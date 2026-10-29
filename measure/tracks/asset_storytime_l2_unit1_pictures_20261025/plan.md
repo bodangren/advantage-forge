@@ -1159,6 +1159,70 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   package-job path.
 - [ ] Task: Build and independently review the PM-approved missing cast, props, and poses for
   week 1. Use the Forge asset workflow and preserve the approved character look.
+  Gap list (2026-10-29, Green session, Opus; list v3, SHA-256
+  `c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b`, 30 week 1 rows).
+  The PM must approve this list before Forge builds a missing item.
+  States: `A` exists and approved; `N` exists but not approved; `M` missing.
+  Approval sources:
+  - Cast `A`: `sprout-nan`, `-pat`, `-may`, `-sam`, `-mia`, `-ben`, `-pip`. The owner's look check
+    passed on 2026-10-23 (`asset_chibi_sprouts_r1_20261022`, F1 and F2).
+  - Gestures `A`: wave, nod, clap, point forward, point to self, hands out, idle. They are on the
+    F3 gesture sheet that the owner passed. Pip's `sit` is on F2.
+  - Gestures `N`: `gesture-touch-nose` and `gesture-touch-neck` (commits `a8fdb560`,
+    `bbcdf085`). No review, and `GESTURES` in `src/song/timeline.ts` does not map them.
+  - Places `A`: the classroom map and rug (owner F4, look item: dark panes). The `meadow` and
+    `grassland` maps and their trees are accepted catalog assets.
+  - Props `A`: accepted catalog assets (`fern`, `rug`, `table`, `stool`, `backpack`, `cat`,
+    `dog`, `fish`, `apple-tree`, `oak-tree`, `bush`, `wildflowers`). `explorer-hat` is a `ready`
+    avatar catalog item.
+  - Props `N`: `storytime-nest`, `storytime-nut`, `storytime-butterfly-net`,
+    `storytime-first-aid-box`, `storytime-nurse-cap` (commit `a8fdb560`, no review).
+  - Pipeline gap: a class C row needs a white background (corners 250 or more). The song page
+    has no white backdrop. A white unlit card gives about 242 after the neutral tone mapping.
+    Green adds a stage backdrop option (pipeline code, not an art item).
+
+  | Row | Cast | Props | Poses | Place | Result |
+  | --- | --- | --- | --- | --- | --- |
+  | `story-page-hello-i-am-pat` | Pat `A` | teddy bear `M`; school bag with a bump: `backpack` `A`, bump `M` | wave `A` | kindergarten room: classroom `A`; green door `M`; low tables `M` (scaled `table` possible); animal pictures on the wall `M` | blocked |
+  | `story-page-hello-i-am-may` | May `A` | box of crayons `M` | two-hand wave `M` | as row 1 | blocked |
+  | `story-page-hello-i-am-sam` | Sam `A` | picture book `M` | sit with a book on the lap `M`; wave `A` | reading corner: classroom `bookcase` and `rug` `A` | blocked |
+  | `story-page-hello-i-am-mia` | Mia `A` | big box of colored blocks `M` | wave `A` | classroom rug `A` | blocked |
+  | `story-page-hello-i-am-nan` | Nan `A` | small plant in a pot `M` (`fern` `A` stands in, `pot` has red flowers) | wave `A` | classroom window `A` (dark panes) | renderable with the fern, as sample v3 |
+  | `story-page-hello-i-am-ben` | Ben `A` | wall hook `M`; `backpack` `A` | hang a bag on a hook `M`; wave `A` | classroom `A` | blocked |
+  | `story-page-hello-i-am-your-teacher` | Teacher Kim `M` (`teacher` is a fantasy NPC with a pointer and an apple); six children `A` | round rug `A` | kneel `M`; sit on the rug `M`; wave `A` | classroom `A` | blocked |
+  | `story-page-hello-i-am-pip` | Pip `A`; six children `A`; Teacher Kim `M` | open school bag `M` | Pip in the bag `M`; laugh in surprise `M` | classroom `A` | blocked |
+  | `cover-hello` | six children `A`; Teacher Kim `M` | bag with a bump `M` | wave `A` | green door `M`; animal pictures `M` | blocked |
+  | `story-page-a-nest` | Nan `A` | `storytime-nest` `N`; low branch `M` (trees `A` are tall) | point forward `A` | garden: `meadow` `A` | blocked |
+  | `story-page-a-net` | Nan `A` | `storytime-butterfly-net` `N` | hold up a net `A` (held prop) | garden `A` | blocked |
+  | `story-page-a-nut` | Nan `A` (hand close up) | `storytime-nut` `N` | hands out `A` | plain light background | blocked |
+  | `story-page-a-nose` | Nan `A` | none | touch nose `N`; laugh `M` | plain light background | blocked |
+  | `story-page-a-neck` | Nan `A` | none | touch neck `N` | plain light background | blocked |
+  | `story-page-a-nurse` | school nurse `M` | first-aid bag with no symbol `M` (`storytime-first-aid-box` `N` has a white cross); nurse cap `N` | hold a bag `M` | plain light background | blocked |
+  | `story-page-a-nest-and-a-nut` | Pip `A` | nest `N`; nut `N`; low branch `M` | sniff `M` | garden `A` | blocked |
+  | `story-page-nan-can-nod` | Nan `A`; Pip `A` | none | nod `A`; Pip sit `A` | plain light background (white backdrop) | renderable |
+  | `cover-nan-can-nod` | Nan `A`; Pip `A` | low tree: `apple-tree` `A` | nod `A`; Pip sit `A` | garden: `meadow` or `grassland` `A` | renderable |
+  | `check-row-nest` | none | nest `N` | none | white | blocked |
+  | `check-row-cat` | none | `cat` `A` | none | white | renderable |
+  | `check-row-fish` | none | `fish` `A` | none | white | renderable |
+  | `check-row-dog` | none | `dog` `A` | none | white | renderable |
+  | `check-row-nose` | Nan face `A` | none | none | white | renderable |
+  | `check-row-bus` | none | school bus `M` | none | white | blocked |
+  | `check-row-hat` | none | `explorer-hat` `A` (a khaki bucket hat) | none | white | renderable |
+  | `check-row-cup` | none | child's cup `M` (`mug` is a tavern ale mug with foam) | none | white | blocked |
+  | `check-row-net` | none | butterfly net `N` | none | white | blocked |
+  | `practice-line-nose` | Nan face `A` | none | none | white | renderable |
+  | `practice-line-nest` | none | nest `N` | none | white | blocked |
+  | `practice-line-nut` | none | nut `N` | none | white | blocked |
+
+  Result: 9 rows are renderable now, and 21 rows are blocked. The blocked rows need these
+  items:
+  - Missing cast: Teacher Kim and the school nurse.
+  - Missing props: teddy bear, crayons box, picture book, blocks box, wall hook, open school
+    bag, a bag with a bump, green door, low kindergarten tables, wall animal pictures, low
+    branch, school bus, and a child's cup. Also needed: a first-aid bag with no symbol.
+  - Missing poses: two-hand wave, sit with a book, hang a bag, kneel, sit on the rug, laugh,
+    Pip in the bag, Pip sniff, and hold a bag.
+  - Not approved: five `storytime-*` props and the touch-nose and touch-neck gestures.
 - [ ] Task: Render the 30 week 1 rows of picture list version 3 as 30 color and 30 line-art
   versioned PNG files, one twin pair per render run. The rows come from
   `Workbooks/content/storytime/l2/print/pictures.json`. The rows are 16 of size class A, 2 of size
