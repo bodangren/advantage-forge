@@ -108,7 +108,7 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
     passed 130 of 131 tests in 14 s. The 1 failure was the manifest pack test, because the
     copy had no `demo/` folder. On that copy, the mutations M1, M2, M3, M6, M7, M9, M10, M11,
     M12, M13, M14, M17, and M18 each failed the row that section 5 of the strategy names.
-- [ ] Task: Add the aim command, the arc, and the hit test to the core (Green).
+- [~] Task: Add the aim command, the arc, and the hit test to the core (Green).
   Owned path: `src/games/archers-revenge/core/`.
   Change `fire(lane)` to `fire(angle, power)`. Add the path function with the fixed sine table, the
   target and tower places, and the hit test. Keep the evidence. Update the event order note at the
