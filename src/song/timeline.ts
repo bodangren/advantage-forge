@@ -123,6 +123,8 @@ export interface Stage {
   sun?: 'high' | 'side';
   /** Pip's singing: `howl` (head up, mouth open) or `quiet` (idle with a sit on a nod). */
   dog?: 'howl' | 'quiet';
+  /** `white`: no room is shown and the backdrop is plain white (a book picture on a white page). */
+  backdrop?: 'white';
 }
 
 export interface Cue {
@@ -202,6 +204,8 @@ export interface Timeline {
   /** Every map the page must load, in order of first use. */
   maps: string[];
   warnings: string[];
+  /** `white`: the page hides every room and clears to plain white. */
+  backdrop?: 'white';
 }
 
 /** Spec actor names to Forge assets. */
@@ -443,7 +447,10 @@ export function buildTimeline(spec: Spec, stage: Stage): Timeline {
   });
 
   const first = shots[0]!;
-  return { duration: spec.duration, scene: first.map, sun: first.sun, actors, camera: first.camera, cameraPortrait: first.cameraPortrait, shots, maps, warnings };
+  return {
+    duration: spec.duration, scene: first.map, sun: first.sun, actors, camera: first.camera, cameraPortrait: first.cameraPortrait, shots, maps, warnings,
+    ...(stage.backdrop === 'white' ? { backdrop: 'white' as const } : {}),
+  };
 }
 
 /** Maps lit as a bright interior; every other map is outdoors (sky backdrop). */

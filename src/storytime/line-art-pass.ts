@@ -34,18 +34,27 @@ export interface LineArtPassResult {
 }
 
 /**
- * The technique ID of this pass. Version 3 adds painted detail edges (an unlit color pass) and
- * scales the stroke with the output resolution, so a 4000 px wide picture has outlines of about
- * 14 px (specification v1 asks for 12 px or more).
+ * The technique ID of this pass. Version 3 added painted detail edges (an unlit color pass) and
+ * a stroke that scales with the output resolution, so a 4000 px wide picture has outlines of about
+ * 14 px (specification v1 asks for 12 px or more). Version 4 keeps the 14 px stroke on every print
+ * size and compares paint over 4 px, so a thin painted line on a close face (a smile) stays.
  */
-export const LINE_ART_PASS_TECHNIQUE = 'song-page-form-paint-edges-viewdepth-scaled-1bit-v3';
+export const LINE_ART_PASS_TECHNIQUE = 'song-page-form-paint-edges-viewdepth-scaled-1bit-v4';
 
 /** The stroke radius at a 4000 px wide output. A 2 px edge grows to 2 * 6 + 2 = 14 px. */
 export const LINE_RADIUS_PX_AT_4000 = 6;
 
-/** The stroke radius for one output width. Small diagnostic sizes keep the 2 px edge. */
+/** Print outputs are this wide or wider; their outlines never go below the 4000 px stroke. */
+export const PRINT_MIN_WIDTH_PX = 1000;
+
+/**
+ * The stroke radius for one output width. The 12 px rule is absolute, so a print output (class C
+ * is 1500 px wide) keeps at least the 4000 px radius and a wider output scales up. Small
+ * diagnostic sizes scale down and keep the 2 px edge.
+ */
 export function lineRadiusFor(width: number): number {
-  return Math.max(0, Math.round((LINE_RADIUS_PX_AT_4000 * width) / 4000));
+  const scaled = Math.max(0, Math.round((LINE_RADIUS_PX_AT_4000 * width) / 4000));
+  return width >= PRINT_MIN_WIDTH_PX ? Math.max(LINE_RADIUS_PX_AT_4000, scaled) : scaled;
 }
 
 /** Ink fragments smaller than this pixel count at a 4000 px wide output are noise, not lines. */
@@ -55,7 +64,14 @@ export const MIN_FRAGMENT_PX_AT_4000 = 40;
  * Neighbor albedo colors with a bigger largest-channel gap (linear 0 to 1) are a painted edge:
  * eyes, brows, and a mouth on skin, or a star on a shirt. Soft paint noise stays below it.
  */
-export const PAINT_EDGE_GAP = 0.22;
+export const PAINT_EDGE_GAP = 0.2;
+
+/** The paint comparison distance: 4 px on a print output, so a magnified soft paint edge counts. */
+export function paintStepFor(width: number): number {
+  return width >= PRINT_MIN_WIDTH_PX
+    ? Math.max(4, Math.round((4 * width) / 4000))
+    : Math.max(1, Math.round((2 * width) / 4000));
+}
 
 /** Neighbor normals with a smaller dot are a form edge (about 30 degrees). */
 const NORMAL_EDGE_DOT = 0.86;
@@ -317,8 +333,8 @@ function edgeData(
     return !Number.isFinite(dot) || dot < NORMAL_EDGE_DOT;
   };
   // A baked paint edge is soft over a few output pixels, so the paint pass compares pixels
-  // `step` apart. The step scales with the output width like the stroke.
-  const step = Math.max(1, Math.round((2 * width) / 4000));
+  // `step` apart.
+  const step = paintStepFor(width);
   const paintEdgeBetween = (a: number, b: number): boolean => {
     const ab = a * 4;
     const bb = b * 4;

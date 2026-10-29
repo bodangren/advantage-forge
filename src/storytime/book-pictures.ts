@@ -1453,6 +1453,9 @@ export interface PictureListRow {
   lineArtFileName: string;
   width: number;
   height: number;
+  /** The page text and the scene prompt of the row (the list keeps every field). */
+  text?: string;
+  prompt?: string;
 }
 
 export interface PictureList {
@@ -3538,6 +3541,301 @@ export interface RenderCandidateResult {
   nextVersion?: number;
 }
 
+// ---------------------------------------------------------------------------
+// Picture list rows: render and verify under the specification v1 names (Phase 3)
+// ---------------------------------------------------------------------------
+
+/** The SHA-256 of picture list version 3 (Workbooks commit `078917f1`). */
+export const PICTURE_LIST_V3_SHA256 = 'c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b';
+
+/** The list print root under a Workbooks checkout. */
+export function pictureListPrintRoot(workbooksRoot: string): string {
+  return path.join(path.resolve(workbooksRoot), 'content/storytime/l2/print');
+}
+
+/** A list file name at another twin version: `-v1.png` becomes `-v<version>.png`. */
+export function rowVersionedName(fileName: string, version: number): string {
+  assertVersion(version);
+  if (!/-v\d+\.png$/.test(fileName)) throw new Error(`The list file name has no version: ${fileName}`);
+  return fileName.replace(/-v\d+\.png$/, `-v${version}.png`);
+}
+
+/** The output directory of the list rows of one week; the line art sits beside the color file. */
+export function rowDirectory(row: Pick<PictureListRow, 'week'>): string {
+  return posix.join(`w${padWeek(row.week)}`, 'rows');
+}
+
+export function rowColorRelativePath(row: PictureListRow, version: number): string {
+  return posix.join(rowDirectory(row), rowVersionedName(planPictureRow(row).colorFile, version));
+}
+
+export function rowLineArtRelativePath(row: PictureListRow, version: number): string {
+  return posix.join(rowDirectory(row), rowVersionedName(planPictureRow(row).lineArtFile, version));
+}
+
+export function rowStageRelativePath(row: Pick<PictureListRow, 'id' | 'week'>, version: number): string {
+  assertVersion(version);
+  return posix.join('docs/storytime/l2-unit1', `w${padWeek(row.week)}`, 'rows', `${row.id}-v${version}.json`);
+}
+
+export function rowEvidenceRelativePath(row: Pick<PictureListRow, 'id'>, version: number): string {
+  assertVersion(version);
+  return posix.join('renders', 'rows', `${row.id}-v${version}.json`);
+}
+
+/** The capture input of a list row: the capture reads only the size, the ID, and the stage. */
+function rowCaptureJob(row: PictureListRow): StorytimeJob {
+  const size: PictureSize = row.sizeClass === 'B' ? 'cover' : row.sizeClass === 'C' ? 'small' : 'story';
+  return {
+    id: row.id,
+    week: row.week,
+    bookKind: 'readalong',
+    bookTitle: '',
+    page: 0,
+    text: row.text ?? '',
+    sourcePrompt: row.prompt ?? '',
+    characters: [],
+    sourcePackage: '',
+    sourceSha256: '',
+    slug: row.id,
+    directory: rowDirectory(row),
+    use: size === 'story' ? 'readalong' : size,
+    size,
+  };
+}
+
+/** Reads one row stage file. The stage must name the row ID and the version. */
+export async function readRowStage(repoRoot: string, row: PictureListRow, version: number): Promise<BookStageFile> {
+  const file = rowStageRelativePath(row, version);
+  const bytes = await readFile(path.resolve(repoRoot, file));
+  const source = BookStageSourceSchema.parse(JSON.parse(bytes.toString('utf8')));
+  assertNoMediaKeys(source, 'stage');
+  if (source.jobId !== row.id) throw new Error(`Stage job ID ${source.jobId} does not match the row ${row.id}.`);
+  if (source.version !== version) throw new Error('Stage version does not match the row version.');
+  if (source.at > source.spec.duration) throw new Error('The declared still time exceeds the Timeline duration.');
+  return { file, absoluteFile: path.resolve(repoRoot, file), sha256: sha256(bytes), at: source.at, source, bytes };
+}
+
+export interface RowRenderEvidence {
+  renderer: string;
+  rowId: string;
+  version: number;
+  sizeClass: PictureListRow['sizeClass'];
+  listSha256: string;
+  stageFile: string;
+  stageSha256: string;
+  at: number;
+  camera?: unknown;
+  colorFile: string;
+  colorSha256: string;
+  lineArtFile: string;
+  lineArtSha256: string;
+  lineArtFormatVersion: string;
+  lineArtTechnique: string;
+  width: number;
+  height: number;
+  peakRssMb?: number;
+  warnings: string[];
+}
+
+export interface RowRenderResult {
+  rowId: string;
+  version: number;
+  status: 'rendered' | 'dry-run';
+  file: string;
+  lineArtFile: string;
+  stageFile: string;
+  stageSha256: string;
+  width: number;
+  height: number;
+  peakRssMb?: number;
+}
+
+/** The size-class checks of a written row pair: color structure, the row checks, and the line art. */
+async function checkRowPair(
+  row: PictureListRow,
+  color: Buffer,
+  lineArt: Buffer,
+): Promise<{ errors: string[]; color: PictureStructuralCheck; lineArt: PictureStructuralCheck }> {
+  const plan = planPictureRow(row);
+  const size = { width: plan.width, height: plan.height };
+  const colorCheck = await inspectPng(color, size, {
+    ...(row.sizeClass === 'C' ? { smallCorners: true } : {}),
+    ...(row.sizeClass === 'B' ? { calmTop: true } : {}),
+  });
+  const rowCheck = inspectPictureRow(color, row);
+  const lineCheck = await inspectLineArtPng(lineArt, size);
+  const errors = [
+    ...colorCheck.errors.map((error) => `color: ${error}`),
+    ...rowCheck.errors.filter((error) => !colorCheck.errors.some((other) => other === error)).map((error) => `row: ${error}`),
+    ...lineCheck.errors.map((error) => `line art: ${error}`),
+  ];
+  return { errors: [...new Set(errors)], color: colorCheck, lineArt: lineCheck };
+}
+
+/**
+ * Renders list rows under the specification v1 names: one twin pair per render run, the color
+ * file and the line-art file side by side in `wNN/rows/`. Every check runs before any write, and
+ * an existing file or evidence record of the same version stops the run.
+ */
+export async function renderPictureRows(options: {
+  rows: PictureListRow[];
+  listSha256: string;
+  outputRoot: string;
+  repoRoot?: string;
+  rowId?: string;
+  version?: number;
+  dryRun: boolean;
+  capture?: BookCapture;
+  readStage?: (input: { row: PictureListRow; version: number; repoRoot: string }) => Promise<BookStageFile>;
+  /** The calibration gate; the default is `assertCalibrationReady`. */
+  assertReady?: () => Promise<void>;
+  workbooksRoot?: string;
+}): Promise<RowRenderResult[]> {
+  const version = options.version ?? 1;
+  assertVersion(version);
+  const repoRoot = path.resolve(options.repoRoot ?? FORGE_ROOT);
+  const rows = options.rowId === undefined ? options.rows : options.rows.filter((row) => row.id === options.rowId);
+  if (!rows.length) throw new Error(`No list row matches ${options.rowId ?? 'the selection'}.`);
+  const capture = options.capture ?? captureBookStill;
+  const readStage = options.readStage ?? ((input) => readRowStage(input.repoRoot, input.row, input.version));
+  if (!options.dryRun) {
+    await (options.assertReady ??
+      (() => assertCalibrationReady(options.outputRoot, options.workbooksRoot ?? DEFAULT_WORKBOOKS, repoRoot)))();
+  }
+  const results: RowRenderResult[] = [];
+  for (const row of rows) {
+    const plan = planPictureRow(row);
+    const stage = await readStage({ row, version, repoRoot });
+    const timeline = buildBookStillTimeline(stage.source);
+    const file = rowColorRelativePath(row, version);
+    const lineArtFile = rowLineArtRelativePath(row, version);
+    const evidencePath = rowEvidenceRelativePath(row, version);
+    for (const relative of [file, lineArtFile, evidencePath]) {
+      if (existsSync(resolveOutputPath(options.outputRoot, relative))) {
+        throw new Error(`${row.id}: ${relative} already exists for v${version}; use a new version.`);
+      }
+    }
+    const result: RowRenderResult = {
+      rowId: row.id,
+      version,
+      status: 'rendered',
+      file,
+      lineArtFile,
+      stageFile: stage.file,
+      stageSha256: stage.sha256,
+      width: plan.width,
+      height: plan.height,
+    };
+    if (options.dryRun) {
+      results.push({ ...result, status: 'dry-run' });
+      continue;
+    }
+    const packet = toCapturePacket(
+      await capture({
+        job: rowCaptureJob(row),
+        stage,
+        timeline,
+        repoRoot,
+        size: { width: plan.width, height: plan.height },
+      }),
+    );
+    if (!packet.color || !packet.lineArt) {
+      throw new Error(`${row.id}: one render run must give both the color file and the line-art file.`);
+    }
+    const color = await sharp(packet.color).flatten({ background: '#ffffff' }).toColourspace('srgb').png().toBuffer();
+    const check = await checkRowPair(row, color, packet.lineArt);
+    if (check.errors.length) throw new Error(`${row.id}: ${check.errors.join(' ')}`);
+    const evidence: RowRenderEvidence = {
+      renderer: RENDERER_ID,
+      rowId: row.id,
+      version,
+      sizeClass: row.sizeClass,
+      listSha256: options.listSha256,
+      stageFile: stage.file,
+      stageSha256: stage.sha256,
+      at: stage.at,
+      ...(packet.camera !== undefined ? { camera: packet.camera } : {}),
+      colorFile: file,
+      colorSha256: sha256(color),
+      lineArtFile,
+      lineArtSha256: sha256(packet.lineArt),
+      lineArtFormatVersion: LINEART_FORMAT_VERSION,
+      lineArtTechnique: packet.lineArtTechnique ?? LINEART_TECHNIQUE,
+      width: plan.width,
+      height: plan.height,
+      ...(packet.peakRssMb === undefined ? {} : { peakRssMb: packet.peakRssMb }),
+      warnings: [...(packet.warnings ?? [])],
+    };
+    const absoluteFile = resolveOutputPath(options.outputRoot, file);
+    await mkdir(path.dirname(absoluteFile), { recursive: true });
+    await writeFile(absoluteFile, color, { flag: 'wx' });
+    await writeFile(resolveOutputPath(options.outputRoot, lineArtFile), packet.lineArt, { flag: 'wx' });
+    await writeJson(options.outputRoot, evidencePath, evidence, true);
+    results.push({ ...result, ...(packet.peakRssMb === undefined ? {} : { peakRssMb: packet.peakRssMb }) });
+  }
+  return results;
+}
+
+export interface RowVerifyResult {
+  rowId: string;
+  version: number;
+  errors: string[];
+}
+
+/**
+ * Verifies every rendered version of the selected rows: the evidence names the files, the file
+ * bytes match the recorded SHA-256 values, and the pair passes the size-class checks again.
+ */
+export async function verifyPictureRows(options: {
+  rows: PictureListRow[];
+  outputRoot: string;
+  rowId?: string;
+}): Promise<RowVerifyResult[]> {
+  const rows = options.rowId === undefined ? options.rows : options.rows.filter((row) => row.id === options.rowId);
+  if (!rows.length) throw new Error(`No list row matches ${options.rowId ?? 'the selection'}.`);
+  const results: RowVerifyResult[] = [];
+  for (const row of rows) {
+    const directory = resolveOutputPath(options.outputRoot, posix.join('renders', 'rows'));
+    const names = existsSync(directory) ? await readdir(directory) : [];
+    const versions = names
+      .map((name) => new RegExp(`^${escapeRegExp(row.id)}-v(\\d+)\\.json$`).exec(name))
+      .filter((match): match is RegExpExecArray => match !== null)
+      .map((match) => Number(match[1]))
+      .sort((a, b) => a - b);
+    if (!versions.length && options.rowId !== undefined) {
+      results.push({ rowId: row.id, version: 0, errors: ['The row has no render evidence.'] });
+    }
+    for (const version of versions) {
+      const errors: string[] = [];
+      const evidence = (await readJsonIfExists(
+        resolveOutputPath(options.outputRoot, rowEvidenceRelativePath(row, version)),
+      )) as Partial<RowRenderEvidence> | undefined;
+      if (
+        !evidence ||
+        evidence.colorFile !== rowColorRelativePath(row, version) ||
+        evidence.lineArtFile !== rowLineArtRelativePath(row, version)
+      ) {
+        results.push({ rowId: row.id, version, errors: ['The evidence does not name the specification v1 files.'] });
+        continue;
+      }
+      const colorPath = resolveOutputPath(options.outputRoot, evidence.colorFile);
+      const linePath = resolveOutputPath(options.outputRoot, evidence.lineArtFile);
+      if (!existsSync(colorPath) || !existsSync(linePath)) {
+        results.push({ rowId: row.id, version, errors: ['A twin file is missing.'] });
+        continue;
+      }
+      const color = await readFile(colorPath);
+      const lineArt = await readFile(linePath);
+      if (sha256(color) !== evidence.colorSha256) errors.push('The color SHA-256 does not match the evidence.');
+      if (sha256(lineArt) !== evidence.lineArtSha256) errors.push('The line-art SHA-256 does not match the evidence.');
+      errors.push(...(await checkRowPair(row, color, lineArt)).errors);
+      results.push({ rowId: row.id, version, errors });
+    }
+  }
+  return results;
+}
+
 function toCapturePacket(value: BookCaptureOutput): BookCapturePacket {
   // A plain Buffer is the pre-line-art draft capture shape: a color image with no twin.
   return Buffer.isBuffer(value) ? { color: value, camera: undefined } : value;
@@ -4284,6 +4582,8 @@ interface CliOptions {
   raw?: string;
   failed: boolean;
   reason?: string;
+  /** A picture list row ID: `render` and `verify` work on that list row. */
+  row?: string;
 }
 
 function parseWeek(value: string): number {
@@ -4305,7 +4605,7 @@ function parseCli(argv: string[]): { command: string; options: CliOptions } {
   const options: CliOptions = { paid: false, dryRun: false, release: false, begin: false, failed: false };
   const valueFlags = new Set([
     '--week', '--job', '--version', '--out', '--workbooks', '--calibration', '--output', '--record', '--raw',
-    '--reason',
+    '--reason', '--row',
   ]);
   for (let index = 0; index < args.length; index += 1) {
     const argument = args[index]!;
@@ -4328,6 +4628,7 @@ function parseCli(argv: string[]): { command: string; options: CliOptions } {
       else if (argument === '--record') options.record = value;
       else if (argument === '--raw') options.raw = value;
       else if (argument === '--reason') options.reason = value;
+      else if (argument === '--row') options.row = value;
       else if (argument === '--output') {
         if (value !== 'color' && value !== 'lineart') throw new Error(`Invalid output kind: ${value}`);
         options.output = value;
@@ -4387,6 +4688,45 @@ export async function runStorytimeCli(
     await writeJson(outputRoot, 'jobs.json', jobs);
     log(`Wrote 112 jobs to ${resolveOutputPath(outputRoot, 'jobs.json')}`);
     log(`Selected ${selectedJobs(jobs, selection).length} jobs.`);
+    return 0;
+  }
+  if ((command === 'render' || command === 'verify') && options.row !== undefined) {
+    // The list is read only; a changed list file stops the run (specification v1, list v3).
+    const list = loadPictureList({
+      printRoot: pictureListPrintRoot(workbooksRoot),
+      workbooksRoot,
+      expectedSha256: PICTURE_LIST_V3_SHA256,
+    });
+    const rows = options.week === undefined ? list.rows : list.rows.filter((row) => row.week === options.week);
+    const rowId = options.row === 'all' ? undefined : options.row;
+    if (command === 'render') {
+      const results = await renderPictureRows({
+        rows,
+        listSha256: list.sha256,
+        outputRoot,
+        repoRoot,
+        workbooksRoot,
+        ...(rowId === undefined ? {} : { rowId }),
+        ...(options.version === undefined ? {} : { version: options.version }),
+        dryRun: options.dryRun,
+        ...(dependencies.capture ? { capture: dependencies.capture } : {}),
+      });
+      for (const result of results) {
+        log(
+          `${result.rowId} v${result.version}: ${result.status}; stage ${result.stageSha256}; file ${result.file}; ` +
+            `lineart ${result.lineArtFile}; size ${result.width} x ${result.height}` +
+            `${result.peakRssMb === undefined ? '' : `; render peak rss mb: ${result.peakRssMb}`}`,
+        );
+      }
+      return 0;
+    }
+    const results = await verifyPictureRows({ rows, outputRoot, ...(rowId === undefined ? {} : { rowId }) });
+    const failures = results.filter((result) => result.errors.length);
+    for (const result of results) {
+      log(`${result.rowId} v${result.version}: ${result.errors.length ? `failed: ${result.errors.join(' ')}` : 'passed'}`);
+    }
+    if (failures.length) throw new Error(`Row verification failed for ${failures.length} row versions.`);
+    log(`Row verification passed for ${results.length} row versions.`);
     return 0;
   }
   if (command === 'render') {

@@ -379,8 +379,14 @@ function seek(t: number): void {
   if (!timeline) return;
   resize();
   const shot = shotAt(timeline, t);
-  for (const [name, group] of rooms) group.visible = name === shot.map;
+  const white = timeline.backdrop === 'white';
+  for (const [name, group] of rooms) group.visible = !white && name === shot.map;
   applyLight(shot);
+  if (white) {
+    // A plain white page: the clear colour is not tone mapped, so it stays 255.
+    (scene.background as THREE.Color).set('#ffffff');
+    lightKey = '';
+  }
   const c = cameraAt(portrait ? shot.cameraPortrait : shot.camera, t);
   const { eye, target, fov } = cameraWorld(c, shot);
   camera.position.set(eye[0], eye[1], eye[2]);
