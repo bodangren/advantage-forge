@@ -55,7 +55,7 @@ records the failing run. Green changes the core and the bot and runs the tests a
 The old views stay on the battle stage in this phase. Green makes only the smallest view edits that
 keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
 
-- [ ] Task: Write the failing path, spot, and wave tests (Red).
+- [x] Task: Write the failing path, spot, and wave tests (Red). Test commit: `957d72af`.
   Owned paths: `tests/games/castle-defense/rules.test.ts`, `replay.test.ts`, `bot.test.ts`,
   `driver.test.ts`, and `helpers.ts` in that folder.
   Test these rows: the sentence building and its wrong-word rule stay as today; the core holds a
@@ -67,6 +67,55 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
   run to `victory`; the driver plays every new core event.
   Run `RED_TEST_COMMAND`. Record the command, the exit code, and the number of failures.
   Commit the tests alone, by explicit paths.
+
+  Red evidence (2026-10-29, role `measure-mid-red`, Anthropic):
+  - `phase_base_sha`: `dde11f04c1fee76aafe7b1a3093d0bb9a1c73a60`. `role_base_sha`:
+    `9c0b400e023665d3d66b8b8d044d7b4f69876772`.
+  - Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300
+    node_modules/.bin/vitest run tests/games/castle-defense --maxWorkers=1'`.
+  - Exit code: 1. `Test Files  4 failed | 1 passed (5)`. `Tests  65 failed | 25 passed (90)`.
+  - Each failure is an `AssertionError`. The log has 0 `TypeError` lines and 0 unhandled errors. No
+    file failed to load.
+  - The failing rows: B1 (32 cases), B2, D1 (3 cases), D2, D3, S3, L1 to L4, P1 to P3, W1 to W9 (10
+    tests, W5 has 2), F1, F2, X1 to X3, E2, E3, R1, and R3.
+  - The passing guard rows: S1, S2, S4, S5, E1, E4, R2, R4, B3, D4 (2 tests), A-core, 2 content
+    guards, 3 run guards in `rules.test.ts`, 1 replay guard, 1 bot guard, and the 6 tests of
+    `manifest.test.ts`.
+  - Type check: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node
+    node_modules/typescript/bin/tsc --noEmit'`. Exit code: 2. Total errors: 132.
+  - Errors in `tests/games/castle-defense/`: 68 (rules 41, driver 17, helpers 4, bot 3, replay 3).
+    These are the intended Red errors. Green must bring them to 0.
+  - Errors in `src/games/castle-defense/`: 0.
+  - The other 64 errors are not in a path of this track: the 31 of the baseline,
+    `src/storytime/book-pictures.ts` 2, and `tests/games/magic-defense/` 31. Other sessions own them.
+  - Run logs (not in git): `measure/runs/game_castle_defense_rebuild_20261029/red-vitest-957d72a.log`
+    and `red-tsc-957d72a.log`.
+
+  Contract details that the tests fix (the strategy names stay; these fill the open points):
+  - The core exports the type `Spot` (`{ spot: number; covers: number[]; level: number }`).
+  - `waveStep.moves` is a list of `{ enemyId: string; at: number }`. `at` is the position after the
+    move. It has one entry for each living attacker that has not got through.
+  - An attacker reaches the castle when its move gives `at === path.length`. Its `attackerThrough`
+    event follows the `waveStep` event of that step.
+  - On one step, the built spots shoot in ascending spot order. The `shots` list keeps that order.
+  - The `Presentation` of `view/driver.ts` changes: `strike(attacker, hearts)`,
+    `showSpots(spots, build)`, `hideSpots()`, `towerBuilt(spot, level)`,
+    `waveStep(step, attackers, shots)`, and `through(attacker, hearts)`. `showPosts`, `hidePosts`,
+    and `volley` go. `ShotShown` is `{ spot, attacker, hits, fell }`. The driver calls only
+    `Presentation` methods. D1 and D2 fail on a call to another method.
+
+  Row changes from the strategy:
+  - E1 places the tower through the bot command. The row then stays a guard at Red and at Green.
+  - E2 compares the heart losses (the `attackerThrough` count), not the final hearts. A rest at 0
+    hearts can make two final heart values equal.
+  - A-core needs at least one import in `sim.ts` and in the scan. `types.ts` has no import today, so
+    the rule "one import line per file" cannot hold for a guard row.
+  - The W5 note test reads the top comment of `core/sim.ts`. It needs `Event order`, `waveStep`, and
+    `attackerThrough`, and no `volley`.
+  - S1 also checks the Helper mode card. B2 adds two made-up spot lists for the tie rule.
+  - The test names mark the defaults Q1 (S3), Q2 (P2), Q3 (L1, P3), and Q4 (W4) as assumptions.
+  - Deviation: the task did not get the `[~]` mark before the work started. The test commit and this
+    record came in one session.
 - [ ] Task: Add the path, the spots, and the wave in steps to the core (Green).
   Owned path: `src/games/castle-defense/core/`.
   Keep the sentence building and the evidence. Replace the hero posts and the volleys with the
