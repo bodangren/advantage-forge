@@ -1,0 +1,160 @@
+{
+  "jobId": "l2-w01-cover-nan-can-nod",
+  "version": 2,
+  "at": 1.5,
+  "spec": {
+    "title": "Nan Can Nod",
+    "duration": 2,
+    "lines": [
+      {
+        "text": "Nan Can Nod",
+        "start": 0,
+        "end": 2,
+        "actors": [
+          "Nan",
+          "Pip"
+        ],
+        "gesture": "nod"
+      }
+    ]
+  },
+  "stage": {
+    "scene": "classroom",
+    "backdrop": "white",
+    "sun": "high",
+    "dog": "quiet",
+    "marks": {
+      "Nan": {
+        "x": -0.3,
+        "z": 0,
+        "yaw": 10
+      },
+      "Pip": {
+        "x": 0.32,
+        "z": 0.05,
+        "yaw": -25
+      }
+    },
+    "props": [
+      {
+        "asset": "grass-ground",
+        "x": -3,
+        "z": -1,
+        "yaw": 0,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "grass-ground",
+        "x": -3,
+        "z": 1,
+        "yaw": 0,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "grass-ground",
+        "x": -1,
+        "z": -1,
+        "yaw": 0,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "grass-ground",
+        "x": -1,
+        "z": 1,
+        "yaw": 0,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "grass-ground",
+        "x": 1,
+        "z": -1,
+        "yaw": 0,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "grass-ground",
+        "x": 1,
+        "z": 1,
+        "yaw": 0,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "grass-ground",
+        "x": 3,
+        "z": -1,
+        "yaw": 0,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "grass-ground",
+        "x": 3,
+        "z": 1,
+        "yaw": 0,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "apple-tree",
+        "x": 1.7,
+        "z": -1.3,
+        "yaw": 20,
+        "scale": 0.5,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "bush",
+        "x": -1.7,
+        "z": -1.2,
+        "yaw": 0,
+        "scale": 0.8,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "wildflowers",
+        "x": -0.95,
+        "z": 0.35,
+        "yaw": 0,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "wildflowers",
+        "x": 1.0,
+        "z": 0.5,
+        "yaw": 40,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      }
+    ],
+    "camera": [
+      {
+        "at": 0,
+        "az": 0,
+        "el": 6,
+        "dist": 4.4,
+        "tx": 0.2,
+        "ty": 1.05,
+        "tz": 0
+      }
+    ]
+  }
+}

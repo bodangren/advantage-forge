@@ -1,0 +1,50 @@
+{
+  "jobId": "l2-w01-story-page-nan-can-nod",
+  "version": 1,
+  "at": 0.5,
+  "spec": {
+    "title": "Nan can nod!",
+    "duration": 2,
+    "lines": [
+      {
+        "text": "Nan can nod!",
+        "start": 0,
+        "end": 2,
+        "actors": [
+          "Nan",
+          "Pip"
+        ],
+        "gesture": "nod"
+      }
+    ]
+  },
+  "stage": {
+    "scene": "classroom",
+    "backdrop": "white",
+    "sun": "high",
+    "dog": "quiet",
+    "marks": {
+      "Nan": {
+        "x": -0.3,
+        "z": 0,
+        "yaw": 10
+      },
+      "Pip": {
+        "x": 0.32,
+        "z": 0.05,
+        "yaw": -25
+      }
+    },
+    "camera": [
+      {
+        "at": 0,
+        "az": 0,
+        "el": 8,
+        "dist": 2.6,
+        "tx": 0,
+        "ty": 0.42,
+        "tz": 0
+      }
+    ]
+  }
+}

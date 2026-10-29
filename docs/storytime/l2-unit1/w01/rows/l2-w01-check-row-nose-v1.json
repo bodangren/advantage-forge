@@ -1,0 +1,42 @@
+{
+  "jobId": "l2-w01-check-row-nose",
+  "version": 1,
+  "at": 0.5,
+  "spec": {
+    "title": "nose",
+    "duration": 2,
+    "lines": [
+      {
+        "text": "nose",
+        "start": 0,
+        "end": 2,
+        "actors": [
+          "Nan"
+        ]
+      }
+    ]
+  },
+  "stage": {
+    "scene": "classroom",
+    "backdrop": "white",
+    "sun": "high",
+    "marks": {
+      "Nan": {
+        "x": 0,
+        "z": 0,
+        "yaw": 0
+      }
+    },
+    "camera": [
+      {
+        "at": 0,
+        "az": 0,
+        "el": 0,
+        "dist": 1.05,
+        "tx": 0,
+        "ty": 0.63,
+        "tz": 0
+      }
+    ]
+  }
+}

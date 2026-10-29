@@ -1,0 +1,45 @@
+{
+  "jobId": "l2-w01-check-row-cat",
+  "version": 1,
+  "at": 0.5,
+  "spec": {
+    "title": "cat",
+    "duration": 2,
+    "lines": [
+      {
+        "text": "cat",
+        "start": 0,
+        "end": 2,
+        "actors": []
+      }
+    ]
+  },
+  "stage": {
+    "scene": "classroom",
+    "backdrop": "white",
+    "sun": "high",
+    "props": [
+      {
+        "asset": "cat",
+        "x": 0,
+        "z": 0,
+        "y": 0,
+        "yaw": 0,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      }
+    ],
+    "camera": [
+      {
+        "at": 0,
+        "az": 25,
+        "el": 10,
+        "dist": 1.9,
+        "tx": 0,
+        "ty": 0.28,
+        "tz": 0.03
+      }
+    ]
+  }
+}

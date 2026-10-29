@@ -1,0 +1,60 @@
+{
+  "jobId": "l2-w01-cover-nan-can-nod",
+  "version": 1,
+  "at": 1.5,
+  "spec": {
+    "title": "Nan Can Nod",
+    "duration": 2,
+    "lines": [
+      {
+        "text": "Nan Can Nod",
+        "start": 0,
+        "end": 2,
+        "actors": [
+          "Nan",
+          "Pip"
+        ],
+        "gesture": "nod"
+      }
+    ]
+  },
+  "stage": {
+    "scene": "grassland",
+    "sun": "high",
+    "dog": "quiet",
+    "marks": {
+      "Nan": {
+        "x": -0.3,
+        "z": 0,
+        "yaw": 10
+      },
+      "Pip": {
+        "x": 0.32,
+        "z": 0.05,
+        "yaw": -25
+      }
+    },
+    "props": [
+      {
+        "asset": "apple-tree",
+        "x": 1.7,
+        "z": -1.6,
+        "yaw": 0,
+        "scale": 0.55,
+        "from": 0,
+        "to": 2
+      }
+    ],
+    "camera": [
+      {
+        "at": 0,
+        "az": 0,
+        "el": 4,
+        "dist": 3.6,
+        "tx": 0.25,
+        "ty": 0.75,
+        "tz": 0
+      }
+    ]
+  }
+}
