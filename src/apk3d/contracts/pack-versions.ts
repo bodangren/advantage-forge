@@ -15,6 +15,6 @@ export const PACK_VERSIONS: Readonly<Record<string, string>> = {
   mounts: '1.0.2',
   'outdoor-props': '1.0.0',
   'potion-shop': '1.1.0',
-  'primary-chibi-2d': '1.2.0',
+  'primary-chibi-2d': '1.3.0',
   'sunken-vault': '1.0.0',
 };

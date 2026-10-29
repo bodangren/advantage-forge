@@ -1,6 +1,6 @@
 {
  "id": "primary-chibi-2d",
- "version": "1.2.0",
+ "version": "1.3.0",
  "root": "/assets/apk/primary-chibi-2d/v1",
  "files": {
   "adventurer.attack": {
@@ -4380,8 +4380,8 @@
    "height": 432,
    "format": "png",
    "alpha": false,
-   "byteSize": 95713,
-   "sha256": "6eadc1b4fd733e38638a73267f2e66197fa6f346bf6e4d2a9ff2524be72894fc",
+   "byteSize": 94208,
+   "sha256": "3fdf844bf49a36fea5fa526a0fb87fc1d7e80e681ff781c4eff62ef6af4b5b7c",
    "provenance": {
     "source": "advantage-forge/src/games/potion-rush/view (the 3D set, baked)",
     "license": "AGPL-3.0-or-later"
@@ -38781,6 +38781,60 @@
    },
    "provenance": {
     "source": "advantage-forge/assets/zombie.ts",
+    "license": "AGPL-3.0-or-later"
+   }
+  },
+  "prop.bookcase": {
+   "id": "prop.bookcase",
+   "path": "props/bookcase.png",
+   "kind": "spritesheet",
+   "view": "isometric",
+   "width": 176,
+   "height": 176,
+   "format": "png",
+   "alpha": true,
+   "byteSize": 6033,
+   "sha256": "21d9b64c17c83d8f4a91764675611c9dc6abca3b28af7f07ee9cbfda769284d6",
+   "grid": {
+    "frameWidth": 176,
+    "frameHeight": 176,
+    "columns": 1,
+    "rows": 1,
+    "frameCount": 1
+   },
+   "origin": {
+    "x": 0.5,
+    "y": 0.7613636363636364
+   },
+   "provenance": {
+    "source": "advantage-forge/assets/bookcase.ts",
+    "license": "AGPL-3.0-or-later"
+   }
+  },
+  "prop.vial": {
+   "id": "prop.vial",
+   "path": "props/vial.png",
+   "kind": "spritesheet",
+   "view": "isometric",
+   "width": 12,
+   "height": 12,
+   "format": "png",
+   "alpha": true,
+   "byteSize": 213,
+   "sha256": "c3950c177e73a96e37d2c474f365eec5b99a20720fb650594d52ea7028d99d2e",
+   "grid": {
+    "frameWidth": 12,
+    "frameHeight": 12,
+    "columns": 1,
+    "rows": 1,
+    "frameCount": 1
+   },
+   "origin": {
+    "x": 0.5,
+    "y": 0.75
+   },
+   "provenance": {
+    "source": "advantage-forge/assets/vial.ts",
     "license": "AGPL-3.0-or-later"
    }
   }
