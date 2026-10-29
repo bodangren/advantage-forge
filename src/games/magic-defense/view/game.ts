@@ -49,6 +49,8 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
       const spawn = stage.spawn(enemies.map((e) => ({ id: e.id, kind: e.kind, hp: 1, maxHp: 1, defeated: false })));
       await Promise.all([hud.banner(null, hud.label('intro'), '', 2.2), spawn]);
     },
+    // Phase 2 adds held missiles. This view still shows only the active meaning through showRound.
+    async throwMissile() {},
     showRound(r, cast) {
       hud.showRound(r, cast);
     },

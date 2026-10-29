@@ -66,6 +66,15 @@ export interface Round {
   choices: Choice[];
 }
 
+/** One missile held above a standing castle. */
+export interface HeldMissile {
+  id: string;
+  wordId: string;
+  prompt: string;
+  castle: number;
+  enemyId: string;
+}
+
 export interface MagicDefenseState {
   phase: 'playing' | 'victory';
   helper: boolean;
@@ -83,7 +92,9 @@ export interface MagicDefenseState {
   /** The hearts of each castle. A castle at 0 is in ruins until the team rests. */
   castles: number[];
   maxCastleHealth: number;
-  /** The missile now; null once the run is won. */
+  missiles: HeldMissile[];
+  activeMissileId: string | null;
+  /** The card of the active missile; null once the run is won. */
   round: Round | null;
   coins: number;
   /** Storm mana, 0 to `maxMana`. */
@@ -112,6 +123,7 @@ export type MagicDefenseCommand =
 
 export type MagicDefenseEvent =
   | { type: 'waveAppeared'; wave: number; waveCount: number; enemies: WaveEnemy[] }
+  | { type: 'missileThrown'; missile: HeldMissile }
   | { type: 'roundShown'; round: Round }
   /** A spell was cast; `correct` is true when it is the word of the missile. */
   | { type: 'cast'; choice: number; wordId: string; correct: boolean; castle: number; enemyId: string; correctText: string; streak: number }
@@ -130,6 +142,7 @@ export type MagicDefenseEventType = MagicDefenseEvent['type'];
 /** Every event type the core emits; there is no game over. */
 export const MAGIC_DEFENSE_EVENT_TYPES: readonly MagicDefenseEventType[] = [
   'waveAppeared',
+  'missileThrown',
   'roundShown',
   'cast',
   'scored',

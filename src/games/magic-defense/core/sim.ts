@@ -1,23 +1,21 @@
 /**
- * The Magic Defense simulation: a turn `Simulation` (`tick` returns []). Enemy casters stand in
- * front of the castles (3, or 2 in Helper mode). One missile falls on one castle at a time and
- * shows a Thai meaning. The student chooses the English spell word with that meaning. A right
- * spell breaks the missile (coins grow with the streak, the storm mana grows by 10) and the next
- * missile comes; when the words of the wave are done, the whole formation falls and the next wave
- * marches in. A wrong spell fails: the missile hits its castle (-1 heart), and that spell word
- * stays shut for this missile. When every castle has fallen the heroes rest and the castles
- * stand again with full hearts. At 100 mana the student may call a storm that mends every castle.
- * There is no game over and no timer; the run is won when every word is cast.
+ * The turn simulation holds one missile above each standing castle while the wave has unheld words.
+ * The core selects one active missile with the seeded RNG. A wrong spell takes one heart from its castle.
+ * The same meaning stays active with the failed word shut. A fixed seeded castle order selects a place after a fall.
+ *
+ * The displaced word returns to the unheld words. The rest restores every castle after the last castle falls.
+ * The storm restores every castle and fills free places. Neither operation changes the other held missiles.
+ * There is no timer and no game over.
  *
  * Event order per command:
- *   start: waveAppeared, roundShown
- *   right: cast, scored, [waveCleared, [waveAppeared]], then roundShown or victory
- *   wrong: cast, castleHit, [rest], roundShown
- *   storm: stormCast, roundShown
+ *   start: waveAppeared, missileThrown x n, roundShown
+ *   right: cast, scored, [waveCleared, [waveAppeared]], [missileThrown x n], roundShown or victory
+ *   wrong: cast, castleHit, [rest], [missileThrown x n], roundShown
+ *   storm: stormCast, [missileThrown x n], roundShown
  */
 import { createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { distinctTerms, formationOf, roundOf, standingCastles, targetsOf, type MagicDefenseInput } from './content.js';
-import type { MagicDefenseCommand, MagicDefenseEvent, MagicDefenseState, Round, TargetWord, WaveEnemy } from './types.js';
+import { distinctTerms, formationOf, roundOf, targetsOf, type MagicDefenseInput } from './content.js';
+import type { HeldMissile, MagicDefenseCommand, MagicDefenseEvent, MagicDefenseState, Round, TargetWord, WaveEnemy } from './types.js';
 
 /** Every tuning number of the game. */
 export const TUNING = {
@@ -53,8 +51,10 @@ export function createMagicDefense(input: MagicDefenseInput, options: MagicDefen
   const choiceCount = Math.max(1, Math.min(options.helper ? TUNING.helperChoices : TUNING.choices, distinctTerms(targets)));
   const waveCount = targets.reduce((n, t) => Math.max(n, t.wave), 0);
   const sizeOf = (wave: number): number => targets.filter((t) => t.wave === wave).length;
-  const nextWord = (): TargetWord | undefined => state.targets.find((t) => !t.solved);
   const full = (): number[] => Array.from({ length: castleCount }, () => TUNING.castleHealth);
+  const castleOrder = rng.shuffle(Array.from({ length: castleCount }, (_, i) => i));
+  const cards = new Map<string, Round>();
+  let missileCount = 0;
 
   const state: MagicDefenseState = {
     phase: targets.length > 0 ? 'playing' : 'victory',
@@ -68,6 +68,8 @@ export function createMagicDefense(input: MagicDefenseInput, options: MagicDefen
     enemies: targets.length > 0 ? formationOf(1, castleCount) : [],
     castles: full(),
     maxCastleHealth: TUNING.castleHealth,
+    missiles: [],
+    activeMissileId: null,
     round: null,
     coins: 0,
     mana: 0,
@@ -77,9 +79,48 @@ export function createMagicDefense(input: MagicDefenseInput, options: MagicDefen
     casts: 0,
     started: false,
   };
-  const newRound = (wordId: string): Round => roundOf(state.targets, wordId, state.enemies, state.castles, choiceCount, rng);
-  const first = nextWord();
-  if (first) state.round = newRound(first.id);
+
+  const unheldWord = (): TargetWord | undefined => state.targets.find((t) =>
+    t.wave === state.wave && !t.solved && !state.missiles.some((m) => m.wordId === t.id));
+
+  const throwMissile = (word: TargetWord, castle: number, events: MagicDefenseEvent[]): HeldMissile => {
+    const missile: HeldMissile = {
+      id: `m-${++missileCount}`,
+      wordId: word.id,
+      prompt: word.translation,
+      castle,
+      enemyId: state.enemies.find((e) => e.lane === castle)!.id,
+    };
+    state.missiles.push(missile);
+    events.push({ type: 'missileThrown', missile: { ...missile } });
+    return missile;
+  };
+
+  const fillPlaces = (events: MagicDefenseEvent[]): void => {
+    for (let castle = 0; castle < castleCount; castle++) {
+      if (state.castles[castle]! <= 0 || state.missiles.some((m) => m.castle === castle)) continue;
+      const word = unheldWord();
+      if (word) throwMissile(word, castle, events);
+    }
+  };
+
+  const activate = (missile: HeldMissile): void => {
+    state.activeMissileId = missile.id;
+    let card = cards.get(missile.wordId);
+    if (!card) {
+      card = roundOf(state.targets, missile.wordId, state.enemies, state.castles, choiceCount, rng);
+      cards.set(missile.wordId, card);
+    }
+    card.castle = missile.castle;
+    card.enemyId = missile.enemyId;
+    state.round = card;
+  };
+  const pickActive = (): void => activate(rng.pick(state.missiles));
+
+  // Prepare the initial card for callers before start. Start publishes every initial throw.
+  const opening: MagicDefenseEvent[] = [];
+  fillPlaces(opening);
+  if (state.missiles.length) pickActive();
 
   const copyEnemies = (): WaveEnemy[] => state.enemies.map((e) => ({ ...e }));
   const showRound = (): MagicDefenseEvent => ({ type: 'roundShown', round: structuredClone(state.round as Round) });
@@ -88,7 +129,7 @@ export function createMagicDefense(input: MagicDefenseInput, options: MagicDefen
     if (state.started) return [{ type: 'rejected', command: 'start' }];
     state.started = true;
     if (!state.round) return [];
-    return [{ type: 'waveAppeared', wave: state.wave, waveCount: state.waveCount, enemies: copyEnemies() }, showRound()];
+    return [{ type: 'waveAppeared', wave: state.wave, waveCount: state.waveCount, enemies: copyEnemies() }, ...opening, showRound()];
   };
 
   const cast = (index: number): MagicDefenseEvent[] => {
@@ -109,21 +150,25 @@ export function createMagicDefense(input: MagicDefenseInput, options: MagicDefen
       events.push({ ...base, streak: 0 });
       state.castles[round.castle] = Math.max(0, state.castles[round.castle]! - 1);
       events.push({ type: 'castleHit', castle: round.castle, enemyId: round.enemyId, health: state.castles[round.castle]! });
-      if (state.castles.every((h) => h === 0)) {
-        state.castles = full();
-        events.push({ type: 'rest', castles: [...state.castles] });
-      }
-      // The missile stays; if its castle fell, the next missile of this word comes down on a standing castle.
       if (state.castles[round.castle] === 0) {
-        const kept = round.choices;
-        state.round = newRound(round.wordId);
-        state.round.choices = kept;
+        state.missiles = state.missiles.filter((m) => m.id !== state.activeMissileId);
+        if (state.castles.every((h) => h === 0)) {
+          state.castles = full();
+          events.push({ type: 'rest', castles: [...state.castles] });
+        }
+        const standing = castleOrder.filter((castle) => state.castles[castle]! > 0);
+        const castle = standing.find((lane) => !state.missiles.some((m) => m.castle === lane)) ?? standing[0]!;
+        state.missiles = state.missiles.filter((m) => m.castle !== castle);
+        activate(throwMissile(word, castle, events));
+        fillPlaces(events);
       }
       events.push(showRound());
       return events;
     }
 
     word.solved = true;
+    cards.delete(word.id);
+    state.missiles = state.missiles.filter((m) => m.id !== state.activeMissileId);
     events.push({ ...base, streak: state.streak + 1 });
     const coins = TUNING.coins + Math.min(TUNING.maxStreakBonus, state.streak * TUNING.streakCoins);
     state.coins += coins;
@@ -138,6 +183,7 @@ export function createMagicDefense(input: MagicDefenseInput, options: MagicDefen
       if (state.wave >= state.waveCount) {
         state.phase = 'victory';
         state.round = null;
+        state.activeMissileId = null;
         state.enemies = [];
         events.push({ type: 'victory' });
         return events;
@@ -148,7 +194,8 @@ export function createMagicDefense(input: MagicDefenseInput, options: MagicDefen
       state.enemies = formationOf(state.wave, castleCount);
       events.push({ type: 'waveAppeared', wave: state.wave, waveCount: state.waveCount, enemies: copyEnemies() });
     }
-    state.round = newRound(nextWord()!.id);
+    fillPlaces(events);
+    pickActive();
     events.push(showRound());
     return events;
   };
@@ -157,7 +204,10 @@ export function createMagicDefense(input: MagicDefenseInput, options: MagicDefen
     if (!state.started || !state.round || state.mana < TUNING.maxMana) return [{ type: 'rejected', command: 'storm' }];
     state.mana = 0;
     state.castles = full();
-    return [{ type: 'stormCast', castles: [...state.castles] }, showRound()];
+    const events: MagicDefenseEvent[] = [{ type: 'stormCast', castles: [...state.castles] }];
+    fillPlaces(events);
+    events.push(showRound());
+    return events;
   };
 
   return {
@@ -181,5 +231,3 @@ export function createMagicDefense(input: MagicDefenseInput, options: MagicDefen
     snapshot: () => structuredClone(state),
   };
 }
-
-

@@ -121,6 +121,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
         audio.play('spawn');
         await Promise.all([banner(scene, t('intro'), '', 2.2), stage.spawn(enemies.map((e) => ({ id: e.id, kind: e.kind })))]);
       },
+      // Phase 2 adds held missiles. This view still shows only the active meaning through showRound.
+      async throwMissile() {},
       showRound(r, cast) {
         round = r;
         setLabel(r);

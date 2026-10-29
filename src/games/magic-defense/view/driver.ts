@@ -9,6 +9,7 @@ import type { GameResults, StoryGameEvidence, StoryGameOutcome } from '../../../
 import {
   wardOf,
   resultsOf,
+  type HeldMissile,
   type MagicDefenseEvent,
   type MagicDefenseSimulation,
   type MonsterKind,
@@ -32,6 +33,8 @@ export interface Presentation {
   setProgress(wave: number, waveCount: number, done: number, size: number): void;
   /** The formation marches in; resolves when every enemy stands. */
   spawnWave(wave: number, waveCount: number, enemies: readonly EnemyShown[]): Promise<void>;
+  /** The enemy throws a missile above its castle. */
+  throwMissile(missile: HeldMissile, enemy: EnemyShown): Promise<void>;
   /** The missile (its meaning, over the enemy that cast it) and the spell words; `cast` is called with the choice the student taps. */
   showRound(round: Round, cast: (choice: number) => void): void;
   hideRound(): void;
@@ -154,6 +157,11 @@ export class MagicDefensePlayer {
         this.enemies.clear();
         const list = ev.enemies.map((e) => this.shown(e));
         await p.spawnWave(ev.wave, ev.waveCount, list);
+        break;
+      }
+      case 'missileThrown': {
+        const enemy = this.enemies.get(ev.missile.enemyId);
+        if (enemy) await p.throwMissile(ev.missile, enemy);
         break;
       }
       case 'roundShown':

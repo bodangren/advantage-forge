@@ -8,6 +8,7 @@ export function nextCommand(state: MagicDefenseState): MagicDefenseCommand | nul
   if (state.phase !== 'playing') return null;
   if (!state.started) return { type: 'start' };
   const round = state.round;
-  const choice = round?.choices.find((c) => c.wordId === round.wordId && !c.blocked);
+  const missile = state.missiles.find((m) => m.id === state.activeMissileId);
+  const choice = round?.choices.find((c) => c.wordId === missile?.wordId && !c.blocked);
   return choice ? { type: 'cast', choice: choice.index } : null;
 }
