@@ -637,6 +637,46 @@ Deviations of round 2:
    this round were still uncommitted.
 9. No run of this round waited over 600 s for the lock.
 
+- [~] Task: Remediate Review A round 4 findings (round 3). Test commit `0e9af0f7`.
+  Owned path: `tests/games/filled-shelves.test.ts` (Red) and the Green source paths in the plan.
+  Review A round 4 (`review-a-cd11315.json`) closed the round-2 work and found two new placement
+  defects and two test gaps. Cover four findings. Red owns the table and the two new rules (done in
+  `0e9af0f7`). Green owns the placements.
+  - RA-FS-15 (blocking): the moved guild-hall barrel at [-6.4, 0, 2.6] scale 0.9 enters the
+    bookshelf at [-6.72, 0, 2.4] by 0.18 m. Owner: Green (move the barrel to about
+    [-6.05, 0, 2.6], clear of the bookshelf front and the banner).
+  - RA-FS-16 (blocking): the haunted-library bookcases at z -0.75 enter the door depth band by
+    0.145 m and hide the open-door glow at z -0.63. Owner: Green (move the bookcases to about
+    z -0.95; front then -0.715, behind the arch back -0.66).
+  - RA-FS-17 (medium): rule R3 had no bookshelf or bookcase footprint. Owner: Red (added in
+    `0e9af0f7`: a centred bookshelf footprint 1.0 x 0.368 m and a bookcase 1.28 x 0.45 m, plus a
+    floor prop radius table from the stats.json bounds).
+  - RA-FS-18 (low): five item table entries sat under the measured bounds. Owner: Red (taken from
+    the stats.json bounds in `0e9af0f7`: sack height 0.437, basket depth 0.415, vial height 0.132,
+    apple height 0.133, mug height 0.124). No placement changes result.
+
+  Red evidence (round 3, 2026-10-29):
+
+  - Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600
+    node_modules/.bin/vitest run tests/games/filled-shelves.test.ts --maxWorkers=1'`.
+    Result: exit 1. Summary: `Tests  2 failed | 14 passed (16)`.
+  - RA-FS-15/17: 1. guild-hall row 160 barrel at [-6.4, 0, 2.6] enters the bookshelf at
+    [-6.72, 0, 2.4], radius 0.307 overlaps by 0.18 m.
+  - RA-FS-16: 8. The eight haunted-library bookcases at z -0.75 have front -0.515, inside the door
+    band back -0.661.
+  - The 14 other rows pass, so the corrected item tables (RA-FS-18) change no pass to a fail.
+  - Type check: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node
+    node_modules/typescript/bin/tsc --noEmit'`. Exit 2. Owned errors (filled-shelves.test.ts): 0.
+    Total: 37. The baseline 31 (assets/ and tests/part.test.ts) plus
+    `src/games/castle-defense/core/sim.ts` 6 of another track.
+  - Deviations: (1) the Red run waited over 600 s for the shared heavy lock while other sessions ran
+    long jobs; the first call recorded `lock wait over 600 s` and a later retry in the same call
+    acquired the lock. (2) The bookshelf/bookcase footprint rule is asserted on the changed map
+    `guild-hall`, and the door band rule on the `haunted-library` view, because the pre-existing
+    bookshelf and bookcase collisions in archive, bank, library, and warehouse sit outside this
+    track's scope. (3) RA-FS-18 changes only the five named entries; the rest stay as measured or
+    over-conservative (sack depth 0.35 stays above the measured 0.32).
+
 ## Phase 2: The hand-off
 
 Roles: Green commits and releases the packs. The PM receives the status line and hands the commit
