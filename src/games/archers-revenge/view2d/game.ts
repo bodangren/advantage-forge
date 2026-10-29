@@ -18,6 +18,7 @@ import { FILES_2D } from '../manifest.js';
 import strings from '../strings.en.js';
 import { ArchersRevengePlayer, type Presentation, type Sfx } from '../view/driver.js';
 import { BACKGROUND_FILE, PROJECTION } from './projection.gen.js';
+import { aimForLane } from '../qc/bot.js';
 
 const SFX: Record<Sfx, string> = { pick: 'tap', correct: 'correct', wrong: 'wrong', hit: 'hit', defeat: 'defeat', victory: 'victory' };
 
@@ -124,7 +125,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
         awaiting = 'round';
         void card.choose(r.lanes.filter((l) => !l.blocked).map((l) => ({ id: String(l.lane), text: l.term }))).then((id) => {
           awaiting = null;
-          fire(Number(id));
+          const aim = aimForLane(sim.state.layout, Number(id));
+          if (aim) fire(aim.angle, aim.power);
         });
       },
       hideRound: () => card.hide(),
@@ -148,6 +150,10 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
         audio.play('hit');
         pending = move.done;
         await stage.enemyHit(enemy.id);
+      },
+      async missed() {
+        audio.play('whoosh');
+        await stage.wait(0.2);
       },
       async enemyStrike(enemy, hero) {
         await stage.enemyAttack(enemy.id, hero as HeroId);

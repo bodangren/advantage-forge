@@ -25,9 +25,9 @@ export interface TargetWord {
   translation: string;
   /** One-based wave that holds this word. */
   wave: number;
-  /** Arrows shot at an enemy while this word was the prompt. */
+  /** Open target hits while this word was the prompt. */
   attempts: number;
-  /** True when the first arrow hit the right enemy. */
+  /** True when the first open target hit was right. */
   correctFirstTry: boolean;
   /** True once the right enemy was hit. */
   solved: boolean;
@@ -62,6 +62,7 @@ export interface Round {
 export interface ArchersRevengeState {
   phase: 'playing' | 'victory';
   helper: boolean;
+  layout: Layout;
   /** Every word of the run, in target order. */
   targets: TargetWord[];
   targetCount: number;
@@ -92,8 +93,8 @@ export interface ArchersRevengeState {
 export type ArchersRevengeCommand =
   /** Once, when the stage is ready: replays `waveAppeared` and `roundShown` for the view. */
   | { type: 'start' }
-  /** Aim at a lane and shoot an arrow. */
-  | { type: 'fire'; lane: number };
+  /** Shoot with whole degrees and whole percent power. */
+  | { type: 'fire'; angle: number; power: number };
 
 // ---------------------------------------------------------------- events
 
@@ -101,7 +102,8 @@ export type ArchersRevengeEvent =
   | { type: 'waveAppeared'; wave: number; waveCount: number; enemies: WaveEnemy[] }
   | { type: 'roundShown'; round: Round }
   /** An arrow flew at a lane; `correct` is true when the lane carries the prompt's word. */
-  | { type: 'shot'; lane: number; enemyId: string; wordId: string; correct: boolean; correctText: string; streak: number }
+  | { type: 'shot'; angle: number; power: number; lane: number; enemyId: string; wordId: string; correct: boolean; correctText: string; streak: number }
+  | { type: 'missed'; angle: number; power: number; kind: Exclude<ContactKind, 'target'>; x: number; y: number }
   | { type: 'scored'; coins: number }
   | { type: 'enemyStrike'; enemyId: string; courage: number }
   | { type: 'rest'; courage: number }
@@ -116,6 +118,7 @@ export const ARCHERS_REVENGE_EVENT_TYPES: readonly ArchersRevengeEventType[] = [
   'waveAppeared',
   'roundShown',
   'shot',
+  'missed',
   'scored',
   'enemyStrike',
   'rest',
@@ -123,3 +126,38 @@ export const ARCHERS_REVENGE_EVENT_TYPES: readonly ArchersRevengeEventType[] = [
   'rejected',
   'victory',
 ];
+
+export interface Point {
+  x: number;
+  y: number;
+}
+
+/** A closed rectangle in meters; positive y points up. */
+export interface Box {
+  x0: number;
+  y0: number;
+  x1: number;
+  y1: number;
+}
+
+export interface Layout {
+  lanes: number;
+  width: number;
+  groundY: number;
+  hills: Box[];
+  towers: Box[];
+  targets: Box[];
+}
+
+export type ContactKind = 'target' | 'shut' | 'tower' | 'ground' | 'edge';
+
+export interface Contact extends Point {
+  kind: ContactKind;
+  /** The lane, tower index, hill index, or -1 for the ground line and edge. */
+  index: number;
+}
+
+export interface Shot {
+  points: Point[];
+  contact: Contact;
+}

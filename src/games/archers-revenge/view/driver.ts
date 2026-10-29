@@ -31,13 +31,15 @@ export interface Presentation {
   setProgress(wave: number, waveCount: number, done: number, size: number): void;
   /** The formation marches in; resolves when every enemy stands. */
   spawnWave(wave: number, waveCount: number, enemies: readonly EnemyShown[]): Promise<void>;
-  /** The prompt and the lanes; `fire` is called with the lane the student taps. */
-  showRound(round: Round, fire: (lane: number) => void): void;
+  /** The prompt and targets; the callback takes whole degrees and whole percent power. */
+  showRound(round: Round, fire: (angle: number, power: number) => void): void;
   hideRound(): void;
   /** Colors the tapped lane (right or shielded) and resolves after a short beat. */
   markShot(lane: number, correct: boolean): Promise<void>;
   /** The arrow flies at an enemy: a right arrow lands, a wrong arrow bounces off the shield. */
   shoot(enemy: EnemyShown, correct: boolean): Promise<void>;
+  /** A shot ended without an open target hit. */
+  missed(event: Extract<ArchersRevengeEvent, { type: 'missed' }>): Promise<void>;
   enemyStrike(enemy: EnemyShown, hero: string): Promise<void>;
   rest(): Promise<void>;
   /** The whole formation falls. */
@@ -94,10 +96,10 @@ export class ArchersRevengePlayer {
     await this.play(this.sim.dispatch({ type: 'start' }));
   }
 
-  /** The student shoots a lane. */
-  async fire(lane: number): Promise<void> {
+  /** The student aims and shoots. */
+  async fire(angle: number, power: number): Promise<void> {
     if (this.busy || this.done || this.destroyed) return;
-    await this.play(this.sim.dispatch({ type: 'fire', lane }));
+    await this.play(this.sim.dispatch({ type: 'fire', angle, power }));
   }
 
   /** Plays events from any command (the QC hook), then asks for the next input. */
@@ -125,7 +127,7 @@ export class ArchersRevengePlayer {
     const state = this.sim.state;
     if (state.phase !== 'playing' || !state.round) return;
     this.p.setProgress(state.wave, state.waveCount, state.waveDone, state.waveSize);
-    this.p.showRound(state.round, (lane) => void this.fire(lane));
+    this.p.showRound(state.round, (angle, power) => void this.fire(angle, power));
   }
 
   private shown(e: WaveEnemy): EnemyShown {
@@ -158,6 +160,9 @@ export class ArchersRevengePlayer {
         if (enemy) await p.shoot(enemy, ev.correct);
         break;
       }
+      case 'missed':
+        await p.missed(ev);
+        break;
       case 'scored':
         p.cardPopup(`+${ev.coins}`);
         break;

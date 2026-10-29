@@ -1,7 +1,7 @@
 /**
- * Evidence and results of an Archer's Revenge run: one `word` item per story word (every word is
- * hit before the victory); `attempts` = arrows shot while the word was the prompt;
- * `correctFirstTry` = the first arrow hit the right enemy; `score` = coins.
+ * Evidence and results use one `word` item per story word. Every word is hit before victory.
+ * `attempts` counts open target hits while the word was the prompt.
+ * `correctFirstTry` means the first target hit was right. The score is the coins.
  */
 import {
   practiceOf,

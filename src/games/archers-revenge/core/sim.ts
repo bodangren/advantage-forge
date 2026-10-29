@@ -1,7 +1,7 @@
 /**
  * The Archer's Revenge simulation: a turn `Simulation` (`tick` returns []). A wave is a formation
  * of enemies (3 lanes, 2 in Helper mode), each behind a shield that shows an English word. The
- * prompt is a Thai meaning. The student shoots the lane whose word means the prompt. A right
+ * prompt is a Thai meaning. The student aims an arrow at the matching word. A right
  * arrow breaks that shield (coins grow with the streak) and the next prompt comes; when the
  * words of the wave are done, the whole formation falls and the next wave marches in. A wrong
  * arrow bounces off its shield, the enemy strikes back (courage -1), and that lane stays shut
@@ -12,25 +12,15 @@
  *   start: waveAppeared, roundShown
  *   right: shot, scored, [waveCleared, [waveAppeared]], then roundShown or victory
  *   wrong: shot, enemyStrike, [rest], roundShown
+ *   miss (including a shut target): missed
  */
 import { createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
 import { distinctTerms, formationOf, roundOf, targetsOf, type ArchersRevengeInput } from './content.js';
+import { layoutOf, shotOf } from './aim.js';
+import { TUNING } from './tuning.js';
 import type { ArchersRevengeCommand, ArchersRevengeEvent, ArchersRevengeState, Round, TargetWord, WaveEnemy } from './types.js';
 
-/** Every tuning number of the game. */
-export const TUNING = {
-  /** Enemy lanes: 3, or 2 in Helper mode. */
-  lanes: 3,
-  helperLanes: 2,
-  /** Words per wave (spread evenly over the waves of a run). */
-  wordsPerWave: 5,
-  coins: 10,
-  /** Extra coins per right arrow already in a row, up to `maxStreakBonus`. */
-  streakCoins: 5,
-  maxStreakBonus: 25,
-  maxCourage: 5,
-  restCourage: 3,
-} as const;
+export { TUNING } from './tuning.js';
 
 export interface ArchersRevengeOptions {
   seed: number;
@@ -50,6 +40,7 @@ export function createArchersRevenge(input: ArchersRevengeInput, options: Archer
   const state: ArchersRevengeState = {
     phase: targets.length > 0 ? 'playing' : 'victory',
     helper: options.helper,
+    layout: layoutOf(lanes),
     targets,
     targetCount: targets.length,
     wave: 1,
@@ -79,21 +70,31 @@ export function createArchersRevenge(input: ArchersRevengeInput, options: Archer
     return [{ type: 'waveAppeared', wave: state.wave, waveCount: state.waveCount, enemies: copyEnemies() }, showRound()];
   };
 
-  const fire = (laneIndex: number): ArchersRevengeEvent[] => {
+  const fire = (angle: number, power: number): ArchersRevengeEvent[] => {
     const round = state.round;
-    const lane = round?.lanes.find((l) => l.lane === laneIndex);
-    if (!state.started || !round || !lane || lane.blocked) return [{ type: 'rejected', command: 'fire' }];
+    const aim = TUNING.aim;
+    if (!state.started || !round || !Number.isInteger(angle) || !Number.isInteger(power)
+      || angle < aim.minAngle || angle > aim.maxAngle || power < aim.minPower || power > aim.maxPower) {
+      return [{ type: 'rejected', command: 'fire' }];
+    }
+    angle = angle === 0 ? 0 : angle;
+    const blocked = round.lanes.filter((l) => l.blocked).map((l) => l.lane);
+    const { contact } = shotOf(state.layout, blocked, angle, power);
+    state.shots += 1;
+    if (contact.kind !== 'target') {
+      return [{ type: 'missed', angle, power, kind: contact.kind, x: contact.x, y: contact.y }];
+    }
+    const lane = round.lanes.find((l) => l.lane === contact.index)!;
     const word = state.targets.find((t) => t.id === round.wordId)!;
     const correct = lane.wordId === word.id;
     const events: ArchersRevengeEvent[] = [];
-    state.shots += 1;
     word.attempts += 1;
     if (word.attempts === 1) word.correctFirstTry = correct;
 
     if (!correct) {
       lane.blocked = true;
       state.streak = 0;
-      events.push({ type: 'shot', lane: lane.lane, enemyId: lane.enemyId, wordId: lane.wordId, correct, correctText: word.term, streak: 0 });
+      events.push({ type: 'shot', angle, power, lane: lane.lane, enemyId: lane.enemyId, wordId: lane.wordId, correct, correctText: word.term, streak: 0 });
       state.courage = Math.max(0, state.courage - 1);
       events.push({ type: 'enemyStrike', enemyId: lane.enemyId, courage: state.courage });
       if (state.courage === 0) {
@@ -105,7 +106,7 @@ export function createArchersRevenge(input: ArchersRevengeInput, options: Archer
     }
 
     word.solved = true;
-    events.push({ type: 'shot', lane: lane.lane, enemyId: lane.enemyId, wordId: lane.wordId, correct, correctText: word.term, streak: state.streak + 1 });
+    events.push({ type: 'shot', angle, power, lane: lane.lane, enemyId: lane.enemyId, wordId: lane.wordId, correct, correctText: word.term, streak: state.streak + 1 });
     const coins = TUNING.coins + Math.min(TUNING.maxStreakBonus, state.streak * TUNING.streakCoins);
     state.coins += coins;
     state.streak += 1;
@@ -143,7 +144,7 @@ export function createArchersRevenge(input: ArchersRevengeInput, options: Archer
         case 'start':
           return start();
         case 'fire':
-          return fire(command.lane);
+          return fire(command.angle, command.power);
         default:
           return [];
       }

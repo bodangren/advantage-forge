@@ -11,6 +11,7 @@ import { BattleStage } from '../../shared/battle/stage3d.js';
 import { ARCHER, createArchersRevenge, type ArchersRevengeCommand, type ArchersRevengeInput, type Round } from '../core/index.js';
 import { ArchersRevengePlayer, type Presentation, type Sfx } from './driver.js';
 import { ArchersHud } from './hud.js';
+import { aimForLane } from '../qc/bot.js';
 
 const PRESET_HEROES = ['knight', 'wizard', 'cleric'] as const;
 const SFX: Record<Sfx, string> = { pick: 'tap', correct: 'correct', wrong: 'wrong', hit: 'hit', defeat: 'defeat', victory: 'victory' };
@@ -51,7 +52,10 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
     },
     showRound(r, fire) {
       round = r;
-      hud.showRound(r, fire);
+      hud.showRound(r, (lane) => {
+        const aim = aimForLane(sim.state.layout, lane);
+        if (aim) fire(aim.angle, aim.power);
+      });
     },
     hideRound: () => hud.hideCard(),
     markShot(lane, correct) {
@@ -69,6 +73,10 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
       audio.play('hit');
       pending = move.done;
       await stage.enemyHit(enemy.id);
+    },
+    async missed() {
+      audio.play('whoosh');
+      await stage.kit.timeline.wait(0.2);
     },
     async enemyStrike(enemy, hero) {
       await stage.enemyAttack(enemy.id, hero as 'knight' | 'wizard' | 'cleric');
