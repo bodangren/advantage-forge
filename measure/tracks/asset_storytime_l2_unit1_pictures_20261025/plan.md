@@ -1300,6 +1300,26 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   painted nose line from the asset build). The hat row needs a v2 from a higher angle.
   Rows done with no open defect: 6 of 30. Rows rendered with a defect: 3. Rows not rendered: 21
   (blocked on missing items).
+  Corrections (2026-10-29, build plan batch 1). Stage files v2 change only the camera. Each
+  render and `verify --row` exited `0`; peak memory 477 to 502 MB. Files (color; line art):
+  - `check-row-nose` v2 (az 90): `07a5f84b1fb87e749276bcfe73ada694546ff02e0627ffbc7c12dd51916002f8`;
+    `e387797c9029cc42a129cae64056b0eac4b4b11ae2baffca59b5d2f8cfb70933`; 24 px.
+  - `practice-line-nose` v2 (az -90): `9fb0d02367bc19733ddc43fe872b51dd072691797298ad8b6ec4e4c47d89b2be`;
+    `1a55d3d8560f3843397f461cb74ec394dd7985695cea994f7bb6e738cd2ff27f`; 24 px.
+  - `check-row-hat` v2 (el 40): `b36d9097d71dd016930431cd71dceaf3dd6dd2cf4719215031cd462034ecc198`;
+    `d84beb77b5c7e17ff239340b32cf26f0b419750b20052a36425963917dba53bf`; 22 px.
+  What Green saw: the side views show the ear and the back of the hair. The large chibi cheek
+  hides the small nose, so the nose has no line, and the picture does not read as "nose". The
+  v1 front views stay the better nose pictures. A camera change cannot fix the nose: the nose is
+  a soft bump with no edge. The fix is a painted nose line on the Sprouts face (an asset change
+  of the approved cast, for the batch 3 builder and review). The hat v2 still reads as a dome
+  with a brim: the `explorer-hat` shape causes it. The fix is a child's sun hat in batch 4.
+  Batch 1 review state: Green made the review cards (`bench/sonnet/storytime/b1/`: five prop
+  renders, the two gesture strips, and a look reference). Green rebuilt `sprout-nan` textured to
+  make fresh gesture strips (`./forge animate`, no warning lines); the GLB bytes stayed the same.
+  The reviewer did not run: the Green session is a subagent, and the subagent depth limit (1)
+  stops it from spawning the reviewer or a builder. Green does not rate its own items. The batch
+  1 review, the first-aid fix, and the gesture mapping wait for a reviewer and a builder session.
 - [ ] Task: Run automated checks on every color and line-art file and both model pre-checks on
   every color candidate. Correct each failed picture under a new twin version and repeat the
   checks. Attach the raw model outputs.
