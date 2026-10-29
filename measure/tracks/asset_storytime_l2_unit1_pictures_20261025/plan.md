@@ -1058,7 +1058,7 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   percent weekly use). Red used MiniMax and OpenAI, so Red and Green stay apart.
 
 - [b] deferred:daniel-lineart-look Task: Render the Nan window sample in color and line art. Sample stage
-  commit `4c7d217f`. First write
+  commit `7d8431ba` (v3); pass commit `deadcad6`; v2 stage commit `4c7d217f`. First write
   `docs/storytime/l2-unit1/w01/w01-readalong-p05-v2.json`. Keep v1 unchanged (Review A RA-P3-1).
   In v2, Nan faces the camera (yaw from -30 to 30 degrees), and the window is beside or behind her.
   A `fern` prop gives the small green plant. The `pot` prop shows red flowers, so v2 does not use
@@ -1103,6 +1103,60 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   `fern` prop on its soil mound. No v3 was needed: Nan faces the camera, the panes show as
   panes, and the plant shows. The task goes to the PM for Daniel's line-art look and stays
   `[b] deferred:daniel-lineart-look` until the style look record passes.
+  Sample v3 evidence (2026-10-29, Green round 3). The orchestrator found that v2 does not meet
+  specification v1: the v2 outlines are 2 to 4 px wide, the old check printed the widest run
+  (`261 px`), the line art has no eyes, brows, mouth, or shirt star, and the color panes are
+  near black. With the median check, v2 measures `2 px`.
+  Pass commit `deadcad6` (`src/storytime/line-art-pass.ts`, `src/storytime/book-pictures.ts`):
+  technique `song-page-form-paint-edges-viewdepth-scaled-1bit-v3`. A third render with unlit
+  material copies finds painted detail edges (largest linear channel gap above 0.22). Fragments
+  under 40 px at 4000 px width drop out. The edges grow to a stroke that scales with the output
+  width (radius 6 px at 4000 px). The output stays one opaque grey channel of 0 and 255.
+  `LINEART_TECHNIQUE` stays `song-page-form-edges-viewdepth-1bit-v2`, because T71 pins that label
+  for capture packets that name no technique. The live page pass names v3 in the capture packet
+  and in the render evidence. The render gate enforces the 12 px rule for the live v3 pass.
+  Stage `docs/storytime/l2-unit1/w01/w01-readalong-p05-v3.json` (commit `7d8431ba`) is v2 with
+  version 3. v1 and v2 stay unchanged. Checks: `bookcase texture size: 1024`; `available MB: 2432`.
+  Render command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 1800
+  node --import tsx scripts/storytime-book-pictures.ts render --job w01-readalong-p05 --version 3'`.
+  The first v3 render (log `green-p3-r3-render-attempt1.log`) had stray specks on the floor. Green
+  added the fragment filter, deleted its own three v3 output files, and rendered v3 again.
+  Final render: exit code `0`; `Line-art line width: 15 px (minimum 12 px)`;
+  `Line-art ink coverage: 16.47% (1976064 of 12000000 pixels black)`;
+  `render peak rss mb: 914`; `camera state drift: 0`; `color repeat identical: yes`;
+  `book files served: 15`; `book file requests refused: 0`. Log: `green-p3-r3-render.log`.
+  Files (4000 x 3000, one twin pair from one render run): color
+  `out/storytime/l2/unit1/w01/readalong/l2-w01-readalong-nan-v3.png`, SHA-256
+  `ee46aa71e8a0691ba4acad9b61ee8e8e1206406f66b144b26bc11329f0a1825b` (the same bytes as v2,
+  because the stage composition is the same); line art
+  `out/storytime/l2/unit1/w01/readalong/lineart/l2-w01-readalong-nan-v3-lineart.png`, SHA-256
+  `79880e818390327f59f5bf0a003d43894a5e31bf7f92381ebbe92496f3fb32c4`.
+  Verify command: same wrapper, `verify --job w01-readalong-p05`; exit code `1`. The v3 twin
+  passes (`15 px`). The v2 twin fails: `w01-readalong-p05 v2: line-art structural check failed:
+  Line-art twin lines must be at least 12 px thick; measured 2 px.` This result is correct: the
+  release gate enforces 12 px on the written bytes, and v2 does not meet specification v1.
+  Log: `green-p3-r3-verify.log`.
+  What the pictures show (Green viewed both files): in the color file, Nan faces the camera and
+  waves. Her eyes, brows, smile, and the white star on the orange T-shirt show. The fern stands
+  on the floor beside her. In the line art, Nan has closed outlines for the eyes with pupils and
+  highlights, the brows, the smile, the hairline, and the shirt star. The window shows four
+  white panes with the cross frame, and the fern shows. The blush cheeks have no line.
+  Panes: no approved item gives light glass. `plaster-wall-window` has a near-black glass recess
+  (`#1a2433`, not emissive) by design. `window` has a dark glass base (`#241a12`, opacity 0.4).
+  `stained-glass-window` has red, blue, gold, and green glass. The stage has no light behind a
+  window. The color panes stay dark navy, as in v2.
+  RA2-N2: the thicker lines do not merge the books more. The paint edges add spine lines
+  between books of different colors. The right bookcase now shows separate books. The left
+  bookcase still shows a merged, broken top line over its books, and some short broken dashes
+  remain on the right bookcase and along the right wall base.
+  Gate after the pass change: `Tests  134 passed (134)`, exit code `0`
+  (`green-p3-r3b-vitest.log`); `tests/storytime-line-art-pass.test.ts`: `Tests  5 passed (5)`,
+  exit code `0` (`green-p3-r3b-lineart-pass-vitest.log`). Type check: `tsc exit: 2`;
+  `owned tsc errors: 0`; `total tsc errors: 31` (`green-p3-r3b-tsc.log`).
+  The 30 week 1 list rows use the specification v1 names from the list: the color file is the
+  row `fileName`, and the line art is the row `lineArtFileName` (`<color name>-line-v1.png`)
+  beside the color file. The sample job still writes `lineart/...-nan-v3-lineart.png`, the
+  package-job path.
 - [ ] Task: Build and independently review the PM-approved missing cast, props, and poses for
   week 1. Use the Forge asset workflow and preserve the approved character look.
 - [ ] Task: Render the 30 week 1 rows of picture list version 3 as 30 color and 30 line-art
