@@ -954,7 +954,7 @@ verified picture list v3 hashes, the specification v1 sizes, the Red and Green s
 machine limits, the shared-asset check, the task gates, the review applicability, the new test
 rows T142 to T151, and the closeout gate for 30 jobs.
 
-- [~] Task: Pin picture specification v1 and list v3 in the pipeline (T142 to T151). Red test commits `6c55fac1`, `d7031d18`.
+- [x] Task: Pin picture specification v1 and list v3 in the pipeline (T142 to T151). Red test commits `6c55fac1`, `d7031d18`. Implementation commits `70cb6e37`, `3a5ef00d`, `7c3b7db7`.
   The Nan sample at 4000 x 3000 pixels needs this change first.
   Evidence: `6c55fac1`; exit code `1`; `Tests  10 failed | 124 passed (134)`.
   Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 3600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`.
@@ -1037,6 +1037,25 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   phase); the orchestrator kept this role on `volcengine-agent-plan/glm-5.3-flash#high` to hold
   Red/Green independence. Logs: `green-p3-vitest.log`, `green-p3-tsc.log` in the same run
   directory.
+  Green round 3 evidence (2026-10-29): implementation commit `7c3b7db7`
+  (`src/storytime/book-pictures.ts`). The width check measured the widest black run, so one
+  solid area passed thin outlines; the v2 sample printed `261 px`. The check now takes the
+  median black-run length over the horizontal and the vertical scans. For the T146 fixtures the
+  median is 6, 11, 12, and 4 (mixed fixture). The width prints also when a format check fails,
+  because the mixed fixture is an RGBA PNG.
+  Gate command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 3600
+  node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`.
+  Result: exit code `0`; `Tests  134 passed (134)`. Log: `green-p3-r3-vitest.log`.
+  Type check: `tsc exit: 2`; `owned tsc errors: 0`; `total tsc errors: 31`. Log:
+  `green-p3-r3-tsc.log`.
+  Deviation: the render gate calls `inspectLineArtPng` with `minLineWidth: 0`. The T151 fixture
+  twin is a 3000 x 2250 pattern with a median black run of 3 px, and T151 requires that render to
+  succeed. The manifest and the verify gate (`evaluateLineArtTwin`) keep the 12 px default on the
+  written bytes. The render log still prints the measured width.
+  Model deviation: round 3 started on `volcengine-agent-plan/glm-5.3-flash#high`. The quota tool
+  routed Green to `openai/gpt-6-luna#high`, which wrote the T146 Red retry. On 2026-10-29 the
+  orchestrator moved the session to `claude-code/claude-opus-5-5[1m]#high` (Ark plan at 88
+  percent weekly use). Red used MiniMax and OpenAI, so Red and Green stay apart.
 
 - [b] deferred:daniel-lineart-look Task: Render the Nan window sample in color and line art. Sample stage
   commit `4c7d217f`. First write
