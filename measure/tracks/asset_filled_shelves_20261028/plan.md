@@ -100,7 +100,7 @@ with a `timeout -k 30` inside and vitest with `--maxWorkers=1`.
   node_modules/.bin/vitest run tests/games/filled-shelves.test.ts tests/apk3d/pack-bindings.test.ts
   tests/apk3d/budget.test.ts tests/games/enchanted-library/manifest.test.ts
   tests/games/haunted-library/manifest.test.ts tests/games/alchemists-synthesis/manifest.test.ts
-  tests/games/rune-forge-chamber/manifest.test.ts --maxWorkers=1'`
+  tests/games/rune-forge-chamber/manifest.test.ts tests/games/filled-shelves.adversarial.test.ts --maxWorkers=1'`
 - `TYPE_CHECK_COMMAND`: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600
   node node_modules/typescript/bin/tsc --noEmit'`
 - Type check baseline rule: the command exits 2 with 31 errors outside the owned paths today. Green
@@ -692,6 +692,8 @@ Deviations of round 2:
     `node scripts/design-guild-hall.mjs` exited 0 and reported `169 places; missing glb: none`.
     `git diff --exit-code -- scenes/maps/guild-hall.ts` exited 0 with no output after generation.
     GREEN_TEST_COMMAND exited 0: 7 test files passed and 142 tests passed.
+  - [x] Task: Remediate adversarial finding M5 (Green). Commit `fe23329a` is the Red test evidence SHA.
+    GREEN_TEST_COMMAND: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node_modules/.bin/vitest run tests/games/filled-shelves.test.ts tests/apk3d/pack-bindings.test.ts tests/apk3d/budget.test.ts tests/games/enchanted-library/manifest.test.ts tests/games/haunted-library/manifest.test.ts tests/games/alchemists-synthesis/manifest.test.ts tests/games/rune-forge-chamber/manifest.test.ts tests/games/filled-shelves.adversarial.test.ts --maxWorkers=1'`. Exit 0; 8 test files passed; 144 tests passed.
 
 ## Phase 2: The hand-off
 
@@ -720,6 +722,7 @@ to the monorepo session.
   Record the pack versions and the release commit.
   The `potion-shop` pack moved from 1.0.0 to 1.1.0 in this track, because it gained the vial model.
   The release must carry that version to the monorepo.
+  `scripts/apk-release.ts --check` must pass before the release, because it checks the MODEL_PACKS source against the built packs (adversarial M5).
 - [ ] Task: Make the handoff file and send the status line to the PM.
   Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node --import tsx
   scripts/monorepo-handoff.ts --target <branch>'`. Read
