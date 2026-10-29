@@ -114,7 +114,7 @@ with a `timeout -k 30` inside and vitest with `--maxWorkers=1`.
 - The full strategy, the test rows F1 to F11, the mutations M1 to M5, and the review gates live in
   [test-strategy.md](./test-strategy.md).
 
-- [x] Task: Write the failing shelf check (Red). Test commit `e4e94d76`.
+- [x] Task: Write the failing shelf check (Red). Test commits `e4e94d76`, `a9e1914b`.
   Owned path: `tests/games/filled-shelves.test.ts` (new file).
   The test lists every `shelf` placement in `scenes/maps/*.ts` and in the five game views with its
   item count. It uses the audit rule: an item stands on a case when its x and z fall inside the
@@ -166,20 +166,20 @@ with a `timeout -k 30` inside and vitest with `--maxWorkers=1`.
     mug; guild-hall barrel. (4) The fixture list above is read from the test. (5) A prior Red
     session stalled with no output for 4 hours; this session restarted and finished.
 
-- [x] Task: Fill the two library games (Green). Commit `455d2c1d`.
+- [x] Task: Fill the two library games (Green). Commits `455d2c1d`, `d28bb5bb`.
   Owned paths: `src/games/enchanted-library/view/hall.ts`,
   `src/games/enchanted-library/manifest.ts`, `src/games/haunted-library/view/library.ts`,
   `src/games/haunted-library/manifest.ts`.
   Replace every `shelf` with `bookcase`. The bookcase holds books and no candle.
   Add `bookcase` to each game's model list and to each `MODELS_3D` list.
-- [x] Task: Fill the shop, lab, and forge games (Green). Commit `a56b4b19`.
+- [x] Task: Fill the shop, lab, and forge games (Green). Commits `a56b4b19`, `d28bb5bb`, `f8d1dfc4`.
   Owned paths: `src/games/potion-rush/view/shop.ts`, `src/games/potion-rush/manifest.ts`,
   `src/games/alchemists-synthesis/view/lab.ts`, `src/games/alchemists-synthesis/manifest.ts`,
   `src/games/rune-forge-chamber/view/forge.ts`, `src/games/rune-forge-chamber/manifest.ts`.
   Keep the `shelf` and put items on its boards: bottles, bread, and apples in Potion Rush; bottles
   and vials in Alchemists' Synthesis; crates and sacks in Rune Forge Chamber.
   Place each item on a board top and scale the board height with the shelf scale of the view.
-- [x] Task: Fill the bathhouse and warehouse shelves (Green). Commit `39a8a6f8`.
+- [x] Task: Fill the bathhouse and warehouse shelves (Green). Commits `39a8a6f8`, `d28bb5bb`.
   Owned paths: `scripts/design-bathhouse.mjs`, `scenes/maps/bathhouse.ts`,
   `scripts/design-warehouse.mjs`, `scenes/maps/warehouse.ts`.
   Edit the generator, then run it. The bathhouse shelves hold jars and baskets. The warehouse
@@ -192,7 +192,7 @@ with a `timeout -k 30` inside and vitest with `--maxWorkers=1`.
   Move the inn bottle and mug onto the board at y 0.8025 and off the back panel. Lower the school
   jar and orb onto the cabinet top at y 0.99. Move the archive candle out of the cabinet.
   Edit each generator, then run it.
-- [x] Task: Register the new game models and rebuild the packs (Green). Commit `455d2c1d`.
+- [x] Task: Register the new game models and rebuild the packs (Green). Commits `455d2c1d`, `f8d1dfc4`.
   Owned path: `src/apk3d/contracts/model-pack.ts`.
   Put `bookcase` in a pack that the two library games load, and add it to each `GAME_LOADS` model
   list. Run the pack binding test and the budget test. The set piece limit is 200,000 bytes and the
@@ -201,7 +201,7 @@ with a `timeout -k 30` inside and vitest with `--maxWorkers=1`.
   on its boards. Record the chosen path.
   Commands: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run
   tests/apk3d/pack-bindings.test.ts tests/apk3d/budget.test.ts --maxWorkers=1'`.
-- [x] Task: Render every changed game view and map, and look at each render. Commit `8a457be7`.
+- [x] Task: Render every changed game view and map, and look at each render. Commits `8a457be7`, `d28bb5bb`.
   Owned output path: `out/filled-shelves/`.
   Render each changed game view with `scripts/apk3d-shot.ts` and each changed map with
   `scripts/shoot-map.mjs` and `FORGE_SHOT_SIZE=1920x1080`.
@@ -212,7 +212,7 @@ with a `timeout -k 30` inside and vitest with `--maxWorkers=1`.
   scripts/apk3d-shot.ts both --game enchanted-library'`, and the same shape for each other game.
   For a map: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/shoot-map.mjs
   out/filled-shelves bathhouse=scene=bathhouse'` with the dev server already running.
-- [x] Task: Run the check and the model tests again (Green). Commit `8a457be7`.
+- [x] Task: Run the check and the model tests again (Green). Commits `8a457be7`, `d28bb5bb`, `f8d1dfc4`.
   Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run
   tests/games/filled-shelves.test.ts tests/apk3d/pack-bindings.test.ts tests/apk3d/budget.test.ts
   --maxWorkers=1'`.
@@ -417,7 +417,7 @@ files were restored with `git checkout`, and `git status --short` shows no chang
 13. The lock was held over 600 s on the bookcase runtime build, on the haunted-library render, on
     the potion rush render, and on the type check.
 
-- [~] Task: Remediate Review A and Review C findings (round 2). Red test commit `a9e1914b`.
+- [x] Task: Remediate Review A and Review C findings (round 2). Commits `d28bb5bb`, `f8d1dfc4`. Red test commit `a9e1914b`.
   Owned path: `tests/games/filled-shelves.test.ts` (Red) and the Green source paths in the plan.
   Cover five findings. Red owns the skip list and the new rules (done in `a9e1914b`). Green owns the
   placements and the model wiring.
@@ -461,6 +461,182 @@ files were restored with `git checkout`, and `git status --short` shows no chang
     only Storytime paths and are not touched. (2) Red ran on the DeepSeek model
     `deepseek-v4-pro#high`. Green ran on OpenAI/MiniMax, so the independence holds.
 
+### Green evidence (round 2, 2026-10-29)
+
+The fixes of this round:
+
+| Finding | Fix | Commit |
+| --- | --- | --- |
+| RA-FS-1 | The bathhouse jars stand at 0.58 and the baskets at 0.55, so their tops clear the board above. | `d28bb5bb` |
+| RA-FS-2 | The west barrel of the guild hall moved to [-6.4, 0, 2.6], inside the room and clear of the cabinet at [-6.6, 0, 3.6]. | `d28bb5bb` |
+| RA-FS-3 | The rune forge candle cluster stands on the floor at [-2.5, 0, -2.9], in front of the left shelf and outside its footprint. | `d28bb5bb` |
+| RA-FS-5 | The potion rush loaf and apple stand on the top board at z -3.35, in line with the bottles. | `d28bb5bb` |
+| RA-FS-6 | The warehouse and rune forge crates stand at 0.55 and the sacks at 0.6, 0.16 m in front of the shelf origin. | `d28bb5bb` |
+| RA-FS-7 | The alchemy lab shelf jars stand at 0.55, so their tops clear the board above and their fronts stay on the board. | `d28bb5bb` |
+| RA-FS-10 | The haunted library bookcases moved from z -1.0 to z -0.75, clear of the back wall. | `d28bb5bb` |
+| RC-FS-1 | The alchemy lab places three vials on the top board of each shelf. The vial is wired through the view list, the manifest, the game load and the pack. | `f8d1dfc4` |
+
+Gate results:
+
+- Gate command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600
+  node_modules/.bin/vitest run tests/games/filled-shelves.test.ts tests/apk3d/pack-bindings.test.ts
+  tests/apk3d/budget.test.ts tests/games/enchanted-library/manifest.test.ts
+  tests/games/haunted-library/manifest.test.ts tests/games/alchemists-synthesis/manifest.test.ts
+  tests/games/rune-forge-chamber/manifest.test.ts --maxWorkers=1'`. Exit 0. Summary: `Test Files  7
+  passed (7)` and `Tests  140 passed (140)`. The run before the commits and the run after the two
+  commits give the same result.
+- The orchestrator command `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30
+  600 node_modules/.bin/vitest run tests/games/filled-shelves.test.ts --maxWorkers=1'` is part of
+  that gate and exits 0.
+- Type check: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node
+  node_modules/typescript/bin/tsc --noEmit'`. Exit 2. Owned errors 0. Total 136. The committed
+  baseline is 31. The other 105 errors sit in the uncommitted files of other sessions:
+  `tests/games/castle-defense/` 68, `tests/games/magic-defense/` 35, and
+  `src/storytime/book-pictures.ts` 2. No error names a path of this track.
+- The sprite parity test `tests/apk3d/sprite-parity.test.ts` exits 1 with two rows: the
+  `library-furniture/bookcase` and the `potion-shop/vial` 2D file are missing. The bookcase row
+  failed before this round (RC-FS-2). The 2D entries belong to the Phase 2 release.
+
+Game view renders. Each run printed `diagnostics none` and `errors none`. The command is
+`bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node --import tsx
+scripts/apk3d-shot.ts both --game <id> --first'`.
+
+| Game and layout | Path | SHA-256 |
+| --- | --- | --- |
+| potion-rush portrait | `out/apk3d-shots/potion-rush/portrait/05-first.png` | `b6184a596461084532744f5ae6b5eaadd0e1e155bf23a5910c62d25638ffbb5c` |
+| potion-rush landscape | `out/apk3d-shots/potion-rush/landscape/05-first.png` | `3dcc70be6c4c837f5537eaa35427e61da4974dfd781a50ff0ff0e11c0db5d70c` |
+| alchemists-synthesis portrait | `out/apk3d-shots/alchemists-synthesis/portrait/05-first.png` | `69434647565ce1210d6e303f5fd1344a1d480cf13f4cd146c29dbf7a940636bb` |
+| alchemists-synthesis landscape | `out/apk3d-shots/alchemists-synthesis/landscape/05-first.png` | `9d7644e9a893e29f4eb6f7727d2fd34d5cc8de3746fcd77948fe0d13a316033c` |
+| rune-forge-chamber portrait | `out/apk3d-shots/rune-forge-chamber/portrait/05-first.png` | `c23ae1ee70a8f81fae26fa3b475fa85c71e09dfa739d8d4be746533424f7d297` |
+| rune-forge-chamber landscape | `out/apk3d-shots/rune-forge-chamber/landscape/05-first.png` | `80a8c201c01c933f4d5ba874be71c2a3727ad4ba21bb18bfb7b780a894700587` |
+| haunted-library portrait | `out/apk3d-shots/haunted-library/portrait/05-first.png` | `e742816be9fbae48afb9e974ac2ad6cd57fbbe746269145f620e5ee5e83eb65f` |
+| haunted-library landscape | `out/apk3d-shots/haunted-library/landscape/05-first.png` | `475527fb1eb5f80d340804b298dc54afdf2fa7db9bf03b1b7a12e9c8ac99e8ca` |
+
+Looks and the three largest differences per render:
+
+- potion-rush portrait: (1) the top board of each shelf now carries the loaf and the apple; (2) the
+  bottle rows read soft at 512 px; (3) every bottle, the loaf and the apple rest on a board, and
+  nothing hangs over the board edge.
+- potion-rush landscape: (1) the top board of each shelf carries the loaf and the apple; (2) the
+  middle board of the left shelf holds three bottles and leaves both ends empty; (3) the loaf stands
+  clear of the bottles and rests on the board.
+- alchemists-synthesis portrait: (1) the top board of each shelf carries three small green vials;
+  (2) the bottle rows read soft; (3) the four pedestals hold their ingredients and nothing floats.
+- alchemists-synthesis landscape: (1) the vials read as small green dots on the top board; (2) the
+  shelves sit high in the frame; (3) every bottle and every vial rests on a board.
+- rune-forge-chamber portrait: (1) the camera crops both shelves at the frame edges; (2) the crate
+  and the sack stand on the lower board of each shelf, in front of the back panel; (3) the candle
+  cluster stands on the floor in front of the left shelf, and nothing floats.
+- rune-forge-chamber landscape: (1) the shelves sit at the top of the frame; (2) the crate and the
+  sack rest on the lower board of each shelf; (3) the candle cluster stands on the floor clear of
+  the shelf footprint.
+- haunted-library portrait: (1) the bookcases stand clear of the back wall; (2) the spines read soft
+  at 128 px; (3) every case carries books on each row and no candle stands on a case.
+- haunted-library landscape: (1) the bookcases stand in front of the wall and the green pads stay
+  clear of them; (2) the spines read soft at 128 px; (3) every case carries books and no candle
+  stands on a case.
+
+Map renders. The command is `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '... vite
+--port 5199 ... node scripts/shoot-map.mjs out/filled-shelves <name>=scene=<map>&az=..&el=..&dist=..
+&tx=..&tz=..'`. The default camera of the map viewer sits 46 m away, so each changed map was
+rendered again with camera values that frame the changed piece.
+
+| Map and camera | Path | SHA-256 |
+| --- | --- | --- |
+| bathhouse, default | `out/filled-shelves/bathhouse.png` | `62c82b233b7ceeb7156a253aa542d7b43b9340a7ebb49b17a665e12bc65dc922` |
+| bathhouse, `az=0&el=22&dist=15&tx=0&tz=-4.5` | `out/filled-shelves/bathhouse-close.png` | `17b1b5a0600aa6cb250725fd2ee5278d293a48900f5655b14a3310da8ad3256b` |
+| warehouse, default | `out/filled-shelves/warehouse.png` | `bf74de373518138e14ff380c42dde112a0c80a104fd05f1a3e69403e9ad7e67c` |
+| warehouse, `az=90&el=20&dist=16&tx=-4.6&tz=0.6` | `out/filled-shelves/warehouse-close.png` | `4914e6e4e3be09b12cff3210e1360aeeea9bf20cf0ddb867779d3b317eb5cf38` |
+| alchemy-lab, default | `out/filled-shelves/alchemy-lab.png` | `84d902dfae09e7b16dd431f7255d906c371a0a0f2ecd125790048b3a4c39282c` |
+| alchemy-lab, `az=0&el=20&dist=9&tx=0.8&tz=-3.94` | `out/filled-shelves/alchemy-lab-close.png` | `bc13798e7085c3384837cbb88b4957374055614bbd1d3539f31b96850085c3d0` |
+| guild-hall, default | `out/filled-shelves/guild-hall.png` | `57df3f18e6f92d2e2651e8d017a1e919e011a76ee66b5fdf39456dcb92a6ba0c` |
+| guild-hall, `az=90&el=22&dist=9&tx=-7.2&tz=3.3` | `out/filled-shelves/guild-hall-close.png` | `e71eff35a4f3193841a5f75e05f3da07f390f412f1e84fb8cf9e51062d0c1495` |
+
+Looks and the three largest differences per render:
+
+- bathhouse default: (1) the room fills the middle of the frame and the black margins hold the
+  rest; (2) the shelves are too small to read; (3) no empty shelf shows.
+- bathhouse close: (1) the jar and the basket stand on the lower board of each of the four shelves;
+  (2) the middle and the top board stay bare; (3) every jar and basket rests on the board and
+  clears the board above.
+- warehouse default: (1) the room floats in the middle of the frame; (2) the shelves are too small
+  to read; (3) no empty shelf shows.
+- warehouse close: (1) the crate and the sack stand on the lower board of each west shelf, in front
+  of the back panel; (2) the middle and the top board stay bare; (3) no shelf is empty and nothing
+  floats.
+- alchemy-lab default: (1) the room floats in the middle of the frame; (2) the shelves are too small
+  to read; (3) no empty shelf shows.
+- alchemy-lab close: (1) the north shelf carries jars, bottles and vials on its three boards; (2) the
+  jars are smaller now and their tops clear the board above; (3) every item rests on a board and
+  stays on it.
+- guild-hall default: (1) the room floats in the middle of the frame; (2) the west corner is too
+  small to read; (3) no barrel stands inside a cabinet.
+- guild-hall close: (1) the moved barrel stands on the floor inside the room, clear of the west wall
+  and of the cabinet; (2) the cabinet keeps its plates on top; (3) the wall cases hold books.
+
+No render shows an empty shelf, a floating item, or an item that hangs over a board.
+
+Mutations. Each log holds the diff of the mutation, the command, the output of the test and the exit
+code. The logs sit in `measure/runs/asset_filled_shelves_20261028/`.
+
+| Id | Mutation | Row | Result |
+| --- | --- | --- | --- |
+| M1 | Remove one bottle placement from a potion rush shelf. | F2 | The row passes, exit 0. The shelf keeps five items, so the row as written does not fail. |
+| M1b | Empty one potion rush shelf. | F2 | Fails, exit 1. The shelf holds 0 items. |
+| M2 | Move one potion rush bottle from y 0.4725 to y 0.52. | F3 | Fails, exit 1. |
+| M3 | Raise the school jar from y 0.99 to y 1.02. | F4 | Fails, exit 1. |
+| M4 | Put the library view back to `shelf`. | F7 | Fails, exit 1. |
+| M5 | Name `bookcase` in a manifest but in no pack. | F9 | Fails, exit 1, with the message `unknown model binding "bookcase": no loaded pack holds it`. |
+| M6 | Give a bathhouse jar the wrong scale, 1 instead of 0.58. | The clearance row | Fails, exit 1. Four jars pass the next board bottom. |
+| M7 | Move the jar and the basket of one bathhouse shelf out of the footprint. | F1 | Fails, exit 1. The shelf holds 0 items. |
+| M8 | Remove the vial from the alchemy lab. | RC-FS-1 | Fails, exit 1. The row names the missing `vial`. |
+
+M6, M7 and M8 are the two extra cases of the strategy section 7 ("a shelf whose item sits outside the
+footprint and a shelf whose item uses the wrong scale") and the new kind rule. Every mutated file
+was restored from a backup copy, and `git status --short` shows no change in them.
+
+Doctor result. `./measure/doctor.sh` exits 1 with twelve findings. None names a path of this
+track.
+
+| Finding | Owner |
+| --- | --- |
+| `measure/tracks/game_archers_revenge_rebuild_20261029/plan.md`: new track has started tasks | Not owned. Another track owns that plan. |
+| `measure/tracks/game_castle_defense_rebuild_20261029/plan.md`: new track has started tasks | Not owned. Another track owns that plan. |
+| `measure/tracks/game_magic_defense_rebuild_20261029/plan.md`: new track has started tasks | Not owned. Another track owns that plan. |
+| `measure/tracks/game_paladins_twin_soul_rebuild_20261029/plan.md`: new track has started tasks | Not owned. Another track owns that plan. |
+| `measure/tracks.md`: missing registry link for asset_filled_shelves_20261028 | Not owned. The plan lists the registry entry as a Phase 2 closeout item. |
+| `measure/tracks.md`: missing registry link for the four rebuild tracks | Not owned. Another session owns that path. |
+| `measure/lessons-learned.md`: 52 lines exceeds 50 | Not owned. Another session owns that file. |
+| `measure/generated/status.md`: stale generated fact | Not owned. The generator run is a Phase 2 closeout item. |
+| `measure/generated/asset-inventory.json`: stale generated fact | Not owned. The same closeout item. |
+
+Deviations of round 2:
+
+1. The model stayed MiniMax (the Green model family). Red ran on `deepseek-v4-pro#high`, so the
+   independence holds.
+2. The rune forge candle cluster stands on the floor instead of on a board. The check counts a
+   free-standing fixture as an item, and its height table has no entry for `candle-cluster`, so a
+   placement on a board would fail the coverage row. A floor placement outside the shelf footprint
+   is the only placement the frozen check accepts.
+3. The potion rush loaf and the apple moved to the top board. On the lower board the loaf would
+   touch the bottle of the same place, and the top board was bare.
+4. The crate at 0.65 is 0.286 m deep, deeper than the 0.27 m of board between the back panel and
+   the frame front, so the crates stand at 0.55 and the sacks at 0.6. The jars and the baskets use
+   the apothecary scale of 0.58 and the bakery scale of 0.55.
+5. The `potion-shop` pack moved from 1.0.0 to 1.1.0, because the pack gained the vial model and the
+   pack script gives a pack that adds a model the next minor version. The other eight packs kept
+   their versions. The monorepo sync of `potion-shop` 1.1.0 is a Phase 2 item.
+6. The 2D pack holds no `prop.bookcase` and no `prop.vial` file, so the sprite parity test fails for
+   two rows. The bookcase row failed before this round. Both 2D entries belong to the Phase 2
+   release.
+7. The type check total is 136, above the baseline of 31, because other sessions added uncommitted
+   test files. The 105 extra errors sit in `tests/games/castle-defense/` (68),
+   `tests/games/magic-defense/` (35) and `src/storytime/book-pictures.ts` (2). The owned count is 0
+   and no error names a path of this track.
+8. The mutated files were restored from a backup copy, not with `git checkout`, because the fixes of
+   this round were still uncommitted.
+9. No run of this round waited over 600 s for the lock.
+
 ## Phase 2: The hand-off
 
 Roles: Green commits and releases the packs. The PM receives the status line and hands the commit
@@ -470,11 +646,24 @@ to the monorepo session.
   Use `git commit -m "fix(scenes): fill every empty shelf" -- <paths>`. Stage only the owned paths.
   Other sessions share the tree and the git index. Never stage `measure/tracks.md` or
   `measure/generated/*`.
+- [ ] Task: Re-bake the Potion Rush 2D background (RA-FS-8).
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node --import
+  tsx scripts/apk2d-bake.ts potion-rush'`.
+  The 3D set of the potion rush changed in this track: the loaf and the apple moved to the top
+  board of each shelf. The 2D background is a bake of that set, so it must show the same picture.
+  Run it before the pack release and record the output.
+- [ ] Task: Add the 2D pack entries for the new models (RC-FS-2 and the parity rows).
+  The 2D pack `primary-chibi-2d` has no `prop.bookcase` and no `prop.vial` file, so
+  `tests/apk3d/sprite-parity.test.ts` fails for the `library-furniture` and the `potion-shop`
+  packs. Run `scripts/apk2d-sprites.ts bookcase vial` and then `scripts/apk2d-pack.ts`, and record
+  the new 2D pack version. The parity test must pass before the hand-off.
 - [ ] Task: Release the model packs when a pack changed.
   Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node --import tsx
   scripts/apk-release.ts --check'`. When it lists stale models, run the same command with
   `--commit`. A rebuild to the same bytes changes no pack version.
   Record the pack versions and the release commit.
+  The `potion-shop` pack moved from 1.0.0 to 1.1.0 in this track, because it gained the vial model.
+  The release must carry that version to the monorepo.
 - [ ] Task: Make the handoff file and send the status line to the PM.
   Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node --import tsx
   scripts/monorepo-handoff.ts --target <branch>'`. Read
