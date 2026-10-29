@@ -9,7 +9,7 @@ import type { AudioBus } from '../../../apk3d/audio/index.js';
 import type { HostServices } from '../../../apk3d/factory/index.js';
 import { esc, feedback, hasThai, type HudRoot, type PopKind } from '../../../apk3d/hud/index.js';
 import type { BattleStage } from '../../shared/battle/stage3d.js';
-import type { Post } from '../core/index.js';
+import type { Spot } from '../core/index.js';
 import type { StepShown } from './driver.js';
 import './castle-defense.css';
 
@@ -108,11 +108,11 @@ export class CastleHud {
     };
   }
 
-  /** The posts of the wall: one button per hero, with the level of its tower. */
-  showPosts(posts: readonly Post[], build: (post: number) => void): void {
+  /** One button per build spot, with its tower level. */
+  showSpots(spots: readonly Spot[], build: (spot: number) => void): void {
     const t = this.t;
-    const buttons = posts
-      .map((p) => `<button class="opt cd-post" data-post="${p.post}">${esc(p.hero === this.player ? t('yourPost') : t('post', { hero: this.i18n.t(`heroes.${p.hero}`) }))}<small>${esc(p.level > 0 ? t('level', { level: p.level }) : t('empty'))}</small></button>`)
+    const buttons = spots
+      .map((s) => `<button class="opt cd-post" data-post="${s.spot}">${s.spot + 1}<small>${esc(s.level > 0 ? t('level', { level: s.level }) : t('empty'))}</small></button>`)
       .join('');
     const card = this.root.card;
     card.show(`<div class="ask">${esc(t('placeThe'))}</div><div class="options cd-posts">${buttons}</div>`);

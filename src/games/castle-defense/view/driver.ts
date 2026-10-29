@@ -11,8 +11,7 @@ import {
   type Attacker,
   type CastleDefenseEvent,
   type CastleDefenseSimulation,
-  type HeroId,
-  type Post,
+  type Spot,
   type Step,
 } from '../core/index.js';
 
@@ -20,14 +19,14 @@ export interface AttackerShown {
   id: string;
   kind: Attacker['kind'];
   lane: number;
+  at: number;
   hits: number;
   maxHits: number;
   defeated: boolean;
 }
 
 export interface ShotShown {
-  post: number;
-  hero: HeroId;
+  spot: number;
   attacker: AttackerShown;
   hits: number;
   fell: boolean;
@@ -55,16 +54,16 @@ export interface Presentation {
   hideStep(): void;
   /** Colors the chosen word (right or failed) and resolves after a short beat. */
   markPick(choice: number, correct: boolean): Promise<void>;
-  /** An attacker strikes the castle at the post of `hero`. */
-  strike(attacker: AttackerShown, hero: HeroId, hearts: number): Promise<void>;
+  /** An attacker strikes the castle after a wrong word. */
+  strike(attacker: AttackerShown, hearts: number): Promise<void>;
   rest(): Promise<void>;
-  /** The posts to choose from (the card); `build` is called with the post the student taps. */
-  showPosts(posts: readonly Post[], build: (post: number) => void): void;
-  hidePosts(): void;
-  /** The tower rises on the post kept by `hero`. */
-  towerBuilt(post: number, hero: HeroId, level: number): Promise<void>;
-  /** One round of fire: the shots fly together; an attacker that falls is defeated. */
-  volley(shots: readonly ShotShown[]): Promise<void>;
+  /** The build spots; `build` receives the spot that the student taps. */
+  showSpots(spots: readonly Spot[], build: (spot: number) => void): void;
+  hideSpots(): void;
+  towerBuilt(spot: number, level: number): Promise<void>;
+  /** One path step and its shots, after the attackers move. */
+  waveStep(step: number, attackers: readonly AttackerShown[], shots: readonly ShotShown[]): Promise<void>;
+  through(attacker: AttackerShown, hearts: number): Promise<void>;
   /** The attackers that still stand fall. */
   clearWave(attackers: readonly AttackerShown[]): Promise<void>;
   /** A floating text over the card (coins). */
@@ -124,10 +123,10 @@ export class CastleDefensePlayer {
     await this.play(this.sim.dispatch({ type: 'pick', choice }));
   }
 
-  /** The student places the tower on a post. */
-  async build(post: number): Promise<void> {
+  /** The student places the tower on a spot. */
+  async build(spot: number): Promise<void> {
     if (this.busy || this.done || this.destroyed) return;
-    await this.play(this.sim.dispatch({ type: 'build', post }));
+    await this.play(this.sim.dispatch({ type: 'build', spot }));
   }
 
   /** Plays events from any command (the QC hook), then asks for the next input. */
@@ -150,21 +149,21 @@ export class CastleDefensePlayer {
     this.destroyed = true;
   }
 
-  /** Shows what the student acts on now: the step with its words, or the posts for the tower. */
+  /** Shows the word choices or the build spots. */
   showInput(): void {
     const state = this.sim.state;
     if (state.phase !== 'playing' || !state.started) return;
     const sentence = state.shift[state.wave - 1]!;
     this.p.setProgress(state.wave, state.waveCount, state.built.length, sentence.words.length);
     if (state.stage === 'place') {
-      this.p.showPosts(state.posts.map((x) => ({ ...x })), (post) => void this.build(post));
+      this.p.showSpots(state.spots.map((s) => ({ ...s, covers: [...s.covers] })), (spot) => void this.build(spot));
     } else if (state.step) {
       this.p.showStep({ translation: sentence.translation, step: state.step, built: [...state.built], total: sentence.words.length }, (choice) => void this.pick(choice));
     }
   }
 
   private shown(a: Attacker): AttackerShown {
-    const s: AttackerShown = { id: a.id, kind: a.kind, lane: a.lane, hits: a.hits, maxHits: a.maxHits, defeated: false };
+    const s: AttackerShown = { id: a.id, kind: a.kind, lane: a.lane, at: a.at, hits: a.hits, maxHits: a.maxHits, defeated: false };
     this.attackers.set(a.id, s);
     return s;
   }
@@ -196,7 +195,7 @@ export class CastleDefensePlayer {
       case 'attackerStrike': {
         const attacker = this.attackers.get(ev.enemyId);
         await p.settle();
-        if (attacker) await p.strike(attacker, ev.hero, ev.hearts);
+        if (attacker) await p.strike(attacker, ev.hearts);
         p.setHearts(ev.hearts, this.sim.state.maxHearts);
         break;
       }
@@ -207,22 +206,38 @@ export class CastleDefensePlayer {
       case 'sentenceBuilt':
         break;
       case 'towerBuilt':
-        p.hidePosts();
+        p.hideSpots();
         p.sfx('tower');
-        await p.towerBuilt(ev.post, ev.hero, ev.level);
+        await p.towerBuilt(ev.spot, ev.level);
         p.cardPopup(`+${ev.coins}`);
         break;
-      case 'volley': {
+      case 'waveStep': {
+        const moved: AttackerShown[] = [];
+        for (const m of ev.moves) {
+          const attacker = this.attackers.get(m.enemyId);
+          if (!attacker) continue;
+          attacker.at = m.at;
+          moved.push({ ...attacker });
+        }
         const shots: ShotShown[] = [];
         for (const s of ev.shots) {
           const attacker = this.attackers.get(s.enemyId);
           if (!attacker) continue;
           attacker.hits = s.hitsLeft;
-          shots.push({ post: s.post, hero: s.hero, attacker, hits: s.hits, fell: s.fell });
+          shots.push({ spot: s.spot, attacker: { ...attacker }, hits: s.hits, fell: s.fell });
         }
         p.sfx('hit');
-        await p.volley(shots);
-        for (const s of shots) if (s.fell) s.attacker.defeated = true;
+        await p.waveStep(ev.step, moved, shots);
+        for (const s of shots) if (s.fell) this.attackers.get(s.attacker.id)!.defeated = true;
+        break;
+      }
+      case 'attackerThrough': {
+        const attacker = this.attackers.get(ev.enemyId);
+        if (attacker) {
+          await p.through({ ...attacker }, ev.hearts);
+          attacker.defeated = true;
+        }
+        p.setHearts(ev.hearts, this.sim.state.maxHearts);
         break;
       }
       case 'waveCleared': {

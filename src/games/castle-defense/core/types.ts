@@ -4,16 +4,10 @@
  * carries ids and plain values, never object references.
  */
 
-/** The party. Post i of the castle wall is kept by hero i; a tower on that post fires through that hero. */
+/** The heroes shown by the transitional battle views. */
 export const HEROES = ['knight', 'wizard', 'cleric'] as const;
 
 export type HeroId = (typeof HEROES)[number];
-
-/** The tower posts of the wall: one per hero. */
-export const POSTS = HEROES.length;
-
-/** The hero who keeps a post. */
-export const keeperOf = (post: number): HeroId => HEROES[post % HEROES.length]!;
 
 /** The attackers: soldiers (skeletons), tanks (mimics), and the boss (the fire dragon). */
 export const ENEMY_TYPES = ['soldier', 'tank', 'boss'] as const;
@@ -50,6 +44,8 @@ export interface Attacker {
   type: EnemyType;
   kind: 'skeleton' | 'mimic' | 'dragon-fire';
   lane: number;
+  /** Path position; negative positions queue outside the gate. */
+  at: number;
   hits: number;
   maxHits: number;
 }
@@ -72,10 +68,10 @@ export interface Step {
   choices: Choice[];
 }
 
-/** One tower post: level 0 is empty. */
-export interface Post {
-  post: number;
-  hero: HeroId;
+/** One build spot and its range of path indexes. Level 0 is empty. */
+export interface Spot {
+  spot: number;
+  covers: number[];
   level: number;
 }
 
@@ -87,14 +83,15 @@ export interface CastleDefenseState {
   /** One-based wave number. */
   wave: number;
   waveCount: number;
-  /** `collect`: build the sentence word by word. `place`: the sentence is built, choose a post. */
+  /** `collect`: build the sentence. `place`: choose a build spot. */
   stage: 'collect' | 'place';
   /** The words of the current sentence chosen so far. */
   built: string[];
   /** The current step; null while placing and after the victory. */
   step: Step | null;
   attackers: Attacker[];
-  posts: Post[];
+  path: number[];
+  spots: Spot[];
   /** Hearts of the castle. At 0 the heroes rest and the hearts return. */
   hearts: number;
   maxHearts: number;
@@ -116,15 +113,15 @@ export type CastleDefenseCommand =
   | { type: 'start' }
   /** Choose a word of the step (the `index` of a choice). */
   | { type: 'pick'; choice: number }
-  /** Place the tower of the built sentence on a post. */
-  | { type: 'build'; post: number };
+  /** Place the tower of the built sentence on a spot. */
+  | { type: 'build'; spot: number };
 
 // ---------------------------------------------------------------- events
 
 export interface ShotSummary {
-  post: number;
-  hero: HeroId;
+  spot: number;
   enemyId: string;
+  at: number;
   hits: number;
   hitsLeft: number;
   fell: boolean;
@@ -137,13 +134,14 @@ export type CastleDefenseEvent =
   | { type: 'picked'; choice: number; word: string; correct: boolean; index: number; streak: number }
   | { type: 'scored'; coins: number }
   /** A wrong word: an attacker strikes the castle and the hearts fall. */
-  | { type: 'attackerStrike'; enemyId: string; hero: HeroId; hearts: number }
+  | { type: 'attackerStrike'; enemyId: string; hearts: number }
   | { type: 'rest'; hearts: number }
-  /** The sentence is built: choose a post for its tower. */
-  | { type: 'sentenceBuilt'; wave: number; posts: Post[] }
-  | { type: 'towerBuilt'; post: number; hero: HeroId; level: number; coins: number }
-  /** One round of fire: every tower shoots the front attacker. */
-  | { type: 'volley'; round: number; shots: ShotSummary[] }
+  /** The sentence is built: choose a spot for its tower. */
+  | { type: 'sentenceBuilt'; wave: number; spots: Spot[] }
+  | { type: 'towerBuilt'; spot: number; level: number; coins: number }
+  /** Attackers move, then towers shoot in ascending spot order. */
+  | { type: 'waveStep'; step: number; moves: { enemyId: string; at: number }[]; shots: ShotSummary[] }
+  | { type: 'attackerThrough'; enemyId: string; hearts: number }
   | { type: 'waveCleared'; wave: number; attackers: Attacker[] }
   | { type: 'rejected'; command: string }
   | { type: 'victory' };
@@ -160,7 +158,8 @@ export const CASTLE_DEFENSE_EVENT_TYPES: readonly CastleDefenseEventType[] = [
   'rest',
   'sentenceBuilt',
   'towerBuilt',
-  'volley',
+  'waveStep',
+  'attackerThrough',
   'waveCleared',
   'rejected',
   'victory',

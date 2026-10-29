@@ -53,21 +53,23 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
     showStep: (shown, pick) => hud.showStep(shown, pick),
     hideStep: () => hud.hideCard(),
     markPick: (choice, correct) => hud.markPick(choice, correct),
-    async strike(attacker, hero) {
+    async strike(attacker) {
+      const hero = PRESET_HEROES[attacker.lane % PRESET_HEROES.length]!;
       await stage.enemyAttack(attacker.id, hero);
       hud.popup(hero, hud.label('castleHit'), '', 1.2);
     },
     rest: () => hud.banner('rest', '', '', 2.4),
-    showPosts: (posts, build) => hud.showPosts(posts, build),
-    hidePosts: () => hud.hideCard(),
-    async towerBuilt(_post, hero) {
+    showSpots: (spots, build) => hud.showSpots(spots, build),
+    hideSpots: () => hud.hideCard(),
+    async towerBuilt(spot) {
+      const hero = PRESET_HEROES[spot % PRESET_HEROES.length]!;
       stage.heal(hero);
       hud.popup(hero, hud.label('towerBuilt'), 'good', 1.4);
       await stage.kit.timeline.wait(0.7);
     },
-    async volley(shots) {
+    async waveStep(_step, _attackers, shots) {
       const runs = shots.map((s) => {
-        const move = stage.heroAttack(s.hero, s.attacker.id, 'attack2');
+        const move = stage.heroAttack(PRESET_HEROES[s.spot % PRESET_HEROES.length]!, s.attacker.id, 'attack2');
         const landed = move.hit.then(async () => {
           audio.play('hit');
           hud.setHits(s.attacker.id, s.attacker.hits, s.attacker.maxHits);
@@ -78,6 +80,10 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
       });
       pending = Promise.all(runs.map((r) => r.done)).then(() => undefined);
       await Promise.all(runs.map((r) => r.landed));
+    },
+    async through(attacker) {
+      hud.setHits(attacker.id, 0, attacker.maxHits);
+      await stage.enemyDefeated(attacker.id);
     },
     async clearWave(attackers) {
       await Promise.all(attackers.map((a) => stage.enemyDefeated(a.id)));

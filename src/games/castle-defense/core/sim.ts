@@ -1,22 +1,25 @@
 /**
  * The Castle Defense simulation: a turn `Simulation` (`tick` returns []). Each wave is one
- * sentence of the story. Attackers stand at the gate. The student builds the sentence word by
- * word: the card shows the words to choose from, and the right next word joins the sentence.
- * A wrong word shuts for this step and an attacker strikes the castle (-1 heart); at 0 hearts
- * the heroes rest and the hearts return. When the sentence is built, the student places its
- * tower on a post of the wall (a post is kept by a hero; placing on a built post makes the tower
- * stronger). Then the towers fire in rounds until the wave has fallen; the next sentence starts.
- * There is no game over and no timer; the run is won when every sentence is built.
+ * sentence of the story. The student builds the sentence word by word, then picks a build spot.
+ * A wrong word costs one castle heart. Each build raises the tower by one level.
+ * Attackers move along the path. Towers shoot the front attacker in range after each move.
+ * A breach costs one heart. At 0 hearts the heroes rest and the hearts return.
+ * No game over or timer occurs. The run ends after every sentence wave.
  *
  * Event order per command:
  *   start: waveAppeared, stepShown
  *   pick right: picked, scored, then stepShown or sentenceBuilt
  *   pick wrong: picked, attackerStrike, [rest], stepShown
- *   build: towerBuilt, volley (one or more), waveCleared, then [waveAppeared, stepShown] or victory
+ *   build: towerBuilt, then each waveStep followed by its attackerThrough and [rest] events,
+ *          then waveCleared, then [waveAppeared, stepShown] or victory
  */
 import { createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
 import { attackersOf, choicesOf, shiftOf, type CastleDefenseInput } from './content.js';
-import { POSTS, keeperOf, type Attacker, type CastleDefenseCommand, type CastleDefenseEvent, type CastleDefenseState, type Post, type ShotSummary, type Step } from './types.js';
+import { type Attacker, type CastleDefenseCommand, type CastleDefenseEvent, type CastleDefenseState, type Spot, type ShotSummary, type Step } from './types.js';
+
+/** Provisional layout. Phase 2 will align it with the selected scene. */
+const PATH = [0, 1, 2, 3, 4, 5];
+const RANGES = [[0, 1], [1, 2, 3, 4, 5], [0, 1, 2], [2, 3, 4], [3, 4, 5], [5]];
 
 /** Every tuning number of the game. */
 export const TUNING = {
@@ -46,7 +49,7 @@ export function createCastleDefense(input: CastleDefenseInput, options: CastleDe
   const rng: Rng = createRng(options.seed);
   const shift = shiftOf(input, rng, TUNING.maxWaves);
   const choiceCount = options.helper ? TUNING.helperChoices : TUNING.choices;
-  const posts: Post[] = Array.from({ length: POSTS }, (_, post) => ({ post, hero: keeperOf(post), level: 0 }));
+  const spots: Spot[] = RANGES.map((covers, spot) => ({ spot, covers: [...covers], level: 0 }));
 
   const state: CastleDefenseState = {
     phase: shift.length > 0 ? 'playing' : 'victory',
@@ -58,7 +61,8 @@ export function createCastleDefense(input: CastleDefenseInput, options: CastleDe
     built: [],
     step: null,
     attackers: shift.length > 0 ? attackersOf(1) : [],
-    posts,
+    path: [...PATH],
+    spots,
     hearts: TUNING.hearts,
     maxHearts: TUNING.hearts,
     coins: 0,
@@ -74,7 +78,7 @@ export function createCastleDefense(input: CastleDefenseInput, options: CastleDe
   if (shift.length > 0) state.step = stepAt(0);
 
   const copyAttackers = (): Attacker[] => state.attackers.map((a) => ({ ...a }));
-  const copyPosts = (): Post[] => state.posts.map((p) => ({ ...p }));
+  const copySpots = (): Spot[] => state.spots.map((s) => ({ ...s, covers: [...s.covers] }));
   const showStep = (): CastleDefenseEvent => ({ type: 'stepShown', step: structuredClone(state.step as Step), built: [...state.built] });
   const living = (): Attacker[] => state.attackers.filter((a) => a.hits > 0);
 
@@ -101,7 +105,7 @@ export function createCastleDefense(input: CastleDefenseInput, options: CastleDe
       events.push({ type: 'picked', choice: index, word: choice.word, correct: false, index: step.index, streak: 0 });
       const attacker = rng.pick(living());
       state.hearts = Math.max(0, state.hearts - 1);
-      events.push({ type: 'attackerStrike', enemyId: attacker.id, hero: keeperOf(attacker.lane), hearts: state.hearts });
+      events.push({ type: 'attackerStrike', enemyId: attacker.id, hearts: state.hearts });
       if (state.hearts === 0) {
         state.hearts = state.maxHearts;
         events.push({ type: 'rest', hearts: state.hearts });
@@ -120,7 +124,7 @@ export function createCastleDefense(input: CastleDefenseInput, options: CastleDe
     if (state.built.length >= current.words.length) {
       state.stage = 'place';
       state.step = null;
-      events.push({ type: 'sentenceBuilt', wave: state.wave, posts: copyPosts() });
+      events.push({ type: 'sentenceBuilt', wave: state.wave, spots: copySpots() });
       return events;
     }
     state.step = stepAt(state.built.length);
@@ -128,26 +132,41 @@ export function createCastleDefense(input: CastleDefenseInput, options: CastleDe
     return events;
   };
 
-  const build = (post: number): CastleDefenseEvent[] => {
-    const slot = state.posts.find((p) => p.post === post);
+  const build = (spot: number): CastleDefenseEvent[] => {
+    const slot = state.spots.find((s) => s.spot === spot);
     if (!state.started || state.stage !== 'place' || !slot) return [{ type: 'rejected', command: 'build' }];
     const events: CastleDefenseEvent[] = [];
     slot.level += 1;
     state.towersBuilt += 1;
     state.coins += TUNING.towerCoins;
-    events.push({ type: 'towerBuilt', post: slot.post, hero: slot.hero, level: slot.level, coins: TUNING.towerCoins });
+    events.push({ type: 'towerBuilt', spot: slot.spot, level: slot.level, coins: TUNING.towerCoins });
 
-    // The towers fire in rounds: every tower shoots the front attacker; a level-n tower hits n times.
-    for (let round = 1; living().length > 0; round++) {
+    // Negative positions queue attackers outside the gate, one step apart.
+    const onPath = (): Attacker[] => living().filter((a) => a.at < state.path.length);
+    const stepLimit = state.path.length + state.attackers.length + 1;
+    for (let step = 1; onPath().length > 0; step++) {
+      if (step > stepLimit) throw new Error('Castle Defense wave exceeded its step bound');
+      const moving = onPath();
+      for (const attacker of moving) attacker.at += 1;
+      const moves = moving.map((a) => ({ enemyId: a.id, at: a.at }));
       const shots: ShotSummary[] = [];
-      for (const tower of state.posts.filter((p) => p.level > 0)) {
-        const target = living()[0];
-        if (!target) break;
+      for (const tower of [...state.spots].filter((s) => s.level > 0).sort((a, b) => a.spot - b.spot)) {
+        const target = onPath().filter((a) => tower.covers.includes(a.at)).sort((a, b) => b.at - a.at)[0];
+        if (!target) continue;
         const hits = Math.min(tower.level, target.hits);
         target.hits -= hits;
-        shots.push({ post: tower.post, hero: tower.hero, enemyId: target.id, hits, hitsLeft: target.hits, fell: target.hits === 0 });
+        shots.push({ spot: tower.spot, enemyId: target.id, at: target.at, hits, hitsLeft: target.hits, fell: target.hits === 0 });
       }
-      events.push({ type: 'volley', round, shots });
+      events.push({ type: 'waveStep', step, moves, shots });
+      for (const attacker of moving.filter((a) => a.at === state.path.length)) {
+        state.attackers = state.attackers.filter((a) => a.id !== attacker.id);
+        state.hearts -= 1;
+        events.push({ type: 'attackerThrough', enemyId: attacker.id, hearts: state.hearts });
+        if (state.hearts === 0) {
+          state.hearts = state.maxHearts;
+          events.push({ type: 'rest', hearts: state.hearts });
+        }
+      }
     }
     sentence().cleared = true;
     events.push({ type: 'waveCleared', wave: state.wave, attackers: copyAttackers() });
@@ -180,7 +199,7 @@ export function createCastleDefense(input: CastleDefenseInput, options: CastleDe
         case 'pick':
           return pick(command.choice);
         case 'build':
-          return build(command.post);
+          return build(command.spot);
         default:
           return [];
       }
@@ -189,4 +208,3 @@ export function createCastleDefense(input: CastleDefenseInput, options: CastleDe
     snapshot: () => structuredClone(state),
   };
 }
-

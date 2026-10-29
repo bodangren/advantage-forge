@@ -14,7 +14,7 @@ import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/fact
 import { createI18n } from '../../../apk3d/i18n/catalog.js';
 import { banner, Card2D, fitGameSize, popup, registerSheetAnimations, StatusBar2D, type Rect } from '../../../apk3d/view2d/index.js';
 import { BattleStage2D, partyPlayer2D } from '../../shared/battle/stage2d.js';
-import { createCastleDefense, type CastleDefenseCommand, type CastleDefenseInput, type HeroId } from '../core/index.js';
+import { createCastleDefense, HEROES, type CastleDefenseCommand, type CastleDefenseInput } from '../core/index.js';
 import { FILES_2D } from '../manifest.js';
 import strings from '../strings.en.js';
 import { CastleDefensePlayer, type Presentation, type Sfx } from '../view/driver.js';
@@ -119,33 +119,35 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
         else await card.feedback(false, t('blocked'));
         await stage.wait(correct ? 0.4 : 0.8);
       },
-      async strike(attacker, hero) {
-        await stage.enemyAttack(attacker.id, hero as HeroId);
+      async strike(attacker) {
+        const hero = HEROES[attacker.lane % HEROES.length]!;
+        await stage.enemyAttack(attacker.id, hero);
         const at = headOf(hero, 1.2);
         popup(scene, at.x, at.y, t('castleHit'), '', 17_800);
       },
       rest: () => banner(scene, t('rest.title'), t('rest.text'), 2.4),
-      showPosts(posts, build) {
+      showSpots(spots, build) {
         card.begin();
         card.line(t('placeThe'), 20);
         awaiting = 'posts';
         void card
-          .choose(posts.map((p) => ({ id: String(p.post), text: `${p.hero === avatarPlace ? t('yourPost') : t('post', { hero: i18n.t(`heroes.${p.hero}`) })} · ${p.level > 0 ? t('level', { level: p.level }) : t('empty')}` })))
+          .choose(spots.map((s) => ({ id: String(s.spot), text: `${s.spot + 1} · ${s.level > 0 ? t('level', { level: s.level }) : t('empty')}` })))
           .then((id) => {
             awaiting = null;
             build(Number(id));
           });
       },
-      hidePosts: () => card.hide(),
-      async towerBuilt(_post, hero) {
-        stage.heal(hero as HeroId);
+      hideSpots: () => card.hide(),
+      async towerBuilt(spot) {
+        const hero = HEROES[spot % HEROES.length]!;
+        stage.heal(hero);
         const at = headOf(hero, 1.6);
         popup(scene, at.x, at.y, t('towerBuilt'), 'good', 17_800);
         await stage.wait(0.7);
       },
-      async volley(shots) {
+      async waveStep(_step, _attackers, shots) {
         const runs = shots.map((s) => {
-          const move = stage.heroAttack(s.hero as HeroId, s.attacker.id, 'attack2');
+          const move = stage.heroAttack(HEROES[s.spot % HEROES.length]!, s.attacker.id, 'attack2');
           const landed = move.hit.then(async () => {
             audio.play('hit');
             stage.updateEnemy(s.attacker.id, s.attacker.hits, s.fell);
@@ -156,6 +158,10 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
         });
         pending = Promise.all(runs.map((r) => r.done)).then(() => undefined);
         await Promise.all(runs.map((r) => r.landed));
+      },
+      async through(attacker) {
+        stage.updateEnemy(attacker.id, 0, true);
+        await stage.enemyDefeated(attacker.id);
       },
       async clearWave(attackers) {
         await Promise.all(attackers.map((a) => stage.enemyDefeated(a.id)));

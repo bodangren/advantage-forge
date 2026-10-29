@@ -88,6 +88,7 @@ export function attackersOf(wave: number): Attacker[] {
     type: config.type,
     kind: KIND_OF[config.type],
     lane,
+    at: -1 - lane,
     hits: HITS[config.type],
     maxHits: HITS[config.type],
   }));
