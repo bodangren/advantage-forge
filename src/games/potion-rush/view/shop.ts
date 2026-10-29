@@ -108,8 +108,9 @@ export function buildShop(stage: Stage3D, hero: string, body?: ActorBody): Shop 
   for (const x of [-1.2, 1.2]) {
     place(stage, 'shelf', [x, 0, -3.5]);
     for (const [dx, y] of [[-0.45, 0.4725], [-0.1, 0.4725], [0.3, 0.4725], [-0.3, 0.8025], [0.15, 0.8025], [0.45, 0.8025]] as [number, number][]) place(stage, 'bottle', [x + dx, y, -3.35]);
-    place(stage, 'bread', [x - 0.48, 0.4725, -3.2], 0, 0.65);
-    place(stage, 'apple', [x + 0.48, 0.4725, -3.2], 0, 0.55);
+    // The loaf and the apple stand on the top board, in line with the bottles.
+    place(stage, 'bread', [x - 0.3, 1.1125, -3.35], 0, 0.65);
+    place(stage, 'apple', [x + 0.3, 1.1125, -3.35], 0, 0.55);
   }
   place(stage, 'fireplace', [0, 0, -3.55]);
   for (const x of [-2.8, 2.6]) place(stage, 'candle-cluster', [x, 0.75, -3.0]);

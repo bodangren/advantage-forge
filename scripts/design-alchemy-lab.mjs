@@ -53,9 +53,16 @@ for (let i = 0; i < 8; i++) put(pick(['vial', 'bottle', 'vial']), -3.5 + i * 0.4
 
 // Shelves with jars: north (x 0.8), west (z 2.9 facing east).
 const boards = [0.47, 0.8, 1.11];
+// The shelf jars stand at 0.55, so their tops clear the board above and their fronts stay on the board.
 for (const y of boards) {
-  for (let i = 0; i < 4; i++) put(pick(['jar', 'bottle', 'vial', 'jar']), 0.8 - 0.5 + i * 0.33, -3.77, 0, y);
-  for (let i = 0; i < 3; i++) put(pick(['bottle', 'vial', 'jar']), -4.77, 2.3 + i * 0.33 + 0.1, 0, y);
+  for (let i = 0; i < 4; i++) {
+    const kind = pick(['jar', 'bottle', 'vial', 'jar']);
+    put(kind, 0.8 - 0.5 + i * 0.33, -3.77, 0, y, kind === 'jar' ? 0.55 : undefined);
+  }
+  for (let i = 0; i < 3; i++) {
+    const kind = pick(['bottle', 'vial', 'jar']);
+    put(kind, -4.77, 2.3 + i * 0.33 + 0.1, 0, y, kind === 'jar' ? 0.55 : undefined);
+  }
 }
 put('shelf', 0.8, -3.94, 0);
 put('shelf', -4.94, 2.95, 90);

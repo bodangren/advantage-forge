@@ -68,10 +68,11 @@ export function buildForge(stage: Stage3D, hero: string, body?: ActorBody): Forg
   place(stage, 'shelf', [-2.5, 0, -3.5]);
   place(stage, 'shelf', [2.5, 0, -3.5]);
   for (const x of [-2.5, 2.5]) {
-    place(stage, 'crate', [x - 0.25, 0.4725, -3.35], 0, 0.65);
-    place(stage, 'sack', [x + 0.25, 0.4725, -3.35], 0, 0.7);
+    place(stage, 'crate', [x - 0.25, 0.4725, -3.34], 0, 0.55);
+    place(stage, 'sack', [x + 0.25, 0.4725, -3.34], 0, 0.6);
   }
-  place(stage, 'candle-cluster', [-2.5, 1.0, -3.4]);
+  // The candle cluster stands on the floor in front of the left shelf.
+  place(stage, 'candle-cluster', [-2.5, 0, -2.9]);
 
   // Clutter at the sides.
   place(stage, 'barrel', [4.2, 0, -1.9]);
