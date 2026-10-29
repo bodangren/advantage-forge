@@ -700,22 +700,23 @@ Deviations of round 2:
 Roles: Green commits and releases the packs. The PM receives the status line and hands the commit
 to the monorepo session.
 
-- [ ] Task: Commit the change in Forge by explicit paths.
+- [x] Task: Commit the change in Forge by explicit paths. Existing commits: `d28bb5bb26d8a6a4fc4bfd467305cb66af035981`, `f8d1dfc4d241ee8933790735b4e691f25c770efc`, `cd11315f2ae9da508bffa7623954a295b92e34f2`, `929f20aeb5fbe8167b6a5f0e1af9a02d16f2f8ca`, and `0f99a1d57ddadbaa285c5af1942800600eb3a91e`. No new commit was needed for this task.
   Use `git commit -m "fix(scenes): fill every empty shelf" -- <paths>`. Stage only the owned paths.
   Other sessions share the tree and the git index. Never stage `measure/tracks.md` or
   `measure/generated/*`.
-- [ ] Task: Re-bake the Potion Rush 2D background (RA-FS-8).
+- [x] Task: Re-bake the Potion Rush 2D background (RA-FS-8). Commit `9938df4b1cf22daa3daf36f665e74d5a432b9d48`. The heavy-run command exited 0. It wrote `out/apk2d/backgrounds/potion-rush/background.png`; SHA-256 `14bdd1fcd33a6853b7837259475b34f502879899a26efcdfbd8e431f1770e9c5`.
   Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node --import
   tsx scripts/apk2d-bake.ts potion-rush'`.
   The 3D set of the potion rush changed in this track: the loaf and the apple moved to the top
   board of each shelf. The 2D background is a bake of that set, so it must show the same picture.
   Run it before the pack release and record the output.
-- [ ] Task: Add the 2D pack entries for the new models (RC-FS-2 and the parity rows).
+- [x] Task: Add the 2D pack entries for the new models (RC-FS-2 and the parity rows). Commit `9938df4b1cf22daa3daf36f665e74d5a432b9d48`. `scripts/apk2d-sprites.ts bookcase vial` completed. `scripts/apk2d-pack.ts` wrote pack version `1.3.0`. The first pack run used incomplete ignored sprite folders and removed unrelated entries. I restored the tracked sprites and retained only `background.potion-rush`, `prop.bookcase`, and `prop.vial` from that build. The parity test passed: 1 file and 96 tests. Bookcase sprite SHA-256: `f5480a9edd3db8e698a7698695ea724a1f3dd0a265ffe110ffa9860635e18a32`; vial sprite SHA-256: `748e072056e107f09add118db4b1a82fa2f91536909dbbf5bd253cdd1a5c6b28`.
   The 2D pack `primary-chibi-2d` has no `prop.bookcase` and no `prop.vial` file, so
   `tests/apk3d/sprite-parity.test.ts` fails for the `library-furniture` and the `potion-shop`
   packs. Run `scripts/apk2d-sprites.ts bookcase vial` and then `scripts/apk2d-pack.ts`, and record
   the new 2D pack version. The parity test must pass before the hand-off.
-- [ ] Task: Release the model packs when a pack changed.
+- [x] Task: Release the model packs when a pack changed. 2D pack commit: `9938df4b1cf22daa3daf36f665e74d5a432b9d48`. `--check` passed the MODEL_PACKS source check and listed `bookcase` stale in 3D and 2D and `vial` stale in 2D. `--commit` exited 0. It rebuilt `bookcase` from source commit `3419926f` and confirmed identical bytes, so it retained `forgeCommit` `455d2c1d`. No 3D pack bytes changed, so the release tool made no separate release commit. Versions remain `potion-shop` 1.1.0 and `library-furniture` 1.0.1. The potion-rush game pack total is 5.70 MB, below 6,000,000 bytes.
+  The `--check` command passed its MODEL_PACKS source check. It listed `bookcase` as stale in 3D and 2D, and `vial` as stale in 2D. The release will rebuild these models.
   Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node --import tsx
   scripts/apk-release.ts --check'`. When it lists stale models, run the same command with
   `--commit`. A rebuild to the same bytes changes no pack version.
@@ -723,17 +724,19 @@ to the monorepo session.
   The `potion-shop` pack moved from 1.0.0 to 1.1.0 in this track, because it gained the vial model.
   The release must carry that version to the monorepo.
   `scripts/apk-release.ts --check` must pass before the release, because it checks the MODEL_PACKS source against the built packs (adversarial M5).
-- [ ] Task: Make the handoff file and send the status line to the PM.
+- [x] Task: Make the handoff file and prepare the status line for the PM. Commit `9938df4b1cf22daa3daf36f665e74d5a432b9d48`. Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node --import tsx scripts/monorepo-handoff.ts --monorepo ../reading-advantage-monorepo --branch master --target primary-parity-integration'`. The handoff file is `out/monorepo-sync/handoff-9938df4b.md`. I used the local `../reading-advantage-monorepo` checkout and `--branch master`, because the configured `apk3d-games-port` branch is absent. The target branch `primary-parity-integration` is also absent. The read-only sync check exited 1 because `monorepo-sync.ts` rejects a `master` checkout. No monorepo files changed. Per the owner instruction, I did not send the status line.
   Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node --import tsx
   scripts/monorepo-handoff.ts --target <branch>'`. Read
   `out/monorepo-sync/handoff-<sha>.md`.
   Send one status line to the PM. The line names the Forge commit, the changed games and scenes,
   and the render paths with SHA-256. The PM hands the commit to the monorepo session for its
   cartridge sync, as in monorepo `0c220e663`, synced from Forge `afc8b890`.
-- [ ] Task: Record the closeout items that this track must not touch.
+- [x] Task: Record the closeout items that this track must not touch. Commit `9938df4b1cf22daa3daf36f665e74d5a432b9d48` owns this Phase 2 hand-off.
   The registry entry for `measure/tracks.md`:
   `- [ ] **Track: Fill every empty shelf in the games and scene maps**` with the link
   `./tracks/asset_filled_shelves_20261028/`.
   The generator run: `./measure/generate.sh` and a commit of `measure/generated/*`.
   Another session owns both paths now, so this track leaves them alone. Record the items here and
   tell the PM.
+  This track did not edit `measure/tracks.md` or `measure/generated/*`, and did not run `./measure/generate.sh`. The closeout owner must add the registry line and run the generator.
+  Final Green gate: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node_modules/.bin/vitest run tests/games/filled-shelves.test.ts tests/apk3d/pack-bindings.test.ts tests/apk3d/budget.test.ts tests/games/enchanted-library/manifest.test.ts tests/games/haunted-library/manifest.test.ts tests/games/alchemists-synthesis/manifest.test.ts tests/games/rune-forge-chamber/manifest.test.ts tests/games/filled-shelves.adversarial.test.ts tests/apk3d/sprite-parity.test.ts --maxWorkers=1'` exited 0: 9 test files and 240 tests passed.
