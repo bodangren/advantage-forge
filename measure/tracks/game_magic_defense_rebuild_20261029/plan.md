@@ -105,18 +105,109 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
     missile between `waveAppeared` and `roundShown`.
   - Logs (not committed, as for the strategy logs):
     `measure/runs/game_magic_defense_rebuild_20261029/mid-red-vitest.log` and `mid-red-tsc.log`.
-- [~] Task: Add the held missile per castle to the core (Green).
+- [x] Task: Add the held missile per castle to the core (Green). Implementation commit `2645b063c7336780ccfa10c77d40e7511adb46d6`.
   Owned path: `src/games/magic-defense/core/`.
   Keep `cast`, `storm`, the castles, and the hearts. Add the held missile per castle. Update the
   event order note at the top of `core/sim.ts`.
-- [ ] Task: Update the QC bot for the new core (Green).
+- [x] Task: Update the QC bot for the new core (Green). Implementation commit `2645b063c7336780ccfa10c77d40e7511adb46d6`.
   Owned path: `src/games/magic-defense/qc/bot.ts`.
   The bot reads the active missile from the state and casts its right word.
-- [ ] Task: Keep the old views compiling and run the gates (Green).
+- [x] Task: Keep the old views compiling and run the gates (Green). Implementation commit `2645b063c7336780ccfa10c77d40e7511adb46d6`.
   Owned paths: `src/games/magic-defense/view/driver.ts`, and the smallest edits in `view/` and
   `view2d/` that the type check needs.
   Run `GREEN_TEST_COMMAND` and `TYPE_CHECK_COMMAND`. Record the exit codes, the test counts, the
   owned errors, and the total errors.
+
+### First Green checkpoint (2026-10-29; incomplete)
+
+- The phase base is `0c5e7ea2d62aa67bbb00694da56fa0573eb3b451`.
+  The Green role base is `5e8582e0efaa941b38c6b57f6cf73ec19d96c702`.
+  Red commit `51d52a0b` is an ancestor of the role base and follows the phase base.
+- The Red rerun exited 1. Test Files: 4 failed, 1 passed (5). Tests: 78 failed, 23 passed (101).
+  The command was `RED_TEST_COMMAND`. The log is
+  `measure/runs/game_magic_defense_rebuild_20261029/jr-green-red-rerun.log`.
+- The implementation adds held missiles, seeded selection, relocation after a fall, and refill after the storm.
+  The bot reads the active missile. The driver plays `missileThrown`.
+  Both old views have a temporary empty `throwMissile` method. Phase 2 supplies the scene.
+- `GREEN_TEST_COMMAND` exited 0. Test Files: 5 passed (5). Tests: 0 failed, 101 passed (101).
+  The log is `measure/runs/game_magic_defense_rebuild_20261029/jr-green-tests.log`.
+- `TYPE_CHECK_COMMAND` exited 2. Total errors: 99. Owned source errors: 0. Owned test errors: 0.
+  The baseline has 31 errors: 30 in `assets/` and 1 in `tests/part.test.ts`.
+  Another track has 68 errors in `tests/games/castle-defense/`:
+  `bot.test.ts` (3), `driver.test.ts` (17), `helpers.ts` (4), `replay.test.ts` (3), and `rules.test.ts` (41).
+  The log is `measure/runs/game_magic_defense_rebuild_20261029/jr-green-tsc.log`.
+- Mutations M1, M2, and M3 each exited 1. Their required rows failed: H9, H1, and H2, respectively.
+  Their test failure counts were 6, 43, and 35. Each mutation log contains its diff, command, and exit code.
+  The logs are `jr-green-M1.log`, `jr-green-M2.log`, and `jr-green-M3.log` in the run folder.
+- M4 did not execute in the first attempt. The shared lock wait exceeded 600 seconds.
+  The log records `lock wait over 600 s`. The shell tool stopped the wait at 1200 seconds.
+  The gate had no exit code. The role stopped that attempt and removed its temporary mutations.
+- At this checkpoint, M4 to M17 and the shared battle gate remained pending.
+  The implementation and plan remained uncommitted. No Green task was complete. The Red tests remained unchanged.
+- Graph-aware mode is disabled in `measure/tech-stack.md`. No graph database exists in this repository.
+  The role did not change the generated files. The role did not run the doctor after the lock hold.
+  The strategy defines the live gate as the core run in Vitest; that run passed before the mutations.
+- The coder delegation failed because this session reached the subagent depth limit. No coder changed a file.
+
+### Green continuation (2026-10-29; Phase 1 implementation complete)
+
+- The orchestrator authorized one batch under the shared lock and continued waits after 600 seconds.
+  The log is `measure/runs/game_magic_defense_rebuild_20261029/jr-green-mutation-batch.log`.
+- M4 to M17 ran under one lock. All required rows failed except M10, which reached the external timeout.
+  M10 cleared every failed choice. This fault kept the committed `while (hasWrong(sim))` loop running.
+  The timeout exited 124. The log is `jr-green-M10-timeout.log` in the run folder.
+- The M10 retry clears the first failed choice only. Later failed choices shut, so the Red loop can terminate.
+  This bounded fault tests the same H8 rule without changing a committed Red test.
+- The final batch ran the M10 retry, the clean Green gate, the shared battle gate, and the type check.
+  It also ran the doctor without changing generated files.
+  The log is `measure/runs/game_magic_defense_rebuild_20261029/jr-green-finish.log`.
+- The implementation commit is `2645b063c7336780ccfa10c77d40e7511adb46d6`. It contains only the six assigned source files.
+  These three Green tasks changed to `[x]`: the core, the bot, and the compiling views with their gates.
+  No task changed to `[b]`. No production file or test file was added.
+- The final `GREEN_TEST_COMMAND` started at 2026-10-29T06:20:50Z and exited 0.
+  Test Files: 5 passed (5). Tests: 0 failed, 101 passed (101).
+  The log is `measure/runs/game_magic_defense_rebuild_20261029/jr-green-final-tests.log`.
+- The shared battle command exited 0: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c
+  'timeout -k 30 300 node_modules/.bin/vitest run tests/games/shared/battle.test.ts --maxWorkers=1'`.
+  Test Files: 1 passed (1). Tests: 0 failed, 1 passed (1).
+  The log is `measure/runs/game_magic_defense_rebuild_20261029/jr-green-shared-battle.log`.
+- The final `TYPE_CHECK_COMMAND` exited 2. Total errors: 31. Owned source errors: 0. Owned test errors: 0.
+  The total equals the baseline: 30 errors in `assets/` and 1 in `tests/part.test.ts`.
+  The final run has no errors in other rebuilt games. The earlier run recorded 68 castle-defense errors.
+  The log is `measure/runs/game_magic_defense_rebuild_20261029/jr-green-final-tsc.log`.
+- Each mutation below exited 1 and failed its required row. Each log contains the diff, command, and exit code.
+  All runs used the shared lock. All temporary mutations are removed.
+  Logs: `measure/runs/game_magic_defense_rebuild_20261029/jr-green-M1.log` through `jr-green-M17.log`.
+
+| Mutation | Required failing row observed | Tests failed | Tests passed |
+| --- | --- | ---: | ---: |
+| M1 | H9 | 6 | 95 |
+| M2 | H1 | 43 | 58 |
+| M3 | H2 | 35 | 66 |
+| M4 | H3 | 2 | 99 |
+| M5 | H4 | 77 | 24 |
+| M6 | H5 | 1 | 100 |
+| M7 | H6 | 75 | 26 |
+| M8 | H7 | 8 | 93 |
+| M9 | H8 | 39 | 62 |
+| M10, bounded retry | H8 | 4 | 97 |
+| M11 | H9 | 3 | 98 |
+| M12 | H10 | 3 | 98 |
+| M13 | H11 | 28 | 73 |
+| M14 | H5 and H12 | 4 | 97 |
+| M15 | H13 | 25 | 76 |
+| M16 | H14 | 5 | 96 |
+| M17 | H16 | 33 | 68 |
+
+- The doctor command was `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'bash measure/doctor.sh'`.
+  It exited 1 with 15 structural errors. The log is `measure/runs/game_magic_defense_rebuild_20261029/jr-green-doctor.log`.
+  Six track plans have started tasks with `new` metadata. Five tracks lack a registry link.
+  `measure/lessons-learned.md` has 52 lines against its limit of 50. Three generated files are stale.
+  The owning sessions and closeout role must resolve these errors. This role did not change those files.
+  The strategy defines the Phase 1 live gate as the core run in Vitest. That gate exited 0.
+- The logs preserve each `lock wait over 600 s` line. The successful batches needed no hold-code retry.
+  The role did not use `/tmp/md-proto`. The committed Red tests remain unchanged.
+  The old scenes remain a Phase 2 task. Daniel must still pick the look before Phase 2 starts.
 
 ## Phase 2: Views
 
