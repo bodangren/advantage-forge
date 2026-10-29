@@ -54,7 +54,7 @@ records the failing run. Green changes the core and the bot and runs the tests a
 The old views stay on the battle stage in this phase. Green makes only the smallest view edits that
 keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
 
-- [ ] Task: Write the failing held-missile tests (Red).
+- [x] Task: Write the failing held-missile tests (Red). Test commit `51d52a0b`.
   Owned paths: `tests/games/magic-defense/rules.test.ts`, `replay.test.ts`, `bot.test.ts`,
   `driver.test.ts`, and `helpers.ts` in that folder.
   Test these rows: each standing castle holds at most one missile; a held missile keeps its castle
@@ -65,6 +65,46 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
   events; the bot plays a full run to `victory`; the driver plays every new core event.
   Run `RED_TEST_COMMAND`. Record the command, the exit code, and the number of failures.
   Commit the tests alone, by explicit paths.
+  - Red evidence (2026-10-29, role `measure-mid-red`, role base `9c0b400e`, phase base
+    `0c5e7ea2`). The test commit `51d52a0b` holds only the five owned test paths.
+  - Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300
+    node_modules/.bin/vitest run tests/games/magic-defense --maxWorkers=1'`. The run started at
+    2026-10-29T03:03:37Z and ended at 03:04:28Z.
+  - Exit code: 1. `Test Files: 4 failed, 1 passed (5)`. `Tests: 78 failed, 23 passed (101)`.
+  - Every failure is an `AssertionError`. No failure is a `TypeError` or a load error.
+    `manifest.test.ts` passes (6 tests).
+  - The 78 failures per row: H1 2, H2 1, H3 1, H4 1, H5 1, H6 2, H7 1, H8 3, H9 1, H10 2, H11 1,
+    H12 1, H13 25, H14 2, H15 4, H16 30.
+  - The failure reasons: `state.missiles` is not a list (the helpers `missilesOf` and `active`),
+    `missileThrown` never occurs, `MAGIC_DEFENSE_EVENT_TYPES` does not list `missileThrown`, and
+    `throwMissile` is never called.
+  - The 23 passing tests are the rows of today that the strategy keeps: 5 content rows, the Helper
+    row, the right-spell row, the mana cap, the commands after the victory, the declared event
+    types, the empty input, the evidence row, 3 replay rows, 2 driver rows, and 6 manifest rows.
+  - Type check (`TYPE_CHECK_COMMAND`, 2026-10-29T03:08:23Z to 03:12:23Z): exit 2, 136 errors in
+    total. The owned errors: 0 in `src/games/magic-defense/` and 35 in
+    `tests/games/magic-defense/`. Each owned error names a new contract name: `HeldMissile`,
+    `missiles`, `activeMissileId`, `missileThrown`, or `throwMissile`. The other 101 errors: 31
+    of the baseline (`assets/` 30, `tests/part.test.ts` 1), 68 in `tests/games/castle-defense/`,
+    and 2 in `src/storytime/book-pictures.ts`. Other sessions own those two paths.
+  - Feasibility check: a throwaway prototype core in `/tmp/md-proto` (outside the repository)
+    passed the 95 rule, replay, bot, and driver tests. The tests type-check with 0 errors against
+    that prototype. The mutations M6, M8, M12, and M15 on the prototype made H5, H7, H10, and H13
+    fail. No production file of the repository changed.
+  - Contract names (strategy section 2, no rename): `HeldMissile`, `state.missiles`,
+    `state.activeMissileId`, the event `{ type: 'missileThrown'; missile: HeldMissile }`,
+    `MAGIC_DEFENSE_EVENT_TYPES` with `missileThrown`, and
+    `Presentation.throwMissile(missile, enemy)`. `HeldMissile` is exported from `core/index.ts`.
+  - Rules that the tests fix for Green: every held missile enters the state through one
+    `missileThrown` event; after each command, the held count equals the smaller of the standing
+    castles and the unsolved words of the current wave, also after a storm (ASM-4); after a right
+    cast, the free place takes the first unheld word of the wave in target order (H6); after a
+    wrong cast with no fall, the same missile stays (same id); when the castle of the active
+    meaning falls and every standing castle holds a missile, the meaning must take the place of
+    one missile, and the tests do not fix which one; `start` emits one `missileThrown` per held
+    missile between `waveAppeared` and `roundShown`.
+  - Logs (not committed, as for the strategy logs):
+    `measure/runs/game_magic_defense_rebuild_20261029/mid-red-vitest.log` and `mid-red-tsc.log`.
 - [ ] Task: Add the held missile per castle to the core (Green).
   Owned path: `src/games/magic-defense/core/`.
   Keep `cast`, `storm`, the castles, and the hearts. Add the held missile per castle. Update the
