@@ -105,7 +105,7 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
     missile between `waveAppeared` and `roundShown`.
   - Logs (not committed, as for the strategy logs):
     `measure/runs/game_magic_defense_rebuild_20261029/mid-red-vitest.log` and `mid-red-tsc.log`.
-- [ ] Task: Add the held missile per castle to the core (Green).
+- [~] Task: Add the held missile per castle to the core (Green).
   Owned path: `src/games/magic-defense/core/`.
   Keep `cast`, `storm`, the castles, and the hearts. Add the held missile per castle. Update the
   event order note at the top of `core/sim.ts`.
