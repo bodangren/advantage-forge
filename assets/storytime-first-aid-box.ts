@@ -1,20 +1,20 @@
-import { defineAsset, profile, sdf } from '../src/index.js';
+import { defineAsset, sdf } from '../src/index.js';
 
 /**
  * Design note — Storytime first-aid bag, a small picture prop without a person.
  * Role: a first-aid container for the nurse's things page, readable at book-page size.
  * Size: about 0.22 m wide and 0.20 m tall including the handle, on y = 0 and facing +Z.
- * One idea: a soft mint-green bag with one large white medical cross.
- * Shape language: rounded rectangular body, soft arch handle, bold simple cross.
+ * One idea: a soft mint-green bag with a front pocket and no symbol (the nurse page asks for none).
+ * Shape language: rounded rectangular body, soft arch handle, one soft front pocket.
  * Palette: mint #78bfa3, dark mint #4d8f79, warm white #fbfaf4, cream handle #f1e7d0.
- * Materials: rough cloth bag, cloth handle, smooth white cross emblem.
- * Detail: one soft bag body, one attached arch handle, one zipper, one white cross.
+ * Materials: rough cloth bag, cloth handle, cloth pocket with a trim.
+ * Detail: one soft bag body, one attached arch handle, one zipper, one front pocket.
  * Rig/animation: none.
  */
 
 export default defineAsset({
   name: 'storytime-first-aid-box',
-  description: 'A small soft mint-green first-aid bag with a cream handle and a large white cross.',
+  description: 'A small soft mint-green first-aid bag with a cream handle, a zipper, and a front pocket, with no symbol.',
   detail: 0.002,
   texture: { size: 512 },
 
@@ -58,24 +58,19 @@ export default defineAsset({
       maxTriangles: 1500,
     });
 
-    const crossOutline = profile.polygon([
-      [-0.01, 0.033],
-      [0.01, 0.033],
-      [0.01, 0.01],
-      [0.033, 0.01],
-      [0.033, -0.01],
-      [0.01, -0.01],
-      [0.01, -0.033],
-      [-0.01, -0.033],
-      [-0.01, -0.01],
-      [-0.033, -0.01],
-      [-0.033, 0.01],
-      [-0.01, 0.01],
-    ]);
-    const cross = sdf.extrude(crossOutline, 0.004, 0.002).at(0, 0.066, 0.051);
-    k.body('white-cross', cross, {
-      color: '#fbfaf4',
-      roughness: 0.7,
+    // Specification for the nurse page: the bag carries no symbol. A soft front pocket with a
+    // dark-mint trim gives the front its detail instead.
+    const pocket = sdf.box([0.15, 0.07, 0.016], 0.008).at(0, 0.052, 0.046);
+    k.body('front-pocket', pocket, {
+      color: '#8ccbb2',
+      roughness: 0.86,
+      detail: 0.0015,
+      maxTriangles: 1800,
+    });
+    const trim = pocket.round(0.002).smoothIntersect(0.002, sdf.box([0.3, 0.008, 0.3]).at(0, 0.083, 0));
+    k.body('pocket-trim', trim, {
+      color: '#4d8f79',
+      roughness: 0.8,
       detail: 0.0012,
       maxTriangles: 1200,
     });
