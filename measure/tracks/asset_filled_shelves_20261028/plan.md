@@ -417,6 +417,50 @@ files were restored with `git checkout`, and `git status --short` shows no chang
 13. The lock was held over 600 s on the bookcase runtime build, on the haunted-library render, on
     the potion rush render, and on the type check.
 
+- [~] Task: Remediate Review A and Review C findings (round 2). Red test commit `a9e1914b`.
+  Owned path: `tests/games/filled-shelves.test.ts` (Red) and the Green source paths in the plan.
+  Cover five findings. Red owns the skip list and the new rules (done in `a9e1914b`). Green owns the
+  placements and the model wiring.
+  - RA-FS-4: freeze the view case counts (enchanted-library bookcase 8, haunted-library bookcase 8,
+    potion-rush shelf 2, alchemists-synthesis shelf 2, rune-forge-chamber shelf 2) and the classroom
+    bookcase 1. Add in-test fixtures that fail when the deliverable is removed. Owner: Red.
+  - RA-FS-3: narrow the mounted-fixture skip list to chandelier, torch-sconce, and wall-sconce. The
+    free-standing props (candle-cluster, lantern, torch, candelabra, brazier, fireplace, campfire,
+    campfire-out, watchfire) become items. The rune-forge candle cluster then fails F3 until Green
+    moves it onto a board. Owner: Red (skip list), Green (placement).
+  - RA-FS-7: add an item height table and a clearance rule, plus an item depth table and a
+    board-depth rule. The rules apply to the in-scope shelves only: the views potion-rush,
+    alchemists-synthesis, rune-forge-chamber and the maps bathhouse, warehouse, inn, alchemy-lab.
+    The 9 resting kinds (bottle, vial, jar, basket, crate, sack, bread, apple, mug) have height and
+    depth entries. Owner: Red (rules), Green (placements).
+  - RA-FS-14: remove the always-true `shelf counts` assertion. Owner: Red.
+  - RC-FS-1: assert the required item kinds per place. The Alchemists' Synthesis lab must place a
+    vial. Owner: Green (vial placement and model wiring in view, manifest, game load, and pack).
+
+  Red evidence (round 2, 2026-10-29):
+
+  - Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600
+    node_modules/.bin/vitest run tests/games/filled-shelves.test.ts --maxWorkers=1'`.
+    Result: exit 1. Summary: `Tests  4 failed | 10 passed (14)`.
+  - F3 (floating view items): 1. rune-forge-chamber candle-cluster at [-2.5, 1, -3.4] floats over
+    shelf at [-2.5, 0, -3.5]. The narrowed skip list now counts it as an item.
+  - Clearance (RA-FS-7): 12. bathhouse 4 jar and 4 basket (top 0.92 and 0.94 pass 0.7575), alchemy-lab
+    4 jar (top 1.25 twice, 1.56, and 0.92 pass 1.0675, 1.43, and 0.7575).
+  - Board-depth (RA-FS-7): 26 items. alchemy-lab 4 jar (front 0.302 passes 0.3); bathhouse 4 jar
+    (back 0.018) and 4 basket (back -0.05 and front 0.35); warehouse 3 crate (back 0.007) and 3 sack
+    (back 0.028); potion-rush 2 bread and 2 apple (centre z 0.3); rune-forge 2 crate (back 0.007)
+    and 2 sack (back 0.027).
+  - RC-FS-1: 1. alchemists-synthesis missing `vial`.
+  - The narrowing causes exactly one new float. No other free-standing fixture sits over a shelf or
+    cabinet footprint in the seven shelf maps or the school, archive, and guild-hall cabinets.
+  - Type check: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node
+    node_modules/typescript/bin/tsc --noEmit'`. Exit 2. Owned errors (filled-shelves.test.ts): 0.
+    Total: 31, which matches the baseline.
+  - Deviations: (1) the role base SHA for this run is `ee9addc8`, and the run started at HEAD
+    `ee9addc8`, not `d0ab3232` as the Review A artifact named. The commits after `cd9029c3` change
+    only Storytime paths and are not touched. (2) Red ran on the DeepSeek model
+    `deepseek-v4-pro#high`. Green ran on OpenAI/MiniMax, so the independence holds.
+
 ## Phase 2: The hand-off
 
 Roles: Green commits and releases the packs. The PM receives the status line and hands the commit
