@@ -92,7 +92,7 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
     The rise from 31 comes from the Red tests of other sessions:
     `tests/games/castle-defense/` (51, track `game_castle_defense_rebuild_20261029`) and
     `tests/games/magic-defense/helpers.ts` (6, track `game_magic_defense_rebuild_20261029`).
-- [ ] Task: Remove the battle monsters and add the dive to the core (Green).
+- [~] Task: Remove the battle monsters and add the dive to the core (Green).
   Owned path: `src/games/paladins-twin-soul/core/`.
   Keep the waves, the shades, the captor, and the soul count. Remove the monsters and the hero turn
   order. Add the shade kinds and the dive. Update the event order note at the top of `core/sim.ts`.
