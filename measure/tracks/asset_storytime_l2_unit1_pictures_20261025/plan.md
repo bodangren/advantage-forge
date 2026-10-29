@@ -1318,8 +1318,15 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   renders, the two gesture strips, and a look reference). Green rebuilt `sprout-nan` textured to
   make fresh gesture strips (`./forge animate`, no warning lines); the GLB bytes stayed the same.
   The reviewer did not run: the Green session is a subagent, and the subagent depth limit (1)
-  stops it from spawning the reviewer or a builder. Green does not rate its own items. The batch
-  1 review, the first-aid fix, and the gesture mapping wait for a reviewer and a builder session.
+  stops it from spawning the reviewer or a builder. Green does not rate its own items.
+  Orchestrator change (2026-10-29): Green builds each item itself, one at a time, and the
+  orchestrator starts the independent reviewer on another model family. First-aid fix: commit
+  `ad03e17e` (`assets/storytime-first-aid-box.ts`). The white cross is gone, and a front pocket
+  with a trim gives the front its detail. `./forge render --fast` and the textured
+  `./forge render` both exited `0` with no warning lines. Review cards for batch 1:
+  `out/storytime-review/batch-1/` (`brief.md`, five prop cards, two gesture strips, and the look
+  reference). The ratings, any fixes, and the `GESTURES` mapping of touch-nose and touch-neck
+  wait for the reviewer.
 - [ ] Task: Run automated checks on every color and line-art file and both model pre-checks on
   every color candidate. Correct each failed picture under a new twin version and repeat the
   checks. Attach the raw model outputs.
