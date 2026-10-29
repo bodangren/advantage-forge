@@ -116,7 +116,7 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
   - The test names mark the defaults Q1 (S3), Q2 (P2), Q3 (L1, P3), and Q4 (W4) as assumptions.
   - Deviation: the task did not get the `[~]` mark before the work started. The test commit and this
     record came in one session.
-- [ ] Task: Add the path, the spots, and the wave in steps to the core (Green).
+- [~] Task: Add the path, the spots, and the wave in steps to the core (Green).
   Owned path: `src/games/castle-defense/core/`.
   Keep the sentence building and the evidence. Replace the hero posts and the volleys with the
   path, the spots with a range, and the wave in steps. Update the event order note at the top of
