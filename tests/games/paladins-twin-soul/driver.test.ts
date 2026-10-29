@@ -135,7 +135,7 @@ describe('T9 driver', () => {
     expect(faded).toBeGreaterThan(bolt);
     expect(dived).toBeGreaterThan(faded);
     expect(log.indexOf('courage:4')).toBeGreaterThan(dived);
-    expect(log[bolt]!.slice(5)).toBe(log[faded]!.slice(7));
+    expect(log[bolt]!.slice('bolt:'.length)).toBe(log[faded]!.slice('faded:'.length));
     expect(asked[1]!.retry).toBe(true);
     expect(asked[1]!.shades.length).toBe(asked[0]!.shades.length - 1);
     expect(log.some((l) => l === 'freed:100:false')).toBe(true);
