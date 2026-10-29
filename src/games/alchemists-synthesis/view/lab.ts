@@ -10,7 +10,7 @@ import { LAYOUT } from './layout.js';
 
 /** Models the lab needs before the first frame (the scenery and the six ingredients); the hero comes from the session. */
 export const LAB_MODELS = [
-  'wood-floor', 'plaster-wall', 'plaster-wall-window', 'shelf', 'bottle', 'fireplace', 'candle-cluster', 'cauldron', 'barrel', 'crate', 'sack',
+  'wood-floor', 'plaster-wall', 'plaster-wall-window', 'shelf', 'bottle', 'vial', 'fireplace', 'candle-cluster', 'cauldron', 'barrel', 'crate', 'sack',
   'lantern', 'counter', 'mushroom', 'apple', 'pumpkin', 'crystal-cluster', 'bread',
 ];
 
@@ -68,6 +68,8 @@ export function buildLab(stage: Stage3D, hero: string, body?: ActorBody): Lab {
   for (const x of [-2.4, 2.4]) {
     place(stage, 'shelf', [x, 0, -3.5]);
     for (const [dx, y] of [[-0.45, 0.4725], [-0.1, 0.4725], [0.3, 0.4725], [-0.3, 0.8025], [0.15, 0.8025], [0.45, 0.8025]] as [number, number][]) place(stage, 'bottle', [x + dx, y, -3.35]);
+    // The vials stand on the top board, a row of small glowing flasks.
+    for (const dx of [-0.45, -0.28, -0.11]) place(stage, 'vial', [x + dx, 1.1125, -3.35]);
   }
   place(stage, 'fireplace', [0, 0, -3.55]);
   place(stage, 'counter', [-4.1, 0, -2.9], 90);

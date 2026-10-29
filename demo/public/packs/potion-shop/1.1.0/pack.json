@@ -1,7 +1,7 @@
 {
  "id": "potion-shop",
- "version": "1.0.0",
- "root": "packs/potion-shop/1.0.0",
+ "version": "1.1.0",
+ "root": "packs/potion-shop/1.1.0",
  "files": {
   "apple": {
    "id": "apple",
@@ -381,6 +381,24 @@
     "tool": "scripts/apk3d-models.ts"
    }
   },
+  "vial": {
+   "id": "vial",
+   "path": "vial.glb",
+   "kind": "model",
+   "format": "glb",
+   "byteSize": 77224,
+   "triangles": 1334,
+   "textureSize": 512,
+   "skinned": false,
+   "clips": [],
+   "presets": [],
+   "provenance": {
+    "source": "advantage-forge/assets/vial.ts",
+    "license": "AGPL-3.0-or-later",
+    "forgeCommit": "d38446a4",
+    "tool": "scripts/apk3d-models.ts"
+   }
+  },
   "wood-floor": {
    "id": "wood-floor",
    "path": "wood-floor.glb",
@@ -418,5 +436,5 @@
    }
   }
  },
- "byteSize": 2105548
+ "byteSize": 2182772
 }

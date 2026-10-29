@@ -25,7 +25,7 @@ export const FILES_2D: readonly string[] = [
 
 /** The models the 3D view loads, by Forge asset name: the keys of `RuntimeEdition3D.bindings` (docs/apk3d-cartridge.md section 7). */
 export const MODELS_3D: readonly string[] = [
-  'apple', 'barrel', 'bottle', 'bread', 'candle-cluster', 'cauldron', 'cleric', 'counter', 'crate', 'crystal-cluster', 'fireplace', 'knight', 'lantern', 'mushroom', 'plaster-wall', 'plaster-wall-window', 'pumpkin', 'sack', 'shelf', 'wizard', 'wood-floor',
+  'apple', 'barrel', 'bottle', 'bread', 'candle-cluster', 'cauldron', 'cleric', 'counter', 'crate', 'crystal-cluster', 'fireplace', 'knight', 'lantern', 'mushroom', 'plaster-wall', 'plaster-wall-window', 'pumpkin', 'sack', 'shelf', 'vial', 'wizard', 'wood-floor',
 ];
 
 export const manifest = validateCartridge3DManifest({
