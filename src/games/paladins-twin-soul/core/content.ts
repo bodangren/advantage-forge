@@ -1,11 +1,11 @@
 /**
- * Paladin's Twin Soul content: the target words of a run from a story, the monsters that serve
- * them, and the shades of each wave. A `PracticeInput` keeps its vocabulary ids for the evidence;
+ * Paladin's Twin Soul content: the target words and the shades of each wave.
+ * A `PracticeInput` keeps its vocabulary ids for the evidence;
  * a plain APK `VocabularyInput` gets ids `w-1`, `w-2`, ...
  */
 import type { PracticeInput, VocabularyInput } from '../../../apk3d/contracts/index.js';
 import type { Rng } from '../../../apk3d/sim/index.js';
-import { MONSTER_KINDS, type Monster, type Shade, type TargetWord } from './types.js';
+import { SHADE_KINDS, type Shade, type TargetWord } from './types.js';
 
 /** The input the core accepts: the whole story (the host passes it) or the APK vocabulary array. */
 export type TwinSoulInput = PracticeInput | VocabularyInput;
@@ -28,23 +28,6 @@ export function targetsOf(input: TwinSoulInput, rng: Rng): TargetWord[] {
 }
 
 /**
- * The monsters of a run for `targetCount` words: a skeleton for the first `wordsPerMonster`
- * words, a mimic for the next, and the fire dragon for every word after that. Each monster's HP
- * is the number of target words it serves.
- */
-export function monstersOf(targetCount: number, wordsPerMonster: number): Monster[] {
-  const monsters: Monster[] = [];
-  let left = targetCount;
-  for (let i = 0; i < MONSTER_KINDS.length && left > 0; i++) {
-    const last = i === MONSTER_KINDS.length - 1;
-    const hp = last ? left : Math.min(wordsPerMonster, left);
-    monsters.push({ kind: MONSTER_KINDS[i]!, hp, maxHp: hp });
-    left -= hp;
-  }
-  return monsters;
-}
-
-/**
  * The shades of one wave: the captor (the target's term) and up to `decoys` shades with the
  * terms of other words, in a seeded order. Two shades never show the same term.
  */
@@ -58,5 +41,6 @@ export function shadesOf(targets: readonly TargetWord[], targetId: string, decoy
     return true;
   });
   const words = rng.shuffle([target, ...others.slice(0, decoys)]);
-  return words.map((w, i) => ({ id: `w${wave}s${i + 1}`, wordId: w.id, term: w.term, fallen: false }));
+  const kinds = rng.shuffle(words.map((_, i) => SHADE_KINDS[i % SHADE_KINDS.length]!));
+  return words.map((w, i) => ({ id: `w${wave}s${i + 1}`, wordId: w.id, term: w.term, kind: kinds[i]!, fallen: false }));
 }

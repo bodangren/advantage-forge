@@ -1,35 +1,20 @@
 /**
- * The Paladin's Twin Soul event player, shared by the 3D view and the 2D view. The core decides
- * every rule; this driver asks the student for a shade, sends the strike, and reads the events
- * in order, asking a `Presentation` to show them (the card, the battle stage, the HUD). The
- * driver has no three.js and no Phaser: each view gives it the `Presentation` of its renderer,
- * and the tests give it a recorder. Nothing here is timed.
+ * The Paladin's Twin Soul event player serves both views. The core decides every rule.
+ * The driver asks for a shade, sends the strike, and plays each event through a `Presentation`.
+ * Each view supplies its renderer. The tests supply a recorder. The driver imports neither three.js nor Phaser.
  */
 import type { GameResults, StoryGameEvidence, StoryGameOutcome } from '../../../apk3d/contracts/index.js';
 import {
-  HEROES,
-  TUNING,
-  monstersOf,
   resultsOf,
-  type HeroId,
-  type Monster,
-  type MonsterKind,
+  type ShadeKind,
   type TwinSoulEvent,
   type TwinSoulSimulation,
 } from '../core/index.js';
 
-export interface MonsterShown {
-  id: string;
-  kind: MonsterKind;
-  hp: number;
-  maxHp: number;
-  defeated: boolean;
-}
-
 export interface WaveShown {
   translation: string;
   /** The shades still standing, in formation order. */
-  shades: { id: string; term: string }[];
+  shades: { id: string; term: string; kind: ShadeKind }[];
   /** True after a wrong shade fell in this wave. */
   retry: boolean;
 }
@@ -42,22 +27,19 @@ export interface Presentation {
   ask(wave: WaveShown): Promise<string>;
   setCourage(value: number, max: number): void;
   setTwins(freed: number, total: number): void;
-  setPlace(index: number, count: number, kind: MonsterKind): void;
-  /** A monster enters (replaces the old one). */
-  spawn(monster: MonsterShown): Promise<void>;
-  setMonsterHp(monster: MonsterShown): void;
+  setPlace(index: number, count: number): void;
   /** The captor shade seizes the twin soul (a floating note over the paladin). */
   captured(): void;
-  /** A wrong shade falls (marked on the card). */
-  shadeFell(shade: string): Promise<void>;
+  /** A holy bolt travels to the struck shade. */
+  bolt(shade: string): Promise<void>;
+  /** A wrong shade fades (marked on the card). */
+  shadeFaded(shade: string): Promise<void>;
+  /** A standing shade dives and returns to its place. */
+  shadeDived(shade: string): Promise<void>;
   /** The captor falls and the soul is free (marked on the card). */
   soulFreed(shade: string, points: number, firstTry: boolean): Promise<void>;
   /** The other shades scatter and the card goes. */
   scatter(): Promise<void>;
-  heroStrike(hero: HeroId, monster: MonsterShown, damage: number): Promise<void>;
-  monsterHit(monster: MonsterShown): Promise<void>;
-  monsterDefeated(monster: MonsterShown): Promise<void>;
-  monsterStrike(monster: MonsterShown, hero: HeroId): Promise<void>;
   rest(): Promise<void>;
   sfx(name: Sfx): void;
   victory(): Promise<void>;
@@ -78,10 +60,7 @@ export interface PlayerOptions {
 export class TwinSoulPlayer {
   private readonly sim: TwinSoulSimulation;
   private readonly p: Presentation;
-  private readonly monsters: Monster[];
-  private monster: MonsterShown | null = null;
-  private monsterNumber = 0;
-  private strikes = 0;
+  private waveNumber = 0;
   private done = false;
   private destroyed = false;
   private readonly startedAt: number;
@@ -92,7 +71,6 @@ export class TwinSoulPlayer {
     this.p = o.presentation;
     this.now = o.now ?? (() => performance.now());
     this.startedAt = this.now();
-    this.monsters = monstersOf(this.sim.state.targetCount, TUNING.wordsPerMonster);
   }
 
   get finished(): boolean {
@@ -109,7 +87,7 @@ export class TwinSoulPlayer {
       const wave = this.sim.state;
       const id = await this.p.ask({
         translation: wave.target?.translation ?? '',
-        shades: wave.shades.filter((s) => !s.fallen).map((s) => ({ id: s.id, term: s.term })),
+        shades: wave.shades.filter((s) => !s.fallen).map((s) => ({ id: s.id, term: s.term, kind: s.kind })),
         retry: wave.shades.some((s) => s.fallen),
       });
       if (this.destroyed) break;
@@ -135,13 +113,18 @@ export class TwinSoulPlayer {
     const p = this.p;
     switch (ev.type) {
       case 'waveShown':
+        this.waveNumber += 1;
+        p.setPlace(this.waveNumber, state.targetCount);
         break;
       case 'captured':
         p.captured();
         break;
-      case 'shadeFell':
+      case 'boltFired':
+        await p.bolt(ev.shade);
+        break;
+      case 'shadeFaded':
         p.sfx('reject');
-        await p.shadeFell(ev.shade);
+        await p.shadeFaded(ev.shade);
         break;
       case 'strikeRejected':
         p.sfx('reject');
@@ -154,41 +137,8 @@ export class TwinSoulPlayer {
       case 'shadesScattered':
         await p.scatter();
         break;
-      case 'heroStrike': {
-        const m = this.monster;
-        if (!m) break;
-        await p.settle();
-        await p.heroStrike(ev.hero, m, ev.damage);
-        m.hp = Math.max(0, m.hp - ev.damage);
-        p.setMonsterHp(m);
-        if (m.hp > 0) await p.monsterHit(m);
-        break;
-      }
-      case 'monsterDefeated': {
-        const m = this.monster;
-        if (!m) break;
-        m.defeated = true;
-        m.hp = 0;
-        p.setMonsterHp(m);
-        p.sfx('defeat');
-        await p.monsterDefeated(m);
-        break;
-      }
-      case 'monsterAppeared': {
-        await p.settle();
-        const info = this.monsters[this.monsterNumber];
-        this.monsterNumber += 1;
-        this.monster = { id: `${ev.kind}-${this.monsterNumber}`, kind: ev.kind, hp: info?.hp ?? 1, maxHp: info?.maxHp ?? 1, defeated: false };
-        p.setPlace(this.monsterNumber, Math.max(this.monsters.length, this.monsterNumber), ev.kind);
-        p.sfx('spawn');
-        await p.spawn(this.monster);
-        break;
-      }
-      case 'monsterStrike': {
-        const m = this.monster;
-        await p.settle();
-        if (m) await p.monsterStrike(m, HEROES[this.strikes % HEROES.length]!);
-        this.strikes += 1;
+      case 'shadeDived': {
+        await p.shadeDived(ev.shade);
         p.setCourage(ev.courage, state.maxCourage);
         break;
       }

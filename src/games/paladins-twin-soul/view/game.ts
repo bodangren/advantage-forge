@@ -35,25 +35,22 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   stage.setFreeArea(true);
 
   const sim = createTwinSoul(story as TwinSoulInput, { seed: ctx.seed, helper: ctx.options.helper });
-  let pending: Promise<void> = Promise.resolve();
   let player: TwinSoulPlayer | null = null;
 
   const presentation: Presentation = {
     ask: (wave) => hud.ask(wave),
     setCourage: (v, max) => hud.setCourage(v, max),
     setTwins: (freed, count) => hud.setTwins(freed, count),
-    setPlace: (index, count, kind) => hud.setPlace(index, count, hud.monsterName(kind)),
-    async spawn(m) {
-      hud.setMonster(null);
-      audio.music(m.kind === 'dragon-fire' ? 'boss' : 'battle');
-      audio.play(m.kind === 'dragon-fire' ? 'roar' : 'spawn');
-      const spawn = stage.spawn([m]);
-      await Promise.all([hud.banner(null, hud.monsterName(m.kind), hud.label('intro'), 2.2), spawn]);
-      hud.setMonster(m);
+    setPlace: (index, count) => hud.setPlace(index, count, ''),
+    // Phase 2 adds the bolt and dive animations to the new scene.
+    bolt: async () => {
+      audio.play('whoosh');
     },
-    setMonsterHp: (m) => hud.updateMonster(m),
     captured: () => hud.popup('knight', hud.label('captured'), '', 1.6),
-    shadeFell: (shade) => hud.mark(shade, 'wrong', 0.7),
+    shadeFaded: (shade) => hud.mark(shade, 'wrong', 0.7),
+    shadeDived: async () => {
+      hud.popup('knight', hud.label('courageLost'), '', 1.2);
+    },
     async soulFreed(shade, _points, firstTry) {
       hud.popup('knight', hud.label(firstTry ? 'freedFirst' : 'freed'), 'good', 1.6);
       await hud.mark(shade, 'right', 0.8);
@@ -61,27 +58,13 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
     async scatter() {
       hud.hideCard();
     },
-    async heroStrike(hero, m, damage) {
-      audio.play('whoosh');
-      const move = stage.heroAttack(hero, m.id, 'attack');
-      await move.hit;
-      audio.play('hit');
-      hud.popup(m.id, `-${damage}`);
-      pending = move.done;
-    },
-    monsterHit: (m) => stage.enemyHit(m.id),
-    monsterDefeated: (m) => stage.enemyDefeated(m.id),
-    async monsterStrike(m, hero) {
-      await stage.enemyAttack(m.id, hero);
-      hud.popup(hero, hud.label('courageLost'), '', 1.2);
-    },
     rest: () => hud.banner('rest', '', '', 2.4),
     sfx: (name) => audio.play(SFX[name]),
     async victory() {
       audio.music('calm');
       await Promise.all([stage.victory(), hud.banner('victory', '', '', 2.2)]);
     },
-    settle: () => pending,
+    settle: async () => undefined,
   };
 
   player = new TwinSoulPlayer({ sim, story, seed: ctx.seed, presentation, complete: (r, o, e) => ctx.complete(r, o, e) });

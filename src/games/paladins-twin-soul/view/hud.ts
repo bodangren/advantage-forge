@@ -1,19 +1,17 @@
 /**
- * The Paladin's Twin Soul overlay on the kit HUD: the status bar (place, courage, twin souls,
- * story, sound), each monster's HP pips, banners, popups, and the card that holds the meaning and
- * the shades. Every text comes from the game's catalog scope. Nothing here is timed.
+ * The Paladin's Twin Soul overlay shows the status, banners, popups, and the card.
+ * The card holds the meaning and the shades. Every text comes from the game's catalog scope.
  */
 import type { ScopedI18n } from '../../../apk3d/contracts/index.js';
 import type { AudioBus } from '../../../apk3d/audio/index.js';
 import type { HostServices } from '../../../apk3d/factory/index.js';
-import { choose, esc, pips, type HudRoot, type PopKind } from '../../../apk3d/hud/index.js';
+import { choose, esc, type HudRoot, type PopKind } from '../../../apk3d/hud/index.js';
 import type { BattleStage } from '../../shared/battle/stage3d.js';
-import type { MonsterShown, WaveShown } from './driver.js';
+import type { WaveShown } from './driver.js';
 import './paladins-twin-soul.css';
 
 export class TwinSoulHud {
   private readonly status: HTMLElement;
-  private hp: HTMLElement | null = null;
   readonly t: ScopedI18n['t'];
 
   constructor(
@@ -54,27 +52,6 @@ export class TwinSoulHud {
     return this.t(key);
   }
 
-  monsterName(kind: string): string {
-    return this.i18n.t(`monsters.${kind}`);
-  }
-
-  setMonster(m: MonsterShown | null): void {
-    if (this.hp) this.root.unanchor(this.hp);
-    this.hp = null;
-    if (!m) return;
-    const el = document.createElement('div');
-    el.className = 'hp';
-    this.hp = el;
-    this.root.anchor(el, () => this.stage.screenOf(m.id, 1.25));
-    pips(el, m.hp, m.maxHp);
-  }
-
-  updateMonster(m: MonsterShown): void {
-    if (!this.hp) return;
-    pips(this.hp, m.hp, m.maxHp);
-    this.hp.style.display = m.defeated ? 'none' : '';
-  }
-
   banner(key: 'rest' | 'victory' | null, title: string, text: string, seconds = 2.2): Promise<void> {
     return this.root.banner.show(key ? this.t(`${key}.title`) : title, key ? this.t(`${key}.text`) : text, seconds);
   }
@@ -105,7 +82,6 @@ export class TwinSoulHud {
   }
 
   dispose(): void {
-    if (this.hp) this.root.unanchor(this.hp);
     this.status.remove();
     this.root.card.hide();
   }

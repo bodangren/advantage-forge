@@ -81,7 +81,6 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
     // ---------------------------------------------------------------- the game
     const sim = createTwinSoul(story as TwinSoulInput, { seed, helper: options.helper });
     let player: TwinSoulPlayer | null = null;
-    let pending: Promise<void> = Promise.resolve();
 
     /** Draws the card with the meaning, the shades, and (when `mark` is set) the verdict on one shade. */
     const drawCard = (mark: { id: string; good: boolean } | null): Promise<string> | null => {
@@ -111,23 +110,19 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
         twins = `✦ ${t('twinCount', { freed, count })}`;
         drawStatus();
       },
-      setPlace: (index, count, kind) => {
-        place = t('progress', { index, count, name: i18n.t(`monsters.${kind}`) });
+      setPlace: (index, count) => {
+        place = t('progress', { index, count, name: '' });
         drawStatus();
       },
-      async spawn(m) {
-        stage.setEnemies([]);
-        audio.music(m.kind === 'dragon-fire' ? 'boss' : 'battle');
-        audio.play(m.kind === 'dragon-fire' ? 'roar' : 'spawn');
-        await Promise.all([banner(scene, i18n.t(`monsters.${m.kind}`), t('intro'), 2.2), stage.spawn([m])]);
-        stage.setEnemies([m]);
+      // Phase 2 adds the bolt and dive animations to the new scene.
+      bolt: async () => {
+        audio.play('whoosh');
       },
-      setMonsterHp: (m) => stage.updateEnemy(m.id, m.hp, m.defeated),
       captured: () => {
         const at = headOf('knight', 1.6);
         popup(scene, at.x, at.y, t('captured'), '', 17_800);
       },
-      async shadeFell(id) {
+      async shadeFaded(id) {
         if (shown) {
           // Draw the card again with the wrong shade marked; the choice promise is not awaited.
           void drawCard({ id, good: false });
@@ -145,20 +140,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
         card.hide();
         shown = null;
       },
-      async heroStrike(hero, m, damage) {
-        audio.play('whoosh');
-        const move = stage.heroAttack(hero, m.id, 'attack');
-        await move.hit;
-        audio.play('hit');
-        const at = headOf(m.id);
-        popup(scene, at.x, at.y, `-${damage}`, '', 17_800);
-        pending = move.done;
-      },
-      monsterHit: (m) => stage.enemyHit(m.id),
-      monsterDefeated: (m) => stage.enemyDefeated(m.id),
-      async monsterStrike(m, hero) {
-        await stage.enemyAttack(m.id, hero);
-        const at = headOf(hero, 1.2);
+      async shadeDived() {
+        const at = headOf('knight', 1.2);
         popup(scene, at.x, at.y, t('courageLost'), '', 17_800);
       },
       rest: () => banner(scene, t('rest.title'), t('rest.text'), 2.4),
@@ -167,7 +150,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
         audio.music('calm');
         await Promise.all([stage.victory(), banner(scene, t('victory.title'), t('victory.text'), 2.2)]);
       },
-      settle: () => pending,
+      settle: async () => undefined,
     };
     player = new TwinSoulPlayer({ sim, story, seed, presentation, complete: (r, o, e) => ctx.complete(r, o, e) });
 

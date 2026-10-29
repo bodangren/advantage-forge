@@ -6,6 +6,7 @@ import type { TwinSoulCommand, TwinSoulState } from '../core/index.js';
 
 export function nextStrike(state: TwinSoulState): TwinSoulCommand | null {
   if (state.phase !== 'playing' || !state.target) return null;
-  const captor = state.shades.find((s) => s.wordId === state.target!.itemId && !s.fallen);
+  const targetId = state.target.itemId;
+  const captor = state.shades.find((s) => s.wordId === targetId && !s.fallen);
   return captor ? { type: 'strike', shade: captor.id } : null;
 }

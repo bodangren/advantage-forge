@@ -4,15 +4,10 @@
  * object references. There is no timer and no game over.
  */
 
-/** The monsters of a run, in order: the shades serve one monster at a time. */
-export const MONSTER_KINDS = ['skeleton', 'mimic', 'dragon-fire'] as const;
+/** The shade kinds share a balanced, seeded formation. */
+export const SHADE_KINDS = ['specter', 'wraith', 'ghost'] as const;
 
-export type MonsterKind = (typeof MONSTER_KINDS)[number];
-
-/** The heroes strike in this order, one per freed soul. The paladin is the knight. */
-export const HEROES = ['knight', 'wizard', 'cleric'] as const;
-
-export type HeroId = (typeof HEROES)[number];
+export type ShadeKind = (typeof SHADE_KINDS)[number];
 
 /** A target word of the run, with its evidence counters. */
 export interface TargetWord {
@@ -34,15 +29,9 @@ export interface Shade {
   id: string;
   wordId: string;
   term: string;
-  /** True once the shade was struck and fell (a wrong shade only). */
+  kind: ShadeKind;
+  /** True after a wrong strike fades this shade. */
   fallen: boolean;
-}
-
-export interface Monster {
-  kind: MonsterKind;
-  /** Souls left to free until the monster falls. */
-  hp: number;
-  maxHp: number;
 }
 
 export interface TwinSoulState {
@@ -57,17 +46,13 @@ export interface TwinSoulState {
   target: { itemId: string; term: string; translation: string } | null;
   /** The shades of this wave, in formation order (row by row). Empty after the last wave. */
   shades: Shade[];
-  monster: Monster | null;
-  monsterIndex: number;
   courage: number;
   maxCourage: number;
   /** Souls freed so far: the twin soul grows with every freed word. */
   twins: number;
   /** Points of the run: a fixed number per freed soul. */
   score: number;
-  /** Index into HEROES of the hero who strikes next. */
-  heroTurn: number;
-  /** Wrong shades struck (they fall; the monster strikes). */
+  /** Wrong shades struck during this run. */
   misses: number;
   started: boolean;
 }
@@ -75,7 +60,7 @@ export interface TwinSoulState {
 // ---------------------------------------------------------------- commands
 
 export type TwinSoulCommand =
-  /** Once, when the stage is ready: shows the first monster and wave. */
+  /** Once, when the stage is ready: shows the first wave. */
   | { type: 'start' }
   /** Strike one shade of the formation. */
   | { type: 'strike'; shade: string };
@@ -86,22 +71,23 @@ export interface ShadeShown {
   id: string;
   wordId: string;
   term: string;
+  kind: ShadeKind;
 }
 
 export type TwinSoulEvent =
-  | { type: 'monsterAppeared'; kind: MonsterKind }
   /** A new wave: the meaning to find and the shades that carry the terms. */
   | { type: 'waveShown'; itemId: string; translation: string; shades: ShadeShown[] }
   /** The captor shade seizes the twin soul of the target word. */
   | { type: 'captured'; shade: string }
-  /** A wrong shade fell: it holds the term of another word. */
-  | { type: 'shadeFell'; shade: string; wordId: string }
-  | { type: 'monsterStrike'; courage: number }
+  /** An accepted strike fires one bolt. */
+  | { type: 'boltFired'; shade: string }
+  /** A wrong shade fades for the rest of this wave. */
+  | { type: 'shadeFaded'; shade: string; wordId: string }
+  /** A standing shade dives and returns to its place. */
+  | { type: 'shadeDived'; shade: string; courage: number }
   | { type: 'rest'; courage: number }
   /** The captor fell: the twin soul is free. `firstTry` = no wrong shade fell for this word. */
   | { type: 'soulFreed'; shade: string; itemId: string; firstTry: boolean; twins: number; points: number }
-  | { type: 'heroStrike'; hero: HeroId; damage: number }
-  | { type: 'monsterDefeated'; kind: MonsterKind }
   /** The shades left in the formation scatter after the soul is free. */
   | { type: 'shadesScattered'; shades: string[] }
   /** Unknown shade, a fallen shade, or a command after the end: nothing happens. */
@@ -112,15 +98,13 @@ export type TwinSoulEventType = TwinSoulEvent['type'];
 
 /** Every event type the core emits; there is no game over. */
 export const TWIN_SOUL_EVENT_TYPES: readonly TwinSoulEventType[] = [
-  'monsterAppeared',
   'waveShown',
   'captured',
-  'shadeFell',
-  'monsterStrike',
+  'boltFired',
+  'shadeFaded',
+  'shadeDived',
   'rest',
   'soulFreed',
-  'heroStrike',
-  'monsterDefeated',
   'shadesScattered',
   'strikeRejected',
   'victory',
