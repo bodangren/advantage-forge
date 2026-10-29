@@ -1704,8 +1704,9 @@ export function inspectPictureRow(png: Buffer, row: PictureListRow): PictureRowC
 export async function inspectLineArtPng(
   png: Buffer,
   expected: { width: number; height: number },
-  accept?: Array<{ width: number; height: number }>,
+  options: { accept?: Array<{ width: number; height: number }>; minLineWidth?: number } = {},
 ): Promise<PictureStructuralCheck> {
+  const minLineWidth = options.minLineWidth ?? MIN_LINE_ART_LINE_WIDTH_PX;
   const fileSha256 = sha256(png);
   try {
     const metadata = await sharp(png).metadata();
@@ -1713,7 +1714,7 @@ export async function inspectLineArtPng(
     if (metadata.format !== 'png') errors.push('Line-art twin must be a PNG file.');
     const dimensionsAccepted =
       (metadata.width === expected.width && metadata.height === expected.height) ||
-      (accept ?? []).some((size) => metadata.width === size.width && metadata.height === size.height);
+      (options.accept ?? []).some((size) => metadata.width === size.width && metadata.height === size.height);
     if (!dimensionsAccepted) {
       errors.push(`Line-art twin must match its color twin at ${expected.width} x ${expected.height} pixels.`);
     }
@@ -1726,9 +1727,10 @@ export async function inspectLineArtPng(
     ) {
       errors.push('Line-art twin must use 8-bit uchar pixels.');
     }
-    if (!errors.length && metadata.width && metadata.height) {
-      // sharp expands a grey PNG to three raw channels, so force the b-w output space:
-      // one channel, with 0 and 255 (and any grey probe value) preserved.
+    // The pixel analysis runs for every decodable PNG, so the measured width prints even when a
+    // channel or size error already fails the file. sharp expands a grey PNG to three raw
+    // channels, so force the b-w output space: one channel, with 0 and 255 preserved.
+    if (metadata.width && metadata.height) {
       const { data, info } = await sharp(png).toColourspace('b-w').raw().toBuffer({ resolveWithObject: true });
       if (info.channels !== 1) {
         errors.push('Line-art twin must decode to one grey channel.');
@@ -1762,37 +1764,39 @@ export async function inspectLineArtPng(
           errors.push('Line-art twin edge frame must be at least 90 percent white.');
         }
         // Specification v1: the closed black outlines are at least 12 px thick. The measured
-        // stroke width is the smaller of the longest horizontal and the longest vertical
-        // black run, so a thin stroke fails in either direction.
-        let maxRunX = 0;
-        let maxRunY = 0;
+        // stroke width is the median black-run length over both scan directions, so the
+        // typical outline decides and one solid block cannot raise the measured width.
+        const runLengths: number[] = [];
         for (let y = 0; y < height; y += 1) {
           let run = 0;
           for (let x = 0; x < width; x += 1) {
             if (data[y * width + x] === 0) run += 1;
             else {
-              if (run > maxRunX) maxRunX = run;
+              if (run > 0) runLengths.push(run);
               run = 0;
             }
           }
-          if (run > maxRunX) maxRunX = run;
+          if (run > 0) runLengths.push(run);
         }
         for (let x = 0; x < width; x += 1) {
           let run = 0;
           for (let y = 0; y < height; y += 1) {
             if (data[y * width + x] === 0) run += 1;
             else {
-              if (run > maxRunY) maxRunY = run;
+              if (run > 0) runLengths.push(run);
               run = 0;
             }
           }
-          if (run > maxRunY) maxRunY = run;
+          if (run > 0) runLengths.push(run);
         }
-        const measuredLineWidth = Math.min(maxRunX, maxRunY);
+        runLengths.sort((a, b) => a - b);
+        const measuredLineWidth = runLengths.length
+          ? runLengths[Math.floor((runLengths.length - 1) / 2)]!
+          : 0;
         console.log(
           `Line-art line width: ${measuredLineWidth} px (minimum ${MIN_LINE_ART_LINE_WIDTH_PX} px).`,
         );
-        if (measuredLineWidth < MIN_LINE_ART_LINE_WIDTH_PX) {
+        if (measuredLineWidth < minLineWidth) {
           errors.push(
             `Line-art twin lines must be at least ${MIN_LINE_ART_LINE_WIDTH_PX} px thick; measured ${measuredLineWidth} px.`,
           );
@@ -3639,10 +3643,17 @@ export async function renderCandidates(options: {
     const actualHeight = structural.height ?? height;
     let linePng: Buffer | undefined;
     if (twin && packet.lineArt) {
+      // The render gate keeps every format check except the 12 px width rule: the release gate
+      // (manifest and verify) enforces the width rule on the written bytes.
       const lineStructural = await inspectLineArtPng(
         packet.lineArt,
         { width: actualWidth, height: actualHeight },
-        legacy && (legacy.width !== actualWidth || legacy.height !== actualHeight) ? [legacy] : undefined,
+        {
+          ...(legacy && (legacy.width !== actualWidth || legacy.height !== actualHeight)
+            ? { accept: [legacy] }
+            : {}),
+          minLineWidth: 0,
+        },
       );
       if (!lineStructural.valid) {
         throw new Error(`${job.id}: line-art twin failed: ${lineStructural.errors.join(' ')}`);
