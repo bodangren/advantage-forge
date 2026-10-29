@@ -162,7 +162,7 @@ export function places(): Place[] {
     {"asset":"candle-cluster","at":[3.6,0,-4.55]},
     {"asset":"shield-maiden-shield","at":[4.5,1.45,-4.88],"scale":0.9},
     {"asset":"wall-sconce","at":[2,1.1,-4.88]},
-    {"asset":"barrel","at":[-6.4,0,2.6],"scale":0.9},
+    {"asset":"barrel","at":[-6.05,0,2.6],"scale":0.9},
     {"asset":"barrel","at":[-6.4,0,4.2],"scale":0.8},
     {"asset":"crate","at":[-5.6,0,4.6],"yaw":15},
     {"asset":"crate","at":[-5,0,4.7],"yaw":-10},

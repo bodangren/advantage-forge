@@ -64,7 +64,7 @@ export function buildLibrary(stage: Stage3D): Library {
     // The floor boards (2 m tiles), the plaster back wall (2x scale: 4 m wide, 3 m tall), shelves, sconces, a chandelier.
     for (let x = -5; x <= 5; x += 2) place('wood-floor', x, y - 0.08, 0);
     ['plaster-wall', f % 2 ? 'plaster-wall' : 'plaster-wall-window', 'plaster-wall'].forEach((name, i) => place(name, (i - 1) * 4, y, -1.05, 2));
-    for (const x of [-3.6, 3.6]) place('bookcase', x + (f % 2 ? 0.3 : -0.3), y, -0.75, 1);
+    for (const x of [-3.6, 3.6]) place('bookcase', x + (f % 2 ? 0.3 : -0.3), y, -0.95, 1);
     for (const x of [-1.9, 1.9]) place('torch-sconce', x, y + 1.5, -0.98, 1);
     place('candle-cluster', f % 2 ? 0.9 : -0.9, y + 0.0, -0.8, 1.4);
     place('chandelier', 0, y + 2.45, 0.1, 1.1);
