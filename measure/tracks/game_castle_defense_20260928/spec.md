@@ -6,6 +6,8 @@ Design a tower defense game. Define placement input and defensive outcomes befor
 
 Owner decision (2026-10-08): Castle Defense is a tower defense game, in family 6 of `docs/apk-2d3d-program.md`, not in the aim and shoot family. The game built on 2026-10-03 already follows this rule: each built sentence becomes a tower on a wall post (`docs/game-castle-defense-3d.md`).
 
+Correction (2026-10-29): the note above is wrong. The 2026-10-03 build put Castle Defense on the shared battle stage with no tower, wall, or wave. See [game_castle_defense_rebuild_20261029](../game_castle_defense_rebuild_20261029/spec.md).
+
 ## Acceptance criteria
 
 - The game has a deterministic rules core and reproducible replay.

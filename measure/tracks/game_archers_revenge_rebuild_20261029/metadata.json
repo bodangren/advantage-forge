@@ -1,0 +1,19 @@
+{
+  "track_id": "game_archers_revenge_rebuild_20261029",
+  "type": "bug",
+  "status": "new",
+  "created_at": "2026-10-29T02:35:00Z",
+  "updated_at": "2026-10-29T02:35:00Z",
+  "description": "Rebuild Archer's Revenge as a side-view aim and shoot game with a drag to aim control and an arc that the core calculates, off the Monster Encounters battle stage, with one rules core and a 3D and a 2D view",
+  "estimated_tasks": 11,
+  "actual_tasks": null,
+  "deviation_notes": "Created on 2026-10-29 from the A-28 plan that the PM accepted on 2026-10-29. Ready on Forge master on 2026-11-10 only if Daniel picks the look by 2026-10-31; each day of delay moves the date by one day. Phase 2 waits for the look. No session writes in the monorepo; the PM routes the cartridge sync. Open owner decision: Daniel decides whether the four games stay live in Primary until the fix; default: keep them live. The registry entry and the generator run are closeout items because another session owns measure/tracks.md and measure/generated/*. Registry line: '- [ ] **Track: Rebuild Archer's Revenge as an aim and shoot game**' with the link './tracks/game_archers_revenge_rebuild_20261029/'. Generator: ./measure/generate.sh and a commit of measure/generated/*.",
+  "workstream": "games",
+  "retrospective": false,
+  "evidence": [
+    "docs/game-archers-revenge-3d.md",
+    "docs/apk-2d3d-program.md",
+    "docs/apk-port.md"
+  ],
+  "dependencies": []
+}
