@@ -55,7 +55,7 @@ records the failing run. Green changes the core and the bot and runs the tests a
 The old views stay on the battle stage in this phase. Green makes only the smallest view edits that
 keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
 
-- [ ] Task: Write the failing chapel shooter tests (Red).
+- [x] Task: Write the failing chapel shooter tests (Red). Test commit: `f823e87b`.
   Owned paths: `tests/games/paladins-twin-soul/rules.test.ts`, `replay.test.ts`, `bot.test.ts`,
   `driver.test.ts`, and `helpers.ts` in that folder.
   Test these rows: the state has no monster and the core emits no `monsterAppeared`,
@@ -67,6 +67,31 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
   plays a full run to `victory`; the driver plays every new core event.
   Run `RED_TEST_COMMAND`. Record the command, the exit code, and the number of failures.
   Commit the tests alone, by explicit paths.
+  - Red evidence (2026-10-29, measure-mid-red). Phase base: `4007148a`. Role base: `9c0b400e`.
+    Test commit: `f823e87b` (the five owned test files only). No file in
+    `src/games/paladins-twin-soul/` changed.
+  - Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300
+    node_modules/.bin/vitest run tests/games/paladins-twin-soul --maxWorkers=1'`.
+    Log: `measure/runs/game_paladins_twin_soul_rebuild_20261029/red-vitest.log`. Lock wait: under 600 s.
+  - Red exit code: 1. Red test files failed: 4. Red test files passed: 1 (`manifest.test.ts`).
+    Red failed: 126. Red passed: 27. Red total: 153.
+  - Every failure is an `AssertionError`. No suite failed to load. No `TypeError` occurred.
+  - Failing rows by name: T1 (9 tests: state keys, event list, exports, start events, mixed run);
+    T2 (3); T3 (2); T4 (36: 30 seeds, the place spread, 5 lone-captor runs); T5 (6); T6 (4 of 5);
+    T7 (2); T8 (5 of 7); T9 (3 of 4); T10 (3); T12 (1); T13 (3 of 4); T14 (48 of 49); T15 (1).
+  - Pass at Red, with the mutation that each row catches: the 5 kept content rows; T6 captor
+    places (M24); T11 (14 tests: M35, M36); T13 rejected strike (M40, M42); T8 kept rows (2:
+    target order, deep copy); T9 destroy row; T14 null row; `manifest.test.ts` (2, not a Red path).
+  - Defaults in force, marked "assumption" in the test names: Q1 (T4, T8), Q2 (T6, T10), Q3 (T5, T8).
+  - Contract names: the defaults of test-strategy section 5. The driver test adds the
+    `Presentation` methods `bolt(shade)`, `shadeFaded(shade)`, and `shadeDived(shade)`. It removes
+    the six monster methods. The header comment of `driver.test.ts` lists the full method set.
+  - Type check: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node
+    node_modules/typescript/bin/tsc --noEmit'`. Log: `red-tsc.log` in the same folder.
+    Exit code: 2. Total errors: 88. Owned errors: 0 (`src/` and `tests/` of this game).
+    The rise from 31 comes from the Red tests of other sessions:
+    `tests/games/castle-defense/` (51, track `game_castle_defense_rebuild_20261029`) and
+    `tests/games/magic-defense/helpers.ts` (6, track `game_magic_defense_rebuild_20261029`).
 - [ ] Task: Remove the battle monsters and add the dive to the core (Green).
   Owned path: `src/games/paladins-twin-soul/core/`.
   Keep the waves, the shades, the captor, and the soul count. Remove the monsters and the hero turn
