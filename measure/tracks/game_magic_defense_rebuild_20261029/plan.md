@@ -117,6 +117,50 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
   `view2d/` that the type check needs.
   Run `GREEN_TEST_COMMAND` and `TYPE_CHECK_COMMAND`. Record the exit codes, the test counts, the
   owned errors, and the total errors.
+- [x] Task: Close Review A gaps RA-MD-1 and RA-MD-2 (Red). Test commit: `8b1fb6e0`.
+  Owned path: `tests/games/magic-defense/rules.test.ts`.
+  - RA-MD-1: the new row `H17: the castle that takes the place of a fallen castle comes from a
+    fixed seeded order` forces the active castle to fall. The row runs 30 seeds and two falls per
+    seed. A storm between the two falls gives three standing castles again. The row proves that
+    the falls of one seed follow one fixed castle order. The row also proves that the castle that
+    takes the place depends on the seed. A core with a constant order fails this fact.
+  - RA-MD-2: the loop of the row `H8 (ASM-3): the right word never shuts, so every meaning can be
+    broken` has a limit of 50 casts now. The row fails with a clear message when the limit is
+    reached. The gate no longer waits for the timeout of 300 seconds.
+  - Red evidence (2026-10-30, role `measure-mid-red`, round `r2`, role base `63fea8c5`, phase base
+    `0c5e7ea2`). The test commit `8b1fb6e0` holds only `tests/games/magic-defense/rules.test.ts`.
+  - Real suite: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300
+    node_modules/.bin/vitest run tests/games/magic-defense --maxWorkers=1'`. Exit code 0.
+    Test Files: 5 passed (5). Tests: 0 failed, 102 passed (102).
+  - Mutant suite, the RED_TEST_COMMAND of this round: `bash
+    ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest
+    run --config measure/runs/game_magic_defense_rebuild_20261029/probe/vitest.config.ts
+    --maxWorkers=1'`. Exit code 1. Test Files: 1 failed, 4 passed (5). Tests: 1 failed, 101 passed
+    (102).
+  - The failing row under the mutant: `H17: the castle that takes the place of a fallen castle comes
+    from a fixed seeded order`. The message: `the castle that takes the place depends on the seed
+    (0->1 1->0 2->0): expected 0 to be greater than 0`.
+  - Type check: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node
+    node_modules/typescript/bin/tsc --noEmit'`. Exit code 2. Total errors: 31. Owned errors: 0 in
+    `src/games/magic-defense/` and 0 in `tests/games/magic-defense/`. The 31 errors are the
+    baseline: 30 in `assets/` and 1 in `tests/part.test.ts`.
+  - The logs of this round are in `measure/runs/game_magic_defense_rebuild_20261029/`. The
+    provisional log is `mid-red-r2-provisional.log`. The final log is
+    `mid-red-<short SHA of this plan commit>.log`. The logs are not committed, as for the earlier
+    logs of this track.
+- [~] Task: Rerun the M10 mutation with the unbounded fault on the bounded loop and the gates (Green).
+  Owned path: `src/games/magic-defense/core/`. The mutation is temporary and is removed after the
+  run.
+  - Apply the fault of M10 without the bound of the retry. The wrong cast clears the `blocked` flag
+    of the failed choice. Run `GREEN_TEST_COMMAND` with the fault.
+  - The run must exit 1. It must fail the row `H8 (ASM-3): the right word never shuts, so every
+    meaning can be broken`. The message must be `the row did not shut every wrong word in 50
+    casts`. The run must not reach the timeout of 300 seconds.
+  - Remove the fault. Run `GREEN_TEST_COMMAND` and `TYPE_CHECK_COMMAND` again. Record the exit
+    codes, the counts, and the owned errors here.
+  - Add a mutation for the seeded castle order to the list of the strategy. The mutation makes the
+    castle order a constant list. The run must exit 1 and fail the row H17. Record the exit code
+    and the failing row here.
 
 ### First Green checkpoint (2026-10-29; incomplete)
 
