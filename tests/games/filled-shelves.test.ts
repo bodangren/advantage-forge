@@ -10,6 +10,18 @@
  *  - R4 (F7): the two library views place no `shelf` and no `bookshelf`.
  *  - R5 (F8): the frozen count table holds per map.
  *
+ * Round 2 (Review A and Review C):
+ *  - RA-FS-4: freeze the view case counts (shelf/bookcase/bookshelf) and the classroom
+ *    bookcase. Prove each freeze fails when the deliverable is removed (A4).
+ *  - RA-FS-3: narrow the mounted-fixture skip list to the fixtures that are truly
+ *    mounted (chandelier, torch-sconce, wall-sconce). A free-standing fixture such as
+ *    candle-cluster is an item and must rest on a board.
+ *  - RA-FS-7: add an item height table with a clearance rule and an item depth table
+ *    with a board-depth rule. Both apply to the in-scope shelves only.
+ *  - RC-FS-1: assert the required item kinds of every shelf place. The lab must place
+ *    a vial.
+ *  - RA-FS-14: remove the always-true `shelf counts` assertion.
+ *
  * No WebGL, no network, no file write. The maps export `places()`; the five game views
  * run their build functions against a recording stub.
  */
@@ -43,6 +55,13 @@ const CABINET_HALF_D = 0.225;
 const CABINET_TOP = 0.99;
 const TOL = 0.01;
 
+// The shelf board geometry from `assets/shelf.ts`, used by the clearance and depth rules.
+const BOARD_T = 0.045; // board thickness (m)
+const BACK_INNER = 0.03; // back panel inner face, local z (m)
+const BOARD_FRONT = 0.28; // board front edge, local z (m)
+const FRAME_FRONT = 0.3; // frame front, local z (m), equals the footprint depth
+const FRAME_TOP_BOTTOM = 1.43; // bottom of the frame board above the top board (m)
+
 const CASE_ASSETS = new Set(['shelf', 'bookcase', 'bookshelf', 'cabinet']);
 
 type CaseKind = 'shelf' | 'cabinet';
@@ -62,6 +81,7 @@ interface ItemPlace {
   x: number;
   y: number;
   z: number;
+  scale: number;
   label: string;
   index: number;
 }
@@ -84,20 +104,69 @@ function insideFootprint(kind: CaseKind, localX: number, localZ: number, scale: 
   return Math.abs(localX) <= CABINET_HALF_W * scale + TOL && Math.abs(localZ) <= CABINET_HALF_D * scale + TOL;
 }
 
+/** The index of the shelf board whose top matches an item y, or -1 when none matches. */
+function restingBoard(kind: CaseKind, y: number, scale: number): number {
+  if (kind !== 'shelf') return -1;
+  return SHELF_TOPS.map((t) => t * scale).findIndex((t) => Math.abs(y - t) <= TOL + 1e-6);
+}
+
 /** Structural pieces never counted as an item and never float over or inside a case. */
 function isStructural(asset: string): boolean {
   const SUFFIX = /(floor|ground|road|path|river|water|wall|window|door|gate|arch|column|pillar|stairs|ladder|bridge|dock|pier|roof|chimney|ceiling|fence|railing|walkway|plank|beam)$/;
   const PREFIX = /^(wall|door|window|gate|arch|column|pillar|stairs|ladder|bridge|roof|chimney|ceiling|fence|railing|walkway|ruin|cliff|boulder|cave|tunnel|street|trail|hill|mountain|pond|puddle|snowbank|sand-dune)/;
-  // Structural pieces and mounted fixtures are never a shelf item and never float over
-  // or stand inside a case. The single `candle` stays an item: the archive candle is the
-  // R3 target, and a desk candle is clutter.
+  // Structural pieces and truly mounted fixtures are never a shelf item and never float
+  // over or stand inside a case. Free-standing props (candle-cluster, lantern, torch,
+  // candelabra, brazier, fireplace, campfire, campfire-out, watchfire) stand on y = 0 and
+  // must be checked as items. The single `candle` stays an item (the archive candle is the
+  // R3 target, and a desk candle is clutter).
   const NAMED = new Set([
     'carpet', 'rug', 'tapestry', 'curtain', 'banner', 'awning', 'beam', 'plank', 'archway', 'walkway', 'railing',
-    'chandelier', 'candle-cluster', 'lantern', 'torch-sconce', 'wall-sconce', 'torch', 'candelabra', 'brazier',
-    'fireplace', 'campfire', 'campfire-out', 'watchfire',
+    'chandelier', 'torch-sconce', 'wall-sconce',
   ]);
   return SUFFIX.test(asset) || PREFIX.test(asset) || NAMED.has(asset);
 }
+
+// Item sizes in metres at scale 1, from the asset design notes. The clearance and depth
+// rules only apply to item kinds that rest on an in-scope shelf board.
+const ITEM_HEIGHT: Record<string, number> = {
+  bottle: 0.22, vial: 0.12, jar: 0.45, basket: 0.47, crate: 0.41, sack: 0.4, bread: 0.17, apple: 0.12, mug: 0.115,
+};
+const ITEM_DEPTH: Record<string, number> = {
+  bottle: 0.07, vial: 0.066, jar: 0.264, basket: 0.4, crate: 0.44, sack: 0.35, bread: 0.25, apple: 0.12, mug: 0.091,
+};
+
+// The shelves that this track owns and must fix. Pre-existing shelves (apothecary,
+// bakery, general-store) and the cabinets (school, archive) stay out of the clearance and
+// depth rules.
+const CLEARANCE_SCOPES = new Set([
+  'potion-rush', 'alchemists-synthesis', 'rune-forge-chamber',
+  'bathhouse', 'warehouse', 'inn', 'alchemy-lab',
+]);
+
+// The required item kinds per place, from spec.md FR-3. A missing kind is a failure (RC-FS-1).
+const REQUIRED_KINDS: Record<string, string[]> = {
+  'alchemists-synthesis': ['bottle', 'vial'],
+  'potion-rush': ['bottle', 'bread', 'apple'],
+  'rune-forge-chamber': ['crate', 'sack'],
+  bathhouse: ['jar', 'basket'],
+  warehouse: ['crate', 'sack'],
+};
+
+interface CaseCounts {
+  shelf: number;
+  bookcase: number;
+  bookshelf: number;
+}
+
+// The frozen view case counts (Review A probe). Each count must fail when the deliverable
+// is removed, which the A4 fixture proves.
+const FROZEN_VIEW_CASES: Record<string, CaseCounts> = {
+  'enchanted-library': { shelf: 0, bookcase: 8, bookshelf: 0 },
+  'haunted-library': { shelf: 0, bookcase: 8, bookshelf: 0 },
+  'potion-rush': { shelf: 2, bookcase: 0, bookshelf: 0 },
+  'alchemists-synthesis': { shelf: 2, bookcase: 0, bookshelf: 0 },
+  'rune-forge-chamber': { shelf: 2, bookcase: 0, bookshelf: 0 },
+};
 
 const fmt = (n: number): string => {
   const r = Math.round(n * 1000) / 1000;
@@ -193,6 +262,19 @@ const MAPS: { name: string; rows: P[] }[] = Object.entries(mapModules)
 
 // ---------------------------------------------------------------- audit
 
+interface ClearanceIssue {
+  item: ItemPlace;
+  casePlace: CasePlace;
+  head: number;
+  nextBottom: number;
+}
+
+interface DepthIssue {
+  item: ItemPlace;
+  casePlace: CasePlace;
+  detail: string;
+}
+
 interface Audit {
   /** Every shelf placement, in row order. */
   shelves: CasePlace[];
@@ -208,6 +290,12 @@ interface Audit {
   floats: { item: ItemPlace; casePlace: CasePlace }[];
   /** Items standing inside a case footprint at floor level (y <= TOL). */
   inside: { item: ItemPlace; casePlace: CasePlace }[];
+  /** Items on an in-scope shelf whose top passes the board above. */
+  clearanceIssues: ClearanceIssue[];
+  /** Items on an in-scope shelf that enter the back panel or leave the board front. */
+  depthIssues: DepthIssue[];
+  /** Items on an in-scope shelf whose kind has no height or depth entry. */
+  coverageIssues: string[];
 }
 
 function audit(rows: P[], label: string): Audit {
@@ -218,7 +306,7 @@ function audit(rows: P[], label: string): Audit {
     const [x, y, z] = r.at;
     if (r.asset === 'shelf') shelves.push({ kind: 'shelf', x, z, yawRad: (r.yaw ?? 0) * DEG, scale: r.scale ?? 1, label, index });
     else if (r.asset === 'cabinet') cabinets.push({ kind: 'cabinet', x, z, yawRad: (r.yaw ?? 0) * DEG, scale: r.scale ?? 1, label, index });
-    else if (!CASE_ASSETS.has(r.asset) && !isStructural(r.asset)) items.push({ asset: r.asset, x, y, z, label, index });
+    else if (!CASE_ASSETS.has(r.asset) && !isStructural(r.asset)) items.push({ asset: r.asset, x, y, z, scale: r.scale ?? 1, label, index });
   });
 
   const cases = [...shelves, ...cabinets];
@@ -250,8 +338,48 @@ function audit(rows: P[], label: string): Audit {
     }
   }
 
+  // Clearance and depth only apply to the shelves this track owns. A float (no matching
+  // board) is reported by F3/F4, not here.
+  const clearanceIssues: ClearanceIssue[] = [];
+  const depthIssues: DepthIssue[] = [];
+  const coverageIssues: string[] = [];
+  if (CLEARANCE_SCOPES.has(label)) {
+    for (const s of shelves) {
+      for (const it of items) {
+        if (it.y <= 0) continue;
+        const local = toLocal(it.x - s.x, it.z - s.z, s.yawRad);
+        if (!insideFootprint('shelf', local.x, local.z, s.scale)) continue;
+        const bIdx = restingBoard('shelf', it.y, s.scale);
+        if (bIdx < 0) continue;
+
+        const h = ITEM_HEIGHT[it.asset];
+        if (h === undefined) {
+          coverageIssues.push(`${describeItem(it)} has no height entry (board ${bIdx + 1})`);
+        } else {
+          const head = it.y + h * it.scale;
+          const nextBottom = bIdx < 2 ? (SHELF_TOPS[bIdx + 1]! - BOARD_T) * s.scale : FRAME_TOP_BOTTOM * s.scale;
+          if (head > nextBottom + 0.001) clearanceIssues.push({ item: it, casePlace: s, head, nextBottom });
+        }
+
+        const d = ITEM_DEPTH[it.asset];
+        if (d === undefined) {
+          coverageIssues.push(`${describeItem(it)} has no depth entry (board ${bIdx + 1})`);
+        } else {
+          const half = (d * it.scale) / 2;
+          const back = local.z - half;
+          const front = local.z + half;
+          const parts: string[] = [];
+          if (back < BACK_INNER * s.scale - 0.001) parts.push(`back ${fmt(back)} enters the back panel (inner face ${fmt(BACK_INNER * s.scale)})`);
+          if (local.z > BOARD_FRONT * s.scale) parts.push(`centre z ${fmt(local.z)} is in front of the board edge ${fmt(BOARD_FRONT * s.scale)}`);
+          else if (front > FRAME_FRONT * s.scale + 0.001) parts.push(`front ${fmt(front)} passes the frame front ${fmt(FRAME_FRONT * s.scale)}`);
+          if (parts.length > 0) depthIssues.push({ item: it, casePlace: s, detail: parts.join('; ') });
+        }
+      }
+    }
+  }
+
   const emptyShelves = shelves.filter((s) => (onShelf.get(s.index) ?? []).length === 0);
-  return { shelves, cabinets, items, onShelf, emptyShelves, floats, inside };
+  return { shelves, cabinets, items, onShelf, emptyShelves, floats, inside, clearanceIssues, depthIssues, coverageIssues };
 }
 
 function describeCase(c: CasePlace): string {
@@ -284,6 +412,11 @@ const VIEW_AUDITS: { name: string; rows: P[]; a: Audit }[] = VIEW_DEFS.map((v) =
   return { name: v.name, rows, a: audit(rows, v.name) };
 });
 
+const ALL_AUDITS: { name: string; a: Audit }[] = [
+  ...MAP_AUDITS.map((m) => ({ name: m.name, a: m.a })),
+  ...VIEW_AUDITS.map((v) => ({ name: v.name, a: v.a })),
+];
+
 function shelfCountByMap(): Map<string, number> {
   const out = new Map<string, number>();
   for (const { name, a } of MAP_AUDITS) {
@@ -297,6 +430,38 @@ function rawBookshelfByMap(): Map<string, number> {
   for (const m of MAPS) {
     const n = m.rows.filter((r) => r.asset === 'bookshelf').length;
     if (n > 0) out.set(m.name, n);
+  }
+  return out;
+}
+
+function viewCaseCounts(rows: P[]): CaseCounts {
+  let shelf = 0;
+  let bookcase = 0;
+  let bookshelf = 0;
+  for (const r of rows) {
+    if (r.asset === 'shelf') shelf += 1;
+    else if (r.asset === 'bookcase') bookcase += 1;
+    else if (r.asset === 'bookshelf') bookshelf += 1;
+  }
+  return { shelf, bookcase, bookshelf };
+}
+
+function diffCaseCounts(name: string, got: CaseCounts, want: CaseCounts): string[] {
+  const out: string[] = [];
+  if (got.shelf !== want.shelf) out.push(`${name}: shelf ${got.shelf} != ${want.shelf}`);
+  if (got.bookcase !== want.bookcase) out.push(`${name}: bookcase ${got.bookcase} != ${want.bookcase}`);
+  if (got.bookshelf !== want.bookshelf) out.push(`${name}: bookshelf ${got.bookshelf} != ${want.bookshelf}`);
+  return out;
+}
+
+function classroomBookcaseCount(rows: P[]): number {
+  return rows.filter((r) => r.asset === 'bookcase').length;
+}
+
+function restingKinds(a: Audit): Set<string> {
+  const out = new Set<string>();
+  for (const held of a.onShelf.values()) {
+    for (const it of held) out.add(it.asset);
   }
   return out;
 }
@@ -338,9 +503,7 @@ describe('filled-shelves check (Red)', () => {
     const filled = ['alchemy-lab', 'apothecary', 'bakery', 'general-store'];
     const missing = filled.filter((n) => !MAP_AUDITS.some((m) => m.name === n));
     expect(missing, 'filled map is absent from the inventory').toEqual([]);
-    const counts = filled.map((n) => `${n}=${MAP_AUDITS.find((m) => m.name === n)!.a.shelves.length}`);
     const empties = filled.flatMap((n) => MAP_AUDITS.find((m) => m.name === n)!.a.emptyShelves);
-    expect(`shelf counts: ${counts.join(', ')}`).toBeTruthy();
     const msg = empties.map((c) => `${describeCase(c)} holds 0 items`).join('\n');
     expect(empties.length, `a filled map regressed:\n${msg}`).toBe(0);
   });
@@ -370,5 +533,69 @@ describe('filled-shelves check (Red)', () => {
     };
     expect(Object.fromEntries(shelfCountByMap()), 'shelf count table by map').toEqual(frozenShelf);
     expect(Object.fromEntries(rawBookshelfByMap()), 'bookshelf count table by map').toEqual(frozenBookshelf);
+  });
+
+  it('the frozen case counts and the classroom bookcase hold (RA-FS-4)', () => {
+    const problems: string[] = [];
+    for (const v of VIEW_AUDITS) {
+      const want = FROZEN_VIEW_CASES[v.name];
+      if (!want) {
+        problems.push(`${v.name}: no frozen case counts`);
+        continue;
+      }
+      problems.push(...diffCaseCounts(v.name, viewCaseCounts(v.rows), want));
+    }
+    const classroom = MAPS.find((m) => m.name === 'classroom')!;
+    const cb = classroomBookcaseCount(classroom.rows);
+    if (cb !== 1) problems.push(`classroom bookcase ${cb} != 1`);
+    expect(problems, `frozen case counts:\n${problems.join('\n')}`).toEqual([]);
+  });
+
+  it('the frozen counts do not vacuous-pass when the deliverable is removed (RA-FS-4, A4)', () => {
+    const pr = VIEW_AUDITS.find((v) => v.name === 'potion-rush')!;
+    const prGone = pr.rows.filter((r) => r.asset !== 'shelf');
+    const prProblems = diffCaseCounts('potion-rush', viewCaseCounts(prGone), FROZEN_VIEW_CASES['potion-rush']!);
+    expect(prProblems, 'potion-rush freeze must fail when its shelves are removed').not.toEqual([]);
+
+    const el = VIEW_AUDITS.find((v) => v.name === 'enchanted-library')!;
+    const elGone = el.rows.filter((r) => r.asset !== 'bookcase');
+    const elProblems = diffCaseCounts('enchanted-library', viewCaseCounts(elGone), FROZEN_VIEW_CASES['enchanted-library']!);
+    expect(elProblems, 'enchanted-library freeze must fail when its bookcases are removed').not.toEqual([]);
+
+    const classroom = MAPS.find((m) => m.name === 'classroom')!;
+    const cmGone = classroom.rows.filter((r) => r.asset !== 'bookcase');
+    expect(classroomBookcaseCount(cmGone), 'classroom bookcase freeze must fail when the bookcase is removed').not.toBe(1);
+  });
+
+  it('every item on an in-scope shelf clears the board above (RA-FS-7)', () => {
+    const issues = ALL_AUDITS.flatMap(({ a }) => a.clearanceIssues);
+    const msg = issues.map((f) => `${describeItem(f.item)} on ${describeCase(f.casePlace)}: top ${fmt(f.head)} passes the next board bottom ${fmt(f.nextBottom)}`).join('\n');
+    expect(issues.length, `clearance issues:\n${msg}`).toBe(0);
+  });
+
+  it('every item on an in-scope shelf stays on the board (RA-FS-7)', () => {
+    const issues = ALL_AUDITS.flatMap(({ a }) => a.depthIssues);
+    const msg = issues.map((f) => `${describeItem(f.item)} on ${describeCase(f.casePlace)}: ${f.detail}`).join('\n');
+    expect(issues.length, `board-depth issues:\n${msg}`).toBe(0);
+  });
+
+  it('every resting item kind has a height and a depth (RA-FS-7)', () => {
+    const issues = ALL_AUDITS.flatMap(({ a }) => a.coverageIssues);
+    expect(issues, `missing dimension coverage:\n${issues.join('\n')}`).toEqual([]);
+  });
+
+  it('each shelf place keeps its required item kinds (RC-FS-1)', () => {
+    const problems: string[] = [];
+    for (const [place, required] of Object.entries(REQUIRED_KINDS)) {
+      const auditEntry = ALL_AUDITS.find((x) => x.name === place);
+      if (!auditEntry) {
+        problems.push(`${place}: no audit rows`);
+        continue;
+      }
+      const present = restingKinds(auditEntry.a);
+      const missing = required.filter((k) => !present.has(k));
+      if (missing.length > 0) problems.push(`${place}: missing ${missing.join(', ')}`);
+    }
+    expect(problems, `missing required item kinds:\n${problems.join('\n')}`).toEqual([]);
   });
 });
