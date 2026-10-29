@@ -148,7 +148,7 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
     provisional log is `mid-red-r2-provisional.log`. The final log is
     `mid-red-<short SHA of this plan commit>.log`. The logs are not committed, as for the earlier
     logs of this track.
-- [~] Task: Rerun the M10 mutation with the unbounded fault on the bounded loop and the gates (Green).
+- [x] Task: Rerun the M10 mutation with the unbounded fault on the bounded loop and the gates (Green). Evidence commit: `8b1fb6e0` (Red tests; no source change needed).
   Owned path: `src/games/magic-defense/core/`. The mutation is temporary and is removed after the
   run.
   - Apply the fault of M10 without the bound of the retry. The wrong cast clears the `blocked` flag
@@ -156,11 +156,19 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
   - The run must exit 1. It must fail the row `H8 (ASM-3): the right word never shuts, so every
     meaning can be broken`. The message must be `the row did not shut every wrong word in 50
     casts`. The run must not reach the timeout of 300 seconds.
+  - M10 unbounded fault: exit 1 before timeout; 6 tests failed and 96 passed. H8 failed with
+    `the row did not shut every wrong word in 50 casts`. H8 failed fast in 2 ms.
   - Remove the fault. Run `GREEN_TEST_COMMAND` and `TYPE_CHECK_COMMAND` again. Record the exit
     codes, the counts, and the owned errors here.
   - Add a mutation for the seeded castle order to the list of the strategy. The mutation makes the
     castle order a constant list. The run must exit 1 and fail the row H17. Record the exit code
     and the failing row here.
+  - Constant castle-order mutation: exit 1; 1 test failed and 101 passed. H17 failed because the
+    castle that takes the place did not depend on the seed. Source was restored after each mutation;
+    `git diff --exit-code -- src/games/magic-defense` exited 0 before the next run and after restore.
+  - Clean Green gate: exit 0; 5 test files passed and 102 tests passed. Shared battle gate: exit 0;
+    1 test file and 1 test passed. Type check: exit 2 with 31 total errors, 0 in owned source and
+    0 in owned tests. The 31 errors match the baseline: 30 in `assets/` and 1 in `tests/part.test.ts`.
 
 ### First Green checkpoint (2026-10-29; incomplete)
 
