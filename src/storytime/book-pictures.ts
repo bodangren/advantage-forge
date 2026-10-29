@@ -10,10 +10,16 @@ import sharp, { type OverlayOptions } from 'sharp';
 import { z } from 'zod';
 import { inflateSync } from 'node:zlib';
 import { buildTimeline, type Spec, type Stage, type Timeline } from '../song/timeline.js';
+import { LINE_ART_PASS_TECHNIQUE } from './line-art-pass.js';
 
 export const PICTURE_RUBRIC_VERSION = 'storytime-picture-v2';
 export const RENDERER_ID = 'forge-song-timeline-book-still-v1';
 export const LINEART_FORMAT_VERSION = 'storytime-lineart-provisional-v1';
+/**
+ * The technique label of a capture packet that names no technique (the injected line-art
+ * passes of the tests and the version 2 records). The live page pass names its own technique,
+ * `LINE_ART_PASS_TECHNIQUE` (version 3), in the capture packet.
+ */
 export const LINEART_TECHNIQUE = 'song-page-form-edges-viewdepth-1bit-v2';
 export const BATCH_HASH_ALGORITHM =
   'SHA-256 of UTF-8 JSON.stringify([{file,sha256}]) with entries sorted by file and no whitespace';
@@ -300,6 +306,8 @@ export interface BookCapturePacket {
   warnings?: string[];
   /** Peak resident memory of the capture process in MB (specification v1 label). */
   peakRssMb?: number;
+  /** The technique of the line-art pass that made `lineArt`; absent means `LINEART_TECHNIQUE`. */
+  lineArtTechnique?: string;
 }
 
 /**
@@ -3374,7 +3382,13 @@ async function captureBookStillOnPage(
     stage: input.stage,
     log,
   });
-  return { color: pair.color, lineArt: pair.lineArt, camera: pair.camera, peakRssMb: capturePeakRssMb() };
+  return {
+    color: pair.color,
+    lineArt: pair.lineArt,
+    camera: pair.camera,
+    peakRssMb: capturePeakRssMb(),
+    ...(deps.lineArt ? {} : { lineArtTechnique: LINE_ART_PASS_TECHNIQUE }),
+  };
 }
 
 export async function captureBookStill(
@@ -3497,6 +3511,7 @@ export async function captureBookStillSmoke(input: BookCaptureInput): Promise<Bo
       lineArt: pair.lineArt,
       camera: pair.camera,
       ...(pair.peakRssMb === undefined ? {} : { peakRssMb: pair.peakRssMb }),
+      ...(pair.lineArtTechnique === undefined ? {} : { lineArtTechnique: pair.lineArtTechnique }),
       fixtureLineArt: fixturePass.png,
       fixture: fixturePass.fixture,
     };
@@ -3643,8 +3658,10 @@ export async function renderCandidates(options: {
     const actualHeight = structural.height ?? height;
     let linePng: Buffer | undefined;
     if (twin && packet.lineArt) {
-      // The render gate keeps every format check except the 12 px width rule: the release gate
-      // (manifest and verify) enforces the width rule on the written bytes.
+      // The live page pass (technique version 3) must meet the 12 px width rule here. A packet
+      // with an injected pass names no technique and skips the width rule at render time only;
+      // the release gate (manifest and verify) enforces the width rule on the written bytes.
+      const liveScaledPass = packet.lineArtTechnique === LINE_ART_PASS_TECHNIQUE;
       const lineStructural = await inspectLineArtPng(
         packet.lineArt,
         { width: actualWidth, height: actualHeight },
@@ -3652,7 +3669,7 @@ export async function renderCandidates(options: {
           ...(legacy && (legacy.width !== actualWidth || legacy.height !== actualHeight)
             ? { accept: [legacy] }
             : {}),
-          minLineWidth: 0,
+          ...(liveScaledPass ? {} : { minLineWidth: 0 }),
         },
       );
       if (!lineStructural.valid) {
@@ -3677,7 +3694,7 @@ export async function renderCandidates(options: {
             lineArtFile,
             lineArtSha256: sha256(linePng),
             lineArtFormatVersion: LINEART_FORMAT_VERSION,
-            lineArtTechnique: LINEART_TECHNIQUE,
+            lineArtTechnique: packet.lineArtTechnique ?? LINEART_TECHNIQUE,
           }
         : {}),
       width: actualWidth,
@@ -4432,7 +4449,8 @@ export async function runStorytimeCli(
       throw new Error('The smoke capture returned no fixture pass.');
     }
     // All checks run before any write: a failed check leaves the output tree unchanged.
-    log(`lineart technique: ${LINEART_TECHNIQUE}`);
+    const smokeTechnique = smokePacket.lineArtTechnique ?? LINEART_TECHNIQUE;
+    log(`lineart technique: ${smokeTechnique}`);
     const fixtureCheck = await checkLineArtSmoke(fixtureLineArt, fixture);
     if (!fixtureCheck.valid) {
       throw new Error(`Line-art smoke fixture failed: ${fixtureCheck.errors.join(' ')}`);
@@ -4472,7 +4490,7 @@ export async function runStorytimeCli(
             camera: smokePacket.camera,
             fixture,
             renderer: RENDERER_ID,
-            lineArtTechnique: LINEART_TECHNIQUE,
+            lineArtTechnique: smokeTechnique,
           },
           null,
           2,
