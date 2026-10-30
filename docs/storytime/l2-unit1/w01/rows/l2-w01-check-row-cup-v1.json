@@ -1,0 +1,45 @@
+{
+  "jobId": "l2-w01-check-row-cup",
+  "version": 1,
+  "at": 1.0,
+  "spec": {
+    "title": "cup",
+    "duration": 2,
+    "lines": [
+      {
+        "text": "cup",
+        "start": 0,
+        "end": 2,
+        "actors": []
+      }
+    ]
+  },
+  "stage": {
+    "scene": "classroom",
+    "backdrop": "white",
+    "sun": "high",
+    "props": [
+      {
+        "asset": "storytime-child-cup",
+        "x": 0,
+        "z": 0,
+        "y": 0,
+        "yaw": 0,
+        "scale": 5,
+        "from": 0,
+        "to": 2
+      }
+    ],
+    "camera": [
+      {
+        "at": 0,
+        "az": 70,
+        "el": 30,
+        "dist": 2.0,
+        "tx": 0.1,
+        "ty": 0.22,
+        "tz": 0
+      }
+    ]
+  }
+}
