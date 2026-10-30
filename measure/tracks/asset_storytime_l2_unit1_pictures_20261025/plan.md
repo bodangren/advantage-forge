@@ -1582,3 +1582,18 @@ gate applies again.
   `out/storytime-review/batch-2/storytime-school-bus.png` (front, three-quarter, side, back), with
   an updated `brief.md`. Open risk: in the front view, the proud door frame shows as a thin dark
   bar at the side edge. No task is marked `[x]`. The bus waits for the independent review r2.
+  Green round 16 evidence (2026-10-31, Sonnet). The school bus passed the independent review r2 at
+  8.4 with no critical defect (`item-review-batch-2-r2.json`, reviewer `openai/gpt-6-luna#high`).
+  Commit `b1d1eb63` adds `assets/storytime-child-cup.ts`, the child's cup for `check-row-cup` (weeks 1,
+  5, and 6). It is a short, round, sky-blue cup about 0.1 m tall with a slightly tapered body, a
+  thick cream rim, a flat base, a darker empty inside, and one big round loop handle on +X. It has
+  no foam, liquid, glass, lid, straw, saucer, text, number, logo, face, or picture. Models: Green
+  `claude-code/claude-sonnet-5-5#high`, Red `minimax-cn-coding-plan/MiniMax-M3`, coder none.
+  Render exits: `--fast` loop 1 exit `0` (`green-p3-r16-fast1.log`), `--fast` loop 2 exit `0`
+  (`green-p3-r16-fast2.log`; the body became shorter and wider, the handle bigger), textured
+  `./forge render storytime-child-cup` exit `0` (`green-p3-r16-tex.log`, `-tex2.log`),
+  `./forge inspect storytime-child-cup --fast` exit `0`, warnings none (`green-p3-r16-inspect.log`).
+  `warning:` lines: `0` in all runs. Every forge command ran as one `heavy-run.sh` command. The
+  review card is `out/storytime-review/batch-2b/storytime-child-cup.png`, with `brief.md` and the
+  look reference. Open risk: a reviewer may read the cup as a mug because of the tall body and the
+  loop handle. No task is marked `[x]`. The cup waits for the independent review.
