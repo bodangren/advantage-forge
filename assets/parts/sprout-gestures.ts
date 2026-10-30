@@ -180,16 +180,29 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
     return { head: { rotate: [tilt, 0, 0] } };
   });
 
-  // ------------------------------------------------------------------ touch nose: the right mitten's narrow edge at the nose, a happy laugh
-  // The horizontal mitten stays beside the nose and above the mouth. A whole-body bounce keeps the contact.
-  const noseDirection = unit([0.95, 0.1, 0.3]);
-  const noseD = unit([-0.180690382, 0.3215428253, 0.9294951304]);
-  const noseHint: V3 = [0.9835336445, 0.0556668679, 0.1719382735];
-  const NOSE_AT: V3 = [-0.1470573952, 0.494, 0.132];
+  // ------------------------------------------------------------------ touch nose: one index finger at the nose tip, the face to the camera, a happy laugh
+  // The head stays turned to the camera and tips down toward the hand (the arm is short). The head position at the key
+  // gives the nose tip; the index finger of the right fist is aimed at that point, so the fingertip lands on the nose.
+  const NOSE_HEAD_TURN: V3 = [14, -14, 0]; // degrees at the key: tips down and turns a little toward the hand
+  const NOSE_HEAD_MOVE: V3 = [-0.004, -0.05, 0]; // meters
+  const noseRest: V3 = [0, AGE5.face.noseY, h.faceZ(0, AGE5.face.noseY) + 0.011];
+  const noseTip = ((): V3 => {
+    const pivot = vec(AGE5.bones.head);
+    const q = vec(noseRest).sub(pivot).applyQuaternion(motion.quat(NOSE_HEAD_TURN));
+    return arr(q.add(pivot).add(vec(NOSE_HEAD_MOVE)));
+  })();
+  const noseD = unit([0.2, 0.2, 0.95]); // the hand axis: the forearm reaches straight forward
+  const noseHint: V3 = [1, 0.15, -0.05]; // the finger points inward from the right, at the nose tip
+  const noseFinger = ((): V3 => {
+    const fr = frameOf(noseD, noseHint);
+    const a = vec(fr.a);
+    return arr(a.multiplyScalar(Math.cos(FINGER_TURN * RAD)).addScaledVector(vec(noseD), Math.sin(FINGER_TURN * RAD)).normalize());
+  })();
+  const NOSE_PRESS: V3 = [-0.024, -0.003, 0.002]; // the fingertip rests on the right side of the nose tip
   const noseGrip: V3 = [
-    NOSE_AT[0] - noseDirection[0] * FINGER_LENGTH,
-    NOSE_AT[1] - noseDirection[1] * FINGER_LENGTH,
-    NOSE_AT[2] - noseDirection[2] * FINGER_LENGTH,
+    noseTip[0] + NOSE_PRESS[0] - noseFinger[0] * FINGER_LENGTH,
+    noseTip[1] + NOSE_PRESS[1] - noseFinger[1] * FINGER_LENGTH,
+    noseTip[2] + NOSE_PRESS[2] - noseFinger[2] * FINGER_LENGTH,
   ];
   const noseGoal: Goal = { wrist: R.wristFor(noseGrip, noseD, noseHint), d: noseD, hint: noseHint, pole: [-0.45, 0.3, -0.08] };
   clip('gesture-touch-nose', (p) => {
@@ -198,7 +211,7 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
     return {
       ...R.pose(noseGoal, f),
       hips: { move: [0, -0.006 * laugh, 0] },
-      head: { rotate: [8 * f, -45 * f, 0], move: [0, -0.045 * f, 0] },
+      head: { rotate: [NOSE_HEAD_TURN[0] * f, NOSE_HEAD_TURN[1] * f, 0], move: [NOSE_HEAD_MOVE[0] * f, NOSE_HEAD_MOVE[1] * f, NOSE_HEAD_MOVE[2] * f] },
     };
   });
 
