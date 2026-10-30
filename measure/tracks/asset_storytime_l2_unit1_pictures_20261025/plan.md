@@ -1466,3 +1466,12 @@ gate applies again.
   `heavy-run.sh`. Logs: `green-p3-r9-*.log`. Review card: `out/storytime-review/batch-1b/storytime-nest.png`
   with `brief.md`. The nest waits for the independent review and has no rating. Butterfly net and
   touch-nose fixes: later rounds.
+  Green round 10 evidence (2026-10-30, Sonnet). Commit `5514cfe9` changes only
+  `assets/storytime-butterfly-net.ts`. A deep, soft, opaque light green bag now hangs back and
+  down from the hoop, with a round bottom and a painted diamond weave. The handle has a green
+  wrapped grip and a green collar, and the wood grain bump is removed. `./forge render
+  storytime-butterfly-net --fast` exited 0 (three loops). The textured `./forge render
+  storytime-butterfly-net` exited 0 and `./forge inspect storytime-butterfly-net --fast` exited 0.
+  Warning lines: none. Each command ran through `heavy-run.sh`. Logs: `green-p3-r10-*.log`.
+  Review card: `out/storytime-review/batch-1b/storytime-butterfly-net.png` with a net row in
+  `brief.md`. The net waits for the independent review and has no rating. Touch-nose fix: next round.
