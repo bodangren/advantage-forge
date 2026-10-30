@@ -1475,3 +1475,41 @@ gate applies again.
   Warning lines: none. Each command ran through `heavy-run.sh`. Logs: `green-p3-r10-*.log`.
   Review card: `out/storytime-review/batch-1b/storytime-butterfly-net.png` with a net row in
   `brief.md`. The net waits for the independent review and has no rating. Touch-nose fix: next round.
+  Green round 11 evidence (2026-10-30, Sonnet). The independent ratings were nest 8.2 and net 7.8,
+  both pass. Commit `a3a50eaf` adds six stage files and changes no asset. Each render and each
+  `verify --row` ran as one `heavy-run.sh` command. All exits were `0`. Logs:
+  `green-p3-r11-<row>-render-v<n>.log` and `green-p3-r11-<row>-verify.log`. Peak memory 482 to
+  992 MB, under the 3 GB limit. Files (color; line art):
+  - `check-row-nest` v1 (class C, 1500 px, 25 px line, ink 9.87%, peak 992 MB):
+    `21f4d525718398c006872047ac15d1160117357c31a767288c3037932cd1e391`;
+    `955c301a6bf45b3569d33e378c079607f44030a7b9c803654cfaf6ffa77a8998`. The nest seen from 35
+    degrees up shows three separate pale blue eggs on a brown bowl. All three eggs count in both
+    files.
+  - `practice-line-nest` v1 (class C, 24 px line, ink 9.69%, peak 502 MB):
+    `c98349980cfe22643b8bfa4e78131c33293c7dc1b7ee1470d2e0dd3889334b1b`;
+    `4d7c3cf230a10ede15d0f8b3d767f1a64b74877b155064ea03fb4cdebf6213ef`. The same nest turned 20
+    degrees with a second egg order. Three eggs count in the color file.
+  - `check-row-net` v1 (az 30; 21 px line, ink 3.93%, peak 482 MB): color
+    `899822fae82499f99598f926d715814b21bcc51e613b45667f42bcb08929db07`; line art
+    `e2af139b0a29696992e3618e4b6ee36e280834b3b897d136cd9e270d25183cbe`. The bag hangs behind
+    the hoop, so the net reads weakly, like a racket. Superseded by v2.
+  - `check-row-net` v2 (kept; az 65 only; 20 px line, ink 3.79%, peak 489 MB): color
+    `4cbd5a0a0e6aa0cddbfce8d46945f0cb028d47cc7533de5205787e759d990012`; line art
+    `428ef8ebcce4842a47bd6fb53d35aa335a28a3f4e8c16f5c5886d92119af9761`. The side view shows the
+    green hoop, the deep woven bag, the grip, and the handle. It reads as a butterfly net.
+  - `story-page-a-net` v1 (kept; class A, 4000 x 3000; 23 px line, ink 10.51%, peak 519 MB):
+    color `40dd591bdf3dd283befb9a3725e5e57bacd07313ca4a7424b9fc2f9967ebe4cb`; line art
+    `316b79bedf946ddfedfc68a86e9e9e7014690d4e2ca8010569f07396bb62a712`. Nan stands on the
+    meadow with a smile and clear eyes. The net hangs at her side with the hoop above her
+    shoulder. The bag hides behind her head, so the net shows as a hoop on a stick.
+  - `story-page-a-net` v2 (rejected; gesture `point up` only; 24 px line, ink 10.15%, peak
+    511 MB): color `2439d6434e17307fbdd14dbd7e4529bc9a04be0b92de9ed46752c7a0d8f1ce7f`; line art
+    `d2d38f67fb580e1e65f2c1a816f6f929af441679658951ecaab1cf54736e9107`. The raised arm turns
+    the hand, so the net points sideways and the bag lies on the ground. Worse than v1.
+  Open defect: `story-page-a-net` shows the net weakly. The held pose or the hand offset must put
+  the hoop and the bag beside the head, not behind it. Two versions are used, so the next round
+  needs a new pose or hold rotation (a `GESTURES` clip such as a raised-arm hold, or a rotate on
+  the held net). Rows rendered this round: 4 of 4. Rows with no open defect: 3
+  (`check-row-nest`, `practice-line-nest`, `check-row-net`). Rows with an open defect: 1. Week
+  1 rows rendered so far: 16 of 30 (12 with no open defect). No task is marked `[x]`. The rows
+  wait for the independent item and picture review.
