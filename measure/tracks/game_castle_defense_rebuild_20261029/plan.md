@@ -91,6 +91,25 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
   - Run logs (not in git): `measure/runs/game_castle_defense_rebuild_20261029/red-vitest-957d72a.log`
     and `red-tsc-957d72a.log`.
 
+  Red r2 (Review A RA-CD-1): commit `27247f07`. Role `measure-mid-red`, `claude-code/claude-sonnet-5-5#high`.
+  - Two loops had no step limit: `buildSentence` in `helpers.ts` and the B3 row in `bot.test.ts`. Each
+    loop now has a limit of `SENTENCE_WORDS.max + 4` (12) picks. A sentence holds 3 to 8 words, so a
+    correct core needs 8 picks at most. At the limit the loop throws "the sentence did not finish
+    after 12 picks" and names the helper or the row. No assertion changed.
+  - Mutant (not in git): `measure/runs/game_castle_defense_rebuild_20261029/probe/sim-mutant-collect.ts`.
+    A right pick never ends stage `collect`.
+  - PROBE_RED, mutant config `probe/vitest.config.ts`: exit 1, not 124. `Test Files  4 failed | 1 passed (5)`.
+    `Tests  63 failed | 27 passed (90)`. Test time 7.32 s. Wall time 893 s, because the heavy lock
+    waited (`lock wait over 600 s`, holder PID 299156). B3 and `buildSentence` failed with their messages.
+  - PROBE_CONTROL, `probe/vitest-control.config.ts`: exit 0. `Test Files  5 passed (5)`.
+    `Tests  90 passed (90)`. Test time 7.69 s. Wall time 235 s.
+  - REAL_SUITE `tests/games/castle-defense`: exit 0. `Test Files  5 passed (5)`. `Tests  90 passed (90)`,
+    equal to the count of `jr-green-63fea8c5.log`. Test time 6.31 s. Wall time 8 s.
+  - Commands: the `vitest run --config .../probe/vitest.config.ts`, `.../probe/vitest-control.config.ts`,
+    and `vitest run tests/games/castle-defense` forms, each as `heavy-run.sh -c 'timeout -k 30 300
+    node_modules/.bin/vitest run ... --maxWorkers=1'`. Logs: `probe/probe-red-raw.txt`,
+    `probe-control-raw.txt`, and `real-suite-raw.txt`.
+
   Contract details that the tests fix (the strategy names stay; these fill the open points):
   - The core exports the type `Spot` (`{ spot: number; covers: number[]; level: number }`).
   - `waveStep.moves` is a list of `{ enemyId: string; at: number }`. `at` is the position after the
