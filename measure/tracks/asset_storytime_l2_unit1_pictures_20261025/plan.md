@@ -1548,3 +1548,19 @@ gate applies again.
   reference. Open risk: the arm is short, so the fist sits at the cheek and may cover part of the
   mouth in the front view. `GESTURES` does not map touch-nose yet; it maps after a pass. No task
   is marked `[x]`. The clip waits for the independent review.
+  Green round 14 evidence (2026-10-31, Sonnet). Part A: commit `9278188e` adds `'touch nose':
+  'gesture-touch-nose'` to `GESTURES` in `src/song/timeline.ts` (the item review of batch 1c passed
+  the clip at 7.0). `tests/song-timeline.test.ts` exit `0`, 19 of 19 tests passed (log
+  `green-p3-r14-test.log`). Part B: commit `bdb542f7` adds `assets/storytime-school-bus.ts`, a
+  yellow school bus about 1.5 m long with a hood, two headlights, a bumper, big windows, four
+  wheels, and a two-leaf door on the right side (-X). It has no text, number, logo, or flag. Three
+  `--fast` loops ran after the first build (`green-p3-r14-fast1b.log`, `-fast2.log`, `-fast3.log`):
+  all exit `0`, `0` warning lines. Loop 2 shortened the mirrors; loop 3 made the door wider and
+  darker. One textured `./forge render storytime-school-bus`: exit `0`, `0` warning lines (log
+  `green-p3-r14-tex.log`). `./forge inspect storytime-school-bus --fast`: exit `0`, warnings:
+  none (log `green-p3-r14-inspect.log`). The first `--fast` run ended with `lock wait over 600 s`
+  (a Next dev job held the heavy lock); the rerun passed. Every forge command ran as one
+  `heavy-run.sh` command. The review card is `out/storytime-review/batch-2/storytime-school-bus.png`
+  (views: front, three-quarter, back-three-quarter for the door side, side), with `brief.md` and
+  the look reference. Open risk: the door shows at a shallow angle in the back-three-quarter view.
+  No task is marked `[x]`. The bus waits for the independent review.
