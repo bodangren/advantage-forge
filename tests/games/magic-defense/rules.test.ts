@@ -59,6 +59,19 @@ const SEEDS = Array.from({ length: 30 }, (_, i) => i + 1);
 const TEN_SEEDS = SEEDS.slice(0, 10);
 const thrownTimes = (n: number): MagicDefenseEvent['type'][] => Array.from({ length: n }, () => 'missileThrown' as const);
 
+/**
+ * Casts the right word until the run ends. The limit bounds the row: a core that never ends the
+ * run must fail the row with a message that names the row, not hang the gate.
+ */
+const castRightToEnd = (sim: MagicDefenseSimulation, limit: number, row: string): void => {
+  let casts = 0;
+  while (sim.state.phase === 'playing') {
+    if (casts >= limit) throw new Error(`${row}: the run did not end after ${limit} right casts`);
+    castRight(sim);
+    casts += 1;
+  }
+};
+
 describe('content', () => {
   it('targets every story word once, in a seeded order, in evenly sized waves', () => {
     const targets = targetsOf(STORY, createRng(3), TUNING.wordsPerWave);
@@ -326,9 +339,14 @@ describe('the run', () => {
     sim.dispatch({ type: 'start' });
     const hit = structuredClone(active(sim));
     // The loop has a limit. A wrong word that never shuts must fail the row fast, not hang the gate.
+    // The card carries TUNING.choices words. One is right; the rest are wrong.
+    // Every wrong word shuts after one cast, so the correct core needs one cast per wrong word.
+    // The limit is the count of the choices with a margin of one card.
+    // A change of TUNING.choices must not fail the row falsely.
+    const limit = sim.state.round!.choices.length * 2;
     let wrongCasts = 0;
     while (hasWrong(sim)) {
-      if (wrongCasts >= 50) throw new Error('the row did not shut every wrong word in 50 casts');
+      if (wrongCasts >= limit) throw new Error(`the row did not shut every wrong word in ${limit} casts`);
       castWrong(sim);
       wrongCasts += 1;
     }
@@ -517,9 +535,13 @@ describe('the run', () => {
   });
 
   it('the mana never passes its maximum', () => {
+    // A correct run casts the right word once per word of the fixture.
+    // The limit is that count with a margin of one more fixture of the same length.
+    // A core that never ends the run fails the row fast instead of hanging the gate.
+    const limit = STORY.vocabulary.length * 2;
     const sim = create(6, false, STORY);
     sim.dispatch({ type: 'start' });
-    while (sim.state.phase === 'playing') castRight(sim);
+    castRightToEnd(sim, limit, 'the mana never passes its maximum');
     expect(sim.state.mana).toBeLessThanOrEqual(sim.state.maxMana);
   });
 
@@ -600,11 +622,15 @@ describe('the run', () => {
 
 describe('evidence', () => {
   it('one item per word with the attempts and the first-try flag; the score is the coins', () => {
+    // A correct run casts the right word once per word of the fixture.
+    // The limit is that count with a margin of one more fixture of the same length.
+    // A core that never ends the run fails the row fast instead of hanging the gate.
+    const limit = SHORT_STORY.vocabulary.length * 2;
     const sim = create(8, false, SHORT_STORY);
     sim.dispatch({ type: 'start' });
     const wrongWord = sim.state.round!.wordId;
     castWrong(sim);
-    while (sim.state.phase === 'playing') castRight(sim);
+    castRightToEnd(sim, limit, 'one item per word with the attempts and the first-try flag; the score is the coins');
     const evidence = evidenceOf(sim.state, SHORT_STORY, 8, 12_345);
     expect(storyGameEvidenceSchema.parse(evidence)).toEqual(evidence);
     expect(evidence.items).toHaveLength(SHORT_STORY.vocabulary.length);
