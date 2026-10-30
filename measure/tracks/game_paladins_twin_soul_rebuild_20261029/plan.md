@@ -207,11 +207,67 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
     node_modules/.bin/vitest run tests/games/paladins-twin-soul --maxWorkers=1'`.
     Exit code: 0. Tests failed: 0. Tests passed: 153. Test files passed: 5. Duration: 3.76 s.
   - Review A owner for the next step: Green runs M9 against the full rules suite.
-- [~] Task: Rerun M9 against the full rules suite on the bounded loops and the gates (Green).
+- [x] Task: Rerun M9 against the full rules suite on the bounded loops and the gates (Green).
+  Evidence commit: this commit; SHA added in the next commit.
+  Implementation commit under test: `527be9bc7ef628658f6be3d6444a6a19b062aad1`. Red r2 test commit: `cb6609a6`.
   Owned path: `measure/runs/game_paladins_twin_soul_rebuild_20261029/green-mutation-runner.py`.
   Remove the `-t 'T3|T13'` scope from M9, so M9 runs the whole rules file. Run M9 against the full
   rules suite. Record the exit code, the failing rows, and the duration. Run `GREEN_TEST_COMMAND`
   and `TYPE_CHECK_COMMAND` again.
+  - Green r2 (after Red r2 RA-PT-1), 2026-10-30. Model: `minimax-cn-coding-plan/MiniMax-M3.1-Flash`.
+    Phase base: `4007148a8794c33992c218f84a2f99e6aacef6fe`.
+    Role base: `ebbec2f3e5ebc9743b68697f60a52aad8b0103e7`.
+    The Red r2 commits `cb6609a6` and `db52e1de` are inside the phase range.
+    The core needed no change. No file in `src/` or `tests/` changed in this round.
+  - Runner change: the lines at `green-mutation-runner.py:109` and `green-mutation-runner.py:110`
+    were removed. They added `-t 'T3|T13'` to M9 alone. No other line of the runner changed.
+    The runner file stays untracked with the other run files.
+  - Runner safety: `gate()` calls `heavy-run.sh` for each run at `green-mutation-runner.py:80`.
+    The outer call used plain `python3`. The lock was never nested.
+    The runner copies `src/`, the Red tests, and the fixtures into `/tmp/opencode/paladin-p1-mutations`
+    at lines 91 to 93. It writes each mutation only to that copy at line 120. It restores the copy
+    at line 123. Lines 136 to 138 assert that the checkout sources match their first contents.
+    The runner exited 0, so those assertions held.
+  - Mutation command: `python3 measure/runs/game_paladins_twin_soul_rebuild_20261029/green-mutation-runner.py`.
+    Exit code: 0. Mutations run: 45. Mutations killed: 45. Survivors: 0.
+    Log: `measure/runs/game_paladins_twin_soul_rebuild_20261029/green-mutation-python3-r2.log`.
+    Each mutation log records `Exit code: 1` after one attempt and `Restored: True`.
+    No mutation log records exit 124. No mutation log records `lock wait over 600 s`.
+    The isolated baseline exited 0 with 153 passed. The restored suite exited 0 with 153 passed.
+    Logs: `green-mutation-baseline.log` and `green-mutation-restored.log` in the same folder.
+    Summary: `green-mutations-summary.json` in the same folder.
+  - M9 on the full rules file: the command was
+    `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/games/paladins-twin-soul/rules.test.ts --maxWorkers=1'`.
+    It ran in the isolated root. Exit code: 1. Not 124.
+    Tests failed: 15. Tests passed: 73. Test files: 1 failed. Duration: 1.29 s.
+    Log: `measure/runs/game_paladins_twin_soul_rebuild_20261029/green-mutation-M09.log`.
+    The failing rows are T2 (1), T3 (2), T4 Q1 standing-dive (5 seeds), T4 Q1 lone-captor (5 seeds),
+    T7 (1), and T13 (1).
+    The T4 rows failed at `rules.test.ts:252` and `rules.test.ts:287`. They stopped at the assertion.
+    They did not reach the Red r2 loop limit. The run did not hang.
+    The T2 victory row passed. Its Red r2 limit did not fire.
+  - Other mutations: M1 to M8 and M10 to M45 each exited 1 with at least one failed row.
+    Failed rows per mutation: M1 4, M2 6, M3 2, M4 5, M5 2, M6 2, M7 1, M8 2, M10 3, M11 15, M12 41,
+    M13 36, M14 1, M15 43, M16 29, M17 6, M18 7, M19 6, M20 1, M21 5, M22 4, M23 4, M24 1, M25 4,
+    M26 2, M27 3, M28 3, M29 3, M30 2, M31 6, M32 2, M33 3, M34 3, M35 1, M36 17, M37 1, M38 4,
+    M39 1, M40 2, M41 10, M42 1, M43 48, M44 49, M45 1.
+    M44 failed through the error `Missing currentTargetId`. No suite failed to load.
+  - Green command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/games/paladins-twin-soul --maxWorkers=1'`.
+    Exit code: 0. Passed: 153. Failed: 0. Test files passed: 5. Duration: 4.46 s.
+    Log: `measure/runs/game_paladins_twin_soul_rebuild_20261029/green-gate-r2.log`.
+  - Type command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node node_modules/typescript/bin/tsc --noEmit'`.
+    Exit code: 2. Total errors: 31. Owned errors: 0.
+    The total equals the baseline of 31 in test-strategy.md section 3.
+    The error paths belong to other sessions: `assets/airship.ts` 7, `assets/rowboat.ts` 8,
+    `assets/plank.ts` 6, `assets/mushroom-cap.ts` 3, `assets/waterskin.ts` 3, `assets/longship.ts` 1,
+    `assets/merchant-cart.ts` 1, `assets/wool.ts` 1, and `tests/part.test.ts` 1.
+    Log: `measure/runs/game_paladins_twin_soul_rebuild_20261029/green-typecheck-r2.log`.
+    Green did not fix those paths. Their owners hold them.
+  - Models: Red r1 `claude-code/claude-opus-5-5[1m]#high`, Red r2 `deepseek/deepseek-flash#high`,
+    Green r1 `openai/gpt-6.1-sol#high`, Review A r1 and r2 `opencode-go/muse-spark-1.3-contributor#high`,
+    Green r2 `minimax-cn-coding-plan/MiniMax-M3.1-Flash`. No coder delegation occurred.
+  - No task changed to `[b]`. Phase 2 still waits for Daniel's look selection.
+    The registry, the metadata, and the generated files stay with the closeout steward.
 
 ## Phase 2: Views
 
