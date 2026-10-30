@@ -1,0 +1,43 @@
+{
+  "jobId": "l2-w01-story-page-a-neck",
+  "version": 1,
+  "at": 1.0,
+  "spec": {
+    "title": "A neck.",
+    "duration": 2,
+    "lines": [
+      {
+        "text": "A neck.",
+        "start": 0,
+        "end": 2,
+        "actors": [
+          "Nan"
+        ],
+        "gesture": "touch neck"
+      }
+    ]
+  },
+  "stage": {
+    "scene": "classroom",
+    "backdrop": "white",
+    "sun": "high",
+    "marks": {
+      "Nan": {
+        "x": 0,
+        "z": 0,
+        "yaw": 0
+      }
+    },
+    "camera": [
+      {
+        "at": 0,
+        "az": 0,
+        "el": 4,
+        "dist": 1.5,
+        "tx": 0,
+        "ty": 0.55,
+        "tz": 0
+      }
+    ]
+  }
+}

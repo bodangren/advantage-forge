@@ -1,0 +1,45 @@
+{
+  "jobId": "l2-w01-practice-line-nut",
+  "version": 1,
+  "at": 1.0,
+  "spec": {
+    "title": "nut",
+    "duration": 2,
+    "lines": [
+      {
+        "text": "nut",
+        "start": 0,
+        "end": 2,
+        "actors": []
+      }
+    ]
+  },
+  "stage": {
+    "scene": "classroom",
+    "backdrop": "white",
+    "sun": "high",
+    "props": [
+      {
+        "asset": "storytime-nut",
+        "x": 0,
+        "z": 0,
+        "y": 0,
+        "yaw": 20,
+        "scale": 4,
+        "from": 0,
+        "to": 2
+      }
+    ],
+    "camera": [
+      {
+        "at": 0,
+        "az": 20,
+        "el": 15,
+        "dist": 0.95,
+        "tx": 0,
+        "ty": 0.1,
+        "tz": 0
+      }
+    ]
+  }
+}

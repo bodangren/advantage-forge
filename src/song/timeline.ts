@@ -227,6 +227,8 @@ export const GESTURES: Record<string, string> = {
   clap: 'gesture-clap',
   nod: 'gesture-nod',
   'hands out': 'gesture-hands-out',
+  // Storytime week 1 (batch 1 review 2026-10-29: touch-neck passed at 7.3).
+  'touch neck': 'gesture-touch-neck',
   idle: 'gesture-idle',
   // Weeks 2 to 6 (bench/sonnet/sprouts/prompts/b7-gestures-2.md).
   'point up': 'gesture-point-up',

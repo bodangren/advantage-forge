@@ -1,0 +1,63 @@
+{
+  "jobId": "l2-w01-story-page-a-nut",
+  "version": 1,
+  "at": 1.0,
+  "spec": {
+    "title": "A nut.",
+    "duration": 2,
+    "lines": [
+      {
+        "text": "A nut.",
+        "start": 0,
+        "end": 2,
+        "actors": [
+          "Nan"
+        ],
+        "gesture": "hands out"
+      }
+    ]
+  },
+  "stage": {
+    "scene": "classroom",
+    "backdrop": "white",
+    "sun": "high",
+    "marks": {
+      "Nan": {
+        "x": 0,
+        "z": 0,
+        "yaw": 0
+      }
+    },
+    "props": [
+      {
+        "asset": "storytime-nut",
+        "held": "Nan",
+        "hand": "R",
+        "offset": [
+          0,
+          0.035,
+          0
+        ],
+        "rotate": [
+          0,
+          0,
+          0
+        ],
+        "scale": 1.6,
+        "from": 0,
+        "to": 2
+      }
+    ],
+    "camera": [
+      {
+        "at": 0,
+        "az": 0,
+        "el": 12,
+        "dist": 1.6,
+        "tx": 0,
+        "ty": 0.4,
+        "tz": 0
+      }
+    ]
+  }
+}
