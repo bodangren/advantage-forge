@@ -332,6 +332,26 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
   `measure/runs/game_magic_defense_rebuild_20261029/mutations-r3/`. The provisional and final logs
   are not committed.
 
+### Phase 1 closing evidence (after adversarial testing)
+
+- Adversarial test commit `9b015077` adds `tests/games/magic-defense/rules.adversarial.test.ts`.
+- Gate command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/games/magic-defense --maxWorkers=1'`. Exit code: 0.
+  ` Test Files  6 passed (6)`
+  `      Tests  116 passed (116)`
+- Open nonblocking items carried to Phase 2:
+  - RA-MD-3: Replace the empty missile presentation adapters and old battle views; owner Green; Phase 2.
+  - RA-MD-4: Remove or document the unused seeded draws in `roundOf`; owner Green; Phase 2.
+  - RA-MD-5: Resolve the recorded doctor errors and stale generated files; owner closeout-steward; Phase 2.
+  - NB-MD-3: Compare one derived castle order per seed in H17; owner Red; Phase 2.
+  - NB-MD-4: H17 does not pin the seed-to-order mapping; owner none; Phase 2.
+  - NB-MD-5: H17 was not red against the original core; plan records the mutation evidence; owner none; Phase 2.
+  - NB-1: Name the changed contract in the Phase 2 report status line; owner Green; Phase 2.
+  - NB-2 / ADV-MD-2: Guard the QC hooks against a null command; owner Green; Phase 2.
+  - ADV-MD-4: Keep unknown-command handling and extra-field behavior documented and tested; owner Green; Phase 2.
+  - RA-MD-1 and RA-MD-2: closed by Red commit `8b1fb6e0` and recorded above.
+  - NB-MD-1 and NB-MD-2: closed by Red commit `ba47b241` and recorded above.
+  - ADV-MD-1 and ADV-MD-3: closed by adversarial test commit `9b015077`.
+
 ## Phase 2: Views
 
 Status: blocked until Daniel picks the look of Magic Defense from the A-28 mockups
