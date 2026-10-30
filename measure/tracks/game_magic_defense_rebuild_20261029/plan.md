@@ -304,6 +304,34 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
   The role did not use `/tmp/md-proto`. The committed Red tests remain unchanged.
   The old scenes remain a Phase 2 task. Daniel must still pick the look before Phase 2 starts.
 
+### Green r3 mutation evidence (after Red r3 NB-MD-1, NB-MD-2)
+
+- Red r3 test commit `ba47b241` is within the immutable phase range `0c5e7ea2..HEAD`.
+  `role_base_sha` is `143e26ff`; `phase_base_sha` is
+  `0c5e7ea2d62aa67bbb00694da56fa0573eb3b451`.
+- Models: Red r1 `claude-code/claude-opus-5-5[1m]#high`; Red r2 and r3
+  `minimax-cn-coding-plan/MiniMax-M3.1-Flash`; Green r3 `openai/gpt-6-luna#high`.
+  No coder delegation occurred.
+- Scratch mutation command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c
+  'python3 measure/runs/game_magic_defense_rebuild_20261029/green-mutation-r3.py'`.
+  The runner copied game source and tests to `/tmp/opencode/md-green-r3/`, linked their dependencies,
+  and mutated only that copy. It ran every mutation against the full Magic Defense test folder.
+- Scratch control exited 0 with 102 tests. M1 exited 1, H9. M2 exited 1, H1. M3 exited 1, H2.
+  M4 exited 1, H3. M5 exited 1, H4. M6 exited 1, H5. M7 exited 1, H6. M8 exited 1, H7.
+  M9 exited 1, H8. M10 exited 1, H8, with `the row did not shut every wrong word in 6 casts`.
+  M11 exited 1, H9. M12 exited 1, H10. M13 exited 1, H11. M14 exited 1, H5.
+  M15 exited 1, H13. M16 exited 1, H14. M17 exited 1, H16.
+- The additional constant castle-order mutation M18 exited 1 and failed H17.
+  Each test command used `timeout -k 30 300` and no `-t` scope.
+- `GREEN_TEST_COMMAND`: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30
+  300 node_modules/.bin/vitest run tests/games/magic-defense --maxWorkers=1'`. Exit 0.
+  Test Files: 5 passed (5). Tests: 102 passed (102).
+- `git diff --exit-code -- src/games/magic-defense tests/games/magic-defense` exited 0.
+  No Phase 1 task changed status in this evidence round. No production file or test file changed.
+- Per-mutation logs and `results.json` are under
+  `measure/runs/game_magic_defense_rebuild_20261029/mutations-r3/`. The provisional and final logs
+  are not committed.
+
 ## Phase 2: Views
 
 Status: blocked until Daniel picks the look of Magic Defense from the A-28 mockups
