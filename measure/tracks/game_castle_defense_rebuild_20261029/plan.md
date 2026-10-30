@@ -260,6 +260,19 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
       Exit code: 0. Green changed no source file and no test file in this round.
     - No task moved to `[b]`. Every Phase 1 task holds its `[x]` mark with its evidence commit.
 
+### Phase 1 closing evidence (after adversarial testing)
+
+- Adversarial test commit: `3f86c3004ebcb7a049c40b0c141d4778060019f4`, adding `tests/games/castle-defense/rules.adversarial.test.ts`.
+- Gate command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/games/castle-defense --maxWorkers=1'`.
+- Exit code: 0. `Test Files  6 passed (6)`. `Tests  119 passed (119)`.
+- Open nonblocking items carried to Phase 2:
+  - ADV-CD-2: Validate covers indexes and attacker start positions at runtime. Owner: Green. Phase 2.
+  - ADV-CD-3: Handle `dispatch(null)` without a `TypeError`. Owner: Green. Phase 2.
+  - RC-CD-N1: Remove cosmetic `posts` strings from CSS, comments, and the 2D card-state literal. Owner: Green. Phase 2.
+  - RC-CD-N2: Handle `dispatch(null)` without a `TypeError`. Owner: Green. Phase 2.
+  - RC-CD-N3: Replace the shared battle stages in both views. Owner: Green. Phase 2.
+- Closed findings: RA-CD-1 by `27247f07` and `9ffb1f8a`; RA-CD-2 by `f5f3dcf3`; ADV-CD-1 by `3f86c300`. Review A and Review C have no blocking findings.
+
 ## Phase 2: Views
 
 Status: blocked until Daniel picks the look of Castle Defense from the A-28 mockups
