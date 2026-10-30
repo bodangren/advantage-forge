@@ -148,6 +148,49 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
     provisional log is `mid-red-r2-provisional.log`. The final log is
     `mid-red-<short SHA of this plan commit>.log`. The logs are not committed, as for the earlier
     logs of this track.
+- [x] Task: Close the Review A gaps NB-MD-1 and NB-MD-2 (Red, round r3). Test commit `ba47b241`.
+  Owned path: `tests/games/magic-defense/rules.test.ts`.
+  - NB-MD-1: the limit of the H8 loop at the row `H8 (ASM-3): the right word never shuts, so every
+    meaning can be broken` is no longer the bare number 50. The limit is now
+    `sim.state.round!.choices.length * 2`, which is 6 casts with `TUNING.choices = 3`. The card
+    carries one right word and two wrong words, and every wrong word shuts after one cast, so the
+    correct core needs two casts. A change of `TUNING.choices` no longer fails the row falsely.
+  - NB-MD-2: the two loops that ran `while (sim.state.phase === 'playing') castRight(sim)` now use
+    the helper `castRightToEnd`. The helper counts the casts and throws at the limit. The limit of
+    the row `the mana never passes its maximum` is `STORY.vocabulary.length * 2`, which is 26
+    casts. The limit of the row `one item per word with the attempts and the first-try flag; the
+    score is the coins` is `SHORT_STORY.vocabulary.length * 2`, which is 10 casts. A correct run
+    casts the right word once per word of the fixture, so the margin is one more fixture. Each
+    message names the row and the fault: `the run did not end after N right casts`.
+  - The M10 mutation of the earlier round now fails the H8 row with `the row did not shut every
+    wrong word in 6 casts`, because the limit comes from the count of the choices. The recorded run
+    of that round keeps its message and its count.
+  - No assertion was removed or loosened. No file in `src/` changed.
+  - Red r3 (Review A NB-MD-1, NB-MD-2): commit `ba47b241`.
+  - Red evidence (2026-10-30, role `measure-mid-red`, round `r3`, role base `014514f0`, phase base
+    `0c5e7ea2`). The test commit `ba47b241` holds only `tests/games/magic-defense/rules.test.ts`.
+  - PROBE_RED, the mutant that never ends the run: `bash
+    ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest
+    run --config measure/runs/game_magic_defense_rebuild_20261029/probe/vitest-victory.config.ts
+    --maxWorkers=1'`. Exit code 1. The gate did not end with 124. Test Files: 3 failed, 2 passed
+    (5). Tests: 74 failed, 28 passed (102). Duration 15.48 s. The two bounded rows failed fast:
+    `the mana never passes its maximum: the run did not end after 26 right casts` and `one item
+    per word with the attempts and the first-try flag; the score is the coins: the run did not end
+    after 10 right casts`. The probe files are `probe/sim-mutant-never-ends.ts`,
+    `probe/index-mutant-never-ends.ts`, and `probe/vitest-victory.config.ts`.
+  - PROBE_CONTROL, the same alias pattern with the real core: `bash
+    ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest
+    run --config measure/runs/game_magic_defense_rebuild_20261029/probe/vitest-control-r3.config.ts
+    --maxWorkers=1'`. Exit code 0. Test Files: 5 passed (5). Tests: 0 failed, 102 passed (102).
+    Duration 5.35 s.
+  - REAL_SUITE: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300
+    node_modules/.bin/vitest run tests/games/magic-defense --maxWorkers=1'`. Exit code 0. Test
+    Files: 5 passed (5). Tests: 0 failed, 102 passed (102). Duration 5.17 s. The count of 102
+    tests is the count of `jr-green-01998be4.log`, before this change.
+  - The logs of this round are in `measure/runs/game_magic_defense_rebuild_20261029/probe/`:
+    `probe-red-r3.log`, `probe-control-r3.log`, and `real-suite-r3.log`. The provisional log is
+    `mid-red-r3-provisional.log`. The final log is `mid-red-<short SHA of this plan commit>.log`.
+    The logs are not committed, as for the earlier logs of this track.
 - [x] Task: Rerun the M10 mutation with the unbounded fault on the bounded loop and the gates (Green). Evidence commit: `8b1fb6e0` (Red tests; no source change needed).
   Owned path: `src/games/magic-defense/core/`. The mutation is temporary and is removed after the
   run.
