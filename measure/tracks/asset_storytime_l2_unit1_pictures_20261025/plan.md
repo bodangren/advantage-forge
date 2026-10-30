@@ -1513,3 +1513,22 @@ gate applies again.
   (`check-row-nest`, `practice-line-nest`, `check-row-net`). Rows with an open defect: 1. Week
   1 rows rendered so far: 16 of 30 (12 with no open defect). No task is marked `[x]`. The rows
   wait for the independent item and picture review.
+  Green round 12 evidence (2026-10-31, Sonnet). Task: fix `story-page-a-net`. Commit `edabdff3` adds
+  `l2-w01-story-page-a-net-v3.json`. It changes only the held net `rotate` (`[0, 55, 0]`, a turn
+  about the handle) and `offset` (`[-0.03, -0.2, 0]`) of the v1 stage. The camera, gesture,
+  scene, mark, prop asset, and scale stay as in v1. No asset or `src/` file changed. Models:
+  Green `claude-code/claude-sonnet-5-5#high`, Red `minimax-cn-coding-plan/MiniMax-M3`, coder
+  none. Render and `verify --row` each ran as one `heavy-run.sh` command. Both exits were `0`.
+  Logs: `green-p3-r12-story-page-a-net-render-v3.log` and `green-p3-r12-story-page-a-net-verify.log`.
+  Render peak 489 MB; verify peak 312 MB; both under the 3 GB limit.
+  - `story-page-a-net` v3 (kept; class A, 4000 x 3000; 23 px line, ink 10.55%): color
+    `62f64283dd73cb515fc1576847d58c0cd0aa10063de399d74cf18b77f20ac665`; line art
+    `a38eb5a821b628f1bcbf22bbac1a8cf8dee6eacd1d85cf1a868ad12eb7e6ce34`. Nan smiles on the meadow
+    with clear eyes and a clear face. The green hoop opens to the three-quarter view. The deep
+    woven bag hangs out to the left, away from the head. The grip and the handle show below.
+    The line art shows the hoop, the bag, and the handle as separate shapes. The net reads as a
+    butterfly net. The hoop edge touches the hair at one point, but it does not cover the face.
+  v4 was not needed. v1 and v2 stay on disk as superseded. Verify passed for 3 row versions.
+  The open defect for `story-page-a-net` is closed in this round, pending the independent
+  picture review. Rows rendered this round: 1. Week 1 rows rendered so far: 16 of 30 (13 with no
+  open defect). No task is marked `[x]`.
