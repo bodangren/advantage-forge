@@ -9,7 +9,8 @@ import { defineAsset, mixRgb, rgb, sdf } from '../src/index.js';
  * Palette: bus yellow #f7b81c, glass #86bde0, trim #3d3d48, tires #2b2b33, hubs #b9bfc8.
  * Materials: satin painted metal, glossy glass, matte rubber, bright metal hubs.
  * Detail: nose hood with grille and two headlights, windshield, two rows of side windows,
- *   a two-leaf door on the right side (-X), black stripe, bumpers, mirrors, roof lamps.
+ *   a two-leaf door with a dark frame and a step on the left side (+X, the side the picture views show;
+ *   the -X side has plain windows), black stripe, bumpers, mirrors, roof lamps.
  * Rig/animation: none. No text, number, logo, or flag.
  */
 
@@ -36,8 +37,11 @@ const WIN_Y = 0.52;
 const WIN_H = 0.19;
 const DOOR_Z = 0.25;
 const DOOR_LEN = 0.22;
-const RIGHT_WINDOWS = [-0.46, -0.22, 0.02];
-const LEFT_WINDOWS = [-0.46, -0.22, 0.02, 0.26];
+const DOOR_SIDE = 1; // +X, the left side of the bus: the side that the picture views show
+const DOOR_H = 0.4;
+const DOOR_Y = 0.42;
+const PLAIN_WINDOWS = [-0.46, -0.22, 0.02, 0.26]; // the -X side: windows only
+const DOOR_SIDE_WINDOWS = [-0.46, -0.22, 0.02]; // the +X side: windows behind the door
 const WIN_LEN = 0.17;
 
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
@@ -52,7 +56,7 @@ const sideGlass = (side: number, y: number, z: number, h: number, len: number) =
 export default defineAsset({
   name: 'storytime-school-bus',
   description:
-    'A short, round, soft yellow school bus with a hood, big windows, a two-leaf side door on the right, two headlights, and four big wheels.',
+    'A short, round, soft yellow school bus with a hood, big windows, a two-leaf side door on the left, two headlights, and four big wheels.',
   detail: 0.005,
   texture: { size: 1024 },
 
@@ -71,9 +75,9 @@ export default defineAsset({
 
     // Window and door recesses.
     const cuts: sdf.Shape[] = [];
-    for (const z of RIGHT_WINDOWS) cuts.push(sideCutter(-1, WIN_Y, z, WIN_H, WIN_LEN));
-    for (const z of LEFT_WINDOWS) cuts.push(sideCutter(1, WIN_Y, z, WIN_H, z > 0.2 ? 0.16 : WIN_LEN));
-    cuts.push(sideCutter(-1, 0.42, DOOR_Z, 0.4, DOOR_LEN));
+    for (const z of PLAIN_WINDOWS) cuts.push(sideCutter(-DOOR_SIDE, WIN_Y, z, WIN_H, z > 0.2 ? 0.16 : WIN_LEN));
+    for (const z of DOOR_SIDE_WINDOWS) cuts.push(sideCutter(DOOR_SIDE, WIN_Y, z, WIN_H, WIN_LEN));
+    cuts.push(sideCutter(DOOR_SIDE, DOOR_Y, DOOR_Z, DOOR_H, DOOR_LEN));
     cuts.push(sdf.box([0.4, 0.17, 0.1], 0.035).at(0, 0.555, BODY_Z1 + 0.05 - 0.014)); // windshield
     cuts.push(sdf.box([0.36, 0.17, 0.1], 0.035).at(0, 0.555, BODY_Z0 - 0.05 + 0.014)); // rear window
     shell = shell.subtract(...cuts);
@@ -93,8 +97,8 @@ export default defineAsset({
       if (y < 0.2) c = mixRgb(c, DARK, clamp01((0.2 - y) / 0.015));
       // Dark wheel arches.
       if (Math.abs(x) > 0.2 && archDist(y, z) < 0.178) c = DARK;
-      // Right door: darker leaf and a centre seam.
-      if (x < -0.33 && Math.abs(z - DOOR_Z) < DOOR_LEN / 2 + 0.004 && y > 0.2 && y < 0.625) {
+      // Door: darker leaves and a centre seam.
+      if (x > 0.33 && Math.abs(z - DOOR_Z) < DOOR_LEN / 2 + 0.004 && y > 0.2 && y < 0.625) {
         c = YELLOW_DOOR;
         if (Math.abs(z - DOOR_Z) < 0.004) c = DARK;
       }
@@ -116,9 +120,9 @@ export default defineAsset({
 
     // ------------------------------------------------------------------ glass
     const panes: sdf.Shape[] = [];
-    for (const z of RIGHT_WINDOWS) panes.push(sideGlass(-1, WIN_Y, z, WIN_H - 0.012, WIN_LEN - 0.012));
-    for (const z of LEFT_WINDOWS) panes.push(sideGlass(1, WIN_Y, z, WIN_H - 0.012, (z > 0.2 ? 0.16 : WIN_LEN) - 0.012));
-    for (const dz of [-0.052, 0.052]) panes.push(sideGlass(-1, 0.535, DOOR_Z + dz, 0.2, 0.086));
+    for (const z of PLAIN_WINDOWS) panes.push(sideGlass(-DOOR_SIDE, WIN_Y, z, WIN_H - 0.012, (z > 0.2 ? 0.16 : WIN_LEN) - 0.012));
+    for (const z of DOOR_SIDE_WINDOWS) panes.push(sideGlass(DOOR_SIDE, WIN_Y, z, WIN_H - 0.012, WIN_LEN - 0.012));
+    for (const dz of [-0.05, 0.05]) panes.push(sideGlass(DOOR_SIDE, 0.5, DOOR_Z + dz, 0.26, 0.082)); // two tall door panes
     panes.push(sdf.box([0.38, 0.15, 0.014], 0.006).at(0, 0.555, BODY_Z1 - 0.014)); // windshield
     panes.push(sdf.box([0.34, 0.15, 0.014], 0.006).at(0, 0.555, BODY_Z0 + 0.014)); // rear window
     k.body('windows', sdf.union(...panes).paintFn((_x, y, _z) => mixRgb(GLASS, GLASS_LIGHT, 0.7 * clamp01((y - 0.5) / 0.14))), {
@@ -153,7 +157,15 @@ export default defineAsset({
     const mirror = sdf
       .capsule([HALF_W - 0.01, 0.6, 0.4], [HALF_W + 0.03, 0.62, 0.415], 0.01)
       .smoothUnion(0.01, sdf.ellipsoid([0.016, 0.045, 0.03]).at(HALF_W + 0.04, 0.615, 0.415));
-    const trim = sdf.union(bumperFront, bumperRear, mirror, mirror.mirror('x', 0));
+    // Door frame: a dark rubber ring that stands proud of the side, so the door reads in line art.
+    const frameX = DOOR_SIDE * (HALF_W + 0.002);
+    const frame = sdf
+      .box([0.03, 0.46, 0.27], 0.014)
+      .at(frameX, DOOR_Y + 0.005, DOOR_Z)
+      .subtract(sdf.box([0.12, 0.385, 0.2], 0.02).at(frameX, DOOR_Y + 0.005, DOOR_Z));
+    // Centre seam between the two leaves.
+    const seam = sdf.box([0.012, 0.37, 0.012], 0.004).at(DOOR_SIDE * (HALF_W - 0.008), DOOR_Y, DOOR_Z);
+    const trim = sdf.union(bumperFront, bumperRear, mirror, mirror.mirror('x', 0), frame, seam);
     k.body('trim', trim, {
       color: '#3d3d48',
       roughness: 0.5,
@@ -161,6 +173,10 @@ export default defineAsset({
       detail: 0.004,
       maxTriangles: 2500,
     });
+
+    // One low step under the door.
+    const step = sdf.box([0.09, 0.03, 0.22], 0.012).at(DOOR_SIDE * (HALF_W + 0.025), 0.2, DOOR_Z);
+    k.body('door-step', step, { color: '#b9bfc8', roughness: 0.4, metalness: 0.4, detail: 0.004, maxTriangles: 1200 });
 
     // ------------------------------------------------------------------ lamps
     const lampBall = (x: number, y: number, z: number, r: number, flat: number) =>
