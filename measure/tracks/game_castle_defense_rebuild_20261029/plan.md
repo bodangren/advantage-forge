@@ -209,6 +209,56 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
   - Model deviation: the Red role ran on `claude-code/claude-opus-5-5[1m]#high`. The first Green ran
     on `openai/gpt-6.1-sol#high` and stopped when Daniel restarted OpenCode at 17:15 ICT. This Green
     run used `minimax-cn-coding-plan/MiniMax-M3.1-Flash`. The Ark plans were over quota.
+  - Green r2 evidence (2026-10-30, role `measure-jr-green`, remediation round 2 after Review A).
+    Review A named two items. RA-CD-1 (Red) named two unbounded collect loops. Red r2 bounded them
+    in test commit `27247f07`. RA-CD-2 (Green) named the missing mutations M9 to M18. The core needed
+    no change. This round ran M1 to M18 on the bounded tests and recorded each kill.
+    Phase base: `dde11f04c1fee76aafe7b1a3093d0bb9a1c73a60`.
+    Role base: `9b015077`.
+    Model of this round: `minimax-cn-coding-plan/MiniMax-M3.1-Flash`.
+    The Red models were `claude-code/claude-opus-5-5[1m]#high` (r1) and `claude-code/claude-sonnet-5-5#high`
+    (r2). Both belong to the Anthropic family, and this round used another family. The first Green ran
+    on `openai/gpt-6.1-sol#high`. No coder delegation ran.
+    - Mutation runner: `measure/runs/game_castle_defense_rebuild_20261029/green-mutation-r2.py`.
+      The model is `measure/runs/game_magic_defense_rebuild_20261029/green-mutation-r3.py`.
+      The runner copied the game and its tests to `/tmp/opencode/cd-green-r2/` and mutated only that
+      copy. The checkout stayed clean.
+    - Mutation command: `timeout -k 30 300 node_modules/.bin/vitest run tests/games/castle-defense
+      --maxWorkers=1`, run in the copy with no `-t` scope.
+      The runner ran under `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'python3
+      measure/runs/game_castle_defense_rebuild_20261029/green-mutation-r2.py'`. The runner called no
+      `heavy-run.sh`, so the flock never nested.
+    - Control run in the copy: exit 0. `Test Files 5 passed (5)`. `Tests 90 passed (90)`.
+      The final control run after the last mutation also exited 0 with `Tests 90 passed (90)`.
+    - Mutation results. Each mutation exited 1 and failed its row of section 6.
+      M1 killed W1 and F1. `Tests 11 failed | 79 passed (90)`.
+      M2 killed W2. `Tests 9 failed | 81 passed (90)`.
+      M3 killed W3. `Tests 1 failed | 89 passed (90)`.
+      M4 killed W4. `Tests 1 failed | 89 passed (90)`.
+      M5 killed W5. `Tests 4 failed | 86 passed (90)`.
+      M6 killed W6. `Tests 63 failed | 27 passed (90)`.
+      M7 killed W7. `Tests 2 failed | 88 passed (90)`.
+      M8 killed W8. `Tests 2 failed | 88 passed (90)`.
+      M9 killed P1, F1, and R3. `Tests 9 failed | 81 passed (90)`.
+      M10 killed P2. `Tests 52 failed | 38 passed (90)`.
+      M11 killed E2 and E3. `Tests 2 failed | 88 passed (90)`.
+      M12 killed S3. `Tests 3 failed | 87 passed (90)`.
+      M13 killed X1. `Tests 1 failed | 89 passed (90)`.
+      M14 killed X3. `Tests 1 failed | 89 passed (90)`.
+      M15 killed B2. `Tests 1 failed | 89 passed (90)`.
+      M16 killed D2. `Tests 1 failed | 89 passed (90)`.
+      M17 killed R1 and A-core. `Tests 2 failed | 88 passed (90)`.
+      M18 killed L1. `Tests 14 failed | 76 passed (90)`.
+      No mutation survived. No mutation hung.
+      Logs: `measure/runs/game_castle_defense_rebuild_20261029/mutations-r2/M1.log` through `M18.log`,
+      with `control.log`, `final-control.log`, and `results.json` in the same folder.
+    - Green command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300
+      node_modules/.bin/vitest run tests/games/castle-defense --maxWorkers=1'`.
+      Exit code: 0. `Test Files 5 passed (5)`. `Tests 90 passed (90)`. Failed: 0.
+      Log: `measure/runs/game_castle_defense_rebuild_20261029/green-vitest-r3.log`.
+    - Clean check: `git diff --exit-code -- src/games/castle-defense tests/games/castle-defense`.
+      Exit code: 0. Green changed no source file and no test file in this round.
+    - No task moved to `[b]`. Every Phase 1 task holds its `[x]` mark with its evidence commit.
 
 ## Phase 2: Views
 
