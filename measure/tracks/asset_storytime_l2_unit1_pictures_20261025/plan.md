@@ -1564,3 +1564,21 @@ gate applies again.
   (views: front, three-quarter, back-three-quarter for the door side, side), with `brief.md` and
   the look reference. Open risk: the door shows at a shallow angle in the back-three-quarter view.
   No task is marked `[x]`. The bus waits for the independent review.
+  Green round 15 evidence (2026-10-31, Sonnet). The independent review
+  `item-review-batch-2.json` rated the bus 8.2 but failed it with one critical defect: "The bus has
+  no clear door." Fix asked: "Make the two-leaf door clear on the right side." Orchestrator
+  decision: move the door to the +X side (the left side of the bus). Reason: Thailand drives on the
+  left, so a bus door is on the left (curb) side, and the three-quarter and side views of the row
+  pictures show +X. This replaces "a door on the right side" from the round 14 brief. Commit
+  `e00cec90` (`assets/storytime-school-bus.ts`) removes the -X door and keeps four plain windows on
+  -X. On +X it adds a tall two-leaf door near the front wheel with a dark rubber frame that stands
+  proud of the side, two tall glass panes, a dark center seam, and one low grey step. The windows,
+  wheels, lamps, bumpers, colors, and size are unchanged. It has no text, number, logo, or flag.
+  Render exits: `--fast` first run exit `1` (box radius error, fixed), `--fast` second run exit
+  `0` (log `green-p3-r15-render2.log`), textured `./forge render storytime-school-bus` exit `0`
+  (log `green-p3-r15-render-tex.log`), `./forge inspect storytime-school-bus --fast` exit `0`
+  (log `green-p3-r15-inspect.log`). `warning:` lines: `0` in all runs; inspect warnings: none.
+  Every forge command ran as one `heavy-run.sh` command. The review card is
+  `out/storytime-review/batch-2/storytime-school-bus.png` (front, three-quarter, side, back), with
+  an updated `brief.md`. Open risk: in the front view, the proud door frame shows as a thin dark
+  bar at the side edge. No task is marked `[x]`. The bus waits for the independent review r2.
