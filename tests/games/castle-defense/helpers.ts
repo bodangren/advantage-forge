@@ -8,6 +8,7 @@ import {
   type CastleDefenseEvent,
   type CastleDefenseSimulation,
   type CastleDefenseState,
+  SENTENCE_WORDS,
   type Spot,
 } from '../../../src/games/castle-defense/core/index.js';
 import { nextCommand } from '../../../src/games/castle-defense/qc/bot.js';
@@ -52,10 +53,20 @@ export function wrongChoice(sim: CastleDefenseSimulation): number {
 export const pickRight = (sim: CastleDefenseSimulation): CastleDefenseEvent[] => sim.dispatch({ type: 'pick', choice: rightChoice(sim) });
 export const pickWrong = (sim: CastleDefenseSimulation): CastleDefenseEvent[] => sim.dispatch({ type: 'pick', choice: wrongChoice(sim) });
 
+/** A sentence holds at most SENTENCE_WORDS.max words and one right pick adds one word; the margin is 4 picks. */
+export const COLLECT_LIMIT = SENTENCE_WORDS.max + 4;
+
 /** Builds the whole current sentence with right words; returns the events. */
 export function buildSentence(sim: CastleDefenseSimulation): CastleDefenseEvent[] {
   const events: CastleDefenseEvent[] = [];
-  while (sim.state.stage === 'collect' && sim.state.phase === 'playing') events.push(...pickRight(sim));
+  let picks = 0;
+  while (sim.state.stage === 'collect' && sim.state.phase === 'playing') {
+    if (picks >= COLLECT_LIMIT) {
+      throw new Error(`buildSentence: the sentence did not finish after ${COLLECT_LIMIT} picks; the stage stayed collect`);
+    }
+    events.push(...pickRight(sim));
+    picks += 1;
+  }
   return events;
 }
 

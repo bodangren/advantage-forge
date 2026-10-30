@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { storyGameEvidenceSchema } from '../../../src/apk3d/contracts/index.js';
 import { createCastleDefense, resultsOf, type CastleDefenseEvent, type CastleDefenseState } from '../../../src/games/castle-defense/core/index.js';
 import { nextCommand } from '../../../src/games/castle-defense/qc/bot.js';
-import { STORY_IDS, buildSentence, loadStory, ofType, playToEnd, spotsOf, widestSpot } from './helpers.js';
+import { COLLECT_LIMIT, STORY_IDS, buildSentence, loadStory, ofType, playToEnd, spotsOf, widestSpot } from './helpers.js';
 
 /** The events of each `build`: from its `towerBuilt` to its `waveCleared`. */
 function waves(events: readonly CastleDefenseEvent[]): CastleDefenseEvent[][] {
@@ -88,7 +88,10 @@ describe('bot', () => {
     const c = nextCommand(sim.state);
     expect(c).toMatchObject({ type: 'pick' });
     expect(sim.state.step!.choices.find((x) => x.index === (c as { choice: number }).choice)!.right).toBe(true);
-    while (sim.state.stage === 'collect') sim.dispatch(nextCommand(sim.state)!);
+    for (let picks = 0; sim.state.stage === 'collect'; picks++) {
+      if (picks >= COLLECT_LIMIT) throw new Error(`B3: the sentence did not finish after ${COLLECT_LIMIT} bot picks; the stage stayed collect`);
+      sim.dispatch(nextCommand(sim.state)!);
+    }
     expect(nextCommand(sim.state)).toMatchObject({ type: 'build' });
     playToEnd(sim);
     expect(nextCommand(sim.state)).toBeNull();
