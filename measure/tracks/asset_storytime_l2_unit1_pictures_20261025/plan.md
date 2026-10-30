@@ -1616,3 +1616,37 @@ gate applies again.
   `heavy-run.sh` command. The review card is `out/storytime-review/batch-2c/storytime-sun-hat.png`,
   with `brief.md` and the look reference. Open risk: a reviewer may find the crown too plain or the
   bow loops too blobby. No task is marked `[x]`. The sun hat waits for the independent review.
+  Green round 18 evidence (2026-10-31, Sonnet). Three props passed the independent review
+  (`item-review-batch-2-r2.json`: bus 8.4; `item-review-batch-2b.json`: cup 7.4;
+  `item-review-batch-2c.json`: sun hat 8.0; reviewer `openai/gpt-6-luna#high`). Commit `69e20a36`
+  adds `l2-w01-check-row-bus-v1.json`, `l2-w01-check-row-cup-v1.json`, and
+  `l2-w01-check-row-hat-v3.json`. No asset, `src/`, or list file changed. Models: Green
+  `claude-code/claude-sonnet-5-5#high`, Red `minimax-cn-coding-plan/MiniMax-M3`, coder none. Each
+  render and each `verify --row` ran as one `heavy-run.sh` command. All exits were `0`. Logs:
+  `green-p3-r18-<row>-render-v<n>.log` and `green-p3-r18-<row>-verify.log`. Render peak memory 458
+  to 822 MB; verify peak 136 to 160 MB; all under the 3 GB limit. All three rows are class C,
+  1500 x 1500, white background, one object. Files (color; line art):
+  - `check-row-bus` v1 (kept; az 60, el 12, dist 3.4; 21 px line, ink 10.90%, peak 822 MB):
+    `e69428544d7625be43274e6ad7974e283128aa8324748ccf021bc395fefd5110`;
+    `d5fe38b7f56e45040eb0ded4c398e34ebb3371b819cdf9b6c78e0b15c5f99bd2`. The bus seen from +X shows
+    the yellow body, the two-leaf door with its step, three windows, and two wheels. The line art
+    keeps the door, the windows, and the wheels as separate shapes.
+  - `check-row-cup` v1 (kept; scale 5, az 70, el 30, dist 2.0; 20 px line, ink 4.02%, peak 458 MB):
+    `a6a591196dafdc3513cc2472fe91c4559364328b45eec5f34f26b2a1f0dbab7d`;
+    `1030020ec6cb20fba897da5aa27daf5b93dda0c3cf23e8d913fc9e0ce3fc9dcc`. The cup shows the
+    dark, empty inside above the cream rim and the round handle on +X. The review note about the
+    sealed opening is answered. The line art draws the rim ring, the inner ring, and the handle.
+  - `check-row-hat` v3 (kept; scale 3, az 70, el 20, dist 2.0; 22 px line, ink 5.26%, peak 479
+    MB): `4ddf4b2f76e5dc9c18191ecf118863b50354793d894d642e53b477ecc01ecc01`;
+    `67d0050d952b81483c8a3e4faeefde74cebfb7bc11cca64d69f5c48bc265b2ac`. The hat reads as a straw
+    sun hat: a straight crown, a wide soft brim, a red ribbon, and the bow on +X. The brim reads as
+    a wide ring, not a thin plate. v4 was not needed. v1 and v2 stay on disk as superseded
+    (`explorer-hat`).
+  Checks by eye on all six files: one object, white corners, nothing cut at the frame, and the key
+  part shows in both files. Small notes: the cup sits a little left of the center. The bus
+  headlight and the grille merge into a dark mass in the line art. Both stay readable. Verify
+  passed: bus 1 row version, cup 1, hat 3 (v1, v2, v3). No open asset defect. Rows rendered this
+  round: 3 (bus and cup are new; hat is the third version of a rendered row). Week 1 rows
+  rendered so far: 18 of 30. Rows with no open defect: 16 (the hat row defect closes, pending the
+  independent picture review). No task is marked `[x]`. The rows wait for the independent item
+  and picture review.
