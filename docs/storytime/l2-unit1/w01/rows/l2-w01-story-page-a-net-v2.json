@@ -1,0 +1,62 @@
+{
+  "jobId": "l2-w01-story-page-a-net",
+  "version": 2,
+  "at": 1.0,
+  "spec": {
+    "title": "A net.",
+    "duration": 2,
+    "lines": [
+      {
+        "text": "A net.",
+        "start": 0,
+        "end": 2,
+        "actors": [
+          "Nan"
+        ],
+        "gesture": "point up"
+      }
+    ]
+  },
+  "stage": {
+    "scene": "meadow",
+    "sun": "high",
+    "marks": {
+      "Nan": {
+        "x": 0,
+        "z": 0,
+        "yaw": 0
+      }
+    },
+    "props": [
+      {
+        "asset": "storytime-butterfly-net",
+        "held": "Nan",
+        "hand": "R",
+        "offset": [
+          0,
+          -0.2,
+          0
+        ],
+        "rotate": [
+          0,
+          0,
+          0
+        ],
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      }
+    ],
+    "camera": [
+      {
+        "at": 0,
+        "az": 0,
+        "el": 6,
+        "dist": 3.0,
+        "tx": 0,
+        "ty": 0.7,
+        "tz": 0
+      }
+    ]
+  }
+}
