@@ -268,6 +268,30 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
   - No task changed to `[b]`. Phase 2 still waits for Daniel's look selection.
     The registry, the metadata, and the generated files stay with the closeout steward.
 
+### Phase 1 closing evidence (after adversarial testing)
+
+- Adversarial test commit: `569d6c68` adds `tests/games/paladins-twin-soul/rules.adversarial.test.ts` (+520 lines). It changed no production source.
+- Gate command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/games/paladins-twin-soul --maxWorkers=1'`.
+- Gate exit code: 0.
+- Exact gate summary:
+  ```
+   Test Files  6 passed (6)
+        Tests  198 passed (198)
+  ```
+- Open nonblocking items carried to Phase 2:
+  - RA-PT-1 — bounded the T4 lone-captor loop; closed by `cb6609a6`.
+  - RA-PT-2 — replace the shared battle stages and update the manifest, battle test, and QC player; Green, Phase 2 (already assigned in Phase 2 tasks).
+  - RA-PT-3 — resolve the recorded doctor errors, stale generated files, and registry and metadata gaps; closeout steward, Phase 2.
+  - RA-PT-4 — bounded the T2 victory loop; closed by `cb6609a6`.
+  - Review C NB-1 — include the changed event set and removed monster state in the cartridge-sync status line; Green, Phase 2.
+  - Review C NB-2 — handle null commands in both QC hooks without a TypeError; Green, Phase 2.
+  - Review C NB-3 — remove old battle-stage sets and monster names from the manifest and strings; Green, Phase 2 (already assigned by FR-11 to FR-13).
+  - ADV-PT-1 — check captor position and id in ask payloads; closed by `569d6c68`.
+  - ADV-PT-2 — prove rejected commands, unknown commands, and ticks do not draw randomness; closed by `569d6c68`.
+  - ADV-PT-3 — strengthen wave ids, strict shade-id matching, and retry score checks; closed by `569d6c68`.
+  - ADV-PT-4 — reject a null command in QC hooks; Green, Phase 2.
+  - ADV-PT-5 — correct the `strikeRejected` comment for post-victory commands; Green, Phase 2.
+
 ## Phase 2: Views
 
 Status: blocked until Daniel picks the look of Paladin's Twin Soul from the A-28 mockups
