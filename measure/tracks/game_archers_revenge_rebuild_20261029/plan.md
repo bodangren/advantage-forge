@@ -232,6 +232,51 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
   `measure/anti-patterns.md` is absent. The review used the strategy catalog and the canonical starter catalog.
 - No task changed to `[b]`. Phase 2 still waits for Daniel's look decision. No closeout metadata changed.
 
+### Green r2 (after Red r2 RA-AR-1, 2026-10-30)
+
+- Role: `measure-jr-green`, `opencode-go/muse-spark-1.3-contributor#high`. No coder delegation occurred.
+- Immutable phase base: `e51413ef`. Role base: `260017dd`.
+  Red r2 test commit `46814310` is inside `phase_base_sha..HEAD`.
+- The core needed no change. Red r2 only bounded two test loops.
+  No file in `src/` or `tests/` changed in this round.
+- Mutation command:
+  `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'python3 measure/runs/game_archers_revenge_rebuild_20261029/run-green-mutations.py'`.
+  The runner copies the current `src/games/archers-revenge/` and `tests/games/archers-revenge/`
+  into a scratch folder at start, so it used the bounded tests.
+  Control: exit 0; `Test Files  6 passed (6)`; `Tests  134 passed (134)`.
+  Runner output: `Scratch control exit 0`, then each of M1 to M19 with exit 1.
+  No exit 124 occurred. No mutation survived. The checkout stayed unchanged.
+  `measure/runs/game_archers_revenge_rebuild_20261029/mutations/results.json` records each id,
+  row, and exit code.
+
+| Mutation | Row | Exit |
+| --- | --- | --- |
+| M1 | R5 | 1 |
+| M2 | R5 part B | 1 |
+| M3 | R2 | 1 |
+| M4 | R2 | 1 |
+| M5 | R2 | 1 |
+| M6 | R4 | 1 |
+| M7 | R4 | 1 |
+| M8 | R4 | 1 |
+| M9 | R7 | 1 |
+| M10 | R7 | 1 |
+| M11 | R8 and R16 | 1 |
+| M12 | R8 | 1 |
+| M13 | R9 | 1 |
+| M14 | R11 | 1 |
+| M15 | R12 | 1 |
+| M16 | R13 and R14 (runner label: "first hitting pair in grid order") | 1 |
+| M17 | R14 | 1 |
+| M18 | R15 | 1 |
+| M19 | R17 | 1 |
+
+- Real gate:
+  `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/games/archers-revenge --maxWorkers=1'`.
+  Exit 0. `Test Files  6 passed (6)`. `Tests  134 passed (134)`.
+- Known nonblocking item from Review A (no action): Green r1 added
+  `tests/games/archers-revenge/aim-green.test.ts`, which is role drift (tests are Red's).
+
 ## Phase 2: Views
 
 Status: blocked until Daniel picks the look of Archer's Revenge from the A-28 mockups
