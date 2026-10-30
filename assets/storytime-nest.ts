@@ -8,7 +8,7 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  * Shape language: round and layered, with gently irregular twig ends.
  * Palette: nest #9c7148 and #c39a63, dark grooves #6f4c32, eggs #a9dce8.
  * Materials: rough woven wood and smooth matte eggshell.
- * Detail: a shallow bowl, rounded woven strands, a thick rim, three calm blue eggs.
+ * Detail: a shallow bowl, woven strands, a rim of rough crossing twigs, three round blue eggs.
  * Rig/animation: none.
  */
 
@@ -24,9 +24,9 @@ const bowlProfile = profile.polygon(
     [0.064, 0.006],
     [0.079, 0.019],
     [0.088, 0.037],
-    [0.089, 0.044],
-    [0.084, 0.047],
-    [0.078, 0.041],
+    [0.089, 0.040],
+    [0.085, 0.042],
+    [0.078, 0.037],
     [0.067, 0.026],
     [0.046, 0.016],
     [0, 0.015],
@@ -34,19 +34,12 @@ const bowlProfile = profile.polygon(
   { smooth: true },
 );
 
-const eggProfile = profile.polygon(
-  [
-    [0, 0],
-    [0.009, 0.001],
-    [0.015, 0.007],
-    [0.018, 0.017],
-    [0.0165, 0.028],
-    [0.011, 0.038],
-    [0.003, 0.044],
-    [0, 0.0445],
-  ],
-  { smooth: true },
-);
+// A smooth egg: a wide round base blended into a smaller round top, so no tip is pointed.
+const eggShape = () =>
+  sdf
+    .ellipsoid([0.0185, 0.0215, 0.0185])
+    .at(0, 0.0215, 0)
+    .smoothUnion(0.012, sdf.ellipsoid([0.0148, 0.0175, 0.0148]).at(0, 0.0275, 0));
 
 export default defineAsset({
   name: 'storytime-nest',
@@ -67,10 +60,7 @@ export default defineAsset({
       maxTriangles: 6500,
     });
 
-    const strands: sdf.Shape[] = [
-      sdf.torus(0.0835, 0.0038).at(0, 0.043, 0),
-      sdf.torus(0.079, 0.0028).at(0, 0.034, 0),
-    ];
+    const strands: sdf.Shape[] = [];
     for (let i = 0; i < 24; i++) {
       const level = i % 3;
       const y = 0.012 + level * 0.012;
@@ -86,6 +76,23 @@ export default defineAsset({
       }
       strands.push(sdf.chain(points, 0.0008));
     }
+    // Rough rim: short crossing twigs of different length and thickness. Some ends poke out and up.
+    for (let i = 0; i < 34; i++) {
+      const start = i * 2.39996 + 0.4;
+      const span = 0.32 + 0.5 * noise.random(i, 1, 0);
+      const climb = (noise.random(i, 2, 0) - 0.45) * 0.014;
+      const baseY = 0.036 + 0.006 * noise.random(i, 3, 0);
+      const baseR = 0.078 + 0.012 * noise.random(i, 4, 0);
+      const thick = 0.0026 + 0.0013 * noise.random(i, 5, 0);
+      const points: [number, number, number, number][] = [];
+      for (let j = 0; j < 4; j++) {
+        const t = j / 3;
+        const a = start + span * t;
+        const rr = baseR + 0.007 * t * (noise.random(i, 6, 0) - 0.3);
+        points.push([rr * Math.cos(a), baseY + climb * t, rr * Math.sin(a), thick * (1 - 0.35 * t)]);
+      }
+      strands.push(sdf.chain(points, 0.0006));
+    }
     const twigs = sdf.union(...strands).paintFn((x, y, z) => {
       const variation = 0.5 + 0.5 * noise.fbm(x * 75, y * 95, z * 75, 2);
       return mixRgb(TWIG_DARK, TWIG_LIGHT, 0.55 + 0.35 * variation);
@@ -98,10 +105,10 @@ export default defineAsset({
       maxTriangles: 11000,
     });
 
-    const egg = (x: number, y: number, z: number, tilt: number) =>
-      sdf.revolve(eggProfile).rotateZ(tilt).at(x, y, z);
+    const egg = (x: number, y: number, z: number, tilt: number) => eggShape().rotateZ(tilt).at(x, y, z);
+    // Spread in a triangle so the front, the side, and the back each show three separate eggs.
     const eggs = sdf
-      .union(egg(-0.033, 0.026, 0, -8), egg(0, 0.027, 0.012, 2), egg(0.033, 0.026, 0, 8))
+      .union(egg(-0.037, 0.027, -0.03, -6), egg(0.004, 0.029, 0.034, 3), egg(0.036, 0.027, -0.004, 7))
       .paintFn((_x, y, _z, base) => mixRgb(base, EGG_LIGHT, Math.max(0, Math.min(0.32, (y - 0.035) * 10))));
     k.body('three-blue-eggs', eggs.at(0, 0.001, 0), {
       color: EGG_BLUE,
