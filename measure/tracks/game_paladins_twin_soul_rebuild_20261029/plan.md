@@ -207,8 +207,7 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
     node_modules/.bin/vitest run tests/games/paladins-twin-soul --maxWorkers=1'`.
     Exit code: 0. Tests failed: 0. Tests passed: 153. Test files passed: 5. Duration: 3.76 s.
   - Review A owner for the next step: Green runs M9 against the full rules suite.
-- [x] Task: Rerun M9 against the full rules suite on the bounded loops and the gates (Green).
-  Evidence commit: this commit; SHA added in the next commit.
+- [x] Task: Rerun M9 against the full rules suite on the bounded loops and the gates (Green). Commit: `1690fc6c5b3c7c0dc14c0dedf3fa6cd272f5c728`.
   Implementation commit under test: `527be9bc7ef628658f6be3d6444a6a19b062aad1`. Red r2 test commit: `cb6609a6`.
   Owned path: `measure/runs/game_paladins_twin_soul_rebuild_20261029/green-mutation-runner.py`.
   Remove the `-t 'T3|T13'` scope from M9, so M9 runs the whole rules file. Run M9 against the full
