@@ -1435,3 +1435,25 @@ gate applies again.
   2026-11-16. Week 1 holds 30 color and 30 line-art files. Weeks 2 to 7 hold 162 rows and 324
   files. Facts changed: due dates, week 1 file count, weeks 2 to 7 file count, and the picture
   sizes of classes A, B, and C.
+  Green round 8 evidence (2026-10-30). Commit `d6f1a332` adopts the prior batch 1b stage rows
+  and maps `touch neck` to `gesture-touch-neck`. The stage v2 nut row is a standalone nut close-up,
+  unlike the v1 held-nut composition, so Green rendered and verified it. Song timeline tests passed
+  (19 tests). Row verification passed for neck v1, nut v1/v2, and practice-line-nut v1.
+  Rendered color and line-art SHA-256 values:
+  - `l2-w01-story-page-a-neck-v1.png`: `2e90f4ce09a676bd930ff8698be31be2854e3fbd0af7dc3edb0c1862c5534d54`;
+    line: `l2-w01-story-page-a-neck-line-v1.png`:
+    `40ddddd95a7ef8464722b0262dfd434ea621e4dd0bb5241792913cd37938fc9d`.
+  - `l2-w01-story-page-a-nut-v1.png`: `bb4a607b154b79256155fa684b06d7bb897f5fdcb68efc31499a3d7b3f71a46d`;
+    line: `l2-w01-story-page-a-nut-line-v1.png`:
+    `1d8214864971d3e3a103eb15fd1951ea529c3133517107a21589e8c787fa6f1a`.
+  - `l2-w01-story-page-a-nut-v2.png`: `c583e8e3bff063776cf80e527a1129c773ac2b3e44653949efb3c1ab1a50c08e`;
+    line: `l2-w01-story-page-a-nut-line-v2.png`:
+    `e846f4fdac7762e70d0e42584f8daa4c9b79f1461a63880bc6af8f3b98ae8f12`.
+  - `l2-w01-practice-line-nut-v1.png`: `b211c813889844efa57800fbbfb59789b6ed192344f595cd41f1607070297aa1`;
+    line: `l2-w01-practice-line-nut-line-v1.png`:
+    `00be9a568d80d6089a812c5af49bc3ac8cf9ece56cb74e852c0d9bd0b44aaf95`.
+  The rows and gesture mapping are rendered and verified, not independently rated. The nut v2
+  render and verify command exited 0. The first combined verify command used unsupported repeated
+  `--row` arguments and exited 1; the corrected command verified each row. The attempted `./forge
+  verify` command also used the wrong CLI form and exited 1. Nest and net fixes, review cards, and
+  their independent ratings remain open. Touch-nose fix: next round.
