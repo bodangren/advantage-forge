@@ -277,6 +277,38 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
 - Known nonblocking item from Review A (no action): Green r1 added
   `tests/games/archers-revenge/aim-green.test.ts`, which is role drift (tests are Red's).
 
+### Phase 1 closing evidence (after adversarial testing)
+
+- Adversarial commit `ebbec2f3` adds
+  `tests/games/archers-revenge/rules.adversarial.test.ts` (+262 lines, 29 rows).
+- Gate (Green r3, this round):
+  `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/games/archers-revenge --maxWorkers=1'`.
+  Exit 0. `Test Files  7 passed (7)`. `Tests  163 passed (163)`.
+  No lock wait over 600 s occurred. No exit 75 occurred.
+- The Green-time counts of 134 tests above stay true history for their commits.
+  The gate now holds 163 tests.
+- Open nonblocking items carried to Phase 2:
+  - RA-AR-5 (Green): `shotOf` throws when a path finds no contact. Phase 2 keeps the D8 guarantee. Phase 2.
+  - RA-AR-6 (Green): the lock-wait rule is restated for next phases. This round had no wait over 600 s. Phase 2.
+  - RA-AR-7 (closeout): doctor exit 1 items sit outside Green scope. Owner closeout. Phase 2.
+  - NB-A (Red): the R10 limit text does not state the lane rule. Owner Red. Phase 2.
+  - NB-B (Green): the scoped mutation record proves one row per fault only. Owner Green. Phase 2.
+  - NB-1 (Green): the Phase 2 report task does not name the command change. Owner Green. Phase 2.
+  - NB-2 (Green): a null lane bridge can leave a dead card. Owner Green. Phase 2.
+  - NB-3 (Green): QC hooks throw TypeError on a null command. Same gap as ADV-AR-2. Phase 2.
+  - NB-4 (Green): views ignore the missed payload. Phase 2 owns the arc animation. Phase 2.
+  - ADV-AR-2 (Green): null hook commands throw instead of a rejected event. Owner Green. Phase 2.
+  - ADV-AR-3 (Green): `shotOf` throws without contact. Phase 2 keeps the D8 guarantee. Phase 2.
+  - ADV-AR-5 (Red): M13 and M17 die in one row each. Accepted for Phase 1. Owner Red. Phase 2.
+- Already closed items (no carry-over):
+  - RA-AR-2: closed. Recorded at plan lines 277-278.
+  - RA-AR-3: closed by commit `ebbec2f3` (moved-box row of ADV-AR-4).
+  - RA-AR-4: closed by commit `ebbec2f3` (hostile rows of ADV-AR-1).
+  - NB-C: closed. The M16 label note sits at plan line 269.
+  - ADV-AR-1: closed by commit `ebbec2f3`.
+  - ADV-AR-4: closed by commit `ebbec2f3`.
+  - ADV-AR-6: closed by this closing-evidence commit (it records the 163 count).
+
 ## Phase 2: Views
 
 Status: blocked until Daniel picks the look of Archer's Revenge from the A-28 mockups
