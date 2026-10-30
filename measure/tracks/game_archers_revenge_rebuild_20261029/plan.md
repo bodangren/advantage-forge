@@ -108,6 +108,36 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
     passed 130 of 131 tests in 14 s. The 1 failure was the manifest pack test, because the
     copy had no `demo/` folder. On that copy, the mutations M1, M2, M3, M6, M7, M9, M10, M11,
     M12, M13, M14, M17, and M18 each failed the row that section 5 of the strategy names.
+
+  Red r2 (Review A RA-AR-1): commit `46814310`. The review found two loops of the rules test
+  without a step limit. The loop at line 631 shot a wrong arrow while a wrong lane was open. The
+  loop at line 728 shot a right arrow while the phase was playing. A core that leaves a wrong lane
+  open, or that never ends the run, runs the loop without an end. The gate then ends with exit
+  124, which reads as a hold. Both loops keep a limit now, and the row fails with a message that
+  names the row and the fault.
+  - The loop of R10 keeps `TUNING.lanes + TUNING.helperLanes` wrong shots, so 5. One wrong shot
+    shuts one wrong lane, and a round holds at most `TUNING.lanes` lanes. At the limit the row
+    throws "R10: a wrong lane stayed open after 5 wrong shots; the wrong lane did not shut".
+  - The loop of R16 keeps `SHORT_STORY.vocabulary.length + 5` right shots, so 10. One right shot
+    solves one word. At the limit the row throws "R16: the run stayed in phase \"playing\" after 10
+    right shots; the run did not end".
+  - The probe folder is `measure/runs/game_archers_revenge_rebuild_20261029/probe/`. Its files stay
+    untracked. The log of the runs is `probe/probe-run-r2.log`.
+  - PROBE_RED, the mutant that never shuts a wrong lane: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run --config measure/runs/game_archers_revenge_rebuild_20261029/probe/vitest.config.ts --maxWorkers=1'`.
+    Exit code 1. Duration 10.15 s. Counts: `Test Files  4 failed | 2 passed (6)` and
+    `Tests  8 failed | 126 passed (134)`. The row R10 fails in 50 ms with its message. No timeout.
+  - PROBE_RED_B, the mutant that never ends the run: the same command with
+    `probe/vitest-mutant-b.config.ts`. Exit code 1. Duration 107.89 s. Counts:
+    `Test Files  4 failed | 2 passed (6)` and `Tests  65 failed | 69 passed (134)`. The row R16
+    fails with its message. No timeout.
+  - PROBE_CONTROL, the same alias pattern and the real core: the same command with
+    `probe/vitest-control.config.ts`. Exit code 0. Duration 11.54 s. Counts:
+    `Test Files  6 passed (6)` and `Tests  134 passed (134)`.
+  - REAL_SUITE, the committed tests and the real core: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/games/archers-revenge --maxWorkers=1'`.
+    Exit code 0. Duration 10.85 s. Counts: `Test Files  6 passed (6)` and
+    `Tests  134 passed (134)`. The count of 134 tests is the count before this change.
+  - The wall time of the four runs was 325 s, 141 s, 30 s, and 365 s. The heavy lock waited in the
+    first run and in the last run. No run printed `lock wait over 600 s`.
 - [x] Task: Add the aim command, the arc, and the hit test to the core (Green). Implementation: `cc5f8750a0ace49e77072d503eeecb804a38248e`.
   Owned path: `src/games/archers-revenge/core/`.
   Change `fire(lane)` to `fire(angle, power)`. Add the path function with the fixed sine table, the
