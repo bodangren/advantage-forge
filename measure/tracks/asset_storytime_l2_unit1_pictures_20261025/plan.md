@@ -1457,3 +1457,12 @@ gate applies again.
   `--row` arguments and exited 1; the corrected command verified each row. The attempted `./forge
   verify` command also used the wrong CLI form and exited 1. Nest and net fixes, review cards, and
   their independent ratings remain open. Touch-nose fix: next round.
+  Green round 9 evidence (2026-10-30, Sonnet). Commit `4b33108f` changes only
+  `assets/storytime-nest.ts`. The eggs are now smooth ovals with round tops. The smooth rim is
+  now a rough rim of 34 crossing twigs. The eggs sit in a triangle, so the front, three-quarter,
+  side, and back views each show three separate eggs. `./forge render storytime-nest --fast`
+  exited 0 (three loops). The textured `./forge render storytime-nest` exited 0 and
+  `./forge inspect storytime-nest --fast` exited 0. Warning lines: none. Each command ran through
+  `heavy-run.sh`. Logs: `green-p3-r9-*.log`. Review card: `out/storytime-review/batch-1b/storytime-nest.png`
+  with `brief.md`. The nest waits for the independent review and has no rating. Butterfly net and
+  touch-nose fixes: later rounds.
