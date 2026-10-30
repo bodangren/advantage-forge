@@ -1532,3 +1532,19 @@ gate applies again.
   The open defect for `story-page-a-net` is closed in this round, pending the independent
   picture review. Rows rendered this round: 1. Week 1 rows rendered so far: 16 of 30 (13 with no
   open defect). No task is marked `[x]`.
+  Green round 13 evidence (2026-10-31, Sonnet). Task: fix `gesture-touch-nose` (batch 1 review: 5.5,
+  fail, critical: no extended finger). Commit `341515a2` changes `assets/parts/sprout-gestures.ts`.
+  The head now turns 14 degrees toward the hand and tips 14 degrees down (it was 45 degrees). The
+  index finger of the right fist is aimed at the nose tip, so the fingertip rests on the nose
+  side. Diff scope: `git diff` showed two hunks, both inside the `gesture-touch-nose` block (23
+  lines added, 10 removed). `sproutIndexFinger`, the shared helpers, the skeleton, the cast, and
+  every other clip are unchanged. Models: Green `claude-code/claude-sonnet-5-5#high`, Red
+  `minimax-cn-coding-plan/MiniMax-M3`, coder none. Five `--fast` loops ran, then one textured
+  `./forge animate sprout-nan --clip gesture-touch-nose`: exit `0`, `0` warning lines.
+  `./forge check sprout-nan`: exit `0`; last line `ground  ok: no clip sinks more than 1.5 cm
+  below the rest pose (rest lowest 0.0 cm)`. Every forge command ran as one `heavy-run.sh`
+  command; logs are `green-p3-r13-*.log`. The review card is
+  `out/storytime-review/batch-1c/gesture-touch-nose.png`, with `brief.md` and the look
+  reference. Open risk: the arm is short, so the fist sits at the cheek and may cover part of the
+  mouth in the front view. `GESTURES` does not map touch-nose yet; it maps after a pass. No task
+  is marked `[x]`. The clip waits for the independent review.
