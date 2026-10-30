@@ -628,7 +628,19 @@ describe('the run', () => {
   it('R10: the right lane never shuts, so every prompt can be solved', () => {
     const sim = create(5);
     sim.dispatch({ type: 'start' });
-    while (sim.state.round!.lanes.some((l) => l.wordId !== sim.state.round!.wordId && !l.blocked) && sim.state.courage > 0) shootWrong(sim);
+    // One wrong shot shuts one wrong lane. A round holds at most TUNING.lanes lanes, and Helper
+    // mode holds TUNING.helperLanes. Five wrong shots leave room for the two wrong lanes of a round.
+    const wrongShotLimit = TUNING.lanes + TUNING.helperLanes;
+    let wrongShots = 0;
+    while (sim.state.round!.lanes.some((l) => l.wordId !== sim.state.round!.wordId && !l.blocked) && sim.state.courage > 0) {
+      if (wrongShots >= wrongShotLimit) {
+        throw new Error(
+          `R10: a wrong lane stayed open after ${wrongShotLimit} wrong shots; the wrong lane did not shut`,
+        );
+      }
+      shootWrong(sim);
+      wrongShots += 1;
+    }
     const round = sim.state.round!;
     expect(round.lanes.find((l) => l.wordId === round.wordId)!.blocked).toBe(false);
     expect(types(shootRight(sim))).toContain('scored');
@@ -725,7 +737,18 @@ describe('evidence', () => {
     shootMiss(sim, 'shut', lane);
     shootMiss(sim, 'tower');
     shootRight(sim);
-    while (sim.state.phase === 'playing') shootRight(sim);
+    // One right shot solves one word. The run must end after the words of the story are done.
+    const rightShotLimit = SHORT_STORY.vocabulary.length + 5;
+    let rightShots = 0;
+    while (sim.state.phase === 'playing') {
+      if (rightShots >= rightShotLimit) {
+        throw new Error(
+          `R16: the run stayed in phase "${sim.state.phase}" after ${rightShotLimit} right shots; the run did not end`,
+        );
+      }
+      shootRight(sim);
+      rightShots += 1;
+    }
     expect(sim.state.shots).toBe(SHORT_STORY.vocabulary.length + 4);
     const evidence = evidenceOf(sim.state, SHORT_STORY, 8, 12_345);
     expect(storyGameEvidenceSchema.parse(evidence)).toEqual(evidence);
