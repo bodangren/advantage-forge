@@ -1597,3 +1597,22 @@ gate applies again.
   review card is `out/storytime-review/batch-2b/storytime-child-cup.png`, with `brief.md` and the
   look reference. Open risk: a reviewer may read the cup as a mug because of the tall body and the
   loop handle. No task is marked `[x]`. The cup waits for the independent review.
+  Green round 17 evidence (2026-10-31, Sonnet). The child's cup passed the independent review at
+  7.4 with no critical defect (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-2b.json`,
+  reviewer `openai/gpt-6-luna#high`). Its note "Show a darker, empty inside above the rim" carries
+  to the cup row, where a higher camera shows the inside. Cause of round 17: `check-row-hat` v2
+  with `explorer-hat` still reads as a dome with a brim, and the fix is a child's sun hat. The
+  recorded default is yes: the sun hat replaces `explorer-hat` in the hat row (weeks 1, 3, 4, 5).
+  Commit `6e880721` adds `assets/storytime-sun-hat.ts`: a straw-yellow hat about 0.34 m across the
+  brim and 0.12 m tall, with a straight-sided round crown, a soft flat top with a small dent, a
+  wide wavy brim that turns down at the edge, and a red ribbon band with a bow on +X. It has no
+  text, number, logo, face, flower, or woven hole. `assets/explorer-hat.ts` did not change.
+  Models: Green `claude-code/claude-sonnet-5-5#high`, Red `minimax-cn-coding-plan/MiniMax-M3`,
+  coder none. Render exits: `--fast` loop 1 exit `0` (`green-p3-r17-fast1.log`), `--fast` loop 2
+  exit `0` (`green-p3-r17-fast2.log`; the crown became taller, the brim more domed, the bow loops
+  bigger, the tails shorter), textured `./forge render storytime-sun-hat` exit `0`
+  (`green-p3-r17-tex.log`), `./forge inspect storytime-sun-hat --fast` exit `0`, warnings none
+  (`green-p3-r17-inspect.log`). `warning:` lines: `0` in all runs. Every forge command ran as one
+  `heavy-run.sh` command. The review card is `out/storytime-review/batch-2c/storytime-sun-hat.png`,
+  with `brief.md` and the look reference. Open risk: a reviewer may find the crown too plain or the
+  bow loops too blobby. No task is marked `[x]`. The sun hat waits for the independent review.
