@@ -2878,3 +2878,78 @@ gate applies again.
    Week 1 count: "22 of 30 rendered, 16 with no open defect". This round adds one item and no row.
    Commit a10d0193 adds `assets/storytime-school-bag.ts`. No task is marked `[x]`. Waiting for the
    independent item review.
+
+   Green round 48 evidence (2026-11-01, deepseek/deepseek-flash#high). Task: build the wall hook
+   rail and Ben's own school bag, then render the Ben page.
+   Models: Green `deepseek/deepseek-flash#high` (route from `ra-quota --fresh pick green
+   --not-family minimax --not-family openai`; Daniel approved the DeepSeek route), Red
+   `minimax-cn-coding-plan/MiniMax-M3` (not the Green family), coder none. No delegation.
+   Batch 19 result (`item-review-batch-19.json`, `kimi-code-plan-cn/kimi-for-coding`):
+   `storytime-school-bag` passed at 8.0 with no critical defect. Two issues stay open: "The round
+   bump is clear in the three-quarter view but faint in the front view." and "The straps sit close
+   to the back panel and read thin from the side."
+   Base SHAs: `role_base_sha` cd79f899 equals HEAD at the start, and `phase_base_sha` 15a7bf0b is an
+   ancestor. The round 47 commits a10d0193 and cd79f899 sit inside `15a7bf0b..HEAD`. An item round
+   carries no new Red test file; the Red signal is the batch 19 review and the plan picture list.
+   What Green built, commit 3456c57f:
+   - `assets/storytime-wall-hook.ts`, asset `storytime-wall-hook`: a light-wood board 0.60 x 0.08 x
+     0.025 m with three round-tipped pegs. Each peg sticks 0.048 m out of the board front, and each
+     knob is 0.025 m across. The board back sits on z = 0 and the board bottom sits on y = 0. The
+     pegs are blue `#3d7bd9`, yellow `#f2c230`, and green `#4caf50`; the board is `#e8c48a`. Four
+     bodies, one per color, vertex colors only. The rail is 3,582 triangles and 0.6 x 0.08 x 0.073 m.
+   - `assets/storytime-school-bag.ts` now holds one exported `defineSchoolBag` function with color
+     and bump options. `assets/storytime-school-bag-ben.ts` calls it with a green body `#3fa34d`, an
+     orange pocket `#f59a2c`, dark blue straps and loop `#2f4a7a`, and no bump. Ben's bag is 10,780
+     triangles and 0.252 x 0.291 x 0.151 m.
+   - Stage files `l2-w01-story-page-hello-i-am-ben-v1.json` and
+     `l2-w01-story-page-hello-i-am-ben-v2.json` under `docs/storytime/l2-unit1/w01/rows/`.
+   Equality check for Pat's bag: `triangles` 11,404 before and 11,404 after. Bounds before and after
+   are min `[-0.126, 0, -0.082]`, max `[0.126, 0.291, 0.069]`, size `[0.252, 0.291, 0.151]`. The two
+   records are equal, so the refactor kept Pat's bag and no separate file was needed. The records are
+   `green-p3-r48-bag-stats-before.json` and `green-p3-r48-bag-stats-after.json` in the run folder.
+   Heavy commands: every forge command, row render, and row verify ran inside
+   `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'`. No heavy command ran outside the
+   wrapper. No exit 75, no exit 137, no `net::ERR_UNSAFE_PORT`. Recorded event: the first bag render
+   call printed "heavy-run: lock wait over 600 s — holder PID 2002679" and the `npm ci` holder kept
+   the lock past the 45 minute foreground limit. The next call waited again, took the lock, and ran.
+   Render exits: `./forge render storytime-wall-hook --fast` exited 0; `./forge inspect
+   storytime-wall-hook --fast` exited 0 with no `warning:` line. `./forge render
+   storytime-school-bag --fast` and `./forge render storytime-school-bag-ben --fast` exited 0 in one
+   call, and neither printed a `warning:` line. `./forge inspect storytime-school-bag-ben --fast`
+   exited 0 with "Warnings: none".
+   Item A note: the wall hook inspect prints one note, "The side silhouette is very thin compared
+   with the front: check that the side view still reads." A wall board 0.025 m thick is thin from the
+   side by design, and the three-quarter view shows the pegs. Green kept the shape.
+   Row form: `node --import tsx scripts/storytime-book-pictures.ts render --row <jobId> --version
+   <n> --workbooks /tmp/opencode/wb-shadow` then the same form for `verify --row`.
+   | Row | Version | Render | Verify | Line | Ink | Peak | Color SHA-256 | Line-art SHA-256 |
+   | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+   | `l2-w01-story-page-hello-i-am-ben` | v1 | 0 | 0 | 21 px | 8.98% | 896 MB | `1cca2c0df2eb6b299de569f58ed2e41bf5348fd0831b279f2b23895d04d31b3d` | `5cc50deaf2287420864dae1b19d7d2ff8810503054a0a8419112fd7284442e8f` |
+   | `l2-w01-story-page-hello-i-am-ben` | v2 | 0 | 0 | 21 px | 9.20% | 510 MB | `0264f507393218b37903389f1f26bca0913e29d87a97f0c0d060628d0cd0969d` | `85da270ed2a8cce5c86b6559cc945ed41f3687bf33cbd6a3b4c4bfa445f1a1ea` |
+   `verify --row` exits 0 with "Row verification passed for 2 row versions".
+   First-cause note on the Ben page: v1 put Ben at 1.13 / -6.3 with a camera at distance 1.85. Ben
+   filled the frame, his hair touched the top edge, and Pat's bag stood at 0.72 / -6.6. That spot
+   lies inside the classroom crate at x 0.357 to 0.843, z -6.85 to -6.45 (crate size 0.54 x 0.41 x
+   0.44 m at scale 0.9), so only red slivers showed through the crate boards. v2 moves Pat's bag to
+   0.88 / -6.3, in front of the crate and beside the basket at x 1.098 to 1.501. v2 puts Ben at 1.3 /
+   -6.05 with yaw 10 and the camera at az 10, el 9, distance 2.4, target 1.26 / 0.46 / -6.4.
+   The hook rail sits on the plain back-wall panel at x 1 (spans 0 and 2) at 1.62 / -6.94 with y
+   0.58, so the pegs are at 0.62 m. The board back is on the wall face at z -6.94 (plaster core 0.12 m
+   thick, wall at z -4 in map space). Ben's bag hangs on the middle peg at 1.62 / -6.858 with y
+   0.368: the loop plane sits on the peg shaft and the bag body lies on the board face. Its green
+   body differs from Ben's blue shirt `#5c94e0` by 0.58 in the blue channel.
+   What Green sees in v2: Ben is whole with clear margins, the hanging bag loop touches the peg, and
+   Pat's red bag stands whole on the floor at his right with the bump in its outline at the upper
+   left. The line art is clean, with a stroke on each bag part, on the rail, on the pegs, and on Ben.
+   Shadow root: `/tmp/opencode/wb-shadow` exists. `sha256sum` of its
+   `content/storytime/l2/print/pictures.json` is
+   `c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b`, so no new copy was made. The
+   live Workbooks list is not written to.
+   Week 1 count: "22 of 30 rendered, 16 with no open defect" before this round. The Ben row is now
+   rendered and waits for review, so the count is "23 of 30 rendered, 16 with no open defect".
+   Review folder `out/storytime-review/batch-20/`: a four-view card for each item, the color and
+   line-art PNGs of the kept v2 page, `sprout-ben-render.png`, `look-reference-nan-and-pip.png`
+   from batch 19, and `brief.md` with bar 7.0 for the two items and the page. Green did not rate its
+   own items. PNGs stay out of git.
+   Commits: 3456c57f adds the two assets, the bag refactor, and the two stage files. This plan block
+   is the next commit. No task is marked `[x]`. Waiting for the independent review.
