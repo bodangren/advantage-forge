@@ -1782,3 +1782,29 @@ gate applies again.
   of the page. The point does not aim at the nest. v3 remains the kept page. Week 1 rows
   rendered so far: 20 of 30. Rows with no open defect: 17. No task is marked `[x]`. The row
   waits for the independent picture review.
+   Green round 25 evidence (2026-10-31, xai/grok-4.7). Task: one new class A page,
+   `l2-w01-story-page-a-nose`. The laugh uses the `touch nose` clip and one long word.
+   No asset file changed. No `src/` file changed. The clip holds the index finger on the
+   nose from 0.65 s to 1.35 s. The word runs from 0.25 s to 1.40 s. That word opens the
+   singing mouth. Still time 0.82 s is a mouth pulse peak and a laugh bounce. The eyes are
+   open for seed 1. Models: Green `xai/grok-4.7#high`, Red
+   `minimax-cn-coding-plan/MiniMax-M3`, coder none. Commit `b27e584d` adds v1 and v2. Each
+   render and `verify --row` ran as one `heavy-run.sh` command. No lock wait over 600 s.
+   Verify logs do not print peak memory.
+   - `story-page-a-nose` v1 (superseded; az -10, el 8, dist 1.22, ty 0.50; 24 px line, ink
+     4.74%, peak 501 MB): color
+     `63897b2a9b94845b46f35aab9dd5f9bcf356c21911f5e5ed2feb12ac5e8f2a82`; line art
+     `b0fc1da98e8c5cff375ada9606259875fce8522808cd1919bf8d6055278b9ab5`. The waist is cut
+     off. The hand reads as a fist on the cheek. The mouth is a thin closed line.
+   - `story-page-a-nose` v2 (kept; yaw 6, az 8, el 8, dist 1.50, ty 0.44; 24 px line, ink
+     4.24%, peak 498 MB): color
+     `8a72b3030babafcac0b89735ed9565589d29307f53a9d628555bb912b59478fb`; line art
+     `b6cddd26e55595d090ee155413ca8b0483462f484b194991b7c6449b4cddf842`. Nan is in frame
+     from the head to the feet. The eyes are open. No letters show. The hand still reads as
+     a fist on the cheek, not one finger on the nose. The mouth is a thin closed smile. The
+     open laugh does not show.
+   Render exits were `0`. Verify exit was `0`. Verify passed for 2 row versions. v2 is kept
+   because the body is complete. The finger and the laugh do not read without an asset
+   change or an `src/` change. This row is blocked. Week 1 rows rendered so far: 21 of 30.
+   Rows with no open defect: 17. No task is marked `[x]`. The row waits for a gesture or
+   face change.
