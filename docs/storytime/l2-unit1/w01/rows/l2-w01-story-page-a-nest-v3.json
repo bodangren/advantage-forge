@@ -1,0 +1,129 @@
+{
+  "jobId": "l2-w01-story-page-a-nest",
+  "version": 3,
+  "at": 1.0,
+  "spec": {
+    "title": "A nest.",
+    "duration": 2,
+    "lines": [
+      {
+        "text": "A nest.",
+        "start": 0,
+        "end": 2,
+        "actors": [
+          "Nan"
+        ],
+        "gesture": "point forward"
+      }
+    ]
+  },
+  "stage": {
+    "scene": "classroom",
+    "backdrop": "white",
+    "sun": "high",
+    "dog": "quiet",
+    "marks": {
+      "Nan": {
+        "x": 0.36,
+        "z": -0.85,
+        "yaw": -30
+      }
+    },
+    "props": [
+      {
+        "asset": "grass-ground",
+        "x": -1,
+        "z": -1,
+        "yaw": 0,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "grass-ground",
+        "x": -1,
+        "z": 1,
+        "yaw": 0,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "grass-ground",
+        "x": 1,
+        "z": -1,
+        "yaw": 0,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "grass-ground",
+        "x": 1,
+        "z": 1,
+        "yaw": 0,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "bush",
+        "x": -1.35,
+        "z": -0.7,
+        "yaw": 15,
+        "scale": 0.55,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "wildflowers",
+        "x": -1.15,
+        "z": 0.7,
+        "yaw": 20,
+        "scale": 0.6,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "wildflowers",
+        "x": 1.35,
+        "z": 0.65,
+        "yaw": 40,
+        "scale": 0.55,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "storytime-low-branch",
+        "x": -0.3,
+        "z": 0,
+        "y": 0,
+        "yaw": 0,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "storytime-nest",
+        "x": 0.2,
+        "z": 0.04,
+        "y": 0.7,
+        "yaw": 0,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      }
+    ],
+    "camera": [
+      {
+        "at": 0,
+        "az": 10,
+        "el": 9,
+        "dist": 0.92,
+        "tx": 0.2,
+        "ty": 0.64,
+        "tz": 0
+      }
+    ]
+  }
+}
