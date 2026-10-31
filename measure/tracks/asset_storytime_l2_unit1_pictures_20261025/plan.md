@@ -2146,3 +2146,60 @@ gate applies again.
    and `brief.md` with the bar 7.0, the batch 7 critical defects, the key `storytime-nut`, and the
    section "Why the rework". Green did not rate the item. PNGs stay out of git.
    No task is marked `[x]`. Waiting for the independent re-review.
+
+   Green round 37 evidence (2026-11-01, deepseek/deepseek-flash#high). Task: remove the last black
+   marks on `storytime-nut` (cap edge and stem tip). One item, no row renders. Models: Green
+   `deepseek/deepseek-flash#high` (route from `ra-quota --fresh pick green --not-family minimax
+   --not-family openai`; Daniel approved the DeepSeek route), Red
+   `minimax-cn-coding-plan/MiniMax-M3`, coder none. No delegation.
+   Batch 8 independent review result (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-8.json`,
+   reviewer `openai/gpt-6-luna#high`): `storytime-nut` 6.5 fail, critical "Black specks remain
+   along the cap edge in all four views." Issues: "Black marks remain at the stem tip" and a small
+   dotted black mark on the three-quarter cap edge. The reviewer kept the acorn read with no lid
+   look.
+   Week 1 rows rendered: 22 of 30. Rows with no open defect: 16. These counts do not change in this
+   round.
+   Black-texel count, taken on each build from the base color atlas in `out/storytime-nut/textures/`
+   (pure black texels with at least five of eight painted neighbours, so the empty gutter does not
+   count):
+   1. Batch 8 build (commit `d6d9f5b9`, one body and a 1024 texture): 2,266 triangles, 90 black
+      texels. The render showed dotted specks on the cap edge and a dashed seam line of about 4 mm
+      in the three-quarter view.
+   2. Option 1, keep the reduced mesh close to the true surface: `maxError` 0.00004 m and
+      `maxTriangles` 8000. 5,698 triangles, 111 black texels. The dashed seam line left the
+      three-quarter view, and one dark stroke appeared on the back view. This option did not work.
+   3. Option 2, add to option 1 a rounder stem tip and larger fillets: tip radius 0.0019 m, stem
+      chain blend 0.0028 m, body fillet 0.0045 m, cap lobe fillet 0.005 m. 5,374 triangles, 91 black
+      texels. The cap edge stayed clean in the close view, and three dark hairline strokes appeared
+      on the side cap top. This option did not work.
+   4. Option 3, vertex colors: `texture: false`, `paintWeight: 1`, and a paint blend of 0.0015 m.
+      5,894 triangles, no texture atlas, so no black texel can exist. The close views of the cap
+      edge and the stem tip show no black mark in the four views.
+   Cause, kept as a follow-up and not changed here: `src/texture/bake.ts` lines 150 to 158 take one
+   Newton step from the reduced-mesh point onto the surface. Where the point sits far from the
+   surface or the gradient is weak, the step lands off the surface, and `paintFn` returns a
+   near-zero color. The paint blend cannot return zero from the three palette colors, so a pure
+   black texel means a failed sample. Round 37 recorded this for routing and changed no `src/` file.
+   Fix in `assets/storytime-nut.ts`: the nut uses vertex colors, `paintWeight` 1, and a 1.5 mm paint
+   blend for the soft cap boundary. The body keeps the 0.0045 m union, the 0.005 m cap lobe fillet,
+   and the thicker stem tip from option 2. `maxError` is 0.00004 m and `maxTriangles` is 8000, so
+   the crease and the stem keep their shape at 5,894 triangles. The texture atlas and the bump are
+   gone, because both need a bake.
+   Shape contract kept: the acorn shape, the pointed bottom, five soft cap lobes, the stem that
+   leans to +X, the colors, the size of 0.049 m by 0.055 m, the ground contact on y = 0, the +Z
+   facing, and the asset name. No text, letter, number, logo, or face. Rated G.
+   Commits: `8af590ef` holds the fix and changes only `assets/storytime-nut.ts`; `bcb83308` updates
+   the design note in the same file. No `src/`, test, row, cast, or picture-list file changed.
+   Nut gates, each in one `heavy-run.sh` command, all exit `0`: textured `render` (the batch 9
+   card), textured `render --focus 0.002,0.05,0,0.008` (the stem tip), textured `render --focus
+   0,0.034,0,0.014` (the cap edge), and `inspect --fast` with the nut at 100% in all five views.
+   `warning:` lines: 0 in the three render logs. The inspect keeps one advisory, "Almost everything
+   is mid-value", which the batch 8 build also had. No exit 75, no exit 137, no lock wait over
+   600 s.
+   Review folder `out/storytime-review/batch-9/`: `storytime-nut.png` (front, three-quarter, side,
+   back, the batch 8 layout, from the textured render), `storytime-nut-cap-close.png`,
+   `storytime-nut-stem-close.png`, `storytime-nut-batch-8.png`, `look-reference-nan-and-pip.png`,
+   and `brief.md` titled "nut specks fix 3" with the bar 7.0, the batch 8 critical defect, the key
+   `storytime-nut`, and the section "Why the rework". Green did not rate the item. PNGs stay out of
+   git.
+   No task is marked `[x]`. Waiting for the independent re-review.
