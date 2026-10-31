@@ -2953,3 +2953,99 @@ gate applies again.
    own items. PNGs stay out of git.
    Commits: 3456c57f adds the two assets, the bag refactor, and the two stage files. This plan block
    is the next commit. No task is marked `[x]`. Waiting for the independent review.
+
+   Green round 49 evidence (2026-11-01, deepseek/deepseek-flash#high). Task: build the animal wall
+   pictures, then render Ben page v3 to close the batch 20 open points.
+   Models: Green `deepseek/deepseek-flash#high` (route from `ra-quota --fresh pick green
+   --not-family minimax --not-family openai`; Daniel approved the DeepSeek route), Red
+   `minimax-cn-coding-plan/MiniMax-M3` (not the Green family), coder none. No delegation.
+   Batch 20 result (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-20.json`,
+   `kimi-code-plan-cn/kimi-for-coding`): `storytime-wall-hook` passed at 8.5, `storytime-school-bag-ben`
+   passed at 8.0, and the Ben page v2 passed at 7.5 with no critical defect.
+   Open points on the Ben page, exact words: "Pat's red bag reads as sitting on the floor near the
+   crate, not held and not floating, but its round bump is not visible, so the 'moves a little' cue
+   does not read." and "A rounded quilted object with a red band sits behind Ben's right arm; the
+   goal does not name it, and it reads as a mat or cushion." (the map basket). Line art: "Dense blob
+   of merged strokes: the top of the crate lid, left of Ben, where the plank lines merge into one
+   heavy black band."; "Short dash floating above the hair outline at the top of Ben's head, left of
+   the top hair tuft."; "Small isolated angled dash at the right edge of the page, mid-height, near
+   the wall trim, with no line connected to it."
+   Base SHAs: `role_base_sha` 71c09e10 equals HEAD at the start, and `phase_base_sha` 15a7bf0b is an
+   ancestor. The round 48 commits 3456c57f and cd79f899 sit inside `15a7bf0b..HEAD`. An item round
+   carries no new Red test file; the Red signal is the batch 20 review, the plan picture list, and
+   the three week 1 rows that ask for the pictures.
+   What Green built, commit `0e953cab`:
+   - `assets/storytime-animal-pictures.ts`, asset `storytime-animal-pictures`: three framed
+     picture-book pages in a row. Each picture is 0.55 m wide and 0.45 m tall with a 0.03 m frame,
+     and the gap is 0.12 m, so the row is 1.889 m wide. The frame backs sit on z = 0 and the bottom
+     edge on y = 0. The row is centered on x = 0 and faces +Z. The frame is `#c98a4b`.
+   - The animals are flat color shapes from extruded 2D profiles, one body per color, vertex colors
+     only (`texture: false`, `paintWeight: 1`). Lion on light blue `#a5dcf7`: mane `#9c3f12`, face
+     `#f8b04a`, muzzle `#fff0d0`, eyes and nose `#2a1a10`. Elephant on light yellow `#ffd95c`: body
+     `#a9bccd`, ears `#54708c`, tusks `#fbf3e0`, eyes `#2a1a10`. Frog on pink `#ffb8d1`: body
+     `#4e9e3a`, belly `#f4efb8`, eyes `#2a1a10`. Each pair of touching colors differs by 0.3 or more
+     in one channel. Every feature is 0.05 m or more across: eyes 0.062 m, lion nose 0.07 m, tusks
+     0.05 m, mane lobes 0.05 m deep. No thin lines, no hair strokes, no texture, no text, letter,
+     number, word, logo, or human face. No rig, no animation.
+   - Layer depth: frame 0 to 0.014 m, background 0.004 to 0.024 m, then four animal slabs 0.010 m
+     thick from 0.022 to 0.038 m, each 0.002 m in front of the layer below. Every layer overlaps the
+     one behind it, so nothing sinks into the background and nothing floats off it.
+   - Size and cost: 1.888 x 0.449 x 0.038 m, 8,168 triangles, GLB 215 KB, vertex colors.
+   First-cause notes on the asset: the first render call failed with "box(): radius is larger than
+   half a dimension" on the background slab, so its radius fell from 0.004 to 0.002 m. The second
+   render drew the frame color over every picture: the background slab was 0.006 m thick, thinner
+   than the 0.008 m mesh cell, so `inspect` reported "backdrop-1 is not visible from any view: it is
+   buried inside another part". The background slab is now 0.020 m thick with a 0.010 m cell, and
+   all three backgrounds render. The animal layers also use a plain union, not a smooth union,
+   because the smooth union grew the elephant head and the frog body 0.010 m past their shapes.
+   Render exits: the first `./forge render storytime-animal-pictures --fast` call failed to build
+   (exit 1 from the build); the next two `--fast` renders exited 0. `./forge inspect
+   storytime-animal-pictures --fast` exited 0 with "Warnings:" listing two notes only: "Part
+   'lion-nose' is barely visible (under 0.3% of the silhouette in every view)" and "The side
+   silhouette is very thin compared with the front". No `warning:` line appeared in any call. The
+   lion nose is 0.07 m wide, which is about 43 px on a 4000 px page, so Green kept the size.
+   Ben page v3, stage file `l2-w01-story-page-hello-i-am-ben-v3.json` (a copy of v2):
+   - The whole group moves from the back wall to the plain right wall of the classroom, at world
+     x 5.94 (map wall x 6, face at 6 - 0.12 / 2). The stage origin is (0, 0, 3) with heading 0, so
+     world z = stage z + 3. No furniture is within 1.3 m of the group: the nearest prop is the pot
+     and fern at world z 1.9, which lies outside the frame at 1.4 m from the view axis.
+   - Ben stands at stage 5.05 / 0.64 with yaw -80; the rail sits on the wall at 5.94 / 0.96 with y
+     0.58 and yaw -90; Ben's green bag hangs on the middle peg at 5.858 / 0.96 with y 0.368.
+   - Pat's red bag moves to stage 5.28 / 1.22 at scale 1.25 and yaw -80. The pocket faces the camera
+     (its normal is 0.96 along the view direction, the straps are at -0.96) and the bump faces
+     stage +z, which is the screen-right side, away from Ben. The bag's screen gap from Ben's body
+     is about 27 percent of the frame width, its gap from the green bag is clear in height (the red
+     bag top is 0.36 m, the green bag bottom is 0.37 m), and its gap from the rail is clear.
+   - Camera: az -80, el 9, distance 2.4, target stage 5.40 / 0.46 / 0.60.
+   Row form: `node --import tsx scripts/storytime-book-pictures.ts render --row <jobId> --version
+   <n> --workbooks /tmp/opencode/wb-shadow` then the same form for `verify --row`.
+   | Row | Version | Render | Verify | Line | Ink | Peak | Color SHA-256 | Line-art SHA-256 |
+   | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+   | `l2-w01-story-page-hello-i-am-ben` | v3 | 0 | 0 | 23 px | 7.54% | 933 MB | `b7cf60d92eb5b57a24ffc7b5d5e0080521810d1884ee0c59285d4adc4dc2f1e4` | `0dd5526ab7706a9b387c645771b19f283e627507bef10b7f8c7f8490400b61bb` |
+   `verify --row` exits 0 with "Row verification passed for 3 row versions".
+   What Green sees in v3, color: Ben is whole with clear margins and waves with his right hand; his
+   green bag hangs by its loop on the middle peg; Pat's red bag stands whole on the floor at his
+   left hand side, behind him, with the pocket toward the camera and a bulge on the top edge of its
+   outer side; the crate, the basket, and every other prop are out of the frame.
+   What Green sees in v3, line art: one closed stroke on Ben, on the rail and its pegs, on the
+   green bag, and on the red bag. The red bag's top outline rises over the bump on the outer side,
+   so the bump changes the silhouette. No merged black band, no floating dash, and no isolated
+   angled dash at the right edge. The short hair strokes sit inside the hair outline.
+   Heavy commands: every forge command, row render, and verify ran inside
+   `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'`. No heavy command ran outside
+   the wrapper. No exit 75, no exit 137, no `net::ERR_UNSAFE_PORT`, no lock wait over 600 s.
+   Shadow root: `/tmp/opencode/wb-shadow` exists. `sha256sum` of its
+   `content/storytime/l2/print/pictures.json` is
+   `c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b`, so no new copy was made. The
+   live Workbooks list is not written to.
+   Week 1 count before this round: "23 of 30 rendered, 16 with no open defect; the Ben page passed
+   at 7.5 with open points". This round adds the pictures item and re-renders the Ben page, so the
+   page waits for review again and no closed row is gained.
+   Review folder `out/storytime-review/batch-21/`: `storytime-animal-pictures.png` (four views, the
+   2060 x 512 layout of batch 20), `l2-w01-story-page-hello-i-am-ben-v3.png`,
+   `l2-w01-story-page-hello-i-am-ben-line-v3.png` (row file names kept), `sprout-ben-render.png`,
+   `look-reference-nan-and-pip.png`, and `brief.md` with bar 7.0 for the item and the page, the item
+   purpose and the exact goal phrase, the goal copied exactly, the critical defects, and the known
+   open defects. Green did not rate its own work. PNGs stay out of git.
+   Commits: `0e953cab` adds the asset and the stage file. This plan block is the next commit. No
+   task is marked `[x]`. Waiting for the independent review.
