@@ -39,7 +39,11 @@ const bodyProfile = profile.polygon(
   { smooth: true },
 );
 
-/** The cap cup, in a local frame: rim at local y = 0, crown at local y = 0.0172. */
+/**
+ * The cap cup, in a local frame: rim at local y = 0, crown at local y = 0.0172.
+ * The under-cut pulls 1.6 mm inside the shell, so the cap's rim is buried and no dark cavity
+ * shows along the edge. A rim level with the shell surface left black specks there.
+ */
 const capProfile = profile.polygon(
   [
     [0, 0.0140],
@@ -49,7 +53,7 @@ const capProfile = profile.polygon(
     [0.0215, 0.0078],
     [0.0226, 0.0052],
     [0.0229, 0.002],
-    [0.0220, 0.0006],
+    [0.0204, 0.0006],
     [0, 0],
   ],
   { smooth: true },
@@ -71,7 +75,7 @@ export default defineAsset({
   name: 'storytime-nut',
   description: 'One acorn: a warm brown nut with a point at the bottom and a dark bumpy cap.',
   detail: 0.00065,
-  texture: { size: 512 },
+  texture: { size: 1024 },
 
   build(k) {
     const shell = sdf.revolve(bodyProfile).paintFn((x, y, z, base) => {
@@ -95,18 +99,19 @@ export default defineAsset({
     const cap = sdf
       .smoothUnion(0.004, sdf.revolve(capProfile), ...capLobes)
       .paintFn((x, y, z, base) => {
-        const mottle = 0.5 + 0.5 * noise.fbm(x * 260, y * 180, z * 260, 2);
+        const mottle = 0.5 + 0.5 * noise.fbm(x * 190, y * 130, z * 190, 2);
         const crown = Math.min(1, Math.max(0, (y - 0.030) / 0.014));
-        return mixRgb(base, mixRgb(CAP, CAPDARK, 0.2 + 0.4 * mottle * (1 - crown)), 0.9);
+        // The rim band stays lighter than the crown. A black rim went to specks in the render.
+        return mixRgb(base, mixRgb(CAP, CAPDARK, 0.16 + 0.38 * mottle * (0.45 + 0.55 * crown)), 0.9);
       })
       .rotateZ(5)
       .at(0, 0.032, 0);
     k.body('cap', cap, {
       color: '#6e4126',
       roughness: 0.9,
-      detail: 0.0006,
-      bump: (x, y, z) => 0.00016 * noise.fbm(x * 210, y * 140, z * 210, 2),
-      maxTriangles: 5000,
+      detail: 0.0005,
+      bump: (x, y, z) => 0.00009 * noise.fbm(x * 150, y * 100, z * 150, 2),
+      maxTriangles: 7000,
     });
 
     const stem = sdf.chain([
