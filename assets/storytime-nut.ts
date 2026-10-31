@@ -82,10 +82,10 @@ const capLobes = [
 const stemShape = sdf.chain(
   [
     [-0.0012, 0.0452, 0, 0.0024],
-    [0.0016, 0.0492, -0.0002, 0.0019],
-    [0.0042, 0.0528, 0.0004, 0.0013],
+    [0.0016, 0.0492, -0.0002, 0.0020],
+    [0.0042, 0.0524, 0.0004, 0.0019],
   ],
-  0.0025,
+  0.0028,
 );
 
 
@@ -93,18 +93,18 @@ export default defineAsset({
   name: 'storytime-nut',
   description: 'One acorn: a warm brown nut with a point at the bottom and a dark bumpy cap.',
   detail: 0.0008,
-  texture: { size: 1024 },
+  texture: false,
 
   build(k) {
     const shell = sdf.revolve(bodyProfile).at(0, 0.002, 0);
     const cap = sdf
-      .smoothUnion(0.004, sdf.revolve(capProfile), ...capLobes)
+      .smoothUnion(0.005, sdf.revolve(capProfile), ...capLobes)
       .rotateZ(5)
       .at(0, 0.032, 0);
 
     // One body. The union removes the faces that the cap, the shell, and the stem hide from each
     // other, so no chart sits on a buried knife edge.
-    const nut = sdf.smoothUnion(0.003, shell, cap, stemShape).paintFn((x, y, z, base) => {
+    const nut = sdf.smoothUnion(0.0045, shell, cap, stemShape).paintFn((x, y, z, base) => {
       const a = Math.atan2(z, x);
       const grain = 0.5 + 0.5 * noise.fbm(x * 150, y * 80, z * 150, 2);
       const streak = Math.pow(0.5 + 0.5 * Math.cos(a * 7 + y * 70), 8);
@@ -119,7 +119,7 @@ export default defineAsset({
 
       // The colors follow the union, not a guessed boundary. The nearest part wins, with a narrow
       // blend, so the cap color stops exactly at the crease and leaves no dark fingers.
-      const soft = 0.0007;
+      const soft = 0.0015;
       const dShell = shell.dist(x, y, z);
       const dCap = cap.dist(x, y, z);
       const dStem = stemShape.dist(x, y, z);
@@ -137,8 +137,9 @@ export default defineAsset({
       color: '#b0703c',
       roughness: 0.85,
       detail: 0.0008,
-      bump: (x, y, z) => 0.00007 * noise.fbm(x * 150, y * 95, z * 150, 2),
-      maxTriangles: 9000,
+      paintWeight: 1,
+      maxTriangles: 8000,
+      maxError: 0.00004,
     });
   },
 });
