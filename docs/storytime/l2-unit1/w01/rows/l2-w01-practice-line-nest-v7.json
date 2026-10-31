@@ -1,0 +1,45 @@
+{
+  "jobId": "l2-w01-practice-line-nest",
+  "version": 7,
+  "at": 1.0,
+  "spec": {
+    "title": "nest",
+    "duration": 2,
+    "lines": [
+      {
+        "text": "nest",
+        "start": 0,
+        "end": 2,
+        "actors": []
+      }
+    ]
+  },
+  "stage": {
+    "scene": "classroom",
+    "backdrop": "white",
+    "sun": "high",
+    "props": [
+      {
+        "asset": "storytime-nest",
+        "x": 0,
+        "z": 0,
+        "y": 0,
+        "yaw": 20,
+        "scale": 4,
+        "from": 0,
+        "to": 2
+      }
+    ],
+    "camera": [
+      {
+        "at": 0,
+        "az": 20,
+        "el": 32,
+        "dist": 1.7,
+        "tx": 0,
+        "ty": 0.1,
+        "tz": 0
+      }
+    ]
+  }
+}
