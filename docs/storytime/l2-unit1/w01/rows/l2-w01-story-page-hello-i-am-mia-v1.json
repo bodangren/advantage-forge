@@ -1,0 +1,66 @@
+{
+  "jobId": "l2-w01-story-page-hello-i-am-mia",
+  "version": 1,
+  "at": 0.7,
+  "spec": {
+    "title": "Hello!",
+    "duration": 2,
+    "lines": [
+      {
+        "text": "Hello, I am Mia.",
+        "start": 0,
+        "end": 1,
+        "actors": [
+          "Mia"
+        ],
+        "gesture": "wave"
+      }
+    ]
+  },
+  "stage": {
+    "scene": "classroom",
+    "backdrop": "white",
+    "sun": "high",
+    "dog": "quiet",
+    "marks": {
+      "Mia": {
+        "x": -0.36,
+        "z": 0.04,
+        "yaw": 8
+      }
+    },
+    "props": [
+      {
+        "asset": "rug",
+        "x": 0.02,
+        "z": 0,
+        "y": 0,
+        "yaw": 0,
+        "scale": 1.35,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "storytime-block-box",
+        "x": 0.32,
+        "z": -0.02,
+        "y": 0.02,
+        "yaw": -24,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      }
+    ],
+    "camera": [
+      {
+        "at": 0,
+        "az": 16,
+        "el": 16,
+        "dist": 3.9,
+        "tx": 0,
+        "ty": 0.46,
+        "tz": 0
+      }
+    ]
+  }
+}
