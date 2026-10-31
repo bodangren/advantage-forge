@@ -1922,3 +1922,38 @@ gate applies again.
    Review card: `out/storytime-review/batch-4/sprout-pip-sniff.png`, with the strip and the
    `brief.md` section "Round 31 change". Green did not rate the item. The item waits for the
    independent re-review. No task is marked `[x]`.
+   Green round 32 evidence (2026-10-31, claude-code/claude-sonnet-5-5#high). Task: one new
+   version of the class A page `l2-w01-story-page-a-nest-and-a-nut`, with a stage change
+   only. The orchestrator found four open defects in v2: (1) Pip sniffed empty grass, because
+   the nut lay about 25 to 30 cm from his nose; (2) the trunk stood on Pip's head in the
+   picture and joined his head in the line art; (3) the fork with its two leaf caps read as a
+   hand that holds the nest; (4) the nut read as a small cup in the line art. Models: Green
+   `claude-code/claude-sonnet-5-5#high`, Red `minimax-cn-coding-plan/MiniMax-M3`, coder none.
+   Commit `45a0a191` adds v3 and v4. No asset, `src/`, test, or picture-list file changed.
+   The branch (x -0.3, z 0) and the nest (x 0.2, y 0.7, z 0.04) did not move. The changes:
+   Pip faces the right of the picture (yaw 90 in v3, 72 in v4) and stands at x 0.2, z 0.2;
+   the nut lies at his nose; the camera looks from the front (+Z side); the bush and the
+   wildflowers moved. Each render and the verify ran as one `heavy-run.sh` command. No lock
+   wait over 600 s occurred.
+   - v3 (superseded; az 15, el 24, dist 2.3; nut x 0.35, z 0.2, scale 2.2; 22 px line, ink
+     6.37%, peak 991 MB; render exit `0`): goals 1, 2, and 5 passed. Goal 4 failed: Pip's
+     head half hid the nut, and the nest stayed small. Goal 3 was partial.
+   - v4 (kept; class A, 4000 x 3000; az 10, el 28, dist 1.9, target 0.25, 0.45, 0.1; Pip
+     yaw 72; nut x 0.4, z 0.3, scale 2.4, about 10.3 cm wide; 22 px line, ink 5.34%, peak
+     516 MB; render exit `0`): color
+     `402b4a4f9277fce77bf610c39915d91b73a5afdb8de9380e671fe0559c1661e5`; line art
+     `82fb8a3f53b3a71a5ae9ee126d9930c58d3cc05a6090e51e93e3805e50fd13b9`.
+     `verify --row` exit `0`; it passed for 4 row versions. The white edge check passed.
+   Goals of v4: (1) pass, Pip's nose is just above the nut and the nut lies free beside him.
+   (2) pass, the trunk stands left of Pip with grass between, in the color file and the line
+   art. (3) partial: the nest sits in the fork and three eggs show, but the fork with two leaf
+   caps still looks like an open hand under the nest, most of all in the line art. The branch
+   asset cannot change in this round. (4) partial: the nest and the nut are large and not cut
+   off, and the nut reads as a nut in the color file. In the line art the nut still looks like
+   a small jar with a lid. (5) pass: no letters show, and the white edge check passed.
+   v4 is better than v2 and v3 on goals 1, 2, and 4. The row is not counted as clean.
+   Count correction: round 30 counted 18 rows with no open defect, but v2 had open defects, so
+   the count after round 30 was 17 (22 of 30 rendered). Week 1 rows rendered after this
+   round: 22 of 30 (no new row). Rows with no open defect: 17. The fork needs a branch
+   asset change (a plain branch without the two leaf caps) to close goal 3. No task is marked
+   `[x]`. The row waits for the independent picture review.
