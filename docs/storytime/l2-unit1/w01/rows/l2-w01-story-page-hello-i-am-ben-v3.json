@@ -1,0 +1,75 @@
+{
+  "jobId": "l2-w01-story-page-hello-i-am-ben",
+  "version": 3,
+  "at": 0.65,
+  "spec": {
+    "title": "Hello!",
+    "duration": 2,
+    "lines": [
+      {
+        "text": "Hello, I am Ben.",
+        "start": 0,
+        "end": 1,
+        "actors": [
+          "Ben"
+        ],
+        "gesture": "wave"
+      }
+    ]
+  },
+  "stage": {
+    "scene": "classroom",
+    "sun": "high",
+    "dog": "quiet",
+    "marks": {
+      "Ben": {
+        "x": 5.05,
+        "z": 0.64,
+        "yaw": -80
+      }
+    },
+    "props": [
+      {
+        "asset": "storytime-wall-hook",
+        "x": 5.94,
+        "z": 0.96,
+        "y": 0.58,
+        "yaw": -90,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "storytime-school-bag-ben",
+        "x": 5.858,
+        "z": 0.96,
+        "y": 0.368,
+        "yaw": -90,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "storytime-school-bag",
+        "x": 5.28,
+        "z": 1.22,
+        "y": 0,
+        "yaw": -80,
+        "scale": 1.25,
+        "from": 0,
+        "to": 2
+      }
+    ],
+    "camera": [
+      {
+        "at": 0,
+        "az": -80,
+        "el": 9,
+        "dist": 2.4,
+        "tx": 5.4,
+        "ty": 0.46,
+        "tz": 0.6
+      }
+    ]
+  }
+}
