@@ -1860,3 +1860,21 @@ gate applies again.
    Review card: `out/storytime-review/batch-4/sprout-pip-sniff.png`, with the strip, the
    look reference, and `brief.md` in the same folder. Green did not rate the item. The item
    waits for the independent review. No task is marked `[x]`.
+   Green round 29 evidence (2026-10-31, claude-code/claude-sonnet-5-5#high). The independent
+   review of the round 28 card (`kimi-code-plan-cn/k3.1-pro#high`, `item-review-batch-4.json`)
+   gave 7.2 with pass `false`. The critical defect: the cream chest read as a floating paw in
+   the side view. The shape was the cream chest ruff, which is bound rigidly to the neck bone.
+   The round 28 pose tilted the neck 14 degrees and moved it 9 cm forward, so the ruff left
+   the torso. Round 29 changed only the `sniff` pose in `assets/parts/wolf-kind.ts`: the neck
+   tilts 2 degrees with no move, and the head tilts 19 degrees (it was 6) and carries the nose
+   down. The mesh, colors, paint, and every other clip did not change. Commit `d799f1f1`.
+   The strip and the card show no separate shape under the neck in any view or frame. The nose
+   stays in front of the front paws, the rear and the tail stay up, and the paws stay planted.
+   The tongue still shows a little: closing it needs a mesh change, which is out of scope.
+   Runs (each in one `heavy-run.sh` command): `animate --fast` exit `0` (three loops), then
+   `./forge build sprout-pip` exit `0`, 82 s, GLB 5447352 bytes (5320 KB), `warning:` lines
+   `0` (`green-p3-r29-build.log`). The cutout run exit `0` (the GLB size did not change).
+   Tests: 4 files, `Tests  164 passed (164)`, exit `0` (`green-p3-r29-vitest.log`). No type
+   check: only `assets/` changed. Review card: `out/storytime-review/batch-4/sprout-pip-sniff.png`,
+   with the strip and the `brief.md` section "Round 29 change". Green did not rate the item.
+   The item waits for the independent re-review. No task is marked `[x]`.
