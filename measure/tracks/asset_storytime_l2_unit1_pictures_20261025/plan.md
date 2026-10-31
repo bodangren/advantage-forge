@@ -2415,3 +2415,87 @@ gate applies again.
    nest. They need a re-render with the new nest later. That work is not in this round.
    Week 1 rows rendered: 22 of 30. Rows with no open defect: 14. No task is marked `[x]`. Waiting
    for the independent re-review.
+   Green round 41 evidence (2026-11-01, deepseek/deepseek-flash#high). Task: close the open line ends
+   of `storytime-nest` and make the eggs clearly light blue.
+   Models: Green `deepseek/deepseek-flash#high` (route from `ra-quota --fresh pick green
+   --not-family minimax --not-family openai`; Daniel approved the DeepSeek route), Red
+   `minimax-cn-coding-plan/MiniMax-M3`, coder none. No delegation.
+   Batch 12 result (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-12.json`):
+   the item `storytime-nest` failed at 6.2, and both nest-alone rows failed at 5.9. Each item carried
+   the critical defect "The line art has many broken strokes and noisy gaps on the rim and twigs."
+   Each item also carried the issues "The eggs in the row pictures read pale mint-cyan, not clearly
+   light blue." and "The dense round outlines can read as a bowl before they read as a nest." The
+   goal "three eggs read light blue" failed.
+   Cause of the open line ends: round 40 used one twig color. A stroke stopped in the middle of the
+   nest in two cases. First, a light twig touched or crossed another light twig, so no paint edge
+   fired and the two twigs shared one depth. Second, a twig end met the cup with a wide fillet, so
+   the outline thinned and faded out. The line-art rules did not change: a paint edge needs a
+   0.2 channel gap between pixels 4 px apart, and a depth edge needs a 2 percent view-distance jump.
+   Fix in `assets/storytime-nest.ts`:
+   - Two twig tones on the dark cup `#6e3f1e`: light `#f7dcb2` and mid `#d09a5c`. The light-to-mid
+     gap is over 0.25 in one channel, and the cup-to-twig gap is over 0.3. Every twig outline now
+     closes by the paint rule.
+   - A light twig never touches another light twig. The rim ring and the three belly braces are
+     light. The four climbers are mid tone, so a twig that crosses the rim or a brace draws its own
+     line. Braces sit 4.4 mm proud and climbers 3.1 mm, so a crossing also has a depth step.
+   - Every twig ends in a round bead that stands on the dark cup. The chain blend is 0.0011, so no
+     twig end fades into the cup with a wide fillet.
+   - Eight large twigs replace the eleven small twigs: one rim ring, four climbers, three braces.
+     The four climbers leave the silhouette at four heights and four angles, so the nest does not
+     read as one smooth bowl.
+   - The eggs use the more saturated blue `#5c9aea` with the light top `#8ab7f4` and roughness 0.88.
+     The warm row light washed a pale cyan toward grey, so the deeper blue holds the blue hue.
+   The base, the outer radius, the three eggs and their places, the vertex colors, the soft round
+   Chibi Sprouts look, and the asset name did not change. The footprint is 0.19 m by 0.197 m against
+   the round 40 0.19 m by 0.198 m. No text, letter, number, logo, or face. Rated G.
+   Commit `9e4eee19` holds the fix in `assets/storytime-nest.ts` and the new stage files
+   `l2-w01-practice-line-nest-v9.json`, `-v10.json`, `-v11.json`, and
+   `l2-w01-check-row-nest-v7.json` under `docs/storytime/l2-unit1/w01/rows/`. Each stage file copies
+   its latest version, and only the version number changed. No `src/`, test, cast, or picture-list
+   file changed.
+   Heavy commands: every forge, row render, and verify command ran inside
+   `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'`. No heavy command ran outside
+   the wrapper. Nest gates: three `render storytime-nest --fast` runs exit `0`, two
+   `render storytime-nest` runs exit `0` (18,244 triangles, 0.19 x 0.076 x 0.197 m, GLB 432 KB,
+   vertex colors), and `inspect storytime-nest --fast` exits `0` with "Warnings: none". `warning:`
+   lines: 0. No exit 75, no exit 137, no lock wait over 600 s.
+   Picture-list blocker, exact words: "`render --row` and `verify --row` exit 1 on the live Workbooks
+   list (SHA-256 6d05dfc5..., 4 uncommitted week 8 rows). The rows were rendered and verified with
+   `--workbooks /tmp/opencode/wb-shadow`, a temporary copy of the committed list (SHA-256
+   c3e23cfd...). The week 1 rows are the same in both lists." The measured message is "The picture
+   list changed: expected SHA-256 c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b,
+   measured 6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58." The list file is
+   `content/storytime/l2/print/pictures.json` in the Workbooks repository, outside this repository
+   and out of scope for this round.
+   Row form: `node --import tsx scripts/storytime-book-pictures.ts render --row <jobId> --version
+   <n> --workbooks /tmp/opencode/wb-shadow` then the same form for `verify --row <jobId>`.
+   | Row | Version | Line | Ink | Peak | Open ends | Color SHA-256 | Line-art SHA-256 |
+   | --- | --- | --- | --- | --- | --- | --- | --- |
+   | `l2-w01-practice-line-nest` | v11 | 24 px | 9.55% | 946 MB | 0 | `1e41d98d5ea89f8e18ce1cb2d6f906c949c2c14ef827539cadea4595c3bfb074` | `9439afbd4055d82e9ed56b00a11d4ee85b000371d89688e583fa66c61ca343f0` |
+   | `l2-w01-check-row-nest` | v7 | 24 px | 9.85% | 486 MB | 0 | `3c6d88944cf7e0562f070b2d0bd46c56062cb9b1c797cd772b8115c3d07bd522` | `852e00052d814b7df80a0380e04fd61b948305d0075518da859d254c70abb742` |
+   Open-end count method: a stroke tip is a black pixel whose 16 px ring holds one black arc under
+   32 percent coverage. Batch 12 measured 8 open ends in `l2-w01-practice-line-nest-line-v8.png` and
+   9 in `l2-w01-check-row-nest-line-v6.png`. Both new line-art files measure 0. Green read all four
+   new row PNGs. `verify --row` exits `0` on both rows with the shadow list ("Row verification
+   passed for 11 row versions", "Row verification passed for 7 row versions").
+   Recorded deviation 1: the round used three practice-line versions, v9 to v11. v9 held the closed
+   twig outlines. v10 changed the egg color to `#87b7f4` and still rendered near grey. v11 set the
+   final blue `#5c9aea`. The round 40 brief allowed two new versions; this round used three to meet
+   the egg color goal. The check-row row rendered once, v7.
+   Recorded deviation 2: the round stopped at the step limit after the batch-13 folder was made. The
+   brief, the implementation commit, this evidence block, and the final log were missing. The
+   orchestrator sent a follow-up on the same base SHAs. The follow-up ran steps 5 to 7 only, with no
+   forge command, no render, no verify, and no asset change.
+   Review folder `out/storytime-review/batch-13/`: `storytime-nest.png` (four views, from the
+   render), `l2-w01-practice-line-nest-v11.png`, `l2-w01-practice-line-nest-line-v11.png`,
+   `l2-w01-check-row-nest-v7.png`, `l2-w01-check-row-nest-line-v7.png` (row file names kept),
+   `storytime-nest-batch-12-practice-line.png`, `storytime-nest-batch-12-check-line.png` (the batch
+   12 line-art files for comparison), `look-reference-nan-and-pip.png`, and `brief.md` with the bar
+   7.0, the critical defects, the keys `storytime-nest`, `l2-w01-practice-line-nest`, and
+   `l2-w01-check-row-nest`, the row goals, the egg color check "the eggs must read light blue in the
+   row color picture", and the section "Why the rework". Green did not rate any item. PNGs stay out
+   of git.
+   The rows `l2-w01-story-page-a-nest` and `l2-w01-story-page-a-nest-and-a-nut` still show the old
+   nest. They need a re-render with the new nest later. That work is not in this round.
+   Week 1 rows rendered: 22 of 30. Rows with no open defect: 14. No task is marked `[x]`. Waiting
+   for the independent re-review.
