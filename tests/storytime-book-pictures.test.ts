@@ -1419,6 +1419,41 @@ describe('Storytime picture contract', () => {
     expect(() => assertPageNotes(['Missing actor'])).toThrow(/Missing actor/);
   });
 
+  it('T23b: a line without word times gives empty sings', () => {
+    const source = stageSource();
+    source.spec.lines = [{
+      text: 'A nose.',
+      start: 0,
+      end: 2,
+      actors: ['Nan'],
+      gesture: 'wave',
+      segments: [{ start: 0.25, end: 1.4 }],
+    }];
+    const timeline = buildBookStillTimeline(source);
+    expect(timeline.actors.find((actor) => actor.id === 'Nan')?.sings).toEqual([]);
+    for (const actor of timeline.actors) expect(actor.sings).toEqual([]);
+  });
+
+  it('T23c: a line with word times keeps those sings', () => {
+    const source = stageSource();
+    source.spec.lines = [
+      { text: 'Look.', start: 0, end: 0.2, actors: ['Nan'], gesture: 'wave' },
+      {
+        text: 'A nose.',
+        start: 0.25,
+        end: 1.4,
+        actors: ['Nan'],
+        gesture: 'touch nose',
+        segments: [{ start: 0.25, end: 1.4, words: [{ start: 0.25, end: 1.4 }] }],
+      },
+    ];
+    const timeline = buildBookStillTimeline(source);
+    expect(timeline.actors.find((actor) => actor.id === 'Nan')?.sings).toEqual([{ start: 0.25, end: 1.4 }]);
+    for (const actor of timeline.actors) {
+      if (actor.id !== 'Nan') expect(actor.sings).toEqual([]);
+    }
+  });
+
   it('T24: MiniMax receives native image arguments, source text, and the rubric without a shell', async () => {
     const { repoRoot, outputRoot } = await sandbox();
     const image = path.join(outputRoot, candidateRelativePath(job(), 1));

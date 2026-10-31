@@ -801,9 +801,28 @@ export async function readBookStage(
   return decodeBookStage({ bytes, job, version, repoRoot });
 }
 
+/** A book still keeps mouth times only from lines that carry explicit word times. */
+function explicitWordSings(lines: Spec['lines']): Map<string, { start: number; end: number }[]> {
+  const kept = new Map<string, { start: number; end: number }[]>();
+  for (const line of lines) {
+    const words = (line.segments ?? [])
+      .flatMap((segment) => segment.words ?? [])
+      .filter((word) => word.end > word.start);
+    if (!words.length) continue;
+    for (const id of line.actors ?? []) {
+      const sings = kept.get(id) ?? [];
+      sings.push(...words.map((word) => ({ start: word.start, end: word.end })));
+      kept.set(id, sings);
+    }
+  }
+  for (const sings of kept.values()) sings.sort((a, b) => a.start - b.start);
+  return kept;
+}
+
 export function buildBookStillTimeline(source: BookStageSource): Timeline {
   const timeline = buildTimeline(source.spec, source.stage);
-  for (const actor of timeline.actors) actor.sings = [];
+  const kept = explicitWordSings(source.spec.lines);
+  for (const actor of timeline.actors) actor.sings = kept.get(actor.id) ?? [];
   if (timeline.warnings.length)
     throw new Error(`Timeline warnings rejected: ${timeline.warnings.join('; ')}`);
   return timeline;
