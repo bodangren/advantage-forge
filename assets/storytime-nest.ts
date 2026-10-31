@@ -4,29 +4,31 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  * Design note — Storytime week 1 nest with three eggs, a small picture prop.
  * Role: a bird's nest for a low branch, with all three eggs readable on a book page.
  * Size: about 0.20 m across and 0.078 m tall, standing on y = 0 and facing +Z.
- * One idea: a dark brown cup that carries many light tan twigs, and three light blue eggs.
- * Shape language: a rough cup, one continuous rim twig, four twig ends past the lip,
- * five wall twigs, two low braces, and one twig that crosses the floor.
- * Palette: dark cup #7c4a26, light dry twigs #d6b184, light blue eggs #8fd3f0.
- * Materials: rough woven wood and smooth matte eggshell.
- * Why two nest bodies: the line-art pass draws no interior form crease. It draws a paint edge
- * only when two colors differ by 0.2 in one channel. So the cup and the twigs are two bodies
- * with two flat colors, and each twig draws its outline against the dark cup. The color gap is
- * 0.35, so the outline is continuous and no depth edge is needed.
+ * One idea: a dark brown cup wrapped by eight large twigs in two tan tones, with three blue eggs.
+ * Shape language: a rough cup, one continuous rim twig, four climbers that break the silhouette,
+ * and three low braces that wrap the belly. Every twig ends in a round bead on the dark cup.
+ * Palette: dark cup #6e3f1e, light twigs #f7dcb2, mid twigs #d09a5c, light blue eggs #5c9aea.
+ * Materials: rough dry twigs and smooth matte eggshell.
+ * Why two twig tones: the line-art pass draws no interior form crease. It draws a paint edge only
+ * when two pixels 4 px apart differ by over 0.2 in one channel. So the cup and the twigs are
+ * separate bodies with flat colors, and two twig tones let a crossing twig draw its own line.
+ * The cup-to-light gap is over 0.5, the cup-to-mid gap over 0.3, and the light-to-mid gap over
+ * 0.25, so every twig outline closes by the paint rule and no depth edge is needed.
  * Why vertex colors: the 1024 bake left smeared texels on the cup floor and a black seam under
  * the rim where the twigs and the eggs crossed the cup. Vertex colors need no atlas gutter.
- * Detail: one cup, eleven twigs, four twig ends, three eggs. No fine scales.
+ * Detail: one cup, eight twigs, three eggs. No fine scales.
  * Rig/animation: none.
  */
 
-const CUP = rgb('#7c4a26');
-const CUP_SHADE = rgb('#653a1d');
-const CUP_WARM = rgb('#8d5a30');
-const TWIG = rgb('#d6b184');
-const TWIG_SHADE = rgb('#bb9459');
-const TWIG_WARM = rgb('#e8cba4');
-const EGG = rgb('#8fd3f0');
-const EGG_TOP = rgb('#aadff7');
+const CUP = rgb('#6e3f1e');
+const CUP_SHADE = rgb('#5c3317');
+const CUP_WARM = rgb('#7d4a26');
+const TWIG_LIGHT = rgb('#f7dcb2');
+const TWIG_LIGHT_SHADE = rgb('#eccfa0');
+const TWIG_MID = rgb('#d09a5c');
+const TWIG_MID_SHADE = rgb('#c48f52');
+const EGG = rgb('#5c9aea');
+const EGG_TOP = rgb('#8ab7f4');
 
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
 
@@ -78,97 +80,80 @@ const eggShape = () =>
     .at(0, 0.0215, 0)
     .smoothUnion(0.012, sdf.ellipsoid([0.0148, 0.0175, 0.0148]).at(0, 0.0275, 0));
 
-// One continuous twig ring on the lip. It buries 3 mm in the outer wall and stands 10 mm proud,
-// so the dark cup interior stays behind it and its outline draws by the paint rule.
+// A twig point: [azimuth in radians, height in m, thickness in m, absolute radius in m].
+type TwigPoint = [number, number, number, number];
+
+// One twig on the cup wall. Each point sits `proud` above the wall, so the twig buries about 3 mm
+// and stands about 9 mm out. The chain gives a round bead at each end, and the small smoothing
+// keeps the end bead crisp instead of pulling it into the cup.
+const twigPath = (points: TwigPoint[], k = 0.0011): sdf.Shape => {
+  const chain: [number, number, number, number][] = points.map(([a, y, thick, r]) => [
+    r * Math.cos(a),
+    y,
+    r * Math.sin(a),
+    thick,
+  ]);
+  return sdf.chain(chain, k);
+};
+
+const onWall = (a: number, y: number, thick: number, proud: number, wobble = 0): TwigPoint => {
+  const r = wallRadius(y) + proud + wobble;
+  return [a, y, thick, r];
+};
+
+// One continuous twig on the lip, in the light tone. It undulates in height so the rim does not
+// read as one smooth bowl edge. The four climbers cross it in the mid tone.
 const rimRing = (): sdf.Shape => {
-  const points: [number, number, number, number][] = [];
-  const segments = 36;
+  const points: TwigPoint[] = [];
+  const segments = 44;
   for (let j = 0; j <= segments; j++) {
     const a = (j / segments) * Math.PI * 2;
-    const rr = 0.0815 + 0.0012 * Math.sin(a * 2 + 0.9) + 0.0008 * Math.sin(a * 5 + 2.3);
-    const y = 0.0472 + 0.0016 * Math.sin(a * 3 + 1.4) + 0.0007 * Math.sin(a * 7 + 0.2);
-    const thick = 0.0064 - 0.0008 * Math.abs(Math.sin(a * 2 + 1.1));
-    points.push([rr * Math.cos(a), y, rr * Math.sin(a), thick]);
+    const rr = 0.0816 + 0.0011 * Math.sin(a + 2.1) + 0.0006 * Math.sin(a * 2 + 0.4);
+    const y = 0.0466 + 0.0036 * Math.sin(a + 0.6) + 0.0014 * Math.sin(a * 3 + 1.9);
+    const thick = 0.0066 + 0.0006 * Math.sin(a * 2 + 2.6);
+    points.push([a, y, thick, rr]);
   }
-  return sdf.chain(points, 0.0012);
+  return twigPath(points);
 };
 
-// One twig that climbs the outer wall and runs out past the lip. Its large round end breaks the
-// round silhouette as one long stroke, so no short mark appears at a tip.
+// A twig that climbs the wall in the mid tone and runs out past the lip in a round bead. Four of
+// them break the round silhouette at different heights, so the nest does not read as a bowl.
 const climber = (
   start: number,
-  span: number,
+  climb: number,
   yLow: number,
-  thickness: number,
-  reach: number,
+  thick: number,
   tipY: number,
+  reach: number,
 ): sdf.Shape => {
-  const points: [number, number, number, number][] = [];
-  const steps = 5;
-  const climb = span * 0.68;
+  const steps = 6;
+  const points: TwigPoint[] = [];
   for (let j = 0; j < steps; j++) {
     const t = j / (steps - 1);
     const a = start + climb * t;
-    const y = yLow + (0.0445 - yLow) * t;
-    const rr = wallRadius(y) + 0.0026 - (j === 0 ? 0.0009 : 0);
-    const thick = thickness * (j === 0 ? 0.68 : 1.04);
-    points.push([rr * Math.cos(a), y, rr * Math.sin(a), thick]);
+    const y = yLow + (0.0464 - yLow) * t;
+    const bend = 0.0007 * Math.sin(t * 4.7 + start * 1.7);
+    const bead = j === 0 ? -0.0006 : 0.0004 * Math.sin(Math.PI * t);
+    points.push(onWall(a, y, thick + bead, 0.0031, bend));
   }
-  const aTop = start + climb;
-  points.push([0.0842 * Math.cos(aTop + span * 0.06), 0.0492, 0.0842 * Math.sin(aTop + span * 0.06), thickness * 1.02]);
-  points.push([
-    (0.0862 + reach) * Math.cos(aTop + span * 0.14),
-    tipY,
-    (0.0862 + reach) * Math.sin(aTop + span * 0.14),
-    thickness * 1.06,
-  ]);
-  return sdf.chain(points, 0.0012);
+  const aTip = start + climb * 1.2;
+  points.push([aTip, tipY, thick * 1.04, 0.0816 + reach]);
+  return twigPath(points);
 };
 
-// One twig that climbs the wall and ends buried in the rim ring, so it never floats.
-const wallTwig = (start: number, span: number, yLow: number, thickness: number): sdf.Shape => {
-  const points: [number, number, number, number][] = [];
-  const steps = 5;
-  const climb = span * 0.8;
-  for (let j = 0; j < steps; j++) {
-    const t = j / (steps - 1);
-    const a = start + climb * t;
-    const y = yLow + (0.0472 - yLow) * t;
-    const rr = wallRadius(y) + 0.0025 - (j === 0 ? 0.0009 : 0);
-    const thick = thickness * (j === 0 ? 0.7 : 1.02);
-    points.push([rr * Math.cos(a), y, rr * Math.sin(a), thick]);
-  }
-  const aTop = start + climb + span * 0.08;
-  points.push([0.0798 * Math.cos(aTop), 0.0472, 0.0798 * Math.sin(aTop), thickness * 0.92]);
-  return sdf.chain(points, 0.0012);
-};
-
-// One low twig that wraps the belly in a near level band, a different angle from every climber.
-const brace = (start: number, span: number, yLow: number, rise: number, thickness: number): sdf.Shape => {
-  const points: [number, number, number, number][] = [];
+// A twig that wraps the belly in a near level band, in the light tone. It sits 1 mm further out
+// than a climber, so a crossing always shows the brace in front with a closed outline.
+const brace = (start: number, span: number, yLow: number, yHigh: number, thick: number): sdf.Shape => {
+  const points: TwigPoint[] = [];
   const steps = 6;
   for (let j = 0; j < steps; j++) {
     const t = j / (steps - 1);
     const a = start + span * t;
-    const y = yLow + rise * t;
-    const rr = wallRadius(y) + 0.0022;
-    const thick = thickness * (0.7 + 0.32 * Math.sin(Math.PI * t));
-    points.push([rr * Math.cos(a), y, rr * Math.sin(a), thick]);
+    const y = yLow + (yHigh - yLow) * t + 0.0012 * Math.sin(Math.PI * t);
+    const bead = 0.0008 * Math.cos(Math.PI * t);
+    points.push(onWall(a, y, thick + bead, 0.0044));
   }
-  return sdf.chain(points, 0.0012);
-};
-
-// One twig that crosses the floor of the cup. It lies on the dark floor and rises over the lip,
-// so its whole outline draws against the cup by the paint rule.
-const floorTwig = (): sdf.Shape => {
-  const points: [number, number, number, number][] = [
-    [0.0722, 0.0498, 0.0308, 0.0048],
-    [0.048, 0.0362, 0.0224, 0.0044],
-    [0.018, 0.0312, 0.0082, 0.0042],
-    [-0.016, 0.0298, -0.0092, 0.0042],
-    [-0.052, 0.0342, -0.0288, 0.0044],
-  ];
-  return sdf.chain(points, 0.0014);
+  return twigPath(points);
 };
 
 export default defineAsset({
@@ -181,25 +166,22 @@ export default defineAsset({
     // The cup: one smooth revolve with a deep mouth and a full belly.
     const cup = sdf.revolve(cupProfile);
 
-    // Eleven twigs, all one body and one light color, on two clear angles: four long climbers
-    // with round ends past the lip, three wall twigs, two low braces, one rim ring, one floor twig.
-    const twigs: sdf.Shape[] = [
+    // Eight twigs in two tones. The rim ring and the three braces are light; the four climbers are
+    // mid tan. A light twig never touches another light twig, so no outline can run into itself.
+    const lightTwigs = sdf.smoothUnion(
+      0.0008,
       rimRing(),
-      floorTwig(),
-      climber(0.42, 1.75, 0.0125, 0.0052, 0.0078, 0.0562),
-      climber(1.58, 1.95, 0.0142, 0.005, 0.0052, 0.0472),
-      climber(3.28, 1.7, 0.0115, 0.0054, 0.0102, 0.0576),
-      climber(4.42, 1.9, 0.0132, 0.0052, 0.0062, 0.0458),
-      wallTwig(1.02, 1.9, 0.0128, 0.0048),
-      wallTwig(2.62, 1.7, 0.0112, 0.0046),
-      wallTwig(5.24, 1.8, 0.0138, 0.0048),
-      brace(0.0, 1.5, 0.0108, 0.0072, 0.0048),
-      brace(3.02, 1.6, 0.0122, 0.0068, 0.0048),
-    ];
-
-    // The twigs join each other with one crisp blend. Their outline against the cup is a body
-    // edge with a 0.35 color gap, so the line-art paint rule draws one clean stroke per twig.
-    const woven = sdf.smoothUnion(0.0009, ...twigs);
+      brace(0.5, 1.5, 0.0092, 0.0212, 0.006),
+      brace(2.34, 1.5, 0.0206, 0.0106, 0.006),
+      brace(4.3, 1.5, 0.0102, 0.0224, 0.006),
+    );
+    const midTwigs = sdf.smoothUnion(
+      0.0008,
+      climber(0.30, 1.02, 0.0082, 0.0062, 0.0552, 0.0098),
+      climber(1.86, 1.0, 0.0096, 0.006, 0.0582, 0.0072),
+      climber(3.42, 1.02, 0.0078, 0.0064, 0.0512, 0.0112),
+      climber(4.98, 0.98, 0.0094, 0.006, 0.06, 0.0086),
+    );
 
     // Dark cup with soft variation only: the mix stays under 0.09 in every channel, so no paint
     // edge fires inside the cup.
@@ -213,37 +195,52 @@ export default defineAsset({
     });
 
     k.body('dark-cup', cupPaint.at(0, 0.001, 0), {
-      color: '#7c4a26',
+      color: '#6e3f1e',
       roughness: 0.94,
       detail: 0.002,
       paintWeight: 1,
       maxTriangles: 9000,
     });
 
-    // Light twigs with soft variation only: under 0.09 in every channel.
-    const twigPaint = woven.paintFn((x, y, z, base) => {
+    // Light twigs: the rim ring and the three belly braces. Variation stays under 0.09.
+    const lightPaint = lightTwigs.paintFn((x, y, z, base) => {
       const grain = noise.fbm(x * 120, y * 105, z * 120, 2);
-      const shade = mixRgb(base, TWIG_SHADE, clamp01(0.12 + 0.16 * grain + 0.14 * clamp01((0.028 - y) / 0.02)));
-      return mixRgb(shade, TWIG_WARM, clamp01(0.18 * clamp01((y - 0.036) / 0.014) + 0.1 * grain));
+      const shade = mixRgb(base, TWIG_LIGHT_SHADE, clamp01(0.14 + 0.16 * grain));
+      return mixRgb(shade, TWIG_LIGHT, clamp01(0.12 + 0.3 * clamp01((y - 0.038) / 0.012)));
     });
 
-    k.body('light-twigs', twigPaint.at(0, 0.001, 0), {
-      color: '#d6b184',
+    k.body('light-twigs', lightPaint.at(0, 0.001, 0), {
+      color: '#f7dcb2',
       roughness: 0.9,
       detail: 0.0016,
       paintWeight: 1,
-      maxTriangles: 20000,
+      maxTriangles: 14000,
+    });
+
+    // Mid twigs: the four climbers. Variation stays under 0.09.
+    const midPaint = midTwigs.paintFn((x, y, z, base) => {
+      const grain = noise.fbm(x * 118, y * 102, z * 118, 2);
+      const shade = mixRgb(base, TWIG_MID_SHADE, clamp01(0.14 + 0.16 * grain));
+      return mixRgb(shade, TWIG_MID, clamp01(0.18 * clamp01((y - 0.032) / 0.016)));
+    });
+
+    k.body('mid-twigs', midPaint.at(0, 0.001, 0), {
+      color: '#d09a5c',
+      roughness: 0.9,
+      detail: 0.0016,
+      paintWeight: 1,
+      maxTriangles: 14000,
     });
 
     const egg = (x: number, y: number, z: number, tilt: number) => eggShape().rotateZ(tilt).at(x, y, z);
     // Spread in a triangle so the front, the side, and the back each show three separate eggs.
     const eggs = sdf
       .union(egg(-0.037, 0.027, -0.03, -6), egg(0.004, 0.029, 0.034, 3), egg(0.036, 0.027, -0.004, 7))
-      .paintFn((_x, y, _z, base) => mixRgb(base, EGG_TOP, clamp01((y - 0.032) * 14)));
+      .paintFn((_x, y, _z, base) => mixRgb(base, EGG_TOP, clamp01((y - 0.036) * 16)));
 
     k.body('three-blue-eggs', eggs.at(0, 0.001, 0), {
-      color: '#8fd3f0',
-      roughness: 0.66,
+      color: '#5c9aea',
+      roughness: 0.88,
       detail: 0.0011,
       paintWeight: 1,
       maxTriangles: 7000,
