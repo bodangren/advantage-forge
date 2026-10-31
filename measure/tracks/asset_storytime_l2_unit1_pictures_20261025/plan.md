@@ -1676,3 +1676,22 @@ gate applies again.
   with `brief.md` and the look reference. Open risk: the arch block stays half buried in the
   heap and may read as a plain blue block. No task is marked `[x]`. The box waits for the
   independent review.
+  Green round 21 evidence (2026-10-31, xai/grok-4.7). Round 20 (xai/grok-4.7) stopped after
+  its second fast render. Restarts and lock waits stopped it. Round 20 made no commit. Round 21
+  continued the same file, `assets/storytime-low-branch.ts`. The box of blocks review is 7.8
+  and pass. It has no critical defect. Two row notes remain. The block pile is small for the
+  box. The front view should show the full green cylinder. The row camera handles those notes
+  later. This round does not change the box. Commit `2b171c3c` adds the low tree branch. It
+  serves class A pages `story-page-a-nest` and `story-page-a-nest-and-a-nut`. The nest is a
+  separate asset. It is not in this file. Nest seat `NEST_SEAT` is x = 0.50 m, y = 0.70 m,
+  z = 0.04 m. Nan's eyes are near y = 0.585 m. The seat is a little above them. Models: Green
+  `xai/grok-4.7#high`, Red `minimax-cn-coding-plan/MiniMax-M3`, batch 3 reviewer
+  `xai/grok-4.7#high`, coder none. Render exits: `--fast` loop 1 exit `0`
+  (`green-p3-r21-fast1.log`), `--fast` loop 2 exit `0` (`green-p3-r21-fast2.log`), `--fast`
+  loop 3 exit `0` (`green-p3-r21-fast3.log`), textured `./forge render storytime-low-branch`
+  exit `0` (`green-p3-r21-tex.log`), `./forge inspect storytime-low-branch --fast` exit `0`
+  (`green-p3-r21-inspect.log`). `warning:` lines: `0` in all runs. Inspect warnings: none.
+  No lock wait over 600 s. Every forge command ran as one `heavy-run.sh` command. The review
+  card is `out/storytime-review/batch-3b/storytime-low-branch.png` (front, three-quarter, side,
+  back), with `brief.md` and the look reference. No task is marked `[x]`. The branch waits for
+  the independent review.
