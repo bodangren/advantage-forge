@@ -2037,3 +2037,60 @@ gate applies again.
    re-render after the review. Their line art showed the jar read, so the orchestrator counts
    them as rows with an open defect. Week 1 rows rendered: 22 of 30. Rows with no open defect
    before this round: 15. No new row is rendered in this round. No task is marked `[x]`.
+   Green round 35 evidence (2026-11-01, deepseek/deepseek-flash#high). Task: remove the black
+   specks along the nut cap edge, then render the four rows that use the new nut and the
+   reworked low branch. Models: Green `deepseek/deepseek-flash#high` (Daniel approved the route
+   on 2026-10-31; not the Red family), Red `minimax-cn-coding-plan/MiniMax-M3`, coder none. No
+   delegation. The orchestrator checked this round: commit `eaa12abb` holds the specks fix.
+   The specks cause: the cap rim under-cut sat level with the shell surface. The two surfaces
+   met at a grazing angle, so the crossing raised dark facets along the rim. The occlusion bake
+   and the normal map were not the cause; Green tested each one.
+   The fix in `assets/storytime-nut.ts`: the rim under-cut pulls 1.6 mm inside the shell, so the
+   rim is buried and no dark cavity shows. The cap rim band paint is lighter, and the mottle
+   frequency is lower (260 to 190). The cap bump noise is calmer (0.00016 to 0.00009 m), and the
+   cap mesh is finer (0.0006 to 0.0005). The atlas rose from 512 to 1024, the storytime prop
+   size. The shape, the pointed bottom, the cap lobe bumps, the stem, and the colors stay. The
+   size is now 0.048 x 0.055 x 0.048 m.
+   Deviation: Green ran six specks loops, not three. The first loop changed the atlas and the
+   cap mesh. The second loop widened the cap profile and exposed the dark underside, so Green
+   reverted it. The third and fourth loops tested the occlusion bake and the normal map as the
+   cause. The last loops buried the rim and lightened the rim paint.
+   Commit `eaa12abb` changes the asset. Commit `2adf33ae` adds the four row stage files. Each
+   stage file copies its latest version, and only the version number changed. No `src/`, test,
+   or picture-list file changed.
+   Stale-GLB check before the row renders: no rebuilt GLB was needed. `out/sprout-nan/sprout-nan.glb`
+   is 10-31 17:00 and its source is older. `out/sprout-pip/sprout-pip.glb` is 10-31 20:25 and
+   textured (5,449,100 bytes); its source file time is 20:18, so the GLB is newer than the
+   source. The last commit on `assets/parts/wolf-kind.ts` is `2527fc6a`.
+   Nut gates, each in one `heavy-run.sh` command: textured `render` exit `0` (1024 atlas,
+   6,046 triangles, GLB 792 KB), `inspect --fast` exit `0` with "lowest point y = 0 m".
+   `warning:` lines: 0. The inspect keeps one advisory: "Almost everything is mid-value". No
+   exit 75, no exit 137, no lock wait over 600 s.
+   Row form: `render --row <jobId> --version <n>` then `verify --row <jobId>`. `--version` is
+   mandatory. Each row ran render and verify in one `heavy-run.sh` command. All exits were `0`.
+   | Row | Version | Line | Ink | Peak | Color SHA-256 | Line-art SHA-256 |
+   | --- | --- | --- | --- | --- | --- | --- |
+   | `l2-w01-practice-line-nut` | v3 | 23 px | 1.97% | 988 MB | `343bc5799e28f4a9c6ee134331a3053749ac32614da0fa0d97cf7ae568603028` | `2aa236d1c570c820e09843cbc88ff8c0043bf4ff7f6751f1feeb77440d3d1dcf` |
+   | `l2-w01-story-page-a-nut` | v3 | 24 px | 3.52% | 503 MB | `d195b1628052c98b8d44917553868a02d74dc0a5fb302481967e5bb845fbf16f` | `33d3040fe9af5d4f0fd2dc579260bb5825d09413abaec2b8e86b61f14b9608b4` |
+   | `l2-w01-story-page-a-nest-and-a-nut` | v5 | 22 px | 5.58% | 511 MB | `29e9b34834228b1258b11e76538d904ea12a05161b5e0cb873d3cb28aa3f69bd` | `37c73a380a4589d13629e5b2b72509962394d2f778f623c6fc9dec92f1f0de74` |
+   | `l2-w01-story-page-a-nest` | v7 | 22 px | 6.37% | 511 MB | `2f06db7ef080d3a330c4ece065084213bcb6b44f7f829fc655ae4cc98ce70820` | `2c3bba86296541bf973bd6c8f4b14e718f65717323a98bbd2cce1e6d536ba4a3` |
+   Verify passed for 3, 3, 5, and 7 row versions. The white edge check passed on every row.
+   Builder notes from the four color files and the four line-art files. These are notes, not a
+   rating. The nut alone reads as a nut in color and in line art; the cap edge shows one thin
+   dark crease line and no scattered specks. The nut in Nan's hand reads as an acorn, and the
+   face shows small dark marks at the outer eye corners. On the nest-and-a-nut page, Pip's nose
+   meets the nut on the grass, the low branch is a Y shape that reads as a branch and not as a
+   hand, and the nest sits in the fork with three eggs. On the a-nest page, one straight trunk
+   reads as a tree and not as a lamp post, the nest sits in the fork, and Nan's held-out hand
+   reads as a mitt. No letter, number, or logo shows.
+   Step limit: the tool budget ended after the four row renders. The orchestrator restarted
+   Green for the brief, the commits, and this block. No forge command ran again in that
+   follow-up.
+   Review folder `out/storytime-review/batch-7/`: `storytime-nut.png` (front, three-quarter,
+   side, back, the batch 6 layout), the four new color PNGs, the four new line-art PNGs (the row
+   file names kept), `look-reference-nan-and-pip.png`, and `brief.md` with the exact row goals,
+   the bar 7.0, the critical defects, and the section "Known open defects". Green did not rate
+   any item.
+   Week 1 rows rendered: 22 of 30. Rows with no open defect: 15. These counts do not change in
+   this round; the orchestrator updates them after the review. No task is marked `[x]`. Waiting
+   for the independent re-review.
