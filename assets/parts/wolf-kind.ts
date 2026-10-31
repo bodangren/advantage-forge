@@ -844,8 +844,8 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
         // the ground. A 3 Hz head bob is the sniff. The tail stays up and wags. The jaw stays shut.
         const BODY = 16;
         const CHEST = 6;
-        const NECK = 14;
-        const HEAD = 6;
+        const NECK = 2;
+        const HEAD = 19;
         const BEND = 10;
         clip('sniff', {
           duration: 1,
@@ -855,8 +855,9 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
             const pose: Pose = {
               hips: { rotate: [BODY, 0, 0] },
               spine: { rotate: [CHEST, 0, 0] },
-              // Kind-space move. scaleAsset turns it into about 9 cm forward in the world.
-              neck: { rotate: [NECK, 0, 0], move: [0, 0.04, 0.18] },
+              // The cream chest ruff is rigid on the neck bone: a big neck tilt or move pulls it off the
+              // torso. The head tilt carries the nose down instead.
+              neck: { rotate: [NECK, 0, 0], move: [0, 0, 0] },
               head: { rotate: [HEAD + bob, 2 * wave(p, 3, 0.15), 0] },
               tail: { rotate: [20 + BODY, 26 * wave(p, 2), 8 * wave(p, 2, 0.25)] },
             };
