@@ -1755,3 +1755,30 @@ gate applies again.
   v2 had open defects, so the count after round 22 was 17. Week 1 rows rendered so far: 20 of
   30. Rows with no open defect: 17. No task is marked `[x]`. The row waits for the independent
   picture review.
+  Green round 24 evidence (2026-10-31, xai/grok-4.7). The orchestrator found three open defects
+  in nest v3. The branch and the fork pass in front of Nan's face. The right leaf cap sits on
+  her head. The line art cuts through her face. The close low angle makes the fork read as a
+  hand. Nan's point still reads as a fist. Commit `4b6ac5f5` adds v5 and v6. No asset, gesture,
+  backdrop, or text changed. Models: Green `xai/grok-4.7#high`, Red
+  `minimax-cn-coding-plan/MiniMax-M3`, coder none. Each render and `verify --row` ran as one
+  `heavy-run.sh` command. Both render exits were `0`. Verify exit was `0`. The v6 render and
+  the verify each printed `lock wait over 600 s`, then finished. Those two runs were not
+  repeated. The wrapper completed each job after the wait.
+  - `story-page-a-nest` v5 (superseded; branch scale 0.82, yaw 18, y -0.04; az 6, el 15,
+    dist 1.18; 23 px line, ink 5.67%, peak 516 MB): color
+    `ebb87f53d65a994fe1276a1681cdc8e0d1dcf3d6bf103244f83a354c05d24810`; line art
+    `bf34d234e34cec5605364fab1e10bcb558271fb39af36c886b0058064e781ced`. The right leaf cap still
+    sits on her cheek. The fork still reads as a hand. Her face and her body are cut off.
+  - `story-page-a-nest` v6 (superseded; branch scale 0.78, yaw -50, y -0.05; az 14, el 36,
+    dist 2.05; 22 px line, ink 5.83%, peak 508 MB): color
+    `fd2a72575817c6f5a802726596b4d0885a0e5c29dc0f40e8c95ffab56f135030`; line art
+    `14ee0f935aa48ac9a9dac391a751a5e9ddefd07896a13309935e808e014f7f7d`. Nan stands clear of the
+    fork. Her face is free. The nest is small and low on the left. Her point does not aim at
+    the nest.
+  Kept: v3. Color `6062f8268ef99e8a3fa5e0e307f7b015598eab76dfd10690a5eaab18370da62e`; line art
+  `bc790f9aeb92bba8390b50ee9c77c39a234fe8e2337cae1217d1f920944c539d`. Round 23 render exit was
+  `0`. Line width 22 px. Ink 6.31%. Peak 535 MB. Verify passed for 6 row versions. v5 crops
+  Nan, and the leaf still meets her cheek. v6 clears her face, but the nest is about one tenth
+  of the page. The point does not aim at the nest. v3 remains the kept page. Week 1 rows
+  rendered so far: 20 of 30. Rows with no open defect: 17. No task is marked `[x]`. The row
+  waits for the independent picture review.
