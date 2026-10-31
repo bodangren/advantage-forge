@@ -1650,3 +1650,29 @@ gate applies again.
   rendered so far: 18 of 30. Rows with no open defect: 16 (the hat row defect closes, pending the
   independent picture review). No task is marked `[x]`. The rows wait for the independent item
   and picture review.
+  Green round 19 evidence (2026-10-31, muse-spark-1.3-contributor). Orchestrator decision:
+  the build order changed. Items that alone unblock a row come first: this box of blocks
+  (unblocks `story-page-hello-i-am-mia`), then a low branch (unblocks `story-page-a-nest`).
+  The kindergarten room set comes after them. Reason: 12 week 1 rows are still blocked and the
+  due date is 2026-11-02, so the next rounds build the items that unblock one row each. Commit
+  `3ce40141` adds `assets/storytime-block-box.ts`, the big box of colored blocks for
+  `story-page-hello-i-am-mia` (class A, with the line-art twin in 1-bit). It is a low, wide,
+  open-top toy box about 0.50 m wide, 0.36 m deep, and 0.28 m high in soft orange with a thin
+  darker rim band and a rounded hand-hole cut in each short side. It holds a heap of chunky
+  blocks in four bright colors (red, blue, yellow, green): cubes, short cylinders, one arch,
+  and one triangle. The heap stands clearly above the rim (peak about 0.39 m, about hip height
+  on a 5-year-old). Two loose blocks (a blue cube and a green cylinder) sit on the ground on
+  the +X side. It has no text, letter, number, logo, face, or picture. Models: Green
+  `opencode-go/muse-spark-1.3-contributor#high`, Red `minimax-cn-coding-plan/MiniMax-M3`,
+  reviewer `openai/gpt-6-luna#high`, coder none. Render exits: `--fast` loop 1 exit `0`
+  (`green-p3-r19-fast1.log`; the heap floated above the rim), `--fast` loop 2 exit `0`
+  (`green-p3-r19-fast2.log`; a third layer joined the heap to the rim), `--fast` loop 3 exit
+  `0` (`green-p3-r19-fast3.log`; a fourth layer and higher top cubes lift the peak clearly
+  above the rim), textured `./forge render storytime-block-box` exit `0`
+  (`green-p3-r19-tex.log`), `./forge inspect storytime-block-box --fast` exit `0`
+  (`green-p3-r19-inspect.log`). `warning:` lines: `0` in all runs; inspect warnings: none.
+  Every forge command ran as one `heavy-run.sh` command. The review card is
+  `out/storytime-review/batch-3/storytime-block-box.png` (front, three-quarter, side, back),
+  with `brief.md` and the look reference. Open risk: the arch block stays half buried in the
+  heap and may read as a plain blue block. No task is marked `[x]`. The box waits for the
+  independent review.
