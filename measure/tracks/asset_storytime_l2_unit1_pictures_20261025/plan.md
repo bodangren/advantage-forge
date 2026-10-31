@@ -1732,3 +1732,26 @@ gate applies again.
   blocks above the rim. Rows rendered this round: 2. Week 1 rows rendered so far: 20 of 30.
   Rows with no open defect: 18. No task is marked `[x]`. The rows wait for the independent
   picture review.
+  Green round 23 evidence (2026-10-31, xai/grok-4.7). The orchestrator found three open defects
+  in nest v2. The nest is about one tenth of the page width. Nan is cut off at the right edge
+  and at the bottom. Her point reads as a fist, because the camera sees her from the side.
+  Commit `b3e99b2b` adds v3 and v4. No asset, prop, gesture, or backdrop changed. Models: Green
+  `xai/grok-4.7#high`, Red `minimax-cn-coding-plan/MiniMax-M3`, coder none. Each render and
+  `verify --row` ran as one `heavy-run.sh` command. Both render exits were `0`. Verify exit
+  was `0`. No lock wait over 600 s. Verify logs do not print peak memory.
+  - `story-page-a-nest` v3 (kept; class A, 4000 x 3000; camera and Nan mark only; az 10, el 9,
+    dist 0.92; 22 px line, ink 6.31%, peak 535 MB): color
+    `6062f8268ef99e8a3fa5e0e307f7b015598eab76dfd10690a5eaab18370da62e`; line art
+    `bc790f9aeb92bba8390b50ee9c77c39a234fe8e2337cae1217d1f920944c539d`. The nest is larger in
+    the middle, and three eggs show. Nan is in frame from the head past the waist. Her face is
+    a front three-quarter view. The index finger extends against the white page and points at
+    the nest. The right leaf cap still sits on her head.
+  - `story-page-a-nest` v4 (superseded; camera and Nan mark only; az 10, el 5, dist 0.86; 22 px
+    line, ink 6.27%, peak 513 MB). The lower camera did not lift the right leaf cap off her
+    head. Her feet are cut off. v3 is better.
+  Verify passed for 4 row versions. The cutoff defect and the fist defect of v2 are closed in
+  v3. The nest is still under one quarter of the page width, and the right leaf cap covers her
+  hair. That row still has an open defect. Round 22 counted 18 rows with no open defect. Nest
+  v2 had open defects, so the count after round 22 was 17. Week 1 rows rendered so far: 20 of
+  30. Rows with no open defect: 17. No task is marked `[x]`. The row waits for the independent
+  picture review.
