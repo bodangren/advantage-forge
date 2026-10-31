@@ -2203,3 +2203,61 @@ gate applies again.
    `storytime-nut`, and the section "Why the rework". Green did not rate the item. PNGs stay out of
    git.
    No task is marked `[x]`. Waiting for the independent re-review.
+
+   Green round 38 evidence (2026-11-01, deepseek/deepseek-flash#high). Task: make the
+   `storytime-nest` 1-bit line art clean, then render the two nest-alone rows again. Models: Green
+   `deepseek/deepseek-flash#high` (route from `ra-quota --fresh pick green --not-family minimax
+   --not-family openai`; Daniel approved the DeepSeek route), Red
+   `minimax-cn-coding-plan/MiniMax-M3`, coder none. No delegation.
+   Batch 9 independent review result (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-9.json`):
+   `storytime-nut` 7.5 pass with no critical item. The nut now uses vertex colors, so no texture
+   atlas exists and no black texel can appear.
+   Batch 7 independent review failed two story pages with the critical item "Nest detail breaks
+   into noise in the line art." The 1-bit line art drew the nest rim as many short, broken, dashed
+   strokes. The same noise showed on the nest-alone rows
+   `out/storytime/l2/unit1/w01/rows/l2-w01-practice-line-nest-line-v1.png` and
+   `l2-w01-check-row-nest-line-v1.png`. At page scale the rim turned into a dense black smudge.
+   Cause: the `woven-twigs` body joined 24 thin woven strands and 34 short crossing rim twigs. Each
+   small twig end and each crossing made a short edge, so the line art drew dozens of dashes.
+   Fix in `assets/storytime-nest.ts`: four coils, each one unbroken loop of 4.6 mm radius around
+   the rim; six long twigs that climb the outer wall over wide arcs at gentle angles; two twigs
+   that drape over the rim into the bowl; and two thick rounded twig ends that lean out of the rim.
+   All strands join the bowl with `smoothUnion` (0.0028 m between strands, 0.0030 m into the bowl),
+   so every crossing is a smooth fillet. The woven look moved to the paint: each strand takes a
+   light, mid, or dark brown, and a noise grain runs over the whole body. The bowl profile keeps a
+   shallow dish and a narrower base. The eggs, their places, the warm brown colors, the texture
+   size of 1024, the asset name, and the ground contact on y = 0 did not change. The footprint is
+   0.183 m by 0.186 m against the earlier 0.189 m by 0.183 m. No text, letter, number, logo, or
+   face. Rated G.
+   Commits: `46f7865a` holds the fix in `assets/storytime-nest.ts` and adds the two v2 stage files
+   `docs/storytime/l2-unit1/w01/rows/l2-w01-practice-line-nest-v2.json` and
+   `l2-w01-check-row-nest-v2.json`. No `src/`, test, cast, or picture-list file changed.
+   Shape loop: four `render --fast` runs, each exit `0` (12,497, 12,665, 13,306, and 12,958
+   triangles). Each run fixed one difference: a plate-like bowl, weak twig stripes, upright posts
+   at the rim, then the final shape.
+   Nest gates, each in one `heavy-run.sh` command: textured `render` exit `0` (1024 atlas, 12,368
+   triangles, GLB 1,571 KB, size 0.183 x 0.077 x 0.186 m) and `inspect --fast` exit `0` with
+   "lowest point y = 0 m" and "Warnings: none". `warning:` lines: 0. No exit 75, no exit 137, no
+   lock wait over 600 s.
+   Row form: `node --import tsx scripts/storytime-book-pictures.ts render --row <jobId> --version
+   <n>` then `verify --row <jobId>`. Each row ran render and verify in one `heavy-run.sh` command.
+   All exits were `0`.
+   | Row | Version | Line | Ink | Peak | Color SHA-256 | Line-art SHA-256 |
+   | --- | --- | --- | --- | --- | --- | --- |
+   | `l2-w01-practice-line-nest` | v2 | 24 px | 9.48% | 949 MB | `57203811d439602802ea8dffe37afdf96c85ae97542d2895b99fe0cd6d0c22f9` | `ff4e87f784c66a3d2df53025267b3a8d5434886cb0b2c4bbc8c7fd62a30372d8` |
+   | `l2-w01-check-row-nest` | v2 | 26 px | 9.69% | 487 MB | `7d9ee77032f5fc3ad2d8d61ef14cd9c038c7f49a662a9cc9a1024572f3e04af4` | `c2cd81cb9cbc388b9d0a2c404d4fffde450a3d78c1b8c0381074201db98b4e26` |
+   Verify passed for 2 row versions on each row. The white edge check passed. The new line art
+   shows long, closed rim strokes in place of the dashed rim. A few short marks remain at two twig
+   tips.
+   Review folder `out/storytime-review/batch-10/`: `storytime-nest.png` (front, three-quarter,
+   side, back, the batch 9 layout, from the textured render), the two new color PNGs, the two new
+   line-art PNGs (the row file names kept), `storytime-nest-old-practice-line.png`,
+   `storytime-nest-old-check-line.png`, `look-reference-nan-and-pip.png`, and `brief.md` with the
+   bar 7.0, the critical defects, the keys `storytime-nest`, `l2-w01-practice-line-nest`, and
+   `l2-w01-check-row-nest`, the row goals, and the section "Why the rework". Green did not rate any
+   item. PNGs stay out of git.
+   The rows `l2-w01-story-page-a-nest` and `l2-w01-story-page-a-nest-and-a-nut` still show the old
+   nest. They need a re-render with the new nest later. That work is not in this round.
+   Week 1 rows rendered: 22 of 30. Rows with no open defect: 16. These counts do not change in this
+   round; the orchestrator updates them after the review. No task is marked `[x]`. Waiting for the
+   independent re-review.
