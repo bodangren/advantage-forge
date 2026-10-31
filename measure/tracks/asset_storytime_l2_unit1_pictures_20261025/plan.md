@@ -1878,3 +1878,25 @@ gate applies again.
    check: only `assets/` changed. Review card: `out/storytime-review/batch-4/sprout-pip-sniff.png`,
    with the strip and the `brief.md` section "Round 29 change". Green did not rate the item.
    The item waits for the independent re-review. No task is marked `[x]`.
+    Green round 30 evidence (2026-10-31, kimi-code-plan-cn/k3.1-pro#high). Task: one class A
+    page, `l2-w01-story-page-a-nest-and-a-nut`. The `sniff` clip passed at 7.4
+    (`item-review-batch-4b.json`, kimi-code-plan-cn/k3.1-pro). The low branch passed at 7.2
+    (`item-review-batch-3b.json`). These reviews unblocked the row. Models: Green
+    `kimi-code-plan-cn/k3.1-pro#high`, Red `minimax-cn-coding-plan/MiniMax-M3`, coder none.
+    Commit `47fa0f5c` adds v1 and v2. No asset, `src/`, test, or picture-list file changed.
+    The nut scale is `2.0`, or about 9.4 cm wide and 9.8 cm tall. Each render and each
+    `verify --row` ran as one `heavy-run.sh` command. The first v1 render printed `lock wait
+    over 600 s`, then exited `0`. Its required retry exited `1` because v1 already existed.
+    The v2 render without `--version 2` exited `1` for the same reason. The correct v2 render
+    exited `0`. Verify exited `0` for both versions. No lock wait over 600 s occurred on v2.
+    - v1 (superseded; 23 px line, ink 5.80%, peak 874 MB): the nut was cut off, and only two
+      eggs showed. The camera was too close and too low. Render exit `0`; verify exit `0`.
+    - v2 (kept; class A, 4000 x 3000; az 65, el 32, dist 2.25; 24 px line, ink 5.78%, peak
+      494 MB): color `28b1c1b87fc1740393cb3625dff78d1fb815635c5aea8e931e00aeb03f6f85d8`;
+      line art `a7d8a96bfd7d4edc46c3ea84bf90342ac75214c5d4d9c730b5c3915f98076f6e`.
+      Render exit `0`; verify exit `0`. Verify passed for 2 row versions. The white edge check
+      passed. Pip's lowered nose sits just behind and above the nut. Three eggs show, and the
+      fork reads as a branch. Both named objects are clear. No letters show.
+    Week 1 rows rendered before this round: 21 of 30. Rows with no open defect: 17. Week 1 rows
+    rendered after this round: 22 of 30. Rows with no open defect: 18. No task is marked `[x]`.
+    The row waits for the independent picture review.
