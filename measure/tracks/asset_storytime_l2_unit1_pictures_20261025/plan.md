@@ -1900,3 +1900,25 @@ gate applies again.
     Week 1 rows rendered before this round: 21 of 30. Rows with no open defect: 17. Week 1 rows
     rendered after this round: 22 of 30. Rows with no open defect: 18. No task is marked `[x]`.
     The row waits for the independent picture review.
+   Green round 31 evidence (2026-10-31, claude-code/claude-sonnet-5-5#high). Task: one filed
+   bug of the Pip `sniff` clip. The re-review (`item-review-batch-4b.json`,
+   `kimi-code-plan-cn/k3.1-pro`, 7.4, pass) noted: "The back view shows a separate pink shape
+   under the belly." The cause: the pink tongue of Pip's open smile was fixed on the `jaw` bone.
+   The sniff pose points the mouth down, and the head is lower than the belly, so the tongue
+   showed between the hind legs. Fix, in `assets/sprout-pip.ts` only: a new bone `tongue-bone`
+   (parent `jaw`) carries the `tongue-in` body, and the `pose` hook of the `sniff` clip moves
+   the bone back 3 cm and shrinks it. `wolf-kind.ts` did not change, so no other dog kind
+   changes. Commit `2527fc6a`. Models: Green `claude-code/claude-sonnet-5-5#high`, Red
+   `minimax-cn-coding-plan/MiniMax-M3`, coder none.
+   Runs (each in one `heavy-run.sh` command): `render --fast` before and after exit `0`; the
+   rest renders are pixel-identical (`sprout-pip-rest-before.png` and
+   `sprout-pip-rest-after.png`, difference box `None`). `animate --fast --clip sniff` exit `0`
+   (first try exit `1`: bone name `tongue` clashed with a body, renamed `tongue-bone`; one loop
+   needed). `./forge build sprout-pip` exit `0`, 113 s, GLB 5449100 bytes (5321 KB), `warning:`
+   lines `0`. Cutout and textured `animate --clip sniff` exit `0`; the GLB size did not change.
+   Back view of the card: no pink shape; a cream chin and a thin dark strip show. The side view
+   still shows the dark mouth under the muzzle, not pink. Tests: 4 files, `Tests  164 passed
+   (164)`, exit `0` (`green-p3-r31-vitest.log`). No type check: only `assets/` changed.
+   Review card: `out/storytime-review/batch-4/sprout-pip-sniff.png`, with the strip and the
+   `brief.md` section "Round 31 change". Green did not rate the item. The item waits for the
+   independent re-review. No task is marked `[x]`.
