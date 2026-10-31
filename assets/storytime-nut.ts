@@ -9,8 +9,10 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  * Shape language: round and soft. No level lid rim, no knob on top of a dome, no flat bottom.
  * Palette: warm brown shell #b0703c, darker cap #6e4126, stem #4f3120.
  * Materials: one matte nut, roughness 0.85. Shell, cap, and stem are one body.
- * Why one body: three bodies left thin charts at the cap rim and the stem tip. Those chart edges
- * sampled the black atlas gutter and became black specks. One union removes the buried faces.
+ * Why one body: three separate bodies left buried faces and thin charts at the cap rim and the
+ * stem tip. One union removes the buried faces.
+ * Why vertex colors: the 1024 bake left pure black texels inside the charts, and the review saw
+ * them as specks along the cap edge and at the stem tip. Vertex colors need no atlas gutter.
  * Detail: one nut, one cap cup, five large cap lobes, one stem. No fine scales.
  * Rig/animation: none.
  */
