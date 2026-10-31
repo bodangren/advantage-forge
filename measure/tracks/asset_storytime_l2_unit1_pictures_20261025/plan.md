@@ -2094,3 +2094,55 @@ gate applies again.
    Week 1 rows rendered: 22 of 30. Rows with no open defect: 15. These counts do not change in
    this round; the orchestrator updates them after the review. No task is marked `[x]`. Waiting
    for the independent re-review.
+
+   Green round 36 evidence (2026-11-01, deepseek/deepseek-flash#high). Task: find the cause of the
+   black specks on `storytime-nut` and remove them. One item, no row renders. Models: Green
+   `deepseek/deepseek-flash#high` (route from `ra-quota --fresh pick green --not-family minimax
+   --not-family openai`; Daniel approved the DeepSeek route on 2026-10-31), Red
+   `minimax-cn-coding-plan/MiniMax-M3`, coder none. No delegation.
+   Batch 7 independent review result (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-7.json`,
+   reviewer `openai/gpt-6-luna#high`): `storytime-nut` 6.2 fail, critical "Black specks remain
+   along the cap edge."; `l2-w01-practice-line-nut` v3 8.0 pass, no critical; `l2-w01-story-page-a-nut`
+   v3 5.8 fail, critical "Facial detail breaks into noisy marks in the line art."; the nest-and-a-nut
+   page v5 6.6 fail, critical "Nest detail breaks into noise in the line art."; the a-nest page v7
+   6.4 fail, critical "Nest detail breaks into noise in the line art."
+   Week 1 rows rendered: 22 of 30. Rows with no open defect: 16. The practice-line-nut v3 row is
+   clean; the batch 7 review passed it with no critical defect.
+   Cause tests, in the order the brief set, and what each showed:
+   1. Texture bake against shape. `render storytime-nut --fast --focus 0,0.030,0,0.030` exit `0`
+      showed a smooth cap edge with one soft crease. `render storytime-nut --focus
+      0,0.030,0,0.030` exit `0` showed the black marks on the same framing. The marks appear only
+      in the textured render, so the bake is the cause, not the shape.
+      Atlas evidence on the batch 7 build: the base color atlas had 25,156 colored texels that
+      touch pure black, and 322 pure black texels inside a chart.
+   2. Seams between separate bodies. The shell, the cap, and the stem were three bodies. The faces
+      that each body hides from the others baked near black, and the cap rim and the stem tip are
+      the thinnest charts. This is the cause that the fix uses.
+   3. The mesh detail was not tested alone: the one-body fix at detail 0.0008 removed the marks, so
+      the detail loop did not run.
+   Fix in `assets/storytime-nut.ts`: the shell, the cap with its five lobes, and the stem become one
+   body with a 3 mm smooth union. The paint follows the union: the nearest part gives the color,
+   with a 0.7 mm blend, so the cap color stops at the crease. The detail is one value of 0.0008 m,
+   the roughness is one value of 0.85, and the bump is one calm noise. The cap lobes changed from
+   loose spheres to the same spheres inside the single union; two earlier loops (loose spheres at
+   a 0.7 mm union, then a displaced rim wave) left dark teeth, so Green dropped them.
+   Shape contract kept: the acorn shape, the pointed bottom, five soft cap lobes, the stem that
+   leans to +X, the colors, the size of about 0.048 m by 0.055 m, the ground contact on y = 0, the
+   +Z facing, the asset name, and the 1024 texture.
+   Commit `d6d9f5b9` holds the fix and changes only `assets/storytime-nut.ts`. No `src/`, test, row,
+   cast, or picture-list file changed. The build output has 0 `warning:` lines.
+   Nut gates, each in one `heavy-run.sh` command: `render --fast --focus` exit `0` (five runs,
+   2,530 to 3,861 triangles); textured `render` exit `0` (1024 atlas, 2,266 triangles, GLB 601 KB);
+   `inspect --fast` exit `0` with the nut at 100% in all five views; textured `render --focus
+   0,0.034,0,0.014` exit `0`. `warning:` lines: 0. The inspect keeps one advisory: "Almost
+   everything is mid-value". No exit 75, no exit 137, no lock wait over 600 s.
+   Final check: the textured focus render shows no black specks on the cap edge in the front, side,
+   and back views, and no black mark on the stem tip. One thin dashed seam mark of about 4 mm
+   remains on the cap edge in the three-quarter view. Green reports it and did not test a coarser
+   detail, because the tool budget ended.
+   Review folder `out/storytime-review/batch-8/`: `storytime-nut.png` (front, three-quarter, side,
+   back, the batch 7 layout, from the textured render), `storytime-nut-cap-close.png` (the textured
+   focus render of the cap edge), `storytime-nut-batch-7.png`, `look-reference-nan-and-pip.png`,
+   and `brief.md` with the bar 7.0, the batch 7 critical defects, the key `storytime-nut`, and the
+   section "Why the rework". Green did not rate the item. PNGs stay out of git.
+   No task is marked `[x]`. Waiting for the independent re-review.
