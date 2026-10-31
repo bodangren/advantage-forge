@@ -1957,3 +1957,38 @@ gate applies again.
    round: 22 of 30 (no new row). Rows with no open defect: 17. The fork needs a branch
    asset change (a plain branch without the two leaf caps) to close goal 3. No task is marked
    `[x]`. The row waits for the independent picture review.
+   Green round 33 evidence (2026-10-31, deepseek/deepseek-flash#high). Task: rework one prop,
+   `storytime-low-branch`, and leave it for the independent re-review. Models: Green
+   `deepseek/deepseek-flash#high` (Daniel approved the route on 2026-10-31; not the Red family),
+   Red `minimax-cn-coding-plan/MiniMax-M3`, coder none. No delegation.
+   The two defects, and where they show: (1) the fork read as an open hand that held the nest.
+   The branch ended in two short prongs, one on each side of the nest, and each prong tip carried
+   a round leaf cap. The two caps looked like two mittens. (2) the trunk base read as a pole on a
+   stand: a flat round disc on the ground. Both show in every row render from round 22 to
+   round 32, most clearly in
+   `out/storytime/l2/unit1/w01/rows/l2-w01-story-page-a-nest-and-a-nut-v4.png`,
+   `l2-w01-story-page-a-nest-and-a-nut-line-v4.png`, and `l2-w01-story-page-a-nest-v5.png`.
+   What changed, in `assets/storytime-low-branch.ts` only. The branch dips, then splits into a
+   long outer twig and a short steeper back twig. The twigs differ in length, angle, and
+   thickness, and neither ends in a round cap. The leaf caps are gone from the twigs by the seat.
+   One joined arc of soft leaf clusters runs from the back twig, over the fork, to the outer twig
+   tip. Each cluster touches its neighbour and a twig, so no leaf floats. The arc stays behind the
+   nest (z below -0.14 m) and above the rim, so the seat stays open in front and above. The wide
+   flat flare is gone: four short roots of different sizes sink below the ground plane, and the
+   ground cut gives a soft step. The round crown (about 0.77 m), the thick taper (0.16 m at the
+   base), the warm bark, the fresh green leaves, and the branch toward +X are kept.
+   Commit `9cfeb406`. The export name `NEST_SEAT` is kept, and its value did not change:
+   x 0.50 m, y 0.70 m, z 0.04 m. The branch tail and the saddle top sit at y = 0.704 m, so the
+   nest rests on wood. Every point of both twigs stays outside the nest footprint.
+   Runs, each in one `heavy-run.sh` command: `render --fast` exit `0` three times (loops 1 to 3),
+   textured `render` exit `0` (atlas 1024, 7018 triangles, GLB 894 KB), `inspect --fast` exit `0`
+   with "Warnings: - none". `warning:` lines: 0. No exit 75, no exit 137, no lock wait over
+   600 s.
+   A nest check render placed `storytime-nest` at `NEST_SEAT` through a temporary asset source,
+   which is deleted and not committed. The nest sits on the fork, the three eggs show, and the
+   branch does not cross the bowl.
+   Review cards in `out/storytime-review/batch-5/`: `storytime-low-branch.png` (front,
+   three-quarter, side, back, the same layout as batch 3b),
+   `storytime-low-branch-nest-check.png` (with nest, front three-quarter and front 28 degrees
+   above), `brief.md`, and `look-reference-nan-and-pip.png`. Green did not rate the item.
+   Waiting for the independent re-review. No task is marked `[x]`.
