@@ -56,6 +56,10 @@ describe('buildTimeline', () => {
     expect(tl.warnings.some((w) => w.includes('spin'))).toBe(true);
   });
 
+  it('maps the dog sniff gesture to the sniff clip', () => {
+    expect(clipFor('sprout-pip', 'sniff').clip).toBe('sniff');
+  });
+
   it('takes the sun and the quiet dog from the stage', () => {
     expect(tl.sun).toBe('high');
     const quiet = buildTimeline(spec, { ...stage, sun: 'side', dog: 'quiet' });

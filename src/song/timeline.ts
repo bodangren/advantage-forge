@@ -247,8 +247,8 @@ export const GESTURES: Record<string, string> = {
   stamp: 'gesture-stamp',
   march: 'gesture-march',
 };
-/** Pip is a dog: he sings his lines with the howl clip and sits for a nod. */
-const DOG_GESTURES: Record<string, string> = { nod: 'sit' };
+/** Pip is a dog: he sings his lines with the howl clip, sits for a nod, and sniffs for a sniff. */
+const DOG_GESTURES: Record<string, string> = { nod: 'sit', sniff: 'sniff' };
 const DOG_SING = 'howl';
 const DOGS = new Set(['sprout-pip']);
 
