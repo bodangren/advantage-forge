@@ -2754,3 +2754,74 @@ gate applies again.
    rate any item. PNGs stay out of git.
    Week 1 count: "22 of 30 rendered, 16 with no open defect".
    No task is marked `[x]`. Waiting for the independent re-review.
+
+   Green round 46 evidence (2026-11-01, deepseek/deepseek-flash#high). Task: reframe the week 1
+   nest-and-nut page and the week 1 nut page. Row-only round: no asset, cast, source, test, or
+   picture-list file changed.
+   Models: Green `deepseek/deepseek-flash#high` (route from `ra-quota --fresh pick green
+   --not-family minimax --not-family openai`; Daniel approved the DeepSeek route), Red
+   `minimax-cn-coding-plan/MiniMax-M3` (not the Green family), coder none. No delegation.
+   Batch 17 result (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-17.json`):
+   the row `l2-w01-story-page-a-nest` v10 passed at 7.0 and keeps two known cast defects open. The
+   row `l2-w01-story-page-a-nest-and-a-nut` v12 failed at 6.0 with the issues "Pip's lower feet are
+   clipped by the frame edge" and "The tree canopy is cropped by the top edge". The fix asked for a
+   reframe that shows Pip's full body. The review carries no new Red test file. The review result is
+   the Red signal for this round.
+   Base SHAs: `role_base_sha` 67547a8b equals HEAD at the start, and `phase_base_sha` 15a7bf0b is an
+   ancestor. The round 45 commits `56e83f5a` and `67547a8b` sit inside `15a7bf0b..HEAD`.
+   Shadow root: `/tmp/opencode/wb-shadow` exists. `sha256sum` of its
+   `content/storytime/l2/print/pictures.json` starts with `c3e23cfd`, so no new copy was made this
+   round. The live Workbooks list is not written to. The goals were read from the live list with the
+   read-only path `/home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json`.
+   Stage files under `docs/storytime/l2-unit1/w01/rows/`, commit `f46b121b`:
+   `l2-w01-story-page-a-nest-and-a-nut-v13.json`, `l2-w01-story-page-a-nut-v4.json`, and
+   `l2-w01-story-page-a-nut-v5.json`. The actors, the gestures, the props, and the assets did not
+   change. The only stage changes are the camera, the nut scale, and the nut x position.
+   - a-nest-and-a-nut v13 copies v12. The camera moves from distance 1.75 and target 0.20 / 0.48 /
+     0.05 to az 8, el 10, distance 2.18, target 0.20 / 0.562 / 0.05. The nest scale stays 2.4 and
+     the nut scale stays 3.8.
+   - a-nut v4 copies v3. The camera moves from distance 0.85 and target -0.13 / 0.40 / 0 to az -14,
+     el 10, distance 1.55, target -0.16 / 0.556 / 0. The nut grows from scale 2.2 to 5.6.
+   - a-nut v5 copies v4. The camera is az -12, el 10, distance 1.58, target -0.14 / 0.552 / 0. The
+     nut shrinks to scale 4.8 and moves to x -0.245.
+   First-cause note: the v4 nut at scale 5.6 came up to Nan's jaw and covered the left side of her
+   face. v5 shrinks the nut and moves it 0.03 m away from her face, so her head stays clear. The
+   nut's top stays below her chin line.
+   Heavy commands: every row render and row verify ran inside
+   `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'`. No heavy command ran outside
+   the wrapper. No exit 75, no exit 137, no lock wait over 600 s, no `net::ERR_UNSAFE_PORT`.
+   Recorded event: one render call failed at exit 1 with "w01/rows/l2-w01-story-page-a-nut-v5.png
+   already exists for v5; use a new version." The stage file kept the camera of the rendered PNG.
+   Row form: `node --import tsx scripts/storytime-book-pictures.ts render --row <jobId> --version
+   <n> --workbooks /tmp/opencode/wb-shadow` then the same form for `verify --row`.
+   | Row | Version | Render | Verify | Line | Ink | Peak | Key measurement | Color SHA-256 | Line-art SHA-256 |
+   | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+   | `l2-w01-story-page-a-nest-and-a-nut` | v13 | 0 | 0 | 21 px | 6.15% | 504 MB | nest 1090 px wide (27.3% of the frame width); Pip bottom margin 194 px (6.5%) | `9406f042be70aaa9adc31a172221244a3c8c915be638832faa47383e18682c35` | `f57871120aad927a8a8f79c46c301e29477cb423a384fd442abdea3c08f9eefb` |
+   | `l2-w01-story-page-a-nut` | v4 | 0 | 0 | 25 px | 4.32% | 491 MB | dropped: the nut covered Nan's jaw | `7c628ec87ac6ada70055ec34ff0cffb14c8fb19d341a053bec30a7aff2e4d730` | `41478c8a60e89e52b5cbc15b66f887442aa1887e4181a3c98f0bb1c46adf62c6` |
+   | `l2-w01-story-page-a-nut` | v5 | 0 | 0 | 25 px | 4.36% | 493 MB | nut 800 px wide by 867 px tall (20% by 29% of the frame); hair-top margin 478 px (15.9%) | `827b752c8108a48aa44399d17f17303a4a9781b05a25f07fd7f02830517842e0` | `e36c37ae930b789b475dd7b1be430046ca0019226ff9644b5b8d570e8fa16a4c` |
+   `verify --row` exits `0` on both rows with the shadow list: "Row verification passed for 13 row
+   versions" and "Row verification passed for 5 row versions".
+   What Green saw, 4000 x 3000 color: v13 shows the nest large at the upper middle with three light
+   blue eggs, the fork under it, the top canopy closed with white sky above it, and Pip whole in the
+   lower middle with all four paws inside the frame and a clear strip of grass below them. The nut
+   sits whole on the grass at his nose. The canopy at the top left still leaves the frame at the top
+   edge, but more crown shows than in v12. v5 shows Nan's whole head with a margin above her hair,
+   the two buns and the red ties closed, a plain white background, and the big brown nut with a
+   crisp cap line and a stem at her open palm. The nut sits left of the frame middle.
+   What Green saw, 1-bit line art: v13 draws one closed outline on the crown, the trunk, the branch,
+   the nest with three egg arcs, Pip, and the nut. No twig merges into a blob. v5 draws a closed
+   face with two eyes, brows, and a smile; the star stays closed; the nut keeps a closed cap band
+   and one stem. The known eye-corner flap mark shows at her left eye.
+   Review folder `out/storytime-review/batch-18/`: `l2-w01-story-page-a-nest-and-a-nut-v13.png` and
+   `l2-w01-story-page-a-nest-and-a-nut-line-v13.png`, `l2-w01-story-page-a-nut-v5.png` and
+   `l2-w01-story-page-a-nut-line-v5.png` (row file names kept),
+   `l2-w01-story-page-a-nest-and-a-nut-v12.png` and `-line-v12.png` (the batch 17 version for
+   comparison), `l2-w01-story-page-a-nut-v3.png` and `-line-v3.png` (the batch 7 version for
+   comparison), `look-reference-nan-and-pip.png`, and `brief.md` with the bar 7.0, the two row keys,
+   the row goals copied from the picture list, the batch 17 result, the batch 7 result, the
+   "Known open defects" section, and the note that small square steps along a stroke edge are the
+   line-art style. Green did not rate any item. PNGs stay out of git.
+   Week 1 count: "22 of 30 rendered, 16 with no open defect; a-nest v10 passed review but keeps two
+   known cast defects". This round adds no new row id. The two rows of this round wait for the
+   re-review.
+   No task is marked `[x]`. Waiting for the independent re-review.
