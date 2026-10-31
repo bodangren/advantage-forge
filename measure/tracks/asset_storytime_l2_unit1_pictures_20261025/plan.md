@@ -1695,3 +1695,40 @@ gate applies again.
   card is `out/storytime-review/batch-3b/storytime-low-branch.png` (front, three-quarter, side,
   back), with `brief.md` and the look reference. No task is marked `[x]`. The branch waits for
   the independent review.
+  Green round 22 evidence (2026-10-31, xai/grok-4.7). Two props passed the independent review.
+  `storytime-block-box` is 7.8 and pass (`item-review-batch-3.json`, xai/grok-4.7).
+  `storytime-low-branch` is 7.2 and pass (`item-review-batch-3b.json`,
+  bailian-token-plan/qwen3.8-max). Commit `24ff0f85` adds three stage files. No asset, `src/`,
+  or list file changed. Models: Green `xai/grok-4.7#high`, Red
+  `minimax-cn-coding-plan/MiniMax-M3`, coder none. The first Mia stage used the classroom map.
+  Two renders exited 1. The line-art edge was not 90 percent white. Floor planks and wall
+  timbers filled the edge. The second run printed `lock wait over 600 s`, then failed the same
+  check. That log was replaced by the passing render. The first failure remains in
+  `green-p3-r22-hello-i-am-mia-render-v1-edge-fail.log` (line 18 px, ink 19.93%). Orchestrator
+  decision: use the white-page method from `cover-nan-can-nod` v2. The scene stays `classroom`.
+  The stage sets `"backdrop": "white"`. The PM will see this as a look choice. Each later render
+  and each `verify --row` ran as one `heavy-run.sh` command. Those exits were `0`. No lock wait
+  over 600 s on the passing runs. Verify logs do not print peak memory. Files (color; line art):
+  - `story-page-hello-i-am-mia` v1 (kept; class A, 4000 x 3000; white page, rug scale 1.35; az
+    16, el 16, dist 3.9; 21 px line, ink 5.75%, peak 520 MB):
+    `7ed8824b1c729276ffedabb977b81ba2504b47b299c5f37c3eb8680b12fc9735`;
+    `939e39c520be3ce38a12b9516f0994d1956ec6f0dd01838f4d53b83f9a43d318`. Mia stands on the rug
+    and waves. Her face reads. The box sits on the rug. Blocks show above the rim. The green
+    cylinder is fully in frame. The whole rug has a white margin. No letters. One box. Verify
+    passed for 1 row version.
+  - `story-page-a-nest` v1 (superseded; white page, grass patch, bush, flowers; 23 px line, ink
+    5.74%, peak 520 MB). The crown touches the top. Nan's point is cut off. Only two eggs show.
+    The nest is small. v2 replaces it.
+  - `story-page-a-nest` v2 (kept; class A, 4000 x 3000; camera and marks only; az 22, el 11,
+    dist 2.55; 24 px line, ink 5.07%, peak 507 MB):
+    `d5704a92ff74e57f9c21227a1d0e28a7ec8bcaebb207d5faa10f5442fa352021`;
+    `e48c2f9d0af652a4eba70739af45a35dc0940d8e5266a5f4b9fa199766daadad`. The nest sits in the
+    fork. Three eggs show in both files. Nan's face reads. Her raised hand points at the nest.
+    The top of the page is white. The crown is in frame. One nest. Verify passed for 2 row
+    versions. The sprout arm is short, so the hand stays near the chest. The point still aims
+    at the nest.
+  Small notes: the rug medallion is a flat brown patch under the box. It is not a letter. The
+  box review notes stay on the asset. The row camera shows the full green cylinder and the
+  blocks above the rim. Rows rendered this round: 2. Week 1 rows rendered so far: 20 of 30.
+  Rows with no open defect: 18. No task is marked `[x]`. The rows wait for the independent
+  picture review.
