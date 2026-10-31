@@ -2693,3 +2693,64 @@ gate applies again.
    round 42 note of 24 rendered was a miscount. The orchestrator counted 22 distinct week 1 row ids
    in `out/`.
    No task is marked `[x]`. Waiting for the independent re-review.
+   Green round 45 evidence (2026-11-01, deepseek/deepseek-flash#high). Task: make the nest large on
+   the two week 1 tree pages so its line art stays clean. Row-only round: no asset, cast, source,
+   test, or picture-list file changed.
+   Models: Green `deepseek/deepseek-flash#high` (route from `ra-quota --fresh pick green
+   --not-family minimax --not-family openai`; Daniel approved the DeepSeek route), Red
+   `minimax-cn-coding-plan/MiniMax-M3` (not the Green family), coder none. No delegation.
+   Batch 16 result (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-16.json`):
+   both tree pages failed at 6.5 with the critical item "Nest detail merges into dense noise in the
+   1-bit line art". The rows are `l2-w01-story-page-a-nest` v9 and
+   `l2-w01-story-page-a-nest-and-a-nut` v10.
+   Cause and rule: the line stroke is fixed at about 21 px at 4000 px wide. A detailed prop stays
+   clean in the line art only when it is large in the frame. The nest measured about 400 px wide, or
+   10 percent of the frame width, so the twig strokes merged. Rule: the nest is at least 25 percent
+   of the frame width on both pages.
+   Shadow root: `/tmp/opencode/wb-shadow` exists. `sha256sum` of its
+   `content/storytime/l2/print/pictures.json` starts with `c3e23cfd`, so no new copy was made. The
+   live Workbooks list is not written to.
+   Stage files under `docs/storytime/l2-unit1/w01/rows/`, commit `56e83f5a`:
+   `l2-w01-story-page-a-nest-v10.json`, `l2-w01-story-page-a-nest-and-a-nut-v11.json`, and
+   `l2-w01-story-page-a-nest-and-a-nut-v12.json`. The nest uses scale 2.4 on both pages. The low
+   branch sits 0.10 m lower, so the nest origin is at y 0.60 on both pages and the fork still holds
+   it. The a-nest v10 camera is azimuth 5, elevation 6, distance 1.70, target 0.06 / 0.55 / 0.42.
+   Nan stands at 0.5 / 0.15 with yaw -60 and her `point forward` gesture. The a-nest-and-a-nut v12
+   camera is azimuth 8, elevation 10, distance 1.75, target 0.20 / 0.48 / 0.05. Pip stands at 0.2 /
+   -0.02 with yaw 72 and his `sniff` gesture. The nut grows from scale 2.4 to 3.8 and moves to 0.42
+   / 0.10 near his nose. The actors, the gestures, and the assets did not change.
+   The first nut-page version (v11) put Pip at 0.2 / 0.30, so he stood near the camera and the
+   lower frame edge crowded his paws. v12 moves him to 0.2 / -0.02, so he is whole with a clear
+   margin and he stands below the nest.
+   Heavy commands: every row render and row verify ran inside
+   `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'`. No heavy command ran outside
+   the wrapper. No exit 75, no exit 137, no lock wait over 600 s, no `net::ERR_UNSAFE_PORT`.
+   Row form: `node --import tsx scripts/storytime-book-pictures.ts render --row <jobId> --version
+   <n> --workbooks /tmp/opencode/wb-shadow` then the same form for `verify --row`.
+   | Row | Version | Render | Verify | Line | Ink | Peak | Nest width | Color SHA-256 | Line-art SHA-256 |
+   | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+   | `l2-w01-story-page-a-nest-and-a-nut` | v11 | 0 | 0 | 21 px | 6.80% | 499 MB | not kept | not kept | not kept |
+   | `l2-w01-story-page-a-nest-and-a-nut` | v12 | 0 | 0 | 21 px | 6.73% | 510 MB | 1265 px (31.6% of width) | `87b87e218409e45cca6df9678f13f3b07977189f23c4630b6e7e10c00f5d05f6` | `8e85ea2e281c67e8f7b6bae03e2e7b3efa1fa13eae4ff3a0e05ea28370c9a696` |
+   | `l2-w01-story-page-a-nest` | v10 | 0 | 0 | 22 px | 7.43% | 500 MB | 1290 px (32.3% of width) | `f7747a018d43751d9286bfff397d646c5079310392d690235234c364502764e1` | `f39aeeff49ee4afcdd3edda12b8db7985da8b9ae77b465eadad4cef980790abf` |
+   `verify --row` exits `0` on both rows with the shadow list: "Row verification passed for 10 row
+   versions" and "Row verification passed for 12 row versions". The nest width is the line-art
+   width of the nest, cup rim and twig beads, read against a 200 px grid drawn on the line-art PNG.
+   What Green saw, 4000 x 3000 color: v10 shows the nest large at the upper middle, the three light
+   blue eggs above the rim, the fork under the nest, leaf clusters above and behind it, and Nan
+   whole at the right with her arm out toward the nest. v12 shows the nest large at the upper
+   middle with the three eggs clear, the crown above it, Pip whole in the lower middle with his
+   nose at the big nut, and the trunk on the left.
+   What Green saw, 1-bit line art: v10 draws the nest as long closed sticks with three egg arcs, so
+   no twig merges into a blob. Nan's face, star, and shoes stay closed. v12 draws the same nest
+   shape, Pip whole with one eye and a closed muzzle, and a nut with a closed cap band and one stem.
+   Review folder `out/storytime-review/batch-17/`: `l2-w01-story-page-a-nest-v10.png` and
+   `l2-w01-story-page-a-nest-line-v10.png`, `l2-w01-story-page-a-nest-and-a-nut-v12.png` and
+   `l2-w01-story-page-a-nest-and-a-nut-line-v12.png` (row file names kept),
+   `l2-w01-story-page-a-nest-v9.png` and `-line-v9.png`, `l2-w01-story-page-a-nest-and-a-nut-v10.png`
+   and `-line-v10.png` (the batch 16 versions for comparison), `look-reference-nan-and-pip.png`, and
+   `brief.md` with the bar 7.0, the two keys, the row goals copied from the picture list, the batch
+   16 critical item, the batch 7 part 2 critical defects, the batch 7 "Known open defects" section,
+   and the note that small square steps along a stroke edge are the line-art style. Green did not
+   rate any item. PNGs stay out of git.
+   Week 1 count: "22 of 30 rendered, 16 with no open defect".
+   No task is marked `[x]`. Waiting for the independent re-review.
