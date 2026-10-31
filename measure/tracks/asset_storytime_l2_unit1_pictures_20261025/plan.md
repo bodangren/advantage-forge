@@ -2629,3 +2629,67 @@ gate applies again.
    of 30 rendered. This round adds no new row, so the rendered count needs a recount before the
    closeout. `l2-w01-practice-line-nut` stays open until the re-review passes v6.
    No task is marked `[x]`. Waiting for the independent re-review.
+
+   Green round 44 evidence (2026-11-01, deepseek/deepseek-flash#high). Task: re-frame the two tree
+   pages so the tree reads as a tree. Row-only round: no asset, cast, source, test, or picture-list
+   file changed.
+   Models: Green `deepseek/deepseek-flash#high` (route from `ra-quota --fresh pick green
+   --not-family minimax --not-family openai`; Daniel approved the DeepSeek route), Red
+   `minimax-cn-coding-plan/MiniMax-M3`, coder none. No delegation.
+   Batch 15 result (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-15.json`):
+   the item `storytime-nut` passed at 8.5, the row `l2-w01-practice-line-nut` v6 passed at 8.0, and
+   the row `l2-w01-story-page-a-nest-and-a-nut` v8 failed at 5.0 with the critical item "Pip is cut
+   off by the lower frame and is not shown whole". Its issue was "The tree crown is outside the
+   frame, so the tree does not read clearly as a tree". Both goals failed: "Pip, nest, and nut are
+   whole, large, and clear inside the frame" and "Simple garden with soft colors and a readable
+   tree".
+   Shadow root: `/tmp/opencode/wb-shadow` exists. `sha256sum` of its
+   `content/storytime/l2/print/pictures.json` starts with `c3e23cfd`, so no new copy was made this
+   round. The live Workbooks list is not written to.
+   Stage files under `docs/storytime/l2-unit1/w01/rows/`, commit `0aecdc91`:
+   `l2-w01-story-page-a-nest-and-a-nut-v9.json` and `-v10.json`, and
+   `l2-w01-story-page-a-nest-v8.json` and `-v9.json`. The v10 camera is azimuth 10, elevation 15,
+   distance 3.55, target -0.04 / 0.87 / 0.12. The a-nest v9 camera is azimuth 5, elevation -4,
+   distance 2.45, target 0.06 / 0.62 / 0.62, and Nan moves to mark 0.5 / 0.15 with yaw -46. Her
+   gesture stays `point forward`. The actors, the gestures, the props, and the assets did not
+   change.
+   First-cause note: the first two versions (v9 and v8) set the camera target `tz` in world terms,
+   3.12 and 3.62. The target uses stage coordinates, so the target sat 3 m in front of the props.
+   The frame then pulled back to an overview and the scene filled less than half of the page. The
+   recorded camera in the row JSON showed position 0.5554 / 1.7888 / 9.4969 with target -0.04 /
+   0.87 / 6.12, while the tree stands at world z 3.0. The repair sets `tz` to 0.12 and 0.62, the
+   same form as the round 42 v7 value of 0.10.
+   Heavy commands: every row render and row verify ran inside
+   `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'`. No heavy command ran outside
+   the wrapper. No exit 75, no exit 137, no lock wait over 600 s, no `net::ERR_UNSAFE_PORT`.
+   Row form: `node --import tsx scripts/storytime-book-pictures.ts render --row <jobId> --version
+   <n> --workbooks /tmp/opencode/wb-shadow` then the same form for `verify --row <jobId>`.
+   | Row | Version | Render | Verify | Line | Ink | Peak | Color SHA-256 | Line-art SHA-256 |
+   | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+   | `l2-w01-story-page-a-nest-and-a-nut` | v9 | 0 | 0 | 20 px | 4.51% | 503 MB | `c4b57c1336e276ec...` | `0f42742a834871cb...` |
+   | `l2-w01-story-page-a-nest-and-a-nut` | v10 | 0 | 0 | 24 px | 6.40% | 469 MB | `08b4f4fe45acbdb0c35a4e7d0dfb022a027dba8b9f75dd400905e6b892a299b3` | `d2240de06b5cd890d2c69a5b1b5a9b0ad49ea1c7de3199647d0c6eddad832c4f` |
+   | `l2-w01-story-page-a-nest` | v8 | 0 | 0 | 20 px | 4.74% | 498 MB | `8dbee09d55d69b8e...` | `d2d2bae5f6317826...` |
+   | `l2-w01-story-page-a-nest` | v9 | 0 | 0 | 22 px | 5.47% | 504 MB | `03b13dd138558dea4c623344a721bdcdac6af4a47486e2302be75d133298bcaf` | `fc3a5691ba979bc4afece5dbe964faac2d632e37fac76f4beed7668a8873fd2d` |
+   `verify --row` exits `0` on both rows with the shadow list: "Row verification passed for 10 row
+   versions" and "Row verification passed for 9 row versions".
+   What Green saw, 4000 x 3000 color: v10 shows the whole tree from the roots to the crown top, and
+   the crown holds the top tenth of the page. The nest sits on the fork at the vertical middle, well
+   below the top edge. Pip is whole with a clear margin below his paws, and the nut sits at his nose.
+   The a-nest v9 shows the crown at the top, the nest on the low branch near the middle, and Nan
+   whole at the right with her arm out toward the nest.
+   What Green saw, 1-bit line art: v10 draws one closed outline around the crown, the trunk, the
+   branch, the nest, Pip, and the nut. The a-nest v9 line art draws Nan whole with a closed face,
+   a closed star, and one continuous outline on the tree and the nest.
+   Review folder `out/storytime-review/batch-16/`: `l2-w01-story-page-a-nest-and-a-nut-v10.png`,
+   `l2-w01-story-page-a-nest-and-a-nut-line-v10.png`, `l2-w01-story-page-a-nest-v9.png`,
+   `l2-w01-story-page-a-nest-line-v9.png` (row file names kept),
+   `l2-w01-story-page-a-nest-and-a-nut-v8.png` and `-line-v8.png` (the batch 15 version for
+   comparison), `l2-w01-story-page-a-nest-v7.png` and `-line-v7.png` (the batch 7 version for
+   comparison), `look-reference-nan-and-pip.png`, and `brief.md` with the bar 7.0, the two keys,
+   the row goals copied from the picture list, the batch 15 critical item, the batch 7 part 2
+   critical defects, the batch 7 "Known open defects" section, and the note that small square steps
+   along a stroke edge are the line-art style. Green did not rate any item. PNGs stay out of git.
+   Week 1 count: "22 of 30 rendered, 16 with no open defect (practice-line-nut v6 passed)". The
+   round 42 note of 24 rendered was a miscount. The orchestrator counted 22 distinct week 1 row ids
+   in `out/`.
+   No task is marked `[x]`. Waiting for the independent re-review.
