@@ -2499,3 +2499,58 @@ gate applies again.
    nest. They need a re-render with the new nest later. That work is not in this round.
    Week 1 rows rendered: 22 of 30. Rows with no open defect: 14. No task is marked `[x]`. Waiting
    for the independent re-review.
+   Green round 42 evidence (2026-11-01, deepseek/deepseek-flash#high). Task: render three week 1
+   rows on the accepted nut and nest. Row-only round: no asset, cast, source, test, or picture-list
+   file changed.
+   Models: Green `deepseek/deepseek-flash#high` (route from `ra-quota --fresh pick green
+   --not-family minimax --not-family openai`; Daniel approved the DeepSeek route), Red
+   `minimax-cn-coding-plan/MiniMax-M3`, coder none. No delegation.
+   Batch 13 result (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-13.json`):
+   the item `storytime-nest` passed at 7.8, the row `l2-w01-practice-line-nest` v11 passed at 7.3,
+   and the row `l2-w01-check-row-nest` v7 failed at 6.8 with the critical item "The line art has
+   detached dash-like marks near the right edge."
+   Shadow root: `/tmp/opencode/wb-shadow` exists. `sha256sum` of its
+   `content/storytime/l2/print/pictures.json` starts with `c3e23cfd`, so no new copy was made this
+   round. The live Workbooks list still holds 4 uncommitted week 8 rows and is not written to.
+   Stage files under `docs/storytime/l2-unit1/w01/rows/`, commit `2ec5e016`:
+   `l2-w01-check-row-nest-v8.json` (copies v7; nest yaw 24 degrees is the only change),
+   `l2-w01-practice-line-nut-v4.json` (copies v3; only the version number changed),
+   `l2-w01-story-page-a-nest-and-a-nut-v6.json` and `-v7.json` (copy v5; only the camera changed).
+   The v7 camera is azimuth 10, elevation 36, distance 1.72, target 0.25 / 0.33 / 0.10. The v6
+   camera pulled 7.5 percent closer at distance 1.6 and cut the nut at the lower edge, so v7 steps
+   back.
+   Row form: `node --import tsx scripts/storytime-book-pictures.ts render --row <jobId> --version
+   <n> --workbooks /tmp/opencode/wb-shadow` then the same form for `verify --row <jobId>`. Every
+   command ran inside `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'`.
+   | Row | Version | Render | Verify | Line | Ink | Peak | Color SHA-256 | Line-art SHA-256 |
+   | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+   | `l2-w01-check-row-nest` | v8 | 0 | 0 | 24 px | 9.84% | 490 MB | `022a8081af838785fd17790b8d9919a8591dd61649bb3e2b300dc4afaacb5417` | `17a569c9c307a0b6a2d901795a4611148c9b5cd583a9ce1eb576e6ad177ee44e` |
+   | `l2-w01-practice-line-nut` | v4 | 0 | 0 | 25 px | 1.55% | 481 MB | `09385f086647a598cd986501da21b1eef757f67038d8ab6be244b54212556b39` | `0f94917b79d0faf46d84ad8d0801e3b13ffd606ec3073c24d45b2a5072d886a6` |
+   | `l2-w01-story-page-a-nest-and-a-nut` | v6 | 0 | 0 | 21 px | 5.62% | 512 MB | `93bdf26b503beaffbf7c898dfdbd1e1ae024f00f1b04e9f35332b5fd91902b35` | `4ed3479647d6e63d1ced147e87f3250e8953164585d134c9823b2934674251f0` |
+   | `l2-w01-story-page-a-nest-and-a-nut` | v7 | 0 | 0 | 21 px | 5.22% | 506 MB | `cb3c4c3e4da97935a8a77474600e07417ae517b32354cc45e8131b374e5bc22d` | `210f29fbd64641d3f6b8b38901ea7291a0736df872202b0ddc386354bbb7b0cb` |
+   `verify --row` exits `0` on all three rows with the shadow list: "Row verification passed for 8
+   row versions", "Row verification passed for 4 row versions", and "Row verification passed for 7
+   row versions".
+   What Green saw: the check row draws one connected stroke with no detached mark at the right
+   silhouette. The nut row draws one closed outline around a smooth brown acorn with no black
+   texel. The nest-and-nut page v6 showed Pip inside the frame but cut the nut at the lower edge.
+   The v7 page shows Pip whole with four paws and the tail, the nest on the fork, and the whole nut
+   on the grass.
+   Check on the line art: a connected-component count finds 1 black component in
+   `l2-w01-check-row-nest-line-v8.png` (v7 held 2) and 0 open tips by the round 41 method.
+   Review folder `out/storytime-review/batch-14/`: `l2-w01-practice-line-nut-v4.png`,
+   `l2-w01-practice-line-nut-line-v4.png`, `l2-w01-check-row-nest-v8.png`,
+   `l2-w01-check-row-nest-line-v8.png`, `l2-w01-story-page-a-nest-and-a-nut-v7.png`,
+   `l2-w01-story-page-a-nest-and-a-nut-line-v7.png` (row file names kept),
+   `l2-w01-check-row-nest-line-v7.png`, `l2-w01-story-page-a-nest-and-a-nut-v5.png`, and
+   `l2-w01-story-page-a-nest-and-a-nut-line-v5.png` (old versions for comparison),
+   `look-reference-nan-and-pip.png`, and `brief.md` with the bar 7.0, the three keys, the row goals
+   copied from the picture list, the batch 7 part 2 critical defects, the batch 13 critical item,
+   the "Known open defects" section, and the note that small square steps along a stroke edge are
+   the line-art style. Green did not rate any item.
+   Rows that still need work: `l2-w01-story-page-a-nut` (open hand, head crop, face line noise) and
+   `l2-w01-story-page-a-nest` (re-stage with the new nest).
+   Week 1 count: 24 of 30 rows rendered. The handoff stated 22 of 30; this round adds the check row
+   and the nest-and-nut page. Rows with no open defect: 15 (`l2-w01-practice-line-nest` v11
+   passed). The two rows new to this round wait for the re-review.
+   No task is marked `[x]`. Waiting for the independent re-review.
