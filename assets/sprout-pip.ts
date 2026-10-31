@@ -77,7 +77,12 @@ export default scaleAsset(
         .paintWhere(bib, t.markings, 0.025)
         .paintWhere(stripe, t.markings, 0.012);
     },
+    // The open smile's tongue has a bone of its own (on the jaw), so the `sniff` clip can pull it in.
+    bones: { 'tongue-bone': { parent: 'jaw', at: [0, 0.36, 0.28] } },
     pose(clip, p) {
+      // Sniff: the mouth points down and the pink tongue would show under the belly from behind, so
+      // the tongue slides back into the mouth and shrinks.
+      if (clip === 'sniff') return { 'tongue-bone': { move: [0, 0.004, -0.03], scale: [0.4, 0.3, 0.4] } };
       // Sit: a wag of the tail and a tilt of the head, so the held pose moves.
       if (clip !== 'sit') return {};
       return {
@@ -132,7 +137,7 @@ export default scaleAsset(
       const opening = openFull.subtract(grinCut);
       k.body('mouth-open', opening.bone('jaw'), { color: '#3a1a1e', roughness: 0.5, detail: 0.003 });
       const tongue = sdf.ellipsoid([0.04, 0.026, 0.027]).at(mh[0], 0.358, OZ + 0.002).intersect(opening.round(0.002));
-      k.body('tongue-in', tongue.bone('jaw'), { color: '#ec7a88', roughness: 0.4, detail: 0.003 });
+      k.body('tongue-in', tongue.bone('tongue-bone'), { color: '#ec7a88', roughness: 0.4, detail: 0.003 });
       // Flat catch-lights: a thin white skin on the eye (upper outer side), not a sphere.
       const shine = w.head.round(0.0015).intersect(sdf.sphere(0.0165).at(e[0] + 0.017, e[1] + 0.021, e[2]).mirror('x'));
       k.body('eye-shine', shine.bone('head'), { color: '#ffffff', roughness: 0.2, detail: 0.002 });
