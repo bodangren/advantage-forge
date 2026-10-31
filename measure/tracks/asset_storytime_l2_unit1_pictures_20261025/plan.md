@@ -1838,3 +1838,25 @@ gate applies again.
    Both outer corners show small skin-colored flaps. This row stays blocked. Week 1 rows
    rendered so far: 21 of 30. Rows with no open defect: 17. No task is marked `[x]`. The
    finger still needs a cast change. That change is out of scope.
+   Green round 28 evidence (2026-10-31, claude-code/claude-sonnet-5-5#high). Task: the
+   `sniff` clip for Pip, used by `l2-w01-story-page-a-nest-and-a-nut`. Models: Green
+   `claude-code/claude-sonnet-5-5#high`, Red `minimax-cn-coding-plan/MiniMax-M3`, coder
+   none. Round 27 (`xai/grok-4.7`) stopped at 18:17 ICT when the xai credits ran out. It
+   made no commit. Round 28 continued its four files. The `wolf-kind.ts` change is an opt-in
+   (`sniff: true`), and only `sprout-pip.ts` sets it. Every other dog kind keeps its clips.
+   The round 27 fast animate run overwrote the textured Pip GLB with a vertex-color build
+   (1813 KB). `./forge build sprout-pip` restored the textured GLB: 5320 KB, 593 s, exit
+   `0`, `warning:` lines `0` (`green-p3-r28-build.log`). The key pose cutouts rebuilt it
+   with the same size. Commit `f81cf760` holds `assets/parts/wolf-kind.ts` and
+   `assets/sprout-pip.ts`. Commit `8433a0f6` holds `src/song/timeline.ts` (one
+   `DOG_GESTURES` entry) and `tests/song-timeline.test.ts`. The review strip shows the head
+   and neck down, the nose about 10 cm above the ground, the rear up, the tail up, and the
+   front paws planted. No fix loop was needed. Tests: `Tests  164 passed (164)`, exit `0`
+   (`green-p3-r28-vitest.log`). Type check exit `2`. Owned errors: `0`. Other-session
+   errors: `33` (`green-p3-r28-tsc.log`). Deviation: Green wrote the one test because the
+   Red family (MiniMax) has no quota. Rounds 5 and 26 are the precedent. Each forge, vitest,
+   and tsc run used one `heavy-run.sh` command. The first two cutout runs exited `1`
+   because the canvas was too small. The third run used 620 px per meter and exited `0`.
+   Review card: `out/storytime-review/batch-4/sprout-pip-sniff.png`, with the strip, the
+   look reference, and `brief.md` in the same folder. Green did not rate the item. The item
+   waits for the independent review. No task is marked `[x]`.
