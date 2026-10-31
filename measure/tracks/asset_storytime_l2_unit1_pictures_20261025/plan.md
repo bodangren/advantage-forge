@@ -1992,3 +1992,48 @@ gate applies again.
    `storytime-low-branch-nest-check.png` (with nest, front three-quarter and front 28 degrees
    above), `brief.md`, and `look-reference-nan-and-pip.png`. Green did not rate the item.
    Waiting for the independent re-review. No task is marked `[x]`.
+   Green round 34 evidence (2026-10-31, deepseek/deepseek-flash#high). Task: rework one prop,
+   `storytime-nut`, so a child of about 5 names it "a nut" in color and in 1-bit line art, and
+   leave it for the independent re-review. Models: Green `deepseek/deepseek-flash#high` (Daniel
+   approved the route on 2026-10-31; not the Red family), Red
+   `minimax-cn-coding-plan/MiniMax-M3`, coder none. No delegation.
+   The defect, and where it shows: in the 1-bit line art the nut read as a round pot or a sugar
+   bowl with a lid and a knob. Three shape cues caused it. The pale cap met the shell along one
+   smooth, level line. The cap top was a smooth dome with a small knob. The body was a round pot
+   with a wide, flat-looking bottom. It shows in
+   `out/storytime/l2/unit1/w01/rows/l2-w01-practice-line-nut-line-v1.png` (the clearest),
+   `l2-w01-story-page-a-nut-line-v2.png`, and
+   `l2-w01-story-page-a-nest-and-a-nut-line-v4.png`.
+   What changed, in `assets/storytime-nut.ts` only. The asset is now a classic picture-book
+   acorn. The body is an egg with a small point at the bottom, and it stands on that point. The
+   wide, flat bottom is gone. The cap is a separate cup over the top third. Four large soft
+   lobes push its lower edge down and out, so the rim line is bumpy and not level. The cap is
+   tilted 5 degrees, so its rim is not parallel to the ground. The cap paint is darker than the
+   shell, so a shadow band marks the edge. The stem is short and leans to +X. Only round, soft
+   forms exist. The asset name, facing +Z, and the approximate size are kept: 0.049 x 0.055 x
+   0.048 m, lowest point y = 0 m. No text, letter, number, logo, or face. Rated G.
+   Commit `4fb40943` changes the asset and adds the row stage file
+   `docs/storytime/l2-unit1/w01/rows/l2-w01-practice-line-nut-v2.json`. The camera and the stage
+   of v1 are kept; only the version number changed. No `src/`, test, or picture-list file
+   changed.
+   Runs, each in one `heavy-run.sh` command: `render --fast` exit `0` three times (loops 1 to
+   3), `inspect --fast` exit `0`, textured `render` exit `0` (atlas 512, 6076 triangles, GLB
+   508 KB), `inspect --fast` again exit `0` with "lowest point y = 0 m". `warning:` lines: 0. No
+   exit 75, no exit 137, no lock wait over 600 s. The inspect notes one advisory: "Almost
+   everything is mid-value". Green adds the shoulder, tip, and cap contrast and keeps the
+   advisory, because a darker shell would read as a dark blob in the line art.
+   Row `l2-w01-practice-line-nut` v2: render exit `0` (23 px line, ink 1.99%, peak 875 MB);
+   `verify --row` exit `0`, and it passed for 2 row versions. The white edge check passed. The
+   color file is `87073fa0445af08c877a27a335ce0c42f70fd195572723c1197f720a268d7575`; the line
+   art is `d337f955d506b29f9a7faebf3531c20d081ecc9715a72d2f03d3f9be23a6e331`. The line art now
+   shows a wavy cap edge, a cap wider than the nut under it, a pointed bottom, and a leaning
+   stem. It does not show a level rim, a knob, or a pot base. One row version was enough.
+   Review card in `out/storytime-review/batch-6/`: `storytime-nut.png` (front, three-quarter,
+   side, back, the same layout as batch 5), `storytime-nut-row.png`,
+   `storytime-nut-row-line.png`, `storytime-nut-old-line.png`,
+   `look-reference-nan-and-pip.png`, and `brief.md` with the section "Why the rework". Green
+   did not rate the item. Waiting for the independent re-review.
+   The rows `story-page-a-nut` and `story-page-a-nest-and-a-nut` used the old nut. They need a
+   re-render after the review. Their line art showed the jar read, so the orchestrator counts
+   them as rows with an open defect. Week 1 rows rendered: 22 of 30. Rows with no open defect
+   before this round: 15. No new row is rendered in this round. No task is marked `[x]`.
