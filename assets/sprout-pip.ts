@@ -26,6 +26,8 @@ export default scaleAsset(
     reference: 'docs/sprout-mockups/pip.jpg',
     // The rest pose stands (for the walk); the `sit` clip holds the sitting pose (week 1 shows Pip sitting up).
     sit: true,
+    // Week 1 "a nest and a nut": Pip sniffs a nut on the ground. Other dog kinds do not get this clip.
+    sniff: true,
     headScale: 1.12,
     cheekCream: false,
     muzzleWidth: 0.62,

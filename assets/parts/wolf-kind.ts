@@ -94,6 +94,8 @@ export interface WolfKind {
   readonly tail?: boolean;
   /** True: a `sit` clip (a held sitting pose on the haunches, as in a sitting mockup); default none. */
   readonly sit?: boolean;
+  /** True: a `sniff` clip (head and neck down, a small front-leg bend, rear up). Default none. */
+  readonly sniff?: boolean;
   /** The head size as a share of the wolf's (default 1): the head, the ears, and the face grow
    * about the head joint, and the body and the legs keep their size. */
   readonly headScale?: number;
@@ -835,6 +837,48 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
           return pose;
         },
       });
+
+      if (kind.sniff) {
+        // Sniff: the chest drops and the hips slide forward so the front paws stay put, the hind
+        // heels stay put (motion.reach), and the neck and the head reach down. The nose stays above
+        // the ground. A 3 Hz head bob is the sniff. The tail stays up and wags. The jaw stays shut.
+        const BODY = 16;
+        const CHEST = 6;
+        const NECK = 14;
+        const HEAD = 6;
+        const BEND = 10;
+        clip('sniff', {
+          duration: 1,
+          loop: true,
+          pose: (_t, p) => {
+            const bob = 4 * wave(p, 3);
+            const pose: Pose = {
+              hips: { rotate: [BODY, 0, 0] },
+              spine: { rotate: [CHEST, 0, 0] },
+              // Kind-space move. scaleAsset turns it into about 9 cm forward in the world.
+              neck: { rotate: [NECK, 0, 0], move: [0, 0.04, 0.18] },
+              head: { rotate: [HEAD + bob, 2 * wave(p, 3, 0.15), 0] },
+              tail: { rotate: [20 + BODY, 26 * wave(p, 2), 8 * wave(p, 2, 0.25)] },
+            };
+            for (const side of ['L', 'R']) {
+              pose[`fleg.${side}`] = { rotate: [-(BODY + CHEST) - BEND, 0, 0] };
+              pose[`fshin.${side}`] = { rotate: [BEND * 1.5, 0, 0] };
+            }
+            const front = LEGS[0]!;
+            const rots = front.bones.map((b) => pose[b]?.rotate ?? ([0, 0, 0] as const));
+            const pawZ = motion.follow(front.joints, rots, FPAW)[2];
+            const move: V3 = [0, motion.plant(chains(pose, [LEGS[0]!])), FPAW[2] - pawZ];
+            const heel = pitchX([HEEL[0], HEEL[1] - move[1], HEEL[2] - move[2]], -BODY, HIPS_AT);
+            const r = motion.reach({ root: HP, mid: BK, end: HEEL }, heel, BK);
+            pose['bleg.L'] = { rotate: r.upper };
+            pose['bshin.L'] = { rotate: r.lower };
+            pose['bleg.R'] = { rotate: [r.upper[0], -r.upper[1], -r.upper[2]] };
+            pose['bshin.R'] = { rotate: [r.lower[0], -r.lower[1], -r.lower[2]] };
+            pose.hips = { ...pose.hips, move: [0, Math.max(move[1], motion.plant(chains(pose))), move[2]] };
+            return pose;
+          },
+        });
+      }
     },
   });
 }
