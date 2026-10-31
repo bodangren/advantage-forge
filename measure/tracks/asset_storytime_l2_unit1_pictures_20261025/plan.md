@@ -2825,3 +2825,56 @@ gate applies again.
    known cast defects". This round adds no new row id. The two rows of this round wait for the
    re-review.
    No task is marked `[x]`. Waiting for the independent re-review.
+
+   Green round 47 evidence (2026-11-01, deepseek/deepseek-flash#high). Task: add Pat's school bag
+   prop for the three blocked week 1 rows. Item-only round: no row, cast, source, test, or
+   picture-list file changed.
+   Models: Green `deepseek/deepseek-flash#high` (route from `ra-quota --fresh pick green
+   --not-family minimax --not-family openai`; Daniel approved the DeepSeek route), Red
+   `minimax-cn-coding-plan/MiniMax-M3` (not the Green family), coder none. No delegation.
+   Batch 18 result: two independent reviews of the two round 46 rows.
+   - `openai/gpt-6-luna` failed `l2-w01-story-page-a-nest-and-a-nut` v13 at 6.5 and
+     `l2-w01-story-page-a-nut` v5 at 6.0. Both reviews hold factual errors about Pip.
+   - `kimi-code-plan-cn/kimi-for-coding` passed both rows at 7.0.
+   The orchestrator holds both rows as not clean until the PM or Daniel decides.
+   Base SHAs: `role_base_sha` f3288f8b equals HEAD at the start, and `phase_base_sha` 15a7bf0b is an
+   ancestor. The round 46 commits f46b121b and f3288f8b sit inside `15a7bf0b..HEAD`. An item round
+   carries no new Red test file; the Red signal is the plan picture list, whose three rows name this
+   item as the missing prop.
+   Build order, from the orchestrator: "the school bag comes first because three blocked rows (pat,
+   ben, cover-hello) need it".
+   What Green built: `assets/storytime-school-bag.ts`, asset name `storytime-school-bag`. One soft
+   rounded main body with a domed top, one wide front pocket on +Z, two padded shoulder straps on
+   -Z from the top edge to the bottom corners, and one short top grab loop for a wall hook in a
+   later row. No zipper teeth, stitches, buckles, text, letter, number, logo, or face.
+   The bump: one round bulge 0.084 m across at the upper edge of the main body, 0.05 m to +X. It
+   rises 0.034 m above the rounded top with a 0.018 m soft fillet, so it changes the outline in the
+   front view and in the three-quarter view and reads as something round inside the fabric.
+   Size: the body is 0.235 m wide, 0.254 m tall, and 0.11 m deep. The full envelope from
+   `out/storytime-school-bag/stats.json` is 0.252 x 0.291 x 0.151 m, lowest point y = 0. Why: Pat
+   is 0.858 m tall with a shoulder span of about 0.23 m, so the bag is as wide as his shoulders. The
+   body covers his back from the shoulder line to the hip line. The pocket and the two straps bring
+   the full depth to 0.151 m.
+   Colors: main body red `#d9483b`, front pocket yellow `#f2c230`, straps and grab loop dark blue
+   `#2f4a7a`. Each pair differs by 0.47 or more in one channel. Four bodies, one per color, with
+   vertex colors only (`texture: false`, `paintWeight: 1`), so every part edge is a hard color step
+   and the 1-bit line art draws a stroke there.
+   Heavy commands: every forge command ran inside
+   `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'`. No heavy command ran outside
+   the wrapper. No exit 75, no exit 137, no lock wait over 600 s.
+   Render exits: `./forge render storytime-school-bag --fast` exited 1 on the first call with
+   "box(): radius is larger than half a dimension" on the front pocket. Green set the pocket corner
+   radius to 0.015 m. The next three `--fast` renders exited 0. The full
+   `./forge render storytime-school-bag` exited 0 at 11,404 triangles. `./forge inspect
+   storytime-school-bag --fast` exited 0 with "Warnings: none", so no `warning:` line appeared. The
+   heavy runner reported no peak memory line for these forge commands.
+   Review folder `out/storytime-review/batch-19/`: `storytime-school-bag.png` (the four views of
+   `out/storytime-school-bag/render.png` in the batch 9 layout), `sprout-pat-render.png` (a copy of
+   `out/sprout-pat/render.png` for scale and look), `look-reference-nan-and-pip.png` from batch 18,
+   and `brief.md` with the bar 7.0, the key `storytime-school-bag`, the asset purpose, the three row
+   goals copied from the picture list, the critical defects, and the note that the line art draws
+   lines only at crisp color boundaries and outlines. Green did not rate the item. PNGs stay out of
+   git.
+   Week 1 count: "22 of 30 rendered, 16 with no open defect". This round adds one item and no row.
+   Commit a10d0193 adds `assets/storytime-school-bag.ts`. No task is marked `[x]`. Waiting for the
+   independent item review.
