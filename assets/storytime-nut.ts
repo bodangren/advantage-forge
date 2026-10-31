@@ -3,13 +3,15 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 /**
  * Design note — Storytime week 1 nut, a hand-sized picture prop.
  * Role: one big nut for a kindergarten book page, readable in color and in 1-bit line art.
- * Size: about 0.050 m wide and 0.053 m tall, standing on y = 0 and facing +Z.
+ * Size: about 0.048 m wide and 0.055 m tall, standing on y = 0 and facing +Z.
  * One idea: a classic picture-book acorn. An oval nut that ends in a small point at the bottom,
  * a cup-shaped cap over the top third with a bumpy lower edge, and a short stem that leans +X.
  * Shape language: round and soft. No level lid rim, no knob on top of a dome, no flat bottom.
- * Palette: warm brown shell #a8663a, dark grain #7a4726, darker cap #7a4a2c, stem #4f3120.
- * Materials: matte shell, slightly rougher cap, smooth stem.
- * Detail: one nut, one cap cup, four large cap lobes, one stem. No fine scales.
+ * Palette: warm brown shell #b0703c, darker cap #6e4126, stem #4f3120.
+ * Materials: one matte nut, roughness 0.85. Shell, cap, and stem are one body.
+ * Why one body: three bodies left thin charts at the cap rim and the stem tip. Those chart edges
+ * sampled the black atlas gutter and became black specks. One union removes the buried faces.
+ * Detail: one nut, one cap cup, five large cap lobes, one stem. No fine scales.
  * Rig/animation: none.
  */
 
@@ -18,6 +20,7 @@ const DARK = rgb('#5f3719');
 const LIGHT = rgb('#d8a973');
 const CAP = rgb('#6e4126');
 const CAPDARK = rgb('#4a2a16');
+const STEM = rgb('#4f3120');
 
 /** The nut body: a small point at the bottom, widest at mid height, closed under the cap. */
 const bodyProfile = profile.polygon(
@@ -40,9 +43,9 @@ const bodyProfile = profile.polygon(
 );
 
 /**
- * The cap cup, in a local frame: rim at local y = 0, crown at local y = 0.0172.
- * The under-cut pulls 1.6 mm inside the shell, so the cap's rim is buried and no dark cavity
- * shows along the edge. A rim level with the shell surface left black specks there.
+ * The cap cup, in a local frame: rim at local y = 0, crown at local y = 0.0140.
+ * The under-cut pulls 1.6 mm inside the shell, so the union buries the rim and no dark cavity
+ * shows along the edge.
  */
 const capProfile = profile.polygon(
   [
@@ -59,7 +62,11 @@ const capProfile = profile.polygon(
   { smooth: true },
 );
 
-/** Four large soft lobes make the lower cap edge bumpy, so it is not a level lid rim. */
+/**
+ * Five large soft lobes make the lower cap edge bumpy, so it is not a level lid rim.
+ * The shell, the cap, and the stem join with a soft fillet, so no knife edge or cusp forms where
+ * their surfaces cross. A sharp join read as dark teeth along the edge.
+ */
 const capLobes = [
   [0, 0.0025, 0.0078],
   [72, 0.0044, 0.0070],
@@ -71,54 +78,67 @@ const capLobes = [
   return sdf.sphere(r).at(Math.cos(a) * 0.0165, y, Math.sin(a) * 0.0165);
 });
 
+/** The stem leans toward +X. Its lower end sits inside the cap crown. */
+const stemShape = sdf.chain(
+  [
+    [-0.0012, 0.0452, 0, 0.0024],
+    [0.0016, 0.0492, -0.0002, 0.0019],
+    [0.0042, 0.0528, 0.0004, 0.0013],
+  ],
+  0.0025,
+);
+
+
 export default defineAsset({
   name: 'storytime-nut',
   description: 'One acorn: a warm brown nut with a point at the bottom and a dark bumpy cap.',
-  detail: 0.00065,
+  detail: 0.0008,
   texture: { size: 1024 },
 
   build(k) {
-    const shell = sdf.revolve(bodyProfile).paintFn((x, y, z, base) => {
+    const shell = sdf.revolve(bodyProfile).at(0, 0.002, 0);
+    const cap = sdf
+      .smoothUnion(0.004, sdf.revolve(capProfile), ...capLobes)
+      .rotateZ(5)
+      .at(0, 0.032, 0);
+
+    // One body. The union removes the faces that the cap, the shell, and the stem hide from each
+    // other, so no chart sits on a buried knife edge.
+    const nut = sdf.smoothUnion(0.003, shell, cap, stemShape).paintFn((x, y, z, base) => {
       const a = Math.atan2(z, x);
       const grain = 0.5 + 0.5 * noise.fbm(x * 150, y * 80, z * 150, 2);
       const streak = Math.pow(0.5 + 0.5 * Math.cos(a * 7 + y * 70), 8);
       const shoulder = Math.max(0, 1 - Math.abs(y - 0.0315) / 0.012);
       const low = Math.max(0, 1 - y / 0.018);
-      let c = mixRgb(BROWN, LIGHT, 0.1 + 0.2 * grain + 0.25 * shoulder);
-      c = mixRgb(c, DARK, 0.1 * streak + 0.3 * low);
-      return mixRgb(base, c, 0.92);
+      let shellColor = mixRgb(BROWN, LIGHT, 0.1 + 0.2 * grain + 0.25 * shoulder);
+      shellColor = mixRgb(shellColor, DARK, 0.1 * streak + 0.3 * low);
+
+      const mottle = 0.5 + 0.5 * noise.fbm(x * 190, y * 130, z * 190, 2);
+      const crown = Math.min(1, Math.max(0, (y - 0.036) / 0.012));
+      const capColor = mixRgb(CAP, CAPDARK, 0.14 + 0.34 * mottle * (0.45 + 0.55 * crown));
+
+      // The colors follow the union, not a guessed boundary. The nearest part wins, with a narrow
+      // blend, so the cap color stops exactly at the crease and leaves no dark fingers.
+      const soft = 0.0007;
+      const dShell = shell.dist(x, y, z);
+      const dCap = cap.dist(x, y, z);
+      const dStem = stemShape.dist(x, y, z);
+      const dMin = Math.min(dShell, dCap, dStem);
+      const wShell = Math.exp(-(dShell - dMin) / soft);
+      const wCap = Math.exp(-(dCap - dMin) / soft);
+      const wStem = Math.exp(-(dStem - dMin) / soft);
+      const total = wShell + wCap + wStem;
+      const blend = (i: 0 | 1 | 2): number =>
+        (wShell * shellColor[i] + wCap * capColor[i] + wStem * STEM[i]) / total;
+      return mixRgb(base, [blend(0), blend(1), blend(2)] as const, 0.93);
     });
-    k.body('shell', shell.at(0, 0.002, 0), {
+
+    k.body('nut', nut, {
       color: '#b0703c',
-      roughness: 0.8,
-      detail: 0.00065,
-      bump: (x, y, z) => 0.00008 * noise.fbm(x * 170, y * 95, z * 170, 2),
-      maxTriangles: 7000,
+      roughness: 0.85,
+      detail: 0.0008,
+      bump: (x, y, z) => 0.00007 * noise.fbm(x * 150, y * 95, z * 150, 2),
+      maxTriangles: 9000,
     });
-
-    const cap = sdf
-      .smoothUnion(0.004, sdf.revolve(capProfile), ...capLobes)
-      .paintFn((x, y, z, base) => {
-        const mottle = 0.5 + 0.5 * noise.fbm(x * 190, y * 130, z * 190, 2);
-        const crown = Math.min(1, Math.max(0, (y - 0.030) / 0.014));
-        // The rim band stays lighter than the crown. A black rim went to specks in the render.
-        return mixRgb(base, mixRgb(CAP, CAPDARK, 0.16 + 0.38 * mottle * (0.45 + 0.55 * crown)), 0.9);
-      })
-      .rotateZ(5)
-      .at(0, 0.032, 0);
-    k.body('cap', cap, {
-      color: '#6e4126',
-      roughness: 0.9,
-      detail: 0.0005,
-      bump: (x, y, z) => 0.00009 * noise.fbm(x * 150, y * 100, z * 150, 2),
-      maxTriangles: 7000,
-    });
-
-    const stem = sdf.chain([
-      [-0.0012, 0.0452, 0, 0.0024],
-      [0.0016, 0.0492, -0.0002, 0.0019],
-      [0.0042, 0.0528, 0.0004, 0.0013],
-    ], 0.0025);
-    k.body('stem', stem, { color: '#4f3120', roughness: 0.85, detail: 0.0005, maxTriangles: 800 });
   },
 });
