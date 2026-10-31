@@ -1157,7 +1157,7 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   row `fileName`, and the line art is the row `lineArtFileName` (`<color name>-line-v1.png`)
   beside the color file. The sample job still writes `lineart/...-nan-v3-lineart.png`, the
   package-job path.
-- [ ] Task: Build and independently review the PM-approved missing cast, props, and poses for
+- [~] Task: Build and independently review the PM-approved missing cast, props, and poses for
   week 1. Use the Forge asset workflow and preserve the approved character look.
   Gap list (2026-10-29, Green session, Opus; list v3, SHA-256
   `c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b`, 30 week 1 rows).
@@ -2553,4 +2553,79 @@ gate applies again.
    Week 1 count: 24 of 30 rows rendered. The handoff stated 22 of 30; this round adds the check row
    and the nest-and-nut page. Rows with no open defect: 15 (`l2-w01-practice-line-nest` v11
    passed). The two rows new to this round wait for the re-review.
+   No task is marked `[x]`. Waiting for the independent re-review.
+
+   Green round 43 evidence (2026-11-01, deepseek/deepseek-flash#high). Task: give `storytime-nut` a
+   crisp cap line in the 1-bit line art, then render the two nut rows.
+   Models: Green `deepseek/deepseek-flash#high` (route from `ra-quota --fresh pick green
+   --not-family minimax --not-family openai`; Daniel approved the DeepSeek route), Red
+   `minimax-cn-coding-plan/MiniMax-M3`, coder none. No delegation.
+   Batch 14 result (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-14.json`):
+   the row `l2-w01-check-row-nest` v8 passed at 8.0 with no critical defect and no issue.
+   Defect: the 1-bit line art of `l2-w01-practice-line-nut` v4 drew the outer outline only. The cap
+   line was gone, so the nut read as an onion, a turnip, or an apple. The nut in
+   `l2-w01-story-page-a-nest-and-a-nut` v7 read as an apple. Batch 9 passed the nut on a color card
+   only and held no line art, so the defect stayed open.
+   Cause: round 37 gave the nut one union body with vertex colors and a 1.5 mm paint blend at the cap
+   edge. The paint rule draws a stroke only where the unlit color jumps by more than 0.2 in one
+   channel between pixels 4 px apart. The row renders the nut at four times its own size, so one
+   vertex step covers more than 4 px. The color step therefore spread over more than 4 px and no
+   stroke fired. Round 43 measured the limit: `detail` 0.0005, a 0.3 mm blend, and 20,000 triangles
+   still drew no cap line, and the ink held at 1.51 percent.
+   Fix in `assets/storytime-nut.ts`: three bodies, one per color. The shell keeps its vertex-color
+   grain, the cap keeps its mottle, and the stem is flat. The line-art paint pass reads the rendered
+   color of each body, so the cap edge is a crisp step at every row scale. The cap is `#573014` and
+   the shell is `#b0703c`; the red channels differ by 0.31 in linear light. The stem is `#a06a3e` and
+   differs from the cap by 0.26, so its outline closes. Each body paints only its own color, so no
+   blend band sits on the edge. The build keeps vertex colors and writes no texture, so no black
+   texel can show. `detail` is 0.0006, `maxTriangles` 12,000 per body, and `maxError` 0.00002 m.
+   The acorn shape, the pointed bottom, the five soft cap lobes, the stem that leans +X, the warm
+   browns, the size 0.048 x 0.055 x 0.048 m, y = 0, +Z facing, and the asset name did not change. No
+   text, letter, number, logo, or face. Rated G.
+   Commit `9ce89f41` holds the fix in `assets/storytime-nut.ts` and the new stage files
+   `l2-w01-practice-line-nut-v5.json`, `l2-w01-practice-line-nut-v6.json`, and
+   `l2-w01-story-page-a-nest-and-a-nut-v8.json` under `docs/storytime/l2-unit1/w01/rows/`. Each
+   stage file copies its latest version, and only the version number changed. No `src/`, test, cast,
+   or picture-list file changed.
+   Heavy commands: every forge, row render, and verify command ran inside
+   `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'`. No heavy command ran outside
+   the wrapper. Nut gates: two `render storytime-nut --fast` runs exit `0`, one `render storytime-nut`
+   run exits `0` (21,249 triangles, 0.048 x 0.055 x 0.048 m, GLB 508 KB, vertex colors), and
+   `inspect storytime-nut --fast` exits `0` with "Warnings: none". `warning:` lines: 0. No exit 75,
+   no exit 137, no lock wait over 600 s.
+   Picture-list blocker: `render --row` and `verify --row` exit 1 on the live Workbooks list. The
+   rows were rendered and verified with `--workbooks /tmp/opencode/wb-shadow`. That folder is a
+   temporary copy of the committed list. `sha256sum` of its
+   `content/storytime/l2/print/pictures.json` starts with `c3e23cfd`, so no new copy was made this
+   round. The live Workbooks list is not written to.
+   Row form: `node --import tsx scripts/storytime-book-pictures.ts render --row <jobId> --version
+   <n> --workbooks /tmp/opencode/wb-shadow` then the same form for `verify --row <jobId>`.
+   | Row | Version | Render | Verify | Line | Ink | Peak | Color SHA-256 | Line-art SHA-256 |
+   | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+   | `l2-w01-practice-line-nut` | v5 | 0 | 0 | 25 px | 1.51% | 892 MB | `bef1abac9e6459ec13d34e9348a4a00e23558979e1707b65657f157311fb0b1e` | `df812073ee8494300857b2b41d8f51043586ad6a7db573446fb95fa45df42c0c` |
+   | `l2-w01-practice-line-nut` | v6 | 0 | 0 | 24 px | 2.03% | 927 MB | `640860ab83b5b4ef84aab9e29a507e5a2672330a26262ef09ec596ce3296f525` | `74d0f273395e9a142ec432a7bb17f388376dcd8e316e189fdfb7f2080159755f` |
+   | `l2-w01-story-page-a-nest-and-a-nut` | v8 | 0 | 0 | 21 px | 5.29% | 508 MB | `84eda1e233eedb07831c52a2860178bc6b77ec0cf7ed97cf8832497f7b09768a` | `2cac2fa39e8815ad28496d1b0ac6d05832d412b57e24431fb006a384672b82ec` |
+   `verify --row` exits `0` on both rows with the shadow list: "Row verification passed for 6 row
+   versions" and "Row verification passed for 8 row versions".
+   What Green saw: v5 drew the outer outline only, because it used the vertex-color cap. v6 draws one
+   continuous wavy cap line that follows the five lobes and ends at the silhouette on both sides, and
+   the stem outline closes. The v6 color picture reads as an acorn: a dark cap, a light shell, and a
+   tan stem. The page row v8 draws the nut with a closed cap line and a closed stem outline, and the
+   color picture reads as an acorn at Pip's nose. Pip is whole, with four paws and the tail, and the
+   nest sits on the fork.
+   Review folder `out/storytime-review/batch-15/`: `storytime-nut.png` (four views, from the render),
+   `l2-w01-practice-line-nut-v6.png`, `l2-w01-practice-line-nut-line-v6.png`,
+   `l2-w01-story-page-a-nest-and-a-nut-v8.png`,
+   `l2-w01-story-page-a-nest-and-a-nut-line-v8.png` (row file names kept),
+   `l2-w01-practice-line-nut-line-v4.png` and `l2-w01-practice-line-nut-line-v3.png` (older line art
+   for comparison), `look-reference-nan-and-pip.png`, and `brief.md` with the bar 7.0, the batch 9
+   critical defects, the cap-line defect, the keys `storytime-nut`, `l2-w01-practice-line-nut`, and
+   `l2-w01-story-page-a-nest-and-a-nut`, the row goals copied from the picture list, the batch 7 part
+   2 critical defects, the batch 7 "Known open defects" section, the note that small square steps
+   along a stroke edge are the line-art style, and the section "Why the rework". Green did not rate
+   any item.
+   Week 1 count, from the round brief: "22 of 30 rendered, 15 with no open defect (check-row-nest v8
+   passed; practice-line-nut stays open until a row with the fixed nut passes)". Round 42 recorded 24
+   of 30 rendered. This round adds no new row, so the rendered count needs a recount before the
+   closeout. `l2-w01-practice-line-nut` stays open until the re-review passes v6.
    No task is marked `[x]`. Waiting for the independent re-review.
