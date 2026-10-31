@@ -1808,3 +1808,33 @@ gate applies again.
    change or an `src/` change. This row is blocked. Week 1 rows rendered so far: 21 of 30.
    Rows with no open defect: 17. No task is marked `[x]`. The row waits for a gesture or
    face change.
+   Green round 26 evidence (2026-10-31, xai/grok-4.7). Task: unblock
+   `l2-w01-story-page-a-nose`. Two causes blocked the laugh. The Nan GLB was built at
+   10-30 23:44, before commit `341515a2`. Book stills cleared every `sings` list, so the
+   word times never opened the mouth. Models: Green `xai/grok-4.7#high`, Red
+   `minimax-cn-coding-plan/MiniMax-M3`, coder none. `./forge build sprout-nan` exit `0`
+   (`green-p3-r26-build-nan.log`). The new GLB time is 2026-10-31 17:00:32 +0700.
+   `warning:` lines: `0`. No asset file changed. Commit `11a06b9c` keeps mouth times only
+   from lines that carry explicit word times. A line without word times still has empty
+   sings. Tests: `Tests  163 passed (163)`, exit `0` (`green-p3-r26-vitest.log`). Type
+   check exit `2` after one heap retry. Owned errors: `0`. Other-session errors: `33`.
+   The first type check aborted at the Node heap (exit `134`). The retry used a 2048 MB
+   Node heap. Deviation: Green wrote the two sings tests because the Red family has no
+   quota. The round 5 backdrop option is the precedent. Commit `0db45aa1` adds v3 and v4.
+   Each render and each `verify --row` ran as one `heavy-run.sh` command. No lock wait
+   over 600 s. Verify logs do not print peak memory.
+   - `story-page-a-nose` v3 (kept; same camera as v2; at 0.82; 24 px line, ink 4.26%,
+     peak 507 MB): color
+     `18596b257d2a378a164ed593fb764fbe2a52e1aa73a393b2df053129b2d64d65`; line art
+     `b2449e1a558fb6fcd53974b94b55baeaf0d266a5d7ce70d390f1aa645810b909`. Render exit `0`.
+     Verify exit `0`. The mouth is a dark open oval under the fist. The hand still reads
+     as a fist at the mouth, not one fingertip on the nose. The eyes are open. No letters
+     show. Nan is in frame from the head to the feet.
+   - `story-page-a-nose` v4 (superseded; az -12; 24 px line, ink 4.41%, peak 505 MB):
+     color `61abe6aec73a39bcfaae6a59248e79c32fcb1729b193000e63ff854c7f41bc49`; line art
+     `c189a9806b3f84db5a4c672f1ec3b7f4577a78bec053b7d8fbbc44171859f61f`. Render exit `0`.
+     The finger-side camera did not show one fingertip on the nose.
+   Verify passed for 4 row versions. The white edge check passed. Eye-corner flaps: yes.
+   Both outer corners show small skin-colored flaps. This row stays blocked. Week 1 rows
+   rendered so far: 21 of 30. Rows with no open defect: 17. No task is marked `[x]`. The
+   finger still needs a cast change. That change is out of scope.
