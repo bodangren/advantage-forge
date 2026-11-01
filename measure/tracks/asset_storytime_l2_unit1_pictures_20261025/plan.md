@@ -3138,3 +3138,101 @@ gate applies again.
    did not rate its own work. PNGs stay out of git.
    Commits: `9b05234b` adds the two assets and the two stage files. This plan block is the next
    commit. No task is marked `[x]`. Waiting for the independent review.
+
+   Green round 51 evidence (2026-11-01, deepseek/deepseek-flash#high). Task: render Pat page v3 so
+   his face shows, and fix the framed animal pictures if the cause is in the asset.
+   Models: Green `deepseek/deepseek-flash#high` (route from `ra-quota --fresh pick green
+   --not-family minimax --not-family openai`; Daniel approved the DeepSeek route), Red
+   `minimax-cn-coding-plan/MiniMax-M3` (not the Green family), coder none. No delegation.
+   Batch 22 result (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-22.json`,
+   `kimi-code-plan-cn/kimi-for-coding`): `storytime-green-door` passed at 8.0, `storytime-low-table`
+   passed at 7.5 (issue: "legs taper and splay slightly, but all four stand flat on the floor"), and
+   the Pat page v2 failed at 5.0. Critical defect, exact words: "Pat's face is not visible. The page
+   shows the back of his head, so a child cannot see who Pat is on the page that introduces him."
+   Issues, exact words: the bag bump does not read as its own shape; "The wooden frame backing peeks
+   out around each animal picture and reads as a separate offset shape, with a small wood tab below
+   each picture"; "A small pale speck sits on the horizontal wall beam above the left edge of the
+   lion picture"; "The teddy bear is seen from behind; it reads as a brown teddy bear, but its face
+   is hidden". Line art: "Small blob of merged stroke on the horizontal wall beam, at the base of the
+   mount line above the left edge of the lion picture"; "Small notch at the top edge of the center
+   wall post where it meets the page edge". The wave read well.
+   Base SHAs: `role_base_sha` 47c0c6a4 equals HEAD at the start, and `phase_base_sha` 15a7bf0b is an
+   ancestor. The round 50 commits 9b05234b and 47c0c6a4 sit inside `15a7bf0b..HEAD`. An item round
+   carries no new Red test file; the Red signal is the batch 22 review, the plan picture list, and
+   the week 1 rows that ask for the Pat page.
+   Picture-frame cause (the frame defect is in the asset, not the stage): the frame body was a
+   0.014 m box at z 0 to 0.014, and the backdrop ran from z 0.004 to 0.024, so the picture face sat
+   0.010 m in front of the frame front. Head on, the border read as a frame. At the oblique camera of
+   the classroom pages, the deeper picture covered the frame's middle and the border showed as a
+   second board offset behind the picture, with its bottom side face as the wood tab below it.
+   Fix in `assets/storytime-animal-pictures.ts`: the frame is now a border ring of the full picture
+   depth, `FRAME_DEPTH` 0.038 m (the front face of the deepest animal layer), made by subtracting an
+   opening of 0.49 by 0.39 m from a 0.55 by 0.45 m box. The backdrop is 0.01 m wider than the opening
+   on each side, so its edge sits inside the frame. One closed ring now surrounds each picture flush
+   on all four sides. `storytime-animal-pictures` was rendered again and put in batch 23 for a new
+   item review.
+   Asset render exits: the first `./forge render storytime-animal-pictures --fast` exited 0, and the
+   back view showed the picture colors through the frame: the 0.004 m back plate is thinner than the
+   0.007 m mesh cell, so the mesher dropped it. `FRAME_BACK` rose to 0.012 m; the second render and
+   `./forge inspect storytime-animal-pictures --fast` exited 0 with "Warnings" listing the same two
+   notes as round 49 only ("lion-nose is barely visible", "the side silhouette is very thin"). The
+   back view now shows three solid frame backs and the backdrops are hidden from behind (backdrop
+   silhouette 0% in the back view). No `warning:` line appeared.
+   Pat page, stage files `l2-w01-story-page-hello-i-am-pat-v3.json` and `-v4.json`:
+   - Pat stands at stage 3.2 / 1.15, about 2.7 m in front of the wall, so the door and the pictures
+     stay behind him while he fills the frame. He faces yaw -60, which is a 30 degree turn off the
+     camera axis: both eyes and the mouth stay visible, and the bag on his back moves to the screen
+     left, the side the camera sees.
+   - The camera is az -90, dist 2.1 and then 2.9, el 4 then 0, target 3.2 / 0.5 to 0.67 / 1.0 to
+     1.1. The 2.1 m version put Pat at 73 percent of the frame height but cut the door top and the
+     table; the 2.9 m version puts him at 53 percent with a margin below the feet and above the
+     hair.
+   - The door hangs at 5.94 / 0.10, the pictures at 5.94 / 1.60 with y 0.95, and one low table stands
+     at 4.6 / 1.75 with yaw 90, under the pictures.
+   - The bag is held on the chest bone with offset [-0.05, 0, -0.115], rotate [0, 180, 0] and scale
+     1.12. The lateral part slings it toward his right side, the side the camera sees.
+   Row form: `node --import tsx scripts/storytime-book-pictures.ts render --row <jobId> --version
+   <n> --workbooks /tmp/opencode/wb-shadow` then the same form for `verify --row`.
+   | Row | Version | Render | Verify | Line | Ink | Peak | Color SHA-256 | Line-art SHA-256 |
+   | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+   | `l2-w01-story-page-hello-i-am-pat` | v3 | 0 | 0 | 18 px | 9.96% | 859 MB | `d0af11f419a457f299bb064858bbff53f79ff585fd4b5a2af3b192c41e16f93a` | `aba4f6b1dbb25d1f3a2fba7b9861191af78c180352c21fe844d8393c05de2e07` |
+   | `l2-w01-story-page-hello-i-am-pat` | v4 | 0 | 0 | 17 px | 11.14% | 479 MB | `e29fe32df9cb59cc312f1d8415b94603040cfdfc92dd8fb9d8218e04a449a3e9` | `ff92b0209cdcee09bfb65f3b6d03a0b1576a24f58182b8718257858d8875aaf5` |
+   `verify --row` exits 0 with "Row verification passed for 4 row versions". v4 was rendered three
+   times inside the v4 file: the first attempt repeated the v3 camera and the second moved the
+   camera back. Green removed each earlier v4 output before the next render, and the record above is
+   the kept third render.
+   What Green sees in v3: Pat's face is clear with both eyes, the brows, the nose, and the mouth; the
+   teddy shows its face in his raised arm; the pictures keep clean frames; but the door top is cut at
+   the page edge, the table is cut at the right, and the bag shows only as a thin red sliver.
+   What Green sees in v4, color: Pat is whole at 53 percent of the page height with a margin below
+   his sandals and above his hair. He stands in three-quarter view, waves with his right arm toward
+   the door, and the teddy bear in that arm shows its head, ears, muzzle, and eyes. The green door is
+   whole at the left with its round window and knob; the three animal pictures are whole above him;
+   one low table is whole at the right. The red bag shows beside his shoulder with its blue strap and
+   no gap and no sinking, and its top outline rises beside his neck; the bump makes a small rise in
+   that outline and does not read as its own round shape.
+   What Green sees in v4, line art: the door, the window, the knob, the three frames, and the table
+   keep closed strokes. Pat, the teddy, and the bag keep closed outlines. No seam line crosses Pat,
+   the door, or a picture; the wall seams stay on the bare wall above and below the pictures, and the
+   floor seams pass beside his feet.
+   Heavy commands: every forge command, row render, and verify ran inside
+   `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'`. No heavy command ran outside the
+   wrapper. No exit 75, no exit 137, no `net::ERR_UNSAFE_PORT`, no `lock wait` line.
+   Shadow root: `/tmp/opencode/wb-shadow` exists. `sha256sum` of its
+   `content/storytime/l2/print/pictures.json` is
+   `c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b`, so no new copy was made. The
+   live Workbooks list is not written to. `out/sprout-pat/sprout-pat.glb` was the textured build at
+   3,396,088 bytes before the rows, so no rebuild ran and no `--fast` call touched sprout-pat.
+   Warning lines: none in any forge, render, or verify call.
+   Week 1 count before this round: "24 of 30 rendered, 17 with no open defect except the known cast
+   defects; the Pat page failed at 5.0". This round changes one accepted item and re-renders the Pat
+   page, so the page waits for review again and no closed row is gained.
+   Review folder `out/storytime-review/batch-23/`: `storytime-animal-pictures.png` (four views, the
+   2060 x 512 layout of batch 22), `l2-w01-story-page-hello-i-am-pat-v4.png`,
+   `l2-w01-story-page-hello-i-am-pat-line-v4.png` (row file names kept), `sprout-pat-render.png`,
+   `look-reference-nan-and-pip.png`, and `brief.md` with bar 7.0 for the item and the page, the item
+   purpose, the goal copied exactly, the critical defects, the known open defects, the teddy note,
+   and the note that the three animal pictures show animal faces by design. Green did not rate its
+   own work. PNGs stay out of git.
+   Commits: `9e249f80` changes the asset and adds the two stage files. This plan block is the next
+   commit. No task is marked `[x]`. Waiting for the independent review.
