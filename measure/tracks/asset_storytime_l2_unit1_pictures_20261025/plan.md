@@ -3049,3 +3049,92 @@ gate applies again.
    open defects. Green did not rate its own work. PNGs stay out of git.
    Commits: `0e953cab` adds the asset and the stage file. This plan block is the next commit. No
    task is marked `[x]`. Waiting for the independent review.
+   Green round 50 evidence (2026-11-01, deepseek/deepseek-flash#high). Task: build the classroom
+   door and the low table, then render Pat page v1.
+   Models: Green `deepseek/deepseek-flash#high` (route from `ra-quota --fresh pick green
+   --not-family minimax --not-family openai`; Daniel approved the DeepSeek route), Red
+   `minimax-cn-coding-plan/MiniMax-M3` (not the Green family), coder none. No delegation.
+   Batch 21 result (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-21.json`,
+   `kimi-code-plan-cn/kimi-for-coding`): `storytime-animal-pictures` passed at 8.0 with no critical
+   defect, and the Ben page v3 passed at 7.5 with no critical defect. Open points on the Ben page,
+   all from the cast: a pale streak across Ben's forehead in the color page; short dashes in the
+   line art on the upper left forehead, at the outer eye corners (the known skin-flap defect), and
+   beside each ear. The reviewer read the red bag's loop and strap tops as a handle and straps, not
+   as a face.
+   Base SHAs: `role_base_sha` 80c5fb3a equals HEAD at the start, and `phase_base_sha` 15a7bf0b is an
+   ancestor. The round 49 commits 0e953cab and 80c5fb3a sit inside `15a7bf0b..HEAD`. An item round
+   carries no new Red test file; the Red signal is the batch 21 review, the plan picture list, and
+   the week 1 rows that ask for a classroom door and a low table.
+   What Green built, commit `9b05234b`:
+   - `assets/storytime-green-door.ts`, asset `storytime-green-door`: one classroom door. The green
+     leaf is 0.95 m wide, 2.0 m tall, and 0.05 m thick in `#3e9e4f`. The cream frame `#f3e6c4` is
+     0.07 m wide on the two sides and on the top. The round knob is yellow `#f2c230`, 0.08 m across,
+     at 0.9 m height. One round window is 0.34 m across at 1.48 m height: pale blue `#cfe8f5` glass
+     in a cream rim. The frame back sits on z = 0, the frame bottom on y = 0, and the door is
+     centered on x = 0 and faces +Z. Five bodies, one per color, vertex colors only
+     (`texture: false`). Every pair of touching colors differs by 0.4 or more in one channel. No
+     text, letter, number, sign, name plate, logo, or face. Size 1.09 x 2.07 x 0.122 m, 77,876
+     triangles, GLB 1829 KB. First render: the cream window ring lay flat, so it read as a bar
+     across the window; `.rotateX(90)` fixed it.
+   - `assets/storytime-low-table.ts`, asset `storytime-low-table`: one low table. The top is 1.0 m
+     by 0.6 m and 0.04 m thick, with rounded corners, in light wood `#e8c48a`, and its surface sits
+     at 0.48 m. Four round legs are 0.05 m across, in red `#d9483b`, at x +/-0.4 and z +/-0.2, and
+     each leg runs into the top. The wood and the red differ by 0.49 in the green channel. Two
+     bodies, vertex colors only. Size 1 x 0.48 x 0.6 m, 22,676 triangles, GLB 536 KB. First render
+     exited 1 with "box(): radius is larger than half a dimension": the 0.03 m corner radius was
+     larger than the 0.02 m half thickness, so the radius fell to 0.018 m.
+   - The corner radius is 0.018 m, which is the limit of a 0.04 m top. The corners read as soft
+     edges, not as round corners.
+   Render and inspect exits: the door render exited 0 on both calls and the table render exited 1
+   then 0. `./forge inspect storytime-green-door --fast` and `./forge inspect storytime-low-table
+   --fast` both exited 0, and their "Warnings" sections are empty. No `warning:` line appeared in
+   any call. Every forge, render, and verify call ran inside one
+   `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'` command. No exit 75, no exit
+   137, no `net::ERR_UNSAFE_PORT`, and no `lock wait` line.
+   Pat page, stage file `l2-w01-story-page-hello-i-am-pat-v1.json` and `-v2.json`:
+   - The group sits on the plain right wall of the classroom at map x 5.94. The stage origin is
+     (0, 0, 3) with heading 0, so world z = stage z + 3. Pat stands at stage 4.5 / 0.85 and faces
+     the door. The door hangs at stage 5.94 / 0.15 with yaw -90. The animal pictures hang on the
+     same wall at stage 5.94 / 1.7 with y 1.0 and yaw -90, so their bottom edge is at 1.0 m. Two low
+     tables stand at stage 4.3 / 0.05 and 4.85 / 1.85. The pot and the fern at world z 1.9 stay out
+     of the frame.
+   - Pat's bag uses the held-prop form: `held` "Pat", `bone` "chest", `rotate` [0, 180, 0], so the
+     straps side lies against his back and the pocket faces away from him.
+   - Camera: az -88, el 6, dist 4.0, tx 5.0, ty 0.85, tz 1.1, with stage coordinates.
+   - `sprout-pat.glb` was the textured build at 3,396,088 bytes before the rows, so no rebuild ran.
+   Row form: `node --import tsx scripts/storytime-book-pictures.ts render --row <jobId> --version
+   <n> --workbooks /tmp/opencode/wb-shadow` then the same form for `verify --row`.
+   | Row | Version | Render | Verify | Line | Ink | Peak | Color SHA-256 | Line-art SHA-256 |
+   | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+   | `l2-w01-story-page-hello-i-am-pat` | v1 | 0 | 0 | 18 px | 10.45% | 977 MB | `779d5e89e534e5368f30b1f63706fadbd6fae0511df388a77fd812ebb52c59c0` | `0c9bbc4f4b731af881d8b1f7a6926ae56d014f82f0daa8e25a67dc07770d3791` |
+   | `l2-w01-story-page-hello-i-am-pat` | v2 | 0 | 0 | 18 px | 10.54% | 515 MB | `ebb929adf1b12038686da719bb04d12ff7897d5fc17fb1b4f0eddb518dc6f76f` | `c4948dc140d1286accaf5139d9631886cd39ab51defa3407bf6e46b76e8e9051` |
+   `verify --row` exits 0 with "Row verification passed for 2 row versions".
+   What Green sees in v1: the bag stood at Pat's knee and off his back, and the two tables were cut
+   by the frame edges. v2 fixes the bag offset to [0, -0.03, -0.115], turns Pat to yaw 45, and moves
+   the tables into the frame. Green keeps v2.
+   What Green sees in v2, color: Pat is whole, with a margin below his feet and above his hair. He
+   faces the green door and waves with his right hand. The door is whole with its round window and
+   its round knob. Three animal pictures hang on the same wall to his right. Two low tables stand
+   in the room and do not cover him. The red bag sits on his back with its top at his shoulders,
+   the pocket outward, and no clear gap and no sinking.
+   What Green sees in v2, line art: the door, its window, and its knob keep closed strokes. Each
+   table keeps a closed top and four legs. The bag keeps a closed outline, and the pocket edge
+   shows inside it. The bump does not change the bag's top outline, so the "moves a little" cue
+   stays weak. One thin diagonal stroke crosses Pat's shorts and his leg, and one thin horizontal
+   stroke crosses the wall behind his raised hand.
+   Shadow root: `/tmp/opencode/wb-shadow` exists. `sha256sum` of its
+   `content/storytime/l2/print/pictures.json` is
+   `c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b`, so no new copy was made. The
+   live Workbooks list is not written to.
+   Week 1 count before this round: "23 of 30 rendered, 17 with no open defect except the known cast
+   defects". This round adds the door and the table and renders the Pat page, so the page waits for
+   review again and no closed row is gained.
+   Review folder `out/storytime-review/batch-22/`: `storytime-green-door.png` and
+   `storytime-low-table.png` (four views, the 2060 x 512 layout of batch 21),
+   `l2-w01-story-page-hello-i-am-pat-v2.png`, `l2-w01-story-page-hello-i-am-pat-line-v2.png` (row
+   file names kept), `sprout-pat-render.png`, `look-reference-nan-and-pip.png`, and `brief.md` with
+   bar 7.0 for both items and the page, each item purpose, the goal copied exactly, the critical
+   defects, the known open defects, and the note that the teddy bear is part of Pat's cast. Green
+   did not rate its own work. PNGs stay out of git.
+   Commits: `9b05234b` adds the two assets and the two stage files. This plan block is the next
+   commit. No task is marked `[x]`. Waiting for the independent review.
