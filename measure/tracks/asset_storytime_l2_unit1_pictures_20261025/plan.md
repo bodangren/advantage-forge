@@ -3669,3 +3669,64 @@ gate applies again.
     `nan-clean-refs`, the batch 29 warning list, and Daniel's rule), `pages/` (20 files), `refs/` (9 files),
     `clean-refs/` (8 files, with side-by-side source and clean files). PNGs stay out of git. Green did not
     rate its own work. No task is marked `[x]`. Waiting for the independent review.
+
+    Green round 60 (2026-11-01, claude-code/claude-sonnet-5-5#high). Task: Muse fix round for batch 29 (the 11
+    character pages). role_base_sha `682f4b2f`, phase_base_sha `15a7bf0b`. Red model
+    minimax-cn-coding-plan/MiniMax-M3. Image model meta/muse-image. Green coder model: none; nothing was
+    delegated. No heavy-runner command and no Forge render were needed. `assets/`, `src/`, `tests/`, and
+    earlier outputs did not change.
+    Defects and their source: the batch 29 Kimi review (`item-review-batch-29.json`) and the orchestrator
+    check. (1) Open waving hands with 4 digits on pat, mia, may, sam, your-teacher, pip, and cover-hello.
+    (2) Ben's forehead band on the group pages. (3) pat: lump hand on the bear, cream muzzle and inner ears
+    on the bear, a low table cut at the frame edge. (4) mia: stray dash in the palm (line). (5) sam: tassel
+    loops on the rug (line). (6) your-teacher: rectangular rug, the goal says round (default taken: a round
+    rug on this page, no PM answer). (7) pip. (8) cover-hello: no low table. (9) a-nurse: line art did not
+    trace the color. (10) a-nest-and-a-nut: 4 eggs, high branch. (11) nan-can-nod and cover-nan-can-nod: line
+    art lost the open mouth, a floating circle, broken eye ring, pale shoulder patch, Nan reaching and not
+    nodding, open tree lines.
+    New group sheets (in `out/storytime/l2/unit1/w01/muse/elements/`; the old sheets are untouched):
+    `cast-group-b-2.png` (made with sharp: Ben = the front view of `ben-ref-clean-2.png` with the card label
+    and edge painted over in the panel gray; Nan and Pip = crops of `nan-ref-clean-look-reference.png` at
+    one scale; Teacher Kim = the front panel of `out/storytime-review/muse-cast/teacher-kim-sheet-2.png`).
+    `cast-group-a-2.png` is a byte copy of `cast-group-a.png` (the four panels did not change). I looked at
+    both at full size. The first two tries of sheet b-2 had a leftover label and a dark card edge and were
+    redone (only the last file is kept in the folder).
+    Spec changes (commit `eefcf7f6`, 11 files): hand text (five digits, palm to the viewer, spread
+    fingers), the round 57 and 58 additions, the new group sheets, the clean Nan copies, and the per-row
+    fixes above. Check method: each open hand at 3x to 5x with a shell crop in `/tmp/opencode/r60/`.
+    Rows (final files in `out/storytime/l2/unit1/w01/muse/`; every call is in `costs.tsv`):
+    - `hello-i-am-pat` color m4, line m4 (try 1). Retry 1 (color m3): the table was still cut at the right
+      edge (2 legs seen). m4: the wave hand shows 4 fingers and a thumb, the bear is plain brown and the hand
+      on the bear has finger shapes (pale color), one whole low table.
+    - `hello-i-am-mia` color m2, line m2 try 2 (`-line-2.png`). Retry: line try 1 had dense fringe tick marks
+      on the rug edge. No dash in the palm in either try.
+    - `hello-i-am-may` color m2, line m2. No retry. Both waving hands counted 5 digits.
+    - `hello-i-am-sam` color m2, line m2. No retry. Hand counted 5 digits; the rug has no tassel.
+    - `hello-i-am-your-teacher` color m3, line m3. Retry 1 (color m2): tassels around the round rug read as
+      many small hands. m3: round plain rug, clean Ben. Hands counted at 3x to 5x: 5 digits on the ones I
+      checked (Pat, Nan at 5x); the eyes in the line art are mostly solid dots.
+    - `hello-i-am-pip` color m4, line m4. Retry 1 (color m3): one lower hand with 3 stubby fingers and many
+      reaching hands. m4: raised hands counted 5 digits; OPEN: one lower hand partly hidden by a shoe shows
+      3 fingers and a thumb.
+    - `a-nurse` color m1 (kept), line m1 try 3 (`-line-3.png`). New line call: plain background, one ground
+      line, almond eyes, closed hands.
+    - `cover-hello` color m5, line m5. Retry 1 (color m4): several raised hands showed 3 fingers and a
+      thumb. m5: whole low table at the back; the hand count is not certain for two hands (heads overlap).
+    - `a-nest-and-a-nut` color m3, line m3 try 2 (`-line-2.png`). Count at 3x: m1 and m2 had 4 eggs. Retry
+      (color m3): 3 eggs, low branch. OPEN: the branch in the line art is still a jagged open stroke and a
+      diagonal hill line remains.
+    - `nan-can-nod` color m3 (clean Nan copies, one even orange shirt), line m3 try 2 (`-line-2.png`). Line
+      try 1: open mouth kept, right eye ring broken. Try 2 (the first call failed with a network timeout, cost
+      0, and ran again): both eye rings closed, no floating circle; OPEN: the mouth is a plain smile shape.
+      OPEN: a fold in the left ear of the color picture.
+    - `cover-nan-can-nod` color m2 (clean Nan copies, head tilted down), line m2 (try 1). Eye rings closed,
+      open smile kept, hands relaxed with separate fingers. No retry.
+    Calls with cost (USD, `usage.cost`, 0.01 per call, `costs.tsv` rows after 2026-11-01T03:53Z): color 15
+    calls 0.15 (10 first tries, 5 retries: pat m4, cover-hello m5, your-teacher m3, pip m4, nest m3); line 14
+    calls 0.14 (11 first tries, mia try 2, nest try 2, nan try 2) = 29 calls, 0.29 USD. One line call failed
+    with no cost (nan, network timeout). Round cost 0.29 USD. Running total 1.24 + 0.29 = 1.53 USD. The tool
+    total in the run (1.30) counts only the `costs.tsv` of the page folder.
+    Review folder `out/storytime-review/batch-32/` (no earlier batch-32): `brief.md` (one key per row, the
+    section "check that these batch 29 defects are gone", the open items, Daniel's rule), `pages/` (22
+    files), `refs/` (24 files, with both new group sheets). PNGs stay out of git. Green did not rate its own
+    work. No task is marked `[x]`. Waiting for the independent review.
