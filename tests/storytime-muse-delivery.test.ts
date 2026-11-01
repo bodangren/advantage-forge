@@ -16,6 +16,7 @@ import {
   type StorytimeManifest,
 } from '../src/storytime/book-pictures.js';
 import { writeMuseDelivery } from '../src/storytime/muse-delivery.js';
+import { runStorytimeBookPicturesEntry } from '../scripts/storytime-book-pictures.js';
 
 // Red tests for the Muse week 1 delivery manifest (plan task "Add failing tests for the Muse week
 // 1 delivery manifest (Red)"). The PM delivery contract is spec.md decision 2 of the amendment
@@ -1142,4 +1143,295 @@ describe('Muse delivery of another week', () => {
     expect.soft({ 'Week 2 CLI batch ids': manifest.batches.map((batch) => batch.id).sort() })
       .toEqual({ 'Week 2 CLI batch ids': ['w02/color', 'w02/lineart'] });
   }, 240000);
+});
+
+// ---------------------------------------------------------------------------
+// Week 1 version 2 delivery (PM order 02:1x ICT 2026-11-02)
+//
+// The Workbooks two-model check refused four week 1 rows. Forge redoes them as new versions and
+// sends new file names. The approval entry may carry an optional integer `fileVersion` (>= 1).
+// With `fileVersion: 2`, the delivered names are `<row id>-v2.png` and `<row id>-line-v2.png`
+// (the list names with `-v1` replaced by `-v2`), and the candidate version is 2. A run with no
+// field keeps the v1 names and bytes. A row has one candidate, so the v2 candidate replaces the
+// v1 candidate in its job. A different manifest.json in the delivery folder still stops the run.
+// ---------------------------------------------------------------------------
+
+/** The list name with its `-v<n>` suffix replaced by the delivered version. */
+function versionedName(name: string, version: number): string {
+  return name.replace(/-v\d+\.png$/, `-v${version}.png`);
+}
+
+/** The SHA-256 of a delivered file, or `missing` when the run wrote no such file. */
+async function shaOrMissing(file: string): Promise<string> {
+  return existsSync(file) ? sha256(await readFile(file)) : 'missing';
+}
+
+interface ApprovalItem {
+  rowId: string;
+  museVersion?: number;
+  lineTry?: number;
+  fileVersion?: number;
+}
+
+function fileVersionApproval(items: ApprovalItem[]): DeliveryApprovals {
+  // `fileVersion` is the field that Green must add to the approval schema. The cast keeps the
+  // test file type-correct at HEAD, where the field does not exist yet.
+  return {
+    version: 1,
+    entries: items.map((item) => ({
+      rowId: item.rowId,
+      version: item.museVersion ?? 1,
+      ...(item.fileVersion === undefined ? {} : { fileVersion: item.fileVersion }),
+      ...museNames(item.rowId, item.museVersion ?? 1, item.lineTry ?? 1),
+    })),
+  } as unknown as DeliveryApprovals;
+}
+
+describe('Muse delivery file versions', () => {
+  it('T184 delivers the v2 names and candidate version when the entry sets fileVersion 2', async () => {
+    const row = rowFor(NUT);
+    const names = museNames(NUT, 1);
+    const sourceColor = sha256(await readFile(path.join(museRoot, names.colorPrint)));
+    const sourceLine = sha256(await readFile(path.join(museRoot, names.linePrint)));
+    const v2Color = versionedName(row.fileName, 2);
+    const v2Line = versionedName(row.lineArtFileName, 2);
+
+    const target = path.join(root, 'delivery-version-2');
+    const manifest = await writeMuseDelivery({
+      rows: [row],
+      approvals: fileVersionApproval([{ rowId: NUT, fileVersion: 2 }]),
+      museRoot,
+      deliveryRoot: target,
+    });
+    const candidate = candidateOf(jobFor(manifest, NUT));
+    expect.soft({ 'The fileVersion 2 candidate version': candidate.version })
+      .toEqual({ 'The fileVersion 2 candidate version': 2 });
+    expect.soft({ 'The fileVersion 2 color file name': path.basename(candidate.file) })
+      .toEqual({ 'The fileVersion 2 color file name': v2Color });
+    expect.soft({ 'The fileVersion 2 line file name': path.basename(candidate.lineArt?.file ?? '') })
+      .toEqual({ 'The fileVersion 2 line file name': v2Line });
+    expect.soft({ 'The fileVersion 2 color file exists': existsSync(path.join(target, v2Color)) })
+      .toEqual({ 'The fileVersion 2 color file exists': true });
+    expect.soft({ 'The fileVersion 2 line file exists': existsSync(path.join(target, v2Line)) })
+      .toEqual({ 'The fileVersion 2 line file exists': true });
+    expect.soft({ 'The fileVersion 2 color bytes are the approved print bytes': await shaOrMissing(path.join(target, v2Color)) })
+      .toEqual({ 'The fileVersion 2 color bytes are the approved print bytes': sourceColor });
+    expect.soft({ 'The fileVersion 2 line bytes are the approved print bytes': await shaOrMissing(path.join(target, v2Line)) })
+      .toEqual({ 'The fileVersion 2 line bytes are the approved print bytes': sourceLine });
+
+    // A run with no field keeps the list names and bytes.
+    const v1Target = path.join(root, 'delivery-version-none');
+    const v1Manifest = await writeMuseDelivery({
+      rows: [row],
+      approvals: fileVersionApproval([{ rowId: NUT }]),
+      museRoot,
+      deliveryRoot: v1Target,
+    });
+    const v1Candidate = candidateOf(jobFor(v1Manifest, NUT));
+    expect.soft({ 'A run with no fileVersion keeps the v1 candidate version': v1Candidate.version })
+      .toEqual({ 'A run with no fileVersion keeps the v1 candidate version': 1 });
+    expect.soft({ 'A run with no fileVersion keeps the list color name': path.basename(v1Candidate.file) })
+      .toEqual({ 'A run with no fileVersion keeps the list color name': row.fileName });
+    expect.soft({ 'A run with no fileVersion keeps the list line name': path.basename(v1Candidate.lineArt?.file ?? '') })
+      .toEqual({ 'A run with no fileVersion keeps the list line name': row.lineArtFileName });
+    expect.soft({ 'A run with no fileVersion keeps the color bytes': await shaOrMissing(path.join(v1Target, row.fileName)) })
+      .toEqual({ 'A run with no fileVersion keeps the color bytes': sourceColor });
+    expect.soft({ 'A run with no fileVersion keeps the line bytes': await shaOrMissing(path.join(v1Target, row.lineArtFileName)) })
+      .toEqual({ 'A run with no fileVersion keeps the line bytes': sourceLine });
+
+    // An explicit fileVersion 1 is the same as no field.
+    const oneTarget = path.join(root, 'delivery-version-1');
+    const oneManifest = await writeMuseDelivery({
+      rows: [row],
+      approvals: fileVersionApproval([{ rowId: NUT, fileVersion: 1 }]),
+      museRoot,
+      deliveryRoot: oneTarget,
+    });
+    const oneCandidate = candidateOf(jobFor(oneManifest, NUT));
+    expect.soft({ 'The fileVersion 1 candidate version': oneCandidate.version })
+      .toEqual({ 'The fileVersion 1 candidate version': 1 });
+    expect.soft({ 'The fileVersion 1 color file name': path.basename(oneCandidate.file) })
+      .toEqual({ 'The fileVersion 1 color file name': row.fileName });
+  });
+
+  it('T185 gives one candidate per job and writes no v1 file for a v2 row', async () => {
+    const row = rowFor(NUT);
+    const v2Color = versionedName(row.fileName, 2);
+    const v2Line = versionedName(row.lineArtFileName, 2);
+    const target = path.join(root, 'delivery-version-one-candidate');
+    const manifest = await writeMuseDelivery({
+      rows: [row],
+      approvals: fileVersionApproval([{ rowId: NUT, fileVersion: 2 }]),
+      museRoot,
+      deliveryRoot: target,
+    });
+    const job = jobFor(manifest, NUT);
+    expect.soft({ 'The v2 job holds one candidate': job.candidates.length })
+      .toEqual({ 'The v2 job holds one candidate': 1 });
+    expect.soft({ 'The v2 job candidate versions': job.candidates.map((candidate) => candidate.version) })
+      .toEqual({ 'The v2 job candidate versions': [2] });
+    expect.soft({ 'The v2 job selects version 2': job.selectedVersion })
+      .toEqual({ 'The v2 job selects version 2': 2 });
+    const files = (await walk(target)).map((file) => path.basename(file)).sort();
+    expect.soft({ 'The v2 folder file names': files })
+      .toEqual({ 'The v2 folder file names': [v2Color, v2Line, 'manifest.json'].sort() });
+    expect.soft({ 'The v2 folder holds no v1 file for the row': files.filter((name) => name === row.fileName || name === row.lineArtFileName) })
+      .toEqual({ 'The v2 folder holds no v1 file for the row': [] });
+    const colorBatch = manifest.batches.find((batch) => batch.outputKind === 'color');
+    expect.soft({ 'The color batch names the v2 file': colorBatch?.files.map((file) => path.basename(file.file)) })
+      .toEqual({ 'The color batch names the v2 file': [v2Color] });
+    const lineBatch = manifest.batches.find((batch) => batch.outputKind === 'lineart');
+    expect.soft({ 'The line batch names the v2 file': lineBatch?.files.map((file) => path.basename(file.file)) })
+      .toEqual({ 'The line batch names the v2 file': [v2Line] });
+  });
+
+  it('T186 accepts the v1 color bytes under the v2 name for a line-only row', async () => {
+    const row = rowFor(NUT);
+    const names = museNames(NUT, 1);
+    const v1Target = path.join(root, 'delivery-line-only-v1');
+    await writeMuseDelivery({
+      rows: [row],
+      approvals: fileVersionApproval([{ rowId: NUT }]),
+      museRoot,
+      deliveryRoot: v1Target,
+    });
+    const v1ColorSha = sha256(await readFile(path.join(v1Target, row.fileName)));
+    const v1LineSha = sha256(await readFile(path.join(v1Target, row.lineArtFileName)));
+
+    // The line art changes; the color print keeps the v1 bytes.
+    const v2LineSource = `${NUT}-m1-line-print-2.png`;
+    await writeFile(path.join(museRoot, v2LineSource), await linePng(4000, 3000, 120));
+    const v2Target = path.join(root, 'delivery-line-only-v2');
+    const v2Manifest = await writeMuseDelivery({
+      rows: [row],
+      approvals: {
+        version: 1,
+        entries: [{
+          rowId: NUT,
+          version: 1,
+          fileVersion: 2,
+          colorPrint: names.colorPrint,
+          linePrint: v2LineSource,
+        }],
+      } as unknown as DeliveryApprovals,
+      museRoot,
+      deliveryRoot: v2Target,
+    });
+    const v2Candidate = candidateOf(jobFor(v2Manifest, NUT));
+    const v2Color = versionedName(row.fileName, 2);
+    const v2Line = versionedName(row.lineArtFileName, 2);
+    expect.soft({ 'The v2 color file holds the v1 color bytes': await shaOrMissing(path.join(v2Target, v2Color)) })
+      .toEqual({ 'The v2 color file holds the v1 color bytes': v1ColorSha });
+    expect.soft({ 'The v2 candidate color hash equals the v1 hash': v2Candidate.fileSha256 })
+      .toEqual({ 'The v2 candidate color hash equals the v1 hash': v1ColorSha });
+    const v2LineSha = await shaOrMissing(path.join(v2Target, v2Line));
+    expect.soft({ 'The v2 line bytes differ from the v1 line bytes': v2LineSha === v1LineSha })
+      .toEqual({ 'The v2 line bytes differ from the v1 line bytes': false });
+  });
+
+  it('T187 repeats the same manifest bytes for a mixed v1 and v2 run', async () => {
+    const nut = rowFor(NUT);
+    const hen = rowFor(HEN);
+    const cat = rowFor(CAT);
+    const rows = [nut, hen, cat];
+    const approvals = fileVersionApproval([
+      { rowId: NUT },
+      { rowId: HEN, museVersion: 2, fileVersion: 2 },
+      { rowId: CAT, lineTry: 2 },
+    ]);
+    const target = path.join(root, 'delivery-mixed-versions');
+    const first = await writeMuseDelivery({ rows, approvals, museRoot, deliveryRoot: target });
+    const firstBytes = await readFile(path.join(target, 'manifest.json'), 'utf8');
+    const firstFiles = (await walk(target))
+      .map(async (file) => `${path.relative(target, file)}:${sha256(await readFile(file))}`);
+    const firstMap = (await Promise.all(firstFiles)).sort();
+
+    const second = await writeMuseDelivery({ rows, approvals, museRoot, deliveryRoot: target });
+    const secondBytes = await readFile(path.join(target, 'manifest.json'), 'utf8');
+    const secondMap = (await Promise.all((await walk(target))
+      .map(async (file) => `${path.relative(target, file)}:${sha256(await readFile(file))}`))).sort();
+
+    expect.soft({ 'The mixed run manifest bytes repeat': secondBytes })
+      .toEqual({ 'The mixed run manifest bytes repeat': firstBytes });
+    expect.soft({ 'The mixed run file bytes repeat': secondMap })
+      .toEqual({ 'The mixed run file bytes repeat': firstMap });
+    expect.soft({ 'The mixed run delivers the v1 row under the v1 name': existsSync(path.join(target, nut.fileName)) })
+      .toEqual({ 'The mixed run delivers the v1 row under the v1 name': true });
+    expect.soft({ 'The mixed run delivers the v2 row under the v2 name': existsSync(path.join(target, versionedName(hen.fileName, 2))) })
+      .toEqual({ 'The mixed run delivers the v2 row under the v2 name': true });
+    expect.soft({ 'The mixed run holds no v1 file for the v2 row': existsSync(path.join(target, hen.fileName)) })
+      .toEqual({ 'The mixed run holds no v1 file for the v2 row': false });
+    expect.soft({ 'The mixed manifest holds the v2 candidate version': candidateOf(jobFor(first, HEN)).version })
+      .toEqual({ 'The mixed manifest holds the v2 candidate version': 2 });
+    expect.soft({ 'The mixed manifest holds the v1 candidate version': candidateOf(jobFor(second, NUT)).version })
+      .toEqual({ 'The mixed manifest holds the v1 candidate version': 1 });
+  });
+
+  it('T188 refuses fileVersion 0, a negative, a non-integer, and a string with exit 1', async () => {
+    const row = rowFor(NUT);
+    const badValues: Array<{ label: string; value: unknown }> = [
+      { label: '0', value: 0 },
+      { label: 'a negative (-1)', value: -1 },
+      { label: 'a non-integer (2.5)', value: 2.5 },
+      { label: 'a string ("2")', value: '2' },
+    ];
+    for (const [index, item] of badValues.entries()) {
+      const repo = path.join(root, `cli-file-version-${index}`);
+      await putWeekPrints(path.join(repo, 'out/muse'), [row]);
+      const listFile = path.join(repo, 'pictures.json');
+      await writeFile(listFile, JSON.stringify([row], null, 2));
+      const approvalsFile = path.join(repo, 'approved.json');
+      await writeFile(approvalsFile, JSON.stringify({
+        version: 1,
+        entries: [{ rowId: NUT, version: 1, fileVersion: item.value, ...museNames(NUT, 1) }],
+      }, null, 2));
+      const logs: string[] = [];
+      const code = await runStorytimeBookPicturesEntry(
+        ['deliver', '--list', listFile, '--approvals', approvalsFile, '--muse', 'out/muse', '--delivery', 'out/delivery'],
+        {
+          pipeline: (argv) => runStorytimeCli(argv, { repoRoot: repo, workbooksRoot: repo, log: () => {} }),
+          errorLog: (message: string) => logs.push(message),
+        },
+      );
+      const deliveryDir = path.join(repo, 'out/delivery');
+      const codeKey = `The ${item.label} fileVersion exit code`;
+      const filesKey = `The ${item.label} fileVersion writes no file`;
+      const fieldKey = `The ${item.label} fileVersion refusal names the field`;
+      expect.soft({ [codeKey]: code }).toEqual({ [codeKey]: 1 });
+      expect.soft({ [filesKey]: await walk(deliveryDir) }).toEqual({ [filesKey]: [] });
+      expect.soft({ [fieldKey]: /fileVersion/i.test(logs.join('\n')) })
+        .toEqual({ [fieldKey]: true });
+    }
+  });
+
+  it('T189 refuses a v2 run into a folder that holds a different manifest.json', async () => {
+    const row = rowFor(NUT);
+    const target = path.join(root, 'delivery-different-manifest-version');
+    await writeMuseDelivery({
+      rows: [row],
+      approvals: fileVersionApproval([{ rowId: NUT }]),
+      museRoot,
+      deliveryRoot: target,
+    });
+    const manifestBytes = await readFile(path.join(target, 'manifest.json'), 'utf8');
+    let refusal: Error | undefined;
+    try {
+      await writeMuseDelivery({
+        rows: [row],
+        approvals: fileVersionApproval([{ rowId: NUT, fileVersion: 2 }]),
+        museRoot,
+        deliveryRoot: target,
+      });
+    } catch (error) {
+      refusal = error instanceof Error ? error : new Error(String(error));
+    }
+    expect.soft(refusal?.message ?? 'delivered', 'A v2 run into a folder with a different manifest.json is refused')
+      .toMatch(/manifest|overwrite|differ|exist/i);
+    expect.soft({ 'The refused v2 run keeps the manifest bytes': await readFile(path.join(target, 'manifest.json'), 'utf8') })
+      .toEqual({ 'The refused v2 run keeps the manifest bytes': manifestBytes });
+    expect.soft({ 'The refused v2 run writes no v2 color file': existsSync(path.join(target, versionedName(row.fileName, 2))) })
+      .toEqual({ 'The refused v2 run writes no v2 color file': false });
+    expect.soft({ 'The refused v2 run writes no v2 line file': existsSync(path.join(target, versionedName(row.lineArtFileName, 2))) })
+      .toEqual({ 'The refused v2 run writes no v2 line file': false });
+  });
 });
