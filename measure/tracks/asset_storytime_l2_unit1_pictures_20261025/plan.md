@@ -3979,3 +3979,92 @@ Replaced by the amendment of 2026-11-01 (Muse path).
     line-art rule, the section "check that these batch 32 defects are gone", the page notes, the open items,
     Daniel's rule), `pages/` (20 files), `refs/` (23 files). PNGs stay out of git. Green did not rate its own
     work. No task is marked `[x]`. Waiting for the independent review.
+
+    Green round 63 (2026-11-01, claude-code/claude-sonnet-5-5#high). Task: Muse fix round for batches 31
+    and 33 (10 rows, mostly line art). role_base_sha `19359dd1`, phase_base_sha `15a7bf0b`. Red model
+    minimax-cn-coding-plan/MiniMax-M3. Image model meta/muse-image. Green coder model: none; nothing was
+    delegated. No Forge render, no heavy runner, no tsc, no vitest. `assets/`, `src/`, `tests/`, and earlier
+    outputs did not change. Spec and tool commit `2bab287e` (10 specs and `scripts/storytime-muse.mjs`).
+    Defects and their source: `item-review-batch-31.json` (mimo), `item-review-batch-33.json` (Kimi), and
+    the orchestrator check. (1) check-row-cat m1: the line-art tail was a ring beside the head that read as
+    a second ear, the stripes were thin slivers; the color had small wedge tick marks around the eyes and a
+    gray smudge on a cheek. (2) check-row-dog m1: double-ring eyes, no tail in the line art, the gaze turned
+    inward. (3) check-row-bus m1: the door gained a horizontal divider. (4) check-row-net m1: the rim was a
+    double line. (5, 6) check-row-nose m3 and practice-line-nose m4: the line art lost Nan's eyelash mark.
+    (7) a-neck m5: three tiny dark specks on the hands. (8) hello-i-am-ben m6: a gray hollow in the right
+    ear of the color picture. (9) a-nest m7: the line art lost the eyelash marks and had one speck on the
+    nest rim. (10) a-net m2: the rim was a double line and the eyelash marks were lost. The line-art rule and
+    the line method (3 parallel tries per line call, one more batch of 3 with a changed prompt if none is
+    free of defects) were used as the orchestrator gave them. Specs for the Nan pages now say that Nan keeps
+    one short thick eyelash stroke at the outer corner of each visible eye in the line art (the words "no
+    eyelash ticks" were removed from the five Nan specs). Calls ran 3 at a time (one spec at a time with
+    `--tries 3`) or 4 at a time at most.
+    Despeckle step (new, local, no call). `scripts/storytime-muse.mjs` has a new function and a new command
+    `despeckle <spec> --from <n> --try <t>`. Method: read the 1-bit line picture, find each black connected
+    component (8 neighbors), and delete each component with an area below `despeckleArea` x the image pixels.
+    The default `despeckleArea` is 0.000015 (0.0015 percent, 37 px at 1920 x 1280, 38 px at 1600 x 1600). A
+    component that touches another line is part of that component and stays. Every new line try now also
+    writes `-line[-t]-despeckled.png` and `-line-print[-t]-despeckled.png`; the un-despeckled file and its
+    print file keep their names and stay. The tool never overwrites a file. Check on 3 line files that
+    have specks, with 3x crops in `/tmp/opencode/r63/` (before and after side by side): `hello-i-am-pip` m6
+    line 3 removed 235 specks (835 px in all); the dotted marks along the neck and the loose dots were
+    gone, and the eye rings, the pupils, the outer-corner lash marks, the nose line, and the collar lines
+    stayed. `a-net` m2 line 1 removed 101 specks (1184 px). `hello-i-am-pat` m6 line 3 removed 2 specks
+    (50 px); these were two 25 px dots between the hair strands; this shows that a dot below 37 px is
+    removed also when it is a deliberate detail, so no pupil or lash mark of this round is that small (the
+    smallest kept mark is 88 px). On the chosen line files of this round the despeckle removed 0 specks: the
+    lists of components show no isolated component below 88 px. The 3 specks of the a-neck line were not
+    isolated (a-neck m5 line 5 has no component below 1784 px); the fix for a-neck is the new try 8 (thick
+    even lines, closed hands, no loose neck lines).
+    Rows (final files in `out/storytime/l2/unit1/w01/muse/`; every call is in `costs.tsv`):
+    - `check-row-cat`: color m2 (new call; the first call failed with a network error, no cost; clean face,
+      no tick marks, no smudge, the tail curls behind the body). Line m2: tries 1 to 3 (tries 1 and 2 had
+      toe lines or a thin ring at the eyes; try 3 added a muzzle outline). Chosen `-line-2.png`
+      (no stripes, one closed tail that does not touch the head). Final line file `-line-2-despeckled.png`.
+    - `check-row-dog`: color m1 kept. Line m1: tries 3 to 5 (two calls failed first, no cost). Chosen
+      `-line-4.png` (each eye one ring with a solid pupil and a highlight oval, both looking the same way,
+      the tail kept; try 3 had eyes that looked inward and try 5 had small pupils without a ring).
+      OPEN: the dog has a bell on the collar. Final line file `-line-4-despeckled.png`.
+    - `check-row-bus`: color m1 kept. Line m1: tries 3 to 5. Chosen `-line-3.png` (the door is one closed
+      shape with one inner rectangle, no horizontal divider; tries 4 and 5 had hub rings or a front plate
+      instead of the grille). OPEN: the roof lights and the mirror are small round bumps. Final line file
+      `-line-3-despeckled.png`.
+    - `check-row-net`: color m1 kept. Line m1: tries 3 to 5 (batch 1, double rim in all 3), tries 7 and 8
+      (batch 2, prompt: the rim is ONE solid ring, draw its center only; try 6 failed with a network error,
+      no cost). Chosen `-line-8.png` (one thick rim line). Final line file `-line-8-despeckled.png`.
+    - `check-row-nose`: color m3 kept. Line m3: tries 7 to 9 (try 7 and 9 had a thin ring sliver at the
+      eye). Chosen `-line-8.png` (clean eye ring, solid pupil, two eyelash strokes). OPEN: the ear is an open
+      "C" arc; the eyelash mark is two strokes. Final line file `-line-8-despeckled.png`.
+    - `practice-line-nose`: color m4 kept. Line m4: tries 7 to 9 (tries 7 and 8 had a double eyebrow band,
+      try 7 a small mark on top of the head). Chosen `-line-9.png` (solid eyebrow, one thick eyelash stroke).
+      OPEN: the eye outline is an open arc; the ear is an open "C" arc. Final line file
+      `-line-9-despeckled.png`.
+    - `a-neck`: color m5 kept. Line m5: tries 7 to 9 (try 9 had two loose vertical strokes at the neck).
+      Chosen `-line-8.png` (thick even lines, hands with separate fingers and no specks, lash marks at both
+      eyes). OPEN: the eyes show an inner ring in tries 7 to 9. Final line file `-line-8-despeckled.png`.
+    - `hello-i-am-ben`: color m7 (new call; both ears small, the left one with a dark squiggle, the right
+      one with a gray hollow) and m8 (second retry with a stronger ear sentence; it showed a deep hole in
+      both ears and a mitten hand; the first m8 calls failed with network errors, no cost). Chosen m7. This
+      is the 2 retries of the limit. Line m7: tries 1 to 3. Chosen `-line-3.png` (solid pupils in rings, an
+      open mouth outline, separate fingers on both hands). OPEN: the ear marks stay in the color picture
+      (left squiggle, right hollow); the line art adds a nose ring. Final files
+      `-m7-color.png` and `-m7-line-3-despeckled.png`.
+    - `a-nest`: color m7 kept. Line m7: tries 9 to 11 (try 9 had a jagged bush line, try 10 jagged marks at
+      the left edge). Chosen `-line-11.png` (thick lines, lash mark at the near eye, smooth bushes). OPEN: a
+      small closed cloud shape sits under the branch at the bottom center; look at the far eye for the lash
+      mark. Final line file `-line-11-despeckled.png`.
+    - `a-net`: color m2 kept. Line m2: tries 11 to 13 (batch 1, double rim in all 3), tries 14 to 16 (batch
+      2, prompt: the rim is ONE solid ring, draw its center only; tries 14 and 16 still had a double rim).
+      Chosen `-line-15.png` (one thick rim line, lash marks at the outer eye corners, five separate fingers
+      on the hand at the pole). OPEN: the mesh is about 5 by 5 small squares. Final line file
+      `-line-15-despeckled.png`.
+    Calls with cost (USD, `usage.cost`, 0.01 per call; `costs.tsv` rows after 2026-11-01T05:17Z): color 3
+    calls 0.03 (cat m2, ben m7, ben m8); line 35 calls 0.35 (cat 3, dog 3, bus 3, net 5, nose 3, practice
+    nose 3, a-neck 3, ben 3, a-nest 3, a-net 6) = 38 calls 0.38 USD. 8 more calls failed with network errors
+    and have no cost (cat color 1, cat line 2, dog line 2, net line 1, ben m8 color 2). Round cost 0.38
+    USD. Running total 2.36 + 0.38 = 2.74 USD.
+    Review folder `out/storytime-review/batch-35/` (no earlier batch-35): `brief.md` (one key per row, the
+    exact goal, the critical defects, the line-art rule, the section "check that these defects are gone",
+    the page notes with the open facts, Daniel's rule), `pages/` (20 files: the final color and the chosen,
+    despeckled line file of each row), `refs/` (16 files). PNGs stay out of git. Green did not rate its own
+    work. No task is marked `[x]`. Waiting for the independent review.
