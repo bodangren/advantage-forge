@@ -1967,6 +1967,67 @@ rows T142 to T151, and the closeout gate for 30 jobs.
     - Open: no task is `[x]`. No week 4 page call before Daniel answers on week 1. The 11 pending
       pages wait for a second answer on the 7 cast looks. The 11 element sheets need an independent
       look.
+  - Week 5 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
+    2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `4af2b605`, phase_base_sha
+    `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.
+    Specs commit `eb58914e`: 27 page specs in `docs/storytime/l2-unit1/w05/muse/<row id>.json` and 4
+    element specs in `docs/storytime/l2-unit1/w05/muse-elements/`. The method is the week 4 method.
+    The run log is
+    `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w05-staging.log`.
+    - Page specs: `text` is the list `text` and `goal` is the list `prompt`, as exact strings. The 9
+      check rows have the list prompt `""`, so their `goal` is `""`. `outDir` is
+      `out/storytime/l2/unit1/w05/muse`. The 18 class A and class B specs have 2 to 6 references
+      each. The 9 class C specs have one reference each. The week 1 lessons are in the prompts
+      (thick, even, closed line art; no blush, eyelash ticks, hair strands, gray, or text; five-digit
+      hands; the props of each sentence). The counts are exact: two eyes, two ears, two hands, two
+      arms, two legs, two bare feet with one pair of sneakers, one nose, four legs on one puppy, one
+      doll on each Pam page, one pan, one map, and one blanket for the nap page. The nose page shows
+      only the tail of the puppy behind the tree, and the two door pages show Nan (or only her
+      sneaker and leg) at an open door. The park set keeps its one sun, so no page adds a second
+      sun. Sam's two white T-shirt stripes stay in the line art as two closed bands.
+    - No new character and no new cast sheet. Sam, Nan, Pip, and Pam have approved looks. No spec
+      carries `"castLook": "pending"`, and Daniel gets no new phone picture for week 5. The Sam
+      reference is a copy of `out/sprout-sam/render.png` named `sam-ref-render.png` in the week 5
+      elements folder, so that the stage check finds the name Sam.
+    - Elements reused by path: Nan and the Nan face crop (week 1); the park set
+      `set-park-empty-m2` and `prop-sun-sheet-m1` (week 2); `prop-pans-sheet-m1` and
+      `prop-pen-sheet-m1` (week 3); `set-nan-living-room-empty-m1`, `prop-doll-pam-sheet-m1`,
+      `prop-paper-map-sheet-m1`, and `pip-ref-render.png` (week 4); Forge 3D views `out/cat`,
+      `out/dog`, `out/bed`, `out/storytime-child-cup`, and `out/storytime-sun-hat`. Seven check-row
+      specs (sun, cat, dog, hat, pen, bed, cup) reuse the earlier spec of that word with a new id.
+      No new 3D shot and no heavy-runner job in this round.
+    - New Muse element sheets (4, in `out/storytime/l2/unit1/w05/muse/elements/`, named with no
+      row id): `prop-sock-sheet` (m2), `prop-sofa-sheet`, `prop-nap-blanket-sheet`, and
+      `prop-blue-sneakers-sheet`. They are inputs, never page candidates. The first look by this
+      Green found all four current sheets usable. Sock m1 (red with a white cuff and knit texture)
+      read as a Christmas stocking, so m2 replaced it (smooth sky-blue sock, white top band, yellow
+      heel and toe). Known gaps: the sock is chunky and may read as a small boot; the blanket
+      looks nearly square. All sheets need an independent look. Review folder:
+      `out/storytime-review/w05-staging/` (`index.md` and `sheets-1.png`).
+    - Muse calls: 5 calls, 5 billed, 0 failed. 4 element calls and 1 retry (sock). Cost 0.05 USD
+      (`usage.cost` 0.01 per call) in `elements/costs.tsv`. Running total 4.04 USD before this
+      run, 4.09 USD after it. Page calls: 0. Page candidates: 0.
+    - Stage gate (STAGING_GATE_COMMAND with `--week 5`, light job, exit code 0):
+
+      ```text
+      list sha256: 6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58
+      week: 5
+      rows: 27
+      specs found: 27
+      text mismatches: 0
+      goal mismatches: 0
+      outDir mismatches: 0
+      rows with no reference (class A and B): 0
+      element paths checked: 63
+      missing element paths: 0
+      characters without a reference: 0
+      page candidates: 0
+      stage check: pass
+      ```
+
+      This proves that the inputs exist and match the list. It proves nothing about picture quality.
+    - Open: no task is `[x]`. No week 5 page call before Daniel answers on week 1. The 4 element
+      sheets need an independent look.
 - [ ] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks.
 
