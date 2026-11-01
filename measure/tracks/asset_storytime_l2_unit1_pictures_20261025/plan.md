@@ -4548,3 +4548,45 @@ Replaced by the amendment of 2026-11-01 (Muse path).
     `linePrint` to the two pad files, and the review of batch-38 must judge the pad prints. `brief.md` of
     batch-38 has a new section for the pad prints. The PM request for a waiver runs in parallel. No task is
     marked `[x]`.
+    Green round 67 (2026-11-02, claude-code/claude-sonnet-5-5#high). Task: Muse fix round for 4 rows that the
+    Workbooks two-model check (print stage 2) refused. role_base_sha `4d4d86a2`; phase_base_sha `15a7bf0b`.
+    Image model `meta/muse-image`; coder: none. No `src/`, `tests/`, `scripts/`, `docs/storytime/l2-unit1/w02/`,
+    or `approved.json` change; no vitest, no tsc. Spec commits `69412be6` (net rim at normal width, nose note,
+    Pip floppy-ears note) and `b0113b0d` (second notes: bold equal line weight for the check row net; separate
+    nose bump).
+    Commands: `node scripts/storytime-muse.mjs line <a-net spec> --from 2 --tries 3` (tries 26 to 28);
+    `... line <check-row-net spec> --from 1 --tries 3` twice (tries 11 to 13, then 14 to 16);
+    `... line <a-nose spec> --from 1 --tries 3` twice (tries 2 to 4, then 5 to 7);
+    `... color <nan-can-nod spec> x4 --concurrency 4` (one round of 4; only m6 was written, 3 refused to
+    overwrite the same file name); `... line <nan-can-nod spec> --from 6 --tries 3` (tries 1 to 3 of m6).
+    The despeckle step and the print files come with each try. Writer check: `/tmp/opencode/chk66.mts`
+    (`inspectLineArtPng`), edge frame and color-print metadata with a short sharp script.
+    Chosen files (all in `out/storytime/l2/unit1/w01/muse/`):
+    - `l2-w01-story-page-a-net`: color m2 (`-m2-color.png`, print `-m2-color-print.png`, unchanged); line try 26
+      `-m2-line-26-despeckled.png`, print `-m2-line-print-26-despeckled.png`. PASS: 19 px, ink 6.05 percent, edge
+      frame 97.06 percent white. Rim: open ring at normal width.
+    - `l2-w01-check-row-net`: color m1 (`-m1-color.png`, print `-m1-color-print.png`, 1500 x 1500, unchanged);
+      line try 16 `-m1-line-16-despeckled.png`, print `-m1-line-print-16-despeckled.png`. PASS: 15 px, ink
+      4.61 percent, edge frame 100 percent. Tries 11 to 13 FAILED the width rule (7, 10, 8 px) after the
+      thick-rim note was removed; the bold-weight note fixed it (tries 14 to 16: 14, 14, 15 px).
+    - `l2-w01-story-page-a-nose`: color m1 (unchanged); line try 5 `-m1-line-5-despeckled.png`, print
+      `-m1-line-print-5-despeckled.png`. PASS: 25 px, ink 4.61 percent, edge frame 100 percent. The nose shows as
+      a separate closed bump. Tries 2 to 4 merged the nose and the finger tip, so the builder made tries 5 to 7.
+    - `l2-w01-story-page-nan-can-nod`: new color m6 `-m6-color.png`, print `-m6-color-print.png` (4000 x 3000,
+      PNG 8-bit sRGB 3 channels, no alpha, no palette); line try 1 `-m6-line-despeckled.png`, print
+      `-m6-line-print-despeckled.png`. PASS: 28 px, ink 8.22 percent, edge frame 100 percent. Pip has floppy ears
+      and a smooth round head top; no spike.
+    Calls with cost (USD, `usage.cost`, 0.01 per call): 19 calls logged in `costs.tsv` (rows from
+    2026-11-01T19:21Z) = 0.19 USD: 9 line (first batch), 1 color, 3 line (nan), 6 line (second batch). The
+    3 parallel color calls that the tool refused to write are not in `costs.tsv`; the provider may have
+    charged them (up to 0.03 USD). 22 calls made in all. Round cost 0.19 USD logged (0.22 USD at most).
+    Running total 3.51 + 0.19 = 3.70 USD (3.73 USD at most). No call failed.
+    Review folder `out/storytime-review/batch-39/` (new): `brief.md` (the bar, the key and files, the exact
+    goals, a section "Check that these Workbooks stage 2 findings are gone" with each PM finding, the
+    writer-check results, facts), `pages/` (16 files: color, line, and both prints of each row), `refs/`
+    (7 files). PNGs stay out of git. Green did not rate its own work. No task is marked `[x]`.
+    Open: `approved.json` is not changed; the orchestrator must point the four rows at the new files
+    (a-net line print 26, check-row-net line print 16, a-nose line print 5, nan-can-nod color m6 and line print
+    despeckled) after the review of batch-39. Both net line arts draw the rim as two thin parallel lines (the
+    tube outline); a reviewer may judge the thin strip between them. Use the color m6 for nan-can-nod: it
+    replaces m5.
