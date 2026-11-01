@@ -3369,7 +3369,7 @@ gate applies again.
    changed only the camera of this stage: `el` 10 to 2, `dist` 4.2 to 3.4, `ty` 0.7 to 0.62. The
    stage, props, and mark are the same. Records: render exit 0; verify exit 0 ("Row verification
    passed for 2 row versions"); line width 17 px; ink 20.33% (2,439,251 of 12,000,000); render peak
-   511 MB; color SHA-256
+   501 MB; color SHA-256
    `97c32237e129c516f82fd79474763c0e9713ed75533eaf3149379282494b3c35`; line art SHA-256
    `cdb8e1af68a566a2760a0d013b1844dbe7d0fe7690db99747f8154f369dfb107`.
    Result at print size: the eye-corner flaps are gone in the color page. In the line art the flap
