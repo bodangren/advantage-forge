@@ -1,0 +1,16 @@
+{
+  "id": "l2-w01-check-row-dog",
+  "text": "dog",
+  "goal": "A dog, one object, large in the middle of the picture on a plain light background, for a word check row.",
+  "references": [
+    "out/dog/views/three-quarter.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the element picture. Picture 1 is a 3D render of a small brown and cream puppy with floppy brown ears, big round dark eyes with white highlights, a black nose, an open mouth with a pink tongue, and a red collar with a gold tag, on a gray background with a gray ground shadow. Ignore the gray background and the shadow: do not copy them. Draw the same dog with the same shape, the same colors, and the same proportions as in picture 1, as a smooth, clean, bright, soft, round 3D render with a plain white background. The picture to make: a square picture of exactly ONE dog, large in the middle, filling most of the square, seen from the front-right (a three-quarter view), standing, the whole dog from the ears to the paws. Exactly one dog: no second one, no copies, and nothing else in the picture. The background is plain white and empty, with at most a very soft shadow under the object. The eyes are big, round, and clean, each with a big dark pupil and white highlights, with no pale flaps or marks around them. The page text is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture of one object. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No fine detail, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. The object outline is one closed shape. No fur strands, scales, grain, or texture lines. The whole dog is one closed outline (no fur strands). The ears, the collar, and the tongue are closed shapes. Each eye of the animal is one closed outline with one big solid black pupil (a filled black circle) inside it, with no extra thin rings. The legs and the chest are plain closed shapes with no wrinkle lines and no stripe lines. The collar is one closed band. Every line inside the object ends on another line, with no loose ends. Draw only the object: no ground line, no shadow, no background shapes. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ]
+}
