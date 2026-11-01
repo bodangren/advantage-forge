@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
-import { existsSync } from 'node:fs';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import type { Stats } from 'node:fs';
+import { lstat, mkdir, readFile, realpath, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
 import { z } from 'zod';
@@ -73,6 +73,8 @@ const MuseApprovalEntrySchema = z.object({
 
 const MuseApprovalListSchema = z.object({
   version: z.literal(1),
+  /** The SHA-256 of the picture list file. When present, the writer refuses a different list. */
+  pictureListSha256: z.string().regex(/^[0-9a-f]{64}$/).optional(),
   entries: z.array(MuseApprovalEntrySchema),
 });
 
@@ -88,6 +90,10 @@ export interface MuseDeliveryOptions {
   museRoot: string;
   /** The delivery batch root: the folder that gets the copied files and manifest.json. */
   deliveryRoot: string;
+  /** The measured SHA-256 of the picture list file. The writer checks it against the pin. */
+  pictureListSha256?: string;
+  /** Called once for each row without an approval entry. The row gets no job. */
+  onSkip?: (rowId: string, reason: string) => void;
 }
 
 interface DeliveryItem {
@@ -101,8 +107,56 @@ interface DeliveryItem {
   candidate: CandidateManifest;
 }
 
-function sha256(data: Buffer): string {
+function sha256(data: Buffer | string): string {
   return createHash('sha256').update(data).digest('hex');
+}
+
+function isInside(root: string, target: string): boolean {
+  const relative = path.relative(root, target);
+  return relative === '' || (!relative.startsWith('..') && !path.isAbsolute(relative));
+}
+
+/**
+ * Resolves the Muse folder and the delivery folder against the repository root. Each path must
+ * be the `out` folder of the repository or sit under it.
+ */
+export function resolveMuseDeliveryPaths(options: {
+  repoRoot: string;
+  muse: string;
+  delivery: string;
+}): { museRoot: string; deliveryRoot: string } {
+  const repoRoot = path.resolve(options.repoRoot);
+  const outRoot = path.join(repoRoot, 'out');
+  const museRoot = path.resolve(repoRoot, options.muse);
+  const deliveryRoot = path.resolve(repoRoot, options.delivery);
+  if (!isInside(outRoot, museRoot)) {
+    throw new Error(`--muse must sit inside the repository out folder (${outRoot}); got ${museRoot}.`);
+  }
+  if (!isInside(outRoot, deliveryRoot)) {
+    throw new Error(`--delivery must sit inside the repository out folder (${outRoot}); got ${deliveryRoot}.`);
+  }
+  return { museRoot, deliveryRoot };
+}
+
+/** Refuses a picture list whose bytes differ from the SHA-256 pin of the approval list. */
+export function checkPictureListPin(listBytes: Buffer | string, approvals: { pictureListSha256?: string }): void {
+  const pin = approvals.pictureListSha256;
+  if (pin === undefined) return;
+  const measured = sha256(listBytes);
+  if (measured !== pin) {
+    throw new Error(
+      `The picture list SHA-256 ${measured} differs from the pin ${pin} of the approval list; the list changed.`,
+    );
+  }
+}
+
+async function lstatOrNull(file: string): Promise<Stats | null> {
+  try {
+    return await lstat(file);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') return null;
+    throw error;
+  }
 }
 
 async function parseApprovals(approvals: MuseApprovalList | string): Promise<MuseApprovalList> {
@@ -137,6 +191,16 @@ async function inspectColorPrint(
       );
     }
     if (metadata.hasAlpha) errors.push('The color print must have no alpha channel.');
+    if (metadata.isPalette) errors.push('The color print must not be a palette PNG.');
+    if (metadata.depth !== 'uchar' || metadata.bitsPerSample !== 8) {
+      errors.push(`The color print must be 8-bit; measured depth ${metadata.depth} and ${metadata.bitsPerSample} bits.`);
+    }
+    if (metadata.space !== 'srgb') {
+      errors.push(`The color print must be in the srgb color space; measured ${metadata.space}.`);
+    }
+    if (metadata.channels !== 3) {
+      errors.push(`The color print must have exactly 3 channels; measured ${metadata.channels}.`);
+    }
     return {
       valid: errors.length === 0,
       ...(metadata.width === undefined ? {} : { width: metadata.width }),
@@ -151,8 +215,14 @@ async function inspectColorPrint(
 }
 
 async function readMuseFile(museRoot: string, name: string, rowId: string): Promise<Buffer> {
+  const file = path.join(museRoot, name);
   try {
-    return await readFile(path.join(museRoot, name));
+    const link = await lstat(file);
+    if (link.isSymbolicLink()) throw new Error('the file is a symlink; the writer refuses it');
+    const real = await realpath(file);
+    if (!isInside(await realpath(museRoot), real)) throw new Error('the file is outside the Muse folder');
+    if (!(await stat(real)).isFile()) throw new Error('the path is not a regular file');
+    return await readFile(real);
   } catch (error) {
     const reason = error instanceof Error ? error.message : String(error);
     throw new Error(`${rowId}: cannot read the Muse print file ${name}: ${reason}`);
@@ -247,15 +317,47 @@ export async function writeMuseDelivery(options: MuseDeliveryOptions): Promise<S
     }
   }
 
+  if (list.pictureListSha256 !== undefined) {
+    if (options.pictureListSha256 === undefined) {
+      throw new Error('The approval list pins the picture list SHA-256, but the run measured no picture list hash.');
+    }
+    if (options.pictureListSha256 !== list.pictureListSha256) {
+      throw new Error(
+        `The picture list SHA-256 ${options.pictureListSha256} differs from the pin ${list.pictureListSha256} of the approval list.`,
+      );
+    }
+  }
+
+  // Name checks run first, so a degenerate or repeated name stops the run before any read or write.
+  const delivered = new Map<string, string>();
+  for (const row of options.rows) {
+    if (!list.entries.some((candidate) => candidate.rowId === row.id)) continue;
+    const plan = planPictureRow(row);
+    const lineName = plan.lineArtFile;
+    if (path.basename(lineName) !== lineName || lineName === '.' || lineName === '..' || lineName === MANIFEST_FILE) {
+      throw new Error(`${row.id}: the line-art file name is a reserved or degenerate name, not a plain file name: ${lineName}`);
+    }
+    if (lineName === plan.colorFile) {
+      throw new Error(`${row.id}: the line-art file name is the same as the color file name: ${lineName}`);
+    }
+    for (const name of [plan.colorFile, lineName]) {
+      const owner = delivered.get(name);
+      if (owner !== undefined) {
+        throw new Error(`${row.id}: the delivered file name ${name} is a duplicate; ${owner} already delivers it.`);
+      }
+      delivered.set(name, row.id);
+    }
+  }
+
   const items: DeliveryItem[] = [];
   const problems: string[] = [];
   for (const row of options.rows) {
     const entry = list.entries.find((candidate) => candidate.rowId === row.id);
-    if (!entry) continue;
-    const plan = planPictureRow(row);
-    if (path.basename(plan.lineArtFile) !== plan.lineArtFile) {
-      throw new Error(`${row.id}: the line-art file name must be a plain file name: ${plan.lineArtFile}`);
+    if (!entry) {
+      options.onSkip?.(row.id, `The approval list has no entry for ${row.id}; the row is not clean and gets no job.`);
+      continue;
     }
+    const plan = planPictureRow(row);
     const colorBytes = await readMuseFile(museRoot, entry.colorPrint, row.id);
     const lineBytes = await readMuseFile(museRoot, entry.linePrint, row.id);
     const size = { width: plan.width, height: plan.height };
@@ -306,8 +408,15 @@ export async function writeMuseDelivery(options: MuseDeliveryOptions): Promise<S
   const manifestFile = path.join(deliveryRoot, MANIFEST_FILE);
 
   // A different manifest, or a different file under a list name, stops the run before any write.
-  if (existsSync(manifestFile) && (await readFile(manifestFile, 'utf8')) !== manifestText) {
-    throw new Error(`The delivery folder already holds a different ${MANIFEST_FILE}; the writer will not overwrite it.`);
+  // A symlink at a target stops the run too: the writer never follows a link.
+  const manifestInfo = await lstatOrNull(manifestFile);
+  let manifestExists = false;
+  if (manifestInfo) {
+    if (!manifestInfo.isFile()) throw new Error(`The delivery path ${MANIFEST_FILE} is a symlink or not a regular file; the writer refuses it.`);
+    if ((await readFile(manifestFile, 'utf8')) !== manifestText) {
+      throw new Error(`The delivery folder already holds a different ${MANIFEST_FILE}; the writer will not overwrite it.`);
+    }
+    manifestExists = true;
   }
   const copies: Array<{ file: string; bytes: Buffer; sha256: string; rowId: string }> = [];
   for (const item of items) {
@@ -319,7 +428,11 @@ export async function writeMuseDelivery(options: MuseDeliveryOptions): Promise<S
   const pending: typeof copies = [];
   for (const copy of copies) {
     const target = path.join(deliveryRoot, copy.file);
-    if (existsSync(target)) {
+    const info = await lstatOrNull(target);
+    if (info) {
+      if (!info.isFile()) {
+        throw new Error(`${copy.rowId}: the delivery path ${copy.file} is a symlink or not a regular file; the writer refuses it.`);
+      }
       if (sha256(await readFile(target)) !== copy.sha256) {
         throw new Error(`${copy.rowId}: the delivery file ${copy.file} exists with different bytes; the writer will not overwrite it.`);
       }
@@ -328,8 +441,9 @@ export async function writeMuseDelivery(options: MuseDeliveryOptions): Promise<S
     pending.push(copy);
   }
 
+  // The `wx` flag creates a file only when none exists, so a link that appears later is not followed.
   await mkdir(deliveryRoot, { recursive: true });
-  for (const copy of pending) await writeFile(path.join(deliveryRoot, copy.file), copy.bytes);
-  await writeFile(manifestFile, manifestText);
+  for (const copy of pending) await writeFile(path.join(deliveryRoot, copy.file), copy.bytes, { flag: 'wx' });
+  if (!manifestExists) await writeFile(manifestFile, manifestText, { flag: 'wx' });
   return manifest;
 }

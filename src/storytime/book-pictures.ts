@@ -4729,14 +4729,21 @@ export async function runStorytimeCli(
       workbooksRoot,
     });
     log(`Picture list ${list.file} SHA-256 ${list.sha256}.`);
-    const { writeMuseDelivery } = await import('./muse-delivery.js');
+    const { resolveMuseDeliveryPaths, writeMuseDelivery } = await import('./muse-delivery.js');
+    const { museRoot, deliveryRoot } = resolveMuseDeliveryPaths({
+      repoRoot,
+      muse: options.muse,
+      delivery: options.delivery,
+    });
     const manifest = await writeMuseDelivery({
       rows: list.rows,
       approvals: path.resolve(repoRoot, options.approvals),
-      museRoot: path.resolve(repoRoot, options.muse),
-      deliveryRoot: path.resolve(repoRoot, options.delivery),
+      museRoot,
+      deliveryRoot,
+      pictureListSha256: list.sha256,
+      onSkip: (rowId, reason) => log(`Skipped ${rowId}: ${reason}`),
     });
-    log(`Delivered ${manifest.jobs.length} rows and ${manifest.batches.length} batch hashes to ${path.resolve(repoRoot, options.delivery)}.`);
+    log(`Delivered ${manifest.jobs.length} rows and ${manifest.batches.length} batch hashes to ${deliveryRoot}.`);
     return 0;
   }
   if ((command === 'render' || command === 'verify') && options.row !== undefined) {
