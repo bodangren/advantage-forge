@@ -4218,3 +4218,39 @@ Replaced by the amendment of 2026-11-01 (Muse path).
     gone", the page notes with the open facts, Daniel's rule), `pages/` (18 files: the final color and the
     chosen, despeckled line file of each row), `refs/` (16 files). PNGs stay out of git. Green did not rate
     its own work. No task is marked `[x]`. Waiting for the independent review.
+
+    Green round 65 (2026-11-01, claude-code/claude-sonnet-5-5#high). Task: Muse fix round for one row,
+    `l2-w01-story-page-hello-i-am-pat`, under the new review bar from Daniel (14:15 ICT). role_base_sha
+    `d81c59be`, phase_base_sha `15a7bf0b`. Red model minimax-cn-coding-plan/MiniMax-M3. Image model
+    meta/muse-image. Green coder model: none; nothing was delegated. No Forge render, no heavy runner, no tsc,
+    no vitest. `assets/`, `src/`, `tests/`, and `scripts/storytime-muse.mjs` did not change. Spec commit
+    `fcbc8cb0`.
+    Defects from the batch 34 review: six digits on the waving hand; a white, glove-like hand on the bear; no
+    visible round bump on the school bag.
+    Commands: `node scripts/storytime-muse.mjs color <spec>` nine times, one after the other (the tool names the
+    next version from the files on disk, so one spec cannot run in parallel): m7 to m9 (note 4: five digits,
+    skin hand, bag seen from the side), m10 to m12 (note 5: Pat turned away, bag shows its front and a dome),
+    m13 to m15 (note 6: clean shorts, a separate half-ball dome on the flap). Then
+    `node scripts/storytime-muse.mjs line <spec> --from 14 --tries 3` (the despeckle step runs inside each
+    try; the print files come with each try). The builder looked at every result.
+    Colors: m7 and m9 had a good hand but no clear bump (m9 also changed the room); m8 and m9 showed stains on
+    the shorts; m10 had a dome on the bag but a patch on the shorts; m11 had clean shorts but no clear bump;
+    m12 changed the character; m13 had a clear ball on the bag but a small bear hand; m15 had stray hair
+    strands. Chosen color `l2-w01-story-page-hello-i-am-pat-m14-color.png`: Pat looks as in the 3D views, the
+    raised hand shows four fingers and a thumb, the hand on the bear has skin color with visible fingers, the
+    bag (yellow label, blue strap) is in view with a round dome on its top, the table stands whole.
+    Lines (m14 tries 1 to 3): try 1 had a bow-like hump on the hair and strands; try 2 had jagged beam corners
+    and eyes with highlights; try 3 has closed shapes, solid pupils, a five-digit waving hand, and a round bump
+    behind the bag. Chosen `l2-w01-story-page-hello-i-am-pat-m14-line-3-despeckled.png`. The despeckle step
+    removed no needed part. The print files `-m14-color-print.png` and `-m14-line-print-3-despeckled.png` exist.
+    OPEN: the color shows a dark patch on the brown shorts (all of m10 to m15 show one); the line art draws the
+    shorts as one plain shape. The bear in the line art is small and its hand is a simple rounded shape. The
+    bump in the line art is a large round lobe behind Pat's head. The room differs from m6 (cream wall, beam
+    frame, door at the right).
+    Calls with cost (USD, `usage.cost`, 0.01 per call; `costs.tsv` rows after 2026-11-01T08:00Z): color 9 calls
+    0.09; line 3 calls 0.03 = 12 calls 0.12 USD. No call failed. Round cost 0.12 USD. Running total
+    3.15 + 0.12 = 3.27 USD.
+    Review folder `out/storytime-review/batch-37/` (new): `brief.md` (the bar, the key, the files, the exact
+    goal, the section "Check that these batch 34 defects are gone", facts), `pages/` (2 files), `refs/`
+    (6 files). PNGs stay out of git. Green did not rate its own work. No task is marked `[x]`. Waiting for the
+    independent review.
