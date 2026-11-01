@@ -4615,3 +4615,24 @@ Replaced by the amendment of 2026-11-01 (Muse path).
   candidate replaces the v1 candidate. The writer still refuses a different `manifest.json`.
   The full-project type check stopped at the heavy-run heap limit (exit 134). A targeted check of
   the test file found no error in it. Facts changed: none. No production file changed.
+- Green: week 1 version 2 delivery (2026-11-02). Role: measure-jr-green
+  (`claude-code/claude-sonnet-5-5#high`). Red of this change: `opencode-go/deepseek-v4.1-flash`.
+  Coder: none. phase_base_sha: `15a7bf0b`. role_base_sha: `c4755d25`.
+  Implementation commit: `f1e797cb` (`src/storytime/muse-delivery.ts` only). No test file changed.
+  `docs/storytime/l2-unit1/w01/muse/approved.json` and `out/` did not change.
+  Change: the approval entry takes an optional integer `fileVersion` (>= 1). With the field, the
+  writer replaces the `-v<n>` suffix of both list names. The candidate `version`, `file`,
+  `lineArt.file`, `lineArt.colorFile`, and the review `file` fields use the new names. The writer
+  copies the prints under the new names and writes no v1 file for the row. Without the field,
+  nothing changes. A value of 0, a negative, a non-integer, or a string makes the list invalid
+  (the schema refusal names `entries.0.fileVersion`). All checks still run before the first
+  write. The rules for a different `manifest.json`, different bytes, and symlinks did not change.
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run
+  tests/storytime-muse-delivery.test.ts tests/storytime-book-pictures.test.ts
+  tests/storytime-picture-rows.test.ts tests/storytime-stage-check.test.ts --maxWorkers=1'`.
+  Result: exit code `0`. `Test Files  4 passed (4)`. `Tests  178 passed (178)`. T184 to T189 pass.
+  Type check: `NODE_OPTIONS=--max-old-space-size=2560 node_modules/.bin/tsc --noEmit -p
+  tsconfig.json` through the heavy runner. Exit code `2`. Owned errors 0. Total errors 38.
+  Mutation proof: the writer ignored `fileVersion` (`if (true || entry.fileVersion === undefined)`).
+  Run of T184: `Tests  1 failed | 28 skipped (29)`. The writer was restored, and the diff shows
+  no mutation line. Facts changed: none. No task marker changed.
