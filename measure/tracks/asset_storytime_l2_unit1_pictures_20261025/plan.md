@@ -3314,3 +3314,78 @@ gate applies again.
    render. Green did not rate its own work. PNGs stay out of git.
    Commits: `65f74878` adds the two asset sources. This plan block is the next commit. No task is
    marked `[x]`. Waiting for the independent review.
+
+   Green round 53 evidence (2026-11-01, claude-code/claude-sonnet-5-5#high). Task: cast fix
+   round 1 of 3. Find the cause of six cast defects and fix the eye-corner flaps. role_base_sha
+   `ad2705be`, phase_base_sha `15a7bf0b`. Green coder model: none.
+   Batch 24 state: two items (crayon box, picture book), waiting for review. PM order
+   (2026-11-01): fix the cast defects now, and render the 13 week 1 pages with a child again after
+   three cast rounds; target week 1 on 2026-11-06. Daniel's rule: no known defect goes to print.
+   Defect map (cause, place, fix, round):
+   1. Eye-corner flap. Cause confirmed: the `eyelid-skin` body of the `sing` face is a flat disc
+      (`ellipsoid [0.058, 0.06, 0.012]`) 3 cm behind the face at the eye centre. The head turns
+      away by about 4 cm at the outer corner, so the disc comes through the skin there. Place:
+      `assets/parts/humanoid-kind.ts` (the `sing` block). Fix: the opt-in option `sproutFace`.
+      Round 1 (done).
+   2. Open hand. Cause: the kind has only the closed fist (`P.fist`: `palmSize`, `rollA/rollB`,
+      `thumbA/thumbB`, in `armShape`, humanoid-kind.ts lines 510 to 527). Plan: under `sproutFace`,
+      add an open-hand shape (flat palm, four short fingers, thumb) for the `hand.L` and `hand.R`
+      bones, and a clip pose that turns the palm up. The old fist stays when the option is off.
+      Round 2.
+   3. Index finger. Cause: `sproutIndexFinger` (assets/parts/sprout-gestures.ts line 61) is a cone
+      of `FINGER_LENGTH = 0.046` m from the grip centre; the fist is 0.044 m deep, so most of the
+      finger hides in the fist and the hand reads as a fist on the cheek. Plan: a longer, thinner
+      finger that leaves the fist, and a touch-nose pose that puts the tip on the nose (the
+      `NOSE_PRESS` offset and `noseHint` lines 188 to 207). Round 2.
+   4. Mouth. Cause (not yet confirmed by a close-up): `mouth-open` (humanoid-kind.ts lines 629 to
+      635) is a dark flat ellipsoid with a tongue; the song page moves it forward and it reads as a
+      dark oval or blob when the hand covers part of it. Plan: under `sproutFace`, give it a lip
+      ring and a shape that follows the face curve, as the eyelid fix does. Round 3.
+   5. Forehead streak. Cause not confirmed. Candidates: the baked shade of the hair locks over the
+      forehead (the Ben close-up shows a pale diagonal band under the front locks), or the hair
+      shell contact line. Plan: a textured close-up of Ben's forehead with the hair body hidden,
+      then the fix in `assets/sprout-ben.ts` or the kind. Round 3.
+   6. Ear marks. Cause not confirmed. The line-art pass draws a depth jump; the ear (`ears`,
+      humanoid-kind.ts line 500, a hollowed ellipsoid joined with `smoothUnion(0.012)`) leaves
+      small folds at the join with the head. Plan: soften the join under `sproutFace`. Round 3.
+   Fix this round: option `sproutFace?: boolean` in `HumanoidKind`, default off. When on, the
+   eyelid is cut from the head surface itself (`head` moved back by `SING_DEPTH`, intersected with
+   a 0.058 x 0.06 ellipse extrusion, grown 4 mm). It stays inside the head at rest and meets the
+   face when the bone moves forward. When off, the code gives the old geometry. It is on in
+   `sprout-nan`, `-pat`, `-ben`, `-mia`, `-may`, `-sam`, `-adventurer`, and `-base` (the base has
+   no `sing`, so the flag does nothing there yet; rounds 2 and 3 use it). `sprout-pip`, the heroes,
+   the NPCs, and `avatar-base` do not set it. `hunter-rival` uses `sing` and does not set it.
+   Textured GLB sizes (`./forge build`, exit 0, no `warning:` line): nan 2,947,996; pat 3,509,144;
+   ben 3,200,236; mia 3,259,552; may 3,182,352; sam 2,754,144 bytes.
+   Face close-ups, textured: the flap is gone on Nan and Ben in front and three-quarter views; the
+   eyes, the lashes, and the colours look as before.
+   Hero check: `./forge render avatar-base` then `node scripts/part-check.mjs compare avatar-base`:
+   result PASS, 0.000% changed on every image. `vitest run tests/sprout-base.test.ts`: exit 0,
+   2 of 2 tests passed.
+   Nan row `l2-w01-story-page-hello-i-am-nan` v2 (technique v3 pass, 4000 x 3000): the stage file
+   `l2-w01-story-page-hello-i-am-nan-v2.json` already existed in git (commit `a1ff1505`) as a copy
+   of v1 with the camera of v1. That stage failed the render with exit 1 ("Line-art twin edge frame
+   must be at least 90 percent white": the floor planks reach the frame edges at `el` 10). Green
+   changed only the camera of this stage: `el` 10 to 2, `dist` 4.2 to 3.4, `ty` 0.7 to 0.62. The
+   stage, props, and mark are the same. Records: render exit 0; verify exit 0 ("Row verification
+   passed for 2 row versions"); line width 17 px; ink 20.33% (2,439,251 of 12,000,000); render peak
+   511 MB; color SHA-256
+   `97c32237e129c516f82fd79474763c0e9713ed75533eaf3149379282494b3c35`; line art SHA-256
+   `cdb8e1af68a566a2760a0d013b1844dbe7d0fe7690db99747f8154f369dfb107`.
+   Result at print size: the eye-corner flaps are gone in the color page. In the line art the flap
+   edge is gone, but each outer eye corner still shows a short thick dash. It is the painted
+   lash wing (a dark paint on the skin), not the flap. Green kept the lashes (the design stays).
+   The short dark marks beside each ear in the line art are still there (defect 6, round 3).
+   Heavy commands: every forge, vitest, part-check, render, and verify command ran inside
+   `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'`; logs are
+   `green-p3-r53-*` in `measure/runs/asset_storytime_l2_unit1_pictures_20261025/`. No exit 75, no
+   exit 137, no `net::ERR_UNSAFE_PORT`, no `lock wait` line. One render exit 1 (the edge check
+   above, nothing written) and one run with the changed camera at exit 0.
+   Shadow root `/tmp/opencode/wb-shadow`: `pictures.json` SHA-256 starts with `c3e23cfd`; no new
+   copy; the live Workbooks list is not written.
+   Review folder `out/storytime-review/batch-25/`: before and after face close-ups of Nan and Ben,
+   the Nan v2 color and line-art pages, `look-reference-nan-and-pip.png`, and `brief.md` (part 1
+   key `cast-fix-eye-corners`, part 2 key `l2-w01-story-page-hello-i-am-nan`). Green did not rate
+   its own work. PNGs stay out of git.
+   Commits: `571cbd9b` changes the kind, the eight casts, and the Nan v2 stage. This plan block is
+   the next commit. No task is marked `[x]`. Waiting for the independent review.
