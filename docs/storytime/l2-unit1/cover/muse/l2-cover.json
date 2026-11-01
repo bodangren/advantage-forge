@@ -1,0 +1,37 @@
+{
+  "id": "l2-cover-v1",
+  "stage": "pending-pm",
+  "stageNote": "Inputs only. No picture list row exists for the Level 2 cover. The file name l2-cover-v1.png, size class B (4000 x 3000), color only, and no line-art twin are the orchestrator default and wait for the PM answer. No Muse call was made.",
+  "file": "l2-cover-v1.png",
+  "sizeClass": "B",
+  "width": 4000,
+  "height": 3000,
+  "lineArt": false,
+  "text": "",
+  "goal": "The Level 2 book cover for Storytime unit 1: the six sprouts Pat, May, Sam, Mia, Ben, and Nan (drawn young, about five years old) stand close together in a bright kindergarten classroom, wave hello, and smile; Pip the puppy sits in front of them. The top 30 percent of the picture is one calm, plain cream wall with no object and no character, for the title that Workbooks adds later. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. Nan: a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. No letters, words, or numbers anywhere.",
+  "references": [
+    "out/storytime/l2/unit1/w01/muse/elements/classroom-door-wide.png",
+    "out/storytime/l2/unit1/w01/muse/elements/cast-group-a-2.png",
+    "out/storytime/l2/unit1/w01/muse/elements/ben-ref-clean-2.png",
+    "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
+    "out/storytime/l2/unit1/w04/muse/elements/pip-ref-render.png"
+  ],
+  "colorPrompt": "Compose one children's book cover picture from the element pictures. Picture 1 is the empty classroom: a cream wall with dark-brown timber beams and a wooden floor. Use it only for the style of the wall, the beams, and the floor, and keep the lower part of the picture like it: the floor, and the low timber wall panels behind the children. Above the low timber panels, the whole upper wall is ONE plain, smooth cream wall in one even color. Picture 2 shows four approved children from left to right: Pat, May, Sam, and Mia. Picture 3 shows the boy Ben (a clean look reference with a drawn picture at the top and four 3D views below; copy the 3D Ben). Picture 4 shows the girl Nan and a different puppy (copy only Nan; this puppy must NOT appear in this picture). Picture 5 shows the puppy Pip in four 3D views (the flat drawing at the top is only a hint). Copy each child and the puppy exactly as shown. Keep the soft, round, bright 3D render look of the pictures, not a 2D drawing and no outlines. The children: Pat: short messy black hair with a fringe and a few small tufts on top, big brown eyes, a small smile, a green T-shirt, brown cargo shorts, brown sandals (no school bag, no teddy bear); May: black hair with a fringe and one long ponytail at the side with a small yellow star hair clip, big brown eyes, a small smile, a yellow T-shirt, a blue pleated skirt, white socks, white sneakers; Sam: short brown hair with a side-swept fringe, big brown eyes, a big open-mouth smile, a red T-shirt with two white stripes, blue shorts, blue shoes; Mia: light-brown shoulder-length hair with a small pink bow on the side, big brown eyes, an open-mouth smile, a pink T-shirt, blue denim overalls, white shoes; Ben: short messy light-brown hair, big brown eyes, a big open-mouth smile, a light-blue T-shirt, dark-blue shorts, grey sneakers; Nan: black-brown hair in two buns with red hair ties, large dark-brown eyes, a small smile, an orange T-shirt with a white star, red shorts, white sneakers. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on the forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, a red collar with a small round gold tag. The picture: a wide, bright kindergarten classroom shot, the camera at a low height, in the room of picture 1. The six children stand in one row in the lower two thirds of the picture, large, full-body, all facing the camera, close together, and all waving hello with one raised open hand and a big happy smile. Their order from the left: Ben, Mia, Sam, May, Pat, Nan. Pip sits on the floor in front of the children, in the middle, whole puppy in view, and looks at the camera with his mouth a little open. Exactly six children, one puppy, and no other person or animal. THE TOP 30 PERCENT OF THE PICTURE IS CALM: the upper third of the picture is only one plain, smooth, even cream wall color, with no object, no picture, no window, no door, no shelf, no lamp, no plant, no beam, no shadow, no pattern, no character, and no head, hand, or hair of any child. Every head stays below that line. Leave a clear margin at the left and right edges: every hand and every foot is fully inside the picture. Hands are small, chubby child hands with five clear short fingers and a thumb when open, never fists unless stated. A waving hand: the palm faces the viewer, the four fingers are spread a little, and the thumb points out to the side. Count five digits on every open hand. Rendering errors to NOT copy from the character pictures: a tiny dark tick mark or pale skin flap at the outer corner of an eye (the corner next to the ear), and a faint pale crease on a forehead. Each eye ends in a smooth, rounded corner. Nan alone keeps one short, thick, curved eyelash flick at each outer eye corner. Clean eye corners with no skin flaps, no streak on the forehead, and no marks on the face. The ears are smooth, with one clean rounded rim. Each piece of clothing is one even color with no pale patches, no pale blotches at the shoulders, and no stains. No text, no letters, no numbers, no logos, no title, no writing on any picture or sign. The picture is for young children and is rated G.",
+  "print": "crop",
+  "aspect": "4:3",
+  "outDir": "out/storytime/l2/unit1/cover/muse",
+  "castLook": "approved",
+  "castLookNames": [
+    "Pat",
+    "May",
+    "Sam",
+    "Mia",
+    "Ben",
+    "Nan",
+    "Pip"
+  ],
+  "gates": {
+    "C1": "calm top: the top 900 of 3000 rows; at most 2 percent of pixels differ from the dominant color",
+    "S19": "Workbooks owns the cover layout and the cover text; Forge supplies the render only"
+  }
+}
