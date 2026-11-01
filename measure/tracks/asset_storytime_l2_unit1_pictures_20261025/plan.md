@@ -3618,3 +3618,54 @@ gate applies again.
     batch 28 defects as "check that these are gone"), `pages/` (12 files), `cast/` (1 file), `refs/` (14 files).
     PNGs stay out of git. Green did not rate its own work. No task is marked `[x]`. Waiting for the
     independent review.
+
+    Green round 59 (2026-11-01, claude-code/claude-sonnet-5-5#high). Task: Muse production round 3 (the 10
+    item rows and the clean Nan reference copies). role_base_sha `f19fed1a`, phase_base_sha `15a7bf0b`. Red
+    model minimax-cn-coding-plan/MiniMax-M3. Image model meta/muse-image. Green coder model: none; nothing
+    was delegated. No heavy-runner command and no Forge render were needed. `assets/`, `src/`, `tests/`, and
+    earlier outputs did not change.
+    Clean Nan reference copies (A), in `out/storytime/l2/unit1/w01/muse/elements/` (no source file was
+    overwritten; no Muse call used them): `nan-ref-clean-look-reference.png` (source
+    `out/storytime-review/batch-21/look-reference-nan-and-pip.png`), `nan-ref-clean-face-crop.png` (source
+    `out/storytime-review/muse-test-2/nan-face-clean-crop.png`), `nan-ref-clean-side-left-head.png` and
+    `nan-ref-clean-side-right-head.png` (sources: the round 58 side crops). Method (sharp, local, narrow
+    boxes): ears: in a box around each ear, each pixel is classed as background, hair (luma below 60), or
+    skin; the three class maps are blurred (sigma 3) and the strongest class wins, which removes the ragged
+    rim and the dark hole; the skin pixels take a normalized blur (sigma 7) of the nearby skin colors
+    (pixels darker than luma 112 are left out of the fill), and the box edge fades back to the original over
+    24 px. Shirt: in a box at each shoulder, the orange pixels get a saturation of at least 0.95 at the
+    same brightness, so the pale patches become the nearby orange. Results at 2x to 3x: look reference: both
+    ears smooth, one rim, no hole; both shoulders one even orange; the eyes, brows, hair edge, and eyelash
+    mark are not touched. The pale skin flaps and tick marks at the outer eye corners remain (the brief said
+    to change nothing else). Face crop: the two edge ear slivers are smooth. Side crops: the ears were
+    already smooth blobs with no hole (a first try with the ear step made hard edges, so it was dropped and
+    the ears stay unchanged); only the shirt step ran there. The next fix round can use these copies.
+    Item rows (B). Specs (commit `2e391b38`, 10 files): `docs/storytime/l2-unit1/w01/muse/l2-w01-check-row-
+    {nest,cat,fish,dog,bus,hat,cup,net}.json` and `l2-w01-practice-line-{nest,nut}.json` (aspect 1:1,
+    printSize 1500 x 1500). Each row has one element: the earlier 3D version's asset (from the latest stage
+    file) as a four-view-card view: nest and practice nest `storytime-nest` three-quarter, cat `cat`
+    three-quarter, fish `fish` side (the earlier row was a side view), dog `dog` three-quarter, bus
+    `storytime-school-bus` three-quarter, hat `storytime-sun-hat` (hat stage v3) three-quarter, cup
+    `storytime-child-cup` three-quarter, net `storytime-butterfly-net` three-quarter, nut `storytime-nut`
+    three-quarter. The picture list gives no different direction for the two practice lines.
+    Rows (final files in `out/storytime/l2/unit1/w01/muse/`; every call is in `costs.tsv`):
+    - All 10 color pictures are m1, no color retry. One cat color call failed with a network timeout (cost
+      0) and ran again. No text, wrong object, wrong count, or animal face defect seen; the cat color keeps
+      the eyelash ticks of the 3D model.
+    - Line try 1 (all 10): my line prompt told Muse how to draw eyes, so it drew eyes on the nest (both
+      rows), the hat bow, the cup, the net, and the nut. Reason for the retry: eyes on objects (a wrong face
+      defect). Try 2 (all 10) removed the eye text for objects and added per-row text for the cat, dog,
+      fish, and bus. Finals: nest, fish, dog, bus, hat, cup, net, practice nest, and practice nut use
+      `-line-2.png`; the cat uses try 1 `-line.png` (try 2 added eyelash ticks and kept the ring tail).
+      One cat line call failed with a network error (cost 0) and ran again.
+    - OPEN defects (retry limit used): cat line (the tail ring reads as an ear; the legs have stripe lines);
+      net line (double rim line, thin lines, sparse mesh); dog line (double rings in the eyes); bus line
+      (thin lines).
+    Cost (USD, `usage.cost`, 0.01 per call): color 10 calls 0.10; line try 1 10 calls 0.10 (the cat call
+    succeeded on its second send); line try 2 10 calls 0.10 = 30 calls, 0.30. Two calls failed with no cost
+    (cat color, cat line). Running total 0.94 + 0.30 = 1.24 USD. The tool total in the run (1.01) counts only
+    the `costs.tsv` of the page folder.
+    Review folder `out/storytime-review/batch-31/` (no earlier batch-31): `brief.md` (one key per row, the key
+    `nan-clean-refs`, the batch 29 warning list, and Daniel's rule), `pages/` (20 files), `refs/` (9 files),
+    `clean-refs/` (8 files, with side-by-side source and clean files). PNGs stay out of git. Green did not
+    rate its own work. No task is marked `[x]`. Waiting for the independent review.
