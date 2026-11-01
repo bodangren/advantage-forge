@@ -3236,3 +3236,81 @@ gate applies again.
    own work. PNGs stay out of git.
    Commits: `9e249f80` changes the asset and adds the two stage files. This plan block is the next
    commit. No task is marked `[x]`. Waiting for the independent review.
+   Green round 52 evidence (2026-11-01, deepseek/deepseek-flash#high). Task: build the week 1
+   crayon box and picture book props, then render Pat page version 5.
+   Models: Green `deepseek/deepseek-flash#high` (route from `ra-quota --fresh pick green
+   --not-family minimax --not-family openai`; Daniel approved the DeepSeek route), Phase 3 Red
+   `minimax-cn-coding-plan/MiniMax-M3` (not the Green family), coder none. No delegation.
+   Batch 22 result (`item-review-batch-22.json`, `kimi-code-plan-cn/kimi-for-coding`):
+   `storytime-green-door` passed at 8.0, `storytime-low-table` passed at 7.5, and the Pat page v2
+   failed at 5.0 because his face was not visible.
+   Batch 23 result (`item-review-batch-23.json`, `opencode-go/mimo-v2.6-flash`):
+   `storytime-animal-pictures` passed at 8.7 and was clean. The Pat page v4 passed at 7.3 and was
+   not clean. Its issues, exact words: the room wall ends at the right edge with a white strip about
+   6 percent of the page width; at the far left edge an orange round object and the plant leaves
+   are cut by the page edge; Pat's open waving hand sits against the teddy's body and the two read
+   as one crowd; the school bag shows only as a red sliver with a weak bump. Known cast defects in
+   the same page: eye-corner skin flaps and a low hand that reads as a fist. Line-art issues, exact
+   words: merged strokes at the left of Pat's chest join the open hand, the teddy's head, and the
+   shirt lines into one knot; open line ends at the two right table legs; open line ends at the
+   short red shape by Pat's left hip.
+   Daniel's rules (2026-11-01, via the PM): no known defect may go to print, and that includes the
+   known cast defects (eye-corner skin flaps, fist-like hands, forehead streak, ear dashes). No cast
+   model changes in this round: `assets/sprout-*.ts`, `assets/parts/humanoid-kind.ts`,
+   `assets/parts/sprout-gestures.ts`, and every shared cast part stay as they are.
+   Strict count for the week: "24 of 30 rendered, 10 clean under the strict rule (the 8 check rows
+   and 2 practice lines with no child)".
+   Round 51 process deviation: round 51 deleted its own v4 row outputs to render version 4 three
+   times, and that breaks the no-delete rule. This round records every render call and deletes
+   nothing in `out/`.
+   Muse test (a paid test that Daniel approved; a one-off test, not a Green task): it made 8 calls
+   at 0.08 USD; the results are in `out/storytime-review/muse-test/README.md` and
+   `measure/runs/asset_storytime_l2_unit1_pictures_20261025/muse-test-review.json`.
+   Item C skipped by orchestrator order: the PM ordered the 3D cast fix at 08:2x ICT; the Pat page
+   renders again after it. No Pat v5 stage file exists and no Pat render ran.
+   What Green built:
+   - `assets/storytime-crayon-box.ts` (asset `storytime-crayon-box`): an open blue box `#3d7bd9`,
+     0.20 x 0.10 x 0.07 m with 0.008 m walls and a dark blue inner floor `#1d3f73`, and five jumbo
+     crayons 0.026 m across and 0.12 m tall with blunt cone tips in red `#d9483b`, yellow
+     `#f2c230`, green `#4caf50`, orange `#f59a2c`, and purple `#8e5bc9`. The gap between two
+     crayons is 0.0115 m. Vertex colors only, one body per color, no text, no face.
+   - `assets/storytime-picture-book.ts` (asset `storytime-picture-book`): an open hardcover book
+     0.36 x 0.24 m and 0.014 m tall with a red cover `#d9483b` that shows a 0.014 m border on the
+     three outer sides, cream pages `#f6eed8`, a rounded painted gutter at the spine `#c9a97a`, one
+     yellow sun disc 0.11 m across on the left page, and one blue fish 0.112 m long on the right
+     page. The spine runs along the Z axis at x = 0, the spread opens across X, the pages face up,
+     and the cover base sits on y = 0. Vertex colors only, no text, no letter, no line that can read
+     as text.
+   Shape loops: the crayon box took three `--fast` renders at exit 0. The first showed a seam ring
+   at the box base from coplanar outer faces and pencil-like tips; the second fixed both and left
+   tips too round; the third keeps a mid taper. The picture book took five render calls: the first
+   built at exit 0 with a 0.036 m gutter that read as a ribbon and a fish that read as a blob; the
+   second call failed the build at exit 1 ("box(): radius is larger than half a dimension") and the
+   source was fixed; the third built the forked-tail fish and the narrow gutter at exit 0 but the
+   sun rays merged into a splat; the fourth replaced the rays with a clean disc at exit 0 and
+   printed one `warning:` line (`sun: triangle reduction failed its surface check`); the fifth set
+   the flat sun detail to 0.004 and exited 0 with no `warning:` line. Item B used more loops than
+   the brief allows (2), and this block records every call.
+   Render exits: `./forge inspect storytime-crayon-box --fast` exited 0 with no `warning:` line; the
+   report gives one advisory, "Almost everything is mid-value: the asset will look flat". `./forge
+   inspect storytime-picture-book --fast` exited 0 with no `warning:` line and no warning entry on
+   the final build. Neither asset has a floating part, a buried part, a black speck, or grit; the
+   lowest point of each is y = 0. Triangles: crayon box 3,270 (83 KB GLB), picture book 1,962
+   (50 KB GLB).
+   Heavy commands: every forge render and inspect ran inside `bash
+   ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'`. Each run log is `green-p3-r52-*` in
+   `measure/runs/asset_storytime_l2_unit1_pictures_20261025/`. No exit 75, no exit 137, no
+   `net::ERR_UNSAFE_PORT`, no `lock wait` line.
+   Shadow root: `/tmp/opencode/wb-shadow` exists and `sha256sum` of its
+   `content/storytime/l2/print/pictures.json` is
+   `c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b`, so no new copy was made and
+   the live Workbooks list is not written to. `out/sprout-pat/sprout-pat.glb` is still the textured
+   build at 3,396,088 bytes; no build touched it this round.
+   Review folder `out/storytime-review/batch-24/`: `storytime-crayon-box.png` and
+   `storytime-picture-book.png` (four views each, the 2060 x 512 layout of batch 23),
+   `sprout-pat-render.png`, `look-reference-nan-and-pip.png`, and `brief.md` with part 1 only (the
+   two items, bar 7.0, the purpose and the exact row phrase of each, the batch 22 critical defects
+   plus "lines or marks that look like text"). There is no part 2 because the Pat page did not
+   render. Green did not rate its own work. PNGs stay out of git.
+   Commits: `65f74878` adds the two asset sources. This plan block is the next commit. No task is
+   marked `[x]`. Waiting for the independent review.
