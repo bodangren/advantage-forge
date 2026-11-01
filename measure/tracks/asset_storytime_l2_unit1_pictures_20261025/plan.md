@@ -1169,7 +1169,7 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   row `fileName`, and the line art is the row `lineArtFileName` (`<color name>-line-v1.png`)
   beside the color file. The sample job still writes `lineart/...-nan-v3-lineart.png`, the
   package-job path.
-- [~] Task: Build and independently review the PM-approved missing cast, props, and poses for
+- [ ] Task: (Deferred: replaced by the Muse path, Daniel 2026-11-01 09:34; see the spec amendment 2026-11-01.) Build and independently review the PM-approved missing cast, props, and poses for
   week 1. Use the Forge asset workflow and preserve the approved character look.
   Gap list (2026-10-29, Green session, Opus; list v3, SHA-256
   `c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b`, 30 week 1 rows).
@@ -1235,7 +1235,7 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   - Missing poses: two-hand wave, sit with a book, hang a bag, kneel, sit on the rug, laugh,
     Pip in the bag, Pip sniff, and hold a bag.
   - Not approved: five `storytime-*` props and the touch-nose and touch-neck gestures.
-- [ ] Task: Render the 30 week 1 rows of picture list version 3 as 30 color and 30 line-art
+- [ ] Task: (Deferred: replaced by the Muse path, Daniel 2026-11-01 09:34; see the spec amendment 2026-11-01.) Render the 30 week 1 rows of picture list version 3 as 30 color and 30 line-art
   versioned PNG files, one twin pair per render run. The rows come from
   `Workbooks/content/storytime/l2/print/pictures.json`. The rows are 16 of size class A, 2 of size
   class B, and 12 of size class C. Use the version 1 file names and the version 1 pixel sizes of
@@ -1340,7 +1340,7 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   reference). The ratings, any fixes, and the `GESTURES` mapping of touch-nose and touch-neck
   wait for the reviewer.
   Amendment 2026-11-01: the Muse flow makes these rows; see the spec amendment.
-- [ ] Task: Run automated checks on every color and line-art file and both model pre-checks on
+- [ ] Task: (Deferred: replaced by the Muse path, Daniel 2026-11-01 09:34; see the spec amendment 2026-11-01.) Run automated checks on every color and line-art file and both model pre-checks on
   every color candidate. Correct each failed picture under a new twin version and repeat the
   checks. Attach the raw model outputs.
 - [ ] Task: Send the count review and the line-art look to the PM. The PM routes them to Daniel or
@@ -1352,7 +1352,7 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   note field for each card, and a button that downloads the answers as JSON. The manifest
   SHA-256 is `00ea0c5b06d18e3f54cbceed9caa943100c0711bb515c44561eb46b7e03ed369`. This task
   stays open until a person records the review.
-- [ ] Task: Deliver the week 1 manifest, contact sheet, review logs, and ledger. The manifest
+- [ ] Task: (Deferred: replaced by the Muse path, Daniel 2026-11-01 09:34; see the spec amendment 2026-11-01.) Deliver the week 1 manifest, contact sheet, review logs, and ledger. The manifest
   lists the 30 color and 30 line-art files. Apply picture specification v1 to the line art.
   Specification v1 has arrived, so the line art is not provisional. Report the output path and
   every remaining gate to the PM for routing.
