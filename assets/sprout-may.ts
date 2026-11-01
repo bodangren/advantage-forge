@@ -34,6 +34,7 @@ export default humanoidAsset({
   proportions: AGE5,
   sing: true,
   sproutFace: true,
+  sproutHands: true,
   hair: false,
   undershirt: false,
   pants: false,

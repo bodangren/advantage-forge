@@ -1,0 +1,55 @@
+{
+  "jobId": "l2-w01-story-page-a-nose",
+  "version": 5,
+  "at": 0.82,
+  "spec": {
+    "title": "A nose.",
+    "duration": 2,
+    "lines": [
+      {
+        "text": "A nose.",
+        "start": 0,
+        "end": 2,
+        "actors": [
+          "Nan"
+        ],
+        "gesture": "touch nose",
+        "segments": [
+          {
+            "start": 0.25,
+            "end": 1.4,
+            "words": [
+              {
+                "start": 0.25,
+                "end": 1.4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "stage": {
+    "scene": "classroom",
+    "backdrop": "white",
+    "sun": "high",
+    "marks": {
+      "Nan": {
+        "x": 0,
+        "z": 0,
+        "yaw": 6
+      }
+    },
+    "camera": [
+      {
+        "at": 0,
+        "az": -12,
+        "el": 8,
+        "dist": 1.5,
+        "tx": 0,
+        "ty": 0.44,
+        "tz": 0
+      }
+    ]
+  }
+}

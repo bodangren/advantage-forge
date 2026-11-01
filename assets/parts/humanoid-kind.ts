@@ -344,6 +344,14 @@ export interface HumanoidKind {
    * flap shows at the outer eye corners.
    */
   readonly sproutFace?: boolean;
+  /**
+   * The Chibi Sprouts hands (Storytime cast fix). Off by default: the hero, the NPCs, and the avatar
+   * pack keep the closed fist. On: a relaxed open hand (palm, thumb, four fingers) replaces the fist.
+   * The index finger (`index.L/R`) and the other three fingers (`fingers.L/R`) are bones, so a clip can
+   * open the hand (`HAND_OPEN`), fold the three fingers and point with the index (touch nose), or leave
+   * the relaxed rest curl. The grip anchors `knife.L` and `knife.R` stay where they were.
+   */
+  readonly sproutHands?: boolean;
   /** Paint on the skin body after the face paint (a beard shadow, freckles, age lines). */
   paintSkin?(skin: sdf.Shape, h: HumanoidShape): sdf.Shape;
   /** Extra bodies: clothes, hats, tools. */
@@ -397,6 +405,70 @@ export interface HumanoidShape {
    */
   perArm(build: (j: ArmJoints) => sdf.Shape): sdf.Shape;
   readonly tint: Readonly<Record<string, string>>;
+  /** With `sproutHands`: the extended index fingertip minus the grip center, in left-hand coordinates (x > 0). */
+  readonly indexReach?: V3;
+}
+
+/** Degrees that a finger bone turns about X to open the relaxed hand (+) or to fold a finger onto the palm (-). */
+export const HAND_OPEN = 12;
+export const HAND_FOLD = -75;
+
+/**
+ * The Chibi Sprouts hand in left-hand coordinates (x > 0, thumb outward, palm forward and up 20 degrees, the
+ * fingers hanging). Built in a local frame (x across, y down the fingers, z out of the palm) and placed at the
+ * fist center. At rest the fingers curl 12 and then 40 degrees toward the palm; `HAND_OPEN` straightens the
+ * first joint. `hand` is the palm, cuff, and thumb; `fingers` the middle, ring, and little finger; `index` the
+ * index finger (the one beside the thumb).
+ */
+function sproutHand(P: HumanoidProportions) {
+  const sc = P.fist.palmSize[1] / HERO.fist.palmSize[1];
+  const s = (n: number) => n * sc;
+  const o = P.fist.palmAt;
+  const tilt = new THREE.Matrix4().makeRotationX((-20 * Math.PI) / 180);
+  const world = (p: V3): V3 => {
+    const v = new THREE.Vector3(p[0], p[1], p[2]).applyMatrix4(tilt);
+    return [o[0] + v.x, o[1] + v.y, o[2] + v.z];
+  };
+  const place = (sh: sdf.Shape) => sh.rotateX(-20).at(o[0], o[1], o[2]);
+  const A1 = (12 * Math.PI) / 180;
+  const A2 = (40 * Math.PI) / 180;
+  const KNUCKLE = -s(0.026);
+  const finger = (u: number, len: number, r: number) => {
+    const p0: V3 = [s(u), KNUCKLE, 0];
+    const l1 = s(len) * 0.55;
+    const l2 = s(len) * 0.45;
+    const p1: V3 = [p0[0], p0[1] - l1 * Math.cos(A1), l1 * Math.sin(A1)];
+    const p2: V3 = [p0[0], p1[1] - l2 * Math.cos(A2), p1[2] + l2 * Math.sin(A2)];
+    return { shape: sdf.smoothUnion(s(0.004), sdf.capsule(p0, p1, s(r)), sdf.capsule(p1, p2, s(r * 0.9))), p0, p2 };
+  };
+  const idx = finger(0.0322, 0.062, 0.0086);
+  const mid = finger(0.0107, 0.057, 0.0088);
+  const ring = finger(-0.0107, 0.05, 0.0086);
+  const pinky = finger(-0.0322, 0.04, 0.0078);
+  const palm = sdf.smoothUnion(
+    s(0.012),
+    sdf.ellipsoid([s(0.037), s(0.03), s(0.0145)]),
+    sdf.cone([0, s(0.045), 0], [0, -s(0.005), 0], s(0.034), s(0.03)), // the cuff over the end of the forearm
+    sdf.smoothUnion(
+      s(0.006),
+      sdf.capsule([s(0.03), s(0.012), s(0.005)], [s(0.056), -s(0.022), s(0.012)], s(0.0095)),
+      sdf.capsule([s(0.056), -s(0.022), s(0.012)], [s(0.059), -s(0.04), s(0.016)], s(0.0085)),
+    ), // the thumb
+  );
+  const fingers = sdf.smoothUnion(s(0.003), mid.shape, ring.shape, pinky.shape);
+  const pivots = { fingers: world([0, KNUCKLE, 0]), index: world(idx.p0) };
+  // The extended index tip: the first joint turned HAND_OPEN degrees about X around its knuckle.
+  const th = (HAND_OPEN * Math.PI) / 180;
+  const dy = idx.p2[1] - idx.p0[1];
+  const dz = idx.p2[2] - idx.p0[2];
+  const tipOpen = world([idx.p0[0], idx.p0[1] + dy * Math.cos(th) - dz * Math.sin(th), idx.p0[2] + dy * Math.sin(th) + dz * Math.cos(th)]);
+  return {
+    hand: place(palm).bone('hand.L'),
+    fingers: place(fingers).bone('fingers.L'),
+    index: place(idx.shape).bone('index.L'),
+    pivots,
+    tipOpen,
+  };
 }
 
 export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
@@ -459,6 +531,8 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       const jointsL = armOf(kind.hold ?? kind.pose?.L);
       const jointsR = armOf(kind.hold ?? kind.pose?.R);
       const { ELBOW, WRIST, GRIP } = jointsL;
+      if (kind.sproutHands && (kind.hold || kind.pose)) throw new Error(`${kind.name}: sproutHands needs the two-arm rest pose`);
+      const sproutHandParts = kind.sproutHands ? sproutHand(P) : undefined;
       // A one-arm pose builds each arm from its own joints; otherwise the right arm mirrors the left.
       const oneSided = !kind.hold && kind.pose !== undefined;
       const perArm = (build: (j: ArmJoints) => sdf.Shape) =>
@@ -482,6 +556,14 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
         'hand.R': { parent: 'forearm.R', at: mx(jointsR.WRIST) },
         'knife.L': { parent: 'hand.L', at: GRIP },
         'knife.R': { parent: 'hand.R', at: mx(jointsR.GRIP) },
+        ...(kind.sproutHands
+          ? {
+              'fingers.L': { parent: 'hand.L', at: sproutHandParts!.pivots.fingers },
+              'index.L': { parent: 'hand.L', at: sproutHandParts!.pivots.index },
+              'fingers.R': { parent: 'hand.R', at: mx(sproutHandParts!.pivots.fingers) },
+              'index.R': { parent: 'hand.R', at: mx(sproutHandParts!.pivots.index) },
+            }
+          : {}),
         'leg.L': { parent: 'hips', at: HIP },
         'shin.L': { parent: 'leg.L', at: KNEE, split: P.split },
         'foot.L': { parent: 'shin.L', at: ANKLE },
@@ -530,7 +612,7 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
             ),
           )
           .bone('hand.L');
-        return sdf.smoothUnion(0.02, arm, fist);
+        return kind.sproutHands ? arm : sdf.smoothUnion(0.02, arm, fist);
       };
       const arms = oneSided ? perArm((j) => armShape(j === jointsL ? jointsL : jointsR)) : pair(armShape(jointsL));
 
@@ -624,9 +706,17 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
         arms: { L: jointsL, R: jointsR },
         perArm,
         tint: T,
+        ...(sproutHandParts
+          ? { indexReach: [sproutHandParts.tipOpen[0] - GRIP[0], sproutHandParts.tipOpen[1] - GRIP[1], sproutHandParts.tipOpen[2] - GRIP[2]] as V3 }
+          : {}),
       };
       const skin = kind.paintSkin ? kind.paintSkin(skinBase, shape) : skinBase;
       k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
+      // The Sprout hands: a separate body at a finer mesh cell (the fingers are 1 cm thick), on the skin color.
+      if (sproutHandParts) {
+        const left = sdf.union(sproutHandParts.hand, sproutHandParts.fingers, sproutHandParts.index);
+        k.body('hands', pair(left), { color: T.skin, roughness: 0.55, detail: 0.0028 });
+      }
 
       // ------------------------------------------------------------------ the singing face (`sing`)
       // The open mouth (a dark flat ellipsoid with a tongue) hangs below the painted smile, which

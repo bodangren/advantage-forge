@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { motion, sdf } from '../../src/index.js';
 import type { AssetContext, Pose } from '../../src/index.js';
-import { AGE5 } from './humanoid-kind.js';
+import { AGE5, HAND_FOLD, HAND_OPEN } from './humanoid-kind.js';
 import type { HumanoidShape } from './humanoid-kind.js';
 
 /**
@@ -114,7 +114,14 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
       const q = basis(fr.a, fr.n).multiply(qRestInv);
       return arr(vec(point).sub(off.clone().applyQuaternion(q)));
     };
-    return { pose, wristFor };
+    /** The wrist that puts a point of the hand (`reach` from the grip center, left-hand coordinates) at `target`. */
+    const wristForReach = (target: V3, d: V3, hint: V3, reach: V3): V3 => {
+      const fr = frameOf(d, hint);
+      const q = basis(fr.a, fr.n).multiply(qRestInv);
+      const r = vec([-reach[0], reach[1], reach[2]]).applyQuaternion(q);
+      return wristFor(arr(vec(target).sub(r)), d, hint);
+    };
+    return { pose, wristFor, wristForReach };
   };
   const R = arm(-1);
   const L = arm(1);
@@ -126,6 +133,11 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
   const SX = SHOULDER[0];
   const SY = SHOULDER[1];
   const REACH = Math.hypot(ELBOW[0] - SHOULDER[0], ELBOW[1] - SHOULDER[1], ELBOW[2] - SHOULDER[2]) + Math.hypot(WRIST[0] - ELBOW[0], WRIST[1] - ELBOW[1], WRIST[2] - ELBOW[2]);
+
+  // The Sprout hands (`sproutHands`): the finger bones open the hand, fold three fingers, or leave the rest curl.
+  const openHands = h.indexReach !== undefined;
+  const fingerPose = (side: 'L' | 'R', fingers: number, index: number): Pose =>
+    openHands ? { [`fingers.${side}`]: { rotate: [fingers, 0, 0] as const }, [`index.${side}`]: { rotate: [index, 0, 0] as const } } : {};
 
   const DEFAULT_DURATION = 2;
   const clip = (name: string, pose: (p: number) => Pose) =>
@@ -170,6 +182,7 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
     const goal: Goal = { wrist: waveWrist, d: dFor(WAVE_ARM + swing), hint: [0, 0, 1], pole: [-0.25, 0.3, 0.0] };
     return {
       ...R.pose(goal, f),
+      ...fingerPose('R', HAND_OPEN * f, HAND_OPEN * f),
       head: { rotate: [0, 0, -3 * f] },
     };
   });
@@ -204,12 +217,21 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
     noseTip[1] + NOSE_PRESS[1] - noseFinger[1] * FINGER_LENGTH,
     noseTip[2] + NOSE_PRESS[2] - noseFinger[2] * FINGER_LENGTH,
   ];
-  const noseGoal: Goal = { wrist: R.wristFor(noseGrip, noseD, noseHint), d: noseD, hint: noseHint, pole: [-0.45, 0.3, -0.08] };
+  // With `sproutHands` the index finger is the open hand's own finger: its tip, not a grip offset, rests on the nose.
+  const NOSE_TOUCH: V3 = [-0.012, -0.004, 0.002];
+  const noseTarget: V3 = [noseTip[0] + NOSE_TOUCH[0], noseTip[1] + NOSE_TOUCH[1], noseTip[2] + NOSE_TOUCH[2]];
+  const noseGoal: Goal = {
+    wrist: openHands ? R.wristForReach(noseTarget, noseD, noseHint, h.indexReach!) : R.wristFor(noseGrip, noseD, noseHint),
+    d: noseD,
+    hint: noseHint,
+    pole: [-0.45, 0.3, -0.08],
+  };
   clip('gesture-touch-nose', (p) => {
     const f = ks(p, [[0, 0], [0.65, 1], [1.35, 1], [2, 0]]);
     const laugh = ks(p, [[0, 0], [0.65, 0], [0.82, 1], [1, 0], [1.18, 1], [1.35, 0], [2, 0]]);
     return {
       ...R.pose(noseGoal, f),
+      ...fingerPose('R', HAND_FOLD * f, HAND_OPEN * f),
       hips: { move: [0, -0.006 * laugh, 0] },
       head: { rotate: [NOSE_HEAD_TURN[0] * f, NOSE_HEAD_TURN[1] * f, 0], move: [NOSE_HEAD_MOVE[0] * f, NOSE_HEAD_MOVE[1] * f, NOSE_HEAD_MOVE[2] * f] },
     };
@@ -270,8 +292,18 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
     hint: [0, 0, 1],
     pole: [-0.3, 0.1, -0.1],
   };
+  // With `sproutHands` the hands are open and palm up, held forward at the belly: a small thing rests on each palm.
+  const holdLen = REACH * 0.985;
+  const holdD: V3 = unit([-0.3, 0.05, 0.95]);
+  const holdGoal: Goal = {
+    wrist: [-(SX + holdLen * 0.4), SY - holdLen * 0.5, holdLen * 0.77],
+    d: holdD,
+    hint: [0, 1, 0],
+    pole: [-0.3, -0.1, -0.1],
+  };
   clip('gesture-hands-out', (p) => {
     const f = keys(p, [[0, 0], [0.4, 1], [0.6, 1], [1, 0]] as const);
+    if (openHands) return { ...both(holdGoal, f), ...fingerPose('L', HAND_OPEN * f, HAND_OPEN * f), ...fingerPose('R', HAND_OPEN * f, HAND_OPEN * f) };
     return both(outGoal, f);
   });
 
