@@ -1882,6 +1882,82 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       lists the group sheet `cast-group-b-2.png`.
     - Open: no task is `[x]`. No week 3 page call before Daniel answers on week 1. The 10 sheets
       need an independent look.
+  - Week 4 staging (inputs only; no page candidate until Daniel's week 1 answer; cast looks pending).
+    Green round of 2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `0755ef8d`,
+    phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model
+    meta/muse-image. Coder: none. Specs commit `31ba6174`: 27 page specs in
+    `docs/storytime/l2-unit1/w04/muse/<row id>.json` and 18 element and cast specs in
+    `docs/storytime/l2-unit1/w04/muse-elements/`. The method is the week 3 method. The run log is
+    `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w04-staging.log`.
+    - Page specs: `text` is the list `text` and `goal` is the list `prompt`, as exact strings. The 9
+      check rows have the list prompt `""`, so their `goal` is `""`. `outDir` is
+      `out/storytime/l2/unit1/w04/muse`. Class A and B specs have 2 to 8 references each. Class C
+      specs have one reference each. The week 1 lessons are in the prompts (thick, even, closed
+      line art; no blush, eyelash ticks, hair strands, gray, wrinkle lines, or text; five-digit
+      hands; the props of each sentence). The counts are exact: six people on the family, dog, and
+      cover pages; one puppy on the dog page; one doll on each Pam page; one pan on the
+      pan-in-a-pan page. The set sheets show no sun and no person.
+    - Pending look (the `"castLook": "pending"` field). Eleven page specs name a cast sheet with no
+      approved look. Each of them carries `"castLook": "pending"` and `"castLookNames"` (the list of
+      the pending names). The stage check ignores both fields. The orchestrator must not start a
+      production call for these 11 pages (the 8 Lily family pages, the family cover, and the 2 pages
+      of Nan's dad) before the PM relays Daniel's look approval. Seven cast sheets exist (front view
+      and three-quarter view, white background, hair and clothes only, no skin description):
+      `cast-lily-sheet-m1`, `cast-tom-sheet-m2`, `cast-mom-sheet-m1`, `cast-dad-sheet-m1`,
+      `cast-grandma-sheet-m2`, `cast-grandpa-sheet-m2`, and `cast-man-sheet-m1` (Nan's dad, the man
+      of the sentences). Daniel gets one phone picture of all seven:
+      `out/storytime-review/w04-staging/pending-cast-sheets.jpg` (2000 px wide, 368 KB, each sheet
+      labeled). Tries: 11 calls for 7 sheets (10 billed). Tom m2 replaced m1 (m1 had two white stripes like Sam).
+      Grandma m2 and Grandpa m2 replaced m1 (m1 had wrinkle lines; Grandpa m2 wears a cardigan, m1 a
+      vest). Mom had one failed call (HTTP 502, cost 0) and then one try. The picture list gives a
+      look only for Nan's dad. The other six looks are proposals of this Green.
+    - Character elements (reused by path): `nan-ref-clean-look-reference.png` and
+      `nan-ref-clean-face-crop.png` in `out/storytime/l2/unit1/w01/muse/elements/`. The Pip render is
+      a copy of `out/sprout-pip/render.png` named `pip-ref-render.png` in the week 4 elements folder,
+      so that the stage check finds the name Pip. Forge 3D views used as elements (by path):
+      `out/cat`, `out/dog`, `out/fish`, `out/storytime-school-bus`, and `out/storytime-sun-hat`. The
+      week 2 sheet `prop-sun-sheet-m1` serves the `sun` row. The week 3 sheet `prop-pans-sheet-m1`
+      serves the big yellow pan. No new 3D shot and no heavy-runner job in this round. No Forge asset
+      exists for the sofa rooms, the house, the doll, the shoe box, the map, the cake, the
+      newspaper, the monkey, the mouse, or the milk.
+    - Muse element sheets (11, in `out/storytime/l2/unit1/w04/muse/elements/`, named with no row
+      id): `set-lily-living-room-empty`, `set-nan-living-room-empty`, `set-house-exterior-empty`,
+      `prop-doll-pam-sheet`, `prop-shoe-box-bed-sheet`, `prop-paper-map-sheet`, `prop-cake-sheet`,
+      `prop-newspaper-sheet`, `prop-monkey-sheet`, `prop-mouse-sheet`, and `prop-milk-sheet`. They
+      are inputs, never page candidates. The first look by this Green found all current sheets
+      usable. Known gaps: the newspaper sheet shows a plain stack of folded paper, so it may read as
+      folded cloth; Lily is a rounder chibi render than Tom m2; the family dog page lists 8
+      references, and the limit of the tool for pictures is not known. All sheets need an
+      independent look. Review folder: `out/storytime-review/w04-staging/` (`index.md`,
+      `sheets-1.png` to `sheets-3.png`, and `pending-cast-sheets.jpg`).
+    - Muse calls: 22 calls, 21 billed, 1 failed (cost 0). 18 element calls (the Mom call failed
+      with HTTP 502), then 1 retry of Mom, then 3 retries (Tom, Grandma, Grandpa). Cost 0.21 USD
+      (`usage.cost` 0.01 per call) in `elements/costs.tsv`. Running total 3.82 USD before this run,
+      4.03 USD after it. The earlier note "up to 3.85" does not hold for this run, because the cast
+      sheets need 10 of the calls. Page calls: 0. Page candidates: 0.
+    - Stage gate (STAGING_GATE_COMMAND with `--week 4`, light job, exit code 0):
+
+      ```text
+      list sha256: 6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58
+      week: 4
+      rows: 27
+      specs found: 27
+      text mismatches: 0
+      goal mismatches: 0
+      outDir mismatches: 0
+      rows with no reference (class A and B): 0
+      element paths checked: 91
+      missing element paths: 0
+      characters without a reference: 0
+      page candidates: 0
+      stage check: pass
+      ```
+
+      This proves that the inputs exist and match the list. It proves nothing about picture quality
+      and nothing about the approval of a cast look.
+    - Open: no task is `[x]`. No week 4 page call before Daniel answers on week 1. The 11 pending
+      pages wait for a second answer on the 7 cast looks. The 11 element sheets need an independent
+      look.
 - [ ] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks.
 
