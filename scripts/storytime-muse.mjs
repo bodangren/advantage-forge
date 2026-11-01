@@ -3,7 +3,7 @@
 // (OpenRouter Image API), makes the line art from the approved color picture, and makes print-size files.
 //
 //   node scripts/storytime-muse.mjs color <spec>... [--concurrency 4]   one color call per spec, next version m<n>
-//   node scripts/storytime-muse.mjs line  <spec>... [--from <n>]        line call from the approved color of m<n> (default: latest)
+//   node scripts/storytime-muse.mjs line  <spec>... [--from <n>] [--tries <k>]  line call from the approved color of m<n> (default: latest); k tries run in parallel
 //   node scripts/storytime-muse.mjs print <spec> --from <n>             print-size files again for m<n> (no call)
 //   node scripts/storytime-muse.mjs import <spec> --color <png> --line <png> [--note <text>] [--cost <usd>]
 //                                                                        copy earlier pictures in as the next version (no call)
@@ -178,7 +178,7 @@ const doColor = async (key, ctx) => {
   console.log(`${base} color ok ${m.width}x${m.height} cost ${r.cost}`);
 };
 
-const doLine = async (key, ctx, from) => {
+const doLine = async (key, ctx, from, tries = 1) => {
   const { spec, dir } = ctx;
   if (!spec.linePrompt) throw new Error(`${spec.id}: no linePrompt`);
   const n = from ?? latestVersion(dir, spec.id);
@@ -186,31 +186,41 @@ const doLine = async (key, ctx, from) => {
   if (!side?.files.color) throw new Error(`${spec.id}: no color picture m${n}`);
   const base = `${spec.id}-m${n}`;
   const src = join(dir, side.files.color);
-  let t = 1;
-  const suffix = () => (t === 1 ? '' : `-${t}`);
-  while (existsSync(join(dir, `${base}-line${suffix()}.png`))) t++;
   const refPath = src.replace(`${ROOT}/`, '');
-  const r = await callMuse(key, spec.linePrompt, [refPath], spec.aspect);
-  if (r.error) {
-    logCall(dir, spec.id, n, 'line', [refPath], 'none', 'none', r.cost, r.error);
-    console.log(`${base} line FAILED ${r.error}`);
-    return;
+  // Reserve the try numbers first, so that parallel tries of one picture write separate files.
+  const suffixOf = (t) => (t === 1 ? '' : `-${t}`);
+  const reserved = [];
+  let t = 1;
+  while (reserved.length < tries) {
+    if (!existsSync(join(dir, `${base}-line${suffixOf(t)}.png`))) reserved.push(t);
+    t++;
   }
-  const raw = await sharp(r.buf).removeAlpha().png().toBuffer();
-  const one = await toOneBit(raw);
-  const m = await sharp(raw).metadata();
-  const name = `${base}-line${suffix()}.png`;
-  writeFileSafe(join(dir, `${base}-line-raw${suffix()}.png`), raw);
-  writeFileSafe(join(dir, name), one);
-  logCall(dir, spec.id, n, 'line', [refPath], name, `${m.width}x${m.height}`, r.cost, t === 1 ? 'ok' : `redo ${t}`);
-  addFile(side, dir, 'line', name, one, r.cost, 'line call');
-  addFile(side, dir, `lineRaw${suffix()}`, `${base}-line-raw${suffix()}.png`, raw);
-  const pp = await printLine(raw, spec.print, ctx.dims);
-  const pname = `${base}-line-print${suffix()}.png`;
-  writeFileSafe(join(dir, pname), pp);
-  addFile(side, dir, 'linePrint', pname, pp);
-  saveSidecar(ctx, side);
-  console.log(`${base} line ok ${m.width}x${m.height} cost ${r.cost}`);
+  await Promise.all(
+    reserved.map(async (t) => {
+      const suffix = () => suffixOf(t);
+      const r = await callMuse(key, spec.linePrompt, [refPath], spec.aspect);
+      if (r.error) {
+        logCall(dir, spec.id, n, 'line', [refPath], 'none', 'none', r.cost, r.error);
+        console.log(`${base} line try ${t} FAILED ${r.error}`);
+        return;
+      }
+      const raw = await sharp(r.buf).removeAlpha().png().toBuffer();
+      const one = await toOneBit(raw);
+      const m = await sharp(raw).metadata();
+      const name = `${base}-line${suffix()}.png`;
+      writeFileSafe(join(dir, `${base}-line-raw${suffix()}.png`), raw);
+      writeFileSafe(join(dir, name), one);
+      logCall(dir, spec.id, n, 'line', [refPath], name, `${m.width}x${m.height}`, r.cost, t === 1 ? 'ok' : `redo ${t}`);
+      addFile(side, dir, 'line', name, one, r.cost, 'line call');
+      addFile(side, dir, `lineRaw${suffix()}`, `${base}-line-raw${suffix()}.png`, raw);
+      const pp = await printLine(raw, spec.print, ctx.dims);
+      const pname = `${base}-line-print${suffix()}.png`;
+      writeFileSafe(join(dir, pname), pp);
+      addFile(side, dir, 'linePrint', pname, pp);
+      saveSidecar(ctx, side);
+      console.log(`${base} line try ${t} ok ${m.width}x${m.height} cost ${r.cost}`);
+    }),
+  );
 };
 
 const doPrint = async (ctx, from) => {
@@ -301,7 +311,7 @@ const main = async () => {
     await doPrint(ctxs[0], opts.from ? Number(opts.from) : undefined);
   } else {
     const key = readKey();
-    await pool(ctxs, limit, (ctx) => (cmd === 'color' ? doColor(key, ctx) : doLine(key, ctx, opts.from ? Number(opts.from) : undefined)));
+    await pool(ctxs, limit, (ctx) => (cmd === 'color' ? doColor(key, ctx) : doLine(key, ctx, opts.from ? Number(opts.from) : undefined, Number(opts.tries ?? 1))));
   }
   const dirs = [...new Set(ctxs.map((c) => c.dir))];
   for (const d of dirs) console.log(`running total ${basename(d)}: ${costTotal(d).toFixed(4)} USD`);
