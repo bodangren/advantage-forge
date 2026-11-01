@@ -62,6 +62,11 @@ const MuseApprovalEntrySchema = z.object({
   rowId: z.string().min(1),
   /** The Muse version of the approved print (the `m<n>` of the Muse file names). */
   version: z.number().int().positive(),
+  /**
+   * The version of the delivered file names. The writer replaces the `-v<n>` suffix of the list
+   * names with it. Without the field the delivered names are the list names.
+   */
+  fileVersion: z.number().int().min(1).optional(),
   colorPrint: MuseFileName,
   linePrint: MuseFileName,
   reviews: z
@@ -100,6 +105,8 @@ interface DeliveryItem {
   row: PictureListRow;
   entry: MuseApprovalEntry;
   version: number;
+  colorFile: string;
+  lineFile: string;
   colorBytes: Buffer;
   lineBytes: Buffer;
   colorSha256: string;
@@ -175,6 +182,28 @@ function deliveredVersion(row: PictureListRow): number {
   return match ? Number(match[1]) : 1;
 }
 
+/**
+ * The delivered file names and version of one row. An entry with `fileVersion` replaces the
+ * `-v<n>` suffix of both list names. An entry without it keeps the list names.
+ */
+function deliveredNames(
+  row: PictureListRow,
+  entry: MuseApprovalEntry,
+  plan: { colorFile: string; lineArtFile: string },
+): { colorFile: string; lineFile: string; version: number } {
+  if (entry.fileVersion === undefined) {
+    return { colorFile: plan.colorFile, lineFile: plan.lineArtFile, version: deliveredVersion(row) };
+  }
+  const suffix = /-v\d+\.png$/;
+  for (const name of [plan.colorFile, plan.lineArtFile]) {
+    if (!suffix.test(name)) {
+      throw new Error(`${row.id}: fileVersion needs a list file name with a -v<n>.png suffix; got ${name}`);
+    }
+  }
+  const replace = (name: string): string => name.replace(suffix, `-v${entry.fileVersion}.png`);
+  return { colorFile: replace(plan.colorFile), lineFile: replace(plan.lineArtFile), version: entry.fileVersion };
+}
+
 async function inspectColorPrint(
   png: Buffer,
   expected: { width: number; height: number },
@@ -234,9 +263,10 @@ function mapReviews(item: {
   row: PictureListRow;
   entry: MuseApprovalEntry;
   version: number;
+  colorFile: string;
   colorSha256: string;
 }): CandidateReviews {
-  const { row, entry, version, colorSha256 } = item;
+  const { row, entry, version, colorFile, colorSha256 } = item;
   const reviews: CandidateReviews = {};
   const kimi = entry.reviews?.kimi;
   if (kimi) {
@@ -247,7 +277,7 @@ function mapReviews(item: {
       kind: 'model-pre-check',
       jobId: row.id,
       version,
-      file: row.fileName,
+      file: colorFile,
       provider: 'kimi',
       model: kimi.model,
       ...(kimi.modelSource ? { modelSource: kimi.modelSource } : {}),
@@ -277,7 +307,7 @@ function mapReviews(item: {
       kind: 'person-count',
       jobId: row.id,
       version,
-      file: row.fileName,
+      file: colorFile,
       sourceText: row.text ?? '',
       ...(row.prompt === undefined ? {} : { sourcePrompt: row.prompt }),
       time: 'still',
@@ -331,16 +361,17 @@ export async function writeMuseDelivery(options: MuseDeliveryOptions): Promise<S
   // Name checks run first, so a degenerate or repeated name stops the run before any read or write.
   const delivered = new Map<string, string>();
   for (const row of options.rows) {
-    if (!list.entries.some((candidate) => candidate.rowId === row.id)) continue;
-    const plan = planPictureRow(row);
-    const lineName = plan.lineArtFile;
+    const entry = list.entries.find((candidate) => candidate.rowId === row.id);
+    if (!entry) continue;
+    const names = deliveredNames(row, entry, planPictureRow(row));
+    const lineName = names.lineFile;
     if (path.basename(lineName) !== lineName || lineName === '.' || lineName === '..' || lineName === MANIFEST_FILE) {
       throw new Error(`${row.id}: the line-art file name is a reserved or degenerate name, not a plain file name: ${lineName}`);
     }
-    if (lineName === plan.colorFile) {
+    if (lineName === names.colorFile) {
       throw new Error(`${row.id}: the line-art file name is the same as the color file name: ${lineName}`);
     }
-    for (const name of [plan.colorFile, lineName]) {
+    for (const name of [names.colorFile, lineName]) {
       const owner = delivered.get(name);
       if (owner !== undefined) {
         throw new Error(`${row.id}: the delivered file name ${name} is a duplicate; ${owner} already delivers it.`);
@@ -366,12 +397,12 @@ export async function writeMuseDelivery(options: MuseDeliveryOptions): Promise<S
     for (const error of color.errors) problems.push(`${row.id}: color print ${entry.colorPrint}: ${error}`);
     for (const error of line.errors) problems.push(`${row.id}: line print ${entry.linePrint}: ${error}`);
     if (!color.valid || !line.valid) continue;
-    const version = deliveredVersion(row);
+    const { colorFile, lineFile, version } = deliveredNames(row, entry, plan);
     const colorSha256 = sha256(colorBytes);
     const lineSha256 = sha256(lineBytes);
     let reviews: CandidateReviews;
     try {
-      reviews = mapReviews({ row, entry, version, colorSha256 });
+      reviews = mapReviews({ row, entry, version, colorFile, colorSha256 });
     } catch (error) {
       problems.push(error instanceof Error ? error.message : String(error));
       continue;
@@ -379,15 +410,15 @@ export async function writeMuseDelivery(options: MuseDeliveryOptions): Promise<S
     const candidate: CandidateManifest = {
       jobId: row.id,
       version,
-      file: plan.colorFile,
+      file: colorFile,
       fileSha256: colorSha256,
       status: 'ready',
       structural: color,
       reviews,
       lineArt: {
-        file: plan.lineArtFile,
+        file: lineFile,
         fileSha256: lineSha256,
-        colorFile: plan.colorFile,
+        colorFile,
         // The Muse flow makes no 3D render evidence, so the field stays empty.
         renderEvidenceFile: '',
         status: 'ready',
@@ -396,7 +427,7 @@ export async function writeMuseDelivery(options: MuseDeliveryOptions): Promise<S
       },
       failures: [],
     };
-    items.push({ row, entry, version, colorBytes, lineBytes, colorSha256, lineSha256, candidate });
+    items.push({ row, entry, version, colorFile, lineFile, colorBytes, lineBytes, colorSha256, lineSha256, candidate });
   }
   if (problems.length) throw new Error(`The Muse delivery stopped; nothing was written:\n${problems.join('\n')}`);
 
@@ -421,8 +452,8 @@ export async function writeMuseDelivery(options: MuseDeliveryOptions): Promise<S
   const copies: Array<{ file: string; bytes: Buffer; sha256: string; rowId: string }> = [];
   for (const item of items) {
     copies.push(
-      { file: item.row.fileName, bytes: item.colorBytes, sha256: item.colorSha256, rowId: item.row.id },
-      { file: item.row.lineArtFileName, bytes: item.lineBytes, sha256: item.lineSha256, rowId: item.row.id },
+      { file: item.colorFile, bytes: item.colorBytes, sha256: item.colorSha256, rowId: item.row.id },
+      { file: item.lineFile, bytes: item.lineBytes, sha256: item.lineSha256, rowId: item.row.id },
     );
   }
   const pending: typeof copies = [];
