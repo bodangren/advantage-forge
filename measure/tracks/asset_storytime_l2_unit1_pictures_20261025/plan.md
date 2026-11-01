@@ -4278,3 +4278,41 @@ Replaced by the amendment of 2026-11-01 (Muse path).
     goal, the section "Check that these batch 34 defects are gone", facts), `pages/` (2 files), `refs/`
     (6 files). PNGs stay out of git. Green did not rate its own work. No task is marked `[x]`. Waiting for the
     independent review.
+
+    Green round 66 (2026-11-01, claude-code/claude-sonnet-5-5#high). Task: line-art fix for two rows that the
+    delivery writer refused: `l2-w01-cover-hello` (edge frame) and `l2-w01-practice-line-nest` (line width).
+    role_base_sha `5b57ceab`, phase_base_sha `15a7bf0b`. Red model minimax-cn-coding-plan/MiniMax-M3. Image
+    model meta/muse-image. Green coder model: none; nothing was delegated. No Forge render, no heavy runner,
+    no tsc, no vitest. `assets/`, `src/`, `tests/`, `scripts/storytime-muse.mjs`, and
+    `docs/storytime/l2-unit1/w01/muse/approved.json` did not change. Spec commit `3298f704`.
+    Writer rule source: `inspectLineArtPng` in `src/storytime/book-pictures.ts`. Check script (off-repository):
+    `/tmp/opencode/chk66.mts`, run as `node --import tsx /tmp/opencode/chk66.mts <width> <height> <print files>`.
+    Existing prints first: nest try 1 print `-m1-line-print.png` PASS (16 px, 8.50 percent ink) but it draws
+    two eyes with pupils and eyebrows on the nest, so the builder rejected it by eye; nest try 2 print FAIL
+    (10 px). Cover m6 tries 1 to 3 FAIL the edge frame (86.0 percent white for try 1; 13 to 14 px lines).
+    Commands: `node scripts/storytime-muse.mjs line docs/storytime/l2-unit1/w01/muse/l2-w01-practice-line-nest.json
+    --from 1 --tries 3` (new tries 3, 4, 5; spec note: extra thick outlines, no face); then
+    `node scripts/storytime-muse.mjs line docs/storytime/l2-unit1/w01/muse/l2-w01-cover-hello.json --from 6
+    --tries 3` twice (new tries 4 to 6 with a margin note, then tries 7 to 9 with a stronger note: shrink the
+    drawing to 90 percent, 5 percent white margin). The despeckle step and the print files come with each try.
+    Nest result (writer check of the despeckled prints): try 3 PASS 30 px 13.77 percent; try 4 PASS 40 px
+    20.40 percent; try 5 PASS 22 px 10.35 percent. Chosen by eye: try 3 despeckled
+    `l2-w01-practice-line-nest-m1-line-3-despeckled.png`, print
+    `l2-w01-practice-line-nest-m1-line-print-3-despeckled.png`. Color stays `-m1-color.png`.
+    Cover result (despeckled prints, crop mode): try 4 FAIL 88.7 percent white (12 px); try 5 FAIL 85.8
+    (14 px); try 6 FAIL 84.8 (15 px); try 7 FAIL 84.9 (16 px); try 8 FAIL 89.3 and 11 px; try 9 FAIL 88.2
+    (12 px). Muse did not follow the margin notes. No cover print passes. The line width and the ink share pass
+    for tries 4 to 7 and 9. Candidate chosen by eye: try 5 despeckled
+    `l2-w01-cover-hello-m6-line-5-despeckled.png`, print `-m6-line-print-5-despeckled.png` (eye rings with
+    pupils, five-finger hands, bag with bump). Try 7 has solid dot eyes and a ground line. Color stays
+    `-m6-color.png`.
+    Off-repository test (no call): padding the line picture to 4:3 with white bands (`print: pad`), instead of
+    the crop, makes the edge frame of tries 5, 6, and 7 pass (13, 13, and 15 px). The color print would pad as
+    well. Green did not change the print mode: it is a decision for the orchestrator and the owner.
+    Calls with cost (USD, `usage.cost`, 0.01 per call; `costs.tsv` rows from 2026-11-01T08:44Z): nest line 3
+    calls 0.03; cover line 6 calls 0.06 = 9 calls 0.09 USD. No call failed. Round cost 0.09 USD. Running total
+    3.27 + 0.09 = 3.36 USD.
+    Review folder `out/storytime-review/batch-38/` (new): `brief.md` (the bar, the key and files, the exact
+    goals, the writer-check result of each chosen print, facts), `pages/` (4 files), `refs/` (12 files). PNGs
+    stay out of git. Green did not rate its own work. No task is marked `[x]`. Open: cover-hello has no line
+    print that passes the writer. Waiting for the independent review of batch-38 and a decision on the cover.
