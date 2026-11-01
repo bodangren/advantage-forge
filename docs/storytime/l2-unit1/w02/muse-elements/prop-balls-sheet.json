@@ -1,0 +1,11 @@
+{
+  "id": "prop-balls-sheet",
+  "text": "",
+  "goal": "Five colorful balls.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly FIVE round balls on a plain white background in a row with clear space between them, each in one plain even color: red, orange, yellow, green, and blue. Each ball is smooth, one solid color, with a soft highlight and no stripes, stars, or patterns. All five are the same size. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w02/muse/elements"
+}

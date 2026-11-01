@@ -1,0 +1,13 @@
+{
+  "id": "set-playground-empty",
+  "text": "",
+  "goal": "Empty playground set, no people.",
+  "references": [
+    "out/beam/views/three-quarter.png"
+  ],
+  "colorPrompt": "Compose one element sheet picture from the element pictures. Ignore any gray background and gray ground shadow in them. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The picture shows an EMPTY sunny playground with nobody in it, on a soft green lawn with a pale blue sky and a bright sun. Left: one LOW climbing frame (a small box-shaped frame of round wooden bars with three rungs, about as tall as a five-year-old child, a flat top platform). Middle: one LOW balance beam, a plain smooth wooden bar on the ground (picture 1 shows the beam asset: copy its shape, but a plain wooden bar with no metal straps), as long as three children. Right: one TALL slide with a short ladder of five wide rungs at the left, a flat top platform with a low rail, and a long smooth yellow slide down to the right. Each of the three things stands apart with a clear space between them. Clean, simple, big shapes. No benches, no swings, no trees in the middle. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "4:3",
+  "outDir": "out/storytime/l2/unit1/w02/muse/elements"
+}

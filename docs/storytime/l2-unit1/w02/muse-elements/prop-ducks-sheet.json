@@ -1,0 +1,11 @@
+{
+  "id": "prop-ducks-sheet",
+  "text": "",
+  "goal": "Three white ducks with orange beaks.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly THREE identical white ducks, with orange beaks and small round black eyes with white highlights and small orange feet, on a plain white background, in a row with a clear space between them: the first duck from the front, the second from the side, the third from the three-quarter front. Each duck is a soft, round, chubby cartoon duck, one even white, floating (sitting low) as if on water, no water drawn. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w02/muse/elements"
+}

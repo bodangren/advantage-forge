@@ -1,0 +1,11 @@
+{
+  "id": "prop-kites-sheet",
+  "text": "",
+  "goal": "Two kites, one red and one yellow.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly TWO kites on a plain white background, side by side, with a clear space between them: one RED diamond kite and one YELLOW diamond kite. Each kite is a flat diamond shape with a long, thin string that ends in a small bow tail with three small bows in a matching color. Plain, even colors, one stripe-free surface each, a simple cross of two thin sticks is not drawn. Show the whole kite and the whole tail. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w02/muse/elements"
+}

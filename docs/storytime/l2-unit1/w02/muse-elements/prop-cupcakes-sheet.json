@@ -1,0 +1,11 @@
+{
+  "id": "prop-cupcakes-sheet",
+  "text": "",
+  "goal": "A plate with seven cupcakes.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows, on a plain white background, ONE round white plate with exactly SEVEN small cupcakes with white cream swirls on top, a pink paper cup each, arranged in two rows: four cupcakes at the back and three at the front. Beside it, with clear space, the same plate again, EMPTY, with a few soft white cream smudges on it. Count the cupcakes on the first plate: seven. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w02/muse/elements"
+}

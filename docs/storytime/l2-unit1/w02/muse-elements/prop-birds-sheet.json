@@ -1,0 +1,11 @@
+{
+  "id": "prop-birds-sheet",
+  "text": "",
+  "goal": "Four small blue birds.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly FOUR identical small round blue birds on a plain white background, in a row with clear space between them. Each bird is a soft, round, chubby cartoon songbird: a blue body, a lighter blue chest, a small short orange beak, big round black eyes with white highlights, small wings folded at the sides, a short tail, and two tiny orange feet. Show the first and second from the front and the third and fourth from the side, all sitting upright. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w02/muse/elements"
+}

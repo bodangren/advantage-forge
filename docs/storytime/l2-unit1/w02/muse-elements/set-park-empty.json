@@ -1,0 +1,14 @@
+{
+  "id": "set-park-empty",
+  "text": "",
+  "goal": "Empty park set, no people.",
+  "references": [
+    "out/pond/views/three-quarter.png",
+    "out/storytime-low-branch/views/three-quarter.png"
+  ],
+  "colorPrompt": "Compose one element sheet picture from the element pictures. Ignore any gray background and gray ground shadow in them. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The picture shows an EMPTY sunny park with nobody in it: soft green grass, a small round pond with a ring of smooth gray and tan stones and a few green lily pads (the pond of picture 1), one low round green tree with a short brown trunk and one low thick branch (see picture 2), a bright yellow sun in a clear blue sky with two small white clouds, and a few soft green bushes far at the back. The grass in the middle foreground is open and empty. The whole picture is one calm wide scene, camera at a low child eye level. Exactly one sun, exactly one pond, exactly one tree. No ducks, no birds, no kites, no benches, no balls. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "4:3",
+  "outDir": "out/storytime/l2/unit1/w02/muse/elements"
+}
