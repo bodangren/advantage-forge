@@ -1417,7 +1417,7 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   `claude-code/claude-sonnet-5-5#high`, a different family.
   `phase_base_sha`: `15a7bf0b`. `role_base_sha`: `2b59ccaa`. No file under `src/`, `assets/`,
   `scripts/`, or another test file changed.
-- [ ] Task: Implement the Muse week 1 delivery manifest writer (Green).
+- [~] Task: Implement the Muse week 1 delivery manifest writer (Green).
   - Reuse the `StorytimeManifest` types and the picture-list row plan (`planPictureRow`) of
     `src/storytime/book-pictures.ts`.
   - Read the approved version of each clean row from a tracked approval list, for example
@@ -1426,6 +1426,48 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   - Copy the print files to the delivery folder under the list names.
   - Write `manifest.json`.
   - Add a CLI entry.
+  - Green evidence (implementation commit `f41fe108`, 2026-11-01). `phase_base_sha`: `15a7bf0b`.
+    `role_base_sha`: `0bf8858a`.
+    - New file `src/storytime/muse-delivery.ts`. It exports `writeMuseDelivery(options)`, the types
+      `MuseApprovalEntry`, `MuseApprovalList`, and `MuseDeliveryOptions`. It reuses
+      `assembleManifest` (so `batchSha256` and `BATCH_HASH_ALGORITHM` come from the existing
+      code), `planPictureRow`, `inspectLineArtPng`, `priceForProvider`, and `PICTURE_RUBRIC_VERSION`.
+    - Change in `src/storytime/book-pictures.ts`: `rowCaptureJob` is now exported (one word), and
+      the CLI has a new `deliver` command with the flags `--list`, `--approvals`, `--muse`, and
+      `--delivery`. The `deliver` command pins no picture list SHA-256 (see the open point below).
+    - CLI line: `node --import tsx scripts/storytime-book-pictures.ts deliver --list <pictures.json>
+      --approvals <approved.json> --muse <muse folder> --delivery <delivery folder>`. A smoke run
+      on the real row `l2-w01-check-row-bus` wrote one manifest, two batch hashes, and two files
+      under `/tmp`. The run exited 0.
+    - Rules in the writer: every check runs before the first write; the copies are byte for byte;
+      `manifest.json` is written last; a different existing manifest or a different file under a
+      list name is refused; a second run gives the same bytes. Only the Kimi review and a named
+      person review map from the approval entry. The color print check covers PNG format, the row
+      class size, and no alpha. The line print check is `inspectLineArtPng` (size, pure 0 and 255).
+      The class B calm top and the class C white corner checks do not run on the Muse prints,
+      because the Red fixtures hold no white corners. The field `lineArt.renderEvidenceFile` is the
+      empty string, because the Muse flow has no 3D render evidence.
+    - GREEN command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest
+      run tests/storytime-muse-delivery.test.ts tests/storytime-picture-rows.test.ts
+      tests/storytime-book-pictures.test.ts --maxWorkers=1'`. Exit code `1`. Summary: `Test Files
+      1 failed | 2 passed (3)` and `Tests 2 failed | 149 passed (151)`. T152 to T161 pass (10 of
+      10, also alone with exit code `0`). The two failures are T142 and T147 of
+      `tests/storytime-book-pictures.test.ts`. They pin the Workbooks picture list SHA-256 of
+      version 3 (`c3e23cfd...`). The Workbooks commit `87ecc6aa` (2026-11-01, picture list version
+      4) changed the list to `6d05dfc5...`. The failure is outside this change and the task
+      cannot edit a committed test. The task stays `[~]` until the owner of those tests updates the
+      pinned hash.
+    - `tsc --noEmit` through the heavy runner: exit code `2`. Total errors `38` (Red saw `39`).
+      Owned errors `0` (Red saw `1`). The other 38 errors were present before this change.
+    - Mutation checks (only `tests/storytime-muse-delivery.test.ts`; each mutation restored):
+      (1) skip the line-art check: T156 and T157 fail. (2) drop the unapproved-row filter: all 10
+      tests fail, T153 among them (the unapproved row has no Muse file). (3) skip the color size
+      check: T156 fails. (4) write `manifest.json` before the copies: no test fails. No test
+      covers the write order. The code writes the manifest last by its statement order.
+    - Open point for the next role: `PICTURE_LIST_V3_SHA256` and the row `render` and `verify`
+      commands still pin version 3, so they refuse the version 4 list that Workbooks has now.
+    - Models: Red `deepseek/deepseek-flash#high`. Green `claude-code/claude-sonnet-5-5#high`
+      (Anthropic, a different family). Green coder model: none. No delegation.
 - [ ] Task: Deliver the week 1 Muse batch to the PM under the 2026-11-01 contract.
   - Run the writer on the clean rows.
   - Send the delivery path, the manifest SHA-256, the clean row count, the not-clean rows with
