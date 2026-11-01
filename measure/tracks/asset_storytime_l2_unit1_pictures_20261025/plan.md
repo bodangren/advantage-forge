@@ -1417,6 +1417,74 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   `claude-code/claude-sonnet-5-5#high`, a different family.
   `phase_base_sha`: `15a7bf0b`. `role_base_sha`: `2b59ccaa`. No file under `src/`, `assets/`,
   `scripts/`, or another test file changed.
+
+  Red remediation round 2 (2026-11-01). Reviews A, B, and C of HEAD `19359dd1` add hardening
+  findings to the writer. This round adds tests T162 to T172 to the same file. The tests use
+  real sharp PNG fixtures and real temporary folders. No test mocks the writer. No task is `[x]`.
+  - T162 (RB8-01): `checkPictureListPin(listBytes, approvals)` refuses a `pictureListSha256`
+    mismatch. It accepts a match and it does nothing with no pin. `writeMuseDelivery` refuses a
+    pinned list whose measured hash differs, and it writes nothing.
+  - T163 (RB8-02): `resolveMuseDeliveryPaths({ repoRoot, muse, delivery })` accepts paths inside
+    `<repo>/out/`. It refuses an absolute path outside `out/` and a `../` path that leaves `out/`.
+  - T164 (RB8-02 wiring): the `deliver` command refuses an absolute delivery path outside `out/`,
+    a `../` delivery path, and a Muse path outside `out/`. Each refused run writes nothing. A
+    valid `out/` run exits 0 and writes `manifest.json`.
+  - T165 (RB8-03): a dangling symlink at a delivery target is refused. The link target receives
+    no byte.
+  - T166 (RB8-04): two rows with the same delivered color name, or with the same line-art name,
+    in one run are refused before any write.
+  - T167 (RB8-05): a line-art name of `.`, `..`, `manifest.json`, or the color name of the same
+    row is refused before any write. A list file name of `manifest.json` is refused by the list
+    pattern.
+  - T168 (RB8-06): a Muse print that is a symlink (inside or outside `museRoot`), or that is a
+    directory, is refused.
+  - T169 (RB8-07): a wrong list version, an unknown row id, and a traversal `colorPrint` name are
+    refused. This test passes at HEAD. It guards the existing checks. It is not a Red failure.
+  - T170 (review A F1): a copy that fails at write time leaves no `manifest.json`. The long file
+    name fails with `ENAMETOOLONG` at the copy write. This test passes at HEAD and fails when the
+    manifest moves before the copies. It is not a Red failure.
+  - T171 (review C F2): a palette, one-channel, 16-bit, or four-channel color print is refused.
+    The four-channel case already fails at HEAD on the alpha rule.
+  - T172 (review C F3): `writeMuseDelivery` takes an optional `onSkip(rowId, reason)` callback.
+    The writer calls it once for a row without an approval entry.
+  At HEAD the Red command exits `1`. Summary: `Test Files  1 failed (1)` and
+  `Tests  9 failed | 12 passed (21)`. T152 to T161 pass (10). Seven new tests fail because the
+  writer accepts the input: T164, T165, T166, T167, T168, T171, and T172. Two new tests fail
+  because the module lacks an export: T162 (`checkPictureListPin`) and T163
+  (`resolveMuseDeliveryPaths`). T169 and T170 pass, as recorded above.
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest
+  run tests/storytime-muse-delivery.test.ts --maxWorkers=1'`.
+  Type check: `tsc exit: 2`; owned errors `0`; total errors `38`. The 38 errors sit in `assets/`
+  and in other test files. They were present before this round. No new test raises a compiler
+  error, because the new exports are read through a runtime import with a local shape type.
+  Out of scope this round: review A F2 (the person schema requires `observedCounts`), review A
+  F3 (the class B calm-top and class C white-corner checks), and review A F4 (the version 3 list
+  pin in the row render and verify commands).
+  The API that Green must add for this round:
+  - `resolveMuseDeliveryPaths(options: { repoRoot, muse, delivery }): { museRoot, deliveryRoot }`.
+    Each path resolves against `repoRoot`. Each resolved path must equal `<repoRoot>/out` or sit
+    under it. A path outside it throws an error that names the flag and holds `out`.
+  - `checkPictureListPin(listBytes: Buffer | string, approvals: MuseApprovalList): void`. It
+    compares the SHA-256 of the bytes with `approvals.pictureListSha256`. A mismatch throws. No
+    pin is a no-op.
+  - `MuseDeliveryOptions.pictureListSha256?: string`: the measured list hash. The writer refuses
+    a pinned list when this field is absent. The writer refuses a pinned list when this field
+    differs from the pin.
+  - The approval list schema gains optional `pictureListSha256` (64 lowercase hex characters).
+    `manifest.json` keeps its current shape. The PM contract does not change.
+  - `MuseDeliveryOptions.onSkip?: (rowId: string, reason: string) => void`. The writer calls it
+    once for each row without an approval entry. The reason names the missing approval entry.
+  - The writer refuses a delivery target that is a symlink (`lstat`, then `wx`). It refuses a
+    repeated delivered file name in one run. It refuses a line-art name of `.`, `..`,
+    `manifest.json`, or the row color name. It checks each Muse print with `lstat`, `realpath`,
+    and `stat`: no symlink, inside `museRoot`, a regular file.
+  - The color print check also requires `depth === 'uchar'`, `bitsPerSample === 8`,
+    `space === 'srgb'`, `channels === 3`, and `isPalette === false`.
+  - The `deliver` CLI command uses `resolveMuseDeliveryPaths` and passes `pictureListSha256:
+    list.sha256`.
+  The test file imports no new module at the top level, so T152 to T161 keep their meaning.
+  `phase_base_sha`: `15a7bf0b`. `role_base_sha`: `2c1b23da`. No file under `src/`, `scripts/`,
+  or another test file changed.
 - [~] Task: Implement the Muse week 1 delivery manifest writer (Green).
   - Reuse the `StorytimeManifest` types and the picture-list row plan (`planPictureRow`) of
     `src/storytime/book-pictures.ts`.

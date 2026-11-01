@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
-import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, readdir, rm, symlink, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import sharp from 'sharp';
@@ -9,6 +9,7 @@ import {
   BATCH_HASH_ALGORITHM,
   PICTURE_SIZES,
   batchSha256,
+  runStorytimeCli,
   type CandidateManifest,
   type ManifestJob,
   type PictureListRow,
@@ -503,5 +504,463 @@ describe('Muse week 1 delivery manifest', () => {
     const fromPath = await deliver(path.join(root, 'delivery-path'), approvalsFile);
     expect(fromPath.jobs.map((job) => job.id).sort()).toEqual([...CLEAN_ROWS].sort());
     expect(existsSync(path.join(root, 'delivery-path', 'manifest.json'))).toBe(true);
+  });
+});
+
+// Red remediation round 2 (2026-11-01). The reviews RB8-01 to RB8-07, review A F1, and review C
+// F2 and F3 add hardening rules to the same writer. The new exports below do not exist yet, so
+// the tests that need them fail with a missing-export error. The other new tests fail because the
+// writer accepts the input today. The tests read and write real files only. The writer keeps
+// using temporary folders, so the path containment rule lives in the exported resolver that the
+// CLI calls.
+
+type DeliveryOptions = Parameters<typeof writeMuseDelivery>[0];
+type DeliveryApprovals = DeliveryOptions['approvals'];
+
+/** The writer options plus the hardening keys that Green must add. */
+function deliverWith(overrides: Record<string, unknown>): Promise<StorytimeManifest> {
+  return writeMuseDelivery({
+    rows: ROWS,
+    approvals: approvalList(),
+    museRoot,
+    deliveryRoot,
+    ...overrides,
+  } as unknown as DeliveryOptions);
+}
+
+function listOf(entries: unknown[]): DeliveryApprovals {
+  return { version: 1, entries } as unknown as DeliveryApprovals;
+}
+
+/** The RB8-02 resolver. It is absent at HEAD, so the caller gets a clear Red error. */
+async function resolvePaths(options: {
+  repoRoot: string;
+  muse: string;
+  delivery: string;
+}): Promise<{ museRoot: string; deliveryRoot: string }> {
+  const module = (await import('../src/storytime/muse-delivery.js')) as unknown as {
+    resolveMuseDeliveryPaths?: (input: {
+      repoRoot: string;
+      muse: string;
+      delivery: string;
+    }) => { museRoot: string; deliveryRoot: string };
+  };
+  const resolver = module.resolveMuseDeliveryPaths;
+  if (typeof resolver !== 'function') {
+    throw new Error('src/storytime/muse-delivery.ts does not export resolveMuseDeliveryPaths (RB8-02).');
+  }
+  return resolver(options);
+}
+
+/** The RB8-01 pin check. It is absent at HEAD, so the caller gets a clear Red error. */
+async function checkPin(listBytes: Buffer | string, approvals: unknown): Promise<void> {
+  const module = (await import('../src/storytime/muse-delivery.js')) as unknown as {
+    checkPictureListPin?: (bytes: Buffer | string, list: unknown) => void;
+  };
+  const checker = module.checkPictureListPin;
+  if (typeof checker !== 'function') {
+    throw new Error('src/storytime/muse-delivery.ts does not export checkPictureListPin (RB8-01).');
+  }
+  checker(listBytes, approvals);
+}
+
+/** A valid picture-list row for a name that the shared ROWS do not hold. */
+function extraRow(id: string, overrides: Partial<PictureListRow> = {}): PictureListRow {
+  return {
+    id,
+    week: 1,
+    use: 'story-page',
+    sizeClass: 'A',
+    fileName: `${id}-v1.png`,
+    lineArtFileName: `${id}-line-v1.png`,
+    width: 4000,
+    height: 3000,
+    text: '',
+    prompt: 'One object.',
+    ...overrides,
+  };
+}
+
+/** Writes one color and one line Muse print for a row and returns the approval file names. */
+async function addMusePrints(
+  row: PictureListRow,
+  version: number,
+  tag: string,
+  background: string = BACKGROUNDS[0]!,
+): Promise<{ colorPrint: string; linePrint: string }> {
+  const size = PICTURE_SIZES[sizeKeyOf(row)];
+  const colorPrint = `${row.id}-${tag}-m${version}-color-print.png`;
+  const linePrint = `${row.id}-${tag}-m${version}-line-print.png`;
+  await writeFile(path.join(museRoot, colorPrint), await colorPng(size.width, size.height, background));
+  await writeFile(path.join(museRoot, linePrint), await linePng(size.width, size.height, 40));
+  return { colorPrint, linePrint };
+}
+
+/** A palette PNG: 8-bit, sRGB, three channels, but a palette. Workbooks refuses it. */
+async function palettePng(width: number, height: number): Promise<Buffer> {
+  const key = `palette:${width}x${height}`;
+  const cached = pngCache.get(key);
+  if (cached) return cached;
+  const png = await sharp({ create: { width, height, channels: 3, background: BACKGROUNDS[0]! } })
+    .png({ palette: true })
+    .toBuffer();
+  pngCache.set(key, png);
+  return png;
+}
+
+/** A one-channel grey PNG. The color print rule requires exactly three channels. */
+async function oneChannelPng(width: number, height: number): Promise<Buffer> {
+  const key = `one-channel:${width}x${height}`;
+  const cached = pngCache.get(key);
+  if (cached) return cached;
+  const png = await sharp(Buffer.alloc(width * height, 200), { raw: { width, height, channels: 1 } })
+    .toColourspace('b-w')
+    .png()
+    .toBuffer();
+  pngCache.set(key, png);
+  return png;
+}
+
+/** A 16-bit PNG. The color print rule requires 8-bit uchar pixels. */
+async function deep16Png(width: number, height: number): Promise<Buffer> {
+  const key = `deep16:${width}x${height}`;
+  const cached = pngCache.get(key);
+  if (cached) return cached;
+  const png = await sharp({ create: { width, height, channels: 3, background: BACKGROUNDS[0]! } })
+    .toColourspace('rgb16')
+    .png()
+    .toBuffer();
+  pngCache.set(key, png);
+  return png;
+}
+
+/** A four-channel PNG with an alpha channel. */
+async function alphaPng(width: number, height: number): Promise<Buffer> {
+  const key = `alpha:${width}x${height}`;
+  const cached = pngCache.get(key);
+  if (cached) return cached;
+  const png = await sharp({
+    create: { width, height, channels: 4, background: { r: 136, g: 204, b: 255, alpha: 1 } },
+  })
+    .png()
+    .toBuffer();
+  pngCache.set(key, png);
+  return png;
+}
+
+describe('Muse delivery hardening (Red remediation round 2)', () => {
+  it('T162 refuses an approval list whose pictureListSha256 does not match the list bytes', async () => {
+    const entries = approvalList().entries;
+    const listText = JSON.stringify(ROWS);
+    const listBytes = Buffer.from(listText, 'utf8');
+    const listSha = sha256(listBytes);
+
+    // The pin matches the list bytes.
+    await checkPin(listBytes, { version: 1, entries, pictureListSha256: listSha });
+    // The pin differs from the list bytes.
+    const pinError = await rejection(() =>
+      checkPin(listBytes, { version: 1, entries, pictureListSha256: sha256('a different list') }),
+    );
+    expect(pinError.message).toMatch(/picture list|sha|pin/i);
+    // The list carries no pin, so the check is a no-op.
+    await checkPin(listBytes, { version: 1, entries });
+
+    // The deliver path refuses a pinned list with different bytes and writes nothing.
+    const mismatch = await rejection(() =>
+      deliverWith({
+        approvals: { version: 1, entries, pictureListSha256: sha256('a different list') },
+        pictureListSha256: listSha,
+      }),
+    );
+    expect(mismatch.message).toMatch(/picture list|sha|pin/i);
+    expect(existsSync(path.join(deliveryRoot, 'manifest.json'))).toBe(false);
+
+    // The deliver path accepts a matching pin.
+    const manifest = await deliverWith({
+      approvals: { version: 1, entries, pictureListSha256: listSha },
+      pictureListSha256: listSha,
+    });
+    expect(manifest.jobs.map((job) => job.id).sort()).toEqual([...CLEAN_ROWS].sort());
+  });
+
+  it('T163 confines the Muse and delivery paths to the repository out folder', async () => {
+    const repo = path.join(root, 'repo');
+    const outRoot = path.join(repo, 'out');
+    await mkdir(outRoot, { recursive: true });
+
+    const inside = await resolvePaths({
+      repoRoot: repo,
+      muse: 'out/muse',
+      delivery: path.join(outRoot, 'delivery'),
+    });
+    expect(inside.museRoot).toBe(path.join(outRoot, 'muse'));
+    expect(inside.deliveryRoot).toBe(path.join(outRoot, 'delivery'));
+    const okDelivery = await resolvePaths({ repoRoot: repo, muse: 'out/muse', delivery: 'out/delivery' });
+    expect(okDelivery.deliveryRoot).toBe(path.join(outRoot, 'delivery'));
+
+    const bad = [
+      { repoRoot: repo, muse: 'out/muse', delivery: path.join(root, 'outside') },
+      { repoRoot: repo, muse: 'out/muse', delivery: '../escape-delivery' },
+      { repoRoot: repo, muse: path.join(root, 'outside-muse'), delivery: 'out/delivery' },
+      { repoRoot: repo, muse: '../../escape-muse', delivery: 'out/delivery' },
+    ];
+    for (const options of bad) {
+      const error = await rejection(() => resolvePaths(options));
+      expect(error.message).toMatch(/out|outside|contain/i);
+    }
+  });
+
+  it('T164 refuses a deliver CLI run whose paths leave the repository out folder', async () => {
+    const repo = path.join(root, 'cli-repo');
+    const outRoot = path.join(repo, 'out');
+    const museFolder = path.join(outRoot, 'muse');
+    const museEscape = path.join(root, 'cli-outside-muse');
+    await mkdir(museFolder, { recursive: true });
+    await mkdir(museEscape, { recursive: true });
+    const row = rowFor(NUT);
+    const colorPrint = 'nut-m1-color-print.png';
+    const linePrint = 'nut-m1-line-print.png';
+    for (const folder of [museFolder, museEscape]) {
+      await writeFile(path.join(folder, colorPrint), await colorPng(4000, 3000, BACKGROUNDS[0]!));
+      await writeFile(path.join(folder, linePrint), await linePng(4000, 3000, 40));
+    }
+    const listFile = path.join(repo, 'pictures.json');
+    await writeFile(listFile, JSON.stringify([row], null, 2));
+    const approvalsFile = path.join(repo, 'approved.json');
+    await writeFile(
+      approvalsFile,
+      JSON.stringify({ version: 1, entries: [{ rowId: NUT, version: 1, colorPrint, linePrint }] }, null, 2),
+    );
+    const run = (delivery: string, muse: string) =>
+      runStorytimeCli(
+        ['deliver', '--list', listFile, '--approvals', approvalsFile, '--muse', muse, '--delivery', delivery],
+        { repoRoot: repo, workbooksRoot: repo, log: () => {} },
+      );
+
+    const absolute = path.join(root, 'cli-outside');
+    const absoluteError = await rejection(() => run(absolute, 'out/muse'));
+    expect(absoluteError.message).toMatch(/out|outside|contain/i);
+    expect(existsSync(absolute)).toBe(false);
+
+    const relativeError = await rejection(() => run('../cli-escape', 'out/muse'));
+    expect(relativeError.message).toMatch(/out|outside|contain/i);
+    expect(existsSync(path.join(root, 'cli-escape'))).toBe(false);
+
+    const museError = await rejection(() => run('out/delivery-muse-escape', museEscape));
+    expect(museError.message).toMatch(/out|outside|contain/i);
+    expect(existsSync(path.join(outRoot, 'delivery-muse-escape'))).toBe(false);
+
+    const status = await run('out/delivery', 'out/muse');
+    expect(status).toBe(0);
+    expect(existsSync(path.join(outRoot, 'delivery', 'manifest.json'))).toBe(true);
+  });
+
+  it('T165 refuses a dangling symlink at a delivery target and writes no byte outside', async () => {
+    const row = rowFor(NUT);
+    await mkdir(deliveryRoot, { recursive: true });
+    const outside = path.join(root, 'outside-target.png');
+    await symlink(outside, path.join(deliveryRoot, row.fileName));
+
+    const error = await rejection(() => deliver());
+    expect(error.message).toMatch(/symlink|link|regular|exist|refus/i);
+    expect(existsSync(outside)).toBe(false);
+    expect(existsSync(path.join(deliveryRoot, 'manifest.json'))).toBe(false);
+  });
+
+  it('T166 refuses two rows that deliver the same file name in one run', async () => {
+    const first = rowFor(NUT);
+    const colorCopy = extraRow('l2-w01-story-page-a-nut-copy', { fileName: first.fileName });
+    const colorPrints = await addMusePrints(colorCopy, 1, 'dupcolor', BACKGROUNDS[1]!);
+    const colorError = await rejection(() =>
+      writeMuseDelivery({
+        rows: [...ROWS, colorCopy],
+        approvals: listOf([...approvalList().entries, { rowId: colorCopy.id, version: 1, ...colorPrints }]),
+        museRoot,
+        deliveryRoot,
+      }),
+    );
+    expect(colorError.message).toMatch(/duplicate|same|twice|collid/i);
+    expect(await walk(deliveryRoot)).toEqual([]);
+
+    const lineCopy = extraRow('l2-w01-story-page-a-nut-line-copy', {
+      lineArtFileName: first.lineArtFileName,
+    });
+    const linePrints = await addMusePrints(lineCopy, 1, 'dupline', BACKGROUNDS[2]!);
+    const lineTarget = path.join(root, 'delivery-line-dup');
+    const lineError = await rejection(() =>
+      writeMuseDelivery({
+        rows: [...ROWS, lineCopy],
+        approvals: listOf([...approvalList().entries, { rowId: lineCopy.id, version: 1, ...linePrints }]),
+        museRoot,
+        deliveryRoot: lineTarget,
+      }),
+    );
+    expect(lineError.message).toMatch(/duplicate|same|twice|collid/i);
+    expect(await walk(lineTarget)).toEqual([]);
+  });
+
+  it('T167 refuses a degenerate line-art name before any write', async () => {
+    const cases: Array<{ id: string; lineArtFileName: string }> = [
+      { id: 'l2-w01-story-page-a-dot', lineArtFileName: '.' },
+      { id: 'l2-w01-story-page-a-dotdot', lineArtFileName: '..' },
+      { id: 'l2-w01-story-page-a-manifest', lineArtFileName: 'manifest.json' },
+      // The line-art name equals the color name of the same row.
+      { id: 'l2-w01-story-page-a-twin', lineArtFileName: 'l2-w01-story-page-a-twin-v1.png' },
+    ];
+    for (const [index, item] of cases.entries()) {
+      const row = extraRow(item.id, { lineArtFileName: item.lineArtFileName });
+      const prints = await addMusePrints(row, 1, `degenerate${index}`);
+      const target = path.join(root, `delivery-degenerate-${index}`);
+      const error = await rejection(() =>
+        writeMuseDelivery({
+          rows: [row],
+          approvals: listOf([{ rowId: row.id, version: 1, ...prints }]),
+          museRoot,
+          deliveryRoot: target,
+        }),
+      );
+      expect(error.message).toMatch(/name|manifest|plain|line|reserved|refus/i);
+      expect(await walk(target)).toEqual([]);
+      expect(existsSync(path.join(target, 'manifest.json'))).toBe(false);
+    }
+
+    // A list file name cannot pass the list pattern, so the writer refuses it before any read.
+    const listNameRow = extraRow('l2-w01-story-page-a-list-name', { fileName: 'manifest.json' });
+    const listPrints = await addMusePrints(listNameRow, 1, 'listname');
+    const listTarget = path.join(root, 'delivery-degenerate-list');
+    const listError = await rejection(() =>
+      writeMuseDelivery({
+        rows: [listNameRow],
+        approvals: listOf([{ rowId: listNameRow.id, version: 1, ...listPrints }]),
+        museRoot,
+        deliveryRoot: listTarget,
+      }),
+    );
+    expect(listError.message).toMatch(/file name|pattern|invalid|manifest/i);
+    expect(await walk(listTarget)).toEqual([]);
+  });
+
+  it('T168 refuses a Muse print that is a symlink, leaves museRoot, or is not a regular file', async () => {
+    const size = PICTURE_SIZES.story;
+    const outsideFolder = path.join(root, 'muse-outside');
+    await mkdir(outsideFolder, { recursive: true });
+    const outsideColor = path.join(outsideFolder, 'color-print.png');
+    await writeFile(outsideColor, await colorPng(size.width, size.height, BACKGROUNDS[1]!));
+    const realNames = museNames(NUT, 1);
+
+    const outsideLink = 'l2-w01-story-page-a-nut-m1-outside-color-print.png';
+    await symlink(outsideColor, path.join(museRoot, outsideLink));
+    const insideLink = 'l2-w01-story-page-a-nut-m1-inside-color-print.png';
+    await symlink(path.join(museRoot, realNames.colorPrint), path.join(museRoot, insideLink));
+    const folderName = 'l2-w01-story-page-a-nut-m1-folder-color-print.png';
+    await mkdir(path.join(museRoot, folderName));
+
+    const cases = [outsideLink, insideLink, folderName];
+    for (const [index, colorPrint] of cases.entries()) {
+      const target = path.join(root, `delivery-muse-print-${index}`);
+      const error = await rejection(() =>
+        writeMuseDelivery({
+          rows: [rowFor(NUT)],
+          approvals: listOf([{ rowId: NUT, version: 1, colorPrint, linePrint: realNames.linePrint }]),
+          museRoot,
+          deliveryRoot: target,
+        }),
+      );
+      expect(error.message).toMatch(/regular file|symlink|link|outside|refus/i);
+      expect(await walk(target)).toEqual([]);
+    }
+  });
+
+  it('T169 refuses a malformed approval list', async () => {
+    const entries = approvalList().entries;
+    const cases: Array<{ approvals: unknown; match: RegExp }> = [
+      { approvals: { version: 2, entries }, match: /version|approval list|invalid/i },
+      {
+        approvals: {
+          version: 1,
+          entries: [
+            ...entries,
+            {
+              rowId: 'l2-w01-story-page-a-ghost',
+              version: 1,
+              colorPrint: 'ghost-color-print.png',
+              linePrint: 'ghost-line-print.png',
+            },
+          ],
+        },
+        match: /not a row|unknown|picture list/i,
+      },
+      {
+        approvals: { version: 1, entries: [{ ...entries[0]!, colorPrint: '../x.png' }] },
+        match: /plain file name|invalid/i,
+      },
+    ];
+    for (const [index, item] of cases.entries()) {
+      const target = path.join(root, `delivery-malformed-${index}`);
+      const error = await rejection(() =>
+        writeMuseDelivery({
+          rows: ROWS,
+          approvals: item.approvals as DeliveryApprovals,
+          museRoot,
+          deliveryRoot: target,
+        }),
+      );
+      expect(error.message).toMatch(item.match);
+      expect(await walk(target)).toEqual([]);
+    }
+  });
+
+  it('T170 writes no manifest.json when a copy fails at write time', async () => {
+    // The long name passes the plain-name rule but the file system refuses it, so the copy fails
+    // at write time. A writer that writes manifest.json first leaves it behind.
+    const longName = `${'x'.repeat(300)}.png`;
+    const row = extraRow('l2-w01-story-page-a-long-name', { lineArtFileName: longName });
+    const prints = await addMusePrints(row, 1, 'longname');
+    const error = await rejection(() =>
+      writeMuseDelivery({
+        rows: [row],
+        approvals: listOf([{ rowId: row.id, version: 1, ...prints }]),
+        museRoot,
+        deliveryRoot,
+      }),
+    );
+    expect(error.message).toMatch(/name|long|ENAMETOOLONG/i);
+    expect(existsSync(path.join(deliveryRoot, 'manifest.json'))).toBe(false);
+  });
+
+  it('T171 refuses a color print that is a palette, one-channel, 16-bit, or four-channel PNG', async () => {
+    const size = PICTURE_SIZES.story;
+    const names = museNames(NUT, 1);
+    const cases: Array<{ label: string; png: Buffer; match: RegExp }> = [
+      { label: 'palette', png: await palettePng(size.width, size.height), match: /palette|channel|format|srgb|8-bit/i },
+      { label: 'one channel', png: await oneChannelPng(size.width, size.height), match: /channel|format|srgb|8-bit/i },
+      { label: '16-bit', png: await deep16Png(size.width, size.height), match: /16-bit|depth|bits|8-bit|format/i },
+      { label: 'alpha', png: await alphaPng(size.width, size.height), match: /alpha|channel/i },
+    ];
+    for (const [index, item] of cases.entries()) {
+      await writeFile(path.join(museRoot, names.colorPrint), item.png);
+      const target = path.join(root, `delivery-format-${index}`);
+      const error = await rejection(() =>
+        writeMuseDelivery({
+          rows: [rowFor(NUT)],
+          approvals: listOf([{ rowId: NUT, version: 1, ...names }]),
+          museRoot,
+          deliveryRoot: target,
+        }),
+      );
+      expect(error.message).toContain(NUT);
+      expect(error.message).toMatch(item.match);
+      expect(await walk(target)).toEqual([]);
+    }
+  });
+
+  it('T172 reports a row that has no approval entry', async () => {
+    const skipped: Array<{ rowId: string; reason: string }> = [];
+    const manifest = await deliverWith({
+      onSkip: (rowId: string, reason: string) => skipped.push({ rowId, reason }),
+    });
+    expect(manifest.jobs.map((job) => job.id).sort()).toEqual([...CLEAN_ROWS].sort());
+    expect(skipped.map((item) => item.rowId)).toEqual([MOP]);
+    expect(skipped[0]?.reason).toMatch(/approval|entry|clean/i);
   });
 });
