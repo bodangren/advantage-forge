@@ -1346,6 +1346,12 @@ rows T142 to T151, and the closeout gate for 30 jobs.
 - [ ] Task: Send the count review and the line-art look to the PM. The PM routes them to Daniel or
   his named reviewer. Record the person, time, counts, and verdict for all 30 color and 30
   line-art pictures. Do not label model results acceptance.
+  Week 1 contact sheet (2026-11-01): `out/storytime-review/w01-contact/index.html`. It shows
+  30 cards in picture-list order, each with a color preview and a line-art preview (60
+  previews in `prev/`). The delivered files are not changed. The page has an OK box and a
+  note field for each card, and a button that downloads the answers as JSON. The manifest
+  SHA-256 is `00ea0c5b06d18e3f54cbceed9caa943100c0711bb515c44561eb46b7e03ed369`. This task
+  stays open until a person records the review.
 - [ ] Task: Deliver the week 1 manifest, contact sheet, review logs, and ledger. The manifest
   lists the 30 color and 30 line-art files. Apply picture specification v1 to the line art.
   Specification v1 has arrived, so the line art is not provisional. Report the output path and
