@@ -5,11 +5,14 @@
 //   node scripts/storytime-muse.mjs color <spec>... [--concurrency 4]   one color call per spec, next version m<n>
 //   node scripts/storytime-muse.mjs line  <spec>... [--from <n>] [--tries <k>]  line call from the approved color of m<n> (default: latest); k tries run in parallel
 //   node scripts/storytime-muse.mjs print <spec> --from <n>             print-size files again for m<n> (no call)
+//   node scripts/storytime-muse.mjs despeckle <spec> --from <n> [--try <t>] [--area <fraction>]
+//                                                                        remove isolated black specks from line-m<n> try t (default 1); writes -line[-t]-despeckled.png and its print file (no call)
 //   node scripts/storytime-muse.mjs import <spec> --color <png> --line <png> [--note <text>] [--cost <usd>]
 //                                                                        copy earlier pictures in as the next version (no call)
 //
 // Spec file (JSON, one per row): { id, text, goal, references: [paths], colorPrompt, linePrompt,
-//   print: "crop" | "pad", aspect?: "4:3", outDir?: <folder> }.
+//   print: "crop" | "pad", aspect?: "4:3", outDir?: <folder>, despeckleArea?: 0.000015 }.
+// despeckleArea = a black connected component (8 neighbors) smaller than this share of the line picture is a speck.
 // Outputs in out/storytime/l2/unit1/w01/muse/ (or spec.outDir): <id>-m<n>-color.png, -line.png (1-bit),
 // -color-print.png, -line-print.png (4000 x 3000, or spec.printSize), <id>-m<n>.json (SHA-256 of each file), costs.tsv.
 // The API key is read at run time from the Workbooks dashboard env file. It is never printed or written.
@@ -95,6 +98,53 @@ const callMuse = async (key, prompt, refs, aspect) => {
 
 // Line art at the call size: grayscale, hard threshold, pure 1-bit.
 const toOneBit = (buf) => sharp(buf).grayscale().threshold(128).toColourspace('b-w').png({ bitdepth: 1, compressionLevel: 9 }).toBuffer();
+
+// Despeckle: delete each black connected component (8 neighbors) whose area is below area x image pixels.
+// A component that touches another line is part of that component, so it is never a speck.
+const DESPECKLE_AREA = 0.000015; // 0.0015 percent of the image area, about 37 px at 1920 x 1280
+const despeckle = async (oneBit, area = DESPECKLE_AREA) => {
+  const { data, info } = await sharp(oneBit).grayscale().raw().toBuffer({ resolveWithObject: true });
+  const { width: w, height: h } = info;
+  const limit = Math.max(1, Math.round(area * w * h));
+  const seen = new Uint8Array(w * h);
+  const stack = new Int32Array(w * h);
+  let removed = 0;
+  let removedPixels = 0;
+  for (let start = 0; start < w * h; start++) {
+    if (seen[start] || data[start] >= 128) continue;
+    let sp = 0;
+    let size = 0;
+    stack[sp++] = start;
+    seen[start] = 1;
+    const members = [];
+    while (sp) {
+      const i = stack[--sp];
+      size++;
+      if (size <= limit) members.push(i);
+      const x = i % w;
+      const y = (i - x) / w;
+      for (let dy = -1; dy <= 1; dy++) {
+        for (let dx = -1; dx <= 1; dx++) {
+          if (!dx && !dy) continue;
+          const nx = x + dx;
+          const ny = y + dy;
+          if (nx < 0 || ny < 0 || nx >= w || ny >= h) continue;
+          const j = ny * w + nx;
+          if (seen[j] || data[j] >= 128) continue;
+          seen[j] = 1;
+          stack[sp++] = j;
+        }
+      }
+    }
+    if (size < limit) {
+      for (const i of members) data[i] = 255;
+      removed++;
+      removedPixels += size;
+    }
+  }
+  const out = await sharp(data, { raw: { width: w, height: h, channels: 1 } }).threshold(128).toColourspace('b-w').png({ bitdepth: 1, compressionLevel: 9 }).toBuffer();
+  return { buf: out, removed, removedPixels, limit };
+};
 
 // Reframe to 4:3: crop = centered crop, pad = white bands (color pad uses the picture's own edge color).
 const reframe = async (buf, mode, padColor, dims) => {
@@ -217,6 +267,13 @@ const doLine = async (key, ctx, from, tries = 1) => {
       const pname = `${base}-line-print${suffix()}.png`;
       writeFileSafe(join(dir, pname), pp);
       addFile(side, dir, 'linePrint', pname, pp);
+      // The un-despeckled files above stay as they are; the despeckled pair has a new name.
+      const ds = await despeckle(one, spec.despeckleArea);
+      writeFileSafe(join(dir, `${base}-line${suffix()}-despeckled.png`), ds.buf);
+      const dp = await printLine(ds.buf, spec.print, ctx.dims);
+      writeFileSafe(join(dir, `${base}-line-print${suffix()}-despeckled.png`), dp);
+      addFile(side, dir, `lineDespeckled${suffix()}`, `${base}-line${suffix()}-despeckled.png`, ds.buf);
+      addFile(side, dir, `linePrintDespeckled${suffix()}`, `${base}-line-print${suffix()}-despeckled.png`, dp);
       saveSidecar(ctx, side);
       console.log(`${base} line try ${t} ok ${m.width}x${m.height} cost ${r.cost}`);
     }),
@@ -244,6 +301,29 @@ const doPrint = async (ctx, from) => {
   }
   saveSidecar(ctx, side);
   console.log(`${base} print files written`);
+};
+
+// Despeckle an existing line picture (no call). Never overwrites: the original line file stays.
+const doDespeckle = async (ctx, from, tryNo, area) => {
+  const { spec, dir } = ctx;
+  const n = from ?? latestVersion(dir, spec.id);
+  const side = readSidecar(dir, spec.id, n);
+  const suffix = tryNo === 1 ? '' : `-${tryNo}`;
+  const base = `${spec.id}-m${n}`;
+  const srcName = `${base}-line${suffix}.png`;
+  if (!existsSync(join(dir, srcName))) throw new Error(`${srcName}: not found`);
+  const ds = await despeckle(readFileSync(join(dir, srcName)), area ?? spec.despeckleArea);
+  const outName = `${base}-line${suffix}-despeckled.png`;
+  writeFileSafe(join(dir, outName), ds.buf);
+  const dp = await printLine(ds.buf, spec.print, ctx.dims);
+  const pname = `${base}-line-print${suffix}-despeckled.png`;
+  writeFileSafe(join(dir, pname), dp);
+  if (side) {
+    addFile(side, dir, `lineDespeckled${suffix}`, outName, ds.buf);
+    addFile(side, dir, `linePrintDespeckled${suffix}`, pname, dp);
+    saveSidecar(ctx, side);
+  }
+  console.log(`${outName} removed ${ds.removed} specks (${ds.removedPixels} px, limit ${ds.limit} px)`);
 };
 
 const doImport = async (ctx, opts) => {
@@ -299,14 +379,16 @@ const main = async () => {
     if (rest[i].startsWith('--')) opts[rest[i].slice(2)] = rest[++i];
     else files.push(rest[i]);
   }
-  if (!['color', 'line', 'print', 'import'].includes(cmd) || !files.length) {
-    console.log('usage: storytime-muse.mjs color|line|print|import <spec>... [--concurrency 4] [--from n]');
+  if (!['color', 'line', 'print', 'import', 'despeckle'].includes(cmd) || !files.length) {
+    console.log('usage: storytime-muse.mjs color|line|print|despeckle|import <spec>... [--concurrency 4] [--from n]');
     process.exit(2);
   }
   const limit = Math.min(4, Number(opts.concurrency ?? 4));
   const ctxs = files.map(loadSpec);
   if (cmd === 'import') {
     await doImport(ctxs[0], opts);
+  } else if (cmd === 'despeckle') {
+    await doDespeckle(ctxs[0], opts.from ? Number(opts.from) : undefined, Number(opts.try ?? 1), opts.area ? Number(opts.area) : undefined);
   } else if (cmd === 'print') {
     await doPrint(ctxs[0], opts.from ? Number(opts.from) : undefined);
   } else {
