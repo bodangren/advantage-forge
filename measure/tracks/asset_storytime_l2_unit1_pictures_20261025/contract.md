@@ -5,10 +5,12 @@
 Workbooks picture specification v1 arrived on 2026-10-27 (Workbooks commit `a9178413`). Picture
 list version 3 is the source of the week 1 rows (Workbooks commit `078917f1`):
 
-- List file: `Workbooks/content/storytime/l2/print/pictures.json`, SHA-256
-  `c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b`, 192 rows.
-- List notes: `Workbooks/content/storytime/l2/print/pictures.md`, SHA-256
-  `e97d649f8de5597494730ee17c8785a1ebe36ee2f7f7c0897701d5422929f848`.
+- List file: `Workbooks/content/storytime/l2/print/pictures.json`, version 4 (Workbooks commit
+  `87ecc6aa`), SHA-256 `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`,
+  196 rows (week 1: 30; weeks 2 to 7: 27 each; week 8: 4). History: version 3 had SHA-256
+  `c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b` and 192 rows.
+- List notes: `Workbooks/content/storytime/l2/print/pictures.md`, version 4, SHA-256
+  `7cc4c20178abbddae3ae0904b9e0e08ced09c6e95d6f9e365fcce932cf81ad56`.
 - The list is read only. No pipeline command writes under the Workbooks tree.
 
 Specification v1 rules, pinned by rows T142 to T151:

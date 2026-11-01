@@ -3564,8 +3564,13 @@ export interface RenderCandidateResult {
 // Picture list rows: render and verify under the specification v1 names (Phase 3)
 // ---------------------------------------------------------------------------
 
-/** The SHA-256 of picture list version 3 (Workbooks commit `078917f1`). */
-export const PICTURE_LIST_V3_SHA256 = 'c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b';
+/** The SHA-256 of picture list version 4 (Workbooks commit `87ecc6aa`). */
+export const PICTURE_LIST_SHA256 = '6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58';
+
+/** The rows of weeks 2 to 7, the production scope of Phase 4. The week 1 and week 8 rows stay out. */
+export function weeksTwoToSevenRows<Row extends { week: number }>(rows: readonly Row[]): Row[] {
+  return rows.filter((row) => row.week >= 2 && row.week <= 7);
+}
 
 /** The list print root under a Workbooks checkout. */
 export function pictureListPrintRoot(workbooksRoot: string): string {
@@ -4612,7 +4617,7 @@ interface CliOptions {
 
 function parseWeek(value: string): number {
   const week = Number(value.toLowerCase().replace(/^w/, ''));
-  if (!Number.isInteger(week) || week < 1 || week > 7) throw new Error(`Invalid week: ${value}`);
+  if (!Number.isInteger(week) || week < 1 || week > 8) throw new Error(`Invalid week: ${value}`);
   return week;
 }
 
@@ -4735,23 +4740,26 @@ export async function runStorytimeCli(
       muse: options.muse,
       delivery: options.delivery,
     });
+    // With --week the run covers one week: an approval entry of another week names a row that is
+    // not in the filtered rows, so the writer refuses it before it writes a file.
+    const weekRows = options.week === undefined ? list.rows : list.rows.filter((row) => row.week === options.week);
     const manifest = await writeMuseDelivery({
-      rows: list.rows,
+      rows: weekRows,
       approvals: path.resolve(repoRoot, options.approvals),
       museRoot,
       deliveryRoot,
       pictureListSha256: list.sha256,
-      onSkip: (rowId, reason) => log(`Skipped ${rowId}: ${reason}`),
+      onSkip: (rowId, reason) => log(`Skipped ${rowId} (${reason})`),
     });
     log(`Delivered ${manifest.jobs.length} rows and ${manifest.batches.length} batch hashes to ${deliveryRoot}.`);
     return 0;
   }
   if ((command === 'render' || command === 'verify') && options.row !== undefined) {
-    // The list is read only; a changed list file stops the run (specification v1, list v3).
+    // The list is read only; a changed list file stops the run (specification v1, list v4).
     const list = loadPictureList({
       printRoot: pictureListPrintRoot(workbooksRoot),
       workbooksRoot,
-      expectedSha256: PICTURE_LIST_V3_SHA256,
+      expectedSha256: PICTURE_LIST_SHA256,
     });
     const rows = options.week === undefined ? list.rows : list.rows.filter((row) => row.week === options.week);
     const rowId = options.row === 'all' ? undefined : options.row;
