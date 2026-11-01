@@ -1955,6 +1955,15 @@ rows T142 to T151, and the closeout gate for 30 jobs.
 
       This proves that the inputs exist and match the list. It proves nothing about picture quality
       and nothing about the approval of a cast look.
+    - Tom remake (follow-up, 2026-11-02): the independent look failed `cast-tom-sheet-m2` (slim
+      adult-style proportions and a side profile in place of a three-quarter view). The new file is
+      `cast-tom-sheet-m3-color.png`: 1 try, 1 billed call, 0.01 USD, with `cast-group-a-2.png`,
+      `cast-group-b-2.png`, and `cast-lily-sheet-m1-color.png` as style references. The first look
+      shows the head at about half of the height, no visible neck, a short body, and a true
+      three-quarter view. The 4 Tom page specs (cover, brother, dog-Pip, family) point to m3. The
+      files m1 and m2 stay. Running total 4.04 USD (4.03 before). The week 4 stage gate passes again
+      with the same values (`element paths checked: 91`, `page candidates: 0`). The look stays
+      `pending` until Daniel approves it.
     - Open: no task is `[x]`. No week 4 page call before Daniel answers on week 1. The 11 pending
       pages wait for a second answer on the 7 cast looks. The 11 element sheets need an independent
       look.
