@@ -1,0 +1,11 @@
+{
+  "id": "set-tom-living-room-empty",
+  "text": "",
+  "goal": "Empty bright living room of Tom with a green sofa, a window, a brown rug, an open toy box, a blue mat, and a big silver pot on a low wooden table.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The picture shows the EMPTY bright living room of a family home, with nobody and no animal in it: warm cream walls and a light wooden floor. At the left stands ONE green sofa with two plain cushions; the sofa stands on four short wooden legs, so there is a clear open gap of floor under it. In the middle of the back wall is ONE window with cream curtains, and under the window lies ONE small plain brown rug (a small oval rug, about as big as a sleeping puppy). At the right stands ONE open wooden toy box that is half full of a few plain toys (a few colored wooden blocks and a small yellow rubber duck; no top, no ball). In the middle of the floor lies ONE soft round blue mat. In the right foreground stands ONE low wooden table with ONE big shiny silver cooking pot with a lid, two side handles, and a round lid knob, on top of it. The open floor in the middle is clear. The picture is one calm wide scene, camera at a low child eye level. Exactly one sofa, one window, one brown rug, one toy box, one blue mat, one table, and one pot. No sun, no people, no animals, no spinning top, no other furniture. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "4:3",
+  "outDir": "out/storytime/l2/unit1/w07/muse/elements"
+}

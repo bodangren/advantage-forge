@@ -1,0 +1,11 @@
+{
+  "id": "prop-olive-sheet",
+  "text": "",
+  "goal": "One green olive.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly ONE green olive, large in the middle on a plain white background, seen from a three-quarter view: a smooth, glossy, narrow oval green table olive (like an egg, longer than wide, much slimmer than an apple) in a soft olive-green color with a small round highlight, and a small round red pimento (a tiny red pepper filling) showing in a small round hole at one end. It has no stem, no leaf, and no branch. The olive is one single whole olive (no slice, no second olive). It has no eyes and no face. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w07/muse/elements"
+}

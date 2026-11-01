@@ -1,0 +1,11 @@
+{
+  "id": "prop-silver-pot-sheet",
+  "text": "",
+  "goal": "A big shiny silver cooking pot with a lid.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly ONE big shiny silver cooking pot with a flat lid, large in the middle on a plain white background, seen from a three-quarter view from the front and a little above: a round smooth pot with two short side handles and a round silver knob in the middle of its flat lid. The pot is one even soft silver-gray metal with a soft highlight. The lid is flat and wide enough for a small toy top to spin on it. The pot has no eyes and no face, no pattern, and no letters. Exactly one pot. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w07/muse/elements"
+}

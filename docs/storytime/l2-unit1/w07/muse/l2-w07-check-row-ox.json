@@ -1,0 +1,17 @@
+{
+  "id": "l2-w07-check-row-ox",
+  "text": "ox",
+  "goal": "",
+  "references": [
+    "out/ox/views/three-quarter.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the element picture. Picture 1 is a 3D render of a small chubby brown ox with two long pale curved horns, a pink muzzle, big round friendly eyes, round ears, black hooves, and a short tail, on a gray or white background, perhaps with a ground shadow. Ignore the background and the shadow: do not copy them. Draw the same ox with the same shape, the same colors, and the same proportions as in picture 1, as a smooth, clean, bright, soft, round 3D render with a plain white background. The picture to make: a square picture of exactly ONE ox, large in the middle, filling most of the square, the whole object in view, standing, seen from a three-quarter front view, so that its shape reads clearly. Exactly one ox: no second one, no copies, and nothing else in the picture. The background is plain white and empty, with at most a very soft shadow under the object. The eyes are big, round, and clean, each with a big dark pupil and white highlights, with no pale flaps or marks around them. The page text is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture of one object. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No fine detail, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. The object outline is one closed shape. No fur strands, scales, grain, or texture lines. The whole ox is one closed outline with no fur strands. Each horn, each ear, the muzzle, each hoof, and the tail are closed shapes. Draw no rope or chain. Each eye is one closed outline with one big solid black pupil (a filled black circle) inside it, with no extra thin rings. Every line inside the object ends on another line, with no loose ends. Draw only the object: no ground line, no shadow, no background shapes. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/w07/muse"
+}

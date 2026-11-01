@@ -1,0 +1,11 @@
+{
+  "id": "set-toy-corner-empty",
+  "text": "",
+  "goal": "Empty toy corner of a kindergarten classroom with a soft blue rug and a low toy shelf, no people, no toys on the floor.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The picture shows the EMPTY toy corner of a bright kindergarten classroom with nobody in it: cream plaster walls with dark-brown timber beams and a light wooden plank floor. A big soft round blue rug lies on the floor in the middle of the picture, with a wide open floor around it (the open floor is where a big blanket and two children will be). At the left stands ONE low wooden toy shelf, as high as a small child's chest, with three plain empty cubby shelves (a few plain colored wooden boxes with lids, no toys, no writing); it stands a little way in front of the wall. The back wall is mostly plain cream with one low window at the right, letting in soft light. The picture is one calm wide scene, camera at a low child eye level. Exactly one rug, one toy shelf, and one window. No toys on the floor, no blanket, no ball, no doll, no car, no kite, no drum, no train, no teddy, no sun, no people, no animals. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "4:3",
+  "outDir": "out/storytime/l2/unit1/w07/muse/elements"
+}

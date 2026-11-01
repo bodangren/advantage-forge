@@ -1,0 +1,11 @@
+{
+  "id": "prop-toys-sheet",
+  "text": "",
+  "goal": "Six toys: a red-and-yellow ball, a blue car, a red-and-yellow kite, a red drum with drumsticks, a green train, and a white teddy bear with a blue bow.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly SIX separate toys on a plain white background, in a grid of three on the top row and three on the bottom row, with a clear gap around each toy, each seen from a three-quarter view. Top row from left to right: (1) one round beach ball with red and yellow stripes, (2) one small blue toy car with four round wheels, two yellow headlights, and a white window (no driver), (3) one diamond-shaped kite with a red half and a yellow half, a thin string, and three small red bows on the string. Bottom row from left to right: (4) one small red toy drum with a white band around its middle and two plain wooden drumsticks lying next to it, (5) one small green toy train with an engine, a chimney, a yellow front lamp, and one red wagon behind it, on four small wheels, (6) one soft white teddy bear sitting up with a blue bow at its neck, round ears with pink insides, a small black nose, and two big round friendly dark eyes. Each toy is plain, smooth, and simple. The toys have no faces except the teddy bear. Exactly six toys, one of each. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w07/muse/elements"
+}
