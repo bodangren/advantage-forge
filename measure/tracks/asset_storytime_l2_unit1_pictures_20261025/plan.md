@@ -3730,3 +3730,58 @@ gate applies again.
     section "check that these batch 29 defects are gone", the open items, Daniel's rule), `pages/` (22
     files), `refs/` (24 files, with both new group sheets). PNGs stay out of git. Green did not rate its own
     work. No task is marked `[x]`. Waiting for the independent review.
+
+    Green round 61 (2026-11-01, claude-code/claude-sonnet-5-5#high). Task: Muse fix round for batch 30 (6
+    rows). role_base_sha `cf189b5f`, phase_base_sha `15a7bf0b`. Red model minimax-cn-coding-plan/MiniMax-M3.
+    Image model meta/muse-image. Green coder model: none; nothing was delegated. No Forge render, no heavy
+    runner, no tsc, no vitest. `assets/`, `src/`, `tests/`, and earlier outputs did not change. Spec and tool
+    commit `76fda533` (6 specs and `scripts/storytime-muse.mjs`).
+    Defects and their source: `item-review-batch-30.json` (mimo) and the orchestrator check. (1) a-neck m4:
+    ragged ears with dark holes. (2) a-nest m5: ragged ear; the branch tip and leaf cluster were thin open
+    strokes in the line art. (3) a-net line try 4: fine mesh of 6 to 11 lines each way. (4) practice-line-nose
+    m3: three-quarter view from behind, tiny nose, extra bun on top, open "C" ear and loose strokes in the
+    line art. (5) check-row-nose m2: ruffled scrunchie; line art had an extra open ear arc, loose strokes at
+    the shirt hem, and a target-like bun. (6) hello-i-am-ben m6: line art had a lump hand with short lines.
+    Tool change: `scripts/storytime-muse.mjs line` has a new option `--tries <k>`. It reserves k try numbers
+    first and runs the k calls in parallel with one shared sidecar (before, parallel runs of one spec chose
+    the same file name). Line method: for each line call, 3 tries of the same color picture in one parallel
+    batch; I looked at all tries and chose one; if none was free of defects, one more batch of 3 ran with a
+    changed prompt. The four line sentences of the brief (closed hand outlines with separate fingers, closed
+    lines with no loose ends, one closed ear outline, no clothes lines except outline, collar, star) were
+    added to every line prompt. The new color calls used only the clean Nan copies of round 59 and the
+    two-round-buns text.
+    Rows (final files in `out/storytime/l2/unit1/w01/muse/`; every call is in `costs.tsv`):
+    - `a-neck` color m5 (new call; chin up, neck column, fingers at the two sides of the neck, smooth ears,
+      one even orange T-shirt, two side buns). Line m5: tries 1 to 3 (batch 1) and 4 to 6 (batch 2, prompt
+      added: head tipped back, neck as a column, closed ear shape, single eyebrow line). Chosen: `-line-5.png`.
+      OPEN: the eyes have a double ring; the neck column lines start inside the face region.
+    - `a-nest` color m6 (new call; 4 eggs counted, dropped) and m7 (3 eggs, smooth ear, one thick branch from
+      the right edge, no leaf cluster at the tip). Line m7: tries 1 to 3, tries 4 to 5 (one call of batch 2,
+      try 6, was rejected by the content filter, no cost), tries 6 to 8 (batch 3, prompt: the branch as a band
+      with two edge lines and a closed tip). Chosen: `-line-8.png`. OPEN: the branch is still an open curved
+      stroke in all 8 tries and the nest bowl does not rest on a closed branch; the ear is a small mark.
+    - `a-net` color m2 (unchanged). Line m2: tries 5 to 7 (batch 1), 8 to 10 (batch 2, prompt: one rim ring,
+      2 mesh lines each way, plain straight handle). Chosen: `-line-9.png` (mesh about 3 by 4 squares). OPEN:
+      the rim is a double line with a thin gap in all 6 tries.
+    - `practice-line-nose` color m4 (new call; exact side view facing the right edge, one eye, nose tip most
+      forward, smooth ear, one side bun with a smooth red ring band, no bun on top). Line m4: tries 1 to 3,
+      4 to 6 (prompt: closed D ear, bun as one circle, nothing on the shirt). Chosen: `-line-6.png`. OPEN: the
+      ear is an open "C" arc in every try (batch 1 tries also had a target bun and, in try 3, a star; batch 2
+      try 4 had a bun on top).
+    - `check-row-nose` color m3 (new call; exact side view facing the left edge, smooth red ring band). Line
+      m3: tries 1 to 3, 4 to 6 (same prompt as the practice line). Chosen: `-line-6.png`. OPEN: the ear is an
+      open "C" arc in every try.
+    - `hello-i-am-ben` color m6 (kept: at 3x the outer eye corners show no tick marks; no new color call).
+      Line m6: tries 2 to 4 (try 1 is the batch 30 file). Chosen: `-line-3.png`. OPEN: the hanging hand has
+      two short finger-divider lines that open at the finger base. The right ear of Ben in the color picture
+      shows a gray hollow.
+    Calls with cost (USD, `usage.cost`, 0.01 per call; `costs.tsv` rows after 2026-11-01T04:0xZ): color 5 calls
+    0.05 (a-neck m5, a-nest m6, a-nest m7, practice-line-nose m4, check-row-nose m3); line 35 calls 0.35
+    (a-neck 6, a-nest 8, a-net 6, practice-line-nose 6, check-row-nose 6, hello-i-am-ben 3) = 40 calls
+    0.40 USD. One a-nest line call was rejected by the content filter with no cost. Round cost 0.40 USD.
+    Running total 1.53 + 0.40 = 1.93 USD. The tool total in the run (1.70) counts only the `costs.tsv` of the
+    page folder.
+    Review folder `out/storytime-review/batch-33/` (no earlier batch-33): `brief.md` (one key per row, the
+    section "check that these batch 30 defects are gone", the page notes, Daniel's rule), `pages/` (12
+    files), `refs/` (12 files, with the clean Nan copies). PNGs stay out of git. Green did not rate its own
+    work. No task is marked `[x]`. Waiting for the independent review.
