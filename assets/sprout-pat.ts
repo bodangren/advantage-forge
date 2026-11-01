@@ -24,6 +24,7 @@ export default scaleAsset(
     reference: 'docs/sprout-mockups/pat.jpg',
     proportions: { ...AGE5, clips: { ...AGE5.clips, stride: 1.25, lift: 1.2 } },
     sing: true,
+    sproutFace: true,
     hair: false,
     undershirt: false,
     pants: false,

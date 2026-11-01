@@ -338,6 +338,12 @@ export interface HumanoidKind {
    * (`eyelids`). No clip poses them, so every other render shows the painted face only.
    */
   readonly sing?: boolean;
+  /**
+   * The Chibi Sprouts face fixes (Storytime cast fix). Off by default: the hero, the NPCs, and the
+   * avatar pack keep their old geometry. On: the singing eyelids follow the head surface, so no skin
+   * flap shows at the outer eye corners.
+   */
+  readonly sproutFace?: boolean;
   /** Paint on the skin body after the face paint (a beard shadow, freckles, age lines). */
   paintSkin?(skin: sdf.Shape, h: HumanoidShape): sdf.Shape;
   /** Extra bodies: clothes, hats, tools. */
@@ -633,7 +639,18 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
           .at(0, mY, faceZ(0, mY) - SING_DEPTH)
           .union(sdf.sphere(0.012).at(0, mY - 0.014, faceZ(0, mY) - SING_DEPTH + 0.004).paint('#c9605a'));
         k.body('mouth-open', mouthOpen, { color: '#4e2522', roughness: 0.7, detail: 0.003, bone: 'mouth' });
-        const eyelids = pair(sdf.ellipsoid([0.058, 0.06, 0.012]).at(EYE[0], EYE[1], faceZ(EYE[0], EYE[1]) - SING_DEPTH));
+        // The flat disc sits 3 cm inside the face at the eye centre, but the head turns away at the outer
+        // eye corner, so the disc came through the skin there (a skin flap under the lash). `sproutFace`
+        // cuts the lid from the head surface itself, moved back by `SING_DEPTH` and grown 4 mm: it stays
+        // inside the head at rest and meets the face when the song page moves the bone forward.
+        const eyelids = pair(
+          kind.sproutFace
+            ? head
+                .at(0, 0, -SING_DEPTH)
+                .intersect(sdf.extrude(profile.circle(1), 0.6).scale([0.058, 0.06, 1]).at(EYE[0], EYE[1], 0))
+                .round(0.004)
+            : sdf.ellipsoid([0.058, 0.06, 0.012]).at(EYE[0], EYE[1], faceZ(EYE[0], EYE[1]) - SING_DEPTH),
+        );
         k.body('eyelid-skin', eyelids, { color: T.skin, roughness: 0.55, bone: 'eyelids' });
       }
 

@@ -32,6 +32,7 @@ export default humanoidAsset({
   reference: 'docs/sprout-mockups/pat.jpg',
   proportions: AGE5,
   sing: true,
+  sproutFace: true,
   hair: false,
   undershirt: false,
   pants: false,

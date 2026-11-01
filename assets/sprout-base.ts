@@ -18,6 +18,7 @@ export default humanoidAsset({
   description: 'Chibi Sprouts age-5 base: the humanoid kind at five years old',
   reference: 'docs/sprout-mockups/pat.jpg',
   proportions: AGE5,
+  sproutFace: true,
   pants: '#6a7a94',
   variants: {
     skin: { fair: '#f2c7a4', light: '#e8b48e', tan: '#d49a72', brown: '#8a5a3e', deep: '#5e3b28' },

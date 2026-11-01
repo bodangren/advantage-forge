@@ -97,6 +97,7 @@ export default humanoidAsset({
   reference: 'docs/hero-mockups/adventurer_001.jpg',
   proportions: AGE5,
   sing: true,
+  sproutFace: true,
   hair: false,
   undershirt: false,
   pants: false,
