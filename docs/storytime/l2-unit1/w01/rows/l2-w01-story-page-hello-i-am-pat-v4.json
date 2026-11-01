@@ -1,0 +1,93 @@
+{
+  "jobId": "l2-w01-story-page-hello-i-am-pat",
+  "version": 4,
+  "at": 0.65,
+  "spec": {
+    "title": "Hello!",
+    "duration": 2,
+    "lines": [
+      {
+        "text": "Hello, I am Pat.",
+        "start": 0,
+        "end": 1,
+        "actors": [
+          "Pat"
+        ],
+        "gesture": "wave"
+      }
+    ]
+  },
+  "stage": {
+    "scene": "classroom",
+    "sun": "high",
+    "dog": "quiet",
+    "marks": {
+      "Pat": {
+        "x": 3.2,
+        "z": 1.15,
+        "yaw": -60
+      }
+    },
+    "props": [
+      {
+        "asset": "storytime-green-door",
+        "x": 5.94,
+        "z": 0.1,
+        "y": 0,
+        "yaw": -90,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "storytime-animal-pictures",
+        "x": 5.94,
+        "z": 1.6,
+        "y": 0.95,
+        "yaw": -90,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "storytime-low-table",
+        "x": 4.6,
+        "z": 1.75,
+        "y": 0,
+        "yaw": 90,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      },
+      {
+        "asset": "storytime-school-bag",
+        "held": "Pat",
+        "bone": "chest",
+        "offset": [
+          -0.05,
+          0.0,
+          -0.115
+        ],
+        "rotate": [
+          0,
+          180,
+          0
+        ],
+        "scale": 1.12,
+        "from": 0,
+        "to": 2
+      }
+    ],
+    "camera": [
+      {
+        "at": 0,
+        "az": -90,
+        "el": 0,
+        "dist": 2.9,
+        "tx": 3.2,
+        "ty": 0.67,
+        "tz": 1.1
+      }
+    ]
+  }
+}

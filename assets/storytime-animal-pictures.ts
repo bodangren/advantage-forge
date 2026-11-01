@@ -12,10 +12,13 @@ import { defineAsset, profile, rgb, sdf } from '../src/index.js';
  *   is 0.12 m, so the row is 1.89 m wide. The frame backs sit on the plane z = 0 and the bottom
  *   edge sits on the plane y = 0, so the stage puts the row flat on a wall and lifts it with `y`.
  *   The row is centered on x = 0 and faces +Z.
- * Layer depth: frame 0 to 0.014 m; background 0.004 to 0.024 m; animal layers 0.022 to 0.038 m in
- *   four 0.010 m slabs, each 0.002 m in front of the layer below. Every layer overlaps the one
- *   behind it, so nothing sinks into the background and nothing floats off it. Each slab is at
- *   least 0.010 m thick, so the mesher never collapses it (a 0.006 m slab did collapse in round 49).
+ * Layer depth: the frame is a border ring of the full 0.038 m picture depth, with a 0.004 m back
+ *   plate and an opening of 0.49 by 0.39 m; its front is flush with the front face of the deepest
+ *   animal layer. Background 0.004 to 0.024 m, and 0.01 m wider than the opening on each side, so
+ *   its edge sits inside the frame. Animal layers 0.022 to 0.038 m in four 0.010 m slabs, each
+ *   0.002 m in front of the layer below. Every layer overlaps the one behind it, so nothing sinks
+ *   into the background and nothing floats off it. Each slab is at least 0.010 m thick, so the
+ *   mesher never collapses it (a 0.006 m slab did collapse in round 49).
  * Line art: `texture: false` and one body for each color, so every edge is a hard color step. Each
  *   pair of touching colors differs by 0.3 or more in one channel (0 to 1), so the 1-bit line art
  *   (src/storytime/line-art-pass.ts) draws one closed stroke around every color area. Every feature
@@ -55,6 +58,18 @@ const PICTURE_X = [-(PICTURE_W + GAP), 0, PICTURE_W + GAP];
 /** The four animal layers, each 0.010 m thick and 0.002 m in front of the one before. */
 const LAYER = [0.027, 0.029, 0.031, 0.033] as const;
 const SLAB = 0.01;
+
+/**
+ * The frame is a border of the full picture depth, and its front sits flush with the front face of
+ * the deepest animal layer. Round 51 fix: the frame front used to sit 0.010 m behind the picture
+ * face, so at an oblique view (the classroom pages) the border read as a second board offset
+ * behind the picture, with a wood tab below it. The border now runs forward past every layer, so
+ * one closed ring surrounds the picture on all four sides at one depth.
+ */
+const FRAME_DEPTH = LAYER[3] + SLAB / 2;
+/** A back plate behind the picture, so the frame reads as one solid board from behind. It is
+ *  0.012 m thick, above the 0.007 m mesh cell, because a 0.004 m plate collapsed in round 51. */
+const FRAME_BACK = 0.012;
 
 /** A lobe ring: n points on the outer radius and n points on the inner radius, in turn. */
 const lobeRing = (outer: number, inner: number, lobes: number, cy = 0) =>
@@ -108,9 +123,18 @@ export default defineAsset({
   build(k) {
     // ---------------------------------------------------------------- frames and backgrounds
     PICTURE_X.forEach((cx, i) => {
+      const opening = sdf
+        .box(
+          [PICTURE_W - 2 * FRAME_W, PICTURE_H - 2 * FRAME_W, FRAME_DEPTH - FRAME_BACK + 0.04],
+          0.001,
+        )
+        .at(cx, PICTURE_CY, FRAME_BACK + (FRAME_DEPTH - FRAME_BACK + 0.04) / 2);
       k.body(
         `frame-${i + 1}`,
-        sdf.box([PICTURE_W, PICTURE_H, 0.014], 0.005).at(cx, PICTURE_CY, 0.007),
+        sdf
+          .box([PICTURE_W, PICTURE_H, FRAME_DEPTH], 0.005)
+          .at(cx, PICTURE_CY, FRAME_DEPTH / 2)
+          .subtract(opening),
         { color: FRAME, roughness: 0.85, paintWeight: 1, detail: 0.007 },
       );
     });
@@ -119,7 +143,7 @@ export default defineAsset({
       k.body(
         `backdrop-${i + 1}`,
         sdf
-          .box([PICTURE_W - 2 * FRAME_W, PICTURE_H - 2 * FRAME_W, 0.02], 0.002)
+          .box([PICTURE_W - 2 * FRAME_W + 0.02, PICTURE_H - 2 * FRAME_W + 0.02, 0.02], 0.002)
           .at(cx, PICTURE_CY, 0.014),
         { color: bg[i]!, roughness: 0.85, paintWeight: 1, detail: 0.01 },
       );
