@@ -1612,6 +1612,34 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   words until version 4 arrives. Version 3 changed four ids in weeks 2 and 6. The suffix moved
   from `-a` to `-b`. Reconcile those four ids. Preserve picture content and document any resize
   or crop.
+  Red evidence for Phase 4 Task 1 and the week delivery change (2026-11-02). Role base
+  `fc76c272`; Phase 4 base `fc76c272`. Models: Red `opencode-go/deepseek-v4.1-flash`; Green
+  `claude-code/claude-sonnet-5-5#high`. Red test commit `c0035c28`.
+  The task marker stays `[ ]`: measure-guard refuses a Phase 4 task change while the Phase 3
+  heading has no checkpoint, and Phase 3 waits for Daniel's review.
+  Red command:
+  `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts tests/storytime-picture-rows.test.ts tests/storytime-muse-delivery.test.ts --maxWorkers=1'`.
+  Exit code `1`. `Test Files  2 failed | 1 passed (3)`. `Tests  3 failed | 166 passed (169)`.
+  Failing rows: T173, T177, T182.
+  - T173: `PICTURE_LIST_SHA256` is undefined, `PICTURE_LIST_V3_SHA256` is still exported, the
+    render row command refuses the live list, and the verify row command reads the version 3
+    pin. The render row command accepts the version 3 bytes and stops at a missing stage file.
+  - T177: `Invalid week: 8`. The weeks 2 to 7 helper is absent. A run with no `--week` stops
+    at the version 3 pin.
+  - T182: a week 3 entry in a week 2 run is delivered. The skipped lines name two rows, not
+    one.
+  Guard rows that pass at the base: T174, T175, T176, and T181. T142 and T147 also pass at the
+  base: they pin the live list, and `loadPictureList` holds no pin. T173 owns the code pin.
+  Staging command:
+  `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-stage-check.test.ts --maxWorkers=1'`.
+  Exit code `1`. `Tests  3 failed (3)`: T178, T179, and T180. Each row fails because
+  `scripts/storytime-stage-check.mjs` is absent.
+  Staging test seam: `--list-sha256 <hex>` lets a fixture week pass the version 4 pin. The
+  live gate omits the option. A row with an empty list prompt passes an empty spec goal; a
+  non-empty goal against an empty prompt fails. Element specs sit in the sibling folder
+  `muse-elements/`.
+  Logs: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-p4-red.log` and
+  `measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-p4-staging.log`.
 - [ ] Task: Produce weeks 2 to 7 after the week 1 review. The weeks hold 162 rows. They need 324
   files, one color file and one line-art file per row. Apply the same automated, two-model, and
   person-count gates to all 162 pictures.
