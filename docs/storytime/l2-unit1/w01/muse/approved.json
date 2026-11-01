@@ -29,25 +29,15 @@
     {
       "rowId": "l2-w01-story-page-a-nose",
       "version": 1,
+      "fileVersion": 2,
       "colorPrint": "l2-w01-story-page-a-nose-m1-color-print.png",
-      "linePrint": "l2-w01-story-page-a-nose-m1-line-print.png",
-      "reviews": {
-        "kimi": {
-          "provider": "kimi",
-          "model": "kimi-code-plan-cn/kimi-for-coding",
-          "verdict": "pass",
-          "reason": "Independent item review, rating 9, clean, no critical defect, no defect; goal shown true.",
-          "checkedAt": "2026-11-01T03:11:07.300Z",
-          "rawFile": "measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-28.json",
-          "modelSource": "declared",
-          "issues": [],
-          "rawOutput": "{\"files\":[\"out/storytime-review/batch-28/pages/l2-w01-story-page-a-nose-m1-color.png\",\"out/storytime-review/batch-28/pages/l2-w01-story-page-a-nose-m1-line.png\"],\"rating\":9,\"pass\":true,\"clean\":true,\"critical\":[],\"defects\":[],\"goal_shown\":true,\"retry_hint\":\"\"}"
-        }
-      },
+      "linePrint": "l2-w01-story-page-a-nose-m1-line-print-5-despeckled.png",
       "notes": [
-        "Reviewer kimi (kimi-code-plan-cn/kimi-for-coding), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-28.json, audited head a4308df1: rating 9, clean true, 0 critical, 0 defects.",
-        "Reviewed color page batch-28/pages/l2-w01-story-page-a-nose-m1-color.png; reviewed line page batch-28/pages/l2-w01-story-page-a-nose-m1-line.png; both byte-equal to the Muse files used for the prints.",
-        "Color print l2-w01-story-page-a-nose-m1-color-print.png (SHA-256 d161a1d628cca3594b75d2386be83a62913db691f43008c944665ae7d0df16ab) and line print l2-w01-story-page-a-nose-m1-line-print.png (SHA-256 69d37d5bde893fc694c1b73401c202f0072284fa6411655317c3a5607b1cfa84) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+        "Round 67 fixed the Workbooks stage 2 finding. The Workbooks two-model check (stage 2) refused the -v1 file of this row. The row is delivered again as version 2 (fileVersion 2): files <row id>-v2.png and <row id>-line-v2.png, no -v1 file. The color print is unchanged (Muse m1). The line print is new (line try 5, despeckled). The earlier kimi review of batch 28 covered the old line page, so this entry no longer holds it.",
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-39.json: rating 8, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Reviewed color page batch-39/pages/l2-w01-story-page-a-nose-m1-color.png; reviewed line page batch-39/pages/l2-w01-story-page-a-nose-m1-line-5-despeckled.png; both byte-equal to the Muse files of the same names.",
+        "Color print l2-w01-story-page-a-nose-m1-color-print.png (SHA-256 d161a1d628cca3594b75d2386be83a62913db691f43008c944665ae7d0df16ab) and line print l2-w01-story-page-a-nose-m1-line-print-5-despeckled.png (SHA-256 eb1443ed921b999f488a71dba19608b3483bb0d5155b9ff35982c920e1ab1231) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
       ]
     },
     {
@@ -198,13 +188,15 @@
     {
       "rowId": "l2-w01-check-row-net",
       "version": 1,
+      "fileVersion": 2,
       "colorPrint": "l2-w01-check-row-net-m1-color-print.png",
-      "linePrint": "l2-w01-check-row-net-m1-line-print-6-despeckled.png",
+      "linePrint": "l2-w01-check-row-net-m1-line-print-16-despeckled.png",
       "notes": [
-        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-36.json, audited head final: rating 8, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Round 67 fixed the Workbooks stage 2 finding. The Workbooks two-model check (stage 2) refused the -v1 file of this row. The row is delivered again as version 2 (fileVersion 2): files <row id>-v2.png and <row id>-line-v2.png, no -v1 file. The color print is unchanged (Muse m1). The line print is new (line try 16, despeckled).",
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-39.json: rating 9, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
         "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
-        "Reviewed color page batch-36/pages/l2-w01-check-row-net-m1-color.png; reviewed line page batch-36/pages/l2-w01-check-row-net-m1-line-6-despeckled.png; both byte-equal to the Muse files used for the prints.",
-        "Color print l2-w01-check-row-net-m1-color-print.png (SHA-256 9ec9db0abb952ff212b4e7d3cc8a5b336cab69946ebff5a4644462c4858e3869) and line print l2-w01-check-row-net-m1-line-print-6-despeckled.png (SHA-256 b340676fa2f49d6f22e4509f0db6330c1cdd42c9484e574aff057fef9a174f4f) recompute byte-identical from the reviewed files with the tool's print code; size 1500 x 1500."
+        "Reviewed color page batch-39/pages/l2-w01-check-row-net-m1-color.png; reviewed line page batch-39/pages/l2-w01-check-row-net-m1-line-16-despeckled.png; both byte-equal to the Muse files of the same names.",
+        "Color print l2-w01-check-row-net-m1-color-print.png (SHA-256 9ec9db0abb952ff212b4e7d3cc8a5b336cab69946ebff5a4644462c4858e3869) and line print l2-w01-check-row-net-m1-line-print-16-despeckled.png (SHA-256 6a9c9394b26f73e6f5a4e5ac475c8439ff224d5be0c2983e37ae2cac6e0f8ce3) recompute byte-identical from the reviewed files with the tool's print code; size 1500 x 1500."
       ]
     },
     {
@@ -284,13 +276,15 @@
     {
       "rowId": "l2-w01-story-page-a-net",
       "version": 2,
+      "fileVersion": 2,
       "colorPrint": "l2-w01-story-page-a-net-m2-color-print.png",
-      "linePrint": "l2-w01-story-page-a-net-m2-line-print-23-despeckled.png",
+      "linePrint": "l2-w01-story-page-a-net-m2-line-print-26-despeckled.png",
       "notes": [
-        "Accepted by Daniel himself, via the PM, 2026-11-01 about 14:2x ICT. Daniel's words (spec.md amendment 2026-11-01): \"These all look great. They are all acceptable.\" No person review is recorded because the schema needs observed counts that do not exist.",
-        "Earlier review record: measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-36.json (mimo opencode-go/mimo-v2.6-flash; the batch 36 log says the row was pre-accepted by Daniel and not re-judged).",
-        "Reviewed color page batch-36/pages/l2-w01-story-page-a-net-m2-color.png; reviewed line page batch-36/pages/l2-w01-story-page-a-net-m2-line-23-despeckled.png; both byte-equal to the Muse files used for the prints.",
-        "Color print l2-w01-story-page-a-net-m2-color-print.png (SHA-256 d5490892d65bf4d850f26a2a6f202438f4232d8993538c020bb9d13949799ad7) and line print l2-w01-story-page-a-net-m2-line-print-23-despeckled.png (SHA-256 a724748fa52a494dcb3f58b3e3fe0a33924e701adb95a626f6e2f91945848d54) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+        "Round 67 fixed the Workbooks stage 2 finding. The Workbooks two-model check (stage 2) refused the -v1 file of this row. The row is delivered again as version 2 (fileVersion 2): files <row id>-v2.png and <row id>-line-v2.png, no -v1 file. The color print is unchanged (Muse m2). The line print is new: the hoop rim is an open ring of two thin parallel lines, not a thick solid black ring (finding R11).",
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-39.json: rating 8, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Reviewed color page batch-39/pages/l2-w01-story-page-a-net-m2-color.png; reviewed line page batch-39/pages/l2-w01-story-page-a-net-m2-line-26-despeckled.png; both byte-equal to the Muse files of the same names.",
+        "Color print l2-w01-story-page-a-net-m2-color-print.png (SHA-256 d5490892d65bf4d850f26a2a6f202438f4232d8993538c020bb9d13949799ad7) and line print l2-w01-story-page-a-net-m2-line-print-26-despeckled.png (SHA-256 7c57d1c6663002959a8c2610a86c2106a8675dafe36cf2d0704402b030c47306) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
       ]
     },
     {
@@ -393,14 +387,16 @@
     },
     {
       "rowId": "l2-w01-story-page-nan-can-nod",
-      "version": 5,
-      "colorPrint": "l2-w01-story-page-nan-can-nod-m5-color-print.png",
-      "linePrint": "l2-w01-story-page-nan-can-nod-m5-line-print-2.png",
+      "version": 6,
+      "fileVersion": 2,
+      "colorPrint": "l2-w01-story-page-nan-can-nod-m6-color-print.png",
+      "linePrint": "l2-w01-story-page-nan-can-nod-m6-line-print-despeckled.png",
       "notes": [
-        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-34-r2.json, audited head d81c59be: rating 8.5, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Round 67 fixed the Workbooks stage 2 finding. The Workbooks two-model check (stage 2) refused the -v1 file of this row. The row is delivered again as version 2 (fileVersion 2): files <row id>-v2.png and <row id>-line-v2.png, no -v1 file. Both prints are new (Muse m6; it replaces m5). Pip has a smooth round head top and no spike.",
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-39.json: rating 8, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
         "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
-        "Reviewed color page batch-34/pages/l2-w01-story-page-nan-can-nod-m5-color.png; reviewed line page batch-34/pages/l2-w01-story-page-nan-can-nod-m5-line-2.png; both byte-equal to the Muse files used for the prints.",
-        "Color print l2-w01-story-page-nan-can-nod-m5-color-print.png (SHA-256 8089c6a8031d6c08694f4fa0613b3da5cb9514a71ff03db04e51f2c7b2040cde) and line print l2-w01-story-page-nan-can-nod-m5-line-print-2.png (SHA-256 712ba9431cda29a5dccb784bb158ececa995b5d979ca60747b79172acdca46e0) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+        "Reviewed color page batch-39/pages/l2-w01-story-page-nan-can-nod-m6-color.png; reviewed line page batch-39/pages/l2-w01-story-page-nan-can-nod-m6-line-despeckled.png; both byte-equal to the Muse files of the same names.",
+        "Color print l2-w01-story-page-nan-can-nod-m6-color-print.png (SHA-256 2b6b6b501227ad2baa6f7620ec41b544c9ef5569cbdc9ba92ae7adbb40871666) and line print l2-w01-story-page-nan-can-nod-m6-line-print-despeckled.png (SHA-256 8d3ba7321db07bcf0bd6348117dfa9dce34c8679fbde52d5238c90b8c9e9f702) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
       ]
     },
     {
