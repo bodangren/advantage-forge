@@ -3389,3 +3389,57 @@ gate applies again.
    its own work. PNGs stay out of git.
    Commits: `571cbd9b` changes the kind, the eight casts, and the Nan v2 stage. This plan block is
    the next commit. No task is marked `[x]`. Waiting for the independent review.
+   Green round 54 evidence (2026-11-01, claude-code/claude-sonnet-5-5#high). Task: cast fix
+   round 2 of 3: the hands. role_base_sha `f0b7460a`, phase_base_sha `15a7bf0b`. Green coder
+   model: none. Code commit `f2de196f`. This plan block is the next commit.
+   Causes:
+   2a. Open hand and rest hands. The kind has only the closed fist (`P.fist`; `armShape` in
+       `humanoid-kind.ts`). Every hand is a lump with a finger roll at the front, so a raised, a
+       resting, or a held-out hand reads as a fist.
+   2b. Wave: Pat v4 shows "fingers" because the raised hand holds the teddy. The fingers are the
+       teddy paws and legs (Pat has a `hold` pose, both fists on the bear). Ben v3 shows the bare
+       fist. No fault in the Pat page; the cause is the fist in Ben.
+   3.  Index finger. `sproutIndexFinger` is used only by `sprout-adventurer`. Nan has no finger
+       body at all: the touch-nose clip puts a fist at the cheek.
+   Fix: the opt-in kind option `sproutHands` (default off). When on, a relaxed open hand replaces
+   the fist: a separate `hands` body (mesh cell 0.0028 m, skin color) with a palm, a cuff over the
+   wrist, a thumb, and four fingers that curl 12 and 40 degrees at rest. Two new bones per hand
+   (`fingers.L/R` middle, ring, little finger; `index.L/R`) turn about X: `HAND_OPEN` (+12 degrees)
+   opens the hand, `HAND_FOLD` (-75) folds three fingers. Clips (sprout-gestures.ts, only when the
+   option is on): wave opens the hand; hands-out becomes palm up, held forward, hands open;
+   touch-nose folds three fingers, extends the index, and puts the index fingertip (`indexReach`)
+   on the nose tip. With the option off the code gives the old geometry. On in `sprout-nan`, `-ben`,
+   `-mia`, `-may`, `-sam`. Not on in `sprout-pat` (decision: Pat has a `hold` pose, both fists
+   hug the teddy, and the kind refuses `sproutHands` with `hold` or `pose`), `-adventurer`,
+   `-base`, `-pip`, the heroes, the NPCs, and `avatar-base`. Skeleton and clips of casts without
+   the option are unchanged. `knife.L/R` and the hand bones are unchanged.
+   Textured GLB sizes (`./forge build`, exit 0, no `warning:` line): nan 3,274,776; pat 3,509,144
+   (the same as round 53); ben 3,523,248; mia 3,551,124; may 3,474,948; sam 3,094,104 bytes.
+   Hero check: `./forge render avatar-base`, `node scripts/part-check.mjs compare avatar-base`:
+   result PASS (baseline from before this round). `vitest run tests/sprout-base.test.ts`: exit 0,
+   2 of 2 passed. Teddy check: textured render of `sprout-pat` front view, the teddy sits between
+   his hands as before (`out/storytime-review/batch-26/after-pat-teddy-check.png`).
+   Proof rows (technique v3, 4000 x 3000; render and verify exit 0; shadow list):
+   | Row | Version | Line | Ink | Peak | Color SHA-256 | Line-art SHA-256 |
+   | --- | --- | --- | --- | --- | --- | --- |
+   | `l2-w01-story-page-a-nut` | v7 (v6 first try, kept) | 24 px | 4.61% | 507 MB | `431c1a9d9508fe543d99e542dc90689ba6b34bb4258447e4efbe18a445d4a968` | `a095d3b3a2bae12927152c502b31398bdd9d6670f5afa6ec823844447307a212` |
+   | `l2-w01-story-page-a-nose` | v6 (v5 first try, kept) | 24 px | 4.42% | 516 MB | `bf4dc0eebc7242daeffc0263354ee11d08733f938dbddd813bbcdb1674972ff6` | `266b1f00b7d1dd7f547f0c8fd1e1026f89efc176e6868cbad86c23ed56c781b4` |
+   The nut stage v7 is the v5 stage with the nut moved from x -0.245, y 0.255 to x -0.205,
+   y 0.243 (it must sit over the palm). The nose stage v6 is the v4 stage unchanged.
+   Result at print size (Green's own note, not a rating): in color both hands of Nan are open
+   with five clear fingers, palm up. The nut sits beside and behind the right hand, not clearly on
+   the palm: this is a known open defect for the review and for round 3. On the nose page the
+   index finger is a small tip below the nose and the folded fingers sit at the mouth: the finger
+   is short and reads weakly (open defect). The resting left hand reads as a relaxed open hand.
+   Known open items for round 3: nut resting on the palm; larger index on the nose page; the wave
+   page was not re-rendered (no wave row proof this round); the mouth, the forehead streak, and
+   the ear marks.
+   Heavy commands ran in `heavy-run.sh -c`; logs `green-p3-r54-*` in
+   `measure/runs/asset_storytime_l2_unit1_pictures_20261025/`. No exit 75, 137, `ERR_UNSAFE_PORT`,
+   or `lock wait` line. One command failed at exit 1: `./forge build sprout-pat` (the kind
+   refuses `sproutHands` with a `hold` pose); fixed by not setting the option on Pat.
+   Shadow root `/tmp/opencode/wb-shadow`: `pictures.json` SHA-256 starts with `c3e23cfd`; the live
+   Workbooks list is not written. Review folder `out/storytime-review/batch-26/`: before and
+   after hand close-ups, the proof pages, `look-reference-nan-and-pip.png`, `brief.md` (part 1 key
+   `cast-fix-hands`). Green did not rate its own work. PNGs stay out of git. No task is marked
+   `[x]`. Waiting for the independent review.
