@@ -1536,6 +1536,31 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       commands still pin version 3, so they refuse the version 4 list that Workbooks has now.
     - Models: Red `deepseek/deepseek-flash#high`. Green `claude-code/claude-sonnet-5-5#high`
       (Anthropic, a different family). Green coder model: none. No delegation.
+    - Green remediation round 2 (2026-11-01). Implementation commit `44c2ec84`. `phase_base_sha`:
+      `15a7bf0b`. `role_base_sha`: `3509efd5`. Files: `src/storytime/muse-delivery.ts` and the
+      `deliver` command in `src/storytime/book-pictures.ts`. No test and no `manifest.json` field
+      changed.
+      - New exports: `resolveMuseDeliveryPaths` (RB8-02; the `deliver` command calls it),
+        `checkPictureListPin` (RB8-01). The options gain `pictureListSha256` and `onSkip`. The
+        approval list gains the optional `pictureListSha256`. The `deliver` command passes
+        `list.sha256` and prints one `Skipped <row id>: ...` line for each row without an entry.
+      - Writer rules added: name checks run first (degenerate line-art name, line name equal to
+        the color name, duplicate delivered name: RB8-04, RB8-05); each Muse print passes `lstat`,
+        `realpath`, and `stat` (no symlink, inside `museRoot`, a regular file: RB8-06); each target
+        passes `lstat` (a symlink or a non-file is refused) and is created with the `wx` flag
+        (RB8-03); an identical manifest is not written again; the color print must be 8-bit, `srgb`,
+        3 channels, and not a palette (review C F2).
+      - GREEN command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c
+        'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts --maxWorkers=1'`. Exit
+        code `0`. Summary: `Test Files  1 passed (1)` and `Tests  21 passed (21)`. T152 to T172
+        pass.
+      - Regression command: the same runner with `tests/storytime-picture-rows.test.ts` and
+        `tests/storytime-book-pictures.test.ts`. Result: `Tests  2 failed | 139 passed (141)`. The
+        two failures are T142 and T147. They are the known version 3 list pin failures from the
+        first Green round. This change did not cause them.
+      - `tsc --noEmit` through the heavy runner: exit code `2`. Total errors `38`. Owned errors
+        `0` (no error names `muse-delivery` or `book-pictures`).
+      - Not in this round: review A F2, F3, F4 (named in the Red note). The task stays `[~]`.
 - [ ] Task: Deliver the week 1 Muse batch to the PM under the 2026-11-01 contract.
   - Run the writer on the clean rows.
   - Send the delivery path, the manifest SHA-256, the clean row count, the not-clean rows with
