@@ -13,6 +13,7 @@ render are due 2026-11-16. The [specification](./spec.md) owns the scope and acc
 - Owned planning path: `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/`.
 - Do not change `assets/fireball.ts` or `out/fireball/`. Their owner review remains separate.
 - Use Forge 3D renders with the approved cast. Do not use MiniMax image generation.
+  Replaced by the amendment of 2026-11-01 (Muse path).
 - Run `sh /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-preflight.sh` before every heavy
   run. Use `scripts/heavy-lock.ts` for the same run. Stop and report `hold`.
 - Use one paid pre-check call at a time. Do not run song or video commands.
@@ -35,10 +36,13 @@ render are due 2026-11-16. The [specification](./spec.md) owns the scope and acc
 
 - Workbooks supplied picture specification v0: exact sizes, filename pattern, sRGB, and batch hash.
 - Daniel selected Forge 3D renders for one character look across books and videos.
+  Replaced by the amendment of 2026-11-01 (Muse path).
 - The renderer is now local Forge. MiniMax image generation is removed.
+  Replaced by the amendment of 2026-11-01 (Muse path).
 - Daniel made the heavy pre-flight check and shared heavy lock mandatory.
 - Daniel added print line art. Each reader page gets a color output and a line-art output from the
   same scene and camera. The line-art format is provisional until Workbooks picture spec v1.
+  Replaced by the amendment of 2026-11-01 (Muse path).
 
 ## Phase 2: Tests and calibrated model pre-checks [checkpoint: 061694f]
 
@@ -948,6 +952,14 @@ Closeout carries these items:
 
 ## Phase 3: Week 1 pictures
 
+Amendment 2026-11-01: the [specification amendment](./spec.md#amendment-2026-11-01-muse-picture-path-and-week-1-delivery-contract)
+records Daniel's Muse decision and the PM delivery contract for week 1. Muse composition from
+the 3D elements is the picture path, and the Muse line art replaces the 3D line art. The tool is
+`scripts/storytime-muse.mjs`. The page specs are `docs/storytime/l2-unit1/w01/muse/<row-id>.json`.
+The outputs are in `out/storytime/l2/unit1/w01/muse/`. Review rule: an independent review and a
+strict clean check run on every page. A page is clean only when it has no defect of any kind.
+Only clean rows go into the delivery manifest.
+
 Strategy note: the Phase 3 test strategy is in
 [test-strategy.md](./test-strategy.md) section 7, "Phase 3: Week 1 pictures". It holds the
 verified picture list v3 hashes, the specification v1 sizes, the Red and Green split, the
@@ -1327,6 +1339,7 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   `out/storytime-review/batch-1/` (`brief.md`, five prop cards, two gesture strips, and the look
   reference). The ratings, any fixes, and the `GESTURES` mapping of touch-nose and touch-neck
   wait for the reviewer.
+  Amendment 2026-11-01: the Muse flow makes these rows; see the spec amendment.
 - [ ] Task: Run automated checks on every color and line-art file and both model pre-checks on
   every color candidate. Correct each failed picture under a new twin version and repeat the
   checks. Attach the raw model outputs.
@@ -1337,6 +1350,33 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   lists the 30 color and 30 line-art files. Apply picture specification v1 to the line art.
   Specification v1 has arrived, so the line art is not provisional. Report the output path and
   every remaining gate to the PM for routing.
+- [ ] Task: Add failing tests for the Muse week 1 delivery manifest (Red).
+  The tests cover these rules:
+  - The delivery batch root holds one `manifest.json` in the `StorytimeManifest` shape.
+  - The manifest has one job for each clean row.
+  - `job.id` equals the row id.
+  - `candidate.file` equals the row `fileName` (`<row id>-v1.png`). `lineArt.file` equals the row
+    `lineArtFileName` (`<row id>-line-v1.png`).
+  - The pixel sizes come from the row size class: A and B 4000 x 3000, C 1500 x 1500.
+  - The line art holds pixel values 0 and 255 only.
+  - A row that is not clean has no entry.
+  - The Muse originals stay.
+  - Kimi reviews go to `reviews.kimi` only. No job has a person review without a named person.
+  - The batch hash uses the existing algorithm.
+  - The delivered files are copies of the approved Muse print files with matching SHA-256.
+- [ ] Task: Implement the Muse week 1 delivery manifest writer (Green).
+  - Reuse the `StorytimeManifest` types and the picture-list row plan (`planPictureRow`) of
+    `src/storytime/book-pictures.ts`.
+  - Read the approved version of each clean row from a tracked approval list, for example
+    `docs/storytime/l2-unit1/w01/muse/approved.json`. The list names the row id, the Muse
+    version, the chosen color and line files, and the review evidence.
+  - Copy the print files to the delivery folder under the list names.
+  - Write `manifest.json`.
+  - Add a CLI entry.
+- [ ] Task: Deliver the week 1 Muse batch to the PM under the 2026-11-01 contract.
+  - Run the writer on the clean rows.
+  - Send the delivery path, the manifest SHA-256, the clean row count, the not-clean rows with
+    their open defects, and the running Muse cost.
 
 ## Phase 4: Remaining pictures and cover
 
@@ -1362,6 +1402,7 @@ landscape. That is about 378 ppi in the A3 picture box (269 mm wide). It meets t
 If a later list sets a larger print size or the A3 ratio, render the color and line-art twins
 again from the kept stage files as new versions. A new ratio changes the framing, so every picture
 gate applies again.
+Replaced by the amendment of 2026-11-01 (Muse path).
 
 ## Phase 5: Documentation and verification
 

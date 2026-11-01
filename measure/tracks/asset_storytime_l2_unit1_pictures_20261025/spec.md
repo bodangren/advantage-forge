@@ -16,7 +16,9 @@ the Level 2 cover render are due 2026-11-16.
 Each reader page has two outputs: a color picture and a black-and-white line-art picture. The
 color picture serves the app read-along and the song videos. The line-art picture serves a
 printed workbook with "build your own" readers. Both outputs come from the same 3D scene and
-camera. Workbooks picture specification v1 arrived on 2026-10-27. It fixes the picture sizes and
+camera.
+Replaced by the amendment of 2026-11-01 (Muse path).
+Workbooks picture specification v1 arrived on 2026-10-27. It fixes the picture sizes and
 the line-art format.
 
 ## Decisions and boundaries
@@ -25,6 +27,7 @@ the line-art format.
   system, I think. We have the 3D assets from Forge. If they need more poses, we can request them.
   If we need additional assets, we can create them. One character look for both books and videos
   seems like a good idea!"
+  Replaced by the amendment of 2026-11-01 (Muse path).
 - The same approved cast and look serves the books and future song videos. Do not substitute a
   different character look.
 - Daniel added print line art on 2026-10-25 (PM relay, about 21:10 ICT). His words:
@@ -36,6 +39,7 @@ the line-art format.
 - The PM instructions for that change: make the line art from the same 3D scenes and cameras as
   the color renders. Do not stop the color renders. Render the Nan window page in both versions
   first. Report the two file paths to the PM for Daniel's look. Continue while the sample waits.
+  Replaced by the amendment of 2026-11-01 (Muse path).
 - Daniel added a teacher print on 2026-10-25 (PM relay, about 21:25 ICT). His words:
 
   > yes, right for the student, but we can produce color pdfs for the teachers to printo on A3
@@ -110,6 +114,7 @@ Class A and class B give about 378 ppi in the A3 picture box (269 mm wide). That
 - Render size is a parameter of the render. The stage file does not contain it.
 - Stage files and cameras are kept and versioned. A later render at a larger size needs no new
   scene work and no extra cost.
+  Replaced by the amendment of 2026-11-01 (Muse path).
 - Specification v1 keeps 4:3 for class A and class B. A3 (about 1.414:1) has a different ratio.
   A render at the A3 ratio changes the framing. A later size or ratio needs a new render, and
   every picture gate applies again.
@@ -133,6 +138,71 @@ Workbooks commit 078917f1 supplied it. The list has 192 rows.
 The class B rows are the 14 reader covers. The Workbooks covers track `storytime_covers_20261027`
 lists them as out of scope. The print track owns them as reader pages. Forge renders the B
 pictures. Workbooks keeps the layout and the text.
+
+## Amendment 2026-11-01: Muse picture path and week 1 delivery contract
+
+This amendment changes the picture path, the line art, and the week 1 delivery contract. The
+earlier text stays in place. The line "Replaced by the amendment of 2026-11-01 (Muse path)."
+follows each earlier statement that this amendment replaces. When an earlier statement conflicts
+with this amendment, this amendment applies.
+
+### Decision 1: the Muse picture path
+
+Daniel gave this decision in Tasks at 09:34 ICT on 2026-11-01. The PM relayed it. His words:
+
+> The Muse version is obviously better in all cases and your reading of the hand is wrong because
+> it's a what is it called perspective problems of the hand is reaching out towards the towards
+> the viewer so we'll keep Muse and then don't even bother with a cap because we have to pay what
+> we have to pay here finally I think we can leave the 3D models as is
+
+The PM orders that follow from it:
+
+- Muse composition from the 3D elements is the picture path for Storytime (week 1 first, then
+  weeks 2 to 8). The inputs are character renders, prop renders, an empty set render, and a page
+  description. Muse never gets a finished page render.
+- The line art comes from the approved Muse color picture: thick, simple, closed lines; no blush,
+  eyelash ticks, hair strands, gray, or text. Muse line art replaces the 3D line art. Nan keeps
+  her eyelash mark.
+- Foreshortening is not a defect.
+- The 3D cast fix stops. The 3D models are reference sources only. Committed changes stay.
+- No cost cap. Every paid Muse call is logged with `usage.cost`, and each report gives the
+  running total. Retry only for a real defect.
+- Muse calls need no heavy lock and no slot; they run 4 at a time.
+- An independent review and a strict clean check run on every page. A page is clean only when it
+  has no defect of any kind ("no known defects in print").
+- The nurse and Teacher Kim get Muse cast sheets, described by hair and clothes only
+  (race-unmarked).
+- Print size: local crop or pad and enlargement to the list size; the line art stays pure black
+  and white.
+- The tool is `scripts/storytime-muse.mjs`; the page specs are
+  `docs/storytime/l2-unit1/w01/muse/<row-id>.json`; the outputs are
+  `out/storytime/l2/unit1/w01/muse/`.
+
+### Decision 2: the week 1 delivery contract
+
+The PM gave this decision at 11:3x ICT on 2026-11-01. It is the delivery contract for the week 1
+hand-off to Workbooks. The target date is 2026-11-04. The PM words:
+
+```text
+PM decision (the shape of 11a06b9c stays the contract):
+1. The Muse flow delivers the week 1 list rows.
+2. At the delivery batch root, write one manifest.json in the 11a06b9c shape, with one entry per picture-list row.
+3. job.id = the picture-list row id (for example l2-w01-story-page-hello-i-am-pat).
+4. candidate.file = the approved 4000 x 3000 color print file, named as the list names it: <row id>-v1.png. lineArt.file = the approved 4000 x 3000 1-bit line-art print file: <row id>-line-v1.png. Copy the approved Muse print files to those names in the delivery folder; keep the Muse originals.
+5. Workbooks matches the file name part only, so the folder prefix is free.
+6. Only clean rows go into the manifest. Any change to this contract goes through the PM first.
+```
+
+Forge accepted the decision with two notes:
+
+- (a) The 12 class C rows (check rows and practice lines) go at the list size 1500 x 1500. Class A
+  and class B rows go at 4000 x 3000.
+- (b) The 11a06b9c review fields (`reviews.minimax`, `reviews.kimi`, `reviews.person`) take only
+  Kimi reviews in `reviews.kimi`. Mimo reviews and orchestrator checks stay in the review logs.
+  No row gets a person review that no person gave.
+
+The manifest shape is `StorytimeManifest` in `src/storytime/book-pictures.ts` lines 238 to 243:
+`version` 1, `batchHashAlgorithm`, `jobs`, and `batches`.
 
 ## Functional Requirements
 
@@ -167,6 +237,7 @@ pictures. Workbooks keeps the layout and the text.
     Use a render pass of the 3D scene, not only a filter of the color picture. The lines show
     silhouettes and form edges, never mesh triangle edges. The song engine gets one additive
     still hook for this pass.
+    Replaced by the amendment of 2026-11-01 (Muse path).
     Daniel's style look applies to the approved line-art technique and format version.
 15. **FR-15 Line-art sample.** Render the Nan window page in color and line art first. Report
     both paths to the PM for Daniel's look. Continue the pipeline while the look is pending.
