@@ -2034,6 +2034,71 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       shows, in the golden-brown color of the reference. Commit `80731830`. The week 5 stage gate
       passes again (`element paths checked: 64`, `missing element paths: 0`, `page candidates: 0`).
       No Muse call; running total stays 4.09 USD.
+    - Week 6 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
+      2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `8e141040`, phase_base_sha
+      `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.
+      Specs commit `ff72b475`: 27 page specs in `docs/storytime/l2-unit1/w06/muse/<row id>.json` and 9
+      element specs in `docs/storytime/l2-unit1/w06/muse-elements/`. The method is the week 4 and
+      week 5 method. The run log is
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w06-staging.log`.
+    - Page specs: `text` is the list `text` and `goal` is the list `prompt`, as exact strings. The 9
+      check rows have the list prompt `""`, so their `goal` is `""`. `outDir` is
+      `out/storytime/l2/unit1/w06/muse`. The 18 class A and class B specs have 2 to 5 references
+      each. The 9 class C specs have one reference each. The renamed id `tap-tap-tap-b` (the `-b`
+      id is current) has its own spec. The week 1 lessons are in the prompts (thick, even, closed
+      line art; no blush, eyelash ticks, hair strands, gray, or text; five-digit hands; the props of
+      each sentence). The counts are exact: one animal on each animal page, two mats, one basket,
+      one map, one red pan, one puppy with four legs, and ten balls in two rows of five.
+    - Page specs, week 5 lessons: where the set has no needed part, the colorPrompt says where it
+      goes. The map page hangs the wall map lower and keeps the wall behind its lifted corner empty.
+      The three tail pages (horse, tap-tap-tap, tap-tap-tap-b) show only the golden-brown tail tip
+      of Pip and say what must not show (body, head, ears, legs). The cover pages name each person
+      and the count. The meadow set keeps its one sun, so no page adds a second sun.
+    - No new character and no new cast sheet. Mia, Pat, Sam, and Pip have approved looks. No spec
+      carries `"castLook": "pending"`, and Daniel gets no new phone picture for week 6. The Mia
+      reference is a copy of `out/sprout-mia/render.png` named `mia-ref-render.png` in the week 6
+      elements folder, so that the stage check finds the name Mia.
+    - Elements reused by path: Pat (`out/storytime-review/batch-22/sprout-pat-render.png`); Sam
+      (week 5 `sam-ref-render.png`); Pip (week 4 `pip-ref-render.png`); the duck sheet
+      `prop-ducks-sheet-m1` (week 2, draw one duck); Forge 3D views `out/fish`, `out/frog`,
+      `out/dog`, `out/storytime-school-bag`, `out/storytime-low-table`, and
+      `out/storytime-child-cup`. Five check-row specs (sun, dog, cup, pen, fish) reuse the earlier
+      spec of that word with a new id. No new 3D shot and no heavy-runner job in this round.
+    - New Muse element sheets (9, in `out/storytime/l2/unit1/w06/muse/elements/`, named with no row
+      id): `set-meadow-empty`, `set-book-corner-empty` (m2), `prop-green-mats-sheet`,
+      `prop-gray-cat-sheet`, `prop-black-white-dog-sheet`, `prop-blue-bird-sheet`,
+      `prop-white-horse-sheet`, `prop-tiger-sheet`, and `prop-ten-sheet`. They are inputs, never
+      page candidates. The first look by this Green found all current sheets usable. The book corner
+      m1 had a small basket and a tiny kitchen, so m2 replaced it. Known gaps: in the m2 set the
+      basket stands close to the wall, so the floor strip behind it is narrow; the mats are thick
+      and may read as cushions; the white horse may lose its edge in the line art. All sheets need an
+      independent look. Review folder: `out/storytime-review/w06-staging/` (`index.md`,
+      `sheets-1.png`, and `sheets-2.png`).
+    - Muse calls: 10 calls, 10 billed, 0 failed. 9 element calls and 1 retry (book corner). Cost
+      0.10 USD (`usage.cost` 0.01 per call) in `elements/costs.tsv`. Running total 4.09 USD before
+      this run, 4.19 USD after it. Page calls: 0. Page candidates: 0.
+    - Stage gate (STAGING_GATE_COMMAND with `--week 6`, light job, exit code 0):
+
+      ```text
+      list sha256: 6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58
+      week: 6
+      rows: 27
+      specs found: 27
+      text mismatches: 0
+      goal mismatches: 0
+      outDir mismatches: 0
+      rows with no reference (class A and B): 0
+      element paths checked: 70
+      missing element paths: 0
+      characters without a reference: 0
+      page candidates: 0
+      stage check: pass
+      ```
+
+      This proves that the inputs exist and match the list. It proves nothing about picture quality.
+    - Open: no task is `[x]`. No week 6 page call before Daniel answers on week 1. The 9 element
+      sheets need an independent look. The `ten` check row shows ten balls, because the sentence
+      gives no object for the word.
 - [ ] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks.
 
