@@ -1672,6 +1672,20 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       This proves that the inputs exist and match the list. It proves nothing about picture quality.
     - Open: no task is `[x]`. The stage-check script and its tests follow in a later round. No week
       2 page call before Daniel answers on week 1.
+    - Follow-up of the same round (specs commit `baf7c29c`, plan commit after `07f52f7a`). Three
+      sheets were remade, and the page specs now point to the new files. `prop-ant-sheet-m2`: six
+      legs show (m1 showed four). `set-playground-empty-m3`: a low climbing frame with a ladder, a
+      top platform, and a rail, and a taller slide (m1 looked like a table frame; m2 had a frame as
+      tall as the slide). In m3 the beam is a round log, and the 3D beam asset is a square bar.
+      `set-park-empty-m2`: a large tree with a wide crown and one low branch (m1 had a small tree).
+      The old versions stay in the folder. The 3D views of `apple`, `pig`, and `bed` were opened:
+      each shows the object clearly on a plain gray background, so no reference changed. The `bed`
+      and `pig` line prompts now say: no blanket checks, no cheek blush, no skin texture. New Muse
+      calls: 5 calls, 4 billed (the playground m2 call failed with `ECONNRESET` at cost 0 and its
+      retry worked). Cost 0.04 USD. Element total 0.15 USD. Running total 3.51 USD (3.47 before
+      the follow-up). The same self-check gives `specs found: 27`, `element paths checked: 82`,
+      `missing element paths: 0`, `characters without a reference: 0`, `page candidates: 0`,
+      `self-check: pass`.
 - [ ] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks.
 
