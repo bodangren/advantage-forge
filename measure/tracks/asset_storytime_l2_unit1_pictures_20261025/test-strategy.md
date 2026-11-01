@@ -10,6 +10,8 @@ Amended from `cf5743b7` for the decoded-value remediation (Phase 2 task 9).
 Amended from `53cc3ada` for the decoded-layer remediation (Phase 2 task 10).
 Amended from `3f604b62` for the token-layer remediation (Phase 2 task 11).
 Amended from `bb4e11f0` for the malformed-string remediation (Phase 2 task 12).
+Amended at `60892a38` for "Phase 4: Remaining pictures and cover" (P4) under the Muse path
+(subsection "Phase 4 under the Muse path (2026-11-02)" in section 7).
 Amended for "Phase 3: Week 1 pictures" (P3) after the plan amendments `010dcc16` and `0d620a43`.
 The amendment covers picture list v3, picture specification v1, 30 week 1 rows, 60 week 1 files,
 the 2026-11-02 date, the machine limits, the shared-asset check, and the classroom map record.
@@ -1920,16 +1922,397 @@ of 162 rows are the new risks.
 - Task 1 also applies picture spec v1 to the line art. Use `RED_TEST_COMMAND` for each new
   line-art rule (size, color depth, line weight). A rename changes only names and records the old
   name. A format change needs a new `lineArtFormatVersion` and a new twin render.
+  Replaced by the amendment of 2026-11-01 (Muse path). The Muse line art comes from the approved
+  Muse color picture, and `inspectLineArtPng` checks the print.
 - Use `RED_TEST_COMMAND` for a size or crop change from the final list. Record each resize or crop.
 - Weeks 2 to 7 get 162 line-art twins with the same line-art gates.
+  Replaced by the amendment of 2026-11-01 (Muse path). The twins come from the approved Muse
+  color picture. The gates are G3 to G6 in 4.5.
 - If spec v1 sets a larger print size or the A3 ratio (about 1.414:1), render the pages again from
   the kept stage files as new versions (T41). A new ratio changes the framing, so all picture
   gates apply again to each new version.
+  Replaced by the amendment of 2026-11-01 (Muse path). No stage file render exists. The Muse
+  print step crops or pads and enlarges to the list size.
 - Person counts and line-art looks become `[b] deferred:daniel-or-named-reviewer` when they are
   the only missing evidence.
 - Treat `verify` and `sheet` on more than 30 pictures as heavy. Run them under the preflight and the lock.
+  Replaced by the amendment of 2026-11-01 (Muse path). Muse calls need no lock and no slot. Vitest,
+  tsc, and `deliver` still run through the heavy runner.
 - Closeout gate: `verify --release` for 192 rows, their 192 line-art twins, and the cover exits 0.
   The manifest has no `failed` or missing release candidate.
+  Replaced by the amendment of 2026-11-01 (Muse path). See the closeout gate in 4.8.
+
+The Phase 4 text above describes the 3D render path. The amendment of 2026-11-01 replaced that
+path with the Muse path. Read the subsection "Phase 4 under the Muse path (2026-11-02)" below.
+Where the subsection and the text above differ, the subsection applies.
+
+#### Phase 4 under the Muse path (2026-11-02)
+
+Revision: written at `60892a38` (the HEAD when this subsection was written). Risk class stays
+**medium** for the code tasks (Task 1, the week delivery change, the stage check) and becomes
+**high** for the production tasks (weeks 2 to 7 and the cover). The production tasks make 162
+paid picture rows on a deadline of 2026-11-16, and a wrong picture reaches print.
+
+Deviation recorded: Phase 4 starts before Phase 3 acceptance. Phase 3 has one open task, the
+person review of week 1 by Daniel. The week 1 delivery is done
+(`out/storytime/l2/unit1/w01/delivery-muse-v1/`, `manifest.json` SHA-256
+`00ea0c5b06d18e3f54cbceed9caa943100c0711bb515c44561eb46b7e03ed369`). Task 1 and the staging do not
+depend on that review. The production of weeks 2 to 7 does depend on it (see 4.5).
+
+##### 4.1 Facts this subsection fixes (checked 2026-11-02)
+
+| Fact | Value |
+| --- | --- |
+| Live list (read only) | `/home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json`, version 4, Workbooks commit `87ecc6aa` |
+| SHA-256 of `pictures.json` (v4) | `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58` |
+| SHA-256 of `pictures.md` (v4) | `7cc4c20178abbddae3ae0904b9e0e08ced09c6e95d6f9e365fcce932cf81ad56` |
+| SHA-256 of `pictures.json` (v3 shadow copy) | `c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b`, at `/tmp/opencode/wb-shadow/content/storytime/l2/print/pictures.json` |
+| Rows | v4: 196 (A 112, B 14, C 70). v3: 192 (A 112, B 14, C 66) |
+| Rows per week (v4) | week 1: 30; weeks 2 to 7: 27 each; week 8: 4 |
+| Rows per week and class | weeks 1 to 7: A 16, B 2, C 9 (week 1: C 12). Week 8: C 4 |
+| Weeks 2 to 7 together | 162 rows: A 96, B 12, C 54. Uses: 96 story-page, 12 cover, 54 check-row |
+| Difference v3 to v4 | 4 added rows, 0 changed rows. The added ids: `l2-w08-check-row-moon`, `-mango`, `-ostrich`, `-drum` (class C, 1500 x 1500) |
+| The four renamed ids (renamed in v3) | `l2-w02-story-page-nan-can-b`, `l2-w02-story-page-can-i-b`, `l2-w02-story-page-i-can-b`, `l2-w06-story-page-tap-tap-tap-b` (the suffix was `-a`) |
+| Old `-a` ids in `src`, `tests`, `scripts`, `docs`, `jobs.json`, and Workbooks `l2` | none found |
+| Size specification v4 | class A and class B: 4000 x 3000. Class C: 1500 x 1500. The same as v3 |
+| Loader | `loadPictureList` accepts week 8 (`week` is a positive integer). The `render` and `verify` row commands pin v3. The `--week` parser (`book-pictures.ts` line 4615) refuses a week above 7, so `--week 8` fails today |
+| Highest test number at the base | `T172` in `tests/storytime-muse-delivery.test.ts`; `T151` in `tests/storytime-book-pictures.test.ts` |
+
+The check commands and their expected output:
+
+```sh
+P=/home/daniebo/Desktop/Workbooks/content/storytime/l2/print
+sha256sum "$P/pictures.json" "$P/pictures.md"
+node -e 'const d=require(process.argv[1]);const f=(a)=>a.length;const w=(n)=>d.filter(r=>r.week===n);const m=d.filter(r=>r.week>=2&&r.week<=7);const k=(a,c)=>a.filter(r=>r.sizeClass===c).length;console.log("rows",d.length,"week1",f(w(1)),"week8",f(w(8)),"weeks2to7",f(m),"A",k(m,"A"),"B",k(m,"B"),"C",k(m,"C"),"renamed",d.filter(r=>/^l2-w0[26]-story-page-(nan-can|can-i|i-can|tap-tap-tap)-b$/.test(r.id)).length)' "$P/pictures.json"
+```
+
+Expected output: `rows 196 week1 30 week8 4 weeks2to7 162 A 96 B 12 C 54 renamed 4`. The check fails when a
+hash differs, when a count differs, or when the renamed count is not 4.
+
+##### 4.2 Task 1: reconcile the list (version 4 pin, ids, counts, sizes, week 8)
+
+Task 1 owns `src/storytime/book-pictures.ts`, `tests/storytime-book-pictures.test.ts`,
+`tests/storytime-picture-rows.test.ts` (if a pin sits there), and the `contract.md` list facts.
+Task 1 does not touch any file of the staging (4.3).
+
+Scope default for the four week 8 rows: they stay out of the 162-row production scope. Task 1
+makes the loader, the pin, and the selection accept them. Nobody renders them until the PM
+assigns them. The question goes to the PM in the `handoff` line.
+
+**Red tests.** Red changes two committed tests and adds five. Red numbers the new tests from
+`T173`. Red confirms the next free number with
+`grep -ho "it('T[0-9]*" tests/storytime-*.test.ts | sort -u | tail -3`.
+
+| Test | Assertion | Falsification condition | State at the base |
+| --- | --- | --- | --- |
+| T142 (changed) | The loader reads the live list: `List rows` is 196, week 1 holds 30 rows (A 16, B 2, C 12), `List SHA-256` is the v4 value. | The test passes with 192 rows or with the v3 hash. | red |
+| T147 (changed) | `LIST_SHA256` is the v4 value and `LIST_MARKDOWN_SHA256` is `7cc4c201...ad56` (full value in 4.1). The Workbooks digests are the same before and after a run. | A byte of either Workbooks file changes, or a v3 value passes. | red |
+| T173 | The constant is named `PICTURE_LIST_SHA256` and holds the v4 value. The `render --dry-run` and `verify` row commands accept the live list. The same commands refuse the v3 shadow bytes with the text `The picture list changed: expected SHA-256 6d05dfc5...`. `PICTURE_LIST_V3_SHA256` is no longer exported. | The v3 bytes pass, the v4 bytes fail, or two constants coexist. | red |
+| T174 | Labeled counts of the live list: `List rows: 196`, week 1 to 7 per week and class (4.1), `Weeks 2 to 7 rows: 162`, `Weeks 2 to 7 class A: 96`, `class B: 12`, `class C: 54`, `Week 8 rows: 4`. | Any label is missing, a count is taken from the v3 shadow copy, or the test passes on any digit. | guard (passes) |
+| T175 | The four renamed ids are in the list. No id ends in `-a` where a `-b` twin exists. For each of the four ids, `fileName` is `<id>-v1.png` and `lineArtFileName` is `<id>-line-v1.png`. | A `-a` id is accepted, a `-b` id is missing, or a file name is derived by slug. | guard (passes) |
+| T176 | Every one of the 196 rows has the size of its class: A and B 4000 x 3000, C 1500 x 1500. The row `width` and `height` equal that size. Existing T143 keeps the v0 size refusal. | One row with 3000 x 2250 or 3600 x 2700 passes, or only week 1 rows are checked. | guard (passes) |
+| T177 | The `--week` parser accepts 8 and still refuses 0 and 9. `--week 8` selects exactly 4 rows. No `--week` selects 196 rows. The weeks 2 to 7 selection helper returns 162 rows and no week 8 row. | The 162 count is computed from all rows (196) or from `week > 1` (166), week 8 leaks into the weeks 2 to 7 selection, or the parser accepts 9. | red (the pin and the parser refuse) |
+
+**Mutation proof for the guard tests (Green runs them, each mutation restored).** (1) In a copy of
+the list, change one id from `-b` to `-a`: T175 must fail. (2) In a copy, set one row height to
+2250: T176 must fail. (3) In a copy, drop one week 2 row: T174 must fail. (4) Delete the `week 8`
+filter branch: T177 must fail. A guard test that survives its mutation is a vacuous pass (A4).
+
+**Callers of the old pin (Green updates every one).** The grep
+`grep -rn "PICTURE_LIST_V3_SHA256\|c3e23cfd" src tests scripts` must show no live use:
+
+- `src/storytime/book-pictures.ts` line 3568 (the constant) and line 4754 (the `render` and
+  `verify` row commands, `expectedSha256`).
+- `tests/storytime-book-pictures.test.ts` line 4039 (`LIST_SHA256`), line 4188 (T142), line 4311
+  (T147), and line 4179 (`List rows` 192).
+- `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/contract.md` line 9 (the SHA and the
+  row count 192). Green writes v4 there and keeps v3 as one history line.
+- The `deliver` command (line 4728) reads the list with no pin. It uses the pin of the approval
+  list (`pictureListSha256`). Green must not add a second pin there.
+
+The v3 hash may stay in the tests only as the labeled negative control of T173.
+
+RED_TEST_COMMAND (Phase 4, Task 1 and the delivery week change):
+
+```sh
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts tests/storytime-picture-rows.test.ts tests/storytime-muse-delivery.test.ts --maxWorkers=1'
+```
+
+GREEN_TEST_COMMAND (Phase 4, Task 1 and the delivery week change): the same command, then the type
+check of section 3 (`TASK9_TYPECHECK_COMMAND` form, `tsc --noEmit -p tsconfig.json` through
+`heavy-run.sh`).
+
+Expected Red result for Task 1: exit code `1`. The line `Tests  <f> failed | <p> passed (<t>)`
+gives `f >= 1`. The expected value is `f = 4`: T142, T147, T173, and T177. The Red role parses `f`
+as a labeled integer and names every failing test. A failure that comes from a missing import or a
+syntax error for the whole file is not Red (A4). Each failure message must name a labeled
+expectation. A `heavy-preflight` hold or exit code `75` is not Red.
+
+Expected Green result: exit code `0`, `Tests  <t> passed (<t>)` with `t` equal to the Red total, no
+skip, no `-t` filter. The type check gives `owned tsc errors: 0` and a total of 38 or less (the
+total at the Muse delivery Green was 38). The owned pattern also matches
+`src/storytime/muse-delivery.ts` and `tests/storytime-muse-delivery.test.ts`.
+
+Architecture guardrails: Task 1 changes no file under `/home/daniebo/Desktop/Workbooks`. Task 1
+adds no hash field or hash chain (the monorepo rule). The row commands may keep their names. The
+approval list pin of week 1 (`approved.json`) already holds the v4 value and stays unchanged.
+Changed-contract risk: the `render` and `verify` row commands now accept the v4 list and refuse
+the v3 list. No Phase 4 task uses these commands for production, because the Muse path does not
+render 3D rows.
+
+##### 4.3 Staging gate for week 2 (inputs only, no page candidate)
+
+Staging runs in parallel with Task 1. The two do not share a file. Staging owns:
+`docs/storytime/l2-unit1/w02/muse/*.json` (27 page specs and any cast spec),
+`out/storytime/l2/unit1/w02/muse/elements/`, `scripts/storytime-stage-check.mjs`, and
+`tests/storytime-stage-check.test.ts`. Task 1 owns the other files. Both tasks run vitest, so the
+heavy lock puts them in one line. Neither task commits a path of the other.
+
+Staging inputs: character renders (the approved looks of Pat, May, Sam, Mia, Ben, Nan, Pip, and
+Teacher Kim), prop renders, the empty park set render, and one page spec per row. Existing assets
+cover some props (`pond`, `beam`, `basket`). Missing props (for example the climbing frame, the
+slide, the kites, the cupcakes, the picnic blanket) need a render or a prop sheet. Staging
+makes **no** Muse call for a page. Staging may call Muse for an element sheet only (see below).
+
+Cast sheets. A Muse cast sheet for a character with no approved look is allowed during staging.
+It is an input, never a page candidate. The call goes to `costs.tsv` with `usage_cost`. The sheet
+describes hair and clothes only. The status is `pending look` until the PM relays Daniel's look
+approval. A page spec must not reference a `pending look` sheet in a production call. Week 2 needs
+no new character: all eight week 2 characters have a look (six 3D sprouts, Pip, and the Teacher
+Kim Muse sheet from week 1, whose look is part of the open week 1 review). Weeks 4 to 7 add Lily,
+Mom, Dad, Grandma, Grandpa, and Tom. These have no look yet. Their cast sheets belong to those
+weeks and follow the same rule.
+
+STAGING_GATE_COMMAND (light job, no heavy lock, exit 0 required):
+
+```sh
+node scripts/storytime-stage-check.mjs --week 2 --list /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --specs docs/storytime/l2-unit1/w02/muse
+```
+
+The script reads the list read only. It refuses a list whose SHA-256 is not the v4 value (exit
+`2`). It prints these labeled lines, one per line, and exits `0` only when all hold:
+
+```text
+list sha256: 6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58
+week: 2
+rows: 27
+specs found: 27
+text mismatches: 0
+goal mismatches: 0
+outDir mismatches: 0
+rows with no reference (class A and B): 0
+element paths checked: <n>
+missing element paths: 0
+characters without a reference: 0
+page candidates: 0
+stage check: pass
+```
+
+Rules of the check:
+
+- `specs found` counts files named `<row id>.json` for each of the 27 rows. A spec with an `id`
+  that is not a row id of the week is an error.
+- `text mismatches` and `goal mismatches` compare the spec `text` with the list `text`, and the
+  spec `goal` with the list `prompt`, as exact strings (no trim, no case change, no `includes`).
+- `outDir` must equal `out/storytime/l2/unit1/w02/muse`.
+- Each class A and class B spec has one reference or more. `element paths checked` is the total
+  number of reference paths. It must be 18 or more (18 class A and class B rows). A value of 0
+  fails (A4).
+- Each reference is a repository-relative regular file, not a symbolic link. The path must not
+  contain `..` and must sit under `out/` or `docs/`. The file size is above 0 and the first bytes
+  are the PNG signature.
+- `characters without a reference` counts the names in the spec goal (Pat, May, Sam, Mia, Ben,
+  Nan, Pip, Kim) that have no matching element. A name matches a reference whose file name holds
+  the lower-case name, or one of the two group sheets that the script lists for that name.
+- `page candidates` counts files `<row id>-m*` in the output folder. It must be 0 during staging.
+  Cast sheet files and element files do not use a row id, so they do not count.
+- The spec holds a non-empty `colorPrompt` and `linePrompt`. A row id with a trailing `-a` where
+  a `-b` row exists is an error.
+
+STAGING_TEST_COMMAND (Red and Green of the script, fixtures in a temp folder):
+
+```sh
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-stage-check.test.ts --maxWorkers=1'
+```
+
+| Test | Assertion | Falsification condition |
+| --- | --- | --- |
+| T178 | A fixture week of 3 rows with specs, elements, and the list passes. Every label is printed with its exact value. | A label is missing, or the run passes with `element paths checked: 0`. |
+| T179 | Each mutation exits `1` and names the row: delete one spec; change one character of `text`; change one character of `goal`; add a trailing space to `goal`; point one reference to a missing file; empty the references of a class A row; use a `..` path; use a symbolic link; change `outDir`; add a `<row id>-m1-color.png` file. | One mutation passes, or the check trims the trailing space. |
+| T180 | A list whose SHA-256 is not the v4 value exits `2`. The v3 shadow bytes are refused. | The v3 list passes. |
+
+Red for the script: the test file exists and the STAGING_TEST_COMMAND gives `f >= 1` (T178 to T180
+fail because the script does not exist). The live STAGING_GATE_COMMAND exits non-zero before the
+specs exist. Green: the test command exits 0 with a labeled total, and the live command exits 0
+with every label above. The Green quotes the full label block in the plan.
+
+Live behavior proof for staging: the live command on the real 27 specs and the real element files.
+The vitest fixtures prove the logic only (artifact test). The week 2 specs are documents. A passing
+check proves that the inputs exist and match the list. It proves nothing about picture quality.
+
+Staging for weeks 3 to 7 repeats this gate with `--week N` before the production of that week.
+
+##### 4.4 Delivery of a week other than week 1 (Task 2 prerequisite)
+
+The writer `writeMuseDelivery` and the `deliver` command do not hard-code week 1. The manifest job
+directory comes from `row.week` (`w02`), so the batch ids are `w02/color` and `w02/lineart`. The
+`deliver` command prints one `Skipped <row id>` line for each of the other 169 rows of the list.
+The `deliver` command ignores `--week`, and an approval entry of another week is not refused. Red
+and Green make `deliver` use `--week <n>` (the parser exists and Task 1 widens it to 8) and add two tests in `tests/storytime-muse-delivery.test.ts` (the Phase 4
+RED_TEST_COMMAND and GREEN_TEST_COMMAND run that file):
+
+| Test | Assertion | Falsification condition |
+| --- | --- | --- |
+| T181 | A week 2 fixture (27 rows: A 16, B 2, C 9) delivers 27 jobs and 2 batches (`w02/color`, `w02/lineart`). File names are the list names. Class sizes hold. A second run gives the same bytes. | The manifest has other batch ids, a size is wrong, or a second run differs. |
+| T182 | With `--week 2`, an approval entry of week 3 exits `1` and writes nothing. The `Skipped` lines name only week 2 rows. The week 1 delivery test T152 to T172 stays green. | A week 3 entry is delivered, or the output folder holds a file after the refusal. |
+
+Week delivery folders: `out/storytime/l2/unit1/w0N/delivery-muse-v1/`. The approval list of a
+week is `docs/storytime/l2-unit1/w0N/muse/approved.json` with `pictureListSha256` set to the v4
+value. A new delivery of a changed week goes to `delivery-muse-v2`. Nothing overwrites a folder (S3).
+
+##### 4.5 Production gates for weeks 2 to 7 (Muse path)
+
+Start condition. The orchestrator starts a page candidate of week 2 only after the PM relays
+Daniel's answer on week 1. Staging (4.3) comes first. Weeks 3 to 7 start in order after the same
+answer; Daniel's bar may change the prompts. A rule change from that answer updates the specs of
+every later week before its staging check.
+
+The bar for every page is Daniel's text of 2026-11-01 at 14:15 ICT, quoted verbatim in every
+review prompt: marks of that size are not defects (a small mark at the nose, an open C-shaped ear
+line, outlined eyebrow bands, small dark shading inside the ears, a simplified branch or bush). A
+defect is only what a teacher or a child sees at book size: a wrong or changed character, a
+broken face, a clearly wrong hand or limb, a wrong or missing prop the sentence needs, a layout
+fault, text in the picture, gray or shading in the line art, or a line gap that makes coloring
+hard. Foreshortening is correct.
+
+For each week W the gates run in this order. Each gate has a command or a record and a
+falsification condition.
+
+| Gate | Command or record | Falsification condition |
+| --- | --- | --- |
+| G1 Staging | STAGING_GATE_COMMAND with `--week W`: exit 0, all labels. | A spec or an element is missing and the production still starts. |
+| G2 Muse calls | `node scripts/storytime-muse.mjs` for each row (4 at a time, no lock, no slot). Each call has one line in `out/storytime/l2/unit1/w0W/muse/costs.tsv` with `usage_cost`. A retry needs a named real defect. | A call has no cost line, or a retry has no defect note. |
+| G3 Independent vision review | One review batch for the week. The reviewer is a vision model of another family than the builder (the image model is Meta Muse; the reviewer is not Meta and is not the model that drives Green). The prompt holds the bar above, the row goal, the color print, and the line print. The result is JSON per row: `verdict` (`clean` or `defect`) and `defects`, each with one category from the bar. | A row has no verdict, a `clean` row has a defect, a defect has a category outside the bar, or the control rows fail (below). |
+| G3 control rows | Each review batch holds three controls from week 1: (1) a delivered clean page, which must be `clean`; (2) a rejected try with a known defect (for example `cover-hello` m1, Pat facing the camera, or a line try with speckle) , which must be `defect`; (3) a page with only a small mark of the bar (a nose mark or an open C ear), which must be `clean`. | The reviewer says `clean` for control 2 (it passes everything), or `defect` for control 3 (it flags small marks). The batch is void and runs again. |
+| G4 Orchestrator spot check | The orchestrator reads at full size: every class B page, every page that had a retry, and at least 5 other pages of the week (at least 1 of each class). The record lists the row ids. | The record lists fewer than 5 other pages or omits a class B page. |
+| G5 Print checks (writer rules) | `deliver` runs every check before its first write: PNG format, class size, no alpha for color; `inspectLineArtPng` for line (size, 8-bit gray, only the values 0 and 255, line width). The PM accepted white pad bands on `cover-hello` and 8-bit gray PNGs with only 0 and 255. | A line print with a pixel of 254 passes, a color print of the wrong size passes, or a pad band is refused after the PM acceptance. |
+| G6 Delivery | `node --import tsx scripts/storytime-book-pictures.ts deliver --week W --list <v4 list> --approvals docs/storytime/l2-unit1/w0W/muse/approved.json --muse out/storytime/l2/unit1/w0W/muse --delivery out/storytime/l2/unit1/w0W/delivery-muse-v1` through the heavy runner. Exit 0 and `Delivered 27 rows and 2 batch hashes`. The orchestrator then re-hashes: each delivered file equals its approved Muse print by `sha256sum`, and the manifest hashes equal the file hashes. | Exit is not 0, the job count is not 27, one byte differs, or a manifest hash differs from `sha256sum`. |
+| G7 Person review | The PM relays the text of Daniel's answer. The record holds person, time, rows, verdict, and note (Tasks). | A row gets a `reviews.person` field without a relayed answer, or a row that the answer does not name becomes "person-checked". |
+| G8 Cost report | `usage_cost` total of the week and the running total, as labeled numbers: `usage.cost total (USD): <x>`. | A call in `costs.tsv` has no `usage_cost`, or the report total differs from the sum of the file. |
+
+Only clean rows go into the manifest (contract decision 2). A row that has an open defect gets no
+approval entry and no job. The delivery report lists such rows with their defects.
+
+Class C rows (check rows) have no multi-character scene. Their G3 question adds: the object of the
+word is the only object, and the count equals `objectCounts`.
+
+The 162-row count gate (after the sixth delivery):
+
+```sh
+node -e 'const fs=require("fs");const L=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));const want=new Set(L.filter(r=>r.week>=2&&r.week<=7).map(r=>r.id));const got=new Set();let jobs=0,files=0;for(let w=2;w<=7;w++){const d="out/storytime/l2/unit1/w0"+w+"/delivery-muse-v1";const m=JSON.parse(fs.readFileSync(d+"/manifest.json","utf8"));jobs+=m.jobs.length;for(const x of m.jobs)got.add(x.id);files+=fs.readdirSync(d).filter(n=>n.endsWith(".png")).length}const c={A:0,B:0,C:0};for(const r of L)if(got.has(r.id))c[r.sizeClass]++;console.log("weeks 2 to 7 delivered jobs:",jobs,"files:",files,"A:",c.A,"B:",c.B,"C:",c.C,"missing:",[...want].filter(x=>!got.has(x)).length,"extra:",[...got].filter(x=>!want.has(x)).length)' /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json
+```
+
+Expected output: `weeks 2 to 7 delivered jobs: 162 files: 324 A: 96 B: 12 C: 54 missing: 0 extra: 0`. A re-delivery
+folder (`delivery-muse-v2`) replaces `delivery-muse-v1` in the command for that week. The command
+fails when a week is missing (the read throws), when a week 8 id appears (`extra` above 0), or
+when a count differs. The "162" claim always reads this output. It never comes from a `week > 1`
+filter (that gives 166).
+
+Live behavior proof: the G2 paid calls, the G3 review, and the G6 deliveries are live. Vitest
+proves the writer and the check logic only. The documents (specs, approval lists) are artifacts.
+
+##### 4.6 Cover gate (S19)
+
+The Level 2 cover is one picture. It is not one of the 14 reader covers (class B rows of the
+list). The list has no row for it. Layout and text stay with Workbooks (S19). Forge makes the
+picture only. Before the cover starts, the PM must give the row name, the size, and the cover goal.
+Default: class B size 4000 x 3000, file `l2-cover-v1.png`, a color picture only (no line twin).
+The question goes to the PM in the `handoff` line.
+
+The cover follows the Muse path: one page spec `docs/storytime/l2-unit1/cover/muse/l2-cover.json`
+with the `outDir` `out/storytime/l2/unit1/cover/muse`. The spec goal says: the top 30 percent is
+calm (sky, wall, or soft background; no character, no prop, no text); the title stays with
+Workbooks. Gates:
+
+| Gate | Command or record | Falsification condition |
+| --- | --- | --- |
+| C1 Calm top (mechanical) | Task Red and Green apply the existing calm-top rule (`calmTopOnRaw`, a region that differs from its dominant color on at most two percent of its pixels) to the cover print. The check reads the top 900 rows of the 3000-row print. It prints `top 30 percent differing share: <x>` and `top 30 percent rows: 900`. A value above 0.02 fails. Test `T183` in `tests/storytime-book-pictures.test.ts`: busy top fails, calm top passes, a 1-row-off band fails. | A busy top passes, a calm top fails, or the check reads another band. |
+| C2 Independent vision review | Same as G3 with the cover question added: "Is the top 30 percent calm: no character, no prop, no text?" The controls of G3 apply. | The reviewer passes a cover with a character in the top band (a control cover with a focal prop in the top 30 percent must be `defect`). |
+| C3 Spot check | The orchestrator reads the cover at full size. | No record. |
+| C4 Print and delivery | PNG, class size, no alpha. The cover is delivered with the PM-named file name in `out/storytime/l2/unit1/cover/delivery-muse-v1/` with a manifest in the contract shape. | A wrong size or an alpha channel passes. |
+| C5 Person review | The PM relays Daniel's answer. The record is as in G7. | A person field without a relayed answer. |
+
+The reader covers (12 class B rows in weeks 2 to 7) use G1 to G8. The calm-top rule does not
+apply to them: the PM accepted `cover-hello` with its layout, and the cover layout belongs to
+Workbooks.
+
+##### 4.7 Anti-pattern coverage for Phase 4
+
+`measure/anti-patterns.md` does not exist. The catalog is
+`~/.agents/skills/measure-orchestrator/references/anti-pattern-catalog.md`. A1 and A8 are retired.
+
+| Class | Task | Defense | Falsification condition |
+| --- | --- | --- | --- |
+| A2 consent-blind publish gate | G7, C5 | A row is person-checked only with a relayed answer (person, time, rows, verdict, note). The approval entry gets `reviews.person` only from that record. | A row becomes person-checked, or a manifest holds a person review, with no relayed answer. |
+| A3 digit-only count | Task 1, G6, the 162 gate | Labeled integers only: `rows 196 week1 30 week8 4 weeks2to7 162 A 96 B 12 C 54 renamed 4`; `weeks 2 to 7 delivered jobs: 162 files: 324 ...`; `Tests  N passed (N)`; `owned tsc errors: 0`; the staging labels. | A date, a path digit, or an unlabeled number satisfies a gate. |
+| A4 vacuous pass | all | Red needs `f >= 1`. The guard tests T174 to T176 have mutation proofs. `element paths checked` must be 18 or more. The three G3 controls prove the reviewer can fail a page. The count gate has `missing: 0 extra: 0`. | An empty week, a staging check with 0 elements, a reviewer that passes every page, or a delivery with 0 jobs passes. |
+| A5 false claim | all | Plan notes quote the command, the exit code, and the labeled values. A model review is "independent review", never "accepted". | A plan claim differs from the quoted output. |
+| A6 registry overstatement | G7, C5, closeout | The registry and the metadata say "delivered, awaiting person review" until the relayed answer exists. | The registry says "accepted" for a week with no person record. |
+| A7 over-broad filter | staging, G3, G5 | The text and goal compare is exact (T179 trailing space). The reviewer prompt uses the bar: control 3 proves a small mark is not a defect. The line check has no tolerance (a pixel of 254 fails). | A trimmed compare passes a changed goal, a small nose mark is flagged, or a gray pixel passes. |
+| A9 archived track paths | Task 1, staging | The new tests read `src/` and the read-only list. They name no `measure/tracks/` path. The stage check reads `docs/` and `out/` only. | `grep -n 'measure/tracks/' tests/storytime-book-pictures.test.ts tests/storytime-stage-check.test.ts` prints a line. |
+| A10 generated-facts drift | closeout | Run `./measure/generate.sh` after each plan status change. | Managed facts differ from the plan. |
+| A11 doc-to-code drift | Task 1 | `contract.md` line 9 and the plan text name the v4 SHA that the code pins. The grep in 4.2 shows no live v3 use. | A document names a pin that the code does not hold. |
+
+Project candidates for a future `measure/anti-patterns.md`: (S14) a reviewer that passes every
+page (answer: the control rows of G3); (S15) a week count built from `week > 1` that includes week
+8; (S16) a delivery folder overwritten by a later run; (S17) a spec `goal` edited by hand so that
+it no longer equals the list prompt.
+
+##### 4.8 Review applicability and the Phase 4 closeout gate
+
+| Review | Applies | Scope |
+| --- | --- | --- |
+| Review A (correctness and architecture) | Yes, on the code changes | Task 1 (pin, selection, tests), the `deliver --week` change, `scripts/storytime-stage-check.mjs`, and the cover calm-top call. A short delta check is enough for the pin rename. |
+| Review B (security) | Yes, on the code changes | The list stays read only. The stage check refuses `..` paths, symbolic links, and paths outside `out/` and `docs/`. The spec `outDir` stays inside `out/`. No API key or token appears in `costs.tsv`, a spec, a review log, or a manifest. |
+| Review C (UX and API) | Yes | The `--week` option, the stage check labels and exit codes (0, 1, 2), the error text that names a row, the manifest shape that Workbooks reads (version 1, `job.id` is the row id, names from the list), the week 8 default. |
+| Adversarial testing | Required | Task 1: the mutations of 4.2 and one changed byte in the list. Staging: the T179 list. Delivery: a color file of another row, a line pixel at 254, a changed manifest hash, a week 3 entry in a week 2 run. Production: the G3 controls. |
+| UX browser review | Not applicable | The output is picture files and CLI text. The independent picture review (G3) is a picture review, not a browser review. |
+
+Phase 4 closeout gate (all must hold; the plan quotes each output):
+
+1. GREEN_TEST_COMMAND exits 0 with a labeled total, and the type check shows `owned tsc errors: 0`
+   and a total of 38 or less. Reviews A, B, and C have no blocking finding.
+2. `grep -rn "PICTURE_LIST_V3_SHA256\|c3e23cfd" src tests scripts` shows only the T173 negative
+   control. `contract.md` names the v4 SHA.
+3. STAGING_GATE_COMMAND exited 0 for each of the weeks 2 to 7 before that week started.
+4. Six week deliveries exist (`deliver` exit 0, 27 jobs each) and the 162-row count command prints
+   `weeks 2 to 7 delivered jobs: 162 files: 324 A: 96 B: 12 C: 54 missing: 0 extra: 0`.
+5. For each week: a complete G3 review (27 verdicts, controls passed), a G4 record, and a G7
+   record. A week without a G7 record is listed as "delivered, awaiting person review" and the
+   task for that record is `[b] deferred:daniel-or-named-reviewer`. The closeout never says
+   "accepted" for it.
+6. The cover is delivered and C1 to C4 pass. The C5 record exists or is deferred as in item 5.
+7. The week 8 rows are recorded as out of scope, or as assigned by the PM.
+8. The cost report gives `usage.cost total (USD)` per week and the running total.
+9. `./measure/generate.sh` exits 0. `./measure/doctor.sh` runs in Phase 5.
+
+The old closeout gate (`verify --release` for 192 rows and their 192 line-art twins) is replaced.
+Replaced by the amendment of 2026-11-01 (Muse path).
+
+Intentionally red aggregate suites: none in the focused commands. The T142 and T147 failures at
+`60892a38` are intentional until Task 1 Green. They are known failures of the list change, not of
+the Muse delivery. The full `vitest run` and `pnpm test` stay outside this track (section 11).
+
+##### 4.9 phase_base_sha capture point (Phase 4)
+
+1. The Phase 4 strategy commit lands first. The PM order named `60892a38` as the base. That value
+   is the HEAD before the strategy commit, so it is the `role_base_sha` only.
+2. Immediately after the strategy commit, the orchestrator runs `git rev-parse HEAD`. The
+   committed value is the immutable Phase 4 `phase_base_sha`. The orchestrator captures it before
+   any Red edit, staging commit, or Muse call that lands in git.
+3. This subsection embeds no SHA for that base. The Phase 3 base `15a7bf0b` and the Phase 2 base
+   `1d39b8fd` do not change.
+4. Task 1 Red, the delivery week Red, and the staging Red diff from the Phase 4 base.
 
 ### Phase 5: Documentation and verification
 
@@ -2234,3 +2617,7 @@ Evidence classes:
      The immutable Phase 2 `phase_base_sha` remains `1d39b8fd`.
      Capture the new base before any Red edit or commit. This strategy embeds no SHA for that base.
      Section 3.12 holds the same rule for the Phase 3 base.
+13. The Phase 4 strategy commit lands before any Phase 4 Red, staging commit, or Muse call that
+    lands in git. Immediately afterward, the orchestrator runs `git rev-parse HEAD` and records that
+    committed value as the immutable Phase 4 `phase_base_sha`. `60892a38` is the `role_base_sha`
+    only. Section 7, subsection 4.9, holds the full rule. This strategy embeds no SHA for the base.
