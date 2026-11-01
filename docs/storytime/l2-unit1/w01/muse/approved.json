@@ -1,0 +1,429 @@
+{
+  "version": 1,
+  "pictureListSha256": "6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58",
+  "entries": [
+    {
+      "rowId": "l2-w01-story-page-a-nut",
+      "version": 1,
+      "colorPrint": "l2-w01-story-page-a-nut-m1-color-print.png",
+      "linePrint": "l2-w01-story-page-a-nut-m1-line-print.png",
+      "reviews": {
+        "kimi": {
+          "provider": "kimi",
+          "model": "kimi-code-plan-cn/kimi-for-coding",
+          "verdict": "pass",
+          "reason": "Independent item review, rating 8.5, clean, no critical defect, no defect; goal shown true.",
+          "checkedAt": "2026-11-01T03:11:07.300Z",
+          "rawFile": "measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-28.json",
+          "modelSource": "declared",
+          "issues": [],
+          "rawOutput": "{\"files\":[\"out/storytime-review/batch-28/pages/l2-w01-story-page-a-nut-m1-color.png\",\"out/storytime-review/batch-28/pages/l2-w01-story-page-a-nut-m1-line.png\"],\"rating\":8.5,\"pass\":true,\"clean\":true,\"critical\":[],\"defects\":[],\"goal_shown\":true,\"retry_hint\":\"\"}"
+        }
+      },
+      "notes": [
+        "Reviewer kimi (kimi-code-plan-cn/kimi-for-coding), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-28.json, audited head a4308df1: rating 8.5, clean true, 0 critical, 0 defects.",
+        "Reviewed color page batch-28/pages/l2-w01-story-page-a-nut-m1-color.png; reviewed line page batch-28/pages/l2-w01-story-page-a-nut-m1-line.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-story-page-a-nut-m1-color-print.png (SHA-256 c0901ca86486f7c386d46a651ffc3e5b366e58ededbc9234daec48d58774ac3c) and line print l2-w01-story-page-a-nut-m1-line-print.png (SHA-256 8d69c90437e8d7fd5b1e80f63cc2fe3bf39158a24979d25bf16566174d0fe17c) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+      ]
+    },
+    {
+      "rowId": "l2-w01-story-page-a-nose",
+      "version": 1,
+      "colorPrint": "l2-w01-story-page-a-nose-m1-color-print.png",
+      "linePrint": "l2-w01-story-page-a-nose-m1-line-print.png",
+      "reviews": {
+        "kimi": {
+          "provider": "kimi",
+          "model": "kimi-code-plan-cn/kimi-for-coding",
+          "verdict": "pass",
+          "reason": "Independent item review, rating 9, clean, no critical defect, no defect; goal shown true.",
+          "checkedAt": "2026-11-01T03:11:07.300Z",
+          "rawFile": "measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-28.json",
+          "modelSource": "declared",
+          "issues": [],
+          "rawOutput": "{\"files\":[\"out/storytime-review/batch-28/pages/l2-w01-story-page-a-nose-m1-color.png\",\"out/storytime-review/batch-28/pages/l2-w01-story-page-a-nose-m1-line.png\"],\"rating\":9,\"pass\":true,\"clean\":true,\"critical\":[],\"defects\":[],\"goal_shown\":true,\"retry_hint\":\"\"}"
+        }
+      },
+      "notes": [
+        "Reviewer kimi (kimi-code-plan-cn/kimi-for-coding), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-28.json, audited head a4308df1: rating 9, clean true, 0 critical, 0 defects.",
+        "Reviewed color page batch-28/pages/l2-w01-story-page-a-nose-m1-color.png; reviewed line page batch-28/pages/l2-w01-story-page-a-nose-m1-line.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-story-page-a-nose-m1-color-print.png (SHA-256 d161a1d628cca3594b75d2386be83a62913db691f43008c944665ae7d0df16ab) and line print l2-w01-story-page-a-nose-m1-line-print.png (SHA-256 69d37d5bde893fc694c1b73401c202f0072284fa6411655317c3a5607b1cfa84) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+      ]
+    },
+    {
+      "rowId": "l2-w01-story-page-hello-i-am-nan",
+      "version": 1,
+      "colorPrint": "l2-w01-story-page-hello-i-am-nan-m1-color-print.png",
+      "linePrint": "l2-w01-story-page-hello-i-am-nan-m1-line-print.png",
+      "reviews": {
+        "kimi": {
+          "provider": "kimi",
+          "model": "kimi-code-plan-cn/kimi-for-coding",
+          "verdict": "pass",
+          "reason": "Independent item review, rating 8.5, clean, no critical defect, no defect; goal shown true.",
+          "checkedAt": "2026-11-01T03:11:07.300Z",
+          "rawFile": "measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-28.json",
+          "modelSource": "declared",
+          "issues": [],
+          "rawOutput": "{\"files\":[\"out/storytime-review/batch-28/pages/l2-w01-story-page-hello-i-am-nan-m1-color.png\",\"out/storytime-review/batch-28/pages/l2-w01-story-page-hello-i-am-nan-m1-line.png\"],\"rating\":8.5,\"pass\":true,\"clean\":true,\"critical\":[],\"defects\":[],\"goal_shown\":true,\"retry_hint\":\"\"}"
+        }
+      },
+      "notes": [
+        "Reviewer kimi (kimi-code-plan-cn/kimi-for-coding), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-28.json, audited head a4308df1: rating 8.5, clean true, 0 critical, 0 defects.",
+        "Reviewed color page batch-28/pages/l2-w01-story-page-hello-i-am-nan-m1-color.png; reviewed line page batch-28/pages/l2-w01-story-page-hello-i-am-nan-m1-line.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-story-page-hello-i-am-nan-m1-color-print.png (SHA-256 b6bf71240a866e9a1f9bbf49009a79d602718b1456cf25cbf6856768213bbd24) and line print l2-w01-story-page-hello-i-am-nan-m1-line-print.png (SHA-256 f58b36ad888b9361b5f2cbd5620407692455ef60029fe58d0e93a52e5c125c6a) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+      ]
+    },
+    {
+      "rowId": "l2-w01-story-page-a-nurse",
+      "version": 1,
+      "colorPrint": "l2-w01-story-page-a-nurse-m1-color-print.png",
+      "linePrint": "l2-w01-story-page-a-nurse-m1-line-print-3.png",
+      "reviews": {
+        "kimi": {
+          "provider": "kimi",
+          "model": "kimi-code-plan-cn/kimi-for-coding",
+          "verdict": "pass",
+          "reason": "Independent item review, rating 8, clean, no critical defect, no defect; goal shown true.",
+          "checkedAt": "2026-11-01T05:00:16.126Z",
+          "rawFile": "measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-32.json",
+          "modelSource": "declared",
+          "issues": [],
+          "rawOutput": "{\"files\":[\"l2-w01-story-page-a-nurse-m1-color.png\",\"l2-w01-story-page-a-nurse-m1-line.png\"],\"rating\":8,\"pass\":true,\"clean\":true,\"critical\":[],\"defects\":[],\"goal_check\":{\"woman_about_thirty\":\"yes: adult woman\",\"short_black_hair\":\"yes\",\"white_uniform_cap_shoes\":\"yes: white polo uniform, small white cap, white shoes\",\"smiles_holds_first_aid_bag_no_symbol\":\"yes: small white bag, no symbol\",\"one_clear_picture_main_large_plain_background\":\"yes\"},\"batch29_defects_gone\":{\"line_traces_color_plain_background_one_ground_line\":\"yes: plain background, one short ground line\",\"shirt_seams_closed_or_out\":\"yes: seams are closed strips\",\"both_hands_closed_outlines\":\"yes\",\"eyes_almond_outline_solid_pupil\":\"yes\"},\"goal_shown\":true,\"retry_hint\":\"None. Clean page.\"}"
+        }
+      },
+      "notes": [
+        "Reviewer kimi (kimi-code-plan-cn/kimi-for-coding), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-32.json, audited head 2b59ccaa: rating 8, clean true, 0 critical, 0 defects.",
+        "Name mismatch recorded at delivery: the reviewed page batch-32/pages/l2-w01-story-page-a-nurse-m1-line.png is byte-identical (SHA-256 5773ba14b151dd68bba6c9a3d003d125cd333e3f64112f416f2165916f2cd952) to the Muse file l2-w01-story-page-a-nurse-m1-line-3.png, not to the Muse file l2-w01-story-page-a-nurse-m1-line.png. The delivery uses the print of l2-w01-story-page-a-nurse-m1-line-3.png.",
+        "Reviewed color page batch-32/pages/l2-w01-story-page-a-nurse-m1-color.png; reviewed line page batch-32/pages/l2-w01-story-page-a-nurse-m1-line.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-story-page-a-nurse-m1-color-print.png (SHA-256 d427a7452c9873e9344741c234153c2422e99041ad7667c6eb6ed9befad31a68) and line print l2-w01-story-page-a-nurse-m1-line-print-3.png (SHA-256 44959eb64c67bcea85dfd591f1cc98acffc3e6e7ddfe64adc54eb9337d62f76e) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+      ]
+    },
+    {
+      "rowId": "l2-w01-check-row-nest",
+      "version": 1,
+      "colorPrint": "l2-w01-check-row-nest-m1-color-print.png",
+      "linePrint": "l2-w01-check-row-nest-m1-line-print-2.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-31.json, audited head cf189b5f: rating 8.5, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Name mismatch recorded at delivery: the reviewed page batch-31/pages/l2-w01-check-row-nest-m1-line.png is byte-identical (SHA-256 2db5b610b790017b8eabff0b0c9081f4fbcdebcc94da0a65cd038066ed04733c) to the Muse file l2-w01-check-row-nest-m1-line-2.png, not to the Muse file l2-w01-check-row-nest-m1-line.png. The delivery uses the print of l2-w01-check-row-nest-m1-line-2.png.",
+        "Reviewed color page batch-31/pages/l2-w01-check-row-nest-m1-color.png; reviewed line page batch-31/pages/l2-w01-check-row-nest-m1-line.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-check-row-nest-m1-color-print.png (SHA-256 f9179502f584b289cfd0cbbd97653b50c0f9687fc9444b501e97689b65c21985) and line print l2-w01-check-row-nest-m1-line-print-2.png (SHA-256 46bc4ddde3ff3966e9eb5b97181b54ec091ede7a6528e0f5ce129eaad73e62ca) recompute byte-identical from the reviewed files with the tool's print code; size 1500 x 1500."
+      ]
+    },
+    {
+      "rowId": "l2-w01-check-row-fish",
+      "version": 1,
+      "colorPrint": "l2-w01-check-row-fish-m1-color-print.png",
+      "linePrint": "l2-w01-check-row-fish-m1-line-print-2.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-31.json, audited head cf189b5f: rating 8.5, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Name mismatch recorded at delivery: the reviewed page batch-31/pages/l2-w01-check-row-fish-m1-line.png is byte-identical (SHA-256 ba8aea2f92091aa8859344c9d3574fb6f7933edf75e285da188a925df6b66e0c) to the Muse file l2-w01-check-row-fish-m1-line-2.png, not to the Muse file l2-w01-check-row-fish-m1-line.png. The delivery uses the print of l2-w01-check-row-fish-m1-line-2.png.",
+        "Reviewed color page batch-31/pages/l2-w01-check-row-fish-m1-color.png; reviewed line page batch-31/pages/l2-w01-check-row-fish-m1-line.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-check-row-fish-m1-color-print.png (SHA-256 e1299e83b194ec0a8c794a653a477c0c04512954a1698290f5ad3eb330920112) and line print l2-w01-check-row-fish-m1-line-print-2.png (SHA-256 f94390245c1d6d1c52291fb8c3708d6656370527ca7dde80a4e79a174de4adf2) recompute byte-identical from the reviewed files with the tool's print code; size 1500 x 1500."
+      ]
+    },
+    {
+      "rowId": "l2-w01-check-row-hat",
+      "version": 1,
+      "colorPrint": "l2-w01-check-row-hat-m1-color-print.png",
+      "linePrint": "l2-w01-check-row-hat-m1-line-print-2.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-31.json, audited head cf189b5f: rating 9, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Name mismatch recorded at delivery: the reviewed page batch-31/pages/l2-w01-check-row-hat-m1-line.png is byte-identical (SHA-256 bb9174b51c7e522ce664aea40936209f9fc6fffced9a3c0c40a6970bef94e2f4) to the Muse file l2-w01-check-row-hat-m1-line-2.png, not to the Muse file l2-w01-check-row-hat-m1-line.png. The delivery uses the print of l2-w01-check-row-hat-m1-line-2.png.",
+        "Reviewed color page batch-31/pages/l2-w01-check-row-hat-m1-color.png; reviewed line page batch-31/pages/l2-w01-check-row-hat-m1-line.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-check-row-hat-m1-color-print.png (SHA-256 2c705a2c1b7fe6f97fd7018a7bd2ab535084cfc446bfc4ac8457769481f72589) and line print l2-w01-check-row-hat-m1-line-print-2.png (SHA-256 0d04e12f60748f4cb5fe1558cbb6835ef36c932f231e7fb61ff6e1500449fa67) recompute byte-identical from the reviewed files with the tool's print code; size 1500 x 1500."
+      ]
+    },
+    {
+      "rowId": "l2-w01-check-row-cup",
+      "version": 1,
+      "colorPrint": "l2-w01-check-row-cup-m1-color-print.png",
+      "linePrint": "l2-w01-check-row-cup-m1-line-print-2.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-31.json, audited head cf189b5f: rating 9, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Name mismatch recorded at delivery: the reviewed page batch-31/pages/l2-w01-check-row-cup-m1-line.png is byte-identical (SHA-256 6c889f5f557747aa08d0b562073532e32a65e9609761b7bdf54c4f7545b09504) to the Muse file l2-w01-check-row-cup-m1-line-2.png, not to the Muse file l2-w01-check-row-cup-m1-line.png. The delivery uses the print of l2-w01-check-row-cup-m1-line-2.png.",
+        "Reviewed color page batch-31/pages/l2-w01-check-row-cup-m1-color.png; reviewed line page batch-31/pages/l2-w01-check-row-cup-m1-line.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-check-row-cup-m1-color-print.png (SHA-256 267f4aa99d8f973a80708a488795bfab65e7639a6af746bac935f38247fb3e48) and line print l2-w01-check-row-cup-m1-line-print-2.png (SHA-256 6d7caba84e005d25e09cc4517ba5b048cfa4eb3151595c2d2a6bf70590eea392) recompute byte-identical from the reviewed files with the tool's print code; size 1500 x 1500."
+      ]
+    },
+    {
+      "rowId": "l2-w01-check-row-cat",
+      "version": 2,
+      "colorPrint": "l2-w01-check-row-cat-m2-color-print.png",
+      "linePrint": "l2-w01-check-row-cat-m2-line-print-2-despeckled.png",
+      "reviews": {
+        "kimi": {
+          "provider": "kimi",
+          "model": "kimi-code-plan-cn/kimi-for-coding",
+          "verdict": "pass",
+          "reason": "Independent item review, rating 8.5, clean, no critical defect, no defect; goal shown true.",
+          "checkedAt": "2026-11-01T06:14:46.514Z",
+          "rawFile": "measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-35.json",
+          "modelSource": "declared",
+          "issues": [],
+          "rawOutput": "{\"files\":[\"out/storytime-review/batch-35/pages/l2-w01-check-row-cat-m2-color.png\",\"out/storytime-review/batch-35/pages/l2-w01-check-row-cat-m2-line-2-despeckled.png\"],\"rating\":8.5,\"pass\":true,\"clean\":true,\"critical\":[],\"defects\":[],\"goal_check\":{\"cat\":\"yes: one ginger tabby cat, large in the middle\",\"plain light background\":\"yes: plain white background\",\"no text/numbers/logos\":\"yes\",\"no tick marks at eyes\":\"yes: no wedge tick marks around the eyes\",\"no cheek smudge\":\"yes\",\"tail behind body away from head\":\"yes: tail curls up behind the body, one closed shape, not touching the head\",\"line art no stripes\":\"yes: no stripe slivers\"},\"defects_gone\":{\"line tail ring beside head reading as a second ear\":\"yes: gone\",\"thin stripe slivers in line art\":\"yes: gone\",\"color wedge tick marks around eyes\":\"yes: gone\",\"gray smudge on cheek\":\"yes: gone\"},\"goal_shown\":true,\"retry_hint\":\"\"}"
+        }
+      },
+      "notes": [
+        "Reviewer kimi (kimi-code-plan-cn/kimi-for-coding), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-35.json, audited head 2c1b23da: rating 8.5, clean true, 0 critical, 0 defects.",
+        "Reviewed color page batch-35/pages/l2-w01-check-row-cat-m2-color.png; reviewed line page batch-35/pages/l2-w01-check-row-cat-m2-line-2-despeckled.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-check-row-cat-m2-color-print.png (SHA-256 1f62cf9efbd96071c10ad416d4bbfbe507d12c322728b41d9bfee5c6b7a0fa2f) and line print l2-w01-check-row-cat-m2-line-print-2-despeckled.png (SHA-256 8d61c10f6bdbf16de9e0ef316158720c4d6b2b984eb3c2cc0ec165c9a068ec79) recompute byte-identical from the reviewed files with the tool's print code; size 1500 x 1500."
+      ]
+    },
+    {
+      "rowId": "l2-w01-check-row-dog",
+      "version": 1,
+      "colorPrint": "l2-w01-check-row-dog-m1-color-print.png",
+      "linePrint": "l2-w01-check-row-dog-m1-line-print-8-despeckled.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-36.json, audited head final: rating 8, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Reviewed color page batch-36/pages/l2-w01-check-row-dog-m1-color.png; reviewed line page batch-36/pages/l2-w01-check-row-dog-m1-line-8-despeckled.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-check-row-dog-m1-color-print.png (SHA-256 0f04c866487bf1e5a1a4106d8390fe38bdeb2ad8153a2937a2b12fac652e8854) and line print l2-w01-check-row-dog-m1-line-print-8-despeckled.png (SHA-256 4d79978e62de35b6bd444f2fec3a45f55ffa60eb4676c4d48e41a7b62dfde429) recompute byte-identical from the reviewed files with the tool's print code; size 1500 x 1500."
+      ]
+    },
+    {
+      "rowId": "l2-w01-check-row-bus",
+      "version": 1,
+      "colorPrint": "l2-w01-check-row-bus-m1-color-print.png",
+      "linePrint": "l2-w01-check-row-bus-m1-line-print-6-despeckled.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-36.json, audited head final: rating 8, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Reviewed color page batch-36/pages/l2-w01-check-row-bus-m1-color.png; reviewed line page batch-36/pages/l2-w01-check-row-bus-m1-line-6-despeckled.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-check-row-bus-m1-color-print.png (SHA-256 1263422793bd62d724852603485e77356c1d397db74849943df98ca92214d296) and line print l2-w01-check-row-bus-m1-line-print-6-despeckled.png (SHA-256 0acae28a197689438b4fa0c0f9813af71ae41fc7fb908272a6ece845ffd49e53) recompute byte-identical from the reviewed files with the tool's print code; size 1500 x 1500."
+      ]
+    },
+    {
+      "rowId": "l2-w01-check-row-net",
+      "version": 1,
+      "colorPrint": "l2-w01-check-row-net-m1-color-print.png",
+      "linePrint": "l2-w01-check-row-net-m1-line-print-6-despeckled.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-36.json, audited head final: rating 8, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Reviewed color page batch-36/pages/l2-w01-check-row-net-m1-color.png; reviewed line page batch-36/pages/l2-w01-check-row-net-m1-line-6-despeckled.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-check-row-net-m1-color-print.png (SHA-256 9ec9db0abb952ff212b4e7d3cc8a5b336cab69946ebff5a4644462c4858e3869) and line print l2-w01-check-row-net-m1-line-print-6-despeckled.png (SHA-256 b340676fa2f49d6f22e4509f0db6330c1cdd42c9484e574aff057fef9a174f4f) recompute byte-identical from the reviewed files with the tool's print code; size 1500 x 1500."
+      ]
+    },
+    {
+      "rowId": "l2-w01-practice-line-nose",
+      "version": 4,
+      "colorPrint": "l2-w01-practice-line-nose-m4-color-print.png",
+      "linePrint": "l2-w01-practice-line-nose-m4-line-print-13-despeckled.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-36.json, audited head final: rating 8.5, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Reviewed color page batch-36/pages/l2-w01-practice-line-nose-m4-color.png; reviewed line page batch-36/pages/l2-w01-practice-line-nose-m4-line-13-despeckled.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-practice-line-nose-m4-color-print.png (SHA-256 f44848c54ad8c49cabecb56754e690a83197805c547de241c6223a79ca5af366) and line print l2-w01-practice-line-nose-m4-line-print-13-despeckled.png (SHA-256 bbe8b1e9a4bf86d30fbbf538d1d6c1777bf2ea48e14b16c26c87e0988a2269ce) recompute byte-identical from the reviewed files with the tool's print code; size 1500 x 1500."
+      ]
+    },
+    {
+      "rowId": "l2-w01-story-page-a-neck",
+      "version": 5,
+      "colorPrint": "l2-w01-story-page-a-neck-m5-color-print.png",
+      "linePrint": "l2-w01-story-page-a-neck-m5-line-print-10-despeckled.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-36.json, audited head final: rating 8.5, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Reviewed color page batch-36/pages/l2-w01-story-page-a-neck-m5-color.png; reviewed line page batch-36/pages/l2-w01-story-page-a-neck-m5-line-10-despeckled.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-story-page-a-neck-m5-color-print.png (SHA-256 145cb7be881cd5852d7ef3f1570063ebda21b2a390b481eef35ae92af1c5b672) and line print l2-w01-story-page-a-neck-m5-line-print-10-despeckled.png (SHA-256 3df146a472d6e5107ec0f8778bb52260baf99264f203a6ba9875481cd1e07a3e) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+      ]
+    },
+    {
+      "rowId": "l2-w01-story-page-a-nest",
+      "version": 7,
+      "colorPrint": "l2-w01-story-page-a-nest-m7-color-print.png",
+      "linePrint": "l2-w01-story-page-a-nest-m7-line-print-14-despeckled.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-36.json, audited head final: rating 8, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Reviewed color page batch-36/pages/l2-w01-story-page-a-nest-m7-color.png; reviewed line page batch-36/pages/l2-w01-story-page-a-nest-m7-line-14-despeckled.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-story-page-a-nest-m7-color-print.png (SHA-256 5b55fd79f90f672341b726d2c16e6e4ff3b25d5e1cfcdea82bb45825d2dcc558) and line print l2-w01-story-page-a-nest-m7-line-print-14-despeckled.png (SHA-256 45b9f2de41b66a440a39eb6fbb40ee5225ae95dd25873abf740ff79e76fa34e9) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+      ]
+    },
+    {
+      "rowId": "l2-w01-practice-line-nest",
+      "version": 1,
+      "colorPrint": "l2-w01-practice-line-nest-m1-color-print.png",
+      "linePrint": "l2-w01-practice-line-nest-m1-line-print-2.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-36.json, audited head final: rating 8, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Name mismatch recorded at delivery: the reviewed page batch-31/pages/l2-w01-practice-line-nest-m1-line.png is byte-identical (SHA-256 483c1c3e46a21acf3028d21ac0aab6e9fad41999ad750399ba75667e8febd767) to the Muse file l2-w01-practice-line-nest-m1-line-2.png, not to the Muse file l2-w01-practice-line-nest-m1-line.png. The delivery uses the print of l2-w01-practice-line-nest-m1-line-2.png.",
+        "Reviewed color page batch-31/pages/l2-w01-practice-line-nest-m1-color.png; reviewed line page batch-31/pages/l2-w01-practice-line-nest-m1-line.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-practice-line-nest-m1-color-print.png (SHA-256 822bb7ecd87e2252ef23671c58a545173a8d9b06515cbc7875da85089664b0bd) and line print l2-w01-practice-line-nest-m1-line-print-2.png (SHA-256 e66cbcdd6fae24bff8643be6f1d866c8e4dc89953ce36d41f0c9db154a18c76d) recompute byte-identical from the reviewed files with the tool's print code; size 1500 x 1500."
+      ]
+    },
+    {
+      "rowId": "l2-w01-practice-line-nut",
+      "version": 1,
+      "colorPrint": "l2-w01-practice-line-nut-m1-color-print.png",
+      "linePrint": "l2-w01-practice-line-nut-m1-line-print-2.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-36.json, audited head final: rating 8, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Name mismatch recorded at delivery: the reviewed page batch-31/pages/l2-w01-practice-line-nut-m1-line.png is byte-identical (SHA-256 14505c8eb5cd8a76a4da8e729e071e35dddc5790b97553bb1a46800e68b54be0) to the Muse file l2-w01-practice-line-nut-m1-line-2.png, not to the Muse file l2-w01-practice-line-nut-m1-line.png. The delivery uses the print of l2-w01-practice-line-nut-m1-line-2.png.",
+        "Reviewed color page batch-31/pages/l2-w01-practice-line-nut-m1-color.png; reviewed line page batch-31/pages/l2-w01-practice-line-nut-m1-line.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-practice-line-nut-m1-color-print.png (SHA-256 cfcc3603752dc64004d9d3454b2647d29fb6f02e96bf5841738e96d7449ff043) and line print l2-w01-practice-line-nut-m1-line-print-2.png (SHA-256 100aa26312e6e9f4bcf1428662da7852015738de495e513f8f5c4465338ed151) recompute byte-identical from the reviewed files with the tool's print code; size 1500 x 1500."
+      ]
+    },
+    {
+      "rowId": "l2-w01-story-page-hello-i-am-ben",
+      "version": 10,
+      "colorPrint": "l2-w01-story-page-hello-i-am-ben-m10-color-print.png",
+      "linePrint": "l2-w01-story-page-hello-i-am-ben-m10-line-print-4-despeckled.png",
+      "notes": [
+        "Accepted by Daniel himself, via the PM, 2026-11-01 about 14:2x ICT. Daniel's words (spec.md amendment 2026-11-01): \"These all look great. They are all acceptable.\" No person review is recorded because the schema needs observed counts that do not exist.",
+        "Earlier review record: measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-36.json (mimo opencode-go/mimo-v2.6-flash; the batch 36 log says the row was pre-accepted by Daniel and not re-judged).",
+        "Reviewed color page batch-36/pages/l2-w01-story-page-hello-i-am-ben-m10-color.png; reviewed line page batch-36/pages/l2-w01-story-page-hello-i-am-ben-m10-line-4-despeckled.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-story-page-hello-i-am-ben-m10-color-print.png (SHA-256 09a0228828770874cab5ebed00a368b80d10186879e353134f01d8db0bcff390) and line print l2-w01-story-page-hello-i-am-ben-m10-line-print-4-despeckled.png (SHA-256 dc1d01865430372748c222986fb5a342a938c5670987b76613fc51127539efc1) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+      ]
+    },
+    {
+      "rowId": "l2-w01-story-page-a-net",
+      "version": 2,
+      "colorPrint": "l2-w01-story-page-a-net-m2-color-print.png",
+      "linePrint": "l2-w01-story-page-a-net-m2-line-print-23-despeckled.png",
+      "notes": [
+        "Accepted by Daniel himself, via the PM, 2026-11-01 about 14:2x ICT. Daniel's words (spec.md amendment 2026-11-01): \"These all look great. They are all acceptable.\" No person review is recorded because the schema needs observed counts that do not exist.",
+        "Earlier review record: measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-36.json (mimo opencode-go/mimo-v2.6-flash; the batch 36 log says the row was pre-accepted by Daniel and not re-judged).",
+        "Reviewed color page batch-36/pages/l2-w01-story-page-a-net-m2-color.png; reviewed line page batch-36/pages/l2-w01-story-page-a-net-m2-line-23-despeckled.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-story-page-a-net-m2-color-print.png (SHA-256 d5490892d65bf4d850f26a2a6f202438f4232d8993538c020bb9d13949799ad7) and line print l2-w01-story-page-a-net-m2-line-print-23-despeckled.png (SHA-256 a724748fa52a494dcb3f58b3e3fe0a33924e701adb95a626f6e2f91945848d54) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+      ]
+    },
+    {
+      "rowId": "l2-w01-check-row-nose",
+      "version": 3,
+      "colorPrint": "l2-w01-check-row-nose-m3-color-print.png",
+      "linePrint": "l2-w01-check-row-nose-m3-line-print-12-despeckled.png",
+      "notes": [
+        "Accepted by Daniel himself, via the PM, 2026-11-01 about 14:2x ICT. Daniel's words (spec.md amendment 2026-11-01): \"These all look great. They are all acceptable.\" No person review is recorded because the schema needs observed counts that do not exist.",
+        "Earlier review record: measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-36.json (mimo opencode-go/mimo-v2.6-flash; the batch 36 log says the row was pre-accepted by Daniel and not re-judged).",
+        "Reviewed color page batch-36/pages/l2-w01-check-row-nose-m3-color.png; reviewed line page batch-36/pages/l2-w01-check-row-nose-m3-line-12-despeckled.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-check-row-nose-m3-color-print.png (SHA-256 fd44e296616d3035f0d0f380876620ebaeea25bf68dec73cc8dfc1c038be46d2) and line print l2-w01-check-row-nose-m3-line-print-12-despeckled.png (SHA-256 4ea90616c0d98f5a078620bec9e6d21ff0620f01ea188b5f9874e0a0f75315a2) recompute byte-identical from the reviewed files with the tool's print code; size 1500 x 1500."
+      ]
+    },
+    {
+      "rowId": "l2-w01-story-page-hello-i-am-mia",
+      "version": 2,
+      "colorPrint": "l2-w01-story-page-hello-i-am-mia-m2-color-print.png",
+      "linePrint": "l2-w01-story-page-hello-i-am-mia-m2-line-print-3.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-34-r2.json, audited head d81c59be: rating 8.5, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Reviewed color page batch-34/pages/l2-w01-story-page-hello-i-am-mia-m2-color.png; reviewed line page batch-34/pages/l2-w01-story-page-hello-i-am-mia-m2-line-3.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-story-page-hello-i-am-mia-m2-color-print.png (SHA-256 966f670e1ba7cba34451fe9fa9db763b4f64daabfe523ae545b519b141111af8) and line print l2-w01-story-page-hello-i-am-mia-m2-line-print-3.png (SHA-256 23d72d1bc96e669a84b4eb6170c48f502c55e32c8f61c88ae01e06090cbb26c5) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+      ]
+    },
+    {
+      "rowId": "l2-w01-story-page-hello-i-am-may",
+      "version": 2,
+      "colorPrint": "l2-w01-story-page-hello-i-am-may-m2-color-print.png",
+      "linePrint": "l2-w01-story-page-hello-i-am-may-m2-line-print-2.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-34-r2.json, audited head d81c59be: rating 8.5, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Reviewed color page batch-34/pages/l2-w01-story-page-hello-i-am-may-m2-color.png; reviewed line page batch-34/pages/l2-w01-story-page-hello-i-am-may-m2-line-2.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-story-page-hello-i-am-may-m2-color-print.png (SHA-256 c0e5e5eb88a10e2b7a40ca5861bd2141ea88329ced9d6b22fc64d15ed7ceccd5) and line print l2-w01-story-page-hello-i-am-may-m2-line-print-2.png (SHA-256 c625e9c2ee085348fe3359473c0a34646278d13eefe90a7a8b38409c7f3c770d) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+      ]
+    },
+    {
+      "rowId": "l2-w01-story-page-hello-i-am-sam",
+      "version": 2,
+      "colorPrint": "l2-w01-story-page-hello-i-am-sam-m2-color-print.png",
+      "linePrint": "l2-w01-story-page-hello-i-am-sam-m2-line-print-3.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-34-r2.json, audited head d81c59be: rating 8.5, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Reviewed color page batch-34/pages/l2-w01-story-page-hello-i-am-sam-m2-color.png; reviewed line page batch-34/pages/l2-w01-story-page-hello-i-am-sam-m2-line-3.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-story-page-hello-i-am-sam-m2-color-print.png (SHA-256 9bbec0b0f3bfd3657ef2d26502605eef746ed8683a36f8b41ec7950cc04d1366) and line print l2-w01-story-page-hello-i-am-sam-m2-line-print-3.png (SHA-256 eafdfec1689a7383a2864a349b6acad36299d3bf75a1248ce18d94b8cfca06f1) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+      ]
+    },
+    {
+      "rowId": "l2-w01-story-page-hello-i-am-your-teacher",
+      "version": 3,
+      "colorPrint": "l2-w01-story-page-hello-i-am-your-teacher-m3-color-print.png",
+      "linePrint": "l2-w01-story-page-hello-i-am-your-teacher-m3-line-print-3.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-34-r2.json, audited head d81c59be: rating 8.7, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Reviewed color page batch-34/pages/l2-w01-story-page-hello-i-am-your-teacher-m3-color.png; reviewed line page batch-34/pages/l2-w01-story-page-hello-i-am-your-teacher-m3-line-3.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-story-page-hello-i-am-your-teacher-m3-color-print.png (SHA-256 98d290ccf012487e0b4db0e9432c4c353bdbed123da06188686d5ba923e94b01) and line print l2-w01-story-page-hello-i-am-your-teacher-m3-line-print-3.png (SHA-256 779586cfe844b7cbac557732985b8b4760a4f5dc91a6bd2c4fb9506d23e1b464) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+      ]
+    },
+    {
+      "rowId": "l2-w01-story-page-hello-i-am-pip",
+      "version": 6,
+      "colorPrint": "l2-w01-story-page-hello-i-am-pip-m6-color-print.png",
+      "linePrint": "l2-w01-story-page-hello-i-am-pip-m6-line-print.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-34-r2.json, audited head d81c59be: rating 8.7, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Reviewed color page batch-34/pages/l2-w01-story-page-hello-i-am-pip-m6-color.png; reviewed line page batch-34/pages/l2-w01-story-page-hello-i-am-pip-m6-line.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-story-page-hello-i-am-pip-m6-color-print.png (SHA-256 b07fe2a3159b8cea43af233d6a3bb9651389aaff7d637f950dbf2ef574090aca) and line print l2-w01-story-page-hello-i-am-pip-m6-line-print.png (SHA-256 0811b6cafd68d2fdb053deef3a705e7174e3fa9215229db96386c8ee735d0725) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+      ]
+    },
+    {
+      "rowId": "l2-w01-cover-hello",
+      "version": 6,
+      "colorPrint": "l2-w01-cover-hello-m6-color-print.png",
+      "linePrint": "l2-w01-cover-hello-m6-line-print-2.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-34-r2.json, audited head d81c59be: rating 8.5, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Reviewed color page batch-34/pages/l2-w01-cover-hello-m6-color.png; reviewed line page batch-34/pages/l2-w01-cover-hello-m6-line-2.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-cover-hello-m6-color-print.png (SHA-256 e7be01a344c711d29455bf6e0902999b2fdea039f79e5f911cfaedcd9b72975d) and line print l2-w01-cover-hello-m6-line-print-2.png (SHA-256 6b09bf5032952befafd22b60eae0c17063d5dbcc1ff2cccb9af5b9d08807551a) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+      ]
+    },
+    {
+      "rowId": "l2-w01-story-page-a-nest-and-a-nut",
+      "version": 3,
+      "colorPrint": "l2-w01-story-page-a-nest-and-a-nut-m3-color-print.png",
+      "linePrint": "l2-w01-story-page-a-nest-and-a-nut-m3-line-print-4.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-34-r2.json, audited head d81c59be: rating 8.6, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Reviewed color page batch-34/pages/l2-w01-story-page-a-nest-and-a-nut-m3-color.png; reviewed line page batch-34/pages/l2-w01-story-page-a-nest-and-a-nut-m3-line-4.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-story-page-a-nest-and-a-nut-m3-color-print.png (SHA-256 1dabb2028553560ec7f7cf849cb54ba77cd50929147eb3ed04411a41671323ce) and line print l2-w01-story-page-a-nest-and-a-nut-m3-line-print-4.png (SHA-256 baec2173f69a2b2ec727cff189a765a942f3708a8fe0a29c0e75e25981aad35d) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+      ]
+    },
+    {
+      "rowId": "l2-w01-story-page-nan-can-nod",
+      "version": 5,
+      "colorPrint": "l2-w01-story-page-nan-can-nod-m5-color-print.png",
+      "linePrint": "l2-w01-story-page-nan-can-nod-m5-line-print-2.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-34-r2.json, audited head d81c59be: rating 8.5, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Reviewed color page batch-34/pages/l2-w01-story-page-nan-can-nod-m5-color.png; reviewed line page batch-34/pages/l2-w01-story-page-nan-can-nod-m5-line-2.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-story-page-nan-can-nod-m5-color-print.png (SHA-256 8089c6a8031d6c08694f4fa0613b3da5cb9514a71ff03db04e51f2c7b2040cde) and line print l2-w01-story-page-nan-can-nod-m5-line-print-2.png (SHA-256 712ba9431cda29a5dccb784bb158ececa995b5d979ca60747b79172acdca46e0) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+      ]
+    },
+    {
+      "rowId": "l2-w01-cover-nan-can-nod",
+      "version": 2,
+      "colorPrint": "l2-w01-cover-nan-can-nod-m2-color-print.png",
+      "linePrint": "l2-w01-cover-nan-can-nod-m2-line-print-4.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-34-r2.json, audited head d81c59be: rating 8.5, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Reviewed color page batch-34/pages/l2-w01-cover-nan-can-nod-m2-color.png; reviewed line page batch-34/pages/l2-w01-cover-nan-can-nod-m2-line-4.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-cover-nan-can-nod-m2-color-print.png (SHA-256 4a608192af82fe5aff2077410ae142f25dafc4468d43905dd4349dded6e5b51d) and line print l2-w01-cover-nan-can-nod-m2-line-print-4.png (SHA-256 0f14b7b97ade4b42e6b7415ce26a3c758fc423699d1782d2a0bc73f9fe7be79e) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+      ]
+    },
+    {
+      "rowId": "l2-w01-story-page-hello-i-am-pat",
+      "version": 14,
+      "colorPrint": "l2-w01-story-page-hello-i-am-pat-m14-color-print.png",
+      "linePrint": "l2-w01-story-page-hello-i-am-pat-m14-line-print-3-despeckled.png",
+      "notes": [
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-37.json, audited head m14: rating 8.5, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
+        "Reviewed color page batch-37/pages/l2-w01-story-page-hello-i-am-pat-m14-color.png; reviewed line page batch-37/pages/l2-w01-story-page-hello-i-am-pat-m14-line-3-despeckled.png; both byte-equal to the Muse files used for the prints.",
+        "Color print l2-w01-story-page-hello-i-am-pat-m14-color-print.png (SHA-256 31a862c3ff84bfaaa17919a32bbd6637c02490f7cb50fb872080cb8a5f331e8c) and line print l2-w01-story-page-hello-i-am-pat-m14-line-print-3-despeckled.png (SHA-256 16ee6f3d3c20621fe9f5c7aeeb0659292c625f2d4d3f9280ffea0f2a51be7544) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+      ]
+    }
+  ]
+}
