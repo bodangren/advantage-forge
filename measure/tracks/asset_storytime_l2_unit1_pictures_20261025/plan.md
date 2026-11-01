@@ -3567,3 +3567,54 @@ gate applies again.
     Commit of the 11 spec files: `b2700448`. Review folder `out/storytime-review/batch-29/`: `brief.md`
     with one key per row, `pages/` (22 files), `refs/` (24 files). PNGs stay out of git. Green did not
     rate its own work. No task is marked `[x]`. Waiting for the independent review.
+    Green round 58 (2026-11-01, claude-code/claude-sonnet-5-5#high). Task: Muse fix round for batch 28.
+    role_base_sha `a4308df1`, phase_base_sha `15a7bf0b`. Red model minimax-cn-coding-plan/MiniMax-M3. Image
+    model meta/muse-image. Green coder model: none; nothing was delegated. No heavy-runner command was needed.
+    Defects fixed in this round, with their source (batch 28 Kimi review and the orchestrator check):
+    nose check row and practice line (a three-quarter view from behind, a small nose bump, a sliver of the far
+    eye, ragged ear), `a-neck` (chin level, neck hidden, hands on the collarbones, pale T-shirt blotches, ragged
+    ears), `hello-i-am-ben` (faint pale forehead line), `a-nest` (open branch outline, blob leaf cluster, lump
+    hand, pale T-shirt blotch), `a-net` (double rim, mesh slivers), Teacher Kim sheet (front-view fingers merged
+    like a mitten).
+    Reference crops and copies (all in `out/storytime/l2/unit1/w01/muse/elements/`; none overwrote a file):
+    `nan-side-left-head.png` and `nan-side-right-head.png`. The look sheet of batch 21 has only a front view,
+    and the Nan render views are close hand shots, so the closest real side view is the 128 px sprite
+    `out/sprout-nan/sprites/W.png` (left) and `E.png` (right). Method: sharp crop of the head and shoulders
+    (x 30, y 8, 70 x 70), Lanczos3 to 900 x 900. `ben-ref-clean-2.png`: round 57 made `ben-ref-clean.png` first
+    (wide blur, not used for the final). The new copy is a narrow mask: forehead skin pixels (two boxes, front
+    and three-quarter views) that differ from the local skin mean by more than 4 grey levels, grown by 1 pixel,
+    filled from the nearby non-mask skin color. Hair edge and brows stay sharp. At full size the crease and the
+    streak left of the left brow are gone; one tiny dark speck left of the left brow remains.
+    Spec changes (commit `86010452`, 7 files): the nose rows got the side crop as picture 1 and no frontal face
+    crop; `a-neck`, `hello-i-am-ben`, `a-nest`, `a-net`, and `cast-teacher-kim` got the new prompt text and the
+    follow-up additions (smooth ears, even clothing color, no forehead crease, separate relaxed fingers, closed
+    line outlines, fewer background shapes).
+    Rows (final files in `out/storytime/l2/unit1/w01/muse/`; every call is in `costs.tsv`):
+    - `check-row-nose` color m2, line m2. A true profile, one eye, clear nose, smooth ear. No retry.
+    - `practice-line-nose` color m3, line m3. Retry 1: m2 showed a floating cut torso, a hand, and pale T-shirt
+      patches. m3 is a tight crop.
+    - `a-neck` color m4, line m4. Retries 1 and 2 (m3: ragged ears and a dark neck shadow; m4 added an ear
+      warning). The chin is up, the neck is a skin column, the hands rest at the neck sides. OPEN: the ears of
+      m2, m3, and m4 show a dark hole or ragged edge at 100 percent (the 3D Nan ear, copied by Muse). Retry
+      limit used.
+    - `hello-i-am-ben` color m4 (used round 57 `ben-ref-clean.png`, then replaced after the orchestrator
+      follow-up), m5 (clean-2; a dark spot on the left temple), m6 (final; forehead and temples smooth). One m6
+      call failed with a network timeout (cost 0) and ran again. Line m6: separate fingers, no eyelash ticks.
+    - `a-nest` color m5, line m5 try 2 (`-line-2.png`). Retries 1 and 2 on color (m3: ragged ear and a dark mark;
+      m4 and m5 added ear text); one more line try (the branch in the line art stayed an open jagged stroke).
+      OPEN: the ear is ragged in m5, and the branch outline is open in both line tries. Retry limit used for
+      the line (try 1 and try 2 of m5) and for the color.
+    - `a-net` line m2 try 4 (`-line-4.png`). The color m2 has no defect (single net, even T-shirt, smooth ears
+      at reading size) and stays. Try 3: one rim, thin mesh, a lumpy hand. Try 4 (hand text added): one rim,
+      a grid of about 4 by 5 squares, a small lumpy hand. Not fully clean (hand, 5 columns).
+    - Teacher Kim cast sheet `cast-teacher-kim` m2, `out/storytime-review/muse-cast/cast-teacher-kim-m2-color.png`,
+      copied to `out/storytime-review/muse-cast/teacher-kim-sheet-2.png` (sheet 1 untouched). Hands at 100
+      percent: separate relaxed fingers in the front, three-quarter, and side views; ears smooth. No retry.
+    Cost (USD, `usage.cost`, 0.01 per call): color 13 calls 0.13 (nose 1, practice 2, neck 3, Ben 3, nest 3,
+    Kim 1), line 8 calls 0.08 (nose 1, practice 1, neck 1, Ben 1, nest 2, net 2) = 21 calls, 0.21. One Ben call
+    failed with no cost. Running total 0.42 (before rounds 57 and 58) + 0.31 (round 57) + 0.21 (round 58) = 0.94
+    USD. The tool total in the run (0.71) counts only the `costs.tsv` of the page folder.
+    Review folder `out/storytime-review/batch-30/`: `brief.md` (one key per row, `cast-sheet-teacher-kim`, the
+    batch 28 defects as "check that these are gone"), `pages/` (12 files), `cast/` (1 file), `refs/` (14 files).
+    PNGs stay out of git. Green did not rate its own work. No task is marked `[x]`. Waiting for the
+    independent review.
