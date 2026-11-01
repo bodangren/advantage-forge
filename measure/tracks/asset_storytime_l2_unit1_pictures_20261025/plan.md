@@ -4636,3 +4636,56 @@ Replaced by the amendment of 2026-11-01 (Muse path).
   Mutation proof: the writer ignored `fileVersion` (`if (true || entry.fileVersion === undefined)`).
   Run of T184: `Tests  1 failed | 28 skipped (29)`. The writer was restored, and the diff shows
   no mutation line. Facts changed: none. No task marker changed.
+- Week 1 version 2 delivery (2026-11-02). Role: measure-jr-green
+  (`claude-code/claude-sonnet-5-5#high`). Red of the change: `opencode-go/deepseek-v4.1-flash`.
+  Coder: none. phase_base_sha: `15a7bf0b`. role_base_sha: `4330cb42`. No Muse call.
+  PM orders, verbatim. (1) "02:1x ICT 2026-11-02: redo 4 rows as new versions (-v2) after the
+  Workbooks two-model check (stage 2) refused them." (2) "03:1x ICT 2026-11-02, verbatim: "Review
+  C v2 findings: decision A. Workbooks changes its stage 1 reader to match a manifest entry by row
+  id (`job.id`), with names `<row id>-v<N>.png` and `<row id>-line-v<N>.png`, one entry per row id.
+  No list v5, no pin move, no reuse of the -v1 names. Your plan stands: after the batch 39 review,
+  Green adds `fileVersion: 2` for the 4 rows and delivers `delivery-muse-v2/` with all 30 rows (26
+  at v1 with the same bytes, 4 at v2). Record RCV2-1 and RCV2-2 as resolved by the PM decision (A,
+  Workbooks owns the reader change)."
+  Review of the 4 rows: batch 39, `item-review-batch-39.json`, reviewer
+  `opencode-go/mimo-v2.6-flash`. All 4 rows are clean (ratings 8, 9, 8, and 8).
+  The 4 rows, with the old and the new delivered names (both a color file and a line-art file):
+  - `l2-w01-story-page-a-net`: `l2-w01-story-page-a-net-v1.png` and `l2-w01-story-page-a-net-line-v1.png`
+    became `l2-w01-story-page-a-net-v2.png` and `l2-w01-story-page-a-net-line-v2.png`.
+    Color print unchanged (m2). New line print `l2-w01-story-page-a-net-m2-line-print-26-despeckled.png`.
+  - `l2-w01-check-row-net`: `l2-w01-check-row-net-v1.png` and `l2-w01-check-row-net-line-v1.png`
+    became `l2-w01-check-row-net-v2.png` and `l2-w01-check-row-net-line-v2.png`.
+    Color print unchanged (m1). New line print `l2-w01-check-row-net-m1-line-print-16-despeckled.png`.
+  - `l2-w01-story-page-a-nose`: `l2-w01-story-page-a-nose-v1.png` and `l2-w01-story-page-a-nose-line-v1.png`
+    became `l2-w01-story-page-a-nose-v2.png` and `l2-w01-story-page-a-nose-line-v2.png`.
+    Color print unchanged (m1). New line print `l2-w01-story-page-a-nose-m1-line-print-5-despeckled.png`.
+  - `l2-w01-story-page-nan-can-nod`: `l2-w01-story-page-nan-can-nod-v1.png` and
+    `l2-w01-story-page-nan-can-nod-line-v1.png` became `l2-w01-story-page-nan-can-nod-v2.png` and
+    `l2-w01-story-page-nan-can-nod-line-v2.png`. New color print
+    `l2-w01-story-page-nan-can-nod-m6-color-print.png` (Muse m6) and new line print
+    `l2-w01-story-page-nan-can-nod-m6-line-print-despeckled.png`.
+  Approval list: commit `687da2fd` edits `docs/storytime/l2-unit1/w01/muse/approved.json` for these
+  4 entries only (`fileVersion: 2`, the new prints, the Muse version, and the notes).
+  `pictureListSha256` and the other 26 entries did not change. The old kimi review of the
+  a-nose entry covered the old line page, so the entry no longer holds it.
+  Folder: `out/storytime/l2/unit1/w01/delivery-muse-v2/` (60 PNG files and `manifest.json`).
+  manifest.json SHA-256: `d3eec18ce7c94b94ed5b0751df164578558ad44f04bebe7b4b371a3ed213796a`.
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node --import tsx
+  scripts/storytime-book-pictures.ts deliver --week 1 --list
+  /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --approvals
+  docs/storytime/l2-unit1/w01/muse/approved.json --muse out/storytime/l2/unit1/w01/muse
+  --delivery out/storytime/l2/unit1/w01/delivery-muse-v2'`. Exit code `0`. Output: `Delivered 30 rows
+  and 2 batch hashes`. Every line width was at or above the 12 px minimum.
+  Byte checks, all with 0 mismatches. (1) The 8 batch 39 page files (4 color, 4 line) equal the
+  Muse files of the same names. (2) The 8 prints recompute byte-identical from the reviewed pages
+  with the print code of `scripts/storytime-muse.mjs` (local script, no Muse call). (3) The manifest
+  holds 30 jobs: 26 at version 1 and 4 at version 2. (4) Each of the 26 v1 jobs has the same file
+  names, bytes, and `selectedSha256` as in `delivery-muse-v1/`. (5) Each of the 4 v2 jobs uses
+  `<row id>-v2.png` and `<row id>-line-v2.png`. The folder holds no v1 file for these rows.
+  (6) Each delivered file equals its approved print. (7) The folder holds 60 PNG files and the
+  manifest, and each PNG is in the manifest. `delivery-muse-v1/` did not change; its
+  `manifest.json` SHA-256 is still `00ea0c5b06d18e3f54cbceed9caa943100c0711bb515c44561eb46b7e03ed369`.
+  RCV2-1 and RCV2-2 (Review C, `review-c-4330cb42.json`) resolved by the PM decision A at 03:1x ICT
+  2026-11-02; Workbooks owns the stage 1 reader change. RCV2-3 (the nit on `contract.md`) is not
+  part of this change. Facts changed: week 1 has a second delivery folder, `delivery-muse-v2`, with
+  4 rows at version 2. No task marker changed.
