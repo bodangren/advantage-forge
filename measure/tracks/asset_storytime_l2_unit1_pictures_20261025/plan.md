@@ -4590,3 +4590,28 @@ Replaced by the amendment of 2026-11-01 (Muse path).
     despeckled) after the review of batch-39. Both net line arts draw the rim as two thin parallel lines (the
     tube outline); a reviewer may judge the thin strip between them. Use the color m6 for nan-can-nod: it
     replaces m5.
+- Red: week 1 version 2 delivery (2026-11-02). Role: measure-mid-red
+  (`opencode-go/deepseek-v4.1-flash`). Green for this change: `claude-code/claude-sonnet-5-5#high`.
+  Coder: none. phase_base_sha: `15a7bf0b2a59b8137a05805666df6736dc256167`. role_base_sha:
+  `69412be6a3dfb123af717e65da034ab7ab10f1ba`. Test commit: `13896a21`.
+  The new rows are T184 to T189 in `tests/storytime-muse-delivery.test.ts`. T152 to T172, T181,
+  and T182 did not change. No task marker changed.
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run
+  tests/storytime-muse-delivery.test.ts --maxWorkers=1'`.
+  Result: exit code `1`. `Test Files  1 failed (1)`. `Tests  6 failed | 23 passed (29)`.
+  Failing rows:
+  - T184: the fileVersion 2 candidate version is 1, not 2. The v2 names are absent.
+  - T185: the job selects version 1. The folder and the batches hold the v1 names.
+  - T186: the v2 color file is absent. The v1 color bytes are not under the v2 name.
+  - T187: the v2 row has no v2 file. The v1 file is present, and the candidate version is 1.
+  - T188: each invalid `fileVersion` value exits 0 and writes the v1 files.
+  - T189: the second run resolves as `delivered`. It does not refuse the different manifest.
+  Each failure names a labeled expectation. The log holds no syntax error, no import error, and
+  no ENOENT. Log: `mid-red-v2-delivery-red2.log`.
+  Contract for Green: the approval entry takes an optional integer `fileVersion` (>= 1). With
+  `fileVersion: 2`, the writer copies the prints to `<row id>-v2.png` and
+  `<row id>-line-v2.png`. The candidate `version` is 2, and `file` and `lineArt.file` are the v2
+  names. Without the field, the v1 names and bytes stay. A row has one candidate, so the v2
+  candidate replaces the v1 candidate. The writer still refuses a different `manifest.json`.
+  The full-project type check stopped at the heavy-run heap limit (exit 134). A targeted check of
+  the test file found no error in it. Facts changed: none. No production file changed.
