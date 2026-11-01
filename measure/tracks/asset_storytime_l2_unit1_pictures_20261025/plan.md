@@ -2099,6 +2099,73 @@ rows T142 to T151, and the closeout gate for 30 jobs.
     - Open: no task is `[x]`. No week 6 page call before Daniel answers on week 1. The 9 element
       sheets need an independent look. The `ten` check row shows ten balls, because the sentence
       gives no object for the word.
+    - Week 7 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
+      2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `b5f0c971`, phase_base_sha
+      `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.
+      Specs commit `75c8aeb9`: 27 page specs in `docs/storytime/l2-unit1/w07/muse/<row id>.json` and 7
+      element specs in `docs/storytime/l2-unit1/w07/muse-elements/`. The method is the week 4 to
+      week 6 method. The run log is
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w07-staging.log`.
+    - Page specs: `text` is the list `text` and `goal` is the list `prompt`, as exact strings. The 9
+      check rows have the list prompt `""`, so their `goal` is `""`. `outDir` is
+      `out/storytime/l2/unit1/w07/muse`. The 18 class A and class B specs have 3 to 6 references
+      each. The 9 class C specs have one reference each. The week 1 lessons are in the prompts
+      (thick, even, closed line art; no blush, eyelash ticks, hair strands, gray, or text;
+      five-digit hands; the props of each sentence). The counts are exact: two children, one
+      blanket, one thought bubble with one toy, one top, one pot, one puppy with four legs.
+    - Page specs, week 5 and week 6 lessons: the seven thought-bubble pages name the one toy of the
+      bubble and say that no other toy shows. The teddy page shows only the golden-brown tail tip of
+      Pip at the far edge of the blanket and lists what must not show (body, head, ears, legs,
+      collar), with the Pip reference for color and shape. The toy corner set has no puppy; Pip
+      appears whole only on the `pip-yes` page. The living room set keeps a gap under the sofa for
+      the `can-tom-see-the-top` page. The cover pages name each person and the count.
+    - No new character and no new cast sheet. May, Ben, and Pip have approved looks. Tom (week 4
+      `cast-tom-sheet-m3`) and Mom (week 4 `cast-mom-sheet-m1`) are pending-look sheets. The 9 specs
+      that use them carry `"castLook": "pending"` with `"castLookNames"` (Tom, Mom) as in week 4.
+      Daniel gets no new phone picture for week 7. The May reference is a copy of
+      `out/sprout-may/render.png` named `may-ref-render.png`; the Ben reference is a copy of the
+      week 1 cleaned `ben-ref-clean-2.png`. Both copies are in the week 7 elements folder, so that
+      the stage check finds the names.
+    - Elements reused by path: Pip (week 4 `pip-ref-render.png`); the rag doll sheet
+      `prop-doll-pam-sheet-m1` (week 4, the doll of the `doll` page); Forge 3D views `out/octopus`
+      and `out/ox`. Six check-row specs (sun, pen, fish from week 6; cat, bed from week 5; bus from
+      week 4) reuse the earlier spec of that word with a new id. No new 3D shot and no heavy-runner
+      job in this round.
+    - New Muse element sheets (7, in `out/storytime/l2/unit1/w07/muse/elements/`, named with no row
+      id): `set-toy-corner-empty`, `set-tom-living-room-empty`, `prop-red-blanket-bump-sheet`,
+      `prop-toys-sheet` (six toys), `prop-top-sheet` (m2), `prop-silver-pot-sheet`, and
+      `prop-olive-sheet` (m2). They are inputs, never page candidates. The first look by this Green
+      found five sheets usable. The top m1 looked like a turnip and the olive m1 looked like a green
+      fruit with a stem, so m2 replaced both. Known gaps: the toy shelf of the corner set is small;
+      the sofa of the living room set is cut at the left edge; the toys sheet holds six toys and a
+      page may draw more than the one it names. All sheets need an independent look. Review folder:
+      `out/storytime-review/w07-staging/` (`index.md`, `sheets-1.png`, and `sheets-2.png`).
+    - Muse calls: 9 calls, 9 billed, 0 failed. 7 element calls and 2 retries (top, olive). Cost 0.09
+      USD (`usage.cost` 0.01 per call) in `elements/costs.tsv`. Running total 4.19 USD before this
+      run, 4.28 USD after it. Page calls: 0. Page candidates: 0.
+    - Staged total for weeks 2 to 7: 162 page specs (27 for each of 6 weeks), all with a passing
+      stage gate.
+    - Stage gate (STAGING_GATE_COMMAND with `--week 7`, light job, exit code 0):
+
+      ```text
+      list sha256: 6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58
+      week: 7
+      rows: 27
+      specs found: 27
+      text mismatches: 0
+      goal mismatches: 0
+      outDir mismatches: 0
+      rows with no reference (class A and B): 0
+      element paths checked: 90
+      missing element paths: 0
+      characters without a reference: 0
+      page candidates: 0
+      stage check: pass
+      ```
+
+      This proves that the inputs exist and match the list. It proves nothing about picture quality.
+    - Open: no task is `[x]`. No week 7 page call before Daniel answers on week 1. The 7 element
+      sheets need an independent look. The teddy page may draw a whole puppy instead of the tail tip.
 - [ ] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks.
 
