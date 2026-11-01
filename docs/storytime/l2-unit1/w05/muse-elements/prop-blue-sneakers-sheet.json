@@ -1,0 +1,11 @@
+{
+  "id": "prop-blue-sneakers-sheet",
+  "text": "",
+  "goal": "One pair of blue sneakers with white soles.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly ONE PAIR (two) of child's blue SNEAKERS, large in the middle on a plain white background, seen from a three-quarter view, standing next to each other, side by side, with the whole pair in view: smooth, chubby, round-toed sneakers in bright blue with thick white soles, white laces tied in a simple bow, and a plain white toe cap. The two sneakers are the same size and the same look. No pattern, no stripes, no logo, no letters. They have no eyes and no face. Exactly two sneakers: no third shoe. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w05/muse/elements"
+}

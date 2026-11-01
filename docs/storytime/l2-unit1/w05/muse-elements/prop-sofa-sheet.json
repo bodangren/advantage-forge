@@ -1,0 +1,11 @@
+{
+  "id": "prop-sofa-sheet",
+  "text": "",
+  "goal": "One sofa.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly ONE SOFA, large in the middle on a plain white background, seen from a three-quarter front view with the whole sofa in view: a soft, chubby, rounded two-seat sofa in plain medium blue, with two rounded arms, a rounded back, a seat cushion, two plain cream square cushions leaning against the back, and four short round wooden feet. No pattern, no buttons that look like eyes, no blanket, and no second sofa. The sofa has no eyes and no face. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w05/muse/elements"
+}
