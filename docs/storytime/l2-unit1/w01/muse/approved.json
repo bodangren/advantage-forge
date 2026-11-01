@@ -247,13 +247,13 @@
       "rowId": "l2-w01-practice-line-nest",
       "version": 1,
       "colorPrint": "l2-w01-practice-line-nest-m1-color-print.png",
-      "linePrint": "l2-w01-practice-line-nest-m1-line-print-2.png",
+      "linePrint": "l2-w01-practice-line-nest-m1-line-print-3-despeckled.png",
       "notes": [
-        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-36.json, audited head final: rating 8, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-38.json: rating 9, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
         "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
-        "Name mismatch recorded at delivery: the reviewed page batch-31/pages/l2-w01-practice-line-nest-m1-line.png is byte-identical (SHA-256 483c1c3e46a21acf3028d21ac0aab6e9fad41999ad750399ba75667e8febd767) to the Muse file l2-w01-practice-line-nest-m1-line-2.png, not to the Muse file l2-w01-practice-line-nest-m1-line.png. The delivery uses the print of l2-w01-practice-line-nest-m1-line-2.png.",
-        "Reviewed color page batch-31/pages/l2-w01-practice-line-nest-m1-color.png; reviewed line page batch-31/pages/l2-w01-practice-line-nest-m1-line.png; both byte-equal to the Muse files used for the prints.",
-        "Color print l2-w01-practice-line-nest-m1-color-print.png (SHA-256 822bb7ecd87e2252ef23671c58a545173a8d9b06515cbc7875da85089664b0bd) and line print l2-w01-practice-line-nest-m1-line-print-2.png (SHA-256 e66cbcdd6fae24bff8643be6f1d866c8e4dc89953ce36d41f0c9db154a18c76d) recompute byte-identical from the reviewed files with the tool's print code; size 1500 x 1500."
+        "Round 66 replaced the earlier line try 2 (line width 10 px, under the 12 px writer minimum) with line try 3, despeckled. The earlier batch 31 and batch 36 reviews no longer apply to this row.",
+        "Reviewed pages out/storytime-review/batch-38/pages/l2-w01-practice-line-nest-m1-color.png and l2-w01-practice-line-nest-m1-line-3-despeckled.png; both byte-equal to the Muse files of the same names.",
+        "Color print l2-w01-practice-line-nest-m1-color-print.png (SHA-256 822bb7ecd87e2252ef23671c58a545173a8d9b06515cbc7875da85089664b0bd) and line print l2-w01-practice-line-nest-m1-line-print-3-despeckled.png (SHA-256 4ae1454472ded4977906fb25cc684bbbbfe72ac37040ff9b907f154a77d19970) recompute byte-identical from the reviewed files with the tool print code; size 1500 x 1500."
       ]
     },
     {
@@ -368,13 +368,15 @@
     {
       "rowId": "l2-w01-cover-hello",
       "version": 6,
-      "colorPrint": "l2-w01-cover-hello-m6-color-print.png",
-      "linePrint": "l2-w01-cover-hello-m6-line-print-2.png",
+      "colorPrint": "l2-w01-cover-hello-m6-color-print-pad.png",
+      "linePrint": "l2-w01-cover-hello-m6-line-print-5-despeckled-pad.png",
       "notes": [
-        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-34-r2.json, audited head d81c59be: rating 8.5, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
+        "Reviewer mimo (opencode-go/mimo-v2.6-flash), artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-38.json: rating 8, clean true, 0 critical, 0 defects. The schema has no mimo review slot, so the review is recorded here only.",
         "Bar: Daniel 2026-11-01 14:15 ICT (a defect is only what a teacher or a child sees at book size).",
-        "Reviewed color page batch-34/pages/l2-w01-cover-hello-m6-color.png; reviewed line page batch-34/pages/l2-w01-cover-hello-m6-line-2.png; both byte-equal to the Muse files used for the prints.",
-        "Color print l2-w01-cover-hello-m6-color-print.png (SHA-256 e7be01a344c711d29455bf6e0902999b2fdea039f79e5f911cfaedcd9b72975d) and line print l2-w01-cover-hello-m6-line-print-2.png (SHA-256 6b09bf5032952befafd22b60eae0c17063d5dbcc1ff2cccb9af5b9d08807551a) recompute byte-identical from the reviewed files with the tool's print code; size 4000 x 3000."
+        "Round 66 set the print mode to pad (white bands top and bottom) because every earlier line print failed the writer edge-frame check. The line art is line try 5, despeckled, of color m6.",
+        "Daniel's answer on Pat's back to the camera and on the white bands is open; the default is acceptable. The review notes that the line bottom band is 100 px larger than the color bottom band (167 and 166 px color, 167 and 266 px line); record only.",
+        "Reviewed print pages out/storytime-review/batch-38/pages/l2-w01-cover-hello-m6-color-print-pad.png and l2-w01-cover-hello-m6-line-print-5-despeckled-pad.png; both byte-equal to the Muse files of the same names.",
+        "Color print l2-w01-cover-hello-m6-color-print-pad.png (SHA-256 99ee1b8d1fe0e9ad632e951c089ab7a4b1dce35de73bcd7dfce0bba63a8ed90f) and line print l2-w01-cover-hello-m6-line-print-5-despeckled-pad.png (SHA-256 00580dbb3e252dfeb809e19bd802a0fd3bbd552c7c9113a46fd50e40840f12cd) recompute byte-identical from the m6 color and line-5-despeckled files with the tool print code in pad mode; size 4000 x 3000."
       ]
     },
     {
