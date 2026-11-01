@@ -1,0 +1,11 @@
+{
+  "id": "prop-blue-bird-sheet",
+  "text": "",
+  "goal": "One small blue bird on a branch.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly ONE small BIRD, large in the middle on a plain white background, perched on a short plain brown branch with two small green leaves, seen from a three-quarter side view with its whole body in view: a smooth, round, chubby cartoon songbird with bright sky-blue feathers, a lighter pale-blue belly, a short orange beak, small orange feet that hold the branch, and a short tail. The branch is a short stick, not a tree. It is the only bird. The animal has big round friendly dark eyes with white highlights and clean eye corners, and smooth plain fur with no strands and no pattern except as named. It is the only animal in the picture. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w06/muse/elements"
+}

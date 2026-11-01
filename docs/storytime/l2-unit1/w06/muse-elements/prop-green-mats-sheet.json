@@ -1,0 +1,11 @@
+{
+  "id": "prop-green-mats-sheet",
+  "text": "",
+  "goal": "Two soft green mats.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly TWO soft, thick, rounded-rectangle floor MATS for children, lying flat side by side on a plain white background with a small gap between them, seen from a little above in a three-quarter view: both mats are plain medium green, the same size, the same shape, and the same color, each about as big as a small child sitting on it. They have no pattern, no stripes, no stars, no border, and no letters. Exactly two mats, no third mat and no cushion. They have no eyes and no face. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w06/muse/elements"
+}

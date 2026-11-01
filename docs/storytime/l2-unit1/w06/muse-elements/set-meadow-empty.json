@@ -1,0 +1,11 @@
+{
+  "id": "set-meadow-empty",
+  "text": "",
+  "goal": "Empty sunny meadow with a wooden fence, a small pond, a low tree, and tall grass, no people, no animals.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The picture shows an EMPTY sunny meadow for a children's book, with nobody and no animal in it: a wide green grassy meadow under a clear light-blue sky with ONE yellow sun in the upper right and two small soft white clouds. A low wooden fence of plain light-brown posts and two rails runs across the back of the meadow from the left to the middle. A small round pond with a few gray and tan stones around it and two round green lily pads on its clear blue water lies at the right, a little back from the camera. ONE low round tree with a thick brown trunk, a round green crown, and one low strong branch that reaches to the right stands at the left, in front of the fence. A few clumps of TALL green grass stand along the bottom edge at the left and at the right, and the middle of the foreground is open, flat, short green grass. The picture is one calm wide scene, camera at a low child eye level. Exactly one sun, one pond, one tree, and one fence run. No flowers, no animals, no birds, no fish, no frog, no people, no house. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "4:3",
+  "outDir": "out/storytime/l2/unit1/w06/muse/elements"
+}

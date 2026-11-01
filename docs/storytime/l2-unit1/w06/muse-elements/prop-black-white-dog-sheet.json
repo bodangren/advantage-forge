@@ -1,0 +1,11 @@
+{
+  "id": "prop-black-white-dog-sheet",
+  "text": "",
+  "goal": "One black-and-white dog with a wagging tail.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly ONE small friendly DOG, large in the middle on a plain white background, standing and seen from a three-quarter front view with its whole body in view and its tail up in a happy wag: a smooth, round, chubby cartoon dog with a clear BLACK-AND-WHITE coat (a white face blaze, white chest, white front paws, and a white tail tip; black ears, a black patch around each eye, a black back, and black hind legs), a black nose, a small pink tongue out of a happy open mouth, and floppy black ears. It has no collar and no tag. It does not look like a golden-brown puppy. The animal has big round friendly dark eyes with white highlights and clean eye corners, and smooth plain fur with no strands and no pattern except as named. It is the only animal in the picture. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w06/muse/elements"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "prop-white-horse-sheet",
+  "text": "",
+  "goal": "One white horse.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly ONE small friendly HORSE, large in the middle on a plain white background, standing and seen from a three-quarter front view with its whole body in view: a smooth, round, chubby cartoon horse with a plain clean WHITE coat, a soft cream-white mane and tail, two small ears, big round friendly dark eyes, a soft pink-gray muzzle, and light-gray hooves. It has no saddle, no bridle, no rope, and no markings. The coat is white (not gray, not brown, not a pony with spots). The animal has big round friendly dark eyes with white highlights and clean eye corners, and smooth plain fur with no strands and no pattern except as named. It is the only animal in the picture. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w06/muse/elements"
+}

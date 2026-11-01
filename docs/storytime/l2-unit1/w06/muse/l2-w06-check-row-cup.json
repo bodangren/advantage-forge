@@ -1,0 +1,17 @@
+{
+  "id": "l2-w06-check-row-cup",
+  "text": "cup",
+  "goal": "",
+  "references": [
+    "out/storytime-child-cup/views/three-quarter.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the element picture. Picture 1 is a 3D render of a blue child cup with a cream rim and one round handle, empty, on a gray background with a gray ground shadow. Ignore the gray background and the shadow: do not copy them. Draw the same cup with the same shape, the same colors, and the same proportions as in picture 1, as a smooth, clean, bright, soft, round 3D render with a plain white background. The picture to make: a square picture of exactly ONE cup, large in the middle, filling most of the square, seen from the front-right and a little from above (a three-quarter view), the handle on the right side, the open top of the cup showing. Exactly one cup: no second one, no copies, and nothing else in the picture. The background is plain white and empty, with at most a very soft shadow under the object. The page text is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture of one object. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No fine detail, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. The object outline is one closed shape. No fur strands, scales, grain, or texture lines. The cup is one closed outline. The rim, the inside, and the handle are closed shapes. The handle is one closed ring. This object has no eyes and no face: draw no eyes, no pupils, and no face anywhere.  Every line inside the object ends on another line, with no loose ends. Draw only the object: no ground line, no shadow, no background shapes. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/w06/muse"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "prop-gray-cat-sheet",
+  "text": "",
+  "goal": "One gray cat, sitting.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly ONE small CAT, large in the middle on a plain white background, sitting upright and seen from a three-quarter front view with its whole body in view: a smooth, round, chubby cartoon cat with plain soft medium-gray fur, a lighter gray chest and muzzle, two pointed ears with pink insides, big round green eyes, a small pink nose, three thin whiskers on each side, and a long curved tail curled around its feet. The cat is plain gray all over: no stripes, no spots, no blue or purple tint, and no collar. The animal has big round friendly dark eyes with white highlights and clean eye corners, and smooth plain fur with no strands and no pattern except as named. It is the only animal in the picture. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w06/muse/elements"
+}
