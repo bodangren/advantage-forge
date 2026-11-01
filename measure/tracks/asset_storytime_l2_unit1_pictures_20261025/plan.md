@@ -4316,3 +4316,19 @@ Replaced by the amendment of 2026-11-01 (Muse path).
     goals, the writer-check result of each chosen print, facts), `pages/` (4 files), `refs/` (12 files). PNGs
     stay out of git. Green did not rate its own work. No task is marked `[x]`. Open: cover-hello has no line
     print that passes the writer. Waiting for the independent review of batch-38 and a decision on the cover.
+    Follow-up (same round, no Muse call, no extra cost): Daniel chose option (a), `print: pad`, for
+    `l2-w01-cover-hello` only. Spec commit `e7a881d4`: the `print` field changed from `crop` to `pad`. Padded
+    prints were made off-repository with the same pad logic as `scripts/storytime-muse.mjs`
+    (`/tmp/opencode/padprint66.mts`): color `l2-w01-cover-hello-m6-color-print-pad.png` (SHA-256
+    `99ee1b8d1fe0e9ad...`) and line `l2-w01-cover-hello-m6-line-print-5-despeckled-pad.png` (SHA-256
+    `00580dbb3e252dfe...`), both in `out/storytime/l2/unit1/w01/muse/` and in
+    `out/storytime-review/batch-38/pages/`. Band height: 80 px at 1920 x 1280 (source), 167 px at 4000 x 3000,
+    at the top and at the bottom; the scene is 4000 x 2666 px.
+    Writer checks: color print PASS (4000 x 3000, PNG, 3 channels, sRGB, 8-bit, no alpha, no palette; the rules
+    of `inspectColorPrint` in `src/storytime/muse-delivery.ts`); line print PASS with `inspectLineArtPng`: edge
+    frame 98.4 percent white, line width 13 px, ink 11.71 percent. `inspectPictureRow` (calm top, class B)
+    fails the crop and the pad color print alike; the delivery writer does not run it. `approved.json` was not
+    changed: its cover-hello entry still names the crop prints. The orchestrator must update `colorPrint` and
+    `linePrint` to the two pad files, and the review of batch-38 must judge the pad prints. `brief.md` of
+    batch-38 has a new section for the pad prints. The PM request for a waiver runs in parallel. No task is
+    marked `[x]`.
