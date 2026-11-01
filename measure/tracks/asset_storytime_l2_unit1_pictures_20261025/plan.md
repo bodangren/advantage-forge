@@ -3464,3 +3464,54 @@ gate applies again.
    discarded edit (1608 KB). It is an untracked output. Build it again with `./forge build
    sprout-nan` if the textured GLB is needed as a reference.
    Cast fix stopped by owner decision; no new model round. No task is marked `[x]`.
+
+   Green round 56 (2026-11-01, claude-code/claude-sonnet-5-5#high). Task: Muse production round 1.
+   role_base_sha `c48e69df` (HEAD at start; `bd42cb1a` was the base named in the brief), phase_base_sha
+   `15a7bf0b`. Red model minimax-cn-coding-plan/MiniMax-M3. Image model meta/muse-image through the
+   OpenRouter Image API. Green coder model: none; nothing was delegated.
+   Owner decision (Daniel, Tasks, 09:34 ICT 2026-11-01, via the PM), verbatim: "The Muse version is
+   obviously better in all cases and your reading of the hand is wrong because it's a what is it called
+   perspective problems of the hand is reaching out towards the towards the viewer so we'll keep Muse and
+   then don't even bother with a cap because we have to pay what we have to pay here finally I think we
+   can leave the 3D models as is".
+   PM orders: Muse composition from the 3D elements is the picture path for Storytime (week 1 first, then
+   weeks 2 to 8); the inputs are character renders, prop renders, an empty set render (when the page has
+   a room), and a page description; Muse never gets a finished page render. The line art comes from the
+   approved Muse color picture only. Foreshortening is correct, not a defect. The 3D cast fix is stopped.
+   No model source changed. Muse calls need no lock; no cost cap; every call logged with `usage.cost`.
+   Keep Nan's painted eyelash mark. The manifest shape of commit 11a06b9c stays the contract with
+   Workbooks; `src/` did not change. The spec and plan still name the local Forge renderer; a plan
+   amendment and a Red/Green manifest task follow.
+   Cast sheets (A): `out/storytime-review/muse-cast/nurse-sheet.png` and `teacher-kim-sheet.png`, four
+   views each, 1920 x 1280. Nurse: a woman of about thirty, short black hair, white nurse uniform, small
+   white nurse cap, white shoes, small plain white first-aid bag with no symbol (the look of the picture
+   list row). Teacher Kim: the picture list and the Workbooks week files give no look, so this look is a
+   PROPOSAL for Daniel: medium-length dark-brown hair in a low ponytail, a soft green cardigan over a cream
+   blouse, navy trousers, brown flat shoes. No prompt names skin color, ethnicity, or race. One Teacher Kim
+   call failed with HTTP 502 (cost 0) and was sent again.
+   Print-size test (B): `out/storytime-review/muse-print-test/` (README, 4000 x 3000 crop and pad files,
+   100 percent crops). Method: reframe 3:2 to 4:3 (crop: 107 px off each side; pad: white bands), Lanczos3,
+   light sharpen for color; for line art Lanczos3, blur sigma 1.6, threshold 128 in a second stage. Result:
+   line art is pure 0 and 255 (6.43 percent black), clean thick lines, no gray or specks; color is soft at
+   100 percent but usable. No paid upscaler was used. Finding: sharp runs a threshold before the resize in
+   one pipeline, so the enlarge and the threshold are two stages.
+   Tool (C): `scripts/storytime-muse.mjs` with commands `color`, `line`, `print`, `import`; up to 4 calls
+   at a time; page specs in `docs/storytime/l2-unit1/w01/muse/<row-id>.json`; outputs in
+   `out/storytime/l2/unit1/w01/muse/` (`<row>-m<n>-color.png`, `-line.png` 1-bit, `-color-print.png`,
+   `-line-print.png`, `<row>-m<n>.json` with SHA-256, `costs.tsv`). A new try takes the next n; a second
+   line try for one version takes the suffix `-2`. A spec may set `printSize` (the two square rows use
+   1500 x 1500). Commit `072c9dc6`.
+   Calls (cost USD, `usage.cost`): cast 2 color calls 0.02 (Teacher Kim 502 not billed). Pages: 11 color
+   calls 0.11 and 9 line calls 0.09 = 0.20. Running total for the round 0.22. One line call for the nest
+   page failed with a network error before a response (cost 0, not logged: the tool did not log
+   network errors then; the tool now does). The nut and nose m1 files are imported from test 2 (their
+   test 2 costs, 0.01 per call, are not counted here).
+   Pages (final version; files in `out/storytime/l2/unit1/w01/muse/`): `a-nut` m1 (import), `a-nose` m1
+   (import), `hello-i-am-ben` m3 (m1, m2 not used: a faint forehead line remains in all three, faintest
+   in m3), `hello-i-am-nan` m1, `a-neck` m1, `a-net` m2 (m1 changed the character; line try 2 removes the
+   fine leaf detail), `a-nest` m2 (m1 changed the character; line try 2 simplifies the background),
+   `check-row-nose` m1, `practice-line-nose` m1. SHA-256 of each file is in the `<row>-m<n>.json` files.
+   Review folder `out/storytime-review/batch-28/` (batch-27 already held a file of an earlier round):
+   `brief.md` with keys `cast-sheet-nurse`, `cast-sheet-teacher-kim`, `print-test`, and one key per
+   page. PNGs stay out of git. Green did not rate its own work. No task is marked `[x]`. Waiting for the
+   independent review.
