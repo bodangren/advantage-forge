@@ -3603,7 +3603,7 @@ export function rowEvidenceRelativePath(row: Pick<PictureListRow, 'id'>, version
 }
 
 /** The capture input of a list row: the capture reads only the size, the ID, and the stage. */
-function rowCaptureJob(row: PictureListRow): StorytimeJob {
+export function rowCaptureJob(row: PictureListRow): StorytimeJob {
   const size: PictureSize = row.sizeClass === 'B' ? 'cover' : row.sizeClass === 'C' ? 'small' : 'story';
   return {
     id: row.id,
@@ -4603,6 +4603,11 @@ interface CliOptions {
   reason?: string;
   /** A picture list row ID: `render` and `verify` work on that list row. */
   row?: string;
+  /** `deliver`: the picture list file, the approval list, the Muse folder, and the delivery folder. */
+  list?: string;
+  approvals?: string;
+  muse?: string;
+  delivery?: string;
 }
 
 function parseWeek(value: string): number {
@@ -4615,16 +4620,16 @@ function parseCli(argv: string[]): { command: string; options: CliOptions } {
   const [command, ...args] = argv;
   if (
     !command ||
-    !['plan', 'render', 'lineart-smoke', 'precheck-minimax', 'precheck-kimi', 'manifest', 'sheet', 'verify'].includes(command)
+    !['plan', 'render', 'lineart-smoke', 'precheck-minimax', 'precheck-kimi', 'manifest', 'sheet', 'verify', 'deliver'].includes(command)
   ) {
     throw new Error(
-      'Use plan, render, lineart-smoke, precheck-minimax, precheck-kimi, manifest, sheet, or verify.',
+      'Use plan, render, lineart-smoke, precheck-minimax, precheck-kimi, manifest, sheet, verify, or deliver.',
     );
   }
   const options: CliOptions = { paid: false, dryRun: false, release: false, begin: false, failed: false };
   const valueFlags = new Set([
     '--week', '--job', '--version', '--out', '--workbooks', '--calibration', '--output', '--record', '--raw',
-    '--reason', '--row',
+    '--reason', '--row', '--list', '--approvals', '--muse', '--delivery',
   ]);
   for (let index = 0; index < args.length; index += 1) {
     const argument = args[index]!;
@@ -4648,6 +4653,10 @@ function parseCli(argv: string[]): { command: string; options: CliOptions } {
       else if (argument === '--raw') options.raw = value;
       else if (argument === '--reason') options.reason = value;
       else if (argument === '--row') options.row = value;
+      else if (argument === '--list') options.list = value;
+      else if (argument === '--approvals') options.approvals = value;
+      else if (argument === '--muse') options.muse = value;
+      else if (argument === '--delivery') options.delivery = value;
       else if (argument === '--output') {
         if (value !== 'color' && value !== 'lineart') throw new Error(`Invalid output kind: ${value}`);
         options.output = value;
@@ -4707,6 +4716,27 @@ export async function runStorytimeCli(
     await writeJson(outputRoot, 'jobs.json', jobs);
     log(`Wrote 112 jobs to ${resolveOutputPath(outputRoot, 'jobs.json')}`);
     log(`Selected ${selectedJobs(jobs, selection).length} jobs.`);
+    return 0;
+  }
+  if (command === 'deliver') {
+    // Read only and offline: the command reads local files and copies the approved Muse prints.
+    if (!options.list || !options.approvals || !options.muse || !options.delivery) {
+      throw new Error('deliver needs --list <pictures.json>, --approvals <file>, --muse <folder>, and --delivery <folder>.');
+    }
+    const listPath = path.resolve(repoRoot, options.list);
+    const list = loadPictureList({
+      printRoot: path.basename(listPath) === PICTURE_LIST_FILE_NAME ? path.dirname(listPath) : listPath,
+      workbooksRoot,
+    });
+    log(`Picture list ${list.file} SHA-256 ${list.sha256}.`);
+    const { writeMuseDelivery } = await import('./muse-delivery.js');
+    const manifest = await writeMuseDelivery({
+      rows: list.rows,
+      approvals: path.resolve(repoRoot, options.approvals),
+      museRoot: path.resolve(repoRoot, options.muse),
+      deliveryRoot: path.resolve(repoRoot, options.delivery),
+    });
+    log(`Delivered ${manifest.jobs.length} rows and ${manifest.batches.length} batch hashes to ${path.resolve(repoRoot, options.delivery)}.`);
     return 0;
   }
   if ((command === 'render' || command === 'verify') && options.row !== undefined) {
