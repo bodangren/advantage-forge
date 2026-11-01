@@ -1,0 +1,11 @@
+{
+  "id": "prop-monkey-sheet",
+  "text": "",
+  "goal": "A monkey.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly ONE small cute monkey, large in the middle on a plain white background, sitting upright and seen from a three-quarter front view, with its whole body in view: a smooth, round, chubby cartoon monkey with warm medium-brown fur, a lighter tan face mask and tan belly, big round ears, big round friendly dark eyes with white highlights and clean eye corners, a small smile, small round hands with five short fingers, and a long curved tail that curls up behind it. The fur is smooth and plain, with no strands. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w04/muse/elements"
+}

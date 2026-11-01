@@ -1,0 +1,17 @@
+{
+  "id": "l2-w04-check-row-hat",
+  "text": "hat",
+  "goal": "",
+  "references": [
+    "out/storytime-sun-hat/views/three-quarter.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the element picture. Picture 1 is a 3D render of a soft yellow straw sun hat with a wide round brim, a round crown, and a red ribbon band with a red bow, on a gray or white background, perhaps with a ground shadow. Ignore the background and the shadow: do not copy them. Draw the same hat with the same shape, the same colors, and the same proportions as in picture 1, as a smooth, clean, bright, soft, round 3D render with a plain white background. The picture to make: a square picture of exactly ONE hat, large in the middle, filling most of the square, the whole object in view, seen from a three-quarter view, so that its shape reads clearly. Exactly one hat: no second one, no copies, and nothing else in the picture. The background is plain white and empty, with at most a very soft shadow under the object. The object has no eyes and no face. The page text is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture of one object. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No fine detail, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. The object outline is one closed shape. No fur strands, scales, grain, or texture lines. The hat is one closed outline. The crown, the brim, the ribbon band, and the bow are closed shapes. No straw weave lines. This object has no eyes and no face: draw no eyes, no pupils, and no face anywhere. Every line inside the object ends on another line, with no loose ends. Draw only the object: no ground line, no shadow, no background shapes. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/w04/muse"
+}

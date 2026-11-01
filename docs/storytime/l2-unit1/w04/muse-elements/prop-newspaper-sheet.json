@@ -1,0 +1,11 @@
+{
+  "id": "prop-newspaper-sheet",
+  "text": "",
+  "goal": "A folded newspaper, with no print.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly ONE folded NEWSPAPER, large in the middle on a plain white background, seen from a three-quarter view: a thick, soft, slightly curved pile of folded paper sheets in a plain pale cream color, with a clean paper edge and one soft fold in the middle. The paper has NO print at all: no letters, no lines of text, no columns, no headline, no photos, no gray marks; every page is plain, blank, even cream. It has no eyes and no face. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w04/muse/elements"
+}

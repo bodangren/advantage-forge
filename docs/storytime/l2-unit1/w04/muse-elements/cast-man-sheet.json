@@ -1,0 +1,15 @@
+{
+  "id": "cast-man-sheet",
+  "text": "",
+  "goal": "Cast sheet of Nan's dad (called the man in the sentences), front and three-quarter view, white background. Pending look: the list gives the look; Daniel has not approved it as a cast sheet.",
+  "references": [
+    "out/storytime/l2/unit1/w01/muse/elements/cast-group-a-2.png",
+    "out/storytime/l2/unit1/w01/muse/elements/cast-group-b-2.png"
+  ],
+  "castLook": "pending",
+  "colorPrompt": "Compose one character sheet picture. Picture 1 shows approved children from the same book, and picture 2 shows approved characters from the same book (one of them is an adult teacher; a puppy is also in it and must not appear). Copy only their rendering style: a soft, round, bright 3D render look with smooth shapes, large friendly eyes, simple clean hands, and no outlines; not a 2D drawing.  The new character is an ADULT with adult proportions like the teacher of picture 2 (about one and a half times as tall as the children of picture 1; slim; smaller eyes than the children; natural adult hands), but with the same soft, friendly 3D look. Nan's dad: a man of about thirty-five with short straight black hair, a blue T-shirt, gray shorts, black sandals, a gentle friendly smile. The sheet: one picture on a plain white background with the same person shown TWICE side by side at the same size, standing relaxed with arms down, full body from head to feet, in two views: front (left) and three-quarter (right), with a clear space between the views. The face is friendly with a gentle smile. Clean eye corners, no marks on the face, no blush circles, no streak on the forehead. Hands are simple and clean with five separate short fingers when open. The ears are smooth, with one clean rounded rim. Each piece of clothing is one even color with no pale patches or stains and no pattern unless named. The look is the same in both views. No text, no letters, no numbers, no labels, no logos, no symbols. Rated G for young children. Do not describe or change skin tone beyond the soft 3D render look of the pictures. Nothing else is in the picture: no animal, no furniture, no props.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "4:3",
+  "outDir": "out/storytime/l2/unit1/w04/muse/elements"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "set-nan-living-room-empty",
+  "text": "",
+  "goal": "Empty cozy living room of Nan with a blue sofa, a soft rug, and a toy box, no people.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The picture shows the EMPTY cozy living room of a family home, with nobody in it: a bright room with warm cream walls and a light wooden floor. A soft BLUE sofa stands against the back wall with one cushion and one folded plain blanket on its arm, a big soft round rug of a plain warm color lies on the floor in front of the sofa, and a wooden TOY BOX with an open lid and a few soft toys (a ball and building blocks, no doll) stands at the right. A small window with a light-blue sky is in the wall at the left. The floor in the middle foreground is open and empty. The picture is one calm wide scene, camera at a low child eye level. Exactly one sofa, one rug, one toy box. No pictures on the walls, no sun, no people, no animals, no doll. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "4:3",
+  "outDir": "out/storytime/l2/unit1/w04/muse/elements"
+}
