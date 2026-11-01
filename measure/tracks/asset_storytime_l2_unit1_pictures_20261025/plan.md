@@ -2168,6 +2168,32 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       sheets need an independent look. The teddy page may draw a whole puppy instead of the tail tip.
 - [ ] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks.
+    - Level 2 cover staging (inputs only; default file name and size wait for the PM). Green round
+      of 2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `1414a3ea`, phase_base_sha
+      `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image.
+      Coder: none. Spec commit `e1753ca4`: `docs/storytime/l2-unit1/cover/muse/l2-cover.json`
+      (`outDir` `out/storytime/l2/unit1/cover/muse`, `"stage": "pending-pm"`). The run log is
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-cover-staging.log`.
+    - The picture list holds no Level 2 cover row. The orchestrator default is the file
+      `l2-cover-v1.png`, size class B (4000 x 3000), color only, no line-art twin. The default went
+      to the PM. The PM has not answered. The spec holds the default as data and nothing else uses it.
+    - The goal: the six sprouts Pat, May, Sam, Mia, Ben, and Nan wave hello in the week 1 classroom,
+      and Pip sits in front of them. Teacher Kim is not in the picture, because S19 does not ask for
+      her. The prompt says that the top 30 percent is one plain cream wall with no object, no beam,
+      and no character, and that every head stays below that line. The prompt forbids text. This
+      matches gate C1 (top 900 of 3000 rows; at most 2 percent of pixels differ from the dominant
+      color).
+    - The 5 references are approved looks only: the week 1 classroom set `classroom-door-wide.png`,
+      the sheet `cast-group-a-2.png` (Pat, May, Sam, Mia), `ben-ref-clean-2.png`,
+      `nan-ref-clean-look-reference.png`, and the week 4 `pip-ref-render.png`. No pending-look sheet
+      is a reference. The Nan reference shows a different puppy, and the prompt tells the model not
+      to copy it.
+    - No Muse call was made. No candidate file exists under `out/storytime/l2/unit1/cover/`.
+    - Open: (1) The PM must set the file name, the size class, and the line-art twin for the cover.
+      (2) The week 1 classroom set has timber beams that reach the top of its image. The prompt asks
+      for a plain upper wall, but the model may keep the beams, and then gate C1 fails. A plain set
+      sheet may be needed. (3) No cover call before Daniel answers on week 1. Marker unchanged:
+      measure-guard refuses a Phase 4 task change before the Phase 3 checkpoint.
 
 Line-art note for Phase 4: weeks 2 to 7 get 162 line-art twins with the same line-art gates. The
 reconciliation task also applies picture specification v1 to the line art. Specification v1 has
