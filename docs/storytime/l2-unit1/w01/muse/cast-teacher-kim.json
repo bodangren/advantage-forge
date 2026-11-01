@@ -1,0 +1,14 @@
+{
+  "id": "cast-teacher-kim",
+  "text": "",
+  "goal": "Cast sheet of Teacher Kim, four views, white background. The look is a proposal for Daniel: the picture list gives no look.",
+  "references": [
+    "out/storytime-review/batch-21/look-reference-nan-and-pip.png",
+    "out/storytime-review/batch-21/sprout-ben-render.png"
+  ],
+  "colorPrompt": "Compose one character sheet picture. Pictures 1 and 2 show two approved children from the same book (Nan and Ben, with a dog next to Nan that must not appear). Copy only their rendering style: a soft, round, bright 3D render look with smooth shapes, large friendly eyes, simple clean hands, and no outlines; not a 2D drawing. The new character is an ADULT, so she has adult proportions (about seven heads tall, slim, smaller eyes than the children, natural adult hands), but the same soft, friendly 3D look. The sheet: one picture on a plain white background with the same adult shown four times in a row at the same size, standing relaxed with arms down, full body from head to feet, in four views: front, three-quarter, side, and back, with a little space between the views. The face is friendly with a gentle smile (not on the back view). Clean eye corners, no marks on the face. No text, no letters, no numbers, no labels, no logos, no symbols. Rated G for young children. Do not describe or change skin tone beyond the soft 3D render look of the pictures. The adult is Teacher Kim, a friendly kindergarten teacher: a woman of about thirty-five with medium-length dark-brown hair in a low ponytail, a soft green cardigan over a cream blouse, navy trousers, and brown flat shoes. She has no bag and nothing in her hands.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime-review/muse-cast"
+}

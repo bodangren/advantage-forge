@@ -1,0 +1,15 @@
+{
+  "id": "cast-nurse",
+  "text": "",
+  "goal": "Cast sheet of the school nurse, four views, white background.",
+  "references": [
+    "out/storytime-review/batch-21/look-reference-nan-and-pip.png",
+    "out/storytime-review/batch-21/sprout-ben-render.png",
+    "out/storytime-first-aid-box/render.png"
+  ],
+  "colorPrompt": "Compose one character sheet picture. Pictures 1 and 2 show two approved children from the same book (Nan and Ben, with a dog next to Nan that must not appear). Copy only their rendering style: a soft, round, bright 3D render look with smooth shapes, large friendly eyes, simple clean hands, and no outlines; not a 2D drawing. The new character is an ADULT, so she has adult proportions (about seven heads tall, slim, smaller eyes than the children, natural adult hands), but the same soft, friendly 3D look. The sheet: one picture on a plain white background with the same adult shown four times in a row at the same size, standing relaxed with arms down, full body from head to feet, in four views: front, three-quarter, side, and back, with a little space between the views. The face is friendly with a gentle smile (not on the back view). Clean eye corners, no marks on the face. No text, no letters, no numbers, no labels, no logos, no symbols. Rated G for young children. Do not describe or change skin tone beyond the soft 3D render look of the pictures. The adult is a school nurse: a woman of about thirty with short black hair, a white nurse uniform (a short-sleeved white tunic and white trousers), a small white nurse cap on her hair, and white shoes. In the front and three-quarter views she holds a small plain white first-aid bag in one hand with no symbol on it (picture 3 shows the first-aid bag from four sides; copy its shape but leave it plain, with no cross and no symbol).",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime-review/muse-cast"
+}
