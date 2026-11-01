@@ -3443,3 +3443,24 @@ gate applies again.
    after hand close-ups, the proof pages, `look-reference-nan-and-pip.png`, `brief.md` (part 1 key
    `cast-fix-hands`). Green did not rate its own work. PNGs stay out of git. No task is marked
    `[x]`. Waiting for the independent review.
+
+   Green round 55 (stopped) (2026-11-01, claude-code/claude-sonnet-5-5#high). role_base_sha
+   `bd42cb1a`, phase_base_sha `15a7bf0b`. Green coder model: none.
+   Owner decision (via the orchestrator and the PM, 09:34 ICT): "we'll keep Muse ... I think we
+   can leave the 3D models as is". The 3D cast fix stops. Muse becomes the picture path. The 3D
+   models stay as they are and serve as reference sources only.
+   Done before the stop: read the mouth, sing, head, and touch-nose code. Cause found for the
+   open mouth: the `mouth-open` body rests 3 cm inside the head, but the song page moves the
+   `mouth` bone 4.6 cm out (`SING_OUT.mouth`), so the flat disc stands about 1.6 cm in front of
+   the face. A first edit (a mouth cut from the head surface, and a longer pointing index through
+   a bone scale) was written in `assets/parts/humanoid-kind.ts` and `assets/parts/sprout-gestures.ts`.
+   It was never tested: the one `./forge build sprout-nan --fast` run built the GLB, and the
+   cutout command then failed on a canvas size error. No row was rendered. No batch-27 folder
+   content was made, except `before-nose-v6.png`.
+   Restored to HEAD with `git checkout -- <path>` (my uncommitted edits only):
+   `assets/parts/humanoid-kind.ts`, `assets/parts/sprout-gestures.ts`.
+   Commits made in this round: none for the cast; the plan commit is this block.
+   Note: `out/sprout-nan/sprout-nan.glb` is now a `--fast` vertex-color build that contains the
+   discarded edit (1608 KB). It is an untracked output. Build it again with `./forge build
+   sprout-nan` if the textured GLB is needed as a reference.
+   Cast fix stopped by owner decision; no new model round. No task is marked `[x]`.
