@@ -4161,3 +4161,60 @@ Replaced by the amendment of 2026-11-01 (Muse path).
     the page notes with the open facts, Daniel's rule), `pages/` (20 files: the final color and the chosen,
     despeckled line file of each row), `refs/` (16 files). PNGs stay out of git. Green did not rate its own
     work. No task is marked `[x]`. Waiting for the independent review.
+
+    Green round 64 (2026-11-01, claude-code/claude-sonnet-5-5#high). Task: Muse fix round for batch 35 (9
+    rows, mostly line art). role_base_sha `d06690a0`, phase_base_sha `15a7bf0b`. Red model
+    minimax-cn-coding-plan/MiniMax-M3. Image model meta/muse-image. Green coder model: none; nothing was
+    delegated. No Forge render, no heavy runner, no tsc, no vitest. `assets/`, `src/`, `tests/`,
+    `scripts/storytime-muse.mjs`, and earlier outputs did not change. Spec commits `15dd7742` (9 specs) and
+    `384e7db7` (3 specs, second notes).
+    Method as in rounds 62 and 63: `node scripts/storytime-muse.mjs line <spec> [--from <n>] --tries 3`
+    (each try also writes the despeckled line file and its print file) and `node scripts/storytime-muse.mjs
+    color <spec>` for Ben. Up to 4 calls ran at the same time. The despeckle step removed no speck that the
+    builder needed; every chosen line file is the `-despeckled` file. The print files come with each try.
+    Defects and their source: the batch 35 review and the orchestrator check.
+    Rows (final files in `out/storytime/l2/unit1/w01/muse/`; every call is in `costs.tsv`):
+    - `check-row-dog`: color m1 kept. Line m1: tries 6 to 8. Chosen `-line-8-despeckled.png` (the tongue is
+      drawn under the mouth, the tag is a small round circle, each eye is one ring with a solid pupil; try 6
+      had eyes without a ring, try 7 a double ring). OPEN: the color shows only a small tail tip behind the
+      ear, and the line art has no tail.
+    - `practice-line-nose`: color m4 kept. Line m4: tries 10 to 12 (the eyebrow was an outlined band in all
+      three) and tries 13 to 15 (batch 2, a note for a solid eyebrow). Chosen `-line-13-despeckled.png`
+      (closed oval eye with a solid pupil, solid eyebrow, one eyelash stroke, two circles around the bun).
+      OPEN: the ear is an open "C" arc; try 14 has a thin ring at the eye.
+    - `a-neck`: color m5 kept. Line m5: tries 10 to 12. Chosen `-line-10-despeckled.png` (each eye one ring
+      with a solid pupil, thick solid eyebrows, lash strokes at both eyes).
+    - `hello-i-am-ben`: color m9 (new call; smaller ear marks, wall lighter than the room of m7) and m10
+      (new call; room like picture 1, open mouth with teeth). Chosen m10. OPEN: both ears still show a small
+      dark inner mark in the color picture (smaller than the squiggle of m7). Line m10: tries 1 to 3 (try 1
+      a plain cap hair, try 2 horizontal floor bars, try 3 thin) and tries 4 to 6 (batch 2, a note for the
+      hair tufts and the floor lines). Chosen `-line-4-despeckled.png` (thick lines, hair tufts, open mouth,
+      no nose ring, a small curve for the nose). OPEN: the eyebrows are outlined bands; the hair has a few
+      tuft lines.
+    - `a-nest`: color m7 kept. Line m7: tries 12 to 14. Chosen `-line-14-despeckled.png` (lash strokes at
+      both eyes, thick solid eyebrows, a red band strip on each bunch). OPEN: the branch band and the
+      bushes are simplified.
+    - `check-row-bus`: color m1 kept. Line m1: tries 6 to 8. Chosen `-line-6-despeckled.png` (4 roof lights,
+      the side stripe as a closed band, thick lines; try 7 had thin lines and a door diagonal, try 8 a door
+      handle). OPEN: one of the 4 roof lights is an oval inside the roof.
+    - `check-row-net`: color m1 kept. Line m1: tries 6, 9, 10 (try 6 had failed with a network error in
+      round 63). Chosen `-line-6-despeckled.png` (one thick rim; the bag outline joins the rim at the top
+      without a strip; try 9 had a double rim, try 10 a blank hoop and a thin sliver). OPEN: a narrow wedge
+      sits between the rim and the bag line at the right side of the hoop.
+    - `check-row-nose`: color m3 kept. Line m3: tries 10 to 12. Chosen `-line-12-despeckled.png` (a closed
+      oval eye with a solid pupil, a solid eyebrow, an eyelash stroke, two circles around the bun; try 10
+      had a double eyebrow). OPEN: the ear is an open "C" arc.
+    - `a-net`: color m2 kept. Line m2: tries 17 to 19 (batch 1; try 17 had no right ear, try 18 jagged
+      bushes, try 19 scribbles in the pupils), tries 20 to 22 (batch 2; double rim in tries 20 and 22) and
+      tries 23 to 25 (batch 3, the rim sentence at the end of the prompt). Chosen `-line-23-despeckled.png`
+      (one thick rim, both ears, a band strip on each bunch, lash strokes at both eyes, solid pupils).
+      OPEN: a tiny mark for the nose; the net mesh is about 4 by 4 squares.
+    Calls with cost (USD, `usage.cost`, 0.01 per call; `costs.tsv` rows after 2026-11-01T06:52:43Z): color 2
+    calls 0.02 (ben m9, ben m10); line 39 calls 0.39 (dog 3, a-neck 3, bus 3, net 3, nose 3, practice nose
+    6, a-nest 3, ben 6, a-net 9) = 41 calls 0.41 USD. No call failed in the cost log of this round. Round
+    cost 0.41 USD. Running total 2.74 + 0.41 = 3.15 USD.
+    Review folder `out/storytime-review/batch-36/` (no earlier batch-36): `brief.md` (one key per row, the
+    exact goal, the critical defects, the line-art rule, the section "check that these batch 35 defects are
+    gone", the page notes with the open facts, Daniel's rule), `pages/` (18 files: the final color and the
+    chosen, despeckled line file of each row), `refs/` (16 files). PNGs stay out of git. Green did not rate
+    its own work. No task is marked `[x]`. Waiting for the independent review.
