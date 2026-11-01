@@ -3921,3 +3921,61 @@ Replaced by the amendment of 2026-11-01 (Muse path).
     section "check that these batch 30 defects are gone", the page notes, Daniel's rule), `pages/` (12
     files), `refs/` (12 files, with the clean Nan copies). PNGs stay out of git. Green did not rate its own
     work. No task is marked `[x]`. Waiting for the independent review.
+
+    Green round 62 (2026-11-01, claude-code/claude-sonnet-5-5#high). Task: Muse fix round for batch 32 (10
+    character pages). role_base_sha `0bf8858a`, phase_base_sha `15a7bf0b`. Red model
+    minimax-cn-coding-plan/MiniMax-M3. Image model meta/muse-image. Green coder model: none; nothing was
+    delegated. No Forge render, no heavy runner, no tsc, no vitest. `assets/`, `src/`, `tests/`, and earlier
+    outputs did not change. Spec commit `9888cd62` (10 specs; the tool did not change).
+    Defects and their source: `item-review-batch-32.json` (Kimi) and the orchestrator check. (1) sam m2: the
+    line art drew the rectangular rug as an oval and the shoe had rib lines. (2) pat m4: the teddy bear had a
+    cream muzzle and white inner ears. (3 to 5) mia m2, may m2, cover-nan-can-nod m2: the line art drew the
+    open mouth as a closed smile. (6) your-teacher m3: the line-art eyes were solid dots. (7) pip m4: Nan's
+    lower-left closed fist showed 3 finger bumps and a thumb. (8) cover-hello m5: Pat's raised open hand
+    showed 3 fingers and a thumb. (9) a-nest-and-a-nut m3: jagged open branch strokes and a long diagonal
+    line across the right bush. (10) nan-can-nod m3: the color ear showed a fold and the line art lost the
+    open mouth. The line-art rule and the line method (3 parallel tries per line call, one more batch of 3
+    with a changed prompt if none is free of defects) were used as the orchestrator gave them. Every line
+    prompt received the sentences for the open mouth, the eye ring, the rug shape, no rib lines, closed hand
+    outlines, closed outlines and one closed ear.
+    Rows (final files in `out/storytime/l2/unit1/w01/muse/`; every call is in `costs.tsv`):
+    - `hello-i-am-sam`: color m2 kept. Line m2: tries 2 to 4. Chosen `-line-3.png` (rectangular rug, shoe
+      without rib lines; tries 2 and 4 had rib lines).
+    - `hello-i-am-pat`: color m5 (new call; plain brown bear confirmed at 3x; five digits on the waving hand;
+      the table was cut by the right frame edge) and m6 (retry with a table instruction; bear plain brown,
+      five digits, whole table with four legs). Line m6: tries 1 to 3 (open mouth in try 1, solid black hair
+      in try 2, muzzle circle on the bear in try 3), tries 4 to 6 (batch 2: empty closed hair shape, closed
+      smile, one-ring eyes). Chosen `-line-4.png`. OPEN: the bear has a small muzzle circle outline; the hand
+      on the bear is one wide shape with finger bumps; the bag on his back shows no round bump in the color.
+    - `hello-i-am-mia`: color m2 kept. Line m2: tries 3 to 5. Chosen `-line-3.png` (open mouth with inner
+      shape, eyes with outer ring; try 4 eyes without ring, try 5 double ring).
+    - `hello-i-am-may`: color m2 kept. Line m2: tries 2 to 4. Chosen `-line-2.png` (try 3 had floor stripe
+      lines, try 4 a double eye ring). OPEN: the long hair is a narrow strip with two parallel lines.
+    - `cover-nan-can-nod`: color m2 kept. Line m2: tries 2 to 4. Chosen `-line-4.png` (open mouth in all
+      tries; try 2 had a double eyebrow outline).
+    - `hello-i-am-your-teacher`: color m3 kept. Line m3: tries 2 to 4. Chosen `-line-3.png` (eye ring with
+      a solid pupil; tries 2 and 4 had solid dot eyes).
+    - `hello-i-am-pip`: color m5 (new call; Nan on hands and knees; a dog tail showed behind Nan and the bag
+      straps had tassels) and m6 (retry; no tail outside the bag, plain straps with a handle, Nan's hands at
+      3x show separate fingers resting on her knees). Line m6: tries 1 to 3. Chosen `-line.png` (try 1;
+      tries 2 and 3 had loops at finger tips or hatching in the hair). OPEN: Nan's two resting hands lie with
+      the fingers close together.
+    - `cover-hello`: color m6 (one new call; m5 was not used). At 3x every raised hand shows five digits,
+      also Pat's. Pat stands with his back to the camera, so his face is not visible; the bag shows the
+      round bump; Teacher Kim waves behind a table. Line m6: tries 1 to 3. Chosen `-line-2.png` (try 1 gave
+      Teacher Kim glasses; try 3 had solid dot eyes). OPEN: the raised hands of neighbors touch the cheeks of
+      the next child.
+    - `a-nest-and-a-nut`: color m3 kept (3 eggs). Line m3: tries 3 to 5. Chosen `-line-4.png` (one band
+      branch, three eggs). OPEN: the branch tip has a small fork shape.
+    - `nan-can-nod`: color m4 (new call; ears smooth, but the mouth was a closed smile) and m5 (retry with an
+      open mouth: two teeth and a tongue; smooth ears). Line m4: tries 1 to 3 (not chosen; the color mouth was
+      closed). Line m5: tries 1 to 3. Chosen `-line-2.png`. OPEN: Nan looks straight ahead; her head is not
+      tipped down.
+    Calls with cost (USD, `usage.cost`, 0.01 per call; `costs.tsv` rows after 2026-11-01T04:29Z): color 7
+    calls 0.07 (pat 2, pip 2, cover-hello 1, nan-can-nod 2); line 36 calls 0.36 (sam 3, pat 6, mia 3, may 3,
+    cover-nan-can-nod 3, your-teacher 3, pip 3, cover-hello 3, a-nest-and-a-nut 3, nan-can-nod 6) = 43 calls
+    0.43 USD. Round cost 0.43 USD. Running total 1.93 + 0.43 = 2.36 USD.
+    Review folder `out/storytime-review/batch-34/` (no earlier batch-34): `brief.md` (one key per row, the
+    line-art rule, the section "check that these batch 32 defects are gone", the page notes, the open items,
+    Daniel's rule), `pages/` (20 files), `refs/` (23 files). PNGs stay out of git. Green did not rate its own
+    work. No task is marked `[x]`. Waiting for the independent review.
