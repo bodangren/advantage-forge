@@ -3515,3 +3515,55 @@ gate applies again.
    `brief.md` with keys `cast-sheet-nurse`, `cast-sheet-teacher-kim`, `print-test`, and one key per
    page. PNGs stay out of git. Green did not rate its own work. No task is marked `[x]`. Waiting for the
    independent review.
+
+    Green round 57 (2026-11-01, claude-code/claude-sonnet-5-5#high). Task: Muse production round 2 (the
+    character pages). role_base_sha `a4308df1`, phase_base_sha `15a7bf0b`. Red model
+    minimax-cn-coding-plan/MiniMax-M3. Image model meta/muse-image (OpenRouter Image API). Green coder
+    model: none; nothing was delegated. The orchestrator sent a follow-up in the middle of the round (smooth
+    ears, even clothing color, closed line outlines, separate relaxed fingers, a forehead crease is a
+    defect, the Ben reference smoothed first). Green applied it to every call made after it (see below).
+    Room shots (A): one heavy-runner command, `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c
+    /tmp/opencode/muse-r57/shoot.sh` (Vite on port 5199, then `scripts/shoot-map.mjs`, 1600 x 1200). Exit
+    code 0 at the first try, 31.8 s, no `lock wait over 600 s`. Classroom origin (0, 0, 3), heading 0. Shots
+    in `out/storytime/l2/unit1/w01/muse/elements/`: `classroom-door.png` (query `scene=classroom&clean&az=-90
+    &el=9&dist=3.0&tx=3.263&tz=4.1`, the camera of the Pat stage version), `classroom-door-wide.png`
+    (`az=-90&el=9&dist=3.84&tx=2.99&tz=4.1`), `classroom-rug.png` (`az=16&el=16&dist=4.843&tx=-0.25&tz=2.13`,
+    the camera of the Mia stage version; it shows the set furniture: rug, shelves, table). The door shots
+    show a stray rug edge and a fern at a border. Two more elements, made with sharp from approved 3D
+    renders: `cast-group-a.png` (Pat, May, Sam, Mia) and `cast-group-b.png` (Ben, Nan, Teacher Kim, Pip),
+    because a call with 8 or more single character references was too many. Tool: not changed.
+    Rows (final files in `out/storytime/l2/unit1/w01/muse/`; every call is in `costs.tsv`):
+    - `hello-i-am-pat` m2. m1 retried: the bag showed a red block with a yellow tab, not a round bump.
+    - `hello-i-am-mia` m1. `hello-i-am-may` m1. `hello-i-am-sam` m1. No retry.
+    - `hello-i-am-your-teacher` m1, line try 2 (try 1 had dotted rug fringe lines). Seven people. The rug is
+      the rectangular set rug; the picture list says "round rug" (not changed).
+    - `hello-i-am-pip` m2. m1 retried: a pale skin flap beside Nan's right eye. m2 adds the clean Nan face
+      crop as a fifth input.
+    - `a-nurse` m1, line try 2 (try 1 had a hill and a cloud as open arcs; try 2 has large cloud and hill arcs
+      that run to the picture edge, and the nurse's right hand outline stays open).
+    - `cover-hello` m3. m1: Pat's bag bump not seen (Pat faced the camera). m2: bump still hidden behind
+      Pat. m3: Pat turned his back to the camera, the bump shows on the bag. 4:3, no own aspect.
+    - `a-nest-and-a-nut` m1 (the branch is high in the frame, not low; no retry).
+    - `nan-can-nod` m2. m1 retried: pale blotches at the shoulders and lump-like hands (follow-up items 2 and
+      6). A faint pale patch remains at Nan's left shoulder in m2.
+    - `cover-nan-can-nod` m1, line try 2 (try 1 had clover details; try 2 has no clover, the tree trunk
+      lines still wander and some stay open). In m1 Nan reaches toward Pip and does not nod.
+    No row used all 2 retries. Eye-corner tick marks on Pat, May, Sam, and Mia come from the 3D models and
+    stay (Daniel: the 3D models stay as they are).
+    Follow-up additions: the color text "ears smooth, clothing one even color, separate relaxed fingers, no
+    forehead crease" went into `nan-can-nod` (call m2) only; the other color calls were made before it and
+    were not repeated. The closed-outline line text (one closed shape per object, few background shapes)
+    went into the line prompts of `hello-i-am-your-teacher` (try 2), `a-nurse` (try 2), `nan-can-nod` (m2),
+    `cover-nan-can-nod` (try 2), and `cover-hello` (m3). Ear rims were not checked at 100 percent.
+    Ben reference (follow-up item 5): `elements/ben-ref-clean.png`. Method: sharp, a local gaussian blur
+    (sigma 6) over the forehead band of the front view (card x 120 to 380, y 610 to 680) with a radial feather.
+    Result: the band is softer, but the blur also softened the hair edge and the brows, and a faint streak
+    left of the left brow remains. No call used it (the group sheet `cast-group-b.png` holds the original
+    Ben panel).
+    Cost (USD, `usage.cost`, 0.01 per call): color 16 calls 0.16 (11 first tries, 3 retries of pat, pip, and
+    cover-hello m2, then cover-hello m3 and nan-can-nod m2), line 15 calls 0.15 (10 first tries, 3 second
+    tries, cover-hello m3, nan-can-nod m2) = 31 calls, 0.31. No call failed. Running total 0.42 + 0.31 =
+    0.73 USD. The tool total printed in the run (0.51) counts only the `costs.tsv` of this folder.
+    Commit of the 11 spec files: `b2700448`. Review folder `out/storytime-review/batch-29/`: `brief.md`
+    with one key per row, `pages/` (22 files), `refs/` (24 files). PNGs stay out of git. Green did not
+    rate its own work. No task is marked `[x]`. Waiting for the independent review.
