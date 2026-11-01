@@ -1640,6 +1640,81 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   `muse-elements/`.
   Logs: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-p4-red.log` and
   `measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-p4-staging.log`.
+  Green evidence for Phase 4 Task 1 (2026-11-02, Green session, claude-code/claude-sonnet-5-5#high).
+  Role base `37fa3501`; Phase 4 base `fc76c272`. Red model `opencode-go/deepseek-v4.1-flash`.
+  Coder: none. Implementation commit `b6824b8a`. Status: **blocked**. Task 1 goes to [x] after the
+  Phase 3 checkpoint and after a Mid Red retry of T173 and T177 (see "Red test defects").
+  - Files: `src/storytime/book-pictures.ts` (`PICTURE_LIST_SHA256` holds the version 4 value;
+    `PICTURE_LIST_V3_SHA256` is removed; `parseWeek` accepts 1 to 8; `weeksTwoToSevenRows`;
+    `deliver` filters the rows by `--week`; the `Skipped` line is now `Skipped <id> (<reason>)`),
+    `scripts/storytime-stage-check.mjs` (new), and `contract.md` line 9 (version 4, 196 rows).
+    `grep -rn "PICTURE_LIST_V3_SHA256\|c3e23cfd" src scripts` finds nothing. No test file changed.
+  - Green command (the four files): `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c
+    'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts
+    tests/storytime-picture-rows.test.ts tests/storytime-muse-delivery.test.ts
+    tests/storytime-stage-check.test.ts --maxWorkers=1'`. Exit code `1`.
+    `Test Files  1 failed | 3 passed (4)`. `Tests  2 failed | 170 passed (172)`. Failing rows: T173
+    and T177. Passing rows include T142, T147, T174, T175, T176, T178, T179, T180, T181, T182, and
+    T152 to T172. The Red total 172 is 169 plus the 3 stage-check tests. Log:
+    `green-p4-t1-vitest2.log`. The first run (`green-p4-t1-vitest.log`) had T182 failing too: the
+    old `Skipped <id>:` line did not split on a space. Green changed the line format.
+  - Red test defects (the reason for `status: blocked`). Green did not edit the committed tests.
+    - `putRowStage` in the Phase 4 block of `tests/storytime-book-pictures.test.ts` (line 4567)
+      writes the stage files to `docs/storytime/l2/unit1/<week>/rows/`. The code, the Phase 3
+      tests, and the repository use `docs/storytime/l2-unit1/<week>/rows/`
+      (`rowStageRelativePath`, line 3602 of `book-pictures.ts`). T177 stops with `ENOENT`.
+    - T173 runs `render --dry-run --row l2-w02-story-page-nan-can-b` with an empty `repoRoot` and
+      writes no stage file. The row command needs the stage file, so the command cannot "accept".
+      The Red evidence block above already noted "stops at a missing stage file".
+    - Proof: a temporary copy of the test file with the two test-side fixes (the `l2-unit1` path,
+      and a `putRowStage` call before the live render in T173) ran with
+      `-t "Phase 4 picture list version 4"`: exit 0, `Tests  5 passed | 136 skipped (141)`. The
+      copy was deleted. Log: `green-p4-t1-probe.log`.
+    - Request: Mid Red retry. Fix `putRowStage` to use `docs/storytime/l2-unit1`. Make T173 write
+      the row stage file before the live render command. Then Green reruns the gate.
+  - Type check: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=2560 node
+    node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'`. The first run without the heap
+    option aborted with exit 134 (heap). The second run: exit `2`, `owned tsc errors: 0`,
+    `total tsc errors: 38`. Log: `green-p4-t1-tsc.log`.
+  - Mutation proofs (each mutation restored; `diff` against the saved copy shows no change).
+    Mutations M1 to M3 ran on a copy of the live list in `/tmp/opencode/green-p4/` through a
+    temporary copy of the test file. M4 to M6 ran on the source files.
+
+    | Mutation | Failing guard |
+    | --- | --- |
+    | M1: one id `-b` to `-a` (`l2-w02-story-page-nan-can-a`) | T175 failed |
+    | M2: one week 3 class A row height 2250 | T176 failed |
+    | M3: one week 2 row dropped | T174 failed (and T176 on the 195 row count) |
+    | M4a: `parseWeek` limit back to 7 | T177 failed |
+    | M4b: helper `row.week > 1` (166 rows) | T177 failed |
+    | M5: `deliver` ignores `--week` | T182 failed |
+    | M6: delivery job directory fixed to `w01` | T181 failed |
+
+    No guard survived. Logs: `green-p4-t1-mut-*.log`. The runs of M1 to M3 also show T173 and
+    T177 failing, because of the Red test defects above.
+  - Live stage gate (light job, no lock), exit `0`:
+
+    ```text
+    list sha256: 6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58
+    week: 2
+    rows: 27
+    specs found: 27
+    text mismatches: 0
+    goal mismatches: 0
+    outDir mismatches: 0
+    rows with no reference (class A and B): 0
+    element paths checked: 82
+    missing element paths: 0
+    characters without a reference: 0
+    page candidates: 0
+    stage check: pass
+    ```
+
+    Command: `node scripts/storytime-stage-check.mjs --week 2 --list
+    /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --specs
+    docs/storytime/l2-unit1/w02/muse`. The check proves that the inputs exist and match the list.
+    It proves nothing about picture quality. Group sheets: `cast-group-a*` shows Pat, May, Sam,
+    and Mia; `cast-group-b*` shows Ben, Nan, Pip, and Kim.
 - [ ] Task: Produce weeks 2 to 7 after the week 1 review. The weeks hold 162 rows. They need 324
   files, one color file and one line-art file per row. Apply the same automated, two-model, and
   person-count gates to all 162 pictures.
