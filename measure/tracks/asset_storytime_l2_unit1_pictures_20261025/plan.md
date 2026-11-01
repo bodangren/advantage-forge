@@ -1640,6 +1640,26 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   `muse-elements/`.
   Logs: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-p4-red.log` and
   `measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-p4-staging.log`.
+  Red r2 evidence (2026-11-02). Role base `86f63533`; Green production commit `b6824b8a`. The
+  test commit is `c2ebc72d`. Green found two fixture defects in the Red tests; the production
+  code was correct.
+  - T177 wrote the row stage files under `docs/storytime/l2/unit1/` and stopped with ENOENT.
+    The code and the repository use `docs/storytime/l2-unit1/`.
+  - T173 ran the live `render --dry-run` with no row stage file and stopped with ENOENT.
+  Both fixes write only under the temporary test root. Every labeled expectation of T173 and
+  T177 is unchanged. No file under `docs/` remains.
+  GREEN-side command on `86f63533` with `b6824b8a`: exit code `0`. `Test Files  4 passed (4)`.
+  `Tests  172 passed (172)`.
+  Old-code proof: a worktree at `37fa3501` (the parent of `b6824b8a`) with the fixed test file.
+  Command: `vitest run tests/storytime-book-pictures.test.ts` through the heavy runner. Exit code
+  `1`. `Test Files  1 failed (1)`. `Tests  2 failed | 139 passed (141)`.
+  - T173 fails with labeled expectations: `PICTURE_LIST_SHA256` is undefined,
+    `PICTURE_LIST_V3_SHA256` is exported, the live render refuses the live list, and the version
+    3 bytes are accepted.
+  - T177 fails with labeled expectations: `Invalid week: 8`, the no-`--week` run stops at the
+    version 3 pin, and the weeks 2 to 7 helper is absent.
+  The old-code log holds no ENOENT line. The worktree is removed and pruned.
+  Logs: `mid-red-p4-r2-head.log`, `mid-red-p4-r2-oldcode.log`, and `mid-red-p4-r2.log`.
   Green evidence for Phase 4 Task 1 (2026-11-02, Green session, claude-code/claude-sonnet-5-5#high).
   Role base `37fa3501`; Phase 4 base `fc76c272`. Red model `opencode-go/deepseek-v4.1-flash`.
   Coder: none. Implementation commit `b6824b8a`. Status: **blocked**. Task 1 goes to [x] after the
