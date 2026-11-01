@@ -1,0 +1,11 @@
+{
+  "id": "prop-pencil-sheet",
+  "text": "",
+  "goal": "A pencil.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly ONE pencil, large in the middle on a plain white background, lying diagonally, seen from a three-quarter view: a smooth, chubby cartoon pencil with a yellow six-sided body, a pink rubber eraser held by a small silver band at the top end, and a sharpened wooden tip with a small gray lead point at the other end. Show the whole pencil. It has no eyes and no face. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w03/muse/elements"
+}

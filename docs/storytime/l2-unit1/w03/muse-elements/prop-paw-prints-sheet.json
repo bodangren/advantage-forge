@@ -1,0 +1,11 @@
+{
+  "id": "prop-paw-prints-sheet",
+  "text": "",
+  "goal": "A sheet of paper with colorful paw prints, and a line of paw prints on the floor.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows two things on a plain white background, with a clear space between them. On the left, one big rectangular sheet of white paper lying flat, seen from above, covered with exactly TWENTY-ONE flat painted paw prints, three of each of seven colors (red, blue, yellow, green, orange, pink, purple), evenly mixed so no color is more common than another: each paw print is one big round pad and four small round toe pads, FLAT hand-painted paint on the paper (not raised, not clay). On the right, a wide strip of warm honey-brown wooden plank floor seen from above, with thin dark seams between the planks and several planks across its width, with a single line of eight small paw prints in many colors walking across it from the left to the right, each paw print smaller than the paw prints on the paper (a small puppy: one big round pad and four small round toe pads). The prints are only paw prints: no puppy, no animal is in the picture. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w03/muse/elements"
+}

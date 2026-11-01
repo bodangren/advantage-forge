@@ -1,0 +1,11 @@
+{
+  "id": "prop-paper-sheets-sheet",
+  "text": "",
+  "goal": "Seven big sheets of paper, each painted all one color.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly SEVEN big rectangular sheets of paper on a plain white background, in two rows with a clear space between them: four on the top row and three on the bottom row. Each sheet is a THIN, FLAT sheet of paper, as thin as a real sheet of drawing paper (no thickness, no border frame, no tile or slab), painted ALL over in ONE flat, even color with a soft hand-painted look, with a tiny white paper edge showing at the very rim: from left to right on the top row RED, BLUE, YELLOW, GREEN; on the bottom row ORANGE, PINK, PURPLE. The seven colors are clearly different from each other. No patterns, no shapes, and no marks on any sheet. All seven sheets are the same size. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w03/muse/elements"
+}

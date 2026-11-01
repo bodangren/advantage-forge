@@ -1,0 +1,11 @@
+{
+  "id": "prop-paint-pots-sheet",
+  "text": "",
+  "goal": "Seven paint pots in seven colors.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly SEVEN small round paint pots on a plain white background, in one row with a clear space between them, each filled to the top with thick shiny paint in ONE color: from left to right RED, BLUE, YELLOW, GREEN, ORANGE, PINK, PURPLE. Each pot is a plain white round pot with a wide mouth. In front of the row lies one paintbrush with a wooden handle and a round soft tip. The seven colors are clearly different from each other. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w03/muse/elements"
+}

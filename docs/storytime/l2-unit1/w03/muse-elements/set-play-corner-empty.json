@@ -1,0 +1,13 @@
+{
+  "id": "set-play-corner-empty",
+  "text": "",
+  "goal": "Empty play corner of the kindergarten classroom, no people.",
+  "references": [
+    "out/storytime/l2/unit1/w01/muse/elements/classroom-rug.png"
+  ],
+  "colorPrompt": "Compose one element sheet picture from the element pictures. Ignore any gray background and gray ground shadow in them. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The picture shows the EMPTY play corner of a bright kindergarten classroom with nobody in it. The room is the same kindergarten classroom as in picture 1: cream plaster walls with dark-brown timber beams and a wooden plank floor (take only the walls, the beams, and the floor from picture 1; ignore the red rug, and leave the bookshelves and the table out). On the left stands one LOW wooden shelf with two shelves, as tall as a five-year-old child, holding only a few small toy cups and small round toy plates: NO pans and NO pots anywhere. On the right stands one child-height wooden TOY KITCHEN: a cabinet with a toy stove with four round burners on top, a small toy sink with a tap, two small cupboard doors, and above it one HIGH top shelf that is empty. Between them the floor is open and empty. The picture is one calm wide scene, camera at a low child eye level. No people, no pans, no pots, no windows with a sun. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "4:3",
+  "outDir": "out/storytime/l2/unit1/w03/muse/elements"
+}

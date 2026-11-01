@@ -1,0 +1,11 @@
+{
+  "id": "prop-easel-sheet",
+  "text": "",
+  "goal": "A child-height wooden easel.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly ONE child-height wooden easel, large in the middle on a plain white background, seen from a three-quarter front view: an A-frame of two smooth wooden legs and one back leg, a flat wooden ledge near the bottom, a top bar, and one large BLANK white sheet of paper held on it by two small clips. A row of three small paint pots (one red, one blue, one yellow) stands on the ledge. Show the whole easel, from the feet to the top. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit1/w03/muse/elements"
+}

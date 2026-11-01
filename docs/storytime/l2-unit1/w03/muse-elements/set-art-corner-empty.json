@@ -1,0 +1,13 @@
+{
+  "id": "set-art-corner-empty",
+  "text": "",
+  "goal": "Empty art corner of the kindergarten classroom, no people.",
+  "references": [
+    "out/storytime/l2/unit1/w01/muse/elements/classroom-rug.png"
+  ],
+  "colorPrompt": "Compose one element sheet picture from the element pictures. Ignore any gray background and gray ground shadow in them. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The picture shows the EMPTY art corner of a bright kindergarten classroom with nobody in it. The room is the same kindergarten classroom as in picture 1: cream plaster walls with dark-brown timber beams and a wooden plank floor (take only the walls, the beams, and the floor from picture 1; ignore the red rug, and leave the bookshelves and the table out). Against the back wall stand TWO child-height wooden easels side by side with a clear space between them, each holding one large BLANK white sheet of paper (no painting on it) on its ledge. In front of the easels, on the left, stands one low wooden table with a few small paint pots in many colors and two paintbrushes on it. A small window with a light-blue sky is in the back wall. The floor in the middle foreground is open and empty. The picture is one calm wide scene, camera at a low child eye level. Exactly two easels, exactly one table. No paintings or pictures on the walls, no sun, no other furniture. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "4:3",
+  "outDir": "out/storytime/l2/unit1/w03/muse/elements"
+}
