@@ -4036,8 +4036,12 @@ describe('Review A remediation', () => {
 const PRINT_ROOT = path.join(WORKBOOKS, 'content/storytime/l2/print');
 const LIST_FILE = path.join(PRINT_ROOT, 'pictures.json');
 const LIST_MARKDOWN_FILE = path.join(PRINT_ROOT, 'pictures.md');
-const LIST_SHA256 = 'c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b';
-const LIST_MARKDOWN_SHA256 = 'e97d649f8de5597494730ee17c8785a1ebe36ee2f7f7c0897701d5422929f848';
+// Picture list version 4 (Workbooks commit `87ecc6aa`). The version 3 hash stays only as the
+// labeled negative control of T173.
+const LIST_SHA256 = '6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58';
+const LIST_MARKDOWN_SHA256 = '7cc4c20178abbddae3ae0904b9e0e08ced09c6e95d6f9e365fcce932cf81ad56';
+const LIST_V3_SHA256 = 'c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b';
+const LIST_V3_SHADOW_FILE = '/tmp/opencode/wb-shadow/content/storytime/l2/print/pictures.json';
 const LIST_FILE_PATTERN = /^l2-w\d{2}-[a-z-]+-v\d+\.png$/;
 const CLASS_PIXELS = {
   A: { width: 4000, height: 3000 },
@@ -4176,7 +4180,7 @@ describe('Phase 3 picture specification v1', () => {
   it('T142: the picture list loader reads pictures.json read-only and records its SHA-256', async () => {
     const list = await loadList({ printRoot: PRINT_ROOT, workbooksRoot: WORKBOOKS });
     if (!list) return;
-    expect.soft({ 'List rows': list.rows.length }).toEqual({ 'List rows': 192 });
+    expect.soft({ 'List rows': list.rows.length }).toEqual({ 'List rows': 196 });
     const week1 = list.rows.filter((row) => row.week === 1);
     expect.soft({ 'Week 1 rows': week1.length }).toEqual({ 'Week 1 rows': 30 });
     expect.soft({ 'Week 1 class A rows': week1.filter((row) => row.sizeClass === 'A').length })
@@ -4467,4 +4471,247 @@ describe('Phase 3 picture specification v1', () => {
     expect.soft(Number(labelled?.[1] ?? Number.NaN), 'The reported peak memory comes from the capture process.')
       .toBe(1234);
   }, 300000);
+});
+
+// ---------------------------------------------------------------------------
+// Phase 4: picture list version 4 (Muse path, strategy section 7, 4.2)
+//
+// The contract that Green must implement for these rows:
+//   - The list pin constant is `PICTURE_LIST_SHA256` and holds the version 4 value.
+//     `PICTURE_LIST_V3_SHA256` is removed from the module exports.
+//   - The `render --dry-run` and `verify` row commands use the new pin, so they accept the
+//     live version 4 list and refuse the version 3 bytes with
+//     `The picture list changed: expected SHA-256 6d05dfc5...`.
+//   - `parseWeek` accepts 8 and still refuses 0 and 9.
+//   - `weeksTwoToSevenRows(rows)` returns the rows with week 2 to 7 (162) and no week 8 row.
+// The v3 hash appears in this file only as the labeled negative control of T173.
+// ---------------------------------------------------------------------------
+describe('Phase 4 picture list version 4', () => {
+  const V4_SHA256 = '6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58';
+  const RENAMED_IDS = [
+    'l2-w02-story-page-nan-can-b',
+    'l2-w02-story-page-can-i-b',
+    'l2-w02-story-page-i-can-b',
+    'l2-w06-story-page-tap-tap-tap-b',
+  ];
+  const CLASS_SIZE = {
+    A: { width: 4000, height: 3000 },
+    B: { width: 4000, height: 3000 },
+    C: { width: 1500, height: 1500 },
+  } as const;
+
+  function rowCounts(list: PictureListRow[]) {
+    const ofWeek = (week: number) => list.filter((row) => row.week === week);
+    const ofClass = (rows: PictureListRow[], sizeClass: 'A' | 'B' | 'C') =>
+      rows.filter((row) => row.sizeClass === sizeClass).length;
+    const middle = list.filter((row) => row.week >= 2 && row.week <= 7);
+    const counts: Record<string, number> = {
+      'List rows': list.length,
+      'Week 1 rows': ofWeek(1).length,
+      'Week 1 class A': ofClass(ofWeek(1), 'A'),
+      'Week 1 class B': ofClass(ofWeek(1), 'B'),
+      'Week 1 class C': ofClass(ofWeek(1), 'C'),
+      'Week 8 rows': ofWeek(8).length,
+      'Weeks 2 to 7 rows': middle.length,
+      'Weeks 2 to 7 class A': ofClass(middle, 'A'),
+      'Weeks 2 to 7 class B': ofClass(middle, 'B'),
+      'Weeks 2 to 7 class C': ofClass(middle, 'C'),
+    };
+    for (let week = 2; week <= 7; week += 1) {
+      const rows = ofWeek(week);
+      counts[`Week ${week} rows`] = rows.length;
+      counts[`Week ${week} class A`] = ofClass(rows, 'A');
+      counts[`Week ${week} class B`] = ofClass(rows, 'B');
+      counts[`Week ${week} class C`] = ofClass(rows, 'C');
+    }
+    return counts;
+  }
+
+  function expectedCounts(): Record<string, number> {
+    const counts: Record<string, number> = {
+      'List rows': 196,
+      'Week 1 rows': 30,
+      'Week 1 class A': 16,
+      'Week 1 class B': 2,
+      'Week 1 class C': 12,
+      'Week 8 rows': 4,
+      'Weeks 2 to 7 rows': 162,
+      'Weeks 2 to 7 class A': 96,
+      'Weeks 2 to 7 class B': 12,
+      'Weeks 2 to 7 class C': 54,
+    };
+    for (let week = 2; week <= 7; week += 1) {
+      counts[`Week ${week} rows`] = 27;
+      counts[`Week ${week} class A`] = 16;
+      counts[`Week ${week} class B`] = 2;
+      counts[`Week ${week} class C`] = 9;
+    }
+    return counts;
+  }
+
+  /** Runs the row command and returns the error text, or undefined when the command resolves. */
+  async function rowCommandError(argv: string[], dependencies: CliDependencies): Promise<string | undefined> {
+    try {
+      await runStorytimeCli(argv, dependencies);
+      return undefined;
+    } catch (error) {
+      return error instanceof Error ? error.message : String(error);
+    }
+  }
+
+  /** Writes the row stage file that `readRowStage` reads for one list row. */
+  async function putRowStage(repoRoot: string, row: PictureListRow) {
+    const source = { ...stageSource(job(), 1), jobId: row.id };
+    const week = `w${String(row.week).padStart(2, '0')}`;
+    await put(
+      path.join(repoRoot, 'docs/storytime/l2/unit1', week, 'rows', `${row.id}-v1.json`),
+      JSON.stringify(source),
+    );
+  }
+
+  /** A Workbooks checkout whose only picture list is the version 3 shadow copy. */
+  async function version3Checkout(directory: string): Promise<string> {
+    const workbooksRoot = path.join(directory, 'Workbooks');
+    const printRoot = path.join(workbooksRoot, 'content/storytime/l2/print');
+    await mkdir(printRoot, { recursive: true });
+    expect.soft(existsSync(LIST_V3_SHADOW_FILE), 'The version 3 shadow copy exists.').toBe(true);
+    await copyFile(LIST_V3_SHADOW_FILE, path.join(printRoot, 'pictures.json'));
+    return workbooksRoot;
+  }
+
+  it('T173: the pipeline pins picture list version 4 and refuses the version 3 bytes', async () => {
+    const exported = pictureSeams as unknown as Record<string, unknown>;
+    expect.soft({ 'PICTURE_LIST_SHA256': exported.PICTURE_LIST_SHA256 })
+      .toEqual({ 'PICTURE_LIST_SHA256': V4_SHA256 });
+    expect.soft({ 'PICTURE_LIST_V3_SHA256 exported': 'PICTURE_LIST_V3_SHA256' in exported })
+      .toEqual({ 'PICTURE_LIST_V3_SHA256 exported': false });
+    expect.soft({ 'Version 3 shadow SHA-256': digest(readFileSync(LIST_V3_SHADOW_FILE)) })
+      .toEqual({ 'Version 3 shadow SHA-256': LIST_V3_SHA256 });
+
+    const directory = await mkdtemp(path.join(root, 'list-v4-'));
+    try {
+      const rowId = 'l2-w02-story-page-nan-can-b';
+      const v3Root = await version3Checkout(directory);
+
+      const liveRender = await rowCommandError(
+        ['render', '--dry-run', '--row', rowId, '--workbooks', WORKBOOKS, '--out', 'out/live'],
+        { repoRoot: directory, log: () => {} },
+      );
+      expect.soft({ 'The render row command accepts the live list': liveRender ?? 'accepted' })
+        .toEqual({ 'The render row command accepts the live list': 'accepted' });
+      const liveVerify = await rowCommandError(
+        ['verify', '--row', rowId, '--workbooks', WORKBOOKS, '--out', 'out/live'],
+        { repoRoot: directory, log: () => {} },
+      );
+      // The row has no render evidence, so `verify` stops after the list check. The label proves
+      // that the list check passed: the version 3 pin would stop the run first.
+      expect.soft({ 'The verify row command reads the live list': /Row verification failed/.test(liveVerify ?? '') })
+        .toEqual({ 'The verify row command reads the live list': true });
+
+      for (const command of ['render', 'verify'] as const) {
+        const args = [command, '--row', rowId, '--workbooks', v3Root, '--out', 'out/v3'];
+        if (command === 'render') args.push('--dry-run');
+        const error = await rowCommandError(args, { repoRoot: directory, log: () => {} });
+        expect.soft(error ?? 'accepted', `The ${command} row command refuses the version 3 bytes`)
+          .toMatch(/The picture list changed: expected SHA-256 6d05dfc5/);
+      }
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
+  }, 120000);
+
+  it('T174: the labeled counts of the live picture list match version 4', async () => {
+    const rows = rawRows();
+    expect.soft(rowCounts(rows)).toEqual(expectedCounts());
+    const list = await loadList({ printRoot: PRINT_ROOT, workbooksRoot: WORKBOOKS });
+    expect.soft({ 'Loader rows': list?.rows.length ?? -1 }).toEqual({ 'Loader rows': 196 });
+    expect.soft({ 'Loader SHA-256': list?.sha256 ?? 'missing' }).toEqual({ 'Loader SHA-256': V4_SHA256 });
+  }, 60000);
+
+  it('T175: the four renamed ids are in the list and their file names come from the list', async () => {
+    const rows = rawRows();
+    const ids = new Set(rows.map((row) => row.id));
+    const missing = RENAMED_IDS.filter((id) => !ids.has(id));
+    const oldSuffixWithTwin = rows
+      .filter((row) => row.id.endsWith('-a') && ids.has(`${row.id.slice(0, -1)}b`))
+      .map((row) => row.id);
+    const wrongNames: string[] = [];
+    for (const id of RENAMED_IDS) {
+      const row = rows.find((item) => item.id === id);
+      if (!row) continue;
+      if (row.fileName !== `${row.id}-v1.png` || row.lineArtFileName !== `${row.id}-line-v1.png`) {
+        wrongNames.push(`${row.id}: ${row.fileName} / ${row.lineArtFileName}`);
+      }
+    }
+    expect.soft({ 'Renamed ids missing from the list': missing })
+      .toEqual({ 'Renamed ids missing from the list': [] });
+    expect.soft({ 'Rows with an -a id where a -b twin exists': oldSuffixWithTwin })
+      .toEqual({ 'Rows with an -a id where a -b twin exists': [] });
+    expect.soft({ 'Renamed rows with a derived file name': wrongNames })
+      .toEqual({ 'Renamed rows with a derived file name': [] });
+  }, 60000);
+
+  it('T176: every row of the list holds the pixel size of its class', async () => {
+    const rows = rawRows();
+    const wrong = rows
+      .filter((row) => {
+        const size = CLASS_SIZE[row.sizeClass];
+        return !size || row.width !== size.width || row.height !== size.height;
+      })
+      .map((row) => `${row.id} (${row.sizeClass}): ${row.width} x ${row.height}`);
+    expect.soft({ 'Rows with a wrong pixel size': wrong }).toEqual({ 'Rows with a wrong pixel size': [] });
+    expect.soft({ 'Rows checked': rows.length }).toEqual({ 'Rows checked': 196 });
+    expect.soft({ 'Size classes covered': [...new Set(rows.map((row) => row.sizeClass))].sort() })
+      .toEqual({ 'Size classes covered': ['A', 'B', 'C'] });
+  }, 60000);
+
+  it('T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows', async () => {
+    const directory = await mkdtemp(path.join(root, 'week-8-'));
+    try {
+      const rows = rawRows();
+      for (const row of rows) await putRowStage(directory, row);
+      const dryRun = async (week?: string) => {
+        const lines: string[] = [];
+        const args = ['render', '--dry-run', '--row', 'all', '--workbooks', WORKBOOKS, '--out', 'out/weeks'];
+        if (week !== undefined) args.push('--week', week);
+        try {
+          await runStorytimeCli(args, { repoRoot: directory, log: (line) => lines.push(line) });
+        } catch (error) {
+          return { count: -1, error: error instanceof Error ? error.message : String(error) };
+        }
+        return { count: lines.filter((line) => /: dry-run;/.test(line)).length, error: undefined };
+      };
+
+      const week8 = await dryRun('8');
+      expect.soft(week8.error ?? 'accepted', 'The week parser accepts week 8.').toEqual('accepted');
+      expect.soft({ 'Week 8 rows rendered in a dry run': week8.count })
+        .toEqual({ 'Week 8 rows rendered in a dry run': 4 });
+      const allWeeks = await dryRun();
+      expect.soft(allWeeks.error ?? 'accepted', 'A run with no --week reads the live list.').toEqual('accepted');
+      expect.soft({ 'Rows rendered in a dry run with no --week': allWeeks.count })
+        .toEqual({ 'Rows rendered in a dry run with no --week': 196 });
+
+      for (const value of ['0', '9']) {
+        const error = await rowCommandError(
+          ['render', '--dry-run', '--row', 'all', '--week', value, '--workbooks', WORKBOOKS, '--out', 'out/weeks'],
+          { repoRoot: directory, log: () => {} },
+        );
+        expect.soft(error ?? 'accepted', `--week ${value} is refused`).toMatch(/Invalid week/);
+      }
+
+      const seam = (pictureSeams as unknown as Record<string, unknown>).weeksTwoToSevenRows;
+      expect.soft(seam, 'The pipeline exposes the weeks 2 to 7 selection helper.').toBeTypeOf('function');
+      if (typeof seam === 'function') {
+        const middle = (seam as (list: PictureListRow[]) => PictureListRow[])(rows);
+        expect.soft({ 'Weeks 2 to 7 helper rows': middle.length })
+          .toEqual({ 'Weeks 2 to 7 helper rows': 162 });
+        expect.soft({ 'Week 8 rows in the weeks 2 to 7 selection': middle.filter((row) => row.week === 8).length })
+          .toEqual({ 'Week 8 rows in the weeks 2 to 7 selection': 0 });
+        expect.soft({ 'Week 1 rows in the weeks 2 to 7 selection': middle.filter((row) => row.week === 1).length })
+          .toEqual({ 'Week 1 rows in the weeks 2 to 7 selection': 0 });
+      }
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
+  }, 240000);
 });

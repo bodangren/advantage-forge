@@ -964,3 +964,182 @@ describe('Muse delivery hardening (Red remediation round 2)', () => {
     expect(skipped[0]?.reason).toMatch(/approval|entry|clean/i);
   });
 });
+
+// ---------------------------------------------------------------------------
+// Phase 4: delivery of a week other than week 1 (strategy section 7, 4.4)
+//
+// The contract that Green must implement for these rows: `deliver` takes `--week <n>` and
+// filters the picture list to that week before the writer runs. The writer already takes the
+// job directory from `row.week`, so the batches are `w0N/color` and `w0N/lineart`.
+// ---------------------------------------------------------------------------
+function weekSuffix(index: number): string {
+  return String.fromCharCode(97 + Math.floor(index / 26)) + String.fromCharCode(97 + (index % 26));
+}
+
+function weekRows(week: number): PictureListRow[] {
+  const rows: PictureListRow[] = [];
+  for (let index = 0; index < 27; index += 1) {
+    const suffix = weekSuffix(index);
+    const sizeClass: PictureListRow['sizeClass'] = index < 16 ? 'A' : index < 18 ? 'B' : 'C';
+    const use = sizeClass === 'A' ? 'story-page' : sizeClass === 'B' ? 'cover' : 'check-row';
+    const size = sizeClass === 'C' ? PICTURE_SIZES.small : PICTURE_SIZES.story;
+    const id = `l2-w0${week}-${use}-${suffix}`;
+    rows.push({
+      id,
+      week,
+      use,
+      sizeClass,
+      fileName: `${id}-v1.png`,
+      lineArtFileName: `${id}-line-v1.png`,
+      width: size.width,
+      height: size.height,
+      text: `Text ${suffix}.`,
+      prompt: `Prompt ${suffix}.`,
+    });
+  }
+  return rows;
+}
+
+async function putWeekPrints(folder: string, rows: PictureListRow[]): Promise<void> {
+  await mkdir(folder, { recursive: true });
+  for (const [index, row] of rows.entries()) {
+    const size = row.sizeClass === 'C' ? PICTURE_SIZES.small : PICTURE_SIZES.story;
+    const names = museNames(row.id, 1);
+    await writeFile(path.join(folder, names.colorPrint), await colorPng(size.width, size.height, BACKGROUNDS[index % 3]!));
+    await writeFile(path.join(folder, names.linePrint), await linePng(size.width, size.height, 40));
+  }
+}
+
+function weekApprovals(rows: PictureListRow[]) {
+  return {
+    version: 1 as const,
+    entries: rows.map((row) => ({ rowId: row.id, version: 1, ...museNames(row.id, 1) })),
+  };
+}
+
+describe('Muse delivery of another week', () => {
+  it('T181 delivers 27 week 2 rows in two week 2 batches with the list names', async () => {
+    const rows = weekRows(2);
+    const week2Root = path.join(root, 'w02');
+    const week2Muse = path.join(week2Root, 'muse');
+    const week2Delivery = path.join(week2Root, 'delivery');
+    await putWeekPrints(week2Muse, rows);
+
+    const manifest = await writeMuseDelivery({
+      rows,
+      approvals: weekApprovals(rows),
+      museRoot: week2Muse,
+      deliveryRoot: week2Delivery,
+    });
+
+    expect.soft({ 'Week 2 manifest jobs': manifest.jobs.length })
+      .toEqual({ 'Week 2 manifest jobs': 27 });
+    expect.soft({ 'Week 2 batch ids': manifest.batches.map((batch) => batch.id).sort() })
+      .toEqual({ 'Week 2 batch ids': ['w02/color', 'w02/lineart'] });
+    expect.soft({ 'Week 2 job directories': [...new Set(manifest.jobs.map((job) => job.directory))] })
+      .toEqual({ 'Week 2 job directories': ['w02'] });
+
+    const wrongNames: string[] = [];
+    const wrongSizes: string[] = [];
+    for (const row of rows) {
+      const job = manifest.jobs.find((item) => item.id === row.id);
+      if (!job) {
+        wrongNames.push(`${row.id}: no job`);
+        continue;
+      }
+      const candidate = job.candidates[0]!;
+      if (candidate.file !== row.fileName) wrongNames.push(`${row.id}: ${candidate.file}`);
+      const size = row.sizeClass === 'C' ? PICTURE_SIZES.small : PICTURE_SIZES.story;
+      if (candidate.structural.width !== size.width || candidate.structural.height !== size.height) {
+        wrongSizes.push(`${row.id}: ${candidate.structural.width} x ${candidate.structural.height}`);
+      }
+    }
+    expect.soft({ 'Week 2 rows with a file name that is not the list name': wrongNames })
+      .toEqual({ 'Week 2 rows with a file name that is not the list name': [] });
+    expect.soft({ 'Week 2 rows with a wrong class size': wrongSizes })
+      .toEqual({ 'Week 2 rows with a wrong class size': [] });
+    expect.soft({ 'Week 2 delivered files': (await walk(week2Delivery)).length })
+      .toEqual({ 'Week 2 delivered files': 55 });
+
+    const before = new Map<string, string>();
+    for (const file of await walk(week2Delivery)) before.set(file, sha256(await readFile(file)));
+    const second = await writeMuseDelivery({
+      rows,
+      approvals: weekApprovals(rows),
+      museRoot: week2Muse,
+      deliveryRoot: week2Delivery,
+    });
+    const after = new Map<string, string>();
+    for (const file of await walk(week2Delivery)) after.set(file, sha256(await readFile(file)));
+    expect.soft({ 'A second week 2 run gives the same files': [...after.keys()].sort() })
+      .toEqual({ 'A second week 2 run gives the same files': [...before.keys()].sort() });
+    expect.soft({ 'A second week 2 run gives the same bytes': [...after].sort() })
+      .toEqual({ 'A second week 2 run gives the same bytes': [...before].sort() });
+    expect.soft({ 'A second week 2 run gives the same jobs': second.jobs.map((job) => job.id).sort() })
+      .toEqual({ 'A second week 2 run gives the same jobs': manifest.jobs.map((job) => job.id).sort() });
+  }, 240000);
+
+  it('T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows', async () => {
+    const rows = [...weekRows(2), ...weekRows(3).slice(0, 1)];
+    const week3Row = rows[rows.length - 1]!;
+    const repo = path.join(root, 'cli-week');
+    const museFolder = path.join(repo, 'out/muse');
+    await putWeekPrints(museFolder, rows);
+    const listFile = path.join(repo, 'pictures.json');
+    await writeFile(listFile, JSON.stringify(rows, null, 2));
+
+    const refusedDelivery = path.join(repo, 'out/refused');
+    const withWeek3 = path.join(repo, 'approved-with-week3.json');
+    await writeFile(
+      withWeek3,
+      JSON.stringify({
+        version: 1,
+        entries: rows.map((row) => ({ rowId: row.id, version: 1, ...museNames(row.id, 1) })),
+      }, null, 2),
+    );
+    let refusal: Error | undefined;
+    try {
+      await runStorytimeCli(
+        ['deliver', '--week', '2', '--list', listFile, '--approvals', withWeek3,
+          '--muse', 'out/muse', '--delivery', 'out/refused'],
+        { repoRoot: repo, workbooksRoot: repo, log: () => {} },
+      );
+    } catch (error) {
+      refusal = error instanceof Error ? error : new Error(String(error));
+    }
+    expect.soft(refusal?.message ?? 'delivered', 'A week 3 entry in a week 2 run is refused')
+      .toMatch(/week 3|l2-w03-/);
+    expect.soft({ 'A refused week 2 run writes no file': await walk(refusedDelivery) })
+      .toEqual({ 'A refused week 2 run writes no file': [] });
+
+    // One week 2 row has no approval entry, so the run logs exactly one `Skipped` line.
+    const unapproved = weekRows(2)[26]!;
+    const week2Only = path.join(repo, 'approved-week2.json');
+    await writeFile(
+      week2Only,
+      JSON.stringify({
+        version: 1,
+        entries: weekApprovals(weekRows(2)).entries.filter((entry) => entry.rowId !== unapproved.id),
+      }, null, 2),
+    );
+    const lines: string[] = [];
+    const code = await runStorytimeCli(
+      ['deliver', '--week', '2', '--list', listFile, '--approvals', week2Only,
+        '--muse', 'out/muse', '--delivery', 'out/delivery'],
+      { repoRoot: repo, workbooksRoot: repo, log: (line) => lines.push(line) },
+    );
+    expect.soft({ 'The week 2 delivery exits with code 0': code })
+      .toEqual({ 'The week 2 delivery exits with code 0': 0 });
+    const skipped = lines.filter((line) => line.startsWith('Skipped ')).map((line) => line.split(' ')[1]);
+    expect.soft({ 'Week 2 skipped rows': skipped }).toEqual({ 'Week 2 skipped rows': [unapproved.id] });
+    expect.soft({ 'Week 3 rows in the skipped lines': skipped.filter((id) => id === week3Row.id) })
+      .toEqual({ 'Week 3 rows in the skipped lines': [] });
+    const manifest = JSON.parse(
+      await readFile(path.join(repo, 'out/delivery/manifest.json'), 'utf8'),
+    ) as StorytimeManifest;
+    expect.soft({ 'Week 2 CLI delivery jobs': manifest.jobs.length })
+      .toEqual({ 'Week 2 CLI delivery jobs': 26 });
+    expect.soft({ 'Week 2 CLI batch ids': manifest.batches.map((batch) => batch.id).sort() })
+      .toEqual({ 'Week 2 CLI batch ids': ['w02/color', 'w02/lineart'] });
+  }, 240000);
+});
