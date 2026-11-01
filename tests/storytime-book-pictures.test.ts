@@ -4563,8 +4563,10 @@ describe('Phase 4 picture list version 4', () => {
   async function putRowStage(repoRoot: string, row: PictureListRow) {
     const source = { ...stageSource(job(), 1), jobId: row.id };
     const week = `w${String(row.week).padStart(2, '0')}`;
+    // The repository path is `docs/storytime/l2-unit1/`, the same path that `rowStageRelativePath`
+    // builds. A wrong segment makes `readRowStage` stop with ENOENT before the list pin check.
     await put(
-      path.join(repoRoot, 'docs/storytime/l2/unit1', week, 'rows', `${row.id}-v1.json`),
+      path.join(repoRoot, 'docs/storytime/l2-unit1', week, 'rows', `${row.id}-v1.json`),
       JSON.stringify(source),
     );
   }
@@ -4592,6 +4594,11 @@ describe('Phase 4 picture list version 4', () => {
     try {
       const rowId = 'l2-w02-story-page-nan-can-b';
       const v3Root = await version3Checkout(directory);
+      // The live render reads the row stage file before it plans the row. Write it under the
+      // temporary root, so the run reaches the list pin and leaves no file in the repository.
+      const liveRow = rawRows().find((item) => item.id === rowId);
+      expect.soft(liveRow, 'The live list holds the row of the pin test.').toBeDefined();
+      if (liveRow) await putRowStage(directory, liveRow);
 
       const liveRender = await rowCommandError(
         ['render', '--dry-run', '--row', rowId, '--workbooks', WORKBOOKS, '--out', 'out/live'],
