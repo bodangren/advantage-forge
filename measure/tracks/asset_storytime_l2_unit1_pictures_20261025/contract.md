@@ -3,7 +3,8 @@
 ## Picture specification v1 (2026-10-28)
 
 Workbooks picture specification v1 arrived on 2026-10-27 (Workbooks commit `a9178413`). Picture
-list version 3 is the source of the week 1 rows (Workbooks commit `078917f1`):
+list version 4 is the source of all picture rows (Workbooks commit `87ecc6aa`). Version 3
+(Workbooks commit `078917f1`) was the source of the week 1 rows and stays here as history:
 
 - List file: `Workbooks/content/storytime/l2/print/pictures.json`, version 4 (Workbooks commit
   `87ecc6aa`), SHA-256 `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`,
@@ -20,6 +21,13 @@ Specification v1 rules, pinned by rows T142 to T151:
 - File names come from the list: the color file is the row `fileName`; the line-art file is the
   row `lineArtFileName`, ends in `-line-v1.png`, and sits beside the color file. The pipeline
   derives no slug for a list row.
+- Delivered names with `fileVersion` (Muse delivery, commit `f1e797cb`): an approval entry with
+  `fileVersion: N` delivers `<row id>-vN.png` and `<row id>-line-vN.png`. Both files come from one
+  candidate, and that candidate has version N. An entry without `fileVersion` keeps the list
+  `fileName` and `lineArtFileName`.
+- Manifest match (PM decision A, 2026-11-02, 03:1x ICT): the Workbooks stage 1 reader matches a
+  manifest entry by the row id (`job.id`), not by the file name. Workbooks owns that reader
+  change. Forge makes no change to the Workbooks tree.
 - Every row of the list gets one color file and one line-art twin, including cover, check-row,
   and practice-line rows. One twin pair comes from one render run.
 - The line art is grayscale with black closed outlines of 12 px or more. The check prints the
