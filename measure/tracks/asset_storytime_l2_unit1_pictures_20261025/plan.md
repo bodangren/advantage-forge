@@ -1817,6 +1817,71 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       the follow-up). The same self-check gives `specs found: 27`, `element paths checked: 82`,
       `missing element paths: 0`, `characters without a reference: 0`, `page candidates: 0`,
       `self-check: pass`.
+  - Week 3 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
+    2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `a3741c90`, phase_base_sha
+    `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.
+    Specs commit `172ae0e4`: 27 page specs in `docs/storytime/l2-unit1/w03/muse/<row id>.json` and 10
+    element specs in `docs/storytime/l2-unit1/w03/muse-elements/`. The method is the week 2 method.
+    The run log is `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w03-staging.log`.
+    - Page specs: `text` is the list `text` and `goal` is the list `prompt`, as exact strings. The 9
+      check rows have the list prompt `""`, so their `goal` is `""`. `outDir` is
+      `out/storytime/l2/unit1/w03/muse`. Class A and B specs have 3 to 7 references each. Class C
+      specs have one reference each. The week 1 lessons are in the prompts: thick, even, closed line
+      art; no blush, eyelash ticks (Nan keeps her eyelash mark), hair strands, gray, or text;
+      five-digit hands; smooth ears; even clothing color; the props of each sentence. The pan pages
+      ask for the exact pan count (two pans on the pan-in-pan, pan-on-pan, and cover pages; one pan
+      on the pan-on-Nan page). The two pages with the tail of Pip name only the tail tip. The set
+      sheets show no sun.
+    - Character elements (reused by path, nothing copied): `cast-group-a-2.png`,
+      `cast-group-b-2.png`, `nan-ref-clean-look-reference.png`, `nan-ref-clean-face-crop.png`, and
+      `ben-ref-clean-2.png` in `out/storytime/l2/unit1/w01/muse/elements/`, and
+      `out/sprout-pip/render.png`. Pending-look cast sheets: none. All 8 week 3 characters (Pat, May,
+      Sam, Mia, Ben, Nan, Pip, Teacher Kim) have a look.
+    - Forge 3D views used as elements (by path): `out/storytime-low-table`, `out/cat`, `out/dog`,
+      `out/fish`, `out/storytime-school-bus`, and `out/storytime-sun-hat`. The week 2 sheet
+      `prop-sun-sheet-m1` serves the `sun` row. The week 1 `classroom-rug.png` is the room reference
+      of the two set sheets. No new 3D shot and no heavy-runner job in this round. No Forge asset
+      exists for the easel, the paint pots, the paper sheets, the toy pans, the toy kitchen, the low
+      shelf, the paw prints, the pen, the pear, or the pencil.
+    - Muse element sheets (10, in `out/storytime/l2/unit1/w03/muse/elements/`, named with no row id):
+      `set-art-corner-empty`, `set-play-corner-empty`, `prop-easel-sheet`, `prop-paper-sheets-sheet`,
+      `prop-paint-pots-sheet`, `prop-pans-sheet`, `prop-paw-prints-sheet`, `prop-pen-sheet`,
+      `prop-pear-sheet`, and `prop-pencil-sheet`. They are inputs, never page candidates. Two sheets
+      were remade after the first look: `prop-paper-sheets-sheet-m2` (the m1 sheets looked like
+      thick tiles) and `prop-paw-prints-sheet-m2` (m1 had a raised clay look and too many blue
+      prints). The old versions stay in the folder. The first look by this Green found the 10
+      current sheets usable. Known gaps: the art corner table shows about nine paint pots, the paw
+      print floor strip is a flat plank pattern and not the classroom floor, and the paper sheets
+      have a plain flat look. The sheets need an independent look. Review folder:
+      `out/storytime-review/w03-staging/` (`index.md`, `sheets-1.png` to `sheets-3.png`).
+    - Muse element calls: 12 calls, 12 billed, 0 failed. Cost 0.12 USD (`usage.cost` 0.01 per
+      call) in `elements/costs.tsv`. Running total 3.70 USD before this run, 3.82 USD after it (up to
+      3.85 USD if the 3 refused calls of an earlier round were charged). Page calls: 0. Page
+      candidates: 0.
+    - Stage gate (STAGING_GATE_COMMAND with `--week 3`, light job, exit code 0):
+
+      ```text
+      list sha256: 6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58
+      week: 3
+      rows: 27
+      specs found: 27
+      text mismatches: 0
+      goal mismatches: 0
+      outDir mismatches: 0
+      rows with no reference (class A and B): 0
+      element paths checked: 94
+      missing element paths: 0
+      characters without a reference: 0
+      page candidates: 0
+      stage check: pass
+      ```
+
+      This proves that the inputs exist and match the list. It proves nothing about picture quality.
+      The check matches a character name to the file name of a reference. The file
+      `out/sprout-pip/render.png` has no name in its file name, so the `a-nap-in-the-pan` page also
+      lists the group sheet `cast-group-b-2.png`.
+    - Open: no task is `[x]`. No week 3 page call before Daniel answers on week 1. The 10 sheets
+      need an independent look.
 - [ ] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks.
 
