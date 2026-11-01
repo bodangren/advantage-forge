@@ -1350,7 +1350,7 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   lists the 30 color and 30 line-art files. Apply picture specification v1 to the line art.
   Specification v1 has arrived, so the line art is not provisional. Report the output path and
   every remaining gate to the PM for routing.
-- [ ] Task: Add failing tests for the Muse week 1 delivery manifest (Red).
+- [~] Task: Add failing tests for the Muse week 1 delivery manifest (Red).
   The tests cover these rules:
   - The delivery batch root holds one `manifest.json` in the `StorytimeManifest` shape.
   - The manifest has one job for each clean row.
@@ -1364,6 +1364,59 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   - Kimi reviews go to `reviews.kimi` only. No job has a person review without a named person.
   - The batch hash uses the existing algorithm.
   - The delivered files are copies of the approved Muse print files with matching SHA-256.
+  Red evidence 2026-11-01: test file `tests/storytime-muse-delivery.test.ts`. It holds ten tests,
+  T152 to T161:
+  - T152: one `manifest.json` in the `StorytimeManifest` shape at the delivery folder.
+  - T153: one job per approved row, `job.id` equals the row id, and an unapproved row has no job.
+  - T154: `candidate.file` ends with the row `fileName` and `lineArt.file` ends with the row
+    `lineArtFileName`.
+  - T155: the delivered color and line files are byte copies of the Muse print files, and the
+    manifest SHA-256 values equal them; `selectedSha256` equals the color SHA-256.
+  - T156: `job.size` and both structural sizes follow `PICTURE_SIZES` for class A, B, and C; a
+    wrong-size color file and a wrong-size line file each fail with an error that names the row.
+  - T157: a pure black and white line art passes; a file with the gray value 128 fails.
+  - T158: every Muse print file keeps its bytes and stays after the run.
+  - T159: a Kimi review goes to `reviews.kimi` with kind `model-pre-check`, provider `kimi`,
+    verdict `pass`, and the delivered color SHA-256; `reviews.person` holds the named person only;
+    a row with no review entry has an empty `reviews` object.
+  - T160: one color batch and one line-art batch, each with `batchSha256` of its own files, and
+    each file SHA-256 equals the delivered file.
+  - T161: a delivery folder with a different `manifest.json` is refused and keeps its bytes; a
+    second run with the same inputs repeats the manifest bytes; the approval list loads from a
+    path.
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts --maxWorkers=1'`.
+  Exit code `1`. Summary: `Test Files  1 failed (1)` and `Tests  no tests`. Reason:
+  `Cannot find module '../src/storytime/muse-delivery.js'`. The module does not exist, so no test
+  runs. That is the expected Red state.
+  Type check: `tsc exit: 2`; owned errors: `1`; total compiler errors: `39`. The one owned error
+  is the missing module. The other 38 errors sit in `assets/` and in other test files that other
+  sessions changed.
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=2560 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'`.
+  Deviation: the same command with the default heap ended with exit code `134` and a JavaScript
+  heap out-of-memory error at 1432 MB. The retry set the heap limit to 2560 MB and exited `2`.
+  The first type check found six owned implicit-`any` errors. The fix types the return of the
+  test helper `deliver` as `Promise<StorytimeManifest>`. No assertion changed.
+  The API that Green must add in `src/storytime/muse-delivery.ts`:
+  - `writeMuseDelivery(options): Promise<StorytimeManifest>`; the module also exports the type of
+    one approval entry.
+  - `options.rows`: the picture-list rows. `options.approvals`: the approval list object, or a
+    path to its JSON file. `options.museRoot`: the Muse output root. `options.deliveryRoot`: the
+    delivery folder.
+  - Approval list: `{ version: 1, entries: [...] }`. One entry: `rowId`, `version`, `colorPrint`,
+    `linePrint`, `reviews: { kimi?, person? }`, and optional `notes`.
+  - Kimi entry keys: `provider` `kimi`, `model`, `verdict`, `reason`, `checkedAt`, optional
+    `rawFile`. Person entry keys: `checkedBy`, `verdict`, `checkedAt`, optional `evidenceClass`
+    and `observedCounts`.
+  - The writer reads and copies the two print files, then writes `manifest.json`. It reuses
+    `BATCH_HASH_ALGORITHM`, `batchSha256`, `PICTURE_SIZES`, and `planPictureRow`.
+  - It refuses a wrong pixel size, a gray line-art pixel, and a different existing manifest. It
+    writes no `manifest.json` when it refuses.
+  Fixtures: real 4000 x 3000 and 1500 x 1500 PNG files made with sharp, one buffer per shape
+  cached across tests. The file has no dependency on `out/`, `/tmp`, or the Workbooks tree.
+  Model: Red ran on `deepseek/deepseek-flash#high`. The Green of this task runs on
+  `claude-code/claude-sonnet-5-5#high`, a different family.
+  `phase_base_sha`: `15a7bf0b`. `role_base_sha`: `2b59ccaa`. No file under `src/`, `assets/`,
+  `scripts/`, or another test file changed.
 - [ ] Task: Implement the Muse week 1 delivery manifest writer (Green).
   - Reuse the `StorytimeManifest` types and the picture-list row plan (`planPictureRow`) of
     `src/storytime/book-pictures.ts`.
