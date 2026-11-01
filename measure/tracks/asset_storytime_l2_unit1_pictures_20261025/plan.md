@@ -2028,6 +2028,12 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       This proves that the inputs exist and match the list. It proves nothing about picture quality.
     - Open: no task is `[x]`. No week 5 page call before Daniel answers on week 1. The 4 element
       sheets need an independent look.
+    - Follow-up (2026-11-02): the independent look (`item-review-w05-elements.json`) passed the 4
+      element sheets and found one page gap. The spec `l2-w05-story-page-i-have-one-nose` now lists
+      `pip-ref-render.png` (week 4) as picture 3, and its colorPrompt says that only Pip's tail
+      shows, in the golden-brown color of the reference. Commit `80731830`. The week 5 stage gate
+      passes again (`element paths checked: 64`, `missing element paths: 0`, `page candidates: 0`).
+      No Muse call; running total stays 4.09 USD.
 - [ ] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks.
 
