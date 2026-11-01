@@ -1350,7 +1350,10 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   lists the 30 color and 30 line-art files. Apply picture specification v1 to the line art.
   Specification v1 has arrived, so the line art is not provisional. Report the output path and
   every remaining gate to the PM for routing.
-- [~] Task: Add failing tests for the Muse week 1 delivery manifest (Red).
+- [x] Task: Add failing tests for the Muse week 1 delivery manifest (Red).
+  Evidence (Green P3 delivery round): Red commits `66d0e57d` and `3509efd5`. Green commits
+  `f41fe108` and `44c2ec84`. Reviews A, B, and C pass at `d06690a0`
+  (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-{a,b,c}-d06690a0.json`).
   The tests cover these rules:
   - The delivery batch root holds one `manifest.json` in the `StorytimeManifest` shape.
   - The manifest has one job for each clean row.
@@ -1485,7 +1488,10 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   The test file imports no new module at the top level, so T152 to T161 keep their meaning.
   `phase_base_sha`: `15a7bf0b`. `role_base_sha`: `2c1b23da`. No file under `src/`, `scripts/`,
   or another test file changed.
-- [~] Task: Implement the Muse week 1 delivery manifest writer (Green).
+- [x] Task: Implement the Muse week 1 delivery manifest writer (Green).
+  Evidence (Green P3 delivery round): Green commits `f41fe108` and `44c2ec84`. Red commits
+  `66d0e57d` and `3509efd5`. Reviews A, B, and C pass at `d06690a0`
+  (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-{a,b,c}-d06690a0.json`).
   - Reuse the `StorytimeManifest` types and the picture-list row plan (`planPictureRow`) of
     `src/storytime/book-pictures.ts`.
   - Read the approved version of each clean row from a tracked approval list, for example
@@ -1562,6 +1568,24 @@ rows T142 to T151, and the closeout gate for 30 jobs.
         `0` (no error names `muse-delivery` or `book-pictures`).
       - Not in this round: review A F2, F3, F4 (named in the Red note). The task stays `[~]`.
 - [ ] Task: Deliver the week 1 Muse batch to the PM under the 2026-11-01 contract.
+  Status (Green P3 delivery round, `role_base_sha` `a0a67275`): BLOCKED, no manifest written.
+  - Approval list: `docs/storytime/l2-unit1/w01/muse/approved.json`, commit `37087467`, 30 rows,
+    pin `pictureListSha256` `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`.
+  - Command (through the heavy lock): `node --import tsx scripts/storytime-book-pictures.ts
+    deliver --list /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json
+    --approvals docs/storytime/l2-unit1/w01/muse/approved.json --muse
+    out/storytime/l2/unit1/w01/muse --delivery out/storytime/l2/unit1/w01/delivery-muse-v1`.
+    Exit code `1`. The writer wrote nothing; the delivery folder does not exist.
+  - 28 of 30 rows pass every writer check. Two rows fail a structural gate:
+    `l2-w01-cover-hello` (every line print try 1, 2, and 3: edge frame under 90 percent white)
+    and `l2-w01-practice-line-nest` (reviewed line print of try 2: line width 10 px, minimum
+    12 px; the print of try 1 passes).
+  - Name mismatch found in step 1 for 7 rows: the reviewed page `-m1-line.png` is byte-identical
+    to a later Muse try, not to the Muse file of that name. Rows: `a-nurse` (try 3, batch 32),
+    `check-row-nest`, `check-row-fish`, `check-row-hat`, `check-row-cup`, `practice-line-nest`,
+    `practice-line-nut` (try 2, batch 31). The approval list uses the byte-matched try.
+  - Four rows of batch 31 (`check-row-nest`, `-fish`, `-hat`, `-cup`) have a mimo review, not a
+    Kimi review. The approval list records no Kimi review for them.
   - Run the writer on the clean rows.
   - Send the delivery path, the manifest SHA-256, the clean row count, the not-clean rows with
     their open defects, and the running Muse cost.
