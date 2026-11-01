@@ -1735,6 +1735,14 @@ rows T142 to T151, and the closeout gate for 30 jobs.
     docs/storytime/l2-unit1/w02/muse`. The check proves that the inputs exist and match the list.
     It proves nothing about picture quality. Group sheets: `cast-group-a*` shows Pat, May, Sam,
     and Mia; `cast-group-b*` shows Ben, Nan, Pip, and Kim.
+  - Green gate after Red r2 (2026-11-02). Red r2 fixed the two fixtures in commits `c2ebc72d`
+    (tests) and `5a9b9257` (plan). HEAD `5a9b9257`.
+    - GREEN_TEST_COMMAND (the four test files through the heavy runner) passed. The orchestrator
+      ran it. Red r2 measured `Tests  172 passed (172)` at HEAD.
+    - Type check from the Green run: `owned tsc errors: 0`, `total tsc errors: 38`.
+    - The only gate line is structural: the current phase has 3 non-deferred incomplete tasks.
+      The Phase 4 markers wait for the Phase 3 checkpoint. No marker changed.
+    - status: complete.
 - [ ] Task: Produce weeks 2 to 7 after the week 1 review. The weeks hold 162 rows. They need 324
   files, one color file and one line-art file per row. Apply the same automated, two-model, and
   person-count gates to all 162 pictures.
