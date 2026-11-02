@@ -1,0 +1,348 @@
+{
+  "version": 1,
+  "pictureListSha256": "6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58",
+  "entries": [
+    {
+      "rowId": "l2-w02-story-page-how-many-suns-one",
+      "version": 1,
+      "colorPrint": "l2-w02-story-page-how-many-suns-one-m1-color-print.png",
+      "linePrint": "l2-w02-story-page-how-many-suns-one-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode-go/mimo-v2.6-flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-41.json, rating 8, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls C1 a-nose defect, C2 a-nut marked defect (false alarm: a four-digit hand read as a thumb and four fingers; the known-defect control failed and the small-mark control passed, so the batch stands), C3 practice-line nose clean.",
+        "Reviewed pages batch-41/pages/l2-w02-story-page-how-many-suns-one-m1-color-print.png and l2-w02-story-page-how-many-suns-one-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w02-story-page-how-many-suns-one-m1-color-print.png (SHA-256 5c1b5a91fc32f0194a48b2cb000e84b6105669afc88a1a2894e93a4fe822b12c) and line print l2-w02-story-page-how-many-suns-one-m1-line-print-despeckled.png (SHA-256 219dd7e9b97b07140ca7e7591738c3c0c4fde8da1b79ab4c5b35d46294b4d37c)."
+      ]
+    },
+    {
+      "rowId": "l2-w02-story-page-how-many-kites-two",
+      "version": 1,
+      "colorPrint": "l2-w02-story-page-how-many-kites-two-m1-color-print.png",
+      "linePrint": "l2-w02-story-page-how-many-kites-two-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode-go/mimo-v2.6-flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-41.json, rating 8, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls C1 a-nose defect, C2 a-nut marked defect (false alarm: a four-digit hand read as a thumb and four fingers; the known-defect control failed and the small-mark control passed, so the batch stands), C3 practice-line nose clean.",
+        "Reviewed pages batch-41/pages/l2-w02-story-page-how-many-kites-two-m1-color-print.png and l2-w02-story-page-how-many-kites-two-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w02-story-page-how-many-kites-two-m1-color-print.png (SHA-256 345301450c086085d314b3131ac6028fc7e714f0fed6cd1c10cd59f48ed98d12) and line print l2-w02-story-page-how-many-kites-two-m1-line-print-3-despeckled.png (SHA-256 4212a60796a77c03b48263a81bbdcd37265398360f9a28134bc02b5deaf05159)."
+      ]
+    },
+    {
+      "rowId": "l2-w02-story-page-how-many-ducks-three",
+      "version": 1,
+      "colorPrint": "l2-w02-story-page-how-many-ducks-three-m1-color-print.png",
+      "linePrint": "l2-w02-story-page-how-many-ducks-three-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode-go/mimo-v2.6-flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-41.json, rating 8, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls C1 a-nose defect, C2 a-nut marked defect (false alarm: a four-digit hand read as a thumb and four fingers; the known-defect control failed and the small-mark control passed, so the batch stands), C3 practice-line nose clean.",
+        "Reviewed pages batch-41/pages/l2-w02-story-page-how-many-ducks-three-m1-color-print.png and l2-w02-story-page-how-many-ducks-three-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w02-story-page-how-many-ducks-three-m1-color-print.png (SHA-256 58f9b6d310defe088811e96631d6ffb8675843b9f40925fc41551425a99b4857) and line print l2-w02-story-page-how-many-ducks-three-m1-line-print-2-despeckled.png (SHA-256 e4bdf66703e3fda15affd9f36b9fefc17477ecfea46f593266bf4b6168de2ec9)."
+      ]
+    },
+    {
+      "rowId": "l2-w02-story-page-how-many-birds-four",
+      "version": 1,
+      "colorPrint": "l2-w02-story-page-how-many-birds-four-m1-color-print.png",
+      "linePrint": "l2-w02-story-page-how-many-birds-four-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode-go/mimo-v2.6-flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-41.json, rating 8, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls C1 a-nose defect, C2 a-nut marked defect (false alarm: a four-digit hand read as a thumb and four fingers; the known-defect control failed and the small-mark control passed, so the batch stands), C3 practice-line nose clean.",
+        "Reviewed pages batch-41/pages/l2-w02-story-page-how-many-birds-four-m1-color-print.png and l2-w02-story-page-how-many-birds-four-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w02-story-page-how-many-birds-four-m1-color-print.png (SHA-256 637447cf6651b3b1bb7c1ae50cf4eeb6f7c1fab84b5fc0ed768447c6ad85a768) and line print l2-w02-story-page-how-many-birds-four-m1-line-print-2-despeckled.png (SHA-256 673fcdef0efbbb7e3f3a95971b0cdf8d2a4a85d410cfe1d1e36a3c985bdaedd7)."
+      ]
+    },
+    {
+      "rowId": "l2-w02-story-page-how-many-balls-five",
+      "version": 1,
+      "colorPrint": "l2-w02-story-page-how-many-balls-five-m1-color-print.png",
+      "linePrint": "l2-w02-story-page-how-many-balls-five-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode-go/mimo-v2.6-flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-41.json, rating 8, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls C1 a-nose defect, C2 a-nut marked defect (false alarm: a four-digit hand read as a thumb and four fingers; the known-defect control failed and the small-mark control passed, so the batch stands), C3 practice-line nose clean.",
+        "Reviewed pages batch-41/pages/l2-w02-story-page-how-many-balls-five-m1-color-print.png and l2-w02-story-page-how-many-balls-five-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w02-story-page-how-many-balls-five-m1-color-print.png (SHA-256 5afffddc844585ae7f6796d16810a8f57b5706e32fb46311d71e9a58bccf90c0) and line print l2-w02-story-page-how-many-balls-five-m1-line-print-despeckled.png (SHA-256 3bdd210d578da99301dd5ab5eb4eedebc51efdb9f92963f7da9a71813e236fed)."
+      ]
+    },
+    {
+      "rowId": "l2-w02-story-page-how-many-friends-six",
+      "version": 1,
+      "colorPrint": "l2-w02-story-page-how-many-friends-six-m1-color-print.png",
+      "linePrint": "l2-w02-story-page-how-many-friends-six-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode-go/mimo-v2.6-flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-41.json, rating 8, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls C1 a-nose defect, C2 a-nut marked defect (false alarm: a four-digit hand read as a thumb and four fingers; the known-defect control failed and the small-mark control passed, so the batch stands), C3 practice-line nose clean.",
+        "Reviewed pages batch-41/pages/l2-w02-story-page-how-many-friends-six-m1-color-print.png and l2-w02-story-page-how-many-friends-six-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w02-story-page-how-many-friends-six-m1-color-print.png (SHA-256 04ce17a16f3a372fb3d065bbbade226d522a05a6e713443a19f18ad9a0e672c1) and line print l2-w02-story-page-how-many-friends-six-m1-line-print-despeckled.png (SHA-256 e525234766084adc9745de2b4fa0a5b92cbd0edeef184b30e7f23e733967c25c)."
+      ]
+    },
+    {
+      "rowId": "l2-w02-story-page-how-many-cakes-seven",
+      "version": 1,
+      "colorPrint": "l2-w02-story-page-how-many-cakes-seven-m1-color-print.png",
+      "linePrint": "l2-w02-story-page-how-many-cakes-seven-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode-go/mimo-v2.6-flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-41.json, rating 8, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls C1 a-nose defect, C2 a-nut marked defect (false alarm: a four-digit hand read as a thumb and four fingers; the known-defect control failed and the small-mark control passed, so the batch stands), C3 practice-line nose clean.",
+        "Reviewed pages batch-41/pages/l2-w02-story-page-how-many-cakes-seven-m1-color-print.png and l2-w02-story-page-how-many-cakes-seven-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w02-story-page-how-many-cakes-seven-m1-color-print.png (SHA-256 196310c615af60ef20deba61e7ad27c5377a3d0fdd01a8e3097ce3798d0b1950) and line print l2-w02-story-page-how-many-cakes-seven-m1-line-print-3-despeckled.png (SHA-256 67010b5693a10d69f7433154592ad09c7f30c64eb36b4b0f2276bb4db01f45eb)."
+      ]
+    },
+    {
+      "rowId": "l2-w02-story-page-how-many-cakes-oh-no-pip",
+      "version": 2,
+      "colorPrint": "l2-w02-story-page-how-many-cakes-oh-no-pip-m2-color-print.png",
+      "linePrint": "l2-w02-story-page-how-many-cakes-oh-no-pip-m2-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode-go/mimo-v2.6-flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-41.json, rating 8, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls C1 a-nose defect, C2 a-nut marked defect (false alarm: a four-digit hand read as a thumb and four fingers; the known-defect control failed and the small-mark control passed, so the batch stands), C3 practice-line nose clean.",
+        "Reviewed pages batch-41/pages/l2-w02-story-page-how-many-cakes-oh-no-pip-m2-color-print.png and l2-w02-story-page-how-many-cakes-oh-no-pip-m2-line-print-2-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w02-story-page-how-many-cakes-oh-no-pip-m2-color-print.png (SHA-256 048609b62aed1469e1e9eb43e42041867e3ae7c042cbbdbc84cd50045dde38b3) and line print l2-w02-story-page-how-many-cakes-oh-no-pip-m2-line-print-2-despeckled.png (SHA-256 12765ffa499554edadc40e56303bab7b56ed9cdfb16a27b77782925b2bd1aef6)."
+      ]
+    },
+    {
+      "rowId": "l2-w02-cover-how-many",
+      "version": 2,
+      "colorPrint": "l2-w02-cover-how-many-m2-color-print.png",
+      "linePrint": "l2-w02-cover-how-many-m2-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode-go/mimo-v2.6-flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-41.json, rating 8, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls C1 a-nose defect, C2 a-nut marked defect (false alarm: a four-digit hand read as a thumb and four fingers; the known-defect control failed and the small-mark control passed, so the batch stands), C3 practice-line nose clean.",
+        "Reviewed pages batch-41/pages/l2-w02-cover-how-many-m2-color-print.png and l2-w02-cover-how-many-m2-line-print-2-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w02-cover-how-many-m2-color-print.png (SHA-256 87e43fa7ea42be25a374e3160c561d21bf7a53f8df0d496f4806665603a8b316) and line print l2-w02-cover-how-many-m2-line-print-2-despeckled.png (SHA-256 73718d70721b39913b3124d4b8efef11b1e5621ad02bb911f0d972d09f66914c)."
+      ]
+    },
+    {
+      "rowId": "l2-w02-story-page-nan-can",
+      "version": 1,
+      "colorPrint": "l2-w02-story-page-nan-can-m1-color-print.png",
+      "linePrint": "l2-w02-story-page-nan-can-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-40.json, rating 8, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls C1 a-nose defect, C2 a-nut clean, C3 practice-line nose profile clean.",
+        "Reviewed pages batch-40/pages/l2-w02-story-page-nan-can-m1-color-print.png and l2-w02-story-page-nan-can-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w02-story-page-nan-can-m1-color-print.png (SHA-256 b8e93818bbcb802e02b4ca7e1a56d8f6eb5c6ec0c38ee2e9a38b97e39f745005) and line print l2-w02-story-page-nan-can-m1-line-print-3-despeckled.png (SHA-256 af4d6ad4f340260afb6bdd4b9d470eeac65b05bb35a561031ef0afd9d0d72549)."
+      ]
+    },
+    {
+      "rowId": "l2-w02-story-page-can-i",
+      "version": 1,
+      "colorPrint": "l2-w02-story-page-can-i-m1-color-print.png",
+      "linePrint": "l2-w02-story-page-can-i-m1-line-print-4-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-40.json, rating 8, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls C1 a-nose defect, C2 a-nut clean, C3 practice-line nose profile clean.",
+        "Reviewed pages batch-40/pages/l2-w02-story-page-can-i-m1-color-print.png and l2-w02-story-page-can-i-m1-line-print-4-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w02-story-page-can-i-m1-color-print.png (SHA-256 824c9e88f74ceb3d619613d485bc625c86f71e5b28292902b57bf0afeecb20ea) and line print l2-w02-story-page-can-i-m1-line-print-4-despeckled.png (SHA-256 da6e0d4315e80014e46b45fe50f75fadeec22210c32a15e355beccd4619876ae)."
+      ]
+    },
+    {
+      "rowId": "l2-w02-story-page-i-can",
+      "version": 1,
+      "colorPrint": "l2-w02-story-page-i-can-m1-color-print.png",
+      "linePrint": "l2-w02-story-page-i-can-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-40.json, rating 8, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls C1 a-nose defect, C2 a-nut clean, C3 practice-line nose profile clean.",
+        "Reviewed pages batch-40/pages/l2-w02-story-page-i-can-m1-color-print.png and l2-w02-story-page-i-can-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w02-story-page-i-can-m1-color-print.png (SHA-256 779d2564714888675b1c3c14d8ba026fd7490c5ba985fb6dd950e38f6ec4a0b2) and line print l2-w02-story-page-i-can-m1-line-print-despeckled.png (SHA-256 7cfc9876ba9c66cc6d37bc90333ff4eb1242508a9f7b804bec5437055e3ad4d2)."
+      ]
+    },
+    {
+      "rowId": "l2-w02-story-page-nan-can-b",
+      "version": 1,
+      "colorPrint": "l2-w02-story-page-nan-can-b-m1-color-print.png",
+      "linePrint": "l2-w02-story-page-nan-can-b-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-40.json, rating 8, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls C1 a-nose defect, C2 a-nut clean, C3 practice-line nose profile clean.",
+        "Reviewed pages batch-40/pages/l2-w02-story-page-nan-can-b-m1-color-print.png and l2-w02-story-page-nan-can-b-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w02-story-page-nan-can-b-m1-color-print.png (SHA-256 b0dbcf53d28734885640b9d8c434e215ba0ec3d0c44a650500e7c3b9001fc8da) and line print l2-w02-story-page-nan-can-b-m1-line-print-2-despeckled.png (SHA-256 ea3823e5930aa773bc7af1cf220c31a3f31d2438249943de64fbda9392fa2bef)."
+      ]
+    },
+    {
+      "rowId": "l2-w02-story-page-can-i-b",
+      "version": 1,
+      "colorPrint": "l2-w02-story-page-can-i-b-m1-color-print.png",
+      "linePrint": "l2-w02-story-page-can-i-b-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-40.json, rating 8, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls C1 a-nose defect, C2 a-nut clean, C3 practice-line nose profile clean.",
+        "Reviewed pages batch-40/pages/l2-w02-story-page-can-i-b-m1-color-print.png and l2-w02-story-page-can-i-b-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w02-story-page-can-i-b-m1-color-print.png (SHA-256 81ce5ab83858a6ae32cf49329f67e32a1141bc36e5da10f304149e5581fd10cc) and line print l2-w02-story-page-can-i-b-m1-line-print-2-despeckled.png (SHA-256 6630fc04902136e7b4dc59291ea619b1d08a80e8a7e18f42115c7fd178a3a820)."
+      ]
+    },
+    {
+      "rowId": "l2-w02-story-page-i-can-b",
+      "version": 1,
+      "colorPrint": "l2-w02-story-page-i-can-b-m1-color-print.png",
+      "linePrint": "l2-w02-story-page-i-can-b-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-40.json, rating 8, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls C1 a-nose defect, C2 a-nut clean, C3 practice-line nose profile clean.",
+        "Reviewed pages batch-40/pages/l2-w02-story-page-i-can-b-m1-color-print.png and l2-w02-story-page-i-can-b-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w02-story-page-i-can-b-m1-color-print.png (SHA-256 367ff4dd55a2f4b9082fbe46a5832cb4d0ed0c524869a9401b6d4532cbd4ca7d) and line print l2-w02-story-page-i-can-b-m1-line-print-despeckled.png (SHA-256 87cb7f2c17201e4263c7e0ae27cc9ecb7ad4bd91d53a128b291d5b688fabf800)."
+      ]
+    },
+    {
+      "rowId": "l2-w02-story-page-can-nan",
+      "version": 1,
+      "colorPrint": "l2-w02-story-page-can-nan-m1-color-print.png",
+      "linePrint": "l2-w02-story-page-can-nan-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-40.json, rating 8, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls C1 a-nose defect, C2 a-nut clean, C3 practice-line nose profile clean.",
+        "Reviewed pages batch-40/pages/l2-w02-story-page-can-nan-m1-color-print.png and l2-w02-story-page-can-nan-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w02-story-page-can-nan-m1-color-print.png (SHA-256 0e886d75963f671bf25caef705d9c5900ba311c5ec133faa8c4c8bc4b2207bb5) and line print l2-w02-story-page-can-nan-m1-line-print-despeckled.png (SHA-256 7f1d8224b7c8c244faef0422584876313336a999d3868d00bffc47174d920815)."
+      ]
+    },
+    {
+      "rowId": "l2-w02-story-page-nan-and-i-can",
+      "version": 1,
+      "colorPrint": "l2-w02-story-page-nan-and-i-can-m1-color-print.png",
+      "linePrint": "l2-w02-story-page-nan-and-i-can-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-40.json, rating 9, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls C1 a-nose defect, C2 a-nut clean, C3 practice-line nose profile clean.",
+        "Reviewed pages batch-40/pages/l2-w02-story-page-nan-and-i-can-m1-color-print.png and l2-w02-story-page-nan-and-i-can-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w02-story-page-nan-and-i-can-m1-color-print.png (SHA-256 fccf71503a3b3aeccfb8edb653f112fe50bf76ace1d43a993da1e53544f281d1) and line print l2-w02-story-page-nan-and-i-can-m1-line-print-2-despeckled.png (SHA-256 12533e044eda73b6633514c0726876baab55a20ede28d0ddcdffb55def8e9a5b)."
+      ]
+    },
+    {
+      "rowId": "l2-w02-cover-can-i",
+      "version": 1,
+      "colorPrint": "l2-w02-cover-can-i-m1-color-print.png",
+      "linePrint": "l2-w02-cover-can-i-m1-line-print-4-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-40.json, rating 8, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls C1 a-nose defect, C2 a-nut clean, C3 practice-line nose profile clean.",
+        "Reviewed pages batch-40/pages/l2-w02-cover-can-i-m1-color-print.png and l2-w02-cover-can-i-m1-line-print-4-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w02-cover-can-i-m1-color-print.png (SHA-256 850cd38352fc92382d122d6e1a37997899e297af6329b6d46c368775b8a50f84) and line print l2-w02-cover-can-i-m1-line-print-4-despeckled.png (SHA-256 4d4900bc7f78ccd0584f1b6cca44655f9ae18e8d62f9b9ece49520f4820280bb)."
+      ]
+    },
+    {
+      "rowId": "l2-w02-check-row-apple",
+      "version": 1,
+      "colorPrint": "l2-w02-check-row-apple-m1-color-print.png",
+      "linePrint": "l2-w02-check-row-apple-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer openai/gpt-6-luna#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-42v2.json, rating 9, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls K3 a-nose defect, K1 a-nut clean, K2 practice-line nose profile clean.",
+        "Reviewed pages batch-42/pages/l2-w02-check-row-apple-m1-color.png and l2-w02-check-row-apple-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names.",
+        "The reviewer saw the 1600 x 1600 source l2-w02-check-row-apple-m1-color.png; the color print l2-w02-check-row-apple-m1-color-print.png is its 1500 x 1500 crop.",
+        "Color print l2-w02-check-row-apple-m1-color-print.png (SHA-256 b785996668babed55a225244ec2885d1cb847542a921c36b71015ba27110b146) and line print l2-w02-check-row-apple-m1-line-print-2-despeckled.png (SHA-256 bb1928b8b79ccac5be89dad171820cb0e269afd04dce0262d94cce554178284f).",
+        "Reviewer goal check: One apple reads clearly. The stem and leaf show in both files. The line art has no gray pixels."
+      ]
+    },
+    {
+      "rowId": "l2-w02-check-row-dog",
+      "version": 1,
+      "colorPrint": "l2-w02-check-row-dog-m1-color-print.png",
+      "linePrint": "l2-w02-check-row-dog-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer openai/gpt-6-luna#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-42v2.json, rating 8, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls K3 a-nose defect, K1 a-nut clean, K2 practice-line nose profile clean.",
+        "Reviewed pages batch-42/pages/l2-w02-check-row-dog-m1-color.png and l2-w02-check-row-dog-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names.",
+        "The reviewer saw the 1600 x 1600 source l2-w02-check-row-dog-m1-color.png; the color print l2-w02-check-row-dog-m1-color-print.png is its 1500 x 1500 crop.",
+        "Color print l2-w02-check-row-dog-m1-color-print.png (SHA-256 251b6d349bea806b1d31ec52b22ff529851ef933cae10c1a833533630fc70448) and line print l2-w02-check-row-dog-m1-line-print-3-despeckled.png (SHA-256 9e9ce09e9e7a7f95443e078b007bda2b06c39a2a876c30f1517e9b18c5ce8b83).",
+        "Reviewer goal check: One dog reads clearly. The face, ears, body, legs, and tail show in both files. Its solid nose is allowed. The line art has no gray pixels."
+      ]
+    },
+    {
+      "rowId": "l2-w02-check-row-sun",
+      "version": 2,
+      "colorPrint": "l2-w02-check-row-sun-m2-color-print.png",
+      "linePrint": "l2-w02-check-row-sun-m2-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer openai/gpt-6-luna#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-42v2.json, rating 9, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls K3 a-nose defect, K1 a-nut clean, K2 practice-line nose profile clean.",
+        "Reviewed pages batch-42r2/pages/l2-w02-check-row-sun-m2-color.png and l2-w02-check-row-sun-m2-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "The reviewer saw the 1600 x 1600 source l2-w02-check-row-sun-m2-color.png; the color print l2-w02-check-row-sun-m2-color-print.png is its 1500 x 1500 crop.",
+        "Color print l2-w02-check-row-sun-m2-color-print.png (SHA-256 c50ec8b6e04c9dfc4c85214ae4c4d2401ff534f62bacf9966a24d45d21e9ad49) and line print l2-w02-check-row-sun-m2-line-print-despeckled.png (SHA-256 34471d64d94c09db87b43b31e665467dc08e683d885f6c54a06a5b01519697c2).",
+        "Reviewer goal check: One sun reads clearly. Its round center and eight rays show in both files. The line art has no gray pixels."
+      ]
+    },
+    {
+      "rowId": "l2-w02-check-row-bus",
+      "version": 1,
+      "colorPrint": "l2-w02-check-row-bus-m1-color-print.png",
+      "linePrint": "l2-w02-check-row-bus-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer openai/gpt-6-luna#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-42v2.json, rating 9, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls K3 a-nose defect, K1 a-nut clean, K2 practice-line nose profile clean.",
+        "Reviewed pages batch-42/pages/l2-w02-check-row-bus-m1-color.png and l2-w02-check-row-bus-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names.",
+        "The reviewer saw the 1600 x 1600 source l2-w02-check-row-bus-m1-color.png; the color print l2-w02-check-row-bus-m1-color-print.png is its 1500 x 1500 crop.",
+        "Color print l2-w02-check-row-bus-m1-color-print.png (SHA-256 1b956a7e35adee2430e029cc890542a6f0c4625efef018544095a625e3f2e14b) and line print l2-w02-check-row-bus-m1-line-print-3-despeckled.png (SHA-256 70bd9acb45028890e3c6049588e54b5c30944f391477faf4b8360a66b4eeca30).",
+        "Reviewer goal check: One school bus reads clearly. Windows, wheels, door, and bus body show in both files. The line art has no gray pixels."
+      ]
+    },
+    {
+      "rowId": "l2-w02-check-row-ant",
+      "version": 1,
+      "colorPrint": "l2-w02-check-row-ant-m1-color-print.png",
+      "linePrint": "l2-w02-check-row-ant-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer openai/gpt-6-luna#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-42v2.json, rating 9, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls K3 a-nose defect, K1 a-nut clean, K2 practice-line nose profile clean.",
+        "Reviewed pages batch-42/pages/l2-w02-check-row-ant-m1-color.png and l2-w02-check-row-ant-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "The reviewer saw the 1600 x 1600 source l2-w02-check-row-ant-m1-color.png; the color print l2-w02-check-row-ant-m1-color-print.png is its 1500 x 1500 crop.",
+        "Color print l2-w02-check-row-ant-m1-color-print.png (SHA-256 f709d14af3b1fdd963dd96c01029090a546e55b7a9436b0d39bb3da4ff5a8bf8) and line print l2-w02-check-row-ant-m1-line-print-despeckled.png (SHA-256 fa1131cf62e9f19818603383ec4fb5f1af380508575881d24023bc8ab5269d32).",
+        "Reviewer goal check: One ant reads clearly. Its antennae and six legs show in both files. The line art has no gray pixels."
+      ]
+    },
+    {
+      "rowId": "l2-w02-check-row-fish",
+      "version": 1,
+      "colorPrint": "l2-w02-check-row-fish-m1-color-print.png",
+      "linePrint": "l2-w02-check-row-fish-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer openai/gpt-6-luna#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-42v2.json, rating 9, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls K3 a-nose defect, K1 a-nut clean, K2 practice-line nose profile clean.",
+        "Reviewed pages batch-42/pages/l2-w02-check-row-fish-m1-color.png and l2-w02-check-row-fish-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names.",
+        "The reviewer saw the 1600 x 1600 source l2-w02-check-row-fish-m1-color.png; the color print l2-w02-check-row-fish-m1-color-print.png is its 1500 x 1500 crop.",
+        "Color print l2-w02-check-row-fish-m1-color-print.png (SHA-256 cf3d5045b76d78feb413db1dfd969c8092fd474bf39829000a842f370f26ba83) and line print l2-w02-check-row-fish-m1-line-print-2-despeckled.png (SHA-256 dae1dcea3bb7ce3908c4613e812696b320f2175d433c3d88f0c4037a10039b9d).",
+        "Reviewer goal check: One fish reads clearly. Its fins, tail, eye, and body show in both files. The line art has no gray pixels."
+      ]
+    },
+    {
+      "rowId": "l2-w02-check-row-pig",
+      "version": 1,
+      "colorPrint": "l2-w02-check-row-pig-m1-color-print.png",
+      "linePrint": "l2-w02-check-row-pig-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer openai/gpt-6-luna#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-42v2.json, rating 9, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls K3 a-nose defect, K1 a-nut clean, K2 practice-line nose profile clean.",
+        "Reviewed pages batch-42/pages/l2-w02-check-row-pig-m1-color.png and l2-w02-check-row-pig-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "The reviewer saw the 1600 x 1600 source l2-w02-check-row-pig-m1-color.png; the color print l2-w02-check-row-pig-m1-color-print.png is its 1500 x 1500 crop.",
+        "Color print l2-w02-check-row-pig-m1-color-print.png (SHA-256 52f055b9ac41b64c86228675b7f8c42de08afa404efedc294206f7e107200274) and line print l2-w02-check-row-pig-m1-line-print-despeckled.png (SHA-256 74952457facc3b01acf705f716dbfbb5eb89d36ed33cbeec8a08ed2b56310c6c).",
+        "Reviewer goal check: One pig reads clearly. Its snout, ears, legs, and tail show in both files. The line art has no gray pixels."
+      ]
+    },
+    {
+      "rowId": "l2-w02-check-row-bed",
+      "version": 1,
+      "colorPrint": "l2-w02-check-row-bed-m1-color-print.png",
+      "linePrint": "l2-w02-check-row-bed-m1-line-print-4-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer openai/gpt-6-luna#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-42v2.json, rating 9, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls K3 a-nose defect, K1 a-nut clean, K2 practice-line nose profile clean.",
+        "Reviewed pages batch-42/pages/l2-w02-check-row-bed-m1-color.png and l2-w02-check-row-bed-m1-line-print-4-despeckled.png: equal and equal to the Muse files of the same names.",
+        "The reviewer saw the 1600 x 1600 source l2-w02-check-row-bed-m1-color.png; the color print l2-w02-check-row-bed-m1-color-print.png is its 1500 x 1500 crop.",
+        "Color print l2-w02-check-row-bed-m1-color-print.png (SHA-256 80572b352e21588a51a420b2a8a62626b0e7983623f4111741efebfdbdf1fde4) and line print l2-w02-check-row-bed-m1-line-print-4-despeckled.png (SHA-256 bfd1f1a8de388819910dbd9829520574593d63b9ffdd79d0618489143128061a).",
+        "Reviewer goal check: One bed reads clearly. The pillow, blanket, frame, and legs show. No extra object or text appears. The line art has no gray pixels."
+      ]
+    },
+    {
+      "rowId": "l2-w02-check-row-alligator",
+      "version": 1,
+      "colorPrint": "l2-w02-check-row-alligator-m1-color-print.png",
+      "linePrint": "l2-w02-check-row-alligator-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer openai/gpt-6-luna#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-42v2.json, rating 9, verdict clean, 0 defects. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls K3 a-nose defect, K1 a-nut clean, K2 practice-line nose profile clean.",
+        "Reviewed pages batch-42/pages/l2-w02-check-row-alligator-m1-color.png and l2-w02-check-row-alligator-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names.",
+        "The reviewer saw the 1600 x 1600 source l2-w02-check-row-alligator-m1-color.png; the color print l2-w02-check-row-alligator-m1-color-print.png is its 1500 x 1500 crop.",
+        "Color print l2-w02-check-row-alligator-m1-color-print.png (SHA-256 552c8a1da7b98e1c1c6b5fa420cb60ab2abe8ee1fbcf2cec78a764f7557d558d) and line print l2-w02-check-row-alligator-m1-line-print-3-despeckled.png (SHA-256 bd8b87d8352b9351bb3cdf586f1f9aa924cebbaba0a2cbaf18f8cd167086480e).",
+        "Reviewer goal check: One alligator reads clearly in both files. No extra object or text appears. The line art has no gray pixels."
+      ]
+    }
+  ]
+}
