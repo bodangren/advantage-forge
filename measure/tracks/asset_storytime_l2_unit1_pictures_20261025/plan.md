@@ -2450,6 +2450,99 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       0.09 USD. Running total 7.00 + 0.09 = 7.09 USD.
     - Open: `approved.json` and the stage 2 check are not run for these rows. `w03-fixes` (both rows)
       needs an independent review. A small pale seam at one eye corner of Nan shows in the m4 color.
+  - Week 3 delivery (G1 to G8). Green round of 2026-11-02, claude-code/claude-sonnet-5-5#high.
+    role_base_sha `6ca857bc`, phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash.
+    Coder: none. No Muse call. No change in `src/`, `tests/`, `scripts/`, or `assets/`. No marker
+    changed. Run log: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w03-delivery.log`.
+    Approval list: `docs/storytime/l2-unit1/w03/muse/approved.json` (commit `d005f2e1`; 27 entries; list
+    SHA-256 `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`). Delivery folder:
+    `out/storytime/l2/unit1/w03/delivery-muse-v1` (54 PNG files and `manifest.json`; not in git).
+    - G1 staging: the stage gate of week 3 passed before production (`stage check: pass`, 27 rows,
+      `specs found: 27`, `element paths checked: 94`, `missing element paths: 0`,
+      `page candidates: 0`). The output is in the week 3 staging note above. This round did not run
+      the gate again, because it now sees page candidates (as in the week 2 delivery).
+    - G2 calls: `out/storytime/l2/unit1/w03/muse/costs.tsv` holds 170 page calls, and each call has a
+      `usage_cost` value (0 calls without a value; 10 calls failed and cost 0). The 12 element calls
+      (`muse/elements/costs.tsv`) all have a value.
+    - G3 independent review. The reviewer for the valid batches is
+      `minimax-cn-coding-plan/MiniMax-M3.1-Flash`. Its artifacts are in
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/`. In each valid artifact, the three
+      controls were correct: the known defect (`a-nose` v1) was `defect`, and the nut and the practice
+      line nose were `clean`.
+      - `item-review-batch-43v2.json` (9 pan rows): 8 clean. `nan-can-get-a-pan` defect (the pan read
+        as a hand mirror); fixed later (see pan fix 2) and reviewed again in `-w03-fixes-r5`.
+        Controls: K1 practice-line nose clean, K2 a-nose defect, K3 a-nut clean.
+      - `item-review-batch-44v2.json` (9 paint rows): 7 clean. `it-is-blue` defect (a star on May's
+        collar in the line art); fixed later (B44-BLUE-1) and reviewed again in `-w03-fixes-r5`.
+        `cover-paint` layout-fault: OVERRULED (see the overrules below). Controls: K1 a-nut clean,
+        K2 practice-line nose clean, K3 a-nose defect.
+      - `item-review-batch-45.json` (9 check rows): 9 of 9 clean. Controls: K1 practice-line nose
+        clean, K2 a-nose defect, K3 a-nut clean.
+      - `item-review-w03-fixes-r5.json` (`it-is-blue` m1 line 6, and `nan-can-get-a-pan` m4 line 9):
+        the reviewer found the star gone and the pan correct. It marked both rows `broken-face` only
+        because the line art draws no nose. OVERRULED (see below). Controls: K1 practice-line nose
+        clean, K2 a-nut clean, K3 a-nose defect.
+      - Void, not evidence: `item-review-batch-42.json`, `-42r2.json`, and `-44.json` (Kimi or luna:
+        a control failed); `item-review-w03-fixes.json` (network stop); `-r2` (Sol, hand route: it
+        marked a clean control as defect); `-r3` (DeepSeek: it marked a clean control as defect); `-r4`
+        (mimo: a read tool failure; the facts came from Claude helper sessions).
+      - Route deviation: the test-strategy table names a Kimi reviewer. Kimi passed the known-defect
+        control in batches 42 and 44 (void), so the valid batches use MiniMax. The `reviews` schema of
+        the writer accepts only `kimi` and `person`, so every model review sits in the `notes` of its
+        approval entry, as in weeks 1 and 2.
+      - The reviewers are models. This is independent review. It is not the person count and not
+        acceptance.
+    - Overrules (orchestrator, 2026-11-02). (1) `cover-paint`: the artifact verdict is `defect`
+      (`layout-fault`, no calm top band). Test-strategy section 4.6 says the calm-top rule does not
+      apply to the 12 reader covers, so the row is clean. (2) `it-is-blue` and `nan-can-get-a-pan` in
+      `-w03-fixes-r5`: the `broken-face` mark rests only on the missing nose in the line art. These
+      sentences do not name the nose. Daniel's bar and the Workbooks finding need a face part only when
+      the text names it. G3 control 3 defines "a nose mark" as a small mark that must be `clean`. Weeks
+      1 and 2 were accepted with the same line style. The orchestrator brief had added a sentence
+      ("no nose ... is a broken face") that went beyond the bar, and that sentence caused the mark. The
+      approval entries of the 3 rows carry the artifact verdict and this record in `notes`.
+    - G4 orchestrator spot check (quoted as given): "G4 orchestrator spot check, week 3, 2026-11-02:
+      cover-the-pan (m1, line 6) clean; note: the line art draws no star on Nan's T-shirt where the
+      color shows it below the pan, and Ben has a small lash flick. cover-paint (m3, line 3) clean; note:
+      Pat's tuft reads as a round top knot in the line art; Teacher Kim's head in the top band is
+      overruled under §4.6. it-is-blue (m1, line 6, retry) clean; May's shirt is plain in both files.
+      nan-can-get-a-pan (m4, line 9, retry) clean; the pan reads as a frying pan; the handle end touches
+      the counter corner (note). i-can-get-a-pan (m4, line 8, retry) clean. a-pan-in-a-pan (m5, line 2,
+      retry) clean; the small pan sits inside the big pan. a-pan-on-nan (m3) clean; note: Nan's eyes are
+      closed in the color and open in the line art (the line template asks for pupils). it-is-pip (m2)
+      clean; Pip has floppy ears. check-row-sun (m1, line 3) clean; 8 pointed triangle rays.
+      check-row-pen and check-row-pencil clean; they do not look alike."
+    - G5 and G6 delivery. The command was the G6 command of `test-strategy.md` section 4.5 through
+      `heavy-run.sh`, with `--week 3`. It ran once. Exit code `0` (no exit 75). Last output line:
+      `Delivered 27 rows and 2 batch hashes to
+      /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w03/delivery-muse-v1.` The writer ran
+      its print checks before its first write. The output shows 27 line widths, all 13 px or more
+      (minimum 12 px). No `Skipped` line appeared.
+      - Re-hash: all 54 delivered files equal their approved Muse print by SHA-256
+        (`delivered files equal to approved Muse print: 54 of 54`), and all 54 file hashes appear in
+        `manifest.json` (`file hashes found in manifest: 54 of 54; problems: 0`). The folder has 54 PNG
+        files and `manifest.json`. The manifest has 27 jobs and the 2 batches `w03/color` and
+        `w03/lineart`.
+      - `sha256sum out/storytime/l2/unit1/w03/delivery-muse-v1/manifest.json`:
+        `24213647b0f1b92cdb891746cdf6181ff7f20f306c51d256fec150c38d5c273b`.
+      - `version` of an entry is the Muse version of the print: m1 for 18 rows, m2 for 4 rows
+        (`it-is-pip`, `a-nap-in-the-pan`, `can-i-get-the-pan`, `i-can-get-the-pan`), m3 for 2 rows
+        (`cover-paint`, `a-pan-on-nan`), m4 for 2 rows (`nan-can-get-a-pan`, `i-can-get-a-pan`), and m5
+        for 1 row (`a-pan-in-a-pan`).
+    - G7 person review: pending. No person has looked at week 3, and the PM has relayed no answer. No
+      entry has `reviews.person`. The delivery is "delivered, awaiting person review". Contact page:
+      `out/storytime-review/w03-contact/index.html` (27 cards, 54 previews in `prev/`, 108 `src` and
+      `href` references, 0 missing). Phone sheets for the PM and Daniel:
+      `out/storytime-review/w03-contact/w03-sheet-1-of-3.jpg`, `w03-sheet-2-of-3.jpg`, and
+      `w03-sheet-3-of-3.jpg` (2000 x 7698 px, 9 rows each; sheet 3 viewed with the read tool).
+    - G8 cost report: `usage.cost total (USD): 1.60` for the 170 page calls of week 3, and `0.12` for
+      the 12 element calls, so `1.72` for week 3. A short script summed the `usage_cost` column. This
+      round made no call. Running total of the track: 9.70 USD (the figure in the run log of the week 5
+      batch 3 round).
+    - Open: Daniel's person review of week 3. Known small marks stay as in the G4 record and the
+      reviewer notes in the approval entries (Ben's lumpy or clumped hair in some colors, a pale seam at
+      one eye corner of Nan in the `nan-can-get-a-pan` color, the bus ground shadow, the fish smile mark).
+      This block makes no task `[x]`.
   - Week 4 staging (inputs only; no page candidate until Daniel's week 1 answer; cast looks pending).
     Green round of 2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `0755ef8d`,
     phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model
