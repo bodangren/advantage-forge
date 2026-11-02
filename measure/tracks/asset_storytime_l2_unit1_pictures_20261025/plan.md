@@ -2775,6 +2775,49 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       crown; a viewer may read it as water or juice (default: accept; the color shows white milk). The
       nap page line art shows a window curtain that the color has not, and one pigtail of Pam. The
       fish line art has wavy-edged fins, as in the color. The 9 check rows of week 4 are now made.
+  - Week 4 line-art fixes (B47-MAN-1, B47v4-HAIR-1, B47v4-STAR-1, B47v4-DRESS-1). Green round of
+    2026-11-03, claude-code/claude-sonnet-5-5#high. role_base_sha `997ffc31`, phase_base_sha
+    `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none. No
+    marker changed. Spec commit `7eee7f7c` (only the `linePrompt` of 4 specs in
+    `docs/storytime/l2-unit1/w04/muse/`). Run log:
+    `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w04-fixes.log`. Review folder:
+    `out/storytime-review/batch-47r2/` (`brief.md`, `pages/` 16 files, `refs/` 5 files, no control
+    rows). Green did not rate its own work. No change in `src/`, `tests/`, `scripts/`, `assets/`, or
+    `approved.json`. All 4 colors (m1) stay as they were.
+    - `pam-is-on-a-man` (B47-MAN-1, blank face). Green added the sentence: the sleeping man's face shows
+      two closed-eye curves, one small nose, and one smiling mouth curve. Two batches (tries 4 to 8; the
+      first try 5 got HTTP 502 and was repeated). Chosen: line try 6. Tries 4, 5, 7, 8 draw Pam with two
+      round buns, so Green rejected them. In try 6 the face has eye curves, a short nose stroke, and a
+      mouth curve; Pam keeps the fringe and two yarn pigtails. The face is weaker than in tries 4 and 5.
+    - `this-is-the-man` (B47v4-HAIR-1, no hairline). Green added the sentence: the man's short black hair
+      is one closed shape with a clear hairline across the forehead and above the ears. One batch
+      (tries 4 to 6). Chosen: line try 5 (a hairline curve across the forehead and above the ear, plain
+      eyes, an open smile, Pam with a fringe and two yarn pigtails). Try 4 adds an eyelash tick to the
+      man; try 6 gives Pam round buns.
+    - `this-is-pam` (B47v4-STAR-1, star above the doll; doll with buns). Green added two sentences: the
+      doll covers Nan's star, so draw no star on the page; Pam's hair is yarn, a fringe and two yarn
+      pigtails, never buns. One batch (tries 4 to 6). Chosen: line try 4 (no star, a plain T-shirt with a
+      collar, a curly yarn fringe, two yarn pigtails, two button eyes). Tries 5 and 6 also show no star,
+      but try 5 has empty eye rings and try 6 has bubble pigtails and dress buttons.
+    - `is-this-pam` (B47v4-DRESS-1, dress corner unclear). Green added the sentence: below the blanket
+      edge, the corner of Pam's dress with its frayed hem is one clear closed shape, next to the yarn
+      hair and the small foot. Two batches (tries 4 to 9). Chosen: line try 7 (the fewest stray lines;
+      a fold line, the frayed hem, the yarn hair, a small foot). All 6 tries show the same layout. No
+      try draws the dress corner as a fully closed shape.
+    - Writer check (`inspectLineArtPng`, 4000 x 3000, `/tmp/opencode/w04fix-check.mts`, edge frame by
+      `/tmp/opencode/w04fix-edge.mjs`): `pam-is-on-a-man` try 6 PASS 16 px, ink 7.35 percent, edge 97.66
+      percent white. `this-is-the-man` try 5 PASS 16 px, ink 7.62 percent, edge 97.94 percent.
+      `this-is-pam` try 4 PASS 16 px, ink 7.94 percent, edge 97.76 percent. `is-this-pam` try 7 PASS 19
+      px, ink 8.18 percent, edge 94.54 percent. All color prints are PNG, 8-bit, sRGB, 3 channels,
+      4000 x 3000. Nothing needed is cut at a print edge. The toy box lid and the window curtain touch
+      or pass the left or right print edge in some rows (background only).
+    - Calls: 17 line calls logged in `out/storytime/l2/unit1/w04/muse/costs.tsv` (one HTTP 502 logged
+      with cost 0). No color call. Round cost 0.17 USD. Running total 9.70 + 0.17 = 9.87 USD.
+    - Open: `approved.json` and the stage 2 check are not run for these rows. `batch-47r2` needs an
+      independent review. In `pam-is-on-a-man` the man's nose is a short stroke, and the line art adds a
+      window curtain and a table lamp that the color has not. In `is-this-pam` the dress corner is still
+      a small frayed region that is open toward the foot; a reviewer must judge if it reads as a dress.
+      In `this-is-pam` Pam's legs end in short toe lines.
   - Week 5 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
     2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `4af2b605`, phase_base_sha
     `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.

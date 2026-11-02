@@ -1,0 +1,33 @@
+provisional; role_base_sha 997ffc31; phase_base_sha fc76c272; Step 1: start w04 fixes (4 line-art rows)
+Step 2: spec commit 7eee7f7c (4 linePrompts)
+Step 3: 4 rows x 3 tries called (tries 4,5,6; man try 5 failed HTTP 502). Next: view and writer check.
+Step 4: man tries 4 (face has nose hook + mouth arc, but doll has round buns = wrong) and 6 (doll right, face weak: eyes + one short nose dash, no clear mouth). Batch 2 for man started (tries 5,7,8).
+Step 5: man row batch 2 (tries 5,7,8, 3 calls): all dolls with round buns. Picked try 6 (doll fringe + pigtails; face has eyes, nose dash, mouth arc); extra curtain and lamp in the line art. this-is-the-man: try 6 doll has round buns; tries 4,5 doll ok.
+Step 6: this-is-the-man: picked try 5 (hairline, doll fringe + pigtails, no eyelash tick); this-is-pam: picked try 4 (no star, yarn fringe + two yarn pigtails). Next: is-this-pam.
+Step 7: is-this-pam batch 1 (tries 4,5,6): no try shows a clearly closed dress shape; try 5 has a closed round foot. Batch 2 started (tries 7,8,9).
+Step 8: is-this-pam batch 2 (tries 7,8,9): similar. Picked try 7 (fewest stray lines; hem with fold, foot, yarn hair). Next: writer check on picks (m1 line 6 man, 5, 4, 7).
+Step 9: writer check PASS: man 6 (16 px, ink 7.35, edge 97.66); this-is-the-man 5 (16 px, 7.62, 97.94); this-is-pam 4 (16 px, 7.94, 97.76); is-this-pam 7 (19 px, 8.18, 94.54). Color prints PNG 8-bit sRGB 3ch 4000x3000. Next: review folder batch-47r2.
+Step 10: review folder out/storytime-review/batch-47r2/ built (brief, 16 pages, 5 refs). Plan note added under Week 4 notes. Round: 17 line calls, 0.17 USD, running total 9.87 USD.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2, week 4 line-art fixes (marker unchanged)
+role_base_sha: 997ffc31
+phase_base_sha: fc76c272
+spec_commits: 7eee7f7c
+plan_evidence_commit: see git log (the commit after 7eee7f7c that holds the plan note and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; image=meta/muse-image; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: l2-w04-story-page-pam-is-on-a-man color m1 + line try 6 (PASS 16 px, ink 7.35 percent, edge 97.66 percent); l2-w04-story-page-this-is-the-man color m1 + line try 5 (PASS 16 px, ink 7.62, edge 97.94); l2-w04-story-page-this-is-pam color m1 + line try 4 (PASS 16 px, ink 7.94, edge 97.76); l2-w04-story-page-is-this-pam color m1 + line try 7 (PASS 19 px, ink 8.18, edge 94.54); color prints PNG 8-bit sRGB 3 channels 4000x3000
+open_items: approved.json and stage 2 check not run for the 4 rows; batch-47r2 needs an independent review; pam-is-on-a-man try 6 nose is a short stroke, line adds a window curtain and a table lamp that the color has not; is-this-pam dress corner is still a small frayed region open toward the foot (no try drew it fully closed); this-is-pam doll legs end in toe lines; background props touch the print edge in some rows
+round_cost_usd: 0.17 (17 line calls; one HTTP 502 at cost 0)
+running_total_usd: 9.87
+batch: out/storytime-review/batch-47r2/
+handoff: Review out/storytime-review/batch-47r2/ against Daniel's bar for the 4 rows. Ask the reviewer to judge (1) pam-is-on-a-man: does the face read as non-blank (nose and mouth) and is Pam right (yarn pigtails)? (2) this-is-the-man: does the man read as having hair? (3) this-is-pam: no star on the page, yarn hair on Pam. (4) is-this-pam: does the frayed dress corner read as a dress? Default if the review rates (4) a defect: one more line batch with a stronger dress sentence, or one new color m2 where the red dress corner is larger and clearly outside the blanket (the cause is the small size of the corner in the color). Default now: no further Muse call.
+finding_ids: F1=B47-MAN-1; F2=B47v4-HAIR-1; F3=B47v4-STAR-1; F4=B47v4-DRESS-1
+dispositions: F1=FIX; F2=FIX; F3=FIX; F4=FIX
+END_MEASURE_AGENT_RESULT
