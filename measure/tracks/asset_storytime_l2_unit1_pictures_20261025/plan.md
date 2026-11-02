@@ -1343,9 +1343,29 @@ rows T142 to T151, and the closeout gate for 30 jobs.
 - [ ] Task: (Deferred: replaced by the Muse path, Daniel 2026-11-01 09:34; see the spec amendment 2026-11-01.) Run automated checks on every color and line-art file and both model pre-checks on
   every color candidate. Correct each failed picture under a new twin version and repeat the
   checks. Attach the raw model outputs.
-- [ ] Task: Send the count review and the line-art look to the PM. The PM routes them to Daniel or
+- [x] Task: Send the count review and the line-art look to the PM (person review recorded 83c8b7ce). The PM routes them to Daniel or
   his named reviewer. Record the person, time, counts, and verdict for all 30 color and 30
   line-art pictures. Do not label model results acceptance.
+  Person review (Daniel, 2026-11-02 07:00 ICT):
+  - Person: Daniel.
+  - Channel: Google Tasks `NG96V3Z5eXZLX2M3ajFtcA`, a reply to the PM note
+    `b2NCSktabW84dTZhMWVMWQ`. The PM relayed the reply at about 07:0x ICT on 2026-11-02.
+  - His words, verbatim: "Both ok".
+  - Scope: the 3 phone contact sheets of delivery manifest `00ea0c5b`
+    (`out/storytime-review/w01-contact/w01-sheet-1..3-of-3.jpg`).
+  - Rows: 26 rows, so 26 color pictures and 26 line-art pictures. The 26 rows are the 30 week 1
+    rows without the 4 v2 rows below. Row ids (prefix `l2-w01-`): `story-page-hello-i-am-pat`,
+    `-may`, `-sam`, `-mia`, `-nan`, `-ben`, `-your-teacher`, `-pip`; `cover-hello`;
+    `story-page-a-nest`, `story-page-a-nut`, `story-page-a-neck`, `story-page-a-nurse`,
+    `story-page-a-nest-and-a-nut`; `cover-nan-can-nod`; `check-row-nest`, `-cat`, `-fish`, `-dog`,
+    `-nose`, `-bus`, `-hat`, `-cup`; `practice-line-nose`, `practice-line-nest`,
+    `practice-line-nut`.
+  - Verdict: ok.
+  - The 4 v2 rows are `a-net`, `check-row-net`, `a-nose`, and `nan-can-nod` (delivery-muse-v2
+    manifest `d3eec18c`). They get their person look after the Workbooks stage 2 recheck, by PM
+    order. The PM sends Daniel one small sheet of them. This look does not hold Phase 4.
+  - The model reviews are model evidence. They are not acceptance. Only this person review is
+    acceptance of the 26 rows.
   Week 1 contact sheet (2026-11-01): `out/storytime-review/w01-contact/index.html`. It shows
   30 cards in picture-list order, each with a color preview and a line-art preview (60
   previews in `prev/`). The delivered files are not changed. The page has an OK box and a
@@ -5064,3 +5084,23 @@ Replaced by the amendment of 2026-11-01 (Muse path).
   2026-11-02; Workbooks owns the stage 1 reader change. RCV2-3 (the nit on `contract.md`) is not
   part of this change. Facts changed: week 1 has a second delivery folder, `delivery-muse-v2`, with
   4 rows at version 2. No task marker changed.
+- 2026-11-02 (about 07:0x ICT): The PM relayed Daniel's answer (Google Tasks
+  `NG96V3Z5eXZLX2M3ajFtcA`, 07:00 ICT, a reply to note `b2NCSktabW84dTZhMWVMWQ`). His exact words:
+  "Both ok". The note asked two things. (1) The look of the 7 pending cast sheets in
+  `out/storytime-review/w04-staging/pending-cast-sheets.jpg` (Lily, Tom, Mom, Dad, Grandma,
+  Grandpa, and Nan's dad; Drive copy md5 `42bcee16`). (2) His week 1 look at the 3 contact sheets
+  (manifest `00ea0c5b`), without the 4 redone rows `a-net`, `check-row-net`, `a-nose`, and
+  `nan-can-nod`. This session recorded both. The week 1 person review for the 26 rows is under the
+  Phase 3 task "Send the count review and the line-art look to the PM". The 27 week 4 and week 7
+  specs (20 page specs and 7 cast sheet specs) now carry `"castLook": "approved"` and a
+  `castLookApproval` field (commit `83c8b7ce`). The `goal` text of the 7 cast sheet specs still says
+  "Pending look"; it is a Muse prompt field and this session did not change it. The person look
+  of the 4 v2 rows comes after the Workbooks stage 2 recheck. The PM sends Daniel one small sheet
+  of them. Default: that look does not hold Phase 4. Facts changed: week 1 person review done for
+  26 rows; cast look approved for 7 characters.
+- 2026-11-01 (17:2x ICT) and 2026-11-02 (06:18 ICT), PM confirmations: (a) week 8 rows are out of
+  scope until the PM assigns them. (b) The cover is `l2-cover-v1.png`, class B, color only. (c) The
+  "ten" check row shows ten red balls. (d) A missing Nan eyelash mark in a line file is a small
+  mark, not a defect. (e) `cover-hello` with white pad bands is acceptable. (f) Line prints as
+  8-bit grey PNG files with only the values 0 and 255 are acceptable. Facts changed: acceptance
+  defaults for review only.
