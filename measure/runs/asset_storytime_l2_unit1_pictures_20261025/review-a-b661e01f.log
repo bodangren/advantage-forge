@@ -1,0 +1,42 @@
+Review A (correctness) at b661e01f. Track: asset_storytime_l2_unit1_pictures_20261025. Phase: P3 (Phase 3: Week 1 pictures). Scope: the ADV remediation change e18baa25 plus its context commits after the adversarial run b142e643.
+
+Verdict: pass. No blocking findings. Two nonblocking nits.
+
+What I verified, in the audited file src/storytime/muse-delivery.ts at b661e01f:
+1. The duplicate row-id check (lines 340-346) runs before the approval loop, the list pin, the name checks, every read of the Muse prints, and every write. The only earlier I/O is the approval-list parse, which has no side effect. The refusal names the id: "The picture list holds the row <id> twice." (line 344).
+2. The check cannot refuse a valid list. It throws only on a repeated row.id. The live list at ../Workbooks/content/storytime/l2/print/pictures.json holds 196 rows with 196 distinct ids; week 1 holds 31 distinct ids.
+3. The symlink root check (lines 348-351) runs lstatOrNull before mkdir (line 488). A missing root returns null, so the writer creates it later. A real directory passes. A symlink root throws with the path (line 350). ADV11's control (new folder) and ADV12 (populated folder) prove the normal paths still work.
+4. ADV9 at tests/storytime-muse-delivery-adversarial.test.ts:567 drives two rows with one id and expects a refusal that names the row, writes no file, and creates no folder. The mutation log green-adv-fix-mutation.log shows ADV9 failing when the check is removed: "The writer resolved, but this test expects a rejection." and "Tests 1 failed | 11 skipped (12)". The test can fail, so no vacuous pass exists.
+5. No other behavior changed. e18baa25 touches only src/storytime/muse-delivery.ts with 12 added lines and no deletion. The four other commits after b142e643 touch docs and measure files only.
+6. Plan claims match the logs. plan.md:5199-5224 repeats jr-green-adv-fix.log exactly: vitest exit 0, 5 files, 190 passed, tsc owned 0 of 38, mutation ADV9 failed then restored.
+
+Nits:
+- RA-P3ADV-1: no test drives a symlinked delivery root. A regression that removes the guard would still pass all 190 tests. Owner: Green, or a later security review.
+- RA-P3ADV-2: plan.md:5212 says the symlink change is 3 lines. The patch adds 4 lines for that guard plus a blank line. Owner: Green.
+
+Limitation: the shell refused node and vitest, so I did not re-run the suite. The 190-pass claim rests on the green log, the mutation log, the it() counts, and code reading.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-review-a-correctness
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 (Phase 3: Week 1 pictures)
+task: re-review of ADV-P3-01 and ADV-P3-NB1 remediation
+role_base_sha: b661e01f
+phase_base_sha: 15a7bf0b
+audited_head_sha: b661e01f
+commits: e18baa25 (production); b661e01f (plan evidence)
+models: green=claude-code/claude-sonnet-5-5#high; adversarial=DeepSeek; review-a=opencode-go/mimo-v2.6-flash
+verdict: pass
+blocking_findings: 0
+nonblocking_findings: 2 (RA-P3ADV-1 symlinked root has no test; RA-P3ADV-2 plan miscounts the guard as 3 lines)
+tasks_flipped_x: none
+tasks_flipped_b: none
+vitest: not re-run in this session (shell permission); Green log records exit 0, Tests 190 passed (190)
+tsc: not re-run in this session; Green log records exit 2, owned 0, total 38
+mutation_proofs: remove duplicate row id check -> ADV9 failed ("The writer resolved, but this test expects a rejection."), restored; read from green-adv-fix-mutation.log
+new_files: review-a-b661e01f.json, review-a-b661e01f.log
+handoff: The remediation is correct. ADV-P3-01 and ADV-P3-NB1 are fixed. The two nits go to Green as nonblocking. No user decision is required.
+finding_ids: none
+dispositions: none
+END_MEASURE_AGENT_RESULT

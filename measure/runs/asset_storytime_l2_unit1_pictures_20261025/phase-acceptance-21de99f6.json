@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Phase 3 passes acceptance at 21de99f6. All 5 Phase 3 tasks are [x] with a SHA in the phase range, and the 4 replaced 3D-path tasks are deferred in 60892a38. Reviews A, B, C and adversarial testing pass at b661e01f, and the only later change is one adversarial test file (ADV13). The orchestrator ran the gates at 21de99f6: vitest exit 0 with Tests 191 passed (191), and tsc with owned errors 0 and total 38. Manifest hashes match the plan, and the human review is recorded without a model result labeled as acceptance.",
+  "phase_base_sha": "15a7bf0b2a59b8137a05805666df6736dc256167",
+  "role_base_sha": "21de99f6f5a1fc97fd2da1c7d98e47dbf0031589",
+  "audited_head_sha": "21de99f6f5a1fc97fd2da1c7d98e47dbf0031589",
+  "audited_head": "21de99f6f5a1fc97fd2da1c7d98e47dbf0031589",
+  "head_at_start": "21de99f6f5a1fc97fd2da1c7d98e47dbf0031589",
+  "head_at_finish": "21de99f6f5a1fc97fd2da1c7d98e47dbf0031589",
+  "head_current": true,
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "PA3-N1 (stale plan text, A5 class): plan.md lines 1373-1374 say 'This task stays open until a person records the review.' under the task 'Send the count review and the line-art look to the PM', which is [x] with person review 83c8b7ce. Green should delete the sentence at closeout.",
+    "PA3-N2 (stale plan text): plan.md lines 1558-1559 and 1595 say the Muse writer task 'stays [~]', but the task is [x]. Line 5212 says 'No test covers it' for the symlinked delivery root, but ADV13 (21de99f6) covers it. The task header lists Green f41fe108 and 44c2ec84 only; f1e797cb (fileVersion) and e18baa25 (ADV-P3-01 fix) appear in later narrative lines. The plan records 190 tests at e18baa25 (true then) and has no 191 or ADV13 line. Closeout should add one line for ADV13 and the 191 count.",
+    "PA3-N3 (open review items): RA-P3ADV-2 (plan says '3 lines', patch adds 4), RB12-01 (parent symlink under out/ still redirects mkdir, Low), and RB12-03 (lstat and mkdir are not atomic, Nit) stay open. RA-P3ADV-1 and RB12-02 (no test for the symlinked delivery root) are closed by ADV13. Record RB12-01 and RB12-03 as tech-debt candidates at closeout.",
+    "PA3-N4 (RC-P3-1): contract.md has no entry for the deliver command (contract.md:24-25 names only the fileVersion rule). Review C routed an owner question with default A: Green adds the entry in its next commit. No owner answer is in the evidence. The item does not block acceptance.",
+    "PA3-N5 (prerequisite HEAD): Reviews A, B, C and adversarial testing target b661e01f, not 21de99f6. git diff --stat b661e01f 21de99f6 shows one file: tests/storytime-muse-delivery-adversarial.test.ts, 28 added lines (ADV13). No source file changed, so the review results stay valid for the implementation.",
+    "PA3-N6 (human evidence carry): the 4 v2 rows (a-net, check-row-net, a-nose, nan-can-nod) have no person look yet. The PM order says the look follows the Workbooks stage 2 recheck and does not hold Phase 4. Phase 4 must not label those rows person-accepted until Daniel records the look."
+  ],
+  "task_verification": [
+    "Task 'Pin picture specification v1 and list v3' [x] first line: Red 6c55fac1, d7031d18; Green 70cb6e37, 3a5ef00d, 7c3b7db7. All five SHAs are in 15a7bf0b..21de99f6.",
+    "Four tasks are '[ ] (Deferred: replaced by the Muse path, Daniel 2026-11-01 09:34)': 'Build and independently review the PM-approved missing cast', 'Render the 30 week 1 rows', 'Run automated checks on every color and line-art file', and 'Deliver the week 1 manifest, contact sheet, review logs, and ledger'. The deferral commit is 60892a38, in range.",
+    "Task 'Send the count review and the line-art look to the PM' [x] first line: person review 83c8b7ce (in range). The record also has f8d6e410.",
+    "Task 'Add failing tests for the Muse week 1 delivery manifest (Red)' [x] first line: 66d0e57d, 3509efd5 (in range).",
+    "Task 'Implement the Muse week 1 delivery manifest writer (Green)' [x] first line: f41fe108, 44c2ec84, reviews pass at d06690a0 (in range). Later Green commits f1e797cb and e18baa25 are in the plan narrative.",
+    "Task 'Deliver the week 1 Muse batch to the PM' [x] first line: approval list 37087467, 53de545c (in range).",
+    "Phase 3 has 5 [x] tasks and 4 deferred tasks, no [~] task. The orchestrator-run checker lists only Phase 4 and Phase 5 as incomplete, so Phase 3 is complete."
+  ],
+  "evidence": [
+    "HEAD: git rev-parse --short=8 HEAD returned 21de99f6 at start and at finish. git status for src, tests, scripts, docs/storytime, and the track folder returned no change in the owned paths.",
+    "Orchestrator-run gate 1 (runner: the orchestrator, 2026-11-02, HEAD 21de99f6 before the run): heavy-run.sh vitest on the five Storytime test files with --maxWorkers=1. Exit 0. Test Files 5 passed (5). Tests 191 passed (191). Duration 301.43 s. This equals 190 (Green log at e18baa25) plus ADV13.",
+    "Orchestrator-run gate 2 (runner: the orchestrator): heavy-run.sh tsc --noEmit -p tsconfig.json with --max-old-space-size=2560. Exit 2. Total 38 errors in assets/ (airship 7, longship 1, merchant-cart 1, mushroom-cap 3, plank 6, rowboat 8, storytime-crayon-box 1, storytime-nut 3, storytime-picture-book 1, waterskin 3, wool 1), tests/games/castle-defense/rules.adversarial.test.ts 2, and tests/part.test.ts 1. Owned errors (src/storytime/, scripts/storytime*, tests/storytime-*) 0. The total equals the 38 recorded before this phase and is not more than 38.",
+    "Orchestrator-run gate 3 (runner: the orchestrator): measure_interphase_checks.py status. incomplete_phases 2: Phase 4 (3/3 remaining) and Phase 5 (1/2 remaining). next_phase is Phase 4. Phase 3 is not listed as incomplete.",
+    "Manifest hashes by sha256sum at 21de99f6 (this role): delivery-muse-v1/manifest.json 00ea0c5b06d18e3f54cbceed9caa943100c0711bb515c44561eb46b7e03ed369 and delivery-muse-v2/manifest.json d3eec18ce7c94b94ed5b0751df164578558ad44f04bebe7b4b371a3ed213796a. Both equal the values in plan.md lines 1373, 5158, and 5173. The two folders have not changed since delivery.",
+    "Human evidence: plan.md lines 1349-1368 and 5178-5191 record Daniel's words 'Both ok', the channel, the time (07:00 ICT 2026-11-02), the 26 v1 row ids, and the 7 cast looks. The plan states that model reviews are 'model evidence' and 'not acceptance'. The v2 manifest holds only model-pre-check reviews (verdict pass at its lines 265, 663, 849, 1141) and no person entry. No model result is labeled human acceptance.",
+    "Picture model reviews: plan.md lines 5136-5137 record batch 39, mimo-v2.6-flash, 4 rows clean (ratings 8, 9, 8, 8).",
+    "Audit results: adversarial-87ca5dab.json failed (ADV-P3-01), adversarial-b661e01f.json passes with Tests 42 passed (42) at 21de99f6. review-a/b/c-b661e01f.json all have status pass. ADV-P3-01 and ADV-P3-NB1 are resolved by e18baa25.",
+    "PM decision A (03:1x ICT 2026-11-02, Workbooks matches by row id) is recorded verbatim at plan.md lines 5128-5135, and contract.md:24-25 holds the fileVersion rule (08edc06a).",
+    "A5: the plan claims Tests 190 passed (190) at e18baa25; the Green log shows it, and the gate at 21de99f6 shows 191 passed. No plan line claims a false count. A3, A4, A6, A7: not examined in detail; the product-only Phase 3 diff changes no contract-test, banned-term filter, or tracks registry file that this role saw in the src, scripts, and tests stat. Unrelated games test files in the range belong to other tracks.",
+    "UX browser review: not applicable. Phase 3 delivers files and a writer. No UI changed in the owned paths.",
+    "Earlier note: this role first returned inconclusive because its shell tool refused heavy-run.sh and python3. The orchestrator then ran the three gates and supplied the output above. This role did not run those three gates itself."
+  ],
+  "commands": [
+    "git rev-parse --short=8 HEAD; 21de99f6",
+    "git log --format='%h %s' 15a7bf0b..21de99f6 | grep <17 SHAs>; all 17 SHAs found",
+    "git diff --stat b661e01f 21de99f6; 1 file, 28 insertions",
+    "sha256sum out/storytime/l2/unit1/w01/delivery-muse-v1/manifest.json out/storytime/l2/unit1/w01/delivery-muse-v2/manifest.json; both match the plan",
+    "Run by the orchestrator: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery-adversarial.test.ts tests/storytime-muse-delivery.test.ts tests/storytime-book-pictures.test.ts tests/storytime-picture-rows.test.ts tests/storytime-stage-check.test.ts --maxWorkers=1'; exit 0; Test Files 5 passed (5); Tests 191 passed (191); 301.43 s",
+    "Run by the orchestrator: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=2560 node_modules/.bin/tsc --noEmit -p tsconfig.json'; exit 2; total 38; owned 0",
+    "Run by the orchestrator: python3 ~/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py status --repo . --track asset_storytime_l2_unit1_pictures_20261025; incomplete_phases 2 (Phase 4, Phase 5); Phase 3 not listed"
+  ],
+  "closeout_carry": [
+    "PA3-N1, PA3-N2: correct stale plan text and add the ADV13 and 191 line.",
+    "RB12-01, RB12-03: tech-debt candidates.",
+    "RA-P3ADV-2: correct the '3 lines' claim.",
+    "RC-P3-1: add the deliver entry to contract.md (default A).",
+    "PA3-N6: person look of the 4 v2 rows is still open."
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/phase-acceptance-21de99f6.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/phase-acceptance-21de99f6.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "handoff": "Phase 3 passes acceptance at 21de99f6. No blocker routes to another role. The orchestrator can run the role gate and then ask the PM for the Phase 3 checkpoint. Closeout must carry PA3-N1 to PA3-N6. The person look of the 4 v2 rows stays open and does not hold Phase 4. No owner decision is required.",
+  "facts_changed": [
+    "Storytime Phase 3 passed phase acceptance at 21de99f6 with 191 phase-gate tests."
+  ]
+}

@@ -1,0 +1,106 @@
+Review B (security and data handling) · P3 · asset_storytime_l2_unit1_pictures_20261025
+Audited HEAD: b661e01f. role_base_sha: b661e01f. phase_base_sha: 15a7bf0b.
+Change: e18baa25 (src/storytime/muse-delivery.ts, +12 lines). Evidence commit: b661e01f.
+Model: opencode-go/deepseek-v4.1-flash.
+
+Scope and provenance
+- git rev-parse HEAD returned b661e01f946dc4ef6ebab78a64985b6c6a58035e. That value equals role_base_sha
+  and audited_head_sha, so the audited HEAD is current.
+- git rev-parse 15a7bf0b returned 15a7bf0b2a59b8137a05805666df6736dc256167, the phase base.
+- git status lists uncommitted edits under .claude/skills/, AGENTS.md, bench/, and measure/ only.
+  src/storytime/muse-delivery.ts has no uncommitted edit.
+- Every scoped read used git show b661e01f:<path>. I ran no vitest and no live probe.
+- security_applicability is "applicable": the delta touches a file writer that copies content and
+  writes a manifest.
+
+What the change does
+1. Duplicate row id refusal. A new Set holds each row id of options.rows
+   (src/storytime/muse-delivery.ts:342-346). A second row with one id stops the run with
+   "The picture list holds the row <id> twice."
+2. Delivery root symlink refusal. The writer lstats the resolved delivery root
+   (src/storytime/muse-delivery.ts:348-351). A symlink stops the run with
+   "The delivery folder <path> is a symlink; the writer refuses it."
+
+Ordering, which is the main control
+- The approval file is read first. That is a read, not a write.
+- The duplicate check runs at line 344. The symlink check runs at line 349.
+- The approval-entry loop runs at line 353. The delivered-name loop runs after it. The print reads
+  run after that. The manifest compare runs after that.
+- The first write is mkdir at line 488. The copies use the wx flag at line 489. The manifest uses
+  the wx flag at line 490.
+- Both refusals therefore run before the first read of a print and before the first write. A refused
+  run leaves the delivery folder unchanged.
+- lstatOrNull (lines 160-167) returns null only for ENOENT. Every other error stops the run before
+  any write.
+
+ADV-P3-01 (blocking) is closed
+- The writer now refuses a duplicate picture-list row id. assembleManifest pairs a candidate to a
+  job by jobId, so the two-jobs-for-one-id state is now unreachable through the writer.
+- The mutation log green-adv-fix-mutation.log removes the check and ADV9 fails. The check is
+  load-bearing.
+- jr-green-adv-fix.log records vitest exit 0 with 190 of 190 tests passed across 5 files. The earlier
+  count was 178 tests in 4 files, so the 12 adversarial probes are green.
+
+ADV-P3-NB1 (low) is closed for the direct case
+- A delivery root that is itself a symlink is refused before any write.
+- A symlink at a parent part of the path still bypasses the check. See RB12-01.
+
+Findings
+- Blocking: none.
+- RB12-01 Low, parent symlink residual. The check lstats only deliveryRoot
+  (src/storytime/muse-delivery.ts:348-351). resolveMuseDeliveryPaths confines both paths by
+  path.resolve only (src/storytime/muse-delivery.ts:130-146). If out/pics is a symlink to another
+  folder and --delivery is out/pics/week1, lstat returns ENOENT, lstatOrNull returns null, and mkdir
+  with recursive follows the parent link (line 488). The writer then copies through the link. The
+  impact is low for this local tool. A local actor must create the link. The approval list cannot
+  create it. Every delivered name is a plain file name. An actor with write access to out/ can write
+  these files directly. A realpath comparison of the deepest existing part of deliveryRoot against
+  the realpath of out/ would close it.
+- RB12-02 Low, the symlink root refusal has no test and no mutation proof. The plan evidence states
+  this in plain words ("No test covers it; the change is 3 lines"), so the plan does not overstate
+  the state. The test count supports that statement: 190 equals 178 plus 12. The control has no
+  regression guard. One probe would close it.
+- RB12-03 Nit, the root check and the first write are not atomic. A link created at deliveryRoot
+  between line 348 and line 488 is followed. The wx flag protects a file target, not a directory.
+  The window needs a concurrent local actor.
+
+Data handling and secrets
+- The two new messages hold a row id and a resolved out/ path. Neither is a secret.
+- The change adds no network call, no credential, and no environment read. I opened no .env.local
+  file.
+- The change copies no new field into the manifest and prints no file bytes.
+- readMuseFile keeps its three refusals: a symlink, a real path outside the Muse folder, and a
+  non-file (src/storytime/muse-delivery.ts:247-259).
+
+A2 (consent-blind publish gate): not triggered. The change flips no draft to published state. The
+manifest candidate status stays "ready". The gate is the approval entry plus the review fields, and
+the change adds no bypass.
+
+A6 (registry overstatement): no overstatement. measure/tracks.md lists the track as [~] with no
+security-resolved claim (measure/tracks.md:138-139). The plan states that the symlink refusal has no
+test, and that statement matches the code and the test file. The claim that ADV9 is green matches
+the log and the mutation proof.
+
+Boundaries: the change adds no endpoint, authentication boundary, tenant or organization scope,
+database migration, or secret store. It is a local file writer.
+
+Verdict: pass. retry_recommendation: none. No CONTEST items were routed to this run.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-review-b-security
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 (Phase 3: Week 1 pictures)
+verdict: pass
+retry_recommendation: none
+audited_head_sha: b661e01f946dc4ef6ebab78a64985b6c6a58035e
+role_base_sha: b661e01f946dc4ef6ebab78a64985b6c6a58035e
+phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+head_current: true
+security_applicability: applicable
+blocking_findings: none
+nonblocking_findings: RB12-01 Low (parent symlink residual, src/storytime/muse-delivery.ts:348-351); RB12-02 Low (no test for the symlink root refusal); RB12-03 Nit (lstat-to-mkdir window)
+contest_items: none
+result_json: measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-b661e01f.json
+model: opencode-go/deepseek-v4.1-flash
+END_MEASURE_AGENT_RESULT

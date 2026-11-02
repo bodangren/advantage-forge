@@ -1,0 +1,152 @@
+Review C - UX and API end-to-end contract
+Track: asset_storytime_l2_unit1_pictures_20261025
+Phase: Phase 3: Week 1 pictures (P3)
+Session: Review C - P3 - storytime_l2_unit1_pictures - ADV fix - r2
+Model: minimax-cn-coding-plan/MiniMax-M3.1-Flash (substitute for the Kimi table model)
+Audited HEAD: b661e01f946dc4ef6ebab78a64985b6c6a58035e (current HEAD)
+role_base_sha: b661e01f946dc4ef6ebab78a64985b6c6a58035e
+phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+Audited change: e18baa25 (src/storytime/muse-delivery.ts, 12 lines added)
+
+Scope
+  The contract applies. The change adds two operator-facing refusals to the deliver path of
+  src/storytime/muse-delivery.ts. The deliver command of scripts/storytime-book-pictures.ts and
+  src/storytime/book-pictures.ts is the operator surface that the refusals change.
+
+Findings
+  Blocking: none.
+  Nonblocking: RC-P3-1, the contract names no deliver command. Evidence and owner routing follow.
+
+Checks of the two new refusals
+  Duplicate picture-list row id (src/storytime/muse-delivery.ts:341-346). The message reads
+  "The picture list holds the row <id> twice." and names the row id. The check runs after the
+  approval file is read and before the first print read, before the delivered-name loop, and
+  before the first write. The refusal reaches the CLI error path, which redacts the message,
+  writes it to stderr, and returns 1. The command exits non-zero.
+
+  Symlinked delivery root (src/storytime/muse-delivery.ts:348-351). The writer calls lstat on the
+  delivery root. The message reads "The delivery folder <path> is a symlink; the writer refuses
+  it." and names the absolute path. The check runs before the mkdir at line 488 and before the
+  writes at lines 489 and 490, so a refused run creates no folder and no file.
+
+Checks of the normal run
+  A missing delivery root makes lstat return ENOENT. lstatOrNull returns null, the root check
+  passes, and the writer creates the folder as before.
+
+  The week 1 delivery folders delivery-muse-v1 and delivery-muse-v2 are real directories, so the
+  root check accepts the production folders.
+
+  A folder that holds the same manifest still works. The writer reads manifest.json, compares the
+  bytes, and keeps the file when the bytes match (src/storytime/muse-delivery.ts:455-464).
+
+  The picture list holds 196 rows with 196 distinct ids. The week 1 set holds 30 rows with 30
+  distinct ids, so the new duplicate check accepts the operator run.
+
+  The operator approval list docs/storytime/l2-unit1/w01/muse/approved.json holds 30 entries, one
+  per week 1 row. It pins the picture list SHA-256 6d05dfc5..., which equals the contract pin at
+  contract.md:10-11 and the measured hash of the Workbooks list file.
+
+Checks of the delivery contract
+  The fileVersion rule holds. contract.md:24-26 states that an approval entry with fileVersion N
+  delivers <row id>-vN.png and <row id>-line-vN.png from one candidate at version N. The code
+  keeps that rule in deliveredNames (src/storytime/muse-delivery.ts:188-204). The change e18baa25
+  touches no line of that rule.
+
+  The PM decision A holds. contract.md:28-30 states that the Workbooks stage 1 reader matches a
+  manifest entry by the row id and that Workbooks owns that change. The Forge side provides the
+  row id. manifestJob copies rowCaptureJob, which sets id to row.id (src/storytime/muse-delivery.ts:326-329,
+  src/storytime/book-pictures.ts:3611-3629). The week 1 v2 manifest holds 30 jobs, 26 at version 1
+  and 4 at version 2, with the batches w01/color and w01/lineart, and the folder holds 60 PNG
+  files. The 4 fileVersion rows use the -v2 names and the other 26 rows keep the -v1 names.
+
+Earlier findings of this role
+  RCV2-1 withdrawn. The PM decision A of 2026-11-02, 03:1x ICT, assigns the stage 1 row match to
+  the Workbooks reader, and the contract records that decision at contract.md:28-30. The Forge
+  manifest gives every job the row id as job.id, so the finding stays closed and is not re-raised.
+
+  RCV2-2 withdrawn. The same PM decision A sets the row scope of the stage 1 run, and the plan
+  records it at plan.md:5129-5133 and plan.md:5174-5175. The Forge side takes the row set from the
+  list and the week filter (src/storytime/book-pictures.ts:4743-4748), so the finding stays closed
+  and is not re-raised.
+
+  RCV2-3 withdrawn. contract.md:24-26 now states the fileVersion rule and contract.md:28-30 states
+  the decision A match by row id, both added by commit 08edc06a in the phase range. The contract
+  no longer drifts, so the nit stays closed.
+
+Nonblocking finding
+  RC-P3-1 [Nit] measure/tracks/asset_storytime_l2_unit1_pictures_20261025/contract.md:43-85. The
+  Commands section lists plan, render, lineart-smoke, precheck-minimax, precheck-kimi, manifest,
+  sheet and verify. It holds no entry for the deliver command, which the CLI accepts
+  (src/storytime/book-pictures.ts:4628) and runs at lines 4726-4755 with the flags --list,
+  --approvals, --muse and --delivery (src/storytime/book-pictures.ts:4637, 4729). The contract
+  holds no deliver refusal rule either, so the two new refusals live only in the code and in
+  plan.md:5199-5212. An operator who reads contract.md cannot learn how to run the phase delivery.
+  This item differs from RCV2-3, which was about the fileVersion rule. Owner: Green.
+
+Limits of this review
+  No vitest ran. The Green log measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-adv-fix.log
+  records 190 of 190 tests passed in five files, and a mutation proof where removing the duplicate
+  row check fails ADV9.
+
+  No browser, no render, no server, and no live deliver probe ran. The refusals and the normal
+  path rest on code reading at the audited HEAD and on the week 1 delivery artifacts. The out/
+  reads come from the working tree, because out/ holds build output.
+
+  No file outside measure/runs/** changed.
+
+MEASURE_AGENT_RESULT
+status: blocked
+status_note: The audit verdict is pass. The run stops for one owner question on RC-P3-1, which
+  the handoff carries.
+role: measure-review-c-ux-api
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 (Phase 3: Week 1 pictures)
+task: adversarial fix review of the deliver contract
+audited_head_sha: b661e01f946dc4ef6ebab78a64985b6c6a58035e
+role_base_sha: b661e01f946dc4ef6ebab78a64985b6c6a58035e
+phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+head_current: true
+contract_applicability: applicable
+verdict: pass
+blocking_findings: none
+nonblocking_findings:
+  - RC-P3-1 [Nit] the contract names no deliver command and no deliver refusal rule
+    (measure/tracks/asset_storytime_l2_unit1_pictures_20261025/contract.md:43-85).
+    Owner: Green.
+withdrawn_findings:
+  - RCV2-1 withdrawn: the PM decision A of 2026-11-02, 03:1x ICT, assigns the stage 1 row match
+    to the Workbooks reader, and the Forge manifest gives every job the row id as job.id.
+  - RCV2-2 withdrawn: the same PM decision A sets the row scope of the stage 1 run, and the Forge
+    side takes the row set from the list and the week filter.
+  - RCV2-3 withdrawn: contract.md:24-26 and contract.md:28-30 now state the fileVersion rule and
+    the decision A match by row id, added by commit 08edc06a.
+not_reported_by_instruction:
+  - RA-P3ADV-1, RA-P3ADV-2, RB12-01, RB12-02, RB12-03
+test_summary: No vitest ran in this review. The Green log records 190 of 190 tests passed in five
+  files, with a mutation proof for the duplicate row check.
+changed_files:
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-b661e01f.json
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-b661e01f.log
+test_strategy_violations: none
+live_contract_violations: none
+prod_wiring_violations: none
+route_parity_violations: none
+retry_recommendation: escalate_human
+confidence: high
+handoff: |
+  The verdict is pass at b661e01f with one nonblocking nit. Both new refusals name their subject,
+  exit 1, and write nothing. A normal run over the week 1 list still works, and the fileVersion
+  rule and the PM decision A hold.
+  The open item is RC-P3-1: contract.md names no deliver command, so an operator cannot learn the
+  delivery flow from the contract. The question for the owner: who adds the deliver entry to
+  contract.md, and when? Options: A) Green adds a deliver entry with the four flags, the week
+  filter, and the refusal rules in the next Green commit of this track; B) the PM names a later
+  track that documents the delivery command, and the contract stays as it is; C) the contract keeps
+  no command list for the Muse path, and the operator uses plan.md:5199-5212 and the CLI help text
+  instead.
+  RCV2-1 and RCV2-2 stay closed under the PM decision A of 2026-11-02, 03:1x ICT, and RCV2-3 stays
+  closed under commit 08edc06a. No CONTEST items were sent to this run. No paid model call, no
+  render, no server, no browser, and no vitest were used.
+  facts_changed: none.
+facts_changed: none
+END_MEASURE_AGENT_RESULT

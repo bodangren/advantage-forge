@@ -1,0 +1,103 @@
+# Adversarial testing, Phase 3, HEAD b661e01f
+
+Status: pass. No blocking finding and no nonblocking finding remain.
+
+- Role: measure-adversarial-testing. Model: opencode-go/deepseek-v4.1-flash.
+- Track: asset_storytime_l2_unit1_pictures_20261025. Phase: "Phase 3: Week 1 pictures".
+- phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+- role_base_sha: b661e01f946dc4ef6ebab78a64985b6c6a58035e
+- audited code HEAD: b661e01f946dc4ef6ebab78a64985b6c6a58035e
+- Green fix commit: e18baa254f69d8054409fa4c3ce184089a3e9e12
+- test commit: 21de99f6f5a1fc97fd2da1c7d98e47dbf0031589
+
+## What ran
+
+The file `tests/storytime-muse-delivery-adversarial.test.ts` holds 13 probes (ADV1 to ADV13).
+The probes use temporary roots only. They make no network call and no Muse call.
+
+Focused command:
+
+```bash
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery-adversarial.test.ts tests/storytime-muse-delivery.test.ts --maxWorkers=1'
+```
+
+First run after the fix: exit 0.
+
+```text
+Test Files  2 passed (2)
+     Tests  41 passed (41)
+  Duration  42.27s
+```
+
+Second run with the new ADV13 probe: exit 0.
+
+```text
+Test Files  2 passed (2)
+     Tests  42 passed (42)
+  Duration  39.85s
+```
+
+## Resolved findings
+
+| ID | Severity | Fix | Test |
+| --- | --- | --- | --- |
+| ADV-P3-01 | blocking | `src/storytime/muse-delivery.ts:340-345` refuses a duplicate `row.id` in `options.rows` before any write. | ADV9 at `tests/storytime-muse-delivery-adversarial.test.ts:567` passes. |
+| ADV-P3-NB1 | nonblocking | `src/storytime/muse-delivery.ts:347-350` refuses a delivery root that is a symlink. | ADV13 at `tests/storytime-muse-delivery-adversarial.test.ts:663` passes. |
+
+Both guards run before any read of a Muse print and before the first write.
+
+## Probes and results
+
+| ID | Probe | Result |
+| --- | --- | --- |
+| ADV1 | an entry that points at another row's print of the same size class | pass. The writer copies the named print, and the two rows never swap bytes. |
+| ADV2 | another row's print of the other format in the color field and in the line field | pass. Both are refused with the row id, and both targets stay empty. |
+| ADV3 | a line print with one pixel at 254, 128, or 1, and a pure 0/255 control | pass. Each value is refused as one grey pixel. The control delivers. |
+| ADV4 | a color print with alpha, and a JPEG under a .png name | pass. Both are refused, and both targets stay empty. |
+| ADV5 | one changed character in manifest.json | pass. The run is refused and the folder stays byte-identical. |
+| ADV6 | a different file, or a folder, under a delivered name | pass. Both are refused and the folder stays byte-identical. |
+| ADV7 | a week 3 entry in a `deliver --week 2` run over a populated folder | pass. Exit 1, and the week 2 delivery stays byte-identical. |
+| ADV8 | the same row id twice in the approval list | pass. The run is refused before any write. |
+| ADV9 | the same row id twice in the picture list | pass. The run is refused before any write. |
+| ADV10 | `fileVersion` on a line name with no -v<n>.png suffix | pass. The run is refused before any read. Closes the RA-P3V2-1 test gap. |
+| ADV11 | `fileVersion` 1e21, with a fileVersion 2 control | pass. 1e21 is refused by the safe-integer bound. |
+| ADV12 | a symlink at a delivered name whose bytes match | pass. The run is refused and the link stays a link. |
+| ADV13 | a symlinked delivery root | pass. The run is refused, no byte goes through the link, and the link stays. The control writes three files into a real folder. |
+
+## ADV13 fails without the guard
+
+The probe at 87ca5dab ran the same fixture with a symlinked delivery root. The writer then wrote
+3 files through the link and returned a manifest. That behavior is recorded as ADV-P3-NB1 in
+`adversarial-87ca5dab.json`. With that behavior, the rejection assertion of ADV13 fails. So ADV13
+fails when the guard at `src/storytime/muse-delivery.ts:347-350` is absent.
+
+## Notes
+
+- The symlink guard checks the delivery root itself with lstat. It does not resolve parent
+  components. A parent folder symlink stays outside the guard. This run records no finding for it,
+  because the operator names the delivery path and no spec rule covers a parent link.
+- ADV1 records that the writer copies the print that the approval entry names. No spec or plan
+  rule asks it to check the row id inside the Muse file name.
+- The role changed no production file. `git diff b661e01f..21de99f6` for `src/` and `scripts/` is
+  empty.
+- The result files are not committed, per the run order.
+
+MEASURE_AGENT_RESULT
+role: measure-adversarial-testing
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures
+phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+role_base_sha: b661e01f946dc4ef6ebab78a64985b6c6a58035e
+audited_head_sha: b661e01f946dc4ef6ebab78a64985b6c6a58035e
+verdict: pass
+rows_added: ADV13 symlinked delivery root pass; ADV1 to ADV12 pass (13 probes in tests/storytime-muse-delivery-adversarial.test.ts)
+blocking_findings: []
+nonblocking_findings: []
+resolved: ADV-P3-01 and ADV-P3-NB1 by e18baa254f69d8054409fa4c3ce184089a3e9e12
+focused_final: exit 0; Tests 42 passed (42)
+commits: 21de99f6f5a1fc97fd2da1c7d98e47dbf0031589
+retry_recommendation: none
+handoff: Phase 3 adversarial testing passes at b661e01f. No implementation defect remains. No owner decision is required.
+facts_changed: Storytime Phase 3 adversarial testing passed at b661e01f with 42 focused delivery tests.
+END_MEASURE_AGENT_RESULT

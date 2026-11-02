@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "The change e18baa25 adds two refusals to writeMuseDelivery: a duplicate picture-list row id (src/storytime/muse-delivery.ts:342-346) and a delivery root that is a symlink (src/storytime/muse-delivery.ts:348-351). Both run after the approval file is read and before the first print is read and before the first write at line 488. The duplicate refusal closes ADV-P3-01, and the mutation log shows ADV9 fails without it. The symlink refusal closes the direct case of ADV-P3-NB1. A symlink at a parent part of the delivery path still bypasses the root check, and no test covers the symlink refusal. The refused run writes nothing, because both checks precede mkdir. No secret reaches a message or a log. The Green log records 190 of 190 tests passed. Three nonblocking findings remain: the parent-symlink residual, the missing symlink test, and the lstat-to-mkdir window.",
+  "phase_base_sha": "15a7bf0b2a59b8137a05805666df6736dc256167",
+  "role_base_sha": "b661e01f946dc4ef6ebab78a64985b6c6a58035e",
+  "audited_head_sha": "b661e01f946dc4ef6ebab78a64985b6c6a58035e",
+  "audited_head": "b661e01f946dc4ef6ebab78a64985b6c6a58035e",
+  "head_current": true,
+  "security_applicability": "applicable",
+  "track": "asset_storytime_l2_unit1_pictures_20261025",
+  "phase": "Phase 3: Week 1 pictures",
+  "role": "measure-review-b-security",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "RB12-01 Low a parent symlink still redirects the delivery folder. The new check lstats only the delivery root itself (src/storytime/muse-delivery.ts:348-351). resolveMuseDeliveryPaths confines both paths by path.resolve only (src/storytime/muse-delivery.ts:130-146). If a folder inside out/ is a symlink, for example out/pics -> /elsewhere, and --delivery is out/pics/week1, then lstat returns ENOENT, lstatOrNull returns null, and mkdir(deliveryRoot, { recursive: true }) (line 488) creates /elsewhere/week1 and the writer copies through the link. The same bypass works when out/pics/week1 already exists. The impact is low for this local tool: a local actor must create the link, the approval list cannot create it, every delivered name is a plain file name, and an actor with write access to out/ can write these files directly. A realpath comparison of the deepest existing part of deliveryRoot against the realpath of out/ would close it. (code reading; confirmed; no live probe ran)",
+    "RB12-02 Low the symlink root refusal has no test and no mutation proof. The plan evidence says so in plain words (measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md, 'No test covers it; the change is 3 lines'), so this is not an overstatement. It is still a security control with no regression guard: the Green log records 190 tests, and that count equals the 178 earlier tests plus the 12 adversarial tests, so no test was added for the root check. The mutation log proves only the duplicate-row check. One probe that makes deliveryRoot a symlink and asserts exit 1 with an unchanged target folder would fix it. (code reading and log reading; confirmed)",
+    "RB12-03 Nit the root check and the first write are not atomic. The writer lstats the delivery root at line 348 and calls mkdir at line 488. A link created at deliveryRoot between those calls is followed. The `wx` flag protects a file target, not a directory. The window needs a concurrent local actor and gives no more than RB12-01 already gives. (code reading; confirmed; no live defect)"
+  ],
+  "evidence": [
+    "Provenance: git rev-parse HEAD returned b661e01f946dc4ef6ebab78a64985b6c6a58035e, which equals role_base_sha and audited_head_sha, so the audited HEAD is current. git rev-parse 15a7bf0b returned 15a7bf0b2a59b8137a05805666df6736dc256167, the phase base. git status lists uncommitted edits under .claude/skills/, AGENTS.md, bench/, and measure/ only; src/storytime/muse-delivery.ts has no uncommitted edit. Every scoped read used git show b661e01f:<path>.",
+    "Scope: e18baa25 changes src/storytime/muse-delivery.ts only, +12 lines and -0 lines. It adds the rowIds set and loop, the lstatOrNull call on deliveryRoot, and the isSymbolicLink refusal. b661e01f adds the plan evidence only, 27 lines.",
+    "Duplicate order: the rowIds loop sits at src/storytime/muse-delivery.ts:342-346, directly after the two path.resolve calls and before the approval-entry loop at line 353, the delivered-name loop, the print reads, the manifest compare, and mkdir at line 488. It refuses before any write and before any print read.",
+    "Symlink order: the lstatOrNull call and the isSymbolicLink refusal sit at src/storytime/muse-delivery.ts:348-351, also before the approval loop, the print reads, and mkdir at line 488. lstatOrNull (src/storytime/muse-delivery.ts:160-167) returns null only for ENOENT and rethrows every other error, so a permission error stops the run before any write.",
+    "Refusal leaves the folder unchanged: the only writes in writeMuseDelivery are mkdir at line 488, the `wx` copies at line 489, and the `wx` manifest at line 490. Both new refusals precede them. The same ordering already holds for the symlink-at-target refusal at lines 250 and 476-479.",
+    "Duplicate defect closed: assembleManifest pairs a candidate to a job by jobId (src/storytime/book-pictures.ts:2081-2084 in the earlier finding). One id twice is now unreachable through the writer, so the second row cannot lose its own file. The mutation log green-adv-fix-mutation.log removes the check and ADV9 fails.",
+    "Test evidence: measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-adv-fix.log records vitest exit 0, Test Files 5 passed (5), Tests 190 passed (190), tsc exit 2 with 0 owned errors, and the mutation proof. The earlier count was 178 tests in 4 files, so the 12 adversarial tests are all green now. This review ran no vitest, as the role requires.",
+    "Test gap: git grep on b661e01f finds 'symlink' in tests/storytime-muse-delivery-adversarial.test.ts at ADV6 and ADV12 only. ADV12 makes a link at a delivered name, not at the delivery root. No test makes the root a link. See RB12-02.",
+    "Secrets: the two new messages hold a row id and the resolved delivery root path. The row id comes from the picture list, and the path is a local out/ path. Neither holds a key, a token, or a credential. The change adds no network call and no environment read. I opened no .env.local file.",
+    "Sensitive data: the change copies no new field into the manifest. The manifest holds row text, prompt, review fields, and delivered names, which the earlier review covered. The new refusals print no file bytes.",
+    "Data handling: the writer still reads only through readMuseFile, which refuses a symlink, a real path outside the Muse folder, and a non-file (src/storytime/muse-delivery.ts:247-259). The change adds no new read path.",
+    "A2: not triggered. The change flips no draft to published state. The manifest candidate status stays 'ready'. The gate is the approval entry plus the review fields, and the change adds no bypass. No consent artifact exists in this flow, and no test publishes a named subject.",
+    "A6: no overstatement. measure/tracks.md at b661e01f lists the track as [~] and makes no security-resolved claim (measure/tracks.md:138-139). The plan evidence states that no test covers the symlink refusal, and that statement matches the code and the test file. The claim that ADV9 is green matches the log and the mutation proof.",
+    "Boundaries: the change adds no endpoint, authentication boundary, tenant or organization scope, database migration, or secret store. It is a local file writer.",
+    "Probe limit: this review ran no live probe. The shell tool ran git commands only. The verdict rests on code reading and the Green logs."
+  ],
+  "commands": [
+    "git rev-parse HEAD -> b661e01f946dc4ef6ebab78a64985b6c6a58035e",
+    "git rev-parse 15a7bf0b -> 15a7bf0b2a59b8137a05805666df6736dc256167",
+    "git status --porcelain -> no change under src/storytime/",
+    "git show e18baa25 --stat; git show e18baa25 -- src/storytime/muse-delivery.ts",
+    "git show b661e01f:src/storytime/muse-delivery.ts (lines 100-160, 270-300, 320-520)",
+    "git show b661e01f:src/storytime/muse-delivery.ts | grep -n rowIds, holds the row, deliveryInfo, symlink, mkdir, writeFile",
+    "git show b661e01f:measure/tracks.md (lines 130-142)",
+    "git show b661e01f:measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md (ADV-P3-01 block)",
+    "git show b661e01f:src/storytime/book-pictures.ts (lines 4730-4770)",
+    "git grep -n symlink b661e01f -- tests/storytime-muse-delivery-adversarial.test.ts",
+    "tail -25 measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-adv-fix.log"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-b661e01f.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-b661e01f.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "handoff": "Verdict is pass. ADV-P3-01 is closed: the writer refuses a duplicate picture-list row id at src/storytime/muse-delivery.ts:342-346, before any write, and the mutation log shows ADV9 fails without the check. ADV-P3-NB1 is closed for the direct case: the writer refuses a delivery root that is a symlink at src/storytime/muse-delivery.ts:348-351, before any write. Both refusals leave the folder unchanged. Three nonblocking findings go to Green. RB12-01 (Low): a symlink at a parent part of the path under out/ still lets mkdir follow the link, so a realpath check would close it. RB12-02 (Low): no test and no mutation proof covers the symlink refusal, and the plan states this honestly; one probe would close it. RB12-03 (Nit): the lstat and mkdir calls are not atomic. No product decision is required. No CONTEST items were routed to this run.",
+  "facts_changed": [
+    "Phase 3 delivery now refuses a duplicate picture-list row id and a symlinked delivery root before any write.",
+    "Vitest at b661e01f: 190 passed (190) across 5 files; the 12 adversarial probes are green.",
+    "The symlink delivery root refusal has no test."
+  ]
+}

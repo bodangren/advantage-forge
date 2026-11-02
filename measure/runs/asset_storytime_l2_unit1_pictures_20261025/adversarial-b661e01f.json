@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "The confirmation run of Phase 3 adversarial testing at b661e01f passes. Green fixed ADV-P3-01 and ADV-P3-NB1 in e18baa25. The focused delivery command exits 0 with Test Files 2 passed (2) and Tests 42 passed (42). The new probe ADV13 covers the symlinked delivery root, and it passes. No implementation defect remains.",
+  "phase_base_sha": "15a7bf0b2a59b8137a05805666df6736dc256167",
+  "role_base_sha": "b661e01f946dc4ef6ebab78a64985b6c6a58035e",
+  "audited_head_sha": "b661e01f946dc4ef6ebab78a64985b6c6a58035e",
+  "audited_head": "b661e01f946dc4ef6ebab78a64985b6c6a58035e",
+  "head_at_start": "b661e01f946dc4ef6ebab78a64985b6c6a58035e",
+  "head_at_finish": "21de99f6f5a1fc97fd2da1c7d98e47dbf0031589",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "resolved_findings": [
+    {
+      "id": "ADV-P3-01",
+      "severity": "blocking",
+      "fixed_by": "e18baa254f69d8054409fa4c3ce184089a3e9e12",
+      "code": "src/storytime/muse-delivery.ts:340-345 refuses a duplicate row.id in options.rows before any write.",
+      "test": "tests/storytime-muse-delivery-adversarial.test.ts:567 (ADV9) now passes."
+    },
+    {
+      "id": "ADV-P3-NB1",
+      "severity": "nonblocking",
+      "fixed_by": "e18baa254f69d8054409fa4c3ce184089a3e9e12",
+      "code": "src/storytime/muse-delivery.ts:347-350 refuses a delivery root that is a symlink.",
+      "test": "tests/storytime-muse-delivery-adversarial.test.ts:663 (ADV13) passes."
+    }
+  ],
+  "rows_added": [
+    {
+      "id": "ADV1",
+      "target": "An approval entry that points at another row's print of the same size class",
+      "result": "pass. The writer copies the named print, and the two rows never swap bytes."
+    },
+    {
+      "id": "ADV2",
+      "target": "An approval entry that points at another row's print of the other format",
+      "result": "pass. Both format swaps are refused with the row id, and both targets stay empty."
+    },
+    {
+      "id": "ADV3",
+      "target": "A line print with one pixel at 254, 128, or 1, with a pure 0/255 control",
+      "result": "pass. Each value is refused as one grey pixel. The control delivers."
+    },
+    {
+      "id": "ADV4",
+      "target": "A color print with an alpha channel, and a JPEG under a .png name",
+      "result": "pass. Both are refused, and both targets stay empty."
+    },
+    {
+      "id": "ADV5",
+      "target": "One changed byte in manifest.json",
+      "result": "pass. The run is refused and the folder stays byte-identical."
+    },
+    {
+      "id": "ADV6",
+      "target": "A different file, or a folder, under a delivered name",
+      "result": "pass. Both are refused and the folder stays byte-identical."
+    },
+    {
+      "id": "ADV7",
+      "target": "A week 3 entry in a `deliver --week 2` run over a populated folder",
+      "result": "pass. Exit 1, and the week 2 delivery stays byte-identical."
+    },
+    {
+      "id": "ADV8",
+      "target": "The same row id twice in the approval list",
+      "result": "pass. The run is refused before any write."
+    },
+    {
+      "id": "ADV9",
+      "target": "The same row id twice in the picture list",
+      "result": "pass. The writer now refuses the duplicate picture-list row id before any write. This row failed at 87ca5dab as ADV-P3-01 and is resolved by e18baa25."
+    },
+    {
+      "id": "ADV10",
+      "target": "`fileVersion` on a line name with no -v<n>.png suffix",
+      "result": "pass. The run is refused before any read. This closes the test gap of RA-P3V2-1."
+    },
+    {
+      "id": "ADV11",
+      "target": "`fileVersion` 1e21, with a fileVersion 2 control",
+      "result": "pass. 1e21 is refused by the safe-integer bound. The control delivers the v2 name."
+    },
+    {
+      "id": "ADV12",
+      "target": "A symlink at a delivered name whose bytes already match",
+      "result": "pass. The run is refused and the link stays a link."
+    },
+    {
+      "id": "ADV13",
+      "target": "A symlinked delivery root (the RB12-02 gap)",
+      "result": "pass. The writer refuses the symlinked delivery root, writes no byte through the link, and keeps the link. The control proves a real delivery folder still resolves and writes three files. The probe fails without the guard: the probe at 87ca5dab wrote three files through the link (adversarial-87ca5dab.json, ADV-P3-NB1)."
+    }
+  ],
+  "mutation_review": {
+    "adv13": "ADV13 fails when the guard at src/storytime/muse-delivery.ts:347-350 is absent. Evidence: the live probe at 87ca5dab ran the same fixture with a symlinked delivery root and the writer wrote 3 files through the link, so the rejection assertion of ADV13 fails without the guard.",
+    "controls": "ADV3, ADV11, and ADV13 each hold a passing control beside the refusal case, so a check that refused every input would fail the control."
+  },
+  "evidence": [
+    "HEAD at start was b661e01f946dc4ef6ebab78a64985b6c6a58035e. The reviewed code is b661e01f. Green fixed the two findings in e18baa254f69d8054409fa4c3ce184089a3e9e12.",
+    "First focused run after the fix: exit 0; Test Files 2 passed (2); Tests 41 passed (41); Duration 42.27 s. ADV9 passed, so ADV-P3-01 is resolved.",
+    "Second focused run with the new ADV13 probe: exit 0; Test Files 2 passed (2); Tests 42 passed (42); Duration 39.85 s.",
+    "The new probe is committed as 21de99f6f5a1fc97fd2da1c7d98e47dbf0031589. git diff b661e01f..21de99f6 for src/ and scripts/ is empty, so the role changed no production file.",
+    "src/storytime/muse-delivery.ts:340-345 holds the duplicate row.id refusal. src/storytime/muse-delivery.ts:347-350 holds the symlinked delivery root refusal. Both guards run before any read of a Muse print and before the first write.",
+    "The symlink guard checks the delivery root itself with lstat. It does not resolve parent components. A parent folder symlink remains outside the guard, and this run records no finding for it because the operator names the delivery path and no spec rule covers a parent link.",
+    "ADV1 records that the writer copies the print that the approval entry names. No spec or plan rule asks it to check the row id inside the Muse file name, so a same-size cross-row pointer is an approval-list authoring error, not a writer defect."
+  ],
+  "commands": [
+    "Focused after the fix: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery-adversarial.test.ts tests/storytime-muse-delivery.test.ts --maxWorkers=1'; exit 0; Test Files 2 passed (2); Tests 41 passed (41); Duration 42.27 s.",
+    "Focused with ADV13: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery-adversarial.test.ts tests/storytime-muse-delivery.test.ts --maxWorkers=1'; exit 0; Test Files 2 passed (2); Tests 42 passed (42); Duration 39.85 s."
+  ],
+  "commits": [
+    "21de99f6f5a1fc97fd2da1c7d98e47dbf0031589 test(storytime): add symlinked delivery root probe"
+  ],
+  "changed_files": [
+    "tests/storytime-muse-delivery-adversarial.test.ts",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/adversarial-b661e01f.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/adversarial-b661e01f.log"
+  ],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "model_deviation": "The adversarial role ran opencode-go/deepseek-v4.1-flash. The role route is ra-quota --fresh pick adversarial --not-family claude. Green of the Phase 3 delivery code ran claude-code/claude-sonnet-5-5#high, so the role families stay apart.",
+  "handoff": "Phase 3 adversarial testing passes at b661e01f. ADV-P3-01 and ADV-P3-NB1 are resolved by e18baa25. The focused delivery command exits 0 with Tests 42 passed (42). No implementation defect routes to Green. No owner decision is required.",
+  "facts_changed": [
+    "Phase 3 adversarial testing at b661e01f passes with 42 tests in the focused delivery command.",
+    "ADV-P3-01 (duplicate picture-list row id) and ADV-P3-NB1 (symlinked delivery root) are resolved by e18baa25."
+  ]
+}

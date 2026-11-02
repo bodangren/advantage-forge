@@ -1,0 +1,18 @@
+MEASURE_AGENT_RESULT
+role: measure-phase-acceptance
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures
+phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+role_base_sha: 21de99f6f5a1fc97fd2da1c7d98e47dbf0031589
+audited_head_sha: 21de99f6f5a1fc97fd2da1c7d98e47dbf0031589
+verdict: pass
+phase_gate: exit 0; Test Files 5 passed (5); Tests 191 passed (191); duration 301.43 s (run by the orchestrator)
+type_check: exit 2; owned errors 0; total errors 38 (run by the orchestrator)
+interphase_status: incomplete_phases 2 (Phase 4, Phase 5); Phase 3 not listed (run by the orchestrator)
+blocking_findings: []
+nonblocking_findings: PA3-N1 stale plan.md:1373-1374; PA3-N2 stale plan.md:1558,1595,5212 and missing ADV13 and 191 line; PA3-N3 RA-P3ADV-2, RB12-01, RB12-03 open; PA3-N4 RC-P3-1 contract.md deliver entry (default A); PA3-N5 prerequisites target b661e01f, delta is one test file; PA3-N6 4 v2 rows lack a person look
+retry_recommendation: none
+handoff: Phase 3 passes acceptance at 21de99f6. No blocker routes to another role. Closeout must carry PA3-N1 to PA3-N6. The person look of the 4 v2 rows stays open and does not hold Phase 4. No owner decision is required.
+facts_changed: Storytime Phase 3 passed phase acceptance at 21de99f6 with 191 phase-gate tests.
+END_MEASURE_AGENT_RESULT

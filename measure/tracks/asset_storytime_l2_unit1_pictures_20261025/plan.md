@@ -950,7 +950,7 @@ Closeout carries these items:
 - The named residual-risk list: keep the out-of-class transform list, including a credential
   encoded twice inside one string token.
 
-## Phase 3: Week 1 pictures
+## Phase 3: Week 1 pictures [checkpoint: 21de99f6]
 
 Amendment 2026-11-01: the [specification amendment](./spec.md#amendment-2026-11-01-muse-picture-path-and-week-1-delivery-contract)
 records Daniel's Muse decision and the PM delivery contract for week 1. Muse composition from
@@ -1370,8 +1370,8 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   30 cards in picture-list order, each with a color preview and a line-art preview (60
   previews in `prev/`). The delivered files are not changed. The page has an OK box and a
   note field for each card, and a button that downloads the answers as JSON. The manifest
-  SHA-256 is `00ea0c5b06d18e3f54cbceed9caa943100c0711bb515c44561eb46b7e03ed369`. This task
-  stays open until a person records the review.
+  SHA-256 is `00ea0c5b06d18e3f54cbceed9caa943100c0711bb515c44561eb46b7e03ed369`. A person
+  recorded the review (commit `83c8b7ce`), so this task is `[x]`.
 - [ ] Task: (Deferred: replaced by the Muse path, Daniel 2026-11-01 09:34; see the spec amendment 2026-11-01.) Deliver the week 1 manifest, contact sheet, review logs, and ledger. The manifest
   lists the 30 color and 30 line-art files. Apply picture specification v1 to the line art.
   Specification v1 has arrived, so the line art is not provisional. Report the output path and
@@ -5222,3 +5222,49 @@ Replaced by the amendment of 2026-11-01 (Muse path).
   `green-adv-fix-mutation.log`.
 - The writer did not run `deliver` into `delivery-muse-v1` or `delivery-muse-v2`. The week 1
   deliveries did not change. No task is marked.
+
+### Phase 3 acceptance (2026-11-02)
+
+Phase base `15a7bf0b`. Checkpoint `21de99f6`. All result files are in
+`measure/runs/asset_storytime_l2_unit1_pictures_20261025/`.
+
+- Audits of the ADV fix at `b661e01f` (the fix is `e18baa25`):
+  - Review A (`mimo`): pass. File `review-a-b661e01f.json`.
+  - Review B (`deepseek`): pass. File `review-b-b661e01f.json`.
+  - Review C (`MiniMax-M3.1-Flash`): pass. File `review-c-b661e01f.json`.
+  - Adversarial at `87ca5dab`: fail with ADV-P3-01. File `adversarial-87ca5dab.json`.
+  - Adversarial at `b661e01f`: pass, 42 tests. The probe ADV13 (commit `21de99f6`) covers the
+    symlinked delivery root. File `adversarial-b661e01f.json`.
+  - Phase acceptance at `21de99f6`: ACCEPT, retry none. File `phase-acceptance-21de99f6.json`.
+    Every role gate returned PASS.
+- Gates at `21de99f6`. The orchestrator ran them because the acceptance role had no shell
+  permission:
+  - Vitest of the five Storytime test files through the heavy runner, `--maxWorkers=1`: exit
+    code `0`. `Test Files  5 passed (5)`. `Tests  191 passed (191)`.
+  - `tsc --noEmit -p tsconfig.json`: exit code `2`. Total 38 errors. Owned errors 0. The total
+    equals the value before the phase.
+  - `measure_interphase_checks.py status`: Phase 3 is not incomplete.
+- Week 2 batch 1 picture review: `item-review-batch-40.json` passes with 9 of 9 rows clean.
+  The reviewer is `minimax-cn-coding-plan/MiniMax-M3.1-Flash`. The reviewer reads color files
+  and line files. The orchestrator spot check of the `can-i` color file and the `i-can-b` line
+  file agrees.
+- Deviations (model substitutions):
+  - Review C used `MiniMax-M3.1-Flash` in place of the Kimi table model. The Kimi quota had no
+    data, and `opencode-go` returned DNS errors.
+  - The batch-40 picture review used `MiniMax-M3.1-Flash` after three `mimo` runs stopped on
+    `getaddrinfo EAI_AGAIN`.
+- Nonblocking items carried to closeout (the source is `phase-acceptance-21de99f6.json`):
+  - PA3-N1: stale text "stays open" at the person-review task. Fixed in this commit.
+  - PA3-N2: stale plan text. The Muse writer task lines say it "stays [~]", but it is `[x]`. The
+    ADV remediation note says "No test covers it", but ADV13 covers it. The 191 count and ADV13
+    need one line.
+  - PA3-N3: open review items RA-P3ADV-2 (the plan says 3 lines, the patch adds 4), RB12-01
+    (a parent symlink under `out/` still redirects `mkdir`, Low), and RB12-03 (`lstat` and
+    `mkdir` are not atomic, Nit). RB12-01 and RB12-03 become tech-debt candidates.
+  - PA3-N4: RC-P3-1, the `deliver` command entry in `contract.md`. Owner default A. Done in the
+    next commit.
+  - PA3-N5: Reviews A, B, C and adversarial test `b661e01f`. The diff to `21de99f6` is one
+    test file (ADV13). No source file changed.
+  - PA3-N6: the four v2 rows (`a-net`, `check-row-net`, `a-nose`, `nan-can-nod`) have no person
+    look. Phase 4 must not label them person-accepted until Daniel records the look.
+  - RA-P3ADV-2, RB12-01, and RB12-03 are listed above under PA3-N3.

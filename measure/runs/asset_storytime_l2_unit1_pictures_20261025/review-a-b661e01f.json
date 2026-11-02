@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Pass at b661e01f. The fix adds 12 lines to writeMuseDelivery. The duplicate row-id check runs before every print read and every write, and it names the repeated id. The live list holds 196 distinct ids, so the check accepts it. The symlink root check runs lstat before mkdir. A missing root and a normal folder both pass. ADV9 fails when the check is removed, and the green run reports 190 passed. Two nonblocking nits remain.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "RA-P3ADV-1 [Nit] review-a: no test drives a symlinked delivery root. Evidence: the new guard at src/storytime/muse-delivery.ts:348-351 refuses a root whose lstat is a symlink, but no test creates a symlinked deliveryRoot. ADV12 at tests/storytime-muse-delivery-adversarial.test.ts:620 covers a symlink at a delivered file name only. A regression that removes the root guard would still pass all 190 tests. plan.md:5212 discloses the gap. Owner: Green, or a later security review.",
+    "RA-P3ADV-2 [Nit] review-a: the plan miscounts the symlink guard size. Evidence: plan.md:5212 says 'the change is 3 lines'. The e18baa25 patch adds 4 lines for that guard (const, if, throw, brace) plus one blank line. The rest of the plan block matches the code and the logs. Owner: Green."
+  ],
+  "evidence": [
+    "Provenance: git rev-parse HEAD returned b661e01f946dc4ef6ebab78a64985b6c6a58035e, which equals the audited head b661e01f. git status --porcelain on src/storytime/muse-delivery.ts, tests/storytime-muse-delivery-adversarial.test.ts, and the track plan.md returned no line, so the working tree files I read are the audited versions.",
+    "Change scope: after the adversarial run at b142e643, five commits follow. Four are docs: 8e7527b5 (measure evidence), 20551358 and 1f6c11ec (storytime w02 notes), b661e01f (plan evidence). One is code: e18baa25 adds 12 lines to src/storytime/muse-delivery.ts only, with no deletion. No other behavior changed.",
+    "Duplicate check placement: src/storytime/muse-delivery.ts:340-346 at b661e01f. It runs after parseApprovals (line 337) and the two path.resolve calls (338-339), before the approval-entry loop (352), the list pin (364), the delivered-name loop (375), the print reads in the items loop (397 and readMuseFile), and the first write (mkdir at 488, then writeFile). The only earlier I/O is the approval-list parse, which has no side effect. The refusal names the id: 'The picture list holds the row <id> twice.' at line 344.",
+    "The check cannot refuse a valid list: the throw fires only when rowIds.has(row.id) is true (line 344), so every distinct id passes. The live list at ../Workbooks/content/storytime/l2/print/pictures.json holds 196 rows and 196 distinct ids; my grep of '\"id\": \"l2-' returned 196 unique strings, and week 1 holds 31 unique ids. loadPictureList maps every array element (src/storytime/book-pictures.ts:1535) and holds no dedup, so the file itself guarantees uniqueness. The --week filter (src/storytime/book-pictures.ts:4744) only shrinks the set.",
+    "Symlink root check: src/storytime/muse-delivery.ts:348-351 uses lstatOrNull (lines 160-167), which returns null on ENOENT and rethrows other errors. A missing root returns null and no throw, so mkdir at line 488 creates it later. A real directory returns isSymbolicLink() false and no throw. A symlink root throws with the path at line 350. The check runs before mkdir (488) and before every print read. Normal and missing folders keep working: the 190-test run includes ADV11's control delivery into a new folder and ADV12's delivery into a populated folder.",
+    "ADV9 tests the duplicate case: tests/storytime-muse-delivery-adversarial.test.ts:567-585 at b661e01f builds two rows with one id, then expects a rejection that matches /twice|duplicate|already|one id/i, names the row, writes no file, and creates no folder. Every assertion uses a labeled expect.soft object, so A3 holds and no bare-digit parse exists. The file holds 12 it() rows, which matches the 12-probe adversarial report.",
+    "ADV9 can fail: green-adv-fix-mutation.log records the run with the duplicate-row check removed. ADV9 fails with 'The writer resolved, but this test expects a rejection.' at tests/storytime-muse-delivery-adversarial.test.ts:578, and the totals read 'Tests 1 failed | 11 skipped (12)'. The check was then restored. The missing-check fixture fails the test, so A4 holds: the test gives no vacuous pass.",
+    "Green run and plan claims: jr-green-adv-fix.log records vitest exit 0, 'Test Files 5 passed (5)', 'Tests 190 passed (190)', tsc exit 2 with owned 0 and total 38, and the mutation proof. plan.md:5199-5224 repeats those numbers and adds 'Tests 1 failed | 11 skipped' for the mutation, which matches green-adv-fix-mutation.log. The prior 178 tests plus the 12 probes equal 190. No A5 conflict: no 'all checks pass' claim in the plan contradicts a measured exit.",
+    "Unchanged rules: the e18baa25 patch is one hunk of added lines only, placed before the approval loop. The duplicate approval-entry rule (line 353), the list pin, the name checks, the manifest compare, the per-copy symlink and byte checks, and the wx writes keep their previous lines as unchanged context.",
+    "Scope and limitation: my scope is the remediation commits b142e643..b661e01f, because the phase diff 15a7bf0b..b661e01f was covered by review-a-4330cb42 and the adversarial run. I could not re-run vitest in this session; the shell refused node and vitest. The 190-pass claim rests on the green log, the mutation log, the it() counts, and code reading. This is audit only: no production file, test file, plan file, or registry file was edited, and the only writes are measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-b661e01f.json and review-a-b661e01f.log."
+  ],
+  "commands": [
+    "git rev-parse HEAD -> b661e01f946dc4ef6ebab78a64985b6c6a58035e",
+    "git diff --stat 15a7bf0b..b661e01f -> phase diff, 536 files; the remediation scope is the five commits after b142e643",
+    "git show e18baa25 -> full patch: 12 added lines in src/storytime/muse-delivery.ts, one hunk",
+    "git show e18baa25 --stat -> 1 file changed, 12 insertions",
+    "git log --oneline b142e643..b661e01f -> b661e01f, e18baa25, 1f6c11ec, 20551358, 8e7527b5",
+    "git show --stat 8e7527b5 20551358 1f6c11ec b661e01f -> docs and measure files only",
+    "git show b661e01f:src/storytime/muse-delivery.ts, sed/grep sections -> lstatOrNull at 160-167, writeMuseDelivery at 336, duplicate check at 340-346, symlink check at 348-351, items loop at 397, mkdir at 488",
+    "git show b661e01f:tests/storytime-muse-delivery-adversarial.test.ts, sed -n 540,660p -> ADV8 to ADV12; grep -c '  it(' -> 12",
+    "git show b661e01f:src/storytime/book-pictures.ts, sed -n 4700,4765p and 1516,1545p -> deliver command, weekRows filter at 4744, loadPictureList at 1523-1536",
+    "git status --porcelain on the three audited files -> empty",
+    "grep '\"id\": \"l2-' in ../Workbooks/content/storytime/l2/print/pictures.json -> 196 unique ids, week 1 holds 31",
+    "read measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-adv-fix.log -> exit 0, 190 passed, tsc owned 0 of 38, mutation ADV9 failed",
+    "read measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-adv-fix-mutation.log -> 'Tests 1 failed | 11 skipped (12)', ADV9 rejected the resolved writer",
+    "read measure/runs/asset_storytime_l2_unit1_pictures_20261025/adversarial-87ca5dab.json -> ADV-P3-01 and ADV-P3-NB1 text, ADV9 row, mutation_review",
+    "sed -n 5195,5224p measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md -> Adversarial remediation block",
+    "node -e and vitest calls -> refused by shell permission, so no re-run"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-b661e01f.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-b661e01f.log"
+  ],
+  "track": "asset_storytime_l2_unit1_pictures_20261025",
+  "phase": "Phase 3: Week 1 pictures",
+  "role": "measure-review-a-correctness",
+  "audited_head": "b661e01f",
+  "audited_head_sha": "b661e01f",
+  "phase_base_sha": "15a7bf0b",
+  "role_base_sha": "b661e01f",
+  "retry_recommendation": "none",
+  "confidence": "high"
+}
