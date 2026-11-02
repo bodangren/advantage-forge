@@ -2097,6 +2097,58 @@ rows T142 to T151, and the closeout gate for 30 jobs.
     5.94 USD.
     Open: `approved.json` and the stage 2 check are not run for these rows. Independent review of
     `batch-43` is needed. Ben's hair is lumpy in the `a-pan-on-nan` color.
+  - Week 3 batch 2 (production). Green round of 2026-11-02, claude-code/claude-sonnet-5-5#high.
+    role_base_sha `685a8eb1`, phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash.
+    Image model meta/muse-image. Coder: none; nothing was delegated. No change in `src/`, `tests/`,
+    `scripts/`, `assets/`, or `approved.json`. No marker changed. Spec commit `a56c35d5` (3 specs: the
+    color prompts of `it-is-pink`, `it-is-pip`, and `cover-paint` ask for smooth hair on Ben; the cover
+    also asks for every brush in a hand, one easel design, and exactly one paw print). Run log:
+    `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w03-b2.log`. Review folder:
+    `out/storytime-review/batch-44/` (`brief.md`, `pages/` 36 files, `refs/` 11 files). Green did not
+    rate its own work.
+    Rows (9): the cover `l2-w03-cover-paint` and the 8 pages `story-page-it-is-blue`, `-green`,
+    `-orange`, `-pink`, `-pip`, `-purple`, `-red`, `-yellow`.
+    Commands: `node scripts/storytime-muse.mjs color <specs> --concurrency 4`; then
+    `... line <spec> --from <n> --tries 3` for each row. Writer check: `inspectLineArtPng` and short
+    sharp scripts (edge frame, color print) in `/tmp/opencode/`.
+    Chosen files (all in `out/storytime/l2/unit1/w03/muse/`), the sheet color in the color picture,
+    and the writer check (line width, ink, edge frame):
+    - `cover-paint`: color m3, line try 3. Six children at six easels and Teacher Kim; one paw print.
+      PASS 14 px, ink 13.54 percent, edge 93.72 percent. Color m1 had a loose brush on the floor; m2 had
+      two paw prints. Line try 1 drew a tall post; try 2 had a stray line near the bottom. Teacher Kim's
+      head is at about 20 to 29 percent of the page height. Ben's hair is clumped (group sheet look).
+    - `story-page-it-is-blue`: color m1, line try 3. May holds a blue sheet; blue only. PASS 19 px, 9.80
+      percent, 97.09 percent. Try 1 drew the easel pots as plain circles; try 2 had a stray bottom line.
+    - `story-page-it-is-green`: color m1, line try 3. Mia holds a green sheet; green only. PASS 16 px,
+      10.24 percent, 98.64 percent. Tries 1 and 2 drew a star on Mia's overalls.
+    - `story-page-it-is-orange`: color m1, line try 1. Nan holds an orange sheet; a thin sliver of her
+      orange T-shirt shows beside the sheet. PASS 18 px, 11.12 percent, 95.45 percent. Try 2 showed a
+      notch in the top edge of the sheet; try 3 had thin lines.
+    - `story-page-it-is-pink`: color m1, line try 1. Ben holds a pink sheet; his hair is a smooth
+      swoosh. PASS 19 px, 8.67 percent, 97.08 percent.
+    - `story-page-it-is-pip`: color m2, line try 1. Pip sits on a paper sheet with paw prints; seven
+      people laugh; about ten paint spots in all seven colors; floppy ears only. PASS 14 px, 13.63
+      percent, 95.56 percent. Color m1 had Pip on four legs. Try 2 gave May a bow like Mia's; try 3
+      closed Teacher Kim's eyes. Ben's hair is clumped (group sheet look).
+    - `story-page-it-is-purple`: color m1, line try 3. Teacher Kim holds a purple sheet; eight paw prints
+      cross the floor. PASS 17 px, 10.34 percent, 96.93 percent. Try 1 filled Kim's hair solid black;
+      try 2 drew a star on her cardigan.
+    - `story-page-it-is-red`: color m1, line try 2. Pat holds a red sheet; a thin green band of his T-shirt
+      shows under it. PASS 19 px, 9.85 percent, 97.26 percent. Try 1 filled Pat's hair solid black; try 3
+      also passes (14 px) and has a nose circle.
+    - `story-page-it-is-yellow`: color m1, line try 3. Sam holds a yellow sheet; a thin red sliver of his
+      T-shirt shows beside it. PASS 14 px, 8.80 percent, 96.83 percent. Tries 1 and 2 drew a star inside
+      the sheet.
+    No page has a sun (all are indoors). No picture has text. All 9 color prints: PNG, 4000 x 3000,
+    8-bit, sRGB, 3 channels, no alpha, no palette. The writer check of every chosen line print is PASS.
+    Retries and why: 2 more color rounds for the cover (loose brush; two paw prints) and 1 more for Pip
+    (Ben's hair; he stayed clumped). The 7 other rows needed one color call each. No line batch beyond
+    the first batch of 3 tries per row.
+    Calls: 41 logged in `out/storytime/l2/unit1/w03/muse/costs.tsv`: 39 billed at 0.01 USD, 2 failed with
+    `UND_ERR_CONNECT_TIMEOUT` at cost 0 (made again). Batch cost 0.39 USD. Running total 5.94 + 0.39 =
+    6.33 USD.
+    Open: `approved.json` and the stage 2 check are not run for these rows. Independent review of
+    `batch-44` is needed. Ben's hair is clumped in the `cover-paint` and `it-is-pip` colors.
   - Week 4 staging (inputs only; no page candidate until Daniel's week 1 answer; cast looks pending).
     Green round of 2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `0755ef8d`,
     phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model
