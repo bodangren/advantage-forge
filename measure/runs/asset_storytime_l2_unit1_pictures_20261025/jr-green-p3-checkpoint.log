@@ -1,0 +1,28 @@
+Green P3 checkpoint and P4 start markers. role_base_sha 21de99f6; phase_base_sha P3 15a7bf0b, P4 fc76c272.
+Step 1-3: read HEAD (21de99f6), run folder, w02-b2 log, plan headings; wrote the provisional log.
+Step 4-10: read plan Phase 3 heading, person-review task text (PA3-N1), phase-acceptance json, deliver code (book-pictures.ts, muse-delivery.ts).
+Step 11-14: plan.md: Phase 3 heading checkpoint 21de99f6; PA3-N1 text fixed to match [x] (person review 83c8b7ce); "Phase 3 acceptance (2026-11-02)" block added. Commit 1 894ba08e: plan.md and 10 new result files (the 87ca5dab files were already tracked).
+Step 15-19: contract.md: `deliver` entry in the Commands section with file:line cites. Line numbers checked against the source and corrected once.
+Step 20-24: plan.md Phase 4: Task 1 [x] (b6824b8a; reviews A, B, C pass at 4d4d86a2, files checked); Task 2 and Task 3 [~]; Week 2 batch 1 review note under Task 2. Stale text near Task 1 updated (marker note, "Status: blocked"). measure-guard refused nothing. Commit 2 3b66b78c: contract.md, plan.md, item-review-batch-40.json/.log.
+Step 25: checker. Phase 4 line: "[1] asset_storytime_l2_unit1_pictures_20261025 -- Phase 4: Remaining pictures and cover (2/3 remaining)". next_phase is Phase 4. Phase 5 (1/2 remaining).
+No Muse call. No change in src/, tests/, scripts/, assets/, docs/, out/.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 checkpoint, P4 start markers
+role_base_sha: 21de99f6
+phase_base_sha: 15a7bf0b (P3); fc76c272 (P4)
+final_head: 3b66b78c
+commits: 894ba08e measure(plan): checkpoint Storytime picture Phase 3; 3b66b78c measure(plan): mark Storytime picture Phase 4 start, add deliver contract
+models: green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: P4 Task 1 (b6824b8a)
+tasks_flipped_tilde: P4 Task 2 (weeks 2 to 7); P4 Task 3 (cover)
+checker_phase_4: Phase 4: Remaining pictures and cover (2/3 remaining); next_phase Phase 4
+measure_guard_refusals: none
+open_items: PA3-N2 (stale plan text: Muse writer "stays [~]" lines, "No test covers it" line, ADV13 and 191 count); PA3-N3 and RB12-01, RB12-03 (tech-debt candidates at closeout); PA3-N6 (four v2 rows have no person look); RA-P3ADV-2
+finding_ids: F1=RC-P3-1; F2=PA3-N1
+handoff: Phase 3 checkpoint 21de99f6 is set and Phase 4 Tasks 2 and 3 are [~]. Default: no Muse call. Next, review the batch-41 pictures, update approved.json for the batch-40 and batch-41 rows, and continue weeks 3 to 7.
+dispositions: F1=FIX; F2=FIX
+END_MEASURE_AGENT_RESULT
