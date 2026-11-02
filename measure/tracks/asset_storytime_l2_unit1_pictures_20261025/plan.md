@@ -3160,6 +3160,42 @@ rows T142 to T151, and the closeout gate for 30 jobs.
         independent review. In the cat line art the left eye is narrower than the right eye, as in the 3D
         model. On the `bed` page the line art shows no check pattern on the blanket. The dog has a small
         oval brow patch over the left eye. After this batch week 5 has its 27 pictures as candidates.
+    - Week 5 ears fix (G4-W05-EARS-1, one row). Green round of 2026-11-03,
+      claude-code/claude-sonnet-5-5#high. role_base_sha `781ead36`, phase_base_sha `fc76c272`. Red model
+      opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none. No marker changed. Spec
+      commit `13060191` (the `colorPrompt` and the `linePrompt` of
+      `docs/storytime/l2-unit1/w05/muse/l2-w05-story-page-i-have-two-ears.json`; `text` and `goal` are the
+      same word for word). Run log:
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w05-ears-fix.log`. Review folder:
+      `out/storytime-review/batch-49r6/` (`brief.md`, `pages/` 4 files, `refs/` 2 files, no control rows).
+      Green did not rate its own work. No change in `src/`, `tests/`, `scripts/`, `assets/`, a cover file,
+      or `approved.json`. No `deliver` run.
+      - Finding. The orchestrator look of 2026-11-03 found that each hand of Sam was drawn twice in color m1
+        and in line try 4: an open palm with four spread fingers stood behind a second hand that pointed at
+        the ear. Each hand showed about eight fingers. The independent review of batch 49r5 did not flag it.
+      - Fix. Both prompts now say: each arm ends in exactly one hand; on each hand the index finger points at
+        the ear and the thumb and the other three fingers curl into a small soft fist below it; no open
+        palm and no spread fingers behind or beside the pointing hand.
+      - Color. Three new calls (m2, m3, m4). All three show one hand on each arm, two ears, two white
+        stripes, and one sun. m2 adds hills and a long tree branch. m4 changes the tree trunk, adds a hair
+        tuft, and adds faint cheek dots. Chosen: m3 (the park as in the set; the tree has a small side
+        branch with a leaf cluster).
+      - Line. Three tries (1 to 3) from m3. All three show one hand on each arm and two clear ears. Try 1 has
+        no nose. In try 3 the nose curve reads as a second small smile and the fingers float above the
+        ears. Chosen: line try 2 (nose arc, eyebrow, open mouth, each index finger touches its ear, plain
+        eyes with solid pupils, one sun with pointed triangle rays, no text, no gray).
+      - Writer check (`inspectLineArtPng` at 4000 x 3000, despeckled line print): try 2 PASS, 16 px, ink 6.71
+        percent, edge frame 98.44 percent white. Try 1: 18 px, 7.96, 97.33. Try 3: 19 px, 7.33, 98.23. The
+        color print is PNG, 4000 x 3000, 8-bit, sRGB, 3 channels. In both prints Sam, both hands, and both
+        ears are inside the crop. The tree touches the left print edge and the pond stones touch the right
+        print edge (background only, as in the park set).
+      - Calls and cost: 6 calls in `out/storytime/l2/unit1/w05/muse/costs.tsv` (3 color and 3 line), all
+        billed at 0.01 USD. No error. Round cost 0.06 USD. Running total 12.67 USD plus this round, before
+        the cover round.
+      - Open: `approved.json` and the stage 2 check are not run for this row. `batch-49r6` needs an
+        independent review. The tree side branch and its knob read as a loop with a small oval in the line
+        art (default: accept as a background note; if the review flags it, one line batch from m4, which has
+        a clean forked trunk). Sam's hair is a smooth side-swept shape without the tufts of the Sam render.
     - Week 6 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
       2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `8e141040`, phase_base_sha
       `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.

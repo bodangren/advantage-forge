@@ -1,0 +1,29 @@
+provisional; role_base_sha 781ead36; phase_base_sha fc76c272; Step 1: start w05 ears fix (G4-W05-EARS-1)
+Step 2: spec commit 13060191 (colorPrompt and linePrompt of i-have-two-ears)
+Step 3: color m2 called (hands: one per arm, index points, fist; ears clear; background adds hills and a tree branch; lash ticks). Calling m3 and m4 to compare.
+Step 4: 3 color calls (m2,m3,m4), all show one hand per arm. m2 adds hills and a tree branch; m4 changes the tree trunk and adds a hair tuft and cheek dots. Picked m3 (two ears, two pointing hands, two stripes, one sun, park as set; tree has a small side branch). Next: line tries 1-3 from m3.
+Step 5: 3 line tries from m3 (1,2,3). All: one hand per arm, two ears clear, plain eyes with solid pupils, open mouth. Try 1 face has no nose. Try 3 nose curve reads as a second smile, fingers float above the ears. Picked try 2 (nose arc, eyebrow, mouth, index touches ear). Writer check PASS try 2: 16 px, ink 6.71, edge 98.44 (try 1: 18 px, 7.96, 97.33; try 3: 19 px, 7.33, 98.23). Color print PNG 8-bit sRGB 3ch 4000x3000. Nothing cut at the print edges except the tree (left) and the pond stones (right) as in the park set. Next: review folder batch-49r6.
+Step 6: review folder out/storytime-review/batch-49r6/ built (brief, 4 pages, 2 refs). Plan note added after the Week 5 batch 3 note. Round: 3 color and 3 line calls, 0.06 USD, running total 12.67 USD plus this round, before the cover round.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2, week 5 ears fix (marker unchanged)
+role_base_sha: 781ead36
+phase_base_sha: fc76c272
+spec_commits: 13060191
+plan_evidence_commit: see git log (the commit after 13060191 that holds the plan note and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; image=meta/muse-image; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: l2-w05-story-page-i-have-two-ears color m3 + line try 2 (PASS 16 px, ink 6.71 percent, edge 98.44 percent); color print PNG 8-bit sRGB 3 channels 4000x3000; one hand per arm in color and line
+open_items: approved.json and stage 2 check not run for this row; batch-49r6 needs an independent review; the tree in the color has a small side branch with a knob (not in the park set) that reads as a loop with an oval in the line art; Sam hair is a smooth side-swept shape without the Sam render tufts; tree touches the left print edge and pond stones touch the right print edge (background, as in the park set)
+round_cost_usd: 0.06 (3 color and 3 line calls, all 0.01)
+running_total_usd: 12.67 USD plus this round, before the cover round
+batch: out/storytime-review/batch-49r6/
+handoff: Review out/storytime-review/batch-49r6/ against Daniel's bar for the one row. Ask the reviewer to judge (1) color m3 and line try 2: does each arm end in exactly one hand with the index finger at the ear and no extra open palm or spread fingers? (2) two ears clear, Sam on model with two white stripes, one sun? (3) the tree side branch and its loop in the line art: note or defect? Default if the review rates (3) a defect: one line batch from color m4 (clean forked trunk) at 3 tries, writer check, and a new folder. Default now: no further Muse call.
+finding_ids: F1=G4-W05-EARS-1
+dispositions: F1=FIX
+END_MEASURE_AGENT_RESULT
