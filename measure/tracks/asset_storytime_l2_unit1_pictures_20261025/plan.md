@@ -2178,6 +2178,58 @@ rows T142 to T151, and the closeout gate for 30 jobs.
     6.33 USD.
     Open: `approved.json` and the stage 2 check are not run for these rows. Independent review of
     `batch-44` is needed. Ben's hair is clumped in the `cover-paint` and `it-is-pip` colors.
+  - Week 3 batch 1 fix (pans, B43-PAN-1 to 3). Green round of 2026-11-02,
+    claude-code/claude-sonnet-5-5#high. role_base_sha `b1622356`, phase_base_sha `fc76c272`. Red model
+    opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none. No marker changed. Spec
+    commit `d1411e88` (3 specs: `l2-w03-story-page-i-can-get-a-pan.json`, `-nan-can-get-a-pan.json`,
+    `-a-pan-in-a-pan.json`). Run log:
+    `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w03-pan-fix.log`. Review folder:
+    `out/storytime-review/batch-43r2/` (`brief.md`, `pages/` 12 files, `refs/` 7 files). Green did not
+    rate its own work.
+    - The batch 43 Kimi review is void for the G3 control. Kimi marked the `a-nose` v1 control clean in
+      `item-review-batch-42.json`. Batch 43 gets a new review. The orchestrator G4 spot check of batch
+      43 made the three findings below.
+    - Finding B43-PAN-1 (`i-can-get-a-pan`, m3 color, line try 2): Ben holds a thin ring with a short
+      handle. At book size it reads as a magnifying glass. Finding B43-PAN-2 (`nan-can-get-a-pan`, m3,
+      line try 1): the same for Nan. Finding B43-PAN-3 (`a-pan-in-a-pan`, m2, line try 3): Ben holds a
+      tiny pan above Nan's pan, not inside it, and the tiny pan reads as a strainer. Category of all
+      three: wrong-or-missing-prop.
+    - Spec change: every pan is a toy frying pan. It has a round shallow bowl with a thick rim and a
+      visible inside, and a long straight thick handle about as long as the bowl is wide. The bowl is
+      about as wide as the child's head, and it faces the viewer in a three-quarter view. The
+      `a-pan-in-a-pan` spec says that one small pan (blue) sits inside one big pan (red, held by Nan),
+      that both handles show, and that exactly two pans exist. Two later notes: the `a-pan-in-a-pan`
+      color prompt asks for Ben's hair as in his reference (the first two new colors drew mud-like
+      lumps); the line prompts of `i-can-get-a-pan` and `nan-can-get-a-pan` ask for a thick handle and
+      for a bowl that is not a thin ring, and the `i-can-get-a-pan` line prompt asks for a white edge.
+    - Chosen files (in `out/storytime/l2/unit1/w03/muse/`): `i-can-get-a-pan` color m4, line try 8
+      (`-m4-line-8-despeckled.png`); `nan-can-get-a-pan` color m4, line try 3 of the m4 lines
+      (`-m4-line-3-despeckled.png`); `a-pan-in-a-pan` color m5, line try 2
+      (`-m5-line-2-despeckled.png`). Prints (4000 x 3000): the matching `-color-print.png` and
+      `-line-print-<try>-despeckled.png`.
+    - Pan count and place. `i-can-get-a-pan`: 1 pan (blue) in Ben's hand, color and line; the shelf
+      holds cups and plates only. `nan-can-get-a-pan`: 1 pan (red) in Nan's hand, color and line; the
+      shelf holds cups and plates only. `a-pan-in-a-pan`: 2 pans in color and in line; the small blue
+      pan rests inside the bowl of the big red pan that Nan holds, and both handles show in color.
+    - Writer check (`inspectLineArtPng`, 4000 x 3000) of the chosen line prints: `i-can-get-a-pan` PASS
+      19 px, ink 8.70 percent, edge frame 93.95 percent white; `nan-can-get-a-pan` PASS 21 px, ink
+      11.13 percent, edge 93.89 percent; `a-pan-in-a-pan` PASS 17 px, ink 10.06 percent, edge 94.82
+      percent. The three color prints are PNG, 4000 x 3000, 8-bit, sRGB, 3 channels, no alpha, no
+      palette. Rejected for the edge frame: `i-can-get-a-pan` m4 line try 1 (86.86 percent white) and
+      `a-pan-in-a-pan` m5 line try 1 (77.70 percent white).
+    - Retries and why: `i-can-get-a-pan` needed one color call (m4) and 2 line batches (the pan read as
+      a magnifying glass in tries 2 to 5; try 1 failed the edge frame; tries 6 to 8 with the edge note
+      gave try 8). `nan-can-get-a-pan` needed 2 color calls (m4 and m5; m5 has a clean face but the
+      handle hides in the fist, and its lines read as a ring) and 3 line batches (the m4 lines give
+      try 3). `a-pan-in-a-pan` needed 3 color calls (m3 and m4: lumpy hair; m5: smooth hair) and one
+      line batch.
+    - Calls: 27 logged in `out/storytime/l2/unit1/w03/muse/costs.tsv` (6 color, 21 line). 25 were
+      billed at 0.01 USD. 2 were not billed: 1 content-policy filter (HTTP 400) and 1
+      `UND_ERR_CONNECT_TIMEOUT`. Cost 0.25 USD. Running total 6.37 + 0.25 = 6.62 USD.
+    - Open: `approved.json` and the stage 2 check are not run for these rows. Batch 43 (the other 6
+      rows) and `batch-43r2` need an independent review with a Kimi control that passes G3. In the m4
+      color of `nan-can-get-a-pan`, a small pale seam shows at one eye corner of Nan. Ben has a small
+      lash flick at one eye in the line art of `a-pan-in-a-pan`.
   - Week 4 staging (inputs only; no page candidate until Daniel's week 1 answer; cast looks pending).
     Green round of 2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `0755ef8d`,
     phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model
