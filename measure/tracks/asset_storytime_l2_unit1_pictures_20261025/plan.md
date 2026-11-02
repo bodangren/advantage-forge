@@ -2853,6 +2853,70 @@ rows T142 to T151, and the closeout gate for 30 jobs.
         doll in front of him and has one chest band, not two clear stripes. On the `can-get` page Sam is
         mid-step, not on his toes. On the `nap` page Pam's pigtails are hatched strands, and Nan's
         eyelash stroke shows on one eye only. The 9 check rows of week 5 are not made.
+    - Week 5 batch 3 (the goal restore of `pam-is-on-sam` and the 9 check rows). Green round of
+      2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `9cb839d6`, phase_base_sha
+      `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none;
+      nothing was delegated. No change in `src/`, `tests/`, `scripts/`, `assets/`, or `approved.json`.
+      No marker changed. Run log:
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w05-b3.log`. Review folder:
+      `out/storytime-review/batch-51/` (`brief.md`, `pages/` 36 files, `refs/` 9 files, no control rows).
+      Green did not rate its own work.
+      - Job A, commit `780c2bdf`. Commit `8af6e5ef` had changed the `goal` of
+        `l2-w05-story-page-pam-is-on-sam`, and the stage gate printed "goal mismatches: 1". The rule is
+        that `text` and `goal` are the Workbooks list values, word for word. The `goal` is again the
+        exact list `prompt` of that row. The new `colorPrompt` and `linePrompt` stay. This correction
+        replaces the text in the week 5 batch 2 note above, which says that the `goal` follows the
+        change. The chosen picture differs from the list prompt: Sam sits and does not lie on his back,
+        the doll is on his knees and not on his tummy, and a white sneaker with a sock steps in at the
+        door with no leg in red shorts. The reason is the Muse content filter, which blocked the lying
+        pose twice (HTTP 400). The orchestrator sent this deviation to the PM with the default "accept".
+        No new Muse call was made for this row.
+      - Stage gate after the restore. The real command
+        `node scripts/storytime-stage-check.mjs --week 5 --list
+        /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --specs
+        docs/storytime/l2-unit1/w05/muse` prints "goal mismatches: 0", "text mismatches: 0", "outDir
+        mismatches: 0", "missing element paths: 0", and then "stage check: fail". The only 413 problem
+        lines are `the output folder holds the page candidate file ...`: week 5 pictures now exist in
+        `out/storytime/l2/unit1/w05/muse/`. The gate is a pre-production gate and cannot pass in that
+        folder. Green did not move or delete any candidate. For a clean run, Green copied the 64
+        element files that the specs name into a scratch folder with the same relative paths, with an
+        empty week 5 output folder, and ran the same command from there. Output: list sha256
+        `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`, week 5, rows 27, specs
+        found 27, text mismatches 0, goal mismatches 0, outDir mismatches 0, rows with no reference
+        (class A and B) 0, element paths checked 64, missing element paths 0, characters without a
+        reference 0, page candidates 0, "stage check: pass", exit code 0.
+      - Job B, spec commit `667f02bf` (one spec). Only the `linePrompt` of
+        `l2-w05-check-row-cat` changed. In tries 1 to 6 the curled tail was a closed ring beside the
+        head, and it read as a round third ear. The prompt now says that the tail is an open
+        question-mark band that joins the back of the body, that the head has exactly two pointed ears,
+        and that no eyelash tick shows. Tries 7 to 9 show a clear tail.
+      - Rows (9; all color m1, 1500 x 1500, print mode `crop`, no text, no ground line). Line try, then
+        the writer check (`inspectLineArtPng` at 1500 x 1500: line width, ink, edge frame):
+        - `bed` (line 3): PASS 13 px, 5.97 percent, edge 100.00 percent white. Tries 1 and 2 failed at
+          10 px.
+        - `cat` (line 8): PASS 22 px, 9.85. Two pointed ears, open tail band, no stripes.
+        - `cup` (line 2): PASS 13 px, 3.43.
+        - `dog` (line 1): PASS 14 px, 5.50.
+        - `hat` (line 2): PASS 14 px, 3.38. One single brim.
+        - `pen` (line 2): PASS 25 px, 4.36.
+        - `sock` (line 2): PASS 15 px, 3.51.
+        - `sofa` (line 1): PASS 14 px, 5.44.
+        - `sun` (line 2): PASS 19 px, 6.12. One disc and exactly 8 pointed triangle rays, wide base on the
+          disc. One sun only.
+        All 9 color prints: PNG, 1500 x 1500, 8-bit RGB, no alpha, no palette. The edge frame (1 percent
+        border) of every color print and every line print is 100.00 percent near-white. The nearest
+        object is 52 px from an edge (sock). Nothing is cut at a print edge.
+      - Retries and why: `bed` tries 1 and 2 failed the writer check; `cat` tries 1 to 6 (tail ring, and
+        in try 2 eyelash ticks and a smile line); `dog` try 2 (ankle bands) and try 3 (small eyes);
+        `sock` try 1 (12 px, at the gate minimum); `sofa` tries 2 and 3 (a thin seat line with loose
+        ends). The 9 color calls were all accepted at m1.
+      - Calls and cost: 42 calls in `out/storytime/l2/unit1/w05/muse/costs.tsv` for these rows, all
+        billed at 0.01 USD: 9 color and 33 line (27 for the 9 rows and 6 more for the cat). No error. Round
+        cost 0.42 USD. Running total 9.28 + 0.42 = 9.70 USD.
+      - Open: `approved.json` and the stage 2 check are not run for these rows. `batch-51` needs an
+        independent review. In the cat line art the left eye is narrower than the right eye, as in the 3D
+        model. On the `bed` page the line art shows no check pattern on the blanket. The dog has a small
+        oval brow patch over the left eye. After this batch week 5 has its 27 pictures as candidates.
     - Week 6 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
       2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `8e141040`, phase_base_sha
       `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.

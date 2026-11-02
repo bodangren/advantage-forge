@@ -1,0 +1,35 @@
+provisional; role_base_sha 9cb839d6; next step: Job A restore goal of pam-is-on-sam
+Step 2: goal of pam-is-on-sam restored from list prompt; real gate shows goal mismatches 0 but fails only on 413 page candidate files (production exists). Making scratch copy for a clean gate run.
+Step 3: Job A committed; clean gate (scratch copy, no candidates) = goal mismatches 0, stage check pass, exit 0. Next: Job B color calls.
+Step 4: 9 color m1 made (0 errors, ~0.09 USD). Next: view colors.
+Step 5: viewed 9 color prints: all accepted (one whole object each; sun = disc + 8 pointed rays). Starting 27 line calls.
+Step 6: 27 line calls ok. Next: view line sheets, writer check.
+Step 7: viewed 3 line sheets (27 tries). Leaning: bed 2, cat needs care (tail loop reads as a round third ear; try 2 has eyelash ticks), cup 2, dog 1, hat 2, pen 2, sock 2/3, sofa 1, sun 2. Next: writer check.
+Step 8: writer check on 27 tries: bed 1,2 FAIL (10 px), bed 3 PASS 13 px; all others PASS; edge frame 100 pct white all. Cat tail loop reads as extra ear: look closer, maybe one redo round.
+Step 9: cat linePrompt edited (tail = narrow hooked band, not ring; exactly 2 pointed ears; no eyelash ticks). Running cat line tries 4-6.
+Step 10: cat tries 4-6 (0.03 USD): tail still a closed ring beside the head, reads as a round ear. One more prompt (open question-mark tail from the body, below the head) for tries 7-9.
+Step 11: cat tries 7-9 (round cost 0.06 for cat redo): tail now an open question-mark band from the body, reads as a tail. Pick cat 8.
+Step 12: picks bed 3 (13 px), cat 8 (22 px), cup 2, dog 1, hat 2, pen 2, sock 2, sofa 1, sun 2; all line 1500x1500, edge frame 100 pct white; all 9 color prints 1500x1500 PNG RGB, nothing near an edge (min distance >50 px). Next: review folder batch-51.
+Step 13: brief.md written, review folder batch-51 done (36 page files, 9 refs). Next: commit cat spec, plan note.
+Step 14: cat spec commit 667f02bf made; plan note added under Phase 4 Task 2 (plan.md had no foreign change before the edit). Next: plan-evidence commit.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2, week 5 batch 3 (goal restore of pam-is-on-sam and the 9 week 5 check rows; marker unchanged)
+role_base_sha: 9cb839d6
+phase_base_sha: fc76c272
+spec_commits: 780c2bdf (l2-w05-story-page-pam-is-on-sam.json: goal restored to the exact list prompt; colorPrompt and linePrompt kept); 667f02bf (l2-w05-check-row-cat.json: linePrompt only; open question-mark tail band, exactly two pointed ears, no eyelash ticks)
+plan_evidence_commit: see git log (the commit after 667f02bf that holds the plan note and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; image=meta/muse-image; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: all 9 check rows color m1 + line try: bed 3 (PASS 13 px), cat 8 (22 px), cup 2 (13 px), dog 1 (14 px), hat 2 (14 px), pen 2 (25 px), sock 2 (15 px), sofa 1 (14 px), sun 2 (19 px). All line prints 1500 x 1500 one channel 8-bit, edge frame 100.00 percent white; all color prints PNG 1500 x 1500 8-bit RGB no alpha no palette, edge frame 100.00 percent near-white, nearest object 52 px from an edge. Nothing is cut at a print edge. pam-is-on-sam: goal restored, no new picture.
+open_items: approved.json and stage 2 check not run for these rows; batch-51 needs an independent review; the real week 5 stage gate prints "goal mismatches: 0" but "stage check: fail" only because 413 page candidate files exist in the week 5 output folder (pre-production gate); a clean run from a scratch copy with the 64 element files and an empty output folder printed "stage check: pass", exit 0 (quoted in the plan note); cat left eye narrower than right (as in the 3D model); bed line art has no blanket check pattern; dog has a small brow patch oval; pam-is-on-sam picture differs from the list prompt (Sam sits, doll on his knees, sneaker and sock at the door, no leg) because of the content filter; the orchestrator sent this deviation to the PM with default accept
+round_cost_usd: 0.42
+running_total_usd: 9.70
+batch: out/storytime-review/batch-51/
+handoff: Review out/storytime-review/batch-51/ against Daniel's bar for 9 rows. Ask the reviewer to look at: the cat (open tail band reads as a tail, two ears only, line try 8), the sun (one disc, eight pointed rays, wide base on the disc), the pen, the sock and the sofa at book size (each must read as its word in the line art), and the dog eyes. Stage gate: the orchestrator must run the week 5 gate in a clean state (see the plan note) before delivery, because the real folder holds candidates; Green did not move any candidate file. Default now: no further Muse call.
+END_MEASURE_AGENT_RESULT
