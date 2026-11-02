@@ -2306,6 +2306,54 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       rows) and `batch-43r2` need an independent review with a Kimi control that passes G3. In the m4
       color of `nan-can-get-a-pan`, a small pale seam shows at one eye corner of Nan. Ben has a small
       lash flick at one eye in the line art of `a-pan-in-a-pan`.
+  - Week 3 batch 3 (production). Green round of 2026-11-02, claude-code/claude-sonnet-5-5#high.
+    role_base_sha `1772cf79`, phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash.
+    Image model meta/muse-image. Coder: none; nothing was delegated. No change in `src/`, `tests/`,
+    `scripts/`, `assets/`, or `approved.json`. No marker changed. Spec commit `93ff2c94` (only
+    `l2-w03-check-row-sun.json`: the color and line prompts now use the week 2 ray wording of commit
+    `745c35ec`: one disc and exactly 8 sharp pointed triangle rays, the wide base on the disc, the point
+    outward). Run log: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w03-b3.log`.
+    Review folder: `out/storytime-review/batch-45/` (`brief.md`, `pages/` 36 files, `refs/` 9 files).
+    Green did not rate its own work.
+    Rows (9): the check rows `l2-w03-check-row-bus`, `-cat`, `-dog`, `-fish`, `-hat`, `-pear`, `-pen`,
+    `-pencil`, `-sun`. Each row is one object on plain white, 1500 x 1500, print mode `crop`.
+    Commands: `node scripts/storytime-muse.mjs color <9 specs> --concurrency 4`; then
+    `... line <9 specs> --from 1 --tries 3 --concurrency 1` (3 calls at a time). The tool made the
+    despeckled files and the prints for every try. Writer check: `/tmp/opencode/chk66.mts`
+    (`inspectLineArtPng`, 1500 x 1500) and a short sharp script for the 15 px edge frame, the bit depth,
+    and the color print format.
+    Chosen files (all in `out/storytime/l2/unit1/w03/muse/`; color is `-m1-color.png` for every row).
+    Writer check: line width, ink (all 9 edge frames are 100.00 percent white):
+    - `check-row-bus`: line try 1. PASS 13 px, ink 7.09 percent. Try 3 FAILED the writer (9 px, 4.66
+      percent). Try 2 timed out at cost 0 and was not made again.
+    - `check-row-cat`: line try 1. PASS 14 px, 6.79 percent. Tries 2 and 3 also pass (18 and 13 px). The
+      cat has pointed ears, three whiskers on each side, and a curled tail, and no stripes.
+    - `check-row-dog`: line try 1. PASS 18 px, 6.90 percent. Tries 2 and 3 pass (17 and 13 px).
+    - `check-row-fish`: line try 2. PASS 22 px, 5.04 percent. Try 1 (20 px) has ray lines inside the fins;
+      try 3 (18 px) has an eye with no ring.
+    - `check-row-hat`: line try 2. PASS 22 px, 4.47 percent. Tries 1 and 3 pass (17 and 14 px). The line
+      art shows a crown, a brim, a ribbon band, and a bow; it reads as a hat.
+    - `check-row-pear`: line try 1. PASS 19 px, 2.94 percent. All 3 tries are clean.
+    - `check-row-pen`: line try 3. PASS 34 px, 5.79 percent. Tries 1 and 2 pass (23 and 30 px) with the
+      same design. The pen has a long closed clip and a small pointed tip, and no wooden cone.
+    - `check-row-pencil`: line try 2. PASS 24 px, 5.98 percent. Try 1 (45 px) has a heavy outline and a
+      double ring band; try 3 (21 px) has an extra double line along the lower edge. The pencil has an
+      eraser, a silver band, a six-sided body, a wooden cone, and a lead point.
+    - `check-row-sun`: line try 3. PASS 20 px, 6.62 percent. Tries 1 and 2 pass (17 px). All 3 tries
+      show a circle and eight closed triangle rays; the color has eight pointed rays on the disc.
+    All 9 color prints: PNG, 1500 x 1500, 8-bit, sRGB, 3 channels, no alpha, no palette. All 9 line
+    prints: 1-bit (no gray pixel). All 9 colors were accepted at the first call that returned a picture:
+    one object, plain white, no text, no second object.
+    Retries and why: no color retry for a defect. The bus color call and the hat color call timed out
+    once each at cost 0 and were made again.
+    Calls: 38 logged in `out/storytime/l2/unit1/w03/muse/costs.tsv`: 11 color (2 timeouts) and 27 line (1
+    timeout); 35 billed at 0.01 USD, 3 failed with a network timeout at cost 0. Batch cost 0.35 USD.
+    Running total 6.62 + 0.35 = 6.97 USD.
+    Open: `approved.json` and the stage 2 check are not run for these rows. An independent review of
+    `out/storytime-review/batch-45/` is needed. The bus color has a gray ground shadow (the line art has
+    no ground line). The fish line art has a wavy tail fin and a small smile mark at the mouth. The pen
+    cap end is a rounded shape in the line art. The cat line art shows its left eye narrower than the
+    right eye.
   - Week 4 staging (inputs only; no page candidate until Daniel's week 1 answer; cast looks pending).
     Green round of 2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `0755ef8d`,
     phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model
