@@ -1,0 +1,30 @@
+Green P4 T2 w02 sun fix provisional. role_base_sha 4edad8b7; phase_base_sha fc76c272. Step 1: read spec and b3 log. Next: spec edit, m2 color.
+Step 2: spec edited (not committed). m2 color call run.
+Step 3: m2 color viewed: 8 pointed rays on the disc, points outward, no face, white bg. Accepted. Running line --tries 3.
+Step 4: m2 lines viewed. Pick try 1 (22 px, 6.62 pct): 8 pointed rays closed on the disc. Writer PASS on all 3 (22, 17, 18 px). Checking prints, building batch-42r2.
+Step 5: batch-42r2 pages (4) and refs (3) copied. Writing brief.
+Step 6: brief written; spec commit done.
+Step 7: plan note written. Sun fix: color m2 (first call accepted), line try 1 (22 px, writer PASS). 4 calls, 0.04 USD, running total 6.37 USD.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Produce weeks 2 to 7, week 2 batch 3 fix, sun row (marker unchanged)
+role_base_sha: 4edad8b7
+phase_base_sha: fc76c272
+spec_commits: 745c35ec
+plan_evidence_commit: see git log (commit after 745c35ec)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; image=meta/muse-image; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: sun m2 color + line 1; writer PASS 22 px, ink 6.62 percent, edge frame 100.00 percent, line print only black and white pixels; color print PNG 8-bit sRGB 3 channels 1500x1500
+open_items: approved.json and stage 2 check not run; independent review of batch-42r2 needed; left and right rays slightly longer than the other six
+round_cost_usd: 0.04 (4 calls: 1 color, 3 line, 0 timeouts)
+running_total_usd: 6.37
+batch: out/storytime-review/batch-42r2/
+handoff: Review batch-42r2 against Daniel's bar for the sun row. Default: no further Muse call.
+finding_ids: F1=B42-SUN
+dispositions: F1=FIX
+END_MEASURE_AGENT_RESULT

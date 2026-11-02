@@ -1980,6 +1980,35 @@ rows T142 to T151, and the closeout gate for 30 jobs.
     small nub. The bus line art has horizontal grille lines that are open. The sun color has rays that do
     not touch the disc, and the line art follows it. The ant line art shows its second eye as a thin
     ring at the edge of the head.
+  - Week 2 batch 3 fix (sun, B42-SUN). Green round of 2026-11-02, claude-code/claude-sonnet-5-5#high.
+    role_base_sha `4edad8b7`, phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash.
+    Image model meta/muse-image. Coder: none. No marker changed. Spec commit `745c35ec` (only
+    `l2-w02-check-row-sun.json`). Run log:
+    `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w02-sun-fix.log`. Review folder:
+    `out/storytime-review/batch-42r2/` (`brief.md`, `pages/` 4 files, `refs/` 3 files). Green did not
+    rate its own work.
+    - Finding B42-SUN (batch 42, reviewer kimi-code-plan-cn/kimi-for-coding, rating 5): the line art
+      reads as a flower. Each of the 8 rays is a closed shape wider at its outer end, and no ray
+      touches the disc. The color m1 had the same ray shape.
+    - Spec change: the color prompt and the line prompt now ask for one round disc and exactly 8 rays.
+      Each ray is a sharp pointed triangle with its wide base on the disc and its point outward. The
+      rays have the same size and the same spacing. The color prompt uses the prop sheet only for the
+      colors and the disc, and it says not to copy the rounded rays. No face. The other rules stay (one
+      object, plain white, no text, square).
+    - Chosen files (in `out/storytime/l2/unit1/w02/muse/`): color `l2-w02-check-row-sun-m2-color.png`
+      (the first call with the new spec was accepted; no repeat); line try 1,
+      `l2-w02-check-row-sun-m2-line-despeckled.png`. Prints (1500 x 1500, `"print": "crop"`):
+      `l2-w02-check-row-sun-m2-color-print.png` and `l2-w02-check-row-sun-m2-line-print-despeckled.png`.
+    - Writer check (`inspectLineArtPng`, 1500 x 1500) of the 3 line prints: try 1 PASS 22 px, ink 6.62
+      percent; try 2 PASS 17 px, 5.19 percent; try 3 PASS 18 px, 5.22 percent. Try 1 is chosen: the
+      thickest line and the cleanest joins at the disc. The chosen line print has only black and white
+      pixels and an edge frame that is 100.00 percent white. The color print is PNG, 8-bit, sRGB, 3
+      channels, 1500 x 1500, no alpha.
+    - Calls: 4 logged in `out/storytime/l2/unit1/w02/muse/costs.tsv` (1 color, 3 line), all billed at
+      0.01 USD, no timeout. Cost 0.04 USD. Running total 6.33 + 0.04 = 6.37 USD.
+    - Open: `approved.json` and the stage 2 check are not run for this row. An independent review of
+      `out/storytime-review/batch-42r2/` is needed. The left and right rays are a little longer than
+      the other six.
   - Week 3 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
     2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `a3741c90`, phase_base_sha
     `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.
