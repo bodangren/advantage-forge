@@ -3769,6 +3769,41 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       for a plain upper wall, but the model may keep the beams, and then gate C1 fails. A plain set
       sheet may be needed. (3) No cover call before Daniel answers on week 1. Marker unchanged:
       measure-guard refuses a Phase 4 task change before the Phase 3 checkpoint.
+    Green evidence for Phase 4 Task 3 (C1 code and cover candidate) (2026-11-03). Role base
+    `781ead36`; Phase 4 base `fc76c272`. Models: Red `opencode-go/deepseek-v4.1-flash`; Green
+    `claude-code/claude-sonnet-5-5#high`; image `meta/muse-image`; coder none. The task marker stays `[~]`.
+    - Implementation commit `8c9a4082` (`src/storytime/book-pictures.ts`): the export
+      `coverCalmTopReport(printPath)` and the command `cover-calm-top --print <path>`. The share
+      code is shared with `calmTopOnRaw`. The command prints `top 30 percent differing share: <x>`
+      and `top 30 percent rows: <rows>` and returns 1 when the share is above 0.02.
+    - Test command:
+      `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts tests/storytime-picture-rows.test.ts tests/storytime-muse-delivery.test.ts --maxWorkers=1'`.
+      Exit code `0`. `Test Files  3 passed (3)`. `Tests  176 passed (176)`. T183 passes.
+    - Type check: exit code `2`; `owned tsc errors: 0`; `baseline tsc errors: 38` (38 `error TS` lines,
+      none in `book-pictures.ts` or `muse-delivery.ts`).
+    - Spec commits: `09047f8e` (`stage` set to `approved`, `stageNote` cites the PM confirmation of
+      2026-11-02 06:18 ICT, item (b)); `08ff673e` (`colorPrompt` only: Ben as the 3D Ben, no wink for
+      Nan, Pip sits, a camera farther back with wide side margins). `goal`, `file`, `sizeClass`, and
+      `lineArt` are unchanged. The spec SHA-256 equals the `specSha256` of candidate m6.
+    - Candidates: 7 Muse color calls, 0.01 USD each. Cost of this round: 0.07 USD. Running total
+      before this round 12.67 USD; after it 12.74 USD. The cap of 10 calls held (3 unused).
+      m1: share 0, Ben flat drawing. m2: share 0, hands cut by the print crop (3:2 call, 4:3 crop).
+      m3: share 0, Ben's hand cut. m4: share 0, Ben flat drawing. m5: share 0, Ben's hand at the edge.
+      m6: share 0, chosen. m7: share `0.1821663888888889`, exit 1 (timber beams in the top 30 percent),
+      which shows that the gate fails a busy top.
+    - C1 lines of the chosen candidate m6 (`l2-cover-v1-m6-color-print.png`):
+      `top 30 percent differing share: 0`; `top 30 percent rows: 900`; exit 0.
+      Print by `sharp`: PNG, 4000 x 3000, 8-bit, sRGB, 3 channels, no alpha.
+      SHA-256 `c5099cba9173014d9ded527439a28397993f156bde779e7c2b84a917f79d89b2`.
+    - Review folder: `out/storytime-review/cover-1/` (`brief.md`, `pages/` with m1 to m7, `refs/` with the 5
+      references). The C2 question is in the brief. The builder gives no rating. C4 (delivery) waits for C2
+      and C3. No delivery folder exists.
+    - Open: (1) Ben's raised fingertips are about 10 px from the left print edge. (2) The feet look
+      slightly raised from the floor. (3) Pip's fur may be more orange than the reference. (4) Eye corners
+      are not checked at full size. (5) The model returns 1920 x 1280 (3:2) and the print crops the sides,
+      so a margin rule in the prompt gives mixed results; the next try may need a pad print mode (a spec
+      change that needs a decision). (6) C2, C3, C4, and C5 are open. Log:
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p4-t3.log`.
 
 Line-art note for Phase 4: weeks 2 to 7 get 162 line-art twins with the same line-art gates. The
 reconciliation task also applies picture specification v1 to the line art. Specification v1 has

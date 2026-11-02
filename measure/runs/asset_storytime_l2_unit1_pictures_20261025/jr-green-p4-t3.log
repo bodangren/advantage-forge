@@ -1,0 +1,29 @@
+Green P4 T3. role_base_sha 781ead36; phase_base_sha fc76c272. HEAD at start 781ead36.
+Step 1: Job A: coverCalmTopReport and cover-calm-top added in src/storytime/book-pictures.ts; commit 8c9a4082.
+Step 2: tests (3 files) exit 0; Test Files 3 passed (3); Tests 176 passed (176). tsc exit 2; 38 errors; owned 0.
+Step 3: Job B: spec stage approved (09047f8e). 7 Muse calls (0.07 USD). colorPrompt changes (08ff673e).
+Step 4: C1 per candidate: m1 to m6 share 0 rows 900 exit 0; m7 share 0.1821663888888889 rows 900 exit 1.
+Step 5: chosen m6, print PNG 4000 x 3000 8-bit sRGB 3 channels no alpha, SHA-256 c5099cba...79d89b2.
+Step 6: review folder out/storytime-review/cover-1/ (brief.md, pages m1 to m7, refs 5). Plan note added. No rating, no delivery.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Produce the Level 2 cover render under S19 (C1 code and cover candidate; marker stays [~])
+role_base_sha: 781ead36
+phase_base_sha: fc76c272
+commits: 8c9a4082 (implementation); 09047f8e (spec approved); 08ff673e (spec colorPrompt); plan-evidence record commit follows (plan.md and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; image=meta/muse-image; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+test_command: heavy-run vitest storytime-book-pictures, storytime-picture-rows, storytime-muse-delivery (--maxWorkers=1): exit 0; Test Files 3 passed (3); Tests 176 passed (176)
+tsc: exit 2; owned tsc errors: 0; baseline tsc errors: 38
+c1_chosen_m6: top 30 percent differing share: 0; top 30 percent rows: 900; exit 0
+muse_calls: 7 (cap 10); cost 0.07 USD; running total 12.74 USD
+chosen: m6 (out/storytime/l2/unit1/cover/muse/l2-cover-v1-m6-color-print.png; SHA-256 c5099cba9173014d9ded527439a28397993f156bde779e7c2b84a917f79d89b2)
+new_files: out/storytime-review/cover-1/ (brief.md, pages/ m1 to m7, refs/ 5); out/storytime/l2/unit1/cover/muse/ (7 candidates, m<n>.json, costs.tsv); this log
+handoff: C2 independent review runs next with the question "Is the top 30 percent calm: no character, no prop, no text?" on out/storytime-review/cover-1/. C3 spot check, C4 delivery, and C5 person review stay open. Open notes: Ben's raised fingertips about 10 px from the left print edge; feet look slightly raised; Pip fur may look more orange than the reference; eye corners not checked at full size. The model returns 3:2 and the print crops the sides; if C2 or C3 fails on the edge margin, the decision is a pad print mode or a new prompt try (3 calls left under the cap of 10). Default: deliver nothing before C2 and C3.
+dispositions: none
+END_MEASURE_AGENT_RESULT
