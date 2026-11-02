@@ -1,0 +1,31 @@
+Step 2: 9 color calls (8 ok, pip 502 retried). Next: view.
+Step 3: viewed 9 color m1. Cover cat cut at left edge behind the tree; pip page Mia has eyelash ticks, 2D look. Made m2 for cover and pip (no spec change).
+Step 4: cover spec edited (cat clear of the left edge; Mia a little right), cover color m3 made. Next: line calls (7 rows m1, pip m2, cover after view).
+Step 5: line tries 1-3 made for 9 rows (27 calls). Picks so far: cat 2, horse 2, fish 2, bird 1, frog 3, pip m2 1. Retry: cover (sun, hair/face), duck (sun), dog (sun, open eyes, pointing finger) -> tries 4-6 after spec edit. Calls so far 45 billed.
+Step 6: retries made (cover 4-6, duck 4-6, dog 4-6; 54 billed). FINAL picks: cover m3 L5; cat m1 L2; dog m1 L6; horse m1 L2; duck m1 L5; fish m1 L2; bird m1 L1; frog m1 L3; pip m2 L1. Writer check run (/tmp/opencode/w06b1/check.out). Next: review folder batch-52.
+Step 7: batch-52 brief.md and folder done. Spec commit 762bdef7. Next: plan note, log result block, commit.
+Step 8: plan note added under Phase 4 Task 2 (plan.md had no foreign change before the edit). Next: record commit.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2, week 6 batch 1 (cover and 8 "I can see ..." story pages; marker unchanged)
+role_base_sha: 93ca9598
+phase_base_sha: fc76c272
+spec_commits: 762bdef7 (l2-w06-cover-i-can-see, l2-w06-story-page-i-can-see-a-duck, l2-w06-story-page-i-can-see-a-dog: colorPrompt or linePrompt only; text and goal unchanged)
+plan_evidence_commit: see git log (the commit after 762bdef7 that holds the plan note and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; image=meta/muse-image; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: cover-i-can-see m3 + line 5 (PASS 19 px, 7.51, edge 96.55); a-cat m1 + line 2 (PASS 17 px, 8.96, 96.30); a-dog m1 + line 6 (PASS 14 px, 7.44, 98.01); a-horse m1 + line 2 (PASS 14 px, 7.27, 97.04); a-duck m1 + line 5 (PASS 17 px, 6.91, 95.21); a-fish m1 + line 2 (PASS 18 px, 7.59, 95.84); a-bird m1 + line 1 (PASS 18 px, 7.34, 96.97); a-frog m1 + line 3 (PASS 14 px, 5.97, 95.96); pip m2 + line 1 (PASS 16 px, 7.02, 97.22). All 9 color prints PNG 4000x3000 8-bit sRGB 3ch no alpha no palette. Nothing needed is cut at a print edge; the horse tail tip runs to the bottom edge by design.
+open_items: approved.json and stage 2 check not run for these rows; batch-52 needs an independent review; horse tail tip runs to the bottom print edge; horse page Mia eyes are two solid black circles with no eye outline in the line art; sun rays are pointed triangles on all pages with a small unmeasured gap to the disc on cat, horse, fish, frog; bird page Mia faces the camera and does not look up; cover cat is small at book size; the real week 6 stage gate prints text 0, goal 0, outDir 0, missing 0 but "stage check: fail" only because 216 page candidate files exist (a clean scratch run printed "stage check: pass", exit 0, quoted in the plan note); the other 18 week 6 rows are not made
+round_cost_usd: 0.48
+running_total_usd: 10.35
+calls: 48 billed (12 color, 36 line), 1 failed HTTP 502 at cost 0, cap 70 not reached
+batch: out/storytime-review/batch-52/
+handoff: Review out/storytime-review/batch-52/ against Daniel's bar for 9 rows. Check first: the horse page (only the golden-brown tail tip of Pip shows, in color and line, and no other Pip part), the cover (one cat whole on the fence, one duck, Mia's visor hand, hair and face in the line art), one animal of the named kind on each animal page, the dog page (two open eyes, pointing finger), and the Pip page (floppy ears, Pip whole, Mia's face without eyelash ticks). Defaults if rated a defect only: tail tip at the bottom edge (accept), sun gap (accept), bird page gaze (accept). Default now: no further Muse call. Next Green round: week 6 batch 2.
+finding_ids: none
+dispositions: none
+END_MEASURE_AGENT_RESULT

@@ -3118,6 +3118,67 @@ rows T142 to T151, and the closeout gate for 30 jobs.
     - Open: no task is `[x]`. No week 6 page call before Daniel answers on week 1. The 9 element
       sheets need an independent look. The `ten` check row shows ten balls, because the sentence
       gives no object for the word.
+    - Week 6 batch 1 (the cover and 8 "I can see ..." story pages). Green round of 2026-11-03,
+      claude-code/claude-sonnet-5-5#high. role_base_sha `93ca9598`, phase_base_sha `fc76c272`. Red model
+      opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none; nothing was delegated. No
+      change in `src/`, `tests/`, `scripts/`, `assets/`, or `approved.json`. No marker changed. Run log:
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w06-b1.log`. Review folder:
+      `out/storytime-review/batch-52/` (`brief.md`, `pages/` 36 files, `refs/` 10 files, no control rows).
+      Green did not rate its own work. Every page has one sun.
+      - Spec commit: `762bdef7` (three specs, `colorPrompt` or `linePrompt` only). The cover `colorPrompt` now
+        seats the gray cat whole on the fence between the tree and Mia, clear of the left edge, and Mia a
+        little right of the middle. The cover `linePrompt` has a sentence for Mia's hair, bow, eyes, nose,
+        and smile. The cover, duck, and dog `linePrompt` have the sun sentence (pointed triangle rays with
+        the wide base on the circle, never a round petal). The dog `linePrompt` also keeps the pointing
+        index finger and two open round eyes. `text` and `goal` did not change.
+      - Rows (9). Color version, line try, then the writer check (line width, ink, edge frame white; gate
+        90) on the 4000 x 3000 despeckled line print:
+        - `cover-i-can-see` (m3, line 5): PASS 19 px, 7.51, 96.55. Mia holds one hand over her eyes; one cat on
+          the fence, one duck on the pond.
+        - `story-page-i-can-see-a-cat` (m1, line 2): PASS 17 px, 8.96, 96.30. One cat on the fence; Mia points.
+        - `story-page-i-can-see-a-dog` (m1, line 6): PASS 14 px, 7.44, 98.01. One puppy with open eyes; Mia
+          points.
+        - `story-page-i-can-see-a-horse` (m1, line 2): PASS 14 px, 7.27, 97.04. One white horse; only the
+          golden-brown tail tip shows in the grass at the lower right (color and line).
+        - `story-page-i-can-see-a-duck` (m1, line 5): PASS 17 px, 6.91, 95.21. One duck; Mia waves.
+        - `story-page-i-can-see-a-fish` (m1, line 2): PASS 18 px, 7.59, 95.84. One fish; Mia kneels and points.
+        - `story-page-i-can-see-a-bird` (m1, line 1): PASS 18 px, 7.34, 96.97. One bird on the branch; Mia
+          points up.
+        - `story-page-i-can-see-a-frog` (m1, line 3): PASS 14 px, 5.97, 95.96. One frog on a lily pad; Mia
+          kneels and points.
+        - `story-page-i-can-see-pip` (m2, line 1): PASS 16 px, 7.02, 97.22. One puppy with floppy ears, a
+          collar, and a tag; Mia opens both arms.
+        All 9 chosen color prints: PNG, 4000 x 3000, 8-bit, sRGB, 3 channels, no alpha, no palette. In
+        every chosen print, no person, hand, hair, foot, or needed prop is cut at an edge. The one
+        exception is the horse tail tip, which runs to the bottom edge (it grows out of the grass).
+      - Retries and why: the cover color m1 and m2 had the cat cut at the left edge and hidden by the
+        tree, so the spec changed and m3 came. The Pip color m1 had a 2D look, eyelash ticks, and loose
+        hair strands on Mia (m2 fixed it; the first Pip call also got HTTP 502 and was made again). Line
+        rejects: the cover tries 1 to 3 (a helmet-like hair shape, a scalloped or petal sun) and tries 4 and
+        6 (the helmet look came back); the duck tries 1 to 3 (a scalloped or petal sun, a stray mark on the
+        overalls) and tries 4 and 6; the dog tries 1 to 3 (a winking eye, or an open hand instead of a
+        pointing finger) and tries 4 and 5; the cat try 1 and 3 (petal sun); the horse try 1 (no tail tip)
+        and try 3; the fish tries 1 and 3, the bird tries 2 and 3, and the frog tries 1 and 2 (scalloped sun).
+        No try has a star, a badge, text, or a gray fill.
+      - Stage gate after the spec change. The real command `node scripts/storytime-stage-check.mjs --week 6
+        --list /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --specs
+        docs/storytime/l2-unit1/w06/muse` prints "text mismatches: 0", "goal mismatches: 0", "outDir
+        mismatches: 0", "missing element paths: 0", and "page candidates: 216", then "stage check: fail".
+        The only problem lines are the page candidate files (week 6 pictures now exist). A clean run in a
+        scratch folder (the 22 element files that the specs name and an empty week 6 output folder) printed
+        list sha256 `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`, rows 27, specs found
+        27, text mismatches 0, goal mismatches 0, outDir mismatches 0, element paths checked 70, missing
+        element paths 0, page candidates 0, "stage check: pass", exit code 0.
+      - Calls: 48 billed in `out/storytime/l2/unit1/w06/muse/costs.tsv` this round (12 color and 36 line),
+        all at 0.01 USD. One color call (Pip m1) failed with HTTP 502 and cost nothing. Round cost 0.48
+        USD. Running total 9.87 + 0.48 = 10.35 USD. The cap of 70 billed calls was not reached.
+      - Open: `approved.json` and the stage 2 check are not run for these rows. `batch-52` needs an
+        independent review. The horse tail tip runs to the bottom print edge. On the horse page Mia's eyes
+        in the line art are two solid black circles with no eye outline. The sun rays are pointed
+        triangles on all 9 pages, but a small gap sits between the ray base and the disc on the cat,
+        horse, fish, and frog pages (not measured). On the bird page Mia faces the camera and does not look
+        up. The cat on the cover is small at book size. The other 18 rows of week 6 (check rows and the
+        cover and pages of the other stories) are not made.
     - Week 7 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
       2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `b5f0c971`, phase_base_sha
       `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.
