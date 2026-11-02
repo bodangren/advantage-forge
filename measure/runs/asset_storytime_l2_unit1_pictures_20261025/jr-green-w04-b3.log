@@ -1,0 +1,34 @@
+provisional: role_base_sha 22f65114; next step: read week 4 batch 2 and week 3 batch 3 plan notes, then Job A (B47-NAP-1)
+Step 2: read notes; nap spec linePrompt edited (no star anywhere, Pam pigtails). Next: line round for nap.
+Step 3: 9 color m1 made (0 errors, 0.09 USD); nap line tries running. Next: view colors.
+Step 4: viewed 9 color prints: all one whole object, white ground, accepted (milk = glass of milk; sun 8 pointed rays). Starting 27 line calls.
+Step 5: nap line tries 4-6 viewed: none shows a star; try 4 has fringe+tuft+pigtail, no star, box whole -> pick try 4 (try 5 box cut at edge, try 6 knit-cap look). 27 check-row line calls ok (round total so far 0.39 USD). Next: view line sheets.
+Step 6: viewed 3 line sheets (27 tries). Leaning: bus 2, cat 2, dog 2, fish 1/2, hat 2 (single brim), milk 2, monkey/mouse/sun by writer. Milk: glass of milk, no carton; try 1 has two extra ovals, try 3 drop on rim. Next: writer check.
+Step 7: writer check done on 27 tries (bus t1 FAIL 11 px). Picks: bus 2, cat 2, dog 2, fish 1, hat 2, milk 2, monkey 1, mouse 3, sun 2; nap line 4. Next: edge/format checks, review folder.
+Step 8: review folder files copied (pages, refs). Next: brief.md.
+Step 9: brief.md written. Next: git status, spec commit, plan note.
+Step 10: spec commit made.
+Step 11: plan note added under Phase 4 Task 2 (plan.md had no foreign change before the edit). Next: plan-evidence commit.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2, week 4 batch 3 (finding B47-NAP-1 and the 9 week 4 check rows; marker unchanged)
+role_base_sha: 22f65114
+phase_base_sha: fc76c272
+spec_commits: 45868e25 (l2-w04-story-page-nan-and-pam-nap.json: linePrompt only; no star anywhere, plain Pam dress, Pam keeps yarn fringe and two pigtails)
+plan_evidence_commit: see git log (the commit after 45868e25 that holds the plan note and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; image=meta/muse-image; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: l2-w04-story-page-nan-and-pam-nap m1 + line 4 (PASS 21 px, 6.94 percent, edge 97.79); check rows, all color m1 + line try: bus 2 (PASS 17 px), cat 2 (20 px), dog 2 (24 px), fish 1 (19 px), hat 2 (16 px), milk 2 (21 px), monkey 1 (14 px), mouse 3 (13 px), sun 2 (20 px). All check-row line prints 1500 x 1500, edge frame 100.00 percent white; all color prints PNG 8-bit sRGB 3ch no alpha no palette. Nothing is cut at a print edge.
+open_items: approved.json and stage 2 check not run for these rows; batch-48 needs an independent review; milk line art is a glass of liquid with no carton or splash crown (default accept); nap line art shows one clear pigtail on Pam (the second is hidden behind her head) and a window curtain that the color lacks; fish fins are wavy-edged; cat and mouse color prints have a cream ground at the edge
+round_cost_usd: 0.39
+running_total_usd: 8.37
+batch: out/storytime-review/batch-48/
+handoff: Review out/storytime-review/batch-48/ against Daniel's bar for 10 rows. F1 (B47-NAP-1): compare pages/l2-w04-story-page-nan-and-pam-nap-m1-line-print-4-despeckled.png with the OLD try 1 file in the same folder; no star shows anywhere and Pam has a fringe, a top tuft, and a pigtail. Ask the reviewer to look at: milk (does the line art read as milk; default accept, one more line batch with a splash crown or a carton only if rated a defect), mouse (not a rat or a cat) and monkey (not a bear), the sun (one disc, eight pointed rays, wide base on the disc), and Pam's second pigtail on the nap page (default accept). Default now: no further Muse call.
+finding_ids: F1=B47-NAP-1
+dispositions: F1=FIX
+END_MEASURE_AGENT_RESULT

@@ -2634,6 +2634,54 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       a yarn fringe and a shoe. In `pam-is-in-a-pan` the pan is deep and round, and its handle is
       short and partly hidden. Window curtains and a few small props in the line art are not in the
       color. The 9 check rows of week 4 are not made.
+  - Week 4 batch 3 (finding B47-NAP-1 and the 9 check rows). Green round of 2026-11-02,
+    claude-code/claude-sonnet-5-5#high. role_base_sha `22f65114`, phase_base_sha `fc76c272`. Red model
+    opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none; nothing was delegated. No
+    change in `src/`, `tests/`, `scripts/`, `assets/`, or `approved.json`. No marker changed. Run log:
+    `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w04-b3.log`. Review folder:
+    `out/storytime-review/batch-48/` (`brief.md`, `pages/` 41 files, `refs/` 13 files, no control rows).
+    Green did not rate its own work.
+    - Spec commit: `45868e25` (only `l2-w04-story-page-nan-and-pam-nap.json`, only the `linePrompt`).
+      The prompt now says that no star shows anywhere on this page (Nan's T-shirt is under the
+      blanket), that Pam's dress is plain, and that Pam keeps a yarn fringe and two yarn pigtails as
+      closed shapes. The week 4 `linePrompt` rule "only Nan has a star" is replaced for this page.
+    - Job A (finding B47-NAP-1, wrong-or-changed-character: in line try 1 Pam had a smooth wavy cap
+      and Nan's star sat on Pam's dress). The color stays m1. One batch of 3 line tries (4, 5, 6)
+      from m1. No try shows a star. Try 4 is chosen: wavy fringe, a yarn tuft on top, one pigtail
+      near the hand, plain dress, toy box whole in the print. Try 5 has the toy box at the right
+      edge of the print and small dots on Pam's cheek. Try 6 gives Pam a striped knit-cap look.
+      Writer check on try 4 (despeckled print, 4000 x 3000): PASS 21 px, 6.94 percent ink, 97.79
+      percent edge frame white (gate 90). The second pigtail is hidden behind Pam's head.
+    - Job B rows (9), color m1 for every row, 1500 x 1500, print mode `crop`. Writer check
+      (`inspectLineArtPng` at 1500 x 1500, despeckled prints): line width, ink; every edge frame is
+      100.00 percent white and no dark pixel is on the outer row or column:
+      - `check-row-bus` (line 2): PASS 17 px, 9.35. Try 1 FAILED the writer (11 px).
+      - `check-row-cat` (2): PASS 20 px, 8.46. Pointed ears, three whiskers a side, curled tail.
+      - `check-row-dog` (2): PASS 24 px, 9.40. Tries 1 and 3 have extra eye rings.
+      - `check-row-fish` (1): PASS 19 px, 4.58. Try 3 draws ray lines in the fins and a double eye ring.
+      - `check-row-hat` (2): PASS 16 px, 3.89. One brim outline; tries 1 and 3 draw a double brim.
+      - `check-row-milk` (2): PASS 21 px, 8.06. A glass with a rim oval and a milk surface oval, and
+        one small drop beside the rim. Try 1 has two extra ovals in the milk; try 3 has a drop on the
+        rim.
+      - `check-row-monkey` (1): PASS 14 px, 8.03. Face mask, round ears, belly, long curled tail.
+      - `check-row-mouse` (3): PASS 13 px, 6.79. Round ears with inner ovals, three whiskers a side,
+        thin tail, no rat snout.
+      - `check-row-sun` (2): PASS 20 px, 6.26. One disc and exactly eight pointed triangle rays with
+        the wide base on the disc; the color has the same eight pointed rays.
+      All 10 chosen color prints are PNG, 8-bit, sRGB, 3 channels, no alpha, no palette (9 at
+      1500 x 1500, the nap page at 4000 x 3000). All line prints are 1 channel, black and white.
+      Nothing is cut at a print edge in any chosen color or line print. The cat and mouse color
+      prints have a soft cream ground and shadow at the edge (85.20 and 90.31 percent near-white).
+    - Retries and why: no color retry; all 9 colors were accepted at the first call. No timeout or
+      network error. The stop limit was not reached for any row.
+    - Calls: 39 logged in `out/storytime/l2/unit1/w04/muse/costs.tsv` this round: 9 color and 30
+      line (27 check rows, 3 nap page). All billed at 0.01 USD. Round cost 0.39 USD. Running total
+      7.98 + 0.39 = 8.37 USD.
+    - Open: `approved.json` and the stage 2 check are not run for these rows. `batch-48` needs an
+      independent review. The milk line art shows a glass of liquid with no carton and no splash
+      crown; a viewer may read it as water or juice (default: accept; the color shows white milk). The
+      nap page line art shows a window curtain that the color has not, and one pigtail of Pam. The
+      fish line art has wavy-edged fins, as in the color. The 9 check rows of week 4 are now made.
   - Week 5 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
     2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `4af2b605`, phase_base_sha
     `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.
