@@ -1329,8 +1329,15 @@ async function hasWhiteCorners(png: Buffer, width: number, height: number): Prom
   return whiteCornersOnRaw(data, width, height);
 }
 
-/** A calm top region differs from its own dominant colour on at most two percent of its pixels. */
-function calmTopOnRaw(data: Buffer, width: number, height: number): boolean {
+/**
+ * The share of top-region pixels that differ from the region's own dominant colour. The region is
+ * the top 30 percent of the rows; a pixel differs when a channel is more than 32 from the modal mean.
+ */
+function calmTopStatsOnRaw(
+  data: Buffer,
+  width: number,
+  height: number,
+): { share: number; rows: number } | undefined {
   const regionHeight = Math.round(height * 0.3);
   const buckets = new Map<number, { count: number; r: number; g: number; b: number }>();
   for (let y = 0; y < regionHeight; y += 1) {
@@ -1350,7 +1357,7 @@ function calmTopOnRaw(data: Buffer, width: number, height: number): boolean {
   }
   let modal: { count: number; r: number; g: number; b: number } | undefined;
   for (const bucket of buckets.values()) if (!modal || bucket.count > modal.count) modal = bucket;
-  if (!modal) return false;
+  if (!modal) return undefined;
   const mean = [modal.r / modal.count, modal.g / modal.count, modal.b / modal.count];
   let focal = 0;
   let total = 0;
@@ -1366,7 +1373,24 @@ function calmTopOnRaw(data: Buffer, width: number, height: number): boolean {
       total += 1;
     }
   }
-  return focal / total <= 0.02;
+  return { share: focal / total, rows: regionHeight };
+}
+
+/** A calm top region differs from its own dominant colour on at most two percent of its pixels. */
+function calmTopOnRaw(data: Buffer, width: number, height: number): boolean {
+  const stats = calmTopStatsOnRaw(data, width, height);
+  return stats !== undefined && stats.share <= 0.02;
+}
+
+/** Gate C1: the calm-top report of a cover print file (the top 30 percent of its rows). */
+export async function coverCalmTopReport(
+  printPath: string,
+): Promise<{ share: number; rows: number; ok: boolean }> {
+  const { data, width, height, channels } = await rawPixels(await readFile(printPath));
+  if (channels !== 3) throw new Error(`The cover print must have 3 channels, found ${channels}: ${printPath}`);
+  const stats = calmTopStatsOnRaw(data, width, height);
+  if (!stats) throw new Error(`The cover print has no top region: ${printPath}`);
+  return { share: stats.share, rows: stats.rows, ok: stats.share <= 0.02 };
 }
 
 async function hasCalmTopRegion(png: Buffer, width: number, height: number): Promise<boolean> {
@@ -4613,6 +4637,8 @@ interface CliOptions {
   approvals?: string;
   muse?: string;
   delivery?: string;
+  /** `cover-calm-top`: the cover print file. */
+  print?: string;
 }
 
 function parseWeek(value: string): number {
@@ -4625,16 +4651,16 @@ function parseCli(argv: string[]): { command: string; options: CliOptions } {
   const [command, ...args] = argv;
   if (
     !command ||
-    !['plan', 'render', 'lineart-smoke', 'precheck-minimax', 'precheck-kimi', 'manifest', 'sheet', 'verify', 'deliver'].includes(command)
+    !['plan', 'render', 'lineart-smoke', 'precheck-minimax', 'precheck-kimi', 'manifest', 'sheet', 'verify', 'deliver', 'cover-calm-top'].includes(command)
   ) {
     throw new Error(
-      'Use plan, render, lineart-smoke, precheck-minimax, precheck-kimi, manifest, sheet, verify, or deliver.',
+      'Use plan, render, lineart-smoke, precheck-minimax, precheck-kimi, manifest, sheet, verify, deliver, or cover-calm-top.',
     );
   }
   const options: CliOptions = { paid: false, dryRun: false, release: false, begin: false, failed: false };
   const valueFlags = new Set([
     '--week', '--job', '--version', '--out', '--workbooks', '--calibration', '--output', '--record', '--raw',
-    '--reason', '--row', '--list', '--approvals', '--muse', '--delivery',
+    '--reason', '--row', '--list', '--approvals', '--muse', '--delivery', '--print',
   ]);
   for (let index = 0; index < args.length; index += 1) {
     const argument = args[index]!;
@@ -4662,6 +4688,7 @@ function parseCli(argv: string[]): { command: string; options: CliOptions } {
       else if (argument === '--approvals') options.approvals = value;
       else if (argument === '--muse') options.muse = value;
       else if (argument === '--delivery') options.delivery = value;
+      else if (argument === '--print') options.print = value;
       else if (argument === '--output') {
         if (value !== 'color' && value !== 'lineart') throw new Error(`Invalid output kind: ${value}`);
         options.output = value;
@@ -4722,6 +4749,13 @@ export async function runStorytimeCli(
     log(`Wrote 112 jobs to ${resolveOutputPath(outputRoot, 'jobs.json')}`);
     log(`Selected ${selectedJobs(jobs, selection).length} jobs.`);
     return 0;
+  }
+  if (command === 'cover-calm-top') {
+    if (!options.print) throw new Error('cover-calm-top needs --print <cover print file>.');
+    const report = await coverCalmTopReport(path.resolve(repoRoot, options.print));
+    log(`top 30 percent differing share: ${report.share}`);
+    log(`top 30 percent rows: ${report.rows}`);
+    return report.ok ? 0 : 1;
   }
   if (command === 'deliver') {
     // Read only and offline: the command reads local files and copies the approved Muse prints.
