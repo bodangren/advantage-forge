@@ -3676,6 +3676,37 @@ rows T142 to T151, and the closeout gate for 30 jobs.
         53 px from a print edge. After this batch the 27 pictures of week 7 exist as candidates.
 - [~] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks.
+    Red evidence for Phase 4 Task 3 (C1, T183) (2026-11-03). Role base `7361c5b5`; Phase 4 base
+    `fc76c272`. Models: Red `opencode-go/deepseek-v4.1-flash`; Green
+    `claude-code/claude-sonnet-5-5#high`. Test commit `0f232b1e`. The task marker stays `[~]`.
+    Red command:
+    `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`.
+    Exit code `1`. `Test Files  1 failed (1)`. `Tests  1 failed | 141 passed (142)`.
+    Failing test: T183. It stops at `The coverCalmTopReport seam exists.: expected undefined to be
+    type of 'function'`. Every other test of the file keeps its state.
+    Type check:
+    `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=2560 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'`.
+    Exit code `2`. `owned tsc errors: 0`. `baseline tsc errors: 38`.
+    Seams for Green (no decision left):
+    - Export `coverCalmTopReport(printPath: string): Promise<{ share: number; rows: number; ok: boolean }>`
+      from `src/storytime/book-pictures.ts`. It decodes the PNG pixels, takes the top
+      `Math.round(height * 0.3)` rows (900 for a 3000-row print), and applies the `calmTopOnRaw`
+      rule: a pixel differs when its largest channel distance from the modal bucket mean is above
+      32. It reports `share = differing / region pixels`, `rows`, and `ok = share <= 0.02`.
+    - CLI command `cover-calm-top --print <printPath>` in the `parseCli` command list, its value
+      flag set, and `runStorytimeCli`. It reaches the CLI through `runStorytimeBookPicturesEntry`
+      in `scripts/storytime-book-pictures.ts`. It prints these two labeled lines through `log`:
+      `top 30 percent differing share: <share>` and `top 30 percent rows: <rows>`. The printed share
+      equals the report `share`. It returns 0 when `ok`. When the share is above 0.02 it fails, so
+      `runStorytimeBookPicturesEntry` exits non-zero (the Red test accepts a throw or a non-zero
+      return). Resolve `--print` with `path.resolve(repoRoot, value)`.
+    Fixtures: four generated 4000 x 3000 PNG files in a temporary folder. T183 cases: (a) a plain
+    cream top passes with share 0; (b) a busy disc inside rows 0 to 899 gives share 0.058988 and
+    fails; (c) a busy band on rows 900 to 999 passes, and a busy band on rows 800 to 899 gives
+    share 0.111111 and fails; (d) the rows line is exactly `top 30 percent rows: 900`.
+    A fixture probe measured a region shifted to rows 900 to 1799: the two band cases invert, so the
+    pair pins the band location. A region with another row count fails the rows line.
+    Log: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-p4-t3.log`.
     - Level 2 cover staging (inputs only; default file name and size wait for the PM). Green round
       of 2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `1414a3ea`, phase_base_sha
       `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image.

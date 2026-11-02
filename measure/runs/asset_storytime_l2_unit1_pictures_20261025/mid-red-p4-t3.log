@@ -1,0 +1,111 @@
+# Mid Red, Phase 4 Task 3 (gate C1, test T183)
+
+- Role: measure-mid-red. Session `Red · P4 T3 · storytime_l2_unit1_pictures`.
+- Track: `asset_storytime_l2_unit1_pictures_20261025`. Phase heading "Phase 4: Remaining
+  pictures and cover". Task 3 marker stays `[~]`.
+- role_base_sha `7361c5b5`. phase_base_sha `fc76c272`.
+- Models: Red `opencode-go/deepseek-v4.1-flash`; Green `claude-code/claude-sonnet-5-5#high`.
+- Test file: `tests/storytime-book-pictures.test.ts`, test `T183`.
+- Seam names:
+  - export `coverCalmTopReport(printPath)` in `src/storytime/book-pictures.ts`.
+  - CLI command `cover-calm-top --print <printPath>` through
+    `runStorytimeBookPicturesEntry` in `scripts/storytime-book-pictures.ts`.
+
+## Red command
+
+```sh
+bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'
+```
+
+Started: 2026-11-03T03:45:18+07:00
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/storytime-book-pictures.test.ts (142 tests | 1 failed) 281339ms
+     × T183: the cover calm-top gate reads the top 900 rows, passes a calm top, and fails a busy top 22ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T183: the cover calm-top gate reads the top 900 rows, passes a calm top, and fails a busy top
+AssertionError: The coverCalmTopReport seam exists.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ tests/storytime-book-pictures.test.ts:4767:59
+    4765|       coverCalmTopReport?: (printPath: string) => Promise<{ share: num…
+    4766|     }).coverCalmTopReport;
+    4767|     expect(report, 'The coverCalmTopReport seam exists.').toBeTypeOf('…
+       |                                                           ^
+    4768|     const entry = (wrapperSeams as unknown as {
+    4769|       runStorytimeBookPicturesEntry?: (
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 141 passed (142)
+   Start at  03:54:48
+   Duration  284.91s (transform 1.26s, setup 0ms, import 2.87s, tests 281.34s, environment 0ms)
+
+EXIT=1
+
+The failure is the absent seam. Every other test of the file keeps its state: 141 passed.
+
+## Type check
+
+```sh
+bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=2560 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'
+```
+
+Exit code `2`. `owned tsc errors: 0`. `baseline tsc errors: 38`.
+The first tsc try exited `134` with a heap abort at the default limit. The retry with
+`--max-old-space-size=2560` follows the earlier phases of this track.
+
+## Fixture probe for the T183 cases
+
+The probe is `/tmp/opencode/t183-probe.mjs`. It writes only under `/tmp/opencode`.
+Output:
+
+```text
+calm: rows 900 share 0.000000 pass true; rows-1-to-899 share 0.000000; rows-900-to-1799 share 0.000000
+busy-top: rows 900 share 0.058988 pass false; rows-1-to-899 share 0.058988; rows-900-to-1799 share 0.000000
+band-below: rows 900 share 0.000000 pass true; rows-1-to-899 share 0.001111; rows-900-to-1799 share 0.111111
+band-inside: rows 900 share 0.111111 pass false; rows-1-to-899 share 0.111111; rows-900-to-1799 share 0.000000
+```
+
+The two band cases invert when the region moves 900 rows down. The rows line of the CLI pins the
+row count at 900, so a region of another row count fails T183.
+
+## Files
+
+- `tests/storytime-book-pictures.test.ts`: the `coverPrint` fixture helper and test T183.
+- `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md`: the Red evidence block
+  under Phase 4 Task 3.
+- This log.
+
+No production file changed. The dirty-path classification: the modified test file and this log
+are the only relevant paths. The many untracked run logs, `reference/*.jpg`, and
+`measure/runs/game_*` folders belong to other sessions and are preserved.
+
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: done
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4
+task: Red for Phase 4 Task 3 (gate C1, test T183, calm top of the Level 2 cover)
+baseline_sha: fc76c27209402c54354447693e9b291d4411ff79
+role_base_sha: 7361c5b55e0d30793aaddbcb1e2dcf1ed0799dae
+head_sha: the record commit that holds plan.md and this log; resolve it with `git log -1 --format=%H` at handoff
+commits: 0f232b1e tests/storytime-book-pictures.test.ts; the record commit holds measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md and this log
+tests_run: Red command exit 1; Test Files 1 failed (1); Tests 1 failed | 141 passed (142). T183 fails at `The coverCalmTopReport seam exists.: expected undefined to be type of 'function'`. Type check exit 2; owned tsc errors: 0; baseline tsc errors: 38.
+files_changed: tests/storytime-book-pictures.test.ts (the `coverPrint` fixture helper and test T183); measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md (Red evidence block under Phase 4 Task 3); this log.
+plan_updates: A "Red evidence for Phase 4 Task 3 (C1, T183)" block sits under the Phase 4 Task 3 entry. It records the role base, the phase base, both models, the test commit, the Red command and its exit code and counts, the type check, the two seam names with the exact contract, the four fixture cases, and the fixture shares. The Phase 4 Task 3 marker stays `[~]`.
+handoff: Green adds `coverCalmTopReport(printPath)` to src/storytime/book-pictures.ts and the `cover-calm-top --print <printPath>` command to parseCli, the value flags, and runStorytimeCli. The command prints `top 30 percent differing share: <share>` and `top 30 percent rows: <rows>` and fails above a share of 0.02. Green changes no test expectation.
+dispositions: none
+model: opencode-go/deepseek-v4.1-flash (Red, this role). Green for this phase runs on claude-code/claude-sonnet-5-5#high. The families differ.
+model_deviation: none.
+facts_changed: none. The production code did not change.
+dirty_path_classification: Relevant: the modified test file and this log. Generated or ignorable: the untracked `measure/runs/` logs and `reference/*.jpg`. Unrelated user work, preserved: `measure/runs/game_archers_revenge_rebuild_20261029/`, `measure/runs/game_castle_defense_rebuild_20261029/`, `measure/runs/game_magic_defense_rebuild_20261029/`, `measure/runs/game_paladins_twin_soul_rebuild_20261029/`, and `reference/blacksmith-quest_001.jpg`, `reference/village-quest_001.jpg`.
+anti_patterns: No vacuous pass: the calm case asserts share 0 through the seam and code 0 through the entry, and the busy cases assert a share above 0.02. The band pair pins the region location. No digit-only count: every value is labeled. The test names no `measure/tracks/` path (A9). Fixtures live only under the test temporary root.
+END_MEASURE_AGENT_RESULT
