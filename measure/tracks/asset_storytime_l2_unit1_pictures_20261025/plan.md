@@ -1362,10 +1362,23 @@ rows T142 to T151, and the closeout gate for 30 jobs.
     `practice-line-nut`.
   - Verdict: ok.
   - The 4 v2 rows are `a-net`, `check-row-net`, `a-nose`, and `nan-can-nod` (delivery-muse-v2
-    manifest `d3eec18c`). They get their person look after the Workbooks stage 2 recheck, by PM
-    order. The PM sends Daniel one small sheet of them. This look does not hold Phase 4.
+    manifest `d3eec18c`). Daniel looked at them later. The block "Person review of the 4 v2 rows
+    (Daniel, 2026-11-02 14:28 ICT)" below records that look.
   - The model reviews are model evidence. They are not acceptance. Only this person review is
     acceptance of the 26 rows.
+  Person review of the 4 v2 rows (Daniel, 2026-11-02 14:28 ICT):
+  - Person: Daniel.
+  - Channel: Google Tasks `MlZrM1ZUSXE1Z0ZmUDVYMw`. The PM relayed the reply at about 14:3x ICT on
+    2026-11-02.
+  - His words, verbatim: "Looks good".
+  - Scope: the delivery `delivery-muse-v2` (manifest `d3eec18c`), color and line-art pictures of
+    4 rows: `l2-w01-story-page-a-net` (R11), `l2-w01-check-row-net` (R27),
+    `l2-w01-story-page-a-nose` (R13), and `l2-w01-story-page-nan-can-nod` (R17).
+  - Verdict: ok.
+  - The Workbooks stage 2 checkers also passed the 4 rows (Doubao 8/8, M3.1-Flash 4/4). The PM
+    reports these results. They are model evidence and are not acceptance.
+  - With this review and the review above, all 30 week 1 rows have a person review. Week 1 is
+    complete on both sides.
   Week 1 contact sheet (2026-11-01): `out/storytime-review/w01-contact/index.html`. It shows
   30 cards in picture-list order, each with a color preview and a line-art preview (60
   previews in `prev/`). The delivered files are not changed. The page has an OK box and a
@@ -5550,6 +5563,8 @@ Replaced by the amendment of 2026-11-01 (Muse path).
   of the 4 v2 rows comes after the Workbooks stage 2 recheck. The PM sends Daniel one small sheet
   of them. Default: that look does not hold Phase 4. Facts changed: week 1 person review done for
   26 rows; cast look approved for 7 characters.
+- 2026-11-02 14:3x ICT, PM: Daniel 'Looks good' for the 4 week 1 v2 rows; week 1 is complete on
+  both sides.
 - 2026-11-01 (17:2x ICT) and 2026-11-02 (06:18 ICT), PM confirmations: (a) week 8 rows are out of
   scope until the PM assigns them. (b) The cover is `l2-cover-v1.png`, class B, color only. (c) The
   "ten" check row shows ten red balls. (d) A missing Nan eyelash mark in a line file is a small
