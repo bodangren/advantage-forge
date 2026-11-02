@@ -23,6 +23,6 @@ open_items: approved.json and stage 2 check not run; batch-56 needs an independe
 round_cost_usd: 0.49
 running_total_usd: 12.29
 calls: 49 billed (14 color, 35 line), 1 failed (network timeout, get-the-top m2 line try 2) at cost 0; cap 70 not reached
-dispositions: none (no routed findings)
+dispositions: none
 review_folder: out/storytime-review/batch-56/
 END_MEASURE_AGENT_RESULT
