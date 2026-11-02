@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "summary": "Phase 3 adversarial testing at 87ca5dab adds 12 probes in tests/storytime-muse-delivery-adversarial.test.ts. 11 probes pass. ADV9 finds one blocking implementation defect: a picture list with one row id twice is accepted, and the manifest then gives every candidate of that id to both jobs, so the second row has no job that selects its own file. The focused command exits 1 with Test Files 1 failed | 1 passed (2) and Tests 1 failed | 40 passed (41).",
+  "phase_base_sha": "15a7bf0b2a59b8137a05805666df6736dc256167",
+  "role_base_sha": "87ca5dab4b93ae4d167c53ea23e7862052148a57",
+  "audited_head_sha": "87ca5dab4b93ae4d167c53ea23e7862052148a57",
+  "audited_head": "87ca5dab4b93ae4d167c53ea23e7862052148a57",
+  "head_at_start": "87ca5dab4b93ae4d167c53ea23e7862052148a57",
+  "head_at_finish": "b142e6430cdf0014bb6baeaa193598a2e4056b84",
+  "blocking_findings": [
+    "ADV-P3-01 [Blocking] a duplicate picture-list row id corrupts the manifest. The writer refuses a duplicate id in the approval list (src/storytime/muse-delivery.ts:341-348) but not in options.rows. assembleManifest pairs candidates by candidate.jobId === job.id (src/storytime/book-pictures.ts:2081-2084), so two rows with one id give two jobs that each hold every candidate of that id and both select the same file. Live probe: rows l2-w01-story-page-a-nut twice (file names l2-w01-story-page-a-nut-v1.png and l2-w01-story-page-a-nut-b-v1.png) with one approval entry give 2 jobs, each with candidates [l2-w01-story-page-a-nut-v1.png, l2-w01-story-page-a-nut-b-v1.png] and selectedFile l2-w01-story-page-a-nut-v1.png. The folder holds 4 delivered files, so the second row has no job that selects its own file. The manifest breaks the decision 2 rule 'one entry per picture-list row' for the second row. Fix: refuse a duplicate row.id in options.rows before the delivered-name loop, in the same way as the approval-list check at src/storytime/muse-delivery.ts:343. Test: tests/storytime-muse-delivery-adversarial.test.ts:567. Owner: Green."
+  ],
+  "nonblocking_findings": [
+    "ADV-P3-NB1 [Low] a symlinked delivery root is followed. resolveMuseDeliveryPaths confines the two paths by path.resolve only (src/storytime/muse-delivery.ts:130-146), and the writer joins and creates the delivery root without a realpath check (src/storytime/muse-delivery.ts:461-478). A delivery root that is a directory symlink to a folder outside the lexical out tree receives the copied files and manifest.json. Live probe: deliveryRoot was a symlink to a folder outside the repository out folder; the writer wrote 3 files through the link and returned a manifest. The writer still refuses a symlink at every file target (src/storytime/muse-delivery.ts:443-446 and 463-466, ADV12). The impact is low: a local actor must create the link, the approval list cannot create it, and every delivered name is a plain file name. Owner: Green, or a later security review."
+  ],
+  "rows_added": [
+    {
+      "id": "ADV1",
+      "target": "An approval entry that points at another row's print of the same size class",
+      "result": "pass. The NUT entry names the MOP print; both rows are class A, so both prints are 4000 x 3000. The NUT candidate hash and the delivered NUT bytes equal the MOP print hash and differ from the NUT print hash. The HEN row keeps its own bytes. The MOP row gets no job. The writer copies the file the entry names and never swaps two rows."
+    },
+    {
+      "id": "ADV2",
+      "target": "An approval entry that points at another row's print of the other format",
+      "result": "pass. A one-channel line print in the color field is refused for its channels. A three-channel color print in the line field is refused for its channels. Both messages name the row and the print file. Both targets stay empty."
+    },
+    {
+      "id": "ADV3",
+      "target": "A line print with one pixel at 254, 128, or 1, with a pure 0/255 control",
+      "result": "pass. Each value is refused with the row id and '1 grey pixel'. Each refusal writes no file and creates no delivery folder. The 0/255 control delivers one job with a valid line art and writes manifest.json, so the check does not refuse every line print."
+    },
+    {
+      "id": "ADV4",
+      "target": "A color print with an alpha channel, and a JPEG under a .png name",
+      "result": "pass. The four-channel print is refused for its alpha or channel count. The JPEG is refused for its format. Both messages name the row and the print file. Both targets stay empty."
+    },
+    {
+      "id": "ADV5",
+      "target": "One changed byte in manifest.json",
+      "result": "pass. One character of one job id is changed; every other byte stays. The rerun is refused with a manifest message, and the folder snapshot is byte-identical after the refusal."
+    },
+    {
+      "id": "ADV6",
+      "target": "A different file, or a folder, under a delivered name",
+      "result": "pass. One extra byte under a delivered name is refused, and the folder snapshot is byte-identical. A folder at a delivered name is refused and writes no manifest.json."
+    },
+    {
+      "id": "ADV7",
+      "target": "A week 3 entry in a `deliver --week 2` run over a populated folder",
+      "result": "pass. The week 2 run exits 0 and writes 5 files. The run with the week 3 entry exits 1, the error names l2-w03-, and the populated delivery folder is byte-identical. No l2-w03- file appears."
+    },
+    {
+      "id": "ADV8",
+      "target": "The same row id twice in the approval list",
+      "result": "pass. The writer refuses the duplicate approval entry, names the row, and writes no file."
+    },
+    {
+      "id": "ADV9",
+      "target": "The same row id twice in the picture list",
+      "result": "FAIL. The writer accepts the duplicate picture-list row id and writes 4 files. The manifest gives both jobs every candidate of that id, and both jobs select the first file. The second row has no job that selects its own file. This is blocking finding ADV-P3-01."
+    },
+    {
+      "id": "ADV10",
+      "target": "`fileVersion` on a line name with no -v<n>.png suffix",
+      "result": "pass. The writer refuses the run before any read, names the row, fileVersion, and the suffix rule, and writes no file. The Muse folder is empty, so the suffix message proves the name check ran before the read. This closes the test gap of RA-P3V2-1."
+    },
+    {
+      "id": "ADV11",
+      "target": "`fileVersion` 1e21, with a fileVersion 2 control on the same list",
+      "result": "pass. 1e21 is refused at entries.0.fileVersion with a too-big safe-integer message and writes no file. The fileVersion 2 control delivers l2-w01-story-page-a-nut-v2.png and records version 2."
+    },
+    {
+      "id": "ADV12",
+      "target": "A symlink at a delivered name whose bytes already match",
+      "result": "pass. The writer refuses the symlink, the folder snapshot is byte-identical, the link stays a link, and the link target keeps its bytes."
+    }
+  ],
+  "mutation_review": {
+    "not_run": "No production mutation ran. The role must not edit src/, and one test fails on its own (ADV9), so the suite proves that it can fail.",
+    "controls": "ADV3 and ADV11 each hold a passing control beside the refusal case, so a check that refused every input would fail the control. ADV1 asserts a negative (the delivered bytes differ from the row's own print) and a positive (they equal the named print)."
+  },
+  "evidence": [
+    "HEAD at start was 87ca5dab4b93ae4d167c53ea23e7862052148a57. The new test file is committed as b142e6430cdf0014bb6baeaa193598a2e4056b84. No src/, scripts/, or other test file changed.",
+    "The focused command exited 1: Test Files 1 failed | 1 passed (2); Tests 1 failed | 40 passed (41); Duration 42.19 s. The existing tests/storytime-muse-delivery.test.ts holds 29 tests and all 29 pass. The new file holds 12 tests; 11 pass and ADV9 fails.",
+    "The ADV9 failure is an implementation defect, not a test defect. A live probe with the real writer printed the two manifest jobs: each job held candidates [l2-w01-story-page-a-nut-v1.png, l2-w01-story-page-a-nut-b-v1.png] and selectedFile l2-w01-story-page-a-nut-v1.png. assembleManifest pairs candidates by jobId at src/storytime/book-pictures.ts:2081-2084.",
+    "Known nonblocking finding RB11-01 is stale on its 1e21 example. The schema refuses 1e21 with 'Too big: expected int to be <=9007199254740991' at entries.0.fileVersion. ADV11 proves the refusal. The residual of RB11-01 is limited to a very large safe integer, and this run does not re-report it.",
+    "The two first runs of the new file failed to transform, because two expect.soft object literals in ADV10 and ADV12 were missing a closing brace. These were test-authoring errors. The fixes changed the new test file only.",
+    "The probes for ADV-P3-NB1 (symlinked delivery root) and for the ADV9 manifest corruption ran as standalone tsx scripts under /tmp/opencode. No network call and no Muse call ran.",
+    "The writer copies the print that the approval entry names, and no spec or plan rule asks it to check the row id inside the Muse file name. ADV1 records that boundary, so a same-size cross-row pointer is an approval-list authoring error, not a writer defect."
+  ],
+  "commands": [
+    "Focused: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery-adversarial.test.ts tests/storytime-muse-delivery.test.ts --maxWorkers=1'; exit 1; Test Files 1 failed | 1 passed (2); Tests 1 failed | 40 passed (41); Duration 42.19 s.",
+    "Earlier focused run of the new file only: exit 1; Test Files 1 failed (1); Tests 1 failed | 11 passed (12).",
+    "No type check ran. The change adds one test file and no production type."
+  ],
+  "commits": [
+    "b142e6430cdf0014bb6baeaa193598a2e4056b84 test(storytime): add adversarial Muse delivery probes"
+  ],
+  "changed_files": [
+    "tests/storytime-muse-delivery-adversarial.test.ts",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/adversarial-87ca5dab.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/adversarial-87ca5dab.log"
+  ],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "model_deviation": "The adversarial role ran opencode-go/deepseek-v4.1-flash. The role route is ra-quota --fresh pick adversarial --not-family claude. Green of the Phase 3 delivery code ran claude-code/claude-sonnet-5-5#high, so the role families stay apart.",
+  "handoff": "Phase 3 adversarial testing fails on one blocking implementation defect. Green must refuse a duplicate picture-list row id in writeMuseDelivery before any write, in the same way as the duplicate approval entry. The failing test is tests/storytime-muse-delivery-adversarial.test.ts:567 (ADV9). The other 11 probes pass. ADV-P3-NB1 (symlinked delivery root) is nonblocking. No owner decision is required.",
+  "facts_changed": [
+    "Phase 3 adversarial testing at 87ca5dab fails with one blocking finding: a duplicate picture-list row id gives a manifest with two jobs for one id and no job for the second row.",
+    "The focused delivery command exits 1 with Tests 1 failed | 40 passed (41)."
+  ]
+}

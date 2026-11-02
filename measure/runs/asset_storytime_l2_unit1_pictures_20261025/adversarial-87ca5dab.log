@@ -1,0 +1,92 @@
+# Adversarial testing, Phase 3, HEAD 87ca5dab
+
+Status: fail. One blocking implementation defect.
+
+- Role: measure-adversarial-testing. Model: opencode-go/deepseek-v4.1-flash.
+- Track: asset_storytime_l2_unit1_pictures_20261025. Phase: "Phase 3: Week 1 pictures".
+- phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+- role_base_sha: 87ca5dab4b93ae4d167c53ea23e7862052148a57
+- audited code HEAD: 87ca5dab4b93ae4d167c53ea23e7862052148a57
+- test commit: b142e6430cdf0014bb6baeaa193598a2e4056b84
+
+## What ran
+
+The new file `tests/storytime-muse-delivery-adversarial.test.ts` holds 12 probes (ADV1 to ADV12).
+The probes use temporary roots only. They make no network call and no Muse call.
+
+Focused command:
+
+```bash
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery-adversarial.test.ts tests/storytime-muse-delivery.test.ts --maxWorkers=1'
+```
+
+Result: exit 1.
+
+```text
+Test Files  1 failed | 1 passed (2)
+     Tests  1 failed | 40 passed (41)
+  Duration  42.19s
+```
+
+The existing file `tests/storytime-muse-delivery.test.ts` holds 29 tests. All 29 pass.
+The new file holds 12 tests. 11 pass and ADV9 fails.
+
+## Probes and results
+
+| ID | Probe | Result |
+| --- | --- | --- |
+| ADV1 | an entry that points at another row's print of the same size class | pass. The writer copies the named print, and the two rows never swap bytes. |
+| ADV2 | another row's print of the other format in the color field and in the line field | pass. Both are refused with the row id, and both targets stay empty. |
+| ADV3 | a line print with one pixel at 254, 128, or 1, and a pure 0/255 control | pass. Each value is refused as one grey pixel. The control delivers. |
+| ADV4 | a color print with alpha, and a JPEG under a .png name | pass. Both are refused, and both targets stay empty. |
+| ADV5 | one changed character in manifest.json | pass. The run is refused and the folder stays byte-identical. |
+| ADV6 | a different file, or a folder, under a delivered name | pass. Both are refused and the folder stays byte-identical. |
+| ADV7 | a week 3 entry in a `deliver --week 2` run over a populated folder | pass. Exit 1, and the week 2 delivery stays byte-identical. |
+| ADV8 | the same row id twice in the approval list | pass. The run is refused before any write. |
+| ADV9 | the same row id twice in the picture list | FAIL. Blocking finding ADV-P3-01. |
+| ADV10 | `fileVersion` on a line name with no -v<n>.png suffix | pass. The run is refused before any read. Closes the RA-P3V2-1 test gap. |
+| ADV11 | `fileVersion` 1e21, with a fileVersion 2 control | pass. 1e21 is refused by the safe-integer bound. |
+| ADV12 | a symlink at a delivered name whose bytes match | pass. The run is refused and the link stays a link. |
+
+## Blocking finding
+
+ADV-P3-01: a duplicate picture-list row id corrupts the manifest.
+
+- The writer refuses a duplicate id in the approval list at
+  `src/storytime/muse-delivery.ts:341-348`. It does not refuse a duplicate id in `options.rows`.
+- `assembleManifest` pairs candidates by `candidate.jobId === job.id` at
+  `src/storytime/book-pictures.ts:2081-2084`.
+- Live probe: two rows with the id `l2-w01-story-page-a-nut` (file names
+  `l2-w01-story-page-a-nut-v1.png` and `l2-w01-story-page-a-nut-b-v1.png`) and one approval entry
+  give 2 jobs. Each job holds candidates `[l2-w01-story-page-a-nut-v1.png,
+  l2-w01-story-page-a-nut-b-v1.png]` and selects `l2-w01-story-page-a-nut-v1.png`. The folder holds
+  4 delivered files. The second row has no job that selects its own file.
+- Fix: refuse a duplicate `row.id` in `options.rows` before the delivered-name loop, in the same
+  way as the approval-list check at `src/storytime/muse-delivery.ts:343`.
+- Failing test: `tests/storytime-muse-delivery-adversarial.test.ts:567`.
+
+## Nonblocking finding
+
+ADV-P3-NB1 (Low): a symlinked delivery root is followed. `resolveMuseDeliveryPaths` confines the
+paths by `path.resolve` only (`src/storytime/muse-delivery.ts:130-146`), and the writer creates and
+joins the delivery root with no realpath check (`src/storytime/muse-delivery.ts:461-478`). A live
+probe wrote 3 files through a directory symlink to a folder outside the lexical out tree. The writer
+still refuses a symlink at every file target. A local actor must create the link, so the impact is
+low.
+
+## Notes
+
+- RB11-01 is stale on its 1e21 example. The schema refuses 1e21 with "Too big: expected int to be
+  <=9007199254740991" at `entries.0.fileVersion`. ADV11 proves the refusal. This run does not
+  re-report RB11-01.
+- The writer copies the print that the approval entry names. No spec or plan rule asks it to check
+  the row id inside the Muse file name, so ADV1 records that boundary as an approval-list authoring
+  error, not a writer defect.
+- Two first runs of the new file failed to transform, because two `expect.soft` object literals
+  were missing a closing brace. These were test-authoring errors. The fixes changed the new test
+  file only.
+- No production mutation ran. The role must not edit `src/`, and ADV9 fails on its own, so the
+  suite proves that it can fail. ADV3 and ADV11 each hold a passing control beside the refusal case.
+
+MEASURE_AGENT_RESULT
+{"status":"fail","retry_recommendation":"retry_implementation","tests":"1 failed | 40 passed (41)","test_file_totals":{"tests/storytime-muse-delivery-adversarial.test.ts":"1 failed | 11 passed (12)","tests/storytime-muse-delivery.test.ts":"29 passed (29)"},"defects":[{"id":"ADV-P3-01","severity":"blocking","file_line":"src/storytime/muse-delivery.ts:341-348 (missing duplicate row.id check); src/storytime/book-pictures.ts:2081-2084 (assembleManifest pairs by jobId)","test":"tests/storytime-muse-delivery-adversarial.test.ts:567","summary":"A duplicate picture-list row id gives two jobs that each hold every candidate of that id and both select the first file. The second row has no job that selects its own file. Fix: refuse a duplicate row.id in options.rows before any write."}],"nonblocking":[{"id":"ADV-P3-NB1","file_line":"src/storytime/muse-delivery.ts:130-146 and 461-478","summary":"A symlinked delivery root is followed; a live probe wrote files outside the lexical out tree. Low impact."}],"commits":["b142e6430cdf0014bb6baeaa193598a2e4056b84 test(storytime): add adversarial Muse delivery probes"],"handoff":"Green must refuse a duplicate picture-list row id in writeMuseDelivery before any write. Rerun the focused delivery command after the fix. No owner decision is required."}
