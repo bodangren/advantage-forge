@@ -31,6 +31,7 @@ import { runStorytimeBookPicturesEntry } from '../scripts/storytime-book-picture
 //   ADV10 `fileVersion` on a line name that has no `-v<n>.png` suffix
 //   ADV11 `fileVersion` 1e21 (the schema safe-integer bound) and 2 (the control)
 //   ADV12 a symlink at a delivered name whose bytes already match
+//   ADV13 a symlinked delivery root (the RB12-02 gap)
 //
 // The tests use temporary roots only. They read and write local files. They make no network
 // call and no Muse call.
@@ -657,5 +658,32 @@ describe('Muse delivery adversarial probes', () => {
       .toEqual({ 'The refused run keeps the symlink': beforeLink });
     expect.soft({ 'The symlink target keeps its bytes': sha256(await readFile(keep)) })
       .toEqual({ 'The symlink target keeps its bytes': before[rowFor(NUT).fileName] });
+  });
+
+  it('ADV13 refuses a symlinked delivery root and writes no byte through the link', async () => {
+    // The delivery root is the one folder path that no target check covers. A directory symlink
+    // here sends every copy outside the lexical out tree, so the writer must refuse it. The
+    // control proves the guard does not refuse a real delivery folder.
+    const nutNames = await putPrints(rowFor(NUT), '#88ccff');
+    const approvals = list([entry(NUT, nutNames)]);
+    const outside = path.join(root, 'outside-root');
+    await mkdir(outside, { recursive: true });
+    const link = path.join(root, 'delivery-link');
+    await symlink(outside, link);
+
+    const error = await rejection(() => deliver(approvals, { target: link }));
+    expect.soft({ 'The symlinked delivery root is refused': /symlink|link|refus/i.test(error.message) })
+      .toEqual({ 'The symlinked delivery root is refused': true });
+    expect.soft({ 'The refused run writes no byte through the link': await walk(outside) })
+      .toEqual({ 'The refused run writes no byte through the link': [] });
+    expect.soft({ 'The refused run keeps the link': (await lstat(link)).isSymbolicLink() })
+      .toEqual({ 'The refused run keeps the link': true });
+
+    const real = path.join(root, 'delivery-real');
+    const manifest = await deliver(approvals, { target: real });
+    expect.soft({ 'The real delivery folder control writes one job': manifest.jobs.length })
+      .toEqual({ 'The real delivery folder control writes one job': 1 });
+    expect.soft({ 'The real delivery folder control writes three files': (await walk(real)).length })
+      .toEqual({ 'The real delivery folder control writes three files': 3 });
   });
 });
