@@ -1,0 +1,36 @@
+provisional: role_base_sha 79b358ec; next step: read week 4 batch 1 note and log
+Step 2: family spec colorPrompt edited (margin sentence). Next: color round family m2 + 9 Pam rows m1.
+Step 3: color round done: family m2 + 9 Pam rows m1, 10 calls ok (0.10 USD). Next: view color prints, then line round.
+Step 4: viewed 10 color prints: 9 Pam rows m1 all whole in print; family m2 still cuts Mom's hand (left) and Lily's hair (right). Strengthening sentence, family m3; starting Pam line round.
+Step 5: family m3 color: all six whole inside print with wide margins; chosen. Started family line tries 1-3 from m3; Pam line round running (27 calls).
+Step 6: family line m3 tries 1-3: adults ring+dot eyes (glasses look) in tries 2,3; try 1 only Mom ring eyes. Added linePrompt eye sentence; tries 4-6.
+Step 7: family line tries 4-6 viewed: try 4 clean (plain dot eyes, no solid hair, six people whole); 5 has solid black hair on Dad; 6 ok too. Zooming try 4; Pam line running.
+Step 8: family line pick try 4. Pam line round done: 27 calls ok (9 specs x 3). Next: contact sheets, writer check.
+Step 9: viewed Pam line contact sheets (27 tries). Next: zoom sheets, writer check.
+Step 10: zoomed Pam tries. Picks: cover 2, the-man 1, is-this-pam 2, nan-and-pam-nap 1, pam-can-nap 1, pam-in-pan 2, pam-on-man 1, pam-on-map 2, this-is-pam 1 (tries 2,3 put Nan's star on Pam), family m3 + line 4. Next: writer check.
+Step 11: writer check all 10 picks PASS (14-22 px, ink 5.80-13.22, edge 94.83-98.64). Next: commit family spec, review folder batch-47.
+Step 12: review folder out/storytime-review/batch-47 built (brief.md, 40 pages, 15 refs). Costs: round 0.44, total 7.98. Next: plan note.
+Step 13: plan note added under Phase 4 Task 2 (plan.md had no foreign change). Next: result block and plan-evidence commit.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2, week 4 batch 2 (finding B46-FAM-1 and 9 Pam rows; marker unchanged)
+role_base_sha: 79b358ec
+phase_base_sha: fc76c272
+spec_commits: f97c2b28 (l2-w04-story-page-this-is-my-family.json: colorPrompt margin and middle-two-thirds sentences, linePrompt plain-eye sentence)
+plan_evidence_commit: see git log (the commit after f97c2b28 that holds the plan note and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; image=meta/muse-image; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: l2-w04-story-page-this-is-my-family m3 + line 4 (PASS 22 px, 13.22 percent, edge 98.64); l2-w04-cover-pam m1 + line 2 (PASS 18 px, 8.44, 97.49); -this-is-the-man m1 + line 1 (PASS 19 px, 8.29, 96.36); -is-this-pam m1 + line 2 (PASS 14 px, 5.80, 95.62); -nan-and-pam-nap m1 + line 1 (PASS 21 px, 7.17, 95.03); -pam-can-nap m1 + line 1 (PASS 19 px, 9.22, 95.20); -pam-is-in-a-pan m1 + line 2 (PASS 18 px, 9.24, 95.74); -pam-is-on-a-man m1 + line 1 (PASS 19 px, 7.97, 95.26); -pam-is-on-a-map m1 + line 2 (PASS 14 px, 8.09, 96.57); -this-is-pam m1 + line 1 (PASS 19 px, 9.36, 94.83). All 10 color prints PNG 4000x3000 8-bit sRGB 3ch no alpha no palette. No person, hand, hair, or needed prop is cut at the edge of any chosen print.
+open_items: approved.json and stage 2 check not run for these rows; batch-47 needs an independent review; family page red door mostly hidden and Grandma's color face has faint crow's-feet (line none); is-this-pam shows Pam only as a yarn fringe and a shoe; pam-is-in-a-pan has a deep round pan with a short handle partly hidden; window curtains and a few small props appear in some line art and not in the color; the 9 week 4 check rows are not made
+round_cost_usd: 0.44
+running_total_usd: 7.98
+batch: out/storytime-review/batch-47/
+handoff: Review out/storytime-review/batch-47/ against Daniel's bar for 10 rows. For B46-FAM-1: the color print of the family page now shows all six people whole with lawn at both sides (color m3). Ask the reviewer to look at: the pan page (does the pan read as a toy pan with a handle; default accept, one more line batch only if rated a defect), is-this-pam (Pam almost hidden as in the color; default accept), and the family page door (default accept). Default now: no further Muse call. Next Green round: the 9 week 4 check rows.
+finding_ids: F1=B46-FAM-1
+dispositions: F1=FIX
+END_MEASURE_AGENT_RESULT

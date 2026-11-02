@@ -2590,6 +2590,50 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       line). In `cover-my-family` the edge frame is 92.90 percent white (gate 90). In
       `this-is-my-grandpa` Lily's dress shows two buttons that the color does not show. The 9 check rows
       and 9 other week 4 rows are not made.
+  - Week 4 batch 2 (finding B46-FAM-1 and the 9 Pam rows). Green round of 2026-11-02,
+    claude-code/claude-sonnet-5-5#high. role_base_sha `79b358ec`, phase_base_sha `fc76c272`. Red model
+    opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none; nothing was delegated. No
+    change in `src/`, `tests/`, `scripts/`, `assets/`, or `approved.json`. No marker changed. Run log:
+    `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w04-b2.log`. Review folder:
+    `out/storytime-review/batch-47/` (`brief.md`, `pages/` 40 files, `refs/` 15 files, no control rows).
+    Green did not rate its own work.
+    - Spec commit: `f97c2b28` (only `l2-w04-story-page-this-is-my-family.json`). The `colorPrompt` got
+      two sentences: a wide empty margin of grass and garden at the left and the right edges, with every
+      person, hand, and hair inside the middle 80 percent of the width; and the group only in the middle
+      two thirds of the width. The `linePrompt` got one sentence: every eye is a plain solid black
+      circle with no ring. No Pam spec changed.
+    - Job A (finding B46-FAM-1, layout-fault; the 4:3 crop cut Lily's outer hand and hair). Color m2
+      (first sentence only) still put Mom's hand and Lily's hair at the print edges. Color m3 (both
+      sentences) shows all six people whole in the print, with lawn and bushes at both sides. Line try
+      4 from m3 is chosen. Tries 1 to 3 gave adults ring-and-dot eyes (a glasses look). Try 5 fills
+      Dad's hair solid black. Writer check PASS 22 px, 13.22 percent ink, 98.64 percent edge frame.
+    - Job B rows (9), color m1 for every row, line try in brackets. Writer check: line width, ink,
+      edge frame white (gate 90):
+      - `cover-pam` (2): PASS 18 px, 8.44, 97.49. Nan holds one doll.
+      - `this-is-the-man` (1): PASS 19 px, 8.29, 96.36. Dad laughs under one blanket; one doll on his head.
+      - `is-this-pam` (2): PASS 14 px, 5.80, 95.62. Pam is almost hidden under the blanket, as in the color.
+      - `nan-and-pam-nap` (1): PASS 21 px, 7.17, 95.03. Nan asleep with one doll and one blanket.
+      - `pam-can-nap` (1): PASS 19 px, 9.22, 95.20. One doll in one shoe box.
+      - `pam-is-in-a-pan` (2): PASS 18 px, 9.24, 95.74. One pan with a rim and a thick handle.
+      - `pam-is-on-a-man` (1): PASS 19 px, 7.97, 95.26. Dad's eyes are closed in both files.
+      - `pam-is-on-a-map` (2): PASS 14 px, 8.09, 96.57. One map with river, house, dotted path, cross.
+      - `this-is-pam` (1): PASS 19 px, 9.36, 94.83. One doll; the star is on Nan's T-shirt only.
+      All 10 color prints: PNG, 4000 x 3000, 8-bit, sRGB, 3 channels, no alpha, no palette. In every
+      chosen color print and line print, no person, hand, hair, or needed prop is cut at the edge.
+    - Retries and why: no color retry for a Pam row. Line rejects: `cover-pam` try 1 adds a floor lamp
+      and try 3 draws a plain doll; `this-is-the-man` try 3 draws ring eyes; `is-this-pam` try 3 adds a
+      shirt collar; `nan-and-pam-nap` tries 2 and 3 add a side table or a tiny doll; `this-is-pam` tries
+      2 and 3 show Nan's star through the doll, so Pam seems to wear a star. The stop limit was not
+      reached for any row.
+    - Calls: 44 logged in `out/storytime/l2/unit1/w04/muse/costs.tsv` this round: 11 color (family m2
+      and m3, 9 Pam rows) and 33 line (6 family, 27 Pam). All billed at 0.01 USD, no network error.
+      Round cost 0.44 USD. Running total 7.54 + 0.44 = 7.98 USD.
+    - Open: `approved.json` and the stage 2 check are not run for these rows. `batch-47` needs an
+      independent review. In `this-is-my-family` the red door is mostly hidden behind two people, and
+      Grandma's color face shows faint crow's-feet (the line has none). `is-this-pam` shows Pam only as
+      a yarn fringe and a shoe. In `pam-is-in-a-pan` the pan is deep and round, and its handle is
+      short and partly hidden. Window curtains and a few small props in the line art are not in the
+      color. The 9 check rows of week 4 are not made.
   - Week 5 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
     2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `4af2b605`, phase_base_sha
     `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.
