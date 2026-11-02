@@ -2367,6 +2367,50 @@ rows T142 to T151, and the closeout gate for 30 jobs.
     no ground line). The fish line art has a wavy tail fin and a small smile mark at the mouth. The pen
     cap end is a rounded shape in the line art. The cat line art shows its left eye narrower than the
     right eye.
+  - Week 3 batch 2 fix (blue page, B44-BLUE-1) and star rule for weeks 4 and 5. Green round of
+    2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `100826bb`, phase_base_sha `fc76c272`.
+    Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none. No marker
+    changed. Spec commit `71831e2b` (37 specs: `l2-w03-story-page-it-is-blue.json` and 36 specs in
+    w04 and w05). Run log:
+    `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w03-blue-fix.log`. Review folder:
+    `out/storytime-review/batch-44r2/` (`brief.md`, `pages/` 4 files, `refs/` 4 files). Green did not
+    rate its own work. No change in `src/`, `tests/`, `scripts/`, `assets/`, `castLook` files, or
+    `approved.json`.
+    - Finding B44-BLUE-1 (independent review batch-44v2, G3 valid): the line art of
+      `l2-w03-story-page-it-is-blue` (color m1, line try 3) draws a five-pointed star on May's collar.
+      The star belongs to Nan's shirt. The color shows May's yellow shirt plain. Category:
+      wrong-or-changed-character. The orchestrator checked tries 1 to 3: all three draw a star on May's
+      shirt. Cause: the spec `linePrompt` sentence "No lines on the clothes other than the outline, the
+      collar, and the star." fits Nan only.
+    - Spec change (Job A): in `l2-w03-story-page-it-is-blue.json` only the `linePrompt` changed. The
+      clothes sentence is now "No lines on the clothes other than the outline and the collar. May's shirt
+      is plain: no star, no badge, no picture, and no mark on it." The color is kept (m1). No color call.
+    - Chosen file: color m1 and line try 6 (`-m1-line-6-despeckled.png`; print
+      `-m1-line-print-6-despeckled.png`, 4000 x 3000). The 3 new tries (4, 5, 6) show no mark on May's
+      shirt. Try 4 draws the easel pots as plain circles and drops the wall beams. Try 5 has a long wavy
+      line near the bottom. Try 6 keeps the beams, the window, the 3 easel pots, and the table pots. The
+      blue sheet is one closed four-sided shape with nothing inside it.
+    - Writer check (`inspectLineArtPng`, 4000 x 3000, `/tmp/opencode/w03blue-check.mts`): try 6 PASS 14
+      px, ink 8.84 percent, edge frame 95.02 percent white. Try 4 PASS 21 px, edge 97.41 percent. Try 5
+      PASS 17 px, edge 94.57 percent. The color print is PNG, 4000 x 3000, 8-bit, sRGB, 3 channels, no
+      alpha, no palette.
+    - Spec change (Job B, text only; no picture exists for these rows). The weeks 4 to 7 specs do not hold
+      the exact template sentence. The star sentence is a week variant: w04 "the outline, the collar, the
+      cuffs, the buttons, and the star" (18 specs) and w05 "..., the buttons, the star, and the stripes"
+      (18 specs). Green kept the other allowed items (cuffs, buttons, stripes) and changed only the star
+      part. A spec that names Nan in its `goal` now says the star is "on Nan's T-shirt. Only Nan has a
+      star", and that every other shirt has no star, no badge, and no mark. A spec that does not name Nan
+      says every shirt has no star, no badge, no picture, and no mark. Changed files: w04 18 (9 names
+      Nan, 9 no Nan); w05 18 (2 names Nan, 16 no Nan); w06 0; w07 0. The w06 and w07 clothes sentences
+      list "the cuffs, the buttons, the straps, the stripes, and the pocket" (w06) and "the cuffs, the
+      buttons, and the pocket" (w07) and name no star, so Green left them unchanged. The check rows of
+      w04 to w07 (9 per week) have no clothes sentence. All changed JSON files parse.
+    - Retries and why: 1 line batch of 3 (tries 4 to 6). No color call. Stop limit 9 new tries; 3 used.
+    - Calls: 3 line calls logged in `out/storytime/l2/unit1/w03/muse/costs.tsv`, 0.01 USD each. Cost 0.03
+      USD. Running total 6.97 + 0.03 = 7.00 USD.
+    - Open: `approved.json` and the stage 2 check are not run for this row. `batch-44r2` needs an
+      independent review (the orchestrator adds the control rows). The other 8 rows of batch 44 are not
+      changed by this round.
   - Week 4 staging (inputs only; no page candidate until Daniel's week 1 answer; cast looks pending).
     Green round of 2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `0755ef8d`,
     phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model

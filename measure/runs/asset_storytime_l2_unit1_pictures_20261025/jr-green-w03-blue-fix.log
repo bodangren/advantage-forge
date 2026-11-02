@@ -1,0 +1,7 @@
+provisional; role_base_sha 100826bb; next step
+Step 2: it-is-blue linePrompt edited (not committed). Job B script found 0 matches in w04-w07: sentence differs. Checking wording.
+Step 3: Job B edited in w04 (9 Nan, 9 no Nan) and w05 (2 Nan, 16 no Nan); w06 and w07 have no star in the clothes sentence (unchanged, 0). Variant wording kept cuffs/buttons/stripes. JSON parses. Next: line --from 1 --tries 3 for it-is-blue.
+Step 4: line tries 4,5,6 made (3 calls). No star on May's shirt in 4,5,6. Try 5 has wavy bottom line; try 4 loses pots/beams; try 6 most faithful. Next: writer check on 6 (and 4).
+Step 5: writer check: line 4 PASS 21 px edge 97.41; line 5 PASS 17 px edge 94.57; line 6 PASS 14 px edge 95.02. Picked try 6 (no star; beams, pots, window kept). Try 5 has wavy bottom line; try 4 lost pots and beams. Next: batch-44r2 folder, spec commit, plan note.
+Step 6: batch-44r2 built (brief, 4 pages, 4 refs). Spec commit 71831e2b (37 specs). Plan note added. Next: evidence commit.
+Step 7: evidence commit made. Round done: 3 calls, 0.03 USD, running total 7.00 USD. Result: it-is-blue color m1 + line 6 (PASS 14 px, edge 95.02). Job B: w04 18 files (9 Nan, 9 no Nan), w05 18 (2 Nan, 16 no Nan), w06 0, w07 0.
