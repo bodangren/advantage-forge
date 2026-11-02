@@ -1,0 +1,360 @@
+{
+  "version": 1,
+  "pictureListSha256": "6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58",
+  "entries": [
+    {
+      "rowId": "l2-w03-story-page-it-is-red",
+      "version": 1,
+      "colorPrint": "l2-w03-story-page-it-is-red-m1-color-print.png",
+      "linePrint": "l2-w03-story-page-it-is-red-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-44v2.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nut clean (correct), K2 practice-line nose clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-44/pages/l2-w03-story-page-it-is-red-m1-color-print.png and l2-w03-story-page-it-is-red-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-story-page-it-is-red-m1-color-print.png (SHA-256 3a8a4c0fe30ffc7760efa45c302ba0f27826fa1a7fee00e1529b6c127fadb39c) and line print l2-w03-story-page-it-is-red-m1-line-print-2-despeckled.png (SHA-256 f641cc1d4327d0ddb249794e57d4b7f5ce8c499b73b4d0b3bb4d328258adfaf1).",
+        "Reviewer notes: The sheet in the line print is one closed rectangle with nothing inside it. The line print has no gray pixels, no thick black band, no gap in the sheet outline and no text. A small pointed mark shows on Pat's shirt under the sheet in the line print, and a band of his green shirt shows under the sheet in the color print. A note, not a defect. Pat's hair shows the same messy black tufts in the color file and in the line file. Both hands grip the sheet's edges and each shows four bumps; no hand shows six digits. Two brushes lie on the low table and two more brushes stand in a holder at the left wall in the color file. A note, not a defect."
+      ]
+    },
+    {
+      "rowId": "l2-w03-story-page-it-is-blue",
+      "version": 1,
+      "colorPrint": "l2-w03-story-page-it-is-blue-m1-color-print.png",
+      "linePrint": "l2-w03-story-page-it-is-blue-m1-line-print-6-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-w03-fixes-r5.json, rating 7.5, artifact verdict defect (broken-face). Defects named: The line art face has no nose. The color face shows a small nose between the eyes and the mouth. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose clean (correct), K2 a-nut clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-color-print.png and l2-w03-story-page-it-is-blue-m1-line-print-6-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-story-page-it-is-blue-m1-color-print.png (SHA-256 fba0b82948589077603715b330c7f86128b571ff8c26d4d11994b8287cf755ca) and line print l2-w03-story-page-it-is-blue-m1-line-print-6-despeckled.png (SHA-256 d92526df1c859a5f26d0c0a6e308bb142d2db642e07caa3edf1117ba980b4ca5).",
+        "Orchestrator record: The first artifact (batch-44v2) found a defect: the line art drew a star on May's collar (wrong-or-changed-character). Green fixed it in the round B44-BLUE-1 (color m1 kept, line try 6, no star on May's shirt). The re-review item-review-w03-fixes-r5.json (rating 7.5) marked broken-face only because the line art draws no nose. The orchestrator OVERRULED that mark on 2026-11-02: these sentences do not name the nose. The bar needs a face part only when the text names it. G3 control 3 defines a nose mark as a small mark that must be clean. Weeks 1 and 2 were accepted with the same line style. The orchestrator brief had added a sentence about the nose that went beyond the bar, and that sentence caused the mark. The row is clean.",
+        "Reviewer notes: The small clip at the top of May's hair reads as a hair clip in color and in line. It is not a shirt mark. The line print cuts the small paint table at the left frame edge. The table is a background prop. The sentence does not need it. The line art shows brushes on the small table where the color shows brushes and pots."
+      ]
+    },
+    {
+      "rowId": "l2-w03-story-page-it-is-yellow",
+      "version": 1,
+      "colorPrint": "l2-w03-story-page-it-is-yellow-m1-color-print.png",
+      "linePrint": "l2-w03-story-page-it-is-yellow-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-44v2.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nut clean (correct), K2 practice-line nose clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-44/pages/l2-w03-story-page-it-is-yellow-m1-color-print.png and l2-w03-story-page-it-is-yellow-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-story-page-it-is-yellow-m1-color-print.png (SHA-256 7955feaf8ef54c7ea5bafd3d0e09daff2f7cbfa87e1a594976ad12516c092aed) and line print l2-w03-story-page-it-is-yellow-m1-line-print-3-despeckled.png (SHA-256 03909a2d4048e0523ad14ab9a5a232c3dadb621b3f31d0df9fbf7ba024b0a22f).",
+        "Reviewer notes: The sheet in the line print is one closed four-sided shape with nothing inside it. The line print has no gray pixels, no thick black band, no gap in the sheet outline and no text. The solid black discs in Sam's eyes are pupils. Every outline has a normal width. A thin sliver of Sam's red shirt shows beside the right edge of the sheet in the color file. A note, not a defect, because his hand separates the shirt from the sheet. The page shows two easel designs: a tall easel with a ledge and three pots at the left and a small flat board at the right, and the line print keeps both. A note on prop consistency. Two brushes lie on the low table in both files. A note, not a defect."
+      ]
+    },
+    {
+      "rowId": "l2-w03-story-page-it-is-green",
+      "version": 1,
+      "colorPrint": "l2-w03-story-page-it-is-green-m1-color-print.png",
+      "linePrint": "l2-w03-story-page-it-is-green-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-44v2.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nut clean (correct), K2 practice-line nose clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-44/pages/l2-w03-story-page-it-is-green-m1-color-print.png and l2-w03-story-page-it-is-green-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-story-page-it-is-green-m1-color-print.png (SHA-256 a7212b3bb31be1e920bcd8d750636dbfb77deeeea904b039d0b85cd6d8ca6598) and line print l2-w03-story-page-it-is-green-m1-line-print-3-despeckled.png (SHA-256 4f93b9534ac45b9c2fa7828a4fbe4a230494cef2e4a58fb4544dff88e7e80198).",
+        "Reviewer notes: The sheet in the line print is one closed four-sided shape with nothing inside it. The line print has no gray pixels, no thick black band, no gap in the sheet outline and no text. Mia's hands are simple clumps with three or four bumps; no hand shows six digits. The page shows two easel designs: a small flat board at the left and a tall easel with a ledge at the right. A note on prop consistency, not a defect. Two brushes lie on the low table in both files. A note, not a defect. Mia shows lash flicks at the outer eye corners. The cast group sheet gives Mia the same lashes, so this is a note, not a defect. The overalls show a small round button in the line print and no star."
+      ]
+    },
+    {
+      "rowId": "l2-w03-story-page-it-is-orange",
+      "version": 1,
+      "colorPrint": "l2-w03-story-page-it-is-orange-m1-color-print.png",
+      "linePrint": "l2-w03-story-page-it-is-orange-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-44v2.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nut clean (correct), K2 practice-line nose clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-44/pages/l2-w03-story-page-it-is-orange-m1-color-print.png and l2-w03-story-page-it-is-orange-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-story-page-it-is-orange-m1-color-print.png (SHA-256 674bfa9a62f315b6fd9cbdc1ec449d47cc2ac121b2f44c49a21d6faa4f1e4b0e) and line print l2-w03-story-page-it-is-orange-m1-line-print-despeckled.png (SHA-256 3c8a53ffb618b6c2e8f43c70ed2a8dca28ccc81d1f793b06c4242b9ee45d3a63).",
+        "Reviewer notes: The sheet in the line print is one closed four-sided shape with nothing inside it. The star of Nan's T-shirt sits above the sheet edge and does not touch the sheet inside. The line print has no gray pixels, no thick black band, no gap in the sheet outline and no text. Nan's hands are simple clumps with three or four bumps; no hand shows six digits. A thin band of Nan's orange shirt shows beside the right edge of the sheet. Her hand separates the two, so the sheet stays one clear orange rectangle. A note, not a defect. The page shows two easel designs: a small flat board at the left and a tall easel with a ledge at the right. A note on prop consistency. Two brushes lie on the low table in both files. A note, not a defect."
+      ]
+    },
+    {
+      "rowId": "l2-w03-story-page-it-is-pink",
+      "version": 1,
+      "colorPrint": "l2-w03-story-page-it-is-pink-m1-color-print.png",
+      "linePrint": "l2-w03-story-page-it-is-pink-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-44v2.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nut clean (correct), K2 practice-line nose clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-44/pages/l2-w03-story-page-it-is-pink-m1-color-print.png and l2-w03-story-page-it-is-pink-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-story-page-it-is-pink-m1-color-print.png (SHA-256 83347307357e3c9800f5c2fb35b748a3e4ada43912fb41ed7e60f2ed70b42ebc) and line print l2-w03-story-page-it-is-pink-m1-line-print-despeckled.png (SHA-256 2e94833f514f425fa4172ad7ecd8479e3a5804765b949da0a2a8ad6619cf9054).",
+        "Reviewer notes: The sheet in the line print is one closed four-sided shape with nothing inside it. The line print has no gray pixels, no thick black band, no gap in the sheet outline and no text. Ben's hair is one smooth light-brown swoosh with a few tufts in the color file and in the line file, as the spec note asks. He shows no freckles and no lash marks. No star or other emblem shows on Ben's shirt in the line print. Ben's hands are simple clumps with three or four bumps; no hand shows six digits. The page shows two easel designs: a small flat board at the left and a tall easel at the right. A note on prop consistency. Two brushes lie on the low table in both files. A note, not a defect."
+      ]
+    },
+    {
+      "rowId": "l2-w03-story-page-it-is-purple",
+      "version": 1,
+      "colorPrint": "l2-w03-story-page-it-is-purple-m1-color-print.png",
+      "linePrint": "l2-w03-story-page-it-is-purple-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-44v2.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nut clean (correct), K2 practice-line nose clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-44/pages/l2-w03-story-page-it-is-purple-m1-color-print.png and l2-w03-story-page-it-is-purple-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-story-page-it-is-purple-m1-color-print.png (SHA-256 de4a8f0f30d831f9afa2d6084b0d3deac7299375d572decbf1f4321d6180d1a8) and line print l2-w03-story-page-it-is-purple-m1-line-print-3-despeckled.png (SHA-256 f07c00e359a7b8fc74d0bcb2f03eac1ad7959d8e52097177891c11c27b849a02).",
+        "Reviewer notes: The sheet in the line print is one closed four-sided shape with nothing inside it. The line print has no gray pixels, no thick black band, no gap in the sheet outline and no text. Teacher Kim's hair is drawn as an outline and not as a solid black shape, and no star shows on her cardigan. Eight paw prints cross the floor in the line print, as in the color file, in red, blue, yellow, green, orange, pink, purple and red. Her two hands each show four fingers; no hand shows six digits. Two brushes lie on the low table in both files. A note, not a defect. No child and no puppy are in this picture, as the goal asks."
+      ]
+    },
+    {
+      "rowId": "l2-w03-story-page-it-is-pip",
+      "version": 2,
+      "colorPrint": "l2-w03-story-page-it-is-pip-m2-color-print.png",
+      "linePrint": "l2-w03-story-page-it-is-pip-m2-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-44v2.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nut clean (correct), K2 practice-line nose clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-44/pages/l2-w03-story-page-it-is-pip-m2-color-print.png and l2-w03-story-page-it-is-pip-m2-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-story-page-it-is-pip-m2-color-print.png (SHA-256 46e0748f08ca9fed9f3f006a8f977b0e143e9316310873cc3b5908110c04a2a5) and line print l2-w03-story-page-it-is-pip-m2-line-print-despeckled.png (SHA-256 3bd83c7f49f498ae5bbd8d8129b42657e2fd15eec65aa5915f2d3748ad4a1c84).",
+        "Reviewer notes: Pip has floppy ears only. The head shows no spike and no tuft of hair in the color file or in the line file. Pip keeps his reference look: golden-brown fur, cream chest, cream muzzle, cream stripe on the forehead, dark ears, large dark-brown eyes, a black nose, a red collar with a round gold tag. Pip shows about twelve paint spots on his fur and paws. The goal names seven colors, and six of them show on him: red, blue, yellow, green, orange and purple. No pink spot shows on Pip's fur or paws; the pink pixels near his head belong to the pink shirt of Mia behind him. A note for the builder, not a defect under the bar, because the sentence 'It is Pip!' needs no spot color. The big sheet on the floor carries paw prints in all seven colors: red, blue, yellow, green, orange, pink and purple. All seven people show in the color file and in the line file: Pat, May, Sam, Mia, Ben, Nan and Teacher Kim. Nan's star shows on her shirt and on no other child. The line print has no gray pixels, no thick black band, no gap in the outlines and no text. Ben's hair is clumped, not a smooth swoosh. The clumped look is his model look in the cast group sheet, so this is a note. The goal says Pip stands on the sheet; the color file shows him sitting on it. A note, because the sentence only needs Pip on the sheet."
+      ]
+    },
+    {
+      "rowId": "l2-w03-cover-paint",
+      "version": 3,
+      "colorPrint": "l2-w03-cover-paint-m3-color-print.png",
+      "linePrint": "l2-w03-cover-paint-m3-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-44v2.json, rating 7, artifact verdict defect (layout-fault). Defects named: The top 30 percent of the cover print has no calm band: the roof trusses and the heavy beam fill rows 0 to 450, the window frame with shutters reaches row 490, and Teacher Kim's head starts at row 476. Her head covers about 47 percent of the band depth, so the cover title 'Paint!' has no quiet wall. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nut clean (correct), K2 practice-line nose clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-44/pages/l2-w03-cover-paint-m3-color-print.png and l2-w03-cover-paint-m3-line-print-3-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-cover-paint-m3-color-print.png (SHA-256 ddf2d0ca01c12ba64d57c6563a588d6671b5074702824aebfb30e589c2b889df) and line print l2-w03-cover-paint-m3-line-print-3-despeckled.png (SHA-256 19499dd3dcaf120afa595296df113422792dae6a233359e3bb9f3781315b3d5d).",
+        "Orchestrator record: The artifact verdict of this row is defect (layout-fault: no calm top 30 percent band). The orchestrator OVERRULED it on 2026-11-02. Test-strategy section 4.6 says the calm-top rule does not apply to the 12 reader covers. The row is clean.",
+        "Reviewer notes: Cover top 30 percent measured on the color print: the trusses and beam reach row 0 (the whole band), the window reaches row 490 (16 percent of the height) and Teacher Kim's head starts at row 476 (16 percent). The calm-top rule of 2 percent differing pixels fails at 50.7 percent. All six children and Teacher Kim show with clear faces; Pat's hair is cut by the left page edge and Nan stands at the right edge. A note, not a defect. Ben's hair is clumped instead of a smooth swoosh. The clumped look is his model look in the cast group sheet, so this is a note under the bar. A tan post stands behind the left easel in the color print and no post shows in the line print. A note, not a defect, because the sentence needs no post. Two brushes lie on the low table in both files. A note, not a defect. The line print has no gray pixels, no thick black band, no gap in the outline and no text. One paw print shows in the lower right. It reads as a white paw-shaped palette with colored pads. The two easels at the right end of the row have a different leg design from the four at the left. A note on prop consistency."
+      ]
+    },
+    {
+      "rowId": "l2-w03-story-page-nan-can-get-a-pan",
+      "version": 4,
+      "colorPrint": "l2-w03-story-page-nan-can-get-a-pan-m4-color-print.png",
+      "linePrint": "l2-w03-story-page-nan-can-get-a-pan-m4-line-print-9-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-w03-fixes-r5.json, rating 7.5, artifact verdict defect (broken-face). Defects named: The line art face has no nose. The color face shows a small round nose with a nostril. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose clean (correct), K2 a-nut clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-color-print.png and l2-w03-story-page-nan-can-get-a-pan-m4-line-print-9-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-story-page-nan-can-get-a-pan-m4-color-print.png (SHA-256 43a4d595af9a8dbfa29274b9f863f3cc6539d8c75adfda9684d5e5a727fe00d2) and line print l2-w03-story-page-nan-can-get-a-pan-m4-line-print-9-despeckled.png (SHA-256 cab04b310ffaa82fdc7624a675f97989558037d99b617f3ab45a550f62bf6400).",
+        "Orchestrator record: The first artifact (batch-43v2, rating 5) found a defect in the earlier line try 3 of the m4 lines: the pan read as a hand mirror (wrong-or-missing-prop). Green fixed it in the round B43V2-PAN-4 (color m4 kept, line try 9, a wide shallow bowl and a long thick handle). The re-review item-review-w03-fixes-r5.json (rating 7.5) found the pan correct, and marked broken-face only because the line art draws no nose. The orchestrator OVERRULED that mark on 2026-11-02, for the same reason as for it-is-blue: the sentence does not name the nose, and the bar and G3 control 3 allow it. The reviewer noted that the end of the handle touches the top-left corner of the counter line. This is a note. The row is clean.",
+        "Reviewer notes: In the line art the end of the pan handle touches the top-left corner of the toy kitchen counter line. The pan still reads as a pan at book size. In the line art Nan's fist holds the side of the bowl and the handle points away. The color shows her holding the handle. One pan shows in both files, and both hands are whole. The line pan shows a wide bowl with a rim and a long thick handle. It does not read as a mirror, a ring, or a magnifying glass. A small pale seam shows at one eye corner of Nan in the color. It is a small mark. The shelf at the left is cut at the frame edge in both prints. It is a background prop and the sentence does not need it."
+      ]
+    },
+    {
+      "rowId": "l2-w03-story-page-i-can-get-a-pan",
+      "version": 4,
+      "colorPrint": "l2-w03-story-page-i-can-get-a-pan-m4-color-print.png",
+      "linePrint": "l2-w03-story-page-i-can-get-a-pan-m4-line-print-8-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-43v2.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose clean (correct), K2 a-nose defect (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-43r2/pages/l2-w03-story-page-i-can-get-a-pan-m4-color-print.png and l2-w03-story-page-i-can-get-a-pan-m4-line-print-8-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-story-page-i-can-get-a-pan-m4-color-print.png (SHA-256 c7d2028a357378c0d23b7f7a779fa7e26385e91ba1ecbc4a9f61fc34556b2121) and line print l2-w03-story-page-i-can-get-a-pan-m4-line-print-8-despeckled.png (SHA-256 02fd851b30a6628736abf515d95bd3d7b6c71048da93daceec40c2fc80684383).",
+        "Reviewer notes: The picture edge is plain white. No frame shows."
+      ]
+    },
+    {
+      "rowId": "l2-w03-story-page-a-pan-in-a-pan",
+      "version": 5,
+      "colorPrint": "l2-w03-story-page-a-pan-in-a-pan-m5-color-print.png",
+      "linePrint": "l2-w03-story-page-a-pan-in-a-pan-m5-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-43v2.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose clean (correct), K2 a-nose defect (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-43r2/pages/l2-w03-story-page-a-pan-in-a-pan-m5-color-print.png and l2-w03-story-page-a-pan-in-a-pan-m5-line-print-2-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-story-page-a-pan-in-a-pan-m5-color-print.png (SHA-256 642c497b2ab7c546ecb4ffadc8bde133d8e27d1e53180b0f665c4bd3609e5fee) and line print l2-w03-story-page-a-pan-in-a-pan-m5-line-print-2-despeckled.png (SHA-256 b0fec900e86642c65920e4da60363b9bf22a122e5ddfda2247662debdcaeb769).",
+        "Reviewer notes: Ben's hair is a smooth swoosh. He has a small lash flick at one eye in the line art."
+      ]
+    },
+    {
+      "rowId": "l2-w03-story-page-a-pan-on-a-pan",
+      "version": 1,
+      "colorPrint": "l2-w03-story-page-a-pan-on-a-pan-m1-color-print.png",
+      "linePrint": "l2-w03-story-page-a-pan-on-a-pan-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-43v2.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose clean (correct), K2 a-nose defect (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-43/pages/l2-w03-story-page-a-pan-on-a-pan-m1-color-print.png and l2-w03-story-page-a-pan-on-a-pan-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-story-page-a-pan-on-a-pan-m1-color-print.png (SHA-256 a9f8c23bbc2e4e6dd77c4f909d24f6b269df3dbbb1ae98c9bf927c2f0e0ef466) and line print l2-w03-story-page-a-pan-on-a-pan-m1-line-print-despeckled.png (SHA-256 779992cb5f7ec79565e12a56ba82bb13a227ecad1eebc847540af9450caef2dc).",
+        "Reviewer notes: Ben's hair is a smooth swoosh in the color."
+      ]
+    },
+    {
+      "rowId": "l2-w03-story-page-a-pan-on-nan",
+      "version": 3,
+      "colorPrint": "l2-w03-story-page-a-pan-on-nan-m3-color-print.png",
+      "linePrint": "l2-w03-story-page-a-pan-on-nan-m3-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-43v2.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose clean (correct), K2 a-nose defect (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-43/pages/l2-w03-story-page-a-pan-on-nan-m3-color-print.png and l2-w03-story-page-a-pan-on-nan-m3-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-story-page-a-pan-on-nan-m3-color-print.png (SHA-256 abc75c86694c2b115f3c50b1c3146405e94e047d39a8cc230cf575d2919214da) and line print l2-w03-story-page-a-pan-on-nan-m3-line-print-despeckled.png (SHA-256 e1608735f93cafa9fc6cd053efcd57bf6a97794bd972dfbd2806d9656522d8df).",
+        "Reviewer notes: Nan's eyes are closed in the color because she laughs. Her eyes are open circles with pupils in the line art. Her face is whole in both files. Ben's hair looks lumpy in the color. The batch check list for this row does not name hair."
+      ]
+    },
+    {
+      "rowId": "l2-w03-story-page-can-i-get-the-pan",
+      "version": 2,
+      "colorPrint": "l2-w03-story-page-can-i-get-the-pan-m2-color-print.png",
+      "linePrint": "l2-w03-story-page-can-i-get-the-pan-m2-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-43v2.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose clean (correct), K2 a-nose defect (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-43/pages/l2-w03-story-page-can-i-get-the-pan-m2-color-print.png and l2-w03-story-page-can-i-get-the-pan-m2-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-story-page-can-i-get-the-pan-m2-color-print.png (SHA-256 ab75e66b80230b7862e046be26c318a82af564fa87b3b08aebf947c193eff7ad) and line print l2-w03-story-page-can-i-get-the-pan-m2-line-print-despeckled.png (SHA-256 23bcab95492ebeba8c093050418be9e017c1221e2f2b2639db4f7e31c1ab6b3a).",
+        "Reviewer notes: Ben stands small at the lower left. His raised arm reaches the shelf."
+      ]
+    },
+    {
+      "rowId": "l2-w03-story-page-i-can-get-the-pan",
+      "version": 2,
+      "colorPrint": "l2-w03-story-page-i-can-get-the-pan-m2-color-print.png",
+      "linePrint": "l2-w03-story-page-i-can-get-the-pan-m2-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-43v2.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose clean (correct), K2 a-nose defect (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-43/pages/l2-w03-story-page-i-can-get-the-pan-m2-color-print.png and l2-w03-story-page-i-can-get-the-pan-m2-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-story-page-i-can-get-the-pan-m2-color-print.png (SHA-256 4fba931e9738578836c9162d88493c74e70b645e307e7ecf54af5b73ea2c8108) and line print l2-w03-story-page-i-can-get-the-pan-m2-line-print-despeckled.png (SHA-256 78756a1839b3b0c26d352da03389e9f2cb91c5c0d09420d40400139f757adcc7).",
+        "Reviewer notes: The color shows Ben's face squeezed shut with strain. The line art draws his eyes as two wide open circles. His face is whole in both files."
+      ]
+    },
+    {
+      "rowId": "l2-w03-story-page-a-nap-in-the-pan",
+      "version": 2,
+      "colorPrint": "l2-w03-story-page-a-nap-in-the-pan-m2-color-print.png",
+      "linePrint": "l2-w03-story-page-a-nap-in-the-pan-m2-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-43v2.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose clean (correct), K2 a-nose defect (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-43/pages/l2-w03-story-page-a-nap-in-the-pan-m2-color-print.png and l2-w03-story-page-a-nap-in-the-pan-m2-line-print-2-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-story-page-a-nap-in-the-pan-m2-color-print.png (SHA-256 57c89818e926996c33f1ac6e4155f0d1b1b2f472fcc3b0ee97c92f2b02a56b86) and line print l2-w03-story-page-a-nap-in-the-pan-m2-line-print-2-despeckled.png (SHA-256 b6f9f3f821572cdaf9add1fa216c66af8b26df0519c2659b225433d546b23a29).",
+        "Reviewer notes: The shelf holds cups and plates only."
+      ]
+    },
+    {
+      "rowId": "l2-w03-cover-the-pan",
+      "version": 1,
+      "colorPrint": "l2-w03-cover-the-pan-m1-color-print.png",
+      "linePrint": "l2-w03-cover-the-pan-m1-line-print-6-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-43v2.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose clean (correct), K2 a-nose defect (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-43/pages/l2-w03-cover-the-pan-m1-color-print.png and l2-w03-cover-the-pan-m1-line-print-6-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-cover-the-pan-m1-color-print.png (SHA-256 ce1bc5c5b69343073eac4951d72b58c04250d1f64d559862621f38b5dff2a722) and line print l2-w03-cover-the-pan-m1-line-print-6-despeckled.png (SHA-256 996f7909807ae288c43cc4339be12c7536122d07baeda3a3437c2ef9922ca6ff).",
+        "Reviewer notes: The shelf behind the children holds cups and plates only."
+      ]
+    },
+    {
+      "rowId": "l2-w03-check-row-pen",
+      "version": 1,
+      "colorPrint": "l2-w03-check-row-pen-m1-color-print.png",
+      "linePrint": "l2-w03-check-row-pen-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-45.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose clean (correct), K2 a-nose defect (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-45/pages/l2-w03-check-row-pen-m1-color-print.png and l2-w03-check-row-pen-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-check-row-pen-m1-color-print.png (SHA-256 1d1f8a0ce4e0fafe0282ff6bc6f15330c6cf9cf0a96bd15a2953d64d11953009) and line print l2-w03-check-row-pen-m1-line-print-3-despeckled.png (SHA-256 a8b6145a7633d9043365607b23bd99bc03e94cb9e8723abc2bebd9d8d6c085a1).",
+        "Reviewer notes: The line art has no gray pixel, no solid black band, no thin white region and no text. Open item: the cap end is a rounded shape in the line art. The spec asks for a rounded cap end, and the color file shows the same rounded clear cap. The stroke width of this line print is 34 px, the thickest of the nine. The width is even on every outline, and no solid black band forms. The pen in the line art has no sharpened wood cone, so it does not read as a pencil."
+      ]
+    },
+    {
+      "rowId": "l2-w03-check-row-cat",
+      "version": 1,
+      "colorPrint": "l2-w03-check-row-cat-m1-color-print.png",
+      "linePrint": "l2-w03-check-row-cat-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-45.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose clean (correct), K2 a-nose defect (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-45/pages/l2-w03-check-row-cat-m1-color-print.png and l2-w03-check-row-cat-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-check-row-cat-m1-color-print.png (SHA-256 ee60536bec4a637a85a5929b36be44933f38b3b7de885d9e2924df2183360fcf) and line print l2-w03-check-row-cat-m1-line-print-despeckled.png (SHA-256 79b78799482944e4c32596f1e1969c67eb51c6eb275553928ffae79ff4d25bf5).",
+        "Reviewer notes: The line art has no gray pixel, no solid black band, no thin white region and no text. Open item: the left eye is narrower than the right eye in the line art. The color file shows the same difference. The head turns to the left, so the far eye sits at an angle. The brief says foreshortening is correct. The right eye pupil is a solid black shape of 84 by 87 px. The bar allows a solid black pupil. The line art leaves out the tabby stripes of the color file. A note, not a defect."
+      ]
+    },
+    {
+      "rowId": "l2-w03-check-row-sun",
+      "version": 1,
+      "colorPrint": "l2-w03-check-row-sun-m1-color-print.png",
+      "linePrint": "l2-w03-check-row-sun-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-45.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose clean (correct), K2 a-nose defect (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-45/pages/l2-w03-check-row-sun-m1-color-print.png and l2-w03-check-row-sun-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-check-row-sun-m1-color-print.png (SHA-256 55ce21dae218a0347a0fdc0ab225414770928d0b6599d7fbb279cc7fba22721d) and line print l2-w03-check-row-sun-m1-line-print-3-despeckled.png (SHA-256 3fec0bfd9fe9753492349f1f08fd46001b84ebd455d81b4e8e43b6533b72fddd).",
+        "Reviewer notes: The line art has no gray pixel, no solid black band, no thin white region and no text. Every ray is a closed shape with a radius of 65 px or more, so a child can color each one. The rays of the line art sit close to the disc. The wide base of each triangle touches the disc line."
+      ]
+    },
+    {
+      "rowId": "l2-w03-check-row-dog",
+      "version": 1,
+      "colorPrint": "l2-w03-check-row-dog-m1-color-print.png",
+      "linePrint": "l2-w03-check-row-dog-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-45.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose clean (correct), K2 a-nose defect (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-45/pages/l2-w03-check-row-dog-m1-color-print.png and l2-w03-check-row-dog-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-check-row-dog-m1-color-print.png (SHA-256 8217e46adc15e3c6cb857795188e7726665c20c765d72ca77ebcfffb7aca2681) and line print l2-w03-check-row-dog-m1-line-print-despeckled.png (SHA-256 0e87c715278b1baa68830590ad0155218bc9225b9925a889b42e8d35334dc73a).",
+        "Reviewer notes: The line art has no gray pixel, no solid black band, no thin white region and no text. The line art draws a small outlined oval above each eye. The bar lists an outlined eyebrow band as a mark that is not a defect. The nose is a solid black shape of 105 by 70 px. The bar allows a solid black nose. The line art leaves out the white blaze of the color file. A note, not a defect."
+      ]
+    },
+    {
+      "rowId": "l2-w03-check-row-pear",
+      "version": 1,
+      "colorPrint": "l2-w03-check-row-pear-m1-color-print.png",
+      "linePrint": "l2-w03-check-row-pear-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-45.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose clean (correct), K2 a-nose defect (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-45/pages/l2-w03-check-row-pear-m1-color-print.png and l2-w03-check-row-pear-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-check-row-pear-m1-color-print.png (SHA-256 a69ce62ddcbbe394c1cc13f53c3c75cc88baa27bf944730e3bb0c8b65d20f8af) and line print l2-w03-check-row-pear-m1-line-print-despeckled.png (SHA-256 251734e945dc893d390313c792ee5f465f9b143bae40a9742572db538fbd2cc2).",
+        "Reviewer notes: The line art has no gray pixel, no solid black band, no thin white region and no text. The line art draws one leaf with a center line and a short stem. The color file shows the same."
+      ]
+    },
+    {
+      "rowId": "l2-w03-check-row-bus",
+      "version": 1,
+      "colorPrint": "l2-w03-check-row-bus-m1-color-print.png",
+      "linePrint": "l2-w03-check-row-bus-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-45.json, rating 7.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose clean (correct), K2 a-nose defect (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-45/pages/l2-w03-check-row-bus-m1-color-print.png and l2-w03-check-row-bus-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-check-row-bus-m1-color-print.png (SHA-256 0d713e987a0a563b91b95d50f4e486c2296df92898d1fca18065046bb3eab72c) and line print l2-w03-check-row-bus-m1-line-print-despeckled.png (SHA-256 9e29209d17c85edc847da675be5b479449e523a7998bcea6f828aaf63e5817f9).",
+        "Reviewer notes: The color print carries a hard gray cast shadow of the bus on the ground. It covers 4.72 percent of the frame in the gray value 200. The line art has no shadow and no ground line. The line art has no gray pixel, no solid black band, no thin white region and no text. The line art shows a front grille, a door with two window bars and four side windows as closed shapes. The line art draws the side stripe as one line, and the color file shows the same dark stripe."
+      ]
+    },
+    {
+      "rowId": "l2-w03-check-row-fish",
+      "version": 1,
+      "colorPrint": "l2-w03-check-row-fish-m1-color-print.png",
+      "linePrint": "l2-w03-check-row-fish-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-45.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose clean (correct), K2 a-nose defect (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-45/pages/l2-w03-check-row-fish-m1-color-print.png and l2-w03-check-row-fish-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-check-row-fish-m1-color-print.png (SHA-256 ffa7f21ccc04eb811ffeb399e560a81c354604afb01059572be225f1d6b83121) and line print l2-w03-check-row-fish-m1-line-print-2-despeckled.png (SHA-256 77f819f4fc8e9166005a942c8fcd5bc1846fb7830ba1834d843e63af88de9eed).",
+        "Reviewer notes: The line art has no gray pixel, no solid black band, no thin white region and no text. Open item: the tail fin has a wavy outline in the line art. The color file draws the same scalloped tail fin. The two files agree. Open item: a small smile mark sits at the mouth in the line art. The color file shows no mouth line. The mark is small and the fish still reads as a fish. The line art splits the body with one band line, and the color file shows the same yellow belly."
+      ]
+    },
+    {
+      "rowId": "l2-w03-check-row-hat",
+      "version": 1,
+      "colorPrint": "l2-w03-check-row-hat-m1-color-print.png",
+      "linePrint": "l2-w03-check-row-hat-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-45.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose clean (correct), K2 a-nose defect (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-45/pages/l2-w03-check-row-hat-m1-color-print.png and l2-w03-check-row-hat-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-check-row-hat-m1-color-print.png (SHA-256 2fe49c48ab2ea6095596ee48521594b0f59cd96e59e69e910040673a21c51ad6) and line print l2-w03-check-row-hat-m1-line-print-2-despeckled.png (SHA-256 4c379cc29886359f8ad6c69fd53dc2db073c42f0456e56c69a3c707f9a8ac4f4).",
+        "Reviewer notes: The line art has no gray pixel, no solid black band, no thin white region and no text. The line art draws no straw lines on the brim. A note, not a defect. The color file has a soft shadow under the brim. The line art has no shadow."
+      ]
+    },
+    {
+      "rowId": "l2-w03-check-row-pencil",
+      "version": 1,
+      "colorPrint": "l2-w03-check-row-pencil-m1-color-print.png",
+      "linePrint": "l2-w03-check-row-pencil-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-45.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose clean (correct), K2 a-nose defect (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-45/pages/l2-w03-check-row-pencil-m1-color-print.png and l2-w03-check-row-pencil-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names.",
+        "Color print l2-w03-check-row-pencil-m1-color-print.png (SHA-256 f8df7ea9a09a67226a1e89b6bdb27299d5ccd358572d2e37a29df9fff92faef4) and line print l2-w03-check-row-pencil-m1-line-print-2-despeckled.png (SHA-256 1ea02ad77f884b4b65d636e8dd913b5eeed595117242d56bb9e3c9f321f447ad).",
+        "Reviewer notes: The line art has no gray pixel, no solid black band, no thin white region and no text. The line art draws the lead point as a small closed wedge at the tip. The color file has a soft shadow under the pencil. The line art has no shadow."
+      ]
+    }
+  ]
+}
