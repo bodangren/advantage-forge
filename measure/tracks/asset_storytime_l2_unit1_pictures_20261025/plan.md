@@ -2045,6 +2045,58 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       lists the group sheet `cast-group-b-2.png`.
     - Open: no task is `[x]`. No week 3 page call before Daniel answers on week 1. The 10 sheets
       need an independent look.
+  - Week 3 batch 1 (production). Green round of 2026-11-02, claude-code/claude-sonnet-5-5#high.
+    role_base_sha `c4c0e682`, phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash.
+    Image model meta/muse-image. Coder: none; nothing was delegated. No change in `src/`, `tests/`,
+    `scripts/`, `assets/`, or `approved.json`. No marker changed. Spec commit `4c4cc8b6` (8 specs: the
+    color prompts of 7 rows ask for smooth hair on Ben and no extra pan on the shelf; the cover line
+    prompt asks for a visible handle on each pan). Run log:
+    `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w03-b1.log`. Review folder:
+    `out/storytime-review/batch-43/` (`brief.md`, `pages/` 36 files, `refs/` 8 files). Green did not
+    rate its own work.
+    Rows (9): the cover `l2-w03-cover-the-pan` and the 8 pages `story-page-a-nap-in-the-pan`,
+    `-a-pan-in-a-pan`, `-a-pan-on-a-pan`, `-a-pan-on-nan`, `-can-i-get-the-pan`, `-i-can-get-a-pan`,
+    `-i-can-get-the-pan`, `-nan-can-get-a-pan`.
+    Commands: `node scripts/storytime-muse.mjs color <specs> --concurrency 4`; then
+    `... line <spec> --from <n> --tries 3` for each row. Writer check: `inspectLineArtPng` and short
+    sharp scripts (edge frame, color print) in `/tmp/opencode/`.
+    Chosen files (all in `out/storytime/l2/unit1/w03/muse/`), the pan count in color and in line art,
+    and the writer check (line width, ink, edge frame):
+    - `cover-the-pan`: color m1, line try 6. Two pans in both (one in each child's hands). PASS 19 px,
+      ink 12.74 percent, edge 94.63 percent. Tries 1 to 3 drew the pans as cups with no handle; a second
+      batch of 3 tries ran with a handle note, and only try 6 shows a handle on each pan.
+    - `story-page-a-nap-in-the-pan`: color m2, line try 2. One pan in both; Pip is asleep with floppy
+      ears. PASS 16 px, 9.99 percent, edge 95.56 percent. Color m1 had a red pan and a blue pan on the
+      shelf (3 pans). Tries 1 and 3 drew Pip with open eyes.
+    - `story-page-a-pan-in-a-pan`: color m2, line try 3. Two pans in both (the tiny blue pan above the
+      small red pan that Nan holds). PASS 21 px, 10.54 percent, edge 97.64 percent. Ben's hand has a few
+      small finger lines in the line art; Ben has a small lash flick at one eye in the color.
+    - `story-page-a-pan-on-a-pan`: color m1, line try 1. Two pans in both (a smaller pan on a larger pan
+      on the table). PASS 22 px, 13.40 percent, edge 93.16 percent.
+    - `story-page-a-pan-on-nan`: color m3, line try 1. One pan on Nan's head in both. PASS 17 px, 10.44
+      percent, edge 94.46 percent. Ben's hair is still lumpy in the color. Nan's eyes are closed in the
+      color and open in the line art.
+    - `story-page-can-i-get-the-pan`: color m2, line try 1. One pan (top shelf) in both. PASS 19 px, 9.44
+      percent, edge 94.42 percent. Color m1 had two more pans on the low shelf.
+    - `story-page-i-can-get-a-pan`: color m3, line try 2. One pan (in Ben's hand) in both. PASS 21 px,
+      9.93 percent, edge 93.94 percent. Colors m1 and m2 kept pans on the shelf. The small pan can read
+      like a magnifying glass.
+    - `story-page-i-can-get-the-pan`: color m2, line try 1. One pan in both. PASS 21 px, 10.51 percent,
+      edge 94.10 percent. Color m1 showed a squeezed, half hidden face for Ben and three pans. Ben's face
+      is strained in profile in m2 (the pan looks heavy).
+    - `story-page-nan-can-get-a-pan`: color m3, line try 1. One pan (in Nan's hand) in both. PASS 16 px,
+      9.05 percent, edge 95.38 percent. Colors m1 and m2 kept two pans on the shelf. The small pan can
+      read like a magnifying glass.
+    No page has a sun (all are indoors). All 9 color prints: PNG, 4000 x 3000, 8-bit, sRGB, 3 channels,
+    no alpha, no palette. The writer check of every chosen line print is PASS.
+    Retries and why: color rounds 2 and 3 for the rows that showed extra pans, lumpy hair, or a broken
+    face (7 rows needed m2; 3 of them needed m3); one extra line batch for the cover (no handle). One
+    row needed one color call and one line batch (`a-pan-on-a-pan`).
+    Calls: 52 logged in `out/storytime/l2/unit1/w03/muse/costs.tsv`: 49 billed at 0.01 USD, 3 failed with
+    `UND_ERR_CONNECT_TIMEOUT` at cost 0 (made again). Batch cost 0.49 USD. Running total 5.45 + 0.49 =
+    5.94 USD.
+    Open: `approved.json` and the stage 2 check are not run for these rows. Independent review of
+    `batch-43` is needed. Ben's hair is lumpy in the `a-pan-on-nan` color.
   - Week 4 staging (inputs only; no page candidate until Daniel's week 1 answer; cast looks pending).
     Green round of 2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `0755ef8d`,
     phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model
