@@ -3549,6 +3549,76 @@ rows T142 to T151, and the closeout gate for 30 jobs.
         page are thin. The doll page line width is 12 px (the gate minimum). The teddy tail tip sits at the
         top of the blanket beside May, not at the far edge of the blanket. The other 18 rows of week 7
         (the 9 check rows and the cover and 8 pages of "The Top") are not made.
+    - Week 7 batch 2 (the cover "The Top" and 8 story pages). Green round of 2026-11-03,
+      claude-code/claude-sonnet-5-5#high. role_base_sha `8f92948f`, phase_base_sha `fc76c272`. Red model
+      opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none; nothing was delegated. No
+      change in `src/`, `tests/`, `scripts/`, `assets/`, or `approved.json`. No marker changed. Run log:
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w07-b2.log`. Review folder:
+      `out/storytime-review/batch-56/` (`brief.md`, `pages/` 36 files, `refs/` 6 files, no control rows).
+      Green did not rate its own work. No page of this batch has a sun. Tom and Mom keep the looks that
+      Daniel approved on 2026-11-02 (`"castLook": "approved"`).
+      - Spec commit: `6aa3aed9` (three specs; `text` and `goal` did not change). `run-tom-run`
+        `linePrompt`: a sentence that each eye is a ring (a closed outline circle with a smaller solid
+        black circle inside it). `the-top-on-a-pot` `colorPrompt`: the table and the pot stand at about 70
+        percent of the picture width with a strip of plain wall and floor at their right; `linePrompt`: the
+        whole table and pot stay inside the picture with a white margin. `tom-can-get-the-top`
+        `colorPrompt`: Tom stands in the middle of the picture, so the pot does not hide him.
+      - Rows (9). Color version, line try, then the writer check (line width, ink, edge frame white; gate
+        90) on the 4000 x 3000 despeckled line print:
+        - `cover-the-top` (m1, line 2): PASS 14 px, 6.17, 98.59. Tom holds one top at face height; Pip
+          sits whole at the right.
+        - `story-page-tom-can-see-a-top` (m1, line 3): PASS 17 px, 7.84, 97.96. Tom kneels at the toy box;
+          one top lies on the toys.
+        - `story-page-the-top-is-on-mom` (m1, line 3): PASS 17 px, 9.05, 98.09. One top on Mom's head; Tom
+          raises both hands.
+        - `story-page-the-top-is-on-pip` (m2, line 3): PASS 16 px, 8.51, 98.07. Tom points with one finger;
+          Pip sleeps whole with one top on his back; Mom smiles.
+        - `story-page-run-tom-run` (m1, line 5): PASS 14 px, 7.83, 98.46. One top on the mat; Tom runs;
+          Mom laughs with nothing on her head; Pip sleeps.
+        - `story-page-can-tom-see-the-top` (m2, line 1): PASS 21 px, 10.60, 97.12. Tom looks under the
+          sofa; Pip sleeps whole with one top on his back; Mom sits on the sofa.
+        - `story-page-the-top-on-a-mat` (m1, line 1): PASS 16 px, 6.99, 98.14. One top over the blue mat;
+          Tom kneels and claps.
+        - `story-page-the-top-on-a-pot` (m3, line 2): PASS 18 px, 8.12, 98.33. One top beside the knob on
+          the lid; the pot shows whole; Tom laughs with both hands open.
+        - `story-page-tom-can-get-the-top` (m2, line 3): PASS 17 px, 6.91, 98.26. Tom holds one top at face
+          height; the toy box has no top.
+        All 9 chosen color prints: PNG, 4000 x 3000, 8-bit, sRGB, 3 channels, no alpha, no palette. In
+        every chosen print, no person, hand, hair, foot, Pip part, or needed prop is cut at an edge. The
+        pot and the low table run to the right print edge in several line prints (background only).
+      - Retries and why. Color: m2 for the Pip page (m1 had cushions on the floor at the left), m2 for the
+        sofa page (m1 drew a recessed floor panel), m2 for the get-the-top page (m1 had the pot hide Tom's
+        legs), and m2 and m3 for the pot page (the pot was cut at the right edge in the line art for m1 and
+        m2; m3 moved the table and pot inside). Line rejects (the writer check passed on the try unless
+        noted). Solid black eyes with no outline: cover try 1, see-a-top try 1, Mom page tries 1 and 2,
+        Pip page m2 try 1 (Tom) and try 2 (Mom), run tries 1 to 3 (the eye sentence fixed tries 4 to 6),
+        pot m1 tries 2 and 3, sofa m2 try 2. Edge frame under 90 percent (gate fail): cover try 3,
+        sofa m2 try 2. See-a-top try 2 drew a second large ellipse (two mats). Mat try 3 had stray curves
+        and a bottom line, mat try 2 had a stray dash at the bottom left. Get-the-top m2 try 1 drew the
+        top above Tom's open hand. The pot tries on m1 and m2 cut the pot at the right print edge. One
+        line call (get-the-top m2, try 2) failed with a network timeout at cost 0. No try has a star, a
+        badge, text, or a gray fill.
+      - Stage gate after the spec changes. The real command `node scripts/storytime-stage-check.mjs --week 7
+        --list /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --specs
+        docs/storytime/l2-unit1/w07/muse` prints "text mismatches: 0", "goal mismatches: 0", "outDir
+        mismatches: 0", "missing element paths: 0", and "page candidates: 479", then "stage check: fail".
+        The only problem lines are the page candidate files (0 other problem lines). A clean run in a
+        scratch folder (the 21 element files that the specs name, copied with the same relative paths, and
+        an empty week 7 output folder) printed list sha256
+        `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`, rows 27, specs found 27, text
+        mismatches 0, goal mismatches 0, outDir mismatches 0, element paths checked 90, missing element
+        paths 0, page candidates 0, "stage check: pass", exit code 0.
+      - Calls: 49 billed in `out/storytime/l2/unit1/w07/muse/costs.tsv` this round (14 color and 35 line),
+        all at 0.01 USD. One line call failed with a network timeout and cost nothing. Round cost 0.49 USD.
+        Running total 11.80 + 0.49 = 12.29 USD. The cap of 70 billed calls was not reached.
+      - Open: `approved.json` and the stage 2 check are not run for these rows. `batch-56` needs an
+        independent review. In the line art, Tom, Mom, and the cover show a mouth and no nose in some rows
+        (the text does not name the nose). Mom's ring eyes on the Pip and sofa pages are large. On the
+        pot page the top touches the lid and overlaps the toy box behind it. The mat page shows a faint
+        swirl ring around the top in color. On the sofa page Tom's head covers part of the gap under the
+        sofa. The pot or the low table touches the right print edge in the line art of several rows
+        (background). The mat line print is 16 px and the cover is 14 px. The other 9 rows of week 7 (the
+        check rows) are not made.
 - [~] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks.
     - Level 2 cover staging (inputs only; default file name and size wait for the PM). Green round

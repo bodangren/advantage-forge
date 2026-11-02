@@ -1,0 +1,28 @@
+Step 1: read the batch 1 and week 6 notes; 9 color m1 made (9 billed). Viewed all 9 prints; 6 usable; Pip page (cushions on floor), sofa page (recessed floor panel), get-the-top page (pot hid Tom's legs) marked for color retry.
+Step 2: 18 line tries (tries 1 to 3, six rows); color m2 for 3 rows (3 billed); get-the-top spec colorPrompt edit (Tom in the middle). 30 billed.
+Step 3: line tries 1 to 3 on m2 of Pip, sofa, get-the-top (8 billed, 1 timeout at cost 0). 38 billed. Picks: cover L2, see-a-top L3, Mom L3, Pip m2 L3, sofa m2 L1, mat L1, get-the-top m2 L3. Run page and pot page rejected (solid black eyes; pot cut at the right print edge).
+Step 4: run linePrompt eye sentence; pot color m2 + run tries 4 to 6 (4 billed); pot m2 line tries 1 to 3 (3 billed): pot still cut. 45 billed.
+Step 5: pot colorPrompt moves table and pot inside; color m3 (1 billed); pot m3 line tries 1 to 3 (3 billed). 49 billed. Picks: run L5, pot m3 L2.
+Step 6: stage gates (real: text 0, goal 0, outDir 0, missing 0, page candidates 479, fail only on candidates; scratch: pass, exit 0). Spec commit 6aa3aed9. batch-56 folder done (brief.md, pages/ 36 files, refs/ 6 files). Plan note added (plan.md had no foreign change before the edit).
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2, week 7 batch 2 (cover "The Top" and 8 story pages; marker unchanged)
+role_base_sha: 8f92948f
+phase_base_sha: fc76c272
+spec_commits: 6aa3aed9 (run-tom-run linePrompt; the-top-on-a-pot colorPrompt and linePrompt; tom-can-get-the-top colorPrompt; text and goal unchanged)
+plan_evidence_commit: see git log (the commit after 6aa3aed9 that holds the plan note and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; image=meta/muse-image; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: cover-the-top m1 + line 2 (PASS 14 px, 6.17, edge 98.59); tom-can-see-a-top m1 + line 3 (PASS 17 px, 7.84, 97.96); the-top-is-on-mom m1 + line 3 (PASS 17 px, 9.05, 98.09); the-top-is-on-pip m2 + line 3 (PASS 16 px, 8.51, 98.07); run-tom-run m1 + line 5 (PASS 14 px, 7.83, 98.46); can-tom-see-the-top m2 + line 1 (PASS 21 px, 10.60, 97.12); the-top-on-a-mat m1 + line 1 (PASS 16 px, 6.99, 98.14); the-top-on-a-pot m3 + line 2 (PASS 18 px, 8.12, 98.33); tom-can-get-the-top m2 + line 3 (PASS 17 px, 6.91, 98.26). All 9 color prints PNG 4000x3000 8-bit sRGB 3ch no alpha no palette. Nothing needed is cut at a print edge.
+open_items: approved.json and stage 2 check not run; batch-56 needs an independent review; line art shows a mouth and no nose on some faces (text does not name the nose); Mom's ring eyes are large on the Pip and sofa pages; pot page top touches the lid and overlaps the toy box; mat page color has a faint swirl ring around the top; sofa page Tom's head covers part of the gap under the sofa; pot or low table touches the right print edge in the line art of several rows (background); real week 7 stage gate prints text 0, goal 0, outDir 0, missing 0 but "stage check: fail" only because 479 page candidate files exist (clean scratch run: pass, exit 0); the 9 week 7 check rows are not made
+round_cost_usd: 0.49
+running_total_usd: 12.29
+calls: 49 billed (14 color, 35 line), 1 failed (network timeout, get-the-top m2 line try 2) at cost 0; cap 70 not reached
+dispositions: none (no routed findings)
+review_folder: out/storytime-review/batch-56/
+END_MEASURE_AGENT_RESULT
