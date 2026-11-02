@@ -3619,6 +3619,61 @@ rows T142 to T151, and the closeout gate for 30 jobs.
         sofa. The pot or the low table touches the right print edge in the line art of several rows
         (background). The mat line print is 16 px and the cover is 14 px. The other 9 rows of week 7 (the
         check rows) are not made.
+    - Week 7 batch 3 (the 9 check rows). Green round of 2026-11-03, claude-code/claude-sonnet-5-5#high.
+      role_base_sha `15a81f41`, phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash.
+      Image model meta/muse-image. Coder: none; nothing was delegated. No change in `src/`, `tests/`,
+      `scripts/`, `assets/`, or `approved.json`. No marker changed. Run log:
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w07-b3.log`. Review folder:
+      `out/storytime-review/batch-57/` (`brief.md`, `pages/` 36 files, `refs/` 9 files, no control rows).
+      Green did not rate its own work.
+      - Spec commit: `5b33b140` (one spec, `linePrompt` only; `text` and `goal` did not change). The
+        `linePrompt` of `check-row-bed` now carries the week 2 text: one bold thick line everywhere, no thin
+        line and no double line. Bed tries 1 to 3 measured 10, 11, and 9 px, below the gate minimum of 12 px.
+      - Rows (9; each is one object on plain white, 1500 x 1500, print mode `crop`, no text, no number).
+        Color version, line try, then the writer check (`inspectLineArtPng` at 1500 x 1500 on the despeckled
+        line print: line width, ink, edge frame 1 percent border white; no dark pixel on the outer row or
+        column):
+        - `bed` (m1, line 6): PASS 16 px, 6.52, 100.00. Tries 4 and 5 gave 13 px.
+        - `bus` (m1, line 1): PASS 15 px, 7.62, 100.00.
+        - `cat` (m1, line 1): PASS 17 px, 7.32, 100.00.
+        - `fish` (m1, line 3): PASS 19 px, 4.08, 100.00.
+        - `octopus` (m1, line 1): PASS 26 px, 8.25, 100.00.
+        - `olive` (m1, line 1): PASS 25 px, 3.48, 100.00. One oval, one small hole with one closed pimento
+          circle, no stem.
+        - `ox` (m1, line 3): PASS 17 px, 7.05, 100.00. Two horns, ring eyes, open nostrils.
+        - `pen` (m1, line 2): PASS 33 px, 5.77, 100.00.
+        - `sun` (m1, line 1): PASS 29 px, 8.69, 100.00. One disc and exactly 8 pointed triangle rays, wide
+          base on the disc. One sun only.
+        All 9 chosen color prints: PNG, 1500 x 1500, 8-bit, sRGB, 3 channels, no alpha, no palette. The edge
+        frame (1 percent border) of every chosen line print is 100.00 percent near-white, and no dark pixel
+        sits on an outer row or column. The nearest object is 52 px from an edge (sun) and 53 px (ox).
+        Nothing is cut at a print edge.
+      - Retries and why: two color calls failed at cost 0 (`olive` HTTP 502, `fish` network timeout) and
+        were repeated. `fish` line try 1 failed at cost 0 (network timeout) and was not repeated; tries 2 and
+        3 exist. `bed` tries 1 to 3 failed the line width gate, so the spec changed and tries 4 to 6 came
+        after it. `bus` try 2 added four roof circles that the color does not show, and try 3 added side
+        stripe lines. `cat` try 3 was thin (12 px). `fish` try 2 had a large solid black eye disc and a body
+        band line. `octopus` try 3 spread the tentacles up at the sides. `ox` tries 1 and 2 had a large solid
+        black left eye. All other tries were usable.
+      - Stage gate after the spec change. The real command `node scripts/storytime-stage-check.mjs --week 7
+        --list /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --specs
+        docs/storytime/l2-unit1/w07/muse` prints "text mismatches: 0", "goal mismatches: 0", "outDir
+        mismatches: 0", "missing element paths: 0", and "page candidates: 651", then "stage check: fail". The
+        only problem lines are the page candidate files. A clean run in a scratch folder (the 21 element
+        files that the specs name, copied with the same relative paths, and an empty week 7 output folder)
+        printed list sha256 `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`, rows 27,
+        specs found 27, text mismatches 0, goal mismatches 0, outDir mismatches 0, element paths checked 90,
+        missing element paths 0, page candidates 0, "stage check: pass", exit code 0.
+      - Calls: 38 billed in `out/storytime/l2/unit1/w07/muse/costs.tsv` this round (9 color and 29 line),
+        all at 0.01 USD. Three calls failed and cost nothing. Round cost 0.38 USD. Running total
+        12.29 + 0.38 = 12.67 USD. The cap of 60 billed calls was not reached.
+      - Open: `approved.json` and the stage 2 check are not run for these rows. `batch-57` needs an
+        independent review. The olive line art is a plain oval with one small ring, and may read as an egg
+        until it is colored. The cat line art has no stripes (the color has stripes). The octopus line art
+        has no cheek blush (as the rules ask), and its left eye is smaller than the right. The ox line art
+        omits the beaded necklace and the bell of the color. The fish line art has no belly line and wavy
+        fin outlines. A thin double stroke sits under the bed footboard. The sun and the ox sit 52 px and
+        53 px from a print edge. After this batch the 27 pictures of week 7 exist as candidates.
 - [~] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks.
     - Level 2 cover staging (inputs only; default file name and size wait for the PM). Green round

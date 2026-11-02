@@ -1,0 +1,29 @@
+provisional; role_base_sha 15a81f41; next step: 9 color calls
+Step 2: 9 color m1 made (olive HTTP 502 and fish ETIMEDOUT failed at cost 0, retried); viewed: all usable; none cut at a print edge.
+Step 3: 27 line calls (fish try 1 failed at cost 0); viewed 26 tries. Writer check: bed tries 1 to 3 measured 10, 11, 9 px (gate minimum 12) -> FAIL; all other tries PASS. Edited bed linePrompt (week 2 text: one bold thick line everywhere), 3 new tries (4 to 6: 13, 13, 16 px).
+Step 4: picks bed L6 16px, bus L1 15, cat L1 17, fish L3 19, octopus L1 26, olive L1 25, ox L3 17, pen L2 33, sun L1 29. Edge frame 100.00 percent for all; 0 dark outer pixels; nearest object min 52 px (sun), 53 px (ox).
+Step 5: stage gate (real: fail only on 651 page candidate files; clean scratch: pass, exit 0). Spec commit 5b33b140. batch-57 folder and brief.md written. Plan note added under Phase 4 Task 2 (plan.md had no foreign change before the edit). Temporary check scripts removed from scripts/ (moved to /tmp). Next: record commit.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2, week 7 batch 3 (the 9 week 7 check rows; marker unchanged)
+role_base_sha: 15a81f41
+phase_base_sha: fc76c272
+spec_commits: 5b33b140 (l2-w07-check-row-bed.json linePrompt: one bold thick line everywhere, no thin or double line; text and goal unchanged)
+plan_evidence_commit: see git log (the commit after 5b33b140 that holds the plan note and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; image=meta/muse-image; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: bed m1 + line 6 (PASS 16 px, ink 6.52, edge 100.00); bus m1 + line 1 (15 px, 7.62); cat m1 + line 1 (17 px, 7.32); fish m1 + line 3 (19 px, 4.08); octopus m1 + line 1 (26 px, 8.25); olive m1 + line 1 (25 px, 3.48); ox m1 + line 3 (17 px, 7.05); pen m1 + line 2 (33 px, 5.77); sun m1 + line 1 (29 px, 8.69; one disc, 8 pointed rays). All 9 color prints PNG 1500x1500 8-bit sRGB 3ch no alpha no palette; all edge frames 100.00 percent white; no dark pixel on any outer row or column of a line print; nearest object 52 px from an edge (sun), 53 px (ox). Nothing is cut at a print edge.
+open_items: approved.json and stage 2 check not run; batch-57 needs an independent review; olive line art is a plain oval with one small ring and may read as an egg before coloring; cat line art has no stripes; octopus left eye smaller than right, no blush in line art; ox line art omits necklace and bell; fish line art has no belly line and wavy fins; thin double stroke under the bed footboard; real week 7 stage gate prints text 0, goal 0, outDir 0, missing 0 but "stage check: fail" only because 651 page candidate files exist (a clean scratch run printed "stage check: pass", exit 0)
+round_cost_usd: 0.38
+running_total_usd: 12.67
+calls: 38 billed (9 color, 29 line); 3 calls failed (olive color HTTP 502, fish color timeout, fish line try 1 timeout) at cost 0; cap 60 not reached
+batch: out/storytime-review/batch-57/
+handoff: Review out/storytime-review/batch-57/ against Daniel's bar for 9 rows. Check first: the olive (must not read as a grape, pea, or fruit with a stem; plain oval with hole and pimento circle), the ox (horns, ring eyes, open nostrils), the sun (one disc, eight pointed rays, wide base on the disc), the bed (16 px, one bold line), and that each line art reads as its word at book size. Defaults if rated a defect only: olive egg-like read (accept; a new line try if the reviewer rates it a defect), missing cat stripes and ox necklace (accept). Default now: no further Muse call. Week 7 now has all 27 candidates; week 7 needs the independent reviews of batches 55, 56, and 57 before approved.json.
+finding_ids: none
+dispositions: none
+END_MEASURE_AGENT_RESULT
