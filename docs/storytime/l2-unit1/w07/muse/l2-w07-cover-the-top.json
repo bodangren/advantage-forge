@@ -13,7 +13,8 @@
   "print": "crop",
   "aspect": "4:3",
   "outDir": "out/storytime/l2/unit1/w07/muse",
-  "castLook": "pending",
+  "castLook": "approved",
+  "castLookApproval": "Daniel 2026-11-02 07:00 ICT, Tasks NG96V3Z5eXZLX2M3ajFtcA: Both ok",
   "castLookNames": [
     "Tom"
   ]
