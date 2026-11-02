@@ -3179,6 +3179,73 @@ rows T142 to T151, and the closeout gate for 30 jobs.
         horse, fish, and frog pages (not measured). On the bird page Mia faces the camera and does not look
         up. The cat on the cover is small at book size. The other 18 rows of week 6 (check rows and the
         cover and pages of the other stories) are not made.
+    - Week 6 batch 2 (the cover "Tap, Tap!" and 8 story pages). Green round of 2026-11-03,
+      claude-code/claude-sonnet-5-5#high. role_base_sha `8e2e382d`, phase_base_sha `fc76c272`. Red model
+      opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none; nothing was delegated. No
+      change in `src/`, `tests/`, `scripts/`, `assets/`, or `approved.json`. No marker changed. Run log:
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w06-b2.log`. Review folder:
+      `out/storytime-review/batch-53/` (`brief.md`, `pages/` 36 files, `refs/` 5 files, no control rows).
+      Green did not rate its own work. No page of this batch has a sun.
+      - Spec commit: `25391c6b` (four specs, `colorPrompt` or `linePrompt` only). The `colorPrompt` of
+        `tap-tap-tap` and `tap-tap-tap-b` now puts the golden-brown tail tip beside the right of the basket,
+        on the floor strip, well inside the picture, with nothing orange at the left edge. The `linePrompt`
+        of `sam-can-see-a-pan` says: no mat, no rug, no rounded floor shape, and one closed hand with
+        separate fingers on the pan handle. The `linePrompt` of `pip-sat-on-the-mat` says that Pat and Sam
+        laugh with closed eyes drawn as one upward curve, and that Pip keeps two open eyes. `text` and `goal`
+        did not change.
+      - Rows (9). Color version, line try, then the writer check (line width, ink, edge frame white; gate
+        90) on the 4000 x 3000 despeckled line print:
+        - `cover-tap-tap` (m1, line 4): PASS 12 px, 7.85, 96.33. Pat sits on the left mat and Sam on the right
+          mat, each with one hand at an ear. The line width is the gate minimum.
+        - `story-page-pat-sat-on-a-mat` (m1, line 3): PASS 14 px, 8.27, 95.09. Pat on the left mat; the right
+          mat is empty.
+        - `story-page-sam-sat-on-a-mat` (m1, line 3): PASS 14 px, 9.78, 94.99. Pat on the left mat, Sam on the
+          right mat.
+        - `story-page-tap-tap-tap` (m2, line 3): PASS 14 px, 9.33, 94.84. Two boys look up with round open
+          mouths; the tail tip shows beside the basket in color and line, and no other part of Pip.
+        - `story-page-tap-tap-tap-b` (m2, line 3): PASS 14 px, 8.62, 95.08. Sam turns toward the basket and
+          Pat looks at the map; the tail tip shows beside the basket in color and line.
+        - `story-page-pat-can-see-a-map` (m1, line 2): PASS 18 px, 11.13, 94.20. Pat lifts the lower right
+          corner; the wall behind it is plain.
+        - `story-page-sam-can-see-a-pan` (m1, line 6): PASS 17 px, 9.57, 94.64. One red pan, empty inside;
+          Sam looks down at it.
+        - `story-page-he-can-see-pip` (m1, line 1): PASS 18 px, 10.24, 94.21. Sam points at Pip; Pip lies whole
+          on the floor to the right of the basket.
+        - `story-page-pip-sat-on-the-mat` (m1, line 5): PASS 14 px, 9.29, 95.42. Pip sits between the two
+          laughing boys on the seam of the two mats.
+        All 9 chosen color prints: PNG, 4000 x 3000, 8-bit, sRGB, 3 channels, no alpha, no palette. In
+        every chosen print, no person, hand, hair, foot, Pip part, or needed prop is cut at an edge.
+      - Retries and why: the color m1 of `tap-tap-tap` and `tap-tap-tap-b` showed only a sliver of orange
+        fur at the left print edge and no clear tail tip, so the spec changed and m2 came for both. Line
+        rejects: the cover try 1 failed with a network timeout (no cost); the cover tries 1 (new) and 5 drew
+        solid black eyes with no outline, and try 2 added three gray bars on the wall. `he-can-see-pip` try 2
+        drew solid black eyes and try 3 added a floor oval. The `pat-sat` and `sam-sat` tries all passed;
+        try 3 was chosen for the ring eyes. `map` try 1 and try 3 (cap hair, solid eyes). `tap-tap-tap` try 1
+        drew bare feet and try 2 drew smiles. `tap-tap-tap-b` tries 1 and 2 added a floor rug, and try 2 also
+        added a black line along the bottom edge. `pan` tries 1 to 3 drew a mat-like floor shape or thin
+        lines, then tries 4 to 6 after the spec change (try 5 solid dot eyes). `pip-sat` tries 1 to 3 drew
+        the boys with open eyes, then tries 4 to 6 after the spec change (try 4 black bottom edge line, try 6
+        two pins on the map). No try has a star, a badge, text, or a gray fill.
+      - Stage gate after the spec changes. The real command `node scripts/storytime-stage-check.mjs --week 6
+        --list /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --specs
+        docs/storytime/l2-unit1/w06/muse` prints "text mismatches: 0", "goal mismatches: 0", "outDir
+        mismatches: 0", "missing element paths: 0", and "page candidates: 424", then "stage check: fail". The
+        only problem lines are the page candidate files (week 6 pictures exist). A clean run in a scratch
+        folder (the 22 element files that the specs name and an empty week 6 output folder) printed list
+        sha256 `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`, rows 27, specs found 27,
+        text mismatches 0, goal mismatches 0, outDir mismatches 0, element paths checked 70, missing element
+        paths 0, page candidates 0, "stage check: pass", exit code 0.
+      - Calls: 46 billed in `out/storytime/l2/unit1/w06/muse/costs.tsv` this round (11 color and 35 line), all
+        at 0.01 USD. One line call (cover, try 1) failed with a network timeout and cost nothing. Round cost
+        0.46 USD. Running total 10.35 + 0.46 = 10.81 USD. The cap of 70 billed calls was not reached.
+      - Open: `approved.json` and the stage 2 check are not run for these rows. `batch-53` needs an
+        independent review. On the pan page the hand on the handle is a small group of short strokes. On the
+        cover the line width is 12 px (the gate minimum) and Pat's hair is one closed shape. On the pip-sat
+        page Pip's eyes in the line art are two solid dots with no outline, and Pip sits on the seam of the
+        two mats, not on one mat. On `tap-tap-tap` a small hanger knob sits above the map and one tiny speck
+        sits near the map in the line art; on `tap-tap-tap-b` two small pins sit at the map corners. On the
+        map page Pat's hair is a solid black fill. The `he-can-see-pip` page shows Pip on the open floor, not
+        inside the floor strip. The other 9 rows of week 6 (the check rows) are not made.
     - Week 7 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
       2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `b5f0c971`, phase_base_sha
       `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.
