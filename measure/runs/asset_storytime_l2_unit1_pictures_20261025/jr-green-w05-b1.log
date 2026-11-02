@@ -1,0 +1,40 @@
+provisional; role_base_sha 0337ae69; next: read plan notes and w04 b2 log shape
+Step 2: read plan notes, w04 scripts, specs. Next: run 9 color calls (concurrency 4).
+Step 3: color round done: 9 rows m1, 9 calls ok (0.09 USD; muse total 0.09 in w05 costs). Next: view color prints on contact sheets.
+Step 4: viewed 9 color prints. Nose page: Sam's hand covers his nose (reject). Others usable; zoom feet/ears/eyes next. Plan: edit nose colorPrompt, color m2.
+Step 5: nose spec colorPrompt edited, nose color m2 made (0.01). Next: view m2, zoom feet/ears/eyes.
+Step 6: viewed ears/eyes zoom (ok). Feet m1 Sam head huge, hair changed; spec edited, feet color m2 made. Next: view m2.
+Step 7: feet m2 chosen (Sam small, true look, two bare feet). Nose m2 chosen. Starting line round: 9 specs x 3 tries.
+Step 8: line round done: 26 ok + 1 network timeout (arms try 3). Next: contact sheets of line prints.
+Step 9: viewed line sheets cover/nose/fourlegs/arms/ears/eyes (arms has only 2 tries). Next: view feet/hands/legs, compare to approved Sam line art, zoom candidates.
+Step 10: zoomed faces. Leaning: cover 3, nose m2 try 1, arms 1/2, ears 1/2, eyes 2, hands 1/3, legs 1; four-legs and feet pending zoom. Next: hands/body zoom.
+Step 11: zoomed hands/ears/eyes/legs/nose/feet faces. Picks so far: cover3, nose m2 t1, arms2, eyes2, hands1or3; ears (ring+small dot) and legs 1 (branch clutter) weak; zoom feet bodies and four-legs next.
+Step 12: zoomed feet and four-legs. Picks: feet m2 t1, four-legs t1, cover t3, nose m2 t1, eyes t2, arms t2, hands t1/t3; ears and legs weak (legs: only try 1 has triangle sun; branch clutter near ear). Next: writer check on all tries, then maybe retry ears/legs.
+Step 13: writer check all 26 tries PASS. Retry batch: ears 4-6, legs 4-6 (spec linePrompt eye/tree/sun sentences), arms 3-4: 8 calls ok. Round so far 0.45 USD. Next: view retries.
+Step 14: viewed retries. FINAL picks: cover m1 L3; four-legs m1 L1; nose m2 L1; arms m1 L3; ears m1 L4; eyes m1 L2; feet m2 L1; hands m1 L1; legs m1 L6. Next: writer check retries, color format, review folder.
+Step 15: writer check retries PASS; color formats ok; spec commit made. Next: review folder batch-49.
+Step 16: review folder batch-49 built. Next: verify sun-style counts in brief, plan note, result block, commit.
+Step 17: plan note added under Phase 4 Task 2 (plan.md had no foreign change before the edit). Next: plan-evidence commit.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2, week 5 batch 1 (cover and 8 "I have ..." story pages; marker unchanged)
+role_base_sha: 0337ae69
+phase_base_sha: fc76c272
+spec_commits: b372c9bf (l2-w05-story-page-i-have-one-nose, -two-feet, -two-ears, -two-legs specs)
+plan_evidence_commit: see git log (the commit after b372c9bf that holds the plan note and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; image=meta/muse-image; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: cover-i-have-two m1 + line 3 (PASS 18 px, 6.54, edge 97.69); four-legs m1 + line 1 (PASS 19 px, 8.11, 97.57); one-nose m2 + line 1 (PASS 19 px, 6.67, 98.53); two-arms m1 + line 3 (PASS 17 px, 6.46, 98.07); two-ears m1 + line 4 (PASS 16 px, 6.63, 97.63); two-eyes m1 + line 2 (PASS 18 px, 6.54, 97.55); two-feet m2 + line 1 (PASS 17 px, 6.16, 96.83); two-hands m1 + line 1 (PASS 23 px, 8.52, 96.16); two-legs m1 + line 6 (PASS 19 px, 6.76, 96.74). All 9 color prints PNG 4000x3000 8-bit sRGB 3ch no alpha no palette. Nothing cut at a print edge in any chosen print.
+open_items: approved.json and stage 2 check not run for these rows; batch-49 needs an independent review; feet page Sam points at tummy/knee not a foot; nose page other hand overlaps pond stones and color sneakers have extra lace stripes; four-legs sun rays touch the right print edge; sun style differs per page (3 plain, 3 stick rays, 3 pointed triangles); ears page eyes are a solid circle in a thin ring with a small gap; 18 other week 5 rows not made
+round_cost_usd: 0.45
+running_total_usd: 8.82
+batch: out/storytime-review/batch-49/
+handoff: Review out/storytime-review/batch-49/ against Daniel's bar for 9 rows. Check first that the named part shows in color AND line: the one nose (closed oval, finger beside it, only the puppy tail behind the tree), two ears (closed outlines), two eyes, two arms, two hands (five fingers each), two legs, two feet (five toes each), and the puppy with four legs. Defaults if rated a defect only: feet page pointing at tummy (accept), sun styles (accept), ear-page eye ring (accept). Default now: no further Muse call. Next Green round: week 5 batch 2.
+finding_ids: none
+dispositions: none
+END_MEASURE_AGENT_RESULT

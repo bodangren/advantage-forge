@@ -2749,6 +2749,55 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       shows, in the golden-brown color of the reference. Commit `80731830`. The week 5 stage gate
       passes again (`element paths checked: 64`, `missing element paths: 0`, `page candidates: 0`).
       No Muse call; running total stays 4.09 USD.
+    - Week 5 batch 1 (the cover and 8 "I have ..." story pages). Green round of 2026-11-02,
+      claude-code/claude-sonnet-5-5#high. role_base_sha `0337ae69`, phase_base_sha `fc76c272`. Red model
+      opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none; nothing was delegated. No
+      change in `src/`, `tests/`, `scripts/`, `assets/`, or `approved.json`. No marker changed. Run log:
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w05-b1.log`. Review folder:
+      `out/storytime-review/batch-49/` (`brief.md`, `pages/` 36 files, `refs/` 4 files, no control rows).
+      Green did not rate its own work. The park has one sun on every page.
+      - Spec commit: `b372c9bf` (four specs). The nose `colorPrompt` now keeps the fingertip in front of the
+        nose and the hand out of the face, with a wide margin of grass at both sides. The feet `colorPrompt`
+        now draws Sam small and far from the camera, with the face and hair of his look. The ears and legs
+        `linePrompt` got a sentence for the eye (one big solid black circle with a hugging thin outline) and
+        a sentence for the sun (pointed triangle rays only); the legs `linePrompt` also keeps the tree to
+        one trunk and one crown, with no branch near Sam's head.
+      - Rows (9). Color version, line try, then the writer check (line width, ink, edge frame white; gate 90)
+        on the 4000 x 3000 despeckled line print:
+        - `cover-i-have-two` (m1, line 3): PASS 18 px, 6.54, 97.69. Both arms out wide, five-finger hands.
+        - `story-page-i-have-four-legs` (m1, line 1): PASS 19 px, 8.11, 97.57. One puppy with four legs and
+          one tail; Sam kneels and points at it.
+        - `story-page-i-have-one-nose` (m2, line 1): PASS 19 px, 6.67, 98.53. One nose drawn as a closed
+          oval; only the puppy tail shows behind the tree.
+        - `story-page-i-have-two-arms` (m1, line 3): PASS 17 px, 6.46, 98.07.
+        - `story-page-i-have-two-ears` (m1, line 4): PASS 16 px, 6.63, 97.63. Two closed ear outlines.
+        - `story-page-i-have-two-eyes` (m1, line 2): PASS 18 px, 6.54, 97.55. Two whole eyes, one finger at
+          each outer corner.
+        - `story-page-i-have-two-feet` (m2, line 1): PASS 17 px, 6.16, 96.83. Two bare feet with five toes
+          each and one pair of sneakers.
+        - `story-page-i-have-two-hands` (m1, line 1): PASS 23 px, 8.52, 96.16. Two open hands, five fingers
+          each.
+        - `story-page-i-have-two-legs` (m1, line 6): PASS 19 px, 6.76, 96.74. Two legs and two shoes.
+        All 9 chosen color prints: PNG, 4000 x 3000, 8-bit, sRGB, 3 channels, no alpha, no palette. In
+        every chosen color print and line print, no person, hand, hair, foot, or needed part is cut at an
+        edge.
+      - Retries and why: the nose page color m1 had Sam's hand over his nose (m2 fixed it). The feet page
+        color m1 had a huge head and a changed hair look (m2 fixed it). Line rejects: cover try 1 (branch
+        lines behind a hand) and try 2 (rounded petal rays); four-legs tries 2 and 3 (stripes on the
+        puppy's head); nose try 2 (hand over mouth and nose); ears tries 1 to 3 (a small dot in a ring for
+        the eye) and the legs tries 1 to 3 (branch near the ear, flower-like sun), so one more batch of
+        three came for each page after the spec change; eyes try 3 (rounded petal rays). No try has a star,
+        a badge, solid black hair, or a stray floating line.
+      - Calls: 45 billed and 1 failed in `out/storytime/l2/unit1/w05/muse/costs.tsv` this round: 11
+        color and 34 line (the failed call was one network timeout on the arms page, and 2 new tries
+        replaced it). All billed at 0.01 USD. Round cost 0.45 USD. Running total 8.37 + 0.45 = 8.82 USD.
+      - Open: `approved.json` and the stage 2 check are not run for these rows. `batch-49` needs an
+        independent review. On the feet page Sam points at his tummy and knee, not at a foot. On the
+        nose page Sam's other hand overlaps the stones of the pond, and the color sneakers have extra lace
+        stripes. On the four-legs page the sun rays touch the right edge of the print. The sun is drawn as
+        a plain circle (3 pages), with thin stick rays (3 pages), or with pointed triangle rays (3
+        pages). The eyes of the ears page are a solid circle in a thin ring with a small gap. The other
+        18 rows of week 5 are not made.
     - Week 6 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
       2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `8e141040`, phase_base_sha
       `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.
