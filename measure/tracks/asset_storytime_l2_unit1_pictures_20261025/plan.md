@@ -2535,6 +2535,61 @@ rows T142 to T151, and the closeout gate for 30 jobs.
     - Open: no task is `[x]`. No week 4 page call before Daniel answers on week 1. The 11 pending
       pages wait for a second answer on the 7 cast looks. The 11 element sheets need an independent
       look.
+  - Week 4 batch 1 (production) and sun check row wording (weeks 4 to 7). Green round of 2026-11-02,
+    claude-code/claude-sonnet-5-5#high. role_base_sha `bea05850`, phase_base_sha `fc76c272`. Red model
+    opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none; nothing was delegated. No
+    change in `src/`, `tests/`, `scripts/`, `assets/`, or `approved.json`. No marker changed. Daniel
+    approved the 7 cast looks ("Both ok"); every row of this batch carries `"castLook": "approved"`.
+    Run log: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w04-b1.log`. Review
+    folder: `out/storytime-review/batch-46/` (`brief.md`, `pages/` 36 files, `refs/` 11 files, no control
+    rows). Green did not rate its own work.
+    - Spec commits: `de383c4c` (Job B: the 4 sun check rows `l2-w0{4,5,6,7}-check-row-sun.json`; the
+      color and line prompts now use the week 3 sun wording of commit `93ff2c94`: one disc and exactly 8
+      sharp pointed triangle rays, the wide base on the disc, the point outward; nothing else changed; no
+      picture exists for these rows; each JSON parses). `42f7226c` (Job A: only the `linePrompt` of
+      `l2-w04-story-page-this-is-my-grandma.json` and `l2-w04-story-page-this-is-my-dog-pip.json`; Green
+      appended sentences: plain adult eyes as two small solid dots with no ring, no floor box, no lines
+      on Grandma's face, no stone ovals, no path, and no ground line on the lawn, laughing eyes closed
+      for Grandma and Grandpa). This commit came after `de383c4c` because the Job A spec change was only
+      known after the first line round.
+    - Rows (9): `l2-w04-cover-my-family`, `l2-w04-story-page-this-is-my-family`, `-this-is-my-mom`,
+      `-this-is-my-dad`, `-this-is-my-brother`, `-this-is-my-grandma`, `-this-is-my-grandpa`,
+      `-this-is-my-dog-pip`, `-this-is-my-house`.
+    - Commands: `node scripts/storytime-muse.mjs color <9 specs> --concurrency 4`; then
+      `... line <9 specs> --from 1 --tries 3 --concurrency 1`; then `... line <grandma, dog-pip> --from 1
+      --tries 3 --concurrency 1` (tries 4 to 6) and `... line <dog-pip> ...` once more (tries 7 to 9).
+      The tool made the despeckled files and the prints. Writer check: `/tmp/opencode/w04b1/chk.mts`
+      (`inspectLineArtPng`, 4000 x 3000, edge frame 2 percent, color print format by `sharp`).
+    - Chosen files (all in `out/storytime/l2/unit1/w04/muse/`; color is `-m1-color.png` for every row).
+      Writer check: line width, ink, edge frame white (the gate needs 90 percent):
+      - `cover-my-family`: line try 2. PASS 13 px, 10.80 percent, 92.90 percent. Six people.
+      - `this-is-my-family`: line try 1. PASS 14 px, 9.85 percent, 96.77 percent. Six people; the red door
+        is hidden behind two people in the color and in the line.
+      - `this-is-my-mom`: line try 3. PASS 14 px, 6.94 percent, 95.98 percent.
+      - `this-is-my-dad`: line try 2. PASS 22 px, 9.31 percent, 99.59 percent.
+      - `this-is-my-brother`: line try 2. PASS 19 px, 8.60 percent, 98.81 percent.
+      - `this-is-my-grandma`: line try 4. PASS 16 px, 7.74 percent, 97.55 percent.
+      - `this-is-my-grandpa`: line try 3. PASS 14 px, 7.27 percent, 99.23 percent.
+      - `this-is-my-dog-pip`: line try 4. PASS 16 px, 11.40 percent, 97.66 percent. Six people and one
+        puppy; Pip has floppy ears.
+      - `this-is-my-house`: line try 1. PASS 17 px, 5.77 percent, 99.16 percent.
+      All 9 color prints: PNG, 4000 x 3000, 8-bit, sRGB, 3 channels, no alpha, no palette. All 27 first
+      line tries passed the writer check (13 to 24 px).
+    - Retries and why: no color retry for a defect (6 color calls timed out and were made again at cost
+      0). Line rejects: ring-and-dot eyes on adults read like glasses (several tries of cover, family,
+      mom, dad, grandma, grandpa, dog-pip); brother try 3 has empty white eyes; grandpa try 2 closes the
+      eyes while the color has open eyes; grandma try 2 adds a box on the floor; dog-pip tries 1 and 3
+      draw 3 stray ovals at the bottom; dog-pip try 2 changes the house roof and Mom's hair; dog-pip
+      tries 7 to 9 change the house roof or close Lily's eyes. The stop limit was not reached for any row.
+    - Calls: 51 logged in `out/storytime/l2/unit1/w04/muse/costs.tsv` this round: 15 color (6 network
+      errors at cost 0) and 36 line. 45 billed calls at 0.01 USD. Round cost 0.45 USD. Running total
+      7.09 + 0.45 = 7.54 USD.
+    - Open: `approved.json` and the stage 2 check are not run for these rows. `batch-46` needs an
+      independent review. In `this-is-my-dog-pip` try 4 a long wavy ground line floats below the feet and
+      touches no figure. Grandma's face shows faint crow's-feet and smile lines in the color (not in the
+      line). In `cover-my-family` the edge frame is 92.90 percent white (gate 90). In
+      `this-is-my-grandpa` Lily's dress shows two buttons that the color does not show. The 9 check rows
+      and 9 other week 4 rows are not made.
   - Week 5 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
     2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `4af2b605`, phase_base_sha
     `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.

@@ -1,0 +1,40 @@
+provisional: jr-green w04 batch 1 started; role_base_sha bea05850; next step: read plan notes and w03 logs
+Step 2: Job B done: 4 sun specs (w04-w07) changed, JSON parse ok, committed de383c4c. Next: Job A color round (9 specs, concurrency 4).
+Step 3: color call 1: 3 ok (dad, cover, mom m1), 6 network failures at cost 0. Retrying the 6.
+Step 4: retry ok: 9 colors m1 made (6 timeouts retried at cost 0 failed). Next: view colors.
+Step 5: viewed 9 colors m1. Cover, family (6 people), mom, dad, brother, grandpa, dog-pip (6 people+1 puppy), house look fine. Grandma: faint wrinkle lines on face, check zoom.
+Step 6: all 9 colors m1 kept (grandma has faint crow's-feet/smile lines in color; line prompt says none; check line). Starting line round: 9 specs --from 1 --tries 3 --concurrency 1.
+Step 7: line round 1: 27 calls ok (9 specs x 3 tries). Next: writer check + view tries.
+Step 8: viewed all 27 line tries on contact sheets. Rejects: grandpa 2 (eyes closed, color open), dog-pip 2 (house changed, Mom hair changed), brother 3 (empty white eyes); bullseye adult eyes (look like glasses) in several. Next: writer check, zoom on candidates.
+Step 9: writer check all 27 tries PASS (13-24 px). Picks so far: cover try 2, family try 1 (6 people, clean). Zooming mom/dad/brother.
+Step 10: zoomed: mom try 3, dad try 2, brother try 2 pass visual check. Next: grandma, grandpa, dog-pip zoom.
+Step 11: viewed grandma/dog-pip candidates. Grandma 2 clean face but extra floor box; 1,3 adult eyes ring+dot (glasses look) and cheek lines. Dog-pip 1,3: 3 stray ovals at bottom, G&G eyes open vs closed in color; dog-pip 2 changed house and Mom hair. Decision: append linePrompt sentences to grandma and dog-pip specs, new batch tries 4-6.
+Step 12: batch 2 made: grandma tries 4-6, dog-pip tries 4-6 (6 calls, 0.06 USD).
+Step 13: batch 2 viewed. grandma 5/4 clean (checking hand of Lily); dog-pip 4 clean (G&G closed eyes, no ovals) but a floating ground line under the feet; dog-pip 5,6 adult eyes ring+dot. Adding a no-ground-line-under-feet sentence to dog-pip, batch 3 tries 7-9 (dog-pip only).
+Step 14: grandma pick try 4 (clean face, lamp table only, pointing finger). Waiting dog-pip batch 3 (tries 7-9).
+Step 15: dog-pip batch 3 (tries 7-9): 7 changed house to pointed roof, 8/9 close Lily's eyes (color open). Keep try 4 (floating ground line below feet is an open note). Total line tries: 33 + 3 = ... next: house zoom, writer check of picks, review folder.
+Step 16: writer check all 9 picks PASS (13-22 px; edge frame 92.9-99.6 pct, gate needs 90; color prints PNG 4000x3000 8-bit sRGB 3ch no alpha no palette). Next: review folder batch-46.
+Step 17: spec commit 42f7226c (grandma and dog-pip linePrompt only), made after Job B commit de383c4c. Next: review folder.
+Step 18 (resume): brief.md checked: 9 rows, bar at top, writer table and cost section present; refs 11 files, pages 36 files.
+Step 19: costs: 51 calls, 45 billed, 6 failed at cost 0, 0.45 USD; running total 7.54 USD. Plan note added under Phase 4 Task 2 (plan.md had no foreign change). Next: result block and commit.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2, weeks 2 to 7, week 4 batch 1 and sun check row wording (marker unchanged)
+role_base_sha: bea05850
+phase_base_sha: fc76c272
+spec_commits: de383c4c (4 sun check row specs, w04 to w07); 42f7226c (linePrompt of grandma and dog-pip, w04)
+plan_evidence_commit: see git log (the commit after 42f7226c that holds the plan note and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; image=meta/muse-image; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: l2-w04-cover-my-family color m1 + line 2 (PASS 13 px, ink 10.80 percent, edge 92.90); l2-w04-story-page-this-is-my-family m1 + line 1 (PASS 14 px, 9.85, 96.77); -this-is-my-mom m1 + line 3 (PASS 14 px, 6.94, 95.98); -this-is-my-dad m1 + line 2 (PASS 22 px, 9.31, 99.59); -this-is-my-brother m1 + line 2 (PASS 19 px, 8.60, 98.81); -this-is-my-grandma m1 + line 4 (PASS 16 px, 7.74, 97.55); -this-is-my-grandpa m1 + line 3 (PASS 14 px, 7.27, 99.23); -this-is-my-dog-pip m1 + line 4 (PASS 16 px, 11.40, 97.66); -this-is-my-house m1 + line 1 (PASS 17 px, 5.77, 99.16). All 9 color prints PNG 4000x3000 8-bit sRGB 3 channels no alpha no palette.
+open_items: approved.json and stage 2 check not run for the 9 rows; batch-46 needs an independent review; dog-pip line try 4 has a long wavy ground line that floats below the feet; Grandma's color face shows faint crow's-feet and smile lines (line has none); cover line edge frame 92.90 percent white (gate 90); grandpa line shows two buttons on Lily's dress that the color does not show; family page hides the red door behind two people in color and line; the 9 check rows and 9 other week 4 rows are not made
+round_cost_usd: 0.45 (15 color calls with 6 network errors at cost 0, 36 line calls; 45 billed at 0.01)
+running_total_usd: 7.54
+batch: out/storytime-review/batch-46/
+handoff: Review out/storytime-review/batch-46/ against Daniel's bar for the 9 rows. Ask the reviewer to look at: ring-and-dot eyes (none chosen on adults), dog-pip floating ground line (default: accept; ask for one more line batch with no ground line only if the review rates it a defect), grandma color wrinkle lines (default: accept because the line has none), and the hidden door on the family page. The sun check rows of w04 to w07 have new wording and no picture; the next Green round makes the week 4 check rows and the 9 Pam rows. Default now: no further Muse call.
+END_MEASURE_AGENT_RESULT
