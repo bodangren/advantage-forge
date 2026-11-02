@@ -1,0 +1,376 @@
+{
+  "version": 1,
+  "pictureListSha256": "6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58",
+  "entries": [
+    {
+      "rowId": "l2-w05-story-page-i-have-two-eyes",
+      "version": 1,
+      "colorPrint": "l2-w05-story-page-i-have-two-eyes-m1-color-print.png",
+      "linePrint": "l2-w05-story-page-i-have-two-eyes-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-49r5.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose defect (correct), K2 practice-line nose clean (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-49/pages/l2-w05-story-page-i-have-two-eyes-m1-color-print.png and l2-w05-story-page-i-have-two-eyes-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-story-page-i-have-two-eyes-m1-color-print.png (SHA-256 9f6d74b778f23c41940d86c825900ab818d38abd7b77c0444d0f0a1130162f49) and line print l2-w05-story-page-i-have-two-eyes-m1-line-print-2-despeckled.png (SHA-256 264b585a58a4c3284523c2c39581b5fb118480188d1eefc91d0d20d78976cdb5).",
+        "G4 orchestrator spot check, week 5, 2026-11-03: i-have-two-eyes (m1, line 2) clean; one index finger at each eye.",
+        "Reviewer notes: Two eyes are whole and clear in the color print and in the line print. Each has a big solid black pupil with a thin outline that hugs it. Each index finger stops at the outer corner of an eye and covers no part of it. The face has a nose curve and an open mouth, so the face is not blank. Two white stripes run across the chest in both prints. One sun. The eight rays are pointed triangles. A white gap of 43 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note. The tree runs past the left frame edge. That is background only."
+      ]
+    },
+    {
+      "rowId": "l2-w05-story-page-i-have-two-ears",
+      "version": 3,
+      "colorPrint": "l2-w05-story-page-i-have-two-ears-m3-color-print.png",
+      "linePrint": "l2-w05-story-page-i-have-two-ears-m3-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-49r6.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose defect (correct), K2 practice-line nose clean (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-49r6/pages/l2-w05-story-page-i-have-two-ears-m3-color-print.png and l2-w05-story-page-i-have-two-ears-m3-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-story-page-i-have-two-ears-m3-color-print.png (SHA-256 66fb16354d4bdf0c24185b7c2d87c9831c2a33128e7bd70b61f963ef78672f34) and line print l2-w05-story-page-i-have-two-ears-m3-line-print-2-despeckled.png (SHA-256 6b073344023edbfaf3400fd824fef49ce574beccbe4818ac21f6d52f17327b82).",
+        "G4 orchestrator spot check, week 5, 2026-11-03: i-have-two-ears (m1, line 4, retry) DEFECT G4-W05-EARS-1, wrong-hand-or-limb: in color and line each hand shows an open palm with four spread fingers behind a pointing hand, about eight fingers per hand; the independent review missed it. Fixed: i-have-two-ears (m3, line 2) clean; one hand per arm, the index finger at each ear; note: a tree side branch reads as a loop with a small oval in the line art.",
+        "Orchestrator record: Finding G4-W05-EARS-1 (orchestrator spot check, 2026-11-03): color m1 and line try 4 showed an open palm with four spread fingers behind each pointing hand (wrong-hand-or-limb). The earlier artifact item-review-batch-49r5.json rated that print clean; the orchestrator finding supersedes it, and that verdict is not used. Green fixed the row with color m3 and line try 2 (spec commit 13060191, plan note a16411a2). The artifact listed above (item-review-batch-49r6.json) reviewed the fixed print and found it clean. Pages reviewed: batch-49r6/pages.",
+        "Reviewer notes: Each arm ends in 1 hand. The index finger of each hand touches its ear and the other fingers stay curled. No second palm and no spread fingers in the color file or in the line file. Both ears are clear in the color file and in the line file. The face shows two eyes, a nose arc and an open mouth. Sam is on model: red T-shirt with 2 white stripes, blue shorts, blue shoes, brown hair and brown eyes. The line art draws the two white stripes of the shirt as two closed bands. The side branch of the tree reads as a closed loop with a small oval in the line art. It is background, so it is a note. The big tree is cut at the left print edge and the pond stones are cut at the right print edge. Both are background. Sam has a smooth side-swept hair shape without the small tufts of the Sam render. It is a note. No text, no gray and no solid black band in the line art."
+      ]
+    },
+    {
+      "rowId": "l2-w05-story-page-i-have-two-hands",
+      "version": 1,
+      "colorPrint": "l2-w05-story-page-i-have-two-hands-m1-color-print.png",
+      "linePrint": "l2-w05-story-page-i-have-two-hands-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-49r5.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose defect (correct), K2 practice-line nose clean (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-49/pages/l2-w05-story-page-i-have-two-hands-m1-color-print.png and l2-w05-story-page-i-have-two-hands-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-story-page-i-have-two-hands-m1-color-print.png (SHA-256 2007891152929e3dd3fad22e611defbd07c4ade7ee25299760c014dbbbc90cc6) and line print l2-w05-story-page-i-have-two-hands-m1-line-print-despeckled.png (SHA-256 1d4aed97b4aa5379a89abc622afb340a6995fe4e374605bed0561f3bafe40a56).",
+        "G4 orchestrator spot check, week 5, 2026-11-03: i-have-two-hands (m1, line 1) clean; two open hands with five fingers each; note: the line sun has short line rays.",
+        "Reviewer notes: Two hands are up with the palms to the camera in both prints. Each hand shows five digits in the color print and in the line print: four fingers and one thumb. The face has a nose curve and an open mouth, so the face is not blank. Two white stripes run across the chest in both prints. One sun. The eight rays are thin sticks. A white gap of 32 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note. The brief of this batch accepts this sun style. The tree runs past the left frame edge. That is background only."
+      ]
+    },
+    {
+      "rowId": "l2-w05-story-page-i-have-two-arms",
+      "version": 1,
+      "colorPrint": "l2-w05-story-page-i-have-two-arms-m1-color-print.png",
+      "linePrint": "l2-w05-story-page-i-have-two-arms-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-49.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nut clean (correct), K2 practice-line nose m4 clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-49/pages/l2-w05-story-page-i-have-two-arms-m1-color-print.png and l2-w05-story-page-i-have-two-arms-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-story-page-i-have-two-arms-m1-color-print.png (SHA-256 700861e9e8de5d35090be93330fab0d7b98465f05f452ca2310ad324044507c4) and line print l2-w05-story-page-i-have-two-arms-m1-line-print-3-despeckled.png (SHA-256 022e354f51ce1b350184fb971235759bfba3c4aad066fb0fdcde0e65c67a0a1e).",
+        "G4 orchestrator spot check, week 5, 2026-11-03: i-have-two-arms (m1, line 3) clean.",
+        "Orchestrator record: Artifact deviation: the MiniMax plan quota stopped the reviewer (item-review-batch-49.json) after these 4 rows and the controls, so its top status stayed \"inconclusive\" and its summary stayed provisional. The orchestrator accepts the 4 per-row verdicts (2026-11-03). The other rows of that file are not used.",
+        "Reviewer notes: The sun has thin stick rays in the line art and soft pale rays in the color. The brief lists the stick rays as an accepted style. The line art shows a short branch stub at the right of the tree trunk. The color shows the tree without that stub. The change touches no character and no needed prop. The eyes of Sam are big solid circles inside a thin outline. Solid pupils are allowed by the bar. The line art shows the shoe tongues as small tags. The color shows plain shoes. These are small marks."
+      ]
+    },
+    {
+      "rowId": "l2-w05-story-page-i-have-two-legs",
+      "version": 1,
+      "colorPrint": "l2-w05-story-page-i-have-two-legs-m1-color-print.png",
+      "linePrint": "l2-w05-story-page-i-have-two-legs-m1-line-print-6-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-49r5.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose defect (correct), K2 practice-line nose clean (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-49/pages/l2-w05-story-page-i-have-two-legs-m1-color-print.png and l2-w05-story-page-i-have-two-legs-m1-line-print-6-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-story-page-i-have-two-legs-m1-color-print.png (SHA-256 24ac712056b8b6cc565dd1857db5ef32a99d317aadc44fc0ccc513aa04e2ee30) and line print l2-w05-story-page-i-have-two-legs-m1-line-print-6-despeckled.png (SHA-256 d626e6ef2d62f7e223e34e410ff421c9a2f8513c79e5190d1b929273f1bff99a).",
+        "G4 orchestrator spot check, week 5, 2026-11-03: i-have-two-legs (m1, line 6) clean; note: the line sun rays float apart from the disc.",
+        "Reviewer notes: Two legs show side by side from the shorts to the shoes in the color print and in the line print. They do not overlap. One index finger points down at a leg in both prints. The line print has no nose on the face. The text names the legs, not the nose, so this is a note. The mouth is there, so the face is not blank. The eye is a solid black pupil inside a thin outline with a small white gap. The outline is thin, so it is not a thick black ring. Two white stripes run across the chest in both prints. One sun. The eight rays are pointed triangles. A white gap of 30 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note. The tree runs past the top and left frame edges. That is background only."
+      ]
+    },
+    {
+      "rowId": "l2-w05-story-page-i-have-two-feet",
+      "version": 2,
+      "colorPrint": "l2-w05-story-page-i-have-two-feet-m2-color-print.png",
+      "linePrint": "l2-w05-story-page-i-have-two-feet-m2-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-49r5.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose defect (correct), K2 practice-line nose clean (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-49/pages/l2-w05-story-page-i-have-two-feet-m2-color-print.png and l2-w05-story-page-i-have-two-feet-m2-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-story-page-i-have-two-feet-m2-color-print.png (SHA-256 87aabddc4dcc58c2478b314727a321bf3d4d6bba277205efe0235c5113cb7508) and line print l2-w05-story-page-i-have-two-feet-m2-line-print-despeckled.png (SHA-256 5497778552546793495e35fec2001cb3592fb7098919609bc86f8b27d47c6b7e).",
+        "G4 orchestrator spot check, week 5, 2026-11-03: i-have-two-feet (m2, line 1, retry) clean; two bare feet with five toes each in color and line; note: Sam points at his knee, not at a foot; the line sun is a plain disc.",
+        "Reviewer notes: Two bare feet show in the color print and in the line print. Each foot has a row of five small round toes. One pair of blue sneakers stands next to Sam in both prints. Sam points at the tummy and knee area and not at a foot. The two feet are still clear, so this is a note. The tree runs past the left frame edge. That is background only. One sun as a plain circle with no rays."
+      ]
+    },
+    {
+      "rowId": "l2-w05-story-page-i-have-one-nose",
+      "version": 2,
+      "colorPrint": "l2-w05-story-page-i-have-one-nose-m2-color-print.png",
+      "linePrint": "l2-w05-story-page-i-have-one-nose-m2-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-49.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nut clean (correct), K2 practice-line nose m4 clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-49/pages/l2-w05-story-page-i-have-one-nose-m2-color-print.png and l2-w05-story-page-i-have-one-nose-m2-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-story-page-i-have-one-nose-m2-color-print.png (SHA-256 2845442541f75b9e5f78637311a6c210e6e47643e55d7e24951fa5fd58d9b13c) and line print l2-w05-story-page-i-have-one-nose-m2-line-print-despeckled.png (SHA-256 7ad5173654ac5d0ab46c75dadc17c58ea9a4ec9b331735cd70126391c56c9ff5).",
+        "G4 orchestrator spot check, week 5, 2026-11-03: i-have-one-nose (m2, line 1, retry) clean; the nose shows in color and line, and one index finger touches it; Pip's tail shows behind the tree.",
+        "Orchestrator record: Artifact deviation: the MiniMax plan quota stopped the reviewer (item-review-batch-49.json) after these 4 rows and the controls, so its top status stayed \"inconclusive\" and its summary stayed provisional. The orchestrator accepts the 4 per-row verdicts (2026-11-03). The other rows of that file are not used.",
+        "Reviewer notes: The hanging hand of Sam overlaps the tan pond stone in the color, and the hand outline touches the stone outline in the line art. The hand keeps its fingers and stays readable, and the stone is background. This is a note, not a defect. The shoes in the color show white lace stripes and blue socks. The approved Sam look has the same shoes and socks, and the line art shows them too. The sun is one plain closed circle in the line art and one soft disc with pale rays in the color. The brief lists the plain circle as an accepted style. The tree in the line art has a branch stub at the left of the trunk. The color shows the tree without it."
+      ]
+    },
+    {
+      "rowId": "l2-w05-story-page-i-have-four-legs",
+      "version": 1,
+      "colorPrint": "l2-w05-story-page-i-have-four-legs-m1-color-print.png",
+      "linePrint": "l2-w05-story-page-i-have-four-legs-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-49.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nut clean (correct), K2 practice-line nose m4 clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-49/pages/l2-w05-story-page-i-have-four-legs-m1-color-print.png and l2-w05-story-page-i-have-four-legs-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-story-page-i-have-four-legs-m1-color-print.png (SHA-256 37a42390b9c1b7aa45c81807b702056d0cf0b12081ff845a8af2cefaed3dea08) and line print l2-w05-story-page-i-have-four-legs-m1-line-print-despeckled.png (SHA-256 400786a3db9162beb6f5c91d8a5f44ecf60af2b6009711b08270a5eae95c8807).",
+        "Orchestrator record: Artifact deviation: the MiniMax plan quota stopped the reviewer (item-review-batch-49.json) after these 4 rows and the controls, so its top status stayed \"inconclusive\" and its summary stayed provisional. The orchestrator accepts the 4 per-row verdicts (2026-11-03). The other rows of that file are not used.",
+        "Reviewer notes: One sun ray of the line art reaches the right print edge. The sun is background, and Pip, Sam, the shoe, and the hand stay whole inside the print. The line art omits the cream forehead stripe and the cream fur patches of the color. The puppy still reads as Pip with the floppy ear, the black nose, the collar, and the tag. The sun has thin stick rays in the line art and soft pale rays in the color. The brief lists the stick rays as an accepted style. The paws of the line art end in short toe lines. These are small marks."
+      ]
+    },
+    {
+      "rowId": "l2-w05-cover-i-have-two",
+      "version": 1,
+      "colorPrint": "l2-w05-cover-i-have-two-m1-color-print.png",
+      "linePrint": "l2-w05-cover-i-have-two-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-49.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nut clean (correct), K2 practice-line nose m4 clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-49/pages/l2-w05-cover-i-have-two-m1-color-print.png and l2-w05-cover-i-have-two-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-cover-i-have-two-m1-color-print.png (SHA-256 c8b92fc368fe6eab1cf5b7e33b368cf9d32c6be6274835443dba057ffc030111) and line print l2-w05-cover-i-have-two-m1-line-print-3-despeckled.png (SHA-256 fe05cf2199349b281e733d4c8386a0d94b6520491c5518234ad17e6b42c8de4e).",
+        "G4 orchestrator spot check, week 5, 2026-11-03: cover-i-have-two (m1, line 3) clean; note: the color sun has round dot rays and the line sun is a plain disc with no rays; the line T-shirt shows more stripe lines than the two white stripes of the color; the line eyes are solid black discs.",
+        "Orchestrator record: Artifact deviation: the MiniMax plan quota stopped the reviewer (item-review-batch-49.json) after these 4 rows and the controls, so its top status stayed \"inconclusive\" and its summary stayed provisional. The orchestrator accepts the 4 per-row verdicts (2026-11-03). The other rows of that file are not used.",
+        "Reviewer notes: The sun is one plain closed circle in the line art and one soft disc with pale rays in the color. The brief lists the plain circle as an accepted style. The tree branch in the color reaches toward the hand of Sam. The line art draws a short branch stub clear of the hand. The eyes of Sam are two big solid black circles with no outline in the line art. Solid pupils are allowed by the bar."
+      ]
+    },
+    {
+      "rowId": "l2-w05-story-page-sam-saw-pam",
+      "version": 1,
+      "colorPrint": "l2-w05-story-page-sam-saw-pam-m1-color-print.png",
+      "linePrint": "l2-w05-story-page-sam-saw-pam-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode/glm-5.3-flash-free#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-50.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose m4 clean (correct), K2 a-nut clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-50/pages/l2-w05-story-page-sam-saw-pam-m1-color-print.png and l2-w05-story-page-sam-saw-pam-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-story-page-sam-saw-pam-m1-color-print.png (SHA-256 cb3dc96ab8c568293f65c4fa0463b161ff320dfd9495302664bd7ee5ba1179ed) and line print l2-w05-story-page-sam-saw-pam-m1-line-print-despeckled.png (SHA-256 597fcc309ac90723bafe7c869ec0248e479a1725297d8c2b0848f2541b59902f).",
+        "Reviewer notes: Sam stands, points, and smiles at one doll on the toy box, in both files. Pam keeps a fringe and two pigtails, plain dress. Sam keeps two white shirt stripes (bands in the line). Sam's eyes in the line are two solid dots without an outline; they still read as dot eyes, and solid pupils are allowed, so a note. No letters, words, or numbers; no sun (indoor page); no gray pixels; nothing needed cut at a print edge."
+      ]
+    },
+    {
+      "rowId": "l2-w05-story-page-sam-can-get-pam",
+      "version": 1,
+      "colorPrint": "l2-w05-story-page-sam-can-get-pam-m1-color-print.png",
+      "linePrint": "l2-w05-story-page-sam-can-get-pam-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode/glm-5.3-flash-free#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-50.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose m4 clean (correct), K2 a-nut clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-50/pages/l2-w05-story-page-sam-can-get-pam-m1-color-print.png and l2-w05-story-page-sam-can-get-pam-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-story-page-sam-can-get-pam-m1-color-print.png (SHA-256 4056aea94b368f91d269e8b19775e35040772cc0591cf945e0679b63b4182b83) and line print l2-w05-story-page-sam-can-get-pam-m1-line-print-3-despeckled.png (SHA-256 9d21af80451611284a3d9e719afde8fd28d2baef9467fe450f1e225731ff4c22).",
+        "Reviewer notes: Sam lifts one doll with both hands, toy box lid closed at the right, in both files. Pam keeps a fringe and two pigtails, plain dress. Sam keeps two white shirt stripes (bands in the line). Sam's feet are mid-step, not on his toes; a spec detail outside the defect categories. No text, no sun, no gray pixels; nothing needed is cut at a print edge."
+      ]
+    },
+    {
+      "rowId": "l2-w05-story-page-sam-is-with-pam",
+      "version": 1,
+      "colorPrint": "l2-w05-story-page-sam-is-with-pam-m1-color-print.png",
+      "linePrint": "l2-w05-story-page-sam-is-with-pam-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode/glm-5.3-flash-free#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-50.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose m4 clean (correct), K2 a-nut clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-50/pages/l2-w05-story-page-sam-is-with-pam-m1-color-print.png and l2-w05-story-page-sam-is-with-pam-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-story-page-sam-is-with-pam-m1-color-print.png (SHA-256 fc18ddd17464aa54ccc5751f08d9b9158b83507820b95778d07d4dcb9caf0ee2) and line print l2-w05-story-page-sam-is-with-pam-m1-line-print-2-despeckled.png (SHA-256 e5bd0579b23dcf20e0a4b909043ca3f699c604f3e002b796b53a3f50756a0dcf).",
+        "Reviewer notes: Sam sits cross-legged and holds one doll on his lap with both hands, in both files. Pam has a fringe and two pigtails (cloud bunches in the line), plain dress. Two stripe bands show on Sam's shirt in the line; the color shows one clear stripe (the second sits behind the doll and his hands, so no count fault). No text, no sun, no gray pixels; nothing needed is cut at a print edge."
+      ]
+    },
+    {
+      "rowId": "l2-w05-story-page-pam-is-in-a-pan",
+      "version": 1,
+      "colorPrint": "l2-w05-story-page-pam-is-in-a-pan-m1-color-print.png",
+      "linePrint": "l2-w05-story-page-pam-is-in-a-pan-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode/glm-5.3-flash-free#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-50.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose m4 clean (correct), K2 a-nut clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-50/pages/l2-w05-story-page-pam-is-in-a-pan-m1-color-print.png and l2-w05-story-page-pam-is-in-a-pan-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-story-page-pam-is-in-a-pan-m1-color-print.png (SHA-256 4c85e6ae2934875024b4106d5542378a2532cdf8b4c693bed36d71f1f152c88d) and line print l2-w05-story-page-pam-is-in-a-pan-m1-line-print-2-despeckled.png (SHA-256 d2dea5fb01cc37d48d24692b92c0b863da8a7bea7846e7acc9767169f58a9e64).",
+        "Reviewer notes: The pan reads in both files: one round toy pan with a rim and one handle. The color handle is shorter and partly hidden behind the rim at the right; the line shows it fuller. Same prop, no needed-prop fault. One doll, one pan. Sam kneels and laughs (open mouth, shut eyes in color; a wide smile with open eyes in line; a face-state difference that changes no character). Pam keeps a fringe and two pigtails, plain dress, in both files. Sam keeps two white shirt stripes drawn as bands (a zoom crop of the torso confirms the stripe bands read as the color's two stripes). The toy box at the right edge is cut by the print edge (background, note). No text, no sun, no gray pixels."
+      ]
+    },
+    {
+      "rowId": "l2-w05-story-page-pam-is-on-a-map",
+      "version": 1,
+      "colorPrint": "l2-w05-story-page-pam-is-on-a-map-m1-color-print.png",
+      "linePrint": "l2-w05-story-page-pam-is-on-a-map-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode/glm-5.3-flash-free#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-50.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose m4 clean (correct), K2 a-nut clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-50/pages/l2-w05-story-page-pam-is-on-a-map-m1-color-print.png and l2-w05-story-page-pam-is-on-a-map-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-story-page-pam-is-on-a-map-m1-color-print.png (SHA-256 51a7479b8ecd194d76a99e8fc7d769c840edba9fa563e62fde36fce48a8d343a) and line print l2-w05-story-page-pam-is-on-a-map-m1-line-print-2-despeckled.png (SHA-256 ebe810a31317b6a94d96e5f53f20bae8b0e303e0e2540fac92a7f1cb85421fb5).",
+        "Reviewer notes: One map with a river, a house, a dotted path, and a cross mark in both files. The color cross is a plain X, not in a circle; a spec detail outside the defect categories. One doll lies on the map in both files. In the color, only one pigtail shows (the other is under her head); the line shows both. A safe difference that hides no needed part. Sam lies on his tummy and points; his left shoe stays whole near the left print edge. The toy box at the right edge is cut by the print edge (background, note). No letters, words, or numbers in either file. No gray pixels."
+      ]
+    },
+    {
+      "rowId": "l2-w05-story-page-pam-is-on-sam",
+      "version": 1,
+      "colorPrint": "l2-w05-story-page-pam-is-on-sam-m1-color-print.png",
+      "linePrint": "l2-w05-story-page-pam-is-on-sam-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode/glm-5.3-flash-free#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-50.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose m4 clean (correct), K2 a-nut clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-50/pages/l2-w05-story-page-pam-is-on-sam-m1-color-print.png and l2-w05-story-page-pam-is-on-sam-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-story-page-pam-is-on-sam-m1-color-print.png (SHA-256 d2dc783367ace195c55a988d8ac00cbd4935b21b48cdf235c6a75e7ba7500636) and line print l2-w05-story-page-pam-is-on-sam-m1-line-print-despeckled.png (SHA-256 9033f835b770c8b6144282cfc1fc49bb5fc78f476458b4bd7b462e91e336a16b).",
+        "G4 orchestrator spot check, week 5, 2026-11-03: pam-is-on-sam (m1, line 1) clean under the PM default; the doll sits on Sam's knees.",
+        "Orchestrator record: Deviation from the list prompt (PM question open, default accept): the Muse content filter blocked the lying pose twice (HTTP 400). In the chosen picture Sam kneels or sits with the doll Pam on his knees, and a sneaker shows at the door. The orchestrator sent the deviation to the PM with the default \"accept\".",
+        "Reviewer notes: The row's judged question passes: the picture shows Pam on Sam in both files. The doll sits on Sam's body (on his lap between his knees), not beside him. The pose difference (a purpose change, accepted at the PM) is not marked. Sam's look note: the color file shows one wide white chest band, and the line shows two bands. The line art passes the asked two-stripe check. At book size Sam still reads as the same boy with a striped shirt, so this is a note outside the defect categories. The white sneaker steps in at the open door and is cut by the print edge as designed (note). Pam keeps a fringe and two pigtails in both files; plain dress, no star. One doll. No text, no gray pixels."
+      ]
+    },
+    {
+      "rowId": "l2-w05-story-page-pam-is-off-sam",
+      "version": 1,
+      "colorPrint": "l2-w05-story-page-pam-is-off-sam-m1-color-print.png",
+      "linePrint": "l2-w05-story-page-pam-is-off-sam-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode/glm-5.3-flash-free#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-50.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose m4 clean (correct), K2 a-nut clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-50/pages/l2-w05-story-page-pam-is-off-sam-m1-color-print.png and l2-w05-story-page-pam-is-off-sam-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-story-page-pam-is-off-sam-m1-color-print.png (SHA-256 fc70ed9d3975694a416ea7693d0b3508d59a98aca6923c57a82cba722b54b704) and line print l2-w05-story-page-pam-is-off-sam-m1-line-print-despeckled.png (SHA-256 9d413fb2072b7ea26c54e423cb3161d71bf07ff12385f2caa74eda3cfeaf8961).",
+        "Reviewer notes: Nan's look holds in both files: black hair in two buns with ties, star shirt (star shows in line), red shorts, white sneakers, hands on hips, surprised open mouth. One doll falls on the rug in both files: fringe, two pigtails, plain dress. Sam sits up; two shirt stripes show in both files. The toy box at the right edge is cut by the print edge (background, note). No text, no sun, no gray pixels."
+      ]
+    },
+    {
+      "rowId": "l2-w05-story-page-sam-nan-and-pam-nap",
+      "version": 2,
+      "colorPrint": "l2-w05-story-page-sam-nan-and-pam-nap-m2-color-print.png",
+      "linePrint": "l2-w05-story-page-sam-nan-and-pam-nap-m2-line-print-6-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode/glm-5.3-flash-free#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-50.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose m4 clean (correct), K2 a-nut clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-50/pages/l2-w05-story-page-sam-nan-and-pam-nap-m2-color-print.png and l2-w05-story-page-sam-nan-and-pam-nap-m2-line-print-6-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-story-page-sam-nan-and-pam-nap-m2-color-print.png (SHA-256 9ce8f4b17340ea9f5eda95919142d5c88754df2606b9e4120d65de66eff27633) and line print l2-w05-story-page-sam-nan-and-pam-nap-m2-line-print-6-despeckled.png (SHA-256 212f6d8511d4918d74dcd588e5b269d60ef58321c0e8de0e1ed67b59da1e142d).",
+        "G4 orchestrator spot check, week 5, 2026-11-03: sam-nan-and-pam-nap (m2, line 6, retry) clean; three sleeping faces with closed-eye curves and mouths under one blanket; note: no nose in the line faces.",
+        "Reviewer notes: Three sleepers with closed eyes in both files (Sam, Nan, doll), one blanket, one doll. Pam's pigtails are hatched strands in the line: judged a note, not a defect. The strands match the yarn look of the color file and the head region stays colorable. Nan's eyelash stroke: from the zoom view both sleep eyes read closed-curve with small lash ends; at most a one-eye detail, so a note. No star shows (Nan's shirt is under the blanket; only an orange sleeve shows in color). No text, no sun, no gray pixels. The toy box at the right edge is cut by the print edge (background, note)."
+      ]
+    },
+    {
+      "rowId": "l2-w05-cover-sam-and-pam",
+      "version": 1,
+      "colorPrint": "l2-w05-cover-sam-and-pam-m1-color-print.png",
+      "linePrint": "l2-w05-cover-sam-and-pam-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode/glm-5.3-flash-free#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-50.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 practice-line nose m4 clean (correct), K2 a-nut clean (correct), K3 a-nose defect (correct). The batch is valid.",
+        "Reviewed pages batch-50/pages/l2-w05-cover-sam-and-pam-m1-color-print.png and l2-w05-cover-sam-and-pam-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-cover-sam-and-pam-m1-color-print.png (SHA-256 acf4434f14dc991c74c8d1ab7cc4b5a7abc619951bf5b4100f5df4d5e1aad76c) and line print l2-w05-cover-sam-and-pam-m1-line-print-despeckled.png (SHA-256 485229ff5af652ee22f7e3d7b3ab8176c495c685cd7099d43300bfdf7e33bded).",
+        "G4 orchestrator spot check, week 5, 2026-11-03: cover-sam-and-pam (m1, line 1) clean; Sam on the rug and the doll Pam on the box; note: the doll has no nose (the text does not name it).",
+        "Reviewer notes: Sam sits on the rug and smiles at one doll on the toy box; pose matches the goal in both files. Sam keeps two white shirt stripes (bands in the line). Pam keeps yarn hair with fringe and two pigtails; her dress is plain, no star. No text, no sun, no gray pixels; no person or needed prop cut at a print edge."
+      ]
+    },
+    {
+      "rowId": "l2-w05-check-row-sun",
+      "version": 1,
+      "colorPrint": "l2-w05-check-row-sun-m1-color-print.png",
+      "linePrint": "l2-w05-check-row-sun-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode/glm-5.3-flash-free#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-51.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose defect (correct), K2 practice-line nose clean (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-51/pages/l2-w05-check-row-sun-m1-color-print.png and l2-w05-check-row-sun-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-check-row-sun-m1-color-print.png (SHA-256 0206de43ee5d9f735b19911b53fa105d93688bb5c5684e3cc45aaa3fac7cc415) and line print l2-w05-check-row-sun-m1-line-print-2-despeckled.png (SHA-256 b438acea0a9882a14d916e9a1b29228448b8639a8b1dce6674f028bf1cdc04c7).",
+        "G4 orchestrator spot check, week 5, 2026-11-03: check-row-sun (m1, line 2) clean; one disc and eight triangle rays; note: small gaps between the ray bases and the disc.",
+        "Reviewer notes: One sun only. Exactly eight pointed triangle rays in color and line; each wide base sits on the disc, each point faces outward. Counts exact."
+      ]
+    },
+    {
+      "rowId": "l2-w05-check-row-cat",
+      "version": 1,
+      "colorPrint": "l2-w05-check-row-cat-m1-color-print.png",
+      "linePrint": "l2-w05-check-row-cat-m1-line-print-8-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode/glm-5.3-flash-free#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-51.json, rating 8.6, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose defect (correct), K2 practice-line nose clean (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-51/pages/l2-w05-check-row-cat-m1-color-print.png and l2-w05-check-row-cat-m1-line-print-8-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-check-row-cat-m1-color-print.png (SHA-256 3d39b1914801d400d06063172f4fee4fd3e09411007888d2bc42bdb497f2cd50) and line print l2-w05-check-row-cat-m1-line-print-8-despeckled.png (SHA-256 650f73e5bcba36fee54d98a8da6040ca7593bc5e1d190ff109bd45861790ef1f).",
+        "G4 orchestrator spot check, week 5, 2026-11-03: check-row-cat (m1, line 8) clean; note: the line cat has a nose and no mouth.",
+        "Reviewer notes: Reads as a cat in color and line: exactly two pointed ears (no third-ear ring), muzzle, three whiskers on each side, tail as an open band joined to the back (not a closed ring), solid pupils. Color has stripes and eyelash ticks; the line has none. The difference changes no character and no prop (note). The rear-leg region of the line is slightly muddled but reads as legs and paws at book size."
+      ]
+    },
+    {
+      "rowId": "l2-w05-check-row-dog",
+      "version": 1,
+      "colorPrint": "l2-w05-check-row-dog-m1-color-print.png",
+      "linePrint": "l2-w05-check-row-dog-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode/glm-5.3-flash-free#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-51.json, rating 8.7, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose defect (correct), K2 practice-line nose clean (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-51/pages/l2-w05-check-row-dog-m1-color-print.png and l2-w05-check-row-dog-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-check-row-dog-m1-color-print.png (SHA-256 f1469b722d8381e883e96325cac44b74a8ff55c132eb2bec786db7263e77b540) and line print l2-w05-check-row-dog-m1-line-print-despeckled.png (SHA-256 80bc98009198fd2500e0dd405b329b8058446b3e0f293acb22aff05e6c618aed).",
+        "Reviewer notes: Reads as a dog in color and line: floppy ears, brow patches, ring eyes with solid pupils, solid nose tip, smile, tongue, collar with tag. The left eye in the line has a double ring (small mark, note); a small curved stroke near the belly (small mark, note)."
+      ]
+    },
+    {
+      "rowId": "l2-w05-check-row-pen",
+      "version": 1,
+      "colorPrint": "l2-w05-check-row-pen-m1-color-print.png",
+      "linePrint": "l2-w05-check-row-pen-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode/glm-5.3-flash-free#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-51.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose defect (correct), K2 practice-line nose clean (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-51/pages/l2-w05-check-row-pen-m1-color-print.png and l2-w05-check-row-pen-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-check-row-pen-m1-color-print.png (SHA-256 25ee5773760d906d8d28e5e555c3e0d4c4d12fb90f5f4b8ee95a2ea221474350) and line print l2-w05-check-row-pen-m1-line-print-2-despeckled.png (SHA-256 88bc36a41554200305a16c3188f2dec4a0d70c8aa306e6e09d2b5ec4895402b1).",
+        "Reviewer notes: Reads as a pen in color and line: diagonal body, clip, top knob or cap, tip at the bottom right. The color's translucent top cap reads in the line as a plain round cap; no character or prop change (note)."
+      ]
+    },
+    {
+      "rowId": "l2-w05-check-row-sock",
+      "version": 1,
+      "colorPrint": "l2-w05-check-row-sock-m1-color-print.png",
+      "linePrint": "l2-w05-check-row-sock-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode/glm-5.3-flash-free#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-51.json, rating 8.7, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose defect (correct), K2 practice-line nose clean (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-51/pages/l2-w05-check-row-sock-m1-color-print.png and l2-w05-check-row-sock-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-check-row-sock-m1-color-print.png (SHA-256 168416cd671a9ed511d5ae9e12e6ce2a19b9bb907429365a30aa1e1d596275b9) and line print l2-w05-check-row-sock-m1-line-print-2-despeckled.png (SHA-256 8356bab602f15357ac802eafc142e8cff48b28c7fdcf1468a55770f72defccb6).",
+        "Reviewer notes: Reads as a sock in color and line: cuff, heel patch, toe patch as closed shapes that end on the outline, wavy instep bump in both. Closest object-to-edge distance is 52 px (builder measurement); no ink on the outer pixel rows."
+      ]
+    },
+    {
+      "rowId": "l2-w05-check-row-bed",
+      "version": 1,
+      "colorPrint": "l2-w05-check-row-bed-m1-color-print.png",
+      "linePrint": "l2-w05-check-row-bed-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode/glm-5.3-flash-free#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-51.json, rating 8.4, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose defect (correct), K2 practice-line nose clean (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-51/pages/l2-w05-check-row-bed-m1-color-print.png and l2-w05-check-row-bed-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-check-row-bed-m1-color-print.png (SHA-256 31490f921fdcce8f1f88d2bedb9ae0427c58bfe71f140906d4b1e8beeb1b043f) and line print l2-w05-check-row-bed-m1-line-print-3-despeckled.png (SHA-256 a1e846034dd7f3082ce902e0ec4fd3d9bf6085ca96983ce58c5618c6648d3b4a).",
+        "Reviewer notes: Reads as a bed in color and line at book size: headboard with inner panel, pillow, mattress, blanket, footboard, four posts with knobs. Small double outline on the left foot-post knob (builder note; small mark, note). Blanket check pattern missing in the line (plain shapes; note)."
+      ]
+    },
+    {
+      "rowId": "l2-w05-check-row-cup",
+      "version": 1,
+      "colorPrint": "l2-w05-check-row-cup-m1-color-print.png",
+      "linePrint": "l2-w05-check-row-cup-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode/glm-5.3-flash-free#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-51.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose defect (correct), K2 practice-line nose clean (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-51/pages/l2-w05-check-row-cup-m1-color-print.png and l2-w05-check-row-cup-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-check-row-cup-m1-color-print.png (SHA-256 0168b116389d4c9dec1f08c5e32c67ace61336e4dcd569f4796c0f753698d051) and line print l2-w05-check-row-cup-m1-line-print-2-despeckled.png (SHA-256 0c769f95f6e8186ed4361c4dc0c197fb616258612b5b2e3f720aa193b7a3ff91).",
+        "Reviewer notes: Reads as a cup in color and line: rim ring, inner opening oval, handle with inner oval. No steam and no drink in either file."
+      ]
+    },
+    {
+      "rowId": "l2-w05-check-row-hat",
+      "version": 1,
+      "colorPrint": "l2-w05-check-row-hat-m1-color-print.png",
+      "linePrint": "l2-w05-check-row-hat-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode/glm-5.3-flash-free#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-51.json, rating 8.9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose defect (correct), K2 practice-line nose clean (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-51/pages/l2-w05-check-row-hat-m1-color-print.png and l2-w05-check-row-hat-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-check-row-hat-m1-color-print.png (SHA-256 d35296a6617c2a376e17ad9aa21cfc3969ca0b2871b27c95d32a7f4cf88d4a45) and line print l2-w05-check-row-hat-m1-line-print-2-despeckled.png (SHA-256 12f005ed3d739d65a580e23e555b363bc3e41896ca459d0d19de07f2e155b4c6).",
+        "Reviewer notes: Reads as a hat in color and line: crown, band, bow of closed loops, single brim outline in the line."
+      ]
+    },
+    {
+      "rowId": "l2-w05-check-row-sofa",
+      "version": 1,
+      "colorPrint": "l2-w05-check-row-sofa-m1-color-print.png",
+      "linePrint": "l2-w05-check-row-sofa-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer opencode/glm-5.3-flash-free#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-51.json, rating 8.8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose defect (correct), K2 practice-line nose clean (correct), K3 a-nut clean (correct). The batch is valid.",
+        "Reviewed pages batch-51/pages/l2-w05-check-row-sofa-m1-color-print.png and l2-w05-check-row-sofa-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w05-check-row-sofa-m1-color-print.png (SHA-256 5f34565884a8a74c27f0cff85ac0f3e95f5b7100ae568cb40e2c7be9c592f439) and line print l2-w05-check-row-sofa-m1-line-print-despeckled.png (SHA-256 f186b0df213b06ea59125287b3be046d817a30a5eda37f06ccd88a9ceeeedbb1).",
+        "Reviewer notes: Reads as a sofa in color and line: two back cushions, two arms, seat cushion, base cushion, four feet; no stray seat line in the line print."
+      ]
+    }
+  ]
+}
