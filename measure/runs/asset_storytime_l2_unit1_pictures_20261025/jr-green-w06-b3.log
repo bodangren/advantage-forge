@@ -1,0 +1,29 @@
+provisional; role_base_sha 0e55a56f; next step: 9 color calls
+Step 2: 9 color m1 made (2 failed calls at cost 0 retried); viewed: all usable; ten balls touch in color and sit 33 px from the print edge, not cut. Next: 27 line calls.
+Step 3: viewed 27 line tries. Picks so far bag 1, cup 1, dog 3, fish 1, pen 2, sun 2, table 2. ten: balls touch (color too); tiger: stripes are solid black fills (conflicts with Workbooks finding) -> editing tiger linePrompt and ten colorPrompt.
+Step 4: 43 billed (9 color, 27 line, ten color m2 + 3 line, tiger 3 line after linePrompt edit). Writer check PASS for all. Picks: bag L1 29px, cup L1 19, dog L1 19, fish L1 18, pen L2 30, sun L2 22, table L2 27, ten m2 L2 21, tiger m1 L6 13. Next: stage gate, spec commit, batch-54.
+Step 5: stage gate run (real: fail only on 619 page candidate files; clean scratch: pass, exit 0). Spec commit 7b5b0edd. batch-54 folder and brief.md written. Plan note added under Phase 4 Task 2 (plan.md had no foreign change before the edit). Next: record commit.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2, week 6 batch 3 (the 9 week 6 check rows; marker unchanged)
+role_base_sha: 0e55a56f
+phase_base_sha: fc76c272
+spec_commits: 7b5b0edd (l2-w06-check-row-tiger.json linePrompt: stripes as single thick lines, no solid black fill; l2-w06-check-row-ten.json colorPrompt: wide margin and clear gaps; text and goal unchanged)
+plan_evidence_commit: see git log (the commit after 7b5b0edd that holds the plan note and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; image=meta/muse-image; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: bag m1 + line 1 (PASS 29 px, ink 8.18, edge 100.00); cup m1 + line 1 (19 px, 5.13); dog m1 + line 1 (19 px, 8.32); fish m1 + line 1 (18 px, 3.96); pen m1 + line 2 (30 px, 5.05); sun m1 + line 2 (22 px, 6.84; one disc, 8 pointed rays); table m1 + line 2 (27 px, 8.51); ten m2 + line 2 (21 px, 7.29; ten separate circles); tiger m1 + line 6 (13 px, 7.52; single-line stripes). All 9 color prints PNG 1500x1500 8-bit sRGB 3ch no alpha no palette; all edge frames 100.00 percent white/near-white; no dark pixel on any outer row or column of a line print; nearest object 38 px from an edge (sun). Nothing is cut at a print edge.
+open_items: approved.json and stage 2 check not run; batch-54 needs an independent review; dog left eye has a wide ring with a thin inner ring; ten line art has open highlight arcs and small gaps between balls; tiger line width 13 px (gate minimum 12) and narrow solid right eye near the head edge; real week 6 stage gate prints text 0, goal 0, outDir 0, missing 0 but "stage check: fail" only because 619 page candidate files exist (a clean scratch run printed "stage check: pass", exit 0)
+round_cost_usd: 0.43
+running_total_usd: 11.24
+calls: 43 billed (10 color, 33 line); 2 color calls failed (HTTP 502, network timeout) at cost 0; cap 60 not reached
+batch: out/storytime-review/batch-54/
+handoff: Review out/storytime-review/batch-54/ against Daniel's bar for 9 rows. Check first: the ten row (ten balls in two rows of five, separate, none cut), the tiger line art (stripes as lines, no solid fill, reads as a tiger), the sun (one disc, eight pointed rays, wide base on the disc), the dog eyes, and that each line art reads as its word at book size. Defaults if rated a defect only: dog eye double ring (accept; a new line try if the reviewer rates it a defect), open highlight arcs on the ten balls (accept). Default now: no further Muse call. Week 6 now has all 27 candidates; week 6 needs the independent reviews of batches 52, 53, and 54 before approved.json.
+finding_ids: none
+dispositions: none
+END_MEASURE_AGENT_RESULT

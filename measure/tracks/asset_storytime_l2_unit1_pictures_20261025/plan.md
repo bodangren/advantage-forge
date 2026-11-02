@@ -3246,6 +3246,64 @@ rows T142 to T151, and the closeout gate for 30 jobs.
         sits near the map in the line art; on `tap-tap-tap-b` two small pins sit at the map corners. On the
         map page Pat's hair is a solid black fill. The `he-can-see-pip` page shows Pip on the open floor, not
         inside the floor strip. The other 9 rows of week 6 (the check rows) are not made.
+    - Week 6 batch 3 (the 9 check rows). Green round of 2026-11-03, claude-code/claude-sonnet-5-5#high.
+      role_base_sha `0e55a56f`, phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash.
+      Image model meta/muse-image. Coder: none; nothing was delegated. No change in `src/`, `tests/`,
+      `scripts/`, `assets/`, or `approved.json`. No marker changed. Run log:
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w06-b3.log`. Review folder:
+      `out/storytime-review/batch-54/` (`brief.md`, `pages/` 36 files, `refs/` 9 files, no control rows).
+      Green did not rate its own work.
+      - Spec commit: `7b5b0edd` (two specs, `colorPrompt` or `linePrompt` only; `text` and `goal` did not
+        change). The `linePrompt` of `check-row-tiger` now draws each stripe as one single thick line and
+        forbids a solid black fill (stripes and tail tip), because tries 1 to 3 had solid black stripes and
+        a solid black tail tip, which the Workbooks finding does not allow. The `colorPrompt` of
+        `check-row-ten` now asks for a wide white margin and a clear gap between all balls, because color m1
+        showed touching balls and a margin of 33 px at the left and right print edge.
+      - Rows (9; each is one object on plain white, 1500 x 1500, print mode `crop`, no text, no number).
+        Color version, line try, then the writer check (`inspectLineArtPng` at 1500 x 1500 on the despeckled
+        line print: line width, ink, edge frame 1 percent border white; no dark pixel on the outer row or
+        column):
+        - `bag` (m1, line 1): PASS 29 px, 8.18, 100.00.
+        - `cup` (m1, line 1): PASS 19 px, 5.13, 100.00.
+        - `dog` (m1, line 1): PASS 19 px, 8.32, 100.00.
+        - `fish` (m1, line 1): PASS 18 px, 3.96, 100.00.
+        - `pen` (m1, line 2): PASS 30 px, 5.05, 100.00.
+        - `sun` (m1, line 2): PASS 22 px, 6.84, 100.00. One disc and exactly 8 pointed triangle rays, wide
+          base on the disc. One sun only.
+        - `table` (m1, line 2): PASS 27 px, 8.51, 100.00.
+        - `ten` (m2, line 2): PASS 21 px, 7.29, 100.00. Ten separate closed circles in two rows of five.
+        - `tiger` (m1, line 6): PASS 13 px, 7.52, 100.00. Stripes are single lines; the tail tip is white
+          inside.
+        All 9 chosen color prints: PNG, 1500 x 1500, 8-bit, sRGB, 3 channels, no alpha, no palette. The edge
+        frame (1 percent border) of every chosen color print and line print is 100.00 percent near-white.
+        The nearest object is 38 px from an edge (sun, lowest ray and its shadow); the `ten` balls are 44 px
+        and 52 px from the left and right edge. Nothing is cut at a print edge.
+      - Retries and why: two color calls failed at cost 0 (`fish` HTTP 502, `bag` network timeout) and were
+        repeated. `ten` color m1 was replaced by m2 after the spec change (touching balls, narrow side
+        margin); `ten` m2 got 3 line tries. `tiger` tries 1 to 3 had solid black stripes and tail tip;
+        tries 4 to 6 came after the spec change. `bag` try 3 bent the top of the bag; `dog` try 2 drew a
+        wrong muzzle shape and try 3 drew ankle bands; `fish` tries 2 and 3 added a belly line, and try 2
+        drew a large solid black eye disc. All other tries were usable.
+      - Stage gate after the spec changes. The real command `node scripts/storytime-stage-check.mjs --week 6
+        --list /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --specs
+        docs/storytime/l2-unit1/w06/muse` prints "text mismatches: 0", "goal mismatches: 0", "outDir
+        mismatches: 0", "missing element paths: 0", and "page candidates: 619", then "stage check: fail". The
+        only problem lines are the page candidate files (week 6 pictures exist). A clean run in a scratch
+        folder (the 70 element paths that the specs name, copied with the same relative paths, and an empty
+        week 6 output folder) printed list sha256
+        `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`, rows 27, specs found 27, text
+        mismatches 0, goal mismatches 0, outDir mismatches 0, element paths checked 70, missing element
+        paths 0, page candidates 0, "stage check: pass", exit code 0.
+      - Calls: 43 billed in `out/storytime/l2/unit1/w06/muse/costs.tsv` this round (10 color and 33 line),
+        all at 0.01 USD. Two color calls failed and cost nothing. Round cost 0.43 USD. Running total
+        10.81 + 0.43 = 11.24 USD. The cap of 60 billed calls was not reached.
+      - Open: `approved.json` and the stage 2 check are not run for these rows. `batch-54` needs an
+        independent review. In the dog line art the left eye ring is wide and has a second thin inner ring.
+        In the `ten` line art each ball has one open highlight arc (an arc stroke, not a closed shape), and
+        the balls sit close to each other with small gaps. On the `ten` page the rows sit in the middle of
+        the square with a wide white space above and below. The `tiger` line width is 13 px (the gate
+        minimum 12), and its right eye is a narrow solid oval near the head edge, as in the color. After
+        this batch the 27 pictures of week 6 exist as candidates.
     - Week 7 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
       2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `b5f0c971`, phase_base_sha
       `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.
