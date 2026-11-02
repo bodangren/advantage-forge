@@ -1876,6 +1876,58 @@ rows T142 to T151, and the closeout gate for 30 jobs.
     fully calm (slide tower at the right). Ben's hair is lumpy in the color of `can-i` and `can-i-b`.
     Muse made the Nan pages without a nose in the line art; no sentence of this batch names the nose.
     The balance beam is a round log on `can-i-b` and a flat plank on `i-can-b` and `nan-can-b`.
+  - Week 2 batch 2 (production). Green round of 2026-11-02, claude-code/claude-sonnet-5-5#high.
+    role_base_sha `b142e643`, phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash.
+    Image model meta/muse-image. Coder: none; nothing was delegated. No change in `src/`, `tests/`,
+    `scripts/`, `assets/`, or `approved.json`. No marker changed. Spec commit `20551358` (the cover spec:
+    Teacher Kim kneels and the top 30 percent is plain sky; the `cakes-oh-no-pip` spec: the cream is only
+    on Pip's nose and Pip has floppy ears only). Run log:
+    `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w02-b2.log`. Review folder:
+    `out/storytime-review/batch-41/` (`brief.md`, `pages/` 36 files, `refs/` 16 files). Green did not rate
+    its own work.
+    Rows (9): the cover `l2-w02-cover-how-many` and the 8 pages `story-page-how-many-balls-five`,
+    `-birds-four`, `-cakes-oh-no-pip`, `-cakes-seven`, `-ducks-three`, `-friends-six`, `-kites-two`,
+    `-suns-one`.
+    Commands: `node scripts/storytime-muse.mjs color <9 specs> --concurrency 4`; then
+    `... line <spec> --from <n> --tries 3` for each row. Writer check: `/tmp/opencode/chk66.mts`
+    (`inspectLineArtPng`), a short sharp script for the edge frame (2 percent border, share of white), and
+    a short sharp script for the color print.
+    Chosen files (all in `out/storytime/l2/unit1/w02/muse/`), the count in color and in line art, and the
+    writer check (line width, ink, edge frame):
+    - `cover-how-many`: color m2, line try 2. Six children and Teacher Kim in both; one sun. PASS 16 px,
+      ink 11.28 percent, edge 94.17 percent. Color m1 had Teacher Kim standing with her head at about 7
+      percent of the height. In m2 the top of her head is at about 11 percent, so the top 30 percent is
+      not fully plain sky.
+    - `story-page-how-many-balls-five`: color m1, line try 1. Five balls in both; Nan's hand shows four
+      fingers and a thumb. PASS 27 px, 9.97 percent, edge 98.10 percent.
+    - `story-page-how-many-birds-four`: color m1, line try 2. Four birds in both. PASS 19 px, 8.02 percent,
+      edge 97.62 percent.
+    - `story-page-how-many-cakes-oh-no-pip`: color m2, line try 2. Six children, Teacher Kim, and Pip in
+      both; Pip has floppy ears. PASS 12 px (equal to the minimum), 9.99 percent, edge 97.16 percent.
+      Color m1 put the cream mark on Nan's nose, not on Pip's nose.
+    - `story-page-how-many-cakes-seven`: color m1, line try 3. Seven cupcakes (four at the back, three at
+      the front) in both. PASS 17 px, 9.05 percent, edge 95.83 percent.
+    - `story-page-how-many-ducks-three`: color m1, line try 2. Three ducks in both. PASS 25 px, 9.48
+      percent, edge 97.02 percent. The sun in the line art is a circle with eight petal loops.
+    - `story-page-how-many-friends-six`: color m1, line try 1. Six children in both. PASS 14 px, 9.22
+      percent, edge 94.50 percent. Try 3 drew an extra plate with cupcakes.
+    - `story-page-how-many-kites-two`: color m1, line try 3. Two kites in both. PASS 17 px, 6.83 percent,
+      edge 98.55 percent.
+    - `story-page-how-many-suns-one`: color m1, line try 1. One sun in both. PASS 20 px, 8.73 percent, edge
+      98.76 percent.
+    Every page shows at most one sun. All 9 color prints: PNG, 4000 x 3000, 8-bit, sRGB, 3 channels, no
+    alpha, no palette. The writer check of every chosen line print is PASS.
+    Retries and why: the cover had a second color (Teacher Kim in the top band) and a second line batch
+    (try 1 had closed eyes on Teacher Kim, try 3 lost the stripes on Sam); `cakes-oh-no-pip` had a second
+    color (cream on Nan's nose); `suns-one` had a second line batch (only try 1 existed after two
+    timeouts). The other rows needed one color call and one line batch. Two color calls timed out and
+    were made again (`cakes-oh-no-pip` and `cakes-seven`).
+    Calls: 46 logged in `out/storytime/l2/unit1/w02/muse/costs.tsv`: 37 billed at 0.01 USD, 9 failed with
+    a network timeout at cost 0. Batch cost 0.37 USD. Running total 4.69 + 0.37 = 5.06 USD.
+    Open: `approved.json` and the stage 2 check are not run for these rows. The cover top band is not
+    fully plain (Teacher Kim's head reaches about 11 percent). The cakes-seven color shows the whole
+    puppy head in the bag. In the line art Pip's cream mark is not a separate shape, and the sun on the
+    ducks page looks like a flower. Pat's hair is a smooth cap on the suns page.
   - Week 3 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
     2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `a3741c90`, phase_base_sha
     `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.
