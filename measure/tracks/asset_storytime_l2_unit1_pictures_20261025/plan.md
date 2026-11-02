@@ -2009,6 +2009,82 @@ rows T142 to T151, and the closeout gate for 30 jobs.
     - Open: `approved.json` and the stage 2 check are not run for this row. An independent review of
       `out/storytime-review/batch-42r2/` is needed. The left and right rays are a little longer than
       the other six.
+  - Week 2 delivery (G1 to G8). Green round of 2026-11-02, claude-code/claude-sonnet-5-5#high.
+    role_base_sha `68c3e553`, phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash.
+    Coder: none. No Muse call. No change in `src/`, `tests/`, `scripts/`, or `assets/`. No marker
+    changed. Run log: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w02-delivery.log`.
+    Approval list: `docs/storytime/l2-unit1/w02/muse/approved.json` (27 entries, list SHA-256
+    `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`). Delivery folder:
+    `out/storytime/l2/unit1/w02/delivery-muse-v1` (54 PNG files and `manifest.json`; not in git).
+    - G1 staging: the stage gate of week 2 passed before production (`stage check: pass`, 27 rows,
+      `specs found: 27`, `element paths checked: 82`, `missing element paths: 0`,
+      `page candidates: 0`). The output is in the week 2 staging note above. This round did not run
+      the gate again, because it now sees page candidates.
+    - G2 calls: `costs.tsv` of the week holds 140 page calls, and each call has a `usage_cost`
+      value (0 calls without a value). `usage.cost total (USD): 1.21` for
+      `out/storytime/l2/unit1/w02/muse/costs.tsv`. The 17 element calls (`elements/costs.tsv`)
+      cost `usage.cost total (USD): 0.15`. A short script summed the column.
+    - G3 independent review, one batch for each part of the week. The reviewers are vision models of
+      other families than the image model. Each batch has three control rows.
+      - Batch 40 (9 playground rows): reviewer `minimax-cn-coding-plan/MiniMax-M3.1-Flash`,
+        `item-review-batch-40.json`, 9 of 9 rows clean. Controls: C1 a-nose defect (correct),
+        C2 a-nut clean (correct), C3 nose profile clean (correct).
+      - Batch 41 (9 "How many?" rows): reviewer `opencode-go/mimo-v2.6-flash`,
+        `item-review-batch-41.json`, 9 of 9 rows clean. Controls: C1 a-nose defect (correct),
+        C2 a-nut marked defect, C3 nose profile clean (correct). The reviewer marked a four-digit
+        hand in C2. The orchestrator read that hand as a thumb and four fingers, so the C2 mark is a
+        false alarm. It does not void the batch, because the known-defect control failed as it
+        must and the small-mark control passed.
+      - Batch 42v2 (9 check rows, the sun from `batch-42r2`): reviewer `openai/gpt-6-luna#high`,
+        `item-review-batch-42v2.json`, 9 of 9 rows clean. Controls (in `extra`): K3 a-nose defect
+        (correct), K1 a-nut clean (correct), K2 nose profile clean (correct).
+      - Void for G3: `item-review-batch-42.json` and `item-review-batch-42r2.json` (reviewer Kimi).
+        Kimi marked the known-defect control (a-nose v1, no nose in the line art) clean, so the
+        reviewer passes a known defect. These two files are not approval evidence.
+      - The reviewers are models. This is independent review. It is not the person count and not
+        acceptance.
+    - G4 orchestrator spot check (quoted as given): "Orchestrator read at full size, 2026-11-02:
+      class B: l2-w02-cover-can-i (color, line), l2-w02-cover-how-many (color, line). Retry pages:
+      l2-w02-story-page-can-i (color, line), l2-w02-story-page-how-many-cakes-oh-no-pip (color,
+      line), l2-w02-story-page-how-many-suns-one (line), l2-w02-check-row-bed (line),
+      l2-w02-check-row-bus (line), l2-w02-check-row-sun (m1 color and line, m2 line). Other pages:
+      l2-w02-story-page-nan-can (line), l2-w02-story-page-i-can-b (line),
+      l2-w02-story-page-how-many-ducks-three (line), l2-w02-check-row-fish (color, line),
+      l2-w02-check-row-ant (line). Found: the old sun read as a flower (fixed, B42-SUN); small marks
+      only on the others (a double-line sliver under the bed footboard, an open line near the bus
+      front wheel, simplified hair lines on the cover-how-many line art, a petal-loop sun in the
+      ducks-three background)."
+    - G5 and G6 delivery. The command was the G6 command of `test-strategy.md` section 4.5 through
+      `heavy-run.sh`. It ran once and did not need a second run (exit 75 did not occur).
+      Exit code `0`. Last output line: `Delivered 27 rows and 2 batch hashes to
+      /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w02/delivery-muse-v1.` The writer
+      ran its print checks before its first write and printed a line width and an ink value for
+      each line print. The tail of the output showed widths of 14 to 22 px, all above the 12 px
+      minimum.
+      - Re-hash: all 54 delivered files equal their approved Muse print by SHA-256
+        (`delivered files equal to approved Muse print: 54 of 54`), and all 54 file hashes appear in
+        `manifest.json` (`file hashes found in manifest: 54 of 54; problems: 0`). The folder has 54
+        PNG files and `manifest.json`. The manifest has 27 jobs and the 2 batches `w02/color` and
+        `w02/lineart`.
+      - `sha256sum out/storytime/l2/unit1/w02/delivery-muse-v1/manifest.json`:
+        `6e6b51450d406bfdac47e01f484925b270bd0b1647bbfc0550d7529809cfeaf4`.
+      - The approval entries hold the model reviews in `notes`. The writer schema
+        (`src/storytime/muse-delivery.ts:39-41`) accepts only the review provider `kimi` and the
+        key `person`, so a `reviews` object for the MiniMax, mimo, and gpt-6-luna reviewers is not
+        possible. Week 1 did the same for its mimo-only rows. No entry has `reviews.person`.
+        `version` is the Muse version of the print (m2 for `cover-how-many`,
+        `story-page-how-many-cakes-oh-no-pip`, and `check-row-sun`; m1 for the other 24 rows), as in week 1.
+    - G7 person review: pending. No person has looked at week 2, and the PM has relayed no answer.
+      The delivery is "delivered, awaiting person review". Contact page:
+      `out/storytime-review/w02-contact/index.html` (27 cards, 54 previews in `prev/`, row id, text,
+      color and line art side by side; 108 `src` and `href` references, 0 missing). Phone sheets for
+      the PM: `out/storytime-review/w02-contact/w02-sheet-1-of-3.jpg`, `w02-sheet-2-of-3.jpg`, and
+      `w02-sheet-3-of-3.jpg` (2000 x 7698 px, 9 rows each; sheet 3 viewed with the read tool).
+    - G8 cost report: `usage.cost total (USD): 1.36` for week 2 (pages 1.21 and elements 0.15).
+      Running total of the track: 6.62 USD, as in the week 3 batch 1 fix note above (this figure
+      includes the week 3 work to that point).
+    - Open: Daniel's person review of week 2. Four known small marks stay as in the G4 record. The
+      Kimi reviews of batches 42 and 42r2 are void. This block makes no task `[x]`.
   - Week 3 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
     2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `a3741c90`, phase_base_sha
     `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.

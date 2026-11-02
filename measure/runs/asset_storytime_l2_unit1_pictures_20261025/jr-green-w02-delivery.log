@@ -1,0 +1,39 @@
+# Green P4 T2 w02 delivery (2026-11-02, claude-code/claude-sonnet-5-5#high)
+role_base_sha: 68c3e553
+phase_base_sha: fc76c272
+Step 1: approved.json written by /tmp/opencode/w02d/build-approved.cjs from the three review JSONs (27 entries, list order). Reviewed pages byte-equal to the Muse files (0 problems). List sha256 6d05dfc5...2a58 checked.
+Step 2: deliver (heavy-run.sh, exit 0, no exit 75): "Delivered 27 rows and 2 batch hashes to .../w02/delivery-muse-v1".
+Re-hash: delivered files equal to approved Muse print: 54 of 54; file hashes found in manifest: 54 of 54; problems: 0. Folder: 54 PNG + manifest.json.
+manifest.json sha256: 6e6b51450d406bfdac47e01f484925b270bd0b1647bbfc0550d7529809cfeaf4
+Step 3: out/storytime-review/w02-contact/index.html (27 cards, 54 previews, 108 refs, 0 missing) and w02-sheet-1..3-of-3.jpg (2000 x 7698 px; 1.96, 1.80, 0.77 MB). Sheet 3 viewed.
+Step 4: plan.md block "Week 2 delivery (G1 to G8)" under Task 2 (no marker change).
+Cost: usage.cost total (USD): 1.21 (140 page calls); elements 0.15; week 2 total 1.36; running total 6.62 (plan figure).
+Muse calls: 0. Commits: d66d8f2a (approved.json); plan commit follows.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Produce weeks 2 to 7 (week 2 approval list, delivery, contact sheets, gate records)
+role_base_sha: 68c3e553
+phase_base_sha: fc76c272
+commits: d66d8f2a (approved.json); plan.md and log commit (see git log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+delivery_folder: out/storytime/l2/unit1/w02/delivery-muse-v1
+deliver_output: Delivered 27 rows and 2 batch hashes
+deliver_exit_code: 0
+rehash: 54 of 54 delivered files equal their approved Muse print; 54 of 54 hashes in the manifest
+manifest_sha256: 6e6b51450d406bfdac47e01f484925b270bd0b1647bbfc0550d7529809cfeaf4
+contact_page: out/storytime-review/w02-contact/index.html
+contact_sheets: out/storytime-review/w02-contact/w02-sheet-1-of-3.jpg; w02-sheet-2-of-3.jpg; w02-sheet-3-of-3.jpg
+usage.cost total (USD): 1.21
+week_cost_usd: 1.36 (pages 1.21 + elements 0.15)
+running_total_usd: 6.62
+muse_calls: 0
+open_items: Daniel's person review of week 2 (G7) is open; no reviews.person field. The writer schema accepts only provider kimi, so the MiniMax, mimo, and gpt-6-luna reviews sit in notes. entry.version is the Muse version (m2 for 3 rows), as in week 1.
+handoff: Send the 3 sheet paths and the manifest SHA-256 to the PM for Daniel. Default: week 2 stays "delivered, awaiting person review".
+dispositions: none
+END_MEASURE_AGENT_RESULT
