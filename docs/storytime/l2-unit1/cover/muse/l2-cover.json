@@ -1,7 +1,7 @@
 {
   "id": "l2-cover-v1",
-  "stage": "pending-pm",
-  "stageNote": "Inputs only. No picture list row exists for the Level 2 cover. The file name l2-cover-v1.png, size class B (4000 x 3000), color only, and no line-art twin are the orchestrator default and wait for the PM answer. No Muse call was made.",
+  "stage": "approved",
+  "stageNote": "The PM confirmed the cover on 2026-11-02 06:18 ICT (plan.md PM confirmations, item (b)): the cover is l2-cover-v1.png, class B, color only. Daniel answered on week 1 on 2026-11-02. Candidates are made under gate C1; none is delivered before the independent review (C2) and the orchestrator spot check (C3).",
   "file": "l2-cover-v1.png",
   "sizeClass": "B",
   "width": 4000,
