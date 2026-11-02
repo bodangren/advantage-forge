@@ -338,6 +338,18 @@ export async function writeMuseDelivery(options: MuseDeliveryOptions): Promise<S
   const museRoot = path.resolve(options.museRoot);
   const deliveryRoot = path.resolve(options.deliveryRoot);
 
+  // A row id twice would pair every candidate with both jobs in assembleManifest.
+  const rowIds = new Set<string>();
+  for (const row of options.rows) {
+    if (rowIds.has(row.id)) throw new Error(`The picture list holds the row ${row.id} twice.`);
+    rowIds.add(row.id);
+  }
+
+  const deliveryInfo = await lstatOrNull(deliveryRoot);
+  if (deliveryInfo?.isSymbolicLink()) {
+    throw new Error(`The delivery folder ${deliveryRoot} is a symlink; the writer refuses it.`);
+  }
+
   const seen = new Set<string>();
   for (const entry of list.entries) {
     if (seen.has(entry.rowId)) throw new Error(`The approval list holds the row ${entry.rowId} twice.`);
