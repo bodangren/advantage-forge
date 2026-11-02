@@ -2411,6 +2411,45 @@ rows T142 to T151, and the closeout gate for 30 jobs.
     - Open: `approved.json` and the stage 2 check are not run for this row. `batch-44r2` needs an
       independent review (the orchestrator adds the control rows). The other 8 rows of batch 44 are not
       changed by this round.
+  - Week 3 pan fix 2 (B43V2-PAN-4). Green round of 2026-11-02, claude-code/claude-sonnet-5-5#high.
+    role_base_sha `18b0b34e` (HEAD after the commit that added the result block to the blue-fix log;
+    `55b47fc7` before it), phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image
+    model meta/muse-image. Coder: none. No marker changed. Spec commit `617d370a` (only
+    `l2-w03-story-page-nan-can-get-a-pan.json`). Run log:
+    `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w03-pan-fix2.log`. Review folder
+    for both week 3 fixes (the blue page and this pan row): `out/storytime-review/w03-fixes/`
+    (`brief.md`, `pages/` 8 files, `refs/` 8 files, no control rows). Green did not rate its own work.
+    No change in `src/`, `tests/`, `scripts/`, `assets/`, or `approved.json`.
+    - Finding B43V2-PAN-4 (independent review batch-43v2, G3 valid): `nan-can-get-a-pan`, color m4,
+      line try 3 of the m4 lines. The color is correct (Nan holds a red frying pan with a handle). In
+      the line art the bowl is a double ring and the handle is a short stub in Nan's fist. At book size
+      it reads as a hand mirror or a magnifying glass. Category: wrong-or-missing-prop.
+    - Spec change: only the `linePrompt`. Green appended: "The pan is a toy frying pan. Draw its bowl as
+      one closed oval rim seen at an angle, with the inside of the bowl as one closed shape. Draw no
+      second ring and no inner ring. Draw the handle as one long, thick, straight closed bar from the
+      bowl rim to Nan's fist, and show the end of the handle past her fist. The pan must not look like
+      a mirror, a ring, or a magnifying glass." The old pan sentences stay in the prompt.
+    - Chosen file: color m4 (kept; no color call) and line try 9 (`-m4-line-9-despeckled.png`; print
+      `-m4-line-print-9-despeckled.png`, 4000 x 3000). Three batches of 3 new tries were made (tries 2,
+      4, 5; 6, 7, 8; 9, 10, 11). Try 9 is a wide shallow bowl with a thick rim and a long thick handle
+      that goes to the right; it reads as a frying pan. Try 11 (round bowl, thin handle) also passes.
+      Tries 2, 5, 8, and 10 read as a ring or a mirror. Try 7 reads as a pan but fills Nan's hair solid
+      black. Try 4 has a thin stick handle. Try 6 has the handle only through the fist. Nan keeps the
+      star on her T-shirt in every try.
+    - Known facts about try 9: the fist holds the left side of the bowl and the handle goes to the
+      right (in the color the handle is a short stub below the fist). The end of the handle touches the
+      top-left corner of the toy kitchen counter line. Step 3 of the brief (a new color m6) was not
+      needed because try 9 reads as a pan. The orchestrator can ask for an m6 round if the review
+      rates the handle contact as a defect.
+    - Writer check (`inspectLineArtPng`, 4000 x 3000, `/tmp/opencode/pan2-check.mts`): try 9 PASS 21
+      px, ink 10.84 percent, edge frame 94.54 percent white. Try 11 PASS 19 px, edge 94.43 percent.
+      Try 6 PASS 22 px, edge 93.36 percent. The color print is PNG, 4000 x 3000, 8-bit, sRGB, 3
+      channels, no alpha, no palette.
+    - Calls: 9 line calls logged in `out/storytime/l2/unit1/w03/muse/costs.tsv`, 0.01 USD each (a call
+      with `--from 6` stopped before any Muse call because `--from` names the color number). Cost
+      0.09 USD. Running total 7.00 + 0.09 = 7.09 USD.
+    - Open: `approved.json` and the stage 2 check are not run for these rows. `w03-fixes` (both rows)
+      needs an independent review. A small pale seam at one eye corner of Nan shows in the m4 color.
   - Week 4 staging (inputs only; no page candidate until Daniel's week 1 answer; cast looks pending).
     Green round of 2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `0755ef8d`,
     phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model
