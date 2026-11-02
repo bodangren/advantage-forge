@@ -5195,3 +5195,30 @@ Replaced by the amendment of 2026-11-01 (Muse path).
   mark, not a defect. (e) `cover-hello` with white pad bands is acceptable. (f) Line prints as
   8-bit grey PNG files with only the values 0 and 255 are acceptable. Facts changed: acceptance
   defaults for review only.
+
+### Adversarial remediation (ADV-P3-01)
+
+- 2026-11-02, Green role (`claude-code/claude-sonnet-5-5#high`), role_base_sha `8e7527b5`,
+  phase_base_sha `15a7bf0b`. Red and adversarial models: DeepSeek. Coder: none.
+- Finding ADV-P3-01 (blocking): `writeMuseDelivery` refused a duplicate approval entry but not a
+  duplicate `row.id` in `options.rows`. `assembleManifest` pairs candidates by job id, so two rows
+  with one id corrupted the manifest. Failing test: `ADV9` in
+  `tests/storytime-muse-delivery-adversarial.test.ts`.
+- Fix (commit `e18baa25`, `src/storytime/muse-delivery.ts`): the writer now refuses a duplicate
+  row id with the error `The picture list holds the row <id> twice.` The check runs before the
+  approval loop, before the delivered-name loop, and before any write.
+- Finding ADV-P3-NB1 (low, nonblocking): FIX. The same commit refuses a delivery root that is a
+  symlink (`lstat`, error `The delivery folder <path> is a symlink; the writer refuses it.`)
+  before any write. No test covers it; the change is 3 lines. The existing symlink tests stay
+  green.
+- Vitest (through `heavy-run.sh`), five files: adversarial, muse-delivery, book-pictures,
+  picture-rows, stage-check, `--maxWorkers=1`. Exit 0. `Test Files  5 passed (5)`;
+  `Tests  190 passed (190)`. Log: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-adv-fix-vitest.log`.
+- tsc (`--noEmit -p tsconfig.json`, `--max-old-space-size=2560`, through `heavy-run.sh`): exit 2;
+  total 38 errors; owned errors 0 (no error in `src/storytime/`; 5 errors are in
+  `assets/storytime-*.ts` and are unchanged). Log: `green-adv-fix-tsc.log`.
+- Mutation: the duplicate-row check was removed. `ADV9` failed (`Tests  1 failed | 11 skipped`).
+  The check was restored and `git diff` showed only the intended 12 added lines. Log:
+  `green-adv-fix-mutation.log`.
+- The writer did not run `deliver` into `delivery-muse-v1` or `delivery-muse-v2`. The week 1
+  deliveries did not change. No task is marked.
