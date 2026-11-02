@@ -1937,6 +1937,49 @@ rows T142 to T151, and the closeout gate for 30 jobs.
     fully plain (Teacher Kim's head reaches about 11 percent). The cakes-seven color shows the whole
     puppy head in the bag. In the line art Pip's cream mark is not a separate shape, and the sun on the
     ducks page looks like a flower. Pat's hair is a smooth cap on the suns page.
+  - Week 2 batch 3 (production). Green round of 2026-11-02, claude-code/claude-sonnet-5-5#high.
+    role_base_sha `012b7d10`, phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash.
+    Image model meta/muse-image. Coder: none; nothing was delegated. No change in `src/`, `tests/`,
+    `scripts/`, `assets/`, or `approved.json`. No marker changed. Spec commit `9f7f63b9` (only
+    `l2-w02-check-row-bed.json`: the line prompt now asks for one bold thick line everywhere, with no
+    thin line and no double line). Run log:
+    `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w02-b3.log`. Review folder:
+    `out/storytime-review/batch-42/` (`brief.md`, `pages/` 36 files, `refs/` 9 files). Green did not rate
+    its own work.
+    Rows (9): the check rows `l2-w02-check-row-alligator`, `-ant`, `-apple`, `-bed`, `-bus`, `-dog`,
+    `-fish`, `-pig`, `-sun`. Each row is one object on plain white, 1500 x 1500, print mode `crop`.
+    Commands: `node scripts/storytime-muse.mjs color <9 specs> --concurrency 4`; then
+    `... line <spec> --from 1 --tries 3` for each row (3 rows at a time). Writer check:
+    `/tmp/opencode/chk66.mts` (`inspectLineArtPng`, 1500 x 1500) and a short sharp script for the edge
+    frame and the color print.
+    Chosen files (all in `out/storytime/l2/unit1/w02/muse/`; color is `-m1-color.png` for every row).
+    Writer check: line width, ink, edge frame (all 100.00 percent white; the objects do not touch the
+    edge):
+    - `check-row-alligator`: line try 3. PASS 19 px, ink 8.36 percent. Try 1 passed at the minimum 12 px;
+      try 2 passed at 13 px.
+    - `check-row-ant`: line try 1. PASS 16 px, 7.48 percent. Tries 2 and 3 also pass (18 px).
+    - `check-row-apple`: line try 2. PASS 22 px, 3.75 percent.
+    - `check-row-bed`: line try 4 (after the spec note). PASS 16 px, 6.85 percent. Tries 1 to 3 FAILED the
+      writer (8, 10, and 10 px); of the new tries, try 5 failed (10 px) and try 6 passed at 12 px.
+    - `check-row-bus`: line try 3. PASS 14 px, 6.45 percent. Tries 1 and 2 FAILED the writer (11 and 10
+      px). The side stripe is a short broken line in try 3 (an open wavy line in tries 1 and 2).
+    - `check-row-dog`: line try 3. PASS 17 px, 7.43 percent. Try 1 has a double ring at one eye.
+    - `check-row-fish`: line try 2. PASS 22 px, 4.90 percent. Try 1 has a thin extra arc at the eye ring.
+      OPEN: one small closed nub at the lower left of the body in try 2.
+    - `check-row-pig`: line try 1. PASS 22 px, 9.97 percent. Try 2 draws the pig smaller; try 3 draws
+      solid black nostrils.
+    - `check-row-sun`: line try 1. PASS 29 px, 9.41 percent. One circle and eight closed rays; no face.
+    All 9 color prints: PNG, 1500 x 1500, 8-bit, sRGB, 3 channels, no alpha, no palette. All 9 line
+    prints: 1-bit (no gray pixel). The writer check of every chosen line print is PASS. All 9 colors
+    were accepted at the first call: one object, plain white, no text, no second object.
+    Retries and why: one extra line batch of 3 for the bed (thin lines in all 3 first tries). Five line
+    calls timed out at cost 0 (bed try 2, bus tries 1 and 2, pig tries 2 and 3) and were made again.
+    Calls: 44 logged in `out/storytime/l2/unit1/w02/muse/costs.tsv`: 39 billed at 0.01 USD, 5 failed
+    with a network timeout at cost 0. Batch cost 0.39 USD. Running total 5.06 + 0.39 = 5.45 USD.
+    Open: `approved.json` and the stage 2 check are not run for these rows. The fish line art has one
+    small nub. The bus line art has horizontal grille lines that are open. The sun color has rays that do
+    not touch the disc, and the line art follows it. The ant line art shows its second eye as a thin
+    ring at the edge of the head.
   - Week 3 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
     2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `a3741c90`, phase_base_sha
     `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.
