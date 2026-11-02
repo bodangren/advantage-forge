@@ -1,0 +1,370 @@
+{
+  "status": "pass",
+  "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "audited_head": "nine color prints and nine line prints of batch 40, the nine line sources, and the five reference pictures in refs/",
+  "verdict": "all nine rows pass under the bar",
+  "seen": {
+    "out/storytime-review/batch-40/brief.md": "Batch 40 brief; nine rows; cover plus eight playground pages; Daniel's bar at the top; the builder listed five open items.",
+    "out/storytime-review/batch-40/refs/out_storytime_l2_unit1_w01_muse_elements_nan-ref-clean-look-reference.png": "Nan look reference: black hair in two bunches with red ties, orange T-shirt with a white star, red shorts, white shoes, large dark-brown eyes with one lash flick at each outer corner.",
+    "out/storytime-review/batch-40/refs/out_storytime_l2_unit1_w01_muse_elements_nan-ref-clean-face-crop.png": "Nan face crop from the same reference set.",
+    "out/storytime-review/batch-40/refs/out_storytime_l2_unit1_w01_muse_elements_ben-ref-clean-2.png": "Ben render sheet: brown swoosh hair, plain blue T-shirt, blue shorts, gray shoes, no lashes, no freckles.",
+    "out/storytime-review/batch-40/refs/out_storytime_l2_unit1_w02_muse_elements_set-playground-empty-m3-color.png": "Empty playground set: low wooden climbing frame at the left, round log balance beam in the middle, tall yellow slide with a ladder at the right, sun in the top right.",
+    "out/storytime-review/batch-40/refs/out_beam_views_three-quarter.png": "Beam asset: a flat square plank with two metal straps, not a round log.",
+    "out/storytime-review/batch-40/pages/l2-w02-cover-can-i-m1-color-print.png": "Cover color: Nan and Ben stand at the foot of the tall slide, both heads up, small climbing frame at the far left, round log beam left of centre, tall slide at the right, sun in the top right corner.",
+    "out/storytime-review/batch-40/pages/l2-w02-cover-can-i-m1-line-print-4-despeckled.png": "Cover line art: same scene; a hard sun circle and a cloud at the top right; a tree at the right edge; a small lash mark at the outer corner of Ben's left eye.",
+    "out/storytime-review/batch-40/pages/l2-w02-story-page-can-i-m1-color-print.png": "Ben stands at the foot of the climbing frame, one hand on a rung, head up, worried brows and mouth, plain blue shirt.",
+    "out/storytime-review/batch-40/pages/l2-w02-story-page-can-i-m1-line-print-4-despeckled.png": "Line art of the same pose; solid eye pupils, a small nose line, no star on the shirt.",
+    "out/storytime-review/batch-40/pages/l2-w02-story-page-can-i-b-m1-color-print.png": "Ben with one shoe on the round log beam, both arms out, worried face, plain shirt; climbing frame at the left and slide at the right.",
+    "out/storytime-review/batch-40/pages/l2-w02-story-page-can-i-b-m1-line-print-2-despeckled.png": "Line art of the same pose; four fingers and one thumb per hand; the beam is a round log.",
+    "out/storytime-review/batch-40/pages/l2-w02-story-page-can-nan-m1-color-print.png": "Nan sits on the slide platform with both hands on the rail and a scared face; Ben stands on the ladder behind her and reaches out one hand.",
+    "out/storytime-review/batch-40/pages/l2-w02-story-page-can-nan-m1-line-print-despeckled.png": "Line art of the same pair; Nan shows a star, lash flicks and no nose; Ben shows no star.",
+    "out/storytime-review/batch-40/pages/l2-w02-story-page-i-can-m1-color-print.png": "Ben sits on the top platform of the climbing frame with both hands on the rail and a wide open smile; plain shirt.",
+    "out/storytime-review/batch-40/pages/l2-w02-story-page-i-can-m1-line-print-despeckled.png": "Line art of the same pose; no star on the shirt; a tree at the right edge.",
+    "out/storytime-review/batch-40/pages/l2-w02-story-page-i-can-b-m1-color-print.png": "Ben walks on the flat plank beam with both arms out and a wide smile; small lash flicks and cheek freckles; the climbing frame stands at the left and the slide at the right.",
+    "out/storytime-review/batch-40/pages/l2-w02-story-page-i-can-b-m1-line-print-despeckled.png": "Line art of the same pose on the same plank; a tree at the left, a bush and stones at the right, no climbing frame and no slide.",
+    "out/storytime-review/batch-40/pages/l2-w02-story-page-nan-and-i-can-m1-color-print.png": "Nan in front on the slide bed and Ben behind her, both laughing with all four arms up; Nan shows her star and her lash flicks.",
+    "out/storytime-review/batch-40/pages/l2-w02-story-page-nan-and-i-can-m1-line-print-2-despeckled.png": "Line art of the same pair; Nan's right hand and Ben's hand overlap at the right; each hand shows four fingers and one thumb.",
+    "out/storytime-review/batch-40/pages/l2-w02-story-page-nan-can-m1-color-print.png": "Nan stands on the top platform of the climbing frame and smiles; the round log beam and the tall slide stand at the right; sun at the top right.",
+    "out/storytime-review/batch-40/pages/l2-w02-story-page-nan-can-m1-line-print-3-despeckled.png": "Line art of the same pose; solid black pupils, lash flicks, a star on the shirt and no nose.",
+    "out/storytime-review/batch-40/pages/l2-w02-story-page-nan-can-b-m1-color-print.png": "Nan walks on the flat plank beam with both arms out; the climbing frame stands at the left and the slide at the right.",
+    "out/storytime-review/batch-40/pages/l2-w02-story-page-nan-can-b-m1-line-print-2-despeckled.png": "Line art of the same pose on the same plank; a tree at the far left."
+  },
+  "line_file_gray_count": {
+    "l2-w02-cover-can-i-m1-line-4-despeckled.png": "0 of 2457600 pixels are not 0 or 255",
+    "l2-w02-cover-can-i-m1-line-print-4-despeckled.png": "0 of 12000000 pixels are not 0 or 255",
+    "l2-w02-story-page-can-i-m1-line-4-despeckled.png": "0 of 2457600 pixels are not 0 or 255",
+    "l2-w02-story-page-can-i-m1-line-print-4-despeckled.png": "0 of 12000000 pixels are not 0 or 255",
+    "l2-w02-story-page-can-i-b-m1-line-2-despeckled.png": "0 of 2457600 pixels are not 0 or 255",
+    "l2-w02-story-page-can-i-b-m1-line-print-2-despeckled.png": "0 of 12000000 pixels are not 0 or 255",
+    "l2-w02-story-page-can-nan-m1-line-despeckled.png": "0 of 2457600 pixels are not 0 or 255",
+    "l2-w02-story-page-can-nan-m1-line-print-despeckled.png": "0 of 12000000 pixels are not 0 or 255",
+    "l2-w02-story-page-i-can-m1-line-despeckled.png": "0 of 2457600 pixels are not 0 or 255",
+    "l2-w02-story-page-i-can-m1-line-print-despeckled.png": "0 of 12000000 pixels are not 0 or 255",
+    "l2-w02-story-page-i-can-b-m1-line-despeckled.png": "0 of 2457600 pixels are not 0 or 255",
+    "l2-w02-story-page-i-can-b-m1-line-print-despeckled.png": "0 of 12000000 pixels are not 0 or 255",
+    "l2-w02-story-page-nan-and-i-can-m1-line-2-despeckled.png": "0 of 2457600 pixels are not 0 or 255",
+    "l2-w02-story-page-nan-and-i-can-m1-line-print-2-despeckled.png": "0 of 12000000 pixels are not 0 or 255",
+    "l2-w02-story-page-nan-can-m1-line-3-despeckled.png": "0 of 2457600 pixels are not 0 or 255",
+    "l2-w02-story-page-nan-can-m1-line-print-3-despeckled.png": "0 of 12000000 pixels are not 0 or 255",
+    "l2-w02-story-page-nan-can-b-m1-line-2-despeckled.png": "0 of 2457600 pixels are not 0 or 255",
+    "l2-w02-story-page-nan-can-b-m1-line-print-2-despeckled.png": "0 of 12000000 pixels are not 0 or 255"
+  },
+  "line_art_thickness_scan": {
+    "method": "a distance map from every black pixel to the nearest white pixel, then a cluster scan of the pixels deeper than 20 px; a stroke wider than 40 px would show up as a cluster",
+    "cover": "only the four eye pupils are deeper than 20 px; the deepest pupil measures 63 px from the pupil centre to its edge",
+    "can-i": "only the two eye pupils are deeper than 20 px",
+    "can-i-b": "only the two eye pupils are deeper than 20 px",
+    "can-nan": "only the four eye pupils are deeper than 20 px",
+    "i-can": "only the two eye pupils are deeper than 20 px",
+    "i-can-b": "only the two eye pupils are deeper than 20 px",
+    "nan-and-i-can": "only the four eye pupils are deeper than 20 px",
+    "nan-can": "only the two eye pupils are deeper than 20 px",
+    "nan-can-b": "only the two eye pupils are deeper than 20 px",
+    "result": "no thick solid black ring and no thick solid black band stands in any line print; every solid black area is an eye pupil"
+  },
+  "line_gap_scan": {
+    "method": "a distance map from every white pixel to the nearest black pixel, then a scan of the closed white areas that are thinner than 15 px",
+    "result": "the thin closed areas all sit between two parallel strokes of the play equipment, or between a pupil and its eye ring; the narrowest one measures 2 px and the rest measure 5 to 14 px; no gap sits inside a face or a hand",
+    "judgement": "no line gap makes the coloring hard"
+  },
+  "l2-w02-cover-can-i": {
+    "files": [
+      "out/storytime-review/batch-40/pages/l2-w02-cover-can-i-m1-color-print.png",
+      "out/storytime-review/batch-40/pages/l2-w02-cover-can-i-m1-line-print-4-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Ben and Nan stand at the bottom of the tall slide": "yes: both children stand at the foot of the slide in both files",
+      "they look up at it": "yes: both heads tilt up and both mouths are open in both files",
+      "Ben is drawn young, about five years old": "yes: small body, short legs and a large head in both files",
+      "Nan's cast look": "yes: short black hair in two bunches with red ties, an orange T-shirt with a white star, red shorts, white sneakers and large dark-brown eyes; the eyelash mark shows in the color file and in the line file",
+      "sunny playground": "yes: blue sky, white clouds, a pale sun in the top right corner and green grass in the color file; sky and grass in the line file",
+      "low climbing frame": "yes: a small wooden frame stands at the far left; the frame edge cuts it in both files",
+      "low balance beam": "yes: a round log beam lies left of centre behind the children in both files",
+      "tall slide": "yes: a tall slide with a ladder stands at the right in both files",
+      "no letters, words, or numbers": "yes: no text shows in either file",
+      "cover top 30 percent": "the slide tower posts reach 15 percent of the page height in the right quarter, so they cover 15 points of the top 30 percent band; the left 60 percent of the band is empty sky; the line art also draws a sun circle whose top sits at 3.5 percent of the height at the far right"
+    },
+    "open_items_judged": {
+      "the cover slide tower reaches into the top band": "not a defect under the bar: the tower is the goal prop, the children look up at it, and the left and centre of the band stay clear for the title",
+      "Ben's hair looks lumpy": "not a defect under the bar: the color file shows spiky tufts and the line art shows a smooth cap; both files read as the same boy"
+    },
+    "minor_differences": {
+      "Ben lash mark": "the line art puts a small black mark at the outer corner of Ben's left eye; the color file has no such mark; the mark measures 37 by 42 px on the 4000 px print; a mark of that size is not a defect under the bar",
+      "sun and cloud": "the line art draws a hard sun circle and a cloud at the top right; the color file shows a soft sun glow and faint cloud in the same place",
+      "tree at the right edge": "the line art draws a cloud outline and a tree trunk at the right edge; the color file has no tree there; the tree covers nothing and the sentence does not need it",
+      "small climbing frame": "the frame at the far left is cut by the page edge in both files; the writer check reports 95.51 percent white edge frame"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w02-story-page-can-i": {
+    "files": [
+      "out/storytime-review/batch-40/pages/l2-w02-story-page-can-i-m1-color-print.png",
+      "out/storytime-review/batch-40/pages/l2-w02-story-page-can-i-m1-line-print-4-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Ben stands at the bottom of the low climbing frame": "yes: the wooden frame fills the left of the picture and Ben stands at its foot at the right in both files",
+      "looks up": "yes: his head tilts up and both eyes point up in both files",
+      "worried face": "yes: the brows slope down at the inner ends and the mouth curves down in both files",
+      "Ben is drawn young, about five years old": "yes: small body, short legs and a large head in both files",
+      "plain shirt": "yes: no star shows on the shirt in either file",
+      "no letters, words, or numbers": "yes: no text shows in either file"
+    },
+    "open_items_judged": {
+      "Ben's hair looks lumpy": "not a defect under the bar: the color file shows spiky tufts and the line art shows a smooth cap; both files read as the same boy"
+    },
+    "minor_differences": {
+      "hair": "the line art draws Ben's hair as a smooth cap; the color file shows spiky tufts",
+      "nose": "the line art draws a small nose line; the color file shows a nose",
+      "frame top": "the climbing frame runs past the top edge of the page in both files; the writer check reports 95.24 percent white edge frame"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w02-story-page-can-i-b": {
+    "files": [
+      "out/storytime-review/batch-40/pages/l2-w02-story-page-can-i-b-m1-color-print.png",
+      "out/storytime-review/batch-40/pages/l2-w02-story-page-can-i-b-m1-line-print-2-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Ben puts one foot on the low balance beam": "yes: his right shoe rests on the beam in both files",
+      "holds his arms out": "yes: both arms stretch to the sides in both files",
+      "he wobbles a little": "yes: his body leans and the brows slope down at the inner ends in both files; the color file shows a worried mouth",
+      "plain shirt": "yes: no star shows on the shirt in either file",
+      "no letters, words, or numbers": "yes: no text shows in either file"
+    },
+    "open_items_judged": {
+      "the balance beam is a round log on this page": "not a defect under the bar: a round log matches the set picture in refs/, the sentence needs a balance beam, and both files of this page agree",
+      "Ben's hair looks lumpy": "not a defect under the bar: the color file shows spiky tufts and the line art shows a lumpy cap; both files read as the same boy"
+    },
+    "minor_differences": {
+      "hands": "each hand shows four fingers and one thumb in the color file; the line art adds finger lines and keeps the same five digits",
+      "background": "the color file shows the climbing frame at the left and the slide at the right; the line art shows a tree at the left and the slide at the right"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w02-story-page-can-nan": {
+    "files": [
+      "out/storytime-review/batch-40/pages/l2-w02-story-page-can-nan-m1-color-print.png",
+      "out/storytime-review/batch-40/pages/l2-w02-story-page-can-nan-m1-line-print-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Nan sits at the top of the tall slide": "yes: she sits on the platform at the top of the slide and her legs rest on the slide bed in both files",
+      "holds on tight": "yes: both hands grip the top rail in both files",
+      "she looks scared": "yes: the brows slope up at the inner ends and the mouth curves down in both files",
+      "Ben climbs the slide ladder behind her": "yes: Ben stands on the ladder rungs behind her in both files",
+      "holds out his hand": "yes: his right hand reaches out with an open palm in both files",
+      "Nan's cast look": "yes: black hair in two bunches with red ties, an orange T-shirt with a white star, red shorts, white sneakers, large dark-brown eyes and the eyelash mark in the color file",
+      "Ben is drawn young, about five years old": "yes: small body, short legs and a large head in both files",
+      "plain shirt": "yes: no star shows on Ben's shirt in either file",
+      "no letters, words, or numbers": "yes: no text shows in either file"
+    },
+    "minor_differences": {
+      "nose": "the line art draws a small nose for Nan and the color file shows a nose; both files agree",
+      "hair": "the line art draws Ben's hair as a smooth cap; the color file shows spiky tufts"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w02-story-page-i-can": {
+    "files": [
+      "out/storytime-review/batch-40/pages/l2-w02-story-page-i-can-m1-color-print.png",
+      "out/storytime-review/batch-40/pages/l2-w02-story-page-i-can-m1-line-print-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Ben sits at the top of the low climbing frame": "yes: he sits on the top platform and grips the rail in both files",
+      "a big proud smile": "yes: the mouth is open wide with a smile curve in both files",
+      "Ben is drawn young, about five years old": "yes: small body, short legs and a large head in both files",
+      "plain shirt": "yes: no star shows on the shirt in either file",
+      "no letters, words, or numbers": "yes: no text shows in either file"
+    },
+    "minor_differences": {
+      "nose": "the line art draws no nose for Ben; no sentence in this batch names the nose, and the face reads whole at book size",
+      "hair": "the line art draws Ben's hair as a smooth cap; the color file shows spiky tufts",
+      "tree": "the line art draws a tree at the right edge; the color file shows sky there"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w02-story-page-i-can-b": {
+    "files": [
+      "out/storytime-review/batch-40/pages/l2-w02-story-page-i-can-b-m1-color-print.png",
+      "out/storytime-review/batch-40/pages/l2-w02-story-page-i-can-b-m1-line-print-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Ben walks along the low balance beam": "yes: both shoes stand on the beam in both files",
+      "with his arms out": "yes: both arms stretch to the sides in both files",
+      "a big smile": "yes: the mouth is open wide with a smile curve in both files",
+      "Ben is drawn young, about five years old": "yes: small body, short legs and a large head in both files",
+      "plain shirt": "yes: no star shows on the shirt in either file",
+      "no letters, words, or numbers": "yes: no text shows in either file"
+    },
+    "open_items_judged": {
+      "the balance beam is a flat plank on this page": "not a defect under the bar: a flat plank matches the beam asset in refs/, the sentence needs a balance beam, and both files of this page agree"
+    },
+    "minor_differences": {
+      "background": "the color file shows the climbing frame at the left and the slide at the right; the line art shows a tree at the left and a bush with stones at the right; the sentence of this page names no background prop",
+      "Ben's marks": "the color file adds small lash flicks and cheek freckles that the reference Ben does not have; each mark is small; the line art draws none",
+      "line width": "this file carries the thickest lines of the batch at 31 px; every stroke keeps one even width"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w02-story-page-nan-and-i-can": {
+    "files": [
+      "out/storytime-review/batch-40/pages/l2-w02-story-page-nan-and-i-can-m1-color-print.png",
+      "out/storytime-review/batch-40/pages/l2-w02-story-page-nan-and-i-can-m1-line-print-2-despeckled.png"
+    ],
+    "rating": 9,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Ben and Nan slide down the tall slide together": "yes: both children sit on the slide bed in both files",
+      "Ben behind Nan": "yes: Ben sits higher and further back on the slide in both files",
+      "both laughing": "yes: both mouths are open wide with a smile curve in both files",
+      "with their arms up": "yes: all four arms reach up in both files",
+      "Nan's cast look": "yes: black hair in two bunches with red ties, an orange T-shirt with a white star, red shorts, white sneakers, large dark-brown eyes and the eyelash mark in the color file",
+      "Ben is drawn young, about five years old": "yes: small body, short legs and a large head in both files",
+      "plain shirt": "yes: no star shows on Ben's shirt in either file",
+      "no letters, words, or numbers": "yes: no text shows in either file"
+    },
+    "minor_differences": {
+      "overlapping hands": "Nan's right hand and Ben's hand overlap at the right of the picture in both files; each hand shows four fingers and one thumb",
+      "hair": "Ben's hair is a smooth swoosh in the color file and a smooth cap in the line art; this page matches the reference best in the batch"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w02-story-page-nan-can": {
+    "files": [
+      "out/storytime-review/batch-40/pages/l2-w02-story-page-nan-can-m1-color-print.png",
+      "out/storytime-review/batch-40/pages/l2-w02-story-page-nan-can-m1-line-print-3-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Nan climbs to the top of a low climbing frame": "yes: she stands on the top platform and grips the rail in both files",
+      "and smiles": "yes: the mouth curves up in both files",
+      "sunny playground with a low climbing frame, a low balance beam, and a tall slide": "yes: all three props stand in both files; the beam is a round log at the right centre and the slide is at the far right",
+      "Nan's cast look": "yes: black hair in two bunches with red ties, an orange T-shirt with a white star, red shorts, white sneakers, large dark-brown eyes and the eyelash mark in the color file",
+      "no letters, words, or numbers": "yes: no text shows in either file"
+    },
+    "minor_differences": {
+      "nose": "the line art draws a small nose for Nan and the color file shows a nose; both files agree",
+      "hands": "each hand shows four fingers over the rail in both files",
+      "pupils": "this line art uses solid black pupils; the earlier tries used ring pupils; the solid pupil is the normal reading for a coloring page"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w02-story-page-nan-can-b": {
+    "files": [
+      "out/storytime-review/batch-40/pages/l2-w02-story-page-nan-can-b-m1-color-print.png",
+      "out/storytime-review/batch-40/pages/l2-w02-story-page-nan-can-b-m1-line-print-2-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Nan walks along a low balance beam": "yes: both shoes stand on the beam in both files",
+      "with her arms out": "yes: both arms stretch to the sides in both files",
+      "Nan's cast look": "yes: black hair in two bunches with red ties, an orange T-shirt with a white star, red shorts, white sneakers, large dark-brown eyes and the eyelash mark in the color file",
+      "no letters, words, or numbers": "yes: no text shows in either file"
+    },
+    "open_items_judged": {
+      "the balance beam is a flat plank on this page": "not a defect under the bar: a flat plank matches the beam asset in refs/, the sentence needs a balance beam, and both files of this page agree"
+    },
+    "minor_differences": {
+      "nose": "the line art draws no nose for Nan; no sentence in this batch names the nose, and the face reads whole at book size",
+      "tree": "the line art draws a tree at the far left; the color file shows the climbing frame there",
+      "hands": "each hand shows four fingers and one thumb in both files"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "batch_notes": {
+    "workbooks_stage_2_findings": {
+      "thick solid black ring or band in the line art": "gone: the depth scan finds only eye pupils as solid black areas in all nine line prints; no ring and no band stands",
+      "a face part that the sentence names must show": "met: every named part shows in both files; the nose shows on the cover, can-i, can-nan and nan-can; the line art of i-can, i-can-b and nan-can-b draws no nose, and no sentence of this batch names the nose",
+      "extra parts on Pip": "not applicable: Pip does not appear in this batch"
+    },
+    "five_digit_hands": "no hand shows six digits: every hand that shows fingers shows four fingers and one thumb in the line art, and the color file agrees",
+    "gray_or_shading_in_the_line_art": "none: all eighteen line files hold 0 pixels that are not 0 or 255",
+    "text_in_the_picture": "none: no page shows a letter, a word or a number",
+    "balance_beam_continuity": "the beam is a round log on the cover, can-i-b, can-nan and nan-can, and a flat plank on i-can-b and nan-can-b; the set picture in refs/ shows a round log and the beam asset in refs/ shows a flat plank; each page agrees with itself, so this is a note for the builder and not a defect under the bar",
+    "ben_hair_continuity": "Ben's hair is a smooth swoosh on i-can-b and nan-and-i-can, and spiky tufts on the other five pages; both styles read as the same boy at book size, so this is a note for the builder",
+    "cover_top_band": "the slide tower reaches 15 percent of the page height in the right quarter of the cover, so it covers 15 points of the top 30 percent band; the left 60 percent of the band is empty sky in both files",
+    "pip": "Pip does not appear in this batch",
+    "nose_lines": "the line art draws a nose on the cover, can-i, can-nan and nan-can; the line art of i-can, i-can-b and nan-can-b draws no nose; no sentence of this batch names the nose"
+  },
+  "summary": {
+    "pages": 9,
+    "pass": 9,
+    "clean": 9,
+    "clean_keys": [
+      "l2-w02-cover-can-i",
+      "l2-w02-story-page-can-i",
+      "l2-w02-story-page-can-i-b",
+      "l2-w02-story-page-can-nan",
+      "l2-w02-story-page-i-can",
+      "l2-w02-story-page-i-can-b",
+      "l2-w02-story-page-nan-and-i-can",
+      "l2-w02-story-page-nan-can",
+      "l2-w02-story-page-nan-can-b"
+    ],
+    "not_clean_keys": [],
+    "workbooks_findings_gone_count": "3 of 3",
+    "defects_found": 0,
+    "notes_for_the_builder": 4,
+    "ratings": {
+      "l2-w02-cover-can-i": 8,
+      "l2-w02-story-page-can-i": 8,
+      "l2-w02-story-page-can-i-b": 8,
+      "l2-w02-story-page-can-nan": 8,
+      "l2-w02-story-page-i-can": 8,
+      "l2-w02-story-page-i-can-b": 8,
+      "l2-w02-story-page-nan-and-i-can": 9,
+      "l2-w02-story-page-nan-can": 8,
+      "l2-w02-story-page-nan-can-b": 8
+    }
+  }
+}

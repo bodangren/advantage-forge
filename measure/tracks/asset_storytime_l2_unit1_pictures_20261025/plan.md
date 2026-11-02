@@ -1626,8 +1626,9 @@ rows T142 to T151, and the closeout gate for 30 jobs.
 
 ## Phase 4: Remaining pictures and cover
 
-- [ ] Task: Reconcile the final Workbooks picture list and size specification. Picture list
-  version 4 is pending and comes before 2026-11-16. Version 4 adds a week 8 review and the
+- [x] Task: Reconcile the final Workbooks picture list and size specification. Commit `b6824b8a`
+  (Red `c0035c28`, `c2ebc72d`; Green `b6824b8a`; Reviews A, B, and C pass at `4d4d86a2`). Picture list
+  version 4 was pending and comes before 2026-11-16. Version 4 adds a week 8 review and the
   Benchmark 1 rows for the words moon, mango, ostrich, and drum. Make no picture for those
   words until version 4 arrives. Version 3 changed four ids in weeks 2 and 6. The suffix moved
   from `-a` to `-b`. Reconcile those four ids. Preserve picture content and document any resize
@@ -1635,8 +1636,8 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   Red evidence for Phase 4 Task 1 and the week delivery change (2026-11-02). Role base
   `fc76c272`; Phase 4 base `fc76c272`. Models: Red `opencode-go/deepseek-v4.1-flash`; Green
   `claude-code/claude-sonnet-5-5#high`. Red test commit `c0035c28`.
-  The task marker stays `[ ]`: measure-guard refuses a Phase 4 task change while the Phase 3
-  heading has no checkpoint, and Phase 3 waits for Daniel's review.
+  The task marker stayed `[ ]` at that time: measure-guard refuses a Phase 4 task change while
+  the Phase 3 heading has no checkpoint. The checkpoint `21de99f6` now exists, so the marker is `[x]`.
   Red command:
   `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts tests/storytime-picture-rows.test.ts tests/storytime-muse-delivery.test.ts --maxWorkers=1'`.
   Exit code `1`. `Test Files  2 failed | 1 passed (3)`. `Tests  3 failed | 166 passed (169)`.
@@ -1682,8 +1683,8 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   Logs: `mid-red-p4-r2-head.log`, `mid-red-p4-r2-oldcode.log`, and `mid-red-p4-r2.log`.
   Green evidence for Phase 4 Task 1 (2026-11-02, Green session, claude-code/claude-sonnet-5-5#high).
   Role base `37fa3501`; Phase 4 base `fc76c272`. Red model `opencode-go/deepseek-v4.1-flash`.
-  Coder: none. Implementation commit `b6824b8a`. Status: **blocked**. Task 1 goes to [x] after the
-  Phase 3 checkpoint and after a Mid Red retry of T173 and T177 (see "Red test defects").
+  Coder: none. Implementation commit `b6824b8a`. Status at that time: **blocked**. The Mid Red retry
+  of T173 and T177 (Red r2, `c2ebc72d`) cleared the block, and Task 1 is now `[x]`.
   - Files: `src/storytime/book-pictures.ts` (`PICTURE_LIST_SHA256` holds the version 4 value;
     `PICTURE_LIST_V3_SHA256` is removed; `parseWeek` accepts 1 to 8; `weeksTwoToSevenRows`;
     `deliver` filters the rows by `--week`; the `Skipped` line is now `Skipped <id> (<reason>)`),
@@ -1763,11 +1764,19 @@ rows T142 to T151, and the closeout gate for 30 jobs.
     - The only gate line is structural: the current phase has 3 non-deferred incomplete tasks.
       The Phase 4 markers wait for the Phase 3 checkpoint. No marker changed.
     - status: complete.
-- [ ] Task: Produce weeks 2 to 7 after the week 1 review. The weeks hold 162 rows. They need 324
+- [~] Task: Produce weeks 2 to 7 after the week 1 review. The weeks hold 162 rows. They need 324
   files, one color file and one line-art file per row. Apply the same automated, two-model, and
   person-count gates to all 162 pictures.
-  - Task 2 goes to [~] after the Phase 3 checkpoint (measure-guard phase order); PM order 00:3x
-    ICT 2026-11-02 started the staging early.
+  - Task 2 is `[~]` after the Phase 3 checkpoint `21de99f6` (measure-guard phase order); PM order
+    00:3x ICT 2026-11-02 started the staging early.
+  - Week 2 batch 1 review (2026-11-02): `item-review-batch-40.json` passes. 9 of 9 rows are clean
+    (the cover and 8 story pages). The reviewer is `minimax-cn-coding-plan/MiniMax-M3.1-Flash`,
+    because three `mimo` runs stopped on `getaddrinfo EAI_AGAIN`. The orchestrator spot check of
+    the `can-i` color file and the `i-can-b` line file agrees. The reviewer judged four builder
+    notes not to be defects: the beam is a log or a plank, Ben's hair, the nose line on some
+    pages, and the cover slide tower at 15 percent into the top band. This review is model
+    evidence. It is not the person count. `approved.json` is not updated for these rows. Files:
+    `measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-40.json` and `.log`.
   - Week 2 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
     2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `fc76c272`, phase_base_sha
     `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.
@@ -2277,7 +2286,7 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       This proves that the inputs exist and match the list. It proves nothing about picture quality.
     - Open: no task is `[x]`. No week 7 page call before Daniel answers on week 1. The 7 element
       sheets need an independent look. The teddy page may draw a whole puppy instead of the tail tip.
-- [ ] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
+- [~] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks.
     - Level 2 cover staging (inputs only; default file name and size wait for the PM). Green round
       of 2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `1414a3ea`, phase_base_sha

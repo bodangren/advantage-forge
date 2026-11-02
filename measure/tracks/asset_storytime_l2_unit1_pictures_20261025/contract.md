@@ -68,6 +68,35 @@ Use `node --import tsx scripts/storytime-book-pictures.ts <command>`.
 - Both record modes refuse a `callId` with no before-call entry and a `callId` that already has an
   after-call entry. They also refuse a `--calibration`, `--job`, or `--version` value that differs
   from the before-call entry. A refused record writes nothing.
+- `deliver --list <pictures.json> --approvals <file> --muse <folder> --delivery <folder>
+  [--week <1 to 8>]`: copy the approved Muse prints into a delivery folder and write
+  `manifest.json`. The command is offline and makes no provider call
+  (`src/storytime/book-pictures.ts:4726-4757`; flags at `:4636-4664`). It reads the list with the
+  pinned loader and writes through `writeMuseDelivery` (`src/storytime/muse-delivery.ts:336`).
+  - `--week` keeps only the list rows of that week (`book-pictures.ts:4745`). An approval entry
+    of another week then names a row that is not in the filtered rows, and the writer refuses it
+    before any write (`muse-delivery.ts:357-359`).
+  - `fileVersion` rule: an approval entry with `fileVersion: N` delivers `<row id>-vN.png` and
+    `<row id>-line-vN.png`. An entry without it keeps the list names. A list name without a
+    `-v<n>.png` suffix is refused when `fileVersion` is set (`muse-delivery.ts:186-205`).
+  - The writer refuses these cases. Each refusal writes nothing. A problem in a print or a review
+    entry joins a list, and the writer stops with `The Muse delivery stopped; nothing was written`
+    (`muse-delivery.ts:444`). The other cases throw at once.
+    - A duplicate row id in the picture list: `The picture list holds the row <id> twice.`
+      (`muse-delivery.ts:342-346`).
+    - A duplicate row id in the approval list: `The approval list holds the row <id> twice.`
+      (`muse-delivery.ts:355`).
+    - A delivery root that is a symlink (`lstat`): `The delivery folder <path> is a symlink; the
+      writer refuses it.` (`muse-delivery.ts:348-351`).
+    - A symlink at a Muse print file, or a print outside the Muse folder
+      (`muse-delivery.ts:246-258`).
+    - A symlink, or a path that is not a regular file, at a delivered file or at `manifest.json`
+      (`muse-delivery.ts:456-459` and `:475-478`).
+    - A delivery folder that holds a different `manifest.json`, or a file under a list name with
+      different bytes (`muse-delivery.ts:460-462` and `:479-482`). The writer never overwrites.
+    - A line print with a pixel value other than 0 or 255: `Line-art twin must use only 0 and 255
+      pixels; <n> grey pixels found.` (`book-pictures.ts:1771-1780`, called at
+      `muse-delivery.ts:408`).
 - `manifest`: rebuild the manifest from jobs, pictures, and review logs.
 - `sheet`: make a labelled contact sheet for human review. Labels stay out of book pictures. A
   reader page shows its color twin and its line-art twin side by side.

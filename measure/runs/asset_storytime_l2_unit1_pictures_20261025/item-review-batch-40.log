@@ -1,0 +1,160 @@
+# Batch 40 item review log
+
+Date: 2026-11-02. Reviewer: minimax-cn-coding-plan/MiniMax-M3.1-Flash. Audit only.
+Bar: Daniel 2026-11-01 14:15 ICT. A defect is only what a teacher or a child sees at book size.
+Nine rows. Week 2 batch 1, Phase 4. I opened both files of every row and the five reference pictures.
+
+Status: pass. All nine rows pass and none carries a defect.
+
+| key | rating | clean | reason if not clean |
+| --- | --- | --- | --- |
+| l2-w02-cover-can-i | 8 | yes | |
+| l2-w02-story-page-can-i | 8 | yes | |
+| l2-w02-story-page-can-i-b | 8 | yes | |
+| l2-w02-story-page-can-nan | 8 | yes | |
+| l2-w02-story-page-i-can | 8 | yes | |
+| l2-w02-story-page-i-can-b | 8 | yes | |
+| l2-w02-story-page-nan-and-i-can | 9 | yes | |
+| l2-w02-story-page-nan-can | 8 | yes | |
+| l2-w02-story-page-nan-can-b | 8 | yes | |
+
+## What I checked
+
+I read the brief and applied Daniel's bar. I opened the nine color prints and the nine line prints.
+I compared each line file with its color file. I used the five pictures in `refs/` for the cast looks.
+I counted every pixel that is not 0 and not 255 in all eighteen line files.
+I measured the stroke depth in every line print. I measured the width of the narrow white areas.
+I measured how far the cover objects reach into the top 30 percent band.
+
+## Line file count
+
+The count is 0 in all eighteen line files. No gray, no specks, no shading.
+The nine line prints pass the writer check in the brief.
+
+## Thick ring and band
+
+A stroke wider than 40 px would show up in my depth scan. No such stroke exists in any line print.
+The only solid black areas are the eye pupils. The deepest pupil measures 63 px from its centre to its edge.
+The sun circle on the cover and the eye rings keep one even width.
+So the stage 2 finding about a thick solid black ring or band is gone on every page.
+
+## Narrow white areas
+
+The narrow closed areas sit between two parallel strokes of the play equipment.
+The narrowest one measures 2 px and the rest measure 5 to 14 px.
+No narrow area sits inside a face or a hand. A child can color these areas or leave them white.
+So no line gap makes the coloring hard.
+
+## Cover row
+
+The goal holds. Ben and Nan stand at the foot of the tall slide and both look up.
+The low climbing frame stands at the far left. The round log beam lies left of centre.
+The tall slide stands at the right. The sky, the clouds and the sun make a sunny playground.
+Nan's cast look holds. Her two bunches have red ties, her shirt is orange with a white star,
+her shorts are red, her shoes are white, her eyes are large and dark brown, and her eyelash mark shows.
+No text shows in either file.
+
+Top band: the slide tower posts reach 15 percent of the page height in the right quarter.
+So the tower covers 15 points of the top 30 percent band. The left 60 percent of the band is empty sky.
+The line art also draws a sun circle whose top sits at 3.5 percent of the height at the far right.
+I judged the tower not a defect under the bar. The tower is the goal prop and the children look up at it.
+
+Minor notes for the builder, none a defect:
+- The line art puts a small mark at the outer corner of Ben's left eye. The color file has none.
+  The mark measures 37 by 42 px on the 4000 px print. A mark of that size is not a defect under the bar.
+- The line art draws a hard sun circle and a cloud at the top right. The color file shows a soft glow there.
+- The line art draws a tree at the right edge. The color file has no tree there. The tree covers nothing.
+- The climbing frame at the far left is cut by the page edge in both files.
+
+## can-i row
+
+The goal holds. Ben stands at the foot of the climbing frame with one hand on a rung.
+His head tilts up and both eyes point up. The brows slope down at the inner ends and the mouth curves down.
+So the face reads worried. His shirt is plain in both files. The builder changed the spec for this page.
+No text shows in either file. The line art draws a small nose line. No defect found.
+
+## can-i-b row
+
+The goal holds. His right shoe rests on the beam. Both arms stretch to the sides.
+His body leans and his brows slope down, so he wobbles. His shirt is plain in both files.
+Each hand shows four fingers and one thumb in the color file, and the line art keeps the same five digits.
+The beam is a round log on this page, and it matches the set picture in `refs/`.
+I judged the beam shape not a defect under the bar. The sentence needs a balance beam and both files agree.
+No text shows in either file. No defect found.
+
+## can-nan row
+
+The goal holds. Nan sits on the platform at the top of the slide and her legs rest on the slide bed.
+Both hands grip the top rail, so she holds on tight. The brows slope up and the mouth curves down, so she looks scared.
+Ben stands on the ladder rungs behind her and reaches out one open hand.
+Nan's cast look holds and her eyelash mark shows in the color file. Ben's shirt is plain.
+The line art draws a small nose for Nan, and the color file shows a nose. The two files agree.
+No text shows in either file. No defect found.
+
+## i-can row
+
+The goal holds. Ben sits on the top platform and grips the rail. His mouth is open wide with a smile curve.
+So he shows a big proud smile. His shirt is plain in both files.
+The line art draws no nose for Ben. No sentence of this batch names the nose and the face reads whole.
+No text shows in either file. No defect found.
+
+## i-can-b row
+
+The goal holds. Both shoes stand on the flat plank beam. Both arms stretch to the sides.
+His mouth is open wide with a smile curve. His shirt is plain in both files.
+The beam is a flat plank on this page, and it matches the beam asset in `refs/`.
+The color file adds small lash flicks and cheek freckles that the reference Ben does not have.
+Each mark is small and the line art draws none. I judged these marks not a defect under the bar.
+The line art keeps a tree, a bush, stones and a sun. The color file shows the climbing frame and the slide.
+The sentence of this page names no background prop, so this difference is not a defect.
+This file carries the thickest lines of the batch at 31 px and every stroke keeps one even width.
+No text shows in either file. No defect found.
+
+## nan-and-i-can row
+
+The goal holds. Both children sit on the slide bed. Ben sits higher and further back, so he is behind Nan.
+Both mouths are open wide with a smile curve, so both laugh. All four arms reach up.
+Nan's cast look holds and her eyelash mark shows. Ben's shirt is plain.
+Nan's right hand and Ben's hand overlap at the right of the picture in both files.
+Each hand shows four fingers and one thumb. The overlap does not read as a wrong hand.
+This page matches the reference best in the batch, and I rated it 9.
+No text shows in either file. No defect found.
+
+## nan-can row
+
+The goal holds. Nan stands on the top platform and grips the rail, so she is at the top of the frame.
+Her mouth curves up, so she smiles. All three props stand in both files: the low climbing frame,
+the round log beam at the right centre and the tall slide at the far right.
+The sun at the top right makes the scene sunny. Nan's cast look holds.
+The line art draws a small nose for Nan, and the color file shows a nose. The two files agree.
+Each hand shows four fingers over the rail in both files.
+The line art uses solid black pupils and the earlier tries used ring pupils. The solid pupil is normal.
+No text shows in either file. No defect found.
+
+## nan-can-b row
+
+The goal holds. Both shoes stand on the flat plank beam and both arms stretch to the sides.
+Nan's cast look holds. The beam is a flat plank on this page and it matches the beam asset in `refs/`.
+The line art draws no nose for Nan and draws a tree at the far left.
+No sentence of this batch names the nose and the tree covers nothing.
+No text shows in either file. No defect found.
+
+## Cast and prop notes for the builder
+
+These four notes are not defects under the bar. They come from the reference set and from the batch itself.
+
+1. The balance beam has two shapes. It is a round log on the cover, can-i-b, can-nan and nan-can,
+   and a flat plank on i-can-b and nan-can-b. The set picture shows a round log and the beam asset
+   shows a flat plank. Each page agrees with itself.
+2. Ben's hair has two shapes. It is a smooth swoosh on i-can-b and nan-and-i-can,
+   and spiky tufts on the other five pages. The reference Ben has the smooth swoosh.
+3. The nose line shows on some pages only. The line art draws a nose on the cover, can-i, can-nan
+   and nan-can. The line art of i-can, i-can-b and nan-can-b draws no nose.
+   No sentence of this batch names the nose.
+4. The cover slide tower reaches 15 percent of the page height in the right quarter.
+
+## Result
+
+Nine pages. Nine pass. Nine clean. No defect found. Four notes for the builder.
+The three stage 2 findings from week 1 are gone on every page of this batch.
+Pip does not appear in this batch.
