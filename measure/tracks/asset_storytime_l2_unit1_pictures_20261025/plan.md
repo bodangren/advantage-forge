@@ -3371,6 +3371,77 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       This proves that the inputs exist and match the list. It proves nothing about picture quality.
     - Open: no task is `[x]`. No week 7 page call before Daniel answers on week 1. The 7 element
       sheets need an independent look. The teddy page may draw a whole puppy instead of the tail tip.
+    - Week 7 batch 1 (the cover "Is It a Ball?" and 8 story pages). Green round of 2026-11-03,
+      claude-code/claude-sonnet-5-5#high. role_base_sha `da09d48a`, phase_base_sha `fc76c272`. Red model
+      opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none; nothing was delegated. No
+      change in `src/`, `tests/`, `scripts/`, `assets/`, or `approved.json`. No marker changed. Run log:
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w07-b1.log`. Review folder:
+      `out/storytime-review/batch-55/` (`brief.md`, `pages/` 36 files, `refs/` 7 files, no control rows).
+      Green did not rate its own work. No page of this batch has a sun.
+      - Spec commit: `5d64e130` (five specs, `linePrompt` only; `text` and `goal` did not change). The cover
+        `linePrompt` now puts one index finger on May's chin (tries 1 to 3 drew her hand on her chest). The
+        ball, kite, and drum `linePrompt` now keep one index finger stretched out for May's pointing hand,
+        with the other fingers curled (tries 1 to 3 drew an open hand). The teddy `linePrompt` now says the
+        tail tip has no line or mark inside it, the bear in the bubble keeps two eyes, a nose, and a mouth,
+        both children keep their hands low on their knees, and the blanket keeps its few big folds.
+      - Rows (9). Color version, line try, then the writer check (line width, ink, edge frame white; gate
+        90) on the 4000 x 3000 despeckled line print:
+        - `cover-is-it-a-ball` (m1, line 6): PASS 16 px, 10.17, 92.07. May holds one finger on her chin;
+          Ben sits at the right; no toy.
+        - `story-page-is-it-a-ball-no` (m1, line 6): PASS 13 px, 8.40, 93.32. May points; one ball in the
+          bubble.
+        - `story-page-is-it-a-train-no` (m1, line 3): PASS 15 px, 9.97, 92.72. May points; one train in the
+          bubble.
+        - `story-page-is-it-a-kite-no` (m1, line 4): PASS 14 px, 9.34, 93.04. May points; one kite with
+          three bows in the bubble.
+        - `story-page-is-it-a-car-no` (m1, line 3): PASS 17 px, 11.05, 91.53. May points; one car in the
+          bubble.
+        - `story-page-is-it-a-teddy-no` (m1, line 9): PASS 14 px, 10.08, 92.90. One teddy bear in the
+          bubble; only the tail tip shows beside the top of the blanket, in color and line.
+        - `story-page-is-it-a-doll-no` (m1, line 3): PASS 12 px, 8.75, 93.33. May points; one doll in the
+          bubble. The line width is the gate minimum.
+        - `story-page-is-it-a-drum-no` (m1, line 6): PASS 14 px, 9.34, 92.47. May points; one drum with two
+          drumsticks in the bubble.
+        - `story-page-is-it-pip-yes` (m1, line 2): PASS 16 px, 10.35, 91.42. Ben lifts the blanket; Pip
+          jumps out whole; May opens both arms.
+        All 9 chosen color prints: PNG, 4000 x 3000, 8-bit, sRGB, 3 channels, no alpha, no palette. In
+        every chosen print, no person, hand, hair, foot, Pip part, or needed prop is cut at an edge. The
+        edge frame values (91 to 93 percent) are lower than in weeks 5 and 6, because the wall beams of
+        the toy corner run off the print edge (background only).
+      - Retries and why: no color retry; all 9 first color prints were usable. Line rejects (the writer
+        check passed on the try unless noted). Solid black eyes with no outline: cover tries 2 and 4, ball
+        tries 1, 2, and 5, train tries 1 and 2, car try 2, doll try 2, drum tries 1, 4, 5, 7, and 8, kite
+        try 6, teddy tries 6 and 8, Pip page try 1 (Pip's eyes). Solid black hair fill on May: kite try 3
+        and Pip page try 3. Edge frame under 90 percent (gate fail): cover try 5, teddy try 1, train try 1
+        (it also had a black line along the bottom edge). Open hand instead of a pointing finger: ball try
+        3, kite tries 1 and 2, car try 1, drum tries 2 and 3. Ball try 4 drew glasses-like double rings
+        around May's eyes. Teddy try 2 had a mark inside the tail tip, teddy try 3 had a blank bear face
+        and a cloud-like tail, teddy try 4 raised both children's hands, and teddy try 5 drew the blanket
+        as a lumpy shape with no folds. Kite try 5 drew Ben with closed laughing eyes. The cover tries 1 to
+        3 drew May's hand on her chest, so the cover `linePrompt` changed. The doll try 1 had a scalloped
+        blanket base. The drum try 6 (first call) failed with a network timeout at cost 0 and was made
+        again. No try has a star, a badge, text, or a gray fill.
+      - Stage gate after the spec changes. The real command `node scripts/storytime-stage-check.mjs --week 7
+        --list /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --specs
+        docs/storytime/l2-unit1/w07/muse` prints "text mismatches: 0", "goal mismatches: 0", "outDir
+        mismatches: 0", "missing element paths: 0", and "page candidates: 262", then "stage check: fail".
+        The only problem lines are the page candidate files (week 7 pictures exist). A clean run in a
+        scratch folder (the 21 element files that the specs name, copied with the same relative paths, and
+        an empty week 7 output folder) printed list sha256
+        `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`, rows 27, specs found 27, text
+        mismatches 0, goal mismatches 0, outDir mismatches 0, element paths checked 90, missing element
+        paths 0, page candidates 0, "stage check: pass", exit code 0.
+      - Calls: 56 billed in `out/storytime/l2/unit1/w07/muse/costs.tsv` this round (9 color and 47 line),
+        all at 0.01 USD. One line call (drum, try 6) failed with a network timeout and cost nothing. Round
+        cost 0.56 USD. Running total 11.24 + 0.56 = 11.80 USD. The cap of 70 billed calls was not reached.
+      - Open: `approved.json` and the stage 2 check are not run for these rows. `batch-55` needs an
+        independent review. Ben's hair differs between rows in the line art (tufts, spikes, or curls; the
+        color has messy tufts). On the car page May's fringe is drawn as several vertical strokes. On the
+        kite page the blanket has ragged flaps at both sides and Ben's foot overlaps its edge. On the
+        train page Ben's mouth is closed in the line art (open in the color). May's eye rings on the drum
+        page are thin. The doll page line width is 12 px (the gate minimum). The teddy tail tip sits at the
+        top of the blanket beside May, not at the far edge of the blanket. The other 18 rows of week 7
+        (the 9 check rows and the cover and 8 pages of "The Top") are not made.
 - [~] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks.
     - Level 2 cover staging (inputs only; default file name and size wait for the PM). Green round

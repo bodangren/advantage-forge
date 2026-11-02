@@ -1,0 +1,32 @@
+Step 1: read notes; 9 color m1 made (9 billed).
+Step 2: viewed 9 color m1 prints; all usable (teddy: tail tip behind blanket top; pip-yes: Pip whole). Starting line tries 1-3 (27 calls).
+Step 3: viewed 27 line tries. Picks so far: cover L3, ball L3(open hand), train L3, kite L2(open hand), car L3, teddy L2(tail mark), doll L3, drum L3, pip-yes L2. Billed 36.
+Step 4: linePrompt edits (cover chin finger, ball/kite/drum pointing finger, teddy tail tip + bear face); tries 4-6 for 5 rows (15 calls) -> 51 billed.
+Step 5: viewed tries 4-8. Picks: cover L6, ball L6, kite L4, drum L6, train L3, car L3, doll L3, pip-yes L2; teddy open (L4 raised hands, L6 solid May eyes). Edited teddy linePrompt (hands low, blanket folds); teddy tries 7-9. Billed 53 before; drum 6 failed timeout cost 0.
+Step 6: teddy tries 7-9 viewed; picks final: cover L6, ball L6, train L3, kite L4, car L3, teddy L9, doll L3, drum L6, pip-yes L2. Next: costs check, stage gate, spec commit, batch-55.
+Step 7: stage gates run (real: text0 goal0 outDir0 missing0 page candidates 262; scratch: pass). Spec commit made. Billed 56 total (9 color, 47 line, 1 timeout cost 0). Next: batch-55 folder.
+Step 8: batch-55 folder done (brief.md, pages/ 36 files, refs/ 7 files); stage gates run; 56 billed 0.56 USD (9 color, 47 line, 1 line timeout at cost 0). Step 9: plan note added under Phase 4 Task 2 (plan.md had no foreign change before the edit). Next: record commit.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2, week 7 batch 1 (cover "Is It a Ball?" and 8 story pages; marker unchanged)
+role_base_sha: da09d48a
+phase_base_sha: fc76c272
+spec_commits: 5d64e130 (cover, ball, kite, drum, teddy linePrompt only; text and goal unchanged)
+plan_evidence_commit: see git log (the commit after 5d64e130 that holds the plan note and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; image=meta/muse-image; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: cover-is-it-a-ball m1 + line 6 (PASS 16 px, 10.17, edge 92.07); ball-no m1 + line 6 (PASS 13 px, 8.40, 93.32); train-no m1 + line 3 (PASS 15 px, 9.97, 92.72); kite-no m1 + line 4 (PASS 14 px, 9.34, 93.04); car-no m1 + line 3 (PASS 17 px, 11.05, 91.53); teddy-no m1 + line 9 (PASS 14 px, 10.08, 92.90); doll-no m1 + line 3 (PASS 12 px, 8.75, 93.33); drum-no m1 + line 6 (PASS 14 px, 9.34, 92.47); pip-yes m1 + line 2 (PASS 16 px, 10.35, 91.42). All 9 color prints PNG 4000x3000 8-bit sRGB 3ch no alpha no palette. Nothing needed is cut at a print edge.
+open_items: approved.json and stage 2 check not run; batch-55 needs an independent review; Ben's line-art hair differs between rows (tufts, spikes, curls); car page May's fringe is several vertical strokes; kite page blanket has ragged flaps and Ben's foot overlaps its edge; train page Ben's mouth is closed in line (open in color); drum page May's eye rings are thin; doll page line width 12 px (gate minimum); teddy tail tip sits at the top of the blanket beside May; the real week 7 stage gate prints text 0, goal 0, outDir 0, missing 0 but "stage check: fail" only because 262 page candidate files exist (a clean scratch run printed "stage check: pass", exit 0); the other 18 rows of week 7 are not made
+round_cost_usd: 0.56
+running_total_usd: 11.80
+calls: 56 billed (9 color, 47 line), 1 failed (network timeout, drum line try 6) at cost 0, cap 70 not reached
+batch: out/storytime-review/batch-55/
+handoff: Review out/storytime-review/batch-55/ against Daniel's bar for 9 rows. Check first: the teddy page (only the golden-brown tail tip of Pip beside the blanket, in color and line, no other Pip part; one teddy bear with a face in the bubble), each thought bubble shows exactly one toy and no other toy, May's pointing finger (one index finger) on the ball, train, kite, car, doll, and drum pages, the cover (finger on chin, no toy), the pip-yes page (Pip whole, floppy ears, collar and tag, Ben lifts the blanket, May opens her arms), and the eye rule (ring outline with solid pupil on every child). Defaults if rated a defect only: Ben's hair differences (accept), car fringe strokes (accept), kite blanket flaps (accept), train closed mouth (accept), drum thin eye rings (accept; a new line try if the reviewer rates it a defect), doll 12 px width (accept, passes gate). Default now: no further Muse call. Next Green round: week 7 batch 2 (the cover "The Top" and 8 story pages).
+finding_ids: none
+dispositions: none
+END_MEASURE_AGENT_RESULT
