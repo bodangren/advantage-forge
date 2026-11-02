@@ -229,6 +229,44 @@ async function picture(size: PictureSize, background = '#ffffff', focalTop = fal
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><rect width="100%" height="100%" fill="${background}"/><circle cx="${width / 2}" cy="${height * (focalTop ? 0.15 : 0.65)}" r="${height * 0.12}" fill="#456a86"/></svg>`;
   return sharp(Buffer.from(svg)).flatten({ background: '#ffffff' }).toColourspace('srgb').png().toBuffer();
 }
+// A 4000 x 3000 cover print. The calm-top region is rows 0 to 899. A mark is the only busy pixel.
+const COVER_PRINT_WIDTH = 4000;
+const COVER_PRINT_HEIGHT = 3000;
+const COVER_CALM_RGB = [244, 233, 208] as const;
+const COVER_BUSY_RGB = [47, 58, 90] as const;
+async function coverPrint(
+  directory: string,
+  name: string,
+  mark: { bands?: Array<{ from: number; to: number }>; disc?: { cy: number; radius: number } } = {},
+): Promise<string> {
+  const width = COVER_PRINT_WIDTH;
+  const height = COVER_PRINT_HEIGHT;
+  const data = Buffer.alloc(width * height * 3);
+  for (let index = 0; index < width * height; index += 1) {
+    data[index * 3] = COVER_CALM_RGB[0];
+    data[index * 3 + 1] = COVER_CALM_RGB[1];
+    data[index * 3 + 2] = COVER_CALM_RGB[2];
+  }
+  const paint = (x: number, y: number) => {
+    const index = (y * width + x) * 3;
+    data[index] = COVER_BUSY_RGB[0];
+    data[index + 1] = COVER_BUSY_RGB[1];
+    data[index + 2] = COVER_BUSY_RGB[2];
+  };
+  for (const band of mark.bands ?? []) {
+    for (let y = band.from; y <= band.to; y += 1) for (let x = 0; x < width; x += 1) paint(x, y);
+  }
+  if (mark.disc) {
+    const { cy, radius } = mark.disc;
+    for (let y = Math.max(0, cy - radius); y <= Math.min(height - 1, cy + radius); y += 1) {
+      const half = Math.sqrt(radius * radius - (y - cy) * (y - cy));
+      for (let x = Math.ceil(width / 2 - half); x <= Math.floor(width / 2 + half); x += 1) paint(x, y);
+    }
+  }
+  const file = path.join(directory, `${name}.png`);
+  await writeFile(file, await sharp(data, { raw: { width, height, channels: 3 } }).png().toBuffer());
+  return file;
+}
 async function tree(directory: string): Promise<string[]> {
   const files: string[] = [];
   for (const entry of await readdir(directory, { withFileTypes: true })) {
@@ -4721,4 +4759,73 @@ describe('Phase 4 picture list version 4', () => {
       await rm(directory, { recursive: true, force: true });
     }
   }, 240000);
+
+  it('T183: the cover calm-top gate reads the top 900 rows, passes a calm top, and fails a busy top', async () => {
+    const report = (pictureSeams as unknown as {
+      coverCalmTopReport?: (printPath: string) => Promise<{ share: number; rows: number; ok: boolean }>;
+    }).coverCalmTopReport;
+    expect(report, 'The coverCalmTopReport seam exists.').toBeTypeOf('function');
+    const entry = (wrapperSeams as unknown as {
+      runStorytimeBookPicturesEntry?: (
+        argv: string[],
+        dependencies?: { errorLog?: (message: string) => void },
+      ) => Promise<number>;
+    }).runStorytimeBookPicturesEntry;
+    expect(entry, 'The runStorytimeBookPicturesEntry seam exists.').toBeTypeOf('function');
+    if (typeof report !== 'function' || typeof entry !== 'function') return;
+
+    const directory = await mkdtemp(path.join(root, 'cover-calm-top-'));
+    try {
+      // Case (b) is a focal disc inside rows 0 to 899. Case (c) moves the band across the edge.
+      const prints = {
+        calm: await coverPrint(directory, 'calm'),
+        busyTop: await coverPrint(directory, 'busy-top', { disc: { cy: 450, radius: 260 } }),
+        bandBelow: await coverPrint(directory, 'band-below', { bands: [{ from: 900, to: 999 }] }),
+        bandInside: await coverPrint(directory, 'band-inside', { bands: [{ from: 800, to: 899 }] }),
+      } as const;
+      const SHARE_LINE = 'top 30 percent differing share: ';
+      const ROWS_LINE = 'top 30 percent rows: ';
+      const cases = [
+        { name: 'calm top', file: prints.calm, passes: true, above: false },
+        { name: 'busy top', file: prints.busyTop, passes: false, above: true },
+        { name: 'busy band from row 900 (outside)', file: prints.bandBelow, passes: true, above: false },
+        { name: 'busy band to row 899 (inside)', file: prints.bandInside, passes: false, above: true },
+      ] as const;
+
+      for (const { name, file, passes, above } of cases) {
+        const result = await report(file);
+        expect.soft({ [`${name}: report rows`]: result.rows }).toEqual({ [`${name}: report rows`]: 900 });
+        expect.soft({ [`${name}: report ok`]: result.ok }).toEqual({ [`${name}: report ok`]: passes });
+        if (above) expect.soft(result.share, `${name}: the differing share is above 0.02`).toBeGreaterThan(0.02);
+        else expect.soft(result.share, `${name}: the differing share is at most 0.02`).toBeLessThanOrEqual(0.02);
+
+        const lines: string[] = [];
+        let code = 0;
+        try {
+          code = await runStorytimeCli(['cover-calm-top', '--print', file], { log: (line) => lines.push(line) });
+        } catch {
+          code = 1;
+        }
+        const labeled = lines.filter((line) => line.startsWith('top 30 percent '));
+        const shareLines = labeled.filter((line) => line.startsWith(SHARE_LINE));
+        const rowsLines = labeled.filter((line) => line.startsWith(ROWS_LINE));
+        const printedShare = Number(shareLines[0]?.slice(SHARE_LINE.length));
+        expect.soft({ [`${name}: labeled line count`]: labeled.length })
+          .toEqual({ [`${name}: labeled line count`]: 2 });
+        expect.soft({ [`${name}: printed share is a number`]: Number.isFinite(printedShare) })
+          .toEqual({ [`${name}: printed share is a number`]: true });
+        expect.soft({ [`${name}: rows line`]: rowsLines[0] })
+          .toEqual({ [`${name}: rows line`]: 'top 30 percent rows: 900' });
+        expect.soft({ [`${name}: printed share equals the report share`]: printedShare === result.share })
+          .toEqual({ [`${name}: printed share equals the report share`]: true });
+        expect.soft({ [`${name}: command exit code`]: code === 0 }).toEqual({ [`${name}: command exit code`]: passes });
+
+        const exitCode = await entry(['cover-calm-top', '--print', file], { errorLog: () => {} });
+        expect.soft({ [`${name}: CLI exit is zero`]: exitCode === 0 })
+          .toEqual({ [`${name}: CLI exit is zero`]: passes });
+      }
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
+  }, 120000);
 });
