@@ -1,0 +1,36 @@
+step 1: started Green P4 T2 w04 delivery (role_base da09d48a, phase_base fc76c272)
+step 2: chosen prints cross-checked against the plan notes (batch 1, batch 2, batch 3, line-art fixes): all 27 equal to the brief; no difference
+step 3: approved.json written by /tmp/opencode/w04d/build-approved.cjs (27 entries, list order; reviewed pages byte-equal to Muse files, reviewed names equal chosen names, 0 problems)
+step 3b: approved.json committed c19d6ef9 (file sha256 cfc98dbda78c2bdeebfe889099fde2e1e78d30ea3d68cede7045ffebb903fca9)
+step 4: deliver (heavy-run.sh) exit 0: Delivered 27 rows and 2 batch hashes to /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w04/delivery-muse-v1. Minimum line width 13 px.
+step 4b: re-hash: delivered files equal to approved Muse print: 54 of 54; file hashes found in manifest: 54 of 54; problems: 0; manifest sha256 4e74b7302a851e0261099925a23c0b9246a533911374af01d9748b905320d310
+step 5: contact page out/storytime-review/w04-contact/index.html (27 cards, 108 refs, 0 missing) + 3 sheets 2000x7698 (1.77, 1.59, 0.81 MB); sheet 3 viewed with the read tool
+step 6: plan.md block "Week 4 delivery (G1 to G8)" added under Task 2 (no marker change)
+G2: costs.tsv 152 page calls (145 at 0.01, 7 failed at 0), 0 without usage_cost; elements/costs.tsv 23 calls (22 at 0.01, 1 failed at 0), 0 without usage_cost
+Cost: usage.cost total (USD): 1.45 pages + 0.22 elements = 1.67 for week 4. No Muse call this round. Running total 11.24 (round cost 0).
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2 (week 4 approval list, delivery, contact sheets, gate records)
+role_base_sha: da09d48a
+phase_base_sha: fc76c272
+spec_commits: none
+approved_json_commit: c19d6ef9
+plan_evidence_commit: see git log (plan.md and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: 27 rows; delivery out/storytime/l2/unit1/w04/delivery-muse-v1; deliver exit 0 ("Delivered 27 rows and 2 batch hashes"); re-hash 54 of 54 equal, 54 of 54 in manifest; manifest SHA-256 4e74b7302a851e0261099925a23c0b9246a533911374af01d9748b905320d310
+contact_page: out/storytime-review/w04-contact/index.html
+contact_sheets: out/storytime-review/w04-contact/w04-sheet-1-of-3.jpg; w04-sheet-2-of-3.jpg; w04-sheet-3-of-3.jpg
+open_items: (1) Daniel's person review of week 4 (G7): "delivered, awaiting person review"; no reviews.person field. (2) cover-pam and pam-can-nap carry an artifact verdict of defect (broken-face, no nose in the line art); the orchestrator overrule of 2026-11-03 sits in their entry notes and in the plan block. (3) Sources with deviations are recorded in the plan block: batch-46 hand route (Sol), batch-47r2 top status inconclusive after the MiniMax quota stop. (4) The stage gate was not run again in this round (it sees page candidates). (5) The plan note of the line-art fix round says 17 line calls; costs.tsv holds 18 (17 billed, 1 failed at 0); the file total 1.45 USD is the figure of record.
+round_cost_usd: 0
+running_total_usd: 11.24 (week 4 total 1.67: pages 1.45, elements 0.22)
+batch: w04 delivery
+chosen_prints_differences: none (all 27 equal to the plan notes)
+handoff: Send the 3 sheet paths and the manifest SHA-256 to the PM for Daniel. Default: week 4 stays "delivered, awaiting person review". The writer reviews schema accepts only kimi and person, so all model reviews sit in notes.
+dispositions: none
+END_MEASURE_AGENT_RESULT

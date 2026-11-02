@@ -2818,6 +2818,113 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       window curtain and a table lamp that the color has not. In `is-this-pam` the dress corner is still
       a small frayed region that is open toward the foot; a reviewer must judge if it reads as a dress.
       In `this-is-pam` Pam's legs end in short toe lines.
+  - Week 4 delivery (G1 to G8). Green round of 2026-11-03, claude-code/claude-sonnet-5-5#high.
+    role_base_sha `da09d48a`, phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash.
+    Coder: none. No Muse call. No change in `src/`, `tests/`, `scripts/`, or `assets/`. No marker
+    changed. Run log: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w04-delivery.log`.
+    Approval list: `docs/storytime/l2-unit1/w04/muse/approved.json` (commit `c19d6ef9`; 27 entries; list
+    SHA-256 `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`; file SHA-256
+    `cfc98dbda78c2bdeebfe889099fde2e1e78d30ea3d68cede7045ffebb903fca9`). Delivery folder:
+    `out/storytime/l2/unit1/w04/delivery-muse-v1` (54 PNG files and `manifest.json`; not in git).
+    - Chosen prints (color version, line try): the 27 choices of the brief equal the choices in the week 4
+      notes above (batch 1, batch 2, batch 3, line-art fixes). No row differed. Color m3 is used for
+      `this-is-my-family` (line 4); all other rows use color m1. Line tries: family cover 2, mom 3, dad 2,
+      brother 2, grandma 4, grandpa 3, dog-pip 4, house 1, `cover-pam` 2, `this-is-the-man` 5,
+      `is-this-pam` 7, `nan-and-pam-nap` 4, `pam-can-nap` 1, `pam-is-in-a-pan` 2, `pam-is-on-a-man` 6,
+      `pam-is-on-a-map` 2, `this-is-pam` 4; check rows bus 2, cat 2, dog 2, fish 1, hat 2, milk 2,
+      monkey 1, mouse 3, sun 2. Each reviewed page is byte-equal to the Muse file of the same name.
+    - G1 staging: the stage gate of week 4 passed before production (`stage check: pass`, 27 rows,
+      `specs found: 27`, `element paths checked: 91`, `missing element paths: 0`,
+      `page candidates: 0`). The output is in the week 4 staging note above. This round did not run the
+      gate again, because it now sees page candidates.
+    - G2 calls: `out/storytime/l2/unit1/w04/muse/costs.tsv` holds 152 page calls. Each call has a
+      `usage_cost` value (0 calls without a value). 145 calls cost 0.01 USD and 7 calls failed and cost 0
+      (6 network errors in batch 1, one HTTP 502 in the line-art fixes). The 23 element calls
+      (`muse/elements/costs.tsv`: 22 at 0.01 USD and 1 failed at 0) all have a value.
+    - G3 independent review. In each valid artifact the 3 blind controls were correct (a-nose v1
+      defect; a-nut v1 and practice-line nose m4 clean). The artifacts are in
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/`.
+      - `item-review-batch-46.json` (openai/gpt-6.1-sol#high): 8 of 9 clean. `this-is-my-family` layout-fault
+        (B46-FAM-1; the crop cut Lily's hand and hair), fixed with color m3 and line 4. Route deviation:
+        the orchestrator picked this route by hand, and the PM flagged it on 2026-11-02 20:2x ICT. The
+        controls were correct and the reviewer family is not the builder or image family, so the review
+        counts.
+      - `item-review-batch-47v4.json` (minimax-cn-coding-plan/MiniMax-M3.1-Flash): `this-is-my-family` (m3,
+        line 4), `pam-is-in-a-pan`, and `pam-is-on-a-map` clean. `this-is-the-man`, `this-is-pam`, and
+        `is-this-pam` defects (B47v4-HAIR-1, -STAR-1, -DRESS-1), fixed in the line-art fix round.
+        `cover-pam` and `pam-can-nap` got `broken-face` only because Nan's line art has no nose.
+        OVERRULED (see below).
+      - `item-review-batch-47r2.json` (MiniMax): the 4 line-art fixes `pam-is-on-a-man` (line 6),
+        `this-is-the-man` (line 5), `this-is-pam` (line 4), and `is-this-pam` (line 7) are clean, and all
+        3 controls are correct. Deviation: the MiniMax plan quota stopped the reviewer after it wrote
+        every row and every control, so its top `status` stayed "inconclusive" and its summary stayed
+        provisional. The orchestrator accepts the per-row verdicts.
+      - `item-review-batch-48v5.json` (opencode/glm-5.3-flash-free#high): `nan-and-pam-nap` (line 4;
+        B47-NAP-1 fixed) and the 9 check rows are clean; status pass. The milk line art reads as a full
+        glass of liquid (a note).
+      - Void, not evidence: `item-review-batch-47.json` (Sol: a control failed), `-47v2` (DeepSeek: a
+        control failed), `-47v3` (mimo: read tool failure), `-48` (mimo: inconclusive), `-48v2` (MiniMax:
+        quota stop before the controls), `-48v3` (NVIDIA route: 8-image limit, provisional file only),
+        and `-48v4` (GLM: a provider stop before controls K2 and K3).
+      - Route deviation: the test-strategy table names a Kimi reviewer. The valid batches use Sol,
+        MiniMax, and GLM. The `reviews` schema of the writer accepts only `kimi` and `person`, so every
+        model review sits in the `notes` of its approval entry, as in week 3.
+      - The reviewers are models. This is independent review. It is not the person count and not
+        acceptance.
+    - Overrule (orchestrator, 2026-11-03): `cover-pam` and `pam-can-nap`. The artifact verdict is
+      `defect` (`broken-face`), because Nan's line art has no nose. The texts "Pam" and "Pam can nap."
+      do not name the nose. Daniel's bar and the Workbooks finding need a face part only when the text
+      names it. G3 control 3 says a nose mark must be clean. This is the same overrule as in week 3. Both
+      rows are clean. The approval entries carry the artifact verdict and this record in `notes`.
+    - G4 orchestrator spot check (quoted as given): "G4 orchestrator spot check, week 4, 2026-11-03:
+      cover-my-family (m1, line 2) clean; six people whole; note: Lily and the brother have solid black
+      eyes with no outline, and the brother's T-shirt shows buttons that the color has not. cover-pam
+      (m1, line 2) clean; note: Pam's yarn bunches read as small round bunches, and a short stray stroke
+      sits at Nan's arm. this-is-my-family (m3, line 4, retry) clean; six people whole in the print.
+      nan-and-pam-nap (m1, line 4, retry) clean; no star; Pam has a yarn fringe and a pigtail; note:
+      Nan's sleeping face shows closed-eye curves with an eyelash tick, and the mouth is very small; the
+      face reads as a sleeping face. pam-is-on-a-man (m1, line 6, retry) clean; the man's face has
+      closed-eye curves; note: Nan's eyes are open in the line art and closed in the color, and the line
+      art adds a lamp. this-is-the-man (m1, line 5, retry) clean; the man has a hairline. this-is-pam
+      (m1, line 4, retry) clean; no star; Pam has a yarn fringe and pigtails. is-this-pam (m1, line 7,
+      retry) clean; yarn strands and a small hand show under the blanket; note: the frayed dress corner
+      is an open shape. this-is-my-grandma (m1, line 4, retry) clean; one cake with 3 candles; note:
+      Lily's eyes are solid black disks. this-is-my-dog-pip (m1, line 4, retry) clean; Pip has floppy
+      ears; note: Mom's and Lily's outer hands sit close to the side edges but stay whole, and a ground
+      line floats below the feet. this-is-my-mom (m1, line 3) clean. pam-can-nap (m1, line 1) clean; one
+      doll in one box. pam-is-on-a-map (m1, line 2) clean; one map with a river, a house, a dotted path,
+      and a cross. check-row-milk (m1, line 2) clean; note: the line art reads as a full glass of
+      liquid. check-row-mouse (m1, line 3) clean."
+    - G5 and G6 delivery. The command was the G6 command of `test-strategy.md` section 4.5 through
+      `heavy-run.sh`, with `--week 4`. It ran once. Exit code `0`. Last output line:
+      `Delivered 27 rows and 2 batch hashes to
+      /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w04/delivery-muse-v1.` The writer ran
+      its print checks before its first write. The output shows 27 line widths, all 13 px or more
+      (minimum 13 px). No `Skipped` line appeared.
+      - Re-hash: all 54 delivered files equal their approved Muse print by SHA-256
+        (`delivered files equal to approved Muse print: 54 of 54`), and all 54 file hashes appear in
+        `manifest.json` (`file hashes found in manifest: 54 of 54; problems: 0`). The folder has 54 PNG
+        files and `manifest.json`. The manifest has 27 jobs and the 2 batches `w04/color` and
+        `w04/lineart`.
+      - `sha256sum out/storytime/l2/unit1/w04/delivery-muse-v1/manifest.json`:
+        `4e74b7302a851e0261099925a23c0b9246a533911374af01d9748b905320d310`.
+      - `version` of an entry is the Muse version of the print: m1 for 26 rows and m3 for 1 row
+        (`this-is-my-family`).
+    - G7 person review: pending. No person has looked at week 4, and the PM has relayed no answer. No
+      entry has `reviews.person`. The delivery is "delivered, awaiting person review". Contact page:
+      `out/storytime-review/w04-contact/index.html` (27 cards, 54 previews in `prev/`, 108 `src` and
+      `href` references, 0 missing). Phone sheets for the PM and Daniel:
+      `out/storytime-review/w04-contact/w04-sheet-1-of-3.jpg`, `w04-sheet-2-of-3.jpg`, and
+      `w04-sheet-3-of-3.jpg` (2000 x 7698 px, 9 rows each; sheet 3 viewed with the read tool).
+    - G8 cost report: `usage.cost total (USD): 1.45` for the 152 page calls of week 4, and `0.22` for
+      the 23 element calls, so `1.67` for week 4. A short script summed the `usage_cost` column. This
+      round made no call (round cost 0). Running total of the track: 11.24 USD (the figure in the week 6
+      batch 3 note).
+    - Open: Daniel's person review of week 4. Known small marks stay as in the G4 record and the
+      reviewer notes in the approval entries (the brother's T-shirt buttons, Lily's solid black eyes,
+      the lamp and the curtain that the line art adds, the open frayed dress corner in `is-this-pam`, the
+      floating ground line in `this-is-my-dog-pip`, the milk line art that reads as a full glass of
+      liquid). This block makes no task `[x]`.
   - Week 5 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
     2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `4af2b605`, phase_base_sha
     `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.
