@@ -1,0 +1,36 @@
+provisional: role_base_sha eecb89f2; next step: read plan notes and b1 log
+Step 2: read plan notes, specs, b1 helper scripts. Next: run 9 color calls (concurrency 4).
+Step 3: color round 1: 6 ok, cover+nap network timeout, on-sam HTTP 400 content filter. Next: retry cover, nap, on-sam (on-sam spec may need a softer prompt).
+Step 4: retried cover+nap ok; on-sam filtered twice (HTTP 400), spec changed (Sam sits with knees up, doll on knees, sneaker and sock at door), m1 ok. 9 color m1 made. Next: view color prints.
+Step 5: viewed 9 color prints, all usable m1 (map shoe tight at left edge ~40 px; on-sam sneaker cut at right edge by design; nap heads big but ok). Next: line round 9 specs x 3 tries from m1.
+Step 6: line round done: 23 ok, 4 network timeouts (off-sam tries 1,3; nap try 3; wait: 3 timeouts total listed). Next: view line sheets.
+Step 7: viewed line sheets; nap tries 1-2 gave Pam a knit-cap look (B47-NAP-1 repeat): nap linePrompt edited (yarn fringe + two pigtails, no cap, plain dress); retry nap tries 3-5 and off-sam tries 1,3,4 ok. Next: view them, zoom candidates (Pam hair, Sam stripes), writer check.
+Step 8: zoomed Pam heads. Provisional picks (m1): cover L1, pan L2, off-sam L1, map L2, on-sam L1, can-get L3, is-with L2, saw L1 (checks pending). Nap lines 1-5 all gave Pam a knit-cap look; nap color m2 made (upright heads, bigger doll). Next: view nap m2, line round 3 tries.
+Step 9: nap color m2 chosen; nap linePrompt edited twice (eyes closed curves, blanket to chin, no star); m2 line tries 1-6: 1-3 had open eyes or no blanket; 4/6 candidates, 5 Sam bald. Next: zoom nap 4/6, others' Sam stripes, writer check.
+Step 10: FINAL picks: cover m1 L1; pan m1 L2; off-sam m1 L1; map m1 L2; on-sam m1 L1; can-get m1 L3; is-with m1 L2; saw m1 L1; nap m2 L6. Next: writer check, color formats, review folder batch-50.
+Step 11: writer check all 9 PASS; spec commit made. Next: review folder batch-50.
+Step 12: review folder batch-50 built (36 pages, 8 refs). Next: plan note (check git status of plan.md), result block, commit.
+Step 13: plan note added under Phase 4 Task 2 (plan.md had no foreign change before the edit). Next: result block, plan-evidence commit.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2, week 5 batch 2 (cover and 8 Pam story pages; marker unchanged)
+role_base_sha: eecb89f2
+phase_base_sha: fc76c272
+spec_commits: 8af6e5ef (l2-w05-story-page-pam-is-on-sam and l2-w05-story-page-sam-nan-and-pam-nap specs)
+plan_evidence_commit: see git log (the commit after 8af6e5ef that holds the plan note and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; image=meta/muse-image; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: cover-sam-and-pam m1 + line 1 (PASS 15 px, 6.40, edge 97.21); pam-is-in-a-pan m1 + line 2 (PASS 18 px, 8.81, 95.27); pam-is-off-sam m1 + line 1 (PASS 12 px, 7.84, 96.15); pam-is-on-a-map m1 + line 2 (PASS 18 px, 9.96, 94.75); pam-is-on-sam m1 + line 1 (PASS 14 px, 7.79, 96.20); sam-can-get-pam m1 + line 3 (PASS 23 px, 9.85, 97.07); sam-is-with-pam m1 + line 2 (PASS 14 px, 6.93, 96.21); sam-nan-and-pam-nap m2 + line 6 (PASS 17 px, 7.46, 96.45); sam-saw-pam m1 + line 1 (PASS 17 px, 7.47, 97.21). All 9 color prints PNG 4000x3000 8-bit sRGB 3ch no alpha no palette.
+open_items: approved.json and stage 2 check not run for these rows; batch-50 needs an independent review; pan page pan is a deep bowl with a short thick handle; map page shows one Pam pigtail and Sam's left shoe is 1.5 percent from the print edge; on-sam page Sam kneels with the doll in front and the sneaker at the right edge is cut by design; can-get page Sam is mid-step not on toes; nap page Pam pigtails are hatched strands and Nan lash stroke shows on one eye; off-sam line width is exactly 12 px (gate minimum); 9 check rows of week 5 not made
+round_cost_usd: 0.46
+running_total_usd: 9.28
+batch: out/storytime-review/batch-50/
+handoff: Review out/storytime-review/batch-50/ against Daniel's bar for 9 rows. Check first that Pam keeps her look in color AND line (fringe, two pigtails, plain dress, no star, no cap look), that the nap page has closed eyes in both files with one blanket and one doll, that the pan reads as a toy frying pan, and that the map reads as a map. Defaults if rated a defect only: pan handle short (accept), map page single visible pigtail (accept), on-sam sneaker cut at the edge (accept). Default now: no further Muse call. Next Green round: week 5 check rows (9 rows).
+finding_ids: none
+dispositions: none
+END_MEASURE_AGENT_RESULT

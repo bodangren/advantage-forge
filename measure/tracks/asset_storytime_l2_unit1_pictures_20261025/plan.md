@@ -2798,6 +2798,61 @@ rows T142 to T151, and the closeout gate for 30 jobs.
         a plain circle (3 pages), with thin stick rays (3 pages), or with pointed triangle rays (3
         pages). The eyes of the ears page are a solid circle in a thin ring with a small gap. The other
         18 rows of week 5 are not made.
+    - Week 5 batch 2 (the cover and 8 Pam story pages). Green round of 2026-11-02,
+      claude-code/claude-sonnet-5-5#high. role_base_sha `eecb89f2`, phase_base_sha `fc76c272`. Red model
+      opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none; nothing was delegated. No
+      change in `src/`, `tests/`, `scripts/`, `assets/`, or `approved.json`. No marker changed. Run log:
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w05-b2.log`. Review folder:
+      `out/storytime-review/batch-50/` (`brief.md`, `pages/` 36 files, `refs/` 8 files, no control rows).
+      Green did not rate its own work. All 9 pages are indoors, so no page has a sun.
+      - Spec commit: `8af6e5ef` (two specs). The Muse content filter blocked the `pam-is-on-sam` color
+        prompt twice (HTTP 400). The prompt no longer says that Sam lies on his back or that a girl's bare
+        leg steps in. Sam now sits with his knees up and the doll sits on his knees. Only a white sneaker
+        with a short sock steps in at the door. The `goal` and the `linePrompt` follow this change. The
+        `nap` spec changed after the first line tries. The `colorPrompt` now has upright heads, a bigger
+        Pam with clear yarn hair, and a wide rug margin. The `linePrompt` now has closed-eye curves for
+        every eye, the blanket to the chin with no star, and Pam with a yarn fringe and two yarn pigtails
+        (no knit cap).
+      - Rows (9). Color version, line try, then the writer check (line width, ink, edge frame white; gate
+        90) on the 4000 x 3000 despeckled line print:
+        - `cover-sam-and-pam` (m1, line 1): PASS 15 px, 6.40, 97.21. Sam sits and smiles at one doll on
+          the toy box.
+        - `story-page-pam-is-in-a-pan` (m1, line 2): PASS 18 px, 8.81, 95.27. One pan, one doll, Sam
+          kneels.
+        - `story-page-pam-is-off-sam` (m1, line 1): PASS 12 px, 7.84, 96.15. The line width is exactly at
+          the gate minimum. Nan stands at the open door; one doll falls.
+        - `story-page-pam-is-on-a-map` (m1, line 2): PASS 18 px, 9.96, 94.75. One map, one doll, Sam lies
+          on his tummy.
+        - `story-page-pam-is-on-sam` (m1, line 1): PASS 14 px, 7.79, 96.20. One doll on Sam's knees; one
+          sneaker at the door.
+        - `story-page-sam-can-get-pam` (m1, line 3): PASS 23 px, 9.85, 97.07. Sam lifts one doll.
+        - `story-page-sam-is-with-pam` (m1, line 2): PASS 14 px, 6.93, 96.21. One doll on Sam's lap.
+        - `story-page-sam-nan-and-pam-nap` (m2, line 6): PASS 17 px, 7.46, 96.45. Three sleepers with
+          closed eyes, one blanket, one doll.
+        - `story-page-sam-saw-pam` (m1, line 1): PASS 17 px, 7.47, 97.21. Sam points at one doll.
+        All 9 chosen color prints: PNG, 4000 x 3000, 8-bit, sRGB, 3 channels, no alpha, no palette. No
+        person, hand, hair, or needed prop is cut at an edge, with two exceptions that are small: the
+        sneaker on the `pam-is-on-sam` page is cut at the right edge by design, and the toy box at the
+        right edge on several pages is cut (background).
+      - Retries and why: the `nap` color m1 had both heads turned sideways and very large, so m2 came.
+        On the `nap` page the line tries 1 to 5 from m1 gave Pam a striped knit cap (the finding B47-NAP-1
+        look came back); the m2 tries 1 to 3 had open eyes or no blanket, try 4 had hash marks at Nan's
+        eye, and try 5 left Sam without hair. Try 6 is chosen. Other line rejects: `cover` try 2 (headband
+        look); `pan` try 3 (a tuft on top of Pam's head); `off-sam` try 4 (a tuft); `map` try 1 (shaggy
+        hatched hair) and try 3 (open ovals for path dots, a stitch line on Pam); `on-sam` try 3 (two
+        buttons on Pam's dress); `can-get` tries 1 and 2 (smooth cap, cloud bunches); `saw` try 3 (a
+        blanket in Sam's hand). No try shows a star on Pam.
+      - Calls: 54 logged and 51 billed in `out/storytime/l2/unit1/w05/muse/costs.tsv` for these 9 rows:
+        15 color calls (3 network timeouts and 2 content-filter blocks, logged without cost) and 39 line
+        calls (3 network timeouts). Billed at 0.01 USD each. Round cost 0.46 USD. Running total
+        8.82 + 0.46 = 9.28 USD.
+      - Open: `approved.json` and the stage 2 check are not run for these rows. `batch-50` needs an
+        independent review. On the `pan` page the pan is a deep bowl with a short thick handle, partly
+        hidden at the right. On the `map` page only one pigtail of Pam shows, and Sam's left shoe is
+        about 1.5 percent of the width from the left print edge. On the `on-sam` page Sam kneels with the
+        doll in front of him and has one chest band, not two clear stripes. On the `can-get` page Sam is
+        mid-step, not on his toes. On the `nap` page Pam's pigtails are hatched strands, and Nan's
+        eyelash stroke shows on one eye only. The 9 check rows of week 5 are not made.
     - Week 6 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
       2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `8e141040`, phase_base_sha
       `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.
