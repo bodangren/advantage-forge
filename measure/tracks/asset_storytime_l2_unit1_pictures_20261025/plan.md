@@ -1837,6 +1837,45 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       the follow-up). The same self-check gives `specs found: 27`, `element paths checked: 82`,
       `missing element paths: 0`, `characters without a reference: 0`, `page candidates: 0`,
       `self-check: pass`.
+  - Week 2 batch 1 (production). Green round of 2026-11-02, claude-code/claude-sonnet-5-5#high.
+    role_base_sha `87ca5dab`, phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash.
+    Image model meta/muse-image. Coder: none; nothing was delegated. No change in `src/`, `tests/`,
+    `scripts/`, `assets/`, or `approved.json`. No marker changed. Spec commit `2e78a4c8` (only
+    `l2-w02-story-page-can-i.json`: the line prompt now says Ben's shirt is plain, no star). Run log:
+    `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w02-b1.log`. Review folder:
+    `out/storytime-review/batch-40/` (`brief.md`, `pages/` 36 files, `refs/` 5 files). Green did not rate
+    its own work.
+    Rows (9): the cover `l2-w02-cover-can-i` and the 8 pages `story-page-can-i`, `-can-i-b`, `-can-nan`,
+    `-i-can`, `-i-can-b`, `-nan-and-i-can`, `-nan-can`, `-nan-can-b`.
+    Commands: `node scripts/storytime-muse.mjs color <9 specs> --concurrency 4`; then
+    `... line <spec> --from 1 --tries 3` for each row. Writer check: `/tmp/opencode/chk66.mts`
+    (`inspectLineArtPng`) and a short sharp script for the edge frame and the color print.
+    Chosen files (all in `out/storytime/l2/unit1/w02/muse/`; color is `-m1-color.png` for every row):
+    - `cover-can-i`: line try 4 (print `-line-print-4-despeckled.png`): PASS 21 px, ink 11.48 percent, edge
+      frame 95.51 percent. A second color (m2, note: keep the top 30 percent calm) made the slide taller
+      in the top band; m1 stays and the note was not kept. In m1 the slide tower top reaches about 15
+      percent of the height at the right. Line tries 1 and 3 lack the slide.
+    - `story-page-can-i`: line try 4: PASS 20 px, 12.29 percent, edge 95.24 percent. Tries 1 to 3 drew a
+      star on Ben's plain shirt; the spec note fixed it (tries 4 to 6 have none).
+    - `story-page-can-i-b`: line try 2: PASS 22 px, 11.80 percent, edge 94.01 percent.
+    - `story-page-can-nan`: line try 1: PASS 22 px, 11.49 percent, edge 96.13 percent.
+    - `story-page-i-can`: line try 1: PASS 21 px, 12.48 percent, edge 93.81 percent.
+    - `story-page-i-can-b`: line try 1: PASS 31 px, 8.55 percent, edge 97.04 percent.
+    - `story-page-nan-and-i-can`: line try 2: PASS 18 px, 11.14 percent, edge 96.06 percent.
+    - `story-page-nan-can`: line try 3: PASS 23 px, 13.45 percent, edge 94.78 percent.
+    - `story-page-nan-can-b`: line try 2: PASS 21 px, 11.04 percent, edge 96.13 percent.
+    All 9 color prints: PNG, 4000 x 3000, 8-bit, sRGB, 3 channels, no alpha, no palette. The writer check
+    of every chosen line print is PASS. The writer check of the other tries is also PASS.
+    Retries and why: one extra color call for the cover (see above); one extra line batch for `can-i`
+    (star on Ben's shirt); one extra line batch for the cover (try 1 lost the tall slide, only try 2 had
+    it). Eight rows needed one color call each and one line batch.
+    Calls: 46 logged in `out/storytime/l2/unit1/w02/muse/costs.tsv`: 41 billed at 0.01 USD, 5 failed
+    with `UND_ERR_CONNECT_TIMEOUT` at cost 0 (the failed tries were made again). Batch cost 0.41 USD.
+    Running total 4.28 + 0.41 = 4.69 USD.
+    Open: `approved.json` and the stage 2 check are not run for these rows. The cover top band is not
+    fully calm (slide tower at the right). Ben's hair is lumpy in the color of `can-i` and `can-i-b`.
+    Muse made the Nan pages without a nose in the line art; no sentence of this batch names the nose.
+    The balance beam is a round log on `can-i-b` and a flat plank on `i-can-b` and `nan-can-b`.
   - Week 3 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
     2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `a3741c90`, phase_base_sha
     `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.
