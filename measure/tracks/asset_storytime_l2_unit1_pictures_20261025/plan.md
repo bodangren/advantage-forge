@@ -1777,9 +1777,12 @@ rows T142 to T151, and the closeout gate for 30 jobs.
     - The only gate line is structural: the current phase has 3 non-deferred incomplete tasks.
       The Phase 4 markers wait for the Phase 3 checkpoint. No marker changed.
     - status: complete.
-- [~] Task: Produce weeks 2 to 7 after the week 1 review. The weeks hold 162 rows. They need 324
+- [x] Task: Produce weeks 2 to 7 after the week 1 review. The weeks hold 162 rows. They need 324
   files, one color file and one line-art file per row. Apply the same automated, two-model, and
-  person-count gates to all 162 pictures.
+  person-count gates to all 162 pictures. Commits: approval lists `d66d8f2a`, `d005f2e1`, `c19d6ef9`,
+  `700a7b83`, `cce84c6b`, `ddd2105e` (weeks 2 to 7); delivery evidence `1772cf79`, `997ffc31`, `8f92948f`,
+  `d854e613`, `302835df`, `6466dd05`; person records `48c71d42` (weeks 2 to 6) and `1ff8e1c1` (week 7).
+  Closeout gate: see "Phase 4 closeout evidence (2026-11-03)".
   - Task 2 is `[~]` after the Phase 3 checkpoint `21de99f6` (measure-guard phase order); PM order
     00:3x ICT 2026-11-02 started the staging early.
   - Week 2 batch 1 review (2026-11-02): `item-review-batch-40.json` passes. 9 of 9 rows are clean
@@ -4080,8 +4083,10 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       - No `approved.json` changed and no delivery ran again. The delivered manifest is the bytes that
         Daniel reviewed. A new `reviews.person` field would change the manifest and would need a new
         delivery folder.
-- [~] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
-  30 percent calm and keep cover layout and text with Workbooks.
+- [x] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
+  30 percent calm and keep cover layout and text with Workbooks. Commits: C1 code `8c9a4082`; spec
+  `09047f8e`; delivery code `6f7c1444`; approval file `0629e1e2`; delivery evidence `569e62cc`; person
+  record (C5) `1ff8e1c1`. Closeout gate: see "Phase 4 closeout evidence (2026-11-03)".
     Red evidence for Phase 4 Task 3 (C1, T183) (2026-11-03). Role base `7361c5b5`; Phase 4 base
     `fc76c272`. Models: Red `opencode-go/deepseek-v4.1-flash`; Green
     `claude-code/claude-sonnet-5-5#high`. Test commit `0f232b1e`. The task marker stays `[~]`.
@@ -4322,6 +4327,112 @@ If a later list sets a larger print size or the A3 ratio, render the color and l
 again from the kept stage files as new versions. A new ratio changes the framing, so every picture
 gate applies again.
 Replaced by the amendment of 2026-11-01 (Muse path).
+
+#### Phase 4 closeout evidence (2026-11-03)
+
+Green closeout round, `claude-code/claude-sonnet-5-5#high`. role_base_sha `1ff8e1c1`; phase_base_sha
+`fc76c272`. Red models of the phase: `opencode-go/deepseek-v4.1-flash` (Task 1, Task 2, Task 3 round 1)
+and `claude-code/claude-opus-5-5[1m]#high` (Task 3 round 2). Coder: none. No Muse call, no delivery, and
+no picture change. The round ran the gate of `test-strategy.md` section 4.5 (closeout gate, items 1 to 9).
+Run log: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p4-closeout.log`.
+
+1. **Tests and type check.**
+   - GREEN_TEST_COMMAND, run 1 (10:42 ICT start): `bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh
+     -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts tests/storytime-picture-rows.test.ts
+     tests/storytime-muse-delivery.test.ts --maxWorkers=1'`. Exit code `1`. `Test Files  1 failed | 2 passed (3)`.
+     `Tests  1 failed | 184 passed (185)`. `Duration  472.62s`. The one failure is T171 in
+     `tests/storytime-muse-delivery.test.ts` (`T171 refuses a color print that is a palette, one-channel,
+     16-bit, or four-channel PNG`): `Error: Test timed out in 5000ms.` The test ran 5452 ms.
+   - Finding P4-FLAKE-T171 (orchestrator, 2026-11-03): the orchestrator role-gate run at 10:33 ICT had the same
+     single failure (5394 ms). The file `tests/storytime-muse-delivery.test.ts` has no `vi.setConfig` timeout.
+     The file `tests/storytime-book-pictures.test.ts` sets `testTimeout: 30000` at line 100. The finding is a
+     load timeout and not a code defect. This round changed no test file. The fix goes to the adversarial round.
+   - GREEN_TEST_COMMAND, run 2 (same command, 10:54 ICT start): exit code `0`. `Test Files  3 passed (3)`.
+     `Tests  185 passed (185)`. `Duration  342.83s`. No test timed out. T171 passed.
+   - Both runs: the only failure was the 5000 ms timeout of one test (T171), and the second run passed. The
+     closeout rule for P4-FLAKE-T171 is met.
+   - Staging test: `... vitest run tests/storytime-stage-check.test.ts --maxWorkers=1` through the heavy runner.
+     Exit code `0`. `Test Files  1 passed (1)`. `Tests  3 passed (3)` (T178, T179, T180).
+   - Type check: `bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=2560
+     node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'`. Exit code `2`. `owned tsc errors: 0`
+     (no error in `src/storytime/`, `tests/storytime*`, `scripts/storytime*`, or `src/song/`).
+     `total tsc errors: 38` (the baseline; 38 `error TS` lines, in `assets/` and two unrelated test files).
+   - Reviews A, B, and C: pending on the closeout HEAD. They run after this round.
+2. **Version 3 pin.** `grep -rn "PICTURE_LIST_V3_SHA256\|c3e23cfd" src tests scripts` found 4 lines, all in
+   `tests/storytime-book-pictures.test.ts`: line 4081 (`LIST_V3_SHA256`, the labeled negative control of
+   T173), line 4519 (a comment), and lines 4626 and 4627 (inside T173: `PICTURE_LIST_V3_SHA256 exported`
+   must be false). `src/` and `scripts/` have 0 matches. `contract.md` line 10 names the version 4 SHA-256
+   `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`. The result is that only the T173
+   negative control uses the version 3 pin.
+3. **Staging gate (G1) before each week.** STAGING_GATE_COMMAND exited `0` with `stage check: pass`, 27 rows,
+   27 specs found, `missing element paths: 0`, and `page candidates: 0` for each week. The command was not run
+   again, because it now sees page candidates. The outputs are in the plan:
+   - Week 2: `element paths checked: 82`. Note "Live stage gate (light job, no lock), exit `0`" in the Task 1
+     Green evidence, and the Week 2 delivery note (G1).
+   - Week 3: `element paths checked: 94`. Note "Week 3 staging", block "Stage gate (STAGING_GATE_COMMAND with
+     `--week 3`, light job, exit code 0)".
+   - Week 4: `element paths checked: 91`. Note "Week 4 staging", block "Stage gate ... `--week 4`".
+   - Week 5: `element paths checked: 63`. Note "Week 5 staging", block "Stage gate ... `--week 5`".
+   - Week 6: `element paths checked: 70`. Note "Week 6 staging", block "Stage gate ... `--week 6`".
+   - Week 7: `element paths checked: 90`. Note "Week 7 staging", block "Stage gate ... `--week 7`".
+   Each week delivery note (G1) states that its gate passed before the production of that week.
+4. **162-row count command** (copied byte for byte from section 4.5, run in this round, exit code `0`):
+   `weeks 2 to 7 delivered jobs: 162 files: 324 A: 96 B: 12 C: 54 missing: 0 extra: 0`.
+5. **Per week 2 to 7: review records.** The G3 and G4 facts come from the week delivery notes (G1 to G8) in this
+   plan. The pictures were not opened in this round. Every reviewer is a vision model of a family other than
+   the image model. Batches that the delivery notes call void are not counted. The manifest SHA-256 is the
+   value of `sha256sum` in this round, and it equals the value in the person-review note.
+
+   | Week | G3 review artifacts (27 verdicts; controls) | G4 record (class B pages) | G7 record | manifest.json SHA-256 |
+   | --- | --- | --- | --- | --- |
+   | 2 | batches 40 (MiniMax), 41 (mimo), 42v2 (gpt-6-luna); 9 of 9 clean in each; 3 controls in each (known defect = defect; nut and nose = clean; batch 41 note: false alarm on one clean control, batch kept by the note) | cover-can-i, cover-how-many, retry pages, 5 other pages; found: sun fixed (B42-SUN) | `48c71d42`, `person-review-w02-w06.json` | `6e6b51450d406bfdac47e01f484925b270bd0b1647bbfc0550d7529809cfeaf4` |
+   | 3 | batches 43v2, 44v2, 45, and fixes r5 (MiniMax); 3 controls correct in each; 2 defects fixed, 3 overrules recorded | cover-the-pan, cover-paint, retry pages, other pages (listed in the note) | `48c71d42`, `person-review-w02-w06.json` | `24213647b0f1b92cdb891746cdf6181ff7f20f306c51d256fec150c38d5c273b` |
+   | 4 | batches 46 (Sol), 47v4 and 47r2 (MiniMax), 48v5 (GLM); 3 controls correct in each; the family crop and the line-art defects fixed, 2 overrules recorded | cover-my-family, cover-pam, retry pages, other pages (listed in the note) | `48c71d42`, `person-review-w02-w06.json` | `4e74b7302a851e0261099925a23c0b9246a533911374af01d9748b905320d310` |
+   | 5 | batches 49, 49r5, 49r6 (MiniMax), 50 and 51 (GLM); 3 controls correct in each; G4 found G4-W05-EARS-1, fixed | cover-i-have-two, cover-sam-and-pam, retry and other pages | `48c71d42`, `person-review-w02-w06.json` | `c3f009e6bfcb3037ae24b495c6e68527bfbf86162deb3a40a9bbd28a416ffbaf` |
+   | 6 | batches 52, 53, 54 (MiniMax); 27 of 27 clean; 3 controls correct in each | cover-i-can-see, cover-tap-tap, retry pages, other pages (listed in the note) | `48c71d42`, `person-review-w02-w06.json` | `11c5dc10198c9d446afc8ffd80aff46c747d2dec34b77293327907d729163292` |
+   | 7 | batch 55 (MiniMax), 56, 57, and 57r2 (Opus); 3 controls correct in each; octopus defect B57-OCTO-1 fixed | all 27 rows read in color and line, including cover-is-it-a-ball and cover-the-top | `1ff8e1c1`, `person-review-w07-cover.json` | `6a5724c42a83134d80fc1cd1ccecdafe1a76dd25961e040caffaafccc81ea3c2` |
+
+   The G7 record for weeks 2 to 6 is Daniel's word "Approved" (Tasks item `WVphdWJubHZXUkljd3VPOQ`, 2026-11-03T08:43+07:00,
+   135 rows). The G7 record for week 7 is Daniel's word "Ok" (Tasks item `RERnblJqVDdnQTNYOGtOcg`,
+   2026-11-03T10:29+07:00, 27 rows). Every week 2 to 7 has a G7 record, so no week is "awaiting person review".
+   The model reviews are independent review. The person records are owner-passed (A2). No `reviews.person` field
+   was written, and no delivery ran again.
+6. **Cover.** Delivered to `out/storytime/l2/unit1/cover/delivery-muse-v1/` (`l2-cover-v1.png`, 4000 x 3000,
+   no alpha, and `manifest.json`). `sha256sum` of `manifest.json` in this round:
+   `27710b3711757d99294b7e837377d325eb9a6094e1dad43e0f064d2581397b88`, equal to the value in the Task 3 notes.
+   C1 (calm top, `top 30 percent differing share: 0`, `top 30 percent rows: 900`), C2 (independent review),
+   C3 (spot check), and C4 (print and delivery, commits `6f7c1444` and `0629e1e2`) pass in the Task 3 notes.
+   C5 (person review) passes: the Cover person review (C5) note and commit `1ff8e1c1` hold the record
+   `person-review-w07-cover.json` (Daniel, "Ok").
+7. **Week 8 rows.** The 4 week 8 rows are out of scope until the PM assigns them. Evidence: the line in this
+   plan that starts "- 2026-11-01 (17:2x ICT) and 2026-11-02 (06:18 ICT), PM confirmations: (a) week 8 rows are
+   out of scope until the PM assigns them." The count command above shows `extra: 0`, so no week 8 id was made.
+8. **Cost report** (a short script summed the cost column of each file; the four calibration files use the
+   columns `usage_cost` or `cost_usd`; every call has a value):
+
+   | Part | Cost files | usage.cost total (USD) |
+   | --- | --- | --- |
+   | Week 1 | `w01/muse/costs.tsv` (349 calls) | 3.32 |
+   | Week 2 | pages 1.21 (140 calls) + elements 0.15 (17 calls) | 1.36 |
+   | Week 3 | pages 1.60 (170 calls) + elements 0.12 (12 calls) | 1.72 |
+   | Week 4 | pages 1.45 (152 calls) + elements 0.22 (23 calls) | 1.67 |
+   | Week 5 | pages 1.39 (148 calls) + elements 0.05 (5 calls) | 1.44 |
+   | Week 6 | pages 1.37 (141 calls) + elements 0.10 (10 calls) | 1.47 |
+   | Week 7 | pages 1.50 (155 calls) + elements 0.09 (9 calls) | 1.59 |
+   | Cover | `cover/muse/costs.tsv` (14 calls) | 0.13 |
+   | Calibration | `muse-test` 0.08, `muse-test-2` 0.12, `muse-cast` 0.03, `muse-print-test` 0.00 | 0.23 |
+
+   `usage.cost total (USD): 9.25` for weeks 2 to 7. `usage.cost total (USD): 12.93` for all 18 cost files
+   (weeks 1 to 7 pages and elements, the cover, and the 4 calibration files). This equals the orchestrator sum
+   of 12.92 USD before cover round 3 plus the one call of round 3 (0.01 USD).
+9. **Measure facts.** `./measure/generate.sh`: exit code `0`; output `Generated 4 Measure facts.` The run changed
+   three files that other agents already had modified and uncommitted: `measure/generated/architecture.json`,
+   `measure/generated/asset-inventory.json`, and `measure/generated/status.md`. They are not staged and not part
+   of this commit. `measure/tracks.md` did not change in the run.
+
+Result of the gate: items 1 to 9 hold, with item 1 open only for Reviews A, B, and C (pending on the closeout
+HEAD). Task 2 and Task 3 change from `[~]` to `[x]`. This note does not add a checkpoint to the Phase 4 heading.
+The registry and the metadata keep their state: phase acceptance and Phase 5 own those facts.
 
 ## Phase 5: Documentation and verification
 
