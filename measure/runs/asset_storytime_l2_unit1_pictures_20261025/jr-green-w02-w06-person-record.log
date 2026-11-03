@@ -1,0 +1,26 @@
+step 1: started record round (role_base f06a7d04, phase_base fc76c272)
+step 2: verify: sha256sum of the 5 delivered manifests starts with 6e6b5145 (w02), 24213647 (w03), 4e74b730 (w04), c3f009e6 (w05), 11c5dc10 (w06); each approved.json has 27 entries (rowId, unique); each id has one job in the delivered manifest; each manifest has 27 jobs; 135 rows; problems: 0
+step 3: record file written: measure/runs/asset_storytime_l2_unit1_pictures_20261025/person-review-w02-w06.json (gate G7, person Daniel, owner-passed, 2026-11-03T08:43+07:00, note "Approved", 135 rows)
+step 4: no approved.json edited; no deliver; reason: the delivered manifests are the bytes that Daniel reviewed; a reviews.person field would change the manifest and need a new delivery folder
+step 5: plan.md had no uncommitted change before the edit; note "Week 2 to 6 person review (G7)" added under Phase 4 Task 2 after the week 7 delivery note; no marker changed
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2 (G7 person review record, weeks 2 to 6)
+role_base_sha: f06a7d04
+phase_base_sha: fc76c272
+spec_commits: none
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: 135 rows (27 per week, weeks 2 to 6); G7 PASS (owner-passed); person Daniel; "Approved"; 2026-11-03T08:43+07:00
+manifest_sha256: w02 6e6b51450d406bfdac47e01f484925b270bd0b1647bbfc0550d7529809cfeaf4; w03 24213647b0f1b92cdb891746cdf6181ff7f20f306c51d256fec150c38d5c273b; w04 4e74b7302a851e0261099925a23c0b9246a533911374af01d9748b905320d310; w05 c3f009e6bfcb3037ae24b495c6e68527bfbf86162deb3a40a9bbd28a416ffbaf; w06 11c5dc10198c9d446afc8ffd80aff46c747d2dec34b77293327907d729163292
+record_file: measure/runs/asset_storytime_l2_unit1_pictures_20261025/person-review-w02-w06.json
+open_items: (1) Daniel's person review of week 7 (27 rows) and of the cover: still awaiting. (2) No reviews.person field exists in weeks 2 to 6 approved.json by design; the record is the JSON file and the plan note.
+round_cost_usd: 0
+handoff: Report to the PM: weeks 2 to 6 are "delivered, person review PASS". Week 7 and the cover stay "awaiting person review". Default: no further action for weeks 2 to 6.
+dispositions: none
+END_MEASURE_AGENT_RESULT

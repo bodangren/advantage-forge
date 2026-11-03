@@ -4023,6 +4023,39 @@ rows T142 to T151, and the closeout gate for 30 jobs.
         color fist on the cover `the-top`; on the octopus, the upper left arm on a stalk and loose line ends
         inside the body. Batch 55 has a MiniMax review. A Claude review of batch 55 is not done. The 0.23
         USD cost chain difference is open.
+    - Week 2 to 6 person review (G7). Green record round of 2026-11-03, claude-code/claude-sonnet-5-5#high.
+      role_base_sha `f06a7d04`, phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash.
+      Coder: none. No Muse call, no delivery, no picture change. No marker changed. Run log:
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w02-w06-person-record.log`.
+      Record file: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/person-review-w02-w06.json`.
+      - Answer: the PM relayed it to Forge on 2026-11-03. The person is Daniel. The channel is Tasks. The
+        answer is Tasks item `WVphdWJubHZXUkljd3VPOQ`, sent at 08:43 ICT (`2026-11-03T08:43+07:00`), under
+        Tasks item `SG92ejhuYkp5Ny03ZjQyRA` (the PM sent that item at about 08:3x ICT). Daniel's word,
+        quoted exactly: "Approved". Daniel saw the 15 contact sheets of weeks 2 to 6 (3 per week, 135
+        pictures, color and line art). The PM instruction: record it as the person review PASS for all 135
+        rows of weeks 2, 3, 4, 5, and 6. No redo.
+      - Rows and manifests. The round re-hashed each delivered manifest and read the 27 row ids of each
+        `docs/storytime/l2-unit1/w0W/muse/approved.json` (`entries[].rowId`). Each id has exactly one job in
+        the delivered manifest. Each manifest has 27 jobs. 0 problems.
+        - Week 2: 27 rows. `out/storytime/l2/unit1/w02/delivery-muse-v1/manifest.json` SHA-256
+          `6e6b51450d406bfdac47e01f484925b270bd0b1647bbfc0550d7529809cfeaf4`.
+        - Week 3: 27 rows. `.../w03/...` SHA-256
+          `24213647b0f1b92cdb891746cdf6181ff7f20f306c51d256fec150c38d5c273b`.
+        - Week 4: 27 rows. `.../w04/...` SHA-256
+          `4e74b7302a851e0261099925a23c0b9246a533911374af01d9748b905320d310`.
+        - Week 5: 27 rows. `.../w05/...` SHA-256
+          `c3f009e6bfcb3037ae24b495c6e68527bfbf86162deb3a40a9bbd28a416ffbaf`.
+        - Week 6: 27 rows. `.../w06/...` SHA-256
+          `11c5dc10198c9d446afc8ffd80aff46c747d2dec34b77293327907d729163292`.
+        - Total: 135 rows. The 135 row ids are in the record file.
+      - G7 PASS (owner-passed) for the 135 rows of weeks 2 to 6. These weeks change from "delivered,
+        awaiting person review" to "delivered, person review PASS".
+      - No `approved.json` changed and no delivery ran again. The delivered manifests are the bytes that
+        Daniel reviewed. A new `reviews.person` field would change the manifest and would need a new
+        delivery folder. The G7 record lives in this note and in the record file (test-strategy G7: "The
+        record holds person, time, rows, verdict, and note (Tasks)").
+      - Week 7 and the cover stay "delivered, awaiting person review" (week 7) and "awaiting person review"
+        (cover). Daniel's word covers only the 15 sheets of weeks 2 to 6.
 - [~] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks.
     Red evidence for Phase 4 Task 3 (C1, T183) (2026-11-03). Role base `7361c5b5`; Phase 4 base
