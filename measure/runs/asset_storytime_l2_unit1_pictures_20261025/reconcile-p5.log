@@ -1,0 +1,35 @@
+list sha256: 6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58
+list rows: 196
+list rows weeks 1 to 7: 192
+list rows week 8: 4
+week 8 ids delivered: 0
+week 8 status: deferred (out of scope until the PM assigns the rows)
+week 1 release folder: delivery-muse-v2
+week 1 rows changed v1 to v2: 4
+manifest sha256 w01: d3eec18ce7c94b94ed5b0751df164578558ad44f04bebe7b4b371a3ed213796a
+manifest sha256 w02: 6e6b51450d406bfdac47e01f484925b270bd0b1647bbfc0550d7529809cfeaf4
+manifest sha256 w03: 24213647b0f1b92cdb891746cdf6181ff7f20f306c51d256fec150c38d5c273b
+manifest sha256 w04: 4e74b7302a851e0261099925a23c0b9246a533911374af01d9748b905320d310
+manifest sha256 w05: c3f009e6bfcb3037ae24b495c6e68527bfbf86162deb3a40a9bbd28a416ffbaf
+manifest sha256 w06: 11c5dc10198c9d446afc8ffd80aff46c747d2dec34b77293327907d729163292
+manifest sha256 w07: 6a5724c42a83134d80fc1cd1ccecdafe1a76dd25961e040caffaafccc81ea3c2
+manifest sha256 cover: 27710b3711757d99294b7e837377d325eb9a6094e1dad43e0f064d2581397b88
+weeks 1 to 7 delivered jobs: 192 files: 384 missing: 0 extra: 0
+weeks 2 to 7 delivered jobs: 162 files: 324 A: 96 B: 12 C: 54 missing: 0 extra: 0
+cover delivered jobs: 1 files: 1
+release files hashed: 385
+release file hash mismatches: 0
+batch hash mismatches: 0
+source prints hashed: 385
+source print mismatches: 0
+approval entries: 193
+approval list pin mismatches: 0
+manifest person review fields: 0
+person record manifest mismatches: 0
+cost files: 18
+cost rows: 1373
+cost rows without usage cost: 0
+cost outputs unaccounted: 0
+usage.cost total (USD): 12.93
+usage.cost total weeks 2 to 7 (USD): 9.25
+reconcile: pass
