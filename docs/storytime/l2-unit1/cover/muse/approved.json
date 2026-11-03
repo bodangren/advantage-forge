@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "rowId": "l2-cover-v1",
+      "version": 13,
+      "fileVersion": 1,
+      "colorPrint": "l2-cover-v1-m13-color-print.png",
+      "notes": [
+        "C1 calm top, `cover-calm-top --print` on the m13 print: \"top 30 percent differing share: 0\", \"top 30 percent rows: 900\", exit 0 (round 3 note).",
+        "C2 independent review (model evidence, not a person review): artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-cover-3r2.json, reviewer claude-code/claude-opus-5-5[1m]#high, rating 8.0, verdict clean, calm_top yes, margins left 590 px and right 658 px, five digits on each waving hand, controls K1 defect, K2 clean, K3 clean (correct). Earlier C2 artifacts: cover-1 (m6, layout-fault, C2-COVER1-EDGE-1), cover-2 (m9, wrong-hand-or-limb, C2-COVER2-HAND-1), cover-3 (m13, VOID: the orchestrator brief defined a layout fault so that the a-nut close-up control K3 became a defect).",
+        "C3 orchestrator spot check, cover, 2026-11-03: m13 read at full size; the top 30 percent is a plain cream wall; six children in the approved look and outfits; Pip whole with floppy ears; each waving hand has five digits on 4x crops (a short thumb against the cheek); each face has eyes, a nose, and a mouth. Notes: no contact shadow at the feet; Pip stands while the goal says he sits; left margin 590 px (a note: the trim is about 40 px). The first C3 look at m9 counted five digits in error; the C2 review found four, and the orchestrator confirmed four on 4x crops.",
+        "Color print l2-cover-v1-m13-color-print.png SHA-256 d32b5cc7caf9b02b5451c1c009b3733e75f05353b7a7ff03bce1d8e7661abf01. Spec SHA-256 e83f21bfe28139f203c6448854f2e1854b1edbb9b4ae1da3247ee83c92b3cf43 (equal to the specSha256 of l2-cover-v1-m13.json).",
+        "C5 person review is pending: the PM sent the cover to Daniel. This list holds no person review."
+      ]
+    }
+  ]
+}
