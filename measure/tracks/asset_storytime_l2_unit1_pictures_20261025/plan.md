@@ -1637,7 +1637,7 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   - Send the delivery path, the manifest SHA-256, the clean row count, the not-clean rows with
     their open defects, and the running Muse cost.
 
-## Phase 4: Remaining pictures and cover
+## Phase 4: Remaining pictures and cover [checkpoint: 35f4a12c]
 
 - [x] Task: Reconcile the final Workbooks picture list and size specification. Commit `b6824b8a`
   (Red `c0035c28`, `c2ebc72d`; Green `b6824b8a`; Reviews A, B, and C pass at `4d4d86a2`). Picture list
@@ -4444,8 +4444,8 @@ because no code and no test changed. Run log:
 `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p4-review-fixes.log`.
 
 - **Review verdicts at `b6326503`.** Review A: pass, no blocking finding. Review B: the file
-  `review-b-b6326503.json` still says `inconclusive`; its final verdict in the session was pass, with
-  RB-P4-1 only. Review C: pass, no blocking finding.
+  `review-b-b6326503.json` now says `pass`; the same Review B session rewrote it, and its gate passed.
+  RB-P4-1 remains its only finding. Review C: pass, no blocking finding.
 - **Gate fix.** The orchestrator role gate printed "FAIL: some completed [x] tasks lack commit SHA evidence".
   The checker reads only the first line of a task. The first line of Task 2 now holds commit `6466dd05`. The
   first line of Task 3 now holds commit `569e62cc`. The wrapped evidence lines stay.
@@ -7421,3 +7421,42 @@ Phase base `15a7bf0b`. Checkpoint `21de99f6`. All result files are in
   - PA3-N6: the four v2 rows (`a-net`, `check-row-net`, `a-nose`, `nan-can-nod`) have no person
     look. Phase 4 must not label them person-accepted until Daniel records the look.
   - RA-P3ADV-2, RB12-01, and RB12-03 are listed above under PA3-N3.
+
+### Phase 4 acceptance (2026-11-03)
+
+Phase base `fc76c272`. Checkpoint `35f4a12c`. All result files are in
+`measure/runs/asset_storytime_l2_unit1_pictures_20261025/`.
+
+- **Audits:** Review A (`claude-code/claude-opus-5-5[1m]#high`) passed at `b6326503`;
+  `review-a-b6326503.json`. Review B (`claude-code/claude-haiku-5-5`) passed;
+  `review-b-b6326503.json`. Review C (`claude-code/claude-opus-5-5[1m]#high`) passed;
+  `review-c-b6326503.json`. Review remediation (docs and plan) is `376ae5dd`.
+  Adversarial testing (`claude-code/claude-haiku-5-5`) passed at test commit `35f4a12c` with
+  186 tests; `adversarial-376ae5dd.json`. Phase acceptance at `35f4a12c` returned ACCEPT with
+  retry none; `phase-acceptance-35f4a12c.json`.
+- **Role gates:** Every role gate returned PASS. This includes jr-green on `376ae5dd`, Reviews A,
+  B, and C, adversarial testing with `PROJECT_TESTS` set to the six Storytime test files, and
+  phase acceptance.
+- **Deliveries and person review:** Weeks 2 to 7 contain 162 rows and 324 files. The Level 2
+  cover is delivered. Daniel reviewed all of them: G7 records `48c71d42` and `1ff8e1c1`, and C5
+  record `1ff8e1c1`.
+- **Deviations:** From 05:3x to 14:59 ICT on 2026-11-03, the PM order allowed Claude models only.
+  Opus, Sonnet, and Haiku were the three available model families. Review B and adversarial testing
+  therefore used Haiku instead of the table models.
+- Phase acceptance used `volcengine-agent-plan/glm-5.3-flash#high`. The orchestrator skipped the
+  first two `ra-quota` routes on OpenCode Go (`mimo-v2.6-flash` and `muse-spark-1.3-contributor`).
+  Its agent configuration reserves OpenCode Go, and an earlier Mimo picture review was void.
+- The first cover C2 review of m13, `item-review-cover-3.json`, was void. Its brief defined a
+  layout fault that made the clean a-nut control a defect. The rerun, `item-review-cover-3r2.json`,
+  judged all controls correctly.
+- The octopus fix brief specified `--from 1`. Three line calls, costing 0.03 USD, used the old
+  color m1. Review B and adversarial testing first wrote off-contract artifacts. The same sessions
+  rewrote those artifacts, and both gates passed afterward.
+- `ra-quota` printed the Opus route without `[1m]` until 08:0x ICT. The orchestrator used
+  `claude-code/claude-opus-5-5[1m]#high`.
+- **Nonblocking items carried forward** (source: `phase-acceptance-35f4a12c.json`): PA4-N1 is
+  RB-P4-1 (Low): `cover-calm-top --print` has no `out/` confinement. Phase 5 should consider it
+  for tech debt. PA4-N2 was the stale Review B sentence above; this commit fixes it.
+  PA4-N3 is informational: the adversarial gate baseline was `376ae5dd`, while HEAD was
+  `35f4a12c`; the adversarial run at HEAD covers the difference. PA4-N4 reserves the registry,
+  metadata, `generate.sh`, and `doctor.sh` for Phase 5.
