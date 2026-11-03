@@ -1,0 +1,37 @@
+Strategy P5 (role_base_sha 91c59500). Light lane (PM 2026-11-03 19:06 ICT).
+Edited: test-strategy.md (Phase 5 section replaced, section 12 item 14 added) and plan.md (one light-lane note line under the Phase 5 heading; task lines unchanged).
+
+Facts checked (read-only, no heavy job, no Muse call):
+- List v4 SHA-256 6d05dfc5... and pictures.md 7cc4c201... match. 196 rows; weeks 2 to 7 count command prints: weeks 2 to 7 delivered jobs: 162 files: 324 A: 96 B: 12 C: 54 missing: 0 extra: 0.
+- Nine manifests exist; SHA-256 values are in strategy 5.1 (w01 v2 d3eec18c, w01 v1 00ea0c5b, w02 to w07, cover 27710b37, cover PNG d32b5cc7). 385 delivered PNG files.
+- Cost files: 18, 1,373 rows, every row has a value, total 12.93 USD (weeks 2 to 7: 9.25). The two calibration files use the header cost_usd.
+- doctor (structural-only) at 91c59500 prints 13 errors, none for this track (other tracks and lessons-learned.md at 52 lines, over the 50 limit). generate state is stale because of other sessions' edits.
+
+Key traps recorded in the strategy: doctor counts no [b] marker (do not reclassify the four superseded [ ] tasks); first-line SHA needs a four-commit order; generated facts depend on uncommitted work of other sessions; lessons-learned.md must shrink by 2 lines before it grows; heavy doctor runs inside heavy-run.sh.
+
+MEASURE_AGENT_RESULT
+role: measure-strategy
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+commits: the commit that holds this log (git log -1 -- measure/runs/asset_storytime_l2_unit1_pictures_20261025/strategy-p5-91c59500.log)
+tests_run: none (read-only hash, count, cost, and doctor checks only)
+files_changed: measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md; measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md (one note line); measure/runs/asset_storytime_l2_unit1_pictures_20261025/strategy-p5-91c59500.log
+plan_updates: one line "PM 2026-11-03: light lane" under the Phase 5 heading
+known_failures: none for this role. Known before Phase 5: doctor (structural-only) shows 13 errors of other tracks and lessons-learned.md at 52 lines.
+risk: low (phase). Residual risk is a false claim in the last record (A5, A6).
+red_test_command: none (documentation-only phase; orchestrator records the deviation)
+green_test_command: bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts tests/storytime-picture-rows.test.ts tests/storytime-muse-delivery.test.ts --maxWorkers=1'  (exit 0, Test Files  3 passed (3), Tests  N passed (N); run once by the maker at the end)
+project_tests: the three files above plus tests/storytime-stage-check.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-muse-delivery-adversarial.test.ts, one heavy-run.sh wrapper, --maxWorkers=1 (Test Files  6 passed (6)); run once by the checker
+reconcile_command: nice -n 19 node measure/runs/asset_storytime_l2_unit1_pictures_20261025/reconcile-p5.mjs --out-root out/storytime/l2/unit1 --docs-root docs/storytime/l2-unit1 --review-root out/storytime-review --list /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --ledger measure/runs/asset_storytime_l2_unit1_pictures_20261025/release-files-p5.tsv (light job; the maker writes the script; four mutation checks M1 to M4)
+review_applicability: Reviews A/B/C no; adversarial no; UX browser review no (UX_REQUIRED=never); Mid/Red no. PM 2026-11-03: light lane.
+phase_base_sha: the orchestrator runs git rev-parse HEAD right after the strategy commit and records it before any maker edit; 91c59500 is the role_base_sha only
+handoff: MAKER BRIEF (measure-jr-green): follow strategy 5.2 to 5.7 and 5.9. Write reconcile-p5.mjs, reconcile-p5.log, release-files-p5.tsv in the run folder (C1). Run RECONCILE_COMMAND and M1 to M4 on copies under /tmp/opencode/. Write the carry-forward ledger (RB-P4-1/PA4-N1, RB12-01/RB12-03, PA4-N3, PA4-N4, week 8 rows as deferred:pm-assignment, PA3-N6 fixed by "Looks good") and the cost note with 12.93 in the plan (C2). Update metadata.json, tracks.md entry, status.md, tech-debt.md (next free TD number), lessons-learned.md (shrink to 50 or less) (C3). Run generate.sh, structural doctor, and the heavy doctor under heavy-run.sh; then mark Task 2 (C4). First line of each [x] task needs a commit SHA (C1 for Task 1, C3 for Task 2). Run GREEN_TEST_COMMAND once. Stage explicit paths only. CHECKER BRIEF (measure-phase-acceptance): reread gates G1 to G11 on the final HEAD, rerun the reconcile into a temp log and diff it with the committed log, rerun M1 and M4, read the G7 wording matches (no "accepted" or "owner-approved" from model evidence only), run PROJECT_TESTS once, write the acceptance file.
+open_questions (each with a default):
+  Q1 Week 8 rows: default deferred:pm-assignment, shown as deferred, not as missing work.
+  Q2 Four superseded [ ] tasks (Muse path): default leave unchanged; changing them to [b] makes doctor fail "in_progress track has no unchecked task". Closeout decides.
+  Q3 Generated facts and foreign uncommitted state: default commit facts only when git status shows no foreign change under measure/tracks, tracks.md, generated; else status blocked and the orchestrator decides.
+  Q4 lessons-learned.md is 52 lines (doctor limit 50): default the maker merges at least 2 lines without loss before adding; if unsafe, status blocked.
+  Q5 Doctor errors of other tracks (13 at 91c59500): default not fixed here; the maker quotes them and returns partial if doctor stays red.
+dispositions: none
+END_MEASURE_AGENT_RESULT

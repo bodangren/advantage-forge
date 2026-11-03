@@ -4471,6 +4471,8 @@ The task markers do not change in this round.
 
 ## Phase 5: Documentation and verification
 
+PM 2026-11-03: light lane. One maker (`measure-jr-green`) and one checker (`measure-phase-acceptance`). No Red, no Reviews A/B/C, no adversarial, no UX browser review. The strategy is in `test-strategy.md` section 7, Phase 5.
+
 - [ ] Task: Reconcile every source page and release file in the manifest. Record deferred work and
   evidence classes without claiming owner approval.
 - [ ] Task: Update the plan, metadata, registry, project status, and relevant lessons. Run

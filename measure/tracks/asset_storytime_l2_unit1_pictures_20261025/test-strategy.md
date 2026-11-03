@@ -2316,11 +2316,335 @@ the Muse delivery. The full `vitest run` and `pnpm test` stay outside this track
 
 ### Phase 5: Documentation and verification
 
-Risk class: **low**.
+Revision: written at `91c59500` (Phase 4 checkpoint). Phase 4 acceptance is `35f4a12c`.
 
-- Closeout gate: `./measure/generate.sh`, then `./measure/doctor.sh` exits 0.
-- The plan, metadata, and registry use the evidence classes. No text says "accepted" or "done"
-  for a picture that has only automated or model evidence (A5, A6).
+PM 2026-11-03: light lane. Phase 5 documents and checks a content track (pictures). It changes no
+product code, makes no Muse call, and starts no render. One maker and one checker run. Where this
+subsection and section 10 differ, this subsection applies.
+
+Risk class: **low**. The residual risk is a false claim in the last record that the PM and
+Workbooks read (A5, A6). The checks below target that risk.
+
+##### 5.1 Facts this subsection fixes (checked 2026-11-03 at 91c59500)
+
+| Fact | Value |
+| --- | --- |
+| Picture list (read only) | `/home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json`, version 4, SHA-256 `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`. `pictures.md` SHA-256 `7cc4c20178abbddae3ae0904b9e0e08ced09c6e95d6f9e365fcce932cf81ad56`. Both match now. Workbooks HEAD moved to `7ea815ef`; the list bytes did not change. Pin the SHA-256, never a Workbooks commit. |
+| Rows | 196. Weeks 1 to 7: 192 (week 1: 30; weeks 2 to 7: 162 = A 96, B 12, C 54). Week 8: 4 rows (`moon`, `mango`, `ostrich`, `drum`; class C). |
+| Release folders | Week 1: `w01/delivery-muse-v2/` (30 rows, 60 files; manifest `d3eec18ce7c94b94ed5b0751df164578558ad44f04bebe7b4b371a3ed213796a`). `w01/delivery-muse-v1/` stays as the earlier delivery (manifest `00ea0c5b06d18e3f54cbceed9caa943100c0711bb515c44561eb46b7e03ed369`). Weeks 2 to 7: `w0N/delivery-muse-v1/` (27 jobs, 54 files each). Cover: `cover/delivery-muse-v1/` (`l2-cover-v1.png` `d32b5cc7caf9b02b5451c1c009b3733e75f05353b7a7ff03bce1d8e7661abf01`; manifest `27710b3711757d99294b7e837377d325eb9a6094e1dad43e0f064d2581397b88`). |
+| Manifest SHA-256 (weeks 2 to 7) | w02 `6e6b51450d406bfdac47e01f484925b270bd0b1647bbfc0550d7529809cfeaf4`; w03 `24213647b0f1b92cdb891746cdf6181ff7f20f306c51d256fec150c38d5c273b`; w04 `4e74b7302a851e0261099925a23c0b9246a533911374af01d9748b905320d310`; w05 `c3f009e6bfcb3037ae24b495c6e68527bfbf86162deb3a40a9bbd28a416ffbaf`; w06 `11c5dc10198c9d446afc8ffd80aff46c747d2dec34b77293327907d729163292`; w07 `6a5724c42a83134d80fc1cd1ccecdafe1a76dd25961e040caffaafccc81ea3c2`. |
+| Delivered files | 385 PNG files: week 1 v2 60, weeks 2 to 7 324, cover 1 (no line twin). |
+| Deliveries are not in git | `out/` is outside git. The durable proof is the hash text in `measure/runs/` and the plan. So the reconcile writes a per-file release ledger. |
+| Approval lists and sources | `docs/storytime/l2-unit1/w0N/muse/approved.json` (`rowId`, `version`, `colorPrint`, `linePrint`; the list pin is `pictureListSha256`) and `.../cover/muse/approved.json` (`colorPrint` only, no pin). The Muse source prints sit in `out/storytime/l2/unit1/w0N/muse/` and `cover/muse/`. Entries: 30 + 6 x 27 + 1 = 193. |
+| Muse cost files | 18: `w01/muse/costs.tsv` (349 rows); `w02` to `w07` `muse/costs.tsv` (140, 170, 152, 148, 141, 155); six `muse/elements/costs.tsv` (17, 12, 23, 5, 10, 9); `cover/muse/costs.tsv` (14); four calibration files in `out/storytime-review/` (`muse-test` 8, `muse-test-2` 12, `muse-cast` 4, `muse-print-test` 4). Total 1,373 data rows. The cost column is `usage_cost` in the 14 production files and `cost_usd` in `muse-test` and `muse-test-2` (their header starts with `call`). Find the column by header name. |
+| Cost sums (USD) | w01 3.32; w02 1.21 + 0.15; w03 1.60 + 0.12; w04 1.45 + 0.22; w05 1.39 + 0.05; w06 1.37 + 0.10; w07 1.50 + 0.09; cover 0.13; calibration 0.23. `usage.cost total (USD): 12.93`. Weeks 2 to 7 alone: 9.25. Every row has a value. 72 rows have `output` = `none` (failed calls, `usage_cost` 0). The plan week 7 note says 12.69 and 12.92; both are earlier states. Phase 5 adds one line. It does not edit old notes. |
+| Cost files and outputs (checked) | Every top-level `muse/*.png` that is not a `-print`, `-despeckled`, or `-crop` file has a `costs.tsv` row or matches `-line-raw` (optional `-<n>`). 0 other names exist. Every `output` other than `none` exists on disk in the 14 production files. |
+| Source print names (checked) | Remove `-print` and `-despeckled` from an approved print name to get the call output name. Two week 1 names (`cover-hello` m6 pad prints) need `-pad` removed too. A filter that drops them is A7. |
+| Person records | Week 1, 26 rows: Daniel, 2026-11-02 07:00 ICT, "Both ok", on 3 phone contact sheets of manifest `00ea0c5b`. Week 1, 4 v2 rows: Daniel, 2026-11-02 14:28 ICT, "Looks good". Weeks 2 to 6, 135 rows: Daniel, 2026-11-03 08:43 ICT, "Approved", 15 contact sheets (`person-review-w02-w06.json`). Week 7, 27 rows, and the cover: Daniel, 2026-11-03 10:29 ICT, "Ok" (`person-review-w07-cover.json`). The PM relayed each answer. Class: owner-passed. No manifest holds a `person` key. |
+| Memory file limits | `doctor` fails above 50 lines in `measure/tech-debt.md` (41 now) and `measure/lessons-learned.md` (**52 now, committed**). |
+| `doctor` state at `91c59500` | `node measure/tools/doctor.mjs --structural-only --root .` prints 13 errors. None names this track: 6 other tracks "new track has started tasks"; 5 other tracks without a registry link; `lessons-learned.md` 52 lines; `generated/status.md` stale. Other sessions own the first two groups (uncommitted work). |
+
+##### 5.2 Roles and commands
+
+PM 2026-11-03: light lane. Phase 5 uses these roles only:
+
+| Role | Applies | Work |
+| --- | --- | --- |
+| Maker (`measure-jr-green`) | Yes | The reconcile (5.3), the carry-forward ledger (5.4), and the Task 2 documents (5.5). |
+| Checker (`measure-phase-acceptance`) | Yes | Reruns the reconcile and the gates of 5.7. Checks the wording of 5.6. Runs PROJECT_TESTS once. |
+| Mid (Red) | **No** | No code change exists to fail first. The orchestrator records the deviation "documentation-only phase, PM light lane". |
+| Reviews A, B, C | **No** | PM 2026-11-03: light lane. The full chain is for app code. |
+| Adversarial testing | **No** | The four mutation checks of 5.3 stand in for it. |
+| UX browser review | **No** (`UX_REQUIRED=never`) | No UI. |
+| Different-family rule | Not applied | It applies to code only. |
+
+RED_TEST_COMMAND: **none**.
+
+GREEN_TEST_COMMAND (maker role gate; it passes at the base; run **once** at the end of the maker
+work, because Phase 5 changes no code):
+
+```sh
+bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts tests/storytime-picture-rows.test.ts tests/storytime-muse-delivery.test.ts --maxWorkers=1'
+```
+
+Expected: exit `0`, `Test Files  3 passed (3)`, `Tests  <N> passed (<N>)`, no skip, no `-t`
+filter. Parse `<N>` as a labeled integer. A `heavy-preflight` hold or exit `75` is neither pass nor
+failure: wait and run again.
+
+PROJECT_TESTS (run **once**, by the checker, at the end of the phase): the three files above plus
+`tests/storytime-stage-check.test.ts`, `tests/storytime-line-art-pass.test.ts`, and
+`tests/storytime-muse-delivery-adversarial.test.ts`, in one `heavy-run.sh` wrapper with
+`--maxWorkers=1`. Expected: `Test Files  6 passed (6)` and `Tests  <N> passed (<N>)`. No tsc runs
+in Phase 5 because the code diff is empty (G1). Never run `pnpm`. Use `node_modules/.bin`. Run no
+second heavy command while one runs.
+
+Final acceptance and closeout stay after Phase 5. Final acceptance reads PROJECT_TESTS and the type
+check (`owned tsc errors: 0`, total 38 or less). Closeout commits
+`measure/runs/asset_storytime_l2_unit1_pictures_20261025/` with the archive, sets
+`status: "done"` and the `completed` date in the archived `metadata.json`, and runs
+`./measure/generate.sh` and `./measure/doctor.sh` again after the move (A10).
+
+##### 5.3 Task 1: the reconcile
+
+Form: a **committed script**, because one command is the smallest form a checker can rerun.
+Files (all under `measure/runs/asset_storytime_l2_unit1_pictures_20261025/`, outside product
+source): `reconcile-p5.mjs`, `reconcile-p5.log` (its output), and `release-files-p5.tsv` (the
+release ledger, one line per delivered file: `week`, `row`, `kind`, `file`, `sha256`, `size`,
+`source_print`, `source_sha256`; 385 data lines).
+
+RECONCILE_COMMAND (light job: one process, streaming SHA-256, no lock; use `nice -n 19`; never
+run it beside a vitest run; about 2.5 GB is read once):
+
+```sh
+R=measure/runs/asset_storytime_l2_unit1_pictures_20261025
+nice -n 19 node $R/reconcile-p5.mjs --out-root out/storytime/l2/unit1 --docs-root docs/storytime/l2-unit1 \
+  --review-root out/storytime-review --list /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json \
+  --ledger $R/release-files-p5.tsv > $R/reconcile-p5.log
+```
+
+Exit `0` = all checks hold. Exit `1` = a check failed and the line names the file or row. Exit `2`
+= the list SHA-256 is not the v4 value, or a usage error. The script reads the list and `out/` read
+only. It writes the ledger and stdout only. The maker may rename options. The maker may not change
+the labels, the values, or the exit codes below.
+
+Required labeled lines (A3: gates read labels, never a bare digit):
+
+```text
+list sha256: 6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58
+list rows: 196
+list rows weeks 1 to 7: 192
+list rows week 8: 4
+week 8 ids delivered: 0
+week 8 status: deferred (out of scope until the PM assigns the rows)
+week 1 release folder: delivery-muse-v2
+week 1 rows changed v1 to v2: 4
+manifest sha256 <w01|w02|...|w07|cover>: <value of 5.1>        (eight lines)
+weeks 1 to 7 delivered jobs: 192 files: 384 missing: 0 extra: 0
+weeks 2 to 7 delivered jobs: 162 files: 324 A: 96 B: 12 C: 54 missing: 0 extra: 0
+cover delivered jobs: 1 files: 1
+release files hashed: 385
+release file hash mismatches: 0
+batch hash mismatches: 0
+source prints hashed: 385
+source print mismatches: 0
+approval entries: 193
+approval list pin mismatches: 0
+manifest person review fields: 0
+person record manifest mismatches: 0
+cost files: 18
+cost rows: 1373
+cost rows without usage cost: 0
+cost outputs unaccounted: 0
+usage.cost total (USD): 12.93
+usage.cost total weeks 2 to 7 (USD): 9.25
+reconcile: pass
+```
+
+Checks behind the labels:
+
+- **R1 List pin.** The list SHA-256 equals the v4 value, else exit `2`. The `pictures.md` SHA-256
+  equals the 5.1 value.
+- **R2 Coverage.** The manifest job ids of week 1 (v2) and weeks 2 to 7 equal the list ids of
+  weeks 1 to 7 (set differences give `missing` and `extra`). The weeks 2 to 7 line equals the
+  Phase 4 count command (4.5). It never comes from a `week > 1` filter (that gives 166, S15). The
+  week 8 ids are in the list and in no manifest. They print as deferred, not as missing work.
+- **R3 Release files.** Each job has its color file and its line file (the cover has no line
+  file). `sha256` of each file equals the manifest `fileSha256`. The PNG IHDR size equals the class
+  size (A and B 4000 x 3000, C 1500 x 1500). A folder has no `.png` that the manifest does not
+  name. Each manifest batch hash equals SHA-256 of the UTF-8 `JSON.stringify([{file,sha256}])`
+  with entries sorted by `file` and no whitespace.
+- **R4 Source pages.** For each approval entry, the `colorPrint` and `linePrint` files in `muse/`
+  have the same `sha256` as the release file of that row (week 1: the entry that matches the
+  manifest file version). The seven week lists carry the v4 `pictureListSha256`.
+- **R5 Week 1 kept.** The v1 manifest SHA-256 is `00ea0c5b...ed369`. The v2 folder differs from v1
+  in exactly the 4 rows `a-net`, `check-row-net`, `a-nose`, and `nan-can-nod`. The other 26 rows
+  have equal color hashes. The v1 folder is never edited (S16).
+- **R6 Evidence class.** No manifest holds a `person` key. The `manifestSha256` of each week in
+  `person-review-w02-w06.json` and `person-review-w07-cover.json` equals the SHA-256 of that
+  manifest now. This proves Daniel looked at the bytes that exist now.
+- **R7 Costs.** Find the cost column by header (`usage_cost` or `cost_usd`). Parse each value as an
+  exact decimal text (no float). An empty or negative value fails. In the 14 production files,
+  every `output` other than `none` exists on disk (relative to the cost file folder). Every
+  top-level `muse/*.png` that is not `-print`, `-despeckled`, or `-crop` has a row or matches
+  `-line-raw`. The source ancestor of each approved print has a row (`-pad` removed for the two
+  `cover-hello` prints). The total equals `12.93` by exact compare, no tolerance.
+- **R8 No write.** The run changes no byte under `out/storytime`, `docs/storytime`, or Workbooks.
+
+**Mutation checks (four).** The maker runs them on **copies** made with `cp` (never a hard link) in
+a new empty folder under `/tmp/opencode/`. The copy holds the cover delivery (6.5 MB), its source
+print, the cover approval list, one copied `costs.tsv`, and a copy of the list. The script takes
+`--out-root`, `--docs-root`, `--list`, and `--list-sha256` so the copy can pin its own list. The
+originals are never edited. The folder is deleted at the end.
+
+| Mutation | Expected result |
+| --- | --- |
+| M1 Flip one byte of a copied delivered PNG | Exit `1`. `release file hash mismatches: 1` and the file name. |
+| M2 Set the expected cost total to `12.92` (or empty one `usage_cost` value in a copied cost file) | Exit `1`. The file or the total is named. No tolerance. |
+| M3 Change one byte of the copied list and give no `--list-sha256` | Exit `2`. |
+| M4 Add a week 8 id to a copied manifest | Exit `1`. `week 8 ids delivered` is above 0. |
+
+A mutation that exits `0` is a vacuous pass (A4). The real run is not accepted until all four fail
+as stated. The checker reruns M1 and M4 only.
+
+##### 5.4 Carry-forward ledger (Task 1 note in the plan)
+
+The maker writes one table in the plan: id, disposition, source. Allowed dispositions:
+`fixed at <sha>`, `tech debt TD-<n>`, `informational`, `deferred:<owner>`. G6 greps each id.
+
+| Id | Default disposition |
+| --- | --- |
+| RB-P4-1 / PA4-N1 (Low; `cover-calm-top --print` has no `out/` confinement, no `realpath`, no regular-file check; `coverCalmTopReport` in `src/storytime/book-pictures.ts`) | `tech debt TD-<n>`, Low, Open. A source fix needs its own task. |
+| RB12-01 (Low; a parent symlink under `out/` redirects `mkdir`) and RB12-03 (Nit; `lstat` and `mkdir` are not atomic) | One `tech debt TD-<n>`, Low, Open (from PA3-N3). |
+| RA-P3ADV-2, RC5-3, RA4-N1, RA3-N1 | The maker greps the plan. If the text is still stale, add a dated correction note (`fixed at <sha>`). Else `informational`. RC5-3 joins a TD row only if the line limit allows. |
+| PA3-N6 (4 v2 rows without a person look) | `fixed`: Daniel's "Looks good", 2026-11-02 14:28 ICT, for `delivery-muse-v2`. |
+| PA4-N2 | `fixed at 91c59500`. |
+| PA4-N3 (adversarial baseline `376ae5dd`, HEAD `35f4a12c`) | `informational`. |
+| PA4-N4 (registry, metadata, generate, doctor) | Closed by Task 2 and gates G7 to G9. |
+| Week 8 rows `moon`, `mango`, `ostrich`, `drum` | `deferred:pm-assignment`. Not missing work of this track. Nobody renders them. |
+| Nan window sample (`[b] deferred:daniel-lineart-look`) and the four `[ ]` tasks marked "Deferred: replaced by the Muse path" | `deferred`, replaced by the Muse path. Keep the markers (trap T2). |
+
+Tech debt rows: read the next free `TD-<n>` at commit time (other sessions add rows). Use the table
+shape of `measure/tech-debt.md`. Write one row per class of problem. Keep the file at 50 lines or
+less (9 lines are free).
+
+##### 5.5 Task 2: documents, facts, doctor
+
+The maker owns: the Phase 5 lines and notes of `plan.md`, `metadata.json`, this track entry in
+`measure/tracks.md`, `measure/status.md`, `measure/tech-debt.md`, `measure/lessons-learned.md`, and
+`measure/generated/`. It touches no other track.
+
+- `metadata.json`: `actual_tasks` equals the count of `[x]` task lines in the plan (a labeled
+  integer from grep). `updated_at` is the commit time. `evidence` gains the nine manifest paths and
+  the run folder. `deviation_notes` gains the Muse-path summary. `status` stays `in_progress`.
+- `measure/tracks.md`: the entry stays `[~]` and matches the metadata. The text may say
+  "delivered; person-reviewed by Daniel (owner-passed); week 8 deferred". It never says "accepted".
+- `measure/status.md`: add one Storytime line in the 5.6 wording (the file has none now).
+- `measure/lessons-learned.md`: add 3 lines or less of durable knowledge. The file has 52 lines
+  and `doctor` fails above 50. The maker removes at least 2 lines net by merging lines without
+  loss of fact. If that is not safe, the maker stops with `status: blocked` (open question Q4).
+  Candidates: a reviewer needs control rows or it passes every page (S14); count from the set of
+  ids, not from `week > 1` (S15); never overwrite a delivery folder (S16); sum all cost files and
+  read the column by header; a person review covers what the record says it saw (contact sheets).
+- Links in `measure/*.md` must resolve (`doctor` checks them).
+
+Traps (each has a check in 5.7):
+
+- **T1 Status words.** `doctor` knows `new`, `in_progress`, `completed`. The closeout checker
+  wants `done` in the archive. Phase 5 sets neither. Closeout sets the final value.
+- **T2 Marker count.** `doctor` counts only `[ ]`, `[~]`, and `[x]`, not `[b]`. If the four
+  superseded `[ ]` tasks become `[b]` while all others are `[x]`, then
+  `in_progress track has no unchecked task` fails. Default: leave those four lines unchanged. The
+  checker and the closeout both skip a line with the word "deferred".
+- **T3 First-line SHA.** The closeout checker reads only the first line of a task. A `[x]` task
+  needs a 7 to 40 hex SHA there. A commit cannot hold its own SHA. So: commit C1 holds the
+  reconcile files. C2 sets Task 1 `[x]` with C1 on its first line. C3 holds the Task 2 documents.
+  C4 sets Task 2 `[x]` with C3 on its first line and holds the regenerated facts.
+- **T4 Generated facts.** Plan task counts feed `measure/generated/status.md`. Order: all plan and
+  metadata edits, then `./measure/generate.sh`, then commit. Then `git diff --exit-code --
+  measure/generated/` must print nothing. A later plan edit needs another generate and commit.
+- **T5 Foreign state.** `generate.sh` and `doctor.sh` read the whole working tree. Other sessions
+  have uncommitted edits in `measure/tracks.md`, other tracks, and `measure/generated/`. Default:
+  commit the facts only when `git status --short measure/tracks measure/tracks.md
+  measure/generated` shows no change outside this track. Else return `status: blocked` with that
+  reason (open question Q3). Never stage a path the phase does not own.
+- **T6 Heavy doctor.** `./measure/doctor.sh` without `--structural-only` runs vitest. Run it as
+  `bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh'`. After each
+  document commit run `node measure/tools/doctor.mjs --structural-only --root .` (light).
+- **T7 Old doctor errors.** The 13 errors of other tracks exist before this phase. The maker does
+  not fix another track and quotes the full output. The claim is "no doctor error names this track
+  or an owned file". The words "doctor exits 0" appear only with exit code 0. If other tracks keep
+  `doctor` red, the maker returns `status: partial` with the exact output.
+
+##### 5.6 Evidence class wording
+
+Allowed words for a row, a week, or the cover: `delivered`, `independent model review` (never
+"accepted"), `person-reviewed by Daniel (owner-passed)`, and `deferred`. A person-review
+statement names the person, the time, Daniel's word, the row count, and what he saw (contact
+sheets for weeks 1 to 7, the print file for the cover).
+
+- No text calls a row "accepted", "owner-approved", or "approved" unless the same line names a
+  person record (the two JSON files or a plan note with Daniel's time and word). Daniel's word
+  "Approved" for weeks 2 to 6 appears in quotation marks.
+- The PM acceptance of pad bands and 8-bit gray prints (G5) is a format decision, not a picture
+  acceptance. Model reviews stay `model evidence` or `independent review`. A phase acceptance is not
+  a picture acceptance.
+- No text says Workbooks accepted or printed a picture. Workbooks has not told this session.
+
+##### 5.7 Phase 5 gates (the plan quotes each output)
+
+`P5BASE` is the Phase 5 `phase_base_sha`. `R` is the run folder of 5.3. `OWNED` is the list of 5.5.
+
+```sh
+# G1: prints nothing
+git diff --name-only "$P5BASE"..HEAD | grep -v '^measure/'
+# G7: the checker reads every line and a reason is given for each
+git diff "$P5BASE"..HEAD -- $OWNED | grep -E '^\+' | grep -Ei '\b(accepted|owner-approved|approved|production-ready)\b'
+# G8: prints nothing
+grep -En 'sk-[A-Za-z0-9]{16,}|Bearer [A-Za-z0-9._-]{16,}|api[_-]?key.{0,20}[:=]' "$R/reconcile-p5.log" "$R/release-files-p5.tsv"
+```
+
+| Gate | Check | Falsification condition |
+| --- | --- | --- |
+| G1 No code drift | The G1 command prints nothing. | A file outside `measure/` changes. |
+| G2 Reconcile | RECONCILE_COMMAND exits `0`, the log has every label of 5.3 with its value, the ledger has 385 data lines, and `reconcile: pass` is the last line. | A label is missing or differs. |
+| G3 Mutations | M1 to M4 give the stated exit codes (maker note). The checker reruns M1 and M4. | A mutation exits `0`. |
+| G4 Read only | Workbooks `git status --short content/storytime/l2/print` prints nothing. `sha256sum` of `pictures.json` and `pictures.md` still equal 5.1. `find out/storytime -newer <stamp> -type f` (stamp made before the run) prints nothing. The nine manifest SHA-256 values equal 5.1 and the plan. | A file changes or a hash differs. |
+| G5 Ledger | Each id of 5.4 has a disposition in the plan. `measure/tech-debt.md` and `measure/lessons-learned.md` have 50 lines or less. | An id has none, or a file passes 50 lines. |
+| G6 Cost report | The plan note quotes `usage.cost total (USD): 12.93`, the weeks 2 to 7 value 9.25, and the per-file table from the log. It marks 12.69 and 12.92 as earlier states. | A number differs from the log. |
+| G7 Wording | The G7 command matches only lines that quote Daniel, record a PM format decision, or name a person record. A seeded copy with one unqualified "accepted" is matched. | An unqualified match remains, or the seed is missed. |
+| G8 No secret | The G8 command prints nothing. | A key-like string is in a new file. |
+| G9 Facts and doctor | `./measure/generate.sh` exits `0` (`Generated 4 Measure facts.`). The structural doctor shows no error that names this track or an owned file. The heavy doctor ran once under `heavy-run.sh`. After the last commit, `git diff --exit-code -- measure/generated/` prints nothing. | A doctor error names this track, or the facts differ from HEAD. |
+| G10 Tests | GREEN_TEST_COMMAND (maker, once) and PROJECT_TESTS (checker, once) exit `0` with the labeled totals of 5.2. | A failure, a skip, or a filter. |
+| G11 Task lines | Both Phase 5 tasks are `[x]` with a SHA on the first line that `git cat-file -t` shows as `commit` and that holds the evidence. `measure_interphase_checks.py status --track asset_storytime_l2_unit1_pictures_20261025` lists no incomplete phase. | The SHA is on a later line or is not a commit. |
+
+Phase 5 is complete when G1 to G11 hold. If G9 fails only because of other tracks (T7), the maker
+returns `status: partial` with the exact output, and does not fix them.
+
+Intentionally red aggregate suites: none. The full `vitest run` and `pnpm test` stay outside this
+track (section 11). Baseline tsc errors outside the owned paths stay known failures.
+
+##### 5.8 Anti-pattern coverage for Phase 5
+
+`measure/anti-patterns.md` does not exist. The catalog is
+`~/.agents/skills/measure-orchestrator/references/anti-pattern-catalog.md`. A1 and A8 are retired.
+
+| Class | Defense | Falsification condition |
+| --- | --- | --- |
+| A2 consent-blind publish gate | R6: no `person` key in a manifest; each record matches the manifest bytes. 5.6 names person, time, word, and what he saw. | A row is called person-reviewed with no record (G7). |
+| A3 digit-only count | Labeled lines only (5.3). Exact decimal cost parse. Labeled `Tests  <N> passed (<N>)`. | A date, a path digit, or a float sum satisfies a gate (M2). |
+| A4 vacuous pass | Four mutations fail on copies. The ledger needs 385 lines. R2 uses set differences, so an empty folder gives `missing` above 0. | A mutation exits `0`, or a run over zero files passes. |
+| A5 false claim | The plan quotes the command, exit code, and labels. Old totals are marked as earlier states. "Doctor exits 0" only with exit code 0. | A note differs from the log (G6, G9). |
+| A6 registry overstatement | `tracks.md`, `status.md`, and `metadata.json` use 5.6 wording and stay `in_progress`. | A line says "accepted" for a picture with model evidence only (G7). |
+| A7 over-broad filter | R7 handles `-pad` and `-line-raw` by name, finds the cost column by header, and has no tolerance. | A `cover-hello` row is dropped, or `cost_usd` files are skipped. |
+| A9 archived track paths | No test file is added. The script takes paths as arguments. | `grep -n 'measure/tracks/' tests/storytime-*.test.ts` prints a line. |
+| A10 generated-facts drift | T4 order and an empty `git diff --exit-code -- measure/generated/` after the last commit. | A plan edit follows the last generate (G9). |
+| A11 doc-to-code drift | The plan and `contract.md` name the v4 SHA. The grep of 4.8 item 2 still shows only the T173 negative control. The checker reruns it. | A document names a pin the code does not hold. |
+
+Project candidates for a future `measure/anti-patterns.md`: (S18) generated facts that hold the
+uncommitted state of another session; (S19) two tools with two words for one status (`done` and
+`completed`) and a marker one tool counts and the other does not (T2); (S20) a cost total built
+from a subset of the cost files or from a column with the wrong name.
+
+##### 5.9 Role briefs
+
+- **Maker (`measure-jr-green`).** Write the reconcile files (C1). Run RECONCILE_COMMAND and the four
+  mutations. Write the ledger and cost notes in the plan (C2). Update the documents of 5.5 (C3). Run
+  generate and doctor, then set Task 2 (C4). Run GREEN_TEST_COMMAND once. Stage explicit paths only.
+  Return `blocked` or `partial` as T5 and T7 say.
+- **Checker (`measure-phase-acceptance`).** Reread G1 to G11 on the final HEAD. Rerun
+  RECONCILE_COMMAND into a temp log and diff it with the committed log. Rerun M1 and M4. Read the
+  G7 matches. Run PROJECT_TESTS once. Write the acceptance file. Do not edit product files.
+
+##### 5.10 phase_base_sha capture point (Phase 5)
+
+1. The Phase 5 strategy commit lands first. `91c59500` is the HEAD before it, so it is the
+   `role_base_sha` only.
+2. Immediately after the strategy commit, the orchestrator runs `git rev-parse HEAD`. That
+   committed value is the immutable Phase 5 `phase_base_sha`. The orchestrator captures it before
+   any maker edit or commit.
+3. This subsection embeds no SHA for that base. The earlier bases (`1d39b8fd`, `15a7bf0b`,
+   `fc76c272`) do not change.
+4. G1 and G7 diff from the Phase 5 base.
 
 ## 8. Architecture guardrails and changed-contract risks
 
@@ -2621,3 +2945,7 @@ Evidence classes:
     lands in git. Immediately afterward, the orchestrator runs `git rev-parse HEAD` and records that
     committed value as the immutable Phase 4 `phase_base_sha`. `60892a38` is the `role_base_sha`
     only. Section 7, subsection 4.9, holds the full rule. This strategy embeds no SHA for the base.
+14. The Phase 5 strategy commit lands before any Phase 5 maker edit or commit. Immediately afterward,
+    the orchestrator runs `git rev-parse HEAD` and records that committed value as the immutable
+    Phase 5 `phase_base_sha`. `91c59500` is the `role_base_sha` only. Section 7, subsection 5.10,
+    holds the full rule. This strategy embeds no SHA for the base.
