@@ -4796,6 +4796,7 @@ describe('Phase 4 picture list version 4', () => {
         const result = await report(file);
         expect.soft({ [`${name}: report rows`]: result.rows }).toEqual({ [`${name}: report rows`]: 900 });
         expect.soft({ [`${name}: report ok`]: result.ok }).toEqual({ [`${name}: report ok`]: passes });
+        if (name === 'busy band to row 899 (inside)') expect.soft(result.share).toBeCloseTo(100 / 900, 5);
         if (above) expect.soft(result.share, `${name}: the differing share is above 0.02`).toBeGreaterThan(0.02);
         else expect.soft(result.share, `${name}: the differing share is at most 0.02`).toBeLessThanOrEqual(0.02);
 

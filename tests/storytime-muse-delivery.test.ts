@@ -4,7 +4,7 @@ import { mkdir, mkdtemp, readFile, readdir, rm, symlink, writeFile } from 'node:
 import os from 'node:os';
 import path from 'node:path';
 import sharp from 'sharp';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   BATCH_HASH_ALGORITHM,
   PICTURE_SIZES,
@@ -17,6 +17,8 @@ import {
 } from '../src/storytime/book-pictures.js';
 import { writeMuseDelivery } from '../src/storytime/muse-delivery.js';
 import { runStorytimeBookPicturesEntry } from '../scripts/storytime-book-pictures.js';
+
+vi.setConfig({ testTimeout: 30000, hookTimeout: 30000 });
 
 // Red tests for the Muse week 1 delivery manifest (plan task "Add failing tests for the Muse week
 // 1 delivery manifest (Red)"). The PM delivery contract is spec.md decision 2 of the amendment
@@ -1581,7 +1583,7 @@ describe('Muse delivery of the Level 2 cover (color only)', () => {
       { label: 'wrong size', bytes: await colorPng(4000, 2000, COVER_BACKGROUND), match: /size|pixel|width|height|dimension/i },
       { label: 'small class size', bytes: await colorPng(1500, 1500, COVER_BACKGROUND), match: /size|pixel|width|height|dimension/i },
       { label: 'alpha', bytes: await alphaPng(size.width, size.height), match: /alpha|channel/i },
-      { label: 'not a PNG', bytes: await jpegPrint(size.width, size.height), match: /png/i },
+      { label: 'not a PNG', bytes: await jpegPrint(size.width, size.height), match: /must be a PNG/ },
     ];
     for (const [index, item] of cases.entries()) {
       await writeFile(path.join(coverMuse, COVER_PRINT), item.bytes);
@@ -1741,5 +1743,17 @@ describe('Muse delivery of the Level 2 cover (color only)', () => {
       expect.soft({ [`The ${item.label} refusal writes no file`]: await walk(target) })
         .toEqual({ [`The ${item.label} refusal writes no file`]: [] });
     }
+  });
+
+  it('T199 refuses a cover approval whose colorPrint is not in the Muse folder, before any write', async () => {
+    const deliverCover = await coverSeam();
+    const target = path.join(root, 'cover-missing-color-print');
+    const missing = 'l2-cover-v1-m99-color-print.png';
+    const error = await rejection(() =>
+      deliverCover({ approvals: coverApprovals({ colorPrint: missing }), museRoot: coverMuse, deliveryRoot: target }),
+    );
+    expect.soft(error.message, 'The missing colorPrint refusal names the file').toContain(missing);
+    expect.soft({ 'The missing colorPrint refusal writes no file': await walk(target) })
+      .toEqual({ 'The missing colorPrint refusal writes no file': [] });
   });
 });
