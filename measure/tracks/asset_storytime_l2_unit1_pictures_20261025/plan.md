@@ -4473,10 +4473,30 @@ The task markers do not change in this round.
 
 PM 2026-11-03: light lane. One maker (`measure-jr-green`) and one checker (`measure-phase-acceptance`). No Red, no Reviews A/B/C, no adversarial, no UX browser review. The strategy is in `test-strategy.md` section 7, Phase 5.
 
-- [ ] Task: Reconcile every source page and release file in the manifest. Record deferred work and
-  evidence classes without claiming owner approval.
-- [ ] Task: Update the plan, metadata, registry, project status, and relevant lessons. Run
-  `./measure/generate.sh` and `./measure/doctor.sh` before closure.
+- [x] Task: Reconcile every source page and release file in the manifest. Record deferred work and evidence classes without claiming owner approval. Commit `7c4f8b63f4d11edae5fae07ac28b0bedde5f2039`.
+  Reconcile command: `nice -n 19 node measure/runs/asset_storytime_l2_unit1_pictures_20261025/reconcile-p5.mjs --out-root out/storytime/l2/unit1 --docs-root docs/storytime/l2-unit1 --review-root out/storytime-review --list /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --ledger measure/runs/asset_storytime_l2_unit1_pictures_20261025/release-files-p5.tsv`; exit `0`. Output: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/reconcile-p5.log`. The log has every required label. The ledger has 385 data rows and ends at the reconcile result.
+  Reconcile labels: list SHA-256 `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`; list rows 196; weeks 1 to 7 rows 192; week 8 rows 4; week 8 ids delivered 0; status `deferred (out of scope until the PM assigns the rows)`; week 1 folder `delivery-muse-v2`; week 1 rows changed v1 to v2: 4. Manifest SHA-256 values: w01 `d3eec18ce7c94b94ed5b0751df164578558ad44f04bebe7b4b371a3ed213796a`; w02 `6e6b51450d406bfdac47e01f484925b270bd0b1647bbfc0550d7529809cfeaf4`; w03 `24213647b0f1b92cdb891746cdf6181ff7f20f306c51d256fec150c38d5c273b`; w04 `4e74b7302a851e0261099925a23c0b9246a533911374af01d9748b905320d310`; w05 `c3f009e6bfcb3037ae24b495c6e68527bfbf86162deb3a40a9bbd28a416ffbaf`; w06 `11c5dc10198c9d446afc8ffd80aff46c747d2dec34b77293327907d729163292`; w07 `6a5724c42a83134d80fc1cd1ccecdafe1a76dd25961e040caffaafccc81ea3c2`; cover `27710b3711757d99294b7e837377d325eb9a6094e1dad43e0f064d2581397b88`.
+  Reconcile totals: weeks 1 to 7 delivered jobs 192, files 384, missing 0, extra 0; weeks 2 to 7 delivered jobs 162, files 324 (A 96, B 12, C 54), missing 0, extra 0; cover 1 job and 1 file. Release files hashed 385; release hash mismatches 0; batch hash mismatches 0; source prints hashed 385; source print mismatches 0; approval entries 193; approval list pin mismatches 0; manifest person fields 0; person record manifest mismatches 0. Cost files 18; cost rows 1,373; rows without usage cost 0; unaccounted outputs 0; `usage.cost total (USD): 12.93`; weeks 2 to 7 total `9.25`.
+  Mutation checks ran on copied files in separate new `/tmp/opencode/` folders. M1 flipped one copied cover PNG byte: exit `1`, release file hash mismatches `1`. M2 emptied one copied cost value: exit `1`, cost rows without usage cost `1`. M3 changed one copied list byte without a pin: exit `2`, list SHA mismatch. M4 added a week 8 job to the copied manifest: exit `1`, week 8 ids delivered `1`. The original files were not changed.
+  Carry-forward ledger:
+
+  | Id | Disposition | Source |
+  | --- | --- | --- |
+  | RB-P4-1 / PA4-N1 | `tech debt TD-29`, Low, Open | `coverCalmTopReport` in `src/storytime/book-pictures.ts`; `cover-calm-top --print` has no `out/` confinement, realpath check, or regular-file check. A source fix needs a separate task. |
+  | RB12-01 / RB12-03 | `tech debt TD-30`, Low, Open | PA3-N3; parent symlink and non-atomic `lstat`/`mkdir` behavior need a separate source task. |
+  | RA-P3ADV-2 / RA4-N1 / RA3-N1 | `informational` | The current plan no longer holds the stale prior handoff or metadata count; Phase 5 records the current count. |
+  | RC5-3 | `informational` | It remains out of scope and is not a Phase 5 task. |
+  | PA3-N6 | `fixed at 7c4f8b63f4d11edae5fae07ac28b0bedde5f2039` | Daniel's 2026-11-02 14:28 ICT “Looks good” covers the four v2 rows. |
+  | PA4-N2 | `fixed at 91c59500` | Existing Phase 4 plan evidence. |
+  | PA4-N3 | `informational` | Adversarial baseline `376ae5dd`, HEAD `35f4a12c`. |
+  | PA4-N4 | `fixed at 7c4f8b63f4d11edae5fae07ac28b0bedde5f2039` | Phase 5 document and fact checks. |
+  | Week 8 rows: `moon`, `mango`, `ostrich`, `drum` | `deferred:pm-assignment` | PM decision Q1. Do not render or plan these rows. |
+  | Nan window `[b] deferred:daniel-lineart-look`; four superseded `[ ]` tasks | `deferred` | PM decision Q2. Preserve all markers and text. |
+
+  Evidence classes: weeks 1 to 7 and the cover are `delivered`; model results are independent model review evidence, not acceptance. Daniel person-reviewed 26 week 1 v1 rows on 2026-11-02 at 07:00 ICT (“Both ok”) from three phone contact sheets. Daniel person-reviewed four week 1 v2 rows on 2026-11-02 at 14:28 ICT (“Looks good”). Daniel person-reviewed 135 weeks 2 to 6 rows on 2026-11-03 at 08:43 ICT (“Approved”) from 15 contact sheets. Daniel person-reviewed 27 week 7 rows and the cover on 2026-11-03 at 10:29 ICT (“Ok”); he saw three week 7 contact sheets and the cover print. No Workbooks acceptance or printing is claimed.
+  Open cost history: `12.69` and `12.92` are earlier totals. The current total includes all cost files and is `12.93`.
+  PM decisions recorded: Q1 defers week 8 to `pm-assignment`; Q2 preserves the four superseded `[ ]` tasks and the existing `[b]`; Q3 preserves all foreign working-tree and staged state, uses only this track's registry hunk, and does not commit generated facts; Q4 permits no lesson if a safe merge cannot meet the 50-line limit; Q5 accepts completion when structural doctor output names no track-owned file, despite known other-track errors.
+- [~] Task: Update the plan, metadata, registry, project status, and relevant lessons. Run `./measure/generate.sh` and `./measure/doctor.sh` before closure.
 
 ## Calibration sources
 
