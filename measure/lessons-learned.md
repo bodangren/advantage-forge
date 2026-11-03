@@ -13,12 +13,9 @@ Keep this working memory within 50 lines. Evidence links retain the detailed his
 ## Recurring failures
 
 - Shared staged files entered unrelated commits during overnight work. Commit explicitly selected paths.
-- Some trial tools wrote outside their trial directory. Validate isolation before launching a batch.
-- A successful build once produced an empty mesh, and trial sources introduced type errors and unsupported paint options. Validate mesh content, types, and visual output before acceptance.
-- Provider quotas and access failures interrupted batches. Record retry conditions without assuming a historical reset remains valid.
-- Concurrent dependency replacement interrupted builds. Coordinate dependency maintenance across sessions.
-- A flat `k.add` plane over a tile top baked dark blocks in textured builds. Review the textured render, not only `--fast`.
-- Glossy water (roughness below 0.5) turned white in some sprite directions. Use roughness 0.55 for water that the sprite camera sees.
+- Some trial tools wrote outside their trial directory. Validate isolation before launching a batch. A successful build produced an empty mesh, and trial sources introduced type errors and unsupported paint options. Validate mesh content, types, and visual output before acceptance.
+- Provider quotas and access failures interrupted batches. Record retry conditions without assuming a historical reset remains valid. Concurrent dependency replacement interrupted builds. Coordinate dependency maintenance across sessions.
+- A flat `k.add` plane over a tile top baked dark blocks in textured builds. Review the textured render, not only `--fast`. Glossy water (roughness below 0.5) turned white in some sprite directions. Use roughness 0.55 where the sprite camera sees water.
 - An agent ran `git stash` on the shared tree. Every brief forbids stash, reset, restore, and checkout outside the agent's own file.
 - The browser QC at 1280 × 720 passed all 28 games, but the phone QC (390 × 844 and 844 × 390, touch) found covered labels, gate words off screen, and unreadable tiles. Run `qc/run.mjs --phone` and `--phone-landscape` before a game layout counts as checked.
 - The answer audio controller notifies its listeners inside its own calls. A gate view that played a clip from a listener started nested plays, and each play cancelled the one before it. Unit tests passed, but the browser QC run gave more than 200 attempts per question, and the mount dropped the result. Deliver controller changes to a view in a microtask, and test a listener that plays.
@@ -45,6 +42,7 @@ Keep this working memory within 50 lines. Evidence links retain the detailed his
 
 ## Evidence
 
+- Reconcile mutable delivery records by pinned hashes. Run mutations on copies and keep read-only sources unchanged.
 - [Overnight production record](../bench/overnight/PLAN.md)
 - [Dungeon fit and assembly review](../docs/dungeon-mockups/fit-check.md)
 - [Forge art direction](../.agents/skills/forge-assets/SKILL.md)

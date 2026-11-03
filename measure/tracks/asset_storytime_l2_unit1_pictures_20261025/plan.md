@@ -4489,7 +4489,7 @@ PM 2026-11-03: light lane. One maker (`measure-jr-green`) and one checker (`meas
   | PA3-N6 | `fixed at 7c4f8b63f4d11edae5fae07ac28b0bedde5f2039` | Daniel's 2026-11-02 14:28 ICT “Looks good” covers the four v2 rows. |
   | PA4-N2 | `fixed at 91c59500` | Existing Phase 4 plan evidence. |
   | PA4-N3 | `informational` | Adversarial baseline `376ae5dd`, HEAD `35f4a12c`. |
-  | PA4-N4 | `fixed at 7c4f8b63f4d11edae5fae07ac28b0bedde5f2039` | Phase 5 document and fact checks. |
+  | PA4-N4 | `informational` | Phase 5 document and fact checks are recorded below after completion. |
   | Week 8 rows: `moon`, `mango`, `ostrich`, `drum` | `deferred:pm-assignment` | PM decision Q1. Do not render or plan these rows. |
   | Nan window `[b] deferred:daniel-lineart-look`; four superseded `[ ]` tasks | `deferred` | PM decision Q2. Preserve all markers and text. |
 
@@ -4497,6 +4497,8 @@ PM 2026-11-03: light lane. One maker (`measure-jr-green`) and one checker (`meas
   Open cost history: `12.69` and `12.92` are earlier totals. The current total includes all cost files and is `12.93`.
   PM decisions recorded: Q1 defers week 8 to `pm-assignment`; Q2 preserves the four superseded `[ ]` tasks and the existing `[b]`; Q3 preserves all foreign working-tree and staged state, uses only this track's registry hunk, and does not commit generated facts; Q4 permits no lesson if a safe merge cannot meet the 50-line limit; Q5 accepts completion when structural doctor output names no track-owned file, despite known other-track errors.
 - [~] Task: Update the plan, metadata, registry, project status, and relevant lessons. Run `./measure/generate.sh` and `./measure/doctor.sh` before closure.
+  Q4 lesson handling: the original lessons file had 52 lines. Three related bullet pairs were merged without removing facts. One durable lesson was added. The file now has 50 lines. The debt registry has 43 lines after TD-29 and TD-30.
+  Task 2 document edits set metadata to 23 completed tasks while Task 2 remains `[~]`. Task 2 completion will change the metadata count to 24. Q3 foreign changes remain uncommitted. The generator output is not committed because generated facts include foreign state; closeout owns the facts commit.
 
 ## Calibration sources
 

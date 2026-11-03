@@ -137,6 +137,7 @@ This registry gives each historical, current, and planned work item one Measure 
 
 - [~] **Track: Storytime Level 2 unit 1 book pictures and cover render**
   *Link: [./tracks/asset_storytime_l2_unit1_pictures_20261025/](./tracks/asset_storytime_l2_unit1_pictures_20261025/)*
+  *Status:* delivered; person-reviewed by Daniel (owner-passed); week 8 deferred to PM assignment; no Workbooks acceptance recorded.
 
 ## Games
 

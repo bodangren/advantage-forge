@@ -9,6 +9,8 @@ Generated status and asset counts appear in `measure/generated/`.
 | Games | 28 student games with 2D and 3D views, ported to the monorepo; the port and the RPG skin are in `primary-parity-integration` (0dac27db2) | The legacy games removal: F1 and F2 are in the monorepo; the phone check of "Listen to English" is open ([track](./tracks/legacy_games_removal_20261006/)) | The port reaches monorepo `master` in the Primary cutover; master CI must be green first ([track](./tracks/monorepo_master_ci_20261006/)). |
 | Management | Measure migration committed (6b70d6f); indexed tracks, catalog ownership, history, debt, and lessons | Status upkeep | Run the generator and the doctor after each status change. |
 
+Storytime Level 2 unit 1 has 385 PNG files delivered for weeks 1 to 7 and the cover. Person-review records for Daniel's reviews name the rows, times, words, and materials in the [track plan](./tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md). Week 8 is deferred to PM assignment. The track remains in progress; no Workbooks acceptance is recorded.
+
 ## Quality baseline
 
 The audit found 140 compiler errors: 139 asset errors and one test error.
