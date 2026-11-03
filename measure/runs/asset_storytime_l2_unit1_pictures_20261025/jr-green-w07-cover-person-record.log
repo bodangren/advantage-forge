@@ -1,0 +1,26 @@
+step 1: started record round (role_base 569e62cc, phase_base fc76c272)
+step 2: verify: SHA-256 of w07 manifest 6a5724c4... (match); cover manifest 27710b37... (match); cover png d32b5cc7... (match), md5 5f0b64a54e6a76e7a8809868ea773bb6 (starts 5f0b64a5); approved.json w07 has 27 entries (unique rowId); each id has one job in the w07 manifest; manifest has 27 jobs; problems: 0
+step 3: record file written: measure/runs/asset_storytime_l2_unit1_pictures_20261025/person-review-w07-cover.json (gate "G7 and C5", person Daniel, owner-passed, 2026-11-03T10:29+07:00, note "Ok", 27 week 7 rows plus the cover, rowCount 28)
+step 4: no approved.json edited; no deliver; no Muse call; reason: the delivered manifests are the bytes that Daniel reviewed
+step 5: plan.md had no uncommitted change before the edit; notes "Week 7 person review (G7)" (Task 2) and "Cover person review (C5)" (Task 3) added; no marker changed
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2 (G7 week 7) and Task 3 (C5 cover); markers stay [~]
+role_base_sha: 569e62cc
+phase_base_sha: fc76c272
+spec_commits: none
+models: red=opencode-go/deepseek-v4.1-flash (T2, T3 r1), claude-code/claude-opus-5-5[1m]#high (T3 r2); green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: 27 week 7 rows (G7 PASS, owner-passed) and the cover (C5 PASS, owner-passed); person Daniel; "Ok"; 2026-11-03T10:29+07:00; rowCount 28
+manifest_sha256: w07 6a5724c42a83134d80fc1cd1ccecdafe1a76dd25961e040caffaafccc81ea3c2; cover 27710b3711757d99294b7e837377d325eb9a6094e1dad43e0f064d2581397b88; cover png d32b5cc7caf9b02b5451c1c009b3733e75f05353b7a7ff03bce1d8e7661abf01 (md5 5f0b64a54e6a76e7a8809868ea773bb6)
+record_file: measure/runs/asset_storytime_l2_unit1_pictures_20261025/person-review-w07-cover.json
+open_items: none for G7 and C5. Weeks 2 to 7 have 162 G7 rows (135 in 48c71d42, 27 here); weeks 1 to 7 and the cover all have Daniel's review. No reviews.person field exists in approved.json by design.
+round_cost_usd: 0
+handoff: Report to the PM: week 7 is "delivered, person review PASS"; the cover is "person review PASS" (C1 to C5 pass). Default: no further action.
+dispositions: none
+END_MEASURE_AGENT_RESULT

@@ -4056,6 +4056,30 @@ rows T142 to T151, and the closeout gate for 30 jobs.
         record holds person, time, rows, verdict, and note (Tasks)").
       - Week 7 and the cover stay "delivered, awaiting person review" (week 7) and "awaiting person review"
         (cover). Daniel's word covers only the 15 sheets of weeks 2 to 6.
+    - Week 7 person review (G7). Green record round of 2026-11-03, claude-code/claude-sonnet-5-5#high.
+      role_base_sha `569e62cc`, phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash.
+      Coder: none. No Muse call, no delivery, no picture change. No marker changed. Run log:
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w07-cover-person-record.log`.
+      Record file: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/person-review-w07-cover.json`.
+      - Answer: the PM relayed it to Forge on 2026-11-03. The person is Daniel. The channel is Tasks. The
+        answer is Tasks item `RERnblJqVDdnQTNYOGtOcg`, sent at 10:29 ICT (`2026-11-03T10:29+07:00`), under
+        Tasks item `VmEzQVcwLW0yckZzRzN6Uw` (the PM sent that item at about 10:2x ICT). Daniel's word,
+        quoted exactly: "Ok". Daniel saw the 3 contact sheets of week 7 (27 pictures, color and line art)
+        and the cover print `l2-cover-v1.png`. The PM instruction: record it as the person review PASS for
+        all 27 week 7 rows (G7) and for the cover (C5). No redo.
+      - Rows and manifest. The round hashed the delivered manifest and read the 27 row ids of
+        `docs/storytime/l2-unit1/w07/muse/approved.json` (`entries[].rowId`). The ids are unique. Each id has
+        exactly one job in the delivered manifest. The manifest has 27 jobs. 0 problems.
+        `out/storytime/l2/unit1/w07/delivery-muse-v1/manifest.json` SHA-256
+        `6a5724c42a83134d80fc1cd1ccecdafe1a76dd25961e040caffaafccc81ea3c2`. The 27 row ids are in the record
+        file.
+      - G7 PASS (owner-passed) for the 27 rows of week 7. Week 7 changes from "delivered, awaiting person
+        review" to "delivered, person review PASS".
+      - With this record, every week 2 to 7 has a G7 record (162 rows: 135 in `48c71d42` and 27 here), and
+        weeks 1 to 7 all have Daniel's review.
+      - No `approved.json` changed and no delivery ran again. The delivered manifest is the bytes that
+        Daniel reviewed. A new `reviews.person` field would change the manifest and would need a new
+        delivery folder.
 - [~] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks.
     Red evidence for Phase 4 Task 3 (C1, T183) (2026-11-03). Role base `7361c5b5`; Phase 4 base
@@ -4266,6 +4290,26 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       `27710b3711757d99294b7e837377d325eb9a6094e1dad43e0f064d2581397b88`.
     - C1 to C4 pass; C5 pending (the PM sent the cover to Daniel; no person review is recorded). Log:
       `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p4-t3-r4.log`.
+    - Cover person review (C5). Green record round of 2026-11-03, claude-code/claude-sonnet-5-5#high.
+      role_base_sha `569e62cc`, phase_base_sha `fc76c272`. Red models: `opencode-go/deepseek-v4.1-flash`
+      (round 1) and `claude-code/claude-opus-5-5[1m]#high` (round 2). Coder: none. No Muse call, no
+      delivery, no picture change. No marker changed. Run log:
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w07-cover-person-record.log`.
+      Record file: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/person-review-w07-cover.json`.
+      - Answer: the PM relayed it to Forge on 2026-11-03. The person is Daniel. The channel is Tasks. The
+        answer is Tasks item `RERnblJqVDdnQTNYOGtOcg`, sent at 10:29 ICT (`2026-11-03T10:29+07:00`), under
+        Tasks item `VmEzQVcwLW0yckZzRzN6Uw`. Daniel's word, quoted exactly: "Ok". Daniel saw the cover print
+        `l2-cover-v1.png` (the m13 print). The PM instruction: record it as the person review PASS for the
+        cover (C5). No redo.
+      - Hashes. The round re-hashed the delivered files.
+        `out/storytime/l2/unit1/cover/delivery-muse-v1/l2-cover-v1.png` SHA-256
+        `d32b5cc7caf9b02b5451c1c009b3733e75f05353b7a7ff03bce1d8e7661abf01`, md5
+        `5f0b64a54e6a76e7a8809868ea773bb6` (equal to the m13 print). `.../cover/delivery-muse-v1/manifest.json`
+        SHA-256 `27710b3711757d99294b7e837377d325eb9a6094e1dad43e0f064d2581397b88`.
+      - C5 PASS (owner-passed). C1 to C5 all pass. The cover changes from "awaiting person review" to
+        "person review PASS".
+      - No `approved.json` changed and no delivery ran again. The delivered manifest is the bytes that
+        Daniel reviewed.
 
 Line-art note for Phase 4: weeks 2 to 7 get 162 line-art twins with the same line-art gates. The
 reconciliation task also applies picture specification v1 to the line art. Specification v1 has

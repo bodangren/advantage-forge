@@ -1,0 +1,57 @@
+{
+  "gate": "G7 and C5",
+  "person": "Daniel",
+  "evidenceClass": "owner-passed",
+  "time": "2026-11-03T10:29+07:00",
+  "tasks": {
+    "answer": "RERnblJqVDdnQTNYOGtOcg",
+    "item": "VmEzQVcwLW0yckZzRzN6Uw"
+  },
+  "relayedBy": "PM",
+  "verdict": "pass",
+  "note": "Ok",
+  "seen": "The cover print l2-cover-v1.png (the m13 print, md5 5f0b64a54e6a76e7a8809868ea773bb6) and 3 week 7 contact sheets (27 pictures, color + line art)",
+  "recordNote": "Daniel answered with the word \"Ok\". The PM relayed the answer and ordered: record it as the person review PASS for all 27 week 7 rows (G7) and for the cover (C5). No redo. With this record, weeks 1 to 7 and the Level 2 cover all have his review. No approved.json changed and no delivery ran again. The delivered manifests are the bytes that Daniel reviewed. A new reviews.person field would change the manifest and would need a new delivery folder. This file and the plan notes hold the G7 and C5 record.",
+  "weeks": {
+    "7": {
+      "manifestSha256": "6a5724c42a83134d80fc1cd1ccecdafe1a76dd25961e040caffaafccc81ea3c2",
+      "rows": [
+        "l2-w07-story-page-is-it-a-ball-no",
+        "l2-w07-story-page-is-it-a-doll-no",
+        "l2-w07-story-page-is-it-a-car-no",
+        "l2-w07-story-page-is-it-a-kite-no",
+        "l2-w07-story-page-is-it-a-drum-no",
+        "l2-w07-story-page-is-it-a-train-no",
+        "l2-w07-story-page-is-it-a-teddy-no",
+        "l2-w07-story-page-is-it-pip-yes",
+        "l2-w07-cover-is-it-a-ball",
+        "l2-w07-story-page-tom-can-see-a-top",
+        "l2-w07-story-page-tom-can-get-the-top",
+        "l2-w07-story-page-the-top-on-a-mat",
+        "l2-w07-story-page-the-top-on-a-pot",
+        "l2-w07-story-page-the-top-is-on-mom",
+        "l2-w07-story-page-run-tom-run",
+        "l2-w07-story-page-can-tom-see-the-top",
+        "l2-w07-story-page-the-top-is-on-pip",
+        "l2-w07-cover-the-top",
+        "l2-w07-check-row-octopus",
+        "l2-w07-check-row-sun",
+        "l2-w07-check-row-bed",
+        "l2-w07-check-row-cat",
+        "l2-w07-check-row-ox",
+        "l2-w07-check-row-fish",
+        "l2-w07-check-row-pen",
+        "l2-w07-check-row-bus",
+        "l2-w07-check-row-olive"
+      ]
+    }
+  },
+  "cover": {
+    "rowId": "l2-cover-v1",
+    "file": "l2-cover-v1.png",
+    "fileSha256": "d32b5cc7caf9b02b5451c1c009b3733e75f05353b7a7ff03bce1d8e7661abf01",
+    "md5": "5f0b64a54e6a76e7a8809868ea773bb6",
+    "manifestSha256": "27710b3711757d99294b7e837377d325eb9a6094e1dad43e0f064d2581397b88"
+  },
+  "rowCount": 28
+}
