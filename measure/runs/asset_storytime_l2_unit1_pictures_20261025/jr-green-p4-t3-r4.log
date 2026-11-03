@@ -1,0 +1,28 @@
+Green P4 T3 round 4. role_base_sha abe5a7b9. No finding routed.
+Step 1: code commit 6f7c1444: deliverMuseCover and deliver-cover; week writer tail moved to shared commitDelivery.
+Step 2: GREEN_TEST_COMMAND exit 0; Test Files 3 passed (3); Tests 185 passed (185). The tenth earlier failure did not appear.
+Step 3: tsc exit 2; owned tsc errors: 0; baseline total 38.
+Step 4: approval file commit 0629e1e2 (print SHA-256 d32b5cc7...1abf01; spec SHA-256 e83f21bf...3cf43 equals m13 specSha256).
+Step 5: deliver-cover exit 0: "Delivered the cover (1 row and 1 batch hash) to .../delivery-muse-v1."
+Step 6: re-hash: delivered l2-cover-v1.png equals the m13 print; manifest hash equals; PNG 4000x3000 8-bit sRGB 3 channels no alpha.
+manifest.json SHA-256 27710b3711757d99294b7e837377d325eb9a6094e1dad43e0f064d2581397b88.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Produce the Level 2 cover (round 4, gate C4 delivery; marker stays [~])
+role_base_sha: abe5a7b9
+phase_base_sha: fc76c272
+commits: 6f7c1444 (code); 0629e1e2 (approval file); plan-evidence commit follows (plan.md and this log)
+models: red=claude-code/claude-opus-5-5[1m]#high; green=claude-code/claude-sonnet-5-5#high; image=none; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+tests_run: GREEN_TEST_COMMAND exit 0; Test Files 3 passed (3); Tests 185 passed (185); T190 to T198 pass; T152 to T189 pass
+tsc: exit 2; owned tsc errors: 0; baseline tsc errors: 38
+delivery: out/storytime/l2/unit1/cover/delivery-muse-v1/ (l2-cover-v1.png, manifest.json); png sha256 d32b5cc7caf9b02b5451c1c009b3733e75f05353b7a7ff03bce1d8e7661abf01 (equals m13 print and manifest); manifest.json sha256 27710b3711757d99294b7e837377d325eb9a6094e1dad43e0f064d2581397b88; batch cover/color sha256 be31953ba5f65753c98eb6c08deb910ccc2732fdbba4a026f22dbcb110a914b6
+new_files: docs/storytime/l2-unit1/cover/muse/approved.json; out/storytime/l2/unit1/cover/delivery-muse-v1/; this log
+handoff: C1 to C4 pass. C5 (person review) is pending: the PM sent the cover to Daniel; no reviews.person is recorded. The tenth failure of the earlier orchestrator run did not appear in this run (185 of 185 pass), so no cause is known; it may have been load-related. Open notes from C3: no contact shadow at the feet; Pip stands while the goal says he sits; left margin 590 px. Task 3 stays [~] until C5.
+dispositions: none
+END_MEASURE_AGENT_RESULT

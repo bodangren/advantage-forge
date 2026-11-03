@@ -4238,6 +4238,34 @@ rows T142 to T151, and the closeout gate for 30 jobs.
     - Type check: `NODE_OPTIONS=--max-old-space-size=2560 node node_modules/typescript/bin/tsc --noEmit -p
       tsconfig.json` through the heavy runner. Exit code `2`. `owned tsc errors: 0`. `baseline tsc errors: 38`.
     - No production file changed. Log: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-p4-t3-r2.log`.
+    Green evidence for Phase 4 Task 3, round 4 (C4) (2026-11-03). Role base `abe5a7b9`; Phase 4 base `fc76c272`.
+    Models: Red `claude-code/claude-opus-5-5[1m]#high`; Green `claude-code/claude-sonnet-5-5#high`. The task
+    marker stays `[~]`. No Muse call in this round.
+    - Code commit `6f7c1444` (`src/storytime/muse-delivery.ts`, `src/storytime/book-pictures.ts`):
+      `deliverMuseCover`, and the command `deliver-cover --approvals <file> --muse <folder> --delivery <folder>`
+      with the paths through `resolveMuseDeliveryPaths`. The cover list holds exactly one entry with `rowId`
+      `l2-cover-v1` and no `linePrint`. The manifest keeps the `cover/color` batch and drops the line-art batch.
+      The week writer keeps its checks and messages; its write tail moved into the shared `commitDelivery`.
+    - Green command: `bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run
+      tests/storytime-book-pictures.test.ts tests/storytime-picture-rows.test.ts tests/storytime-muse-delivery.test.ts
+      --maxWorkers=1'`. Exit code `0`. `Test Files  3 passed (3)`. `Tests  185 passed (185)`. T152 to T198 pass.
+      The tenth failure of the earlier orchestrator run did not appear in this run.
+    - Type check through the heavy runner: exit code `2`. `owned tsc errors: 0`. `baseline tsc errors: 38`.
+    - Approval file commit `0629e1e2`: `docs/storytime/l2-unit1/cover/muse/approved.json` (one entry, `rowId`
+      `l2-cover-v1`, `version` 13, `fileVersion` 1, `colorPrint` `l2-cover-v1-m13-color-print.png`, notes for C1,
+      C2, C3, and the two hashes). Print SHA-256
+      `d32b5cc7caf9b02b5451c1c009b3733e75f05353b7a7ff03bce1d8e7661abf01`. Spec SHA-256
+      `e83f21bfe28139f203c6448854f2e1854b1edbb9b4ae1da3247ee83c92b3cf43`, equal to the `specSha256` of m13. No
+      `reviews.person`.
+    - Delivery: `deliver-cover` through the heavy runner, exit code `0`. Output line: `Delivered the cover (1 row
+      and 1 batch hash) to .../out/storytime/l2/unit1/cover/delivery-muse-v1.`
+    - Re-hash: `out/storytime/l2/unit1/cover/delivery-muse-v1/l2-cover-v1.png` has SHA-256
+      `d32b5cc7caf9b02b5451c1c009b3733e75f05353b7a7ff03bce1d8e7661abf01`, equal to the m13 print and to the
+      manifest `fileSha256`. PNG, 4000 x 3000, 8-bit, sRGB, 3 channels, no alpha. Batch `cover/color` SHA-256
+      `be31953ba5f65753c98eb6c08deb910ccc2732fdbba4a026f22dbcb110a914b6`. `manifest.json` SHA-256
+      `27710b3711757d99294b7e837377d325eb9a6094e1dad43e0f064d2581397b88`.
+    - C1 to C4 pass; C5 pending (the PM sent the cover to Daniel; no person review is recorded). Log:
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p4-t3-r4.log`.
 
 Line-art note for Phase 4: weeks 2 to 7 get 162 line-art twins with the same line-art gates. The
 reconciliation task also applies picture specification v1 to the line art. Specification v1 has
