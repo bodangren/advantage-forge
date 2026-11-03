@@ -4651,10 +4651,10 @@ function parseCli(argv: string[]): { command: string; options: CliOptions } {
   const [command, ...args] = argv;
   if (
     !command ||
-    !['plan', 'render', 'lineart-smoke', 'precheck-minimax', 'precheck-kimi', 'manifest', 'sheet', 'verify', 'deliver', 'cover-calm-top'].includes(command)
+    !['plan', 'render', 'lineart-smoke', 'precheck-minimax', 'precheck-kimi', 'manifest', 'sheet', 'verify', 'deliver', 'deliver-cover', 'cover-calm-top'].includes(command)
   ) {
     throw new Error(
-      'Use plan, render, lineart-smoke, precheck-minimax, precheck-kimi, manifest, sheet, verify, deliver, or cover-calm-top.',
+      'Use plan, render, lineart-smoke, precheck-minimax, precheck-kimi, manifest, sheet, verify, deliver, deliver-cover, or cover-calm-top.',
     );
   }
   const options: CliOptions = { paid: false, dryRun: false, release: false, begin: false, failed: false };
@@ -4786,6 +4786,25 @@ export async function runStorytimeCli(
       onSkip: (rowId, reason) => log(`Skipped ${rowId} (${reason})`),
     });
     log(`Delivered ${manifest.jobs.length} rows and ${manifest.batches.length} batch hashes to ${deliveryRoot}.`);
+    return 0;
+  }
+  if (command === 'deliver-cover') {
+    // Read only and offline: the command copies the approved Muse cover print (color only).
+    if (!options.approvals || !options.muse || !options.delivery) {
+      throw new Error('deliver-cover needs --approvals <file>, --muse <folder>, and --delivery <folder>.');
+    }
+    const { resolveMuseDeliveryPaths, deliverMuseCover } = await import('./muse-delivery.js');
+    const { museRoot, deliveryRoot } = resolveMuseDeliveryPaths({
+      repoRoot,
+      muse: options.muse,
+      delivery: options.delivery,
+    });
+    const manifest = await deliverMuseCover({
+      approvals: path.resolve(repoRoot, options.approvals),
+      museRoot,
+      deliveryRoot,
+    });
+    log(`Delivered the cover (${manifest.jobs.length} row and ${manifest.batches.length} batch hash) to ${deliveryRoot}.`);
     return 0;
   }
   if ((command === 'render' || command === 'verify') && options.row !== undefined) {

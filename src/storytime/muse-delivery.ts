@@ -6,6 +6,7 @@ import sharp from 'sharp';
 import { z } from 'zod';
 import {
   PICTURE_RUBRIC_VERSION,
+  PICTURE_SIZES,
   assembleManifest,
   inspectLineArtPng,
   planPictureRow,
@@ -260,8 +261,8 @@ async function readMuseFile(museRoot: string, name: string, rowId: string): Prom
 
 /** Maps the review fields of one approval entry. The mapper adds no review that the entry lacks. */
 function mapReviews(item: {
-  row: PictureListRow;
-  entry: MuseApprovalEntry;
+  row: Pick<PictureListRow, 'id' | 'text' | 'prompt'>;
+  entry: Pick<MuseApprovalEntry, 'reviews'>;
   version: number;
   colorFile: string;
   colorSha256: string;
@@ -447,11 +448,32 @@ export async function writeMuseDelivery(options: MuseDeliveryOptions): Promise<S
     items.map((item) => manifestJob(item.row)),
     items.map((item) => item.candidate),
   );
+  const copies: DeliveryCopy[] = [];
+  for (const item of items) {
+    copies.push(
+      { file: item.colorFile, bytes: item.colorBytes, sha256: item.colorSha256, rowId: item.row.id },
+      { file: item.lineFile, bytes: item.lineBytes, sha256: item.lineSha256, rowId: item.row.id },
+    );
+  }
+  await commitDelivery(deliveryRoot, manifest, copies);
+  return manifest;
+}
+
+interface DeliveryCopy {
+  file: string;
+  bytes: Buffer;
+  sha256: string;
+  rowId: string;
+}
+
+/**
+ * Checks the delivery folder, then writes the print copies and manifest.json. A different
+ * manifest, or a different file under a delivered name, stops the run before any write. A
+ * symlink at a target stops the run too: the writer never follows a link.
+ */
+async function commitDelivery(deliveryRoot: string, manifest: StorytimeManifest, copies: DeliveryCopy[]): Promise<void> {
   const manifestText = `${JSON.stringify(manifest, null, 2)}\n`;
   const manifestFile = path.join(deliveryRoot, MANIFEST_FILE);
-
-  // A different manifest, or a different file under a list name, stops the run before any write.
-  // A symlink at a target stops the run too: the writer never follows a link.
   const manifestInfo = await lstatOrNull(manifestFile);
   let manifestExists = false;
   if (manifestInfo) {
@@ -461,14 +483,7 @@ export async function writeMuseDelivery(options: MuseDeliveryOptions): Promise<S
     }
     manifestExists = true;
   }
-  const copies: Array<{ file: string; bytes: Buffer; sha256: string; rowId: string }> = [];
-  for (const item of items) {
-    copies.push(
-      { file: item.colorFile, bytes: item.colorBytes, sha256: item.colorSha256, rowId: item.row.id },
-      { file: item.lineFile, bytes: item.lineBytes, sha256: item.lineSha256, rowId: item.row.id },
-    );
-  }
-  const pending: typeof copies = [];
+  const pending: DeliveryCopy[] = [];
   for (const copy of copies) {
     const target = path.join(deliveryRoot, copy.file);
     const info = await lstatOrNull(target);
@@ -488,5 +503,116 @@ export async function writeMuseDelivery(options: MuseDeliveryOptions): Promise<S
   await mkdir(deliveryRoot, { recursive: true });
   for (const copy of pending) await writeFile(path.join(deliveryRoot, copy.file), copy.bytes, { flag: 'wx' });
   if (!manifestExists) await writeFile(manifestFile, manifestText, { flag: 'wx' });
+}
+
+// ---------------------------------------------------------------------------
+// The Level 2 cover (Phase 4 Task 3, gate C4). The cover is one color picture of size class B.
+// It is not a row of the picture list and it has no line-art twin.
+// ---------------------------------------------------------------------------
+
+const COVER_ROW_ID = 'l2-cover-v1';
+const COVER_DIRECTORY = 'cover';
+
+/** The week entry without `linePrint`. A `linePrint` key is refused. */
+const MuseCoverApprovalEntrySchema = MuseApprovalEntrySchema.omit({ linePrint: true })
+  .extend({ rowId: z.literal(COVER_ROW_ID) })
+  .strict();
+
+const MuseCoverApprovalListSchema = z.object({
+  version: z.literal(1),
+  entries: z.array(MuseCoverApprovalEntrySchema).length(1, { message: 'must hold exactly one entry, the cover' }),
+});
+
+export type MuseCoverApprovalEntry = z.infer<typeof MuseCoverApprovalEntrySchema>;
+export type MuseCoverApprovalList = z.infer<typeof MuseCoverApprovalListSchema>;
+
+export interface MuseCoverDeliveryOptions {
+  /** The cover approval list, or the path of its JSON file. */
+  approvals: MuseCoverApprovalList | string;
+  /** The folder that holds the Muse cover print named in the approval entry. */
+  museRoot: string;
+  /** The delivery batch root: the folder that gets the copied file and manifest.json. */
+  deliveryRoot: string;
+}
+
+async function parseCoverApprovals(approvals: MuseCoverApprovalList | string): Promise<MuseCoverApprovalList> {
+  const source: unknown =
+    typeof approvals === 'string' ? JSON.parse(await readFile(approvals, 'utf8')) : approvals;
+  const parsed = MuseCoverApprovalListSchema.safeParse(source);
+  if (parsed.success) return parsed.data;
+  const issue = parsed.error.issues[0];
+  const where = issue ? issue.path.join('.') : 'list';
+  throw new Error(`The cover approval list is invalid at ${where}: ${issue?.message ?? 'invalid list'}.`);
+}
+
+function coverJob(): StorytimeJob {
+  return {
+    id: COVER_ROW_ID,
+    week: 1,
+    bookKind: 'readalong',
+    bookTitle: '',
+    page: 0,
+    text: '',
+    sourcePrompt: '',
+    characters: [],
+    sourcePackage: '',
+    sourceSha256: '',
+    slug: COVER_ROW_ID,
+    directory: COVER_DIRECTORY,
+    use: 'cover',
+    size: 'cover',
+  };
+}
+
+/**
+ * Writes the Level 2 cover delivery: one color print, byte for byte, and one manifest.json with
+ * one color batch and no line-art batch. Every check runs before the first write.
+ */
+export async function deliverMuseCover(options: MuseCoverDeliveryOptions): Promise<StorytimeManifest> {
+  const list = await parseCoverApprovals(options.approvals);
+  const entry = list.entries[0]!;
+  const museRoot = path.resolve(options.museRoot);
+  const deliveryRoot = path.resolve(options.deliveryRoot);
+
+  const deliveryInfo = await lstatOrNull(deliveryRoot);
+  if (deliveryInfo?.isSymbolicLink()) {
+    throw new Error(`The delivery folder ${deliveryRoot} is a symlink; the writer refuses it.`);
+  }
+
+  const colorFile = `l2-cover-v${entry.fileVersion ?? 1}.png`;
+  const version = entry.fileVersion ?? 1;
+  const colorBytes = await readMuseFile(museRoot, entry.colorPrint, COVER_ROW_ID);
+  const color = await inspectColorPrint(colorBytes, PICTURE_SIZES.cover);
+  if (!color.valid) {
+    const problems = color.errors.map((error) => `${COVER_ROW_ID}: color print ${entry.colorPrint}: ${error}`);
+    throw new Error(`The Muse delivery stopped; nothing was written:\n${problems.join('\n')}`);
+  }
+  const colorSha256 = sha256(colorBytes);
+  const reviews = mapReviews({
+    row: { id: COVER_ROW_ID, text: '', prompt: '' },
+    entry,
+    version,
+    colorFile,
+    colorSha256,
+  });
+  const candidate: CandidateManifest = {
+    jobId: COVER_ROW_ID,
+    version,
+    file: colorFile,
+    fileSha256: colorSha256,
+    status: 'ready',
+    structural: color,
+    reviews,
+    failures: [],
+  };
+  const assembled = assembleManifest([coverJob()], [candidate]);
+  // The cover has no line-art twin, so the manifest keeps the color batch only.
+  const manifest: StorytimeManifest = {
+    ...assembled,
+    batches: assembled.batches.filter((batch) => batch.outputKind === 'color'),
+  };
+  await commitDelivery(deliveryRoot, manifest, [
+    { file: colorFile, bytes: colorBytes, sha256: colorSha256, rowId: COVER_ROW_ID },
+  ]);
   return manifest;
 }
