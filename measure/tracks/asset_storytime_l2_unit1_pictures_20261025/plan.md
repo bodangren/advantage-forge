@@ -3935,6 +3935,94 @@ rows T142 to T151, and the closeout gate for 30 jobs.
         independent review. The upper left arm in the line art rises on a stalk from the side of the head
         and the right curls sit close together, but each has a closed outline. The color has a blush mark
         and a few small bumps on the top of the head, as in the 3D look.
+    - Week 7 delivery (G1 to G8). Green round of 2026-11-03, claude-code/claude-sonnet-5-5#high.
+      role_base_sha `9037952b`, phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash.
+      Coder: none. No Muse call. No change in `src/`, `tests/`, `scripts/`, `assets/`, a cover file, a week 5
+      file, or a week 6 file. No marker changed. Run log:
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w07-delivery.log`.
+      Approval list: `docs/storytime/l2-unit1/w07/muse/approved.json` (commit `ddd2105e`; 27 entries; list
+      SHA-256 `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`; file SHA-256
+      `1626a3416e4ef13a6233a333d105974f4087f72203c75b351322d24a7e6e3d74`). Delivery folder:
+      `out/storytime/l2/unit1/w07/delivery-muse-v1` (54 PNG files and `manifest.json`; not in git).
+      - Chosen prints (color version, line try): the 27 choices of the brief equal the choices in the
+        week 7 batch 1, batch 2, batch 3, and octopus fix notes above. No row differed. Color m2 is used for
+        `the-top-is-on-pip`, `can-tom-see-the-top`, `tom-can-get-the-top`, and `check-row-octopus`; color m3
+        for `the-top-on-a-pot`; all other rows use color m1. Line tries: cover `is-it-a-ball` 6, ball 6,
+        train 3, kite 4, car 3, teddy 9, doll 3, drum 6, `is-it-pip-yes` 2; cover `the-top` 2,
+        `tom-can-see-a-top` 3, `the-top-is-on-mom` 3, `the-top-is-on-pip` 3, `run-tom-run` 5,
+        `can-tom-see-the-top` 1, `the-top-on-a-mat` 1, `the-top-on-a-pot` 2, `tom-can-get-the-top` 3; check
+        rows bed 6, bus 1, cat 1, fish 3, octopus 3, olive 1, ox 3, pen 2, sun 1. Each reviewed page is
+        byte-equal to the Muse file of the same name, and each reviewed name equals the chosen name.
+      - G1 staging: the stage gate of week 7 passed before production (see the week 7 staging note above).
+        This round did not run the gate again, because it now sees page candidates.
+      - G2 calls: `out/storytime/l2/unit1/w07/muse/costs.tsv` holds 155 page calls. Each call has a
+        `usage_cost` value (0 calls without a value). 150 calls cost 0.01 USD and 5 calls failed and cost 0.
+        The 9 element calls (`muse/elements/costs.tsv`, all at 0.01 USD) all have a value. The 3 octopus line
+        calls (tries 4 to 6 from color m1, 23:31 UTC) came from an orchestrator brief error. They are billed
+        and are not candidates.
+      - G3 independent review. In each artifact the 3 blind controls were correct (a-nose v1 defect; a-nut
+        v1 and practice-line nose m4 clean). The artifacts are in
+        `measure/runs/asset_storytime_l2_unit1_pictures_20261025/`.
+        - `item-review-batch-55.json` (minimax-cn-coding-plan/MiniMax-M3.1-Flash; started before the PM
+          order to use Claude models only): the 9 rows of batch 55 are clean; status pass.
+        - `item-review-batch-56.json` (claude-code/claude-opus-5-5[1m]#high): the 9 rows of batch 56 are
+          clean; status pass. Notes: Mom's eyes are closed in color and open in line (`the-top-is-on-mom`,
+          `run-tom-run`); on `can-tom-see-the-top` Tom's head covers part of the gap under the sofa; on
+          `the-top-on-a-mat` Tom's line eyes are solid black ovals with no outline.
+        - `item-review-batch-57.json` (Opus): 8 check rows are clean. The octopus (m1, line 1) has defect
+          B57-OCTO-1 (7 arms, not 8). It is superseded by the fix. The status is fail only because of the
+          octopus.
+        - `item-review-batch-57r2.json` (Opus): the octopus (m2, line 3) is clean, with 8 arms in color
+          and in line (left 3, center 1, right 4); status pass.
+        - Route deviation: batch 55 has a MiniMax reviewer, and batches 56, 57, and 57r2 have an Opus
+          reviewer. The `reviews` schema of the writer accepts only `kimi` and `person`, so every model
+          review sits in the `notes` of its approval entry, as in week 6. The reviewers are models. This is
+          independent review. It is not the person count and not acceptance.
+      - G4 orchestrator spot check (quoted as given): "G4 orchestrator spot check, week 7, 2026-11-03: all
+        27 rows read in color print and line print, with zoomed crops where a count or a contact needed it.
+        cover-is-it-a-ball (m1, line 6) clean. cover-the-top (m1, line 2) clean; note: the line hand is
+        open and the color hand is a fist. is-it-a-ball-no, is-it-a-kite-no, is-it-a-teddy-no,
+        is-it-a-drum-no, is-it-a-car-no, is-it-a-doll-no, is-it-a-train-no, is-it-pip-yes clean.
+        tom-can-see-a-top, the-top-is-on-mom, the-top-is-on-pip, run-tom-run, can-tom-see-the-top,
+        tom-can-get-the-top, the-top-on-a-mat clean. the-top-on-a-pot (m3, line 2) clean; a zoomed crop shows
+        one top on the pot lid in color and line, and the pot is whole. check-row-bed, -fish, -ox, -sun,
+        -pen, -bus, -cat, -olive clean. check-row-octopus (m1, line 1) DEFECT B57-OCTO-1, wrong count: 7 arms
+        in color and line; the independent review found it too. Fixed: check-row-octopus (m2, line 3) clean;
+        8 arms in color and line (left 3, center 1, right 4); note: in the line art the upper left arm rises
+        on a stalk, and loose line ends sit inside the body."
+      - G5 and G6 delivery. The command was the G6 command of `test-strategy.md` section 4.5 through
+        `heavy-run.sh`, with `--week 7`. It ran once. Exit code `0`. Last output line:
+        `Delivered 27 rows and 2 batch hashes to
+        /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w07/delivery-muse-v1.` The writer ran
+        its print checks before its first write. The output shows 27 line widths, all 12 px or more
+        (minimum 12 px). No `Skipped` line appeared.
+        - Re-hash: all 54 delivered files equal their approved Muse print by SHA-256
+          (`delivered files equal to approved Muse print: 54 of 54`), and all 54 file hashes appear in
+          `manifest.json` (`file hashes found in manifest: 54 of 54; problems: 0`). The folder has 54 PNG
+          files and `manifest.json`. The manifest has 27 jobs and the 2 batches `w07/color` and
+          `w07/lineart`.
+        - `sha256sum out/storytime/l2/unit1/w07/delivery-muse-v1/manifest.json`:
+          `6a5724c42a83134d80fc1cd1ccecdafe1a76dd25961e040caffaafccc81ea3c2`.
+        - `version` of an entry is the Muse version of the print: m1 for 22 rows, m2 for 4 rows, and m3 for
+          1 row (`the-top-on-a-pot`).
+      - G7 person review: pending. No person has looked at week 7, and the PM has relayed no answer. No
+        entry has `reviews.person`. The delivery is "delivered, awaiting person review". Contact page:
+        `out/storytime-review/w07-contact/index.html` (27 cards, 54 previews in `prev/`, 108 `src` and
+        `href` references, 0 missing). Phone sheets for the PM and Daniel:
+        `out/storytime-review/w07-contact/w07-sheet-1-of-3.jpg`, `w07-sheet-2-of-3.jpg`, and
+        `w07-sheet-3-of-3.jpg` (2000 x 7698 px, 9 rows each; sheet 3 viewed with the read tool).
+      - G8 cost report: `usage.cost total (USD): 1.50` for the 155 page calls of week 7, and `0.09` for
+        the 9 element calls, so `1.59` for week 7. A short script summed the `usage_cost` column. This round
+        made no call (round cost 0). Sum of all cost files (weeks 1 to 7 pages and elements, and the cover):
+        `usage.cost total (USD): 12.69`. The plan chain of round costs gives 12.80 plus 0.07 (octopus fix)
+        plus 0.05 (cover round 2), so 12.92 USD. The 0.23 USD difference is not explained by the cost files.
+        The chain also holds the early calibration cost. The track total for reports is the file sum.
+      - Open: Daniel's person review of week 7. Known small marks stay as in the G4 record and the reviewer
+        notes in the approval entries: Mom's eyes (closed in color, open in line); Tom's head over part of
+        the gap under the sofa; Tom's solid black line eyes on the mat page; the open line hand and the
+        color fist on the cover `the-top`; on the octopus, the upper left arm on a stalk and loose line ends
+        inside the body. Batch 55 has a MiniMax review. A Claude review of batch 55 is not done. The 0.23
+        USD cost chain difference is open.
 - [~] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks.
     Red evidence for Phase 4 Task 3 (C1, T183) (2026-11-03). Role base `7361c5b5`; Phase 4 base

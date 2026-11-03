@@ -1,0 +1,35 @@
+step 1: started Green P4 T2 w07 delivery (role_base 9037952b, phase_base fc76c272); chosen prints cross-checked with plan notes batch 1, 2, 3, octopus fix: no difference
+step 3: approved.json written by /tmp/opencode/w07d/build-approved.cjs (27 entries; reviewed pages byte-equal to Muse files; reviewed names equal chosen names; 0 problems); chosen prints equal to the brief and the plan notes (batch 1, 2, 3, octopus fix)
+step 3b: approved.json committed ddd2105e
+step 4: deliver (heavy-run.sh) exit 0: Delivered 27 rows and 2 batch hashes to /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w07/delivery-muse-v1. 27 line widths, minimum 12 px; no Skipped line.
+step 4b: re-hash: delivered files equal to approved Muse print: 54 of 54; file hashes found in manifest: 54 of 54; problems: 0; 54 PNG files; manifest sha256 6a5724c42a83134d80fc1cd1ccecdafe1a76dd25961e040caffaafccc81ea3c2
+step 5: contact page out/storytime-review/w07-contact/index.html (27 cards, 108 refs, 0 missing) + 3 sheets 2000x7698 (2.05, 1.63, 0.74 MB); sheet 3 viewed with the read tool
+step 6: plan.md block "Week 7 delivery (G1 to G8)" added under Task 2 after the octopus fix note (no marker change); plan.md had no change by another author before the edit
+G2: costs.tsv 155 page calls (150 at 0.01, 5 failed at 0), 0 without usage_cost; elements/costs.tsv 9 calls (9 at 0.01), 0 without usage_cost
+G8: usage.cost total (USD): 1.50 pages + 0.09 elements = 1.59 for week 7. Sum of all cost files (w01 to w07 pages and elements, cover): 12.69. Plan chain 12.80 + 0.07 + 0.05 = 12.92; difference 0.23 not explained by the cost files (open). Round cost 0.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2 (week 7 approval list, delivery, contact sheets, gate records)
+role_base_sha: 9037952b
+phase_base_sha: fc76c272
+spec_commits: none
+approved_json_commit: ddd2105e
+plan_evidence_commit: see git log (plan.md and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: 27 rows; delivery out/storytime/l2/unit1/w07/delivery-muse-v1; deliver exit 0 ("Delivered 27 rows and 2 batch hashes"); re-hash 54 of 54 equal, 54 of 54 in manifest; manifest SHA-256 6a5724c42a83134d80fc1cd1ccecdafe1a76dd25961e040caffaafccc81ea3c2
+contact_page: out/storytime-review/w07-contact/index.html
+contact_sheets: out/storytime-review/w07-contact/w07-sheet-1-of-3.jpg; w07-sheet-2-of-3.jpg; w07-sheet-3-of-3.jpg
+open_items: (1) Daniel's person review of week 7 (G7): "delivered, awaiting person review"; no reviews.person field. (2) Batch 55 was reviewed by MiniMax, not Claude; the PM Claude-only order came after its start. (3) Model reviews sit in notes (schema accepts only kimi and person). (4) Cost chain 12.92 vs file sum 12.69 (0.23 difference, open). (5) The stage gate was not run again in this round (it sees page candidates). (6) Small marks: Mom eyes closed in color and open in line; Tom's head over part of the sofa gap; Tom's solid black line eyes (mat page); cover the-top line hand open vs color fist; octopus upper left arm on a stalk and loose line ends.
+round_cost_usd: 0
+running_total_usd: 12.69 (sum of cost files; week 7 total 1.59: pages 1.50, elements 0.09)
+batch: w07 delivery
+chosen_prints_differences: none (all 27 equal to the brief and to the plan notes)
+handoff: Send the 3 sheet paths and the manifest SHA-256 to the PM for Daniel. Default: week 7 stays "delivered, awaiting person review". The writer reviews schema accepts only kimi and person, so all model reviews sit in notes. Decide which running total (12.69 file sum or 12.92 chain) the PM report uses.
+dispositions: none
+END_MEASURE_AGENT_RESULT
