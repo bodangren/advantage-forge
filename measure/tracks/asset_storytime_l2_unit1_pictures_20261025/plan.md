@@ -4029,6 +4029,37 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       so a margin rule in the prompt gives mixed results; the next try may need a pad print mode (a spec
       change that needs a decision). (6) C2, C3, C4, and C5 are open. Log:
       `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p4-t3.log`.
+    Green evidence for Phase 4 Task 3, round 2 (2026-11-03). Role base `059df227`. Models: Red
+    `opencode-go/deepseek-v4.1-flash`; Green `claude-code/claude-sonnet-5-5#high`; image `meta/muse-image`;
+    coder none. The task marker stays `[~]`. Finding F1 = C2-COVER1-EDGE-1 (layout-fault, m6, Ben's
+    fingertips 11 px from the left print edge): disposition FIX, not yet closed.
+    - Spec commits (only `colorPrompt`; `stage` stays `approved`; `text`, `goal`, `print: "crop"`, size
+      unchanged): `d8d0899f` (group in the middle half, contact shadows, clean boy eye corners);
+      `db534b87` (child size one quarter of the picture height); `85e864f9` (centered sentence, tried for
+      m10 and m11, no help); `71605333` (the `db534b87` prompt restored). The spec now has SHA-256
+      `3da386095e706d1a3c265683ff50966f26b6a19966d6f1f1a554c5bbffcf4443`, the `specSha256` of m9 and m12.
+    - Margin method: `/tmp/opencode/margins.mjs` finds the first and last column with figure colors
+      (strong hue, white, near black, skin) in rows 900 to 2600. On m6 it gave left 11 px (the C2 value)
+      and right 103 px (C2: 114 px).
+    - Calls: 5 billed (m8 to m12), 0.01 USD each, 0.05 USD. One m12 try failed with a network timeout
+      (usage cost 0 in `costs.tsv`); the retry made m12. Running total before this round 12.80 USD, so
+      12.80 USD plus this round (0.05 USD). The cap of 5 is used; track total of calls at most 15 held.
+    - C1 and margins (`cover-calm-top` lines; both labeled lines printed; rows always 900):
+      m8 share 0.014269444444444444 exit 0, margins 0 and 0 (fail); m9 share 0 exit 0, margins left 590,
+      right 660 (left fails by 50 px); m10 share 0 exit 0, margins 14 and 106 (fail); m11 share 0 exit 0,
+      margins 0 and 0 (fail); m12 share 0.062003333333333334 exit 1 (timber panel top near row 845),
+      margins 787 and 815.
+    - No candidate passes C1 and both margins. Best: m9 (`pages/l2-cover-v1-m9-color-print.png`, SHA-256
+      `35de657d8bcf9859db80ea66f22a3625dacbe0006e7e9b9927182a437a261ff0`; PNG 4000 x 3000, 8-bit, sRGB,
+      3 channels, no alpha). By eye: six children in the approved 3D look, five digits on each raised hand,
+      Pip whole with floppy ears, no text. Open notes on m9: feet have no clear contact shadow; Pat and
+      May show small eyelash flicks; left margin 590 px.
+    - Review folder: `out/storytime-review/cover-2/` (`brief.md`, `pages/` m8 to m12, `refs/`). No rating.
+      No delivery. Log: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p4-t3-r2.log`.
+    - Default proposal (open for the orchestrator): send m9 to C2 with the 590 px margin recorded, because
+      590 px is 14.8 percent of the print width and a book trim removes about 1 percent. Or allow 3 more
+      calls with the m9 prompt. Two of the five round 2 candidates (m9 and m12) made a small group; m12 failed
+      C1 only because the timber panel top is near row 845. The model does not follow margin words well.
 
 Line-art note for Phase 4: weeks 2 to 7 get 162 line-art twins with the same line-art gates. The
 reconciliation task also applies picture specification v1 to the line art. Specification v1 has

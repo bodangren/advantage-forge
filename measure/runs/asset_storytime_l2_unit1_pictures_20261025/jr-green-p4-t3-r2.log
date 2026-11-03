@@ -1,0 +1,28 @@
+Green P4 T3 round 2. role_base_sha 059df227. Resumed after a network error (EAI_AGAIN).
+Step 1: spec commits d8d0899f, db534b87, 85e864f9, 71605333 (colorPrompt only). Spec SHA-256 3da38609...f4443 equals specSha256 of m9 and m12.
+Step 2: margin script /tmp/opencode/margins.mjs checked on m6 (left 11 px, the C2 value).
+Step 3: calls m8 to m12 (5 billed, 0.05 USD; one m12 try timed out, cost 0). C1 and margins: m8 0.0143/0/0; m9 0/590/660; m10 0/14/106; m11 0/0/0; m12 0.062 (exit 1)/787/815.
+Step 4: no candidate passes C1 and both margins. Best m9. Review folder out/storytime-review/cover-2/. Plan note added. No rating, no delivery.
+
+MEASURE_AGENT_RESULT
+status: blocked
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Produce the Level 2 cover render under S19 (round 2, finding C2-COVER1-EDGE-1; marker stays [~])
+role_base_sha: 059df227
+phase_base_sha: fc76c272
+finding_ids: F1=C2-COVER1-EDGE-1
+commits: d8d0899f; db534b87; 85e864f9; 71605333 (spec colorPrompt); plan-evidence record commit follows (plan.md and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; image=meta/muse-image; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+muse_calls: 5 billed (m8 to m12), 0.05 USD; one timed-out try cost 0; cover total before this round 12.80 USD, so 12.80 USD plus this round
+best_candidate: m9 (out/storytime/l2/unit1/cover/muse/l2-cover-v1-m9-color-print.png; SHA-256 35de657d8bcf9859db80ea66f22a3625dacbe0006e7e9b9927182a437a261ff0)
+best_c1: top 30 percent differing share: 0; top 30 percent rows: 900; exit 0
+best_margins: left margin px: 590; right margin px: 660 (rule 640 or more; left fails by 50 px)
+other_candidates: m8 margins 0/0; m10 14/106; m11 0/0; m12 margins 787/815 but C1 share 0.062003333333333334 exit 1
+new_files: out/storytime-review/cover-2/ (brief.md, pages/ m8 to m12, refs/ 5); out/storytime/l2/unit1/cover/muse/ (m8 to m12 files, costs.tsv); this log
+handoff: No candidate passes C1 and both margins after 5 calls. Best candidate m9 (C1 pass, margins 590 and 660; feet without clear contact shadow; Pat and May small eyelash flicks). Default proposal: send m9 to C2 with the 590 px margin recorded (14.8 percent of the width; a book trim removes about 1 percent), or allow 3 more calls with the same prompt (cover total would stay at 15 calls or less if the cap is raised). The model does not follow margin words well; two of five candidates made a small group. Default: deliver nothing; wait for the orchestrator.
+dispositions: F1=FIX
+END_MEASURE_AGENT_RESULT
