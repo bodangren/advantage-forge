@@ -4148,6 +4148,37 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       590 px is 14.8 percent of the print width and a book trim removes about 1 percent. Or allow 3 more
       calls with the m9 prompt. Two of the five round 2 candidates (m9 and m12) made a small group; m12 failed
       C1 only because the timber panel top is near row 845. The model does not follow margin words well.
+    Green evidence for Phase 4 Task 3, round 3 (2026-11-03). Role base `ddd2105e`. Models: Red
+    `opencode-go/deepseek-v4.1-flash`; Green `claude-code/claude-sonnet-5-5#high`; image `meta/muse-image`;
+    coder none. The task marker stays `[~]`. Finding F1 = C2-COVER2-HAND-1 (m9: four digits on each waving
+    hand; my round 2 count of five was wrong): disposition FIX, candidate m13 made, review open.
+    - Spec commit `f670926e` (route A; `colorPrompt` and `references` only): the m9 source color file is the
+      first reference; the prompt keeps picture 1 and changes only the waving hands (a thumb and four
+      fingers) and adds contact shadows. `text`, `goal`, `print: "crop"`, size, and stage `approved` are
+      unchanged. The spec SHA-256 `e83f21bfe28139f203c6448854f2e1854b1edbb9b4ae1da3247ee83c92b3cf43` equals the
+      `specSha256` of m13.
+    - Calls: 1 billed (m13), 0.01 USD. Cover running total before this round 12.92 USD, so 12.92 USD plus
+      this round (0.01 USD). Route B and the other 4 calls were not needed.
+    - Cost reconciliation (orchestrator, 2026-11-03): the week 7 delivery note says that the cost files do
+      not explain a 0.23 USD difference (file sum 12.69 USD against the plan chain 12.92 USD). The difference
+      is the four calibration cost files under `out/storytime-review/`: muse-test 0.08, muse-test-2 0.12,
+      muse-cast 0.03, muse-print-test 0.00 USD. All 18 cost files (weeks 1 to 7 pages and elements, the cover,
+      and the 4 calibration files) sum to 12.92 USD before round 3. The track total for reports is the sum of
+      all 18 files.
+    - C1 of m13: `top 30 percent differing share: 0`; `top 30 percent rows: 900`; exit 0.
+    - Margins of m13: script (stricter version) left 593 px, right 702 px; by eye about 592 and 663. The old
+      script gave 89 and 279, a false hit on the dark timber beams. The orchestrator decision: 640 px is a
+      prompt target, not a gate.
+    - Hand count (every waving hand, 4 times size): Ben 5, Mia 5, Sam 5, May 5, Pat 5, Nan 5 (four fingers and
+      a short thumb on each). Ben changed from three fingers and a thumb in m9. The thumbs are short and may
+      read as four digits.
+    - Print of m13: PNG, 4000 x 3000, 8-bit, sRGB, 3 channels, no alpha. SHA-256
+      `d32b5cc7caf9b02b5451c1c009b3733e75f05353b7a7ff03bce1d8e7661abf01`.
+    - Review folder: `out/storytime-review/cover-3/` (`brief.md`, `pages/` with the m13 print and the hand
+      crops, `refs/` with the 5 references and the m9 source). No rating. No delivery. Log:
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p4-t3-r3.log`.
+    - Open: (1) short thumbs may read as four digits; (2) feet without a clear contact shadow; (3) Pip stands
+      while the goal says he sits; (4) C2 on m13, C3, C4, and C5.
 
 Line-art note for Phase 4: weeks 2 to 7 get 162 line-art twins with the same line-art gates. The
 reconciliation task also applies picture specification v1 to the line art. Specification v1 has

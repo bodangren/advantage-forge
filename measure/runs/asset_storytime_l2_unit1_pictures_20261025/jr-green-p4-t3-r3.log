@@ -1,0 +1,29 @@
+Green P4 T3 round 3. role_base_sha ddd2105e. Finding F1=C2-COVER2-HAND-1.
+Step 1: route A spec commit f670926e (m9 source color as first reference; hands only; contact shadows). Spec SHA-256 e83f21bf...3cf43 equals specSha256 of m13.
+Step 2: one call, m13 (0.01 USD). C1: share 0, rows 900, exit 0.
+Step 3: margins: old script 89/279 (false hit on beams); stricter script 593/702; by eye about 592/663.
+Step 4: hand count at 4 times size: Ben, Mia, Sam, May, Pat, Nan each 5 (four fingers and a short thumb).
+Step 5: review folder out/storytime-review/cover-3/. Plan note added. No rating, no delivery. Route B and 4 calls not used.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Produce the Level 2 cover render under S19 (round 3, finding C2-COVER2-HAND-1; marker stays [~])
+role_base_sha: ddd2105e
+phase_base_sha: fc76c272
+finding_ids: F1=C2-COVER2-HAND-1
+commits: f670926e (spec, route A); plan-evidence record commit follows (plan.md and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; image=meta/muse-image; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+muse_calls: 1 billed (m13), 0.01 USD; cover total 12.92 USD plus this round
+candidate: m13 (out/storytime/l2/unit1/cover/muse/l2-cover-v1-m13-color-print.png; SHA-256 d32b5cc7caf9b02b5451c1c009b3733e75f05353b7a7ff03bce1d8e7661abf01)
+c1: top 30 percent differing share: 0; top 30 percent rows: 900; exit 0
+margins: left 593 px, right 702 px (stricter script); about 592 and 663 by eye
+hands: Ben 5; Mia 5; Sam 5; May 5; Pat 5; Nan 5 (four fingers and a short thumb on each, counted at 4 times size)
+new_files: out/storytime-review/cover-3/ (brief.md, pages/ m13 print and hand crops, refs/ 5 plus m9 source, margins2.mjs); m13 files and costs.tsv row under out/storytime/l2/unit1/cover/muse/; this log
+handoff: C2 independent review of m13 runs next with the question "Is the top 30 percent calm: no character, no prop, no text?" on out/storytime-review/cover-3/, and a hand count at 4 times size. Open notes: the thumbs are short and may read as four digits; feet have no clear contact shadow; Pip stands (the goal says he sits); left margin about 590 px (a note, not a gate). C3, C4, and C5 stay open. Default: deliver nothing before C2 and C3; if C2 counts four digits again, use route B (restore the m9 prompt and references with the hand sentence, at most 3 calls).
+dispositions: F1=FIX
+END_MEASURE_AGENT_RESULT
