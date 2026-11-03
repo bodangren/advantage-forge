@@ -3447,6 +3447,100 @@ rows T142 to T151, and the closeout gate for 30 jobs.
         the square with a wide white space above and below. The `tiger` line width is 13 px (the gate
         minimum 12), and its right eye is a narrow solid oval near the head edge, as in the color. After
         this batch the 27 pictures of week 6 exist as candidates.
+    - Week 6 delivery (G1 to G8). Green round of 2026-11-03, claude-code/claude-sonnet-5-5#high.
+      role_base_sha `db534b87`, phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash.
+      Coder: none. No Muse call. No change in `src/`, `tests/`, `scripts/`, or `assets/`. No marker
+      changed. Run log:
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w06-delivery.log`.
+      Approval list: `docs/storytime/l2-unit1/w06/muse/approved.json` (commit `cce84c6b`; 27 entries; list
+      SHA-256 `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`; file SHA-256
+      `0ba08035928e40a6f1909ad6508893366dda7360080b4c173e59c43292c05262`). Delivery folder:
+      `out/storytime/l2/unit1/w06/delivery-muse-v1` (54 PNG files and `manifest.json`; not in git).
+      - Chosen prints (color version, line try): the 27 choices of the brief equal the choices in the
+        week 6 batch 1, batch 2, and batch 3 notes above. No row differed. Color m3 is used for
+        `cover-i-can-see` (line 5), and color m2 for `i-can-see-pip` (line 1), `tap-tap-tap` (line 3),
+        `tap-tap-tap-b` (line 3), and `check-row-ten` (line 2). All other rows use color m1. Line tries:
+        cat 2, dog 6, horse 2, duck 5, fish 2, bird 1, frog 3; cover `tap-tap` 4, `pat-sat-on-a-mat` 3,
+        `sam-sat-on-a-mat` 3, `pat-can-see-a-map` 2, `sam-can-see-a-pan` 6, `he-can-see-pip` 1,
+        `pip-sat-on-the-mat` 5; check rows bag 1, cup 1, dog 1, fish 1, pen 2, sun 2, table 2, tiger 6. Each
+        reviewed page is byte-equal to the Muse file of the same name, and each reviewed name equals the
+        chosen name.
+      - G1 staging: the stage gate of week 6 passed before production (`stage check: pass`, 27 rows,
+        `specs found: 27`, `element paths checked: 70`, `missing element paths: 0`,
+        `page candidates: 0`). The output is in the week 6 staging note above. This round did not run the
+        gate again, because it now sees page candidates.
+      - G2 calls: `out/storytime/l2/unit1/w06/muse/costs.tsv` holds 141 page calls. Each call has a
+        `usage_cost` value (0 calls without a value). 137 calls cost 0.01 USD and 4 calls failed and cost 0
+        (the batch 1, batch 2, and batch 3 notes list them). The 10 element calls (`muse/elements/costs.tsv`,
+        all at 0.01 USD) all have a value.
+      - G3 independent review. In each artifact the 3 blind controls were correct (a-nose v1 defect; a-nut
+        v1 and practice-line nose m4 clean). The artifacts are in
+        `measure/runs/asset_storytime_l2_unit1_pictures_20261025/`. Reviewer for all three:
+        minimax-cn-coding-plan/MiniMax-M3.1-Flash.
+        - `item-review-batch-52.json`: the 9 rows of batch 52 are clean; status pass. Note from the same
+          run: on most park line prints the sun rays float 8 to 43 px from the disc. The PM question about
+          this is open; the default is a note.
+        - `item-review-batch-53.json`: the 9 rows of batch 53 are clean; status pass. Notes: a solid black
+          hair fill on the map page; a small stroke group for the hand on the pan handle (rating 6.5 for
+          that row); a hanger knob and a speck on the tap page; a small bar on the oven door.
+        - `item-review-batch-54.json`: the 9 check rows are clean; status pass. The sun line print is one
+          connected shape (largest ray gap 0 px); the ten balls are closed circles; the tiger stripes are
+          lines.
+        - No void artifact for week 6.
+        - Route deviation: the test-strategy table names a Kimi reviewer. The three artifacts use MiniMax.
+          The `reviews` schema of the writer accepts only `kimi` and `person`, so every model review sits
+          in the `notes` of its approval entry, as in week 4. The reviewers are models. This is
+          independent review. It is not the person count and not acceptance.
+      - G4 orchestrator spot check (quoted as given): "G4 orchestrator spot check, week 6, 2026-11-03:
+        cover-i-can-see (m3, line 5, retry) clean; Mia shades her eyes, one cat on the fence, one duck in
+        the pond, one sun; note: the color sun has rounded rays, and a small stone touches the right edge
+        in the line print. cover-tap-tap (m1, line 4, retry) clean; Pat and Sam each hold one hand at an
+        ear with five fingers; note: Pat's line hair is a smooth cap, and the line basket has no weave.
+        i-can-see-a-dog (m1, line 6, retry) clean; note: the black patches of the dog are solid black fills
+        in the line art. i-can-see-a-horse (m1, line 2) clean; only Pip's tail tip shows; note: Mia's line
+        eyes are solid black discs with no outline. i-can-see-a-duck (m1, line 5, retry) clean; one duck;
+        note: the line sun rays are open points that do not touch the disc. i-can-see-pip (m2, line 1,
+        retry) clean; Pip whole with floppy ears, a collar, and a tag. tap-tap-tap (m2, line 3, retry)
+        clean; only Pip's tail tip shows; note: a hanger knob above the map and one small speck.
+        tap-tap-tap-b (m2, line 3, retry) clean; Sam behind the basket, Pat at the map, only Pip's tail
+        tip; note: two pins on the map. sam-can-see-a-pan (m1, line 6, retry) clean; note: the line hand on
+        the pan handle is a fist of short strokes, and the line T-shirt has a collar that the color has
+        not. pip-sat-on-the-mat (m1, line 5, retry) clean; Pip sits at the seam of the two mats; note:
+        Pip's line eyes are solid dots. check-row-ten (m2, line 2, retry) clean; ten balls in two rows of
+        five in color and line. check-row-tiger (m1, line 6, retry) clean; the stripes are lines, and the
+        eyes are rings with solid pupils."
+      - G5 and G6 delivery. The command was the G6 command of `test-strategy.md` section 4.5 through
+        `heavy-run.sh`, with `--week 6`. It ran once. Exit code `0`. Last output line:
+        `Delivered 27 rows and 2 batch hashes to
+        /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w06/delivery-muse-v1.` The writer ran
+        its print checks before its first write. The output shows 27 line widths, all 12 px or more
+        (minimum 12 px, on the cover `tap-tap`). No `Skipped` line appeared.
+        - Re-hash: all 54 delivered files equal their approved Muse print by SHA-256
+          (`delivered files equal to approved Muse print: 54 of 54`), and all 54 file hashes appear in
+          `manifest.json` (`file hashes found in manifest: 54 of 54; problems: 0`). The folder has 54 PNG
+          files and `manifest.json`. The manifest has 27 jobs and the 2 batches `w06/color` and
+          `w06/lineart`.
+        - `sha256sum out/storytime/l2/unit1/w06/delivery-muse-v1/manifest.json`:
+          `11c5dc10198c9d446afc8ffd80aff46c747d2dec34b77293327907d729163292`.
+        - `version` of an entry is the Muse version of the print: m1 for 22 rows, m2 for 4 rows
+          (`i-can-see-pip`, `tap-tap-tap`, `tap-tap-tap-b`, and `check-row-ten`), and m3 for 1 row
+          (`cover-i-can-see`).
+      - G7 person review: pending. No person has looked at week 6, and the PM has relayed no answer. No
+        entry has `reviews.person`. The delivery is "delivered, awaiting person review". Contact page:
+        `out/storytime-review/w06-contact/index.html` (27 cards, 54 previews in `prev/`, 108 `src` and
+        `href` references, 0 missing). Phone sheets for the PM and Daniel:
+        `out/storytime-review/w06-contact/w06-sheet-1-of-3.jpg`, `w06-sheet-2-of-3.jpg`, and
+        `w06-sheet-3-of-3.jpg` (2000 x 7698 px, 9 rows each; sheet 2 viewed with the read tool).
+      - G8 cost report: `usage.cost total (USD): 1.37` for the 141 page calls of week 6, and `0.10` for
+        the 10 element calls, so `1.47` for week 6. A short script summed the `usage_cost` column. This
+        round made no call (round cost 0). Running total of the track: 12.80 USD, as given by the
+        orchestrator (parallel rounds for week 7 and the cover are not in this figure).
+      - Open: Daniel's person review of week 6. Known small marks stay as in the G4 record and the
+        reviewer notes in the approval entries: Mia's solid black line eyes (cover and horse page); the
+        sun rays that float or stay open in the line art on the park pages; the solid black patches of the
+        dog and the solid black hair fill on the map page; the hand on the pan handle (a fist of short
+        strokes, rating 6.5); the hanger knob and the speck on the `tap-tap-tap` page; the two map pins on
+        `tap-tap-tap-b`; Pip's solid dot eyes on `pip-sat-on-the-mat`. This block makes no task `[x]`.
     - Week 7 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
       2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `b5f0c971`, phase_base_sha
       `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.

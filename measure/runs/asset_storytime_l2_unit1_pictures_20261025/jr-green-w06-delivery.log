@@ -1,0 +1,35 @@
+step 1: started Green P4 T2 w06 delivery (role_base db534b87, phase_base fc76c272)
+step 3: approved.json written by /tmp/opencode/w06d/build-approved.cjs (27 entries; reviewed pages byte-equal to Muse files; reviewed names equal chosen names; 0 problems); chosen prints equal to the brief and to the plan notes (batch 1, 2, 3)
+step 3b: approved.json committed cce84c6b (file sha256 0ba08035928e40a6f1909ad6508893366dda7360080b4c173e59c43292c05262)
+step 4: deliver (heavy-run.sh) exit 0: Delivered 27 rows and 2 batch hashes to /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w06/delivery-muse-v1. Minimum line width 12 px.
+step 4b: re-hash: delivered files equal to approved Muse print: 54 of 54; file hashes found in manifest: 54 of 54; problems: 0; 54 PNG files; manifest sha256 11c5dc10198c9d446afc8ffd80aff46c747d2dec34b77293327907d729163292
+step 5: contact page out/storytime-review/w06-contact/index.html (27 cards, 108 refs, 0 missing) + 3 sheets 2000x7698 (1.62, 2.00, 0.74 MB); sheet 2 viewed with the read tool
+step 6: plan.md block "Week 6 delivery (G1 to G8)" added under Task 2 (no marker change); plan.md had no change by another author before the edit
+G2: costs.tsv 141 page calls (137 at 0.01, 4 failed at 0), 0 without usage_cost; elements/costs.tsv 10 calls (10 at 0.01), 0 without usage_cost
+Cost: usage.cost total (USD): 1.37 pages + 0.10 elements = 1.47 for week 6. No Muse call this round. Running total 12.80 (round cost 0).
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2 (week 6 approval list, delivery, contact sheets, gate records)
+role_base_sha: db534b87
+phase_base_sha: fc76c272
+spec_commits: none
+approved_json_commit: cce84c6b
+plan_evidence_commit: see git log (plan.md and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: 27 rows; delivery out/storytime/l2/unit1/w06/delivery-muse-v1; deliver exit 0 ("Delivered 27 rows and 2 batch hashes"); re-hash 54 of 54 equal, 54 of 54 in manifest; manifest SHA-256 11c5dc10198c9d446afc8ffd80aff46c747d2dec34b77293327907d729163292
+contact_page: out/storytime-review/w06-contact/index.html
+contact_sheets: out/storytime-review/w06-contact/w06-sheet-1-of-3.jpg; w06-sheet-2-of-3.jpg; w06-sheet-3-of-3.jpg
+open_items: (1) Daniel's person review of week 6 (G7): "delivered, awaiting person review"; no reviews.person field. (2) Park sun rays float or stay open on most line prints (PM question open; default note). (3) sam-can-see-a-pan has rating 6.5 (hand on the pan handle is a fist of short strokes); artifact verdict clean; kept as a note. (4) Model reviewer is MiniMax, not Kimi; all reviews sit in notes (schema accepts only kimi and person). (5) The stage gate was not run again in this round (it sees page candidates).
+round_cost_usd: 0
+running_total_usd: 12.80 (week 6 total 1.47: pages 1.37, elements 0.10)
+batch: w06 delivery
+chosen_prints_differences: none (all 27 equal to the brief and to the plan notes)
+handoff: Send the 3 sheet paths and the manifest SHA-256 to the PM for Daniel. Default: week 6 stays "delivered, awaiting person review". The writer reviews schema accepts only kimi and person, so all model reviews sit in notes.
+dispositions: none
+END_MEASURE_AGENT_RESULT
