@@ -1,0 +1,358 @@
+{
+  "version": 1,
+  "pictureListSha256": "6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58",
+  "entries": [
+    {
+      "rowId": "l2-w07-story-page-is-it-a-ball-no",
+      "version": 1,
+      "colorPrint": "l2-w07-story-page-is-it-a-ball-no-m1-color-print.png",
+      "linePrint": "l2-w07-story-page-is-it-a-ball-no-m1-line-print-6-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-55.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-55/pages/l2-w07-story-page-is-it-a-ball-no-m1-color-print.png and l2-w07-story-page-is-it-a-ball-no-m1-line-print-6-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-story-page-is-it-a-ball-no-m1-color-print.png (SHA-256 ae389b87913240a4ee16f78983a0c4a9bd84a0ecf372cefc5426aafbde11a588) and line print l2-w07-story-page-is-it-a-ball-no-m1-line-print-6-despeckled.png (SHA-256 862dcb1c0192034620858a3d02f7bbefba8738461d987bc1ee14ed0eb1c7df45).",
+        "Reviewer notes: The thought bubble shows 1 red-and-yellow striped ball in the color file and 1 ball with 3 curves in the line file. No other toy shows. May points at the bump with 1 index finger in the color file and in the line file. The other fingers stay curled. Both children have ring eyes with solid pupils and a smile. The line file draws the toy shelf as a tall shelf with boxes. It is background, so it is a note."
+      ]
+    },
+    {
+      "rowId": "l2-w07-story-page-is-it-a-doll-no",
+      "version": 1,
+      "colorPrint": "l2-w07-story-page-is-it-a-doll-no-m1-color-print.png",
+      "linePrint": "l2-w07-story-page-is-it-a-doll-no-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-55.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-55/pages/l2-w07-story-page-is-it-a-doll-no-m1-color-print.png and l2-w07-story-page-is-it-a-doll-no-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-story-page-is-it-a-doll-no-m1-color-print.png (SHA-256 bf99c3d342e60b023d43133570906813db9de0cac6ba77814f93de00fc89e2a7) and line print l2-w07-story-page-is-it-a-doll-no-m1-line-print-3-despeckled.png (SHA-256 79ea03a16fa3cf0ae1fa3ae7504abde2c30da9106b7aa8ffa24cb30657250b25).",
+        "Reviewer notes: The thought bubble shows 1 rag doll with yellow yarn hair and a red dress in the color file and 1 doll with 2 pigtails and a dress in the line file. No other toy shows. May points at the bump with 1 index finger in the color file and in the line file. The other fingers stay curled. The lines of the line file are thin, but they close and a child can color them. The line file draws the toy shelf as a tall shelf with boxes. It is background, so it is a note."
+      ]
+    },
+    {
+      "rowId": "l2-w07-story-page-is-it-a-car-no",
+      "version": 1,
+      "colorPrint": "l2-w07-story-page-is-it-a-car-no-m1-color-print.png",
+      "linePrint": "l2-w07-story-page-is-it-a-car-no-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-55.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-55/pages/l2-w07-story-page-is-it-a-car-no-m1-color-print.png and l2-w07-story-page-is-it-a-car-no-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-story-page-is-it-a-car-no-m1-color-print.png (SHA-256 16e2aad4734d6162469f64e2eb165861fa73230079e71fd3df669f055b54b4cc) and line print l2-w07-story-page-is-it-a-car-no-m1-line-print-3-despeckled.png (SHA-256 9f839abf5d68391713d41d436102c6940962df292acdcba65b32c3c9acd0806f).",
+        "Reviewer notes: The thought bubble shows 1 blue car in the color file and 1 car in the line file. No other toy shows. May points at the bump with 1 index finger in the color file and in the line file. In the line file the thumb points up beside the index finger. It is a note. The fringe of May is drawn with several short strokes in the line file and as one shape in the color file. It is a note. The line file draws the toy shelf as a tall shelf with boxes. It is background, so it is a note."
+      ]
+    },
+    {
+      "rowId": "l2-w07-story-page-is-it-a-kite-no",
+      "version": 1,
+      "colorPrint": "l2-w07-story-page-is-it-a-kite-no-m1-color-print.png",
+      "linePrint": "l2-w07-story-page-is-it-a-kite-no-m1-line-print-4-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-55.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-55/pages/l2-w07-story-page-is-it-a-kite-no-m1-color-print.png and l2-w07-story-page-is-it-a-kite-no-m1-line-print-4-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-story-page-is-it-a-kite-no-m1-color-print.png (SHA-256 86c70ffdb85b126ec3c4d4a5f98b6c56c958d80282e76719c43fc3d61161bbd2) and line print l2-w07-story-page-is-it-a-kite-no-m1-line-print-4-despeckled.png (SHA-256 d02dc8249c2770afed06e6b00bd0ed878ba95c6ac2dc14595846b1512f78d7ee).",
+        "Reviewer notes: The thought bubble shows 1 red-and-yellow kite with a string and 3 red bows in the color file and 1 kite with 3 bows in the line file. No other toy shows. May points at the bump with 1 index finger in the color file and in the line file. The other fingers stay curled. The shoe of Ben rests on the blanket edge in both files. It is a small overlap, so it is a note. The line file draws the toy shelf as a tall shelf with boxes. It is background, so it is a note."
+      ]
+    },
+    {
+      "rowId": "l2-w07-story-page-is-it-a-drum-no",
+      "version": 1,
+      "colorPrint": "l2-w07-story-page-is-it-a-drum-no-m1-color-print.png",
+      "linePrint": "l2-w07-story-page-is-it-a-drum-no-m1-line-print-6-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-55.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-55/pages/l2-w07-story-page-is-it-a-drum-no-m1-color-print.png and l2-w07-story-page-is-it-a-drum-no-m1-line-print-6-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-story-page-is-it-a-drum-no-m1-color-print.png (SHA-256 854b5d15f5946b324cf92964281211e8016e5013d78aad458aadbd8e350db338) and line print l2-w07-story-page-is-it-a-drum-no-m1-line-print-6-despeckled.png (SHA-256 a82bac04dd16eda0ac3932dee527809b7a0f91a851cf90113983c674907cf008).",
+        "Reviewer notes: The thought bubble shows 1 red drum with a white band and 2 drumsticks in the color file and 1 drum with 2 sticks in the line file. No other toy shows. May points at the bump with 1 index finger in the color file and in the line file. The other fingers stay curled. The eye rings of May are thin in the line file. It is a note. The line file draws the toy shelf as a tall shelf with boxes. It is background, so it is a note."
+      ]
+    },
+    {
+      "rowId": "l2-w07-story-page-is-it-a-train-no",
+      "version": 1,
+      "colorPrint": "l2-w07-story-page-is-it-a-train-no-m1-color-print.png",
+      "linePrint": "l2-w07-story-page-is-it-a-train-no-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-55.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-55/pages/l2-w07-story-page-is-it-a-train-no-m1-color-print.png and l2-w07-story-page-is-it-a-train-no-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-story-page-is-it-a-train-no-m1-color-print.png (SHA-256 e5cd9e2f7d7461e82dbdb3b2adc5b4df8ce3e694246edb2f31cc19a4c2aa9b9d) and line print l2-w07-story-page-is-it-a-train-no-m1-line-print-3-despeckled.png (SHA-256 a35de86bfa00c489854ed72726c3e36d23fd91643ad8263d90f3acd63449c29e).",
+        "Reviewer notes: The thought bubble shows 1 green train with a red wagon in the color file and 1 engine with 1 wagon in the line file. No other toy shows. May points at the bump with 1 index finger in the color file and in the line file. The other fingers stay curled. Ben has a closed smile in the line file and an open smile in the color file. It is a note. The line file draws the toy shelf as a tall shelf with boxes. It is background, so it is a note."
+      ]
+    },
+    {
+      "rowId": "l2-w07-story-page-is-it-a-teddy-no",
+      "version": 1,
+      "colorPrint": "l2-w07-story-page-is-it-a-teddy-no-m1-color-print.png",
+      "linePrint": "l2-w07-story-page-is-it-a-teddy-no-m1-line-print-9-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-55.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-55/pages/l2-w07-story-page-is-it-a-teddy-no-m1-color-print.png and l2-w07-story-page-is-it-a-teddy-no-m1-line-print-9-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-story-page-is-it-a-teddy-no-m1-color-print.png (SHA-256 2227f41faac1b5bd6e74934db49794826fb42099ff47bf8533734c34b1e728e3) and line print l2-w07-story-page-is-it-a-teddy-no-m1-line-print-9-despeckled.png (SHA-256 88e4384d2d9390b2a29e6525133f7ee96407e22c27797d0f9da40216adee71f6).",
+        "Reviewer notes: The thought bubble shows 1 white teddy bear with a blue bow, 2 dot eyes, a nose and a smile in the color file, and 1 teddy bear with a bow in the line file. No other toy shows. Only the golden-brown fluffy tip of the tail shows at the edge of the blanket in the color file. The line file shows 1 closed fluffy shape and no other part of Pip. The tail tip in the color file sits in front of the blanket edge beside May, not behind her. It is a small place difference, so it is a note. May keeps both hands low on her knees in the color file and in the line file. No hand is raised."
+      ]
+    },
+    {
+      "rowId": "l2-w07-story-page-is-it-pip-yes",
+      "version": 1,
+      "colorPrint": "l2-w07-story-page-is-it-pip-yes-m1-color-print.png",
+      "linePrint": "l2-w07-story-page-is-it-pip-yes-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-55.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-55/pages/l2-w07-story-page-is-it-pip-yes-m1-color-print.png and l2-w07-story-page-is-it-pip-yes-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-story-page-is-it-pip-yes-m1-color-print.png (SHA-256 5244e0087af0cd6356f0600b406ce9f763c420ce06f55175412dcd387b7f0944) and line print l2-w07-story-page-is-it-pip-yes-m1-line-print-2-despeckled.png (SHA-256 179a1e3947e89d4a1704271ddc2f649512fd13746fa0dc688e53c1b9d1ff2852).",
+        "Reviewer notes: Pip shows whole in the color file and in the line file: floppy ears, a red collar with a round gold tag, a fluffy tail, 4 legs and 1 tail. May opens both arms with 5 fingers on each hand in the color file and in the line file. Ben holds the blanket with 2 fists, one on each side. No finger is spread. The hair of Ben is a curly cloud shape in the line file and messy tufts in the color file. It is a note. The line file draws the toy shelf as a tall shelf with boxes. It is background, so it is a note."
+      ]
+    },
+    {
+      "rowId": "l2-w07-cover-is-it-a-ball",
+      "version": 1,
+      "colorPrint": "l2-w07-cover-is-it-a-ball-m1-color-print.png",
+      "linePrint": "l2-w07-cover-is-it-a-ball-m1-line-print-6-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-55.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-55/pages/l2-w07-cover-is-it-a-ball-m1-color-print.png and l2-w07-cover-is-it-a-ball-m1-line-print-6-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-cover-is-it-a-ball-m1-color-print.png (SHA-256 7f4cb14df9a89630c14f4cb12aacf1e8fcdc27202c3f347b5a8b87c1caef5d52) and line print l2-w07-cover-is-it-a-ball-m1-line-print-6-despeckled.png (SHA-256 89f282119a0c49c6c8e8c1b701e7b0046d113f384028d1d715d769235dbdc802).",
+        "Reviewer notes: The picture shows 2 children, 1 red blanket over 1 small round bump, 1 blue rug, 1 toy shelf and 1 window. No toy and no thought bubble show, as the goal asks. May holds one finger on her chin in the color file and in the line file. Each hand has 1 index finger and no open palm. Both children keep their approved looks and have ring eyes with solid pupils, a nose and a smile in the line file. The line file draws the toy shelf as a tall shelf with boxes and not the low shelf of the color file. It is background, so it is a note. The wall beams run off the top print edge. They are background."
+      ]
+    },
+    {
+      "rowId": "l2-w07-story-page-tom-can-see-a-top",
+      "version": 1,
+      "colorPrint": "l2-w07-story-page-tom-can-see-a-top-m1-color-print.png",
+      "linePrint": "l2-w07-story-page-tom-can-see-a-top-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer claude-code/claude-opus-5-5[1m]#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-56.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-56/pages/l2-w07-story-page-tom-can-see-a-top-m1-color-print.png and l2-w07-story-page-tom-can-see-a-top-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-story-page-tom-can-see-a-top-m1-color-print.png (SHA-256 2b4b9cbaa71aaaf09ee9bef31c5b767f05d4feb9ee9f6f2e785f44bcc34211f2) and line print l2-w07-story-page-tom-can-see-a-top-m1-line-print-3-despeckled.png (SHA-256 1ce2016f8d6c509ca909aad323afbd1088ad8f46f5052502b32f8d14aa2db36f).",
+        "Reviewer notes: Tom kneels at the open toy box with his hands on his knees and looks at the top. He matches his look: dark hair, blue shirt, tan shorts, red shoes. Exactly one top (red with a yellow stripe in color) lies on the toys in the box, in color and in line. One blue mat, one small brown rug under the window, one green sofa, one silver pot on a low table. The line shirt has a small collar; the color shirt has a round neck. This changes no character. Tom has ring eyes with solid pupils and a smile in the line art, and no nose. The text does not name the nose. The pot and the low table touch the right print edge (background; the sentence does not name the pot)."
+      ]
+    },
+    {
+      "rowId": "l2-w07-story-page-tom-can-get-the-top",
+      "version": 2,
+      "colorPrint": "l2-w07-story-page-tom-can-get-the-top-m2-color-print.png",
+      "linePrint": "l2-w07-story-page-tom-can-get-the-top-m2-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer claude-code/claude-opus-5-5[1m]#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-56.json, rating 7.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-56/pages/l2-w07-story-page-tom-can-get-the-top-m2-color-print.png and l2-w07-story-page-tom-can-get-the-top-m2-line-print-3-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-story-page-tom-can-get-the-top-m2-color-print.png (SHA-256 2e0e301d86b16b9f5fbf50b5701dd3fc2fa696307c506998dc541fdbafc2f56c) and line print l2-w07-story-page-tom-can-get-the-top-m2-line-print-3-despeckled.png (SHA-256 c1dd78a3e4e2f164902fc702472dff35920ca24fbb68b6a156f001e5561a2285).",
+        "Reviewer notes: Tom stands in the middle on the blue mat and holds up one top in one hand at face height. His other hand hangs at his side. One hand on each arm, in color and in line. Exactly one top shows on the page. The open toy box holds blocks and a duck and no top. Tom matches his look and smiles. In the line art he has ring eyes with very large solid pupils, an open smile, no nose, and no eyebrows. The text does not name these face parts. The goal says Tom takes the top out of the toy box. Tom stands away from the box with the top already in his hand. The sentence 'Tom can get the top.' reads clearly. The small brown rug shows in color behind Tom and is not drawn in the line art (not needed by the sentence). The pot and the low table touch the right print edge (background)."
+      ]
+    },
+    {
+      "rowId": "l2-w07-story-page-the-top-on-a-mat",
+      "version": 1,
+      "colorPrint": "l2-w07-story-page-the-top-on-a-mat-m1-color-print.png",
+      "linePrint": "l2-w07-story-page-the-top-on-a-mat-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer claude-code/claude-opus-5-5[1m]#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-56.json, rating 7.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-56/pages/l2-w07-story-page-the-top-on-a-mat-m1-color-print.png and l2-w07-story-page-the-top-on-a-mat-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-story-page-the-top-on-a-mat-m1-color-print.png (SHA-256 7c5a088c232eff54672bf16d12113a0ee161ce94622851d576375f55b8c026a3) and line print l2-w07-story-page-the-top-on-a-mat-m1-line-print-despeckled.png (SHA-256 cd6f23d9211b7c2f498a6304c63c682f4fa6ff4b2bae6f222ec59f6ae589e18d).",
+        "Reviewer notes: Exactly one top spins upright on the blue mat. Its point touches the mat in color and in line. Tom kneels next to the mat and claps with two normal hands, in color and in line. He matches his look and smiles. In the line art Tom's eyes are solid black ovals with a lash arc above, without a closed outline around them. The bar allows solid black pupils, so this is a note. The Workbooks stage 2 finding asks for a closed outline around a solid pupil; the parent can choose a line retry for that rule. The color print has a faint swirl ring around the top to show the spin. The line art has no motion lines. The small brown rug under the window shows in color but not in the line art. The sentence does not need the rug. The pot and the low table touch the right print edge (background)."
+      ]
+    },
+    {
+      "rowId": "l2-w07-story-page-the-top-on-a-pot",
+      "version": 3,
+      "colorPrint": "l2-w07-story-page-the-top-on-a-pot-m3-color-print.png",
+      "linePrint": "l2-w07-story-page-the-top-on-a-pot-m3-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer claude-code/claude-opus-5-5[1m]#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-56.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-56/pages/l2-w07-story-page-the-top-on-a-pot-m3-color-print.png and l2-w07-story-page-the-top-on-a-pot-m3-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-story-page-the-top-on-a-pot-m3-color-print.png (SHA-256 7ba9ac88c0518a0ffa7ed6bc9e808ba5dc6f18b6237c4cc314f273d2fa286ef2) and line print l2-w07-story-page-the-top-on-a-pot-m3-line-print-2-despeckled.png (SHA-256 6a60231975728f83cfe5d85138d47297c858d10560f0af2eb44e8fe0a8be4f7d).",
+        "Reviewer notes: The big silver pot shows whole with its lid, knob, and both handles, in color and in line. It stands on the low wooden table inside the picture. Exactly one top spins on the lid beside the knob. Its point touches the lid in color and in line. In the line art the top overlaps the toy box behind it, and the box lines stop at the top outline. Tom stands, laughs, and opens both hands. Each hand shows a thumb and three fingers in color and in line; this is the cartoon style and no hand has more than five fingers. The goal says Tom spins the top on the lid. Tom stands away from the table with open hands, so the picture shows the top spinning after the spin. The sentence 'The top on a pot!' reads clearly. The low table touches the right print edge (background). The small brown rug shows in color behind Tom and is not drawn in the line art (not needed by the sentence)."
+      ]
+    },
+    {
+      "rowId": "l2-w07-story-page-the-top-is-on-mom",
+      "version": 1,
+      "colorPrint": "l2-w07-story-page-the-top-is-on-mom-m1-color-print.png",
+      "linePrint": "l2-w07-story-page-the-top-is-on-mom-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer claude-code/claude-opus-5-5[1m]#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-56.json, rating 7.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-56/pages/l2-w07-story-page-the-top-is-on-mom-m1-color-print.png and l2-w07-story-page-the-top-is-on-mom-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-story-page-the-top-is-on-mom-m1-color-print.png (SHA-256 9d112d43b4580214e0c2c461eca70957679da9cd953607567c3d2246050478c0) and line print l2-w07-story-page-the-top-is-on-mom-m1-line-print-3-despeckled.png (SHA-256 7dcd1f04ef9a7d37b8a0e424141493d4113a9626d4dc7e5e543310499680f767).",
+        "Reviewer notes: Mom matches her approved look: long wavy dark hair, pink collar shirt, blue trousers, white shoes. She sits on the green sofa and laughs. Exactly one top stands on Mom's head in color and in line. Its point touches her hair. Mom's eyes are closed in the color laugh and open rings with solid pupils in the line art. The text does not name the eyes, and the change makes no other character. This is a color/line difference. Tom raises both open hands and laughs. Each hand shows four digits in color and in line (a thumb and three fingers). This is the cartoon style; no hand has more than five fingers. In color Tom has rounder cheeks and a few loose hair tufts at the back compared with his sheet. His hair color, hair shape, blue shirt, tan shorts, and red shoes stay the same. The line art gives Mom a shirt with three buttons and gives both faces a small nose mark. The pot and the low table touch the right print edge (background)."
+      ]
+    },
+    {
+      "rowId": "l2-w07-story-page-run-tom-run",
+      "version": 1,
+      "colorPrint": "l2-w07-story-page-run-tom-run-m1-color-print.png",
+      "linePrint": "l2-w07-story-page-run-tom-run-m1-line-print-5-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer claude-code/claude-opus-5-5[1m]#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-56.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-56/pages/l2-w07-story-page-run-tom-run-m1-color-print.png and l2-w07-story-page-run-tom-run-m1-line-print-5-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-story-page-run-tom-run-m1-color-print.png (SHA-256 d955c40eca67c05199aa5edc591439c6af89d78b40e6ffc019f44ba7bfe63989) and line print l2-w07-story-page-run-tom-run-m1-line-print-5-despeckled.png (SHA-256 ce5940d10ea2f89f75bb807677f664ece0c20819643aebfa11877d348bbac06d).",
+        "Reviewer notes: Tom runs with both feet off the floor, one arm forward with an open hand and one arm back, in color and in line. He matches his look. Exactly one top lies tilted on the blue mat in color and in line. Mom has nothing on her head. Pip sleeps whole on the small brown rug under the window, with floppy ears, closed eyes, a collar, and a tail, in color and in line. Mom laughs with closed eyes in color; in line she has open ring eyes with solid pupils, an open smile, and no nose. The text does not name the eyes or the nose. The line top has several stripe lines; the color top has one yellow stripe. The prop stays one clear top. Tom runs to the left toward the top and the sofa. The goal says the top rolls toward the window. The sentence 'Run, Tom, run!' reads clearly. The pot and the low table touch the right print edge (background)."
+      ]
+    },
+    {
+      "rowId": "l2-w07-story-page-can-tom-see-the-top",
+      "version": 2,
+      "colorPrint": "l2-w07-story-page-can-tom-see-the-top-m2-color-print.png",
+      "linePrint": "l2-w07-story-page-can-tom-see-the-top-m2-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer claude-code/claude-opus-5-5[1m]#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-56.json, rating 7, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-56/pages/l2-w07-story-page-can-tom-see-the-top-m2-color-print.png and l2-w07-story-page-can-tom-see-the-top-m2-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-story-page-can-tom-see-the-top-m2-color-print.png (SHA-256 88ac32e62c77c00aa7d8257f68f0e920b1995d5e568d36bca7cb98030ce181c6) and line print l2-w07-story-page-can-tom-see-the-top-m2-line-print-despeckled.png (SHA-256 f059547c67a704e1c800392dcd02b400f7ad3832dd61c8129ad28b569e59924a).",
+        "Reviewer notes: Tom kneels on his hands and knees at the front of the sofa, next to Mom's legs, and looks down toward the sofa. Each hand on the floor shows a normal hand in color and in line. Tom's head is at seat level, in front of the right end of the sofa. It covers part of the low gap under the sofa in color and in line. The gap still shows at the left between the sofa legs. The look 'under the sofa' reads weakly; the sentence (a question about the top) still reads, because Tom searches and the top shows on Pip. Exactly one top stands on the back of the sleeping Pip, in color and in line. Pip shows whole on the small brown rug with floppy ears, closed eyes, and a tail. One blue mat shows partly behind Tom, and one brown rug shows under Pip. In the line art Mom's hair is a curly cloud shape; in color it is long and wavy. Her face, collar shirt, trousers, shoes, and seat stay the same, so a reader sees the same Mom. The line art has a long straight floor line near the bottom of the page and a window with two tall panes. These are background lines. The pot and the low table touch the right print edge (background)."
+      ]
+    },
+    {
+      "rowId": "l2-w07-story-page-the-top-is-on-pip",
+      "version": 2,
+      "colorPrint": "l2-w07-story-page-the-top-is-on-pip-m2-color-print.png",
+      "linePrint": "l2-w07-story-page-the-top-is-on-pip-m2-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer claude-code/claude-opus-5-5[1m]#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-56.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-56/pages/l2-w07-story-page-the-top-is-on-pip-m2-color-print.png and l2-w07-story-page-the-top-is-on-pip-m2-line-print-3-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-story-page-the-top-is-on-pip-m2-color-print.png (SHA-256 446b9cc4322bcb90cc9e951265513a9f07b1c83115600ea75d6dfb761f33552d) and line print l2-w07-story-page-the-top-is-on-pip-m2-line-print-3-despeckled.png (SHA-256 3cfbd9f17381b0175f56f9ad8c0f1971015dcf0b739bc4b86094d8a5d9ef9824).",
+        "Reviewer notes: Tom points at Pip with one index finger; the other fingers curl and the thumb shows, in color and in line. One hand on each arm. Pip sleeps whole on the small brown rug with his eyes closed, in color and in line. He has two floppy ears, a cream forehead stripe, a red collar, and a fluffy tail. The curled sleeping pose shows two front paws and one hind paw; the fourth leg is under the body. Exactly one top sits on Pip's back. Its point touches his back in color and in line. In color two very small pointed tufts show on the top of Pip's head behind the floppy ear. They match the Pip reference render and do not read as ears at book size. The line art does not draw them. The rug with Pip lies at the right, between the window and the toy box, not straight under the window. The sentence needs Pip and the top, and both show clearly. Mom smiles on the green sofa. In the line art she has ring eyes with solid pupils, a smile, and no nose. The pot and the low table touch the right print edge (background)."
+      ]
+    },
+    {
+      "rowId": "l2-w07-cover-the-top",
+      "version": 1,
+      "colorPrint": "l2-w07-cover-the-top-m1-color-print.png",
+      "linePrint": "l2-w07-cover-the-top-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer claude-code/claude-opus-5-5[1m]#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-56.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-56/pages/l2-w07-cover-the-top-m1-color-print.png and l2-w07-cover-the-top-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-cover-the-top-m1-color-print.png (SHA-256 07efd40207a0954db2f948d0ef71fee84512282e83296a707dff3ca6308e9221) and line print l2-w07-cover-the-top-m1-line-print-2-despeckled.png (SHA-256 ee721695274e6d94d0242721caa9b5defcb593379ddfb378b2e5c47fd89c7a05).",
+        "Reviewer notes: Tom matches his approved look: dark side-swept hair, blue shirt, tan shorts, red shoes. He smiles and holds up one red top with a yellow stripe. Exactly one top in color and in line. One blue mat, one small brown rug under the window, one open toy box, one green sofa, one silver pot on a low table. Pip sits whole at the right with floppy ears, a red collar with a gold tag, and a fluffy tail. He looks at the top. The sitting pose shows three paws in color and in line; the fourth leg is behind the body. In color Tom holds the top in a fist. In line the hand pinches the stick between the index finger and the thumb, and the other three fingers spread open. The hand has five digits and one palm. This is a color/line difference that changes no character. Tom has ring eyes with solid pupils and an open-mouth smile in the line art, and no nose. The text does not name the nose. The pot and the low table touch the right print edge in color and in line (background; the title names no pot)."
+      ]
+    },
+    {
+      "rowId": "l2-w07-check-row-octopus",
+      "version": 2,
+      "colorPrint": "l2-w07-check-row-octopus-m2-color-print.png",
+      "linePrint": "l2-w07-check-row-octopus-m2-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer claude-code/claude-opus-5-5[1m]#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-57r2.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-57r2/pages/l2-w07-check-row-octopus-m2-color-print.png and l2-w07-check-row-octopus-m2-line-print-3-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-check-row-octopus-m2-color-print.png (SHA-256 8f227b0db04d0cb6b640a962f7c67ce1c3e34270faf291ca5bfeaf74f003a522) and line print l2-w07-check-row-octopus-m2-line-print-3-despeckled.png (SHA-256 5536319086df1e7a92624e8df343429a6b4481e42f4c52dc87f035e1d0f52c7d).",
+        "Reviewer notes: The object reads as an octopus at book size in color and in line. It matches the look sheet: a round purple head, two big dark eyes, a small smile, and curled arms. The color print has one head, two eyes with white highlights, a smile, and a blush mark on each cheek. The line print has one head, two eyes (each a ring with a solid black pupil), and a smile. The center arm in color has its tip toward the viewer. The line print shows the same tip as an inner hook line inside the closed arm outline. Builder note 1 is correct: the upper left arm in the line print rises from the side of the head on a stalk and ends in a curl. In color, this arm lies lower behind the middle left arm. The arm count is the same, so this difference changes no character. Builder note 2 is correct: the four right curls are close together. Each curl has its own closed outline. The second and third curls share one boundary line. Builder note 3 is correct: the line print has open line ends inside the body. These lines start the arm edges and the center arm sides, and one hook line marks the center arm tip. The outer outline of the octopus is closed, so the line ends do not make a coloring gap. The arm areas near the right join of the body are thin wedges. The curls at the arm ends are large, so a child can color each arm. The line print has no blush, no suckers, and no head bumps. The color print has small bumps on the top of the head, as in the look sheet. These are small marks. The line print has no thick black band. Only the pupils are solid black. Nothing is cut at a print edge in color or in line.",
+        "Superseded finding B57-OCTO-1 (artifact item-review-batch-57.json, Opus, octopus m1, line 1): 7 arms, not 8, in color and in line (wrong-hand-or-limb). Spec fix ef757014 (plan note b7b72ce8) gave color m2 and line try 3, which this entry uses. Batch 57 has status fail only because of this row; its other 8 check rows are clean."
+      ]
+    },
+    {
+      "rowId": "l2-w07-check-row-sun",
+      "version": 1,
+      "colorPrint": "l2-w07-check-row-sun-m1-color-print.png",
+      "linePrint": "l2-w07-check-row-sun-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer claude-code/claude-opus-5-5[1m]#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-57.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status fail; status fail only because of the octopus row, which is superseded).",
+        "Reviewed pages batch-57/pages/l2-w07-check-row-sun-m1-color-print.png and l2-w07-check-row-sun-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-check-row-sun-m1-color-print.png (SHA-256 8ea284af4e0ed868ccbe4bc79ef7fd7e52d7d8e8355ee08c82859df7ec1ef290) and line print l2-w07-check-row-sun-m1-line-print-despeckled.png (SHA-256 278f687ca8b1242fc2e297cdd46270932358892705130cf0f437fdbaacafdcd9).",
+        "Reviewer notes: One sun with one disc and exactly 8 pointed triangle rays in color and in line. The reviewer counted 8 rays in each file. Each ray has its wide base on the disc and its point outward. In the line print, the disc and all 8 rays are one connected black component, so the largest ray gap is 0 px. The disc ring is 29 to 30 px wide on the horizontal and vertical axis, the same as the line weight. It is not a thick solid ring. No face, no text. The lowest ray is near the lower print edge but is not cut."
+      ]
+    },
+    {
+      "rowId": "l2-w07-check-row-bed",
+      "version": 1,
+      "colorPrint": "l2-w07-check-row-bed-m1-color-print.png",
+      "linePrint": "l2-w07-check-row-bed-m1-line-print-6-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer claude-code/claude-opus-5-5[1m]#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-57.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status fail; status fail only because of the octopus row, which is superseded).",
+        "Reviewed pages batch-57/pages/l2-w07-check-row-bed-m1-color-print.png and l2-w07-check-row-bed-m1-line-print-6-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-check-row-bed-m1-color-print.png (SHA-256 d6ab124abe20071fb5cfddce8a726805bcfdef8f8843203af549de6a4a1991fc) and line print l2-w07-check-row-bed-m1-line-print-6-despeckled.png (SHA-256 c215c0bb660b104ae994b2ef8254a79ce106a23ec4b9af99a573021b5aca0a42).",
+        "Reviewer notes: The bed reads as a bed at book size in color and in line: an arched headboard, posts with round knobs, a footboard panel, a mattress, a pillow, a blanket, and three visible legs. The fourth leg is hidden in both files. The color blanket has a red check pattern. The line blanket is one plain shape. This changes no needed prop. The line under the footboard is a merged double stroke, about two line widths thick. It is a small mark, not a large solid area. The headboard arch and the left post join at one point; the areas stay closed. Nothing is cut at a print edge."
+      ]
+    },
+    {
+      "rowId": "l2-w07-check-row-cat",
+      "version": 1,
+      "colorPrint": "l2-w07-check-row-cat-m1-color-print.png",
+      "linePrint": "l2-w07-check-row-cat-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer claude-code/claude-opus-5-5[1m]#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-57.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status fail; status fail only because of the octopus row, which is superseded).",
+        "Reviewed pages batch-57/pages/l2-w07-check-row-cat-m1-color-print.png and l2-w07-check-row-cat-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-check-row-cat-m1-color-print.png (SHA-256 5b3d30fddbe1d56a43b81753eae9f2850bfd1f2dd094d2678ce959c7feca8652) and line print l2-w07-check-row-cat-m1-line-print-despeckled.png (SHA-256 28c2c3eeaa020c1ee3bba94b2a367ac4ba471fbef95d83013842fe82152a1593).",
+        "Reviewer notes: The cat reads as a cat at book size in color and in line: two pointed ears, two big eyes (ring and solid pupil), a nose, three whiskers on each side, a curled tail, and paws. The color has orange stripes and a white muzzle and chest. The line file draws plain shapes without stripes. This changes no needed prop. The color shows a fourth paw as a small bump behind the front legs. The line file shows three paws. The text names no count, so this is a note. Two short inner leg lines end open inside the body outline. The body areas stay closed for coloring. Nothing is cut at a print edge."
+      ]
+    },
+    {
+      "rowId": "l2-w07-check-row-ox",
+      "version": 1,
+      "colorPrint": "l2-w07-check-row-ox-m1-color-print.png",
+      "linePrint": "l2-w07-check-row-ox-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer claude-code/claude-opus-5-5[1m]#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-57.json, rating 7.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status fail; status fail only because of the octopus row, which is superseded).",
+        "Reviewed pages batch-57/pages/l2-w07-check-row-ox-m1-color-print.png and l2-w07-check-row-ox-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-check-row-ox-m1-color-print.png (SHA-256 03dc88f009db1db887b0fb7b81ca664e7cb8661917839893da7e9af685327163) and line print l2-w07-check-row-ox-m1-line-print-3-despeckled.png (SHA-256 f2417351df2d3e6a53771a3b445981a492a30c4a1ff4fcb2b038633be0889d41).",
+        "Reviewer notes: The ox reads as an ox at book size in color and in line: two long curved horns, two ears, two big eyes (ring and solid pupil), a wide muzzle with two nostrils, four legs with hoof bands, and a short tail. The horns make it an ox, not a hornless cow. The color has a beaded necklace and a gold bell. The line file draws neither; one short open stroke on the shoulder is left from the necklace. This changes no needed prop. The left eye extends past the head outline in the three-quarter view, in both files. This is a note. Two short inner lines (shoulder and back leg) end open inside the body outline. The areas stay closed for coloring. Nothing is cut at a print edge."
+      ]
+    },
+    {
+      "rowId": "l2-w07-check-row-fish",
+      "version": 1,
+      "colorPrint": "l2-w07-check-row-fish-m1-color-print.png",
+      "linePrint": "l2-w07-check-row-fish-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer claude-code/claude-opus-5-5[1m]#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-57.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status fail; status fail only because of the octopus row, which is superseded).",
+        "Reviewed pages batch-57/pages/l2-w07-check-row-fish-m1-color-print.png and l2-w07-check-row-fish-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-check-row-fish-m1-color-print.png (SHA-256 7dfdb6093c0d6ca5000e2b0439bab2074dde87a50b4b5eb63410db71939a244c) and line print l2-w07-check-row-fish-m1-line-print-3-despeckled.png (SHA-256 f046e1c4dd84fa777a0e651a2aa796e9e9bdf2984961138376c7b5cb68fa0935).",
+        "Reviewer notes: The fish reads as a fish at book size in color and in line: a round body in side view, one eye (ring and solid pupil), one top fin, one tail fin, and one belly fin. The color has a blue back and a yellow belly. The line file has no belly line. This changes no needed prop. The fin outlines in the line file are wavy, as in the color fins. The pupil is a solid black disc of normal eye size; this is allowed. The color has a soft gray ground shadow. Nothing is cut at a print edge."
+      ]
+    },
+    {
+      "rowId": "l2-w07-check-row-pen",
+      "version": 1,
+      "colorPrint": "l2-w07-check-row-pen-m1-color-print.png",
+      "linePrint": "l2-w07-check-row-pen-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer claude-code/claude-opus-5-5[1m]#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-57.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status fail; status fail only because of the octopus row, which is superseded).",
+        "Reviewed pages batch-57/pages/l2-w07-check-row-pen-m1-color-print.png and l2-w07-check-row-pen-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-check-row-pen-m1-color-print.png (SHA-256 3852549dcc3e495df3b175a3584d276b62053e206ec9dfd4e62d45782a94e392) and line print l2-w07-check-row-pen-m1-line-print-2-despeckled.png (SHA-256 72b915b4e1c77c361cba9be2e5310f681c3165c4b08ad7fcc3107053c470cc81).",
+        "Reviewer notes: The pen reads as a ballpoint pen at book size in color and in line: a body on a diagonal, a cap with a clip, a round top button, and a pointed tip at the lower right. The pen body is wide and round. It still reads as a pen because of the clip and the tip. The color top button is clear plastic; the line file draws it as one circle. This changes no needed prop. Nothing is cut at a print edge."
+      ]
+    },
+    {
+      "rowId": "l2-w07-check-row-bus",
+      "version": 1,
+      "colorPrint": "l2-w07-check-row-bus-m1-color-print.png",
+      "linePrint": "l2-w07-check-row-bus-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer claude-code/claude-opus-5-5[1m]#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-57.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status fail; status fail only because of the octopus row, which is superseded).",
+        "Reviewed pages batch-57/pages/l2-w07-check-row-bus-m1-color-print.png and l2-w07-check-row-bus-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-check-row-bus-m1-color-print.png (SHA-256 f103cc6445326a05db502eb2e393f84b38e9be729857cdf5a48dea0fc86a2f3c) and line print l2-w07-check-row-bus-m1-line-print-despeckled.png (SHA-256 e6e47195482fcd67faa3373d22cb99d4f4af95b245665193e3f3e074005fb034).",
+        "Reviewer notes: The yellow school bus reads as a bus in color and in line: a windshield, four side windows, a door with a step, a grille, two headlights, a bumper, four wheels with hubs, and four roof lights. The front right roof light shows as a small closed oval on the roof edge in the line file. It matches the orange light of the color file. The color has a soft gray ground shadow at the right. The line file has no shadow. This is correct for line art. The side stripe of the color file shows as one partial line in the line file. This changes no needed prop. Nothing is cut at a print edge."
+      ]
+    },
+    {
+      "rowId": "l2-w07-check-row-olive",
+      "version": 1,
+      "colorPrint": "l2-w07-check-row-olive-m1-color-print.png",
+      "linePrint": "l2-w07-check-row-olive-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer claude-code/claude-opus-5-5[1m]#high, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-57.json, rating 7, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status fail; status fail only because of the octopus row, which is superseded).",
+        "Reviewed pages batch-57/pages/l2-w07-check-row-olive-m1-color-print.png and l2-w07-check-row-olive-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w07-check-row-olive-m1-color-print.png (SHA-256 bd2333cd32b537bc6d34878c117e20cf7a6138d7b8415dc827b7a82d674a7a0d) and line print l2-w07-check-row-olive-m1-line-print-despeckled.png (SHA-256 581a57b646c1ea39c23579070afd59ab8bf40795f732e06b64a9ee11c3f5ac39).",
+        "Reviewer notes: The color file reads clearly as one green olive with a red pimento in a round hole. The line file is one large oval with one small ring (the hole) and one inner ring (the pimento) near the right end. This is the usual coloring-page sign for a stuffed olive. Next to the printed word \"olive\", it reads as an olive. Risk: the oval is wide, so without the word a child can read it as an egg with a hole. The ring at the end is the only olive sign. The reviewer records this as a note, not a defect, because the object is not a different object (no grape, no pea, no stem, no leaf). The color has a soft gray ground shadow. Nothing is cut at a print edge."
+      ]
+    }
+  ]
+}
