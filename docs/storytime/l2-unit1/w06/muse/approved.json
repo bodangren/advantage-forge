@@ -1,0 +1,366 @@
+{
+  "version": 1,
+  "pictureListSha256": "6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58",
+  "entries": [
+    {
+      "rowId": "l2-w06-story-page-i-can-see-a-cat",
+      "version": 1,
+      "colorPrint": "l2-w06-story-page-i-can-see-a-cat-m1-color-print.png",
+      "linePrint": "l2-w06-story-page-i-can-see-a-cat-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-52.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-52/pages/l2-w06-story-page-i-can-see-a-cat-m1-color-print.png and l2-w06-story-page-i-can-see-a-cat-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-story-page-i-can-see-a-cat-m1-color-print.png (SHA-256 7900915ba300cc70bb9343d1c605163de2ec3058dbf4930f1b6880325c75e630) and line print l2-w06-story-page-i-can-see-a-cat-m1-line-print-2-despeckled.png (SHA-256 c151f07cafaae3e9b38782b265dc7133271ea625575d5e4824c32194db41cf05).",
+        "Reviewer notes: Exactly one cat sits on the fence rail in the color print and in the line print. The cat has two pointed ears, whiskers, a nose and a mouth in the line print. Mia points at the cat with one index finger in both prints. Mia has a nose curve and an open smile, so the face is not blank. One sun. The eight rays are pointed triangles. A white gap of 23 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note. The tree runs past the left frame edge. That is background only.",
+        "Same-run note of the reviewer on batch 52: on most park line prints the sun rays float 8 to 43 px from the disc. The PM question about this is open; the default is a note, not a defect."
+      ]
+    },
+    {
+      "rowId": "l2-w06-story-page-i-can-see-a-dog",
+      "version": 1,
+      "colorPrint": "l2-w06-story-page-i-can-see-a-dog-m1-color-print.png",
+      "linePrint": "l2-w06-story-page-i-can-see-a-dog-m1-line-print-6-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-52.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-52/pages/l2-w06-story-page-i-can-see-a-dog-m1-color-print.png and l2-w06-story-page-i-can-see-a-dog-m1-line-print-6-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-story-page-i-can-see-a-dog-m1-color-print.png (SHA-256 099886e666875a25b51859e69cca476628e8632565a81de83ca91d54b51082e9) and line print l2-w06-story-page-i-can-see-a-dog-m1-line-print-6-despeckled.png (SHA-256 ad9a1cd47bd8ded1190e7a9f7fc7e4a66867634d96ec1d6cd2dc6340ce9bad6c).",
+        "Reviewer notes: Exactly one black and white puppy runs in the air in the color print and in the line print. The black patches of the puppy are solid black fills in the line art, as they are in the color. That is a note because the fills match the color and they are areas, not rings or bands. The puppy has floppy ears, a nose, an open mouth with a tongue and one tail in both prints. Mia points at the puppy with one index finger in both prints. Mia has a nose curve and an open smile, so the face is not blank. One sun. The eight rays are pointed triangles and their wide bases sit on the disc. This page matches the sun rule. The tree, the fence and the grass clumps run past the frame edges. That is background only.",
+        "Same-run note of the reviewer on batch 52: on most park line prints the sun rays float 8 to 43 px from the disc. The PM question about this is open; the default is a note, not a defect."
+      ]
+    },
+    {
+      "rowId": "l2-w06-story-page-i-can-see-a-bird",
+      "version": 1,
+      "colorPrint": "l2-w06-story-page-i-can-see-a-bird-m1-color-print.png",
+      "linePrint": "l2-w06-story-page-i-can-see-a-bird-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-52.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-52/pages/l2-w06-story-page-i-can-see-a-bird-m1-color-print.png and l2-w06-story-page-i-can-see-a-bird-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-story-page-i-can-see-a-bird-m1-color-print.png (SHA-256 30ea5e7121f9c064235fb17fded29b8ef20155f894de32ffad6e083d9c8c9780) and line print l2-w06-story-page-i-can-see-a-bird-m1-line-print-despeckled.png (SHA-256 1535149f677aa28d6968f94ff5079f6689bf3f7be1e11628a39bd856c0db854d).",
+        "Reviewer notes: Exactly one blue bird sits on a branch of the tree in the color print and in the line print. The bird has two eyes, a beak, a wing, a tail and two feet on the branch in both prints. Mia points up with one index finger in both prints. She faces the camera and does not look up, so that is a note. Mia has a nose curve and an open smile, so the face is not blank. One sun. The eight rays are pointed triangles. A white gap of 20 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note. The tree crown, the fence, the pond and the grass clumps run past the frame edges. That is background only.",
+        "Same-run note of the reviewer on batch 52: on most park line prints the sun rays float 8 to 43 px from the disc. The PM question about this is open; the default is a note, not a defect."
+      ]
+    },
+    {
+      "rowId": "l2-w06-story-page-i-can-see-a-fish",
+      "version": 1,
+      "colorPrint": "l2-w06-story-page-i-can-see-a-fish-m1-color-print.png",
+      "linePrint": "l2-w06-story-page-i-can-see-a-fish-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-52.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-52/pages/l2-w06-story-page-i-can-see-a-fish-m1-color-print.png and l2-w06-story-page-i-can-see-a-fish-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-story-page-i-can-see-a-fish-m1-color-print.png (SHA-256 a5b0d80a86af73e50452ff890bdef8461779bf3fe8dd8075689a97b94105d4f6) and line print l2-w06-story-page-i-can-see-a-fish-m1-line-print-2-despeckled.png (SHA-256 d492f8d5b01524e5c2429572afc4423804f56c62d96c49d27fcb2ec18710f7e5).",
+        "Reviewer notes: Exactly one orange fish swims in the pond in the color print and in the line print. The fish has one eye, a tail, a dorsal fin and a side fin in both prints. Mia kneels and points at the fish with one index finger in both prints. Mia has a nose curve and an open smile, so the face is not blank. Two buttons sit on the bib of the overalls in the line print and on the straps in the color print. One sun. The eight rays are pointed triangles. A white gap of 28 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note. The tree, the fence and the pond run past the frame edges. That is background only.",
+        "Same-run note of the reviewer on batch 52: on most park line prints the sun rays float 8 to 43 px from the disc. The PM question about this is open; the default is a note, not a defect."
+      ]
+    },
+    {
+      "rowId": "l2-w06-story-page-i-can-see-a-frog",
+      "version": 1,
+      "colorPrint": "l2-w06-story-page-i-can-see-a-frog-m1-color-print.png",
+      "linePrint": "l2-w06-story-page-i-can-see-a-frog-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-52.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-52/pages/l2-w06-story-page-i-can-see-a-frog-m1-color-print.png and l2-w06-story-page-i-can-see-a-frog-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-story-page-i-can-see-a-frog-m1-color-print.png (SHA-256 dcdc0889fe5c059dce53553f2d50ed6d5f397daeeced43b9b950679204a34169) and line print l2-w06-story-page-i-can-see-a-frog-m1-line-print-3-despeckled.png (SHA-256 1bc9af28260a89deb11fd047bf9b93083efcf0a918c8ed69edda16bc68814136).",
+        "Reviewer notes: Exactly one green frog sits on a lily pad in the color print and in the line print. The frog has two big eyes on top and a smile in both prints. Mia kneels and points at the frog with one index finger in both prints. Mia has a nose curve and an open smile, so the face is not blank. One sun. The eight rays are pointed triangles. A white gap of 20 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note. The tree, the fence and the grass clumps run past the frame edges. That is background only.",
+        "Same-run note of the reviewer on batch 52: on most park line prints the sun rays float 8 to 43 px from the disc. The PM question about this is open; the default is a note, not a defect."
+      ]
+    },
+    {
+      "rowId": "l2-w06-story-page-i-can-see-a-duck",
+      "version": 1,
+      "colorPrint": "l2-w06-story-page-i-can-see-a-duck-m1-color-print.png",
+      "linePrint": "l2-w06-story-page-i-can-see-a-duck-m1-line-print-5-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-52.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-52/pages/l2-w06-story-page-i-can-see-a-duck-m1-color-print.png and l2-w06-story-page-i-can-see-a-duck-m1-line-print-5-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-story-page-i-can-see-a-duck-m1-color-print.png (SHA-256 5284a18337621b7820406f01a5dc480df07402485a8ba4264b8b20672e1fc579) and line print l2-w06-story-page-i-can-see-a-duck-m1-line-print-5-despeckled.png (SHA-256 f7f67f4e16328dbb757ffd8ded4ed1bd7abad9dd9b7120eedee495b5579386d3).",
+        "Reviewer notes: Exactly one white duck swims on the pond in the color print and in the line print. Mia waves with an open hand of five fingers in both prints. Mia has a nose curve and an open smile, so the face is not blank. Two buttons sit on the straps of the overalls in both prints. One sun. The eight rays are pointed triangles. A white gap of 25 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note. The tree, the fence and the grass clumps run past the frame edges. That is background only.",
+        "Same-run note of the reviewer on batch 52: on most park line prints the sun rays float 8 to 43 px from the disc. The PM question about this is open; the default is a note, not a defect."
+      ]
+    },
+    {
+      "rowId": "l2-w06-story-page-i-can-see-a-horse",
+      "version": 1,
+      "colorPrint": "l2-w06-story-page-i-can-see-a-horse-m1-color-print.png",
+      "linePrint": "l2-w06-story-page-i-can-see-a-horse-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-52.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-52/pages/l2-w06-story-page-i-can-see-a-horse-m1-color-print.png and l2-w06-story-page-i-can-see-a-horse-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-story-page-i-can-see-a-horse-m1-color-print.png (SHA-256 39a038f29fd29c61043b53ae09b99a56d1a4f00df39b65173685fdc59c1bfd9c) and line print l2-w06-story-page-i-can-see-a-horse-m1-line-print-2-despeckled.png (SHA-256 2734b4423b7b7a6f31bfe278d1255abe53814276ccbd9798996b6f3dd7690a38).",
+        "Reviewer notes: Exactly one white horse stands behind the fence at the right in the color print and in the line print. The golden brown tail tip of Pip is one closed fluffy shape at the lower right in both prints. No body, head, ears or legs of Pip show. The shape runs to the bottom frame edge, so it is a note. Mia points at the horse with one index finger in both prints. The eyes of Mia are two solid black circles with no eye outline. That is a note because the text names no eye and the face has a nose and a mouth. One sun. The eight rays are pointed triangles. A white gap of 20 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note. The tree, the fence and the pond run past the frame edges. That is background only.",
+        "Same-run note of the reviewer on batch 52: on most park line prints the sun rays float 8 to 43 px from the disc. The PM question about this is open; the default is a note, not a defect."
+      ]
+    },
+    {
+      "rowId": "l2-w06-story-page-i-can-see-pip",
+      "version": 2,
+      "colorPrint": "l2-w06-story-page-i-can-see-pip-m2-color-print.png",
+      "linePrint": "l2-w06-story-page-i-can-see-pip-m2-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-52.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-52/pages/l2-w06-story-page-i-can-see-pip-m2-color-print.png and l2-w06-story-page-i-can-see-pip-m2-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-story-page-i-can-see-pip-m2-color-print.png (SHA-256 dd4db66aa8b5bb0e3a0e3c339fac2ad22893cf3de4678c34b9048d748a34493d) and line print l2-w06-story-page-i-can-see-pip-m2-line-print-despeckled.png (SHA-256 5ec6dd5cbe243d5681eb647bdd01dac19f495a14f1bb2d0798b549b31bd43e29).",
+        "Reviewer notes: Exactly one puppy, Pip, jumps at the right in the color print and in the line print. Pip has floppy ears only in both prints. He has a nose, an open mouth with a tongue, a collar with one round tag, four legs and one fluffy tail. Mia opens both arms with an open hand of five fingers on each side in both prints. Mia has a nose curve and an open smile, so the face is not blank. One sun. The eight rays are pointed triangles. A white gap of 8 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note. The tree, the pond and the grass clumps run past the frame edges. That is background only.",
+        "Same-run note of the reviewer on batch 52: on most park line prints the sun rays float 8 to 43 px from the disc. The PM question about this is open; the default is a note, not a defect."
+      ]
+    },
+    {
+      "rowId": "l2-w06-cover-i-can-see",
+      "version": 3,
+      "colorPrint": "l2-w06-cover-i-can-see-m3-color-print.png",
+      "linePrint": "l2-w06-cover-i-can-see-m3-line-print-5-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-52.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-52/pages/l2-w06-cover-i-can-see-m3-color-print.png and l2-w06-cover-i-can-see-m3-line-print-5-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-cover-i-can-see-m3-color-print.png (SHA-256 9dbbebdd949b5c71dd4de2f4444d13e7f85ac668df20c952a4f03a4922ecbb5d) and line print l2-w06-cover-i-can-see-m3-line-print-5-despeckled.png (SHA-256 5c78481031371a22aad2e5103fbf12eca43fd41ec541ec6c0d836f1137394a58).",
+        "Reviewer notes: One gray cat sits whole on the fence rail in the color print and in the line print. The cat is small at book size, so it is a note. One white duck swims on the pond in both prints. Mia holds one flat hand over her eyes in both prints. Mia has a nose curve and a smile in the line print, so the face is not blank. The eyes of Mia are two solid black circles with no eye outline. That is a note because the text names no eye. One sun. The eight rays are pointed triangles. A white gap of 16 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note. The tree crown and the grass clumps run past the frame edges. That is background only.",
+        "Same-run note of the reviewer on batch 52: on most park line prints the sun rays float 8 to 43 px from the disc. The PM question about this is open; the default is a note, not a defect."
+      ]
+    },
+    {
+      "rowId": "l2-w06-story-page-pat-sat-on-a-mat",
+      "version": 1,
+      "colorPrint": "l2-w06-story-page-pat-sat-on-a-mat-m1-color-print.png",
+      "linePrint": "l2-w06-story-page-pat-sat-on-a-mat-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-53.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-53/pages/l2-w06-story-page-pat-sat-on-a-mat-m1-color-print.png and l2-w06-story-page-pat-sat-on-a-mat-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-story-page-pat-sat-on-a-mat-m1-color-print.png (SHA-256 bb1df1e325106aafce39b27e9bfaa72a161fd0440bc312de77e88a6ce279ff72) and line print l2-w06-story-page-pat-sat-on-a-mat-m1-line-print-3-despeckled.png (SHA-256 78ece6ba9bbc269abb6aa726da348b4c2edb9474e29ccabd4671cc07b2d27bb2).",
+        "Reviewer notes: The color print shows two green mats, one basket, one map and one red pan. Pat sits on the left mat and the right mat is empty. Pat has black hair, a green shirt, brown shorts and brown sandals. He matches the reference render. The line face has ring eyes with solid pupils, eyebrows and an open smile. It has no nose. The text does not name a nose, so this is a note. The line hair of Pat is a rounded cap instead of the spiky hair of the color file. A color and line difference that changes no character."
+      ]
+    },
+    {
+      "rowId": "l2-w06-story-page-sam-sat-on-a-mat",
+      "version": 1,
+      "colorPrint": "l2-w06-story-page-sam-sat-on-a-mat-m1-color-print.png",
+      "linePrint": "l2-w06-story-page-sam-sat-on-a-mat-m1-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-53.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-53/pages/l2-w06-story-page-sam-sat-on-a-mat-m1-color-print.png and l2-w06-story-page-sam-sat-on-a-mat-m1-line-print-3-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-story-page-sam-sat-on-a-mat-m1-color-print.png (SHA-256 67c5784f1af6fc8632c144634261cb9de73a5a2787b90bb05a50c761f9d8e301) and line print l2-w06-story-page-sam-sat-on-a-mat-m1-line-print-3-despeckled.png (SHA-256 8f930c72a36408f2042ac587b534866f7fe5e87ef3eb0ad6232b00993490b20f).",
+        "Reviewer notes: The color print shows two green mats, one basket, one map and one red pan. Pat sits on the left mat and Sam on the right mat. Sam has brown hair, a red shirt with two white stripes, blue shorts and blue shoes. He matches the reference render. Both faces have eyes, eyebrows, a nose and an open smiling mouth in color and in line. The oven door of the toy kitchen in the line art has one extra small bar under the handle. A small mark. The color print has one small round wall pin at the left. The line art has no pin. A color and line difference that changes no character."
+      ]
+    },
+    {
+      "rowId": "l2-w06-story-page-tap-tap-tap",
+      "version": 2,
+      "colorPrint": "l2-w06-story-page-tap-tap-tap-m2-color-print.png",
+      "linePrint": "l2-w06-story-page-tap-tap-tap-m2-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-53.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-53/pages/l2-w06-story-page-tap-tap-tap-m2-color-print.png and l2-w06-story-page-tap-tap-tap-m2-line-print-3-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-story-page-tap-tap-tap-m2-color-print.png (SHA-256 fe04b27de5700adc111eec37ca5cac58bdb1753dd7d7860c867ce8813969a4c2) and line print l2-w06-story-page-tap-tap-tap-m2-line-print-3-despeckled.png (SHA-256 fe71bad62f3aa403d63fadd94a8a81e4ec2d58591eff6b9025eb630db76af803).",
+        "Reviewer notes: Only the golden-brown tail tip of Pip shows at the right of the basket, in color and in line. No body, head, ear or leg of Pip shows. Pat and Sam sit on their two mats and look up with small round open mouths. Both faces have eyes, eyebrows and a nose. The line art has one small hanger knob above the map and one tiny speck at the right of the map. Small marks. The brows of Pat in the color file tilt a little worried. A small expression change, not a defect."
+      ]
+    },
+    {
+      "rowId": "l2-w06-story-page-pat-can-see-a-map",
+      "version": 1,
+      "colorPrint": "l2-w06-story-page-pat-can-see-a-map-m1-color-print.png",
+      "linePrint": "l2-w06-story-page-pat-can-see-a-map-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-53.json, rating 7.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-53/pages/l2-w06-story-page-pat-can-see-a-map-m1-color-print.png and l2-w06-story-page-pat-can-see-a-map-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-story-page-pat-can-see-a-map-m1-color-print.png (SHA-256 58dcbb2405efff186c3503591ebb89ac7add18fedcd78d90c707d8264c03cbd7) and line print l2-w06-story-page-pat-can-see-a-map-m1-line-print-2-despeckled.png (SHA-256 01502c252259a9c4ddb82db7f94d90e3cc026c7f99d514d4efd1f69fce3dcb3a).",
+        "Reviewer notes: The line art draws the hair of Pat as one solid black shape with a few spikes. A solid black fill of a large area. Recorded as a note. The other line prints of this batch draw hair as an outline. The wall behind the lifted corner of the map is plain in color and in line. No hole, door or picture shows. Pat reaches up with one hand. The hand grips the corner with a thumb and fingers. The other hand hangs relaxed with fingers. The color file shows Pat looking up at the lifted corner. The goal asks him to look at the empty wall behind it. This spec detail is not a defect category, so it is a note. The face has ring eyes with solid pupils, eyebrows, a nose and a small open mouth."
+      ]
+    },
+    {
+      "rowId": "l2-w06-story-page-sam-can-see-a-pan",
+      "version": 1,
+      "colorPrint": "l2-w06-story-page-sam-can-see-a-pan-m1-color-print.png",
+      "linePrint": "l2-w06-story-page-sam-can-see-a-pan-m1-line-print-6-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-53.json, rating 6.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-53/pages/l2-w06-story-page-sam-can-see-a-pan-m1-color-print.png and l2-w06-story-page-sam-can-see-a-pan-m1-line-print-6-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-story-page-sam-can-see-a-pan-m1-color-print.png (SHA-256 d64f305bced19e09c40e31039fd860f419c8e89f40398a62129096751e924a2d) and line print l2-w06-story-page-sam-can-see-a-pan-m1-line-print-6-despeckled.png (SHA-256 d6977d6ce90007b900f489178f2b1880a5fa40126921905893f63a5650636d40).",
+        "Reviewer notes: The hand on the pan handle in the line art is a small group of short strokes with one small loop. It reads as a small blob at book size. The color hand is a clear grip around the handle. Recorded as a note. The pan in the line art is deeper and rounder than the shallow pan of the color file. It still reads as a pan with one handle. The face has eyes with solid pupils, eyebrows, a nose and a smile. The inside of the pan is empty in color and in line. The floor under Sam is plain. No mat is drawn in this page, and the color file has none."
+      ]
+    },
+    {
+      "rowId": "l2-w06-story-page-tap-tap-tap-b",
+      "version": 2,
+      "colorPrint": "l2-w06-story-page-tap-tap-tap-b-m2-color-print.png",
+      "linePrint": "l2-w06-story-page-tap-tap-tap-b-m2-line-print-3-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-53.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-53/pages/l2-w06-story-page-tap-tap-tap-b-m2-color-print.png and l2-w06-story-page-tap-tap-tap-b-m2-line-print-3-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-story-page-tap-tap-tap-b-m2-color-print.png (SHA-256 ab07f432d85453cc341fa1877330546cdc94297792a85ef8adb0ec584620146e) and line print l2-w06-story-page-tap-tap-tap-b-m2-line-print-3-despeckled.png (SHA-256 556771bb3bd325bd0cd96d6bcf7f0338d71cca1664a7d303367f11f31875fe45).",
+        "Reviewer notes: Only the golden-brown tail tip of Pip shows at the right of the basket, in color and in line. No body, head, ear or leg of Pip shows. Sam stands at the left behind the basket with one arm out. Pat stands at the wall and looks up at the map with a tilted head. The line art has two small pins at the top corners of the map. The color file has no pins. A color and line difference that changes no character. The line art draws one flat rounded shape on the floor under Pat. This is the floor strip of the color file."
+      ]
+    },
+    {
+      "rowId": "l2-w06-story-page-he-can-see-pip",
+      "version": 1,
+      "colorPrint": "l2-w06-story-page-he-can-see-pip-m1-color-print.png",
+      "linePrint": "l2-w06-story-page-he-can-see-pip-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-53.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-53/pages/l2-w06-story-page-he-can-see-pip-m1-color-print.png and l2-w06-story-page-he-can-see-pip-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-story-page-he-can-see-pip-m1-color-print.png (SHA-256 043869e673bdacd1e4fcb9eead675acb9cfe280565ca52dd914dd96ee86f16ca) and line print l2-w06-story-page-he-can-see-pip-m1-line-print-despeckled.png (SHA-256 e2110135680251710f552b06a2512a9e6a67e362e4e4c80660d4a8059e778cdc).",
+        "Reviewer notes: Pip shows whole in color and in line: floppy ears with darker tips, a cream chest, a cream muzzle, a cream stripe on the forehead, large dark-brown eyes, a black nose, a red collar with a round gold tag and a raised tail. He matches the reference render and has floppy ears only. Pip shows one body, two front paws and one closed curl tail behind his back. The face of Pip in the line art has two eyes, a nose and an open mouth. The left eye is a solid pupil with a partly drawn ring. Sam points with one index finger. The hand shows one extended finger and a fist. The face has ring eyes with solid pupils, a nose and a smile. The color file and the line art each show one basket, one map and one red pan."
+      ]
+    },
+    {
+      "rowId": "l2-w06-story-page-pip-sat-on-the-mat",
+      "version": 1,
+      "colorPrint": "l2-w06-story-page-pip-sat-on-the-mat-m1-color-print.png",
+      "linePrint": "l2-w06-story-page-pip-sat-on-the-mat-m1-line-print-5-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-53.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-53/pages/l2-w06-story-page-pip-sat-on-the-mat-m1-color-print.png and l2-w06-story-page-pip-sat-on-the-mat-m1-line-print-5-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-story-page-pip-sat-on-the-mat-m1-color-print.png (SHA-256 b48d8ded401d0c82a47695e37141c77d21f1faf3d028b5cd067c02d59da8a6c2) and line print l2-w06-story-page-pip-sat-on-the-mat-m1-line-print-5-despeckled.png (SHA-256 f990e6ab90ad467954a1fbcecf0eb360245698c0ede720d1b18ba24c5e99058a).",
+        "Reviewer notes: Pip sits on the seam where the two mats meet, between Pat and Sam, in color and in line. He has a red collar with a gold tag, floppy ears and a raised tail. Pat and Sam laugh with closed eyes and wide open mouths in color and in line. Their faces have a nose and a mouth. The eyes of Pip in the line art are two solid dots with no ring. Solid black pupils are allowed. The line file shows one basket, one map, one red pan, two mats and one Pip. The counts match the color file."
+      ]
+    },
+    {
+      "rowId": "l2-w06-cover-tap-tap",
+      "version": 1,
+      "colorPrint": "l2-w06-cover-tap-tap-m1-color-print.png",
+      "linePrint": "l2-w06-cover-tap-tap-m1-line-print-4-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-53.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-53/pages/l2-w06-cover-tap-tap-m1-color-print.png and l2-w06-cover-tap-tap-m1-line-print-4-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-cover-tap-tap-m1-color-print.png (SHA-256 59bee251d39e8f10b52f4901bc866ed8a09d05e359e53c6ff5b81027c8926100) and line print l2-w06-cover-tap-tap-m1-line-print-4-despeckled.png (SHA-256 48efe50b69efd80f5a712073efd6c4cca602e1347649941336a0149b782f42d0).",
+        "Reviewer notes: The color print shows two green mats, one basket of books, one map and one red pan. The counts match the goal. Pat sits on the left mat with black hair and a green shirt. Sam sits on the right mat with brown hair and a red shirt with two white stripes. Both match the reference renders. Each boy has one hand behind an ear. Both faces have eyes, eyebrows, a nose and a mouth. The line art draws the hair of both boys as outlines, not solid black. The line hair of Pat is a rounded cap instead of the spiky hair of the color file. A color and line difference that changes no character."
+      ]
+    },
+    {
+      "rowId": "l2-w06-check-row-tiger",
+      "version": 1,
+      "colorPrint": "l2-w06-check-row-tiger-m1-color-print.png",
+      "linePrint": "l2-w06-check-row-tiger-m1-line-print-6-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-54.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-54/pages/l2-w06-check-row-tiger-m1-color-print.png and l2-w06-check-row-tiger-m1-line-print-6-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-check-row-tiger-m1-color-print.png (SHA-256 a191c531ca658c895fcccd90e4fcadba804e4bfe98b36ca8d92da9192f0b10a7) and line print l2-w06-check-row-tiger-m1-line-print-6-despeckled.png (SHA-256 48df4383b2eeff604899e1b1489bd969545d0f3c540ca7db755bea9d9f2c631e).",
+        "Reviewer notes: One tiger in color and one tiger in line. The counts match. Every stripe in the line art is a single curved line. The measure of the black groups of the line print shows no solid black fill of a large area. The only solid black shapes are the two eye pupils. The tail has two band lines and a white tip inside. The ears have an inner line. The face has two eyes, a muzzle, a nose and a smile. The right eye of the line file is a narrow solid oval near the head edge, as in the color file. The tiger reads as a tiger at book size in color and in line."
+      ]
+    },
+    {
+      "rowId": "l2-w06-check-row-sun",
+      "version": 1,
+      "colorPrint": "l2-w06-check-row-sun-m1-color-print.png",
+      "linePrint": "l2-w06-check-row-sun-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-54.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-54/pages/l2-w06-check-row-sun-m1-color-print.png and l2-w06-check-row-sun-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-check-row-sun-m1-color-print.png (SHA-256 95d2aecd78ad07f055be458ef87738fc48f1c86841c9c056fc926c5351cbc91d) and line print l2-w06-check-row-sun-m1-line-print-2-despeckled.png (SHA-256 0a237d256b19ddacf289f842fbdcba6c334c21640500c4d9d00832972373e173).",
+        "Reviewer notes: One sun in color and one sun in line. The counts match. The disc has exactly eight pointed triangle rays in color and in line. The wide base of each ray sits on the disc and each point faces outward. No ray floats. The black pixels of the line print form one connected group, so every ray touches the disc. The largest gap between a ray and the disc is 0 px. The sun has no face. No text and no number show."
+      ]
+    },
+    {
+      "rowId": "l2-w06-check-row-bag",
+      "version": 1,
+      "colorPrint": "l2-w06-check-row-bag-m1-color-print.png",
+      "linePrint": "l2-w06-check-row-bag-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-54.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-54/pages/l2-w06-check-row-bag-m1-color-print.png and l2-w06-check-row-bag-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-check-row-bag-m1-color-print.png (SHA-256 32b51eb6d20dd53172eb3a0e826af087972d664b966970f5c921bd22885c0f78) and line print l2-w06-check-row-bag-m1-line-print-despeckled.png (SHA-256 34b003200f11f6fe3b612b6fb137198fedbe7e23e9d0fda650abe37aa29cee49).",
+        "Reviewer notes: One bag in color and one bag in line. The counts match. The color file shows a red bag with a yellow label panel, a blue handle loop and a blue side strap. The line file shows the body, the label, the handle loop and the side strap as closed shapes. The object reads as a bag at book size in color and in line. No text, no number and no second object."
+      ]
+    },
+    {
+      "rowId": "l2-w06-check-row-cup",
+      "version": 1,
+      "colorPrint": "l2-w06-check-row-cup-m1-color-print.png",
+      "linePrint": "l2-w06-check-row-cup-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-54.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-54/pages/l2-w06-check-row-cup-m1-color-print.png and l2-w06-check-row-cup-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-check-row-cup-m1-color-print.png (SHA-256 7a047b9c426592d216384c38e4f0f9c99d1cfd4e81bbfd077bd32fcc5b6557fd) and line print l2-w06-check-row-cup-m1-line-print-despeckled.png (SHA-256 41cfb9e2b947912617c2e21cf65584233fc4c0fcff9d6e607985beb404ce44e9).",
+        "Reviewer notes: One cup in color and one cup in line. The counts match. The color file shows a blue cup with a cream rim, an inner opening oval and one ring handle. The line file shows the rim ring, the opening oval, the handle ring and the inner oval. No steam and no drink in either file. The object reads as a cup at book size in color and in line."
+      ]
+    },
+    {
+      "rowId": "l2-w06-check-row-ten",
+      "version": 2,
+      "colorPrint": "l2-w06-check-row-ten-m2-color-print.png",
+      "linePrint": "l2-w06-check-row-ten-m2-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-54.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-54/pages/l2-w06-check-row-ten-m2-color-print.png and l2-w06-check-row-ten-m2-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-check-row-ten-m2-color-print.png (SHA-256 82c92b71fd258dc3d63b2cec3c9cd51052ddcbce8a43ead153801cf58a7a110c) and line print l2-w06-check-row-ten-m2-line-print-2-despeckled.png (SHA-256 fe4cefedc6beddc72b28a6a78250b9319c7a3921577cf6daa38ff27e34012725).",
+        "Reviewer notes: Exactly ten balls in color and exactly ten balls in line, in two rows of five. The count was measured: the color print has ten separate red shapes and the line print has ten closed circles. The balls in the color print have clear gaps between all of them and a wide white margin at every side. Each line circle has one open highlight arc inside. No number, no letter and no text show."
+      ]
+    },
+    {
+      "rowId": "l2-w06-check-row-fish",
+      "version": 1,
+      "colorPrint": "l2-w06-check-row-fish-m1-color-print.png",
+      "linePrint": "l2-w06-check-row-fish-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-54.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-54/pages/l2-w06-check-row-fish-m1-color-print.png and l2-w06-check-row-fish-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-check-row-fish-m1-color-print.png (SHA-256 62ed4e4c192ba5e8ff232ccb91f47ef968e48d7d0b6f253bfdfa55512625d6f2) and line print l2-w06-check-row-fish-m1-line-print-despeckled.png (SHA-256 059631738b5bfa5e4d983490b73bffeae079cc17bf18c814308705d023500a01).",
+        "Reviewer notes: One fish in color and one fish in line. The counts match. The color file shows a blue and yellow fish in side view with one round eye, one top fin, one tail fin and one belly fin. The line file shows the same four parts. The line file has no line between the blue body and the yellow belly of the color file. A color and line difference that changes no character. The eye is a ring with a solid pupil in both files. The fish reads as a fish at book size in color and in line."
+      ]
+    },
+    {
+      "rowId": "l2-w06-check-row-dog",
+      "version": 1,
+      "colorPrint": "l2-w06-check-row-dog-m1-color-print.png",
+      "linePrint": "l2-w06-check-row-dog-m1-line-print-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-54.json, rating 8, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-54/pages/l2-w06-check-row-dog-m1-color-print.png and l2-w06-check-row-dog-m1-line-print-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-check-row-dog-m1-color-print.png (SHA-256 49b29d715e1fa8cbe11603b3a92b738280a29c6722db175da08ccb1ac7aa02bc) and line print l2-w06-check-row-dog-m1-line-print-despeckled.png (SHA-256 d9a681bf22af085241e45092b66f27cc7359ba3f559a8b4b4ab097fad8ae510a).",
+        "Reviewer notes: One dog in color and one dog in line. The counts match. The color file shows a brown puppy with floppy ears, a red collar with a gold tag, a solid black nose and a tongue. The line file shows the same floppy ears, the collar and the round tag, the solid nose, the mouth and the tongue. The eyes are rings with solid pupils in color and in line. The left eye ring of the line file is wide with a second thin inner ring. A small difference that changes no part of the dog. Four legs in color and four legs in line. The object reads as a dog at book size in color and in line."
+      ]
+    },
+    {
+      "rowId": "l2-w06-check-row-pen",
+      "version": 1,
+      "colorPrint": "l2-w06-check-row-pen-m1-color-print.png",
+      "linePrint": "l2-w06-check-row-pen-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-54.json, rating 8.5, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-54/pages/l2-w06-check-row-pen-m1-color-print.png and l2-w06-check-row-pen-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-check-row-pen-m1-color-print.png (SHA-256 ea1923b5d12458d2eebe7ae1a97d3f79e3e82723e887f09e78ac77a43f670488) and line print l2-w06-check-row-pen-m1-line-print-2-despeckled.png (SHA-256 669eb516f8243c32e4d59eca6dffa2e086ff49cffc5bd15e8eac494dc5dfd759).",
+        "Reviewer notes: One pen in color and one pen in line. The counts match. The color file shows a blue ballpoint pen with a white clip, a round top cap and a silver tip at the lower right. The line file shows the body, the clip, the round top cap and the small tip. The pen lies on the diagonal in both files and reads as a pen at book size in color and in line."
+      ]
+    },
+    {
+      "rowId": "l2-w06-check-row-table",
+      "version": 1,
+      "colorPrint": "l2-w06-check-row-table-m1-color-print.png",
+      "linePrint": "l2-w06-check-row-table-m1-line-print-2-despeckled.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): reviewer minimax-cn-coding-plan/MiniMax-M3.1-Flash, artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-54.json, rating 9, artifact verdict clean. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "G3 controls of this artifact: K1 a-nose v1 defect (correct), K2 practice-line nose m4 clean (correct), K3 a-nut v1 clean (correct). The batch is valid (artifact status pass).",
+        "Reviewed pages batch-54/pages/l2-w06-check-row-table-m1-color-print.png and l2-w06-check-row-table-m1-line-print-2-despeckled.png: equal and equal to the Muse files of the same names (SHA-256 checked).",
+        "Color print l2-w06-check-row-table-m1-color-print.png (SHA-256 11cac0798766769002cdd617152df55ae6eb42daea08cb0a730505479bff1c11) and line print l2-w06-check-row-table-m1-line-print-2-despeckled.png (SHA-256 fbf647b381b774606cf38b9372efad735ff3178cc5dba1d5c359ea5fac8f3983).",
+        "Reviewer notes: One table in color and one table in line. The counts match. The color file shows a low table with a pale wooden top and four red round legs in three-quarter view. The line file shows a flat top and four round legs. No wood grain lines show. The table reads as a table at book size in color and in line."
+      ]
+    }
+  ]
+}
