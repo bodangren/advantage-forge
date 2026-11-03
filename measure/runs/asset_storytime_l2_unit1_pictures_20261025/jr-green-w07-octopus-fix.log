@@ -1,0 +1,31 @@
+provisional; role_base_sha 059df227; phase_base_sha fc76c272; Step 1: start w07 octopus fix (B57-OCTO-1)
+Step 2: spec commit ef757014 (colorPrompt and linePrompt of l2-w07-check-row-octopus)
+Step 3: color m2 called (1 of 3 color calls, 0.01 USD). Zoomed crop count in the 1500x1500 print: left 3 curls, center 1 arm (tip toward the viewer), right 4 curls = 8 arms. One head, two big eyes, smile, blush on cheeks (color only), nothing cut at an edge. m2 is good; no more color calls. Next: line tries 1-3 from m2.
+Step 4: 3 line calls (tries 4, 5, 6) were made from the OLD color m1 (7 arms) by an orchestrator brief error (--from 1 selects color m1), 0.03 USD, not candidates, not counted in the line budget. Next: line --from 2 --tries 3 on color m2.
+Step 5: 3 line tries from color m2 (1 batch, 3 x 0.01 USD). Arm counts in the 1500x1500 line PRINTS (zoomed crops): try 1 = 9 arms (4 left curls, 1 center, 4 right curls); try 2 = 8 curls but the four top curls float as open arcs away from the body, not closed arm shapes, and the layout does not match m2; try 3 = 8 arms (left 3 curls, center 1, right 4), same layout as color m2. All three: one head, two eyes (ring plus solid pupil), a smile, no blush, no suckers, nothing cut at an edge. Picked try 3.
+Step 6: writer check (inspectLineArtPng, 1500x1500, edge frame 2 percent): try 3 PASS, line width 19 px, ink 7.23 percent, edge 100.00 percent white. Try 1 PASS (26 px, ink 13.15), try 2 PASS (27 px, ink 17.75). Color print PNG 8-bit sRGB 3 channels 1500x1500.
+Step 7: review folder out/storytime-review/batch-57r2/ built (brief, 4 pages, 1 ref).
+Step 8: plan note added after the Week 7 batch 3 note (plan.md was clean before the edit). Round: 1 color and 6 line calls, 0.07 USD, running total 12.80 USD plus this round.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2, week 7 octopus fix (marker unchanged)
+role_base_sha: 059df227
+phase_base_sha: fc76c272
+spec_commits: ef757014
+plan_evidence_commit: see git log (the commit after ef757014 that holds the plan note and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; image=meta/muse-image; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: l2-w07-check-row-octopus color m2 + line try 3 (PASS 19 px, ink 7.23 percent, edge 100.00 percent); 8 arms counted in color print and line print (left 3, center 1, right 4); color print PNG 8-bit sRGB 3 channels 1500x1500
+open_items: approved.json and stage 2 check not run for this row; batch-57r2 needs an independent review; line try 3 has an upper left arm on a stalk and close right curls (each closed); color has cheek blush and small head bumps as in the 3D look; line tries 4, 5, 6 (from color m1) are not candidates
+round_cost_usd: 0.07 (1 color and 3 line calls from m2, plus 3 line calls from m1 by an orchestrator brief error, all 0.01)
+running_total_usd: 12.80 USD plus this round (other rounds run in parallel)
+batch: out/storytime-review/batch-57r2/
+handoff: Review out/storytime-review/batch-57r2/ against Daniel's bar for the one row. Ask the reviewer to count the arms on a zoomed crop of the color print and the line print (target 8 in both, same layout), and to check one head, two eyes (ring plus solid pupil), a smile, no blush and no suckers in the line art, nothing cut at an edge. Default if the review finds a defect: one more line batch (3 tries) from color m2, then a new folder. Default now: no further Muse call. Plan.md was clean before my edit; no plan note file was needed.
+finding_ids: F1=B57-OCTO-1
+dispositions: F1=FIX
+END_MEASURE_AGENT_RESULT

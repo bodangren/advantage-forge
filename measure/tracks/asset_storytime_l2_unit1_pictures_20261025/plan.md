@@ -3902,6 +3902,39 @@ rows T142 to T151, and the closeout gate for 30 jobs.
         omits the beaded necklace and the bell of the color. The fish line art has no belly line and wavy
         fin outlines. A thin double stroke sits under the bed footboard. The sun and the ox sit 52 px and
         53 px from a print edge. After this batch the 27 pictures of week 7 exist as candidates.
+    - Week 7 octopus fix (B57-OCTO-1, one row). Green round of 2026-11-03, claude-code/claude-sonnet-5-5#high.
+      role_base_sha `059df227`, phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image
+      model meta/muse-image. Coder: none. No marker changed. Spec commit `ef757014` (the `colorPrompt` and
+      the `linePrompt` of `docs/storytime/l2-unit1/w07/muse/l2-w07-check-row-octopus.json`; `text` and
+      `goal` are the same word for word). Run log:
+      `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w07-octopus-fix.log`. Review folder:
+      `out/storytime-review/batch-57r2/` (`brief.md`, `pages/` 4 files, `refs/` 1 file, no control rows).
+      Green did not rate its own work. No change in `src/`, `tests/`, `scripts/`, `assets/`, a cover file,
+      a week 5 file, or `approved.json`. No `deliver` run.
+      - Finding. The independent review `item-review-batch-57.json` (finding B57-OCTO-1) and the
+        orchestrator look found seven curled arms in color m1 and in line try 1. Counts are exact and the
+        spec asks for eight arms.
+      - Fix. The `colorPrompt` now says: exactly eight arms, all in view and well apart, four curl out to
+        the left and four curl out to the right, and no arm hides behind another arm or the head. The
+        `linePrompt` says: draw exactly eight closed arm shapes, four at the left and four at the right.
+      - Color. One new call (m2). Arm count in a zoomed crop of the 1500 x 1500 print: 8 (left 3 curls,
+        center 1 arm with its tip toward the viewer, right 4 curls). One head, two eyes, a smile, a blush
+        mark on each cheek (color only), nothing cut at an edge.
+      - Line. Three tries (1 to 3) from m2. Try 1 shows 9 arms. Try 2 shows 8 curls, but the four top
+        curls float away from the body as open arcs and the layout does not match m2. Try 3 shows 8 arms
+        (left 3, center 1, right 4) in the layout of m2. Chosen: line try 3 (one head, two eyes with ring
+        and solid pupil, a smile, no blush, no suckers, no text, no gray). Three more line calls (tries 4,
+        5, 6) were made from the old color m1 by an orchestrator brief error (`--from 1` selects color
+        m1). They are not candidates and do not count against the line budget.
+      - Writer check (`inspectLineArtPng` at 1500 x 1500, despeckled line print): try 3 PASS, 19 px, ink
+        7.23 percent, edge frame 100.00 percent white. Try 1: 26 px, 13.15 percent. Try 2: 27 px, 17.75
+        percent. The color print is PNG, 1500 x 1500, 8-bit, sRGB, 3 channels.
+      - Calls: 1 color and 6 line calls at 0.01 USD each, round cost 0.07 USD (0.03 of it for the three
+        wrong line calls). Running total 12.80 USD plus this round (other rounds run in parallel).
+      - Open: `approved.json` and the stage 2 check are not run for this row. `batch-57r2` needs an
+        independent review. The upper left arm in the line art rises on a stalk from the side of the head
+        and the right curls sit close together, but each has a closed outline. The color has a blush mark
+        and a few small bumps on the top of the head, as in the 3D look.
 - [~] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks.
     Red evidence for Phase 4 Task 3 (C1, T183) (2026-11-03). Role base `7361c5b5`; Phase 4 base
