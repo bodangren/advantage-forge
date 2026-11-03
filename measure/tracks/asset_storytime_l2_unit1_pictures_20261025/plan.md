@@ -4212,6 +4212,32 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p4-t3-r3.log`.
     - Open: (1) short thumbs may read as four digits; (2) feet without a clear contact shadow; (3) Pip stands
       while the goal says he sits; (4) C2 on m13, C3, C4, and C5.
+    Red evidence for Phase 4 Task 3, round 2 (C4, T190 to T198) (2026-11-03). Role base `48c71d42`; Phase 4
+    base `fc76c272`. Models: Red `claude-code/claude-opus-5-5[1m]#high`; Green `claude-code/claude-sonnet-5-5#high`.
+    The task marker stays `[~]`. The ids T184 to T189 were already in use (file versions), so the new ids
+    start at T190.
+    - Test commit `f88af46a` (`tests/storytime-muse-delivery.test.ts`, new `describe` block "Muse delivery
+      of the Level 2 cover (color only)"). The block comment holds the contract for Green.
+    - Contract: `deliverMuseCover({ approvals, museRoot, deliveryRoot })` in `src/storytime/muse-delivery.ts`,
+      and the command `deliver-cover --approvals <file> --muse <folder> --delivery <folder>` next to
+      `deliver`, with the paths through `resolveMuseDeliveryPaths`. The approval list holds exactly one
+      entry: the week entry without `linePrint`, `rowId` `l2-cover-v1`. The job: id `l2-cover-v1`, size
+      `cover`, use `cover`, directory `cover`, week 1, no `lineArt`, file `l2-cover-v1.png`. One batch
+      `cover/color`; no line-art batch. Size from `PICTURE_SIZES.cover` (4000 x 3000).
+    - Tests: T190 manifest shape and one job; T191 byte copy and Muse original kept; T192 wrong size, small
+      class size, alpha, and JPEG refused with the row name; T193 one color batch, `batchSha256`; T194 a
+      different `manifest.json` refused and kept, a second run repeats the bytes; T195 CLI paths stay in
+      `out`; T196 symlink, outside, and folder prints refused; T197 no person review from the notes (A2);
+      T198 no entry, two entries, another `rowId`, and a `linePrint` key refused before any write.
+    - Red command: `bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run
+      tests/storytime-muse-delivery.test.ts --maxWorkers=1'`. Exit code `1`. `Test Files  1 failed (1)`.
+      `Tests  9 failed | 29 passed (38)`. Eight tests fail at `The deliverMuseCover seam exists.: expected
+      'undefined' to be 'function'`. T195 fails at `Error: Use plan, render, lineart-smoke, precheck-minimax,
+      precheck-kimi, manifest, sheet, verify, deliver, or cover-calm-top.` (no `deliver-cover` command). The
+      earlier tests (T152 to T172, T181, T182, T184 to T189) pass.
+    - Type check: `NODE_OPTIONS=--max-old-space-size=2560 node node_modules/typescript/bin/tsc --noEmit -p
+      tsconfig.json` through the heavy runner. Exit code `2`. `owned tsc errors: 0`. `baseline tsc errors: 38`.
+    - No production file changed. Log: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-p4-t3-r2.log`.
 
 Line-art note for Phase 4: weeks 2 to 7 get 162 line-art twins with the same line-art gates. The
 reconciliation task also applies picture specification v1 to the line art. Specification v1 has

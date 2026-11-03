@@ -1,0 +1,106 @@
+# Red, Phase 4 Task 3, round 2 (gate C4, color-only Level 2 cover delivery)
+
+Date: 2026-11-03. Role: measure-mid-red. Model: claude-code/claude-opus-5-5[1m]#high.
+Role base 48c71d4274b86ac1d06ccce31a6b2892358523f1. Phase base fc76c27209402c54354447693e9b291d4411ff79.
+The first line of this file was the provisional line. The record follows.
+
+## Test ids
+
+The ids T184 to T189 were already in use in tests/storytime-muse-delivery.test.ts (file versions).
+The new tests are T190 to T198.
+
+## Red command
+
+```sh
+bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts --maxWorkers=1'
+```
+
+Exit code `1`. Summary and failure lines:
+
+```text
+     × T190 writes one manifest.json with one color-only cover job 126ms
+     × T191 copies the approved cover print byte for byte and keeps the Muse original 8ms
+     × T192 refuses a wrong-size cover, an alpha channel, and a file that is not a PNG 7ms
+     × T193 hashes the cover in one color batch and writes no line-art batch 13ms
+     × T194 refuses a different manifest.json and repeats the same bytes on a second run 8ms
+     × T195 deliver-cover runs inside the repository out folder and refuses paths outside it 15ms
+     × T196 refuses a cover print that is a symlink, leaves the Muse folder, or is not a regular file 4ms
+     × T197 turns no model review in the notes into a person review 6ms
+     × T198 refuses a malformed cover approval list before any write 14ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery of the Level 2 cover (color only) > T190 writes one manifest.json with one color-only cover job
+AssertionError: The deliverMuseCover seam exists.: expected 'undefined' to be 'function' // Object.is equality
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery of the Level 2 cover (color only) > T191 copies the approved cover print byte for byte and keeps the Muse original
+AssertionError: The deliverMuseCover seam exists.: expected 'undefined' to be 'function' // Object.is equality
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery of the Level 2 cover (color only) > T192 refuses a wrong-size cover, an alpha channel, and a file that is not a PNG
+AssertionError: The deliverMuseCover seam exists.: expected 'undefined' to be 'function' // Object.is equality
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery of the Level 2 cover (color only) > T193 hashes the cover in one color batch and writes no line-art batch
+AssertionError: The deliverMuseCover seam exists.: expected 'undefined' to be 'function' // Object.is equality
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery of the Level 2 cover (color only) > T194 refuses a different manifest.json and repeats the same bytes on a second run
+AssertionError: The deliverMuseCover seam exists.: expected 'undefined' to be 'function' // Object.is equality
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery of the Level 2 cover (color only) > T195 deliver-cover runs inside the repository out folder and refuses paths outside it
+Error: Use plan, render, lineart-smoke, precheck-minimax, precheck-kimi, manifest, sheet, verify, deliver, or cover-calm-top.
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery of the Level 2 cover (color only) > T196 refuses a cover print that is a symlink, leaves the Muse folder, or is not a regular file
+AssertionError: The deliverMuseCover seam exists.: expected 'undefined' to be 'function' // Object.is equality
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery of the Level 2 cover (color only) > T197 turns no model review in the notes into a person review
+AssertionError: The deliverMuseCover seam exists.: expected 'undefined' to be 'function' // Object.is equality
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery of the Level 2 cover (color only) > T198 refuses a malformed cover approval list before any write
+AssertionError: The deliverMuseCover seam exists.: expected 'undefined' to be 'function' // Object.is equality
+ Test Files  1 failed (1)
+      Tests  9 failed | 29 passed (38)
+```
+
+Eight tests fail at the seam check: `deliverMuseCover` is not exported. T195 fails because the CLI
+has no `deliver-cover` command. No test fails on a fixture error. The 29 earlier tests pass.
+
+## Type check
+
+```sh
+bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=2560 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'
+```
+
+Exit code `2`. `owned tsc errors: 0`. `baseline tsc errors: 38`.
+
+## Contract for Green
+
+- `deliverMuseCover({ approvals, museRoot, deliveryRoot }): Promise<StorytimeManifest>` in
+  `src/storytime/muse-delivery.ts`. `approvals` is the list or the path of its JSON file.
+- The list is `{ version: 1, entries: [entry] }` with exactly one entry. The entry is the week entry
+  without `linePrint`: `rowId` `l2-cover-v1`, `version`, optional `fileVersion`, `colorPrint`,
+  optional `reviews`, optional `notes`. A `linePrint` key is refused.
+- The job: id `l2-cover-v1`, size `cover`, use `cover`, directory `cover`, week 1, status `ready`, one
+  candidate, no `lineArt`, file `l2-cover-v1.png`, `selectedSha256` = the color SHA-256.
+- One batch `cover/color` with `batchSha256` of its file. No line-art batch.
+- The color print checks of the week writer with `PICTURE_SIZES.cover`; the row id is in each error.
+- The CLI: `deliver-cover --approvals <file> --muse <folder> --delivery <folder>`, paths through
+  `resolveMuseDeliveryPaths`.
+- Every check runs before the first write. A different `manifest.json` stops the run. A second run
+  with the same inputs repeats the bytes.
+
+## Files
+
+- tests/storytime-muse-delivery.test.ts (commit f88af46a).
+- measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md (Red evidence block under Phase 4 Task 3).
+- This log.
+
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: done
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4
+task: Red for Phase 4 Task 3, round 2 (gate C4, tests T190 to T198, color-only Level 2 cover delivery)
+baseline_sha: fc76c27209402c54354447693e9b291d4411ff79
+role_base_sha: 48c71d4274b86ac1d06ccce31a6b2892358523f1
+head_sha: the evidence commit that holds plan.md and this log; resolve it with `git log -1 --format=%H` at handoff
+commits: f88af46a tests/storytime-muse-delivery.test.ts; the evidence commit holds measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md and this log
+tests_run: Red command exit 1; Test Files 1 failed (1); Tests 9 failed | 29 passed (38). T190 to T194 and T196 to T198 fail at `The deliverMuseCover seam exists.: expected 'undefined' to be 'function'`. T195 fails at `Error: Use plan, render, lineart-smoke, precheck-minimax, precheck-kimi, manifest, sheet, verify, deliver, or cover-calm-top.`. Type check exit 2; owned tsc errors: 0; baseline tsc errors: 38.
+files_changed: tests/storytime-muse-delivery.test.ts; measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md; this log.
+plan_updates: A "Red evidence for Phase 4 Task 3, round 2 (C4, T190 to T198)" block sits under the Task 3 entry, after the round 3 Green note. The Task 3 marker stays `[~]`.
+handoff: Green adds `deliverMuseCover` to src/storytime/muse-delivery.ts and the `deliver-cover` command to parseCli and runStorytimeCli in src/storytime/book-pictures.ts, as the block comment of the test file says. Green changes no test expectation. Names: the brief names were used. Defaults that the orchestrator can change: the test ids start at T190 because T184 to T189 exist; the job has directory `cover` and week 1, so the batch id is `cover/color`; `assembleManifest` makes a line-art batch for each directory, so Green must drop the empty line-art batch. The approval file docs/storytime/l2-unit1/cover/muse/approved.json does not exist yet; Red did not write it.
+dispositions: none
+model: claude-code/claude-opus-5-5[1m]#high (Red, this role). Green runs on claude-code/claude-sonnet-5-5#high. Both are Claude models of different families (Opus and Sonnet).
+model_deviation: none.
+facts_changed: none. The production code did not change.
+dirty_path_classification: Relevant: the test file, plan.md, and this log. Generated or ignorable: the untracked measure/runs logs and the measure/generated files. Unrelated user work, preserved: the modified skills, AGENTS.md, bench/trials files, other track plans, measure/tracks.md, measure/workflow.md, and the untracked bench/ and assets/wizard-argon-trial.ts.
+anti_patterns: A2: T197 proves that a model review in `notes` gives no `reviews.person` and no `person-checked` text. A3: every count is a labeled value. A4: T190 asserts exactly one job and T193 exactly one batch file; a delivery with 0 jobs fails. A7: the size, alpha, and format cases each have their own fixture. A9: the tests name no measure/tracks path. Fixtures live only under the test temporary root.
+END_MEASURE_AGENT_RESULT
