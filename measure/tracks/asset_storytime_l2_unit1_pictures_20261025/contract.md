@@ -71,9 +71,10 @@ Use `node --import tsx scripts/storytime-book-pictures.ts <command>`.
 - `deliver --list <pictures.json> --approvals <file> --muse <folder> --delivery <folder>
   [--week <1 to 8>]`: copy the approved Muse prints into a delivery folder and write
   `manifest.json`. The command is offline and makes no provider call
-  (`src/storytime/book-pictures.ts:4726-4757`; flags at `:4636-4664`). It reads the list with the
-  pinned loader and writes through `writeMuseDelivery` (`src/storytime/muse-delivery.ts:336`).
-  - `--week` keeps only the list rows of that week (`book-pictures.ts:4745`). An approval entry
+  (`src/storytime/book-pictures.ts:4760-4790`; flags at `:4636-4691`). It reads the list with the
+  pinned loader and writes through `writeMuseDelivery` (`src/storytime/muse-delivery.ts:337`).
+  Line numbers in this entry are for commit `6f7c1444` and later.
+  - `--week` keeps only the list rows of that week (`book-pictures.ts:4779`). An approval entry
     of another week then names a row that is not in the filtered rows, and the writer refuses it
     before any write (`muse-delivery.ts:357-359`).
   - `fileVersion` rule: an approval entry with `fileVersion: N` delivers `<row id>-vN.png` and
@@ -85,18 +86,40 @@ Use `node --import tsx scripts/storytime-book-pictures.ts <command>`.
     - A duplicate row id in the picture list: `The picture list holds the row <id> twice.`
       (`muse-delivery.ts:342-346`).
     - A duplicate row id in the approval list: `The approval list holds the row <id> twice.`
-      (`muse-delivery.ts:355`).
+      (`muse-delivery.ts:356`).
     - A delivery root that is a symlink (`lstat`): `The delivery folder <path> is a symlink; the
-      writer refuses it.` (`muse-delivery.ts:348-351`).
+      writer refuses it.` (`muse-delivery.ts:349-352`).
     - A symlink at a Muse print file, or a print outside the Muse folder
-      (`muse-delivery.ts:246-258`).
+      (`muse-delivery.ts:247-258`).
     - A symlink, or a path that is not a regular file, at a delivered file or at `manifest.json`
-      (`muse-delivery.ts:456-459` and `:475-478`).
+      (`muse-delivery.ts:480` and `:491-493`).
     - A delivery folder that holds a different `manifest.json`, or a file under a list name with
-      different bytes (`muse-delivery.ts:460-462` and `:479-482`). The writer never overwrites.
+      different bytes (`muse-delivery.ts:481-483` and `:494-496`). The writer never overwrites.
     - A line print with a pixel value other than 0 or 255: `Line-art twin must use only 0 and 255
-      pixels; <n> grey pixels found.` (`book-pictures.ts:1771-1780`, called at
-      `muse-delivery.ts:408`).
+      pixels; <n> grey pixels found.` (`book-pictures.ts:1804`, called at
+      `muse-delivery.ts:409`).
+- `deliver-cover --approvals <file> --muse <folder> --delivery <folder>`: copy the approved Muse
+  print of the Level 2 cover into a delivery folder and write `manifest.json`. The command is offline
+  and makes no provider call (`book-pictures.ts:4791-4807`). It has no `--list` and no `--week`: the
+  cover is not a row of the picture list. It writes through `deliverMuseCover`
+  (`muse-delivery.ts:571`).
+  - The approval file holds `version: 1` and exactly one entry. The entry has `rowId: "l2-cover-v1"`
+    and no `linePrint` key; the schema refuses a `linePrint` key (`muse-delivery.ts:518-526`).
+  - The color print must pass the class B check (4000 x 3000, opaque, 8-bit sRGB). The delivered
+    name is `l2-cover-v<n>.png`, with `n` from `fileVersion` or 1 (`muse-delivery.ts:582-583`).
+  - The writer refuses the same cases as `deliver` for the print, the delivery root, and the
+    existing files (`muse-delivery.ts:577-579`, and `commitDelivery`). A refusal writes nothing.
+  - The cover manifest is defined in "Cover manifest" below.
+- `cover-calm-top --print <file>`: report the calm-top gate (C1) for a cover print. It is read only
+  and offline (`book-pictures.ts:4753-4759`; the report is `coverCalmTopReport`, `:1386`). It prints
+  two lines: `top 30 percent differing share: <number>` and `top 30 percent rows: <number>`.
+  - Exit code 0: the share is at most 0.02 (a calm top).
+  - Exit code 1: the top is busy, OR the command had an input error (for example an unreadable
+    file, a print that has no 3-channel RGB data, or a missing `--print`). The printed lines tell
+    them apart. A busy top prints both numbers and exits 1. An input error prints an error and
+    does not print both numbers.
+  - The command reads the path as given, with no `out/` confinement. It prints only the two numbers.
+    A path restriction is a Phase 5 tech-debt candidate (review finding RB-P4-1, deferred).
 - `manifest`: rebuild the manifest from jobs, pictures, and review logs.
 - `sheet`: make a labelled contact sheet for human review. Labels stay out of book pictures. A
   reader page shows its color twin and its line-art twin side by side.
@@ -323,6 +346,13 @@ section defines the line-art `ready` rule. Missing evidence
 keeps the candidate `pending`. A failed check keeps it `failed`. The newest ready version is the
 selected release candidate. No candidate is marked ready from model results alone.
 
+Amendment note (2026-11-01, Muse path): the amendment replaced this ready rule for the Muse path.
+A Muse delivery marks each delivered job `ready` with empty `reviews` (`spec.md`, Amendment
+2026-11-01, Decision 2, lines about 193 and 200-202). The person review lives in the G7 and C5
+records of `plan.md` and in the person-review files. It does not live in the manifest. No
+`reviews.person` field is written, because a new field would change the manifest and would need a
+new delivery folder.
+
 Each selected file has its own SHA-256. Each week, book kind, and output kind (`color` or
 `lineart`) is a batch, for example `w01/readalong/color` and `w01/readalong/lineart`. A line-art
 change thus never changes a color batch hash. The batch SHA-256 is the SHA-256 of the canonical
@@ -331,6 +361,23 @@ JSON array of `{file, sha256}` entries sorted by file. The manifest records this
 The manifest lists each line-art twin under its job version with its file, SHA-256, color twin
 file, render evidence file, status, and any provisional name. The newest ready line-art version
 is the selected line-art release candidate.
+
+## Cover manifest
+
+The delivered Level 2 cover (`out/storytime/l2/unit1/cover/delivery-muse-v1/`) has one
+`manifest.json`. It holds one job and one batch. `deliverMuseCover` writes it (`muse-delivery.ts:571`).
+
+- Job `id`: `l2-cover-v1`. `directory`: `cover`. `size`: `cover` (class B, 4000 x 3000). `use`: `cover`.
+- The cover has no line-art twin. The manifest holds no line-art batch.
+- One batch: `cover/color`.
+- `week: 1` and `bookKind: "readalong"` are placeholders. The job type requires both fields
+  (`coverJob`, `muse-delivery.ts:548-565`). They do not mean that the cover belongs to week 1 or to a
+  read-along book.
+- A consumer identifies the Level 2 cover by the job `id` and the `directory`, not by `week` or
+  `bookKind`.
+- The job has a candidate with status `ready` and empty `reviews`, as in the amendment note of
+  "Manifest and batch hash".
+- No new delivery was made for this contract text. The delivered bytes did not change.
 
 ## Calibration
 

@@ -1777,7 +1777,7 @@ rows T142 to T151, and the closeout gate for 30 jobs.
     - The only gate line is structural: the current phase has 3 non-deferred incomplete tasks.
       The Phase 4 markers wait for the Phase 3 checkpoint. No marker changed.
     - status: complete.
-- [x] Task: Produce weeks 2 to 7 after the week 1 review. The weeks hold 162 rows. They need 324
+- [x] Task: Produce weeks 2 to 7 after the week 1 review (commit `6466dd05`). The weeks hold 162 rows. They need 324
   files, one color file and one line-art file per row. Apply the same automated, two-model, and
   person-count gates to all 162 pictures. Commits: approval lists `d66d8f2a`, `d005f2e1`, `c19d6ef9`,
   `700a7b83`, `cce84c6b`, `ddd2105e` (weeks 2 to 7); delivery evidence `1772cf79`, `997ffc31`, `8f92948f`,
@@ -4083,7 +4083,7 @@ rows T142 to T151, and the closeout gate for 30 jobs.
       - No `approved.json` changed and no delivery ran again. The delivered manifest is the bytes that
         Daniel reviewed. A new `reviews.person` field would change the manifest and would need a new
         delivery folder.
-- [x] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
+- [x] Task: Produce the Level 2 cover render under S19 (commit `569e62cc`). Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks. Commits: C1 code `8c9a4082`; spec
   `09047f8e`; delivery code `6f7c1444`; approval file `0629e1e2`; delivery evidence `569e62cc`; person
   record (C5) `1ff8e1c1`. Closeout gate: see "Phase 4 closeout evidence (2026-11-03)".
@@ -4312,7 +4312,7 @@ rows T142 to T151, and the closeout gate for 30 jobs.
         `5f0b64a54e6a76e7a8809868ea773bb6` (equal to the m13 print). `.../cover/delivery-muse-v1/manifest.json`
         SHA-256 `27710b3711757d99294b7e837377d325eb9a6094e1dad43e0f064d2581397b88`.
       - C5 PASS (owner-passed). C1 to C5 all pass. The cover changes from "awaiting person review" to
-        "person review PASS".
+        "delivered, person review PASS".
       - No `approved.json` changed and no delivery ran again. The delivered manifest is the bytes that
         Daniel reviewed.
 
@@ -4433,6 +4433,41 @@ Run log: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p4-cl
 Result of the gate: items 1 to 9 hold, with item 1 open only for Reviews A, B, and C (pending on the closeout
 HEAD). Task 2 and Task 3 change from `[~]` to `[x]`. This note does not add a checkpoint to the Phase 4 heading.
 The registry and the metadata keep their state: phase acceptance and Phase 5 own those facts.
+
+#### Phase 4 review remediation (docs and plan) (2026-11-03)
+
+Green review-fix round, `claude-code/claude-sonnet-5-5#high`. role_base_sha `b6326503`; phase_base_sha
+`fc76c272`. Red models of the phase: `opencode-go/deepseek-v4.1-flash` and `claude-code/claude-opus-5-5[1m]#high`.
+Coder: none. The round changed `contract.md`, this plan, and one run log. It changed no file under `src/`,
+`scripts/`, or `tests/`, and it made no picture, approval file, or delivery. No vitest run was needed,
+because no code and no test changed. Run log:
+`measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p4-review-fixes.log`.
+
+- **Review verdicts at `b6326503`.** Review A: pass, no blocking finding. Review B: the file
+  `review-b-b6326503.json` still says `inconclusive`; its final verdict in the session was pass, with
+  RB-P4-1 only. Review C: pass, no blocking finding.
+- **Gate fix.** The orchestrator role gate printed "FAIL: some completed [x] tasks lack commit SHA evidence".
+  The checker reads only the first line of a task. The first line of Task 2 now holds commit `6466dd05`. The
+  first line of Task 3 now holds commit `569e62cc`. The wrapped evidence lines stay.
+  `grep -nE '^- \[x\] Task: Produce' plan.md` shows both SHAs on the first lines.
+
+| Finding | Severity | Disposition | Action |
+| --- | --- | --- | --- |
+| RA-P4-1 (= P4-FLAKE-T171) | Major | ROUTED to the adversarial round | `tests/storytime-muse-delivery.test.ts` has no file-level vitest timeout. A test-file change is needed. |
+| RA-P4-2 | Major | FIX (this commit) | `contract.md`, section "Cover manifest": job `l2-cover-v1`, directory `cover`, size `cover`, placeholders `week: 1` and `bookKind: "readalong"`. |
+| RA-P4-3 | Nit | FIX (this commit) | `contract.md` Commands: entries for `deliver-cover` and `cover-calm-top`. Stale line references of the `deliver` entry refreshed for `6f7c1444`. |
+| RA-P4-4 | Nit | ROUTED to the adversarial round | T192 `/png/i` always matches. A test-file change is needed. |
+| RA-P4-5 | Nit | ROUTED to the adversarial round | T183 exact share. A test-file change is needed. |
+| RB-P4-1 | Low | DEFER to Phase 5 (tech-debt candidate) | `cover-calm-top --print` reads a path with no `out/` confinement. A source fix needs Red, Green, and new reviews. The command prints only two numbers. Documented in the `cover-calm-top` entry. |
+| RC-P4-1 | Nit | FIX (this commit) | Same change as RA-P4-3. |
+| RC-P4-2 | Nit | FIX (this commit) | Same change as RA-P4-2. |
+| RC-P4-3 | Nit | FIX (this commit) | `contract.md`, "Manifest and batch hash": the amendment of 2026-11-01 replaced the ready rule for the Muse path. A Muse delivery marks each job `ready` with empty reviews. The person review lives in the G7 and C5 records. |
+| RC-P4-4 | Nit | FIX (this commit) | `cover-calm-top` entry: exit 1 means a busy top or an input error. The printed lines tell them apart. |
+| RC-P4-5 | Nit | FIX (this commit) | Cover text above now reads "delivered, person review PASS". |
+
+The RA, RB, and RC ids are the ids in `review-a-b6326503.json`, `review-b-b6326503.json`, and
+`review-c-b6326503.json`. The routed items (RA-P4-1, RA-P4-4, RA-P4-5) wait for the adversarial round.
+The task markers do not change in this round.
 
 ## Phase 5: Documentation and verification
 
