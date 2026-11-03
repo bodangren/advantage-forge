@@ -1435,3 +1435,311 @@ describe('Muse delivery file versions', () => {
       .toEqual({ 'The refused v2 run writes no v2 line file': false });
   });
 });
+
+// ---------------------------------------------------------------------------
+// Level 2 cover delivery (Phase 4 Task 3, gate C4 of strategy section 4.6)
+//
+// The cover is one color picture. It is not a row of the picture list, so `writeMuseDelivery`
+// cannot deliver it: that writer needs a `linePrint` and a list row. PM confirmation of
+// 2026-11-02 06:18 ICT: the file name is `l2-cover-v1.png`, class B (4000 x 3000), color only.
+//
+// The API that Green must add in src/storytime/muse-delivery.ts:
+//
+//   export async function deliverMuseCover(options: {
+//     approvals: MuseCoverApprovalList | string;   // the list, or the path of its JSON file
+//     museRoot: string;                            // the folder of the Muse cover prints
+//     deliveryRoot: string;                        // the delivery batch root
+//   }): Promise<StorytimeManifest>;
+//
+//   MuseCoverApprovalList = { version: 1; entries: [MuseCoverApprovalEntry] }   // exactly one entry
+//   MuseCoverApprovalEntry = the week entry without `linePrint` (a `linePrint` key is refused):
+//     { rowId: 'l2-cover-v1'; version: number; fileVersion?: number; colorPrint: string;
+//       reviews?: { kimi?: {...}; person?: {...} }; notes?: string[] }
+//
+// The manifest has the StorytimeManifest shape with one job: id `l2-cover-v1`, size `cover`, use
+// `cover`, directory `cover`, week 1. The candidate has no `lineArt`. The file is
+// `l2-cover-v<fileVersion>.png` (`l2-cover-v1.png` without the field). The manifest has one batch
+// (`cover/color`) and no line-art batch. The print checks are the color print checks of the week
+// writer, with the size PICTURE_SIZES.cover. Every check runs before the first write.
+//
+// The CLI command next to `deliver`:
+//
+//   deliver-cover --approvals <file> --muse <folder> --delivery <folder>
+//
+// It resolves the two folders with `resolveMuseDeliveryPaths`, so both stay inside the repository
+// out folder. The approval file of the real cover is docs/storytime/l2-unit1/cover/muse/approved.json.
+// ---------------------------------------------------------------------------
+
+const COVER_ID = 'l2-cover-v1';
+const COVER_FILE = 'l2-cover-v1.png';
+const COVER_PRINT = 'l2-cover-v1-m13-color-print.png';
+const COVER_BACKGROUND = '#f3e6c8';
+
+type CoverDeliver = (options: {
+  approvals: unknown;
+  museRoot: string;
+  deliveryRoot: string;
+}) => Promise<StorytimeManifest>;
+
+/** The cover writer. It is absent at HEAD, so the caller fails on a clear seam check. */
+async function coverSeam(): Promise<CoverDeliver> {
+  const module = (await import('../src/storytime/muse-delivery.js')) as unknown as {
+    deliverMuseCover?: CoverDeliver;
+  };
+  expect(typeof module.deliverMuseCover, 'The deliverMuseCover seam exists.').toBe('function');
+  return module.deliverMuseCover!;
+}
+
+/** The approval list of the cover: one entry, no line print, a model review only in the notes. */
+function coverApprovals(overrides: Record<string, unknown> = {}) {
+  return {
+    version: 1 as const,
+    entries: [
+      {
+        rowId: COVER_ID,
+        version: 13,
+        fileVersion: 1,
+        colorPrint: COVER_PRINT,
+        notes: [
+          'Independent review C2 (model evidence, not a person review): reviewer claude-opus-5-5, verdict clean, controls correct.',
+          'Orchestrator spot check C3 at full size: clean.',
+        ],
+        ...overrides,
+      },
+    ],
+  };
+}
+
+/** A JPEG of the class B size. Only the PNG rule can refuse it. */
+async function jpegPrint(width: number, height: number): Promise<Buffer> {
+  const key = `jpeg:${width}x${height}`;
+  const cached = pngCache.get(key);
+  if (cached) return cached;
+  const jpeg = await sharp({ create: { width, height, channels: 3, background: COVER_BACKGROUND } }).jpeg().toBuffer();
+  pngCache.set(key, jpeg);
+  return jpeg;
+}
+
+describe('Muse delivery of the Level 2 cover (color only)', () => {
+  let coverMuse: string;
+  let coverDelivery: string;
+
+  beforeEach(async () => {
+    coverMuse = path.join(root, 'cover-muse');
+    coverDelivery = path.join(root, 'cover-delivery');
+    await mkdir(coverMuse, { recursive: true });
+    const size = PICTURE_SIZES.cover;
+    await writeFile(path.join(coverMuse, COVER_PRINT), await colorPng(size.width, size.height, COVER_BACKGROUND));
+  });
+
+  it('T190 writes one manifest.json with one color-only cover job', async () => {
+    const deliverCover = await coverSeam();
+    const manifest = await deliverCover({ approvals: coverApprovals(), museRoot: coverMuse, deliveryRoot: coverDelivery });
+    const written = JSON.parse(await readFile(path.join(coverDelivery, 'manifest.json'), 'utf8')) as StorytimeManifest;
+    expect(written).toEqual(manifest);
+    expect(written.version).toBe(1);
+    expect(written.batchHashAlgorithm).toBe(BATCH_HASH_ALGORITHM);
+    expect({ 'Cover manifest jobs': manifest.jobs.length }).toEqual({ 'Cover manifest jobs': 1 });
+    const job = jobFor(manifest, COVER_ID);
+    expect({ id: job.id, size: job.size, use: job.use, directory: job.directory, week: job.week, status: job.status })
+      .toEqual({ id: COVER_ID, size: 'cover', use: 'cover', directory: 'cover', week: 1, status: 'ready' });
+    expect({ 'Cover candidates': job.candidates.length }).toEqual({ 'Cover candidates': 1 });
+    const candidate = candidateOf(job);
+    expect(candidate.lineArt).toBeUndefined();
+    expect(candidate.file.endsWith(COVER_FILE)).toBe(true);
+    expect(path.basename(candidate.file)).toBe(COVER_FILE);
+    expect(candidate.version).toBe(1);
+    expect(candidate.status).toBe('ready');
+    expect(candidate.structural.valid).toBe(true);
+    expect(candidate.structural.width).toBe(PICTURE_SIZES.cover.width);
+    expect(candidate.structural.height).toBe(PICTURE_SIZES.cover.height);
+    const colorSha = sha256(await readFile(path.join(coverMuse, COVER_PRINT)));
+    expect(candidate.fileSha256).toBe(colorSha);
+    expect(job.selectedSha256).toBe(colorSha);
+    expect(job.selectedVersion).toBe(1);
+    const files = (await walk(coverDelivery)).map((file) => path.relative(coverDelivery, file)).sort();
+    expect({ 'Cover delivery files': files }).toEqual({ 'Cover delivery files': [COVER_FILE, 'manifest.json'] });
+  });
+
+  it('T191 copies the approved cover print byte for byte and keeps the Muse original', async () => {
+    const deliverCover = await coverSeam();
+    const source = path.join(coverMuse, COVER_PRINT);
+    const before = sha256(await readFile(source));
+    const manifest = await deliverCover({ approvals: coverApprovals(), museRoot: coverMuse, deliveryRoot: coverDelivery });
+    const delivered = path.join(coverDelivery, COVER_FILE);
+    expect({ 'Delivered cover SHA-256': await shaOrMissing(delivered) }).toEqual({ 'Delivered cover SHA-256': before });
+    expect({ 'Muse original SHA-256 after delivery': await shaOrMissing(source) })
+      .toEqual({ 'Muse original SHA-256 after delivery': before });
+    expect(candidateOf(jobFor(manifest, COVER_ID)).fileSha256).toBe(before);
+  });
+
+  it('T192 refuses a wrong-size cover, an alpha channel, and a file that is not a PNG', async () => {
+    const deliverCover = await coverSeam();
+    const size = PICTURE_SIZES.cover;
+    expect(size).toEqual({ width: 4000, height: 3000 });
+    const cases: Array<{ label: string; bytes: Buffer; match: RegExp }> = [
+      { label: 'wrong size', bytes: await colorPng(4000, 2000, COVER_BACKGROUND), match: /size|pixel|width|height|dimension/i },
+      { label: 'small class size', bytes: await colorPng(1500, 1500, COVER_BACKGROUND), match: /size|pixel|width|height|dimension/i },
+      { label: 'alpha', bytes: await alphaPng(size.width, size.height), match: /alpha|channel/i },
+      { label: 'not a PNG', bytes: await jpegPrint(size.width, size.height), match: /png/i },
+    ];
+    for (const [index, item] of cases.entries()) {
+      await writeFile(path.join(coverMuse, COVER_PRINT), item.bytes);
+      const target = path.join(root, `cover-refused-${index}`);
+      const error = await rejection(() => deliverCover({ approvals: coverApprovals(), museRoot: coverMuse, deliveryRoot: target }));
+      expect.soft(error.message, `The ${item.label} refusal names the cover row`).toContain(COVER_ID);
+      expect.soft(error.message, `The ${item.label} refusal names the rule`).toMatch(item.match);
+      expect.soft({ [`The ${item.label} refusal writes no file`]: await walk(target) })
+        .toEqual({ [`The ${item.label} refusal writes no file`]: [] });
+    }
+  });
+
+  it('T193 hashes the cover in one color batch and writes no line-art batch', async () => {
+    const deliverCover = await coverSeam();
+    const manifest = await deliverCover({ approvals: coverApprovals(), museRoot: coverMuse, deliveryRoot: coverDelivery });
+    expect({ 'Cover batch ids': manifest.batches.map((batch) => batch.id) }).toEqual({ 'Cover batch ids': ['cover/color'] });
+    expect(manifest.batches.some((batch) => batch.outputKind === 'lineart')).toBe(false);
+    const batch = manifest.batches[0]!;
+    expect(batch.outputKind).toBe('color');
+    expect({ 'Cover batch files': batch.files.length }).toEqual({ 'Cover batch files': 1 });
+    expect(path.basename(batch.files[0]!.file)).toBe(COVER_FILE);
+    expect(batch.files[0]!.sha256).toBe(sha256(await readFile(path.join(coverDelivery, COVER_FILE))));
+    expect(batch.sha256).toBe(batchSha256(batch.files));
+  });
+
+  it('T194 refuses a different manifest.json and repeats the same bytes on a second run', async () => {
+    const deliverCover = await coverSeam();
+    await mkdir(coverDelivery, { recursive: true });
+    const other = JSON.stringify({ version: 1, batchHashAlgorithm: 'other', jobs: [], batches: [] }, null, 2);
+    await writeFile(path.join(coverDelivery, 'manifest.json'), other);
+    const error = await rejection(() =>
+      deliverCover({ approvals: coverApprovals(), museRoot: coverMuse, deliveryRoot: coverDelivery }),
+    );
+    expect(error.message).toMatch(/manifest|overwrite|differ|exist/i);
+    expect(await readFile(path.join(coverDelivery, 'manifest.json'), 'utf8')).toBe(other);
+    expect(existsSync(path.join(coverDelivery, COVER_FILE))).toBe(false);
+    await rm(path.join(coverDelivery, 'manifest.json'));
+
+    // The approval list comes from a file path, as in the CLI.
+    const approvalsFile = path.join(root, 'cover-approved.json');
+    await writeFile(approvalsFile, JSON.stringify(coverApprovals(), null, 2));
+    const first = await deliverCover({ approvals: approvalsFile, museRoot: coverMuse, deliveryRoot: coverDelivery });
+    const firstBytes = await readFile(path.join(coverDelivery, 'manifest.json'), 'utf8');
+    const second = await deliverCover({ approvals: approvalsFile, museRoot: coverMuse, deliveryRoot: coverDelivery });
+    expect(second).toEqual(first);
+    expect({ 'A second cover run repeats the manifest bytes': await readFile(path.join(coverDelivery, 'manifest.json'), 'utf8') })
+      .toEqual({ 'A second cover run repeats the manifest bytes': firstBytes });
+  });
+
+  it('T195 deliver-cover runs inside the repository out folder and refuses paths outside it', async () => {
+    const repo = path.join(root, 'cover-cli-repo');
+    const outRoot = path.join(repo, 'out');
+    const museFolder = path.join(outRoot, 'cover-muse');
+    const museEscape = path.join(root, 'cover-cli-outside-muse');
+    const size = PICTURE_SIZES.cover;
+    for (const folder of [museFolder, museEscape]) {
+      await mkdir(folder, { recursive: true });
+      await writeFile(path.join(folder, COVER_PRINT), await colorPng(size.width, size.height, COVER_BACKGROUND));
+    }
+    const approvalsFile = path.join(repo, 'approved.json');
+    await writeFile(approvalsFile, JSON.stringify(coverApprovals(), null, 2));
+    const run = (delivery: string, muse: string) =>
+      runStorytimeCli(
+        ['deliver-cover', '--approvals', approvalsFile, '--muse', muse, '--delivery', delivery],
+        { repoRoot: repo, workbooksRoot: repo, log: () => {} },
+      );
+
+    const status = await run('out/cover-delivery', 'out/cover-muse');
+    expect(status).toBe(0);
+    const manifest = JSON.parse(await readFile(path.join(outRoot, 'cover-delivery', 'manifest.json'), 'utf8')) as StorytimeManifest;
+    expect(manifest.jobs.map((job) => job.id)).toEqual([COVER_ID]);
+    expect(existsSync(path.join(outRoot, 'cover-delivery', COVER_FILE))).toBe(true);
+
+    const absolute = path.join(root, 'cover-cli-outside');
+    const absoluteError = await rejection(() => run(absolute, 'out/cover-muse'));
+    expect(absoluteError.message).toMatch(/out|outside|contain/i);
+    expect(existsSync(absolute)).toBe(false);
+
+    const relativeError = await rejection(() => run('../cover-cli-escape', 'out/cover-muse'));
+    expect(relativeError.message).toMatch(/out|outside|contain/i);
+    expect(existsSync(path.join(root, 'cover-cli-escape'))).toBe(false);
+
+    const museError = await rejection(() => run('out/cover-delivery-muse-escape', museEscape));
+    expect(museError.message).toMatch(/out|outside|contain/i);
+    expect(existsSync(path.join(outRoot, 'cover-delivery-muse-escape'))).toBe(false);
+  });
+
+  it('T196 refuses a cover print that is a symlink, leaves the Muse folder, or is not a regular file', async () => {
+    const deliverCover = await coverSeam();
+    const size = PICTURE_SIZES.cover;
+    const outsideFolder = path.join(root, 'cover-muse-outside');
+    await mkdir(outsideFolder, { recursive: true });
+    const outsideColor = path.join(outsideFolder, 'color-print.png');
+    await writeFile(outsideColor, await colorPng(size.width, size.height, COVER_BACKGROUND));
+
+    const outsideLink = 'l2-cover-v1-m13-outside-color-print.png';
+    await symlink(outsideColor, path.join(coverMuse, outsideLink));
+    const insideLink = 'l2-cover-v1-m13-inside-color-print.png';
+    await symlink(path.join(coverMuse, COVER_PRINT), path.join(coverMuse, insideLink));
+    const folderName = 'l2-cover-v1-m13-folder-color-print.png';
+    await mkdir(path.join(coverMuse, folderName));
+
+    for (const [index, colorPrint] of [outsideLink, insideLink, folderName].entries()) {
+      const target = path.join(root, `cover-muse-print-${index}`);
+      const error = await rejection(() =>
+        deliverCover({ approvals: coverApprovals({ colorPrint }), museRoot: coverMuse, deliveryRoot: target }),
+      );
+      expect.soft(error.message, `Print case ${index} names the rule`).toMatch(/regular file|symlink|link|outside|refus/i);
+      expect.soft({ [`Print case ${index} writes no file`]: await walk(target) })
+        .toEqual({ [`Print case ${index} writes no file`]: [] });
+    }
+  });
+
+  it('T197 turns no model review in the notes into a person review', async () => {
+    const deliverCover = await coverSeam();
+    const manifest = await deliverCover({ approvals: coverApprovals(), museRoot: coverMuse, deliveryRoot: coverDelivery });
+    const candidate = candidateOf(jobFor(manifest, COVER_ID));
+    expect(candidate.reviews.person).toBeUndefined();
+    expect({ 'Cover candidate reviews': candidate.reviews }).toEqual({ 'Cover candidate reviews': {} });
+    const text = await readFile(path.join(coverDelivery, 'manifest.json'), 'utf8');
+    expect({ 'The cover manifest holds a person review': text.includes('"person"') })
+      .toEqual({ 'The cover manifest holds a person review': false });
+    expect({ 'The cover manifest holds a person-checked class': text.includes('person-checked') })
+      .toEqual({ 'The cover manifest holds a person-checked class': false });
+  });
+
+  it('T198 refuses a malformed cover approval list before any write', async () => {
+    const deliverCover = await coverSeam();
+    const entry = coverApprovals().entries[0]!;
+    const cases: Array<{ label: string; approvals: unknown; match: RegExp }> = [
+      { label: 'no entry', approvals: { version: 1, entries: [] }, match: /entr|one|approval|invalid/i },
+      {
+        label: 'two entries',
+        approvals: { version: 1, entries: [entry, { ...entry, version: 12, colorPrint: 'l2-cover-v1-m12-color-print.png' }] },
+        match: /entr|one|twice|two|approval|invalid/i,
+      },
+      {
+        label: 'another row id',
+        approvals: { version: 1, entries: [{ ...entry, rowId: 'l2-w02-story-page-a-nut' }] },
+        match: /l2-cover-v1|rowId|invalid/i,
+      },
+      {
+        label: 'a linePrint field',
+        approvals: { version: 1, entries: [{ ...entry, linePrint: 'l2-cover-v1-m13-line-print.png' }] },
+        match: /linePrint|line|unrecognized|invalid/i,
+      },
+    ];
+    // A line print file exists, so a writer that reads `linePrint` cannot fail on a missing file.
+    await writeFile(
+      path.join(coverMuse, 'l2-cover-v1-m13-line-print.png'),
+      await linePng(PICTURE_SIZES.cover.width, PICTURE_SIZES.cover.height, 40),
+    );
+    for (const [index, item] of cases.entries()) {
+      const target = path.join(root, `cover-malformed-${index}`);
+      const error = await rejection(() => deliverCover({ approvals: item.approvals, museRoot: coverMuse, deliveryRoot: target }));
+      expect.soft(error.message, `The ${item.label} refusal names the rule`).toMatch(item.match);
+      expect.soft({ [`The ${item.label} refusal writes no file`]: await walk(target) })
+        .toEqual({ [`The ${item.label} refusal writes no file`]: [] });
+    }
+  });
+});
