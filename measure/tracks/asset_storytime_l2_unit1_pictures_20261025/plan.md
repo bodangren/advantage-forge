@@ -3196,6 +3196,104 @@ rows T142 to T151, and the closeout gate for 30 jobs.
         independent review. The tree side branch and its knob read as a loop with a small oval in the line
         art (default: accept as a background note; if the review flags it, one line batch from m4, which has
         a clean forked trunk). Sam's hair is a smooth side-swept shape without the tufts of the Sam render.
+    - Week 5 delivery (G1 to G8). Green round of 2026-11-03, claude-code/claude-sonnet-5-5#high.
+      role_base_sha `059df227`, phase_base_sha `fc76c272`. Red model opencode-go/deepseek-v4.1-flash.
+      Coder: none. No Muse call. No change in `src/`, `tests/`, `scripts/`, or `assets/`. No marker
+      changed. Run log: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w05-delivery.log`.
+      Approval list: `docs/storytime/l2-unit1/w05/muse/approved.json` (commit `700a7b83`; 27 entries; list
+      SHA-256 `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`; file SHA-256
+      `6b65ea09aa20f8fe04a026b786e3be25185badd87b4f322323119f75f6214d97`). Delivery folder:
+      `out/storytime/l2/unit1/w05/delivery-muse-v1` (54 PNG files and `manifest.json`; not in git).
+      - Chosen prints (color version, line try): the 27 choices of the brief equal the choices in the week 5
+        notes above (batch 1, batch 2, batch 3, ears fix). No row differed. Color m2 is used for
+        `i-have-one-nose`, `i-have-two-feet`, and `sam-nan-and-pam-nap`; color m3 for `i-have-two-ears`; all
+        other rows use color m1. Line tries: cover `i-have-two` 3, four-legs 1, nose 1, arms 3, ears 2, eyes
+        2, feet 1, hands 1, legs 6; cover `sam-and-pam` 1, `pam-is-in-a-pan` 2, `pam-is-off-sam` 1,
+        `pam-is-on-a-map` 2, `pam-is-on-sam` 1, `sam-can-get-pam` 3, `sam-is-with-pam` 2,
+        `sam-nan-and-pam-nap` 6, `sam-saw-pam` 1; check rows bed 3, cat 8, cup 2, dog 1, hat 2, pen 2, sock
+        2, sofa 1, sun 2. Each reviewed page is byte-equal to the Muse file of the same name.
+      - G1 staging: the stage gate of week 5 passed before production (`stage check: pass`, 27 rows, 64
+        element paths, 0 missing, 0 page candidates). The output is in the week 5 staging and batch 3 notes
+        above. This round did not run the gate again, because it now sees page candidates.
+      - G2 calls: `out/storytime/l2/unit1/w05/muse/costs.tsv` holds 148 page calls. Each call has a
+        `usage_cost` value (0 calls without a value). 139 calls cost 0.01 USD and 9 calls failed and cost 0
+        (6 network errors and 3 content-filter blocks, HTTP 400, on `pam-is-on-sam`). The 5 element calls
+        (`muse/elements/costs.tsv`) are all at 0.01 USD and all have a value.
+      - G3 independent review. In each valid artifact the 3 blind controls were correct (a-nose v1 defect;
+        a-nut v1 and practice-line nose m4 clean). The artifacts are in
+        `measure/runs/asset_storytime_l2_unit1_pictures_20261025/`.
+        - `item-review-batch-49.json` (minimax-cn-coding-plan/MiniMax-M3.1-Flash): `cover-i-have-two`,
+          `i-have-four-legs`, `i-have-one-nose`, and `i-have-two-arms` clean. Deviation: the MiniMax plan quota
+          stopped the reviewer after these 4 rows and the controls, so its top `status` stayed
+          "inconclusive". The orchestrator accepts the 4 per-row verdicts.
+        - `item-review-batch-49r5.json` (MiniMax): `i-have-two-eyes`, `-feet`, `-hands`, and `-legs` clean;
+          status pass. Its "clean" for `i-have-two-ears` (color m1, line 4) is superseded by the
+          orchestrator finding G4-W05-EARS-1 (wrong-hand-or-limb) and is not used.
+        - `item-review-batch-49r6.json` (MiniMax): `i-have-two-ears` (color m3, line 2) clean; status pass.
+          Note: the tree side branch reads as a loop with a small oval in the line art (background).
+        - `item-review-batch-50.json` (opencode/glm-5.3-flash-free#high): the 9 batch-50 rows clean; status
+          pass. In `pam-is-on-sam` Sam kneels with the doll Pam on his knees, and a sneaker shows at the door
+          (PM question open; default accept).
+        - `item-review-batch-51.json` (GLM): the 9 check rows clean; status pass.
+        - Void, not evidence: `item-review-batch-49r2.json` (NVIDIA MiniMax route: 8-image limit,
+          provisional file only), `-49r3` (GLM: a provider stop before controls K2 and K3), and `-49r4` (GLM:
+          an off-contract result shape with pass/fail verdicts and no file lists).
+        - Route deviation: the test-strategy table names a Kimi reviewer. The valid batches use MiniMax and
+          GLM. The `reviews` schema of the writer accepts only `kimi` and `person`, so every model review sits
+          in the `notes` of its approval entry, as in week 4.
+        - The reviewers are models. This is independent review. It is not the person count and not
+          acceptance.
+      - G4 orchestrator spot check (quoted as given): "G4 orchestrator spot check, week 5, 2026-11-03:
+        cover-i-have-two (m1, line 3) clean; note: the color sun has round dot rays and the line sun is a
+        plain disc with no rays; the line T-shirt shows more stripe lines than the two white stripes of the
+        color; the line eyes are solid black discs. cover-sam-and-pam (m1, line 1) clean; Sam on the rug and
+        the doll Pam on the box; note: the doll has no nose (the text does not name it). i-have-one-nose (m2,
+        line 1, retry) clean; the nose shows in color and line, and one index finger touches it; Pip's tail
+        shows behind the tree. i-have-two-feet (m2, line 1, retry) clean; two bare feet with five toes each in
+        color and line; note: Sam points at his knee, not at a foot; the line sun is a plain disc.
+        sam-nan-and-pam-nap (m2, line 6, retry) clean; three sleeping faces with closed-eye curves and
+        mouths under one blanket; note: no nose in the line faces. i-have-two-ears (m1, line 4, retry) DEFECT
+        G4-W05-EARS-1, wrong-hand-or-limb: in color and line each hand shows an open palm with four spread
+        fingers behind a pointing hand, about eight fingers per hand; the independent review missed it.
+        Fixed: i-have-two-ears (m3, line 2) clean; one hand per arm, the index finger at each ear; note: a
+        tree side branch reads as a loop with a small oval in the line art. i-have-two-legs (m1, line 6)
+        clean; note: the line sun rays float apart from the disc. i-have-two-hands (m1, line 1) clean; two
+        open hands with five fingers each; note: the line sun has short line rays. i-have-two-eyes (m1, line
+        2) clean; one index finger at each eye. i-have-two-arms (m1, line 3) clean. pam-is-on-sam (m1, line
+        1) clean under the PM default; the doll sits on Sam's knees. check-row-cat (m1, line 8) clean; note:
+        the line cat has a nose and no mouth. check-row-sun (m1, line 2) clean; one disc and eight triangle
+        rays; note: small gaps between the ray bases and the disc."
+      - G5 and G6 delivery. The command was the G6 command of `test-strategy.md` section 4.5 through
+        `heavy-run.sh`, with `--week 5`. It ran once, after a long wait for the shared heavy lock (an earlier
+        call of the same command stopped in the lock queue and ran no job). Exit code `0`. Last output line:
+        `Delivered 27 rows and 2 batch hashes to
+        /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w05/delivery-muse-v1.` The writer ran
+        its print checks before its first write. The output shows 27 line widths, all 12 px or more
+        (minimum 12 px). No `Skipped` line appeared.
+        - Re-hash: all 54 delivered files equal their approved Muse print by SHA-256
+          (`delivered files equal to approved Muse print: 54 of 54`), and all 54 file hashes appear in
+          `manifest.json` (`file hashes found in manifest: 54 of 54; problems: 0`). The folder has 54 PNG
+          files and `manifest.json`. The manifest has 27 jobs and the 2 batches `w05/color` and
+          `w05/lineart`.
+        - `sha256sum out/storytime/l2/unit1/w05/delivery-muse-v1/manifest.json`:
+          `c3f009e6bfcb3037ae24b495c6e68527bfbf86162deb3a40a9bbd28a416ffbaf`.
+        - `version` of an entry is the Muse version of the print: m2 for 3 rows (`i-have-one-nose`,
+          `i-have-two-feet`, `sam-nan-and-pam-nap`), m3 for 1 row (`i-have-two-ears`), and m1 for 23 rows.
+      - G7 person review: pending. No person has looked at week 5, and the PM has relayed no answer. No
+        entry has `reviews.person`. The delivery is "delivered, awaiting person review". Contact page:
+        `out/storytime-review/w05-contact/index.html` (27 cards, 54 previews in `prev/`, 108 `src` and
+        `href` references, 0 missing). Phone sheets for the PM and Daniel:
+        `out/storytime-review/w05-contact/w05-sheet-1-of-3.jpg`, `w05-sheet-2-of-3.jpg`, and
+        `w05-sheet-3-of-3.jpg` (2000 x 7698 px, 9 rows each; sheet 3 viewed with the read tool).
+      - G8 cost report: `usage.cost total (USD): 1.39` for the 148 page calls of week 5, and `0.05` for the
+        5 element calls, so `1.44` for week 5. A short script summed the `usage_cost` column. This round
+        made no call (round cost 0). Running total of the track: 12.80 USD (12.67 before the cover round,
+        plus 0.07 for the cover round, plus 0.06 for the ears fix).
+      - Open: Daniel's person review of week 5. The PM question on `pam-is-on-sam` (the pose differs from the
+        list prompt because of the content filter) stays open with the default "accept". Known small marks
+        stay as in the G4 record and the reviewer notes in the approval entries (the line sun that is a plain
+        disc or has floating rays, the doll with no nose, the line faces of the nap page with no nose, the
+        tree side branch in `i-have-two-ears`). This block makes no task `[x]`.
     - Week 6 staging (inputs only; no page candidate until Daniel's week 1 answer). Green round of
       2026-11-02, claude-code/claude-sonnet-5-5#high. role_base_sha `8e141040`, phase_base_sha
       `fc76c272`. Red model opencode-go/deepseek-v4.1-flash. Image model meta/muse-image. Coder: none.

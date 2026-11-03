@@ -1,0 +1,37 @@
+step 1: started Green P4 T2 w05 delivery (role_base 059df227, phase_base fc76c272)
+step 2: chosen prints cross-checked against the plan notes (batch 1, batch 2, batch 3, ears fix): all 27 equal to the brief; no difference
+step 3: approved.json written by /tmp/opencode/w05d/build-approved.cjs (27 entries, 0 problems; reviewed pages byte-equal to Muse files, reviewed names equal chosen names)
+step 3b: approved.json committed 700a7b83 (file sha256 6b65ea09aa20f8fe04a026b786e3be25185badd87b4f322323119f75f6214d97)
+step 4: first deliver call stopped in the heavy lock queue (no job ran); the session then stopped on a network error (EAI_AGAIN). Deliver ran once after the resume (nohup, heavy-run.sh).
+step 4a: deliver exit 0: Delivered 27 rows and 2 batch hashes to /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w05/delivery-muse-v1. 27 line widths, minimum 12 px, no Skipped line.
+step 4b: re-hash: delivered files equal to approved Muse print: 54 of 54; file hashes found in manifest: 54 of 54; problems: 0; manifest sha256 c3f009e6bfcb3037ae24b495c6e68527bfbf86162deb3a40a9bbd28a416ffbaf
+step 5: contact page out/storytime-review/w05-contact/index.html (27 cards, 108 refs, 0 missing, 54 previews) + 3 sheets 2000x7698 (1.55, 1.64, 0.71 MB); sheet 3 viewed with the read tool
+step 6: plan.md block "Week 5 delivery (G1 to G8)" added after the week 5 ears fix note (no marker change)
+G2: costs.tsv 148 page calls (139 at 0.01, 9 failed at 0: 6 network errors, 3 HTTP 400 content filter), 0 without usage_cost; elements/costs.tsv 5 calls (5 at 0.01), 0 without usage_cost
+Cost: usage.cost total (USD): 1.39 pages + 0.05 elements = 1.44 for week 5. No Muse call this round. Running total 12.80 (round cost 0).
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 2 (week 5 approval list, delivery, contact sheets, gate records)
+role_base_sha: 059df227
+phase_base_sha: fc76c272
+spec_commits: none
+approved_json_commit: 700a7b83
+plan_evidence_commit: see git log (plan.md and this log)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+final_rows: 27 rows; delivery out/storytime/l2/unit1/w05/delivery-muse-v1; deliver exit 0 ("Delivered 27 rows and 2 batch hashes"); re-hash 54 of 54 equal, 54 of 54 in manifest; manifest SHA-256 c3f009e6bfcb3037ae24b495c6e68527bfbf86162deb3a40a9bbd28a416ffbaf
+contact_page: out/storytime-review/w05-contact/index.html
+contact_sheets: out/storytime-review/w05-contact/w05-sheet-1-of-3.jpg; w05-sheet-2-of-3.jpg; w05-sheet-3-of-3.jpg
+open_items: (1) Daniel's person review of week 5 (G7): "delivered, awaiting person review"; no reviews.person field. (2) PM question on pam-is-on-sam (pose differs from the list prompt; content filter) open, default accept. (3) Deviations in the plan block: batch-49 top status inconclusive after the MiniMax quota stop (4 per-row verdicts accepted); the 49r5 clean for i-have-two-ears is superseded by G4-W05-EARS-1. (4) The stage gate was not run again (it sees page candidates). (5) The plan note of batch 2 says 2 content-filter blocks; costs.tsv holds 3 (all HTTP 400, cost 0); the file is the record.
+round_cost_usd: 0
+running_total_usd: 12.80 (week 5 total 1.44: pages 1.39, elements 0.05)
+batch: w05 delivery
+chosen_prints_differences: none (all 27 equal to the plan notes)
+handoff: Send the 3 sheet paths and the manifest SHA-256 to the PM for Daniel. Default: week 5 stays "delivered, awaiting person review". The writer reviews schema accepts only kimi and person, so all model reviews sit in notes.
+dispositions: none
+END_MEASURE_AGENT_RESULT
