@@ -58,3 +58,19 @@ plan_updates: T3a stays [~]; run 4 SHA added
 known_failures: none
 handoff: Rerun calibration with prompt v3. The cast role-field warning of run 3 still stands.
 END_MEASURE_AGENT_RESULT
+
+Run 5 (bounded fix): cast.json had 8 characters. Built the list from every character that the color prompts of weeks 1 to 7 name and from the reference files that the approved specs feed to Muse. Now 17: nan, pip, ben, tom, may, sam, pat, mia, pam-doll, teacher-kim, nurse, mom, dad, lily, grandma, grandpa, nans-dad. Added: mia, teacher-kim, nurse, mom, dad, lily, grandma, grandpa, nans-dad. Pat now uses the file that the specs feed (batch-22 sprout-pat-render.png). Teacher Kim uses the group picture cast-group-b-2.png (the file that the approved pages feed), copied at 1024 px. Look notes are neutral (hair, clothes, age). The BOYS role lines are gone from the script. Added a --cast-only option; I ran only the cast step, so calibration-set.json and the batch files did not change (no full rerun). Every character has a reference file; none has source null. Prompt v3 not changed. No judge result file opened. No Muse or provider call. Spend 0.00 USD.
+cast.json SHA-256: 88cbc9518d86f6658ded24139058fba1bbbccabf7a8381a4e3451f80f96f3daa
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: complete
+commits: 3b255fcb (cast + script), plan/log evidence commit follows
+tests_run: []
+files_changed: docs/storytime/l2-unit1/judge/cast.json, scripts/storytime-judge-set.mjs, plan.md, this log
+plan_updates: T3a stays [~]; run 5 SHA added
+known_failures: none
+handoff: Rerun the calibration with the new cast.json. Cast copies are in out/storytime-review/judge/cast/ (17 files).
+END_MEASURE_AGENT_RESULT
