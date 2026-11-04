@@ -1,4 +1,5 @@
 {
+  "rule": "A note gives who the character is. Things that a character holds or carries change from page to page and are not part of the character.",
   "cast": [
     {
       "name": "nan",
@@ -59,7 +60,7 @@
       "source": "out/storytime-review/batch-22/sprout-pat-render.png",
       "sourceSha256": "a327c76ced5cfbe4a5818204d0e45dbd589514bc964ffea7995b91b13f99bd03",
       "file": "out/storytime-review/judge/cast/pat.png",
-      "note": "Pat: a five-year-old boy with a chibi look (a big head and a small body), short messy black hair with a fringe and a few small tufts on top, big brown eyes, a green T-shirt, brown cargo shorts, brown sandals; he holds no teddy bear and carries no bag",
+      "note": "Pat: a five-year-old boy with a chibi look (a big head and a small body), short messy black hair with a fringe and a few small tufts on top, big brown eyes, a green T-shirt, brown cargo shorts, brown sandals",
       "lookSource": "docs/storytime/l2-unit1/w06/muse/l2-w06-cover-tap-tap.json",
       "pictureNote": "The 3D figures are the cast. The small flat drawing at the top is an old mockup; ignore it."
     },
