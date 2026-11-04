@@ -42,3 +42,19 @@ plan_updates: T3a stays [~]; run 3 SHA added
 known_failures: none
 handoff: scripts/storytime-judge-set.mjs still writes the cast role field; rerunning it would restore the hint. Remove the BOYS role lines there before any rerun.
 END_MEASURE_AGENT_RESULT
+
+Run 4 (bounded fix): judge-prompt.md version 3. Added the check order a-d (list items and counts, say what is seen, decide drawn/visible/reads as the thing, then verdict) with a short form in notes. Added the four-part prop rule to rule 5 (missing/hidden/covered/cut is missing; reads as a different object is wrong; uncommon form is wrong; notes and verdict must agree). Rule 3 no longer says "give pass" when no class fits. Rule 9 is now "Do not invent defects...". The example is neutral and its notes show the short form. Bar quote unchanged. No calibration or A-48 example in the prompt. No judge result file opened. No Muse or provider call. Spend 0.00 USD.
+Prompt SHA-256: 415150a697767e3ff37a37014c85f15a5f06a4be281ac96e1ae51b472daf474b
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: complete
+commits: 515aacf1 (prompt), plan/log evidence commit follows
+tests_run: []
+files_changed: docs/storytime/l2-unit1/judge/judge-prompt.md, plan.md, this log
+plan_updates: T3a stays [~]; run 4 SHA added
+known_failures: none
+handoff: Rerun calibration with prompt v3. The cast role-field warning of run 3 still stands.
+END_MEASURE_AGENT_RESULT
