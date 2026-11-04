@@ -27,3 +27,18 @@ plan_updates: T3a [~] (calibration pending), T4 [ ], T5 [ ]
 known_failures: none
 handoff: See the final reply.
 END_MEASURE_AGENT_RESULT
+
+Run 3 (bounded fix): replaced the output example of judge-prompt.md with a neutral one (made-up ids and files; one pass, one fail with text-in-picture). Prompt version 2. Hints removed: (1) the example that used the a-nose line control (id, file, "no nose shows"); (2) the two "role" fields in cast.json ("one of the 2 boys of "He can see Pip!" (audit E35)"). The words control/expected/handle/magnifying/B43 do not appear in the prompt, cast.json, or any batch file. Daniel's bar quote ("a small mark at the nose") stays unchanged. No Muse or provider call. Spend 0.00 USD.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: complete
+commits: 108a3d9a (prompt + cast), plan/log evidence commit follows
+tests_run: []
+files_changed: docs/storytime/l2-unit1/judge/judge-prompt.md, docs/storytime/l2-unit1/judge/cast.json, plan.md, this log
+plan_updates: T3a stays [~]; run 3 SHA added
+known_failures: none
+handoff: scripts/storytime-judge-set.mjs still writes the cast role field; rerunning it would restore the hint. Remove the BOYS role lines there before any rerun.
+END_MEASURE_AGENT_RESULT
