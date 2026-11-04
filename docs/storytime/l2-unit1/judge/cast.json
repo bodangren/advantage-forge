@@ -5,119 +5,153 @@
       "source": "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
       "sourceSha256": "3be8077800958f03f349d203a0c99d1c974ccf3d0fe8dfe1862da316e4eda98a",
       "file": "out/storytime-review/judge/cast/nan.png",
-      "note": "Nan: girl, black-brown hair, two round buns with red ring bands, orange T-shirt with a star, red shorts"
+      "note": "Nan: black-brown hair in exactly two round buns with smooth red ring bands (no bun on top), large dark-brown eyes, an orange T-shirt with a white star, red shorts, white sneakers",
+      "lookSource": "docs/storytime/l2-unit1/w05/muse/l2-w05-story-page-pam-is-off-sam.json",
+      "pictureNote": "The girl is the cast character. The puppy next to her is Pip."
     },
     {
       "name": "pip",
       "source": "out/storytime/l2/unit1/w04/muse/elements/pip-ref-render.png",
       "sourceSha256": "62ec330fbac3ab034fcd26cebb83f5a98a59431bf6c54780f8d6a3d836df1984",
       "file": "out/storytime-review/judge/cast/pip.png",
-      "note": "Pip: puppy, golden-brown fur, cream chest and muzzle, floppy ears, red collar with gold tag"
+      "note": "Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on the forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, a red collar with a small round gold tag",
+      "lookSource": "docs/storytime/l2-unit1/w07/muse/l2-w07-cover-the-top.json",
+      "pictureNote": "The 3D figures are the cast. The small flat drawing at the top is an old mockup; ignore it."
     },
     {
       "name": "ben",
       "source": "out/storytime/l2/unit1/w01/muse/elements/ben-ref-clean-2.png",
       "sourceSha256": "c5632cd9d3412c8df7a5c25531e52158e2bcf5c1c55ef04fa7b0048285bb214e",
       "file": "out/storytime-review/judge/cast/ben.png",
-      "note": "Ben: boy, light-brown tousled hair, light-blue T-shirt, blue trousers, gray shoes"
+      "note": "Ben: a five-year-old boy with a chibi look (a big head and a small body), short messy light-brown hair with a fringe, big brown eyes, a big open-mouth happy smile, a light-blue T-shirt, dark-blue shorts, grey sneakers",
+      "lookSource": "docs/storytime/l2-unit1/w07/muse/l2-w07-cover-is-it-a-ball.json",
+      "pictureNote": "The 3D figures are the cast. The small flat drawing at the top is an old mockup; ignore it."
     },
     {
       "name": "tom",
       "source": "out/storytime/l2/unit1/w04/muse/elements/cast-tom-sheet-m3-color.png",
       "sourceSha256": "08442dbb6fdd8f101e1a491ffbe45797f766487483a3887d12990920e075d05b",
       "file": "out/storytime-review/judge/cast/tom.png",
-      "note": "Tom: boy, dark-brown side-swept hair, dark-blue T-shirt, tan shorts, red shoes"
+      "note": "Tom: a boy of eight with the same chibi proportions as a five-year-old child (a huge round head, about half of his height, no neck, a short chubby body), only a little taller, with short dark-brown hair swept to the side, big brown eyes, a plain navy-blue T-shirt (no stripes), khaki shorts, red shoes",
+      "lookSource": "docs/storytime/l2-unit1/w07/muse/l2-w07-cover-the-top.json",
+      "pictureNote": "Two views of the same boy."
     },
     {
       "name": "may",
       "source": "out/storytime/l2/unit1/w07/muse/elements/may-ref-render.png",
       "sourceSha256": "cdd6dc181bf4af9519fcbba74942dccc8e2ef040973c045d6564c84749fe5746",
       "file": "out/storytime-review/judge/cast/may.png",
-      "note": "May: girl, black hair in a side ponytail with a small yellow clip, yellow T-shirt, blue skirt, white socks and shoes"
+      "note": "May: a five-year-old girl with a chibi look (a big head and a small body), black hair with a fringe and one long ponytail at the side with a small yellow star hair clip, big brown eyes, a small smile, a yellow T-shirt, a blue pleated skirt, white socks, white sneakers",
+      "lookSource": "docs/storytime/l2-unit1/w07/muse/l2-w07-cover-is-it-a-ball.json",
+      "pictureNote": "The 3D figures are the cast. The small flat drawing at the top is an old mockup; ignore it."
     },
     {
       "name": "sam",
       "source": "out/storytime/l2/unit1/w05/muse/elements/sam-ref-render.png",
       "sourceSha256": "bee0fe172986b47f32966c6a9035109e65447f7e2b676d4f965ed6fe49c708f5",
       "file": "out/storytime-review/judge/cast/sam.png",
-      "note": "Sam: boy, brown hair, red T-shirt with white stripes, blue shorts, blue shoes"
+      "note": "Sam: a five-year-old boy with a chibi look (a big head and a small body), short brown hair with a side-swept fringe, big brown eyes, a big open-mouth smile, a red T-shirt with two white stripes across the chest, blue shorts, blue shoes",
+      "lookSource": "docs/storytime/l2-unit1/w06/muse/l2-w06-cover-tap-tap.json",
+      "pictureNote": "The 3D figures are the cast. The small flat drawing at the top is an old mockup; ignore it."
     },
     {
       "name": "pat",
       "source": "out/storytime-review/batch-22/sprout-pat-render.png",
       "sourceSha256": "a327c76ced5cfbe4a5818204d0e45dbd589514bc964ffea7995b91b13f99bd03",
       "file": "out/storytime-review/judge/cast/pat.png",
-      "note": "Pat: boy, short spiky black hair, green T-shirt, brown shorts, brown sandals, holds a brown teddy bear"
+      "note": "Pat: a five-year-old boy with a chibi look (a big head and a small body), short messy black hair with a fringe and a few small tufts on top, big brown eyes, a green T-shirt, brown cargo shorts, brown sandals; he holds no teddy bear and carries no bag",
+      "lookSource": "docs/storytime/l2-unit1/w06/muse/l2-w06-cover-tap-tap.json",
+      "pictureNote": "The 3D figures are the cast. The small flat drawing at the top is an old mockup; ignore it."
     },
     {
       "name": "mia",
       "source": "out/storytime/l2/unit1/w06/muse/elements/mia-ref-render.png",
       "sourceSha256": "9ae0faaf1d676e8174543630b1dbaed7399d2aa13148f08a162b34b630dd69fd",
       "file": "out/storytime-review/judge/cast/mia.png",
-      "note": "Mia: girl drawn young, about five years old; light-brown shoulder-length hair, small pink bow on the side, pink T-shirt, blue denim overalls, white shoes"
+      "note": "Mia: a five-year-old girl with a chibi look (a big head and a small body), light-brown shoulder-length hair with a small pink bow on the side, big brown eyes, a pink T-shirt, blue denim overalls, white shoes",
+      "lookSource": "docs/storytime/l2-unit1/w06/muse/l2-w06-cover-i-can-see.json",
+      "pictureNote": "The 3D figures are the cast. The small flat drawing at the top is an old mockup; ignore it."
     },
     {
       "name": "pam-doll",
       "source": "out/storytime/l2/unit1/w04/muse/elements/prop-doll-pam-sheet-m1-color.png",
       "sourceSha256": "f742c67726c2b6d4fc8bfe780d11187af16c92028b13e1e180fd7e46b0f1c42c",
       "file": "out/storytime-review/judge/cast/pam-doll.png",
-      "note": "Pam: a cloth doll, cream face with black button eyes, yellow yarn hair in two pigtails with a fringe, red dress"
+      "note": "Pam: a small rag doll with short bright yellow yarn hair (a fringe and two short yarn bunches), a round cream cloth face with two round black button eyes, a small stitched smile, and a simple red dress with short sleeves",
+      "lookSource": "docs/storytime/l2-unit1/w05/muse/l2-w05-cover-sam-and-pam.json",
+      "pictureNote": "Three views of the same doll."
     },
     {
       "name": "teacher-kim",
       "source": "out/storytime/l2/unit1/w01/muse/elements/cast-group-b-2.png",
       "sourceSha256": "102f6365403c66923d9bc14b6103a899055a32b7a1c02be5a87a5150163cce1a",
       "file": "out/storytime-review/judge/cast/teacher-kim.png",
-      "note": "Teacher Kim: adult woman, third from the left in this group picture, medium-length dark-brown hair in a low ponytail, soft green cardigan over a cream blouse, navy trousers, brown flat shoes; the group also shows Ben, Nan, and Pip"
+      "note": "Teacher Kim: a grown woman, about one and a half times as tall as the children, with medium-length dark-brown hair in a low ponytail, a soft green cardigan over a cream blouse, navy trousers, brown flat shoes, a gentle smile",
+      "lookSource": "docs/storytime/l2-unit1/w03/muse/l2-w03-cover-paint.json",
+      "pictureNote": "Group picture, left to right: Ben, Nan, Teacher Kim, Pip."
     },
     {
       "name": "nurse",
       "source": "out/storytime-review/muse-cast/nurse-sheet.png",
       "sourceSha256": "b892c30582c951ead702a45795ed97a051ea44d47ba85f7d28c7c47033940ad2",
       "file": "out/storytime-review/judge/cast/nurse.png",
-      "note": "School nurse: adult woman of about thirty, short black hair, small white nurse cap, white short-sleeved tunic, white trousers, white shoes"
+      "note": "School nurse: a woman of about thirty with short black hair, a small white nurse cap, a white short-sleeved tunic, white trousers, white shoes, a gentle smile",
+      "lookSource": "docs/storytime/l2-unit1/w01/muse/l2-w01-story-page-a-nurse.json",
+      "pictureNote": "Four views of the same woman."
     },
     {
       "name": "mom",
       "source": "out/storytime/l2/unit1/w04/muse/elements/cast-mom-sheet-m1-color.png",
       "sourceSha256": "3669c57329d32a77c55b459ab0d6910306026925c0362cdf75a1d8523c5f0d11",
       "file": "out/storytime-review/judge/cast/mom.png",
-      "note": "Mom: adult woman of about thirty-five, wavy shoulder-length dark-brown hair with a side parting, coral-pink blouse, blue jeans, white sneakers"
+      "note": "Mom: a woman of about thirty-five with wavy shoulder-length dark-brown hair with a side parting, a coral-pink long-sleeved blouse with a collar, blue jeans, white sneakers",
+      "lookSource": "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-can-tom-see-the-top.json",
+      "pictureNote": "Two views of the same woman."
     },
     {
       "name": "dad",
       "source": "out/storytime/l2/unit1/w04/muse/elements/cast-dad-sheet-m1-color.png",
       "sourceSha256": "1fca0b795409de9ddefa05fd80c0d57a5ab9e086cd37a6ed5e85094ce18704c1",
       "file": "out/storytime-review/judge/cast/dad.png",
-      "note": "Dad: adult man of about thirty-eight, short dark-brown hair with a side parting, mustard-yellow polo shirt, dark-blue jeans, brown shoes"
+      "note": "Dad: a man of about thirty-eight with short dark-brown hair with a side parting, a mustard-yellow polo shirt, dark-blue jeans, brown shoes",
+      "lookSource": "docs/storytime/l2-unit1/w04/muse/l2-w04-cover-my-family.json",
+      "pictureNote": "Two views of the same man."
     },
     {
       "name": "lily",
       "source": "out/storytime/l2/unit1/w04/muse/elements/cast-lily-sheet-m1-color.png",
       "sourceSha256": "ecf81d5cb347056f2a66ceb5afc008625a6aecc246167272a35c157b660a3de6",
       "file": "out/storytime-review/judge/cast/lily.png",
-      "note": "Lily: girl of five, short dark-brown bob with a straight fringe and a small lilac hair clip, lilac dress with a small white collar, white socks, pink shoes"
+      "note": "Lily: a girl of five with a short dark-brown bob with a straight fringe and one small lilac bow at the side of her hair, big brown eyes, a lilac dress with short sleeves and a small white collar, white socks, pink shoes",
+      "lookSource": "docs/storytime/l2-unit1/w04/muse/l2-w04-cover-my-family.json",
+      "pictureNote": "Two views of the same girl."
     },
     {
       "name": "grandma",
       "source": "out/storytime/l2/unit1/w04/muse/elements/cast-grandma-sheet-m2-color.png",
       "sourceSha256": "0b282d445808f193868f54c3b60835ab9b9708ef2c6113bf16d5126f6349eb9b",
       "file": "out/storytime-review/judge/cast/grandma.png",
-      "note": "Grandma: older woman of about sixty-five, short curly silver-gray hair, rose-red cardigan over a cream blouse, long dark-blue skirt, brown shoes"
+      "note": "Grandma: an older woman, a little shorter than Mom, with short curly silver-gray hair, a rose-red cardigan over a cream blouse, a long dark-blue skirt, brown flat shoes",
+      "lookSource": "docs/storytime/l2-unit1/w04/muse/l2-w04-cover-my-family.json",
+      "pictureNote": "Two views of the same woman."
     },
     {
       "name": "grandpa",
       "source": "out/storytime/l2/unit1/w04/muse/elements/cast-grandpa-sheet-m2-color.png",
       "sourceSha256": "4b050a678fe56040a8fae3ec028192a6dc3d1a4f50fc5623878af3ba9dec0515",
       "file": "out/storytime-review/judge/cast/grandpa.png",
-      "note": "Grandpa: older man of about seventy, short white hair and a small white mustache, green knitted vest over a white shirt, brown trousers, brown shoes"
+      "note": "Grandpa: an older man, a little shorter than Dad, with short white hair and a small white mustache, a green knitted cardigan over a white shirt, brown trousers, brown shoes",
+      "lookSource": "docs/storytime/l2-unit1/w04/muse/l2-w04-cover-my-family.json",
+      "pictureNote": "Two views of the same man."
     },
     {
       "name": "nans-dad",
       "source": "out/storytime/l2/unit1/w04/muse/elements/cast-man-sheet-m1-color.png",
       "sourceSha256": "fb15bf449ff6c4d416e3b2a42f57d8155b6c5d035e71578e0e0bc28077e906e2",
       "file": "out/storytime-review/judge/cast/nans-dad.png",
-      "note": "Nan's dad (the man): adult man of about thirty-five, short straight black hair, blue T-shirt, gray shorts, black sandals"
+      "note": "Nan's dad: a man of about thirty-five with short straight black hair, a blue T-shirt, gray shorts, black sandals",
+      "lookSource": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-pam-is-on-a-man.json",
+      "pictureNote": "Two views of the same man."
     }
   ]
 }
