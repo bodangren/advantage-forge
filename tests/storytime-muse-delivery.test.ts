@@ -1439,6 +1439,83 @@ describe('Muse delivery file versions', () => {
 });
 
 // ---------------------------------------------------------------------------
+// The D4 prompt rows of the A-48 list (T4 step 1, 2026-11-05)
+//
+// The two new D4 prompt rows are `l2-w05-d4-prompt-face` and `l2-w07-d4-prompt-ball`. Their
+// Workbooks file names hold a digit in the row name, so the writer must accept them and deliver
+// them under the list names.
+// ---------------------------------------------------------------------------
+
+const D4_FACE: PictureListRow = {
+  id: 'l2-w05-d4-prompt-face',
+  week: 5,
+  use: 'd4-prompt',
+  sizeClass: 'C',
+  fileName: 'l2-w05-d4-prompt-face-v1.png',
+  lineArtFileName: 'l2-w05-d4-prompt-face-line-v1.png',
+  width: 1500,
+  height: 1500,
+  text: 'Draw your two eyes in the face.',
+  prompt: 'A round child face with two empty places for the eyes.',
+};
+
+describe('Muse delivery of a D4 prompt row', () => {
+  it('T2A1 delivers a row whose name holds a digit under the list names', async () => {
+    const names = museNames(D4_FACE.id, 1);
+    await writeFile(path.join(museRoot, names.colorPrint), await colorPng(1500, 1500, '#88ccff'));
+    await writeFile(path.join(museRoot, names.linePrint), await linePng(1500, 1500, 40));
+
+    const target = path.join(root, 'delivery-d4-face');
+    const manifest = await writeMuseDelivery({
+      rows: [D4_FACE],
+      approvals: {
+        version: 1,
+        entries: [{ rowId: D4_FACE.id, version: 1, ...names }],
+      } as unknown as DeliveryApprovals,
+      museRoot,
+      deliveryRoot: target,
+    });
+
+    const job = jobFor(manifest, D4_FACE.id);
+    const candidate = candidateOf(job);
+    expect.soft({ 'The D4 job id': job.id }).toEqual({ 'The D4 job id': D4_FACE.id });
+    expect.soft({ 'The D4 job directory': job.directory }).toEqual({ 'The D4 job directory': 'w05' });
+    expect.soft({ 'The D4 color file name': path.basename(candidate.file) })
+      .toEqual({ 'The D4 color file name': D4_FACE.fileName });
+    expect.soft({ 'The D4 line file name': path.basename(candidate.lineArt?.file ?? '') })
+      .toEqual({ 'The D4 line file name': D4_FACE.lineArtFileName });
+    expect.soft({ 'The D4 color file exists': existsSync(path.join(target, D4_FACE.fileName)) })
+      .toEqual({ 'The D4 color file exists': true });
+    expect.soft({ 'The D4 line file exists': existsSync(path.join(target, D4_FACE.lineArtFileName)) })
+      .toEqual({ 'The D4 line file exists': true });
+    expect.soft({ 'The D4 row has one candidate': job.candidates.length })
+      .toEqual({ 'The D4 row has one candidate': 1 });
+  });
+
+  it('T2A2 delivers a D4 row under the v2 names when the entry sets fileVersion 2', async () => {
+    const names = museNames(D4_FACE.id, 1);
+    await writeFile(path.join(museRoot, names.colorPrint), await colorPng(1500, 1500, '#88ccff'));
+    await writeFile(path.join(museRoot, names.linePrint), await linePng(1500, 1500, 40));
+
+    const target = path.join(root, 'delivery-d4-face-v2');
+    const manifest = await writeMuseDelivery({
+      rows: [D4_FACE],
+      approvals: fileVersionApproval([{ rowId: D4_FACE.id, fileVersion: 2 }]),
+      museRoot,
+      deliveryRoot: target,
+    });
+
+    const candidate = candidateOf(jobFor(manifest, D4_FACE.id));
+    expect.soft({ 'The D4 v2 candidate version': candidate.version })
+      .toEqual({ 'The D4 v2 candidate version': 2 });
+    expect.soft({ 'The D4 v2 color file name': path.basename(candidate.file) })
+      .toEqual({ 'The D4 v2 color file name': 'l2-w05-d4-prompt-face-v2.png' });
+    expect.soft({ 'The D4 v2 color file exists': existsSync(path.join(target, 'l2-w05-d4-prompt-face-v2.png')) })
+      .toEqual({ 'The D4 v2 color file exists': true });
+  });
+});
+
+// ---------------------------------------------------------------------------
 // Level 2 cover delivery (Phase 4 Task 3, gate C4 of strategy section 4.6)
 //
 // The cover is one color picture. It is not a row of the picture list, so `writeMuseDelivery`

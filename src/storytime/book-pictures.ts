@@ -1477,8 +1477,12 @@ export async function inspectCandidatePng(png: Buffer, size: PictureSize): Promi
 // Picture list v3 and specification v1 rows (Phase 3)
 // ---------------------------------------------------------------------------
 
-/** The Workbooks file-name pattern of one picture row color file. */
-export const PICTURE_ROW_FILE_NAME_PATTERN = /^l2-w\d{2}-[a-z-]+-v\d+\.png$/;
+/**
+ * The Workbooks file-name pattern of one picture row color file. The row name may hold a digit:
+ * the D4 prompt rows of the A-48 list are named `l2-w05-d4-prompt-face-v1.png` and
+ * `l2-w07-d4-prompt-ball-v1.png`.
+ */
+export const PICTURE_ROW_FILE_NAME_PATTERN = /^l2-w\d{2}-[a-z0-9-]+-v\d+\.png$/;
 const PICTURE_LIST_FILE_NAME = 'pictures.json';
 const PICTURE_SIZE_CLASS_KEY: Record<string, PictureSize | undefined> = {
   A: 'story',
