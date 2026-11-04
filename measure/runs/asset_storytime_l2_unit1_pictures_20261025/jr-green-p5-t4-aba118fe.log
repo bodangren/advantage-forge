@@ -1,0 +1,185 @@
+# Role log: measure-jr-green, Phase 5 Task T4 (step 1, setup)
+
+Track: asset_storytime_l2_unit1_pictures_20261025 (storytime_l2_unit1_pictures)
+Phase: Phase 5: Documentation and verification (phase id P5), task T4.
+role_base_sha: aba118fe5c96902b0a7ddf31b3414693d13d7f21
+Red model: none (light lane). Green model: minimax-cn-coding-plan/MiniMax-M3.1-Flash.
+
+No Muse call and no provider call ran in this step. Spend stays 0.00 USD.
+
+## Work list
+
+`/home/daniebo/Desktop/handoff/a48-forge-picture-list/picture-list.md`, SHA-256
+`df87dc7d1ffb309f29ffec16b98495823435346cec0fc4cba14cc9d6b3c8c440` (checked before the
+work; 24 pictures; lists A to D). Order of work: the drum first, then list A with items 1 to 3
+first, then the moon and the mango, then list B, then list D.
+
+## Commits (explicit paths)
+
+| Commit | Paths |
+| --- | --- |
+| `4a354d6c` | `scripts/storytime-muse-guards.mjs`, `tests/storytime-muse-attempts.test.ts` |
+| `abf0b49f` | `docs/storytime/l2-unit1/a48/` (24 spec files) |
+| `d6c9af71` | `scripts/storytime-judge-batch.mjs`, `tests/storytime-judge-batch.test.ts`, `docs/storytime/l2-unit1/judge/prod/batch-dry-run-nose.json` |
+| `0473f406` | `scripts/storytime-judge-batch.d.mts` |
+| `2575743b` | `src/storytime/book-pictures.ts`, `tests/storytime-muse-delivery.test.ts` |
+| `69f5f82c` | `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md` |
+
+## The 24 spec files in work order
+
+1. `l2-w08-check-row-drum.json`
+2. `l2-w01-story-page-a-nest.json`
+3. `l2-w01-story-page-a-nut.json`
+4. `l2-w01-story-page-a-nest-and-a-nut.json`
+5. `l2-w01-check-row-nose.json`
+6. `l2-w04-check-row-milk.json`
+7. `l2-w02-check-row-axe.json`
+8. `l2-w07-check-row-ostrich.json`
+9. `l2-w06-check-row-ten.json`
+10. `l2-w07-story-page-the-top-on-a-pot.json`
+11. `l2-w03-story-page-a-pan-on-a-pan.json`
+12. `l2-w03-story-page-a-pan-in-a-pan.json`
+13. `l2-w01-story-page-a-neck.json`
+14. `l2-w08-check-row-moon.json`
+15. `l2-w08-check-row-mango.json`
+16. `l2-w01-story-page-hello-i-am-pip.json`
+17. `l2-w02-story-page-how-many-balls-five.json`
+18. `l2-w04-story-page-this-is-pam.json`
+19. `l2-w05-story-page-i-have-four-legs.json`
+20. `l2-w06-story-page-tap-tap-tap.json`
+21. `l2-w06-story-page-tap-tap-tap-b.json`
+22. `l2-w06-story-page-he-can-see-pip.json`
+23. `l2-w05-d4-prompt-face.json`
+24. `l2-w07-d4-prompt-ball.json`
+
+## The guards
+
+The nose keeps one group of two ids: `l2-w01-practice-line-nose` and `l2-w01-check-row-nose`. A
+try of either id counts for the group, so the two ids share the 3 tries of one picture.
+
+The ostrich has the one id `l2-w07-check-row-ostrich`. The id is not in any group, so the
+counter counts its own rows. The old olive id and the old week 8 ostrich id left the group.
+
+## The delivery check
+
+`src/storytime/muse-delivery.ts` and its caller can deliver a row only when the picture list
+holds that row. The list gives the delivered file names and the pixel size. The approval entry
+`fileVersion` already gives the v2 names of a redraw, so that part needed no change.
+
+One gap needed a change. The two D4 prompt rows are named `l2-w05-d4-prompt-face-v1.png` and
+`l2-w07-d4-prompt-ball-v1.png`. The row-name pattern `^l2-w\d{2}-[a-z-]+-v\d+\.png$` refused the
+digit in the row name, so the delivery stopped before the first write. The pattern now allows a
+digit in the row name, and two tests cover the D4 row under the list names and under the v2
+names.
+
+The five other new ids (the axe, the ostrich, the moon, the mango, and the drum) sit in the
+Workbooks picture list today. The list moved on since the judge kit: SHA-256
+`327f805f2f44aeed2b29477e83921ed03cf5fd7ab6600910ca8e21fced5b2cc7`, 194 rows, Workbooks commit
+`c618523e`. The judge kit stays frozen and still pins the list v5 SHA-256.
+
+Nothing was written in Workbooks.
+
+## Tests
+
+Command:
+
+```sh
+HEAVY_MIN_AVAIL_MB=1500 bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-attempts.test.ts tests/storytime-judge-batch.test.ts tests/storytime-muse-delivery.test.ts --maxWorkers=1'
+```
+
+Output: `Test Files  3 passed (3)`; `Tests  72 passed (72)`; exit `0`. The same three files
+passed before this step with 61 tests.
+
+The type check of the changed source file:
+`NODE_OPTIONS=--max-old-space-size=6144 node_modules/.bin/tsc --noEmit` exits `2` with 58
+errors. None names a file of this step. The 20 errors of `tests/storytime-muse-attempts.test.ts`
+come from the T3a import of the guards module and came before this step.
+
+The Phase 4 gate file `tests/storytime-book-pictures.test.ts` has 8 failures that came before this
+step: it pins the picture list SHA-256 `6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58`
+and the Workbooks list has moved on. This step did not touch that file.
+
+## Defaults taken
+
+- The nose picture is a close-up of one nose. The audit E19 offers a close-up or a child who
+  points at the nose; the close-up reads better on a small card.
+- The nose spec holds the id `l2-w01-check-row-nose` and the field `alsoIds`. The extra field
+  `alsoDeliverAs` names the second delivered file, because one picture delivers two names.
+- The specs of the props without an element sheet (the milk carton, the ten apples, the axe, the
+  ostrich, the moon, the mango, the drum, and the two D4 prompts) hold an empty `references`
+  list. The element sheets of the old pictures show the art that the audit rejects.
+- The `use` of the nose spec is `check-row`. Both uses print at 360 px.
+- The line art of a D4 prompt comes from its color picture, as the Muse path does for every
+  picture. The D4 color picture is a black line drawing on white, so the line art twin stays a
+  line drawing.
+- The production batch files live in `docs/storytime/l2-unit1/judge/prod/`. The frozen kit in
+  `docs/storytime/l2-unit1/judge/` is untouched.
+- The batch script refuses to write over an existing batch file.
+
+## Open question for the PM
+
+The Workbooks picture list no longer holds the two D4 prompt ids. The delivery needs them before
+the D4 pictures can ship. Workbooks maps the ids in its data when the art arrives, so no action
+is needed now. The judge-set script still pins the list v5 SHA-256, so the kit cannot be rebuilt
+against the current list. That is a separate decision for the closeout.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: partial
+commits:
+  - 4a354d6c
+  - abf0b49f
+  - d6c9af71
+  - 0473f406
+  - 2575743b
+  - 69f5f82c
+tests_run:
+  - command: HEAVY_MIN_AVAIL_MB=1500 bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-attempts.test.ts tests/storytime-judge-batch.test.ts tests/storytime-muse-delivery.test.ts --maxWorkers=1'
+    result: Test Files  3 passed (3); Tests  72 passed (72); exit 0
+files_changed:
+  - scripts/storytime-muse-guards.mjs
+  - tests/storytime-muse-attempts.test.ts
+  - docs/storytime/l2-unit1/a48/l2-w01-check-row-nose.json
+  - docs/storytime/l2-unit1/a48/l2-w01-story-page-a-neck.json
+  - docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nest-and-a-nut.json
+  - docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nest.json
+  - docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json
+  - docs/storytime/l2-unit1/a48/l2-w01-story-page-hello-i-am-pip.json
+  - docs/storytime/l2-unit1/a48/l2-w02-check-row-axe.json
+  - docs/storytime/l2-unit1/a48/l2-w02-story-page-how-many-balls-five.json
+  - docs/storytime/l2-unit1/a48/l2-w03-story-page-a-pan-in-a-pan.json
+  - docs/storytime/l2-unit1/a48/l2-w03-story-page-a-pan-on-a-pan.json
+  - docs/storytime/l2-unit1/a48/l2-w04-check-row-milk.json
+  - docs/storytime/l2-unit1/a48/l2-w04-story-page-this-is-pam.json
+  - docs/storytime/l2-unit1/a48/l2-w05-d4-prompt-face.json
+  - docs/storytime/l2-unit1/a48/l2-w05-story-page-i-have-four-legs.json
+  - docs/storytime/l2-unit1/a48/l2-w06-check-row-ten.json
+  - docs/storytime/l2-unit1/a48/l2-w06-story-page-he-can-see-pip.json
+  - docs/storytime/l2-unit1/a48/l2-w06-story-page-tap-tap-tap-b.json
+  - docs/storytime/l2-unit1/a48/l2-w06-story-page-tap-tap-tap.json
+  - docs/storytime/l2-unit1/a48/l2-w07-check-row-ostrich.json
+  - docs/storytime/l2-unit1/a48/l2-w07-d4-prompt-ball.json
+  - docs/storytime/l2-unit1/a48/l2-w07-story-page-the-top-on-a-pot.json
+  - docs/storytime/l2-unit1/a48/l2-w08-check-row-drum.json
+  - docs/storytime/l2-unit1/a48/l2-w08-check-row-mango.json
+  - docs/storytime/l2-unit1/a48/l2-w08-check-row-moon.json
+  - scripts/storytime-judge-batch.mjs
+  - scripts/storytime-judge-batch.d.mts
+  - tests/storytime-judge-batch.test.ts
+  - docs/storytime/l2-unit1/judge/prod/batch-dry-run-nose.json
+  - src/storytime/book-pictures.ts
+  - tests/storytime-muse-delivery.test.ts
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+plan_updates:
+  - Task T3a closed with the commit c132d866 and the calibration evidence (381 pass, 7 fail)
+  - Task T4 marked [~] and its text now names the two new ids and the one ostrich id
+  - Task T6 added for the two D4 prompt pictures
+  - Task T5 stays [ ]
+  - The work list SHA-256 df87dc7d and the order of work recorded
+known_failures:
+  - tests/storytime-book-pictures.test.ts has 8 failures that came before this step: it pins the picture list SHA-256 6d05dfc and the Workbooks list has moved on to 327f805f
+  - The type check exits 2 with 58 errors; none names a file of this step
+handoff: Step 1 of T4 is done. The judge, the 24 specs, the guards, the production batch script, and the delivery name pattern are ready. No color try ran. The next step is the first color try of the drum (the first id in the work order), then the judge batch of that try. phase_base_sha: aba118fe5c96902b0a7ddf31b3414693d13d7f21; Green HEAD: 69f5f82c.
+END_MEASURE_AGENT_RESULT
