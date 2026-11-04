@@ -1,0 +1,50 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w08-check-row-drum-color-t1.png",
+    "id": "l2-w08-check-row-drum",
+    "kind": "color",
+    "pageText": "drum",
+    "use": "check-row",
+    "mustShow": [
+      "one drum",
+      "a round drum with a rim and a drum skin",
+      "two drumsticks"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nest-color-t1.png",
+    "id": "l2-w01-story-page-a-nest",
+    "kind": "color",
+    "pageText": "A nest.",
+    "use": "story-page",
+    "mustShow": [
+      "Nan",
+      "a bird's nest with twigs",
+      "the nest in a tree"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nut-color-t1.png",
+    "id": "l2-w01-story-page-a-nut",
+    "kind": "color",
+    "pageText": "A nut.",
+    "use": "story-page",
+    "mustShow": [
+      "one peanut in its shell",
+      "Nan's open hand",
+      "the nut is large in the middle"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nest-and-a-nut-color-t1.png",
+    "id": "l2-w01-story-page-a-nest-and-a-nut",
+    "kind": "color",
+    "pageText": "A nest and a nut.",
+    "use": "story-page",
+    "mustShow": [
+      "a bird's nest in a tree",
+      "a peanut in its shell",
+      "Pip the puppy"
+    ]
+  }
+]
