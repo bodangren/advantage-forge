@@ -123,3 +123,20 @@ plan_updates: T3a stays [~]; run 8 SHA added
 known_failures: none
 handoff: Rerun the calibration with the new cast.json and prompt v5.
 END_MEASURE_AGENT_RESULT
+
+Run 9 (two bounded fixes). Fix 1 (commit 08e53601): cast notes give identity only. The one prop clause removed: Pat, "; he holds no teddy bear and carries no bag". No other note held a clause about held, carried, or not-held things (checked by search for hold, carr, bag, teddy, bear, basket, book, ball). cast.json has a top-level "rule" field. The script writes the same file (cast-only step through heavy-run.sh); calibration-set.json and the batch files stayed unchanged. Fix 2 (commit c132d866): judge-prompt.md version 6. Added the cover-title rule (a title names the subject, does not count things, does not say how many people hold the thing; check that the subject shows and the characters match the cast) and the character-rule sentences (held things, bags, and carried things are page props; a character who holds a thing that the cast note does not mention is not a changed character). Bar quote and everything else of v5 kept. No page, character, object, or id of the calibration set or the A-48 list is named in the prompt. No judge result file opened. No Muse or provider call. Spend 0.00 USD.
+cast.json SHA-256: 2eb4a6a14d2ba6e49223e27d9ad390aad7ba1d247b272f6a467742b931046e76
+judge-prompt.md SHA-256: db5b443a6ea7740f435fedb7f13d0fd12971332c08b6e71d09e4a468da02ffd8
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: complete
+commits: 08e53601 (cast + script), c132d866 (prompt), plan/log evidence commit follows
+tests_run: []
+files_changed: docs/storytime/l2-unit1/judge/cast.json, scripts/storytime-judge-set.mjs, docs/storytime/l2-unit1/judge/judge-prompt.md, plan.md, this log
+plan_updates: T3a stays [~]; run 9 SHAs added
+known_failures: none
+handoff: Rerun the calibration with cast.json 2eb4a6a14d2ba6e49223e27d9ad390aad7ba1d247b272f6a467742b931046e76 and prompt v6.
+END_MEASURE_AGENT_RESULT
