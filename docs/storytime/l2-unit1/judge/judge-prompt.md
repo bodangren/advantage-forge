@@ -1,6 +1,6 @@
 # Storytime L2 unit 1 picture judge: fixed prompt
 
-Version 3, 2026-11-04. Track `asset_storytime_l2_unit1_pictures_20261025`, task T3a.
+Version 4, 2026-11-04. Track `asset_storytime_l2_unit1_pictures_20261025`, task T3a.
 Judge: Sonnet (`claude-code/claude-sonnet-5-5`) with native image input.
 This prompt replaces the MiniMax and Kimi pre-checks of FR-9. The judge result is model evidence.
 It is not acceptance.
@@ -31,13 +31,22 @@ For each file in the batch, give one verdict: `pass` or `fail`.
    the sentence counts. The prop rule has four parts:
    - A named thing that is not drawn, or is hidden, covered (for example by a hand), or cut by
      the frame, is missing. That is `wrong-or-missing-prop`. Do not assume that a hidden thing
-     is there.
+     is there. The exception below applies only to a question page.
    - A named thing that reads as a different object at book size is a wrong prop. This is true
      even if a careful adult could read it as the named thing.
    - A named thing in an uncommon form that a young child would not know as that word is a
      wrong prop.
    - When your own notes describe one of these cases, the verdict is `fail`. The notes and the
      verdict must agree.
+
+   Exception for a question page. A question page is a page whose text asks whether a thing is
+   there or what a thing is (for example "Is this ...?" or "Is it a ...?"). On a question page
+   the picture may hide the thing under a cover or in a container on purpose, so that the child
+   can guess. Then the hidden thing is not missing. Check instead that the cover or the shape
+   under it is clear, and that any clue or thought bubble is clear. A thought bubble that shows
+   a different thing is correct when the text answers "No". The exception applies only to a
+   question page. For a page that states a thing (for example "A ..." or "This is ..."), the
+   hidden-thing rule above stays: hidden, covered, or cut by the frame is missing.
 6. The picture holds no words, letters, numbers, signatures, or watermarks. Text in the picture
    is a hard defect.
 7. For a line-art file (`kind` is `line`), also check two more points. Gray or shading is a hard
@@ -52,7 +61,7 @@ For each file in the batch, give one verdict: `pass` or `fail`.
 Do these steps in this order for each file. Do step d last.
 
 a. From the page text, list each thing that the sentence names (person, animal, body part,
-   object, action) and each count.
+   object, action) and each count. Also say whether the page is a question page.
 b. For each item, say what you SEE in the picture at that place, in your own words. Do this
    before you compare it with the text.
 c. Decide for each item: it is drawn and visible, and it reads as that thing to a young child
@@ -102,7 +111,7 @@ Reply with one JSON object and nothing else. The object has the shape below.
       "verdict": "pass",
       "defectClass": null,
       "where": null,
-      "notes": "Items: a cat (1), a hat (1). Seen: an orange cat; a red hat on its head. Both drawn, visible, and clear to a child."
+      "notes": "Question page: no. Items: a cat (1), a hat (1). Seen: an orange cat; a red hat on its head. Both drawn, visible, and clear to a child."
     },
     {
       "id": "l2-w00-example-row-b",
@@ -111,7 +120,7 @@ Reply with one JSON object and nothing else. The object has the shape below.
       "verdict": "fail",
       "defectClass": "text-in-picture",
       "where": "a word on the wall at the top left",
-      "notes": "Items: a bird (1), a kite (1). Seen: a blue bird; a red kite. Both clear. Small marks go here. The fail is the word on the wall."
+      "notes": "Question page: no. Items: a bird (1), a kite (1). Seen: a blue bird; a red kite. Both clear. Small marks go here. The fail is the word on the wall."
     }
   ],
   "summary": { "files": 2, "pass": 1, "fail": 1 }
