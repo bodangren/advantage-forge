@@ -1,0 +1,14 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-check-row-nose-color-t1.png",
+    "id": "l2-w01-check-row-nose",
+    "kind": "color",
+    "pageText": "nose",
+    "use": "check-row",
+    "mustShow": [
+      "one nose",
+      "the nose tip and one nostril",
+      "the nose fills most of the picture"
+    ]
+  }
+]
