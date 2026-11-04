@@ -1,6 +1,6 @@
 # Storytime L2 unit 1 picture judge: fixed prompt
 
-Version 1, 2026-11-04. Track `asset_storytime_l2_unit1_pictures_20261025`, task T3a.
+Version 2, 2026-11-04. Track `asset_storytime_l2_unit1_pictures_20261025`, task T3a.
 Judge: Sonnet (`claude-code/claude-sonnet-5-5`) with native image input.
 This prompt replaces the MiniMax and Kimi pre-checks of FR-9. The judge result is model evidence.
 It is not acceptance.
@@ -71,16 +71,25 @@ Reply with one JSON object and nothing else. The object has the shape below.
 {
   "results": [
     {
-      "id": "l2-w01-story-page-a-nose",
-      "kind": "line",
-      "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-a-nose-line-v1.png",
+      "id": "l2-w00-example-row",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/example/example-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": ""
+    },
+    {
+      "id": "l2-w00-example-row-b",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/example/example-b-v1.png",
       "verdict": "fail",
-      "defectClass": "wrong-or-missing-prop",
-      "where": "the face of Nan: no nose shows",
+      "defectClass": "text-in-picture",
+      "where": "a word on the wall at the top left",
       "notes": "short text; small marks go here"
     }
   ],
-  "summary": { "files": 1, "pass": 0, "fail": 1 }
+  "summary": { "files": 2, "pass": 1, "fail": 1 }
 }
 ```
 

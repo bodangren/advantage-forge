@@ -19,8 +19,7 @@
       "source": "out/storytime/l2/unit1/w04/muse/elements/cast-tom-sheet-m3-color.png",
       "sourceSha256": "08442dbb6fdd8f101e1a491ffbe45797f766487483a3887d12990920e075d05b",
       "file": "out/storytime-review/judge/cast/tom.png",
-      "note": "Tom: boy",
-      "role": "one of the 2 boys of \"He can see Pip!\" (audit E35)"
+      "note": "Tom: boy"
     },
     {
       "name": "ben",
@@ -41,8 +40,7 @@
       "source": "out/storytime/l2/unit1/w05/muse/elements/sam-ref-render.png",
       "sourceSha256": "bee0fe172986b47f32966c6a9035109e65447f7e2b676d4f965ed6fe49c708f5",
       "file": "out/storytime-review/judge/cast/sam.png",
-      "note": "Sam: boy",
-      "role": "one of the 2 boys of \"He can see Pip!\" (audit E35)"
+      "note": "Sam: boy"
     },
     {
       "name": "pat",
