@@ -1,0 +1,31 @@
+{
+  "id": "l2-w01-check-row-nose",
+  "text": "nose",
+  "pageText": "nose",
+  "use": "check-row",
+  "goal": "A close-up of one child's nose, large in the middle of a white card, so a child can name it.",
+  "mustShow": [
+    "one nose",
+    "the nose tip and one nostril",
+    "the nose fills most of the picture"
+  ],
+  "deliverAs": "l2-w01-check-row-nose-v2.png",
+  "alsoIds": [
+    "l2-w01-practice-line-nose"
+  ],
+  "alsoDeliverAs": [
+    "l2-w01-practice-line-nose-v2.png"
+  ],
+  "references": [
+    "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-side-left-head.png"
+  ],
+  "colorPrompt": "Make one children's book picture from picture 1. Picture 1 is an exact side view (90 degrees) of the head and shoulders of the girl Nan (the approved 3D character), facing the left. It is a small, low-resolution picture with a dark pixel outline: ignore the outline and the blocky pixels. Draw the nose of that face, smooth, clean, and in high detail. Keep the soft, round, bright 3D render look of picture 1, not a 2D drawing and no outlines. The picture: a SQUARE close-up of ONE nose. The nose of a small child, seen from the side, fills almost the whole picture: the tip of the nose, the bridge of the nose, and ONE nostril are large and clearly seen. The nose points to the LEFT edge of the picture. Draw ONLY the nose and a little plain skin around it. Do not draw the rest of the face: no eye, no eyebrow, no mouth, no ear, no hair, no bun, no head, no neck, no shoulder, and no T-shirt. Do not draw a whole head in profile. The nose is a small, soft, rounded child nose: a smooth rounded tip, a soft bridge, and one small nostril shape, with clean smooth skin and no dark shadow. The background is plain white and empty. The page text is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G. There is no line or crease on the skin, no mark, and no scratch anywhere.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. Draw ONLY the nose: the tip of a small child nose seen from the side, pointing to the left, with the bridge line and one small nostril shape. The nose outline is one thick closed line. The nostril is one small closed shape. Draw no eye, no eyebrow, no mouth, no ear, no hair, no head, and no shoulder. Every line ends on another line, with no loose ends. Use no background shapes: no ground line, no wall line, and no shadow. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/w01/muse"
+}

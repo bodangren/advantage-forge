@@ -1,0 +1,22 @@
+{
+  "id": "l2-w04-story-page-this-is-pam",
+  "text": "This is Pam.",
+  "pageText": "This is Pam.",
+  "use": "story-page",
+  "goal": "The doll Pam stands alone in the middle of the picture, large, so the child sees the doll and not Nan.",
+  "mustShow": [
+    "the doll Pam",
+    "the doll alone in the picture",
+    "the doll is large in the middle"
+  ],
+  "deliverAs": "l2-w04-story-page-this-is-pam-v2.png",
+  "references": [
+    "out/storytime/l2/unit1/w04/muse/elements/prop-doll-pam-sheet-m1-color.png",
+    "out/storytime/l2/unit1/w04/muse/elements/set-nan-living-room-empty-m1-color.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the element pictures. Picture 1 shows Pam, the small rag doll with yellow yarn hair and a red dress, three times (front, three-quarter, lying flat); draw ONE doll only, exactly this doll, with the same yellow yarn hair and the same red dress. Picture 2 is the empty cozy living room of Nan: warm cream walls, a light wooden floor, a blue sofa with one cushion and a folded blanket on its arm, a big round soft rug, a wooden toy box with a few toys at the right, and a small window at the left; use it as the background and keep the same room. Keep the soft, round, bright 3D render look of the pictures, not a 2D drawing and no outlines. The doll Pam: a small rag doll with short bright yellow yarn hair (a fringe and two short yarn bunches), a round cream cloth face with two round black button eyes, a small stitched smile, and a simple red dress with short sleeves. The picture: Pam, the doll, is the MAIN thing in the picture. A close shot at the camera height of the doll. The doll stands ALONE in the MIDDLE of the picture, large: the whole doll from the top of her yarn hair to her feet is in view, and she takes up about two thirds of the picture height. Her round cloth face with its two button eyes is big enough to read at book size. NO PERSON IS IN THE PICTURE: there is no girl, no child, no Nan, no hand, and no arm. The doll stands on the big round soft rug of picture 2, and the blue sofa, the toy box, and the window of picture 2 stay behind her, soft and simple. Exactly ONE figure: the doll. The doll has no eyes of her own other than her two round black button eyes, and no text on her dress. The page text is \"This is Pam.\" and is context only: do not draw any text. No text, no letters, no numbers, no logos, no writing on any picture or sign. The picture is for young children and is rated G. The doll is alone: no person and no hand anywhere in the picture. THE DOLL IS THE MAIN THING: the doll is large and in the middle of the picture, and the room behind her is soft and out of focus. The doll is not small, not in a bag, and not held by anybody.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No blush circles, no eyelash ticks, no hair strands, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. Draw the rag doll: its head, its hair fringe, each yarn bunch, its dress, each arm, and each leg are separate closed shapes; each button eye is a closed circle with a big solid black center; the stitched smile is one curve; no cheek circles. Draw no person, no child, no hand, and no arm. Simplify the background: draw only a few large, simple, closed shapes (the floor line, the wall line, the window as one closed rectangle with its curtain as one closed shape, the sofa as one closed shape with its cushion as one closed shape, the rug as one closed oval, the side table, the lamp, and the toy box as simple closed shapes). No wood grain lines, no floor plank lines, no wall texture, no hatching, no tick marks, no small details. Every outline is one closed line that never runs into a background line; no loose line ends anywhere. Every line inside an object ends on another line. Use few background shapes. No lines on the doll's dress other than its outline. The doll's hair is yarn: a fringe and two yarn bunches, never round buns.",
+  "print": "crop",
+  "aspect": "4:3",
+  "outDir": "out/storytime/l2/unit1/w04/muse"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "l2-w08-check-row-moon",
+  "text": "moon",
+  "pageText": "moon",
+  "use": "check-row",
+  "goal": "One bright moon, large in the middle of a white card, so a child can name it.",
+  "mustShow": [
+    "one moon",
+    "the round moon with a round hollow",
+    "the moon is large in the middle"
+  ],
+  "deliverAs": "l2-w08-check-row-moon-v1.png",
+  "references": [],
+  "colorPrompt": "Make one children's book picture for a child. No picture is given. Draw the object that this text describes, as a smooth, clean, bright, soft, round 3D render with a plain white background. The object is ONE moon: a round pale yellow moon with a few soft round hollows on its surface. The picture to make: a square picture of exactly ONE moon, large in the middle, filling most of the square, the whole object in view, seen from the front, so that its round shape reads clearly. Exactly one moon: no second one, no copies, no stars, and no sky in the picture. The background is plain white and empty, with at most a very soft shadow under the moon. The moon has no eyes and no face. The page text is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture of one object. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No fine detail, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. The moon is one closed circle. Each hollow on the moon is one small closed circle. Draw no stars and no sky. The moon has no eyes and no face: draw no eyes, no pupils, and no face anywhere. Every line inside the object ends on another line, with no loose ends. Draw only the moon: no ground line, no shadow, no background shapes. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/w08/muse"
+}

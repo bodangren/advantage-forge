@@ -1,0 +1,22 @@
+{
+  "id": "l2-w06-check-row-ten",
+  "text": "ten",
+  "pageText": "ten",
+  "use": "check-row",
+  "goal": "Ten red apples in two rows of five, on a white card, so a child can count them.",
+  "mustShow": [
+    "ten apples",
+    "two rows of five apples"
+  ],
+  "deliverAs": "l2-w06-check-row-ten-v2.png",
+  "references": [],
+  "colorPrompt": "Make one children's book picture for a child. No picture is given. Draw the objects that this text describes, as a smooth, clean, bright, soft, round 3D render with a plain white background. The objects are TEN red apples: round red apples with a small brown stem and one small green leaf each. The picture to make: a square picture with EXACTLY TEN red apples in two straight rows of exactly five apples each, evenly spaced with clear gaps between all the apples, in the middle of the square, with a wide empty white margin of about one tenth of the square on the left side, on the right side, at the top, and at the bottom, all ten apples fully in view. Each apple is separate: between every two neighboring apples, in a row and from row to row, there is a clear white gap about one third of an apple width, and no two apples touch or overlap. Count them: five in the top row and five in the bottom row, ten in all; no more and no fewer. The apples are round and red and they read as apples, not as plain circles, not as balls, and not as eggs. Nothing else is in the picture: no number, no letters, no other object. The background is plain white and empty, with at most a very soft shadow under each apple. The apples have no eyes and no face. The page text is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture of ten apples. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No fine detail, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. Draw exactly ten apples: five in the top row and five in the bottom row. Each apple is one closed round shape with a small closed stem shape and one small closed leaf shape, and no two apples touch. These objects have no eyes and no face: draw no eyes, no pupils, and no face anywhere. Every line inside an object ends on another line, with no loose ends. Draw only the ten apples: no ground line, no shadow, no background shapes. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/w06/muse"
+}

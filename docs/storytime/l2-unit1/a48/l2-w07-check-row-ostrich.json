@@ -1,0 +1,23 @@
+{
+  "id": "l2-w07-check-row-ostrich",
+  "text": "ostrich",
+  "pageText": "ostrich",
+  "use": "check-row",
+  "goal": "One ostrich with a long neck, long legs, and a black feather body, large in the middle of a white card, so a child can name it.",
+  "mustShow": [
+    "one ostrich",
+    "a long neck and long legs",
+    "the ostrich is large in the middle"
+  ],
+  "deliverAs": "l2-w07-check-row-ostrich-v1.png",
+  "references": [],
+  "colorPrompt": "Make one children's book picture for a child. No picture is given. Draw the object that this text describes, as a smooth, clean, bright, soft, round 3D render with a plain white background. The object is ONE ostrich: a big bird with a round black feather body, two long thin pink legs, a long thin neck, a small round head, a short flat beak, and big round eyes. The picture to make: a square picture of exactly ONE ostrich, large in the middle, filling most of the square, the whole bird in view, seen from the side so that the long neck and both long legs show clearly. The bird stands on the ground with its neck held up high. Exactly one ostrich: no second one, no copies, no egg, and no other animal in the picture. The background is plain white and empty, with at most a very soft shadow under the feet. The page text is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture of one object. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No fine detail, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. The ostrich body is one closed oval shape with no feather texture lines. The neck is one long closed shape, the head is one small closed round shape, the beak is one small closed shape, and each leg is one long closed shape. Each eye is one closed outline with one big solid black pupil (a filled black circle) inside it. Every line inside the object ends on another line, with no loose ends. Draw only the ostrich: no ground line, no shadow, no background shapes. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/w07/muse"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "l2-w08-check-row-mango",
+  "text": "mango",
+  "pageText": "mango",
+  "use": "check-row",
+  "goal": "One mango, large in the middle of a white card, so a child can name it.",
+  "mustShow": [
+    "one mango",
+    "an oval yellow and green fruit with a small stem",
+    "the mango is large in the middle"
+  ],
+  "deliverAs": "l2-w08-check-row-mango-v1.png",
+  "references": [],
+  "colorPrompt": "Make one children's book picture for a child. No picture is given. Draw the object that this text describes, as a smooth, clean, bright, soft, round 3D render with a plain white background. The object is ONE mango: one smooth oval fruit, yellow at the top and green at the bottom, with one small brown stem at the top. The picture to make: a square picture of exactly ONE mango, large in the middle, filling most of the square, the whole object in view, lying on its side at a small angle, so that its shape reads clearly. Exactly one mango: no second one, no copies, no apple, no pear, and no other fruit in the picture. The background is plain white and empty, with at most a very soft shadow under the fruit. The mango has no eyes and no face. The page text is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture of one object. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No fine detail, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. The mango is one closed oval shape and the stem is one small closed shape. Draw no leaf and no highlight lines. The mango has no eyes and no face: draw no eyes, no pupils, and no face anywhere. Every line inside the object ends on another line, with no loose ends. Draw only the mango: no ground line, no shadow, no background shapes. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/w08/muse"
+}

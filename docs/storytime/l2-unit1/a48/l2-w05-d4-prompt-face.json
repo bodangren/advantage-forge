@@ -1,0 +1,24 @@
+{
+  "id": "l2-w05-d4-prompt-face",
+  "text": "Draw your two eyes in the face.",
+  "pageText": "Draw your two eyes in the face.",
+  "use": "d4-prompt",
+  "goal": "A round child face outline with hair, a nose, and a mouth, and two empty places for the eyes, so the child can draw the eyes.",
+  "mustShow": [
+    "hair",
+    "a nose",
+    "a mouth",
+    "two empty places for the eyes"
+  ],
+  "deliverAs": "l2-w05-d4-prompt-face-v1.png",
+  "references": [],
+  "colorPrompt": "Make one drawing for a child's activity book. Draw it as clean black lines on a plain white background. The drawing is a round child FACE, seen from the front, and nothing else: no body, no arms, no hands, no background, no room. The face is one big round outline. The HAIR is drawn as one simple shape around the top of the round face: a fringe across the forehead and a short round hair shape at each side, in simple black outline lines, with no separate hair strands. The NOSE is one small simple shape in the middle of the face, below the middle. The MOUTH is one small smiling curve below the nose. There are TWO EMPTY PLACES for the eyes: two empty oval outlines, one on the left of the face and one on the right of the face, level with each other, above the nose. The two eye ovals are EMPTY: no pupil, no black dot, no filled color, and no eye inside them. The child will draw the eyes. The face has NO skin color and NO hair color: the drawing is black lines on white, so the child can color it. Every shape is a closed shape with one even line. No shading, no gray, no texture lines, no color, and no background shapes. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is already a black-line drawing on white. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. The round face is one closed circle. The hair is one closed shape with the fringe and the two side hair shapes as separate closed shapes. The nose is one small closed shape and the mouth is one closed curve. The two eye ovals stay EMPTY: no pupil, no dot, and no filled color inside them. Draw no body, no arms, no hands, and no background shapes. Every line ends on another line, with no loose ends. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/w05/muse"
+}
