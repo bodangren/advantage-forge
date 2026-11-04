@@ -106,3 +106,20 @@ plan_updates: T3a stays [~]; run 7 SHA added
 known_failures: none
 handoff: Rerun calibration with prompt v5.
 END_MEASURE_AGENT_RESULT
+
+Run 8 (bounded fix): cast.json look notes now come word for word from the specs that made the approved pictures (the text after "Keep each character exactly as in the pictures:" and the like), from the most recent week that holds the character. Each entry has a lookSource (the spec file) and a pictureNote. The cast sheets with a flat mockup at the top (pip, ben, may, sam, pat, mia) carry the note "The 3D figures are the cast. The small flat drawing at the top is an old mockup; ignore it." No cleaner single-character 3D render exists that the specs feed, so sources stay. The nurse note comes from the nurse page spec (character part only; the bag clause is left out). All 17 notes were checked as exact substrings of their lookSource spec. The script writes the same cast.json (cast-only step through heavy-run.sh); calibration-set.json and the batch files stayed unchanged. Judge prompt v5 not changed. No judge result file opened. No Muse or provider call. Spend 0.00 USD.
+Spec differences (chosen week first): ben w07 vs w02-w03 and w01 (w07 adds five-year-old chibi look, "with a fringe", happy smile); pat w06 vs w01-w03 (small smile, "(no teddy bear)" vs "holds no teddy bear and carries no bag"); may w07 vs w01-w03; sam w06 vs w01-w03 and one w05 page with bare feet; mia w06 vs w01-w03; nan w05 (two round buns with smooth red ring bands, no bun on top) vs w01 (two buns with red hair ties, small smile); tom w07 (as a five-year-old child) vs w04 (as Lily, a little taller than Lily).
+cast.json SHA-256: 0dd311f95dee5d138ebfd6f9db32f1e70e678424bcdef88352a3a96570d36da1
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: complete
+commits: fb8a7bd7 (cast + script), plan/log evidence commit follows
+tests_run: []
+files_changed: docs/storytime/l2-unit1/judge/cast.json, scripts/storytime-judge-set.mjs, plan.md, this log
+plan_updates: T3a stays [~]; run 8 SHA added
+known_failures: none
+handoff: Rerun the calibration with the new cast.json and prompt v5.
+END_MEASURE_AGENT_RESULT
