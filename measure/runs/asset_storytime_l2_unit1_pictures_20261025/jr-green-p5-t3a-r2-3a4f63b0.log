@@ -74,3 +74,19 @@ plan_updates: T3a stays [~]; run 5 SHA added
 known_failures: none
 handoff: Rerun the calibration with the new cast.json. Cast copies are in out/storytime-review/judge/cast/ (17 files).
 END_MEASURE_AGENT_RESULT
+
+Run 6 (bounded fix): judge-prompt.md version 4. Added an exception inside the prop rule for a question page (text asks whether a thing is there or what a thing is): the picture may hide the thing under a cover or in a container on purpose; check that the cover or shape, and any clue or thought bubble, is clear; a thought bubble that shows a different thing is correct when the text answers "No". The exception applies only to question pages; the v3 hidden-thing rule stays for pages that state a thing. Check order step a now also says whether the page is a question page. The example notes show it. Bar quote unchanged. No page, character, object, or id of the calibration set or the A-48 list is named. cast.json and the batch files not changed. No judge result file opened. No Muse or provider call. Spend 0.00 USD.
+Prompt SHA-256: dac7cfd582e23fda691b09f8e24ecb2dd478ed5012070db4a30017ef27c51625
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: complete
+commits: a4579931 (prompt), plan/log evidence commit follows
+tests_run: []
+files_changed: docs/storytime/l2-unit1/judge/judge-prompt.md, plan.md, this log
+plan_updates: T3a stays [~]; run 6 SHA added
+known_failures: none
+handoff: Rerun calibration with prompt v4.
+END_MEASURE_AGENT_RESULT
