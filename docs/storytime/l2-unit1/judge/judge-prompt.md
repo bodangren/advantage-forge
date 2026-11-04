@@ -1,6 +1,6 @@
 # Storytime L2 unit 1 picture judge: fixed prompt
 
-Version 4, 2026-11-04. Track `asset_storytime_l2_unit1_pictures_20261025`, task T3a.
+Version 5, 2026-11-04. Track `asset_storytime_l2_unit1_pictures_20261025`, task T3a.
 Judge: Sonnet (`claude-code/claude-sonnet-5-5`) with native image input.
 This prompt replaces the MiniMax and Kimi pre-checks of FR-9. The judge result is model evidence.
 It is not acceptance.
@@ -8,6 +8,17 @@ It is not acceptance.
 The orchestrator gives this prompt without change to the judge, with one batch file
 (`batch-<group>.json`) and the cast sheets (`cast.json`). The judge reads the picture files that
 the batch lists. The judge does not see the expected result of any file.
+
+## Batch fields
+
+Each batch entry has `judgeFile`, `id`, `kind`, `use`, and `pageText`. An entry may also have
+`mustShow`. This field is optional. It is a list of short phrases.
+
+When an entry has `mustShow`, each phrase names something that must be drawn and visible in the
+picture. An absent item is `wrong-or-missing-prop`. A phrase may name an action. A still picture
+cannot show motion, so for such a phrase check that the persons, body parts, and objects that the
+phrase states are drawn and visible. Add the result for each phrase to `notes`. An entry without
+`mustShow` follows the rules below only.
 
 ## Your task
 
@@ -27,7 +38,7 @@ For each file in the batch, give one verdict: `pass` or `fail`.
 4. Check the character against the cast sheets in `cast.json`. A wrong or changed character
    (hair, face, clothes, age, species, collar, color) is a hard defect.
 5. Check the picture against the page text in the batch (`pageText`). A wrong or missing prop,
-   action, count, or character that the sentence needs is a hard defect. Count each object that
+   count, or character that the sentence needs is a hard defect. Count each object that
    the sentence counts. The prop rule has four parts:
    - A named thing that is not drawn, or is hidden, covered (for example by a hand), or cut by
      the frame, is missing. That is `wrong-or-missing-prop`. Do not assume that a hidden thing
@@ -47,21 +58,28 @@ For each file in the batch, give one verdict: `pass` or `fail`.
    a different thing is correct when the text answers "No". The exception applies only to a
    question page. For a page that states a thing (for example "A ..." or "This is ..."), the
    hidden-thing rule above stays: hidden, covered, or cut by the frame is missing.
-6. The picture holds no words, letters, numbers, signatures, or watermarks. Text in the picture
+6. A still picture cannot show motion. An action that the sentence names is a note, not a fail.
+   Judge the persons, body parts, and objects that the action needs (they must be drawn and
+   visible), not the motion itself.
+7. A body part that the sentence names passes when a mark of it shows at its place, even a small
+   mark. It is missing only when no mark of it shows (for example, it is covered and nothing of
+   it is drawn).
+8. The picture holds no words, letters, numbers, signatures, or watermarks. Text in the picture
    is a hard defect.
-7. For a line-art file (`kind` is `line`), also check two more points. Gray or shading is a hard
+9. For a line-art file (`kind` is `line`), also check two more points. Gray or shading is a hard
    defect. A line gap that makes coloring hard is a hard defect. A line-art file must be black
    lines on white.
-8. Judge each file alone. Do not compare it with the other files of the batch to decide a verdict.
-9. Do not invent defects. Small marks stay notes (the bar lists them). A clear case of a hard
+10. Judge each file alone. Do not compare it with the other files of the batch to decide a verdict.
+11. Do not invent defects. Small marks stay notes (the bar lists them). A clear case of a hard
    defect class is a fail.
 
 ## Check order for each file
 
 Do these steps in this order for each file. Do step d last.
 
-a. From the page text, list each thing that the sentence names (person, animal, body part,
-   object, action) and each count. Also say whether the page is a question page.
+a. From the page text, list the persons, animals, body parts, and objects that the sentence
+   names, and each count. Write any action that the sentence names in `notes`. Also say whether
+   the page is a question page.
 b. For each item, say what you SEE in the picture at that place, in your own words. Do this
    before you compare it with the text.
 c. Decide for each item: it is drawn and visible, and it reads as that thing to a young child
@@ -111,7 +129,7 @@ Reply with one JSON object and nothing else. The object has the shape below.
       "verdict": "pass",
       "defectClass": null,
       "where": null,
-      "notes": "Question page: no. Items: a cat (1), a hat (1). Seen: an orange cat; a red hat on its head. Both drawn, visible, and clear to a child."
+      "notes": "Question page: no. Items: a cat (1), a hat (1). Action: none. Seen: an orange cat; a red hat on its head. Both drawn, visible, and clear to a child."
     },
     {
       "id": "l2-w00-example-row-b",
@@ -120,7 +138,7 @@ Reply with one JSON object and nothing else. The object has the shape below.
       "verdict": "fail",
       "defectClass": "text-in-picture",
       "where": "a word on the wall at the top left",
-      "notes": "Question page: no. Items: a bird (1), a kite (1). Seen: a blue bird; a red kite. Both clear. Small marks go here. The fail is the word on the wall."
+      "notes": "Question page: no. Items: a bird (1), a kite (1). Action: flying (note only). Seen: a blue bird; a red kite. Both clear. Small marks go here. The fail is the word on the wall."
     }
   ],
   "summary": { "files": 2, "pass": 1, "fail": 1 }
