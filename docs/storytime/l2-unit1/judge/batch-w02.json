@@ -1,0 +1,380 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-how-many-suns-one-v1.png",
+    "id": "l2-w02-story-page-how-many-suns-one",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "How many suns? One!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-how-many-suns-one-line-v1.png",
+    "id": "l2-w02-story-page-how-many-suns-one",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "How many suns? One!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-how-many-kites-two-v1.png",
+    "id": "l2-w02-story-page-how-many-kites-two",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "How many kites? Two!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-how-many-kites-two-line-v1.png",
+    "id": "l2-w02-story-page-how-many-kites-two",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "How many kites? Two!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-how-many-ducks-three-v1.png",
+    "id": "l2-w02-story-page-how-many-ducks-three",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "How many ducks? Three!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-how-many-ducks-three-line-v1.png",
+    "id": "l2-w02-story-page-how-many-ducks-three",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "How many ducks? Three!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-how-many-birds-four-v1.png",
+    "id": "l2-w02-story-page-how-many-birds-four",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "How many birds? Four!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-how-many-birds-four-line-v1.png",
+    "id": "l2-w02-story-page-how-many-birds-four",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "How many birds? Four!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-how-many-friends-six-v1.png",
+    "id": "l2-w02-story-page-how-many-friends-six",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "How many friends? Six!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-how-many-friends-six-line-v1.png",
+    "id": "l2-w02-story-page-how-many-friends-six",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "How many friends? Six!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-how-many-cakes-seven-v1.png",
+    "id": "l2-w02-story-page-how-many-cakes-seven",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "How many cakes? Seven!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-how-many-cakes-seven-line-v1.png",
+    "id": "l2-w02-story-page-how-many-cakes-seven",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "How many cakes? Seven!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-how-many-cakes-oh-no-pip-v1.png",
+    "id": "l2-w02-story-page-how-many-cakes-oh-no-pip",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "How many cakes? Oh no, Pip!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-how-many-cakes-oh-no-pip-line-v1.png",
+    "id": "l2-w02-story-page-how-many-cakes-oh-no-pip",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "How many cakes? Oh no, Pip!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-cover-how-many-v1.png",
+    "id": "l2-w02-cover-how-many",
+    "kind": "color",
+    "use": "cover",
+    "pageText": "How Many?"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-cover-how-many-line-v1.png",
+    "id": "l2-w02-cover-how-many",
+    "kind": "line",
+    "use": "cover",
+    "pageText": "How Many?"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-nan-can-v1.png",
+    "id": "l2-w02-story-page-nan-can",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Nan can."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-nan-can-line-v1.png",
+    "id": "l2-w02-story-page-nan-can",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Nan can."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-can-i-v1.png",
+    "id": "l2-w02-story-page-can-i",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Can I?"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-can-i-line-v1.png",
+    "id": "l2-w02-story-page-can-i",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Can I?"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-i-can-v1.png",
+    "id": "l2-w02-story-page-i-can",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "I can!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-i-can-line-v1.png",
+    "id": "l2-w02-story-page-i-can",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "I can!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-nan-can-b-v1.png",
+    "id": "l2-w02-story-page-nan-can-b",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Nan can."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-nan-can-b-line-v1.png",
+    "id": "l2-w02-story-page-nan-can-b",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Nan can."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-can-i-b-v1.png",
+    "id": "l2-w02-story-page-can-i-b",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Can I?"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-can-i-b-line-v1.png",
+    "id": "l2-w02-story-page-can-i-b",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Can I?"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-i-can-b-v1.png",
+    "id": "l2-w02-story-page-i-can-b",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "I can!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-i-can-b-line-v1.png",
+    "id": "l2-w02-story-page-i-can-b",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "I can!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-can-nan-v1.png",
+    "id": "l2-w02-story-page-can-nan",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Can Nan?"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-can-nan-line-v1.png",
+    "id": "l2-w02-story-page-can-nan",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Can Nan?"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-nan-and-i-can-v1.png",
+    "id": "l2-w02-story-page-nan-and-i-can",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Nan and I can!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-nan-and-i-can-line-v1.png",
+    "id": "l2-w02-story-page-nan-and-i-can",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Nan and I can!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-cover-can-i-v1.png",
+    "id": "l2-w02-cover-can-i",
+    "kind": "color",
+    "use": "cover",
+    "pageText": "Can I?"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-cover-can-i-line-v1.png",
+    "id": "l2-w02-cover-can-i",
+    "kind": "line",
+    "use": "cover",
+    "pageText": "Can I?"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-check-row-apple-v1.png",
+    "id": "l2-w02-check-row-apple",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "apple"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-check-row-apple-line-v1.png",
+    "id": "l2-w02-check-row-apple",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "apple"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-check-row-dog-v1.png",
+    "id": "l2-w02-check-row-dog",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "dog"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-check-row-dog-line-v1.png",
+    "id": "l2-w02-check-row-dog",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "dog"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-check-row-sun-v1.png",
+    "id": "l2-w02-check-row-sun",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "sun"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-check-row-sun-line-v1.png",
+    "id": "l2-w02-check-row-sun",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "sun"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-check-row-bus-v1.png",
+    "id": "l2-w02-check-row-bus",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "bus"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-check-row-bus-line-v1.png",
+    "id": "l2-w02-check-row-bus",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "bus"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-check-row-ant-v1.png",
+    "id": "l2-w02-check-row-ant",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "ant"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-check-row-ant-line-v1.png",
+    "id": "l2-w02-check-row-ant",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "ant"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-check-row-fish-v1.png",
+    "id": "l2-w02-check-row-fish",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "fish"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-check-row-fish-line-v1.png",
+    "id": "l2-w02-check-row-fish",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "fish"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-check-row-pig-v1.png",
+    "id": "l2-w02-check-row-pig",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "pig"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-check-row-pig-line-v1.png",
+    "id": "l2-w02-check-row-pig",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "pig"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-check-row-bed-v1.png",
+    "id": "l2-w02-check-row-bed",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "bed"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-check-row-bed-line-v1.png",
+    "id": "l2-w02-check-row-bed",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "bed"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-how-many-balls-five-v1.png",
+    "id": "l2-w02-story-page-how-many-balls-five",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "How many balls? Five!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-story-page-how-many-balls-five-line-v1.png",
+    "id": "l2-w02-story-page-how-many-balls-five",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "How many balls? Five!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-check-row-alligator-v1.png",
+    "id": "l2-w02-check-row-alligator",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "alligator"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w02/l2-w02-check-row-alligator-line-v1.png",
+    "id": "l2-w02-check-row-alligator",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "alligator"
+  }
+]

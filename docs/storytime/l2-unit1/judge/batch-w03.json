@@ -1,0 +1,394 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-it-is-red-v1.png",
+    "id": "l2-w03-story-page-it-is-red",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "It is red."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-it-is-red-line-v1.png",
+    "id": "l2-w03-story-page-it-is-red",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "It is red."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-it-is-blue-v1.png",
+    "id": "l2-w03-story-page-it-is-blue",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "It is blue."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-it-is-blue-line-v1.png",
+    "id": "l2-w03-story-page-it-is-blue",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "It is blue."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-it-is-yellow-v1.png",
+    "id": "l2-w03-story-page-it-is-yellow",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "It is yellow."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-it-is-yellow-line-v1.png",
+    "id": "l2-w03-story-page-it-is-yellow",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "It is yellow."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-it-is-green-v1.png",
+    "id": "l2-w03-story-page-it-is-green",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "It is green."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-it-is-green-line-v1.png",
+    "id": "l2-w03-story-page-it-is-green",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "It is green."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-it-is-orange-v1.png",
+    "id": "l2-w03-story-page-it-is-orange",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "It is orange."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-it-is-orange-line-v1.png",
+    "id": "l2-w03-story-page-it-is-orange",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "It is orange."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-it-is-pink-v1.png",
+    "id": "l2-w03-story-page-it-is-pink",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "It is pink."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-it-is-pink-line-v1.png",
+    "id": "l2-w03-story-page-it-is-pink",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "It is pink."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-it-is-purple-v1.png",
+    "id": "l2-w03-story-page-it-is-purple",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "It is purple."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-it-is-purple-line-v1.png",
+    "id": "l2-w03-story-page-it-is-purple",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "It is purple."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-it-is-pip-v1.png",
+    "id": "l2-w03-story-page-it-is-pip",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "It is Pip!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-it-is-pip-line-v1.png",
+    "id": "l2-w03-story-page-it-is-pip",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "It is Pip!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-cover-paint-v1.png",
+    "id": "l2-w03-cover-paint",
+    "kind": "color",
+    "use": "cover",
+    "pageText": "Paint!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-cover-paint-line-v1.png",
+    "id": "l2-w03-cover-paint",
+    "kind": "line",
+    "use": "cover",
+    "pageText": "Paint!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-nan-can-get-a-pan-v1.png",
+    "id": "l2-w03-story-page-nan-can-get-a-pan",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Nan can get a pan."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-nan-can-get-a-pan-line-v1.png",
+    "id": "l2-w03-story-page-nan-can-get-a-pan",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Nan can get a pan."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-i-can-get-a-pan-v1.png",
+    "id": "l2-w03-story-page-i-can-get-a-pan",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "I can get a pan."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-i-can-get-a-pan-line-v1.png",
+    "id": "l2-w03-story-page-i-can-get-a-pan",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "I can get a pan."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-a-pan-on-nan-v1.png",
+    "id": "l2-w03-story-page-a-pan-on-nan",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "A pan on Nan!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-a-pan-on-nan-line-v1.png",
+    "id": "l2-w03-story-page-a-pan-on-nan",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "A pan on Nan!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-can-i-get-the-pan-v1.png",
+    "id": "l2-w03-story-page-can-i-get-the-pan",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Can I get the pan?"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-can-i-get-the-pan-line-v1.png",
+    "id": "l2-w03-story-page-can-i-get-the-pan",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Can I get the pan?"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-i-can-get-the-pan-v1.png",
+    "id": "l2-w03-story-page-i-can-get-the-pan",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "I can get the pan!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-i-can-get-the-pan-line-v1.png",
+    "id": "l2-w03-story-page-i-can-get-the-pan",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "I can get the pan!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-a-nap-in-the-pan-v1.png",
+    "id": "l2-w03-story-page-a-nap-in-the-pan",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "A nap in the pan!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-a-nap-in-the-pan-line-v1.png",
+    "id": "l2-w03-story-page-a-nap-in-the-pan",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "A nap in the pan!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-cover-the-pan-v1.png",
+    "id": "l2-w03-cover-the-pan",
+    "kind": "color",
+    "use": "cover",
+    "pageText": "The Pan"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-cover-the-pan-line-v1.png",
+    "id": "l2-w03-cover-the-pan",
+    "kind": "line",
+    "use": "cover",
+    "pageText": "The Pan"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-check-row-pen-v1.png",
+    "id": "l2-w03-check-row-pen",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "pen"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-check-row-pen-line-v1.png",
+    "id": "l2-w03-check-row-pen",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "pen"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-check-row-cat-v1.png",
+    "id": "l2-w03-check-row-cat",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "cat"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-check-row-cat-line-v1.png",
+    "id": "l2-w03-check-row-cat",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "cat"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-check-row-sun-v1.png",
+    "id": "l2-w03-check-row-sun",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "sun"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-check-row-sun-line-v1.png",
+    "id": "l2-w03-check-row-sun",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "sun"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-check-row-dog-v1.png",
+    "id": "l2-w03-check-row-dog",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "dog"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-check-row-dog-line-v1.png",
+    "id": "l2-w03-check-row-dog",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "dog"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-check-row-pear-v1.png",
+    "id": "l2-w03-check-row-pear",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "pear"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-check-row-pear-line-v1.png",
+    "id": "l2-w03-check-row-pear",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "pear"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-check-row-bus-v1.png",
+    "id": "l2-w03-check-row-bus",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "bus"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-check-row-bus-line-v1.png",
+    "id": "l2-w03-check-row-bus",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "bus"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-check-row-fish-v1.png",
+    "id": "l2-w03-check-row-fish",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "fish"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-check-row-fish-line-v1.png",
+    "id": "l2-w03-check-row-fish",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "fish"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-check-row-hat-v1.png",
+    "id": "l2-w03-check-row-hat",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "hat"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-check-row-hat-line-v1.png",
+    "id": "l2-w03-check-row-hat",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "hat"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-check-row-pencil-v1.png",
+    "id": "l2-w03-check-row-pencil",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "pencil"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-check-row-pencil-line-v1.png",
+    "id": "l2-w03-check-row-pencil",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "pencil"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-a-pan-in-a-pan-v1.png",
+    "id": "l2-w03-story-page-a-pan-in-a-pan",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "A pan in a pan."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-a-pan-in-a-pan-line-v1.png",
+    "id": "l2-w03-story-page-a-pan-in-a-pan",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "A pan in a pan."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-a-pan-on-a-pan-v1.png",
+    "id": "l2-w03-story-page-a-pan-on-a-pan",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "A pan on a pan."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-a-pan-on-a-pan-line-v1.png",
+    "id": "l2-w03-story-page-a-pan-on-a-pan",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "A pan on a pan."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-nan-can-get-a-pan-m3-line.png",
+    "id": "l2-w03-story-page-nan-can-get-a-pan",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Nan can get a pan."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-nan-can-get-a-pan-m3-color.png",
+    "id": "l2-w03-story-page-nan-can-get-a-pan",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Nan can get a pan."
+  }
+]

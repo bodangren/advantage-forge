@@ -1,0 +1,62 @@
+{
+  "cast": [
+    {
+      "name": "nan",
+      "source": "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
+      "sourceSha256": "3be8077800958f03f349d203a0c99d1c974ccf3d0fe8dfe1862da316e4eda98a",
+      "file": "out/storytime-review/judge/cast/nan.png",
+      "note": "Nan: girl, black-brown hair, two round buns with red ring bands, orange T-shirt"
+    },
+    {
+      "name": "pip",
+      "source": "out/storytime/l2/unit1/w04/muse/elements/pip-ref-render.png",
+      "sourceSha256": "62ec330fbac3ab034fcd26cebb83f5a98a59431bf6c54780f8d6a3d836df1984",
+      "file": "out/storytime-review/judge/cast/pip.png",
+      "note": "Pip: puppy, golden-brown fur, cream chest and muzzle, floppy ears, red collar with gold tag"
+    },
+    {
+      "name": "tom",
+      "source": "out/storytime/l2/unit1/w04/muse/elements/cast-tom-sheet-m3-color.png",
+      "sourceSha256": "08442dbb6fdd8f101e1a491ffbe45797f766487483a3887d12990920e075d05b",
+      "file": "out/storytime-review/judge/cast/tom.png",
+      "note": "Tom: boy",
+      "role": "one of the 2 boys of \"He can see Pip!\" (audit E35)"
+    },
+    {
+      "name": "ben",
+      "source": "out/storytime/l2/unit1/w01/muse/elements/ben-ref-clean-2.png",
+      "sourceSha256": "c5632cd9d3412c8df7a5c25531e52158e2bcf5c1c55ef04fa7b0048285bb214e",
+      "file": "out/storytime-review/judge/cast/ben.png",
+      "note": "Ben: boy"
+    },
+    {
+      "name": "may",
+      "source": "out/storytime/l2/unit1/w07/muse/elements/may-ref-render.png",
+      "sourceSha256": "cdd6dc181bf4af9519fcbba74942dccc8e2ef040973c045d6564c84749fe5746",
+      "file": "out/storytime-review/judge/cast/may.png",
+      "note": "May: girl"
+    },
+    {
+      "name": "sam",
+      "source": "out/storytime/l2/unit1/w05/muse/elements/sam-ref-render.png",
+      "sourceSha256": "bee0fe172986b47f32966c6a9035109e65447f7e2b676d4f965ed6fe49c708f5",
+      "file": "out/storytime-review/judge/cast/sam.png",
+      "note": "Sam: boy",
+      "role": "one of the 2 boys of \"He can see Pip!\" (audit E35)"
+    },
+    {
+      "name": "pat",
+      "source": "out/sprout-pat/render.png",
+      "sourceSha256": "fa778af7ae6f47658b288f3ef80bfc95bfc4b55ae523d2ebdb1573e8a8a881e5",
+      "file": "out/storytime-review/judge/cast/pat.png",
+      "note": "Pat: boy with teddy"
+    },
+    {
+      "name": "pam-doll",
+      "source": "out/storytime/l2/unit1/w04/muse/elements/prop-doll-pam-sheet-m1-color.png",
+      "sourceSha256": "f742c67726c2b6d4fc8bfe780d11187af16c92028b13e1e180fd7e46b0f1c42c",
+      "file": "out/storytime-review/judge/cast/pam-doll.png",
+      "note": "Pam: the doll"
+    }
+  ]
+}

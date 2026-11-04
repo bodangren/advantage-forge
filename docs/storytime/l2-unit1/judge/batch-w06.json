@@ -1,0 +1,380 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-cat-v1.png",
+    "id": "l2-w06-story-page-i-can-see-a-cat",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "I can see a cat."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-cat-line-v1.png",
+    "id": "l2-w06-story-page-i-can-see-a-cat",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "I can see a cat."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-dog-v1.png",
+    "id": "l2-w06-story-page-i-can-see-a-dog",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "I can see a dog."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-dog-line-v1.png",
+    "id": "l2-w06-story-page-i-can-see-a-dog",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "I can see a dog."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-bird-v1.png",
+    "id": "l2-w06-story-page-i-can-see-a-bird",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "I can see a bird."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-bird-line-v1.png",
+    "id": "l2-w06-story-page-i-can-see-a-bird",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "I can see a bird."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-fish-v1.png",
+    "id": "l2-w06-story-page-i-can-see-a-fish",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "I can see a fish."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-fish-line-v1.png",
+    "id": "l2-w06-story-page-i-can-see-a-fish",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "I can see a fish."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-frog-v1.png",
+    "id": "l2-w06-story-page-i-can-see-a-frog",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "I can see a frog."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-frog-line-v1.png",
+    "id": "l2-w06-story-page-i-can-see-a-frog",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "I can see a frog."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-duck-v1.png",
+    "id": "l2-w06-story-page-i-can-see-a-duck",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "I can see a duck."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-duck-line-v1.png",
+    "id": "l2-w06-story-page-i-can-see-a-duck",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "I can see a duck."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-horse-v1.png",
+    "id": "l2-w06-story-page-i-can-see-a-horse",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "I can see a horse."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-horse-line-v1.png",
+    "id": "l2-w06-story-page-i-can-see-a-horse",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "I can see a horse."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-pip-v1.png",
+    "id": "l2-w06-story-page-i-can-see-pip",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "I can see Pip!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-pip-line-v1.png",
+    "id": "l2-w06-story-page-i-can-see-pip",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "I can see Pip!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-cover-i-can-see-v1.png",
+    "id": "l2-w06-cover-i-can-see",
+    "kind": "color",
+    "use": "cover",
+    "pageText": "I Can See"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-cover-i-can-see-line-v1.png",
+    "id": "l2-w06-cover-i-can-see",
+    "kind": "line",
+    "use": "cover",
+    "pageText": "I Can See"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-pat-sat-on-a-mat-v1.png",
+    "id": "l2-w06-story-page-pat-sat-on-a-mat",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Pat sat on a mat."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-pat-sat-on-a-mat-line-v1.png",
+    "id": "l2-w06-story-page-pat-sat-on-a-mat",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Pat sat on a mat."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-sam-sat-on-a-mat-v1.png",
+    "id": "l2-w06-story-page-sam-sat-on-a-mat",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Sam sat on a mat."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-sam-sat-on-a-mat-line-v1.png",
+    "id": "l2-w06-story-page-sam-sat-on-a-mat",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Sam sat on a mat."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-pat-can-see-a-map-v1.png",
+    "id": "l2-w06-story-page-pat-can-see-a-map",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Pat can see a map."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-pat-can-see-a-map-line-v1.png",
+    "id": "l2-w06-story-page-pat-can-see-a-map",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Pat can see a map."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-sam-can-see-a-pan-v1.png",
+    "id": "l2-w06-story-page-sam-can-see-a-pan",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Sam can see a pan."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-sam-can-see-a-pan-line-v1.png",
+    "id": "l2-w06-story-page-sam-can-see-a-pan",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Sam can see a pan."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-pip-sat-on-the-mat-v1.png",
+    "id": "l2-w06-story-page-pip-sat-on-the-mat",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Pip sat on the mat!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-pip-sat-on-the-mat-line-v1.png",
+    "id": "l2-w06-story-page-pip-sat-on-the-mat",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Pip sat on the mat!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-cover-tap-tap-v1.png",
+    "id": "l2-w06-cover-tap-tap",
+    "kind": "color",
+    "use": "cover",
+    "pageText": "Tap, Tap!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-cover-tap-tap-line-v1.png",
+    "id": "l2-w06-cover-tap-tap",
+    "kind": "line",
+    "use": "cover",
+    "pageText": "Tap, Tap!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-tiger-v1.png",
+    "id": "l2-w06-check-row-tiger",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "tiger"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-tiger-line-v1.png",
+    "id": "l2-w06-check-row-tiger",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "tiger"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-sun-v1.png",
+    "id": "l2-w06-check-row-sun",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "sun"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-sun-line-v1.png",
+    "id": "l2-w06-check-row-sun",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "sun"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-bag-v1.png",
+    "id": "l2-w06-check-row-bag",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "bag"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-bag-line-v1.png",
+    "id": "l2-w06-check-row-bag",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "bag"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-cup-v1.png",
+    "id": "l2-w06-check-row-cup",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "cup"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-cup-line-v1.png",
+    "id": "l2-w06-check-row-cup",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "cup"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-fish-v1.png",
+    "id": "l2-w06-check-row-fish",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "fish"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-fish-line-v1.png",
+    "id": "l2-w06-check-row-fish",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "fish"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-dog-v1.png",
+    "id": "l2-w06-check-row-dog",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "dog"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-dog-line-v1.png",
+    "id": "l2-w06-check-row-dog",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "dog"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-pen-v1.png",
+    "id": "l2-w06-check-row-pen",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "pen"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-pen-line-v1.png",
+    "id": "l2-w06-check-row-pen",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "pen"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-table-v1.png",
+    "id": "l2-w06-check-row-table",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "table"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-table-line-v1.png",
+    "id": "l2-w06-check-row-table",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "table"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-tap-tap-tap-v1.png",
+    "id": "l2-w06-story-page-tap-tap-tap",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Tap, tap, tap!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-tap-tap-tap-line-v1.png",
+    "id": "l2-w06-story-page-tap-tap-tap",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Tap, tap, tap!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-tap-tap-tap-b-v1.png",
+    "id": "l2-w06-story-page-tap-tap-tap-b",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Tap, tap, tap!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-tap-tap-tap-b-line-v1.png",
+    "id": "l2-w06-story-page-tap-tap-tap-b",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Tap, tap, tap!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-he-can-see-pip-v1.png",
+    "id": "l2-w06-story-page-he-can-see-pip",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "He can see Pip!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-he-can-see-pip-line-v1.png",
+    "id": "l2-w06-story-page-he-can-see-pip",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "He can see Pip!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-ten-v1.png",
+    "id": "l2-w06-check-row-ten",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "ten"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-ten-line-v1.png",
+    "id": "l2-w06-check-row-ten",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "ten"
+  }
+]

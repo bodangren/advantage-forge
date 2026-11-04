@@ -1,0 +1,380 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-ball-no-v1.png",
+    "id": "l2-w07-story-page-is-it-a-ball-no",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Is it a ball? No!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-ball-no-line-v1.png",
+    "id": "l2-w07-story-page-is-it-a-ball-no",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Is it a ball? No!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-doll-no-v1.png",
+    "id": "l2-w07-story-page-is-it-a-doll-no",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Is it a doll? No!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-doll-no-line-v1.png",
+    "id": "l2-w07-story-page-is-it-a-doll-no",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Is it a doll? No!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-car-no-v1.png",
+    "id": "l2-w07-story-page-is-it-a-car-no",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Is it a car? No!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-car-no-line-v1.png",
+    "id": "l2-w07-story-page-is-it-a-car-no",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Is it a car? No!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-kite-no-v1.png",
+    "id": "l2-w07-story-page-is-it-a-kite-no",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Is it a kite? No!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-kite-no-line-v1.png",
+    "id": "l2-w07-story-page-is-it-a-kite-no",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Is it a kite? No!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-drum-no-v1.png",
+    "id": "l2-w07-story-page-is-it-a-drum-no",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Is it a drum? No!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-drum-no-line-v1.png",
+    "id": "l2-w07-story-page-is-it-a-drum-no",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Is it a drum? No!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-train-no-v1.png",
+    "id": "l2-w07-story-page-is-it-a-train-no",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Is it a train? No!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-train-no-line-v1.png",
+    "id": "l2-w07-story-page-is-it-a-train-no",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Is it a train? No!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-teddy-no-v1.png",
+    "id": "l2-w07-story-page-is-it-a-teddy-no",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Is it a teddy? No!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-teddy-no-line-v1.png",
+    "id": "l2-w07-story-page-is-it-a-teddy-no",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Is it a teddy? No!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-pip-yes-v1.png",
+    "id": "l2-w07-story-page-is-it-pip-yes",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Is it Pip? Yes!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-pip-yes-line-v1.png",
+    "id": "l2-w07-story-page-is-it-pip-yes",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Is it Pip? Yes!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-cover-is-it-a-ball-v1.png",
+    "id": "l2-w07-cover-is-it-a-ball",
+    "kind": "color",
+    "use": "cover",
+    "pageText": "Is It a Ball?"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-cover-is-it-a-ball-line-v1.png",
+    "id": "l2-w07-cover-is-it-a-ball",
+    "kind": "line",
+    "use": "cover",
+    "pageText": "Is It a Ball?"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-tom-can-see-a-top-v1.png",
+    "id": "l2-w07-story-page-tom-can-see-a-top",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Tom can see a top."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-tom-can-see-a-top-line-v1.png",
+    "id": "l2-w07-story-page-tom-can-see-a-top",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Tom can see a top."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-tom-can-get-the-top-v1.png",
+    "id": "l2-w07-story-page-tom-can-get-the-top",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Tom can get the top."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-tom-can-get-the-top-line-v1.png",
+    "id": "l2-w07-story-page-tom-can-get-the-top",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Tom can get the top."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-the-top-on-a-mat-v1.png",
+    "id": "l2-w07-story-page-the-top-on-a-mat",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "The top on a mat."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-the-top-on-a-mat-line-v1.png",
+    "id": "l2-w07-story-page-the-top-on-a-mat",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "The top on a mat."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-the-top-is-on-mom-v1.png",
+    "id": "l2-w07-story-page-the-top-is-on-mom",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "The top is on Mom!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-the-top-is-on-mom-line-v1.png",
+    "id": "l2-w07-story-page-the-top-is-on-mom",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "The top is on Mom!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-run-tom-run-v1.png",
+    "id": "l2-w07-story-page-run-tom-run",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Run, Tom, run!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-run-tom-run-line-v1.png",
+    "id": "l2-w07-story-page-run-tom-run",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Run, Tom, run!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-can-tom-see-the-top-v1.png",
+    "id": "l2-w07-story-page-can-tom-see-the-top",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Can Tom see the top?"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-can-tom-see-the-top-line-v1.png",
+    "id": "l2-w07-story-page-can-tom-see-the-top",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Can Tom see the top?"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-the-top-is-on-pip-v1.png",
+    "id": "l2-w07-story-page-the-top-is-on-pip",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "The top is on Pip!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-the-top-is-on-pip-line-v1.png",
+    "id": "l2-w07-story-page-the-top-is-on-pip",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "The top is on Pip!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-cover-the-top-v1.png",
+    "id": "l2-w07-cover-the-top",
+    "kind": "color",
+    "use": "cover",
+    "pageText": "The Top"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-cover-the-top-line-v1.png",
+    "id": "l2-w07-cover-the-top",
+    "kind": "line",
+    "use": "cover",
+    "pageText": "The Top"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-octopus-v1.png",
+    "id": "l2-w07-check-row-octopus",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "octopus"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-octopus-line-v1.png",
+    "id": "l2-w07-check-row-octopus",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "octopus"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-sun-v1.png",
+    "id": "l2-w07-check-row-sun",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "sun"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-sun-line-v1.png",
+    "id": "l2-w07-check-row-sun",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "sun"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-bed-v1.png",
+    "id": "l2-w07-check-row-bed",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "bed"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-bed-line-v1.png",
+    "id": "l2-w07-check-row-bed",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "bed"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-cat-v1.png",
+    "id": "l2-w07-check-row-cat",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "cat"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-cat-line-v1.png",
+    "id": "l2-w07-check-row-cat",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "cat"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-ox-v1.png",
+    "id": "l2-w07-check-row-ox",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "ox"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-ox-line-v1.png",
+    "id": "l2-w07-check-row-ox",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "ox"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-fish-v1.png",
+    "id": "l2-w07-check-row-fish",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "fish"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-fish-line-v1.png",
+    "id": "l2-w07-check-row-fish",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "fish"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-pen-v1.png",
+    "id": "l2-w07-check-row-pen",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "pen"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-pen-line-v1.png",
+    "id": "l2-w07-check-row-pen",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "pen"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-bus-v1.png",
+    "id": "l2-w07-check-row-bus",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "bus"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-bus-line-v1.png",
+    "id": "l2-w07-check-row-bus",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "bus"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-the-top-on-a-pot-v1.png",
+    "id": "l2-w07-story-page-the-top-on-a-pot",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "The top on a pot!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-the-top-on-a-pot-line-v1.png",
+    "id": "l2-w07-story-page-the-top-on-a-pot",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "The top on a pot!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-olive-v1.png",
+    "id": "l2-w07-check-row-olive",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "olive"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-olive-line-v1.png",
+    "id": "l2-w07-check-row-olive",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "olive"
+  }
+]

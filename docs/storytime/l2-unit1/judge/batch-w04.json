@@ -1,0 +1,380 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-mom-v1.png",
+    "id": "l2-w04-story-page-this-is-my-mom",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "This is my mom."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-mom-line-v1.png",
+    "id": "l2-w04-story-page-this-is-my-mom",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "This is my mom."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-dad-v1.png",
+    "id": "l2-w04-story-page-this-is-my-dad",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "This is my dad."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-dad-line-v1.png",
+    "id": "l2-w04-story-page-this-is-my-dad",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "This is my dad."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-brother-v1.png",
+    "id": "l2-w04-story-page-this-is-my-brother",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "This is my brother."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-brother-line-v1.png",
+    "id": "l2-w04-story-page-this-is-my-brother",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "This is my brother."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-grandma-v1.png",
+    "id": "l2-w04-story-page-this-is-my-grandma",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "This is my grandma."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-grandma-line-v1.png",
+    "id": "l2-w04-story-page-this-is-my-grandma",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "This is my grandma."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-grandpa-v1.png",
+    "id": "l2-w04-story-page-this-is-my-grandpa",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "This is my grandpa."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-grandpa-line-v1.png",
+    "id": "l2-w04-story-page-this-is-my-grandpa",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "This is my grandpa."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-house-v1.png",
+    "id": "l2-w04-story-page-this-is-my-house",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "This is my house."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-house-line-v1.png",
+    "id": "l2-w04-story-page-this-is-my-house",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "This is my house."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-family-v1.png",
+    "id": "l2-w04-story-page-this-is-my-family",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "This is my family."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-family-line-v1.png",
+    "id": "l2-w04-story-page-this-is-my-family",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "This is my family."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-dog-pip-v1.png",
+    "id": "l2-w04-story-page-this-is-my-dog-pip",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "This is my dog, Pip!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-dog-pip-line-v1.png",
+    "id": "l2-w04-story-page-this-is-my-dog-pip",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "This is my dog, Pip!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-cover-my-family-v1.png",
+    "id": "l2-w04-cover-my-family",
+    "kind": "color",
+    "use": "cover",
+    "pageText": "My Family"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-cover-my-family-line-v1.png",
+    "id": "l2-w04-cover-my-family",
+    "kind": "line",
+    "use": "cover",
+    "pageText": "My Family"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-pam-can-nap-v1.png",
+    "id": "l2-w04-story-page-pam-can-nap",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Pam can nap."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-pam-can-nap-line-v1.png",
+    "id": "l2-w04-story-page-pam-can-nap",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Pam can nap."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-pam-is-in-a-pan-v1.png",
+    "id": "l2-w04-story-page-pam-is-in-a-pan",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Pam is in a pan."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-pam-is-in-a-pan-line-v1.png",
+    "id": "l2-w04-story-page-pam-is-in-a-pan",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Pam is in a pan."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-pam-is-on-a-map-v1.png",
+    "id": "l2-w04-story-page-pam-is-on-a-map",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Pam is on a map."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-pam-is-on-a-map-line-v1.png",
+    "id": "l2-w04-story-page-pam-is-on-a-map",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Pam is on a map."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-pam-is-on-a-man-v1.png",
+    "id": "l2-w04-story-page-pam-is-on-a-man",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Pam is on a man!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-pam-is-on-a-man-line-v1.png",
+    "id": "l2-w04-story-page-pam-is-on-a-man",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Pam is on a man!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-is-this-pam-v1.png",
+    "id": "l2-w04-story-page-is-this-pam",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Is this Pam?"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-is-this-pam-line-v1.png",
+    "id": "l2-w04-story-page-is-this-pam",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Is this Pam?"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-the-man-v1.png",
+    "id": "l2-w04-story-page-this-is-the-man",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "This is the man!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-the-man-line-v1.png",
+    "id": "l2-w04-story-page-this-is-the-man",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "This is the man!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-nan-and-pam-nap-v1.png",
+    "id": "l2-w04-story-page-nan-and-pam-nap",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Nan and Pam nap."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-nan-and-pam-nap-line-v1.png",
+    "id": "l2-w04-story-page-nan-and-pam-nap",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Nan and Pam nap."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-cover-pam-v1.png",
+    "id": "l2-w04-cover-pam",
+    "kind": "color",
+    "use": "cover",
+    "pageText": "Pam"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-cover-pam-line-v1.png",
+    "id": "l2-w04-cover-pam",
+    "kind": "line",
+    "use": "cover",
+    "pageText": "Pam"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-monkey-v1.png",
+    "id": "l2-w04-check-row-monkey",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "monkey"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-monkey-line-v1.png",
+    "id": "l2-w04-check-row-monkey",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "monkey"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-cat-v1.png",
+    "id": "l2-w04-check-row-cat",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "cat"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-cat-line-v1.png",
+    "id": "l2-w04-check-row-cat",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "cat"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-sun-v1.png",
+    "id": "l2-w04-check-row-sun",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "sun"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-sun-line-v1.png",
+    "id": "l2-w04-check-row-sun",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "sun"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-dog-v1.png",
+    "id": "l2-w04-check-row-dog",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "dog"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-dog-line-v1.png",
+    "id": "l2-w04-check-row-dog",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "dog"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-mouse-v1.png",
+    "id": "l2-w04-check-row-mouse",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "mouse"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-mouse-line-v1.png",
+    "id": "l2-w04-check-row-mouse",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "mouse"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-bus-v1.png",
+    "id": "l2-w04-check-row-bus",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "bus"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-bus-line-v1.png",
+    "id": "l2-w04-check-row-bus",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "bus"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-fish-v1.png",
+    "id": "l2-w04-check-row-fish",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "fish"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-fish-line-v1.png",
+    "id": "l2-w04-check-row-fish",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "fish"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-hat-v1.png",
+    "id": "l2-w04-check-row-hat",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "hat"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-hat-line-v1.png",
+    "id": "l2-w04-check-row-hat",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "hat"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-pam-v1.png",
+    "id": "l2-w04-story-page-this-is-pam",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "This is Pam."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-pam-line-v1.png",
+    "id": "l2-w04-story-page-this-is-pam",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "This is Pam."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-milk-v1.png",
+    "id": "l2-w04-check-row-milk",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "milk"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-milk-line-v1.png",
+    "id": "l2-w04-check-row-milk",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "milk"
+  }
+]

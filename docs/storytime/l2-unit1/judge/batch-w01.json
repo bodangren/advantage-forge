@@ -1,0 +1,429 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-hello-i-am-pat-v1.png",
+    "id": "l2-w01-story-page-hello-i-am-pat",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Hello, I am Pat."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-hello-i-am-pat-line-v1.png",
+    "id": "l2-w01-story-page-hello-i-am-pat",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Hello, I am Pat."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-hello-i-am-may-v1.png",
+    "id": "l2-w01-story-page-hello-i-am-may",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Hello, I am May."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-hello-i-am-may-line-v1.png",
+    "id": "l2-w01-story-page-hello-i-am-may",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Hello, I am May."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-hello-i-am-sam-v1.png",
+    "id": "l2-w01-story-page-hello-i-am-sam",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Hello, I am Sam."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-hello-i-am-sam-line-v1.png",
+    "id": "l2-w01-story-page-hello-i-am-sam",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Hello, I am Sam."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-hello-i-am-mia-v1.png",
+    "id": "l2-w01-story-page-hello-i-am-mia",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Hello, I am Mia."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-hello-i-am-mia-line-v1.png",
+    "id": "l2-w01-story-page-hello-i-am-mia",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Hello, I am Mia."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-hello-i-am-nan-v1.png",
+    "id": "l2-w01-story-page-hello-i-am-nan",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Hello, I am Nan."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-hello-i-am-nan-line-v1.png",
+    "id": "l2-w01-story-page-hello-i-am-nan",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Hello, I am Nan."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-hello-i-am-ben-v1.png",
+    "id": "l2-w01-story-page-hello-i-am-ben",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Hello, I am Ben."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-hello-i-am-ben-line-v1.png",
+    "id": "l2-w01-story-page-hello-i-am-ben",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Hello, I am Ben."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-hello-i-am-your-teacher-v1.png",
+    "id": "l2-w01-story-page-hello-i-am-your-teacher",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Hello, I am your teacher."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-hello-i-am-your-teacher-line-v1.png",
+    "id": "l2-w01-story-page-hello-i-am-your-teacher",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Hello, I am your teacher."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-cover-hello-v1.png",
+    "id": "l2-w01-cover-hello",
+    "kind": "color",
+    "use": "cover",
+    "pageText": "Hello!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-cover-hello-line-v1.png",
+    "id": "l2-w01-cover-hello",
+    "kind": "line",
+    "use": "cover",
+    "pageText": "Hello!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-a-net-v2.png",
+    "id": "l2-w01-story-page-a-net",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "A net."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-a-net-line-v2.png",
+    "id": "l2-w01-story-page-a-net",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "A net."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-a-nose-v2.png",
+    "id": "l2-w01-story-page-a-nose",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "A nose."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-a-nose-line-v2.png",
+    "id": "l2-w01-story-page-a-nose",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "A nose."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-a-nurse-v1.png",
+    "id": "l2-w01-story-page-a-nurse",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "A nurse."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-a-nurse-line-v1.png",
+    "id": "l2-w01-story-page-a-nurse",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "A nurse."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-nan-can-nod-v2.png",
+    "id": "l2-w01-story-page-nan-can-nod",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Nan can nod!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-nan-can-nod-line-v2.png",
+    "id": "l2-w01-story-page-nan-can-nod",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Nan can nod!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-cover-nan-can-nod-v1.png",
+    "id": "l2-w01-cover-nan-can-nod",
+    "kind": "color",
+    "use": "cover",
+    "pageText": "Nan Can Nod"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-cover-nan-can-nod-line-v1.png",
+    "id": "l2-w01-cover-nan-can-nod",
+    "kind": "line",
+    "use": "cover",
+    "pageText": "Nan Can Nod"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-check-row-nest-v1.png",
+    "id": "l2-w01-check-row-nest",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "nest"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-check-row-nest-line-v1.png",
+    "id": "l2-w01-check-row-nest",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "nest"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-check-row-cat-v1.png",
+    "id": "l2-w01-check-row-cat",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "cat"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-check-row-cat-line-v1.png",
+    "id": "l2-w01-check-row-cat",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "cat"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-check-row-fish-v1.png",
+    "id": "l2-w01-check-row-fish",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "fish"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-check-row-fish-line-v1.png",
+    "id": "l2-w01-check-row-fish",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "fish"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-check-row-dog-v1.png",
+    "id": "l2-w01-check-row-dog",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "dog"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-check-row-dog-line-v1.png",
+    "id": "l2-w01-check-row-dog",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "dog"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-check-row-bus-v1.png",
+    "id": "l2-w01-check-row-bus",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "bus"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-check-row-bus-line-v1.png",
+    "id": "l2-w01-check-row-bus",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "bus"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-check-row-hat-v1.png",
+    "id": "l2-w01-check-row-hat",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "hat"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-check-row-hat-line-v1.png",
+    "id": "l2-w01-check-row-hat",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "hat"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-check-row-cup-v1.png",
+    "id": "l2-w01-check-row-cup",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "cup"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-check-row-cup-line-v1.png",
+    "id": "l2-w01-check-row-cup",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "cup"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-check-row-net-v2.png",
+    "id": "l2-w01-check-row-net",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "net"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-check-row-net-line-v2.png",
+    "id": "l2-w01-check-row-net",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "net"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-practice-line-nest-v1.png",
+    "id": "l2-w01-practice-line-nest",
+    "kind": "color",
+    "use": "practice-line",
+    "pageText": "nest"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-practice-line-nest-line-v1.png",
+    "id": "l2-w01-practice-line-nest",
+    "kind": "line",
+    "use": "practice-line",
+    "pageText": "nest"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-practice-line-nut-v1.png",
+    "id": "l2-w01-practice-line-nut",
+    "kind": "color",
+    "use": "small",
+    "pageText": ""
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-practice-line-nut-line-v1.png",
+    "id": "l2-w01-practice-line-nut",
+    "kind": "line",
+    "use": "small",
+    "pageText": ""
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-hello-i-am-pip-v1.png",
+    "id": "l2-w01-story-page-hello-i-am-pip",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "Hello, I am Pip!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-hello-i-am-pip-line-v1.png",
+    "id": "l2-w01-story-page-hello-i-am-pip",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "Hello, I am Pip!"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-a-nest-v1.png",
+    "id": "l2-w01-story-page-a-nest",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "A nest."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-a-nest-line-v1.png",
+    "id": "l2-w01-story-page-a-nest",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "A nest."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-a-nut-v1.png",
+    "id": "l2-w01-story-page-a-nut",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "A nut."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-a-nut-line-v1.png",
+    "id": "l2-w01-story-page-a-nut",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "A nut."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-a-neck-v1.png",
+    "id": "l2-w01-story-page-a-neck",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "A neck."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-a-neck-line-v1.png",
+    "id": "l2-w01-story-page-a-neck",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "A neck."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-a-nest-and-a-nut-v1.png",
+    "id": "l2-w01-story-page-a-nest-and-a-nut",
+    "kind": "color",
+    "use": "story-page",
+    "pageText": "A nest and a nut."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-a-nest-and-a-nut-line-v1.png",
+    "id": "l2-w01-story-page-a-nest-and-a-nut",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "A nest and a nut."
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-check-row-nose-v1.png",
+    "id": "l2-w01-check-row-nose",
+    "kind": "color",
+    "use": "check-row",
+    "pageText": "nose"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-check-row-nose-line-v1.png",
+    "id": "l2-w01-check-row-nose",
+    "kind": "line",
+    "use": "check-row",
+    "pageText": "nose"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-practice-line-nose-v1.png",
+    "id": "l2-w01-practice-line-nose",
+    "kind": "color",
+    "use": "practice-line",
+    "pageText": "nose"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-practice-line-nose-line-v1.png",
+    "id": "l2-w01-practice-line-nose",
+    "kind": "line",
+    "use": "practice-line",
+    "pageText": "nose"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-a-nose-line-v1.png",
+    "id": "l2-w01-story-page-a-nose",
+    "kind": "line",
+    "use": "story-page",
+    "pageText": "A nose."
+  }
+]
