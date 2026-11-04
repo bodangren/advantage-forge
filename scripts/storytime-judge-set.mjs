@@ -97,18 +97,29 @@ const FAILS = [
   },
 ];
 
-// Cast sheets for the judge: name, source reference, and a short note on identity.
+// Cast sheets for the judge: name, the file that the approved picture specs feed to Muse, and a
+// neutral look note (hair, clothes, age). `size` is the long side of the copy (default 512).
+// The cast list covers every character that the color prompts of weeks 1 to 7 and the cover
+// name. A character with no reference file has `source: null` and a note from the spec text.
 const CAST = [
-  { name: 'nan', source: 'out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png', note: 'Nan: girl, black-brown hair, two round buns with red ring bands, orange T-shirt' },
+  { name: 'nan', source: 'out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png', note: 'Nan: girl, black-brown hair, two round buns with red ring bands, orange T-shirt with a star, red shorts' },
   { name: 'pip', source: 'out/storytime/l2/unit1/w04/muse/elements/pip-ref-render.png', note: 'Pip: puppy, golden-brown fur, cream chest and muzzle, floppy ears, red collar with gold tag' },
-  { name: 'tom', source: 'out/storytime/l2/unit1/w04/muse/elements/cast-tom-sheet-m3-color.png', note: 'Tom: boy' },
-  { name: 'ben', source: 'out/storytime/l2/unit1/w01/muse/elements/ben-ref-clean-2.png', note: 'Ben: boy' },
-  { name: 'may', source: 'out/storytime/l2/unit1/w07/muse/elements/may-ref-render.png', note: 'May: girl' },
-  { name: 'sam', source: 'out/storytime/l2/unit1/w05/muse/elements/sam-ref-render.png', note: 'Sam: boy' },
-  { name: 'pat', source: 'out/sprout-pat/render.png', note: 'Pat: boy with teddy' },
-  { name: 'pam-doll', source: 'out/storytime/l2/unit1/w04/muse/elements/prop-doll-pam-sheet-m1-color.png', note: 'Pam: the doll' },
+  { name: 'ben', source: 'out/storytime/l2/unit1/w01/muse/elements/ben-ref-clean-2.png', note: 'Ben: boy, light-brown tousled hair, light-blue T-shirt, blue trousers, gray shoes' },
+  { name: 'tom', source: 'out/storytime/l2/unit1/w04/muse/elements/cast-tom-sheet-m3-color.png', note: 'Tom: boy, dark-brown side-swept hair, dark-blue T-shirt, tan shorts, red shoes' },
+  { name: 'may', source: 'out/storytime/l2/unit1/w07/muse/elements/may-ref-render.png', note: 'May: girl, black hair in a side ponytail with a small yellow clip, yellow T-shirt, blue skirt, white socks and shoes' },
+  { name: 'sam', source: 'out/storytime/l2/unit1/w05/muse/elements/sam-ref-render.png', note: 'Sam: boy, brown hair, red T-shirt with white stripes, blue shorts, blue shoes' },
+  { name: 'pat', source: 'out/storytime-review/batch-22/sprout-pat-render.png', note: 'Pat: boy, short spiky black hair, green T-shirt, brown shorts, brown sandals, holds a brown teddy bear' },
+  { name: 'mia', source: 'out/storytime/l2/unit1/w06/muse/elements/mia-ref-render.png', note: 'Mia: girl drawn young, about five years old; light-brown shoulder-length hair, small pink bow on the side, pink T-shirt, blue denim overalls, white shoes' },
+  { name: 'pam-doll', source: 'out/storytime/l2/unit1/w04/muse/elements/prop-doll-pam-sheet-m1-color.png', note: 'Pam: a cloth doll, cream face with black button eyes, yellow yarn hair in two pigtails with a fringe, red dress' },
+  { name: 'teacher-kim', source: 'out/storytime/l2/unit1/w01/muse/elements/cast-group-b-2.png', size: 1024, note: 'Teacher Kim: adult woman, third from the left in this group picture, medium-length dark-brown hair in a low ponytail, soft green cardigan over a cream blouse, navy trousers, brown flat shoes; the group also shows Ben, Nan, and Pip' },
+  { name: 'nurse', source: 'out/storytime-review/muse-cast/nurse-sheet.png', note: 'School nurse: adult woman of about thirty, short black hair, small white nurse cap, white short-sleeved tunic, white trousers, white shoes' },
+  { name: 'mom', source: 'out/storytime/l2/unit1/w04/muse/elements/cast-mom-sheet-m1-color.png', note: 'Mom: adult woman of about thirty-five, wavy shoulder-length dark-brown hair with a side parting, coral-pink blouse, blue jeans, white sneakers' },
+  { name: 'dad', source: 'out/storytime/l2/unit1/w04/muse/elements/cast-dad-sheet-m1-color.png', note: 'Dad: adult man of about thirty-eight, short dark-brown hair with a side parting, mustard-yellow polo shirt, dark-blue jeans, brown shoes' },
+  { name: 'lily', source: 'out/storytime/l2/unit1/w04/muse/elements/cast-lily-sheet-m1-color.png', note: 'Lily: girl of five, short dark-brown bob with a straight fringe and a small lilac hair clip, lilac dress with a small white collar, white socks, pink shoes' },
+  { name: 'grandma', source: 'out/storytime/l2/unit1/w04/muse/elements/cast-grandma-sheet-m2-color.png', note: 'Grandma: older woman of about sixty-five, short curly silver-gray hair, rose-red cardigan over a cream blouse, long dark-blue skirt, brown shoes' },
+  { name: 'grandpa', source: 'out/storytime/l2/unit1/w04/muse/elements/cast-grandpa-sheet-m2-color.png', note: 'Grandpa: older man of about seventy, short white hair and a small white mustache, green knitted vest over a white shirt, brown trousers, brown shoes' },
+  { name: 'nans-dad', source: 'out/storytime/l2/unit1/w04/muse/elements/cast-man-sheet-m1-color.png', note: "Nan's dad (the man): adult man of about thirty-five, short straight black hair, blue T-shirt, gray shorts, black sandals" },
 ];
-const BOYS = ['tom', 'sam']; // the 2 boys of audit E35 ("He can see Pip!"): Sam and Tom
 
 const readList = () => {
   const buf = readFileSync(LIST);
@@ -176,7 +187,28 @@ const manifestEntries = (manifestPath, group, byId) => {
   return out;
 };
 
+// Cast sheets: small copies for the judge, and cast.json.
+const writeCast = async () => {
+  const castOut = join(JUDGE_ROOT, 'cast');
+  mkdirSync(castOut, { recursive: true });
+  const castList = [];
+  for (const c of CAST) {
+    const buf = readFileSync(join(ROOT, c.source));
+    const resized = await sharp(buf).resize({ width: c.size ?? 512, height: c.size ?? 512, fit: 'inside', withoutEnlargement: true }).png({ compressionLevel: 9 }).toBuffer();
+    const file = `out/storytime-review/judge/cast/${c.name}.png`;
+    writeFileSync(join(ROOT, file), resized);
+    castList.push({ name: c.name, source: c.source, sourceSha256: sha256(buf), file, note: c.note });
+  }
+  writeFileSync(join(DOCS_DIR, 'cast.json'), JSON.stringify({ cast: castList }, null, 2) + '\n');
+  console.log(`cast: ${castList.length} characters`);
+};
+
 const main = async () => {
+  if (process.argv.includes('--cast-only')) {
+    mkdirSync(DOCS_DIR, { recursive: true });
+    await writeCast();
+    return;
+  }
   const { byId, rows } = readList();
   const listInfo = { version: LIST_VERSION, sha256: LIST_SHA256, path: LIST, rows: rows.length };
 
@@ -252,22 +284,7 @@ const main = async () => {
     JSON.stringify({ list: listInfo, pictureListSha256: LIST_SHA256, entries: ordered }, null, 2) + '\n',
   );
 
-  // Cast sheets: small copies for the judge.
-  const castOut = join(JUDGE_ROOT, 'cast');
-  mkdirSync(castOut, { recursive: true });
-  const castList = [];
-  for (const c of CAST) {
-    const buf = readFileSync(join(ROOT, c.source));
-    const resized = await sharp(buf).resize({ width: 512, height: 512, fit: 'inside', withoutEnlargement: true }).png({ compressionLevel: 9 }).toBuffer();
-    const file = `out/storytime-review/judge/cast/${c.name}.png`;
-    writeFileSync(join(ROOT, file), resized);
-    castList.push({ name: c.name, source: c.source, sourceSha256: sha256(buf), file, note: c.note });
-  }
-  for (const b of BOYS) {
-    const hit = castList.find((c) => c.name === b);
-    if (hit) hit.role = 'one of the 2 boys of "He can see Pip!" (audit E35)';
-  }
-  writeFileSync(join(DOCS_DIR, 'cast.json'), JSON.stringify({ cast: castList }, null, 2) + '\n');
+  await writeCast();
 
   for (const [g, list] of byGroup) console.log(`group ${g}: ${list.length} judge files`);
   console.log(`entries total: ${entries.length}`);
