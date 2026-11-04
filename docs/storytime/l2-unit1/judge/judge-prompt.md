@@ -1,6 +1,6 @@
 # Storytime L2 unit 1 picture judge: fixed prompt
 
-Version 5, 2026-11-04. Track `asset_storytime_l2_unit1_pictures_20261025`, task T3a.
+Version 6, 2026-11-04. Track `asset_storytime_l2_unit1_pictures_20261025`, task T3a.
 Judge: Sonnet (`claude-code/claude-sonnet-5-5`) with native image input.
 This prompt replaces the MiniMax and Kimi pre-checks of FR-9. The judge result is model evidence.
 It is not acceptance.
@@ -20,6 +20,10 @@ cannot show motion, so for such a phrase check that the persons, body parts, and
 phrase states are drawn and visible. Add the result for each phrase to `notes`. An entry without
 `mustShow` follows the rules below only.
 
+When an entry has `use` `cover`, its page text is the book title. A title names the subject of
+the book. It does not count things and does not say how many people hold the thing. On a cover,
+check that the subject shows and that the characters match the cast.
+
 ## Your task
 
 You judge children's book pictures for Storytime Advantage Level 2. Each picture is a color
@@ -36,7 +40,9 @@ For each file in the batch, give one verdict: `pass` or `fail`.
    picture. A fail without a defect class is not allowed. If the defect is a case of rule 5, the
    class is `wrong-or-missing-prop`.
 4. Check the character against the cast sheets in `cast.json`. A wrong or changed character
-   (hair, face, clothes, age, species, collar, color) is a hard defect.
+   (hair, face, clothes, age, species, collar, color) is a hard defect. Held things, bags, and
+   carried things are props of the page, not part of the character. A character who holds or
+   carries a thing that the cast note does not mention is not a changed character.
 5. Check the picture against the page text in the batch (`pageText`). A wrong or missing prop,
    count, or character that the sentence needs is a hard defect. Count each object that
    the sentence counts. The prop rule has four parts:
