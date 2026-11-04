@@ -3,10 +3,10 @@
 // The script scripts/storytime-judge-batch.mjs builds one judge batch for the A-48 pictures.
 // It makes no provider call. The tests cover the pure rules and the file work:
 //   - the printed long side of a use: 900 px for a story page, 360 px for every other card;
-//   - the name of the source file of a color try and of a line try;
+//   - the source file of a try comes from the restart rows of the costs.tsv of the week folder;
 //   - the batch entry shape: judgeFile, id, kind, pageText, use, and mustShow;
 //   - the judge copy at the printed size;
-//   - a missing source file is an error and writes no copy.
+//   - a try that does not exist is an error and writes no copy.
 
 import { mkdtempSync, existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
@@ -18,7 +18,9 @@ import {
   judgeFileName,
   longSideOf,
   parseArgs,
-  sourceFileName,
+  parseCostRows,
+  restartTries,
+  trySourceName,
 } from '../scripts/storytime-judge-batch.mjs';
 
 let root: string;
@@ -66,14 +68,34 @@ const writeSpec = (spec: Record<string, unknown>) => {
 };
 
 /** A source picture in the week folder of the spec, at the size of a Muse color call. */
-async function writeSource(spec: Record<string, unknown>, name: string, width = 1920, height = 1280) {
+async function writeSource(
+  spec: Record<string, unknown>,
+  name: string,
+  width = 1920,
+  height = 1280,
+  background = '#88ccff',
+) {
   const dir = path.join(root, spec.outDir as string);
   mkdirSync(dir, { recursive: true });
   const file = path.join(dir, name);
-  const png = await sharp({ create: { width, height, channels: 3, background: '#88ccff' } }).png().toBuffer();
+  const png = await sharp({ create: { width, height, channels: 3, background } }).png().toBuffer();
   writeFileSync(file, png);
   return file;
 }
+
+/** One row of a costs.tsv. */
+const costRow = (time: string, row: string, version: string, kind: string, output: string) =>
+  `${time}\t${row}\t${version}\t${kind}\tin\t${output}\t1920x1280\t0.01\tok`;
+
+/** A costs.tsv of a week folder. */
+const writeCosts = (spec: Record<string, unknown>, lines: string[]) => {
+  const dir = path.join(root, spec.outDir as string);
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(
+    path.join(dir, 'costs.tsv'),
+    `time\trow\tversion\tkind\tinputs\toutput\tsize\tusage_cost\tnote\n${lines.join('\n')}\n`,
+  );
+};
 
 describe('the judge batch rules', () => {
   it('prints a story page at 900 px and every other card at 360 px', () => {
@@ -83,10 +105,25 @@ describe('the judge batch rules', () => {
     expect(longSideOf('d4-prompt')).toBe(360);
   });
 
-  it('names the source file of a color try and of a line try', () => {
-    expect(sourceFileName('l2-w01-story-page-a-nest', 'color', 2)).toBe('l2-w01-story-page-a-nest-m2-color.png');
-    expect(sourceFileName('l2-w01-story-page-a-nest', 'line', 1, 1)).toBe('l2-w01-story-page-a-nest-m1-line.png');
-    expect(sourceFileName('l2-w01-story-page-a-nest', 'line', 3, 1)).toBe('l2-w01-story-page-a-nest-m1-line-3.png');
+  it('takes the source file of a try from the restart rows of the costs.tsv', () => {
+    const rows = parseCostRows(
+      `time\trow\tversion\tkind\tinputs\toutput\tsize\tusage_cost\tnote\n` +
+        [
+          costRow('2026-11-03T07:54:01', 'l2-w01-story-page-a-nest', 'm1', 'color', 'l2-w01-story-page-a-nest-m1-color.png'),
+          costRow('2026-11-05T07:54:01', 'l2-w01-story-page-a-nest', 'm4', 'color', 'l2-w01-story-page-a-nest-m4-color.png'),
+          costRow('2026-11-05T07:55:00', 'l2-w01-story-page-a-nest', 'm4', 'line', 'l2-w01-story-page-a-nest-m4-line.png'),
+        ].join('\n'),
+    );
+    const colorTries = restartTries(rows, 'l2-w01-story-page-a-nest', 'color');
+    expect(colorTries.length).toBe(1);
+    expect(trySourceName(colorTries, 1, 'color', 'l2-w01-story-page-a-nest')).toBe(
+      'l2-w01-story-page-a-nest-m4-color.png',
+    );
+    const lineTries = restartTries(rows, 'l2-w01-story-page-a-nest', 'line');
+    expect(trySourceName(lineTries, 1, 'line', 'l2-w01-story-page-a-nest')).toBe(
+      'l2-w01-story-page-a-nest-m4-line.png',
+    );
+    expect(() => trySourceName(colorTries, 2, 'color', 'l2-w01-story-page-a-nest')).toThrow(/no color try 2/);
     expect(judgeFileName('l2-w01-story-page-a-nest', 'color', 1)).toBe('l2-w01-story-page-a-nest-color-t1.png');
   });
 
@@ -107,6 +144,12 @@ describe('buildBatch', () => {
     writeSpec(CARD_SPEC);
     await writeSource(STORY_SPEC, 'l2-w01-story-page-a-nest-m1-color.png');
     await writeSource(CARD_SPEC, 'l2-w02-check-row-axe-m1-color.png', 1024, 1024);
+    writeCosts(STORY_SPEC, [
+      costRow('2026-11-05T07:54:01', 'l2-w01-story-page-a-nest', 'm1', 'color', 'l2-w01-story-page-a-nest-m1-color.png'),
+    ]);
+    writeCosts(CARD_SPEC, [
+      costRow('2026-11-05T07:54:02', 'l2-w02-check-row-axe', 'm1', 'color', 'l2-w02-check-row-axe-m1-color.png'),
+    ]);
 
     const entries = await buildBatch({
       ids: ['l2-w01-story-page-a-nest', 'l2-w02-check-row-axe'],
@@ -137,9 +180,44 @@ describe('buildBatch', () => {
     expect(Math.max(cardSize.width ?? 0, cardSize.height ?? 0)).toBe(360);
   });
 
+  it('takes try 1 from the first restart row, not from the old approved files', async () => {
+    writeSpec(STORY_SPEC);
+    // The old approved art sits in m1 to m3. The restart call made m4.
+    await writeSource(STORY_SPEC, 'l2-w01-story-page-a-nest-m1-color.png');
+    await writeSource(STORY_SPEC, 'l2-w01-story-page-a-nest-m2-color.png');
+    await writeSource(STORY_SPEC, 'l2-w01-story-page-a-nest-m3-color.png');
+    await writeSource(STORY_SPEC, 'l2-w01-story-page-a-nest-m4-color.png', 1920, 1280, '#22bb44');
+    writeCosts(STORY_SPEC, [
+      costRow('2026-11-03T07:54:01', 'l2-w01-story-page-a-nest', 'm1', 'color', 'l2-w01-story-page-a-nest-m1-color.png'),
+      costRow('2026-11-04T02:00:00', 'l2-w01-story-page-a-nest', 'm2', 'color', 'l2-w01-story-page-a-nest-m2-color.png'),
+      costRow('2026-11-04T06:00:00', 'l2-w01-story-page-a-nest', 'm3', 'color', 'l2-w01-story-page-a-nest-m3-color.png'),
+      costRow('2026-11-05T07:54:01', 'l2-w01-story-page-a-nest', 'm4', 'color', 'l2-w01-story-page-a-nest-m4-color.png'),
+    ]);
+
+    const entries = await buildBatch({
+      ids: ['l2-w01-story-page-a-nest'],
+      kind: 'color',
+      tryNo: 1,
+      specDir,
+      judgeDir: path.join(root, 'judge'),
+      root,
+    });
+
+    // The m4 file is a different color from the old files, so the copy must be that color.
+    const copy = path.join(root, entries[0]!.judgeFile);
+    const { data } = await sharp(copy).raw().toBuffer({ resolveWithObject: true });
+    const red = data[0] ?? 0;
+    const green = data[1] ?? 0;
+    expect(green > 150 && red < 90).toBe(true);
+    expect(entries[0]!.judgeFile).toBe('out/storytime-review/judge/prod/l2-w01-story-page-a-nest-color-t1.png');
+  });
+
   it('writes the batch file as the JSON of the entries', async () => {
     writeSpec(STORY_SPEC);
     await writeSource(STORY_SPEC, 'l2-w01-story-page-a-nest-m1-color.png');
+    writeCosts(STORY_SPEC, [
+      costRow('2026-11-05T07:54:01', 'l2-w01-story-page-a-nest', 'm1', 'color', 'l2-w01-story-page-a-nest-m1-color.png'),
+    ]);
     const entries = await buildBatch({
       ids: ['l2-w01-story-page-a-nest'],
       kind: 'color',
@@ -152,8 +230,12 @@ describe('buildBatch', () => {
     expect(JSON.parse(text)).toEqual(entries);
   });
 
-  it('refuses a missing source file and writes no judge copy', async () => {
+  it('refuses a try that does not exist and writes no judge copy', async () => {
     writeSpec(STORY_SPEC);
+    await writeSource(STORY_SPEC, 'l2-w01-story-page-a-nest-m1-color.png');
+    writeCosts(STORY_SPEC, [
+      costRow('2026-11-05T07:54:01', 'l2-w01-story-page-a-nest', 'm1', 'color', 'l2-w01-story-page-a-nest-m1-color.png'),
+    ]);
     await expect(
       buildBatch({
         ids: ['l2-w01-story-page-a-nest'],
@@ -163,7 +245,7 @@ describe('buildBatch', () => {
         judgeDir: path.join(root, 'judge'),
         root,
       }),
-    ).rejects.toThrow(/no source file/);
+    ).rejects.toThrow(/no color try 3/);
     expect(existsSync(path.join(root, 'out/storytime-review/judge/prod/l2-w01-story-page-a-nest-color-t3.png'))).toBe(false);
   });
 

@@ -5,16 +5,20 @@
 // provider call: it copies local picture files and writes one JSON batch file.
 //
 //   node scripts/storytime-judge-batch.mjs --ids <id,id,...> --kind color|line --try <n> \
-//        [--from <n>] [--out <batch name>]
+//        [--out <batch name>]
 //
 // The ids are the row ids of the A-48 specs in docs/storytime/l2-unit1/a48/. The script reads
 // the spec of each id for the page text, the use, and the mustShow phrases.
 //
-// The source file of a try sits in the week folder of the spec (spec.outDir):
-//   kind color, try n: <id>-m<n>-color.png        (each color call makes a new version)
-//   kind line,  try n: <id>-m<from>-line.png      (try 1)
-//                     <id>-m<from>-line-<n>.png    (try 2 and 3)
-// --from is the Muse version that the line art came from. It defaults to 1 for the line kind.
+// The source file of a try is the Muse version that the restart call made. The script reads the
+// top-level costs.tsv of the week folder of the spec (spec.outDir). A try is a row of that id
+// with kind `color` or `line` and a time at or after the restart start time
+// `2026-11-04T07:54:00Z`. The rows in time order are the tries: try n is the n-th row. The
+// version column of that row gives the Muse version (m<n>), so the color file of the try is
+// `<id>-m<n>-color.png`. A line row holds the line file name in its output column.
+//
+// The redraw ids hold the old approved files m1 to m3 in their week folders, so a try number is
+// never a file number. The costs.tsv has a version column, and the script uses it.
 //
 // The judge sees each file at the size that the page prints (judge prompt v6, rule 1):
 //   900 px long side for a story page;
@@ -35,14 +39,77 @@ const JUDGE_DIR = join(ROOT, 'out/storytime-review/judge/prod');
 const LONG_SIDE_STORY = 900;
 const LONG_SIDE_CARD = 360;
 const KINDS = ['color', 'line'];
+/** The start of the restart run. A try before this time belongs to the old approved set. */
+export const RESTART_START = '2026-11-04T07:54:00Z';
 
 /** The printed long side of a use: 900 px for a story page, 360 px for every other card. */
 export const longSideOf = (use) => (use === 'story-page' ? LONG_SIDE_STORY : LONG_SIDE_CARD);
 
-/** The name of the source file of one try of one picture. */
-export const sourceFileName = (id, kind, tryNo, from = 1) => {
-  if (kind === 'color') return `${id}-m${tryNo}-color.png`;
-  return tryNo === 1 ? `${id}-m${from}-line.png` : `${id}-m${from}-line-${tryNo}.png`;
+/** A time as a number of milliseconds. A time without a zone is UTC. */
+export const utcMs = (time) => Date.parse(/(Z|[+-]\d\d:?\d\d)$/.test(time) ? time : `${time}Z`);
+
+/**
+ * Reads one costs.tsv into rows. The columns are found by header name, so a header change does
+ * not break the parse. A row holds the time, the row id, the Muse version, the kind, and the
+ * output file name.
+ */
+export function parseCostRows(text) {
+  const lines = text.split('\n');
+  if (lines.length < 2) return [];
+  const head = lines[0].split('\t').map((h) => h.trim());
+  const at = (name) => head.indexOf(name);
+  const timeCol = at('time');
+  const rowCol = at('row');
+  const versionCol = at('version');
+  const kindCol = at('kind');
+  const outputCol = at('output');
+  const rows = [];
+  for (let i = 1; i < lines.length; i += 1) {
+    const c = lines[i].split('\t');
+    if (c.length < 2 || !c[0].trim()) continue;
+    rows.push({
+      time: timeCol >= 0 ? c[timeCol].trim() : '',
+      row: rowCol >= 0 ? c[rowCol].trim() : '',
+      version: versionCol >= 0 ? c[versionCol].trim() : '',
+      kind: kindCol >= 0 ? c[kindCol].trim() : '',
+      output: outputCol >= 0 ? c[outputCol].trim() : '',
+    });
+  }
+  return rows;
+}
+
+/** The restart tries of one id and kind, in time order. */
+export const restartTries = (rows, id, kind, startTime = RESTART_START) =>
+  rows
+    .filter((row) => row.row === id && row.kind === kind && utcMs(row.time) >= utcMs(startTime))
+    .sort((a, b) => utcMs(a.time) - utcMs(b.time));
+
+/**
+ * The source file name of one try. A color row gives the Muse version, so the file is
+ * `<id>-m<version>-color.png`. A line row gives the file name in its output column.
+ */
+export const trySourceName = (tries, tryNo, kind, id) => {
+  const row = tries[tryNo - 1];
+  if (!row) {
+    const count = tries.length;
+    throw new Error(
+      `no ${kind} try ${tryNo} of ${id}: the restart rows hold ${count} ${kind} ${count === 1 ? 'try' : 'tries'}.`,
+    );
+  }
+  if (kind === 'line') {
+    if (!row.output || row.output === 'none') {
+      throw new Error(`the ${kind} try ${tryNo} of ${id} has no picture file (the call failed).`);
+    }
+    return row.output;
+  }
+  const version = row.version.replace(/^m/, '');
+  if (!version) {
+    throw new Error(`the ${kind} try ${tryNo} of ${id} has no Muse version in the costs.tsv.`);
+  }
+  if (row.output === 'none') {
+    throw new Error(`the ${kind} try ${tryNo} of ${id} has no picture file (the call failed).`);
+  }
+  return `${id}-m${version}-color.png`;
 };
 
 /** The judge file name of one try of one picture. */
@@ -72,7 +139,6 @@ export async function buildBatch(options) {
     ids,
     kind,
     tryNo,
-    from = 1,
     specDir = SPEC_DIR,
     judgeDir = JUDGE_DIR,
     root = ROOT,
@@ -83,7 +149,14 @@ export async function buildBatch(options) {
   const entries = [];
   for (const id of ids) {
     const spec = readSpec(specDir, id);
-    const source = join(resolve(root, spec.outDir), sourceFileName(id, kind, tryNo, from));
+    const weekDir = resolve(root, spec.outDir);
+    const costFile = join(weekDir, 'costs.tsv');
+    if (!existsSync(costFile)) {
+      throw new Error(`no costs.tsv of ${id}: ${costFile} is missing, so the try is unknown.`);
+    }
+    const tries = restartTries(parseCostRows(readFileSync(costFile, 'utf8')), id, kind);
+    const name = trySourceName(tries, tryNo, kind, id);
+    const source = join(weekDir, name);
     if (!existsSync(source)) throw new Error(`no source file for ${id} ${kind} try ${tryNo}: ${source} is missing.`);
     const judgeFile = `out/storytime-review/judge/prod/${judgeFileName(id, kind, tryNo)}`;
     const target = join(resolve(root), judgeFile);
@@ -108,13 +181,12 @@ export async function buildBatch(options) {
 
 /** Parses the command line. An unknown option is an error. */
 export function parseArgs(argv) {
-  const options = { ids: [], kind: undefined, tryNo: undefined, from: undefined, out: undefined };
+  const options = { ids: [], kind: undefined, tryNo: undefined, out: undefined };
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
     if (arg === '--ids') options.ids = (argv[++i] ?? '').split(',').map((id) => id.trim()).filter(Boolean);
     else if (arg === '--kind') options.kind = argv[++i];
     else if (arg === '--try') options.tryNo = Number(argv[++i]);
-    else if (arg === '--from') options.from = Number(argv[++i]);
     else if (arg === '--out') options.out = argv[++i];
     else throw new Error(`unknown option: ${arg}`);
   }
