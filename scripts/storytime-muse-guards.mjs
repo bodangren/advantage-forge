@@ -18,8 +18,9 @@
 // cost files. The spend guard reads the top-level files and the elements files.
 //
 // A picture with two ids is one picture (one generation, used for both ids):
-//   - nose: l2-w01-practice-line-nose and l2-w01-check-row-nose;
-//   - ostrich: l2-w07-check-row-olive and l2-w08-check-row-ostrich.
+//   - nose: l2-w01-practice-line-nose and l2-w01-check-row-nose.
+// The ostrich has one id, l2-w07-check-row-ostrich. The same picture fills week 7 and week 8, so
+// the id needs no group. The old olive id and the old week 8 ostrich id are gone from the list.
 // The try counter maps every id to its picture and counts the rows of the whole group.
 
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
@@ -34,7 +35,6 @@ export const REPORT_AT_USD = 0.5;
 /** Two-id pictures: the value is the group of ids of one picture. The first id is the key. */
 export const PICTURE_IDS = {
   'l2-w01-practice-line-nose': ['l2-w01-practice-line-nose', 'l2-w01-check-row-nose'],
-  'l2-w07-check-row-olive': ['l2-w07-check-row-olive', 'l2-w08-check-row-ostrich'],
 };
 
 /** The picture of an id: the group key, or the id itself when it has no group. */

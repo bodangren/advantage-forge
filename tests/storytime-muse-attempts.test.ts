@@ -88,6 +88,22 @@ describe('countTries', () => {
     expect(countTries(rows, 'l2-w01-practice-line-nose', 'color')).toBe(2);
     expect(countTries(rows, 'l2-w01-check-row-nose', 'color')).toBe(2);
   });
+
+  it('counts the ostrich as one picture under its own id', () => {
+    const rows = rowsOf([
+      row('2026-11-04T07:54:01', 'l2-w07-check-row-ostrich', 'color'),
+      row('2026-11-04T07:55:00', 'l2-w07-check-row-ostrich', 'color'),
+      row('2026-11-04T07:56:00', 'l2-w07-check-row-ostrich', 'line'),
+    ]);
+    expect(pictureKey('l2-w07-check-row-ostrich')).toBe('l2-w07-check-row-ostrich');
+    expect(countTries(rows, 'l2-w07-check-row-ostrich', 'color')).toBe(2);
+    expect(countTries(rows, 'l2-w07-check-row-ostrich', 'line')).toBe(1);
+  });
+
+  it('keeps the old olive and week 8 ostrich ids out of every group', () => {
+    expect(pictureKey('l2-w07-check-row-olive')).toBe('l2-w07-check-row-olive');
+    expect(pictureKey('l2-w08-check-row-ostrich')).toBe('l2-w08-check-row-ostrich');
+  });
 });
 
 describe('tryGuard', () => {
