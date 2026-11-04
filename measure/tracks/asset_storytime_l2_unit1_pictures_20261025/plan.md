@@ -4504,6 +4504,15 @@ PM 2026-11-03: light lane. One maker (`measure-jr-green`) and one checker (`meas
   PM 2026-11-03 stop order: no Muse calls, no further tests; week 8 pictures wait for the new judge plan.
   Q4 lesson handling: the original lessons file had 52 lines. Three related bullet pairs were merged without removing facts. One durable lesson was added. The file now has 50 lines. The debt registry has 43 lines after TD-29 and TD-30.
   Task 2 document edits set metadata to 23 completed tasks while Task 2 remains `[~]`. Task 2 completion will change the metadata count to 24. Q3 foreign changes remain uncommitted. The generator output is not committed because generated facts include foreign state; closeout owns the facts commit.
+  PM restart 2026-11-04 (note on Task 3): the ostrich now comes from A item 7 of the A-48 list (`l2-w07-check-row-olive` is replaced, and the same art fills `l2-w08-check-row-ostrich`). The week 8 work is list C (moon, mango, drum). The task stays `[~]` until list C is delivered. The tasks T3a, T4, and T5 below hold the new judge and the redraw lists.
+- [~] Task T3a: Replace the FR-9 pre-check with one Sonnet judge and calibrate it.
+  Source: Daniel's word (Tasks, 2026-11-04 14:54 ICT): "Beautiful samples. Approved. Also redo the incorrect pictures." The PM relayed Daniel's restart rules (2026-11-03) on 2026-11-04. The spec records them in "Amendment 2026-11-04".
+  Work list: `/home/daniebo/Desktop/handoff/a48-forge-picture-list/picture-list.md`, SHA-256 `dad8b49efbaf8ebdf0308e50dba971759293913ce8c8ab52694b25f886c419d9` (22 pictures; lists A, B, and C). Order of work: judge and calibration, then list A (items 1 to 3 first), then list C, then list B. Needed by 2026-11-09 18:00 ICT.
+  Cap: 1.00 USD for the whole restart run; report point 0.50 USD; the tool refuses a fourth try of a picture and kind. Spend so far in this step: 0.00 USD. No Muse call and no provider call ran.
+  Model deviation: planned model `openai/gpt-6-luna` (Codex week quota 84 percent). The first maker `coding-plan/deepseek-v4-flash` stopped before its commits. The PM ordered the Sonnet route on 2026-11-04, and `claude-code/claude-sonnet-5-5#high` finished the step (run 2).
+  Parts of the step: C5 spec and plan records; C6 guards (`scripts/storytime-muse-guards.mjs`, `scripts/storytime-muse.mjs`, `tests/storytime-muse-attempts.test.ts`); C7 judge kit (`scripts/storytime-judge-set.mjs`, `docs/storytime/l2-unit1/judge/`). The calibration run is the next orchestrator step. This task stays `[~]` until the judge passes the calibration.
+- [ ] Task T4: Redraw list A (12 pictures) of the A-48 list. Deliver color and line art for each picture. Redraws keep their id with version v2. The new id is `l2-w02-check-row-axe-v1`. Items 1 to 3 go first. At most 3 color tries and 3 line-art tries for each picture.
+- [ ] Task T5: Redraw list B (7 pictures) of the A-48 list. The text stays; the picture must show the text. At most 3 color tries and 3 line-art tries for each picture.
 
 ## Calibration sources
 

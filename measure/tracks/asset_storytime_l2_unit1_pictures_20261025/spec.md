@@ -204,6 +204,82 @@ Forge accepted the decision with two notes:
 The manifest shape is `StorytimeManifest` in `src/storytime/book-pictures.ts` lines 238 to 243:
 `version` 1, `batchHashAlgorithm`, `jobs`, and `batches`.
 
+## Amendment 2026-11-04: one Sonnet judge and the picture restart
+
+This amendment changes FR-7 and FR-9 for the picture restart. The earlier text stays in place.
+The line "Amended 2026-11-04." follows each statement that this amendment changes. When an
+earlier statement conflicts with this amendment, this amendment applies.
+
+Source. Daniel's word (Tasks, 2026-11-04 14:54 ICT): "Beautiful samples. Approved. Also redo the
+incorrect pictures." The PM relayed the restart rules of Daniel (2026-11-03) on 2026-11-04. The
+PM also named the work list and the order of work.
+
+### Decision 1: one judge replaces the MiniMax and Kimi pre-checks (FR-9)
+
+- One judge, Sonnet (`claude-code/claude-sonnet-5-5`) with native image input, makes the FR-9
+  pre-check. MiniMax and Kimi no longer make a pre-check for the restart pictures.
+- The judge result is model evidence. It is not acceptance (FR-10 stays in force).
+- The judge uses one fixed prompt: `docs/storytime/l2-unit1/judge/judge-prompt.md`.
+
+### Decision 2: calibrate the judge before any new picture
+
+- The judge must pass the delivery files of weeks 1 to 7 and the cover that Daniel approved.
+- The judge must fail the two named-defect files (the gate controls): the `a-nose` v1 line
+  art, which has no nose, and the `nan-can-get-a-pan` m3 line art try 1, which has no pan handle
+  (finding B43-PAN-2).
+- The pictures of the A-48 redraw list and the m3 color file of `nan-can-get-a-pan` are report
+  items. The judge may pass or fail them. The run records each verdict.
+- Daniel does no new work for the calibration.
+
+### Decision 3: judge at printed size, with Daniel's bar word for word
+
+- The judge looks at each file at the size that the page prints. It does not zoom in.
+- The Workbooks print data holds no printed box sizes. The fallback is a 900 px long side for a
+  story page and the cover, and a 360 px long side for a check row, a practice line, and any
+  other card.
+- The bar is Daniel's text of 2026-11-01 at 14:15 ICT:
+
+> The bar for every page is Daniel's text of 2026-11-01 at 14:15 ICT, quoted verbatim in every
+> review prompt: marks of that size are not defects (a small mark at the nose, an open C-shaped ear
+> line, outlined eyebrow bands, small dark shading inside the ears, a simplified branch or bush). A
+> defect is only what a teacher or a child sees at book size: a wrong or changed character, a
+> broken face, a clearly wrong hand or limb, a wrong or missing prop the sentence needs, a layout
+> fault, text in the picture, gray or shading in the line art, or a line gap that makes coloring
+> hard. Foreshortening is correct.
+
+- A small mark is a note. It is not a retry.
+
+### Decision 4: stop rule
+
+- The first passing try is the delivery.
+- A color picture gets 3 tries or fewer. A line-art picture gets 3 tries or fewer.
+- When no try passes, the best try goes to the PM with a note. The old picture stays.
+- Line art stays a Muse call. No local filter makes line art (FR-14 stays replaced).
+- The tool `scripts/storytime-muse.mjs` refuses a fourth try of a picture and kind. It counts the
+  tries in the `costs.tsv` files since `2026-11-04T07:54:00Z`. A failed call with cost 0 does not
+  count. A picture with two ids is one picture (nose; olive and ostrich).
+
+### Decision 5: spend cap (FR-7)
+
+- The cap for the whole restart run is 1.00 USD. The report point is 0.50 USD.
+- The tool sums the `usage_cost` of every Muse row since the start time, element sheets
+  included. It refuses a call when the sum plus 0.01 USD passes the cap. It prints a notice at or
+  above the report point.
+- The maker stops and reports before more calls when the projection passes 1.00 USD.
+- The maker logs every call and its cost in `costs.tsv`.
+
+### Decision 6: the work list
+
+- The list is `/home/daniebo/Desktop/handoff/a48-forge-picture-list/picture-list.md`, SHA-256
+  `dad8b49efbaf8ebdf0308e50dba971759293913ce8c8ab52694b25f886c419d9`.
+- It holds 22 pictures: list A (12 pictures that teach the wrong thing), list B (7 reader
+  pictures that do not show their text), and list C (moon, mango, and drum; the ostrich of
+  A item 7 also fills week 8).
+- The order of work is the judge and its calibration, then list A (items 1 to 3 first), then
+  list C, then list B. The pictures are needed by 2026-11-09 18:00 ICT.
+- A redraw keeps its id with version v2. The new ids are `l2-w02-check-row-axe-v1` and the
+  week 8 ostrich id.
+
 ## Functional Requirements
 
 1. **FR-1 Source extraction.** Extract all 112 page prompts, texts, books, and character lists
@@ -219,10 +295,14 @@ The manifest shape is `StorytimeManifest` in `src/storytime/book-pictures.ts` li
    `scripts/heavy-lock.ts` for every heavy run. Stop and report a `hold` result.
 7. **FR-7 Paid-call contract.** Run paid pre-check calls sequentially. Log each call's purpose and
    price before the call in `out/storytime/l2/unit1/cost-ledger.jsonl`.
+   Amended 2026-11-04. The restart run has a spend cap of 1.00 USD and a report point of
+   0.50 USD. See "Amendment 2026-11-04", Decision 5.
 8. **FR-8 Calibration.** Calibrate the picture rubric before production. It must fail the known
    bad "One sun" thumbnail and pass the owner-approved Nan cutout.
 9. **FR-9 Model pre-check.** Check every release candidate with native image input from MiniMax
    and Moonshot. Save each raw result. A failure returns to production before human review.
+    Amended 2026-11-04. One Sonnet judge replaces MiniMax and Moonshot. See
+    "Amendment 2026-11-04", Decisions 1 to 4.
 10. **FR-10 Person count.** Daniel or his named reviewer counts the objects in every picture
     against its text. Record the person, time, counts, and verdict. A model pre-check is not
     acceptance.
