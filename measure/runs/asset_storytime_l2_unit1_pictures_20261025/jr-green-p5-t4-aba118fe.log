@@ -183,3 +183,125 @@ known_failures:
   - The type check exits 2 with 58 errors; none names a file of this step
 handoff: Step 1 of T4 is done. The judge, the 24 specs, the guards, the production batch script, and the delivery name pattern are ready. No color try ran. The next step is the first color try of the drum (the first id in the work order), then the judge batch of that try. phase_base_sha: aba118fe5c96902b0a7ddf31b3414693d13d7f21; Green HEAD: 69f5f82c.
 END_MEASURE_AGENT_RESULT
+
+# Step 2 of T4 (round 1, 2026-11-05)
+
+role_base_sha: 32134060fa08faa1675b8c08e6e58c75a555d93b
+Red model: none (light lane). Green model: minimax-cn-coding-plan/MiniMax-M3.1-Flash.
+
+Four Muse color calls ran (the drum first). No line call ran. The restart spend is 0.04 USD of the
+1.00 USD cap. The judge has not run yet.
+
+## Commits (explicit paths)
+
+| Commit | Paths |
+| --- | --- |
+| `1a1c4333` | `docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nest.json`, `docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nest-and-a-nut.json`, `docs/storytime/l2-unit1/a48/l2-w02-story-page-how-many-balls-five.json` |
+| `c3d2e412` | `scripts/storytime-judge-batch.mjs`, `scripts/storytime-judge-batch.d.mts`, `tests/storytime-judge-batch.test.ts` |
+| `b3bfad54` | `docs/storytime/l2-unit1/judge/prod/batch-r1-color.json` |
+| `f58e1f42` | `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md` |
+
+## The review findings
+
+Finding 1 (the nest specs): `out/storytime-review/batch-13/storytime-nest.png` is a smooth brown
+bowl with blue eggs. That is the bowl of eggs of audit E20. The two nest specs no longer use it.
+Their color prompts describe the nest in words: a round nest of many thin brown twigs and dry
+straw, rough and woven, with the cut ends of the twigs sticking out, in the fork of a branch, with
+no bowl and no smooth sides. The picture words are renumbered.
+
+The check of the other 22 specs found one more rejected sheet: the week 2 balls sheet
+(`out/storytime/l2/unit1/w02/muse/elements/prop-balls-sheet-m1-color.png`) shows five plain balls
+with no pattern, the plain circles of audit E33. The how-many-balls-five spec no longer uses it and
+describes the five patterned balls in words. The other rejected sheets (the acorn sheet, the glass
+of milk, the alligator, the olive, and the ten plain circles) were already out of the specs of
+step 1. The other 21 specs hold no rejected art.
+
+Finding 2 (the judge batch script): a try number is never a file number, because the redraw ids
+hold the old approved files m1 to m3 in their week folders. The script now reads the top-level
+costs.tsv of the week folder of the spec. A try is a row of that id with kind `color` or `line`
+and a time at or after `2026-11-04T07:54:00Z`. The rows in time order are the tries, and try n is
+the n-th row. The costs.tsv has a version column, and the script uses it: the color file of a try
+is `<id>-m<version>-color.png`. A line row holds the line file name in its output column. A try
+that does not exist is an error with a clear message. The `--from` option is gone.
+
+## The round 1 color tries
+
+Command:
+
+```sh
+HEAVY_MIN_AVAIL_MB=1500 bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/storytime-muse.mjs color docs/storytime/l2-unit1/a48/l2-w08-check-row-drum.json docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nest.json docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nest-and-a-nut.json --concurrency 4'
+```
+
+Exit `0`. The drum came first in the call order.
+
+| Id | Muse version | Cost (USD) | File |
+| --- | --- | --- | --- |
+| `l2-w08-check-row-drum` | m1 | 0.01 | `out/storytime/l2/unit1/w08/muse/l2-w08-check-row-drum-m1-color.png` |
+| `l2-w01-story-page-a-nest` | m8 | 0.01 | `out/storytime/l2/unit1/w01/muse/l2-w01-story-page-a-nest-m8-color.png` |
+| `l2-w01-story-page-a-nut` | m2 | 0.01 | `out/storytime/l2/unit1/w01/muse/l2-w01-story-page-a-nut-m2-color.png` |
+| `l2-w01-story-page-a-nest-and-a-nut` | m4 | 0.01 | `out/storytime/l2/unit1/w01/muse/l2-w01-story-page-a-nest-and-a-nut-m4-color.png` |
+
+Restart spend so far: 0.04 USD. Each picture has 1 color try of the 3 that it may have.
+
+## The judge batch
+
+Command:
+
+```sh
+HEAVY_MIN_AVAIL_MB=1500 bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/storytime-judge-batch.mjs --ids l2-w08-check-row-drum,l2-w01-story-page-a-nest,l2-w01-story-page-a-nut,l2-w01-story-page-a-nest-and-a-nut --kind color --try 1 --out batch-r1-color'
+```
+
+Exit `0`. Batch path: `docs/storytime/l2-unit1/judge/prod/batch-r1-color.json` with 4 files. The
+judge copies are at the printed size: 360 px for the drum and 900 px for the three story pages.
+Try 1 maps to the restart versions: m1, m8, m2, and m4.
+
+## Tests
+
+Command:
+
+```sh
+HEAVY_MIN_AVAIL_MB=1500 bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-judge-batch.test.ts --maxWorkers=1'
+```
+
+Output: `Test Files  1 passed (1)`; `Tests  8 passed (8)`; exit `0`. The file held 7 tests before
+this step.
+
+## Defaults taken
+
+- The nest description follows the words of the orchestrator: many thin brown twigs and straw,
+  rough and woven, twig ends sticking out, in the fork of a branch, no bowl and no smooth sides.
+- The three eggs stay in the nest; the count rule stays in the color prompt.
+- The nose spec keeps its reference of the clean side head of Nan. The rejected nose art was the
+  delivered picture, and the color prompt asks for the nose alone.
+- The school bag sheet stays in the hello-i-am-pip spec. The rejected art of that item was the
+  small Pip among seven people, and the new prompt puts Pip large in the middle.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: partial
+commits:
+  - 1a1c4333
+  - c3d2e412
+  - b3bfad54
+  - f58e1f42
+tests_run:
+  - command: HEAVY_MIN_AVAIL_MB=1500 bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-judge-batch.test.ts --maxWorkers=1'
+    result: Test Files  1 passed (1); Tests  8 passed (8); exit 0
+files_changed:
+  - docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nest.json
+  - docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nest-and-a-nut.json
+  - docs/storytime/l2-unit1/a48/l2-w02-story-page-how-many-balls-five.json
+  - scripts/storytime-judge-batch.mjs
+  - scripts/storytime-judge-batch.d.mts
+  - tests/storytime-judge-batch.test.ts
+  - docs/storytime/l2-unit1/judge/prod/batch-r1-color.json
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+plan_updates:
+  - The T4 step 2 block records the two findings, the four color tries, the spend of 0.04 USD, the round 1 batch, and the test command
+known_failures:
+  - tests/storytime-book-pictures.test.ts has 8 failures that came before this step: it pins the picture list SHA-256 6d05dfc and the Workbooks list has moved on to 327f805f
+  - The type check exits 2 with 58 errors; none names a file of this step
+handoff: Round 1 of T4 is done. The four color tries of the drum, the nest page, the nut page, and the nest-and-nut page are ready, and the judge batch is at docs/storytime/l2-unit1/judge/prod/batch-r1-color.json. The judge has not run yet. The next step is the judge on that batch, then the tries of the picture that fails. phase_base_sha: aba118fe5c96902b0a7ddf31b3414693d13d7f21; Green HEAD: f58e1f42.
+END_MEASURE_AGENT_RESULT
