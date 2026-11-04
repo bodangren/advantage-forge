@@ -1,0 +1,29 @@
+# Role log: measure-jr-green, Phase 5 Task T3a (step 1, run 2)
+
+Track: asset_storytime_l2_unit1_pictures_20261025 (storytime_l2_unit1_pictures)
+Phase: Phase 5: Documentation and verification (phase id P5), task T3a.
+phase_base_sha: 4e171648
+role_base_sha: 3a4f63b07706da0feea35002f12e05ed79aeac16
+Red model: none (light lane). Green model: claude-code/claude-sonnet-5-5#high (PM order 2026-11-04). The first maker (coding-plan/deepseek-v4-flash) stopped before its commits. Planned model: openai/gpt-6-luna (Codex week quota 84 percent).
+Spend so far: 0.00 USD. No Muse call and no provider call in this step.
+
+Work done:
+- Checked the first maker's guards. Both guards run before every provider call (only `color` and `line` call the API; `print`, `despeckle`, and `import` make no call). The failed-call rule matches the real costs.tsv rows (network error, HTTP 400/502 rows have cost 0 and output `none`). `line --tries N` is refused when count plus N passes 3.
+- Guard defect fixed: the time compare was a string compare, so a row at 07:54:00.250Z sorted before the start time. It is now a UTC number compare. A test covers it. A test helper (`ts`) also made invalid times; fixed.
+- C5 `1c6c2664` spec amendment 2026-11-04 (FR-7, FR-9) and plan tasks T3a, T4, T5. C6 `16d2fe33` guards and test. C7 `f02451c9` judge kit and prompt.
+- Judge set rebuilt: nan m3 color is `report`; controls are a-nose v1 line and nan m3 line. 388 judge files; groups w01 61, w02 54, w03 56, w04 54, w05 54, w06 54, w07 54, cover 1. Expected 345 pass, 41 report, 2 fail. No batch file holds `expected` or `reason`. All judge files exist.
+- Test: `vitest run tests/storytime-muse-attempts.test.ts --maxWorkers=1` through heavy-run: exit 0, Tests 22 passed (22). First run exit 1 (test helper made invalid times); fixed and rerun.
+- Spend: 0.00 USD. No Muse call, no provider call.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: complete
+commits: 1c6c2664 (C5), 16d2fe33 (C6), f02451c9 (C7), plan-evidence commit follows
+tests_run: vitest tests/storytime-muse-attempts.test.ts --maxWorkers=1 via heavy-run: exit 0, Tests 22 passed (22)
+files_changed: spec.md, plan.md, scripts/storytime-muse-guards.mjs, scripts/storytime-muse.mjs, tests/storytime-muse-attempts.test.ts, scripts/storytime-judge-set.mjs, docs/storytime/l2-unit1/judge/*
+plan_updates: T3a [~] (calibration pending), T4 [ ], T5 [ ]
+known_failures: none
+handoff: See the final reply.
+END_MEASURE_AGENT_RESULT
