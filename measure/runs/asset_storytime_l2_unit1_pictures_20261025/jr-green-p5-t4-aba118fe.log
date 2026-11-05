@@ -1104,3 +1104,86 @@ known_failures:
   - The guard refused the 4th line try: `refused: l2-w01-story-page-a-nut line count 3 (max 3)`; no owner-exception override exists in the tool and scripts/ is frozen
 handoff: The PM-granted 4th line try did not run. The guard printed `refused: l2-w01-story-page-a-nut line count 3 (max 3)` and the tool documents no owner-exception override for the try cap (its --tries flag passes the same cap check), so nothing was worked around and no Muse cost ran (restart spend stays 0.54 of 1.00). The PM line to send: the frozen guard refused the 4th line try of the nut, so v2 stays and nothing new is delivered; the PM can lift the cap in scripts/storytime-muse-guards.mjs (MAX_TRIES) in a write-capable step or accept v2. role_base_sha: 0d72e9cfe922f7000c5c4aa53301f72bb538fc27; Green HEAD: this commit.
 END_MEASURE_AGENT_RESULT
+
+# Step 11 of T4 (the nut line try 4, the PM exception carried out, 2026-11-05)
+
+role_base_sha: f51889cc32c4abf4b7a9f58df59608f448e2ed60
+Red model: none (light lane). Green model: kimi-code-plan-cn/kimi-for-coding.
+
+Note: the first step 11 run stopped at the start on a network error (getaddrinfo EAI_AGAIN
+api.kimi.com). The orchestrator checked at 09:30 ICT: no file changed and no commit was made.
+This block records the rerun from the start, unchanged.
+
+## Part 1: the guard exception (commit `4ce37661`)
+
+`scripts/storytime-muse-guards.mjs` now exports `TRY_EXCEPTIONS` with exactly one entry:
+`l2-w01-story-page-a-nut`, kind `line`, 1 extra try (max 4), and a `source` string that quotes
+the PM decision of 2026-11-05 09:17 ICT. `tryGuard` computes the cap as `MAX_TRIES` plus the
+entry of that id and kind (matched through `pictureKey`, so the nose group rule stays), and the
+refusal message prints the real cap. Every other id and kind keeps the max of 3. No `storytime-
+muse-guards.d.mts` exists; the tests import the module directly, so only the guard and the test
+changed. Nothing else changed at run time.
+
+Test command: `HEAVY_MIN_AVAIL_MB=1500 bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-attempts.test.ts --maxWorkers=1'`
+Output: `Test Files  1 passed (1)`; `Tests  30 passed (30)`; exit `0`. The four new tests
+cover: the nut line with 3 restart rows passes for 1 more try; the nut line with 4 rows is
+refused; the nut color with 3 rows is still refused; another id with 3 line rows is still
+refused. The first run of the tests failed one case on a fixture bug of this maker (a row at
+07:10, before the restart start, so only 3 of 4 rows counted); the fixture times were fixed and
+the rerun passed 30 of 30.
+
+## Part 2: the call
+
+Command: `node scripts/storytime-muse.mjs line docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json --from 4`
+Output: `l2-w01-story-page-a-nut-m4 line try 2 ok 1920x1280 cost 0.01`. This is line try 4 of
+the picture (the tool's counter keys on the color version, so it prints "try 2"); the file is
+`out/storytime/l2/unit1/w01/muse/l2-w01-story-page-a-nut-m4-line-2.png`. The guard did not
+refuse. No despeckle step and no other local filter ran.
+
+## Part 3: the batch (commit `c3d31c2a`)
+
+Command: `node scripts/storytime-judge-batch.mjs --ids l2-w01-story-page-a-nut --kind line --try 4 --out batch-r8-line-nut4`
+Exit `0`; the script has no hard limit of 3. Batch path:
+`docs/storytime/l2-unit1/judge/prod/batch-r8-line-nut4.json` (1 file,
+`out/storytime-review/judge/prod/l2-w01-story-page-a-nut-line-t4.png`). The batch was checked
+against the w01 costs.tsv: the 4th restart line row names
+`l2-w01-story-page-a-nut-m4-line-2.png`, this call's file, and the batch carries the new
+four-phrase mustShow. The batch file was committed at once (`c3d31c2a`); the orchestrator's
+judge starts when it appears. The judge has not run on it yet.
+
+## Spend
+
+Restart spend so far: 0.55 USD of the 1.00 USD cap.
+
+## Commits (explicit paths)
+
+| Commit | Paths |
+| --- | --- |
+| `4ce37661` | `scripts/storytime-muse-guards.mjs`, `tests/storytime-muse-attempts.test.ts` |
+| `c3d31c2a` | `docs/storytime/l2-unit1/judge/prod/batch-r8-line-nut4.json` |
+| (this commit) | `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md`, `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p5-t4-aba118fe.log` |
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: partial
+commits:
+  - 4ce37661
+  - c3d31c2a
+tests_run:
+  - command: HEAVY_MIN_AVAIL_MB=1500 bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-attempts.test.ts --maxWorkers=1'
+    result: Test Files  1 passed (1); Tests  30 passed (30); exit 0
+files_changed:
+  - scripts/storytime-muse-guards.mjs
+  - tests/storytime-muse-attempts.test.ts
+  - docs/storytime/l2-unit1/judge/prod/batch-r8-line-nut4.json
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p5-t4-aba118fe.log
+plan_updates:
+  - The T4 step 11 block records the guard exception with its commit, the test totals, the call, and the batch
+  - The T4 step 10 block now records that the exception was carried out in step 11
+known_failures:
+  - tests/storytime-book-pictures.test.ts has 8 failures that came before step 8: it pins the picture list SHA-256 6d05dfc and the Workbooks list has moved on to 327f805f
+handoff: The PM exception is carried out and the nut line try 4 ran (m4-line-2, 0.01 USD; restart spend 0.55 of 1.00). The round 8 batch is at docs/storytime/l2-unit1/judge/prod/batch-r8-line-nut4.json (commit c3d31c2a) and points at the new file. The judge has not run on it yet. If it passes, the next step delivers the m4 nut prints to a48-forge-pictures-nut3/ per the PM decision; if it fails, v2 stays and the PM gets one line. role_base_sha: f51889cc32c4abf4b7a9f58df59608f448e2ed60; Green HEAD: this commit.
+END_MEASURE_AGENT_RESULT
