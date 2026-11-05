@@ -1300,3 +1300,63 @@ known_failures:
   - tests/storytime-book-pictures.test.ts has 8 failures that came before step 8: it pins the picture list SHA-256 6d05dfc and the Workbooks list has moved on to 327f805f
 handoff: The nut color try 4 (m5) and line try 5 (m5) ran (0.02 USD; restart spend 0.57 of 1.00; 57 rows) and the round 9 batches are committed at 3ef35157. The judge has not run on them yet. Per the PM decision: if either fails, v2 stays and the nut goes on Daniel's v14 look list; if both pass, the next step delivers the m5 pair to a48-forge-pictures-nut3/ with a MANIFEST and tells Workbooks. Step 12 (M2 to M7) resumes next on this HEAD. role_base_sha: 81ebac1c284eead124db29d92406f2f80f0583e6; Green HEAD: this commit.
 END_MEASURE_AGENT_RESULT
+
+# Step 14 of T4 (the nut v3 delivery, 2026-11-05, orchestrator 10:47 ICT)
+
+role_base_sha: 81ebac1c284eead124db29d92406f2f80f0583e6 (step 12 paused at M2; the delivery ran first)
+Red model: none (light lane). Green model: kimi-code-plan-cn/kimi-for-coding.
+
+No Muse call ran in this step. Both step 13 tries passed the Sonnet judge (prompt v6):
+`judge-prod-r9-color-nut5-5251c126.json` (color try 4, m5) and
+`judge-prod-r9-line-nut5-5251c126.json` (line try 5, m5); 1 nut counted in each.
+
+## The delivery (copy way, per 5.11.8)
+
+- The source prints came from the w01 costs.tsv rows: color try 4 = m5 color print
+  (`l2-w01-story-page-a-nut-m5-color-print.png`), line try 5 = the print of the m5 line call
+  (`l2-w01-story-page-a-nut-m5-line-print.png`). Not despeckled files.
+- The judge copies `out/storytime-review/judge/prod/l2-w01-story-page-a-nut-color-t4.png` and
+  `...-line-t5.png` are named by the two judge result files above, and the batches of step 13
+  map tries 4 and 5 to the m5 rows.
+- New folder `out/storytime/l2/unit1/w01/delivery-muse-v4/` holds
+  `l2-w01-story-page-a-nut-v3.png` (SHA-256 f16c547ae0d8489be4737096a2bd0bd3d429fc3d7ea13fe6ad5f40ce2dc32157,
+  4000 x 3000 px) and `l2-w01-story-page-a-nut-line-v3.png` (SHA-256
+  e155d846429da010fd88cbb81522689ab2989d534567311d3a33b5d605b9ee04, 4000 x 3000 px), each
+  byte-equal to its source print, and a hand-written manifest.json (source print, SHA-256,
+  pixel size, judge file per file). `w01/delivery-muse-v3/` and every other existing folder
+  are unchanged.
+- The handoff folder `/home/daniebo/Desktop/handoff/a48-forge-pictures-nut3/` did not exist
+  before. It holds the 2 files and `MANIFEST.txt` in the c-folder form (source repo, path,
+  commit 5251c126, the judge result files, "model evidence, not acceptance", the note that the
+  v3 pair replaces the v2 nut pair of a48-forge-pictures-a/ for the page "A nut.", reader Nan
+  Can Nod p5, date and time in ICT, sender). The check
+  `grep -E '^[0-9a-f]{64}  l2-w01-story-page-a-nut' MANIFEST.txt | sha256sum -c -` gives
+  `l2-w01-story-page-a-nut-v3.png: OK` and `l2-w01-story-page-a-nut-line-v3.png: OK`; exit 0.
+
+## Spend
+
+Restart spend total: 0.57 USD (57 rows, counted from the cost files with the restart start of
+2026-11-04T07:54:00Z; the count was re-checked after the delivery).
+
+## Commits (explicit paths)
+
+| Commit | Paths |
+| --- | --- |
+| (this commit) | `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md`, `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p5-t4-aba118fe.log` |
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: partial
+commits: []
+tests_run:
+  - command: grep -E '^[0-9a-f]{64}  l2-w01-story-page-a-nut' MANIFEST.txt | sha256sum -c - (in /home/daniebo/Desktop/handoff/a48-forge-pictures-nut3)
+    result: 2 OK lines; exit 0
+files_changed:
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p5-t4-aba118fe.log
+plan_updates:
+  - The T4 step 13 block now records both judge passes; the T4 step 14 block records the v3 delivery, the handoff folder, and the checked spend of 0.57 USD (57 rows)
+handoff: The nut v3 pair is delivered to out/storytime/l2/unit1/w01/delivery-muse-v4/ and handed over at /home/daniebo/Desktop/handoff/a48-forge-pictures-nut3/ (check exit 0). Workbooks is told with this handoff. Step 12 resumes on this HEAD (M2 needs the owned tsc errors at 0; the .d.mts is uncommitted until then). Restart spend 0.57 of 1.00. role_base_sha: 81ebac1c284eead124db29d92406f2f80f0583e6; Green HEAD: this commit.
+END_MEASURE_AGENT_RESULT
