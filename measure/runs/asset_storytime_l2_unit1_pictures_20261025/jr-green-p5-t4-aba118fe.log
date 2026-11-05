@@ -1444,3 +1444,11 @@ known_failures:
   - M7 GREEN_TEST_COMMAND pending for the same hold
 handoff: Step 12 light work is done (M2 file, M3, M4, M5, M6; the nut v3 delivery of step 14 is committed at 8eb7e8c4 and handed over). Pending after 13:00 ICT when the heavy lock frees: the type check and GREEN_TEST_COMMAND, and the annotation fix of the 25 owned test errors (20 pre-existing, 5 from the step 11/13 test additions; no runtime change). Restart spend 0.57 of 1.00; no Muse call ran in step 12. role_base_sha: 81ebac1c284eead124db29d92406f2f80f0583e6; Green HEAD: this commit.
 END_MEASURE_AGENT_RESULT
+
+# Step 12 addendum (the tracks.md hunk fix, 2026-11-05)
+
+The step 12 commit `b320e514` swept an unrelated uncommitted hunk of `measure/tracks.md` (a
+`## Contents` section of another session; the file was `M` in the git status of 08:16 ICT)
+into the commit, against the Q3 rule. The fix: commit `d6867c52` drops the hunk from the
+committed file, and the hunk was restored to the working tree uncommitted, byte-equal to the
+other session's version. The committed tracks.md now holds only this track's line.
