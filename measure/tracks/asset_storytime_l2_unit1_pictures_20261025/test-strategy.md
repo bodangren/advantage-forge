@@ -4657,6 +4657,224 @@ the structural doctor, and the `nut3` check command).
 
 No delivered file lacks a passing judge result: v3 `--final` gives 51 of 51.
 
+###### 5.11.16 Known-red rule under list drift (2026-11-05 14:00, role base `b72f8b60`)
+
+This addition replaces the KNOWN_RED expectation of 5.11.4 and X10 ("exactly 8 failures"). The
+command stays. The text of 5.11.1 to 5.11.15 stays. Where this addition and an earlier part of
+5.11 differ, this addition applies.
+
+The finding. The Phase 5 checker (`coding-plan/glm-5.3-flash#high`, audited HEAD `b72f8b60`)
+measured `Tests  7 failed | 135 passed (142)` for `tests/storytime-book-pictures.test.ts`. The
+failing tests were T142, T145, T147, T150, T173, T174, and T177. The gate said exactly 8. The cause
+is list drift: Workbooks commit `b80c374d` (2026-11-05 10:19 ICT, "list version 6, 196 rows")
+changed the live list from `327f805f…` (194 rows) to
+`89b2910c28f07dcda1bd6a93349a26f31a32e971b72a55ec68e1bc9e48d9b33d` (196 rows). The test file pins
+list v4 (`6d05dfc5…`, 196 rows).
+
+**The earlier 8 failures.** No log names them: the T4 log and the step 8 result block give only
+the count and the reason. This role derived them read-only. It read the list `327f805f` from
+Workbooks commit `c618523e` (`git show`, SHA-256 checked) and computed the assertions of each
+pin-dependent test:
+
+| Test | List `327f805f` (194 rows) | List `89b2910c` (196 rows) | Failing assertion |
+| --- | --- | --- | --- |
+| T142 | fail | fail | List SHA-256 pin; week 1 rows 29, not 30; week 1 class C 11, not 12 |
+| T145 | fail | fail | Week 1 rows 29; practice-line rows 2, not 3 |
+| T147 | fail | fail | List SHA-256 pin; `pictures.md` SHA-256 pin |
+| T150 | fail | fail | Week 1 rows 29, not 30 |
+| T173 | fail | fail | The live render refuses the live list (the source pins v4 `6d05dfc5`) |
+| T174 | fail | fail | Labeled counts of v4 and the loader SHA-256 pin |
+| T176 | **fail** | **pass** | `Rows checked`: 194 at `327f805f`; 196 at `89b2910c`, the value that the test wants. Every row has the pixel size of its class, and the classes are A, B, and C. |
+| T177 | fail | fail | Week 8 rows 3, not 4; weeks 2 to 7 rows 164 at `89b2910c` (162 at `327f805f`); the dry run stops on the list pin |
+
+T176 now passes because Workbooks added the two D4 rows (`l2-w05-d4-prompt-face`,
+`l2-w07-d4-prompt-ball`, class C, 1500 x 1500). The list has 196 rows again, which equals the v4
+row count that T176 checks. The other 7 still fail. The checker result matches this prediction.
+
+**The named known-red set.** A test is pin-dependent when its body reads the live list or a list
+pin: `LIST_FILE`, `LIST_MARKDOWN_FILE`, `LIST_SHA256`, `LIST_MARKDOWN_SHA256`, `PRINT_ROOT`,
+`V4_SHA256`, `rawRows(`, or the pin text `6d05dfc5`. The script `pin-set.mjs` below finds them. A
+body runs from its `it('T<n>:` line to the first later `})` or `}, <n>)` line at the same indent.
+At `b72f8b60` the set holds 13 of the 142 tests:
+
+`T142, T143, T144, T145, T147, T148, T149, T150, T173, T174, T175, T176, T177`
+
+The drift sentinels are T142, T147, T173, and T174. Each one asserts the list SHA-256 pin or the
+source pin directly, so each one fails whenever the live list differs from `6d05dfc5…`.
+
+**The known-red rule.** The KNOWN_RED_COMMAND result passes the gate when all of these hold:
+
+1. The test file is byte-equal to its state at `b72f8b60` (`git diff` prints nothing for it).
+2. The file runs whole, alone, with no `-t` filter, and with no skipped and no todo test. The
+   `Tests` line sums to 142.
+3. The live list SHA-256 differs from the pin `6d05dfc5…`. (If it equals the pin, the rule wants
+   exit `0` and 0 failures.)
+4. Every failing test is in the named set. A failing test outside the set is a new failure and
+   fails the gate.
+5. All 4 drift sentinels fail. A sentinel that passes while the list differs from the pin shows
+   that the test did not run its pin check (A4).
+6. `pin-set.mjs` extracted from this file has the SHA-256 below and prints the named set.
+
+The rule needs no exact failure count. The count follows the list, and Workbooks owns the list.
+
+KNOWN_RED_CHECK (checker, once; `$T` and `$D` as in 5.11.3; one heavy command):
+
+```sh
+F=tests/storytime-book-pictures.test.ts
+PIN=6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58
+awk '/^<!-- pin-set.mjs end -->$/{f=0} f; /^<!-- pin-set.mjs begin -->$/{f=1}' "$T/test-strategy.md" | sed '1d;$d' > "$D/pin-set.mjs"
+echo "pin set script sha256: $(sha256sum < "$D/pin-set.mjs" | cut -c1-64)"
+node "$D/pin-set.mjs" "$F" > "$D/pin-set.txt"; cat "$D/pin-set.txt"
+echo "test file changed since b72f8b60: $(git diff --name-only b72f8b60..HEAD -- "$F" | wc -l)"
+LIVE=$(sha256sum < /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json | cut -c1-64)
+echo "live list sha256: $LIVE"
+echo "live list differs from the pin: $([ "$LIVE" != "$PIN" ] && echo yes || echo no)"
+HEAVY_MIN_AVAIL_MB=1500 bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1' > "$D/known-red.log" 2>&1; echo "known red exit: $?"
+grep -E '^ *Tests  ' "$D/known-red.log"
+grep -E '^ *FAIL  tests/storytime-book-pictures\.test\.ts > ' "$D/known-red.log" | grep -oE '> T[0-9]+[a-z]?:' | grep -oE 'T[0-9]+[a-z]?' | sort -u > "$D/failing.txt"
+sed -n 's/^pin-dependent tests: [0-9]* //p' "$D/pin-set.txt" | tr ',' '\n' | sort -u > "$D/pinset.txt"
+echo "known red failing tests: $(wc -l < "$D/failing.txt") $(paste -sd, "$D/failing.txt")"
+echo "known red failing tests outside the pin set: $(comm -23 "$D/failing.txt" "$D/pinset.txt" | wc -l)"
+echo "known red drift sentinels failing: $(printf 'T142\nT147\nT173\nT174\n' | comm -12 - "$D/failing.txt" | wc -l) of 4"
+echo "known red skipped or todo: $(grep -E '^ *Tests  ' "$D/known-red.log" | grep -cE 'skipped|todo')"
+```
+
+Expected at the live list `89b2910c`:
+
+| Label | Value |
+| --- | --- |
+| `pin set script sha256:` | `f67cfa8f17d380cb7e6f7632612b8f56d5cba6793d642a90abf2b5c1fd4a3fe0` |
+| `tests in the file:` | 142 |
+| `pin-dependent tests:` | `13 T142,T143,T144,T145,T147,T148,T149,T150,T173,T174,T175,T176,T177` |
+| `test file changed since b72f8b60:` | 0 |
+| `live list differs from the pin:` | yes |
+| `known red exit:` | 1 |
+| `Tests` line | `Tests  7 failed \| 135 passed (142)` (any `<F> failed \| <P> passed (142)` with `<F>` + `<P>` = 142 passes the rule) |
+| `known red failing tests:` | `7 T142,T145,T147,T150,T173,T174,T177` (the values of the probe; another subset of the named set also passes) |
+| `known red failing tests outside the pin set:` | 0 |
+| `known red drift sentinels failing:` | `4 of 4` |
+| `known red skipped or todo:` | 0 |
+
+Falsification: a failing test outside the named set, a sentinel that passes while the list differs,
+a skip, a filter, a `Tests` total other than 142, a changed test file, or a script SHA-256 that
+differs. Each one fails X10.
+
+<!-- pin-set.mjs begin -->
+```js
+// pin-set.mjs: read-only. Lists the test ids of tests/storytime-book-pictures.test.ts whose body
+// depends on the live picture list or a list pin. A body runs from its `it('T<n>:` line to the
+// first later line `})` or `}, <n>)` at the same indent. Output: labeled lines only.
+import fs from 'node:fs';
+const lines = fs.readFileSync(process.argv[2] ?? 'tests/storytime-book-pictures.test.ts', 'utf8').split('\n');
+const PIN = /\b(LIST_FILE|LIST_MARKDOWN_FILE|LIST_SHA256|LIST_MARKDOWN_SHA256|PRINT_ROOT|V4_SHA256)\b|rawRows\(|6d05dfc5/;
+const ids = [];
+let tests = 0;
+for (let i = 0; i < lines.length; i += 1) {
+  const m = lines[i].match(/^(\s*)it\('(T\d+[a-z]?):/);
+  if (!m) continue;
+  tests += 1;
+  const end = new RegExp(`^${m[1]}\\}(, \\d+)?\\);\\s*$`);
+  let j = i + 1;
+  while (j < lines.length && !end.test(lines[j])) j += 1;
+  if (lines.slice(i, j + 1).some((l) => PIN.test(l))) ids.push(m[2]);
+}
+console.log(`tests in the file: ${tests}`);
+console.log(`pin-dependent tests: ${ids.length} ${ids.join(',')}`);
+```
+<!-- pin-set.mjs end -->
+
+**Carry-over rule for this acceptance run.** The checker measured the gates at `b72f8b60`. This
+strategy commit changes no audited file. So it is not an implementation commit: it changes no
+script, source, test, spec, batch, approval list, delivery, or plan. The measured results carry over
+to the new HEAD when all of these conditions hold:
+
+1. `git diff --name-only b72f8b60..HEAD` lists only `$T/test-strategy.md`. Exception: a file from a
+   commit whose subject does not start with `storytime:` or
+   `measure(storytime_l2_unit1_pictures):`, outside the X1 allowed set, with no Storytime path. The
+   checker names each one.
+2. The strategy diff since `b72f8b60` removes no line. Every earlier block extracts to its earlier
+   SHA-256 (table below).
+3. Pin blocks 1, 2, and 3 still pass `sha256sum -c`, and restart check v3 `--final` still exits
+   `0` with `restart check: pass`. These two runs are light. They prove that the untracked files
+   (`out/`, the handoff folders, `measure/runs/`) did not change.
+
+CARRY_OVER_CHECK (read-only, light):
+
+```sh
+B=b72f8b60
+echo "files changed since b72f8b60: $(git diff --name-only "$B"..HEAD | paste -sd, -)"
+echo "files changed since b72f8b60 other than the strategy: $(git diff --name-only "$B"..HEAD | grep -cvx "$T/test-strategy.md")"
+echo "strategy lines removed since b72f8b60: $(git diff "$B"..HEAD -- "$T/test-strategy.md" | grep -c '^-[^-]')"
+for v in restart-check.mjs restart-check-v2.mjs restart-check-v3.mjs restart-pins restart-pins-2 restart-pins-3; do
+  echo "block $v sha256: $(awk -v b="$v" '$0=="<!-- " b " end -->"{f=0} f; $0=="<!-- " b " begin -->"{f=1}' "$T/test-strategy.md" | sed '1d;$d' | sha256sum | cut -c1-64)"
+done
+for v in restart-pins restart-pins-2 restart-pins-3; do
+  awk -v b="$v" '$0=="<!-- " b " end -->"{f=0} f; $0=="<!-- " b " begin -->"{f=1}' "$T/test-strategy.md" | sed '1d;$d' > "$D/$v.sha256"
+  sha256sum -c --quiet "$D/$v.sha256"; echo "$v check exit: $?"
+done
+awk '/^<!-- restart-check-v3.mjs end -->$/{f=0} f; /^<!-- restart-check-v3.mjs begin -->$/{f=1}' "$T/test-strategy.md" | sed '1d;$d' > "$D/restart-check.mjs"
+nice -n 19 node "$D/restart-check.mjs" --final > "$D/restart-check-carry.log"; echo "restart check exit: $?"; tail -1 "$D/restart-check-carry.log"
+```
+
+Expected:
+
+| Label | Value |
+| --- | --- |
+| `files changed since b72f8b60 other than the strategy:` | 0 (or only named foreign files of condition 1) |
+| `strategy lines removed since b72f8b60:` | 0 |
+| `block restart-check.mjs sha256:` | `c3ecbeb73f75abc77f64bf04c9fd86110f414cd121ac460ce423b3474672f062` |
+| `block restart-check-v2.mjs sha256:` | `30f68eafaa216bdd8947efa394aac08b8d11fbd98fed37c0c8988527807541a7` |
+| `block restart-check-v3.mjs sha256:` | `6ae82ad4a305341a409be95cd007239ef069cac2e8c4ef6301467908bac78a9e` |
+| `block restart-pins sha256:` | `3b9b40775385616b39ad889592cd66ba5c181fdf8d8c299e02cafbd1723aedea` |
+| `block restart-pins-2 sha256:` | `fe0370b481a4588e24770522cd60f66fb8457ec4e27113a93abcdae89df3a311` |
+| `block restart-pins-3 sha256:` | `335b8e9a1bdc2def8cd14a7770f4db9f7c759d060e48719bf8c99006b50707d5` |
+| `restart-pins check exit:`, `restart-pins-2 check exit:`, `restart-pins-3 check exit:` | 0, 0, 0 |
+| `restart check exit:` | 0, and the last line `restart check: pass` |
+
+Results that carry over from `b72f8b60` when the conditions hold: the restart check script SHA, X1,
+X2, X2b, X3, X4 with its control, X5, X6, X7, X8, X9, X12, TYPECHECK_COMMAND (total 38, owned 0),
+and PROJECT_TESTS (`Test Files  7 passed (7)`, `Tests  105 passed (105)`).
+
+Falsification: a file other than the strategy (and the named foreign files) changes, a strategy
+line is removed, a block SHA-256 differs, a pin fails, or restart check v3 fails. Then nothing
+carries over, and the checker reruns every gate of 5.11.15 at the new HEAD.
+
+**The rest of the acceptance run (checker commands).** Set `T`, `R`, `P5BASE`, and `D` as in
+5.11.3. Run in this order:
+
+1. CARRY_OVER_CHECK above.
+2. KNOWN_RED_CHECK above (the one heavy command; wait for a held lock).
+3. X13: the command and the seed control of 5.11.7, with the file-level rules. At `b72f8b60` the
+   expected matches are the 3 w08 approval notes only.
+4. X14: the command of 5.11.7. Expected: no output.
+5. X15: `node measure/tools/doctor.mjs --structural-only --root .`. Expected: no error line with
+   `asset_storytime_l2_unit1_pictures_20261025` or an owned path. Quote the count and every line.
+6. G5:
+   ```sh
+   echo "tech-debt lines: $(wc -l < measure/tech-debt.md)"
+   echo "lessons lines: $(wc -l < measure/lessons-learned.md)"
+   for id in RB-P4-1 RB12-01 RA-P3ADV-2 RC5-3 PA3-N6 PA4-N2 PA4-N3 PA4-N4; do echo "ledger $id: $(grep -c "$id" "$T/plan.md")"; done
+   ```
+   Expected: both files have 50 lines or less, and each ledger id count is 1 or more.
+7. The plan-quote comparison. Compare each value with the restart check v3 output and your own
+   runs: the T4 step 13 and 14 notes (57 rows, 0.57 USD, the nut verdicts, 51 files, the `nut3`
+   handoff), the step 15 notes (GREEN `<N>` = 84, the type check total 38 and owned 0), the
+   Task 3 note, and the metadata count (29). Name each difference.
+8. Write `$R/acceptance-p5-restart-<HEAD7>.json` and `.log` for the new HEAD. In the log, quote
+   the carry-over labels, the known-red labels, and the `b72f8b60` results that carried over.
+   Write `status: "pass"` only when `blocking_findings` and every `*_violations` array are empty.
+
+**Anti-pattern notes for this addition.**
+
+| Class | Defense | Falsification condition |
+| --- | --- | --- |
+| A3 | The known-red gate reads labels (`known red failing tests outside the pin set:`, `drift sentinels failing:`, the `Tests` line with its total 142). | A bare failure count satisfies X10. |
+| A4 | The 4 drift sentinels must fail while the list differs from the pin. The total must be 142, so a test that did not run shows. | A sentinel passes on a changed list, or the total is not 142. |
+| A5 | The earlier 8 were not recorded. This text derives them from the test file and the list bytes of `c618523e`, and names the one test (T176) that changed. | The derived set differs from a rerun of the probe. |
+| A7 | The named set comes from the test bodies by a fixed pattern, not from the failures. A failing test outside it fails the gate. | A new failure is called known-red. |
+| A10 | The carry-over needs an unchanged audited tree and unchanged untracked evidence. | Results carry over after a code, plan, or evidence change. |
+| A11 | The block SHA-256 values in this text equal the extracted blocks. | An extracted block SHA differs from the table. |
+
 ## 8. Architecture guardrails and changed-contract risks
 
 Guardrails:
