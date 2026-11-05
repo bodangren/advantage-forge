@@ -639,3 +639,146 @@ known_failures:
   - The type check exits 2 with 58 errors; none names a file of this step
 handoff: Round 4 of T4 is done. The line art of the ten color passes of round 2 and the first color try of the seven group B and the two group D pictures are ready. The two batches are at docs/storytime/l2-unit1/judge/prod/batch-r4-line.json and batch-r4-color.json. The restart spend is 0.39 USD of the 1.00 USD cap. The pan in a pan fail waits for its second judge, and no call ran for it. The next step is the judge on the round 4 batches, then the redraws of the pictures that fail. phase_base_sha: aba118fe5c96902b0a7ddf31b3414693d13d7f21; Green HEAD: 7bb68529.
 END_MEASURE_AGENT_RESULT
+
+# Steps 6 and 7 of T4 (round 5, 2026-11-05)
+
+role_base_sha: 6fd626c6faf9c7a0054212fc3149b727771307f7
+Red model: none (light lane). Green model: minimax-cn-coding-plan/MiniMax-M3.1-Flash.
+
+The step 6 run stopped at 07:55 ICT on a network error. The orchestrator checked the work of step 6
+and kept it. This block records step 6 (the moon and the mango delivery and the handoff folder) and
+step 7 (the three retry specs, the three retries, and the nine line calls of the group B and group
+D pictures). 12 Muse calls ran in step 7. The judge has not run on the round 5 batches yet.
+
+## The judge results before this step
+
+`judge-prod-r4-color-a1783749.json`: the group B and group D color try 1 passed 9 of 9. The second
+judges confirmed the three fails, so they stand: the A1 nest line m8
+(`judge-prod-r2-line-a1-second-a1783749.json`), the A2 nut line m3
+(`judge-prod-r3-line-a2-second-a1783749.json`), and the pan in a pan color m6
+(`judge-prod-r2-color-a11-second-a1783749.json`).
+
+## Step 6: the moon and the mango delivery
+
+The delivery folder `out/storytime/l2/unit1/w08/delivery-muse-v1/` holds the drum, the moon, and the
+mango. The approval list is `docs/storytime/l2-unit1/w08/muse/approved.json` with 3 rows (commit
+`6fd626c6`).
+
+The drum files were byte-equal before and after the run:
+`l2-w08-check-row-drum-v1.png` SHA-256 `c44c8836c6584a05a34b57c1465988f3ce9ab2676fc0858e0d7c1abb2f68faad`
+and `l2-w08-check-row-drum-line-v1.png` SHA-256
+`72453e668641fd225c747d7e0ec14de2692cfc270593a142050417cbd0d481ff`.
+
+The manifest grew from 1 job to 3 jobs: the old SHA-256 was
+`b8176ec6090de4bcc115c7af694071b95dbff5e0cdd415686fba7d670fb5e0a1` and the new one is
+`2dc0812b3a90be19bd288d622d1c9fdd4d682bd013c2c99242441f09a71b9f92`. The writer refused the first
+run because it never overwrites a different manifest, so the old manifest was removed and the run
+was made again. The writer skipped the drum files, because their bytes were equal.
+
+The new delivered files:
+
+| File | SHA-256 | Pixel size |
+| --- | --- | --- |
+| `l2-w08-check-row-moon-v1.png` | `a59d6fc9332c1572af5003bbd8814bd1d1a3f450eb8e3826ff2366fec9187995` | 1500 x 1500 |
+| `l2-w08-check-row-moon-line-v1.png` | `2868afa6de8e83cdd650cfbad096a19cc55652027b168229a07adca17641954a` | 1500 x 1500 |
+| `l2-w08-check-row-mango-v1.png` | `be6e91eedea7e67b026e263abef8efca20f9270a358f1c1fc83ba2e2c619e884` | 1500 x 1500 |
+| `l2-w08-check-row-mango-line-v1.png` | `4567b75d72ea6611eb3e8e2d2b2ff1992c16a87d9329ef372662a115b714d7c8` | 1500 x 1500 |
+
+The handoff folder is `/home/daniebo/Desktop/handoff/a48-forge-pictures-c/`. It holds the 4 files
+and `MANIFEST.txt` in the same form as the drum folder. The check
+`grep -E '^[0-9a-f]{64}  l2-w08-check-row-(moon|mango)' MANIFEST.txt | sha256sum -c -` gives
+`l2-w08-check-row-moon-v1.png: OK`, `l2-w08-check-row-moon-line-v1.png: OK`,
+`l2-w08-check-row-mango-v1.png: OK`, and `l2-w08-check-row-mango-line-v1.png: OK`; exit `0`.
+
+## Step 7: the three retry specs
+
+The line prompt of the nest page now asks for the woven twig lines in the line art: many thin twig
+strokes, the cut ends of the twigs sticking out, and a rough edge, never a smooth bowl outline. The
+line prompt of the nut page now asks for one shell with two round lobes and one narrow waist, with
+a short netted pattern of lines on the shell, never two separate smooth lobes. The color prompt of
+the pan in a pan page now says that exactly two pans are in the whole picture, that Ben and Nan
+hold no other pan, and that no third pan is anywhere. The mustShow phrases of the three specs stay
+as they are. Commit `b8392d0e`.
+
+## The 12 calls of step 7
+
+| Id | Kind | Try | Muse version | File | Cost (USD) | Result |
+| --- | --- | --- | --- | --- | --- | --- |
+| `l2-w01-story-page-a-nest` | line | 2 | m8 | `out/storytime/l2/unit1/w01/muse/l2-w01-story-page-a-nest-m8-line-2.png` | 0.01 | ok |
+| `l2-w01-story-page-a-nut` | line | 2 | m3 | `out/storytime/l2/unit1/w01/muse/l2-w01-story-page-a-nut-m3-line-2.png` | 0.01 | ok |
+| `l2-w03-story-page-a-pan-in-a-pan` | color | 2 | m7 | `out/storytime/l2/unit1/w03/muse/l2-w03-story-page-a-pan-in-a-pan-m7-color.png` | 0.01 | ok |
+| `l2-w01-story-page-hello-i-am-pip` | line | 1 | m7 | `out/storytime/l2/unit1/w01/muse/l2-w01-story-page-hello-i-am-pip-m7-line.png` | 0.01 | ok |
+| `l2-w02-story-page-how-many-balls-five` | line | 1 | m2 | `out/storytime/l2/unit1/w02/muse/l2-w02-story-page-how-many-balls-five-m2-line.png` | 0.01 | ok |
+| `l2-w04-story-page-this-is-pam` | line | 1 | m2 | `out/storytime/l2/unit1/w04/muse/l2-w04-story-page-this-is-pam-m2-line.png` | 0.01 | ok |
+| `l2-w05-story-page-i-have-four-legs` | line | 1 | m2 | `out/storytime/l2/unit1/w05/muse/l2-w05-story-page-i-have-four-legs-m2-line.png` | 0.01 | ok |
+| `l2-w06-story-page-tap-tap-tap` | line | 1 | m3 | `out/storytime/l2/unit1/w06/muse/l2-w06-story-page-tap-tap-tap-m3-line.png` | 0.01 | ok |
+| `l2-w06-story-page-tap-tap-tap-b` | line | 1 | m3 | `out/storytime/l2/unit1/w06/muse/l2-w06-story-page-tap-tap-tap-b-m3-line.png` | 0.01 | ok |
+| `l2-w06-story-page-he-can-see-pip` | line | 1 | m2 | `out/storytime/l2/unit1/w06/muse/l2-w06-story-page-he-can-see-pip-m2-line.png` | 0.01 | ok |
+| `l2-w05-d4-prompt-face` | line | 1 | m1 | `out/storytime/l2/unit1/w05/muse/l2-w05-d4-prompt-face-m1-line.png` | 0.01 | ok |
+| `l2-w07-d4-prompt-ball` | line | 1 | m1 | `out/storytime/l2/unit1/w07/muse/l2-w07-d4-prompt-ball-m1-line.png` | 0.01 | ok |
+
+No despeckle step and no other local filter ran.
+
+## The three round 5 judge batches
+
+| Batch | Path | Files | Judge files point at |
+| --- | --- | --- | --- |
+| retry line | `docs/storytime/l2-unit1/judge/prod/batch-r5-line-retry.json` | 2 | the nest m8 line 2 and the nut m3 line 2 |
+| retry color | `docs/storytime/l2-unit1/judge/prod/batch-r5-color-retry.json` | 1 | the pan in a pan m7 color |
+| group B and D line | `docs/storytime/l2-unit1/judge/prod/batch-r5-line.json` | 9 | m7, m2, m2, m2, m3, m3, m2, m1, and m1 line files |
+
+Every source file and every judge copy exists.
+
+## Commits (explicit paths)
+
+| Commit | Paths |
+| --- | --- |
+| `b8392d0e` | `docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nest.json`, `docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json`, `docs/storytime/l2-unit1/a48/l2-w03-story-page-a-pan-in-a-pan.json` |
+| `2455abe5` | `docs/storytime/l2-unit1/judge/prod/batch-r5-line-retry.json`, `docs/storytime/l2-unit1/judge/prod/batch-r5-color-retry.json`, `docs/storytime/l2-unit1/judge/prod/batch-r5-line.json` |
+| `8e6582f7` | `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md` |
+
+## Spend
+
+Restart spend so far: 0.51 USD of the 1.00 USD cap.
+
+## Tests
+
+No code changed in this step, so no vitest run was needed. The last gate run was the step 2 run
+of `tests/storytime-judge-batch.test.ts`: `Test Files  1 passed (1)`; `Tests  8 passed (8)`;
+exit `0`.
+
+## Defaults taken
+
+- The 9 line calls of the group B and group D pictures ran 4 at a time, as the brief allows.
+- The old manifest of the week 8 delivery folder was removed before the second run of the
+  delivery, because the writer never overwrites a different manifest. The old hash and its batch
+  hashes are in this log, and the drum files were not changed.
+- The line try 2 of a picture is the file with the `-2` suffix. The judge batch script reads the
+  file name from the output column of the line row, so the retry batch points at those files.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: partial
+commits:
+  - b8392d0e
+  - 2455abe5
+  - 8e6582f7
+tests_run: []
+files_changed:
+  - docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nest.json
+  - docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json
+  - docs/storytime/l2-unit1/a48/l2-w03-story-page-a-pan-in-a-pan.json
+  - docs/storytime/l2-unit1/judge/prod/batch-r5-line-retry.json
+  - docs/storytime/l2-unit1/judge/prod/batch-r5-color-retry.json
+  - docs/storytime/l2-unit1/judge/prod/batch-r5-line.json
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+plan_updates:
+  - The T4 step 6 and step 7 blocks record the moon and mango delivery, the drum check, the old and new manifest hash, the handoff folder, the three retry specs, the 12 calls, the three round 5 batches, and the spend of 0.51 USD
+  - The task lines of T5 and T6 name their line tries and their batches
+known_failures:
+  - tests/storytime-book-pictures.test.ts has 8 failures that came before this step: it pins the picture list SHA-256 6d05dfc and the Workbooks list has moved on to 327f805f
+  - The type check exits 2 with 58 errors; none names a file of this step
+handoff: Steps 6 and 7 of T4 are done. The moon and the mango are delivered and handed over, the three retries have their new pictures, and the line art of the nine group B and group D pictures is ready. The three batches are at docs/storytime/l2-unit1/judge/prod/batch-r5-line-retry.json, batch-r5-color-retry.json, and batch-r5-line.json. The restart spend is 0.51 USD of the 1.00 USD cap. The next step is the judge on those batches, then the delivery of the week 1 to week 7 rows that pass. phase_base_sha: aba118fe5c96902b0a7ddf31b3414693d13d7f21; Green HEAD: 8e6582f7.
+END_MEASURE_AGENT_RESULT
