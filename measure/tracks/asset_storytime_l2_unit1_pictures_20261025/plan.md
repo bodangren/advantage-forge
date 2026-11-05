@@ -4567,8 +4567,37 @@ PM 2026-11-03: light lane. One maker (`measure-jr-green`) and one checker (`meas
   The handoff folder is `/home/daniebo/Desktop/handoff/a48-forge-pictures-drum/`. It holds the two delivered files and `MANIFEST.txt` with the source, the commit `07a15b977821c38454f1d4a32f4ccb57100d33e9`, the SHA-256 and the pixel size of each file, the two judge result files, the date and time in ICT, and the sender. The check `grep -E '^[0-9a-f]{64}  l2-w08-check-row-drum' MANIFEST.txt | sha256sum -c -` gives `OK` for both files.
   The A2 line try 1: `node scripts/storytime-muse.mjs line docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json --from 3`; exit `0`; `l2-w01-story-page-a-nut-m3 line try 1 ok 1920x1280 cost 0.01`. The file is `out/storytime/l2/unit1/w01/muse/l2-w01-story-page-a-nut-m3-line.png`. No despeckle step and no other local filter ran. The round 3 judge batch is `docs/storytime/l2-unit1/judge/prod/batch-r3-line.json` with 1 file, and its judge copy points at the line file of m3.
   Restart spend so far: 0.20 USD of the 1.00 USD cap. The A2 nut page has 2 color tries and 1 line try. The drum has 1 color try and 1 line try.
-- [ ] Task T5: Redraw list B (7 pictures) of the A-48 list. The text stays; the picture must show the text. At most 3 color tries and 3 line-art tries for each picture.
-- [ ] Task T6: Draw list D (2 D4 prompt pictures) of the A-48 list. The ids are `l2-w05-d4-prompt-face-v1` and `l2-w07-d4-prompt-ball-v1`. Line art is the main file: the child works on it in the book.
+  T4 step 5 (round 4, 2026-11-05). The judge of the round 2 color batch (`judge-prod-r2-color-186d78ba.json`) passed 10 pictures: the nose m4, the milk m2, the axe m1, the ostrich m1, the ten m3, the top on a pot m4, the pan on a pan m2, the neck m6, the moon m1, and the mango m1. It failed the pan in a pan m6 with the defect class `wrong-or-missing-prop`: Ben holds a second blue pan above the big red pan, so three pans show. A second judge checks that fail alone, and no call ran for it. No A1 or A2 call ran either.
+  The step also made the first tries of the group B pictures (task T5) and the group D pictures (task T6). Commits: the two round 4 judge batches and this plan note.
+  The 19 calls of round 4 (Muse calls only, no despeckle and no local filter). Every call ran with `node scripts/storytime-muse.mjs` and every one returned `ok`.
+  | Id | Kind | Muse version | Cost (USD) |
+  | --- | --- | --- | --- |
+  | `l2-w01-check-row-nose` | line | m4 | 0.01 |
+  | `l2-w04-check-row-milk` | line | m2 | 0.01 |
+  | `l2-w02-check-row-axe` | line | m1 | 0.01 |
+  | `l2-w07-check-row-ostrich` | line | m1 | 0.01 |
+  | `l2-w06-check-row-ten` | line | m3 | 0.01 |
+  | `l2-w07-story-page-the-top-on-a-pot` | line | m4 | 0.01 |
+  | `l2-w03-story-page-a-pan-on-a-pan` | line | m2 | 0.01 |
+  | `l2-w01-story-page-a-neck` | line | m6 | 0.01 |
+  | `l2-w08-check-row-moon` | line | m1 | 0.01 |
+  | `l2-w08-check-row-mango` | line | m1 | 0.01 |
+  | `l2-w01-story-page-hello-i-am-pip` | color | m7 | 0.01 |
+  | `l2-w02-story-page-how-many-balls-five` | color | m2 | 0.01 |
+  | `l2-w04-story-page-this-is-pam` | color | m2 | 0.01 |
+  | `l2-w05-story-page-i-have-four-legs` | color | m2 | 0.01 |
+  | `l2-w06-story-page-tap-tap-tap` | color | m3 | 0.01 |
+  | `l2-w06-story-page-tap-tap-tap-b` | color | m3 | 0.01 |
+  | `l2-w06-story-page-he-can-see-pip` | color | m2 | 0.01 |
+  | `l2-w05-d4-prompt-face` | color | m1 | 0.01 |
+  | `l2-w07-d4-prompt-ball` | color | m1 | 0.01 |
+  The line files of the 10 line calls sit beside their color files in the week folders, with the name `<id>-m<version>-line.png`. The color files of the 9 color calls have the name `<id>-m<version>-color.png`.
+  The two round 4 judge batches: `docs/storytime/l2-unit1/judge/prod/batch-r4-line.json` (10 files) and `docs/storytime/l2-unit1/judge/prod/batch-r4-color.json` (9 files). Every judge file points at the file of this round: the line files m4, m2, m1, m1, m3, m4, m2, m6, m1, and m1; the color files m7, m2, m2, m2, m3, m3, m2, m1, and m1. The judge has not run on them yet.
+  Restart spend so far: 0.39 USD of the 1.00 USD cap.
+- [~] Task T5: Redraw list B (7 pictures) of the A-48 list. The text stays; the picture must show the text. At most 3 color tries and 3 line-art tries for each picture.
+  The first color tries of the 7 group B pictures ran in the T4 step 5 round: the hello-I-am-Pip page m7, the how-many-balls-five page m2, the this-is-Pam page m2, the I-have-four-legs page m2, the tap-tap-tap page m3, the tap-tap-tap-b page m3, and the he-can-see-Pip page m2. The judge batch is `docs/storytime/l2-unit1/judge/prod/batch-r4-color.json`. The task stays `[~]` until the judge has run and the pictures are delivered.
+- [~] Task T6: Draw list D (2 D4 prompt pictures) of the A-48 list. The ids are `l2-w05-d4-prompt-face-v1` and `l2-w07-d4-prompt-ball-v1`. Line art is the main file: the child works on it in the book.
+  The first color tries of the 2 group D pictures ran in the T4 step 5 round: the face m1 and the ball m1. The judge batch is `docs/storytime/l2-unit1/judge/prod/batch-r4-color.json`. The task stays `[~]` until the judge has run and the pictures are delivered.
 
 ## Calibration sources
 
