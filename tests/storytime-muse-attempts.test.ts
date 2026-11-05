@@ -30,11 +30,11 @@ import {
   parseCostsTsv,
 } from '../scripts/storytime-muse-guards.mjs';
 
-const ts = (hms) => `2026-11-04T${hms}.000Z`;
-const row = (time, id, kind, cost = 0.01, note = 'ok', output = 'l2-x-m1-color.png') =>
+const ts = (hms: string) => `2026-11-04T${hms}.000Z`;
+const row = (time: string, id: string, kind: string, cost = 0.01, note = 'ok', output = 'l2-x-m1-color.png') =>
   `${time}\t${id}\tm1\t${kind}\tin\t${output}\t1920x1280\t${cost}\t${note}`;
 
-let root;
+let root: string;
 beforeEach(() => {
   root = mkdtempSync(path.join(os.tmpdir(), 'muse-guards-'));
 });
@@ -42,14 +42,14 @@ afterEach(() => {
   rmSync(root, { recursive: true, force: true });
 });
 
-const writeCosts = (rel, lines) => {
+const writeCosts = (rel: string, lines: string[]) => {
   const p = path.join(root, rel);
   mkdirSync(path.dirname(p), { recursive: true });
   writeFileSync(p, `time\trow\tversion\tkind\tinputs\toutput\tsize\tusage_cost\tnote\n${lines.join('\n')}\n`);
 };
 
-const specOf = (id) => ({ spec: { id } });
-const rowsOf = (lines) => parseCostsTsv(`time\trow\tversion\tkind\tinputs\toutput\tsize\tusage_cost\tnote\n${lines.join('\n')}\n`);
+const specOf = (id: string) => ({ spec: { id } });
+const rowsOf = (lines: string[]) => parseCostsTsv(`time\trow\tversion\tkind\tinputs\toutput\tsize\tusage_cost\tnote\n${lines.join('\n')}\n`);
 
 describe('countTries', () => {
   it('counts only rows at or after the restart start, of the kind, of the picture', () => {
@@ -143,7 +143,7 @@ describe('tryGuard', () => {
 
 describe('TRY_EXCEPTIONS (the nut tries, PM 2026-11-05 09:17 and ~10:23 ICT)', () => {
   const nut = 'l2-w01-story-page-a-nut';
-  const nutRows = (n, kind) => rowsOf(
+  const nutRows = (n: number, kind: string) => rowsOf(
     Array.from({ length: n }, (_, i) => row(`2026-11-04T08:${String(10 + i * 10).padStart(2, '0')}:00`, nut, kind, 0.01, 'ok', `${nut}-m${i + 1}-${kind}.png`)),
   );
 
@@ -153,9 +153,9 @@ describe('TRY_EXCEPTIONS (the nut tries, PM 2026-11-05 09:17 and ~10:23 ICT)', (
     const color = TRY_EXCEPTIONS.filter((e) => e.kind === 'color');
     expect(line.reduce((s, e) => s + e.extraTries, 0)).toBe(2);
     expect(color.reduce((s, e) => s + e.extraTries, 0)).toBe(1);
-    expect(TRY_EXCEPTIONS[0].source).toContain('09:17 ICT');
-    expect(TRY_EXCEPTIONS[1].source).toContain('10:23');
-    expect(TRY_EXCEPTIONS[2].source).toContain('10:23');
+    expect(TRY_EXCEPTIONS[0]!.source).toContain('09:17 ICT');
+    expect(TRY_EXCEPTIONS[1]!.source).toContain('10:23');
+    expect(TRY_EXCEPTIONS[2]!.source).toContain('10:23');
   });
 
   it('allows the nut line with 3 restart rows 1 more try (cap 5)', () => {
@@ -182,7 +182,7 @@ describe('TRY_EXCEPTIONS (the nut tries, PM 2026-11-05 09:17 and ~10:23 ICT)', (
 
   it('still refuses another id with 3 rows, in both kinds', () => {
     const other = 'l2-w01-story-page-a-nest';
-    const rows = (kind) => rowsOf([
+    const rows = (kind: string) => rowsOf([
       row('2026-11-04T08:10:00', other, kind, 0.01, 'ok', `${other}-m1-${kind}.png`),
       row('2026-11-04T08:20:00', other, kind, 0.01, 'ok', `${other}-m2-${kind}.png`),
       row('2026-11-04T08:30:00', other, kind, 0.01, 'ok', `${other}-m3-${kind}.png`),
