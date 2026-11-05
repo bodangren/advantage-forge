@@ -1,0 +1,121 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-check-row-nose-line-t1.png",
+    "id": "l2-w01-check-row-nose",
+    "kind": "line",
+    "pageText": "nose",
+    "use": "check-row",
+    "mustShow": [
+      "one nose",
+      "the nose tip and one nostril",
+      "the nose fills most of the picture"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w04-check-row-milk-line-t1.png",
+    "id": "l2-w04-check-row-milk",
+    "kind": "line",
+    "pageText": "milk",
+    "use": "check-row",
+    "mustShow": [
+      "one milk carton",
+      "a cow picture on the carton",
+      "the carton is large in the middle"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w02-check-row-axe-line-t1.png",
+    "id": "l2-w02-check-row-axe",
+    "kind": "line",
+    "pageText": "axe",
+    "use": "check-row",
+    "mustShow": [
+      "one axe",
+      "a handle and a blade",
+      "the axe is large in the middle"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w07-check-row-ostrich-line-t1.png",
+    "id": "l2-w07-check-row-ostrich",
+    "kind": "line",
+    "pageText": "ostrich",
+    "use": "check-row",
+    "mustShow": [
+      "one ostrich",
+      "a long neck and long legs",
+      "the ostrich is large in the middle"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w06-check-row-ten-line-t1.png",
+    "id": "l2-w06-check-row-ten",
+    "kind": "line",
+    "pageText": "ten",
+    "use": "check-row",
+    "mustShow": [
+      "ten apples",
+      "two rows of five apples"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w07-story-page-the-top-on-a-pot-line-t1.png",
+    "id": "l2-w07-story-page-the-top-on-a-pot",
+    "kind": "line",
+    "pageText": "The top on a pot!",
+    "use": "story-page",
+    "mustShow": [
+      "a spinning top",
+      "a pot with a lid",
+      "the top sits on the lid of the pot"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w03-story-page-a-pan-on-a-pan-line-t1.png",
+    "id": "l2-w03-story-page-a-pan-on-a-pan",
+    "kind": "line",
+    "pageText": "A pan on a pan.",
+    "use": "story-page",
+    "mustShow": [
+      "one pan",
+      "a second pan",
+      "one pan stacked on the other pan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-neck-line-t1.png",
+    "id": "l2-w01-story-page-a-neck",
+    "kind": "line",
+    "pageText": "A neck.",
+    "use": "story-page",
+    "mustShow": [
+      "Nan",
+      "her hand on her neck",
+      "the neck is clear between the chin and the collar"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w08-check-row-moon-line-t1.png",
+    "id": "l2-w08-check-row-moon",
+    "kind": "line",
+    "pageText": "moon",
+    "use": "check-row",
+    "mustShow": [
+      "one moon",
+      "the round moon with a round hollow",
+      "the moon is large in the middle"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w08-check-row-mango-line-t1.png",
+    "id": "l2-w08-check-row-mango",
+    "kind": "line",
+    "pageText": "mango",
+    "use": "check-row",
+    "mustShow": [
+      "one mango",
+      "an oval yellow and green fruit with a small stem",
+      "the mango is large in the middle"
+    ]
+  }
+]
