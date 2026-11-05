@@ -782,3 +782,155 @@ known_failures:
   - The type check exits 2 with 58 errors; none names a file of this step
 handoff: Steps 6 and 7 of T4 are done. The moon and the mango are delivered and handed over, the three retries have their new pictures, and the line art of the nine group B and group D pictures is ready. The three batches are at docs/storytime/l2-unit1/judge/prod/batch-r5-line-retry.json, batch-r5-color-retry.json, and batch-r5-line.json. The restart spend is 0.51 USD of the 1.00 USD cap. The next step is the judge on those batches, then the delivery of the week 1 to week 7 rows that pass. phase_base_sha: aba118fe5c96902b0a7ddf31b3414693d13d7f21; Green HEAD: 8e6582f7.
 END_MEASURE_AGENT_RESULT
+
+# Step 8 of T4/T5/T6 (delivery of the groups A, B, and D, 2026-11-05)
+
+role_base_sha: 1e43b8b8dd091402a85b4f30b783e1dc8032e797
+Red model: none (light lane). Green model: kimi-code-plan-cn/kimi-for-coding.
+
+Deviation: this step replaced the earlier MiniMax maker (session ses_e5769d3feffe8eIjC22MWAmzDO),
+because its plan was at 98 percent of its 5 h window (PM route note, 08:16 ICT). The orchestrator
+routed Parts 1 to 3 first and added Part 4 (group A) at 08:25 ICT with the pan-in-a-pan line pass;
+Part 4 ran before Part 3, as the group A order comes first.
+
+One Muse call ran (the pan in a pan line try 1). No despeckle step ran for any delivery. The judge
+of the round 6 line batch (`judge-prod-r6-line-38cb0ca4.json`) passed the pan in a pan line m7.
+
+## Part 1: the last group A line try
+
+Command: `node scripts/storytime-muse.mjs line docs/storytime/l2-unit1/a48/l2-w03-story-page-a-pan-in-a-pan.json --from 7`
+Exit `0`. `l2-w03-story-page-a-pan-in-a-pan-m7 line try 1 ok 1920x1280 cost 0.01`. The file is
+`out/storytime/l2/unit1/w03/muse/l2-w03-story-page-a-pan-in-a-pan-m7-line.png`.
+
+Judge batch command: `node scripts/storytime-judge-batch.mjs --ids l2-w03-story-page-a-pan-in-a-pan --kind line --try 1 --out batch-r6-line`
+Exit `0`. Batch path: `docs/storytime/l2-unit1/judge/prod/batch-r6-line.json` (1 file). The w03
+costs.tsv line row of 2026-11-05T01:20:16Z names the m7 line file, so the judge copy maps to it.
+Commit `38cb0ca4` (the batch file), before Part 2, as the brief requires.
+
+## Part 2: the group B delivery (7 pictures, no call)
+
+The delivery writer ran once for week 2 and refused before any write: `The approval list names
+l2-w02-check-row-alligator, which is not a row of the picture list` (exit 2). The weekly approval
+lists pin the old picture-list SHA 6d05dfc5, and the list on disk is 327f805f. So the copy way
+was used, as the brief allows.
+
+The 14 approved try-1 prints were copied under the spec deliverAs names (v2) into:
+`w01/delivery-muse-v3/` (the hello Pip page), `w02/delivery-muse-v2/` (the five balls page),
+`w04/delivery-muse-v2/` (the Pam page), `w05/delivery-muse-v2/` (the four legs page), and
+`w06/delivery-muse-v2/` (the tap, tap-b, and he-can-see-Pip pages). Each folder holds a
+manifest.json with the SHA-256, the pixel size, the source print, and the judge file of each
+file. The line prints are the plain Muse line prints of try 1, not despeckled files.
+
+The handoff folder `/home/daniebo/Desktop/handoff/a48-forge-pictures-b/` did not exist before.
+It holds the 14 files and `MANIFEST.txt` in the c-folder form. The check
+`grep -E '^[0-9a-f]{64}  l2-w0[12456]-story-page' MANIFEST.txt | sha256sum -c -` gives 14 OK
+lines; exit `0`.
+
+## Part 4: the group A delivery (12 pictures, no call, ran before Part 3)
+
+The writer refused for the same reasons. The 25 approved prints (the nest, nut, nest-and-nut,
+nose, neck, axe, milk, ten, ostrich, top-on-a-pot, pan-on-a-pan, and pan-in-a-pan pictures; the
+nose line print under both `l2-w01-check-row-nose-line-v2.png` and
+`l2-w01-practice-line-nose-v2.png`) were copied under the spec deliverAs names into:
+`w01/delivery-muse-v3/`, `w02/delivery-muse-v2/`, `w03/delivery-muse-v2/` (new),
+`w04/delivery-muse-v2/`, `w06/delivery-muse-v2/`, and `w07/delivery-muse-v2/` (new). The axe and
+the ostrich hold v1 names; the rest hold v2 names. The nest and the nut deliver the line try 2
+prints (`-m8-line-print-2.png` and `-m3-line-print-2.png`), not try 1 and not despeckled.
+
+Each folder holds a manifest.json with the SHA-256, the pixel size, the source print, and the
+judge file of each file. Old and new SHA-256 of each changed manifest.json:
+w01/delivery-muse-v3 afeb7fea... -> 38a16765..., w02/delivery-muse-v2 5720558b... -> c59a75bb...,
+w03/delivery-muse-v2 new bb7a2752..., w04/delivery-muse-v2 0c100800... -> 82d467e6...,
+w05/delivery-muse-v2 ef86e255... -> 0e2fde98... (record format only; its two B files are
+byte-equal), w06/delivery-muse-v2 d79cbeea... -> 66bb2f62..., w07/delivery-muse-v2 new 352b2dab....
+The 14 group B files stayed byte-equal (each SHA-256 checked after the copies).
+
+The handoff folder `/home/daniebo/Desktop/handoff/a48-forge-pictures-a/` did not exist before.
+It holds the 25 files and `MANIFEST.txt` in the c-folder form, with the judge file of each
+picture. The check `grep -E '^[0-9a-f]{64}  l2-w0[1-7]-' MANIFEST.txt | sha256sum -c -` gives
+25 OK lines; exit `0`.
+
+## Part 3: the group D delivery (2 pictures, no call)
+
+The Workbooks picture list (SHA-256 327f805f...) has no row for `l2-w05-d4-prompt-face` and
+`l2-w07-d4-prompt-ball`; Workbooks maps the ids when the art arrives. The writer refused for
+that reason, so the copy way was used: the 4 approved try-1 prints were copied under the spec
+deliverAs names (v1) into the new folders `w05/delivery-a48-d/` and `w07/delivery-a48-d/`, each
+with a manifest.json that names the missing list row, the SHA-256, the pixel size, the source
+print, and the judge file of each file.
+
+The handoff folder `/home/daniebo/Desktop/handoff/a48-forge-pictures-d/` did not exist before.
+It holds the 4 files and `MANIFEST.txt` in the c-folder form; the missing list rows are named
+in it. The check `grep -E '^[0-9a-f]{64}  l2-w0[57]-d4-prompt' MANIFEST.txt | sha256sum -c -`
+gives 4 OK lines; exit `0`.
+
+## The existing delivery folders
+
+The SHA-256 of every existing manifest.json of the weeks 1 to 7 (and the cover) is the same
+before and after this step: w01/delivery-muse-v1 00ea0c5b..., w01/delivery-muse-v2 d3eec18c...,
+w02/delivery-muse-v1 6e6b5145..., w03/delivery-muse-v1 24213647..., w04/delivery-muse-v1
+4e74b730..., w05/delivery-muse-v1 c3f009e6..., w06/delivery-muse-v1 11c5dc10...,
+w07/delivery-muse-v1 6a5724c4..., w08/delivery-muse-v1 2dc0812b... No file of an existing
+delivery folder was touched.
+
+## Spend
+
+Restart spend so far: 0.52 USD of the 1.00 USD cap (0.51 before this step, plus 0.01 for the
+pan in a pan line try 1).
+
+## Tests
+
+No code or spec changed in this step, so no vitest run was needed. The last gate run was the
+step 2 run of `tests/storytime-judge-batch.test.ts`: `Test Files  1 passed (1)`; `Tests  8 passed (8)`;
+exit `0`. The live gates of this step are the three handoff check commands (14, 25, and 4 OK
+lines) and the manifest before/after equality.
+
+## Commits (explicit paths)
+
+| Commit | Paths |
+| --- | --- |
+| `38cb0ca4` | `docs/storytime/l2-unit1/judge/prod/batch-r6-line.json` |
+| (this commit) | `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md`, `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p5-t4-aba118fe.log` |
+
+## Defaults taken
+
+- The writer was tried once for week 2 and refused before any write; the copy way was used for
+  all three groups, as the brief allows.
+- The line deliver name of a picture is its deliverAs name with `-line` before the version
+  suffix, matching the picture list rows and the earlier deliveries.
+- The manifest.json of a new folder holds one entry per file with the SHA-256, the pixel size,
+  the source print path, and the judge file; it is not a writer manifest, and it says so.
+- The w05/delivery-muse-v2 manifest changed only in record format when group A rewrote it; its
+  two group B files stayed byte-equal, and each SHA-256 was checked after.
+- The group D files went to `w05/delivery-a48-d/` and `w07/delivery-a48-d/`, not to the group B
+  folders, because the writer did not deliver them there.
+- Task T4 is marked `[x]` (commit `38cb0ca4` on the first line); tasks T5 and T6 are marked
+  `[x]` with the delivery evidence in their progress lines.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: complete
+commits:
+  - 38cb0ca4
+tests_run:
+  - command: grep -E '^[0-9a-f]{64}  l2-w0[12456]-story-page' MANIFEST.txt | sha256sum -c - (in /home/daniebo/Desktop/handoff/a48-forge-pictures-b)
+    result: 14 OK lines; exit 0
+  - command: grep -E '^[0-9a-f]{64}  l2-w0[1-7]-' MANIFEST.txt | sha256sum -c - (in /home/daniebo/Desktop/handoff/a48-forge-pictures-a)
+    result: 25 OK lines; exit 0
+  - command: grep -E '^[0-9a-f]{64}  l2-w0[57]-d4-prompt' MANIFEST.txt | sha256sum -c - (in /home/daniebo/Desktop/handoff/a48-forge-pictures-d)
+    result: 4 OK lines; exit 0
+files_changed:
+  - docs/storytime/l2-unit1/judge/prod/batch-r6-line.json
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p5-t4-aba118fe.log
+plan_updates:
+  - Task T4 marked [x] with the step 8 block (the pan in a pan line try 1, the round 6 batch, the group A delivery, and the handoff folder)
+  - Task T5 marked [x] with the group B delivery and the handoff folder
+  - Task T6 marked [x] with the group D delivery, the missing list rows, and the handoff folder
+known_failures:
+  - tests/storytime-book-pictures.test.ts has 8 failures that came before this step: it pins the picture list SHA-256 6d05dfc and the Workbooks list has moved on to 327f805f
+  - The type check exits 2 with 58 errors; none names a file of this step
+handoff: Step 8 is done. One Muse call ran (the pan in a pan line m7, 0.01 USD, restart spend 0.52 of 1.00). The round 6 line batch passed the judge, and the groups A, B, and D are delivered and handed over at /home/daniebo/Desktop/handoff/a48-forge-pictures-a/ (25 files), a48-forge-pictures-b/ (14 files), and a48-forge-pictures-d/ (4 files); every check command exits 0. Every existing delivery manifest of the weeks 1 to 7 holds the same SHA-256 as before. Tasks T4, T5, and T6 are [x]. phase_base_sha: aba118fe5c96902b0a7ddf31b3414693d13d7f21; role_base_sha: 1e43b8b8dd091402a85b4f30b783e1dc8032e797; Green HEAD: this commit.
+END_MEASURE_AGENT_RESULT
