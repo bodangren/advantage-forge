@@ -2646,6 +2646,887 @@ from a subset of the cost files or from a column with the wrong name.
    `fc76c272`) do not change.
 4. G1 and G7 diff from the Phase 5 base.
 
+##### 5.11 Restart amendment (2026-11-05): gates for Task 3, T3a, T4, T5, T6
+
+Revision: written at `f25d8399` (the T4, T5, and T6 step 8 delivery). It includes the PM order of
+2026-11-05 08:44 ICT (the nut attempt 3). The text of 5.1 to 5.10 stays as written. Where 5.11
+and an earlier subsection differ, 5.11 applies.
+
+Sources: the spec section "Amendment 2026-11-04" (Decisions 1 to 6), the plan Phase 5 tasks 3, T3a,
+T4, T5, and T6, and the step 8 block of `jr-green-p5-t4-aba118fe.log`. PM 2026-11-05: light lane,
+the checker route of 5.11.9, and the copy-way delivery of the two D4 ids (defaults 1 and 3).
+
+Risk class: **medium**. The restart changed scripts, one source file, and three test files. It
+delivered 49 files (51 with the nut v3 pair) outside git, to Workbooks. The residual risks are a
+delivered file without a judge pass (A5), a spend or try count from a subset of the cost rows (A7),
+and the word "approved" on a picture with model evidence only (A6).
+
+###### 5.11.1 The earlier gates that 5.11 replaces
+
+| Earlier rule | Status under 5.11 | Replacement |
+| --- | --- | --- |
+| G1 No code drift | Replaced. The restart changed code by design. | X1 and X2 |
+| G2 Reconcile | Replaced. RECONCILE_COMMAND pins list v4 and exits `2` on the list `327f805f…` by design. `reconcile-p5.mjs`, `reconcile-p5.log`, and `release-files-p5.tsv` stay as the record of `7c4f8b63`. Nobody runs the reconcile again. | X8 |
+| G3 Mutations | Stays a record of `7c4f8b63`. The checker does not run M1 and M4 again. | X4 control run |
+| G4 Read only | Replaced. | X4 (19 manifest pins) and X8 |
+| G5 Ledger | Stays in force. | none |
+| G6 Cost report | Stays a record. `12.93` is the total before the restart. | X5 |
+| G7 Wording | Extended to the new files. | X13 |
+| G8 No secret | Extended to the new files. | X14 |
+| G9 Facts and doctor | Replaced. | X15 |
+| G10 Tests | Replaced. | X10 and X11 |
+| G11 Task lines | Replaced. Phase 5 has 7 tasks now. | X12 |
+| 5.2 commands | Replaced. | 5.11.4 |
+| 5.2 and 5.9 roles | Replaced. | 5.11.9 |
+| 5.6 wording | Stays in force. X13 adds two file-level rules. | none |
+
+###### 5.11.2 Facts (checked 2026-11-05 at `f25d8399`, read-only commands only)
+
+| Fact | Value |
+| --- | --- |
+| Phase 5 base `P5BASE` | `4e171648d0101d9f7b34d0f486fc1494bc0a48e7`. The orchestrator recorded it at the Phase 5 start. It does not change. The restart steps used `aba118fe` as their step base. |
+| Commits `P5BASE..f25d8399` | 55. No merge commit. Each subject starts with `storytime:` or `measure(storytime_l2_unit1_pictures):`. They touch 69 paths. All 69 are in the allowed set of 5.11.3. |
+| Workbooks list now | SHA-256 `327f805f2f44aeed2b29477e83921ed03cf5fd7ab6600910ca8e21fced5b2cc7`, 194 rows. The copy-way manifests record this value. 5.11 pins no list SHA. Workbooks owns the list. |
+| Judge kit | `judge-prompt.md` SHA-256 `db5b443a…` (v6) and `cast.json` SHA-256 `2eb4a6a1…`. `git diff c132d866..HEAD` of the kit files, the calibration set, and the eight calibration batches is empty. Judge model: `claude-code/claude-sonnet-5-5#high`. |
+| Calibration | 8 result files `judge-cal-<group>-aba118fe.json`, each `status: complete`. 388 files judged: 381 pass, 7 fail. The 2 entries with `expected: fail` (the gate controls) fail. Every entry with `expected: pass` passes. Each `summary` equals the count of its `results`. |
+| Production judge | 15 result files `judge-prod-*.json`: 11 main files and 4 second-judge files (`-second-` in the name). 52 main results, 4 main fails. A second judge confirmed each fail, and one retry followed each fail. 12 batch files in `docs/storytime/l2-unit1/judge/prod/` (11 rounds and the dry run). Each main result file names its batch through `group`. |
+| Restart cost rows | 15 cost files (8 week files, 6 element files, the cover file). 52 rows at or after `2026-11-04T07:54:00Z`, all in week files. Spend `0.52` USD. 0 failed calls. 48 picture and kind pairs. Most tries for one pair: 2 (the nut color, the nut line, the nest line, the pan in a pan color). |
+| Restart deliveries | 10 folders, 49 files, 24 pictures. See the folder table below. |
+| Handoff folders | `a48-forge-pictures-drum` 2 files, `-c` 4, `-a` 25, `-b` 14, `-d` 4. Each `MANIFEST.txt` check command gives one `OK` line for each file and exits `0`. Each `MANIFEST.txt` holds the words "model evidence, not acceptance". |
+| Pre-restart manifests | The nine values of 5.1 (w01 v1, w01 v2, w02 to w07 v1, the cover) are unchanged. The step 8 log lists eight of them and the w08 manifest. |
+| D4 ids | `l2-w05-d4-prompt-face` and `l2-w07-d4-prompt-ball` have no row in the list `327f805f…`. Each `delivery-a48-d/manifest.json` names its id in `missingPictureListRows`. PM 2026-11-05 accepted this copy-way delivery with hand-written manifests (defaults 1 and 3). |
+| Untracked evidence | The judge result files and the restart logs in `measure/runs/` are not in git. Closeout commits `measure/runs/`. 5.11.6 pins their bytes. `out/` and the handoff folders are outside git. |
+| Tests | `tests/storytime-book-pictures.test.ts` has 8 failures that came before T4. The file pins the list SHA-256 `6d05dfc5…`. T4 step 1: the three restart test files gave `Tests  72 passed (72)`. |
+| Type check | T4 step 1: `tsc --noEmit` exit `2`, 58 errors. 20 are in `tests/storytime-muse-attempts.test.ts`, an owned file: the T3a test imports `scripts/storytime-muse-guards.mjs`, which has no type file. |
+| Plan and metadata | 28 `- [x] Task` lines; Task 3 is `[~]`. T5 and T6 have no commit SHA on the first line. `metadata.json`: `actual_tasks` 23, `status` `in_progress`. |
+| doctor | `node measure/tools/doctor.mjs --structural-only --root .` prints 12 errors. None names this track: 6 tracks "new track has started tasks", 5 registry links, and `generated/status.md` stale. |
+| Interphase status | `incomplete_phases: 1`, Phase 5 "1/7 remaining". |
+
+Restart delivery folders (the restart check pins each `manifest.json` SHA-256):
+
+| Folder | Files | Way | `manifest.json` SHA-256 |
+| --- | --- | --- | --- |
+| `w01/delivery-muse-v3` | 13 | copy | `38a16765…` |
+| `w02/delivery-muse-v2` | 4 | copy | `c59a75bb…` |
+| `w03/delivery-muse-v2` | 4 | copy | `bb7a2752…` |
+| `w04/delivery-muse-v2` | 4 | copy | `82d467e6…` |
+| `w05/delivery-muse-v2` | 2 | copy | `0e2fde98…` |
+| `w06/delivery-muse-v2` | 8 | copy | `66bb2f62…` |
+| `w07/delivery-muse-v2` | 4 | copy | `352b2dab…` |
+| `w05/delivery-a48-d` | 2 | copy | `0fa7b232…` |
+| `w07/delivery-a48-d` | 2 | copy | `36b4febc…` |
+| `w08/delivery-muse-v1` | 6 | writer | `2dc0812b…` |
+| `w01/delivery-muse-v4` (only after a nut v3 pass) | 2 | copy | not pinned (new) |
+
+The 24 pictures: list A 12 (the nose counts once for its two ids; the ostrich has one id for
+week 7 and week 8), list B 7, list C 3 (drum, moon, mango), list D 2. The 24 specs are the 24
+files of `docs/storytime/l2-unit1/a48/`.
+
+###### 5.11.3 Scope and the allowed file set (X1, X2)
+
+X1 uses `P5BASE`. X2 uses `P5R_BASE`, the HEAD that the orchestrator captures right after the
+5.11 commit (5.11.12). The allowed set comes from `git diff --name-only P5BASE..HEAD` at
+`f25d8399` and the plan evidence, plus one planned file (`scripts/storytime-muse-guards.d.mts`,
+finding F2).
+
+```sh
+P5BASE=4e171648d0101d9f7b34d0f486fc1494bc0a48e7
+D=$(mktemp -d /tmp/opencode/p5r-check.XXXXXX)
+ALLOWED='^(measure/tracks/asset_storytime_l2_unit1_pictures_20261025/|measure/runs/asset_storytime_l2_unit1_pictures_20261025/|measure/(tracks|status|tech-debt|lessons-learned)\.md$|measure/generated/|docs/storytime/l2-unit1/a48/l2-w0[1-8]-[a-z0-9-]+\.json$|docs/storytime/l2-unit1/judge/(judge-prompt\.md|cast\.json|calibration-set\.json|batch-(w0[1-7]|cover)\.json)$|docs/storytime/l2-unit1/judge/prod/batch-[a-z0-9-]+\.json$|docs/storytime/l2-unit1/w08/muse/approved\.json$|scripts/storytime-(judge-batch\.mjs|judge-batch\.d\.mts|judge-set\.mjs|muse-guards\.mjs|muse-guards\.d\.mts|muse\.mjs)$|src/storytime/book-pictures\.ts$|tests/storytime-(judge-batch|muse-attempts|muse-delivery)\.test\.ts$)'
+# X1: files of this track's commits, and the foreign commits in the range
+for c in $(git rev-list --no-merges "$P5BASE"..HEAD); do
+  s=$(git log -1 --format=%s "$c")
+  case "$s" in
+    'storytime:'*|'measure(storytime_l2_unit1_pictures):'*) git diff-tree --no-commit-id --name-only -r "$c" >> "$D/own.txt" ;;
+    *) echo "$c $s" >> "$D/foreign.txt"; git diff-tree --no-commit-id --name-only -r "$c" | grep -E 'storytime|asset_storytime_l2_unit1' >> "$D/foreign-touch.txt" ;;
+  esac
+done
+touch "$D/own.txt" "$D/foreign.txt" "$D/foreign-touch.txt"
+echo "merge commits in range: $(git rev-list --merges "$P5BASE"..HEAD | wc -l)"
+echo "own files: $(sort -u "$D/own.txt" | wc -l)"
+echo "own files outside the allowed set: $(sort -u "$D/own.txt" | grep -cEv "$ALLOWED")"
+echo "foreign commits: $(wc -l < "$D/foreign.txt")"
+echo "foreign storytime paths: $(wc -l < "$D/foreign-touch.txt")"
+echo "a48 specs in git: $(git ls-files docs/storytime/l2-unit1/a48 | wc -l)"
+# X2: freezes after the 5.11 commit (P5R_BASE from the orchestrator)
+echo "code files changed after P5R_BASE: $(git diff --name-only "$P5R_BASE"..HEAD -- scripts src tests | grep -cvx 'scripts/storytime-muse-guards.d.mts')"
+echo "judge files changed or removed after P5R_BASE: $(git diff --name-status --diff-filter=MDR "$P5R_BASE"..HEAD -- docs/storytime/l2-unit1/judge | wc -l)"
+echo "a48 specs changed after P5R_BASE: $(git diff --name-only "$P5R_BASE"..HEAD -- docs/storytime/l2-unit1/a48 | grep -cvx 'docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json')"
+echo "judge kit changed after c132d866: $(git diff --name-only c132d866..HEAD -- docs/storytime/l2-unit1/judge/judge-prompt.md docs/storytime/l2-unit1/judge/cast.json docs/storytime/l2-unit1/judge/calibration-set.json docs/storytime/l2-unit1/judge/batch-w0{1,2,3,4,5,6,7}.json docs/storytime/l2-unit1/judge/batch-cover.json | wc -l)"
+```
+
+Expected: `merge commits in range: 0`, `own files outside the allowed set: 0`,
+`foreign storytime paths: 0`, `a48 specs in git: 24`, and `0` on each of the four X2 lines. A
+foreign commit is not a failure. The checker names each one from `foreign.txt`. The nut spec
+(`mustShow` "one nut, clearly a nut", `deliverAs` v3) may change after its earlier tries. The new
+nut batch files are additions (status `A`), so the earlier batch files keep their bytes.
+
+###### 5.11.4 Commands
+
+RED_TEST_COMMAND: **none**. The restart code is committed with its tests (T3a and T4 step 1). The
+one planned code change is a type file. Its Red evidence is the T4 step 1 type check (20 owned
+errors). TYPECHECK_COMMAND below is its Green.
+
+GREEN_TEST_COMMAND (maker, **once**, after the last code change):
+
+```sh
+HEAVY_MIN_AVAIL_MB=1500 bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-attempts.test.ts tests/storytime-judge-batch.test.ts tests/storytime-muse-delivery.test.ts tests/storytime-picture-rows.test.ts --maxWorkers=1'
+```
+
+Expected: exit `0`, `Test Files  4 passed (4)`, `Tests  <N> passed (<N>)`. No skip and no `-t`
+filter. Parse `<N>` as a labeled integer. The three restart files gave 72 at T4 step 1, so `<N>`
+is above 72.
+
+PROJECT_TESTS (checker, **once**): the four files above plus `tests/storytime-stage-check.test.ts`,
+`tests/storytime-line-art-pass.test.ts`, and `tests/storytime-muse-delivery-adversarial.test.ts`,
+in one `heavy-run.sh` wrapper with `HEAVY_MIN_AVAIL_MB=1500` and `--maxWorkers=1`. Expected:
+exit `0`, `Test Files  7 passed (7)`, `Tests  <M> passed (<M>)`, and `<M>` above `<N>`.
+
+KNOWN_RED_COMMAND (checker, **once**, after PROJECT_TESTS ends):
+
+```sh
+HEAVY_MIN_AVAIL_MB=1500 bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1' > "$D/known-red.log" 2>&1; echo "known red exit: $?"
+echo "known red fail lines: $(grep -c '^ *FAIL  tests/storytime-book-pictures.test.ts >' "$D/known-red.log")"
+grep -E '^ *Tests  ' "$D/known-red.log"
+```
+
+Expected: exit `1`, `known red fail lines: 8`, and `Tests  8 failed | <P> passed (<P+8>)`. The file
+stays out of GREEN_TEST_COMMAND and PROJECT_TESTS for this reason: it pins the list v4 SHA-256 and
+the Workbooks list moved on (plan line of T4 step 1). This is not a `-t` filter: the file runs whole,
+alone, with an exact expected count. For each of the 8 failing test names, the checker reads the
+test body in the file. The body must use `LIST_SHA256`, `LIST_MARKDOWN_SHA256`, `LIST_FILE`, or
+`PRINT_ROOT`. A ninth failure, or a failing body without one of these names, is a new failure.
+
+TYPECHECK_COMMAND (maker once after the type file, checker once):
+
+```sh
+bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=6144 node_modules/.bin/tsc --noEmit' > "$D/tsc.log" 2>&1; echo "tsc exit: $?"
+echo "tsc errors total: $(grep -cE 'error TS[0-9]+' "$D/tsc.log")"
+echo "owned tsc errors: $(grep -E 'error TS[0-9]+' "$D/tsc.log" | grep -cE '^(src/storytime/|scripts/storytime-|tests/storytime-)')"
+```
+
+Expected: `owned tsc errors: 0` and `tsc errors total:` 38 or less (58 minus the 20 owned errors).
+The exit code stays `2` while other tracks have errors.
+
+Heavy rules: run one heavy command at a time. Never run `pnpm`. Use `node_modules/.bin`. A
+`heavy-preflight` hold or exit `75` is neither a pass nor a failure: wait and run again.
+`storytime-muse.mjs` and `storytime-judge-batch.mjs` are light (rule of 2026-11-05 07:21 ICT).
+
+###### 5.11.5 The restart check (X4 to X7)
+
+The checker is a read-only Node script. It lives in this subsection, so the strategy commit holds
+it and nobody adds a file to the repo. The checker copies it into a new temp folder and checks
+its SHA-256:
+
+```sh
+T=measure/tracks/asset_storytime_l2_unit1_pictures_20261025
+awk '/^<!-- restart-check.mjs end -->$/{f=0} f; /^<!-- restart-check.mjs begin -->$/{f=1}' "$T/test-strategy.md" | sed '1d;$d' > "$D/restart-check.mjs"
+echo "restart check script sha256: $(sha256sum < "$D/restart-check.mjs" | cut -c1-64)"
+nice -n 19 node "$D/restart-check.mjs" $NUT_MODE > "$D/restart-check.log"; echo "restart check exit: $?"
+nice -n 19 node "$D/restart-check.mjs" $NUT_MODE --control > "$D/restart-control.log"; echo "restart control exit: $?"
+```
+
+Expected script SHA-256: `c3ecbeb73f75abc77f64bf04c9fd86110f414cd121ac460ce423b3474672f062`.
+
+`NUT_MODE` follows the nut result (5.11.8): empty before the nut try 3, `--pm-nut3` when the try 3
+ran and the v2 pair stays, and `--nut3` when both try 3 kinds passed and the v3 pair is
+delivered. The modes exclude each other: a v4 folder without `--nut3`, or a nut try 3 without
+`--pm-nut3` or `--nut3`, fails. The script reads files only and writes stdout only.
+
+How the script maps a delivered file to its try:
+
+1. A copy-way `manifest.json` gives `pictureId`, `kind`, `file`, `sha256`, and `source` (the
+   print). The w08 writer manifest gives `file` and `fileSha256`. The w08 approval list
+   (`docs/storytime/l2-unit1/w08/muse/approved.json`) gives the print (`colorPrint`, `linePrint`).
+2. The delivered bytes equal the manifest SHA-256 and the print bytes.
+3. The call output name is the print name with the first `-print` removed
+   (`…-m8-line-print-2.png` gives `…-m8-line-2.png`). The restart row with that `output` in the
+   cost file of the print folder is the try.
+4. The judge copy number is the position of that row among the restart rows of the same id and
+   kind in that cost file, in time order. This is the rule of `restartTries` and
+   `judgeFileName` in `scripts/storytime-judge-batch.mjs`. The judge copy is
+   `out/storytime-review/judge/prod/<id>-<kind>-t<n>.png`.
+5. A main result (`status: complete`, the v6 prompt, cast `2eb4a6a1`, the Sonnet model) names
+   that judge copy with verdict `pass`. Its batch file (`batch-<group without prod->.json`) holds
+   the same `judgeFile`, `id`, and `kind`.
+6. No earlier try of the same id and kind passed, except a PM order (the nut try 3).
+7. A delivered line try starts from the delivered color try (the `inputs` column).
+
+The judge copies are resized prints (900 px or 360 px long side), so no byte compare ties a copy
+to a print. Steps 3 and 4 tie them through the cost row instead.
+
+Required labeled lines and values. The checker compares each value. "Before" is the state at
+`f25d8399`. "v3" is the state after a nut v3 pass. "PM" is the state after a nut try 3 that does
+not deliver.
+
+| Label | Before | v3 (`--nut3`) | PM (`--pm-nut3`) |
+| --- | --- | --- | --- |
+| `cost files read:` | 15 | 15 | 15 |
+| `cost rows with an unreadable time:` | 0 | 0 | 0 |
+| `restart cost rows:` | 52 | 54 | 54 |
+| `restart spend (USD):` | 0.52 | 0.54 | 0.54 |
+| `restart failed calls (cost 0 or output none):` | 0 | 0 | 0 |
+| `max tries for one picture and kind:` | 2 | 3 | 3 |
+| `picture and kind pairs above 3 tries:` | 0 | 0 | 0 |
+| `nut tries color: <c> line: <l>` | 2, 2 | 3, 3 | 3, 3 |
+| `judge prompt sha256:` / `judge cast sha256:` | `db5b443a…` / `2eb4a6a1…` | same | same |
+| `calibration files judged: <f> pass: <p> fail: <x>` | 388, 381, 7 | same | same |
+| `calibration gate controls: 2 failed:` | 2 | 2 | 2 |
+| `calibration expected-pass files that did not pass:` | 0 | 0 | 0 |
+| `production main fails:` | 4 | 4 | 5 or 6 |
+| `retries: <r> after a confirmed fail: <c> by PM order: <p>` | 4, 4, 0 | 6, 4, 2 | 6, 4, 2 |
+| `second-judge results that differ from the main verdict:` | 0 | 0 | 0 |
+| `nut judge copies of tries 1 and 2 changed:` | 0 | 0 | 0 |
+| `nut color try 3 verdict:` / `nut line try 3 verdict:` | absent | pass / pass | at least one fail |
+| `restart delivery folders:` | 10 | 11 | 10 |
+| `restart delivered files: <d> byte-equal to a source print: <b> with a pass verdict: <v>` | 49, 49, 49 | 51, 51, 51 | 49, 49, 49 |
+| `restart delivered pictures:` | 24 | 24 | 24 |
+| `line files not made from the delivered color:` | 0 | 0 | 0 |
+| `restart delivered files with a wrong size or line format:` | 0 | 0 | 0 |
+| `handoff <h>: files: <n> manifest lines: <n> byte-equal to delivery: <n> evidence words: yes` | drum 2, c 4, a 25, b 14, d 4 | the same and nut3 2 | the same as Before |
+| `restart check:` | `pass` | `pass` | `pass` |
+
+The table holds the restart spend after the nut try 3 as 0.54 USD (2 calls of 0.01 USD). A
+different call count changes the rows, the spend, and the PM retry count together. The checker
+then takes the values from the plan T4 step 9 block, and the cap and try rules still apply.
+
+The control run (`--control`) changes three expected values in memory: the w01 v1 manifest pin,
+the cap (0.51 USD), and the judge model name. Expected: `restart control exit: 1`, and FAIL lines
+that name `pre-restart manifest changed: w01/delivery-muse-v1`, `above the cap 0.51`, and
+`header or status`. A control run that exits `0` is a vacuous pass (A4).
+
+The handoff check commands (X7). Run each one in its folder and count the `OK` lines:
+
+```sh
+H=/home/daniebo/Desktop/handoff
+for h in drum c a b d; do   # add nut3 in the v3 state
+  ( cd "$H/a48-forge-pictures-$h" && cmd=$(grep -E "^grep -E '\^\[0-9a-f\]\{64\}  " MANIFEST.txt | head -1) \
+    && ok=$(bash -c "$cmd" | grep -c ': OK$'); bash -c "$cmd" > /dev/null; echo "handoff check $h exit: $? ok lines: $ok" )
+done
+```
+
+Expected: exit `0` for each folder, and the `OK` count equals the file count of the table above. A
+command that matches no line makes `sha256sum -c` exit `1`, so an empty match fails.
+
+<!-- restart-check.mjs begin -->
+```js
+// restart-check.mjs: the read-only checker of test-strategy.md 5.11 (Phase 5 restart).
+// Run from the repo root: node <this file> [--pm-nut3 | --nut3] [--control]. It reads files only. It writes stdout only.
+// Exit 0: every check holds. Exit 1: a check failed (a FAIL line names it).
+// --pm-nut3: the nut try 3 (PM order, 2026-11-05 08:44 ICT) ran and did not deliver.
+// --nut3: the nut try 3 passed both kinds and w01/delivery-muse-v4 and the nut3 handoff exist.
+// --control changes three expected values in memory (a pre-restart manifest pin, the cap, the judge
+// model). A control run must exit 1 with the three FAIL lines; else the checks are vacuous (A4).
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+
+const NUT3 = process.argv.includes('--nut3');
+const PM_NUT3 = NUT3 || process.argv.includes('--pm-nut3');
+const CONTROL = process.argv.includes('--control');
+const U = 'out/storytime/l2/unit1';
+const RUNS = 'measure/runs/asset_storytime_l2_unit1_pictures_20261025';
+const PROD = 'docs/storytime/l2-unit1/judge/prod';
+const JC = 'out/storytime-review/judge/prod';
+const HANDOFF = '/home/daniebo/Desktop/handoff';
+const START = Date.parse('2026-11-04T07:54:00Z');
+const MODEL = CONTROL ? 'control/no-such-model' : 'claude-code/claude-sonnet-5-5#high';
+const CAP = CONTROL ? 510000n : 1000000n; // 1.00 USD in micro-USD; the control sets 0.51
+const GROUP = { 'l2-w01-practice-line-nose': 'l2-w01-check-row-nose' };
+const NUT = 'l2-w01-story-page-a-nut';
+// Retries that a PM order caused (not a judge fail). Only the nut try 3 of 2026-11-05 08:44 ICT.
+const PM_ORDER = new Set(PM_NUT3 ? [`${NUT}|color|3`, `${NUT}|line|3`] : []);
+const PRE = {
+  'w01/delivery-muse-v1': '00ea0c5b06d18e3f54cbceed9caa943100c0711bb515c44561eb46b7e03ed369',
+  'w01/delivery-muse-v2': 'd3eec18ce7c94b94ed5b0751df164578558ad44f04bebe7b4b371a3ed213796a',
+  'w02/delivery-muse-v1': '6e6b51450d406bfdac47e01f484925b270bd0b1647bbfc0550d7529809cfeaf4',
+  'w03/delivery-muse-v1': '24213647b0f1b92cdb891746cdf6181ff7f20f306c51d256fec150c38d5c273b',
+  'w04/delivery-muse-v1': '4e74b7302a851e0261099925a23c0b9246a533911374af01d9748b905320d310',
+  'w05/delivery-muse-v1': 'c3f009e6bfcb3037ae24b495c6e68527bfbf86162deb3a40a9bbd28a416ffbaf',
+  'w06/delivery-muse-v1': '11c5dc10198c9d446afc8ffd80aff46c747d2dec34b77293327907d729163292',
+  'w07/delivery-muse-v1': '6a5724c42a83134d80fc1cd1ccecdafe1a76dd25961e040caffaafccc81ea3c2',
+  'cover/delivery-muse-v1': '27710b3711757d99294b7e837377d325eb9a6094e1dad43e0f064d2581397b88',
+};
+if (CONTROL) PRE['w01/delivery-muse-v1'] = '0'.repeat(64);
+const RESTART = {
+  'w01/delivery-muse-v3': '38a16765a061a8f71fba1fe5744c1b2aa3b48b35b87352c12302ce519e44dce0',
+  'w02/delivery-muse-v2': 'c59a75bb30def25168bd90effbf44931e2d6a0a4844b1b961ce8105b61146ae5',
+  'w03/delivery-muse-v2': 'bb7a27525fcd8da28a9cf8148a2f39bcc2e0609ef86a0648425b66c8ecafa30a',
+  'w04/delivery-muse-v2': '82d467e6ecedd7caea7331dd9088c35d000db16d67c1a80f8818f68dfd2fe52c',
+  'w05/delivery-muse-v2': '0e2fde98f4610afbe49637241f3887e1378dd6f293a69d763df8362d453885ca',
+  'w06/delivery-muse-v2': '66bb2f62b46a8dcc2e0497ab9b637929ec0d93b2de56a27b84eccb5b6d33ee60',
+  'w07/delivery-muse-v2': '352b2dabe598f80ed4d9ef10977c86f9a988c9d6e8a59cfea52fa59ced1f32b4',
+  'w05/delivery-a48-d': '0fa7b23268449a9f83365eb4ea03057a1a6453b291bcdf697251fd0421f39fea',
+  'w07/delivery-a48-d': '36b4febcdcdc80d10c789866e1d468b88708389cc7af28bfd79778cf299b8eb8',
+  'w08/delivery-muse-v1': '2dc0812b3a90be19bd288d622d1c9fdd4d682bd013c2c99242441f09a71b9f92',
+};
+const NUT3_DIR = 'w01/delivery-muse-v4';
+const HANDOFFS = { drum: 2, c: 4, a: 25, b: 14, d: 4, ...(NUT3 ? { nut3: 2 } : {}) };
+
+let failures = 0;
+const fail = (m) => { failures += 1; console.log(`FAIL ${m}`); };
+const sha = (f) => crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
+const json = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
+const group = (id) => GROUP[id] ?? id;
+const micro = (v) => {
+  if (!/^\d+(\.\d{1,6})?$/.test(v)) return null;
+  const [i, d = ''] = v.split('.');
+  return BigInt(i) * 1000000n + BigInt((d + '000000').slice(0, 6));
+};
+const usd = (m) => `${m / 1000000n}.${String((m % 1000000n) / 10000n).padStart(2, '0')}`;
+
+// 1. Restart rows of every Muse cost file (week folders and element folders).
+const costFiles = [];
+for (const w of fs.readdirSync(U).sort()) {
+  for (const s of ['muse/costs.tsv', 'muse/elements/costs.tsv']) {
+    const f = path.join(U, w, s);
+    if (fs.existsSync(f)) costFiles.push(f);
+  }
+}
+const rows = [];
+let spend = 0n;
+let badTime = 0;
+for (const f of costFiles) {
+  const [head, ...lines] = fs.readFileSync(f, 'utf8').split('\n').filter((l) => l.trim());
+  const H = head.split('\t');
+  const col = Object.fromEntries(['time', 'row', 'version', 'kind', 'inputs', 'output', 'usage_cost'].map((n) => [n, H.indexOf(n)]));
+  if (col.time < 0 || col.usage_cost < 0 || col.row < 0 || col.kind < 0 || col.output < 0) { fail(`header without a needed column: ${f}`); continue; }
+  for (const l of lines) {
+    const c = l.split('\t');
+    const t = Date.parse(c[col.time]);
+    if (Number.isNaN(t)) { badTime += 1; continue; }
+    if (t < START) continue;
+    const m = micro((c[col.usage_cost] ?? '').trim());
+    if (m === null) { fail(`usage_cost is not a decimal: ${f}: ${l}`); continue; }
+    spend += m;
+    rows.push({ f, dir: path.dirname(f), t, row: c[col.row], kind: c[col.kind], out: c[col.output], inp: c[col.inputs] ?? '', m });
+  }
+}
+console.log(`cost files read: ${costFiles.length}`);
+console.log(`cost rows with an unreadable time: ${badTime}`);
+console.log(`restart cost rows: ${rows.length}`);
+console.log(`restart spend (USD): ${usd(spend)}`);
+if (badTime !== 0) fail(`cost rows with an unreadable time: ${badTime}`);
+if (spend > CAP) fail(`restart spend ${usd(spend)} is above the cap ${usd(CAP)}`);
+
+// Tries: rows with a cost above 0 and an output, kind color or line, counted per picture group.
+const tryRows = rows.filter((r) => (r.kind === 'color' || r.kind === 'line') && r.m > 0n && r.out !== 'none');
+console.log(`restart failed calls (cost 0 or output none): ${rows.length - tryRows.length}`);
+const perGroup = new Map();
+for (const r of tryRows) { const k = `${group(r.row)}|${r.kind}`; perGroup.set(k, (perGroup.get(k) ?? 0) + 1); }
+const maxTries = Math.max(0, ...perGroup.values());
+const over = [...perGroup].filter(([, n]) => n > 3);
+console.log(`picture and kind pairs with a try: ${perGroup.size}`);
+console.log(`max tries for one picture and kind: ${maxTries}`);
+console.log(`picture and kind pairs above 3 tries: ${over.length}`);
+console.log(`nut tries color: ${perGroup.get(`${NUT}|color`) ?? 0} line: ${perGroup.get(`${NUT}|line`) ?? 0}`);
+for (const [k, n] of over) fail(`${k} has ${n} tries`);
+// Judge copy number n of one id and kind: the n-th restart row of that id and kind in its cost
+// file, in time order, failed rows included (restartTries of scripts/storytime-judge-batch.mjs).
+const rowsOf = (r) => rows.filter((x) => x.f === r.f && x.row === r.row && x.kind === r.kind && (x.kind === 'color' || x.kind === 'line')).sort((a, b) => a.t - b.t);
+const tryOf = (r) => rowsOf(r).indexOf(r) + 1;
+const prevTryOf = (r) => { const all = rowsOf(r); const before = all.slice(0, all.indexOf(r)).filter((x) => tryRows.includes(x)); return before.length ? all.indexOf(before[before.length - 1]) + 1 : 0; };
+
+// 2. Judge kit and calibration.
+const PROMPT_SHA = 'db5b443a6ea7740f435fedb7f13d0fd12971332c08b6e71d09e4a468da02ffd8';
+const CAST_SHA = '2eb4a6a14d2ba6e49223e27d9ad390aad7ba1d247b272f6a467742b931046e76';
+const ps = sha('docs/storytime/l2-unit1/judge/judge-prompt.md');
+const cs = sha('docs/storytime/l2-unit1/judge/cast.json');
+console.log(`judge prompt sha256: ${ps}`);
+console.log(`judge cast sha256: ${cs}`);
+if (ps !== PROMPT_SHA) fail('judge prompt SHA-256 differs from the calibration value');
+if (cs !== CAST_SHA) fail('judge cast SHA-256 differs from the calibration value');
+const headerOk = (j) => j.status === 'complete' && j.model === MODEL && /judge-prompt\.md v6$/.test(j.judgePrompt ?? '') && /2eb4a6a1/.test(j.cast ?? '');
+const calSet = json('docs/storytime/l2-unit1/judge/calibration-set.json').entries;
+const calExpected = new Map(calSet.map((e) => [e.judgeFile, e.expected]));
+let calPass = 0, calFail = 0, calFiles = 0, calCtrl = 0, calCtrlFail = 0, calPassBroken = 0;
+const calSeen = new Set();
+for (const g of ['w01', 'w02', 'w03', 'w04', 'w05', 'w06', 'w07', 'cover']) {
+  const f = `${RUNS}/judge-cal-${g}-aba118fe.json`;
+  if (!fs.existsSync(f)) { fail(`missing ${f}`); continue; }
+  const j = json(f);
+  if (!headerOk(j)) fail(`calibration header or status: ${f}`);
+  let p = 0, x = 0;
+  for (const r of j.results) {
+    calFiles += 1; calSeen.add(r.judgeFile);
+    if (r.verdict === 'pass') p += 1; else if (r.verdict === 'fail') x += 1; else fail(`verdict ${r.verdict} in ${f}`);
+    const e = calExpected.get(r.judgeFile);
+    if (e === undefined) fail(`calibration result for a file outside the set: ${r.judgeFile}`);
+    if (e === 'fail') { calCtrl += 1; if (r.verdict === 'fail') calCtrlFail += 1; }
+    if (e === 'pass' && r.verdict !== 'pass') calPassBroken += 1;
+  }
+  if (j.summary?.pass !== p || j.summary?.fail !== x || j.summary?.files !== j.results.length) fail(`summary of ${f} differs from its results`);
+  calPass += p; calFail += x;
+}
+console.log(`calibration files judged: ${calFiles} pass: ${calPass} fail: ${calFail}`);
+console.log(`calibration set entries without a result: ${calSet.filter((e) => !calSeen.has(e.judgeFile)).length}`);
+console.log(`calibration gate controls: ${calCtrl} failed: ${calCtrlFail}`);
+console.log(`calibration expected-pass files that did not pass: ${calPassBroken}`);
+if (calFiles !== 388 || calPass !== 381 || calFail !== 7) fail('calibration counts differ from 388 / 381 / 7');
+if (calCtrl !== 2 || calCtrlFail !== 2) fail('a gate control did not fail');
+if (calPassBroken !== 0) fail('an expected-pass calibration file did not pass');
+if (calSet.length !== 388 || calSeen.size !== 388) fail('calibration set and results differ');
+
+// 3. Production judge results, tied to their batch files.
+const prod = [];
+for (const f of fs.readdirSync(RUNS).filter((n) => /^judge-prod-.*\.json$/.test(n)).sort()) {
+  const j = json(`${RUNS}/${f}`);
+  const second = f.includes('-second-');
+  if (!headerOk(j)) { fail(`production header or status: ${f}`); continue; }
+  const batch = `${PROD}/batch-${String(j.group).replace(/^prod-/, '')}.json`;
+  const entries = second ? null : (fs.existsSync(batch) ? json(batch) : null);
+  if (!second && !entries) { fail(`no batch file ${batch} for ${f}`); continue; }
+  for (const r of j.results) {
+    if (!second && !entries.some((e) => e.judgeFile === r.judgeFile && e.id === r.id && e.kind === r.kind)) fail(`${f}: ${r.judgeFile} is not in ${batch}`);
+    if (!fs.existsSync(r.judgeFile)) fail(`${f}: judge copy missing ${r.judgeFile}`);
+    prod.push({ f, second, ...r });
+  }
+}
+const main = prod.filter((r) => !r.second);
+console.log(`production result files: ${new Set(prod.map((r) => r.f)).size} results: ${main.length} second-judge results: ${prod.length - main.length}`);
+console.log(`production main fails: ${main.filter((r) => r.verdict === 'fail').length}`);
+
+// 4. Retry rule: each later try follows a fail of the try before it that a second judge confirms,
+// or a PM order.
+const jf = (id, kind, n) => `${JC}/${id}-${kind}-t${n}.png`;
+let retries = 0, retriesConfirmed = 0, retriesPm = 0;
+for (const r of tryRows) {
+  const n = tryOf(r);
+  const p = prevTryOf(r);
+  if (p === 0) continue;
+  retries += 1;
+  const prev = jf(r.row, r.kind, p);
+  const m1 = main.find((x) => x.judgeFile === prev && x.verdict === 'fail');
+  const s1 = prod.find((x) => x.second && x.judgeFile === prev && x.verdict === 'fail');
+  const s1pass = prod.find((x) => x.second && x.judgeFile === prev && x.verdict === 'pass');
+  if (m1 && s1 && !s1pass) retriesConfirmed += 1;
+  else if (PM_ORDER.has(`${r.row}|${r.kind}|${n}`)) retriesPm += 1;
+  else fail(`try ${n} of ${r.row} ${r.kind} has no confirmed fail of try ${p} and no PM order`);
+}
+console.log(`retries: ${retries} after a confirmed fail: ${retriesConfirmed} by PM order: ${retriesPm}`);
+const disagree = prod.filter((y) => y.second && main.some((x) => x.judgeFile === y.judgeFile && x.verdict !== y.verdict));
+console.log(`second-judge results that differ from the main verdict: ${disagree.length}`);
+// The judge copies of the nut tries 1 and 2 keep their bytes; a try 3 batch names the new mustShow.
+const NUT_COPIES = {
+  'color-t1': '8f62fb3871c1dbc9f7c481a575cccbadf6a84fa872aeb8c248c4704c7b339041',
+  'color-t2': '8ed540398c94554e5239440fd9d98300a4033c5bd8b35f55b8fb27ada4d14c52',
+  'line-t1': 'd9b784e2b7920a6a4d7d9f82b4e07bb3b10c0811c9e9f11258c2ef1a71826d38',
+  'line-t2': '6ba147242f5f2b19a44146789546b39b34424400e27d6dc976ff9d1b3e8e5360',
+};
+let nutCopyBad = 0;
+for (const [k, v] of Object.entries(NUT_COPIES)) if (sha(`${JC}/${NUT}-${k}.png`) !== v) { nutCopyBad += 1; fail(`judge copy ${NUT}-${k}.png changed`); }
+console.log(`nut judge copies of tries 1 and 2 changed: ${nutCopyBad}`);
+if (PM_NUT3) {
+  for (const kind of ['color', 'line']) {
+    const r3 = main.find((x) => x.judgeFile === jf(NUT, kind, 3));
+    const b3 = r3 && json(`${PROD}/batch-${JSON.parse(fs.readFileSync(`${RUNS}/${r3.f}`, 'utf8')).group.replace(/^prod-/, '')}.json`).find((e) => e.judgeFile === r3.judgeFile);
+    console.log(`nut ${kind} try 3 verdict: ${r3 ? r3.verdict : 'none'}`);
+    if (!r3) fail(`no judge result for the nut ${kind} try 3`);
+    else if (!(b3?.mustShow ?? []).includes('one nut, clearly a nut')) fail(`the nut ${kind} try 3 batch has no mustShow "one nut, clearly a nut"`);
+    if (NUT3 && r3?.verdict !== 'pass') fail(`--nut3 needs a pass of the nut ${kind} try 3`);
+  }
+}
+if (PM_NUT3 && (perGroup.get(`${NUT}|color`) !== 3 || perGroup.get(`${NUT}|line`) !== 3)) fail('the PM nut order needs 3 color tries and 3 line tries of the nut');
+if (!PM_NUT3 && ((perGroup.get(`${NUT}|color`) ?? 0) > 2 || (perGroup.get(`${NUT}|line`) ?? 0) > 2)) fail('the nut has a try 3: run with --pm-nut3 or --nut3');
+
+// 5. Delivered files of the restart: each one is byte-equal to the print of a passing try.
+for (const [d, want] of Object.entries(PRE)) {
+  const got = sha(`${U}/${d}/manifest.json`);
+  console.log(`manifest sha256 ${d}: ${got}`);
+  if (got !== want) fail(`pre-restart manifest changed: ${d}`);
+}
+const restartDirs = { ...RESTART };
+if (NUT3) restartDirs[NUT3_DIR] = null;
+for (const w of fs.readdirSync(U)) {
+  const p = path.join(U, w);
+  if (!fs.statSync(p).isDirectory()) continue;
+  for (const d of fs.readdirSync(p).filter((n) => n.startsWith('delivery-'))) {
+    const k = `${w}/${d}`;
+    if (!(k in PRE) && !(k in restartDirs)) fail(`unknown delivery folder ${k}`);
+  }
+}
+if (!NUT3 && fs.existsSync(`${U}/${NUT3_DIR}`)) fail(`${NUT3_DIR} exists, but the run has no --nut3`);
+const delivered = [];
+const approvalsW08 = json('docs/storytime/l2-unit1/w08/muse/approved.json').entries;
+for (const [d, want] of Object.entries(restartDirs)) {
+  const dir = `${U}/${d}`;
+  if (!fs.existsSync(`${dir}/manifest.json`)) { fail(`no manifest in ${d}`); continue; }
+  const got = sha(`${dir}/manifest.json`);
+  console.log(`manifest sha256 ${d}: ${got}`);
+  if (want && got !== want) fail(`restart manifest changed: ${d}`);
+  const man = json(`${dir}/manifest.json`);
+  let entries;
+  if (Array.isArray(man.files)) {
+    entries = man.files.map((e) => ({ id: e.pictureId, kind: e.kind, file: e.file, sha256: e.sha256, source: e.source }));
+  } else {
+    entries = [];
+    for (const job of man.jobs) {
+      const a = approvalsW08.find((e) => e.rowId === job.id);
+      if (!a) { fail(`${d}: no approval entry for ${job.id}`); continue; }
+      for (const c of job.candidates) {
+        const kind = /-line-v\d+\.png$/.test(c.file) ? 'line' : 'color';
+        entries.push({ id: job.id, kind, file: c.file, sha256: c.fileSha256, source: `${U}/w08/muse/${kind === 'line' ? a.linePrint : a.colorPrint}` });
+        if (c.lineArt?.file) entries.push({ id: job.id, kind: 'line', file: c.lineArt.file, sha256: c.lineArt.fileSha256, source: `${U}/w08/muse/${a.linePrint}` });
+      }
+    }
+  }
+  const pngs = fs.readdirSync(dir).filter((n) => n.endsWith('.png')).sort();
+  const named = [...new Set(entries.map((e) => e.file))].sort();
+  if (JSON.stringify(pngs) !== JSON.stringify(named)) fail(`${d}: PNG set and manifest set differ (${pngs.length} / ${named.length})`);
+  for (const e of entries) delivered.push({ dir: d, ...e });
+}
+let byteOk = 0, passOk = 0, formatBad = 0;
+const pictures = new Set();
+const colorOut = new Map();
+for (const e of delivered) {
+  const file = `${U}/${e.dir}/${e.file}`;
+  if (!fs.existsSync(file) || !fs.existsSync(e.source)) { fail(`${e.dir}/${e.file}: file or source missing`); continue; }
+  const s = sha(file);
+  if (s !== e.sha256 || s !== sha(e.source)) { fail(`${e.dir}/${e.file}: bytes differ from the manifest or the source print`); continue; }
+  byteOk += 1;
+  const ihdr = fs.readFileSync(file).subarray(16, 26);
+  const [w, h, depth, type] = [ihdr.readUInt32BE(0), ihdr.readUInt32BE(4), ihdr[8], ihdr[9]];
+  const [ww, wh] = e.id.includes('-story-page-') ? [4000, 3000] : [1500, 1500];
+  if (w !== ww || h !== wh) { formatBad += 1; fail(`${e.dir}/${e.file}: ${w}x${h}, ${ww}x${wh} wanted`); }
+  if (e.kind === 'line' && (depth !== 8 || type !== 0)) { formatBad += 1; fail(`${e.dir}/${e.file}: line file is not 8-bit gray (depth ${depth}, type ${type})`); }
+  const outName = path.basename(e.source).replace('-print', '');
+  const r = tryRows.find((x) => x.dir === path.dirname(e.source) && x.out === outName && x.kind === e.kind);
+  if (!r) { fail(`${e.dir}/${e.file}: no restart try has the output ${outName}`); continue; }
+  if (group(r.row) !== group(e.id)) fail(`${e.dir}/${e.file}: try row ${r.row} is not picture ${e.id}`);
+  const n = tryOf(r);
+  const j = jf(r.row, r.kind, n);
+  const pass = main.find((x) => x.judgeFile === j && x.verdict === 'pass');
+  if (!pass) { fail(`${e.dir}/${e.file}: try ${n} (${j}) has no pass verdict`); continue; }
+  passOk += 1;
+  for (let k = 1; k < n; k += 1) {
+    if (main.some((x) => x.judgeFile === jf(r.row, r.kind, k) && x.verdict === 'pass') && !PM_ORDER.has(`${r.row}|${r.kind}|${n}`)) fail(`${e.dir}/${e.file}: try ${n} is delivered, but try ${k} passed first`);
+  }
+  if (e.dir === NUT3_DIR && (group(e.id) !== NUT || n !== 3)) fail(`${e.dir}/${e.file}: the folder holds only the nut try 3 pair`);
+  pictures.add(group(e.id));
+  if (e.kind === 'color') colorOut.set(`${e.dir}|${group(e.id)}`, r.out);
+  else e.lineInput = path.basename(r.inp);
+  e.pass = `${pass.f} try ${n}`;
+}
+// The line try of a delivered pair starts from the delivered color try.
+let twinBad = 0;
+for (const e of delivered.filter((x) => x.kind === 'line' && x.lineInput)) {
+  const c = colorOut.get(`${e.dir}|${group(e.id)}`);
+  if (c && c !== e.lineInput) { twinBad += 1; fail(`${e.dir}/${e.file}: line input ${e.lineInput} is not the delivered color ${c}`); }
+}
+console.log(`restart delivery folders: ${Object.keys(restartDirs).length}`);
+console.log(`restart delivered files: ${delivered.length} byte-equal to a source print: ${byteOk} with a pass verdict: ${passOk}`);
+console.log(`restart delivered pictures: ${pictures.size}`);
+console.log(`line files not made from the delivered color: ${twinBad}`);
+console.log(`restart delivered files with a wrong size or line format: ${formatBad}`);
+const wantFiles = 49 + (NUT3 ? 2 : 0);
+if (delivered.length !== wantFiles || byteOk !== wantFiles || passOk !== wantFiles) fail(`restart delivered files are not ${wantFiles}`);
+if (pictures.size !== 24) fail('restart delivered pictures are not 24');
+
+// 6. Handoff folders.
+const byName = new Map();
+for (const e of delivered) { const k = e.file; if (!byName.has(k)) byName.set(k, new Set()); byName.get(k).add(e.sha256); }
+for (const [h, n] of Object.entries(HANDOFFS)) {
+  const dir = `${HANDOFF}/a48-forge-pictures-${h}`;
+  if (!fs.existsSync(`${dir}/MANIFEST.txt`)) { fail(`no MANIFEST.txt in ${dir}`); continue; }
+  const pngs = fs.readdirSync(dir).filter((x) => x.endsWith('.png')).sort();
+  const text = fs.readFileSync(`${dir}/MANIFEST.txt`, 'utf8');
+  const lines = [...text.matchAll(/^([0-9a-f]{64})  ([^\s/]+\.png)$/gm)];
+  const listed = [...new Set(lines.map((m) => m[2]))].sort();
+  let eq = 0;
+  for (const p of pngs) {
+    const s = sha(`${dir}/${p}`);
+    if (byName.get(p)?.has(s)) eq += 1; else fail(`handoff ${h}/${p} is not byte-equal to a restart delivery file`);
+    if (lines.some((m) => m[2] === p && m[1] !== s)) fail(`handoff ${h}/${p}: MANIFEST line differs from the file`);
+  }
+  console.log(`handoff ${h}: files: ${pngs.length} manifest lines: ${listed.length} byte-equal to delivery: ${eq} evidence words: ${text.includes('model evidence, not acceptance') ? 'yes' : 'no'}`);
+  if (pngs.length !== n) fail(`handoff ${h}: ${pngs.length} files, ${n} wanted`);
+  if (JSON.stringify(pngs) !== JSON.stringify(listed)) fail(`handoff ${h}: MANIFEST lines and files differ`);
+  if (!text.includes('model evidence, not acceptance')) fail(`handoff ${h}: no "model evidence, not acceptance"`);
+}
+if (!NUT3 && fs.existsSync(`${HANDOFF}/a48-forge-pictures-nut3`)) fail('a48-forge-pictures-nut3 exists, but the run has no --nut3');
+
+console.log(`restart check: ${failures === 0 ? 'pass' : `fail (${failures})`}`);
+process.exit(failures === 0 ? 0 : 1);
+```
+<!-- restart-check.mjs end -->
+
+###### 5.11.6 Evidence pins (X3)
+
+The judge result files and the handoff `MANIFEST.txt` files are outside git until closeout. The
+pins hold their bytes at `f25d8399`. New nut result files are additions and have no pin.
+
+```sh
+awk '/^<!-- restart-pins end -->$/{f=0} f; /^<!-- restart-pins begin -->$/{f=1}' "$T/test-strategy.md" | sed '1d;$d' > "$D/pins.sha256"
+echo "pin lines: $(wc -l < "$D/pins.sha256")"
+sha256sum -c --quiet "$D/pins.sha256"; echo "pin check exit: $?"
+```
+
+Expected: `pin lines: 28` and `pin check exit: 0`.
+
+<!-- restart-pins begin -->
+```text
+4e7f7d78ac1d416924e54c1702d464744c232924114e39984369e4e5a44475fa  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-cal-cover-aba118fe.json
+3d82f90dd1c2c0b083f1e7241da50fcb6756b6e128520dbbf1084d8c5ca23603  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-cal-w01-aba118fe.json
+fa97f8445f9dd9e1e9c17e3332672c26a1211ad47f0e17a2e2eb9659f7c620ce  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-cal-w02-aba118fe.json
+9c0ab8b2be5c80bfd627f2ffa87b882a6c5991d6aeeed5b1d73cd8092aa4491d  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-cal-w03-aba118fe.json
+a630e61f8f0bd9744383ea0f56872f933e8aecb36021d5135b58b2bd88278110  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-cal-w04-aba118fe.json
+a5da369be3bbff5738bd66b6ca051d243e8e66e086771f53c2c2a7eaf275e8d7  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-cal-w05-aba118fe.json
+529e2d3d9c40472ad247290cc5ca6c06bcc2a9312ab4c35a44f5ca878c006bec  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-cal-w06-aba118fe.json
+63505600fd13d2621d82abccd0fbcbde8e5aeb01e2c360df44e659b808920112  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-cal-w07-aba118fe.json
+08b2dd4a5345f9c806d36ee65346c31a9df51fdda5a9c2fbd35054ab33bdc7e5  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r1-color-a2-second-f15bff60.json
+f7a5efd7cfe3e6c4e905a2f54bee8b861eaee86aaa3e49c6d4db2823b968d228  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r1-color-f15bff60.json
+042ba8362d75180cc74190582b5b092247bb476836ed5207cb203bc66416afbd  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r2-color-186d78ba.json
+d3a2b227c1b253a954c2c10cb52aba47fdda4f696cf9a5d653fff16ed130ba52  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r2-color-a11-second-a1783749.json
+6f99f0874be37198fe59a0aa348579c6220b8cfb8ae043637bc994b4ae4753b7  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r2-color-a2-186d78ba.json
+adb8cbeba76edd4b06dd806ba2e6a99438bc226c91e435a2cb5226a77d4e16b2  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r2-line-186d78ba.json
+02951b4905ebbc3018bc8a7c44a0eda28f5d056a07891fba10e0d56d6c710b5f  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r2-line-a1-second-a1783749.json
+242a448e32f4e5a8bbb6cae4cb23995bd7993e8b96d40e8e1b5fbb4a7cbe34a0  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r3-line-a1783749.json
+cebc3c884bd8e718d6e28e98e172fe4f48a291f6f663db076d5649dabd62acbb  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r3-line-a2-second-a1783749.json
+262d00432d43bcbb6b7e21739dcab6fc252adbbc134ada940a0c0afb31325481  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r4-color-a1783749.json
+a0c4688539d893a6491c4e901d122605fb407c98e6e94d4c8de2cd0de745e143  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r4-line-a1783749.json
+47b5bd5fbddfe7a48e66f58e40f4a0c86c690740bb17ce566f3ab791a06ebf41  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r5-color-retry-1e43b8b8.json
+a4ea7373320f959b62665fcf392822f162bcfa881884745b8f229bb171b84e1f  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r5-line-1e43b8b8.json
+c5002e8c28192ccb917ab4c1bc4b370280e3e97e620d9e155d439b33ffe8b825  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r5-line-retry-1e43b8b8.json
+6affa1ba02c18eb01df6c1950b7399b5d52b53a042833b11edfff98728c79f11  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r6-line-38cb0ca4.json
+5115ebf723de417f05d191fe1be01fed05c4ccff1e0ac4d1bb1a81069aed98fd  /home/daniebo/Desktop/handoff/a48-forge-pictures-drum/MANIFEST.txt
+9402b5d2e7646cee72702f8900e5784ee2929379f2879e1a50bc4f6065ff54f4  /home/daniebo/Desktop/handoff/a48-forge-pictures-c/MANIFEST.txt
+9c47d40898956a1d49258bf81552068065710996c04b11faefad490554e43458  /home/daniebo/Desktop/handoff/a48-forge-pictures-a/MANIFEST.txt
+e8a0df7960d51d5522c402b5388796cf6c39a8814f740986ec5cad2401c0bb44  /home/daniebo/Desktop/handoff/a48-forge-pictures-b/MANIFEST.txt
+9737e0c1c9f08e40bc75ef2807f5fcb6acced0b598a530c856bdec971f3a189e  /home/daniebo/Desktop/handoff/a48-forge-pictures-d/MANIFEST.txt
+```
+<!-- restart-pins end -->
+
+###### 5.11.7 Gates (the plan quotes each output)
+
+`T` is the track folder. `R` is the run folder. `D` is the temp folder of 5.11.3.
+
+| Gate | Check | Falsification condition |
+| --- | --- | --- |
+| X1 Code drift | The X1 lines of 5.11.3 give the expected values. | A file of this track's commits is outside the allowed set, a foreign commit touches a Storytime path, or a merge commit is in the range. |
+| X2 Freeze | The four X2 lines print `0`. | A script, source, or test file other than the guards type file changes after `P5R_BASE`, an earlier batch file changes, another spec changes, or the judge kit changes after `c132d866`. |
+| X3 Pins | 5.11.6 gives `pin lines: 28` and `pin check exit: 0`. | An untracked judge result or a handoff `MANIFEST.txt` changed. |
+| X4 Restart check | `restart check exit: 0` in the mode of the nut result, every label of 5.11.5 with its value, and `restart control exit: 1` with the three named FAIL lines. | A label is missing or differs, or the control exits `0`. |
+| X5 Spend and tries (Decisions 4 and 5) | X4 shows `restart spend (USD):` 1.00 or less and `picture and kind pairs above 3 tries: 0`. The plan quotes the same spend and row count. | The spend passes 1.00, a pair has 4 tries, the two nose ids count as two pictures, or the plan number differs from the script. |
+| X6 Judge evidence (Decisions 1 to 3) | X4 shows the kit SHA-256 values, the calibration counts, and `with a pass verdict:` equal to the delivered file count. Each retry after a fail has a second-judge fail. | A delivered file has no pass verdict, a try passed earlier than the delivered try, or a retry follows an unconfirmed fail. |
+| X7 Deliveries | X4 shows the folder, file, and handoff counts. The handoff check commands exit `0` with the stated `OK` counts. The two `delivery-a48-d` manifests name their id in `missingPictureListRows`. | A count differs, a handoff file differs from its delivery file, or a check command exits non-zero. |
+| X8 Earlier deliveries | The ledger command below prints `ledger lines: 385` and `ledger check exit: 0`. X4 shows the nine pre-restart manifest SHA-256 values of 5.1. | A delivered file of weeks 1 to 7 or the cover changed. |
+| X9 Task 3 content | `ls out/storytime/l2/unit1/w08/delivery-muse-v1/*.png \| wc -l` prints 6 (drum, moon, mango, color and line). `ls out/storytime/l2/unit1/w07/delivery-muse-v2/ \| grep -c '^l2-w07-check-row-ostrich'` prints 2. X4 passes, so each of these files has a pass verdict. | A list C file or an ostrich file is missing or has no pass. |
+| X10 Tests | GREEN_TEST_COMMAND (maker) and PROJECT_TESTS (checker) exit `0` with their labeled totals. KNOWN_RED_COMMAND gives exactly 8 failures with the pin reason. | A failure, a skip, a `-t` filter, a ninth known-red failure, or a known-red body without a list pin name. |
+| X11 Type check | `owned tsc errors: 0` and `tsc errors total:` 38 or less. | An owned error remains, or the total rises. |
+| X12 Task lines | The X12 command below prints `phase 5 task lines: 7`, `phase 5 tasks [x]: 7`, and `phase 5 tasks with a commit on the first line: 7`. `metadata.json` `actual_tasks` equals `grep -cE '^- \[x\] Task' "$T/plan.md"`, and `status` is `in_progress`. `measure_interphase_checks.py status --track asset_storytime_l2_unit1_pictures_20261025` prints `incomplete_phases: 0`. | A SHA is on a later line, a SHA is not a commit, a task is not `[x]`, or the metadata count differs. |
+| X13 Wording | The X13 command prints nothing. The seed control matches its line. The w08 approval-list notes and the handoff manifests obey the file-level rules. | An unqualified match remains, or the seed is missed. |
+| X14 No secret | The X14 command prints nothing. | A key-like string is in a new file. |
+| X15 Facts and doctor | The structural doctor prints no error line that holds `asset_storytime_l2_unit1_pictures_20261025` or an owned path. The checker quotes the error count and every error line. | An error names this track or an owned file. |
+
+X8 ledger command (light; it reads about 2.5 GB once; never beside a vitest run):
+
+```sh
+R=measure/runs/asset_storytime_l2_unit1_pictures_20261025
+awk -F'\t' 'NR>1{d=($1=="cover")?"cover/delivery-muse-v1":($1=="w01")?"w01/delivery-muse-v2":$1"/delivery-muse-v1"; print $5"  out/storytime/l2/unit1/"d"/"$4}' "$R/release-files-p5.tsv" > "$D/ledger.sha256"
+echo "ledger lines: $(wc -l < "$D/ledger.sha256")"
+nice -n 19 sha256sum -c --quiet "$D/ledger.sha256"; echo "ledger check exit: $?"
+```
+
+X12 command:
+
+```sh
+awk '/^## Phase 5: Documentation and verification$/{f=1;next} /^## /{f=0} f && /^- \[.\] Task/' "$T/plan.md" > "$D/p5-tasks.txt"
+echo "phase 5 task lines: $(wc -l < "$D/p5-tasks.txt")"
+echo "phase 5 tasks [x]: $(grep -c '^- \[x\]' "$D/p5-tasks.txt")"
+n=0; while IFS= read -r l; do for s in $(grep -oE '\b[0-9a-f]{7,40}\b' <<< "$l"); do [ "$(git cat-file -t "$s" 2>/dev/null)" = commit ] && { n=$((n+1)); break; }; done; done < "$D/p5-tasks.txt"
+echo "phase 5 tasks with a commit on the first line: $n"
+```
+
+The checker also runs `git show --stat` on each first-line SHA. The commit must hold the evidence of
+its task (the plan note, the batch, or the approval list).
+
+X13 command (case-sensitive qualifiers; `$Q` lists the words that qualify a line):
+
+```sh
+Q='judge-approved|judge-passed|model evidence|not acceptance|approved\.json|approval list|Daniel|person-review|owner-passed|“Approved”|"Approved|Approved\. |PM format|approved 3D character|approved character|approved children|not yet approved|No Workbooks acceptance|acceptance (JSON|file|log)|measure-phase-acceptance|[Ff]inal acceptance|Phase [0-9] acceptance'
+W='\b(accepted|owner-approved|approved|production-ready)\b'
+git diff "$P5BASE"..HEAD -- "$T/plan.md" "$T/metadata.json" measure/tracks.md measure/status.md docs/storytime/l2-unit1/a48 docs/storytime/l2-unit1/judge docs/storytime/l2-unit1/w08 | grep -E '^\+' | grep -Ei "$W" | grep -Ev "$Q"
+printf '+  The nut v3 pair is accepted.\n' | grep -Ei "$W" | grep -Ev "$Q" | grep -c accepted   # seed control: prints 1
+```
+
+File-level rules (X13):
+
+- In `docs/storytime/l2-unit1/w08/muse/approved.json`, a note with "approved print" is qualified when
+  `notes[0]` of the same entry holds "model evidence, not the person count". The checker reads
+  each entry. "Approved print" there names an entry of the approval list.
+- In a handoff `MANIFEST.txt` or a copy-way `manifest.json`, "approved" is qualified when the file
+  holds "model evidence, not acceptance" (handoff) or "judge-approved" (`producedBy`). X4 checks
+  the handoff words.
+- The logs in `$R` are records. X13 does not read them. X14 reads them.
+
+At `f25d8399` the X13 command prints 8 lines: the 3 w08 approval notes (qualified by the first
+file-level rule) and 5 plan lines (finding F3).
+
+X14 command:
+
+```sh
+grep -EnI 'sk-[A-Za-z0-9]{16,}|Bearer [A-Za-z0-9._-]{16,}|api[_-]?key.{0,20}[:=]|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY' -r docs/storytime/l2-unit1/a48 docs/storytime/l2-unit1/judge docs/storytime/l2-unit1/w08 "$R"/judge-*.json "$R"/jr-green-p5-*.log "$R"/strategy-p5-*.log scripts/storytime-muse.mjs scripts/storytime-muse-guards.mjs scripts/storytime-judge-batch.mjs scripts/storytime-judge-set.mjs out/storytime/l2/unit1/w0*/delivery-muse-v[234]/manifest.json out/storytime/l2/unit1/w0*/delivery-a48-d/manifest.json /home/daniebo/Desktop/handoff/a48-forge-pictures-*/MANIFEST.txt
+```
+
+At `f25d8399` the X14 command prints nothing (exit `1`).
+
+X15: closeout owns the facts commit (Q3 of Task 2). Other sessions hold uncommitted edits in
+`measure/tracks.md` and `measure/generated/`. So the maker does not run `./measure/generate.sh`,
+and the checker does not run it (it writes). The checker runs
+`node measure/tools/doctor.mjs --structural-only --root .` once. The error
+`measure/generated/status.md: stale generated fact` is a known state until closeout. The heavy
+doctor does not run (Q5). Closeout runs `./measure/generate.sh` and `./measure/doctor.sh` after
+the archive move (A10).
+
+Phase 5 is complete when X1 to X15 and G5 hold. Intentionally red aggregate suites: none. The
+full `vitest run` and `pnpm test` stay outside this track (section 11). The known-red file has its
+own command and count (X10). Type errors of other tracks stay known failures.
+
+###### 5.11.8 The nut attempt 3 (PM order, 2026-11-05 08:44 ICT)
+
+Workbooks looked at the v2 nut pair: the color shows two peanut pods side by side, and the line
+art has sparse hatching. The PM ordered one more try of each kind before closeout. Rules:
+
+- The maker makes color try 3 (the last color try; tries 1 and 2 were m2 and m3). Then the maker
+  makes line try 3 from the new color (the last line try; tries 1 and 2 came from m3). The nut
+  then has 3 color tries and 3 line tries. That is the cap of Decision 4.
+- The spec change after the earlier tries is allowed: a stronger prompt, `mustShow` with
+  "one nut, clearly a nut", and `deliverAs` v3. The new batch files are new files. The judge copies
+  of tries 1 and 2 keep their bytes (X4 pins them), and their batch files do not change (X2).
+- The Sonnet judge (prompt v6, cast `2eb4a6a1`) judges both tries. The judge is a model of a third
+  family, so no maker judges its own work.
+- The try 3 is a PM order, not a judge fail. So no second judge is needed for it.
+- Both kinds pass: the maker delivers `l2-w01-story-page-a-nut-v3.png` and
+  `l2-w01-story-page-a-nut-line-v3.png` in the new folder `w01/delivery-muse-v4/` (copy way, a
+  hand-written `manifest.json` in the form of the other copy-way folders) and in the new handoff
+  folder `/home/daniebo/Desktop/handoff/a48-forge-pictures-nut3/` (2 files and a `MANIFEST.txt` in
+  the c-folder form with "model evidence, not acceptance" and its own check command). `NUT_MODE`
+  is `--nut3`.
+- One kind fails: the v2 pair stays the delivery. No v4 folder and no `nut3` folder exist. The best
+  try goes to the PM with a note, and the plan names that file. `NUT_MODE` is `--pm-nut3`.
+- In both cases, `w01/delivery-muse-v3/` and `a48-forge-pictures-a/` stay as they are (X3 and X4
+  pins).
+- The plan records the work as a "T4 step 9" block under T4. T4 stays `[x]` with `38cb0ca4` on its
+  first line, so Phase 5 keeps 7 tasks. The block quotes the PM order, the two calls with their
+  files and costs, the two judge result files and verdicts, the delivery result (v3, or v2 with
+  the PM note), and the line "Restart spend total: <x> USD (<n> rows)".
+
+###### 5.11.9 Roles and briefs
+
+PM 2026-11-05: the light lane stays. One maker and one checker run. No Red role, no Reviews A, B,
+or C, no adversarial role, and no browser review (5.11.11).
+
+| Role | Agent and model | Work |
+| --- | --- | --- |
+| Maker | `measure-jr-green`; MiniMax or Kimi family, as the orchestrator routes. Not GLM, so the checker family stays apart. | The brief below. |
+| Judge | Sonnet `claude-code/claude-sonnet-5-5#high`, prompt v6. | The nut try 3 batches only. |
+| Checker | `measure-phase-acceptance` on `coding-plan/glm-5.3-flash#high` (PM route 2026-11-05). | The brief below. |
+
+The checker is of a third family: the makers were MiniMax and Kimi, and the judge is Anthropic.
+Escalation: if the first checker run returns `fail` or `inconclusive`, the orchestrator runs the
+check once more on `coding-plan/glm-latest#high` before it routes a fix. No other escalation.
+
+**Maker brief (`measure-jr-green`).** Stage explicit paths only. Other agents share the git index.
+
+1. M1 The nut try 3 (5.11.8). Commit the spec change first. Run the color call:
+   `node scripts/storytime-muse.mjs color docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json`.
+   Build its batch:
+   `node scripts/storytime-judge-batch.mjs --ids l2-w01-story-page-a-nut --kind color --try 3 --out batch-r7-color-nut3`.
+   Commit the batch. After a color pass, run the line call with `line … --from <new version>`. Build
+   and commit `batch-r7-line-nut3` the same way. One call at a time. Deliver per 5.11.8. Write the
+   T4 step 9 block.
+2. M2 Add `scripts/storytime-muse-guards.d.mts` (finding F2), in the form of
+   `scripts/storytime-judge-batch.d.mts`. Change no runtime code. Run TYPECHECK_COMMAND once.
+   Record `tsc errors total:` and `owned tsc errors:`.
+3. M3 Fix the wording of the 5 plan lines of finding F3. Change "approved" to "judge-passed"
+   where the text means a judge pass. Change it to "person-reviewed" where the text means Daniel's
+   look. Change no number and no path.
+4. M4 Close Task 3: `[x]`, with `6fd626c6` (the week 8 approval list with the drum, the moon, and the
+   mango) on the first line. Add one note: list C is in `w08/delivery-muse-v1/` and the ostrich is
+   in `w07/delivery-muse-v2/`, with the handoff folders `-drum`, `-c`, and `-a`.
+5. M5 Put a commit SHA on the first lines of T5 and T6 (finding F1). Default: `f25d8399`, the commit
+   that holds the T5 and T6 delivery record.
+6. M6 Update `metadata.json`: `actual_tasks` from the grep of X12, `updated_at`, the restart
+   folders, the handoff folders, and the run files in `evidence`. `status` stays `in_progress`.
+   Update this track's line in `measure/tracks.md` in the 5.6 wording. Keep it `[~]`. Stage only
+   this track's line (Q3).
+7. M7 Run GREEN_TEST_COMMAND once, after M2. Quote the labeled totals in the plan.
+8. M8 Run the restart check of 5.11.5 in the mode of the nut result and quote its labeled lines in
+   the plan. Write the role log in `$R` with the result block. Do not commit `$R` (closeout
+   commits it). Do not run `./measure/generate.sh`.
+
+Return `blocked` if a Muse guard refuses a call, the spend projection passes 1.00 USD, or a test
+fails outside the known-red file. Return `partial` with the exact output if only the doctor errors
+of other tracks remain.
+
+**Checker brief (`measure-phase-acceptance`).** Work on the final HEAD. Use read-only commands
+only, except the temp folder `$D` under `/tmp/opencode/`. Edit no product file, no plan, and no
+Measure document.
+
+1. Rerun X1 to X15 and G5. Read the plan quotes and compare each one with your own output.
+2. Extract the restart check, compare its SHA-256, and run it in the mode of the nut result and
+   with `--control`.
+3. Run PROJECT_TESTS once, then KNOWN_RED_COMMAND once, then TYPECHECK_COMMAND once. Run them one
+   at a time.
+4. Read every X13 match and give a reason for each one.
+5. Write `$R/acceptance-p5-restart-<HEAD7>.json` (the audit result JSON of `contracts.md`) and
+   `$R/acceptance-p5-restart-<HEAD7>.log` with each command, its exit code, and its labeled lines.
+   Write `status: "pass"` only when `blocking_findings` and every `*_violations` array are empty.
+   Do not commit them.
+
+###### 5.11.10 Anti-pattern coverage (restart amendment)
+
+| Class | Defense | Falsification condition |
+| --- | --- | --- |
+| A3 digit-only count | Every gate reads a label: `restart spend (USD):`, `restart delivered files: … with a pass verdict:`, `Tests  <N> passed (<N>)`, `owned tsc errors:`, `phase 5 tasks with a commit on the first line:`. Costs parse as exact decimal text to micro-USD, never a float. | A bare digit, a path digit, or a float sum satisfies a gate. The control run with the cap at 0.51 must fail on 0.52. |
+| A4 vacuous pass | The control run must exit `1`. The nut modes exclude each other. A handoff check with no matched line exits `1`. The ledger needs 385 lines and the pins need 28 lines. The script fails on 0 delivered files (it wants 49 or 51). | The control exits `0`, a mode passes in the wrong state, or a run over 0 files passes. |
+| A5 false claim | The plan quotes the script output, the spend, and the nut verdicts. The checker compares them. The untracked judge results carry pins (X3). The T5 and T6 first lines get a real commit (F1). | A plan number differs from the checker output, a pin fails, or a first-line SHA is not a commit. |
+| A6 registry overstatement | `tracks.md` stays `[~]`, `metadata.json` stays `in_progress`, and the words of 5.6 apply. Each handoff `MANIFEST.txt` says "model evidence, not acceptance". | A plan, registry, or metadata line says "approved" or "accepted" for a judge pass (X13), or a handoff file lacks the words. |
+| A7 over-broad filter | The script reads all 15 cost files, element folders included, and finds the columns by header name. It counts an unreadable time and does not drop it. It removes only the first `-print`. It groups the two nose ids. The handoff regex skips the source-path lines of the drum and c manifests and keeps every file line. | `cost files read:` is below 15, a row with a bad time disappears, the nose counts as two pictures, or `manifest lines:` differs from `files:`. |
+| A10 generated-facts drift | The maker sets `actual_tasks` from the X12 grep. Closeout runs generate and doctor after the archive move. | The metadata count differs from the grep, or closeout commits facts from before the last plan edit. |
+| A11 doc-to-code drift | The script uses the try rule of `restartTries` and `judgeFileName`. X4 ties each result to a batch entry and each delivered file to a judge copy, so a rule difference makes a pass go missing. The strategy pins the script SHA-256, the kit SHA-256 values, and the manifest SHA-256 values. | A delivered file maps to a judge copy that no batch names, the extracted script SHA-256 differs, or a document names a kit SHA that the files do not have. |
+
+###### 5.11.11 Reviews, evidence classes, and aggregate suites
+
+- Security review: **No**. The restart adds no trust boundary. The scripts read local files and
+  call Muse through the existing tool and guards. X14 covers secrets.
+- UX and API review: **No**. No UI and no public API change.
+- Adversarial testing: **No**. The control run, the exclusive nut modes, and the pins stand in.
+- Browser review: **No** (`UX_REQUIRED=never`).
+- Artifact tests and live behavior: the restart check, the pins, the ledger, and the wording greps
+  check artifacts (files, hashes, and records). The live behavior proof is the Muse calls and the
+  Sonnet judge runs, recorded in the cost rows and the judge results. The checker makes no Muse call
+  and no judge call. The vitest files prove the code of the guards, the batch builder, and the
+  delivery names with fixtures.
+- Evidence class of each picture: `delivered`, `independent model review` (the Sonnet judge). No
+  person review exists for the 24 restart pictures. Daniel checks their look in the 11-10 book
+  proof. No text says Workbooks accepted or printed a picture.
+
+###### 5.11.12 Base capture point
+
+1. `P5BASE` stays `4e171648d0101d9f7b34d0f486fc1494bc0a48e7`, the immutable Phase 5
+   `phase_base_sha`. X1 and the X13 diff use it.
+2. `f25d8399` is the `role_base_sha` of this strategy role only.
+3. Immediately after the 5.11 strategy commit, the orchestrator runs `git rev-parse HEAD`. It
+   records that committed value as `P5R_BASE` before any maker edit or commit. X2 uses it.
+4. This subsection embeds no SHA for `P5R_BASE`.
+
+###### 5.11.13 Findings at `f25d8399`
+
+The restart check passed at `f25d8399`: 49 of 49 delivered files are byte-equal to a print with a
+pass verdict. No delivered file lacks a passing judge result.
+
+| Id | Class | Finding | Owner |
+| --- | --- | --- | --- |
+| F1 | Blocks X12 | The first lines of T5 and T6 hold no commit SHA. | Maker M5 |
+| F2 | Blocks X11 | 20 owned type errors in `tests/storytime-muse-attempts.test.ts` (no type file for `scripts/storytime-muse-guards.mjs`). | Maker M2 |
+| F3 | Blocks X13 | 5 Phase 5 plan lines use "approved" without a qualifier: the T3a calibration reading ("Every approved file passes"), the T4 step 1 dry-run line ("the approved nose color try 1"), the T4 step 2 finding 2 ("the old approved files m1 to m3"), and the T5 and T6 progress lines ("the approved try-1 prints"). | Maker M3 |
+| F4 | Blocks X12 | `metadata.json` `actual_tasks` is 23. The plan has 28 `[x]` task lines (29 after Task 3). | Maker M6 |
+| F5 | Expected | Task 3 is `[~]`. List C and the ostrich are delivered. | Maker M4 |
+| N1 | Informational | The drum and c handoff manifests say "approved Muse prints". The file-level rule of X13 qualifies them, so nobody edits a delivered manifest. | none |
+| N2 | Informational | `w08/muse/` holds `-line-despeckled` and `-line-print-despeckled` siblings. The delivered line files equal the plain `-line-print` files (X4), so no local filter made a delivered file. | none |
+| N3 | Informational | The judge results are untracked until closeout. X3 pins them. | Closeout |
+
 ## 8. Architecture guardrails and changed-contract risks
 
 Guardrails:
