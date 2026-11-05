@@ -415,3 +415,124 @@ known_failures:
   - The type check exits 2 with 58 errors; none names a file of this step
 handoff: Round 2 of T4 is done. The line art of the three round 1 color passes, the first color try of the eleven pictures of A4 to A12, the moon, and the mango, and the second color try of the A2 nut page are ready. The restart spend is 0.19 USD of the 1.00 USD cap. The three batches are at docs/storytime/l2-unit1/judge/prod/batch-r2-line.json, batch-r2-color.json, and batch-r2-color-a2.json. The judge has not run on them yet. The next step is the judge on those batches, then the tries of the pictures that fail. phase_base_sha: aba118fe5c96902b0a7ddf31b3414693d13d7f21; Green HEAD: fc1c4fc2.
 END_MEASURE_AGENT_RESULT
+
+# Step 4 of T4 (round 3, 2026-11-05)
+
+role_base_sha: 186d78ba6f9f540745a2f015b663520db7daa6d4
+Red model: none (light lane). Green model: minimax-cn-coding-plan/MiniMax-M3.1-Flash.
+
+One Muse call ran (the A2 line try 1). No color call ran. The judge has not run on the round 3
+batch yet. The drum was delivered and handed over.
+
+## The round 2 judge results
+
+`judge-prod-r2-line-186d78ba.json`: the drum line m1 passed, the A3 nest-and-nut line m4 passed,
+and the A1 nest line m8 failed with the defect class `wrong-or-missing-prop` (the nest in the line
+art is a smooth bowl with eggs and has no twig lines). A second judge checks that fail alone, and
+no A1 call ran in this step. `judge-prod-r2-color-a2-186d78ba.json`: the A2 nut page color m3
+passed. The drum color m1 passed in `judge-prod-r1-color-f15bff60.json`, so the drum is complete.
+
+## Commits (explicit paths)
+
+| Commit | Paths |
+| --- | --- |
+| `07a15b97` | `docs/storytime/l2-unit1/w08/muse/approved.json` |
+| `07c74b61` | `docs/storytime/l2-unit1/judge/prod/batch-r3-line.json` |
+| `7cc7215c` | `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md` |
+| `6eb74ebc` | `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md` (the commit sha of the round 3 batch) |
+
+## The drum delivery
+
+Command:
+
+```sh
+node --import tsx scripts/storytime-book-pictures.ts deliver --week 8 --list /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --approvals docs/storytime/l2-unit1/w08/muse/approved.json --muse out/storytime/l2/unit1/w08/muse --delivery out/storytime/l2/unit1/w08/delivery-muse-v1
+```
+
+Exit `0`. Output: `Delivered 1 rows and 2 batch hashes`. The moon and the mango were skipped, because
+they have no approval entry yet. The line check printed a line width of 16 px (minimum 12 px) and
+an ink coverage of 6.86 percent.
+
+Delivery folder: `out/storytime/l2/unit1/w08/delivery-muse-v1/`. It holds the two files and
+`manifest.json` (1 job, 2 batch hashes: `w08/color` and `w08/lineart`).
+
+| File | SHA-256 | Pixel size |
+| --- | --- | --- |
+| `l2-w08-check-row-drum-v1.png` | `c44c8836c6584a05a34b57c1465988f3ce9ab2676fc0858e0d7c1abb2f68faad` | 1500 x 1500 |
+| `l2-w08-check-row-drum-line-v1.png` | `72453e668641fd225c747d7e0ec14de2692cfc270593a142050417cbd0d481ff` | 1500 x 1500 |
+
+The delivered bytes are the approved Muse prints of try 1.
+
+## The handoff folder
+
+`/home/daniebo/Desktop/handoff/a48-forge-pictures-drum/` (it did not exist before). It holds the
+two delivered files and `MANIFEST.txt` with the source repo, the delivery path, the commit
+`07a15b977821c38454f1d4a32f4ccb57100d33e9`, the SHA-256 and the pixel size of each file, the two
+judge result files that passed them, the date and time in ICT, and the sender
+`advantage-forge (Forge orchestrator, T4)`. Nothing else is in the folder.
+
+Check: `grep -E '^[0-9a-f]{64}  l2-w08-check-row-drum' MANIFEST.txt | sha256sum -c -` gives
+`l2-w08-check-row-drum-v1.png: OK` and `l2-w08-check-row-drum-line-v1.png: OK`; exit `0`.
+
+## The A2 line try 1
+
+Command:
+
+```sh
+node scripts/storytime-muse.mjs line docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json --from 3
+```
+
+Exit `0`. `l2-w01-story-page-a-nut-m3 line try 1 ok 1920x1280 cost 0.01`. The file is
+`out/storytime/l2/unit1/w01/muse/l2-w01-story-page-a-nut-m3-line.png`. No despeckle step and no
+other local filter ran.
+
+The round 3 judge batch is `docs/storytime/l2-unit1/judge/prod/batch-r3-line.json` with 1 file. Its
+judge copy points at the line file of m3.
+
+## Spend
+
+Restart spend so far: 0.20 USD of the 1.00 USD cap. The A2 nut page has 2 color tries and 1 line
+try. The drum has 1 color try and 1 line try.
+
+## Tests
+
+No code changed in this step, so no vitest run was needed. The last gate run was the step 2 run
+of `tests/storytime-judge-batch.test.ts`: `Test Files  1 passed (1)`; `Tests  8 passed (8)`;
+exit `0`.
+
+## Defaults taken
+
+- The approval list pins the picture list SHA-256 of the list on disk today
+  (`327f805f2f44aeed2b29477e83921ed03cf5fd7ab6600910ca8e21fced5b2cc7`). The weeks 2 to 7 lists pin
+  the v4 value, which no longer matches the list, so a re-delivery of those weeks needs a new pin.
+- The delivered line print is the plain Muse print of try 1. The tool also writes a despeckled
+  pair after every line call, but no despeckle step ran as an approved step for the drum, so the
+  delivered line file has no local filter in it.
+- The delivery writer ran with `node` and without the heavy runner, as the light-role rule of
+  2026-11-05 allows for local file work.
+- The handoff manifest holds the two SHA-256 lines in the `sha256sum` format, and the check
+  command reads them out of the manifest itself. No second checksum file was written, so the
+  folder holds only the two pictures and the manifest.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: partial
+commits:
+  - 07a15b97
+  - 07c74b61
+  - 7cc7215c
+  - 6eb74ebc
+tests_run: []
+files_changed:
+  - docs/storytime/l2-unit1/w08/muse/approved.json
+  - docs/storytime/l2-unit1/judge/prod/batch-r3-line.json
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+plan_updates:
+  - The T4 step 4 block records the round 2 judge results, the drum delivery, the handoff folder, the A2 line try 1, the round 3 judge batch, and the spend of 0.20 USD
+known_failures:
+  - tests/storytime-book-pictures.test.ts has 8 failures that came before this step: it pins the picture list SHA-256 6d05dfc and the Workbooks list has moved on to 327f805f
+  - The type check exits 2 with 58 errors; none names a file of this step
+handoff: The drum is delivered and handed over. The delivery folder is out/storytime/l2/unit1/w08/delivery-muse-v1/ and the handoff folder is /home/daniebo/Desktop/handoff/a48-forge-pictures-drum/. The A2 nut page has its line try 1 and its batch at docs/storytime/l2-unit1/judge/prod/batch-r3-line.json. The restart spend is 0.20 USD of the 1.00 USD cap. The A1 nest line fail waits for the second judge. The next step is the judge on the round 3 batch, then the A1 line redraw after that judge. phase_base_sha: aba118fe5c96902b0a7ddf31b3414693d13d7f21; Green HEAD: 6eb74ebc.
+END_MEASURE_AGENT_RESULT
