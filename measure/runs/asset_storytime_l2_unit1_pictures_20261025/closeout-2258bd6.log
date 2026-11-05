@@ -154,11 +154,80 @@ T5.
 
 Result: recorded in the reply of this role and in the closeout commit message.
 
-## Step 10 (CG9): facts and doctor after the move - PENDING
+## Step 10 (CG9): facts and doctor after the move - PASS
 
-## Step 11 (CG8): closeout role-gate - PENDING
+Command: `./measure/generate.sh`. Exit code 0. Output: `Generated 4 Measure facts.`
 
-## Step 12: report - PENDING
+Command: `HEAVY_MIN_AVAIL_MB=1500 bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh'`.
+Exit code 1. The run first waited over 600 s for the shared heavy lock, which another session held.
+Error count: 11. The error lines:
+
+```
+error: measure/tracks/asset_filled_shelves_20261028/plan.md: new track has started tasks
+error: measure/tracks/asset_p2_npcs_20260928/plan.md: new track has started tasks
+error: measure/tracks/game_archers_revenge_rebuild_20261029/plan.md: new track has started tasks
+error: measure/tracks/game_castle_defense_rebuild_20261029/plan.md: new track has started tasks
+error: measure/tracks/game_magic_defense_rebuild_20261029/plan.md: new track has started tasks
+error: measure/tracks/game_paladins_twin_soul_rebuild_20261029/plan.md: new track has started tasks
+error: measure/tracks.md: missing registry link for asset_filled_shelves_20261028
+error: measure/tracks.md: missing registry link for game_archers_revenge_rebuild_20261029
+error: measure/tracks.md: missing registry link for game_castle_defense_rebuild_20261029
+error: measure/tracks.md: missing registry link for game_magic_defense_rebuild_20261029
+error: measure/tracks.md: missing registry link for game_paladins_twin_soul_rebuild_20261029
+```
+
+No error names this track or an owned path. The doctor stopped after the structural checks because
+the first error set the exit code, so the vitest boundary check and the git-facts check did not
+run in that pass.
+
+Command: `node measure/tools/doctor.mjs --structural-only --root .`. Exit code 1. The same 11
+error lines. The error `measure/generated/status.md: stale generated fact` that the final
+acceptance saw is gone, because generate.sh refreshed the facts.
+
+Facts commit under T5. `git status --short measure/tracks measure/tracks.md measure/generated`
+shows only foreign changes: 9 files of other tracks, the foreign `## Contents` hunk in
+`measure/tracks.md`, and `measure/generated/architecture.json`,
+`measure/generated/asset-inventory.json`, and `measure/generated/status.md`. The closeout
+committed nothing under `measure/generated/` and restored nothing. The manifest records the
+reason.
+
+## Step 11 (CG8): closeout role-gate - PASS
+
+Command: `python3 ~/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py role-gate --role closeout --track asset_storytime_l2_unit1_pictures_20261025 --log-file measure/runs/asset_storytime_l2_unit1_pictures_20261025/closeout-2258bd6.log --result-file measure/runs/asset_storytime_l2_unit1_pictures_20261025/closeout-2258bd6.json`
+
+Output: `PASS: closeout gate passed`. Exit code 0.
+
+## Step 12: report
+
+`git worktree list`:
+
+```
+/home/daniebo/Desktop/advantage-forge            601c5594 [master]
+/home/daniebo/Desktop/advantage-forge-release    e01ac17b (detached HEAD)
+/home/daniebo/Desktop/advantage-forge-shelf-sync 623e7b5d [shelf-sync-20261030]
+```
+
+`git branch -a`:
+
+```
+* master
++ shelf-sync-20261030
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/gh-pages
+  remotes/origin/master
+```
+
+Facts changed:
+
+- The track status is done. The metadata reads `done` with the completion date 2026-11-05.
+- The registry entry left the active section and sits under `## Archived Tracks`. It names the
+  week 8 delivery and the model evidence class.
+- TD-29, TD-30, and the status paragraph link to
+  `./archive/asset_storytime_l2_unit1_pictures_20261025/`.
+- The generated facts stay uncommitted under T5. Other sessions must not read them as current.
+- The 11 doctor errors belong to other tracks. Their owners must clear them.
+
+No branch, worktree, or run file was deleted. No product file was edited.
 
 ## Superseded earlier result block
 
@@ -183,10 +252,10 @@ role: closeout
 status: partial
 track: asset_storytime_l2_unit1_pictures_20261025
 phase: track closeout
-commits: pending (steps 1 to 9 done)
-tests_run: CG0 status check (pass); CG2 secret grep over the run folder (exit 0, 32 matches in 2 files, all declared synthetic fixtures)
-files_changed: measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md; measure/tracks/asset_storytime_l2_unit1_pictures_20261025/metadata.json; measure/tracks/asset_storytime_l2_unit1_pictures_20261025/automation-supervisor-closeout-manifest.json; measure/tech-debt.md; measure/status.md; measure/tracks.md
-plan_updates: plan lines 30 and 32 carry their commit SHA on the first line
-known_failures: 38 pinned tsc errors of other tracks; 12 structural doctor errors of other tracks; known-red file tests/storytime-book-pictures.test.ts stays red by the 5.11.16 rule
-handoff: steps 1 to 9 are done. Step 10 (generate.sh and doctor) and step 11 (the closeout role-gate) run next. The final block of this file replaces this one.
+commits: 601c5594 (archive move and run records); the closeout record commit adds this log and the closeout result JSON
+tests_run: CG0 status check (pass); CG2 secret grep over the run folder (exit 0, 32 matches in 2 files, all declared synthetic fixtures); ./measure/generate.sh (exit 0, Generated 4 Measure facts.); heavy-run.sh doctor (exit 1, 11 errors, all of other tracks); node measure/tools/doctor.mjs --structural-only --root . (exit 1, 11 errors); closeout role-gate (exit 0, PASS: closeout gate passed)
+files_changed: measure/archive/asset_storytime_l2_unit1_pictures_20261025/plan.md; measure/archive/asset_storytime_l2_unit1_pictures_20261025/metadata.json; measure/archive/asset_storytime_l2_unit1_pictures_20261025/automation-supervisor-closeout-manifest.json; measure/archive/asset_storytime_l2_unit1_pictures_20261025/spec.md; measure/archive/asset_storytime_l2_unit1_pictures_20261025/contract.md; measure/archive/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md; measure/archive/asset_storytime_l2_unit1_pictures_20261025/index.md; measure/tracks.md; measure/tech-debt.md; measure/status.md; measure/runs/asset_storytime_l2_unit1_pictures_20261025/closeout-2258bd6.log; measure/runs/asset_storytime_l2_unit1_pictures_20261025/closeout-2258bd6.json
+plan_updates: plan lines 30 and 32 carry their commit SHA on the first line; the track metadata reads status done with completed 2026-11-05
+known_failures: 38 pinned tsc errors of other tracks; 11 structural doctor errors of other tracks (12 before generate.sh); known-red file tests/storytime-book-pictures.test.ts stays red by the 5.11.16 rule; the T180 temp fixture under /tmp/opencode
+handoff: the track is archived. The registry, the metadata, the links, and the closeout manifest are in place, and the closeout role-gate exits 0. The status is partial because the doctor still exits 1 on the 11 errors of other tracks, which F.8 asks to report as partial. The generated facts stay uncommitted under T5; measure/generated and measure/tracks.md hold foreign uncommitted changes. No text says that Daniel or Workbooks accepted a picture. The week 8 rows are delivered, not deferred.
 END_MEASURE_AGENT_RESULT
