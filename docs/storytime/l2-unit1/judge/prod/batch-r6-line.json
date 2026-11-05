@@ -1,0 +1,14 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w03-story-page-a-pan-in-a-pan-line-t1.png",
+    "id": "l2-w03-story-page-a-pan-in-a-pan",
+    "kind": "line",
+    "pageText": "A pan in a pan.",
+    "use": "story-page",
+    "mustShow": [
+      "one big pan",
+      "a small pan",
+      "the small pan sits inside the big pan"
+    ]
+  }
+]
