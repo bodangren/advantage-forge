@@ -1,0 +1,14 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nut-line-t1.png",
+    "id": "l2-w01-story-page-a-nut",
+    "kind": "line",
+    "pageText": "A nut.",
+    "use": "story-page",
+    "mustShow": [
+      "one peanut in its shell",
+      "Nan's open hand",
+      "the nut is large in the middle"
+    ]
+  }
+]
