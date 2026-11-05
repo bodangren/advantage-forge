@@ -4539,6 +4539,29 @@ PM 2026-11-03: light lane. One maker (`measure-jr-green`) and one checker (`meas
   Restart spend so far: 0.04 USD of the 1.00 USD cap. Each picture has 1 color try of the 3 that it may have.
   The round 1 judge batch is `docs/storytime/l2-unit1/judge/prod/batch-r1-color.json` with 4 files. The command: `HEAVY_MIN_AVAIL_MB=1500 bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/storytime-judge-batch.mjs --ids l2-w08-check-row-drum,l2-w01-story-page-a-nest,l2-w01-story-page-a-nut,l2-w01-story-page-a-nest-and-a-nut --kind color --try 1 --out batch-r1-color'`; exit `0`. The judge copies are at the printed size: 360 px for the drum and 900 px for the three story pages. The judge has not run yet.
   T4 step 2 test command: `HEAVY_MIN_AVAIL_MB=1500 bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-judge-batch.test.ts --maxWorkers=1'`; exit `0`; `Test Files  1 passed (1)`; `Tests  8 passed (8)`.
+  T4 step 3 (round 2, 2026-11-05). The judge of round 1 (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r1-color-f15bff60.json`) passed the drum m1, the nest page m8, and the nest-and-nut page m4. It failed the A2 nut page m2 with the defect class `layout-fault`: "the nut is large in the middle" was absent, and the peanut was about one eighth of the picture width, at the left edge. The second judge (`judge-prod-r1-color-a2-second-f15bff60.json`) confirmed the fail. Commits: `34d1c2b2` (the A2 spec fix), `d3e1da96` (the three judge batches), and this plan note.
+  Rule change of 2026-11-05 07:21 ICT: a `storytime-muse.mjs` call is a light role, so the Muse calls and the judge batch script run with `node` and without the heavy runner. The heavy runner stays for vitest. The first drum line call of this step waited on the heavy lock behind a Workbooks build and was stopped before any provider call, so it was not a try; the w08 costs.tsv holds no line row for it.
+  The 15 calls of round 2 (Muse calls only, no despeckle and no local filter). Every call ran with `node scripts/storytime-muse.mjs` and every one returned `ok`.
+  | Id | Kind | Muse version | Cost (USD) | File |
+  | --- | --- | --- | --- | --- |
+  | `l2-w08-check-row-drum` | line | m1 | 0.01 | `out/storytime/l2/unit1/w08/muse/l2-w08-check-row-drum-m1-line.png` |
+  | `l2-w01-story-page-a-nest` | line | m8 | 0.01 | `out/storytime/l2/unit1/w01/muse/l2-w01-story-page-a-nest-m8-line.png` |
+  | `l2-w01-story-page-a-nest-and-a-nut` | line | m4 | 0.01 | `out/storytime/l2/unit1/w01/muse/l2-w01-story-page-a-nest-and-a-nut-m4-line.png` |
+  | `l2-w01-check-row-nose` | color | m4 | 0.01 | `out/storytime/l2/unit1/w01/muse/l2-w01-check-row-nose-m4-color.png` |
+  | `l2-w04-check-row-milk` | color | m2 | 0.01 | `out/storytime/l2/unit1/w04/muse/l2-w04-check-row-milk-m2-color.png` |
+  | `l2-w02-check-row-axe` | color | m1 | 0.01 | `out/storytime/l2/unit1/w02/muse/l2-w02-check-row-axe-m1-color.png` |
+  | `l2-w07-check-row-ostrich` | color | m1 | 0.01 | `out/storytime/l2/unit1/w07/muse/l2-w07-check-row-ostrich-m1-color.png` |
+  | `l2-w06-check-row-ten` | color | m3 | 0.01 | `out/storytime/l2/unit1/w06/muse/l2-w06-check-row-ten-m3-color.png` |
+  | `l2-w07-story-page-the-top-on-a-pot` | color | m4 | 0.01 | `out/storytime/l2/unit1/w07/muse/l2-w07-story-page-the-top-on-a-pot-m4-color.png` |
+  | `l2-w03-story-page-a-pan-on-a-pan` | color | m2 | 0.01 | `out/storytime/l2/unit1/w03/muse/l2-w03-story-page-a-pan-on-a-pan-m2-color.png` |
+  | `l2-w03-story-page-a-pan-in-a-pan` | color | m6 | 0.01 | `out/storytime/l2/unit1/w03/muse/l2-w03-story-page-a-pan-in-a-pan-m6-color.png` |
+  | `l2-w01-story-page-a-neck` | color | m6 | 0.01 | `out/storytime/l2/unit1/w01/muse/l2-w01-story-page-a-neck-m6-color.png` |
+  | `l2-w08-check-row-moon` | color | m1 | 0.01 | `out/storytime/l2/unit1/w08/muse/l2-w08-check-row-moon-m1-color.png` |
+  | `l2-w08-check-row-mango` | color | m1 | 0.01 | `out/storytime/l2/unit1/w08/muse/l2-w08-check-row-mango-m1-color.png` |
+  | `l2-w01-story-page-a-nut` | color | m3 | 0.01 | `out/storytime/l2/unit1/w01/muse/l2-w01-story-page-a-nut-m3-color.png` |
+  Restart spend so far: 0.19 USD of the 1.00 USD cap. The A2 nut page has 2 color tries of the 3 that it may have; every other picture has 1 color try. The three line pictures have 1 line try each.
+  The A2 spec fix: the color prompt now asks for one peanut in its shell, large, about one third of the picture width, in the middle of the picture, held up in Nan's open hand toward the reader. Nan stands behind the hand at the right side, smaller, and her face stays clear. The mustShow phrases stay as they are.
+  The three round 2 judge batches: `docs/storytime/l2-unit1/judge/prod/batch-r2-line.json` (3 files), `docs/storytime/l2-unit1/judge/prod/batch-r2-color.json` (11 files), and `docs/storytime/l2-unit1/judge/prod/batch-r2-color-a2.json` (1 file). Every judge file points at the file of this round. The judge has not run on them yet.
 - [ ] Task T5: Redraw list B (7 pictures) of the A-48 list. The text stays; the picture must show the text. At most 3 color tries and 3 line-art tries for each picture.
 - [ ] Task T6: Draw list D (2 D4 prompt pictures) of the A-48 list. The ids are `l2-w05-d4-prompt-face-v1` and `l2-w07-d4-prompt-ball-v1`. Line art is the main file: the child works on it in the book.
 
