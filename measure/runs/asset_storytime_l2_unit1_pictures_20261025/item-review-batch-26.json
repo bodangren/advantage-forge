@@ -1,0 +1,60 @@
+{
+  "reviewer": "kimi-code-plan-cn/kimi-for-coding",
+  "seen": {
+    "look-reference-nan-and-pip.png": "Approved style: chibi Nan with two black bunches, orange star shirt, red shorts, and Pip the orange-white dog on a plain background.",
+    "before-nan-hands.png": "Before fix, Nan's hand is a round blob with no fingers and reads as a fist in all three close-up views.",
+    "after-nan-hands.png": "After fix, Nan's hand is open with a thumb and four clear fingers in the front and three-quarter views; the side view crops the hand out of frame.",
+    "after-ben-hands.png": "Ben's hand is open with five clear digits in the front and three-quarter views, same skin color and size as Nan's; the side view crops the hand out of frame.",
+    "after-pat-teddy-check.png": "Pat holds the teddy against his chest with both hands; the teddy rests on the hands and does not float or sink.",
+    "l2-w01-story-page-a-nut-v7.png": "Nan holds one big brown nut in her open left hand at her side; her right hand is open and empty; face, eyes, and mouth read well; the frame cuts at the lower legs.",
+    "l2-w01-story-page-a-nut-line-v7.png": "Line art of the nut page is mostly clean with two small floating dashes, one below the nut near the wrist and one at the right side of the shorts.",
+    "l2-w01-story-page-a-nose-v6.png": "Nan laughs with an open dark mouth and touches her nose base with one extended index finger; the whole body down to the feet is in frame.",
+    "l2-w01-story-page-a-nose-line-v6.png": "Line art of the nose page is mostly clean with a few short dashes below the eyes, on the extended right forearm, and inside the shorts."
+  },
+  "cast-fix-hands": {
+    "overall": 8.0,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "issues": [
+      "The side close-up view crops the hand out of frame and shows only the sleeve.",
+      "The finger tips are slightly clumped, but five digits read in the front and three-quarter views."
+    ],
+    "fix": "",
+    "notes": "The before hand read as a fist. The after hands are open with five clear fingers. The skin color and the hand size did not change. Ben's hand matches Nan's hand. Pat's teddy rests on both hands. The index finger reads on the nose pose in the page below. The fix meets the goal."
+  },
+  "l2-w01-story-page-a-nut": {
+    "overall": 7.5,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "issues": [
+      "The nut is as long as Nan's head, far past a real nut size, but the goal asks for one big nut in a close up.",
+      "The frame cuts the feet at the bottom edge.",
+      "The nut rests on the open palm and does not float."
+    ],
+    "line_art": [
+      "Small floating dash below the nut, just left of the wrist.",
+      "Short dash on the right side of the shorts, at the lower right of the leg opening."
+    ],
+    "fix": "",
+    "notes": "The page shows one big brown nut in Nan's open hand, close up, on a plain light background. The nut sits on the palm. The mouth and the eyes sit on the face and read well. The line art has two small dashes. The page meets the goal."
+  },
+  "l2-w01-story-page-a-nose": {
+    "overall": 7.5,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "issues": [
+      "The index finger touches the nose base, just above the lip, not the nose tip; the pose still reads as a nose touch.",
+      "The open laughing mouth sits on the face and reads well."
+    ],
+    "line_art": [
+      "Short dash below the outer corner of each eye, one under the left eye and one under the right eye.",
+      "Short dash on the extended right forearm, mid-arm.",
+      "Short dash inside the shorts at the left leg."
+    ],
+    "fix": "",
+    "notes": "The page shows Nan touching her own nose with one finger and laughing. The index finger is clear and the other fingers curl. The whole body is in frame. The line art has four short dashes in total. The page meets the goal."
+  }
+}

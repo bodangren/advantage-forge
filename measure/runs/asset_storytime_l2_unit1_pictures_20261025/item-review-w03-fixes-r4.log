@@ -1,0 +1,48 @@
+item-review-w03-fixes-r4.log
+Reviewer: opencode-go/mimo-v2.6-flash
+Bar: Daniel 2026-11-01 14:15 ICT
+Status: in progress
+
+First picture read (required): out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-color.png
+Description: May, a chibi girl with a black ponytail and a yellow shirt, holds one plain blue sheet of paper in front of a wooden easel with a blank white sheet, in a wood-floored classroom.
+
+Vision tool incident:
+After about 16 images the read tool in this session stopped returning the requested file and kept returning one stale line picture. A synthetic 64x64 red marker test image returned the same stale picture, so the failure is in the tool, not in the files. Single reads, batch reads and a PDF path all failed. The reviewer then used four helper sessions with their own image pipeline to view the pictures. Helper sessions report facts only. This reviewer applies the bar and writes the ratings.
+
+Numeric checks by the reviewer (scripts in /tmp/opencode/):
+- gray-check.mjs: every line file in both sets has 0 pixels that are not 0 or 255. No gray or shading in any line file.
+- scene-id.mjs: every print is the exact center crop of its own source (MAE 0.7 to 1.6 against the crop, 43 against the other row). Each line art matches its own row color scene (edge correlation 0.209 and 0.122 own, 0.006 and 0.010 cross).
+- File format: color files are RGB and saturated, line files are 8-bit grayscale, prints are 4000 x 3000.
+
+Row 1 l2-w03-story-page-it-is-blue (color m1, line try 6):
+- Viewed: color source, color print, line source and line print. Helper session re-read of both prints is pending.
+- Color: May holds one solid blue sheet at an easel. Her yellow shirt is plain (no star, badge or mark). Three pots on the easel ledge (red, blue, yellow). A small table at the left holds paint pots and 2 brushes. No letters, words or numbers.
+- Line: one closed four-sided sheet with nothing inside. Plain shirt. Three ledge pots. Same table with pots and brushes. Face complete (eyes, brows, mouth, ear). Solid black pupils inside outlined eyes (allowed).
+- Print: May, her hair, both hands, the sheet and the easel are whole. The background paint table reaches the left print edge. Background only, not a needed prop.
+- Look sheet check: outfit, face and hair color match cast-group-a-2.png. The ponytail and the yellow clip sit on the viewer's right; the look sheet shows them on the viewer's left.
+
+Row 2 l2-w03-story-page-nan-can-get-a-pan (color m4, line try 9):
+- Viewed: color source, line source, line print. Helper session re-read of both prints is pending.
+- Color: one red toy frying pan with a short handle in Nan's fist. Nan keeps the white star on the orange T-shirt, two buns with bands, red shorts, white sneakers. Shelf holds 3 cups and 3 plates. Toy kitchen at the right. No letters, words or numbers.
+- Line: one pan. The bowl is one closed oval rim seen at an angle, with the inside of the bowl as one closed shape. The handle is one long thick straight bar from the rim to Nan's fist and past it. It reads as a toy frying pan, not a mirror, ring or magnifying glass. Exactly one pan.
+- Judge (a): the end of the handle touches the top-left corner line of the toy kitchen counter. Judged a note. The pan stays whole and readable; the touch is a small overlap.
+- Judge (b): the line fist grips the side of the bowl and the handle points right; the color shows a short handle under the fist. Judged a note. The bar says a color/line difference that changes no character and no needed prop is a note. The pan is present in both.
+- Small mark: a pale seam at one eye corner shows in the m4 color (known since the first pan round).
+
+Extra K1 to K3: helper session facts received; follow-up on the nose line and top-edge marks is pending.
+
+FINAL RESULT (2026-11-02)
+Top status: fail. The only defect in this file is extra row K1.
+Row l2-w03-story-page-it-is-blue: rating 8.5, clean.
+Row l2-w03-story-page-nan-can-get-a-pan: rating 8, clean.
+Extra K1: rating 5, defect, category broken-face. The line art draws no nose, and the text is "A nose.".
+Extra K2: rating 8, clean.
+Extra K3: rating 8, clean.
+
+Print edge evidence for Set A (numeric, scripts in /tmp/opencode/):
+- The print is the center crop of the source; 106.67 px leave each side of a 1920 px source.
+- it-is-blue color: 0 yellow shirt pixels, 0 blue skirt pixels and 8 dark hair pixels in the cut strips; 29603 yellow, 6639 blue and 53025 hair pixels in the kept center. May stays whole.
+- nan-can-get-a-pan color: 0 skin pixels in both cut strips. Nan stays whole.
+- Both line files: only background lines reach the cut strips.
+
+Set A helper session ses_e6339fc36ffe91fq3a4bjZ3qyo stayed busy and did not return its report. Set A rests on the reviewer's own views taken before the tool failure, on the numeric checks above, and on the brief's facts.

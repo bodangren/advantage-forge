@@ -1,0 +1,72 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025 (short id asset_storytime_l2_unit1_pictures)
+phase: P2 — Phase 2: Tests and calibrated model pre-checks
+task: T11 — Check every JSON string token of the provider answer before any evidence write
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e (immutable, unchanged)
+role_base_sha: 2ba7acec4b97c8b5e61c9b468efe7ab426748d0c (confirmed at role start)
+head_sha: 167680a1ce976831b09fafcfd5166aca06b3c436
+commits:
+  - 496c6622 — test(storytime): add failing JSON string token tests. Explicit path only: tests/storytime-book-pictures.test.ts.
+  - 167680a1 — docs(measure): record Storytime task 11 Red evidence. Explicit path only: measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md.
+files_changed:
+  - tests/storytime-book-pictures.test.ts (commit 496c6622). One new describe block "JSON string token remediation" with T116 to T128.
+    374 insertions and 1 deletion. The one deletion is the worker report line. T1 to T115 stay unchanged.
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md (commit 167680a1). Task 11 marker [~] and the Red evidence.
+  - No production source, script, registry, or generated file changed. Run logs stay uncommitted.
+tests_run:
+  - Focused hostile rows: exit 1. Tests  11 failed | 2 passed | 98 skipped (111). Duration 63.24 s.
+    Command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1 -t "T11[6-9]|T12[0-8]"'.
+    Log: red-vitest-t11-hostile.log. One "heavy-run: lock wait over 600 s" line appeared while another agent held the shared lock.
+  - Red gate: exit 1. Tests  11 failed | 127 passed (138). Duration 301.19 s. All 125 earlier tests passed. Earlier-test exceptions: none.
+    Command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'.
+    Log: red-vitest-t11.log.
+  - Type check: exit 2. Owned tsc errors 0. Total tsc errors 31. The 31 errors sit in assets/*.ts and tests/part.test.ts.
+    None sits in tests/storytime-book-pictures.test.ts.
+    Command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'.
+    Log: red-tsc-t11.log.
+  - No exit 124, 137, or 75 in any run. One heavy-run call per vitest or tsc command. The first focused call and one gate call
+    waited for the shared lock. The first focused call was cut by this agent's tool timeout before the lock was free and was
+    repeated. The stopped gate call was repeated after the test file changed.
+red_rows:
+  - T116 failed because the fence extraction returns no root array. The escaped scalar element is never checked.
+  - T117 failed because the scan reads the first document only. The second document holds the credential.
+  - T118 failed because JSON.parse keeps the last duplicate value. The earlier value is never checked.
+  - T119 failed because the credential key of an earlier duplicate value is never checked.
+  - T120 failed because the parse error sends the answer to the extraction path. The escaped value is never checked.
+  - T121 failed because malformed scan ms: 16651 exceeds 2000. The brace rescan is quadratic. The worker finished inside the 60000 ms limit.
+  - T122 failed because the fence and the malformed tail hide the credential. The tail never reaches the scan.
+  - T124 failed because a long pattern name pushes the task 10 suffix past the 500-character cut. The thrown error, the ledger
+    error, and the CLI error log lose the suffix.
+  - T126 failed because the MiniMax comment holds the stale RB3-01 label and does not state that the check reads the raw answer.
+  - T127 failed because the MiniMax path writes a review file, a raw copy, and a success entry for every construction that the scan does not refuse.
+  - T128 failed because the Kimi path writes a review file and a raw copy and changes the ledger for every construction that the scan does not refuse.
+  - T123 and T125 passed at Red. T123 holds no credential. T125 finds the same rule name in both paths at this HEAD.
+deviations:
+  - T119 and T122 hold two constructions each. The strategy construction puts the credential in the last duplicate key.
+    A duplicate key name survives JSON.parse, so the RB4-01 key scan finds that key and that form is already refused at this HEAD.
+    The second construction hides the credential. T119 puts it in a key of an earlier duplicate value. T122 puts it in the
+    malformed tail behind the fence. Both rows fail at Red on the second form. A probe of decodedAnswerFindings confirms both forms.
+  - Review finding note for the review roles: RB5-02 names an earlier duplicate key. A duplicate key name survives JSON.parse,
+    so the key always reaches the scan. Only an earlier duplicate value hides a credential. T118 covers the value form.
+  - The first focused run failed T124 and T125 because the rows double-escaped the value. The rows now build the escape form the
+    task 10 rows use. Logs: red-vitest-t11-hostile-attempt1.log, red-vitest-t11-hostile-attempt2.log, red-vitest-t11-hostile-attempt3.log.
+  - The worker harness gained one rules mode for T125. The seam, minimax, and kimi modes stay unchanged. T1 to T115 stay unchanged.
+  - One gate run was stopped while it waited for the shared lock, because the tightened rows changed the test file.
+    The gate run was repeated on the final test state.
+  - Red model deviation: the strategy names volcengine-agent-plan/deepseek-v4-pro#high. This role ran minimax-cn-coding-plan/MiniMax-M3#high,
+    because the orchestrator keeps Red in this track on MiniMax-M3.
+  - The task marker became [~] in the plan commit. The task stays open for Green.
+  - The provisional result file mid-red-2ba7ace.log was removed after the two commits. This file is the result block.
+handoff:
+  - Green starts from 167680a1. The Red base was 2ba7acec. The immutable Phase 2 base stays 1d39b8fd.
+  - Green must pass T116 to T128 and every earlier test. The file total is 138 rows. The Red gate expects exit 0 with no skipped row.
+  - The design decision stays open. Design B is the default. The design A note still covers T116 to T120 and T123. The two extra
+    constructions in T119 and T122 change with the same row-set replacement.
+  - Reviews A, B, and C run on the task 11 HEAD. Review B audits the decoded credential path and both write boundaries.
+    Adversarial testing applies with the twelve task 11 mutations. Browser review does not apply because the task changes no UI.
+  - The acceptance role measures the nested-layer cost and opens a follow-up task when the cost passes the task bound.
+  - No paid call, no render, no Vite server, and no browser were run by this role.
+facts_changed: none.
+END_MEASURE_AGENT_RESULT

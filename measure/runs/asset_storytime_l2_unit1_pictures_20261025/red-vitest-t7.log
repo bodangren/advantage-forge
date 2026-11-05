@@ -1,0 +1,229 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+stdout | tests/storytime-book-pictures.test.ts > Review B security remediation > T84: release rechecks calibration while plain verification does not
+Line-art ink coverage: 5.00% (337500 of 6750000 pixels black).
+
+stdout | tests/storytime-book-pictures.test.ts > Review B security remediation > T84: release rechecks calibration while plain verification does not
+Line-art ink coverage: 5.00% (337500 of 6750000 pixels black).
+
+stdout | tests/storytime-book-pictures.test.ts > Review B security remediation > T85: an empty or absent style sample list fails every twin
+Line-art ink coverage: 5.00% (337500 of 6750000 pixels black).
+
+stdout | tests/storytime-book-pictures.test.ts > Review B security remediation > T85: an empty or absent style sample list fails every twin
+Line-art ink coverage: 5.00% (337500 of 6750000 pixels black).
+
+stdout | tests/storytime-book-pictures.test.ts > Review B security remediation > T85: an empty or absent style sample list fails every twin
+Line-art ink coverage: 5.00% (337500 of 6750000 pixels black).
+
+stdout | tests/storytime-book-pictures.test.ts > Review B security remediation > T85: an empty or absent style sample list fails every twin
+Line-art ink coverage: 5.00% (337500 of 6750000 pixels black).
+
+stdout | tests/storytime-book-pictures.test.ts > Review B security remediation > T85: an empty or absent style sample list fails every twin
+Line-art ink coverage: 5.00% (337500 of 6750000 pixels black).
+
+stdout | tests/storytime-book-pictures.test.ts > Review B security remediation > T85: an empty or absent style sample list fails every twin
+Line-art ink coverage: 5.00% (337500 of 6750000 pixels black).
+
+stdout | tests/storytime-book-pictures.test.ts > Review B security remediation > T85: an empty or absent style sample list fails every twin
+Line-art ink coverage: 5.00% (337500 of 6750000 pixels black).
+
+stdout | tests/storytime-book-pictures.test.ts > Review B security remediation > T85: an empty or absent style sample list fails every twin
+Line-art ink coverage: 5.00% (337500 of 6750000 pixels black).
+
+stdout | tests/storytime-book-pictures.test.ts > Review B security remediation > T85: an empty or absent style sample list fails every twin
+Line-art ink coverage: 5.00% (337500 of 6750000 pixels black).
+
+ ❯ tests/storytime-book-pictures.test.ts (72 tests | 9 failed) 83338ms
+     × T77: the render wrapper preserves argv and the hold code without a shell string 22ms
+     × T78: the file server allows named files and refuses physical escapes without next 7ms
+     × T79: the production opener uses the loopback server and the protected file plugin 2ms
+     × T80: exclusive output writes and the smoke writer refuse existing paths and symlink escapes 4ms
+     × T81: credential findings name patterns and provider failures persist only bounded redacted text 2ms
+     × T82: raw answers reject credentials and unsafe files and preserve safe bytes 3ms
+     × T83: Kimi refuses credential reasons and long reasons before any write 553ms
+     × T84: release rechecks calibration while plain verification does not 1650ms
+     × T85: an empty or absent style sample list fails every twin 5229ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T77: the render wrapper preserves argv and the hold code without a shell string
+AssertionError: The wrapper uses the injected spawn.: expected Error: Forbidden real operation: spawnSync to be undefined
+
+- Expected:
+undefined
+
++ Received:
+Error {
+  "message": "Forbidden real operation: spawnSync",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:480:61
+    478|       catch (caught) { error = caught; }
+    479|       finally { forbidden.spawnSync.mockClear(); }
+    480|       expect(error, 'The wrapper uses the injected spawn.').toBeUndefi…
+       |                                                             ^
+    481|       expect(code).toBe(status);
+    482|       expect(calls).toHaveLength(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/10]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T78: the file server allows named files and refuses physical escapes without next
+AssertionError: The bookFileAllowlist seam exists.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ securitySeam tests/storytime-book-pictures.test.ts:371:44
+    369| function securitySeam<K extends keyof SecuritySeams>(name: K): Securit…
+    370|   const seam = (pictureSeams as unknown as SecuritySeams)[name];
+    371|   expect(seam, `The ${name} seam exists.`).toBeTypeOf('function');
+       |                                            ^
+    372|   return seam;
+    373| }
+ ❯ tests/storytime-book-pictures.test.ts:494:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/10]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T79: the production opener uses the loopback server and the protected file plugin
+AssertionError: The bookServerConfig seam exists.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ securitySeam tests/storytime-book-pictures.test.ts:371:44
+    369| function securitySeam<K extends keyof SecuritySeams>(name: K): Securit…
+    370|   const seam = (pictureSeams as unknown as SecuritySeams)[name];
+    371|   expect(seam, `The ${name} seam exists.`).toBeTypeOf('function');
+       |                                            ^
+    372|   return seam;
+    373| }
+ ❯ tests/storytime-book-pictures.test.ts:561:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/10]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T80: exclusive output writes and the smoke writer refuse existing paths and symlink escapes
+AssertionError: The writeOutputFile seam exists.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ securitySeam tests/storytime-book-pictures.test.ts:371:44
+    369| function securitySeam<K extends keyof SecuritySeams>(name: K): Securit…
+    370|   const seam = (pictureSeams as unknown as SecuritySeams)[name];
+    371|   expect(seam, `The ${name} seam exists.`).toBeTypeOf('function');
+       |                                            ^
+    372|   return seam;
+    373| }
+ ❯ tests/storytime-book-pictures.test.ts:588:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/10]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T81: credential findings name patterns and provider failures persist only bounded redacted text
+AssertionError: The secretFindings seam exists.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ securitySeam tests/storytime-book-pictures.test.ts:371:44
+    369| function securitySeam<K extends keyof SecuritySeams>(name: K): Securit…
+    370|   const seam = (pictureSeams as unknown as SecuritySeams)[name];
+    371|   expect(seam, `The ${name} seam exists.`).toBeTypeOf('function');
+       |                                            ^
+    372|   return seam;
+    373| }
+ ❯ tests/storytime-book-pictures.test.ts:632:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/10]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T82: raw answers reject credentials and unsafe files and preserve safe bytes
+AssertionError: The secretFindings seam exists.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ securitySeam tests/storytime-book-pictures.test.ts:371:44
+    369| function securitySeam<K extends keyof SecuritySeams>(name: K): Securit…
+    370|   const seam = (pictureSeams as unknown as SecuritySeams)[name];
+    371|   expect(seam, `The ${name} seam exists.`).toBeTypeOf('function');
+       |                                            ^
+    372|   return seam;
+    373| }
+ ❯ tests/storytime-book-pictures.test.ts:678:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/10]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T83: Kimi refuses credential reasons and long reasons before any write
+AssertionError: promise resolved "+0" instead of rejecting
+
+- Expected:
+Error {
+  "message": "rejected promise",
+}
+
++ Received:
+0
+
+ ❯ tests/storytime-book-pictures.test.ts:760:35
+    758|       const before = await fileSnapshot(kimi.outputRoot);
+    759|       await expect(runStorytimeCli([...kimi.args, '--record', kimi.cal…
+    760|         `Refused reason ${index}`).rejects.toThrow();
+       |                                   ^
+    761|       expect(await fileSnapshot(kimi.outputRoot)).toEqual(before);
+    762|       await assertNoSyntheticValues([kimi.outputRoot, kimi.outside], v…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/10]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T84: release rechecks calibration while plain verification does not
+AssertionError: promise resolved "+0" instead of rejecting
+
+- Expected:
+Error {
+  "message": "rejected promise",
+}
+
++ Received:
+0
+
+ ❯ tests/storytime-book-pictures.test.ts:791:72
+    789|         await put(sourceFile, changed);
+    790|       }
+    791|       await expect(runStorytimeCli([...args, '--release'], deps), mode…
+       |                                                                        ^
+    792|       expect(await runStorytimeCli(args, deps), mode).toBe(0);
+    793|       await put(file, bytes); await put(sourceFile, sourceBytes);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/10]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T85: an empty or absent style sample list fails every twin
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T85: an empty or absent style sample list fails every twin
+AssertionError: expected [ 'ready', 'ready', 'pending' ] to deeply equal [ 'failed', 'failed', 'failed' ]
+
+- Expected
++ Received
+
+  [
+-   "failed",
+-   "failed",
+-   "failed",
++   "ready",
++   "ready",
++   "pending",
+  ]
+
+ ❯ tests/storytime-book-pictures.test.ts:803:43
+    801|     for (const style of [{ ...fixture.style, sampleFiles: [] }, withou…
+    802|       await json(path.join(fixture.outputRoot, fixture.styleFile), sty…
+    803|       expect.soft(await fixture.states()).toEqual(['failed', 'failed',…
+       |                                           ^
+    804|     }
+    805|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/10]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  9 failed | 90 passed (99)
+   Start at  12:27:48
+   Duration  87.28s (transform 1.26s, setup 0ms, import 2.32s, tests 83.59s, environment 1ms)
+

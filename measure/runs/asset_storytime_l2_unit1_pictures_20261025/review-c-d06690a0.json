@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "track": "asset_storytime_l2_unit1_pictures_20261025",
+  "phase": "Phase 3: Week 1 pictures",
+  "role": "measure-review-c-ux-api",
+  "audited_head": "d06690a0",
+  "status": "pass",
+  "summary": "Pass at d06690a0 (current HEAD). Both contested Review C items are closed and withdrawn. F2: the writer inspectColorPrint now refuses a palette PNG, a non-8-bit depth, a non-sRGB space, and any channel count other than 3, on top of PNG format, size, and no-alpha; it matches every Workbooks checkColor rule (picture-check.ts:238-250) and adds the palette refusal, so no weak file passes. F3: writeMuseDelivery calls onSkip once per row with no approval entry, and the deliver command logs one 'Skipped <row id>: <reason>' line per row (book-pictures.ts:4744). The manifest.json shape is unchanged: StorytimeManifest stays version 1, batchHashAlgorithm, jobs, batches, and the 19359dd1..d06690a0 diff in book-pictures.ts touches only the deliver block. The optional pictureListSha256 pin and the out/ path rule give clear refusals that name the row, the file, and the reason. The CLI exits 0 on success and 1 on a refusal through the RB2-01 boundary. The gate run reports 21 passed.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Provenance: audited HEAD d06690a0 is the current HEAD (git rev-parse HEAD; git log --oneline -12). Phase base 15a7bf0b, Red 3509efd5, and Green 44c2ec84 all exist as commits. The phase work touches src/storytime/muse-delivery.ts, the deliver command in src/storytime/book-pictures.ts, scripts/storytime-muse.mjs, and tests/storytime-muse-delivery.test.ts, so the API and file contract applies.",
+    "F2 withdrawn: checked inspectColorPrint at d06690a0 (git show d06690a0:src/storytime/muse-delivery.ts). It refuses a palette PNG (metadata.isPalette), a depth other than uchar or bitsPerSample other than 8, a space other than srgb, and a channel count other than 3, on top of the existing PNG format, pixel size, and no-alpha checks. Workbooks checkColor (dashboard/lib/storytime/print/picture-check.ts:238-250) requires PNG format, no alpha, no 4 channels, channels === 3, and space srgb or rgb. The writer covers every rule and adds the palette refusal; it accepts only srgb, which sharp reports for an 8-bit RGB PNG, so the Muse flow sees no false refusal. Test T171 covers palette, one-channel, 16-bit, and four-channel refusals.",
+    "F3 withdrawn: checked writeMuseDelivery at d06690a0. The items loop calls options.onSkip(row.id, 'The approval list has no entry for <row id>; the row is not clean and gets no job.') for each row with no approval entry. The deliver command wires it: onSkip: (rowId, reason) => log(`Skipped ${rowId}: ${reason}`) at src/storytime/book-pictures.ts:4744. Test T172 reports a row that has no approval entry.",
+    "Manifest shape unchanged: StorytimeManifest at src/storytime/book-pictures.ts:238-243 stays version 1, batchHashAlgorithm, jobs, batches. The diff 19359dd1..d06690a0 in book-pictures.ts touches only the deliver command block (adds resolveMuseDeliveryPaths, pictureListSha256, onSkip). muse-delivery.ts still builds the manifest through assembleManifest and manifestJob (directory w01). This matches spec.md amendment 2026-11-01 decision 2.",
+    "Operator clarity: pictureListSha256 is an optional approval-list field with a 64-hex regex; a mismatch names the measured hash and the pin, and a pin with no measured hash names that case. resolveMuseDeliveryPaths refuses a --muse or --delivery path outside <repoRoot>/out and names the flag, the required folder, and the got path. readMuseFile errors name the row, the file, and the reason (symlink, outside the Muse folder, not a regular file). Copy refusals name the row, the file, and the reason. Tests T162, T163, and T164 cover the pin and the path rule.",
+    "Exit codes: the deliver command returns 0 after it writes the delivery (src/storytime/book-pictures.ts, deliver block). A refusal throws; the RB2-01 boundary catches it, redacts it, logs it, and returns 1 (scripts/storytime-book-pictures.ts:48-56). The production entry sets process.exitCode from that return (scripts/storytime-book-pictures.ts:91-97).",
+    "Gate: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts --maxWorkers=1' returned exit 0 with 21 passed (21). No exit 75 retry was needed."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git log --oneline -12",
+    "git cat-file -t 15a7bf0b",
+    "git diff --stat 19359dd1 d06690a0 -- src/ scripts/ tests/",
+    "git diff 19359dd1 d06690a0 -- src/storytime/book-pictures.ts",
+    "git diff 19359dd1 d06690a0 -- src/storytime/muse-delivery.ts",
+    "git show d06690a0:src/storytime/muse-delivery.ts",
+    "git show d06690a0:src/storytime/book-pictures.ts | sed -n '230,250p'",
+    "git show d06690a0:src/storytime/book-pictures.ts | sed -n '4650,4830p'",
+    "git show d06690a0:tests/storytime-muse-delivery.test.ts | grep -n 'T16[2-9]|T17[0-2]|Skipped|8-bit|srgb|channels|pictureListSha256|out folder'",
+    "Read Workbooks dashboard/lib/storytime/print/picture-check.ts lines 230-259 (read-only; no .env.local access)",
+    "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts --maxWorkers=1'"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-d06690a0.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-d06690a0.log"
+  ],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "test_summary": "The gate command ran here at d06690a0 through the heavy lock: tests/storytime-muse-delivery.test.ts, 21 passed (21), exit 0. Tests T162 to T172 cover the pin, the out/ path rule, symlinks, duplicate and degenerate names, the malformed list, the write failure, the four color-format refusals, and the skip report."
+}

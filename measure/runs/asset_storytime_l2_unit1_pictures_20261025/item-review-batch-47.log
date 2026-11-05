@@ -1,0 +1,101 @@
+Provisional. Review in progress.
+Reviewer: openai/gpt-6.1-sol#high
+Bar: Daniel 2026-11-01 14:15 ICT
+l2-w04-story-page-this-is-my-family: 8.5/10; clean; categories: none.
+Files: out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-color-print.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-color.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-line-4-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-line-print-4-despeckled.png
+Goal: Exactly six people appear in both files. Mom, Dad, Grandma, Grandpa, Tom, and Lily retain their reference identities. Both prints contain every person, hand, and hair outline. B46-FAM-1 is corrected.
+Defects: None.
+Notes: The family hides most of the red door. The sentence needs the family, not an unobstructed door. The line simplifies hair, clothes, and relaxed fingers. These changes preserve all six identities. Faint color marks beside Grandma's eyes do not break her face.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-line-4-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0,"colored_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-line-print-4-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0,"colored_pixels":0}}
+l2-w04-cover-pam: 8.5/10; clean; categories: none.
+Files: out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-color-print.png; out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-color.png; out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-line-2-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-line-print-2-despeckled.png
+Goal: Nan hugs exactly one Pam. Both figures retain their reference identities. Their faces, hands, hair, and feet remain whole in both prints. The line has no solid black ring or band and no hard coloring gap.
+Defects: None.
+Notes: The added curtain and simplified toy blocks are background notes. The line simplifies Pam's yarn into two small pigtails. Pam remains a recognizable rag doll. Pam hides Nan's shirt star in color. The line shows the star on Nan, not Pam.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-line-2-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0,"colored_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-line-print-2-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0,"colored_pixels":0}}
+l2-w04-story-page-this-is-the-man: 9/10; clean; categories: none.
+Files: out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-color-print.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-color.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-line-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-line-print-despeckled.png
+Goal: Nan laughs beside the adult man from the look sheet. Exactly one Pam sits on his head. Exactly one blanket wraps him. Nan's open hands have five digits. Both prints keep all people, hands, hair, and Pam whole.
+Defects: None.
+Notes: The line changes the blanket folds and omits background cloth detail. One blanket remains. Solid black eyes use the permitted pupil treatment.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-line-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0,"colored_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-line-print-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0,"colored_pixels":0}}
+l2-w04-story-page-is-this-pam: 8.5/10; clean; categories: none.
+Files: out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-color-print.png; out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-color.png; out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-line-2-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-line-print-2-despeckled.png
+Goal: Nan points at one large bump under one blanket. Red cloth and yellow yarn show in color. The line retains the exposed cloth and yarn shapes. The intentional concealment supports the question. Both prints preserve Nan and the needed clues.
+Defects: None.
+Notes: Pam is mostly hidden. This is a note, not a missing prop: the goal requires a covered bump and a dress corner. The line preserves the cloth edge, yarn fringe, and small exposed doll part. It need not reveal Pam's face.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-line-2-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0,"colored_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-line-print-2-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0,"colored_pixels":0}}
+l2-w04-story-page-nan-and-pam-nap: 6.5/10; defect; categories: wrong-or-changed-character.
+Files: out/storytime-review/batch-47/pages/l2-w04-story-page-nan-and-pam-nap-m1-color-print.png; out/storytime-review/batch-47/pages/l2-w04-story-page-nan-and-pam-nap-m1-color.png; out/storytime-review/batch-47/pages/l2-w04-story-page-nan-and-pam-nap-m1-line-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-story-page-nan-and-pam-nap-m1-line-print-despeckled.png
+Goal: Nan sleeps under one blanket and holds one doll. The color retains Pam's look. The line changes Pam's identifying hair and dress. Both prints preserve the figures without edge cuts.
+Defects: The line puts Nan's five-point star on Pam's dress. Pam's reference dress is plain. The line removes Pam's yarn pigtails and gives her a smooth hair cap. The doll no longer retains her reference look.
+Notes: The added curtain is a background note. Pam's fixed open eyes do not by themselves prevent a nap scene.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-story-page-nan-and-pam-nap-m1-line-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0,"colored_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-story-page-nan-and-pam-nap-m1-line-print-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0,"colored_pixels":0}}
+Retry: Line: Keep Pam's yarn fringe, two yarn pigtails, and plain dress; keep the star only on Nan.
+l2-w04-story-page-pam-can-nap: 9/10; clean; categories: none.
+Files: out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-color-print.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-color.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-line-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-line-print-despeckled.png
+Goal: Nan puts exactly one recognizable Pam in one shoe box with one small blanket. Pam retains her yarn fringe and pigtails. The star belongs only to Nan. Nan's floor hand has five digits. Both prints preserve Nan, Pam, and the box.
+Defects: None.
+Notes: The line places Nan's curved hand above the blanket instead of pinching its raised corner. The bed action remains readable.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-line-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0,"colored_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-line-print-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0,"colored_pixels":0}}
+l2-w04-story-page-pam-is-in-a-pan: 9/10; clean; categories: none.
+Files: out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-color-print.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-color.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-line-2-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-line-print-2-despeckled.png
+Goal: Exactly one Pam sits in exactly one toy pan. The bowl, rim, side wall, and thick handle read as a pan in both files. Nan retains her buns and shirt star. Both prints preserve Nan, Pam, and the complete pan.
+Defects: None.
+Notes: The deep round body and short handle are notes, not defects. The outlined handle visibly joins the pan. The line simplifies small hands and removes background cloth. Pam remains the same recognizable doll.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-line-2-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0,"colored_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-line-print-2-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0,"colored_pixels":0}}
+l2-w04-story-page-pam-is-on-a-man: 8.5/10; clean; categories: none.
+Files: out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-color-print.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-color.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-line-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-line-print-despeckled.png
+Goal: Exactly one Pam sits on the adult man's tummy. He lies on the sofa with closed eyes. Nan laughs beside him. Nan's open hands have five digits. The star stays on Nan. Both prints keep all figures and needed props whole.
+Defects: None.
+Notes: The line omits the background blanket. The sentence and goal do not need that blanket. The line opens Nan's laughing eyes and simplifies Pam's hair. Both characters remain identifiable.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-line-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0,"colored_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-line-print-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0,"colored_pixels":0}}
+l2-w04-story-page-pam-is-on-a-map: 8.5/10; clean; categories: none.
+Files: out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-color-print.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-color.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-line-2-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-line-print-2-despeckled.png
+Goal: Exactly one Pam lies on exactly one open paper map. Its river, route, house, and cross make the map readable. Nan points at Pam. Nan's floor hand has five digits. Both prints preserve Nan, Pam, and the complete map.
+Defects: None.
+Notes: The map cross is a location symbol, not text in the picture. The line simplifies Pam's fringe and keeps her two yarn pigtails and plain dress. The doll remains identifiable.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-line-2-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0,"colored_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-line-print-2-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0,"colored_pixels":0}}
+l2-w04-story-page-this-is-pam: 7/10; defect; categories: wrong-or-changed-character.
+Files: out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-color-print.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-color.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-line-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-line-print-despeckled.png
+Goal: Nan holds exactly one doll. The color clearly shows Pam. The line changes Pam's identifying hair on a page that explicitly introduces her. Both prints keep Nan and the doll whole.
+Defects: The line replaces Pam's yarn fringe and yarn pigtails with a smooth fringe and two round buns. Pam resembles a second Nan.
+Notes: The star stays on Nan above the doll. It does not appear on Pam's dress. The line lowers the doll without cutting her at a print edge.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-line-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0,"colored_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-line-print-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0,"colored_pixels":0}}
+Retry: Line: Restore Pam's yarn fringe and two strand-shaped pigtails; keep the dress plain and the star on Nan.
+K1: 7/10; defect; categories: layout-fault.
+Files: out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png; out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png
+Goal: Both files show one large nut in Nan's open hand. Nan retains her reference look. The nut and hand remain whole. The 4:3 delivery edges cut Nan's hair and shoes.
+Defects: Both delivery files cut Nan's hair at the top and right edges. Both files also cut her shoes at the bottom edge.
+Notes: The enlarged hand has five digits. The nut is one readable acorn. The close-up goal explains the enlarged hand, but the explicit edge rule still applies.
+Line pixels: {"out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png":{"width":4000,"height":3000,"non_binary_pixels":0,"colored_pixels":0}}
+Retry: Color and line: Keep the close-up nut and hand; frame Nan so her hair and shoes do not cross the delivery edges.
+K2: 6/10; defect; categories: broken-face.
+Files: out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png; out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png
+Goal: The color supports “A nose.” The line fails the required face-part check. A teacher or child cannot identify the nose in the line file.
+Defects: The line omits Nan's nose. Her fingertip meets the mouth outline, so the named nose is not visible.
+Notes: The color shows a readable nose and the intended touch. Both delivery files keep Nan inside the page edges.
+Line pixels: {"out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png":{"width":4000,"height":3000,"non_binary_pixels":0,"colored_pixels":0}}
+Retry: Line: Draw Nan's nose visibly above the smile and place one fingertip against its side.
+K3: 7/10; defect; categories: gray-or-shading-in-line-art.
+Files: out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png; out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png
+Goal: Both exact source files show Nan facing right in profile with a readable nose. The line supports nose tracing, but its heavy black hair ring fails the line-art bar.
+Defects: The line draws the hair tie as a thick solid black ring around the bun. The line-art bar forbids this ring.
+Notes: The profile nose shows clearly in both files. The lower shirt crosses the source edge in this head study. The complete head, hair, and named nose remain inside the image. The pixel check finds no gray. The solid black ring is a separate visual failure.
+Line pixels: {"out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png":{"width":1600,"height":1600,"non_binary_pixels":1397607,"colored_pixels":1371713},"out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png":{"width":1600,"height":1600,"non_binary_pixels":0,"colored_pixels":0}}
+Retry: Line: Replace the solid black hair ring with two thin outlines and a white band between them.
+Reassessment: The simplified hair on this-is-pam remains a note under the book-size bar. The first assessment treated a source detail as a character defect. The final row below replaces it.
+l2-w04-story-page-this-is-pam: 8/10; clean; categories: none.
+Files: out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-color-print.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-color.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-line-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-line-print-despeckled.png
+Goal: Nan holds exactly one recognizable doll Pam. The two pigtails, plain dress, small body, and separate doll face preserve the needed identity at book size. Both prints keep Nan and Pam whole.
+Defects: None.
+Notes: The line simplifies Pam's yarn pigtails into round shapes and leaves her eye interiors white. These details do not change the needed doll. The star stays on Nan above the doll. It does not appear on Pam's dress. The line lowers the doll without cutting her at a print edge.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-line-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0,"colored_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-line-print-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0,"colored_pixels":0}}
+Final status: fail. Set status: fail. Extra status: fail.
+Nine batch rows are clean. The nap row changes Pam in the line file. All three extra rows have defects.
+Verification: 13 rows; 23 line files; 0 non-binary pixels.
+The K3 color source is not a line file. Its pixels are excluded from the final line totals.
+All line files have zero gray pixels. K3 fails the separate black-ring check.
+Audit only. No picture changed. No commit.
+Existing checkout inventory: advantage-forge-release (detached), advantage-forge-shelf-sync (shelf-sync-20261030), and /tmp/opencode/paladin-audit-0e9af0f (detached). Plan: Preserve each checkout for its existing owner. Existing remote origin/gh-pages remains unchanged for its publishing owner. This audit creates no branch or worktree.
+Facts changed: Two week 3 rows are clean. Nine batch 47 rows are clean. The nap row and K1 to K3 have defects.

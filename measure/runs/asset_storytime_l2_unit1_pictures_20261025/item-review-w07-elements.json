@@ -1,0 +1,200 @@
+{
+  "reviewer": "opencode-go/mimo-v2.6-flash",
+  "verdict": "accept: 7 of 7 sheets clean under the bar",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "scope": "Week 7 Muse input sheets (sets and props). Sheets feed later week 7 pages. The sheets are not pages.",
+  "index": "out/storytime-review/w07-staging/index.md",
+  "set-toy-corner-empty": {
+    "file": "out/storytime/l2/unit1/w07/muse/elements/set-toy-corner-empty-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w07/muse-elements/set-toy-corner-empty.json",
+    "spec_goal": "Empty toy corner of a kindergarten classroom with a soft blue rug and a low toy shelf, no people, no toys on the floor.",
+    "used_by": [
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-cover-is-it-a-ball.json (Is It a Ball?)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-ball-no.json (Is it a ball? No!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-car-no.json (Is it a car? No!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-doll-no.json (Is it a doll? No!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-drum-no.json (Is it a drum? No!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-kite-no.json (Is it a kite? No!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-teddy-no.json (Is it a teddy? No!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-train-no.json (Is it a train? No!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-pip-yes.json (Is it Pip? Yes!)"
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "An empty room corner. Cream walls with dark-brown timber beams. Light wooden floor. One big round blue rug in the middle. One low wooden toy shelf with three cubbies and colored boxes at the left. One low window at the right.",
+      "input_checks": "No people. No animals. No toys on the floor. No text or letters.",
+      "page_fit": "All nine toy-corner pages describe this set in the same words: cream plaster walls with dark-brown timber beams, one big soft round blue rug, one low wooden toy shelf with three cubby shelves at the left, one low window at the right. The sheet matches each part.",
+      "builder_doubt_small_shelf": "The builder said the toy shelf is small. Under the bar, a small shelf is not a defect. The shelf reads as a toy shelf: it has three cubbies and colored boxes. The pages keep the shelf as background only. No sentence needs a bigger shelf. Not a defect.",
+      "second_look": "re-checked: one blue round rug, one shelf with three cubbies and three boxes, one window at the right, no people, no toys on the floor, no text. Verdict unchanged."
+    }
+  },
+  "set-tom-living-room-empty": {
+    "file": "out/storytime/l2/unit1/w07/muse/elements/set-tom-living-room-empty-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w07/muse-elements/set-tom-living-room-empty.json",
+    "spec_goal": "Empty bright living room of Tom with a green sofa, a window, a brown rug, an open toy box, a blue mat, and a big silver pot on a low wooden table.",
+    "used_by": [
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-cover-the-top.json (The Top)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-can-tom-see-the-top.json (Can Tom see the top?)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-run-tom-run.json (Run, Tom, run!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-the-top-is-on-mom.json (The top is on Mom!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-the-top-is-on-pip.json (The top is on Pip!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-the-top-on-a-mat.json (The top on a mat.)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-the-top-on-a-pot.json (The top on a pot!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-tom-can-get-the-top.json (Tom can get the top.)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-tom-can-see-a-top.json (Tom can see a top.)"
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "An empty living room. Warm cream walls, light wooden floor. One green sofa with two cushions at the left. One window with cream curtains in the middle of the back wall. One small brown rug under the window. One open wooden toy box with blocks and a yellow rubber duck at the right. One round blue mat on the floor. One low wooden table with one big silver pot with a lid in the right foreground.",
+      "input_checks": "No people. No animals. No text or letters.",
+      "page_fit": "All nine living-room pages describe this set in the same words. The sheet matches each part: sofa, window, brown rug, toy box, blue mat, and pot on the low table.",
+      "builder_doubt_sofa_cut": "The builder said the sofa is cut at the left edge. Under the bar, a layout fault must be visible to a teacher or a child at book size. The sofa runs off the left frame edge like a normal photo crop. The visible sofa part is whole and soft. It can seat Mom. The pages only need the sofa at the left. Not a defect.",
+      "builder_doubt_small_brown_rug": "The brown rug under the window is small. The page prompts call it a small plain brown rug. The sheet matches the prompt. Not a defect.",
+      "pot_note": "The set already holds the silver pot on the low table. The page The top on a pot! also references the pot sheet. Both show the same pot type, so the two references agree.",
+      "second_look": "re-checked: green sofa cut at the left frame edge like a normal photo crop, window with cream curtains, small brown rug, open toy box with blocks and a duck, blue mat, silver pot with a lid on the low table, no people, no text. Verdict unchanged."
+    }
+  },
+  "prop-red-blanket-bump-sheet": {
+    "file": "out/storytime/l2/unit1/w07/muse/elements/prop-red-blanket-bump-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w07/muse-elements/prop-red-blanket-bump-sheet.json",
+    "spec_goal": "A big red blanket over a small round bump.",
+    "used_by": [
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-cover-is-it-a-ball.json (Is It a Ball?)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-ball-no.json (Is it a ball? No!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-car-no.json (Is it a car? No!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-doll-no.json (Is it a doll? No!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-drum-no.json (Is it a drum? No!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-kite-no.json (Is it a kite? No!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-teddy-no.json (Is it a teddy? No!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-train-no.json (Is it a train? No!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-pip-yes.json (Is it Pip? Yes!)"
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One big plain red blanket on a white background. It covers one smooth round bump in the middle. Soft folds spread wide on the floor. Nothing sticks out from under it.",
+      "input_checks": "Plain white background. No people. No animals. No text or letters. One blanket. No pattern and no stripe.",
+      "page_fit": "The nine blanket pages say: one big plain red blanket, keep it plain red, nothing sticks out unless the page says so. The sheet gives that. The doll page, the teddy tail page, and the Pip page each add their own exception sentence, so the plain sheet is correct for all pages.",
+      "builder_doubt_bump_size": "The index asks whether the bump reads as small in the pages. The sheet is a close view, so size in the page comes from the page prompt. Every page prompt says one small round bump. The sheet shows one round dome with no ear, paw, or tail shape. Not a defect on the sheet; the size is a page check."
+    }
+  },
+  "prop-toys-sheet": {
+    "file": "out/storytime/l2/unit1/w07/muse/elements/prop-toys-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w07/muse-elements/prop-toys-sheet.json",
+    "spec_goal": "Six toys: a red-and-yellow ball, a blue car, a red-and-yellow kite, a red drum with drumsticks, a green train, and a white teddy bear with a blue bow.",
+    "used_by": [
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-ball-no.json (Is it a ball? No!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-car-no.json (Is it a car? No!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-drum-no.json (Is it a drum? No!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-kite-no.json (Is it a kite? No!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-teddy-no.json (Is it a teddy? No!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-a-train-no.json (Is it a train? No!)"
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Six toys on a white background. Top row: one red-and-yellow striped ball, one small blue toy car, one red-and-yellow diamond kite with a string and three red bows. Bottom row: one red toy drum with a white band and two wooden drumsticks, one green toy train with one red wagon, one white teddy bear with a blue bow.",
+      "count_check": "Exactly six toys: ball, car, kite, drum, train, teddy. No seventh toy. No toy is named twice.",
+      "input_checks": "Plain white background. No people. No animals. No text or letters. Every toy reads as its word at book size.",
+      "page_fit": "The six pages each name one toy. Each page prompt lists all six toys, then says: draw only the named toy once, and no other toy anywhere. The doll page uses the week 4 doll sheet instead, so the doll is not part of this set. The set matches the six page names exactly.",
+      "second_look": "re-checked from a fresh copy at /tmp/opencode/w07review: exactly six toys (ball, car, kite, drum, train, teddy), white background, no people, no text. The first second-look open of the file returned a stale pot image; md5 and a fresh copy show the six-toy sheet. Verdict unchanged."
+    }
+  },
+  "prop-top-sheet": {
+    "file": "out/storytime/l2/unit1/w07/muse/elements/prop-top-sheet-m2-color.png",
+    "spec": "docs/storytime/l2-unit1/w07/muse-elements/prop-top-sheet.json",
+    "spec_goal": "A small red spinning top with a yellow stripe.",
+    "used_by": [
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-cover-the-top.json (The Top)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-can-tom-see-the-top.json (Can Tom see the top?)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-run-tom-run.json (Run, Tom, run!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-the-top-is-on-mom.json (The top is on Mom!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-the-top-is-on-pip.json (The top is on Pip!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-the-top-on-a-mat.json (The top on a mat.)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-the-top-on-a-pot.json (The top on a pot!)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-tom-can-get-the-top.json (Tom can get the top.)",
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-tom-can-see-a-top.json (Tom can see a top.)"
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One red spinning top toy in three views: upright, tilted, and on its side. Wide yellow stripe around the body. Thin yellow stem with a round yellow knob on top. Sharp point at the bottom.",
+      "input_checks": "Plain white background. No people. No animals. No text or letters. One top per view, three views of the same top.",
+      "m2_note": "m1 read as a turnip. m2 replaced it. All nine page references name the m2 file. No reference names m1.",
+      "word_read": "At book size the top reads as a spinning top toy, not a turnip or a fruit. The knob, stripe, and point give the classic top shape.",
+      "second_look": "re-checked from a fresh copy: three views of one red top, wide yellow stripe, thin yellow stem with a round knob, sharp point, white background, no text. Verdict unchanged."
+    }
+  },
+  "prop-silver-pot-sheet": {
+    "file": "out/storytime/l2/unit1/w07/muse/elements/prop-silver-pot-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w07/muse-elements/prop-silver-pot-sheet.json",
+    "spec_goal": "A big shiny silver cooking pot with a lid.",
+    "used_by": [
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-the-top-on-a-pot.json (The top on a pot!)"
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One big silver cooking pot with a lid. Two side handles. One round knob on the lid. Shiny smooth surface.",
+      "input_checks": "Plain white background. No people. No animals. No food. No text or letters.",
+      "word_read": "At book size the pot reads as a cooking pot. The lid, knob, and handles give the pot shape.",
+      "page_fit": "The one page needs a pot lid for the top to spin on. The sheet shows the lid closed and flat on top. That works.",
+      "second_look": "re-checked from a fresh copy: one silver pot with a lid, round lid knob, two side handles, white background, no food, no text. Verdict unchanged."
+    }
+  },
+  "prop-olive-sheet": {
+    "file": "out/storytime/l2/unit1/w07/muse/elements/prop-olive-sheet-m2-color.png",
+    "spec": "docs/storytime/l2-unit1/w07/muse-elements/prop-olive-sheet.json",
+    "spec_goal": "One green olive.",
+    "used_by": [
+      "docs/storytime/l2-unit1/w07/muse/l2-w07-check-row-olive.json (olive)"
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One smooth green table olive. Narrow glossy oval shape. One small round red pimento in one small round hole at the left end.",
+      "input_checks": "Plain white background. No people. No animals. No text or letters. One olive. No face and no eyes.",
+      "m2_note": "m1 read as a green fruit with a stem. m2 replaced it. The check row reference names the m2 file. No reference names m1.",
+      "word_read": "At book size the olive reads as an olive. The red pimento in the hole is the olive sign. No stem stays.",
+      "page_fit": "The check row text is olive. Its colorPrompt describes one smooth green olive with a red pimento in a small round hole. The sheet matches word for word.",
+      "second_look": "re-checked from a fresh copy: one smooth green olive, one red pimento in one round hole, no stem, no face, white background, no text. Verdict unchanged."
+    }
+  },
+  "page_risks": [
+    {
+      "risk": "Teddy page tail",
+      "builder_said": "The teddy page shows only Pip's tail tip; the model may draw the whole puppy.",
+      "found": "l2-w07-story-page-is-it-a-teddy-no holds both guards. It references the Pip render (picture 6). It states: ONLY the fluffy golden-brown tip of a tail sticks out from under the blanket; no puppy body, no head, no ears, no legs, and no collar show. It ends with: exactly two children, one blanket, one thought bubble with one teddy bear, and one tail tip.",
+      "spec_clarity": "Clear. The Pip reference gives the tail color and fur look. The negative list names every part that must stay hidden.",
+      "advice": "At page review, check one fluffy golden-brown tail tip at the blanket edge and no other puppy part. If a whole puppy returns, re-run the page with the negative list kept first in the picture block."
+    },
+    {
+      "risk": "Thought-bubble toy pages",
+      "builder_said": "A thought-bubble page may draw more toys than the one it names.",
+      "found": "Six pages use the six-toy sheet: ball, car, drum, kite, teddy, train. Each colorPrompt lists all six toys, then says: draw ONLY the named toy, once, exactly like it. Each prompt repeats: draw only this ONE toy, once, and no other toy anywhere. Each prompt ends with: exactly two children, one blanket, one thought bubble, and one toy in it.",
+      "spec_clarity": "Clear. The rule is stated three times in each prompt: once at picture 5, once in the bubble sentence, once in the count line.",
+      "advice": "At page review, count toys in each bubble: exactly one, and no toy anywhere else. If a page returns with extra toys, re-run that page with the one-toy sentence kept first and the six-toy description shortened to the named toy only."
+    }
+  ],
+  "summary": {
+    "sheets": 7,
+    "clean": 7,
+    "not_clean": 0,
+    "clean_keys": [
+      "set-toy-corner-empty",
+      "set-tom-living-room-empty",
+      "prop-red-blanket-bump-sheet",
+      "prop-toys-sheet",
+      "prop-top-sheet",
+      "prop-silver-pot-sheet",
+      "prop-olive-sheet"
+    ],
+    "not_clean_keys": [],
+    "builder_doubts_judged": "Both builder doubts judge as not defects under the bar. The small toy shelf reads as a toy shelf with three cubbies and stays background only. The sofa cut at the left frame edge is a normal photo crop, not a layout fault a teacher sees.",
+    "page_risk": "No sheet is at blocking risk. Two page risks stand for the page review: the teddy page must show only a tail tip, and each thought-bubble page must show exactly one toy.",
+    "reference_paths": "All page references name the current sheet files: m2 for the top and the olive, m1 for the rest. No page references a stale top or olive m1 file.",
+    "second_look": "Every sheet was opened again after the first pass, five from fresh copies in /tmp/opencode/w07review. One second-look open of the toys file returned a stale pot image; md5 plus a fresh copy show the six-toy sheet, and the first look already showed it. All counts hold. All verdicts unchanged."
+  }
+}

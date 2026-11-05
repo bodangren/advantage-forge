@@ -1,0 +1,216 @@
+{
+  "reviewer": "kimi-code-plan-cn/kimi-for-coding",
+  "audited_head": "a4308df1",
+  "verdict": "final",
+  "seen": {
+    "/tmp/opencode/wb-shadow/content/storytime/l2/print/pictures.json": "Goals for the nine page rows: exact prompts, objectCounts (nut 1, nose 1, net 1, nest 1), size class A 4000x3000 for story pages and C 1500x1500 square for the two check/practice nose rows.",
+    "docs/storytime/l2-unit1/w01/muse/cast-nurse.json": "Nurse cast prompt: adult woman, short black hair, white tunic and trousers, white nurse cap, white shoes, plain white first-aid bag with no symbol; no skin color, ethnicity, or race described.",
+    "docs/storytime/l2-unit1/w01/muse/cast-teacher-kim.json": "Teacher Kim cast prompt: adult woman, dark-brown low ponytail, green cardigan over cream blouse, navy trousers, brown flat shoes, no bag; no skin color, ethnicity, or race described.",
+    "out/storytime-review/batch-28/refs/storytime-review_batch-21_look-reference-nan-and-pip.png": "Nan reference: black hair in two buns with red ties, orange T-shirt with white star, red shorts, white shoes, dark-brown eyes; Pip is a golden-brown puppy with red collar.",
+    "out/storytime-review/batch-28/refs/storytime-review_batch-21_sprout-ben-render.png": "Ben reference: chibi boy with brown hair, blue T-shirt, dark blue shorts, gray shoes, front/three-quarter/side/back renders.",
+    "out/storytime-review/batch-28/refs/storytime-review_muse-test-2_nan-face-clean-crop.png": "Clean Nan face crop used for face comparison.",
+    "out/storytime-review/batch-28/cast/nurse-sheet.png": "Four views of one adult nurse, short black hair, white uniform, cap, shoes, plain bag with no cross or symbol, bag in her right hand in all views, soft 3D style, gentle smile, clean eyes, no text.",
+    "out/storytime-review/batch-28/cast/teacher-kim-sheet.png": "Four views of one adult teacher, dark-brown low ponytail, green cardigan, cream blouse, navy trousers, brown flats, no bag, soft 3D style; front-view fingers merge mitten-like at close crop.",
+    "out/storytime-review/batch-28/print-test/README.md": "Local print method: reframe to 4:3, Lanczos3 to 4000x3000, blur+threshold for line art; builder reports lines smooth and thick, color soft at 100 percent.",
+    "out/storytime-review/batch-28/print-test/crop100-face-color.png": "100 percent face crop: eyes, brows, mouth keep shape; edges smooth, no ringing; hair texture blurred from upscaling.",
+    "out/storytime-review/batch-28/print-test/crop100-face-line.png": "100 percent face line crop: thick smooth lines, closed shapes, no gray, no specks.",
+    "out/storytime-review/batch-28/print-test/crop100-bag-color.png": "100 percent bag crop: green bag edges hold; color soft but usable.",
+    "out/storytime-review/batch-28/print-test/crop100-bag-line.png": "100 percent bag line crop: clean thick closed outlines.",
+    "out/storytime-review/batch-28/print-test/print-test-crop-m1-line-print.png": "4000 x 3000, pixel values 0 and 255 only (verified with histogram), 6.43 percent black; full view shows clean, thick, closed lines.",
+    "out/storytime-review/batch-28/print-test/print-test-crop-m1-color-print.png": "4000 x 3000 RGB; shapes stay soft but sharp enough at reading size.",
+    "out/storytime-review/batch-28/pages/l2-w01-story-page-a-nut-m1-color.png": "Nan with one big brown acorn in her open palm, close up, foreshortened hand with 5 digits, look matches reference, no text.",
+    "out/storytime-review/batch-28/pages/l2-w01-story-page-a-nut-m1-line.png": "1-bit line art, thick closed lines, eyes with pupils, fingers as nested loops, no gray or specks.",
+    "out/storytime-review/batch-28/pages/l2-w01-story-page-a-nose-m1-color.png": "Nan touches her nose tip with one index finger, laughing with open mouth, look matches reference, no text.",
+    "out/storytime-review/batch-28/pages/l2-w01-story-page-a-nose-m1-line.png": "1-bit line art with pupils, open laughing mouth, finger-to-nose pose reads.",
+    "out/storytime-review/batch-28/pages/l2-w01-story-page-hello-i-am-ben-m3-color.png": "Ben waves with a 5-digit hand; green bag hangs on the hook rack; red bag sits on the floor behind him; look matches reference; no text or logo.",
+    "out/storytime-review/batch-28/pages/l2-w01-story-page-hello-i-am-ben-m3-line.png": "1-bit line art; waving hand and both bags read; eyes with pupils; closed shapes.",
+    "out/storytime-review/batch-28/pages/l2-w01-story-page-hello-i-am-nan-m1-color.png": "Nan waves at a classroom window next to a small green fern in a pot; 5-digit waving hand; look matches reference; no text.",
+    "out/storytime-review/batch-28/pages/l2-w01-story-page-hello-i-am-nan-m1-line.png": "1-bit line art; pupils present; window, wall panels, and potted fern drawn with simple closed shapes.",
+    "out/storytime-review/batch-28/pages/l2-w01-story-page-a-neck-m1-color.png": "Close up of Nan lifting her chin, both hands at her neck; eyes even with pupils; look matches reference.",
+    "out/storytime-review/batch-28/pages/l2-w01-story-page-a-neck-m1-line.png": "1-bit line art; pupils present; both hands read at the neck.",
+    "out/storytime-review/batch-28/pages/l2-w01-story-page-a-net-m2-color.png": "Nan holds up a green butterfly net in a soft garden; net mesh drawn as fine grid like the reference prop; look matches reference; no text.",
+    "out/storytime-review/batch-28/pages/l2-w01-story-page-a-net-m2-line.png": "1-bit line art; net mesh becomes many thin crossing slivers; pupils present.",
+    "out/storytime-review/batch-28/pages/l2-w01-story-page-a-nest-m2-color.png": "Nan points at a small nest with three light blue eggs on a low branch; pointing hand natural; look matches reference; no text.",
+    "out/storytime-review/batch-28/pages/l2-w01-story-page-a-nest-m2-line.png": "1-bit line art; nest with three egg bumps on a branch; pupils present.",
+    "out/storytime-review/batch-28/pages/l2-w01-check-row-nose-m1-color.png": "Square profile of Nan facing left with a small but visible nose bump; no text in the picture.",
+    "out/storytime-review/batch-28/pages/l2-w01-check-row-nose-m1-line.png": "1-bit line art profile with pupil and nose bump.",
+    "out/storytime-review/batch-28/pages/l2-w01-practice-line-nose-m1-color.png": "Square profile of Nan facing right, the other way, with a small visible nose bump; two buns with red ties.",
+    "out/storytime-review/batch-28/pages/l2-w01-practice-line-nose-m1-line.png": "1-bit line art profile facing right with pupil and nose bump."
+  },
+  "cast-sheet-nurse": {
+    "files": ["out/storytime-review/batch-28/cast/nurse-sheet.png"],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "cast-sheet-teacher-kim": {
+    "files": ["out/storytime-review/batch-28/cast/teacher-kim-sheet.png"],
+    "rating": 8.0,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": ["front view: the relaxed fingers merge into one mitten-like mass at close crop; the three-quarter view shows separated fingers"],
+    "goal_shown": true,
+    "retry_hint": "Give the front view clearly separated fingers on both hands, as the three-quarter view already shows."
+  },
+  "print-test": {
+    "files": [
+      "out/storytime-review/batch-28/print-test/README.md",
+      "out/storytime-review/batch-28/print-test/crop100-face-color.png",
+      "out/storytime-review/batch-28/print-test/crop100-face-line.png",
+      "out/storytime-review/batch-28/print-test/crop100-bag-color.png",
+      "out/storytime-review/batch-28/print-test/crop100-bag-line.png",
+      "out/storytime-review/batch-28/print-test/print-test-crop-m1-line-print.png",
+      "out/storytime-review/batch-28/print-test/print-test-crop-m1-color-print.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-a-nut": {
+    "files": [
+      "out/storytime-review/batch-28/pages/l2-w01-story-page-a-nut-m1-color.png",
+      "out/storytime-review/batch-28/pages/l2-w01-story-page-a-nut-m1-line.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-a-nose": {
+    "files": [
+      "out/storytime-review/batch-28/pages/l2-w01-story-page-a-nose-m1-color.png",
+      "out/storytime-review/batch-28/pages/l2-w01-story-page-a-nose-m1-line.png"
+    ],
+    "rating": 9.0,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-hello-i-am-ben": {
+    "files": [
+      "out/storytime-review/batch-28/pages/l2-w01-story-page-hello-i-am-ben-m3-color.png",
+      "out/storytime-review/batch-28/pages/l2-w01-story-page-hello-i-am-ben-m3-line.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-hello-i-am-nan": {
+    "files": [
+      "out/storytime-review/batch-28/pages/l2-w01-story-page-hello-i-am-nan-m1-color.png",
+      "out/storytime-review/batch-28/pages/l2-w01-story-page-hello-i-am-nan-m1-line.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-a-neck": {
+    "files": [
+      "out/storytime-review/batch-28/pages/l2-w01-story-page-a-neck-m1-color.png",
+      "out/storytime-review/batch-28/pages/l2-w01-story-page-a-neck-m1-line.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-a-net": {
+    "files": [
+      "out/storytime-review/batch-28/pages/l2-w01-story-page-a-net-m2-color.png",
+      "out/storytime-review/batch-28/pages/l2-w01-story-page-a-net-m2-line.png"
+    ],
+    "rating": 8.0,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": ["line art: the net mesh is many thin crossing slivers, borderline for a 5-year-old to color"],
+    "goal_shown": true,
+    "retry_hint": "Simplify the net mesh in the line art to a few bold web lines so a child can color the whole net green."
+  },
+  "l2-w01-story-page-a-nest": {
+    "files": [
+      "out/storytime-review/batch-28/pages/l2-w01-story-page-a-nest-m2-color.png",
+      "out/storytime-review/batch-28/pages/l2-w01-story-page-a-nest-m2-line.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-check-row-nose": {
+    "files": [
+      "out/storytime-review/batch-28/pages/l2-w01-check-row-nose-m1-color.png",
+      "out/storytime-review/batch-28/pages/l2-w01-check-row-nose-m1-line.png"
+    ],
+    "rating": 8.0,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-practice-line-nose": {
+    "files": [
+      "out/storytime-review/batch-28/pages/l2-w01-practice-line-nose-m1-color.png",
+      "out/storytime-review/batch-28/pages/l2-w01-practice-line-nose-m1-line.png"
+    ],
+    "rating": 8.0,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "summary": {
+    "pages": 12,
+    "pass": 12,
+    "clean": 10,
+    "clean_keys": [
+      "cast-sheet-nurse",
+      "print-test",
+      "l2-w01-story-page-a-nut",
+      "l2-w01-story-page-a-nose",
+      "l2-w01-story-page-hello-i-am-ben",
+      "l2-w01-story-page-hello-i-am-nan",
+      "l2-w01-story-page-a-neck",
+      "l2-w01-story-page-a-nest",
+      "l2-w01-check-row-nose",
+      "l2-w01-practice-line-nose"
+    ],
+    "not_clean_keys": [
+      "cast-sheet-teacher-kim",
+      "l2-w01-story-page-a-net"
+    ]
+  }
+}

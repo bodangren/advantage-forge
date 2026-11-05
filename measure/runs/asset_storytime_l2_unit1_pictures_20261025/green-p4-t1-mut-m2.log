@@ -1,0 +1,134 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/zz-green-probe-m2.test.ts (141 tests | 3 failed | 136 skipped) 413ms
+     × T173: the pipeline pins picture list version 4 and refuses the version 3 bytes 78ms
+     × T176: every row of the list holds the pixel size of its class 6ms
+     × T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows 89ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/zz-green-probe-m2.test.ts > Phase 4 picture list version 4 > T173: the pipeline pins picture list version 4 and refuses the version 3 bytes
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The render row command accepts the live list": "accepted",
++   "The render row command accepts the live list": "ENOENT: no such file or directory, open '/tmp/opencode/storytime-red-y0G7lU/list-v4-EnXcJX/docs/storytime/l2-unit1/w02/rows/l2-w02-story-page-nan-can-b-v1.json'",
+  }
+
+ ❯ tests/zz-green-probe-m2.test.ts:4601:10
+    4599|       );
+    4600|       expect.soft({ 'The render row command accepts the live list': li…
+    4601|         .toEqual({ 'The render row command accepts the live list': 'ac…
+       |          ^
+    4602|       const liveVerify = await rowCommandError(
+    4603|         ['verify', '--row', rowId, '--workbooks', WORKBOOKS, '--out', …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  tests/zz-green-probe-m2.test.ts > Phase 4 picture list version 4 > T176: every row of the list holds the pixel size of its class
+AssertionError: expected { …(1) } to deeply equal { 'Rows with a wrong pixel size': [] }
+
+- Expected
++ Received
+
+  {
+-   "Rows with a wrong pixel size": [],
++   "Rows with a wrong pixel size": [
++     "l2-w03-story-page-it-is-red (A): 4000 x 2250",
++   ],
+  }
+
+ ❯ tests/zz-green-probe-m2.test.ts:4662:60
+    4660|       })
+    4661|       .map((row) => `${row.id} (${row.sizeClass}): ${row.width} x ${ro…
+    4662|     expect.soft({ 'Rows with a wrong pixel size': wrong }).toEqual({ '…
+       |                                                            ^
+    4663|     expect.soft({ 'Rows checked': rows.length }).toEqual({ 'Rows check…
+    4664|     expect.soft({ 'Size classes covered': [...new Set(rows.map((row) =…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  tests/zz-green-probe-m2.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: The week parser accepts week 8.: expected 'ENOENT: no such file or directory, op…' to deeply equal 'accepted'
+
+Expected: "accepted"
+Received: "ENOENT: no such file or directory, open '/tmp/opencode/storytime-red-y0G7lU/week-8-prKQOU/docs/storytime/l2-unit1/w08/rows/l2-w08-check-row-moon-v1.json'"
+
+ ❯ tests/zz-green-probe-m2.test.ts:4686:81
+    4684|
+    4685|       const week8 = await dryRun('8');
+    4686|       expect.soft(week8.error ?? 'accepted', 'The week parser accepts …
+       |                                                                                 ^
+    4687|       expect.soft({ 'Week 8 rows rendered in a dry run': week8.count })
+    4688|         .toEqual({ 'Week 8 rows rendered in a dry run': 4 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  tests/zz-green-probe-m2.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "Week 8 rows rendered in a dry run": 4,
++   "Week 8 rows rendered in a dry run": -1,
+  }
+
+ ❯ tests/zz-green-probe-m2.test.ts:4688:10
+    4686|       expect.soft(week8.error ?? 'accepted', 'The week parser accepts …
+    4687|       expect.soft({ 'Week 8 rows rendered in a dry run': week8.count })
+    4688|         .toEqual({ 'Week 8 rows rendered in a dry run': 4 });
+       |          ^
+    4689|       const allWeeks = await dryRun();
+    4690|       expect.soft(allWeeks.error ?? 'accepted', 'A run with no --week …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  tests/zz-green-probe-m2.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: A run with no --week reads the live list.: expected 'ENOENT: no such file or directory, op…' to deeply equal 'accepted'
+
+Expected: "accepted"
+Received: "ENOENT: no such file or directory, open '/tmp/opencode/storytime-red-y0G7lU/week-8-prKQOU/docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-hello-i-am-pat-v1.json'"
+
+ ❯ tests/zz-green-probe-m2.test.ts:4690:94
+    4688|         .toEqual({ 'Week 8 rows rendered in a dry run': 4 });
+    4689|       const allWeeks = await dryRun();
+    4690|       expect.soft(allWeeks.error ?? 'accepted', 'A run with no --week …
+       |                                                                                              ^
+    4691|       expect.soft({ 'Rows rendered in a dry run with no --week': allWe…
+    4692|         .toEqual({ 'Rows rendered in a dry run with no --week': 196 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  tests/zz-green-probe-m2.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "Rows rendered in a dry run with no --week": 196,
++   "Rows rendered in a dry run with no --week": -1,
+  }
+
+ ❯ tests/zz-green-probe-m2.test.ts:4692:10
+    4690|       expect.soft(allWeeks.error ?? 'accepted', 'A run with no --week …
+    4691|       expect.soft({ 'Rows rendered in a dry run with no --week': allWe…
+    4692|         .toEqual({ 'Rows rendered in a dry run with no --week': 196 });
+       |          ^
+    4693|
+    4694|       for (const value of ['0', '9']) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 2 passed | 136 skipped (141)
+   Start at  01:31:54
+   Duration  1.90s (transform 905ms, setup 0ms, import 1.19s, tests 413ms, environment 0ms)
+

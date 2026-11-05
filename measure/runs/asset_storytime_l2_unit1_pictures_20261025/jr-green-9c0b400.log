@@ -1,0 +1,48 @@
+MEASURE_AGENT_RESULT
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 (Phase 3: Week 1 pictures)
+role: jr-green (round 3)
+status: done
+phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+role_base_sha: ee9addc87b3889ca48ad97c1fc002f2b888fc2ef
+red_commits: 6c55fac1 (T142-T151), d7031d18 (T146 retry), ee9addc8 (retry evidence)
+final_green_head: 9c0b400e
+green_model: claude-code/claude-opus-5-5[1m]#high
+model_deviation: round 3 started on volcengine-agent-plan/glm-5.3-flash#high (the quota tool routed Green to openai/gpt-6-luna#high, which wrote the T146 Red retry). On 2026-10-29 the orchestrator moved the session to claude-opus-5-5 (Ark plan at 88 percent weekly use). Red used MiniMax and OpenAI, so Red and Green stay apart. No coder was used.
+commits:
+- 7c3b7db7 fix(storytime): measure the typical line-art outline width (src/storytime/book-pictures.ts)
+- e17a2c77 docs(measure): record the Phase 3 pin Green evidence round 3 (plan.md)
+- deadcad6 feat(storytime): line-art pass v3 with scaled strokes and paint edges (src/storytime/line-art-pass.ts, src/storytime/book-pictures.ts)
+- 7d8431ba feat(storytime): stage the Nan window sample v3 (docs/storytime/l2-unit1/w01/w01-readalong-p05-v3.json)
+- 9c0b400e docs(measure): record the Nan window sample v3 evidence (plan.md)
+- (4007148a between them belongs to another session)
+task_states:
+- Pin task (T142-T151): [x]. First line: Red 6c55fac1, d7031d18; implementation 70cb6e37, 3a5ef00d, 7c3b7db7.
+- Sample task 1: [b] deferred:daniel-lineart-look. First line: stage v3 7d8431ba, pass deadcad6, v2 stage 4c7d217f.
+test_results:
+- Part A: GREEN_TEST_COMMAND exit 0; "Tests  134 passed (134)"; log green-p3-r3-vitest.log. Type check: tsc exit 2; owned errors 0; total 31; log green-p3-r3-tsc.log.
+- After Part B: GREEN_TEST_COMMAND exit 0; "Tests  134 passed (134)"; log green-p3-r3b-vitest.log. tests/storytime-line-art-pass.test.ts exit 0; "Tests  5 passed (5)"; log green-p3-r3b-lineart-pass-vitest.log. Type check: tsc exit 2; owned errors 0; total 31; log green-p3-r3b-tsc.log.
+- Width check: the median black-run length over horizontal and vertical scans. T146 fixtures measure 6, 11, 12, and 4 (mixed).
+deviations:
+- Render gate width rule: a capture packet that names no technique (the injected passes of the tests; the T151 fixture twin has a 3 px median) skips the 12 px rule at render time only. The live v3 page pass must meet 12 px at render time. The manifest and verify gate enforce 12 px on the written bytes for every twin. Recorded in plan.md.
+- Technique label: T71 pins LINEART_TECHNIQUE = song-page-form-edges-viewdepth-1bit-v2. That constant stays as the label for packets that name no technique. The live page pass names song-page-form-paint-edges-viewdepth-scaled-1bit-v3 in the capture packet, the render evidence, and smoke.json. No test was edited.
+- First v3 render had stray floor specks. Green added a fragment filter, deleted its own three v3 output files (color, line art, render evidence), and rendered v3 again. The first log is green-p3-r3-render-attempt1.log.
+- verify --job w01-readalong-p05 exits 1: the v3 twin passes (15 px), and the v2 twin fails (2 px). This is the correct release-gate result: v2 does not meet specification v1. v2 files stay, as the plan asks.
+new_files:
+- docs/storytime/l2-unit1/w01/w01-readalong-p05-v3.json
+- out/storytime/l2/unit1/w01/readalong/l2-w01-readalong-nan-v3.png, .../lineart/l2-w01-readalong-nan-v3-lineart.png, out/storytime/l2/unit1/renders/w01-readalong-p05-v3.json (outputs, not tracked)
+- No new source file. Changed: src/storytime/book-pictures.ts, src/storytime/line-art-pass.ts (new exports: LINE_ART_PASS_TECHNIQUE, LINE_RADIUS_PX_AT_4000, lineRadiusFor, MIN_FRAGMENT_PX_AT_4000, PAINT_EDGE_GAP, dropFragments, thicken).
+list_row_names: the 30 week 1 list rows use the specification v1 names from pictures.json: color = row fileName; line art = row lineArtFileName (<color name>-line-v1.png) beside the color file. The sample package job still writes w01/readalong/lineart/l2-w01-readalong-nan-v3-lineart.png.
+pm_report:
+- Nan window sample v3 for Daniel's line-art look. Both files are 4000 x 3000, one twin pair from one render run.
+- Color: out/storytime/l2/unit1/w01/readalong/l2-w01-readalong-nan-v3.png, SHA-256 ee46aa71e8a0691ba4acad9b61ee8e8e1206406f66b144b26bc11329f0a1825b (same bytes as v2; same composition).
+- Line art: out/storytime/l2/unit1/w01/readalong/lineart/l2-w01-readalong-nan-v3-lineart.png, SHA-256 79880e818390327f59f5bf0a003d43894a5e31bf7f92381ebbe92496f3fb32c4.
+- Measured line width: 15 px (minimum 12 px). Ink coverage: 16.47 percent.
+- What the pictures show: Nan faces the camera and waves. In both files her eyes, brows, smile, and the shirt star show. The fern stands beside her. The line art has closed black outlines; the blush cheeks have no line.
+- Panes: the line art shows four white panes with the cross frame. The color panes stay dark navy. No approved item gives light glass (plaster-wall-window recess #1a2433 by design; window has a dark glass base; stained-glass-window is colored).
+- RA2-N2: thicker lines do not merge the books more. Paint edges add spine lines between books of different colors, so the right bookcase shows separate books. The left bookcase still has a merged, broken top line, and short broken dashes remain on the right bookcase and the right wall base.
+question_for_orchestrator:
+- Open PM question: should the line art draw painted detail edges (eyes, brows, mouth, shirt star)? Default used: yes (technique v3). If Daniel says no, set the paint gap above 1 to turn the paint pass off and render a new version.
+- Panes: a light-glass window needs a new or changed approved item (for example plaster-wall-window with light glass). Default: keep the dark panes until the PM decides.
+log_path: measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-9c0b400.log
+END_MEASURE_AGENT_RESULT

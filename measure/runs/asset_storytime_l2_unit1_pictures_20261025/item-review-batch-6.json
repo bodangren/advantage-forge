@@ -1,0 +1,18 @@
+{
+  "reviewer": "openai/gpt-6-luna#high",
+  "seen": {
+    "card": "The card shows a brown nut with a short leaning stem, a dark lobed cap, and a pointed base in four views.",
+    "row_color": "The color row shows one brown nut with a dark cap and a short stem on a white page.",
+    "row_line": "The line row shows the nut as a clear outline with a wavy cap edge and no visible speck noise.",
+    "old_line": "The old line art shows a round pot shape with a level lid and a knob."
+  },
+  "storytime-nut": {
+    "overall": 7.4,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "Small black specks along the cap edge in the color views read as rendering noise, not dirt."
+    ],
+    "fix": "Remove the black specks along the cap edge."
+  }
+}

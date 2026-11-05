@@ -1,0 +1,22 @@
+heavy-run: lock wait over 600 s — holder PID 900442: flock -w 600 -E 201 /home/daniebo/Desktop/primary-parity-progress/heavy.lock /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh --locked -c bash /tmp/opencode/red-p4-r12/run_all_new.sh 
+sprout-pip: 41,199 triangles, 0.303 x 0.436 x 0.477 m, built in 21188 ms
+  fur                      13568 tris  (12004 ms)
+  jawFur                    2626 tris  (2140 ms)
+  mouth                     1018 tris  (307 ms)
+  tongue                     534 tris  (115 ms)
+  jawCream                  1916 tris  (403 ms)
+  cream                     3407 tris  (968 ms)
+  nose                       566 tris  (80 ms)
+  ears                      4020 tris  (2610 ms)
+  tufts                     1690 tris  (264 ms)
+  brows                     1048 tris  (109 ms)
+  mouth-open                 808 tris  (124 ms)
+  tongue-in                  716 tris  (87 ms)
+  eye-shine                  588 tris  (138 ms)
+  collar                    3418 tris  (1249 ms)
+  tag                        692 tris  (104 ms)
+  tail-fur                  4584 tris  (1436 ms)
+texture  none (vertex colors)
+glb      out/sprout-pip/sprout-pip.glb  (1813 KB)
+animate  out/sprout-pip/anim/sniff.png  + .gif  (1.00 s clip, 2338 ms)
+EXIT:0

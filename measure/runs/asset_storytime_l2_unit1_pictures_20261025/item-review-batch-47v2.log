@@ -1,0 +1,98 @@
+Reviewer: opencode-go/deepseek-v4.1-flash
+Bar: Daniel 2026-11-01 14:15 ICT
+Date: 2026-11-02. Audit only. No picture changed. No commit.
+Picture check: the read tool returns images.
+Row 1 color: a dark-haired girl in a yellow shirt and blue skirt holds one blue sheet beside an easel in a timber room.
+
+l2-w04-story-page-this-is-my-family: 8.5/10; clean; categories: none.
+Files: out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-color.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-color-print.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-line-4-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-line-print-4-despeckled.png
+Goal: Both files show the six family members in front of the house. Five people match their look sheets. Dad keeps his face and hair, but his shirt and trousers differ from his sheet. Both prints show every person, hand, and hair whole, with lawn and bushes at both sides.
+Defects: None.
+Notes: Dad wears a yellow polo, long dark trousers, and brown shoes. His sheet has a blue T-shirt, gray shorts, and black sandals. The sentence names no clothes. This is a note. The red door is mostly hidden behind Grandma and Grandpa. A small red strip stays visible in the color. The line adds small buttons on two blouses. They change no character and no needed prop. The family print fix holds in the color print and the line print.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-line-4-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-line-print-4-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0}}
+
+l2-w04-cover-pam: 9/10; clean; categories: none.
+Files: out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-color.png; out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-color-print.png; out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-line-2-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-line-print-2-despeckled.png
+Goal: Both files show Nan holding one doll Pam. Nan and Pam match their look sheets. One sofa, one rug, and one toy box stay clear. Nan, her hands, and the doll stay whole in the print.
+Defects: None.
+Notes: The line adds a window curtain that the color does not show. The line shows the star of the shirt of Nan at the arm of the doll. The star belongs to Nan, so this is a note.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-line-2-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-line-print-2-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0}}
+
+l2-w04-story-page-this-is-the-man: 9/10; clean; categories: none.
+Files: out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-color.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-color-print.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-line-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-line-print-despeckled.png
+Goal: Both files show Dad in the blue blanket with one doll Pam on his head, and Nan laughing with open arms. Dad and Pam match their look sheets. One blanket and one doll. People, hands, and hair stay whole in both prints.
+Defects: None.
+Notes: The line fills the eyes of Nan solid black. The rule allows solid pupils, and the face stays readable. The other pages use outlined eyes, so this is a note. The line simplifies the folds of the blanket. One blanket stays clear.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-line-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-line-print-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0}}
+
+l2-w04-story-page-is-this-pam: 8.5/10; clean; categories: none.
+Files: out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-color.png; out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-color-print.png; out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-line-2-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-line-print-2-despeckled.png
+Goal: Both files show Nan pointing at one big bump under one blue blanket. The red dress corner and the yellow yarn show at the blanket edge in color and in line. Nan matches her look. Nan, her hands, and the blanket stay whole in both prints.
+Defects: None.
+Notes: Pam shows as a fringe of yarn, a frayed dress corner, and one foot. The goal asks for the dress corner, and the text asks a question. This is a note. The line draws the frayed edge as a zigzag and the yarn as a small fan. A child still reads cloth and yarn.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-line-2-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-line-print-2-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0}}
+
+l2-w04-story-page-pam-can-nap: 9/10; clean; categories: none.
+Files: out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-color.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-color-print.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-line-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-line-print-despeckled.png
+Goal: Both files show Nan tucking one doll into one shoe box with a pillow and one small blanket. The lid stands at the back. Nan and Pam match their look sheets. Nan, the box, and the doll stay whole in both prints.
+Defects: None.
+Notes: The line draws the small blanket as one cloth shape over the box front. The line hides the second pigtail behind the blanket edge. The yarn fringe stays.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-line-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-line-print-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0}}
+
+l2-w04-story-page-pam-is-in-a-pan: 8.5/10; clean; categories: none.
+Files: out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-color.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-color-print.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-line-2-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-line-print-2-despeckled.png
+Goal: Both files show one doll in one big yellow toy pan, with Nan laughing at the left. The pan keeps a rim and one thick handle. Pam and Nan match their look sheets. Nan, her hands, the doll, and the pan stay whole in both prints.
+Defects: None.
+Notes: The pan is deep and round with a short thick handle behind the bowl. It reads as a pan at book size. The doll is large against the pan. She still fits inside, and the sentence stays clear. The prints cut the right side of the toy box. The toy box is background.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-line-2-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-line-print-2-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0}}
+
+l2-w04-story-page-pam-is-on-a-man: 9/10; clean; categories: none.
+Files: out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-color.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-color-print.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-line-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-line-print-despeckled.png
+Goal: Both files show Dad asleep on the sofa with one doll on his tummy, and Nan laughing at the left. Dad and Pam match their look sheets. People, hands, feet, and hair stay whole in both prints.
+Defects: None.
+Notes: The line omits the blanket on the left sofa arm. The goal names no blanket here. The line draws the pigtails of Pam as two tufts. Her fringe and dress stay clear.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-line-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-line-print-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0}}
+
+l2-w04-story-page-pam-is-on-a-map: 9/10; clean; categories: none.
+Files: out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-color.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-color-print.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-line-2-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-line-print-2-despeckled.png
+Goal: Both files show Nan kneeling and pointing at one doll on one big paper map. The map keeps its river, house, dotted path, and cross. Nan and Pam match their look sheets. Nan, her hands, the doll, and the map stay whole in both prints.
+Defects: None.
+Notes: The line simplifies the map marks but keeps every mark of the goal. The finger meets the head of the doll in both files, as the goal asks.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-line-2-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-line-print-2-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0}}
+
+l2-w04-story-page-this-is-pam: 9/10; clean; categories: none.
+Files: out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-color.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-color-print.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-line-despeckled.png; out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-line-print-despeckled.png
+Goal: Both files show Nan holding up one doll and smiling. Nan and Pam match their look sheets. The dress of Pam has no star. Nan, her hands, her hair, and the doll stay whole in both prints.
+Defects: None.
+Notes: The line shows the star of the shirt of Nan above the head of the doll. The star belongs to Nan and is allowed. The line draws the pigtails of Pam as two tufts.
+Line pixels: {"out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-line-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0},"out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-line-print-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0}}
+
+K1: 9/10; clean; categories: none.
+Files: out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png; out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png
+Goal: Both exact files show the head of Nan in right profile with a clear nose. The nose, eye, ear, and mouth stay readable. The head supports a tracing line. No extra person, animal, prop, or text appears.
+Defects: None.
+Notes: The goal says the head faces the other way. The brief supplies no second image, and both files face right. The line draws the hair bun as one thin circle. It is not a thick black band, and the earlier round does not reproduce. The neck and the shirt cross the bottom edge of this head study. The head and the named nose stay whole.
+Line pixels: {"out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png":{"width":1600,"height":1600,"non_binary_pixels":0}}
+
+K2: 6/10; defect; categories: broken-face.
+Files: out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png; out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png
+Goal: The color shows Nan touching her nose with one finger while she laughs. The line fails the named face part. A teacher or a child cannot read 'A nose.' from the line file.
+Defects: The line file does not draw the nose of Nan. Her fingertip stops on her cheek below the eye, so the face part that the text names is missing.
+Notes: The color file shows a clear nose and the intended touch. Both files keep Nan inside the frame. The eyes and the mouth stay readable in the line.
+Line pixels: {"out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png":{"width":4000,"height":3000,"non_binary_pixels":0}}
+Retry: Line: Draw the nose of Nan above the smile and set the fingertip against its side.
+
+K3: 7.5/10; defect; categories: layout-fault.
+Files: out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png; out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png
+Goal: Both files show one large brown nut on the open hand of Nan, close up. Nan matches her look. The hand and the nut stay whole. The frame cuts the right hair bun and the shoe soles.
+Defects: The right hair bun runs off the right edge, and the shoe soles run off the bottom edge, in the color file and in the line file.
+Notes: The goal asks for a close-up. The hand and the big nut stay whole in both files. No open hand shows a clearly wrong finger count in either file. The nut is one acorn with a cap and a stem in both files.
+Line pixels: {"out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png":{"width":4000,"height":3000,"non_binary_pixels":0}}
+Retry: Color and line: Keep the close-up of the hand and the nut; widen the frame so the hair bun and the shoes stay whole.
+
+Checks: the read tool returns every named picture. I looked at the color source, the color print, the line source, and the line print of each row.
+Book-size check: I looked at the family color and the line art of the pan row at 700 pixels wide. The pan still reads as a pan. All six family members stay clear.
+Line totals: 25 line files; 0 non-binary pixels. The color source of K1 is not a line file.
+Set status: pass. Extra status: fail. Final status: fail.
+K1 is clean. K2 lacks the named nose in the line. K3 cuts the hair bun and the shoe soles at the frame edges.
+Facts changed: the week 3 fix rows stay clean. All nine batch 47 rows are clean. The family print fix holds. K2 and K3 keep defects.

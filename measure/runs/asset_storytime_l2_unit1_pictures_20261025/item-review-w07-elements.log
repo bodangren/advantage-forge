@@ -1,0 +1,88 @@
+item-review-w07-elements
+Reviewer: opencode-go/mimo-v2.6-flash (independent, audit only)
+Track: asset_storytime_l2_unit1_pictures_20261025, Phase 4 (P4)
+Bar: Daniel 2026-11-01 14:15 ICT, verbatim.
+Scope: 7 current week 7 Muse input sheets (2 sets, 5 props). Sheets are inputs for later pages, not pages.
+
+Index read: out/storytime-review/w07-staging/index.md.
+Green log read: measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w07-staging.log.
+Specs read: docs/storytime/l2-unit1/w07/muse-elements/ (7 files).
+Page refs grepped: docs/storytime/l2-unit1/w07/muse/*.json per sheet file name.
+
+PROVISIONAL PASS (first look, one open of each sheet)
+
+1. set-toy-corner-empty-m1-color.png
+   Used by: 9 toy-corner pages (cover + 7 "is it a" pages + is-it-pip-yes).
+   Shows: empty room corner, cream walls with dark-brown timber beams, wooden floor, one big round blue rug, one low toy shelf with three cubbies at the left, one low window at the right.
+   Input checks: no people, no animals, no toys on the floor, no text.
+   Builder doubt (toy shelf small): under the bar a small shelf is not a defect. The shelf reads as a toy shelf: three cubbies, colored boxes. Pages keep it as background only. Not a defect.
+   Verdict: clean.
+
+2. set-tom-living-room-empty-m1-color.png
+   Used by: 9 living-room pages (cover + 8 top pages).
+   Shows: empty living room, one green sofa at the left, one window with cream curtains, one small brown rug under the window, one open toy box with blocks and a yellow duck at the right, one round blue mat, one low table with one big silver pot with a lid.
+   Input checks: no people, no animals, no text.
+   Builder doubt (sofa cut at the left edge): under the bar the cut must be a fault a teacher or child sees at book size. The sofa runs off the left frame edge like a normal photo crop. The visible part is whole and soft. Pages only need the sofa at the left. Not a defect.
+   Note: the small brown rug matches the prompt words "small plain brown rug". Not a defect.
+   Verdict: clean.
+
+3. prop-red-blanket-bump-sheet-m1-color.png
+   Used by: the same 9 toy-corner pages.
+   Shows: one big plain red blanket over one smooth round bump, soft folds, nothing sticks out.
+   Input checks: white background, no people, no text, one blanket, no pattern.
+   Page fit: every page prompt says one small round bump. The doll, teddy tail, and Pip pages each add their own exception sentence.
+   Verdict: clean.
+
+4. prop-toys-sheet-m1-color.png
+   Used by: 6 pages: ball, car, drum, kite, teddy, train.
+   Shows: exactly six toys: red-and-yellow striped ball, blue toy car, red-and-yellow diamond kite with string and three red bows, red toy drum with white band and two wooden drumsticks, green toy train with one red wagon, white teddy bear with blue bow.
+   Input checks: white background, no people, no text. Count = 6, exact.
+   Page fit: each page names one toy and its prompt lists all six then says draw only the named one. The doll page uses the week 4 doll sheet instead.
+   Verdict: clean.
+
+5. prop-top-sheet-m2-color.png (newest)
+   Used by: 9 living-room pages.
+   Shows: one red spinning top toy in three views (upright, tilted, on its side). Wide yellow stripe, thin yellow stem with round yellow knob, sharp point at the bottom.
+   m2 note: m1 read as a turnip; m2 replaced it. All nine references name m2; none names m1.
+   Word read: reads as a spinning top toy at book size.
+   Verdict: clean.
+
+6. prop-silver-pot-sheet-m1-color.png
+   Used by: the-top-on-a-pot (1 page).
+   Shows: one big silver cooking pot with a lid, two side handles, one round lid knob.
+   Input checks: white background, no people, no food, no text.
+   Word read: reads as a cooking pot.
+   Verdict: clean.
+
+7. prop-olive-sheet-m2-color.png (newest)
+   Used by: check-row-olive (1 page).
+   Shows: one smooth green table olive, narrow glossy oval, one small round red pimento in one small round hole at one end.
+   m2 note: m1 read as a green fruit with a stem; m2 replaced it. The check row names m2; no reference names m1.
+   Word read: reads as an olive at book size. The pimento hole is the olive sign.
+   Verdict: clean.
+
+Provisional totals: 7 of 7 clean. Both builder doubts judge as not defects under the bar. No sheet at blocking risk.
+
+PAGE RISKS (from the page specs, no file change)
+
+- Teddy page tail: l2-w07-story-page-is-it-a-teddy-no holds both guards the task asks about. It references the Pip render (picture 6). It states: ONLY the fluffy golden-brown tip of a tail sticks out from under the blanket; no puppy body, no head, no ears, no legs, and no collar show. The count line ends: exactly two children, one blanket, one thought bubble with one teddy bear, and one tail tip. Advice: at page review check one tail tip and no other puppy part; re-run with the negative list kept first if a whole puppy returns.
+- Thought-bubble toy pages: six pages use the six-toy sheet. Each colorPrompt lists all six toys, then says draw ONLY the named toy once, repeats draw only this ONE toy and no other toy anywhere in the bubble sentence, and ends with a count of exactly one toy in the bubble. The wording is clear and stated three times. Advice: at page review count one toy per bubble and no toy elsewhere; re-run extra-toy pages with the one-toy sentence kept first.
+
+SECOND LOOK
+Every sheet was opened again after the first pass. Five were copied to /tmp/opencode/w07review and opened from the copy.
+
+- toy corner m1: re-checked one blue round rug, one shelf with three cubbies and three boxes, one window at the right, no people, no toys on the floor, no text.
+- living room m1: re-checked green sofa cut at the left frame edge like a normal photo crop, window with cream curtains, small brown rug, open toy box with blocks and a duck, blue mat, silver pot with a lid on the low table, no people, no text.
+- red blanket m1: re-checked one plain red blanket over one round bump, soft folds, nothing sticks out, white background, no text.
+- toys m1: one second-look open of the file path returned a stale pot image. md5 sums show the toys file and the pot file differ. A fresh copy shows exactly six toys: ball, car, kite, drum, train, teddy. The first look already showed the six-toy sheet. Count holds.
+- top m2: re-checked three views of one red top, wide yellow stripe, thin yellow stem with a round knob, sharp point, white background, no text.
+- silver pot m1: re-checked one silver pot with a lid, round lid knob, two side handles, white background, no food, no text.
+- olive m2: re-checked one smooth green olive, one red pimento in one round hole, no stem, no face, white background, no text.
+
+All counts hold. All verdicts unchanged.
+Reference paths hold: m2 for the top and the olive; m1 for the rest. No page names a stale top or olive m1 file.
+
+FINAL TOTALS
+7 of 7 clean. 0 not clean.
+Builder doubts: 2 of 2 judge as not defects under the bar. The toy shelf is small but reads as a toy shelf with three cubbies and stays background only. The sofa cut at the left frame edge is a normal photo crop, not a layout fault a teacher sees.
+Page risk: no sheet at blocking risk. Two page risks stand for the page review: the teddy page must show only a tail tip, and each thought-bubble page must show exactly one toy.

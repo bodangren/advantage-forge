@@ -1,0 +1,47 @@
+Review A (correctness and architecture), Phase 4: Remaining pictures and cover.
+Track asset_storytime_l2_unit1_pictures_20261025. Audited HEAD b6326503 (equal to HEAD). phase_base_sha fc76c272.
+Reviewer claude-code/claude-opus-5-5[1m]#high.
+
+Verdict: pass. No blocking finding. Five nonblocking findings.
+
+Scope: the new code after 4d4d86a2: 0f232b1e and 8c9a4082 (C1, coverCalmTopReport, cover-calm-top),
+f88af46a and 6f7c1444 (C4, deliverMuseCover, deliver-cover, commitDelivery). Plan Phase 4 Tasks 2
+and 3 and the closeout evidence. Test strategy sections 4.5, 4.6, and 4.8. contract.md.
+
+Findings:
+- RA-P4-1 [Major] P4-FLAKE-T171: tests/storytime-muse-delivery.test.ts has no file timeout. T171 ran
+  5394 ms and 5452 ms against 5000 ms. Only T181 and T182 set a timeout. Add vi.setConfig({ testTimeout:
+  30000, hookTimeout: 30000 }) as in tests/storytime-book-pictures.test.ts:100.
+- RA-P4-2 [Major] The cover manifest job and batch carry week 1 and bookKind readalong
+  (muse-delivery.ts:548-565, book-pictures.ts:2138-2139). contract.md does not document them. Document the
+  placeholders and tell Workbooks through the PM.
+- RA-P4-3 [Nit] contract.md does not name cover-calm-top or deliver-cover. Its muse-delivery.ts line
+  references (contract.md:74-99) are stale. Refresh them in Phase 5.
+- RA-P4-4 [Nit] T192 /png/i always matches the print file name. Use /must be a PNG/.
+- RA-P4-5 [Nit] T183 does not pin the region start row. Assert the exact band-inside share.
+
+Checks that hold:
+- The commitDelivery refactor keeps the week deliver behavior (same checks, messages, and write order;
+  T152 to T189 pass in closeout run 2).
+- deliverMuseCover runs every check before the first write. size 'cover' and use 'cover' are correct.
+- T183 and T190 to T198 test what C1 and C4 require. Each refusal also checks that no file is written.
+- The Task 2 and Task 3 [x] commit SHAs exist with matching subjects.
+- The six week manifest hashes and the cover hashes equal the plan values. The folders hold 162 jobs
+  and 324 PNG files.
+- G7 and C5 records (48c71d42, 1ff8e1c1) hold person, time, rows, verdict, and note from a relayed
+  answer. No approved.json holds a person review.
+- Review A did not run the test suite (orchestrator order; memory floor). Test results come from the
+  closeout evidence: run 1 exit 1 (T171 timeout, 184 passed), run 2 exit 0 (185 passed).
+
+MEASURE_AGENT_RESULT
+role: measure-review-a-correctness
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 4: Remaining pictures and cover
+commits: none
+tests_run: none run by Review A (orchestrator order; memory floor). Cited: orchestrator role-gate 10:33 ICT exit 1 (T171 timeout 5394 ms, 184 passed); closeout run 1 exit 1 (T171 5452 ms, 184 passed); closeout run 2 exit 0 (Tests 185 passed (185)).
+files_changed: measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-b6326503.json, measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-b6326503.log
+plan_updates: none
+known_failures: P4-FLAKE-T171 (RA-P4-1), an intermittent 5000 ms timeout of T171 under load
+handoff: Review A passes Phase 4 at b6326503 with no blocking finding. Route RA-P4-1 (file timeout) to Green or the adversarial round. Route RA-P4-2 and RA-P4-3 to the Phase 5 contract reconciliation, and send the cover manifest note to Workbooks through the PM. RA-P4-4 and RA-P4-5 are test Nits for Green. retry_recommendation none.
+END_MEASURE_AGENT_RESULT

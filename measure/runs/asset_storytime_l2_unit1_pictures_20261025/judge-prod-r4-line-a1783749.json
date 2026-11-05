@@ -1,0 +1,100 @@
+{
+  "group": "prod-r4-line",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w01-check-row-nose",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-check-row-nose-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one nose. Action: none. Seen: a side-view nose with a bridge line, a rounded tip, one oval nostril, and a curved nostril-wing line. mustShow: one nose - shown; nose tip and one nostril - shown; nose fills most of the picture - shown. Black lines on white, no gray, no text. The open wing line is a small mark, not a coloring gap."
+    },
+    {
+      "id": "l2-w04-check-row-milk",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-check-row-milk-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one milk carton. Action: none. Seen: a gable-top carton with a straw and a small cow drawing on the front face. mustShow: one milk carton - shown; cow picture on the carton - shown; carton large in the middle - shown. Black lines on white, closed shapes, no gray, no text."
+    },
+    {
+      "id": "l2-w02-check-row-axe",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w02-check-row-axe-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one axe. Action: none. Seen: a long diagonal handle and a curved blade with a bevel band along the cutting edge. Reads as an axe. mustShow: one axe - shown; a handle and a blade - shown; axe large in the middle - shown. Black lines on white, closed shapes, no gray, no text."
+    },
+    {
+      "id": "l2-w07-check-row-ostrich",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-check-row-ostrich-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one ostrich. Action: none. Seen: a bird with a small head, a beak, a very long neck, a round body, a wing, tail feathers, and two long legs with feet. mustShow: one ostrich - shown; long neck and long legs - shown; ostrich large in the middle - shown. Black lines on white, closed shapes, no gray, no text."
+    },
+    {
+      "id": "l2-w06-check-row-ten",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-check-row-ten-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: ten apples. Action: none. Seen: two rows of apples, five in the top row and five in the bottom row, each with a stem and a leaf. Count is 10. mustShow: ten apples - shown; two rows of five apples - shown. Black lines on white, closed shapes, no gray, no text."
+    },
+    {
+      "id": "l2-w07-story-page-the-top-on-a-pot",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-story-page-the-top-on-a-pot-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a top (1), a pot (1). Action: none. Seen: a cone-shaped spinning top with a knob on its upper end, tip down, at the rim of the lid of a large cooking pot with two side handles; the pot stands on a low table; a smiling boy with open arms stands at the left; a toy chest with blocks and a duck is behind the pot. Top and pot are drawn and visible. The top is small but reads as a spinning top. mustShow: a spinning top - shown; a pot with a lid - shown; the top sits on the lid - shown (its tip touches the lid). The boy has short hair with a fringe and a T-shirt with shorts; the page text names no person and the look fits a cast boy. Black lines on white, no gray, no text, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w03-story-page-a-pan-on-a-pan",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w03-story-page-a-pan-on-a-pan-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a pan (1) and a second pan (1), one on the other. Action: none. Seen: on the table, a wide pan with a handle to the right and a smaller pan sitting on top of it; part of the upper handle is behind a child's hand. Two children sit at the table: the left one has two round buns (fits Nan), the right one has messy tufted hair (fits a cast boy). Both pans are drawn, visible, and read as stacked pans, though small. mustShow: one pan - shown; a second pan - shown; one pan stacked on the other - shown. Black lines on white, no gray, no text. The faces are in the same style as the other Nan pages; no broken face."
+    },
+    {
+      "id": "l2-w01-story-page-a-neck",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-neck-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a neck (1). Action: none named. Seen: Nan, a girl with two round buns with ring bands and no top bun, large round eyes, a small smile, a star on her shirt. Her neck is a clear column between the chin lines and the shirt collar, and each hand touches one side of the neck. Cast match: two buns, star shirt, face - ok. mustShow: Nan - shown; her hand on her neck - shown (two hands touch the neck sides; the sentence says hand, small variance is a note); neck clear between chin and collar - shown. Black lines on white, no gray, no text. The neck opens into the face region on purpose, not a coloring gap."
+    },
+    {
+      "id": "l2-w08-check-row-moon",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w08-check-row-moon-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one moon. Action: none. Seen: a large round disc with about nine oval craters of different sizes. Reads as a full moon. mustShow: one moon - shown; the round moon with a round hollow - shown (several craters); moon large in the middle - shown. Black lines on white, closed shapes, no gray, no text. Small note: the craters are ovals; a child may also see a ball, but the crater pattern reads as a moon."
+    },
+    {
+      "id": "l2-w08-check-row-mango",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w08-check-row-mango-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one mango. Action: none. Seen: a large tilted oval fruit with a narrow end at the lower left, and a small stem at the upper right. mustShow: one mango - shown; an oval fruit with a small stem - shown (color cannot show in line art); mango large in the middle - shown. Black lines on white, one closed shape, no gray, no text. Small note: no leaf or inner line, so the shape is plain."
+    }
+  ],
+  "summary": { "files": 10, "pass": 10, "fail": 0 }
+}

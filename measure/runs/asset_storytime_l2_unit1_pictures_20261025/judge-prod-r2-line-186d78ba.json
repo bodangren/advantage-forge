@@ -1,0 +1,37 @@
+{
+  "group": "prod-r2-line",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w08-check-row-drum",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w08-check-row-drum-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a drum (1), a drum rim and skin, drumsticks (2). Action: none. Seen: one round drum seen from above at an angle, with a rim ring, a flat top skin, and a side wall; two drumsticks cross on the skin, each with a visible tip. mustShow: one drum shown; round drum with rim and drum skin shown; two drumsticks shown. Black lines on white. No gray, no text, no line gap."
+    },
+    {
+      "id": "l2-w01-story-page-a-nest",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nest-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the nest at the top right: a smooth bowl with eggs and no twigs",
+      "notes": "Question page: no. Items: a nest (1). Action: none. Seen: a girl with two round buns with ring bands, a star T-shirt, shorts, and sneakers (Nan matches the cast); she points up at a smooth round bowl with three eggs inside; the bowl sits at the end of a curved branch that joins a tree trunk cut by the right frame edge. mustShow: Nan shown. A bird's nest with twigs: absent. The bowl has clean outline only, with no twig lines, so it reads as a bowl of eggs, not as a nest. The nest in a tree: partly shown; the branch and trunk are drawn, but the trunk is mostly cut by the frame. Small marks: cloud-shaped bush on the branch. Black lines on white. No gray, no text, no line gap."
+    },
+    {
+      "id": "l2-w01-story-page-a-nest-and-a-nut",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nest-and-a-nut-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a nest (1), a nut (1). Action: none. Seen: a nest with an uneven rim and four eggs, held on a branch with leaf clusters in a tree; a peanut-shaped nut with two lobes and a waist on the ground at the bottom center; a puppy at the left with floppy ears, a collar with a round tag, a fluffy tail, and a tongue out. mustShow: a bird's nest in a tree shown; a peanut in its shell shown (the shell is a smooth outline with no texture, a small mark, but the two-lobe shape reads as a peanut); Pip the puppy shown and matches the cast. Small marks: a spiky tuft above the puppy's head. Black lines on white. No gray, no text, no line gap."
+    }
+  ],
+  "summary": { "files": 3, "pass": 2, "fail": 1 }
+}

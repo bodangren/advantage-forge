@@ -1,0 +1,64 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P2
+task: 4
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: 835d9c058aea9800375f6339e4485fd195e39f72
+head_sha: bd4483c363ee4fa8b4f5b58721f96cfd44158aa1
+commits:
+  - 52923de3: test(storytime): add model review envelope parse tests
+  - bd4483c3: measure(plan): record Storytime review parse Red evidence
+tests_run:
+  - command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'
+    exit_code: 1
+    labeled_summary: "Tests  2 failed | 74 passed (76)"
+    file_summary: "Test Files  1 failed | 3 passed (4)"
+    earlier_tests_passed: 69
+    new_tests_failed: [T54, T55]
+    new_tests_passed: [T56, T57, T58, T59, T60]
+    note: Valid Red. No syntax, transform, timeout, package, or preflight error occurred.
+  - command: ./measure/generate.sh
+    exit_code: 0
+    labeled_summary: "Generated 4 Measure facts."
+  - command: git diff --quiet 835d9c058aea9800375f6339e4485fd195e39f72 -- src scripts
+    exit_code: 0
+  - command: git diff --quiet 1d39b8fda457e12d8e7332e7de65d2046ddda78e -- src/song/timeline.ts tests/song-timeline.test.ts
+    exit_code: 0
+fixture_verification:
+  embedded_bytes: 379
+  byte_identical_to_live_file: true
+  earlier_test_file_is_unchanged_prefix: true
+files_changed:
+  - tests/storytime-book-pictures.test.ts: appended T54 to T60; existing tests unchanged
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md: task 4 marked [~] with Red evidence
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-835d9c0.log: uncommitted role log
+  - measure/generated/architecture.json: regenerated; uncommitted
+  - measure/generated/asset-inventory.json: regenerated; uncommitted
+  - measure/generated/status.md: regenerated; uncommitted
+dirty_path_classification:
+  - Relevant: the assigned test and plan paths are clean.
+  - Generated or ignorable: measure/generated/* and measure/runs/; excluded from commits.
+  - Unrelated user work: all other initial dirty paths; preserve them.
+known_failures:
+  - T54: the FAIL envelope loses its reason, counts, and issue. The early FAIL return supplies fallback fields.
+  - T55: the PASS envelope returns fail with empty counts. The parser does not unwrap content.
+passing_new_tests_and_mutations:
+  - T56: passes now. Parse only the raw string with JSON.parse, without fence extraction, to make it fail.
+  - T57: passes now because the parser rejects both envelope fixtures. Unwrap content without checking base_resp.status_code to make it fail.
+  - T58: passes now. Return verdict pass for unstructured FAIL text to make it fail.
+  - T59: passes now. Accept an unstructured PASS word to make it fail.
+  - T60: passes now. Accept structured PASS without counts and issues validation to make it fail.
+handoff:
+  - Green fixes parseModelReview and retains the conservative rules.
+  - Green preserves the reason, counts, and issues of structured FAIL reviews.
+  - Green checks the provider status before accepting envelope content.
+  - The calibration calls run again after the fix.
+  - The adversarial role runs the listed mutations after Green. Red ran no source mutation.
+  - The PASS fixture is synthetic. The FAIL fixture copies the real raw file exactly.
+  - Assigned test and plan paths are clean. Generated files remain uncommitted because they contain concurrent work.
+  - No compiler, browser, render, provider call, or pnpm command ran.
+  - The only worktree uses master. origin/gh-pages remains outside this assignment; leave it unchanged.
+facts_changed: []
+END_MEASURE_AGENT_RESULT

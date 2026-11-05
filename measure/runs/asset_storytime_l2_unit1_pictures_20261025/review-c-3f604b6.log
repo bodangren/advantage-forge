@@ -1,0 +1,147 @@
+MEASURE_AGENT_RESULT
+role: measure-review-c-ux-api
+status: pass
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P2 task 10 (Phase 2: Tests and calibrated model pre-checks)
+phase_base_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: 3f604b62a50099c383169e766aef6d737f59f504
+audited_head_sha: 3f604b62a50099c383169e766aef6d737f59f504
+head_sha: 3f604b62a50099c383169e766aef6d737f59f504
+code_state_sha: b2a02238a8f217b175b70fd38c737f0593eed16a
+audited_head: 3f604b62a50099c383169e766aef6d737f59f504
+head_current: true (git rev-parse HEAD matched at the start and at the finish)
+contract_applicability: |
+  applicable. The strategy names the task 10 CLI and API surface, and the phase diff changes the
+  shared walker and the two provider refusal paths in src/storytime/book-pictures.ts.
+  contract.md:291-304 states the refusal, suffix, redaction, model, and byte rules that the diff
+  must hold.
+summary: |
+  Task 10 passes the CLI and API contract delta at HEAD 3f604b62. The shared walker
+  decodedAnswerFindings uses an explicit worklist with no depth ceiling, so RC5-1 is closed. The
+  walker builds the credential rules once per call, so RC5-2 is closed. The dead export
+  decodedReviewFindings is gone, so RC5-4 is closed. Both provider paths keep the exact contract
+  suffix, name only a pattern, and refuse before any review file, raw copy, success entry, or result
+  log. The Kimi check now runs before parseModelReview, and the Kimi comment states that the check
+  reads the raw answer. The focused hostile rows pass with 12 passed and 86 skipped. RC5-3 stays a
+  closeout candidate and did not get worse. Two low findings remain: a pattern name longer than 392
+  characters loses the shared suffix at the 500-character cut, and the raw scan and the decoded scan
+  hold two rule applications that can drift.
+focus_results: |
+  1. RC5-1, RC5-2, and RC5-4: closed. The walker pops from an explicit worklist at
+     book-pictures.ts:1179-1204 with no recursion and no depth counter. The rules are built once at
+     lines 1161-1164. The removed export has no caller in src, scripts, or tests.
+  2. Refusal text: pass. The MiniMax decoded refusal at lines 3356-3357 and the Kimi decoded
+     refusal at lines 3680-3681 carry the same text and the same suffix "the raw answer is refused;
+     no review or raw copy is written.". Both name only a pattern. The CLI entry redacts and cuts to
+     500 characters at scripts/storytime-book-pictures.ts:49-52. RC5-3 did not get worse.
+  3. Deep answer: pass. T110 passes for both providers. A safe object at depth 4000 gives no error,
+     writes the review file, keeps the parser result, keeps the declared model and modelSource, and
+     keeps the raw bytes and the raw copy identical.
+  4. Export change: pass. Nothing imports decodedReviewFindings. The name appears only in the T113
+     assertion at tests/storytime-book-pictures.test.ts:2491-2493.
+  5. Time bound: pass. The focused run finished in 19.04 s with 12 passed and 86 skipped. T109 and
+     T110 use the 30000 ms provider limit. T111 and T115 use the 20000 ms seam limit and the 2000 ms
+     labeled scan bound.
+blocking_findings: none
+nonblocking_findings: |
+  RC6-1 (nonblocking, low): the shared decoded-refusal suffix is cut away at the CLI boundary when
+  the credential pattern name is longer than 392 characters. The prefix "The decoded answer matched
+  credential pattern " is 46 characters and the suffix "; the raw answer is refused; no review or raw
+  copy is written." is 62 characters, so a name of 393 characters or more pushes the suffix past the
+  500-character cut in scripts/storytime-book-pictures.ts:49-52 and in the MiniMax failure ledger
+  entry at book-pictures.ts:1053. The six fixed names give 117 to 126 characters. Only an
+  environment-derived name such as env:NAME can reach that length. The text is unchanged from task
+  9. A follow-up task could cut the name inside the message.
+  RC6-2 (nonblocking, low): the decoded walker now applies the credential rules through a local scan
+  helper at book-pictures.ts:1165-1170 instead of calling secretFindings. The rule set is the same at
+  this HEAD. Both paths use CREDENTIAL_PATTERNS and envCredentialPatterns(process.env), and both
+  reset the regex index before each test. The raw scan and the decoded scan now hold two rule
+  applications, and a later change to one path can leave the other path behind. contract.md:295 names
+  secretFindings, and test-strategy.md:671 requires the rule list to be built once per call, so the
+  strategy forces the local helper. A follow-up task could expose one shared rule builder.
+evidence: |
+  audited HEAD 3f604b62a50099c383169e766aef6d737f59f504 confirmed current by git rev-parse HEAD at
+  the start and at the finish. The audited files are clean in the working tree, so the committed
+  content is the audited content.
+  The task 10 code delta is one file: src/storytime/book-pictures.ts in commit b2a02238. The diff has
+  two hunks: the shared walker at lines 1146-1206 and the Kimi call order at lines 3673-3684.
+  git diff b2a02238~1 b2a02238 -- scripts/ tests/ src/song/ is empty.
+  git diff --stat cf5743b7 3f604b62 -- scripts/ is empty.
+  Focus 1, RC5-1: the walker at book-pictures.ts:1179-1204 pops from a worklist. No function calls
+  itself. There is no depth counter.
+  Focus 1, RC5-2: the rules array is built once at book-pictures.ts:1161-1164. The scan helper at
+  lines 1165-1170 reuses it.
+  Focus 1, RC5-4: the diff deletes the function and the export. grep finds the name only in
+  tests/storytime-book-pictures.test.ts:2491-2493, where T113 asserts that the name is absent.
+  Focus 2: both decoded refusals carry the same suffix. The CLI entry redacts and cuts to
+  REDACTED_ERROR_MAX_CHARS = 500 at scripts/storytime-book-pictures.ts:49-52. The MiniMax failure
+  ledger entry uses the same limit at book-pictures.ts:1053.
+  Focus 2, RC5-3: the raw-byte refusal strings are byte-identical between b2a02238~1 and
+  b2a02238. The MiniMax text at book-pictures.ts:3346-3347 and the Kimi text at
+  book-pictures.ts:3670 are unchanged. RC5-3 did not get worse.
+  Focus 2, message length: a node measurement gives 125, 122, 120, 122, 126, and 117 characters for
+  the six fixed pattern names. Every message is under the 500-character limit, so the shared suffix
+  survives the cut for all fixed names.
+  Focus 3: the MiniMax check runs inside the paid callback at book-pictures.ts:3353, before the
+  success ledger entry at lines 1037-1043, before the raw copy at line 3396, and before the review
+  JSON at line 3397. The Kimi check runs at line 3677, before the review JSON at line 3715, before
+  the raw copy at line 3718, and before the success ledger entry at line 3719. The Kimi refusal
+  leaves the begin ledger and the source raw file unchanged because the check runs before every
+  append.
+  Focus 3, live result: T110 passes for both providers. A safe object at depth 4000 gives no error,
+  writes the review file, keeps the parser result, keeps the declared model and modelSource, and
+  keeps the raw bytes and the raw copy identical.
+  Focus 4: the exit codes do not change. precheck-minimax returns 0 or 2 at book-pictures.ts:4067,
+  precheck-kimi returns 0 or 2 at line 4094, and a refusal exits 1 through
+  scripts/storytime-book-pictures.ts:55.
+  Route parity: only book-pictures.ts calls precheckMiniMax and precheckKimi, at lines 4050 and 4071.
+  Both provider paths use the same shared seam and the same refusal text. git diff --quiet cf5743b7
+  -- src/song src/storytime/line-art-pass.ts returns exit 0.
+  Focus 5, test run: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600
+  node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1 -t
+  "T10[4-9]|T11[0-5]"'; exit 0; Test Files 1 passed (1); Tests 12 passed | 86 skipped (98);
+  duration 19.04 s. No exit 124, 137, or 75. No "lock wait over 600 s" line appeared in the output.
+  Focus 5, limits: T109 and T110 use the 30000 ms provider limit, and T111 and T115 use the 20000 ms
+  seam limit. All four rows finish inside their limits. T111 and T115 also assert the labeled scan
+  time of 2000 ms. The default reporter hides the labeled values for passing tests, so the log holds
+  no "decoded scan ms" or "rule scan ms" line.
+  Focus 5, test strength: the Green mutation 9 re-extracts nested objects from the raw text and from
+  every string, and T111 still passed. The time row proves the bound but does not prove the
+  once-per-visit rule. The plan records this gap. The acceptance role owns the record.
+  The audit wrote no file outside measure/runs/. No paid provider call, render, build, Vite server, or
+  browser ran. Nothing was committed.
+  This audit applies the Red model family, as the orchestrator recorded. The scope is the Green API
+  and user-flow wiring, not the Red test meaning.
+commands: |
+  git rev-parse HEAD; git status --porcelain; git log --oneline -6
+  git diff --stat b2a02238~1 b2a02238; git diff b2a02238~1 b2a02238 -- src/storytime/book-pictures.ts
+  git diff --stat 62c4ef6f 3f604b62; git diff --quiet b2a02238~1 b2a02238 -- scripts/ tests/ src/song/; git diff --stat cf5743b7 3f604b62 -- scripts/
+  grep -rn 'decodedReviewFindings' src/ scripts/ tests/; grep -rn 'precheckMiniMax|precheckKimi' --include=*.ts src/ scripts/
+  git show b2a02238~1:src/storytime/book-pictures.ts | grep -n 'nothing is written'; git show b2a02238:src/storytime/book-pictures.ts | grep -n 'nothing is written'
+  git diff --quiet cf5743b7 -- src/song src/storytime/line-art-pass.ts; echo exit=$?
+  node -e <message length measurement for the six fixed pattern names>
+  bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1 -t "T10[4-9]|T11[0-5]"'; exit 0; Tests 12 passed | 86 skipped (98); duration 19.04 s
+changed_files:
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-3f604b6.json
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-3f604b6.log
+test_strategy_violations: none
+live_contract_violations: none
+prod_wiring_violations: none
+route_parity_violations: none
+retry_recommendation: escalate_human
+confidence: medium
+handoff: |
+  The phase 2 task 10 CLI and API contract holds at HEAD 3f604b62. No blocking finding. RC5-1,
+  RC5-2, and RC5-4 are closed. The focused hostile rows pass with 12 passed and 86 skipped in
+  19.04 s, and no lock wait line appeared. RC5-3 stays a closeout candidate and did not get worse.
+  Two new low findings are open: RC6-1, where a credential pattern name longer than 392 characters
+  loses the shared suffix at the 500-character cut, and RC6-2, where the raw scan and the decoded
+  scan hold two rule applications that can drift. No question blocks this handoff. Default taken:
+  both findings stay nonblocking. The six fixed pattern names give 117 to 126 characters, and only
+  an environment variable name can reach the long case in RC6-1. The rule set is identical in both
+  paths at this HEAD for RC6-2. The owner or the orchestrator decides whether to open a follow-up
+  task for them, and the acceptance role keeps the mutation 9 and mutation 17 test gaps and the
+  RC5-3 text. UX browser review does not apply because the task changes no UI. No paid model call,
+  no render, no server, and no browser were used. facts_changed: none.
+facts_changed: none
+END_MEASURE_AGENT_RESULT

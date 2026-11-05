@@ -1,0 +1,524 @@
+{
+  "reviewer": "opencode-go/mimo-v2.6-flash",
+  "verdict": "accept: 10 of 10 sheets clean under the bar",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "scope": "Week 3 Muse input sheets (sets, props, objects). Sheets feed later week 3 pages. The sheets are not pages.",
+  "index": "out/storytime-review/w03-staging/index.md",
+  "prop-easel-sheet": {
+    "file": "out/storytime/l2/unit1/w03/muse/elements/prop-easel-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w03/muse-elements/prop-easel-sheet.json",
+    "spec_goal": "A child-height wooden easel.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-cover-paint.json",
+        "text": "Paint!",
+        "goal": "Pat, May, Sam, Mia, and Ben (drawn young, about five years old) and Nan paint at easels in the art corner of a bright kindergarten classroom with low tables, with easels and paint pots; Teacher Kim smiles behind them. A small colorful paw print is on the floor. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-easel-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-blue.json",
+        "text": "It is blue.",
+        "goal": "May (drawn young, about five years old) holds up a big sheet of paper painted all blue at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-easel-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-green.json",
+        "text": "It is green.",
+        "goal": "Mia (drawn young, about five years old) holds up a big sheet of paper painted all green at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-easel-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-orange.json",
+        "text": "It is orange.",
+        "goal": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, holds up a big sheet of paper painted all orange at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-easel-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-pink.json",
+        "text": "It is pink.",
+        "goal": "Ben (drawn young, about five years old) holds up a big sheet of paper painted all pink at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-easel-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-yellow.json",
+        "text": "It is yellow.",
+        "goal": "Sam (drawn young, about five years old) holds up a big sheet of paper painted all yellow at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-easel-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One child-height wooden A-frame easel, three-quarter front. Two front legs and one back leg, a top bar, a ledge, one large blank white sheet held by two small clips. Three small pots (red, blue, yellow) stand on the ledge. The whole easel shows from feet to top.",
+      "input_checks": "Plain white background. No people. No animals. No text or letters. One easel. It reads as the word easel at book size.",
+      "page_fit": "Five color pages need one easel that a child stands at. The cover page needs easels to paint at. The blank paper lets a page put a painted sheet in front.",
+      "second_look": "re-checked: one easel, blank paper, two clips, three pots (red, blue, yellow) on the ledge. Verdict unchanged."
+    }
+  },
+  "prop-paint-pots-sheet": {
+    "file": "out/storytime/l2/unit1/w03/muse/elements/prop-paint-pots-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w03/muse-elements/prop-paint-pots-sheet.json",
+    "spec_goal": "Seven paint pots in seven colors.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-cover-paint.json",
+        "text": "Paint!",
+        "goal": "Pat, May, Sam, Mia, and Ben (drawn young, about five years old) and Nan paint at easels in the art corner of a bright kindergarten classroom with low tables, with easels and paint pots; Teacher Kim smiles behind them. A small colorful paw print is on the floor. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-paint-pots-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-pip.json",
+        "text": "It is Pip!",
+        "goal": "Pip the puppy has a happy face and spots of red, blue, yellow, green, orange, pink, and purple paint on his fur and paws. He stands on a big sheet of paper with colorful paw prints all over it. Pat, May, Sam, Mia, Ben (drawn young, about five years old), Nan, and Teacher Kim laugh. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-paint-pots-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Seven white round pots in one row, each full of thick shiny paint in one color: red, blue, yellow, green, orange, pink, purple. One paintbrush with a wooden handle and a soft round tip lies in front of the row.",
+      "count_check": "Seven pots. The seven colors match the seven paper sheets.",
+      "input_checks": "Plain white background. No people. No animals. No text or letters.",
+      "page_fit": "The cover page needs paint pots on the art table. The Pip page needs seven paint colors for the paint spots. Both are here.",
+      "second_look": "re-counted: seven pots in order red, blue, yellow, green, orange, pink, purple, plus one brush. Verdict unchanged."
+    }
+  },
+  "prop-pans-sheet": {
+    "file": "out/storytime/l2/unit1/w03/muse/elements/prop-pans-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w03/muse-elements/prop-pans-sheet.json",
+    "spec_goal": "Three toy pans: small red, tiny blue, big yellow.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-cover-the-pan.json",
+        "text": "The Pan",
+        "goal": "Ben (drawn young, about five years old) and Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, hold up a small red toy pan and a tiny blue toy pan in the play corner of a bright kindergarten classroom with low tables, with a toy kitchen and a low shelf of toy pans. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-pans-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-a-nap-in-the-pan.json",
+        "text": "A nap in the pan!",
+        "goal": "Pip the puppy is asleep, curled up inside the big yellow toy pan on the floor. Ben (drawn young, about five years old) and Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, look in and smile. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-pans-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-a-pan-in-a-pan.json",
+        "text": "A pan in a pan.",
+        "goal": "Ben (drawn young, about five years old) puts the tiny blue toy pan inside the small red toy pan; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, holds the red pan and smiles. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-pans-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-a-pan-on-a-pan.json",
+        "text": "A pan on a pan.",
+        "goal": "On a low table, the small red toy pan sits upside down, and the tiny blue toy pan sits on top of it, like a tower; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, and Ben (drawn young, about five years old) look at it. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-pans-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-a-pan-on-nan.json",
+        "text": "A pan on Nan!",
+        "goal": "Ben (drawn young, about five years old) puts the small red toy pan on the head of Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, like a hat; Nan laughs. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-pans-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-can-i-get-the-pan.json",
+        "text": "Can I get the pan?",
+        "goal": "Ben (drawn young, about five years old) points up at a big yellow toy pan on the top shelf of the toy kitchen. The tip of a fluffy golden-brown tail hangs over the edge of the pan. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-pans-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-i-can-get-a-pan.json",
+        "text": "I can get a pan.",
+        "goal": "Ben (drawn young, about five years old) takes a tiny blue toy pan from the low shelf of the toy kitchen. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-pans-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-i-can-get-the-pan.json",
+        "text": "I can get the pan!",
+        "goal": "Ben (drawn young, about five years old) stands on his toes and lifts the big yellow toy pan down from the top shelf; it looks heavy. The fluffy golden-brown tail hangs over the edge of the pan. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-pans-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-nan-can-get-a-pan.json",
+        "text": "Nan can get a pan.",
+        "goal": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, takes a small red toy pan from the low shelf in the play corner of a bright kindergarten classroom with low tables, with a toy kitchen and a low shelf of toy pans. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-pans-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Three round shallow toy pans with one short straight handle each, all handles on the right, seen from a little above. Left: the small red pan. Middle: the tiny blue pan. Right: the big yellow pan.",
+      "size_note": "The yellow pan reads biggest, the red pan reads middle, and the blue pan reads tiny. The blue pan is clearly small enough to fit inside the red pan.",
+      "input_checks": "Plain white background. No people. No animals. No text or letters. Count is three.",
+      "page_fit": "Nine pan pages need the three pans by size and color. The blue-in-red page needs the blue pan to fit inside the red pan. The Pip nap page needs the big yellow pan wide enough to hold a curled puppy. The sheet gives all of this.",
+      "second_look": "re-counted: three pans, all handles on the right; yellow reads biggest, red middle, blue tiny. Verdict unchanged."
+    }
+  },
+  "prop-paper-sheets-sheet": {
+    "file": "out/storytime/l2/unit1/w03/muse/elements/prop-paper-sheets-sheet-m2-color.png",
+    "spec": "docs/storytime/l2-unit1/w03/muse-elements/prop-paper-sheets-sheet.json",
+    "spec_goal": "Seven big sheets of paper, each painted all one color.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-blue.json",
+        "text": "It is blue.",
+        "goal": "May (drawn young, about five years old) holds up a big sheet of paper painted all blue at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-paper-sheets-sheet-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-green.json",
+        "text": "It is green.",
+        "goal": "Mia (drawn young, about five years old) holds up a big sheet of paper painted all green at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-paper-sheets-sheet-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-orange.json",
+        "text": "It is orange.",
+        "goal": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, holds up a big sheet of paper painted all orange at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-paper-sheets-sheet-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-pink.json",
+        "text": "It is pink.",
+        "goal": "Ben (drawn young, about five years old) holds up a big sheet of paper painted all pink at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-paper-sheets-sheet-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-purple.json",
+        "text": "It is purple.",
+        "goal": "Teacher Kim holds up a big sheet of paper painted all purple in the art corner of the kindergarten classroom. Behind her, a line of small paw prints in many colors goes across the floor. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-paper-sheets-sheet-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-red.json",
+        "text": "It is red.",
+        "goal": "Pat (drawn young, about five years old) smiles and holds up a big sheet of paper painted all red in the art corner of a bright kindergarten classroom with low tables, with easels and paint pots. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-paper-sheets-sheet-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-yellow.json",
+        "text": "It is yellow.",
+        "goal": "Sam (drawn young, about five years old) holds up a big sheet of paper painted all yellow at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-paper-sheets-sheet-m2-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Seven rectangular sheets of paper in two rows. Top row: red, blue, yellow, green. Bottom row: orange, pink, purple. Each sheet is thin and flat, painted one even color, with a light paper edge at the rim.",
+      "count_check": "Seven sheets. The colors match the seven paint pots.",
+      "input_checks": "Plain white background. No people. No animals. No text or letters. No patterns or marks on any sheet.",
+      "page_fit": "Seven color pages each need one big sheet painted all one color. The plain even color keeps the page color word easy to read.",
+      "builder_gap_plain_flat": "The builder noted the sheets look plain and flat. The spec asks for a thin flat sheet with one flat even color and no patterns. Plain and flat is the target, so this is not a defect. The light gray rim reads as the paper edge, not as line art shading.",
+      "page_risk": "None. No week 3 page counts the paper sheets, and no page needs a pattern on them.",
+      "second_look": "re-counted: seven sheets, four on top (red, blue, yellow, green) and three below (orange, pink, purple). Verdict unchanged."
+    }
+  },
+  "prop-paw-prints-sheet": {
+    "file": "out/storytime/l2/unit1/w03/muse/elements/prop-paw-prints-sheet-m2-color.png",
+    "spec": "docs/storytime/l2-unit1/w03/muse-elements/prop-paw-prints-sheet.json",
+    "spec_goal": "A sheet of paper with colorful paw prints, and a line of paw prints on the floor.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-cover-paint.json",
+        "text": "Paint!",
+        "goal": "Pat, May, Sam, Mia, and Ben (drawn young, about five years old) and Nan paint at easels in the art corner of a bright kindergarten classroom with low tables, with easels and paint pots; Teacher Kim smiles behind them. A small colorful paw print is on the floor. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-paw-prints-sheet-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-pip.json",
+        "text": "It is Pip!",
+        "goal": "Pip the puppy has a happy face and spots of red, blue, yellow, green, orange, pink, and purple paint on his fur and paws. He stands on a big sheet of paper with colorful paw prints all over it. Pat, May, Sam, Mia, Ben (drawn young, about five years old), Nan, and Teacher Kim laugh. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-paw-prints-sheet-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-purple.json",
+        "text": "It is purple.",
+        "goal": "Teacher Kim holds up a big sheet of paper painted all purple in the art corner of the kindergarten classroom. Behind her, a line of small paw prints in many colors goes across the floor. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-paw-prints-sheet-m2-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Left: one big white sheet of paper, seen from above, with flat painted paw prints in three rows of seven. Right: a warm honey-brown plank floor strip seen from above, with a single line of eight small paw prints in many colors. Each paw print is one round pad and four small round toe pads.",
+      "count_check": "Left sheet: 21 prints, three of each of the seven colors. Right strip: 8 small prints.",
+      "input_checks": "Plain white background. No people. No puppy or animal. No text or letters.",
+      "page_fit": "The Pip page needs a big sheet of paper with colorful paw prints all over it, and the cover page needs one small paw print on the floor. The purple page needs a line of small prints across the floor. The sheet gives all three parts.",
+      "builder_gap_plank_strip": "The builder noted the floor strip is a flat plank pattern, not the classroom floor. The element spec itself asks for a honey-brown plank strip. The week 3 classroom floor is also wooden plank in a warm honey tone, so the strip blends at book size. Under the bar this is not a defect.",
+      "page_risk": "Low, not blocking. Only the purple page sets a print line on the classroom floor. A tone edge between strip and floor may show faintly, but a child reads a line of colorful prints, not a floor seam.",
+      "second_look": "re-counted: 21 prints on the paper, three of each of seven colors; 8 small prints on the strip. Verdict unchanged."
+    }
+  },
+  "prop-pear-sheet": {
+    "file": "out/storytime/l2/unit1/w03/muse/elements/prop-pear-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w03/muse-elements/prop-pear-sheet.json",
+    "spec_goal": "A pear.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-check-row-pear.json",
+        "text": "pear",
+        "goal": "",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-pear-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One ripe yellow-green pear, standing on its round base, with a short brown stem and one small green leaf. Smooth plain skin. No face.",
+      "input_checks": "Plain white background. No people. No animals. No text or letters. One pear. It reads as the word pear at book size.",
+      "page_fit": "The check row needs one picture that reads as pear. The sheet gives that.",
+      "second_look": "re-checked: one pear, brown stem, one green leaf, no face. Verdict unchanged."
+    }
+  },
+  "prop-pen-sheet": {
+    "file": "out/storytime/l2/unit1/w03/muse/elements/prop-pen-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w03/muse-elements/prop-pen-sheet.json",
+    "spec_goal": "A pen.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-check-row-pen.json",
+        "text": "pen",
+        "goal": "",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-pen-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One chubby round blue ballpoint pen, lying diagonally. It has a white cap end with a white clip, a small silver tip, and a clear round end piece. No face.",
+      "input_checks": "Plain white background. No people. No animals. No text or letters. One pen. The clip and the tip read as a pen at book size.",
+      "page_fit": "The check row needs one picture that reads as pen. The yellow pencil sits on its own row, so pen and pencil do not mix.",
+      "second_look": "re-checked: one pen, white clip and silver tip present, no face. Verdict unchanged."
+    }
+  },
+  "prop-pencil-sheet": {
+    "file": "out/storytime/l2/unit1/w03/muse/elements/prop-pencil-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w03/muse-elements/prop-pencil-sheet.json",
+    "spec_goal": "A pencil.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-check-row-pencil.json",
+        "text": "pencil",
+        "goal": "",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/prop-pencil-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One chubby yellow six-sided pencil, lying diagonally. It has a pink eraser held by a silver band at one end and a sharpened wooden tip with a small gray lead point at the other end. No face.",
+      "input_checks": "Plain white background. No people. No animals. No text or letters. One pencil. It reads as the word pencil at book size.",
+      "page_fit": "The check row needs one picture that reads as pencil. The blue pen sits on its own row, so the two tools do not mix.",
+      "second_look": "re-checked: one pencil, pink eraser with silver band and gray lead point present, no face. Verdict unchanged."
+    }
+  },
+  "set-art-corner-empty": {
+    "file": "out/storytime/l2/unit1/w03/muse/elements/set-art-corner-empty-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w03/muse-elements/set-art-corner-empty.json",
+    "spec_goal": "Empty art corner of the kindergarten classroom, no people.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-cover-paint.json",
+        "text": "Paint!",
+        "goal": "Pat, May, Sam, Mia, and Ben (drawn young, about five years old) and Nan paint at easels in the art corner of a bright kindergarten classroom with low tables, with easels and paint pots; Teacher Kim smiles behind them. A small colorful paw print is on the floor. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/set-art-corner-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-blue.json",
+        "text": "It is blue.",
+        "goal": "May (drawn young, about five years old) holds up a big sheet of paper painted all blue at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/set-art-corner-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-green.json",
+        "text": "It is green.",
+        "goal": "Mia (drawn young, about five years old) holds up a big sheet of paper painted all green at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/set-art-corner-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-orange.json",
+        "text": "It is orange.",
+        "goal": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, holds up a big sheet of paper painted all orange at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/set-art-corner-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-pink.json",
+        "text": "It is pink.",
+        "goal": "Ben (drawn young, about five years old) holds up a big sheet of paper painted all pink at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/set-art-corner-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-pip.json",
+        "text": "It is Pip!",
+        "goal": "Pip the puppy has a happy face and spots of red, blue, yellow, green, orange, pink, and purple paint on his fur and paws. He stands on a big sheet of paper with colorful paw prints all over it. Pat, May, Sam, Mia, Ben (drawn young, about five years old), Nan, and Teacher Kim laugh. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/set-art-corner-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-purple.json",
+        "text": "It is purple.",
+        "goal": "Teacher Kim holds up a big sheet of paper painted all purple in the art corner of the kindergarten classroom. Behind her, a line of small paw prints in many colors goes across the floor. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/set-art-corner-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-red.json",
+        "text": "It is red.",
+        "goal": "Pat (drawn young, about five years old) smiles and holds up a big sheet of paper painted all red in the art corner of a bright kindergarten classroom with low tables, with easels and paint pots. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/set-art-corner-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-it-is-yellow.json",
+        "text": "It is yellow.",
+        "goal": "Sam (drawn young, about five years old) holds up a big sheet of paper painted all yellow at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/set-art-corner-empty-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One empty art corner. Cream plaster walls with dark-brown timber beams, wooden plank floor. Two child-height wooden easels with blank white paper stand against the back wall with clear space between them. A small window with light-blue sky sits between them. One low wooden table on the left holds many small paint pots and two brushes. The middle foreground floor is open.",
+      "builder_gap_about_nine_pots": "The builder counted about nine pots on the table. The element spec asks for a few small pots in many colors and names no count. No week 3 page counts paint pots, and the paint-pot sheet supplies the seven page colors. Under the bar this is not a defect.",
+      "input_checks": "No people. No animals. No text or letters. Exactly two easels, exactly one table, one window. No paintings on the walls.",
+      "page_risk": "None. The nine art pages need a room with easels and open floor. The set gives that.",
+      "second_look": "re-counted: two easels, one table, one window, about nine pots and two brushes. No people or text. Verdict unchanged."
+    }
+  },
+  "set-play-corner-empty": {
+    "file": "out/storytime/l2/unit1/w03/muse/elements/set-play-corner-empty-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w03/muse-elements/set-play-corner-empty.json",
+    "spec_goal": "Empty play corner of the kindergarten classroom, no people.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-cover-the-pan.json",
+        "text": "The Pan",
+        "goal": "Ben (drawn young, about five years old) and Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, hold up a small red toy pan and a tiny blue toy pan in the play corner of a bright kindergarten classroom with low tables, with a toy kitchen and a low shelf of toy pans. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/set-play-corner-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-a-nap-in-the-pan.json",
+        "text": "A nap in the pan!",
+        "goal": "Pip the puppy is asleep, curled up inside the big yellow toy pan on the floor. Ben (drawn young, about five years old) and Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, look in and smile. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/set-play-corner-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-a-pan-in-a-pan.json",
+        "text": "A pan in a pan.",
+        "goal": "Ben (drawn young, about five years old) puts the tiny blue toy pan inside the small red toy pan; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, holds the red pan and smiles. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/set-play-corner-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-a-pan-on-a-pan.json",
+        "text": "A pan on a pan.",
+        "goal": "On a low table, the small red toy pan sits upside down, and the tiny blue toy pan sits on top of it, like a tower; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, and Ben (drawn young, about five years old) look at it. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/set-play-corner-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-a-pan-on-nan.json",
+        "text": "A pan on Nan!",
+        "goal": "Ben (drawn young, about five years old) puts the small red toy pan on the head of Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, like a hat; Nan laughs. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/set-play-corner-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-can-i-get-the-pan.json",
+        "text": "Can I get the pan?",
+        "goal": "Ben (drawn young, about five years old) points up at a big yellow toy pan on the top shelf of the toy kitchen. The tip of a fluffy golden-brown tail hangs over the edge of the pan. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/set-play-corner-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-i-can-get-a-pan.json",
+        "text": "I can get a pan.",
+        "goal": "Ben (drawn young, about five years old) takes a tiny blue toy pan from the low shelf of the toy kitchen. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/set-play-corner-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-i-can-get-the-pan.json",
+        "text": "I can get the pan!",
+        "goal": "Ben (drawn young, about five years old) stands on his toes and lifts the big yellow toy pan down from the top shelf; it looks heavy. The fluffy golden-brown tail hangs over the edge of the pan. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/set-play-corner-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w03/muse/l2-w03-story-page-nan-can-get-a-pan.json",
+        "text": "Nan can get a pan.",
+        "goal": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, takes a small red toy pan from the low shelf in the play corner of a bright kindergarten classroom with low tables, with a toy kitchen and a low shelf of toy pans. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w03/muse/elements/set-play-corner-empty-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One empty play corner. Cream plaster walls with dark-brown timber beams, wooden plank floor. Left: one low wooden shelf with two levels, holding small toy cups on top and small round toy plates below. Right: one child-height wooden toy kitchen with a stove of four round burners, a sink with a tap, two cupboard doors, and one high empty top shelf. The middle floor is open.",
+      "input_checks": "No people. No animals. No text or letters. No pans or pots in the set. One shelf, one kitchen.",
+      "page_fit": "The pan pages need a play corner with a toy kitchen, a high top shelf for the big yellow pan, and a low shelf the children reach. The set gives all three. Pans arrive from the pan sheet, as the spec intends.",
+      "second_look": "re-counted: one low shelf with three cups and three plates, one kitchen with four burners and one high empty top shelf, no pans. Verdict unchanged."
+    }
+  },
+  "summary": {
+    "sheets": 10,
+    "clean": 10,
+    "not_clean": 0,
+    "clean_keys": [
+      "prop-easel-sheet",
+      "prop-paint-pots-sheet",
+      "prop-pans-sheet",
+      "prop-paper-sheets-sheet",
+      "prop-paw-prints-sheet",
+      "prop-pear-sheet",
+      "prop-pen-sheet",
+      "prop-pencil-sheet",
+      "set-art-corner-empty",
+      "set-play-corner-empty"
+    ],
+    "not_clean_keys": [],
+    "builder_gaps_judged": "All three builder gaps are not defects under the bar. The about-nine pots on the art table match a spec that names no count, and no page counts them. The plank print strip matches its spec and blends with the classroom plank floor. The plain flat paper matches its spec, and no page needs a pattern.",
+    "page_risk": "No page is at blocking risk. Only the purple page carries a low, noted risk: a print strip placed on the classroom floor may show a faint tone edge, and a child reads a line of prints, not a floor seam.",
+    "second_look": "Every sheet was opened again after the first pass. All counts hold. All verdicts unchanged.",
+    "reference_paths": "All page reference paths name the current sheet files: m2 for paper sheets and paw prints, m1 for the other eight."
+  }
+}

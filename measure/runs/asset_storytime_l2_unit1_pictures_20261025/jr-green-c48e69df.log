@@ -1,0 +1,15 @@
+Green round 55 (stopped), model claude-code/claude-sonnet-5-5#high, no coder.
+role_base_sha: bd42cb1a   phase_base_sha: 15a7bf0b   final HEAD: c48e69df
+
+MEASURE_AGENT_RESULT
+status: stopped
+task: P3 cast fix 3a (open mouth flush, long index finger, nut on palm)
+reason: owner decision via orchestrator and PM, 09:34 ICT: 3D cast fix stops; Muse is the picture path.
+commits: c48e69df (plan.md "Green round 55 (stopped)" block only); no cast commit
+restored_paths: assets/parts/humanoid-kind.ts, assets/parts/sprout-gestures.ts (my uncommitted edits, git checkout -- )
+cause_found: mouth-open body rests 3 cm inside the head; the song page moves the mouth bone 4.6 cm out (SING_OUT.mouth); net 1.6 cm in front of the face.
+not_done: no textured builds, no row renders, no hero check, no vitest, no new stage files, no batch-27 proofs (only before-nose-v6.png).
+note: out/sprout-nan/sprout-nan.glb is an untracked --fast build that includes the discarded edit; run ./forge build sprout-nan to restore the textured GLB.
+tasks_marked_done: none
+handoff: cast fix stopped by owner decision; no new model round.
+END_MEASURE_AGENT_RESULT

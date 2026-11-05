@@ -1,0 +1,36 @@
+Green P4 T1 started. role_base_sha: 37fa3501; phase_base_sha: fc76c272.
+Step 3: provisional log. Reading tests and sources next.
+Step: book-pictures.ts edited (PICTURE_LIST_SHA256 v4, parseWeek 1..8, weeksTwoToSevenRows, deliver --week filter). Next: stage-check script.
+Step: stage-check.mjs written; live gate being tried
+Step: first Green run: 169 passed, 3 failed (T173, T177x?, T182). T182 fixed (Skipped line format: id then space). T173 and T177 have Red test defects: putRowStage writes docs/storytime/l2/unit1/... (code and repo use l2-unit1); T173 live render --dry-run writes no stage file (ENOENT). Probing with a temp patched copy of the test.
+Step: mutation proofs done (M1-M6 all killed). Running final vitest + tsc.
+Step: tsc first try exit 134 (heap abort); retry with NODE_OPTIONS=--max-old-space-size=2560 as earlier phases
+Step: tsc retry exit 2, owned 0, total 38. Committing production files.
+
+Commits: b6824b8a (production + contract.md); 86f63533 (plan.md evidence).
+Gates: vitest 170 passed / 2 failed (T173, T177: Red test defects, proven by temp patched copy: 5 passed). tsc owned 0, total 38. Mutations M1-M6 all killed. Live stage gate exit 0 (82 element paths).
+
+Follow-up: Red r2 applied; gate passed at 5a9b9257; plan.md gate block committed as 4d4d86a2.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Task 1 (T173, T177), delivery of another week (T181, T182), stage check (T178 to T180)
+role_base_sha: 37fa3501
+phase_base_sha: fc76c272
+final_green_head: 4d4d86a2
+commits: b6824b8a (production files and contract.md); 86f63533 (plan.md Green evidence); 4d4d86a2 (plan.md Green gate after Red r2)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none (Task 1 stays [ ]: Phase 3 checkpoint absent and two Red defects)
+tasks_flipped_b: none
+vitest: exit 0 after Red r2 (c2ebc72d, 5a9b9257); Tests  172 passed (172); the first Green run had 2 failed | 170 passed (T173, T177: Red fixture defects)
+tsc: exit 2; owned errors 0; total errors 38
+mutation_proofs: M1 (T175), M2 (T176), M3 (T174), M4a/M4b (T177), M5 (T182), M6 (T181) all killed
+live_stage_gate: exit 0; 27 rows; 27 specs; 82 element paths; 0 mismatches; stage check: pass
+new_files: scripts/storytime-stage-check.mjs
+red_defects: (1) tests/storytime-book-pictures.test.ts line 4567 putRowStage writes docs/storytime/l2/unit1/... but code and repo use docs/storytime/l2-unit1/... (T177 ENOENT). (2) T173 runs render --dry-run on the live list with no stage file written (ENOENT). A temp patched copy of the test passed 5 of 5 against the production code.
+handoff: Red r2 fixed the two fixtures. The gate passes. The only gate line is structural (3 non-deferred incomplete tasks; Phase 4 markers wait for the Phase 3 checkpoint). Week 8 rows stay out of the 162-row scope until the PM assigns them.
+dispositions: none
+END_MEASURE_AGENT_RESULT

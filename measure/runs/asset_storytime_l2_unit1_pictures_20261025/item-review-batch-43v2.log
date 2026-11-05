@@ -1,0 +1,19 @@
+2026-11-02 Batch 43v2 independent picture review (minimax-cn-coding-plan/MiniMax-M3.1-Flash)
+Bar: Daniel 2026-11-01 14:15 ICT
+Scope: batch 43 nine pan rows, batch 43r2 three fixed pan rows, plus K1 K2 K3 week 1 rows.
+Status: provisional file written before any image was opened. Review in progress.
+2026-11-02 row l2-w03-cover-the-pan: rating 9, verdict clean, categories none.
+2026-11-02 row l2-w03-story-page-a-nap-in-the-pan: rating 9, verdict clean, categories none.
+2026-11-02 row l2-w03-story-page-a-pan-on-a-pan: rating 9, verdict clean, categories none.
+2026-11-02 row l2-w03-story-page-a-pan-on-nan: rating 8, verdict clean, categories none.
+2026-11-02 row l2-w03-story-page-can-i-get-the-pan: rating 9, verdict clean, categories none.
+2026-11-02 row l2-w03-story-page-i-can-get-the-pan: rating 8, verdict clean, categories none.
+2026-11-02 row l2-w03-story-page-i-can-get-a-pan-r2: rating 9, verdict clean, categories none.
+2026-11-02 row l2-w03-story-page-nan-can-get-a-pan-r2: rating 5, verdict defect, categories wrong-or-missing-prop.
+2026-11-02 row l2-w03-story-page-a-pan-in-a-pan-r2: rating 9, verdict clean, categories none.
+2026-11-02 extra row K1-nose-practice-line: rating 9, verdict clean, categories none.
+2026-11-02 extra row K2-a-nose: rating 6, verdict defect, categories broken-face.
+2026-11-02 extra row K3-a-nut: rating 9, verdict clean, categories none.
+2026-11-02 status: fail. Eight of the nine pan rows are clean. The line art of nan-can-get-a-pan r2 fails because its pan reads as a hand mirror at book size. The a-nose control fails because the nose does not show in the line art.
+2026-11-02 checks: 0 gray pixels in all 15 line files. No thick solid black ring or band in any line file. No text, no sun, and no page frame. No line gap makes coloring hard.
+2026-11-02 scope note: the batch 43 files of i-can-get-a-pan (m3 color, line print 2) and nan-can-get-a-pan (m3) are not scored. The r2 files replace them. The batch 43 file of a-pan-in-a-pan (m2, line print 3) is not scored. The r2 file replaces it.

@@ -1,0 +1,55 @@
+# Review B (security and data handling) — Muse week 1 delivery writer
+# Track: asset_storytime_l2_unit1_pictures_20261025. Phase: Phase 3: Week 1 pictures.
+# Audited HEAD: 19359dd1d9f024a4ab7612f4e5fcf08c091ae029 (current at audit start).
+
+## Scope read at the audited HEAD
+
+- src/storytime/muse-delivery.ts (new, Green commit f41fe108).
+- src/storytime/book-pictures.ts: the exported rowCaptureJob and the deliver CLI command.
+- tests/storytime-muse-delivery.test.ts T152 to T161 (Red commits 66d0e57d, 0bf8858a).
+- scripts/storytime-book-pictures.ts (the CLI error boundary).
+- spec.md amendment 2026-11-01 decision 2; contract.md security rules; test-strategy.md P3.
+
+## Test run
+
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts --maxWorkers=1'
+exit 0. Test Files 1 passed (1). Tests 10 passed (10). Duration 10.82s. No exit 75.
+
+## Code facts confirmed
+
+- MuseFileName schema refuses any approval file name that is not a plain name, and refuses "." and "..".
+- Approval row ids must equal a picture-list row id before they are used; the writer never forms a path from a row id.
+- Delivery copy targets come only from the picture-list row names, which the file-name pattern pins.
+- All structural checks run before the first write; manifest.json is written last.
+- A different existing manifest is refused; an existing delivery file with different bytes is refused (color and line).
+- SHA-256 values come from the byte buffers that the writer copies.
+- The writer maps only a Kimi review and a named person review; a model evidence class on a person review is refused by schema.
+- The writer reads local files only: no fetch, no child process, no env read, no credential.
+- The deliver CLI errors pass the redactSecrets boundary of scripts/storytime-book-pictures.ts.
+
+## Findings
+
+- RB8-01 Major: deliver pins no picture-list SHA-256. (code reading; confirmed)
+- RB8-02 Major: --delivery and --muse accept paths outside out/ and outside the repository. (code reading; confirmed)
+- RB8-03 Nit: writes are not exclusive creates; a dangling symlink at a delivery target receives the delivered bytes. (code reading; probe blocked by tool permission)
+- RB8-04 Nit: duplicate picture-list names within one run can overwrite an earlier copy silently. (code reading; probe blocked by tool permission)
+- RB8-05 Nit: degenerate line-art list names "." and "manifest.json" pass the plain-name check. (code reading; probe blocked by tool permission)
+- RB8-06 Nit: Muse reads follow symlinks out of museRoot. (code reading; probe blocked by tool permission)
+- RB8-07 Nit: T152 to T161 cover no path or validation refusal. (code reading; confirmed)
+
+## Probe status
+
+The sandbox denied probe scripts: writes under /tmp, heredocs, and tsx -e programs containing dynamic import were refused by tool permission. RB8-03 to RB8-05 rest on code reading only. The working probe pattern for a later session is a short static-import tsx -e program that imports /home/daniebo/Desktop/advantage-forge/src/storytime/muse-delivery.ts.
+
+MEASURE_AGENT_RESULT
+role: measure-review-b-security
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures
+commits: 19359dd1 (audited HEAD, current); Green f41fe108, 7b843204; Red 66d0e57d, 0bf8858a
+tests_run: heavy-run vitest tests/storytime-muse-delivery.test.ts --maxWorkers=1; exit 0; Tests 10 passed (10); Duration 10.82s
+files_changed: measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-19359dd1.json, measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-19359dd1.log
+plan_updates: none (audit only)
+known_failures: probes P1 to P13 blocked by tool permission denials; findings RB8-03 to RB8-05 rest on code reading only
+handoff: Verdict is pass with seven nonblocking findings: RB8-01 (Major, no list SHA pin), RB8-02 (Major, no delivery path containment), RB8-03 (Nit, non-exclusive writes), RB8-04 (Nit, duplicate list names overwrite in-run), RB8-05 (Nit, degenerate line-art names), RB8-06 (Nit, symlink reads out of museRoot), RB8-07 (Nit, no refusal tests). Probes P1 to P13 were blocked by tool permission; RB8-03 to RB8-05 rest on code reading. Route the findings to Green. RB8-01 and RB8-02 may need a PM note because a fix touches the decision-2 contract. No product decision is required from this review.
+END_MEASURE_AGENT_RESULT

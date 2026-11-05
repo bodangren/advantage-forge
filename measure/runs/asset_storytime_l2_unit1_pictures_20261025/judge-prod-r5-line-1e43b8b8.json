@@ -1,0 +1,92 @@
+{
+  "group": "prod-r5-line",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w01-story-page-hello-i-am-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-hello-i-am-pip-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1). Action: greeting (note only). Seen: a large puppy with floppy ears, a collar with a round tag, a raised paw, in the center, head and chest fully drawn. Six children and a woman stand behind. mustShow: Pip shown; Pip large in the middle shown; whole head and chest shown. Black lines on white, no gray, no gaps. Small marks: the woman in the back wears round glasses (cast note for Teacher Kim has none); empty rectangles on the wall carry no text."
+    },
+    {
+      "id": "l2-w02-story-page-how-many-balls-five",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w02-story-page-how-many-balls-five-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no (the page asks a count and then answers it). Items: balls (5). Action: none. Seen: five round balls in a row along the bottom, each with two horizontal stripe bands; a girl with two buns and a star T-shirt stands behind the middle ball; a tree, a sandpit ring, clouds, a sun. I count five balls, all fully inside the frame. mustShow: five balls shown; a pattern on each ball shown (stripes); all five inside the picture shown. The girl matches Nan (two buns, star shirt). Black lines on white, no gray, no gaps."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-pam",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-story-page-this-is-pam-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: the doll Pam (1). Action: none. Seen: one rag doll in the middle, yarn fringe and two yarn bunches, a round face with two round button eyes and a stitched smile, a dress with short puffed sleeves, two short legs. Room behind: sofa, window, lamp, rug, toy box. No person or other doll. mustShow: the doll Pam shown; the doll alone shown; the doll large in the middle shown. Matches the cast note for Pam. Black lines on white, no gray, no gaps."
+    },
+    {
+      "id": "l2-w05-story-page-i-have-four-legs",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-story-page-i-have-four-legs-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), four legs (4). Action: none. Seen: one puppy standing in three-quarter view, floppy ears, collar with round tag, tail up, four paws on the ground (two front, two back). No other character. mustShow: Pip shown; four legs shown (four paws counted); Pip alone shown. Black lines on white, no gray, no gaps."
+    },
+    {
+      "id": "l2-w06-story-page-tap-tap-tap",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-story-page-tap-tap-tap-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a child's hand (1). Action: tapping (note only). Seen: a boy with a striped T-shirt in a classroom raises his right arm; his open hand with fingers touches the edge of a thick wall line at the right. A bucket of sticks, a poster, and a cabinet are at the sides. mustShow: a child's hand shown; the hand taps on the wall shown (the hand touches the wall line). Small mark: a wide blank white area at the right of the wall line. The boy fits Sam (striped shirt). Black lines on white, no gray, no gaps."
+    },
+    {
+      "id": "l2-w06-story-page-tap-tap-tap-b",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-story-page-tap-tap-tap-b-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a child's hand (1). Action: tapping (note only). Seen: a boy with a striped T-shirt faces left and raises his hand; the fingertips touch the thick vertical wall line in the middle of the picture. A map poster, a bucket of sticks, and a table are in the room. mustShow: a child's hand shown; the hand taps on the wall shown (fingertips at the wall line). The boy fits Sam (striped shirt). Black lines on white, no gray, no gaps."
+    }
+,
+    {
+      "id": "l2-w06-story-page-he-can-see-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-story-page-he-can-see-pip-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one boy (1), Pip (1). Action: seeing (note only). Seen: one boy with a striped T-shirt at the left, head turned to the right, arm reaching toward a puppy; the puppy lies on the floor with floppy ears, a collar, and a round tag. A bucket of sticks, a map poster, and a toy stove are in the room. mustShow: one boy shown; Pip shown; the boy looks at Pip shown (head and open hand point to the puppy). Small mark: the bucket hides the boy's lower legs. Black lines on white, no gray, no gaps."
+    },
+    {
+      "id": "l2-w05-d4-prompt-face",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-d4-prompt-face-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. D4 prompt: the child draws two eyes. Items: a face with two empty places for the eyes. Seen: a round face with hair and a wavy fringe, two ears, two empty oval outlines for eyes, a small nose, a smiling mouth. mustShow: hair shown; a nose shown; a mouth shown; two empty places for the eyes shown. Black lines on white, no gray, no gaps."
+    },
+    {
+      "id": "l2-w07-d4-prompt-ball",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-d4-prompt-ball-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. D4 prompt: the child colors the ball. Items: one ball (1). Seen: one large round ball with a thick closed outline and two curved seam lines that cross inside, which make four large areas. mustShow: one ball shown; a clear outline shown; large areas to color shown. Black lines on white, no gray, no gaps."
+    }
+  ],
+  "summary": { "files": 9, "pass": 9, "fail": 0 }
+}

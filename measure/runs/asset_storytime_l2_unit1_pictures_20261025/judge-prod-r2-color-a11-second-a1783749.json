@@ -1,0 +1,19 @@
+{
+  "group": "prod-r2-color-a11-second",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w03-story-page-a-pan-in-a-pan",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w03-story-page-a-pan-in-a-pan-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "in the middle: two small blue pans show with the red pan, one inside the red pan and a second one that Ben holds above its back rim",
+      "notes": "Question page: no. Items: one big pan (1), a small pan (1), the small pan inside the big pan. Action: none. Seen: Nan holds a red pan by its handle. A small blue pan with a handle sits in the well of the red pan. A second small blue pan with its own handle shows above the red pan's back rim, and Ben holds its handle. So three pans show, two small and one big. The sentence counts two pans: a pan in a pan. The extra small pan is a wrong count at book size. mustShow: one big pan shown; a small pan shown; the small pan inside the big pan shown, but a second small pan is also drawn. Characters: Nan (two buns with red ring bands, orange star shirt, red shorts, white sneakers) and Ben (messy light-brown hair, light-blue shirt, dark-blue shorts, grey sneakers) both match the cast. Hands look correct. Small marks: none that matter."
+    }
+  ],
+  "summary": { "files": 1, "pass": 0, "fail": 1 }
+}

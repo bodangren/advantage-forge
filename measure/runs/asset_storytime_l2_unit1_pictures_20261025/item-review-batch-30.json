@@ -1,0 +1,230 @@
+{
+  "reviewer": "opencode-go/mimo-v2.6-flash",
+  "audited_head": "682f4b2f",
+  "verdict": "final",
+  "seen": {
+    "out/storytime-review/batch-30/brief.md": "Brief: 7 keys, bar 7.0, Daniel no-defect rule, the batch 28 defects that must be gone, and per-page notes.",
+    "out/storytime-review/batch-30/cast/teacher-kim-sheet-2.png": "Four views of Teacher Kim: dark-brown low ponytail, sage green cardigan over a cream blouse, navy trousers, brown flat shoes, soft 3D style, no text.",
+    "out/storytime-review/batch-30/pages/l2-w01-check-row-nose-m2-color.png": "Square close-up of Nan's head in exact left profile: nose tip is the most forward point, one eye, black hair with red scrunchie, orange star T-shirt, smooth ear, no text.",
+    "out/storytime-review/batch-30/pages/l2-w01-check-row-nose-m2-line.png": "1-bit line art of the left profile, pure 0/255, eye has a pupil, nose bump reads, closed shapes, no gray or specks.",
+    "out/storytime-review/batch-30/pages/l2-w01-practice-line-nose-m3-color.png": "Square close-up of Nan's head in exact right profile (the other way): nose tip is the most forward point, one eye with the painted eyelash mark, smooth ear with a soft tan canal, no text.",
+    "out/storytime-review/batch-30/pages/l2-w01-practice-line-nose-m3-line.png": "1-bit line art of the right profile, pure 0/255, eye has a pupil, nose bump reads, closed shapes.",
+    "out/storytime-review/batch-30/pages/l2-w01-story-page-a-neck-m4-color.png": "Close-up of Nan lifting her chin, both hands with separated fingers on the two sides of the neck, neck reads as a skin column, even orange star T-shirt; both ears are ragged with dark jagged holes.",
+    "out/storytime-review/batch-30/pages/l2-w01-story-page-a-neck-m4-line.png": "1-bit line art, pure 0/255, both eyes have pupils, both hands read at the neck, star present, closed shapes.",
+    "out/storytime-review/batch-30/pages/l2-w01-story-page-hello-i-am-ben-m6-color.png": "Ben (about five) waves with a 5-finger open hand; a green bag hangs on the hook; a red Pat bag sits on the floor behind him; forehead is one smooth skin color; no text or logo.",
+    "out/storytime-review/batch-30/pages/l2-w01-story-page-hello-i-am-ben-m6-line.png": "1-bit line art, pure 0/255, eyes have pupils, waving hand and hanging hand show separated fingers, no eyelash ticks, both bags read, closed shapes.",
+    "out/storytime-review/batch-30/pages/l2-w01-story-page-a-nest-m5-color.png": "Nan points with a clear index finger at a nest with three light blue eggs on a low branch; even orange star T-shirt; soft garden background; Nan's ear is ragged with a dark jagged hole.",
+    "out/storytime-review/batch-30/pages/l2-w01-story-page-a-nest-m5-line-2.png": "1-bit line art, pure 0/255, eyes have pupils, pointing hand reads; the branch tip and leaf cluster show thin, jagged, open strokes.",
+    "out/storytime-review/batch-30/pages/l2-w01-story-page-a-net-m2-color.png": "Unchanged m2: Nan holds up a green butterfly net in a soft garden, look matches reference, no text.",
+    "out/storytime-review/batch-30/pages/l2-w01-story-page-a-net-m2-line-4.png": "1-bit line art, pure 0/255, rim is one thick line; the mesh is a fine grid of 6-11 crossing lines each way (about 40+ cells).",
+    "out/storytime-review/batch-21/look-reference-nan-and-pip.png": "Nan reference: black hair in two bunches with red ties, orange T-shirt with white star, red shorts, white sneakers, large dark-brown eyes; Pip is a puppy.",
+    "out/storytime-review/batch-21/sprout-ben-render.png": "Ben reference: chibi boy, brown hair, blue T-shirt, dark blue shorts, gray shoes.",
+    "out/storytime-review/muse-cast/teacher-kim-sheet.png": "The earlier Teacher Kim look that batch 30 replaces: dark-brown low ponytail, green cardigan, cream blouse, navy trousers, brown flats."
+  },
+  "cast-sheet-teacher-kim": {
+    "files": ["out/storytime-review/batch-30/cast/teacher-kim-sheet-2.png"],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "medium dark-brown hair in a low ponytail": "yes: all four views show dark-brown hair tied in a low ponytail.",
+      "soft green cardigan": "yes: a sage green cardigan in every view.",
+      "cream blouse": "yes: a cream collared blouse under the cardigan.",
+      "navy trousers": "yes: navy trousers in every view.",
+      "brown flat shoes": "yes: brown flat loafers in every view.",
+      "four views front, three-quarter, side, back": "yes: all four views are present.",
+      "soft round bright 3D style": "yes: soft rounded friendly 3D render, G-rated, no text or symbols.",
+      "separated relaxed fingers": "yes: the front-view fingers are clearly separate, the mitten defect of batch 28 is gone.",
+      "smooth ear rim": "yes: the side and back views show a smooth ear rim."
+    },
+    "batch28_defects_gone": {
+      "front-view fingers merged like a mitten": "yes: the front view shows clearly separated relaxed fingers on both hands; the mitten look is gone."
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-check-row-nose": {
+    "files": [
+      "out/storytime-review/batch-30/pages/l2-w01-check-row-nose-m2-color.png",
+      "out/storytime-review/batch-30/pages/l2-w01-check-row-nose-m2-line.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Nan head in profile": "yes: an exact left side view.",
+      "nose clearly seen, nose tip is the most forward point": "yes: the rounded nose tip projects past the forehead and lips as the most forward point.",
+      "only one eye shows": "yes: one eye only, no sliver of the far eye.",
+      "square 1:1 picture": "yes: 1600 x 1600.",
+      "head fills the square": "yes: the head fills the frame.",
+      "smooth ear": "yes: the color ear rim is smooth with a soft canal, no ragged edge or dark hole.",
+      "line art pupil, thick closed lines": "yes: the eye has a pupil, pixel values are 0 and 255 only, shapes are closed."
+    },
+    "batch28_defects_gone": {
+      "three-quarter view from behind, nose a small bump, sliver of far eye": "yes: it is now an exact side view, the nose tip is the most forward point, and only one eye shows.",
+      "ear rim ragged": "yes: the ear rim is smooth in both the color and the line art."
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-practice-line-nose": {
+    "files": [
+      "out/storytime-review/batch-30/pages/l2-w01-practice-line-nose-m3-color.png",
+      "out/storytime-review/batch-30/pages/l2-w01-practice-line-nose-m3-line.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Nan head in profile facing the other way": "yes: an exact right side view, the mirror of the check row.",
+      "nose clearly seen, nose tip is the most forward point": "yes: the nose tip projects past the forehead and lips as the most forward point.",
+      "only one eye shows": "yes: one eye with the painted eyelash mark, no far-eye sliver.",
+      "square 1:1 picture": "yes: 1600 x 1600.",
+      "head fills the square": "yes: the head fills the frame.",
+      "smooth ear": "yes: the ear rim is smooth with a soft tan canal, no ragged edge or dark hole.",
+      "line art pupil, thick closed lines": "yes: the eye has a pupil, pixel values are 0 and 255 only, shapes are closed."
+    },
+    "batch28_defects_gone": {
+      "three-quarter view from behind, nose a small bump, sliver of far eye": "yes: it is now an exact side view facing the other way, the nose tip is the most forward point, and only one eye shows.",
+      "ear rim ragged": "yes: the ear rim is smooth in both the color and the line art."
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-a-neck": {
+    "files": [
+      "out/storytime-review/batch-30/pages/l2-w01-story-page-a-neck-m4-color.png",
+      "out/storytime-review/batch-30/pages/l2-w01-story-page-a-neck-m4-line.png"
+    ],
+    "rating": 7.5,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "both ears are ragged with dark jagged holes (open defect the brief lists for m4; visible at 3x zoom on both the left and right ear)."
+    ],
+    "goal_check": {
+      "lifts her chin": "yes: the head tilts up, the chin is lifted.",
+      "touches her own neck with both hands": "yes: both hands are on the neck, fingers on the two sides under the jaw.",
+      "close up of head and neck": "yes: a close-up, the main thing large in the middle.",
+      "plain light background": "yes: plain light background.",
+      "even orange T-shirt": "yes: one even orange with the white star, no pale blotches.",
+      "smooth ears": "no: both ears show a ragged rim and a dark jagged hole."
+    },
+    "batch28_defects_gone": {
+      "chin was level": "yes: the chin is now lifted.",
+      "neck was hidden": "yes: the neck reads as a skin column between chin and collar.",
+      "hands rested on collarbones and T-shirt": "yes: the fingers now rest on the two sides of the neck under the jaw.",
+      "T-shirt had pale blotches": "yes: the T-shirt is one even orange.",
+      "ear rims ragged": "no: both ear rims are still ragged with dark jagged holes in m4."
+    },
+    "goal_shown": true,
+    "retry_hint": "Smooth both ear rims and remove the dark jagged holes; the rest of the page is clean."
+  },
+  "l2-w01-story-page-hello-i-am-ben": {
+    "files": [
+      "out/storytime-review/batch-30/pages/l2-w01-story-page-hello-i-am-ben-m6-color.png",
+      "out/storytime-review/batch-30/pages/l2-w01-story-page-hello-i-am-ben-m6-line.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Ben drawn young about five": "yes: a young chibi boy.",
+      "hangs his school bag on a hook": "yes: a green bag hangs on the hook rack.",
+      "waves": "yes: he waves with an open 5-finger hand.",
+      "Pat school bag sits on the floor and moves a little": "yes: a red bag sits on the floor behind him.",
+      "no text or logo": "yes: no text, letter, number, or logo anywhere."
+    },
+    "batch28_defects_gone": {
+      "faint pale line on the forehead": "yes: the forehead and temples are one smooth skin color; the crease is gone. No spot on a temple.",
+      "line art hanging hand lump": "yes: the hanging hand and the waving hand both show separate relaxed fingers.",
+      "Ben eyelash ticks in line art": "yes: Ben has no eyelash ticks; his eyes are plain with pupils."
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-a-nest": {
+    "files": [
+      "out/storytime-review/batch-30/pages/l2-w01-story-page-a-nest-m5-color.png",
+      "out/storytime-review/batch-30/pages/l2-w01-story-page-a-nest-m5-line-2.png"
+    ],
+    "rating": 7.0,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "Nan's ear is ragged with a dark jagged hole (open defect the brief lists for m5; visible at 3x zoom).",
+      "in the line art the branch tip and the leaf cluster show thin, jagged, open strokes (the branch outline is open and unclear where it meets the leaf cluster)."
+    ],
+    "goal_check": {
+      "small bird nest with three light blue eggs": "yes: a nest with three light blue eggs.",
+      "on a low tree branch in a garden": "yes: the nest sits on a low branch.",
+      "Nan points at it": "yes: Nan points with a clear index finger.",
+      "one clear picture, main thing large in the middle": "yes: a clear picture.",
+      "simple garden background with soft colors": "yes: soft garden background.",
+      "T-shirt one even orange": "yes: one even orange with the white star, no pale blotch.",
+      "smooth ears": "no: Nan's ear is ragged with a dark jagged hole.",
+      "branch and leaf cluster each one closed shape": "no: in the line art the branch tip and leaf cluster are thin, jagged, open strokes."
+    },
+    "batch28_defects_gone": {
+      "line art branch outline open where it met the hill line": "no: the branch tip and leaf cluster still show thin, jagged, open strokes in the line art.",
+      "leaf cluster an unclear blob": "no: the leaf cluster is still unclear with thin open strokes at the branch tip.",
+      "hanging hand on the left a lump with small lines": "yes: the hanging hand now shows separate relaxed fingers.",
+      "color pale blotch on T-shirt at right shoulder": "yes: the T-shirt is one even orange.",
+      "ears smooth": "no: Nan's ear is still ragged with a dark jagged hole."
+    },
+    "goal_shown": true,
+    "retry_hint": "Smooth Nan's ear rim and remove the dark hole; redraw the branch tip and leaf cluster as clean closed shapes."
+  },
+  "l2-w01-story-page-a-net": {
+    "files": [
+      "out/storytime-review/batch-30/pages/l2-w01-story-page-a-net-m2-color.png",
+      "out/storytime-review/batch-30/pages/l2-w01-story-page-a-net-m2-line-4.png"
+    ],
+    "rating": 7.0,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "the net mesh is a fine grid of 6-11 crossing lines each way (about 40+ cells), far over the 4x4 limit the brief sets for a child to color."
+    ],
+    "goal_check": {
+      "Nan holds up a green butterfly net": "yes: she holds up the net.",
+      "one clear picture, main thing large in the middle": "yes: a clear picture.",
+      "simple garden background with soft colors": "yes: soft garden background.",
+      "net rim one thick line": "yes: the rim is one thick line, the double-line defect of batch 28 is gone.",
+      "mesh a simple grid of big squares at most 4 by 4": "no: the mesh has 6-11 crossing lines each way, about 40+ cells."
+    },
+    "batch28_defects_gone": {
+      "net rim a double line with a thin ring between": "yes: the rim is now one thick line.",
+      "net mesh many thin slivers": "no: the slivers are gone but the mesh is still a fine grid of 40+ cells, over the 4x4 limit."
+    },
+    "goal_shown": true,
+    "retry_hint": "Simplify the net mesh to a grid of at most 4 by 4 big squares so a child can color it."
+  },
+  "summary": {
+    "items": 7,
+    "pass": 7,
+    "clean": 4,
+    "clean_keys": [
+      "cast-sheet-teacher-kim",
+      "l2-w01-check-row-nose",
+      "l2-w01-practice-line-nose",
+      "l2-w01-story-page-hello-i-am-ben"
+    ],
+    "not_clean_keys": [
+      "l2-w01-story-page-a-neck",
+      "l2-w01-story-page-a-nest",
+      "l2-w01-story-page-a-net"
+    ]
+  }
+}

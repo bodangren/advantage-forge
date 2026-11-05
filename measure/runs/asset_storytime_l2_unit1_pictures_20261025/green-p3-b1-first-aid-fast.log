@@ -1,0 +1,9 @@
+storytime-first-aid-box: 3,672 triangles, 0.22 x 0.199 x 0.106 m, built in 2392 ms
+  mint-bag                   932 tris  (346 ms)
+  cream-handle              1626 tris  (195 ms)
+  zipper                     284 tris  (62 ms)
+  front-pocket               440 tris  (111 ms)
+  pocket-trim                390 tris  (87 ms)
+texture  none (vertex colors)
+glb      out/storytime-first-aid-box/storytime-first-aid-box.glb  (91 KB)
+render   out/storytime-first-aid-box/render.png  (865 ms)

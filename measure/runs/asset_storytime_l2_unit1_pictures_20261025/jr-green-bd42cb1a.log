@@ -1,0 +1,33 @@
+Role: measure-jr-green, Green round 54 (cast fix round 2 of 3: hands)
+Model: claude-code/claude-sonnet-5-5#high (Red model family: MiniMax; no coder spawned)
+role_base_sha: f0b7460a
+phase_base_sha: 15a7bf0b
+Commits: f2de196f (kind, gestures, five casts, stage files), bd42cb1a (plan evidence)
+
+MEASURE_AGENT_RESULT
+status: done (round 2 of 3; two proof pages have open defects, listed in handoff)
+phase_base_sha: 15a7bf0b
+role_base_sha: f0b7460a
+final_head: bd42cb1a
+implementation_commit: f2de196f
+plan_evidence_commit: bd42cb1a
+tasks_flipped: none ([x] none, [b] none)
+causes:
+  - Open and rest hands: the kind has only a closed fist; every hand reads as a fist.
+  - Pat v4 "waving hand with fingers" is the teddy (paws and legs), not a hand. Ben v3 is the bare fist.
+  - Index finger: sproutIndexFinger is used only by sprout-adventurer; Nan has no finger body.
+fix: opt-in kind option sproutHands (default off): open relaxed hand body 'hands' + bones fingers.L/R, index.L/R; clips wave, hands-out (palm up), touch-nose use them. On in nan, ben, mia, may, sam. Not on in pat (hold pose; kind refuses it), adventurer, base, pip, heroes, NPCs, avatar-base.
+glb_sizes: nan 3274776; pat 3509144; ben 3523248; mia 3551124; may 3474948; sam 3094104
+hero_check: avatar-base part-check compare PASS
+vitest: tests/sprout-base.test.ts exit 0, 2 of 2 passed
+teddy_check: sprout-pat front render, teddy between hands as before
+proof_rows:
+  l2-w01-story-page-a-nut v7: render 0, verify 0, line 24 px, ink 4.61%, peak 507 MB, color 431c1a9d9508fe543d99e542dc90689ba6b34bb4258447e4efbe18a445d4a968, line a095d3b3a2bae12927152c502b31398bdd9d6670f5afa6ec823844447307a212
+  l2-w01-story-page-a-nose v6: render 0, verify 0, line 24 px, ink 4.42%, peak 516 MB, color bf4dc0eebc7242daeffc0263354ee11d08733f938dbddd813bbcdb1674972ff6, line 266b1f00b7d1dd7f547f0c8fd1e1026f89efc176e6868cbad86c23ed56c781b4
+  (v6 nut and v5 nose are first tries, kept, not reviewed)
+warnings: no warning: lines. One exit 1 (pat build refused sproutHands with hold), fixed. No exit 75, 137, ERR_UNSAFE_PORT.
+shadow_root: /tmp/opencode/wb-shadow pictures.json SHA-256 starts c3e23cfd; Workbooks not written
+batch: out/storytime-review/batch-26/ (brief.md key cast-fix-hands + two page keys)
+new_files: stage files a-nut-v6/v7, a-nose-v5/v6 json; no new asset files
+handoff: Waiting for the independent review. Open defects Green saw: the nut sits beside and behind the right hand, not clearly on the palm; the index finger on the nose page is short and reads weakly (hand sits at the mouth). The wave page was not re-rendered. Round 3 (mouth, forehead streak, ear marks) can also fix the nut position and a longer index.
+END_MEASURE_AGENT_RESULT

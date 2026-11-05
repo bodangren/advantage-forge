@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "summary": "Five security findings block Phase 2. The focused suite passes all 90 tests. Green must correct the missing protections.",
+  "phase_base_sha": "1d39b8fda457e12d8e7332e7de65d2046ddda78e",
+  "role_base_sha": "c23534333d4d40ee3740327a7505e02c4f76079f",
+  "audited_head_sha": "c23534333d4d40ee3740327a7505e02c4f76079f",
+  "audited_head": "c23534333d4d40ee3740327a7505e02c4f76079f",
+  "security_applicability": "applicable",
+  "blocking_findings": [
+    "RB-01 high scripts/storytime-book-pictures.ts:38-41: The render wrapper uses JSON.stringify as shell quoting. Bash still expands command substitutions inside the resulting double quotes. A render argument containing $(printf RB_SUBSTITUTION_EXECUTED) executes the substitution before CLI validation. The bounded quoting probe confirmed this expansion. Green must use an argument-preserving invocation or correct shell quoting. Add a regression test for the production wrapper.",
+    "RB-02 high src/storytime/book-pictures.ts:2056-2076,2220-2230: The capture middleware serves every file below out/ and the stage directory. It checks lexical containment only. A symlink inside either directory can expose an external file, including a credential file. The middleware also serves the ledger and raw reviews, not only assets. Vite uses the repository as its root without a narrow file allowlist. Green must restrict served files and verify physical containment before reading them.",
+    "RB-03 high src/storytime/book-pictures.ts:3449-3450,3476-3502: lineart-smoke bypasses resolveOutputPath for its directory and files. An existing smoke symlink can redirect writes outside the output root. File writes can also follow existing file symlinks and overwrite their targets. Green must validate each physical destination and use exclusive creation. Add directory-symlink and file-symlink tests.",
+    "RB-04 high src/storytime/book-pictures.ts:955-963,986-989,2877-2910,3133-3143,3165-3200: Provider errors, raw answers, and failure reasons enter persistent files without a secret check. Provider stderr becomes the ledger error on a process failure. Kimi --raw can copy any readable file into raw/ and the review JSON. A credential in these inputs therefore enters delivery evidence. Green must reject sensitive input before persistence and sanitize provider errors. Keep safe raw answers byte-identical. Add synthetic credential tests for both provider paths and failure records.",
+    "RB-05 medium src/storytime/book-pictures.ts:875-922,2672-2677,3572-3580: Only render calls assertCalibrationReady. verify --release never checks calibration. Valid candidate reviews can therefore pass release after calibration files disappear or become stale. T17 also passes the pure release verifier without calibration evidence. Green must check current calibration on the release path. Add missing, stale-rubric, and changed-source calibration cases."
+  ],
+  "nonblocking_findings": [
+    "RB-06 low measure/anti-patterns.md: The required local catalog is absent. The test strategy records this gap and names the canonical fallback. The audit read that fallback."
+  ],
+  "evidence": [
+    "Provenance: phase_base_sha=1d39b8fda457e12d8e7332e7de65d2046ddda78e; role_base_sha=c23534333d4d40ee3740327a7505e02c4f76079f, observed at audit start; audited_head_sha=c23534333d4d40ee3740327a7505e02c4f76079f.",
+    "HEAD matched the assigned commit at audit start and at the last successful HEAD check. No move was observed. A later confirmation command was denied.",
+    "The actual phase diff adds src/storytime/book-pictures.ts, src/storytime/line-art-pass.ts, src/song/still-hook.ts, and scripts/storytime-book-pictures.ts. It changes src/song/main.ts. These paths implement filesystem writes, process execution, and local serving. Review B therefore applies under test-strategy.md:618.",
+    "Scope excludes demo asset commits a8fdb560 and bbcdf085. No finding concerns their asset changes.",
+    "The audited working files matched the immutable commit. git diff --quiet returned 0 for the source, tests, and track documents before testing.",
+    "SHA-256 src/storytime/book-pictures.ts=14bfb93cb1401cda4b786c98fc5332f9d16827db0f9aa07dbb0929abc7806551; scripts/storytime-book-pictures.ts=07cd82e4a4be0da0d3bcc3f09554c0da14bac627e572284d43faabfd58ffbcca.",
+    "SHA-256 src/storytime/line-art-pass.ts=907f7bee0588d91852ac29f87b4a76453c2c7146b204a8f00f7ef5cb8e262dcf; src/song/still-hook.ts=6badc3b9e1d13dbe33e02e2773a9b822fa29416d2eea2441d2754789003c68ef.",
+    "The single heavy command completed successfully: Test Files 4 passed (4); Tests 90 passed (90); duration 79.15 seconds. No paid call, render, browser, or pnpm command ran.",
+    "The bounded shell probe used only printf. JSON.stringify produced a double-quoted substitution. Bash returned RB_SUBSTITUTION_EXECUTED instead of the literal argument.",
+    "The proposed in-memory secret probe did not run because shell permission was denied. RB-04 rests on source inspection, not an executed secret probe.",
+    "The read-only scan covered 15 live text files under calibration/, raw/, candidates/, and cost-ledger.jsonl. The credential patterns matched zero files. This result does not prove secret rejection.",
+    "Live ledger: before-call entries=8; after-call entries=8; open before-calls=0; failed entries=1. All four calibration logs have current source hashes and rubric storytime-picture-v2.",
+    "Live calibration verdicts: bad-one-sun-minimax=fail; bad-one-sun-kimi=fail; good-nan-minimax=pass; good-nan-kimi=pass. Raw output lengths are 430, 233, 649, and 301 characters, respectively.",
+    "Workbooks w01 SHA-256 at inspection: ae8d4b7428c7e4e329cea65ccac783cde1a967ab97aba7ee14e9e5acf65452b3. Source extraction uses readFileSync. No audited production path writes to Workbooks.",
+    "Output helpers reject traversal and existing descendant symlink escapes. T10 covers those root cases, but not the smoke writer. MiniMax uses spawn with an argument array and no shell.",
+    "runPaidCall and precheckKimi require --paid unless --dry-run applies. Dry runs return before provider calls and ledger writes. Kimi rejects --failed with --raw before any write. T13 and T67 pass.",
+    "The render calibration check binds four verdicts to nonempty raw outputs, the current rubric, current source hashes, and current text. T22 and T65 pass. RB-05 concerns release revalidation.",
+    "The installed Vite default uses localhost. The capture configuration does not override it. The hook contains scene, camera, renderer, three, and copied camera values, not credentials.",
+    "A2: No audited test changes a draft into a published artifact. The local ready state concerns fictional Storytime characters. This phase performs no public publish operation. Person counts are quality checks, not consent verification.",
+    "A6: The immutable measure/tracks.md contains no security-resolved claim. Its phase diff is empty. No registry statement requires a green security adversarial test in this scope.",
+    "This local pipeline adds no database, migration, authentication endpoint, or tenant boundary. The audit found no applicable organization-scoping or migration change.",
+    "Worktree inventory: one master worktree. Local branch: master. Remote origin/gh-pages remains outside this audit; origin/master and origin/HEAD remain unchanged."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git status --short",
+    "git diff --name-status 1d39b8fda457e12d8e7332e7de65d2046ddda78e c23534333d4d40ee3740327a7505e02c4f76079f",
+    "git log --oneline -8",
+    "git diff --quiet c23534333d4d40ee3740327a7505e02c4f76079f -- src/storytime src/song scripts/storytime-book-pictures.ts tests/storytime-book-pictures.test.ts tests/storytime-line-art-pass.test.ts tests/song-still-hook.test.ts measure/tracks/asset_storytime_l2_unit1_pictures_20261025",
+    "git diff 1d39b8fda457e12d8e7332e7de65d2046ddda78e c23534333d4d40ee3740327a7505e02c4f76079f -- src/song/main.ts",
+    "git show c23534333d4d40ee3740327a7505e02c4f76079f:measure/tracks.md | grep -nEi 'storytime_l2_unit1_pictures|resolved|encryption|fully solved|completely fixed|all (checks |tests )?pass'",
+    "git worktree list; git branch -a",
+    "Read-only Python inspection: scan live text for credential patterns; count ledger entries; verify calibration source hashes; hash Workbooks w01; list smoke files.",
+    "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'",
+    "Read-only Node quoting probe: JSON.stringify the literal $(printf RB_SUBSTITUTION_EXECUTED); pass the quoted value to bash printf; compare the returned argument.",
+    "Read-only Python provenance check: compare six working files with git show at audited_head_sha and compute SHA-256 values.",
+    "DENIED: in-memory synthetic provider-error probe and final HEAD/source/Workbooks checks. No probe result was recorded."
+  ],
+  "changed_files": ["measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-c235343.json", "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-c235343.log"],
+  "test_strategy_violations": [
+    "RB-02: The server does not enforce the file boundary stated at test-strategy.md:618.",
+    "RB-03: The smoke writer does not enforce the symlink isolation required at test-strategy.md:618.",
+    "RB-04: The provider paths do not enforce the secret exclusion required at test-strategy.md:618."
+  ],
+  "live_contract_violations": [
+    "RB-03: The smoke writer can escape the repository through an existing symlink. This contradicts spec.md:48 and contract.md:15-18."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "handoff": "Route RB-01 through RB-05 to Green. Add regression tests, correct the protections, and request another security audit. No owner decision is required.",
+  "facts_changed": []
+}

@@ -1,0 +1,216 @@
+{
+  "reviewer": "opencode-go/mimo-v2.6-flash",
+  "audited_head": "four small color files and four small line files of batch 39, plus the four line prints for the 1-bit count",
+  "verdict": "fix-round review",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "line_art_rule": "brief line-art rule as amended by Daniel's bar 2026-11-01",
+  "seen": {
+    "out/storytime-review/batch-39/brief.md": "Batch 39 brief; four rows; Muse fix round after Workbooks stage 2 refused; Daniel's bar at the top.",
+    "out/storytime-review/batch-39/refs/out_storytime-review_batch-21_look-reference-nan-and-pip.png": "Nan and Pip look reference: Nan with black hair in two bunches and red ties, orange T-shirt with white star, red shorts, white shoes, large dark-brown eyes with one lash flick at each outer corner; Pip golden-brown with cream muzzle, floppy ears, red collar with gold tag.",
+    "out/storytime-review/batch-39/refs/out_sprout-pip_render.png": "Pip render sheet: reference art plus front, three-quarter, side, back views; golden-brown fur, cream chest and muzzle, floppy ears, red collar with gold tag.",
+    "out/storytime-review/batch-39/pages/l2-w01-story-page-a-net-m2-color.png": "Nan in a garden raises a green butterfly net on a wooden handle; green bushes and pale sky behind; she wears the star T-shirt, red shorts, white shoes.",
+    "out/storytime-review/batch-39/pages/l2-w01-story-page-a-net-m2-line-26-despeckled.png": "1-bit line art of the same scene; hoop rim is two thin parallel lines with a white channel between them; net grid inside the hoop; solid pupils and lash flicks; hands grip the handle and hang at the side.",
+    "out/storytime-review/batch-39/pages/l2-w01-check-row-net-m1-color.png": "One green net, large and centred on plain white; grid in the hoop, bag behind, wooden handle with green grip, soft gray shadow on the right.",
+    "out/storytime-review/batch-39/pages/l2-w01-check-row-net-m1-line-16-despeckled.png": "1-bit line art of the same net; open double-line rim; grid inside the hoop and inside the bag; one plain handle outline; no shadow, no gray.",
+    "out/storytime-review/batch-39/pages/l2-w01-story-page-a-nose-m1-color.png": "Nan touches her nose with the index finger of one hand and laughs with an open mouth; plain white background.",
+    "out/storytime-review/batch-39/pages/l2-w01-story-page-a-nose-m1-line-5-despeckled.png": "1-bit line art of the same pose; a small closed round nose bump sits at the fingertip between the eyes and the open mouth; both eyes have solid pupils.",
+    "out/storytime-review/batch-39/pages/l2-w01-story-page-nan-can-nod-m6-color.png": "Nan stands smiling with an open mouth; Pip the puppy sits beside her with a smooth head top, floppy ears, red collar with gold tag; plain cream background.",
+    "out/storytime-review/batch-39/pages/l2-w01-story-page-nan-can-nod-m6-line-despeckled.png": "1-bit line art of the same pair; Pip head top is a smooth round curve with two floppy ears and no spike; Nan shows two bunches, star shirt, solid pupils, open smile; two ground strokes at the bottom."
+  },
+  "line_file_gray_count": {
+    "l2-w01-story-page-a-net-m2-line-26-despeckled.png": "0 of 2457600 pixels are not 0 or 255",
+    "l2-w01-story-page-a-net-m2-line-print-26-despeckled.png": "0 of 12000000 pixels are not 0 or 255",
+    "l2-w01-check-row-net-m1-line-16-despeckled.png": "0 of 2560000 pixels are not 0 or 255",
+    "l2-w01-check-row-net-m1-line-print-16-despeckled.png": "0 of 2250000 pixels are not 0 or 255",
+    "l2-w01-story-page-a-nose-m1-line-5-despeckled.png": "0 of 2457600 pixels are not 0 or 255",
+    "l2-w01-story-page-a-nose-m1-line-print-5-despeckled.png": "0 of 12000000 pixels are not 0 or 255",
+    "l2-w01-story-page-nan-can-nod-m6-line-despeckled.png": "0 of 2457600 pixels are not 0 or 255",
+    "l2-w01-story-page-nan-can-nod-m6-line-print-despeckled.png": "0 of 12000000 pixels are not 0 or 255"
+  },
+  "l2-w01-story-page-a-net": {
+    "files": [
+      "out/storytime-review/batch-39/pages/l2-w01-story-page-a-net-m2-color.png",
+      "out/storytime-review/batch-39/pages/l2-w01-story-page-a-net-m2-line-26-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "workbooks_findings_gone": {
+      "R11 rim thick solid black ring": {
+        "finding": "R11 `l2-w01-story-page-a-net-line-v1.png` (line art only): the hoop rim of the net is a thick, solid black ring. Draw it at normal line width.",
+        "gone": true,
+        "evidence": "The rim is an open ring of two thin parallel lines. The white channel between them is one closed component (bbox 170,25 to 424,299 at 1920 x 1280). Row widths of the channel: minimum 7 px, median 9 px, 90th percentile 15 px. Outline lines are 7 to 17 px. On the 4000 px print the channel measures 14 to 36 px. The ring is never a solid black band."
+      },
+      "rim white strip judgment": {
+        "question": "Is the thin white strip between the two rim lines a line gap that makes coloring hard?",
+        "answer": "no",
+        "evidence": "The strip is one closed annular channel. Flood fill from the frame never reaches it. Its width is about one outline line width at every row (minimum 7 px, median 9 px at 1920 x 1280). It never collapses to zero. Line crossings at shallow angles beside the strip leave 1 to 4 px white wedges, and each wedge stays closed. A child can color it or leave it white, and no color can run out of it."
+      }
+    },
+    "goal_check": {
+      "Nan holds up a green butterfly net": "yes: the raised hand grips the handle and the hoop stands above her head in both files; the net is green in the color file",
+      "in a garden": "yes: grass, bushes and pale sky in the color file; bushes and horizon lines in the line file",
+      "line art no gray": "yes: 1-bit file, 0 pixels off 0 or 255; writer check passes at 19 px lines, 6.05 percent ink",
+      "line art matches the color file": "yes: hoop, bag, grid, handle, grip band, figure and bushes all map to the color file",
+      "eyes and pupils": "yes: both eye rings are closed components with solid pupils; lash flicks at both outer corners match the reference",
+      "five-digit hands": "yes: the gripping hand shows three finger lobes, one thumb bump and one finger behind the handle; the hanging hand is a relaxed hand with a thumb curl and matches the color mitten",
+      "closed shapes color well": "yes: face, shirt, shorts, shoes, both hands, handle tube, hoop cells and bag cells are all closed components",
+      "no text": "yes: no letters in either file",
+      "no layout fault": "yes: the scene is whole and centred; the writer check reports 97.06 percent white edge frame; scenery lines that reach the frame are normal"
+    },
+    "solid_area_scan": "I searched every black region of the line file for compact solid areas. Only the two pupils (63 x 66 px and 58 x 68 px, fill 0.79) and one eyebrow band are solid. No ring and no blob exists. One scan row at the hoop bottom returns a 51 px black run because the inner rim line runs near-horizontal there; the zoom shows two normal lines with the white channel between them.",
+    "minor_differences": {
+      "nose line": "the color file has a soft nose bump, the line file draws no nose line; the face reads whole at book size and the nose is not a goal word of this row; not a defect under the bar",
+      "finger lines on the grip": "the line file draws three finger lobes left of the handle; the color file draws one smooth finger mass there; these are short inner detail lines inside a closed outline; not a defect"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-check-row-net": {
+    "files": [
+      "out/storytime-review/batch-39/pages/l2-w01-check-row-net-m1-color.png",
+      "out/storytime-review/batch-39/pages/l2-w01-check-row-net-m1-line-16-despeckled.png"
+    ],
+    "rating": 9,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "workbooks_findings_gone": {
+      "R27 rim thick solid black ring": {
+        "finding": "R27 `l2-w01-check-row-net-line-v1.png` (line art only): the same thick rim.",
+        "gone": true,
+        "evidence": "The rim is an open ring of two lines at 15 to 18 px, the same weight as the handle outline. The white channel between them is one closed component (bbox 461,124 to 891,656 at 1600 x 1600). Channel widths: minimum 3 px at one line crossing, 10th percentile 13 px, median 14 px, 90th percentile 23 px. No solid black band remains."
+      },
+      "rim white strip judgment": {
+        "question": "Is the thin white strip between the two rim lines a line gap that makes coloring hard?",
+        "answer": "no",
+        "evidence": "The strip is one closed channel around the ring. Flood fill from the frame never reaches it. Its median width equals the line width of the drawing. The handle interior beside it measures 27 to 28 px, the same order. No color can leak across it."
+      }
+    },
+    "goal_check": {
+      "one net, one object": "yes: one net in both files",
+      "large in the middle": "yes: the hoop spans the upper middle and the handle runs down the middle in both files",
+      "plain light background": "yes: plain white in both files; the gray shadow of the color file is dropped in the line file",
+      "grid in the hoop": "yes: the line file draws the same net grid inside the hoop as the color file, and the grid inside the bag",
+      "line art no gray": "yes: 1-bit file, 0 pixels off 0 or 255; writer check passes at 15 px lines, 4.61 percent ink",
+      "no text": "yes: no letters in either file",
+      "no layout fault": "yes: the object stands centred with a white margin on every side; edge frame 100 percent white"
+    },
+    "minor_differences": {
+      "grip ribs": "the color handle has ribbed grip lines; the line file leaves the handle plain; texture lines are not allowed in line art; not a defect",
+      "two small mesh cells": "the bag grid leaves two small closed cells of 976 and 1487 px at 1600 px; they read as net mesh; a child colors over the mesh; not counted",
+      "narrow wedges at line crossings": "three rows show a 2 to 3 px white wedge where a grid line or the bag line crosses a rim line at a shallow angle; the channel stays closed at every row; normal line crossings, not counted",
+      "solid area scan": "the line file holds no compact solid black area at all; no ring and no blob exists"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-a-nose": {
+    "files": [
+      "out/storytime-review/batch-39/pages/l2-w01-story-page-a-nose-m1-color.png",
+      "out/storytime-review/batch-39/pages/l2-w01-story-page-a-nose-m1-line-5-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "workbooks_findings_gone": {
+      "R13 face has no nose": {
+        "finding": "R13 `l2-w01-story-page-a-nose-line-v1.png` (line art only): the face has no nose, on the page for the word \"nose\". The nose must show.",
+        "gone": true,
+        "evidence": "A small closed round nose bump sits at the fingertip between the eyes and the mouth (closed component bbox 884,522 to 927,565 at 1920 x 1280, 1437 px). The finger stays a separate shape from the nose. Both eyes are closed rings with solid pupils."
+      }
+    },
+    "goal_check": {
+      "Nan touches her own nose with one finger": "yes: the index finger tip meets the nose bump in both files",
+      "and laughs": "yes: the mouth is open in both files; the line mouth is one closed open-mouth region of 2860 px",
+      "line art no gray": "yes: 1-bit file, 0 pixels off 0 or 255; writer check passes at 25 px lines, 4.61 percent ink",
+      "line art matches the color file": "yes: hair bunches with ties, eyebrow bands, eyes, nose, finger, star, shorts, shoes all map to the color file",
+      "five-digit hands": "yes: the raised hand shows the index finger up and the folded fingers as a closed fist; the hanging hand is a mitten in both files and shows no separated fingers",
+      "closed shapes color well": "yes: face, shirt, shorts, shoes, both hands, nose bump and mouth are closed components; the shorts are closed and the space between the legs is background",
+      "no text": "yes: no letters in either file",
+      "no layout fault": "yes: the figure stands centred and whole; edge frame 100 percent white"
+    },
+    "minor_differences": {
+      "eyelash flicks": "the color file draws one lash flick at each outer eye corner, the line file draws none; the face still reads as Nan at book size; recorded, not counted under the bar",
+      "pinhole in the mouth corner": "one enclosed white speck of 22 px (8 x 6 px at 1920 px) sits inside the line junction at the left mouth corner; it stays under 0.5 percent of the picture width; the bar allows marks of that size; not counted"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-nan-can-nod": {
+    "files": [
+      "out/storytime-review/batch-39/pages/l2-w01-story-page-nan-can-nod-m6-color.png",
+      "out/storytime-review/batch-39/pages/l2-w01-story-page-nan-can-nod-m6-line-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "workbooks_findings_gone": {
+      "R17 two pointed spikes on Pip's head": {
+        "finding": "R17 `l2-w01-story-page-nan-can-nod-v1.png` (color, then its line art): two pointed spikes stick out of the top of Pip's head. Pip has floppy ears only.",
+        "gone": true,
+        "evidence": "In the color file the top of Pip's head is a smooth round curve between two floppy ears. In the line file the same smooth curve runs between two floppy ear outlines. No spike, horn or pointed tuft shows in either file."
+      }
+    },
+    "pip_reference_check": {
+      "colors": "yes: golden-brown fur, cream chest, cream muzzle, cream forehead stripe, dark-brown eyes, black nose in the color file",
+      "floppy ears": "yes: two floppy ears hang at both sides in both files",
+      "collar and tag": "yes: red collar with one round gold tag in the color file; the line file draws the collar band and the round tag",
+      "tail": "yes: fluffy tail with cream tip in the color file; the line file draws the raised tail",
+      "no spikes or pointed tufts": "yes: head top smooth in color and in line art"
+    },
+    "nan_reference_check": {
+      "two bunches with red ties": "yes: both files",
+      "orange T-shirt with white star": "yes: color file; the line file draws the star as one closed outline",
+      "red shorts and white sneakers": "yes: color file; the line file draws the shorts and the shoes with sock lines",
+      "large dark-brown eyes": "yes: color file; the line file draws closed rings with solid pupils",
+      "eyelash mark": "the color file draws one lash flick at each outer corner like the reference; the line file draws none; recorded, not counted under the bar; the face still reads as Nan at book size",
+      "big smile with open mouth": "yes: both files; the line mouth is closed around two regions (2664 px and 861 px)"
+    },
+    "goal_check": {
+      "Nan nods yes with a big smile": "yes: head straight, mouth open and smiling in both files",
+      "Pip sits next to her and nods too": "yes: Pip sits at her side with head up in both files",
+      "one clear picture, main thing large in the middle": "yes: the pair fills the middle; Nan is large at the left centre and Pip large at the right centre",
+      "plain light background": "yes: plain cream in the color file; plain white with two ground strokes in the line file",
+      "line art no gray": "yes: 1-bit file, 0 pixels off 0 or 255; writer check passes at 28 px lines, 8.22 percent ink",
+      "line art matches the color file": "yes: figure, Pip, collar, tag, tail, muzzle, ears, star, shorts, shoes all map to the color file",
+      "five-digit hands": "yes: each hanging hand shows one thumb and three or four finger lobes, with one finger behind; no hand shows six digits; the line hands match the mitten shape of the color hands",
+      "no text": "yes: no letters in either file",
+      "no layout fault": "yes: both figures stand whole above the frame bottom; edge frame 100 percent white"
+    },
+    "minor_differences": {
+      "forehead stripe": "the color file shows Pip's cream forehead stripe; the line file draws no boundary line for it; color-only patch, not a goal object; recorded, not counted under the bar",
+      "ground strokes": "the color file shows soft gray shadows under both figures; the line file draws two thin ground strokes in the same places; the strokes are black lines, not gray shading; recorded, not counted",
+      "pinholes at line junctions": "six enclosed white specks of 1 to 136 px sit inside line junctions near Pip's muzzle, Pip's collar and Nan's right hand; each stays under 1 percent of the picture width; the bar allows marks of that size; not counted",
+      "small paw cells": "Pip's toe lines create small closed cells of 45 to 1069 px; they read as toes and each is large enough to color; not counted"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "summary": {
+    "pages": 4,
+    "pass": 4,
+    "clean": 4,
+    "clean_keys": [
+      "l2-w01-story-page-a-net",
+      "l2-w01-check-row-net",
+      "l2-w01-story-page-a-nose",
+      "l2-w01-story-page-nan-can-nod"
+    ],
+    "not_clean_keys": [],
+    "workbooks_findings_gone_count": "4 of 4",
+    "ratings": {
+      "l2-w01-story-page-a-net": 8,
+      "l2-w01-check-row-net": 9,
+      "l2-w01-story-page-a-nose": 8,
+      "l2-w01-story-page-nan-can-nod": 8
+    }
+  }
+}

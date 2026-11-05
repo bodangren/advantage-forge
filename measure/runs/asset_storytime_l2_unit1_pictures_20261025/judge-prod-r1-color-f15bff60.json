@@ -1,0 +1,46 @@
+{
+  "group": "prod-r1-color",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w08-check-row-drum",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w08-check-row-drum-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a drum (1), two drumsticks (2). Action: none. Seen: one round drum with a red rim, a cream drum skin, and a tan wood side; two wooden sticks crossed on the skin. mustShow: one drum - shown. A round drum with a rim and a drum skin - shown. Two drumsticks - shown (exactly two). No text. No character."
+    },
+    {
+      "id": "l2-w01-story-page-a-nest",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nest-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a nest (1), Nan (1). Action: none. Seen: a girl with black-brown hair in two round buns with red bands, an orange T-shirt with a white star, red shorts, white sneakers; she points up at a twig nest with three pale blue eggs on a tree branch. Nan matches the cast note. mustShow: Nan - shown. A bird's nest with twigs - shown. The nest in a tree - shown (on a branch of the large tree at the right). The eggs are extra and fit a nest. No text."
+    },
+    {
+      "id": "l2-w01-story-page-a-nut",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nut-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "layout-fault",
+      "where": "The peanut is small and sits at the left edge of the frame, in the hand. Nan's large head and body fill the middle.",
+      "notes": "Question page: no. Items: one nut (1). Action: none. Seen: Nan (matches the cast note) on a white background; in her open left-side hand lies one peanut in its shell. mustShow: one peanut in its shell - shown. Nan's open hand - shown (palm up, the nut on it). The nut is large in the middle - NOT met. The nut is about one eighth of the picture width and off center. The girl is the large subject. The page text names only the nut, so the nut must be the main subject. The nut itself is clear and reads as a peanut. The fail is the composition, not the prop. No text."
+    },
+    {
+      "id": "l2-w01-story-page-a-nest-and-a-nut",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nest-and-a-nut-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a nest (1), a nut (1). Action: none. Seen: a golden-brown puppy with a cream forehead stripe, cream muzzle, black nose, floppy ears, fluffy tail, red collar with a gold tag, looking down at one peanut in its shell on the grass; a twig nest with four pale blue eggs on a tree branch at the upper right. Pip matches the cast note. mustShow: a bird's nest in a tree - shown. A peanut in its shell - shown. Pip the puppy - shown. Small marks: small orange spikes on the head (also in the cast figure); the ears are only slightly darker at the tips; the nest holds four eggs. No text."
+    }
+  ],
+  "summary": { "files": 4, "pass": 3, "fail": 1 }
+}

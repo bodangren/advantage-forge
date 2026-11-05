@@ -1,0 +1,20 @@
+{
+  "reviewer": "kimi-code-plan-cn/k3.1-pro#high",
+  "seen": {
+    "front": "The head lowers toward the ground, the legs stay planted, and the tail is hidden.",
+    "three_quarter": "The nose points down near the ground, the legs stay planted, and the tail curls up.",
+    "side": "The nose stays low ahead of the paws, the front legs bend slightly, and the tail curls up.",
+    "back": "The head lowers ahead of the body, the legs stay planted, and the tail rises between the ears.",
+    "strip": "The head bobs near the ground, the paws stay planted, and the tail stays curled up."
+  },
+  "sprout-pip-sniff": {
+    "overall": 7.4,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "The front view shows the sniff pose less clearly than the side view.",
+      "The back view shows a separate pink shape under the belly."
+    ],
+    "fix": "Clarify the tongue shape in the back view."
+  }
+}

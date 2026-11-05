@@ -1,0 +1,42 @@
+MEASURE_AGENT_RESULT
+role: measure-green
+status: partial
+track: asset_storytime_l2_unit1_pictures_20261025 (short id asset_storytime_l2_unit1_pictures)
+phase: P2 — Phase 2: Tests and calibrated model pre-checks
+task: T11 — Check every JSON string token of the provider answer before any evidence write
+phase_base_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e (immutable)
+role_base_sha: 167680a1ce976831b09fafcfd5166aca06b3c436
+final_green_head: 0b50710f3c049116383a5e012ebd2a059a33843b
+commits:
+  - 820f35c4cb3cab1e30fb561d70833c03a8da593a — implementation: shared credential-rule builder; scans raw text and every JSON string token across decoded layers; removes quadratic unmatched-brace scan; updates provider comments.
+  - 0b50710f3c049116383a5e012ebd2a059a33843b — plan evidence. Task 11 remains [~]. The implementation commit is recorded in plan.md.
+red_confirmation:
+  - Committed Red change 496c6622 is in phase_base_sha..HEAD.
+  - Pre-edit gate command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`.
+  - Exit 1; Tests 11 failed | 127 passed (138). Log: green-vitest-t11-pre.log.
+green_evidence:
+  - Same four-file gate after implementation: exit 0; Tests 138 passed (138), no skips. Log: green-vitest-t11.log.
+  - Final four-file gate after implementation commit: exit 0; Tests 138 passed (138), no skips. Log: green-vitest-t11-final.log.
+  - Typecheck command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'`; exit 2; owned errors 0; total errors 31, all in baseline assets and tests/part.test.ts. Log: task11-tsc.log.
+  - `git diff --quiet cf5743b7 -- src/song src/storytime/line-art-pass.ts` exited 0. The Red test file is unchanged.
+  - `bash measure/doctor.sh` exited 1 on unrelated project state: active-task conflict in asset_p2_npcs plan, lessons file over 50 lines, and stale generated status and asset inventory. Log: green-doctor-t11.log.
+mutation_evidence:
+  - The twelve requested mutations were not run. They remain necessary before task 11 can be marked [x].
+plan_tasks:
+  - No task was flipped to [x] or [b]. Task 11 stays [~].
+owner_decision:
+  - Daniel selected Design B: “Accept B” (Google Tasks, 15:52-15:53 ICT, 2026-10-27). Plan Communication log records this decision.
+new_files:
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-vitest-t11-pre.log
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-vitest-t11.log
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-vitest-t11-final.log
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/task11-tsc.log
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-doctor-t11.log
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-820f35c.log (provisional)
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-0b50710.log (this result)
+handoff:
+  - Run the twelve mutation checks from test-strategy.md. For each, record its log and restore the implementation file.
+  - Confirm each named test fails under its mutation. Document test gaps when it does not.
+  - If all mutation checks pass, mark task 11 [x] and place `Commit `820f35c`.` on the task line. Add mutation evidence, then commit plan.md separately.
+  - The doctor failures involve unrelated dirty state; do not edit those paths in this task.
+END_MEASURE_AGENT_RESULT

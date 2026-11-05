@@ -1,0 +1,41 @@
+review-a 4330cb42 log. Track: asset_storytime_l2_unit1_pictures_20261025. Phase: Phase 3: Week 1 pictures.
+Role: measure-review-a-correctness. Audit only. Provisional verdict written first, then refined to pass.
+
+Provenance
+- HEAD at review start: 4330cb420dd9cc11576ab089c8046aa716889524. Equals audited_head_sha 4330cb42.
+- git status --porcelain on src/storytime/muse-delivery.ts, tests/storytime-muse-delivery.test.ts, and the track plan.md: empty. The audited files match HEAD.
+- Change scope: 13896a21 (Red, tests only, +292 append-only), c4755d25 (red evidence docs), f1e797cb (production, src/storytime/muse-delivery.ts only), 4330cb42 (plan.md Green evidence only).
+
+Checks performed
+1. Name rewrite. deliveredNames (src/storytime/muse-delivery.ts:189-203) replaces only the -v<n>.png suffix with -v<fileVersion>.png for both names. The row id and -line- segment keep their bytes. Without the field the plan names and deliveredVersion(row) stay.
+2. No-suffix refusal. The throw at line 200 fires in the first name-check loop at line 366, before any read or write. The color branch is unreachable (planPictureRow enforces /^l2-w\d{2}-[a-z-]+-v\d+\.png$/, book-pictures.ts:1457). The line-art branch is reachable (lineArtFileName is checked only non-empty, book-pictures.ts:1557). No test covers it. Nonblocking finding RA-P3V2-1.
+3. Candidate and review fields. candidate.version, file, lineArt.file, lineArt.colorFile use the delivered names (lines 413-424). The kimi and person review file fields use colorFile (lines 280, 310). Copies use colorFile and lineFile (lines 455-456). v1 values equal row.fileName and row.lineArtFileName (planPictureRow at book-pictures.ts:1565), so v1 output is unchanged.
+4. One candidate per job. Duplicate rowId refused (lines 342-346). One item per row. assembleManifest groups by jobId (book-pictures.ts:2079-2099). T185 asserts one candidate, selectedVersion 2, and the exact folder contents [v2Color, v2Line, manifest.json].
+5. No v1 file for a v2 row. Copies emit delivered names only. T185 and T187 assert it.
+6. Checks before the first write. Schema parse 337, duplicate and unknown row 340-349, list pin 351-359, name checks 362-382, structural problems 396-431, manifest compare 443-450, copy lstat and byte checks 462-478, writes only at 483-486 with wx. T188 and T189 assert no files after a refusal.
+7. Unchanged rules. The manifest, symlink, and different-bytes blocks appear only as unchanged context in f1e797cb. The --week filter lives in scripts/storytime-book-pictures.ts, untouched by the production commit. T181 (line 1022) and T182 (line 1083) unchanged.
+8. Zod. fileVersion is z.number().int().min(1).optional() (line 69). T188 drives 0, -1, 2.5, and "2" through the CLI and asserts exit 1, no files, and a refusal naming fileVersion (path entries.0.fileVersion).
+9. Test meaning. mid-red-v2-delivery-red2.log: 'Test Files 1 failed (1)', 'Tests 6 failed | 23 passed (29)' with T184 to T189 named. Each row carries labeled expect.soft assertions. T189 reuses the existing different-manifest rule and proves it holds for a v2 run.
+10. Earlier rows unchanged. 13896a21 is one append-only hunk after line 1143; f1e797cb touched no test file.
+11. Green evidence. jr-green-v2-delivery.log: vitest exit 0, Tests 178 passed (178), tsc exit 2 owned 0 total 38, mutation ignore-fileVersion failed T184 and was restored. plan.md:4618-4641 repeats those numbers and adds 'Tests 1 failed | 28 skipped (29)'. The four gate files hold 29 + 141 + 5 + 3 = 178 it() rows. No A5 conflict found.
+
+Limitation
+- vitest could not run in this session. heavy-run.sh and a direct vitest call were refused by shell permission. The 178-pass claim rests on the green log, the red log, the exact it() counts, and code reading.
+
+Scope
+- No production file, test file, plan file, or registry file was edited. No worktree was created. Only the two result files of this review were written.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-review-a-correctness
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures
+audited_head_sha: 4330cb42
+phase_base_sha: 15a7bf0b
+role_base_sha: 4330cb42
+verdict: pass
+retry_recommendation: none
+blocking_findings: 0
+nonblocking_findings: 2
+handoff: RA-P3V2-1 (nit) the fileVersion no-suffix refusal at src/storytime/muse-delivery.ts:200 has no test; the line-art branch is reachable and the throw is safe before writes. RA-P3V2-2 (nit) the mutation proof exists only as the summary line in jr-green-v2-delivery.log, with no dedicated mutation log. Neither blocks acceptance. vitest could not be re-run here; the 178-pass claim was verified by logs and exact test counts.
+END_MEASURE_AGENT_RESULT

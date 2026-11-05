@@ -1,0 +1,133 @@
+{
+  "status": "pass",
+  "reviewer": "opencode/glm-5.3-flash-free#high",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "All 10 batch rows are clean, so the top status is pass. Control row K1 has one defect on its own: the line file shows no nose while the text is 'A nose.' and the goal names the nose. K2 and K3 are clean. All 13 counted line files are pure black and white, 0 pixels outside 0 and 255.",
+  "counts": {
+    "K1_line": 0, "K2_line": 0, "K3_line": 0,
+    "nap_line_print": 0, "bus": 0, "cat": 0, "dog": 0, "fish": 0, "hat": 0,
+    "milk": 0, "monkey": 0, "mouse": 0, "sun": 0
+  },
+  "extra": {
+    "K1": {
+      "rating": 6,
+      "verdict": "defect",
+      "defect_categories": ["wrong-or-missing-prop"],
+      "defects": "The line file shows no nose. The text is 'A nose.' and the goal names the nose, so the nose must show in the line file too. The finger tip touches the mouth corner and no nose shape shows beside it; the color file shows the nose tip clearly beside the finger.",
+      "notes": "Character, pose, shirt star, eyes, brows, and mouth match the look and the color. Hand reads as a pointing hand. Pure black and white only (0 non-pure pixels).",
+      "goal_check": "Color: Nan touches her own nose with one finger and laughs - yes. Line: finger at the face, laugh mouth present, but the named nose does not show.",
+      "line_check": "0 pixels outside 0 and 255. No gray or shading."
+    },
+    "K2": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": "The profile line shows the nose tip clearly, with brow, eye (solid pupil, allowed), ear, mouth, and chin as closed shapes. The red hair ring around the bun shows in the color but not as a line in the line art; this changes no character, so it is a note. The bun reads as a bun. 'Facing the other way' is judged as facing right against the front-facing K1 pose; I could not compare with an earlier practice line.",
+      "goal_check": "Head of Nan in profile, nose clearly seen: yes in both files.",
+      "line_check": "0 pixels outside 0 and 255. No gray or shading."
+    },
+    "K3": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": "One big brown nut (acorn) in Nan's open hand, close up, in both files. The close-up crops hair at the top edge and feet at the bottom edge while the nut stays whole; per the bar this is a note. Line fingers are slightly wavy but read as an open hand. Star on shirt in both files.",
+      "goal_check": "One big brown nut in Nan's open hand, close up: yes in both files.",
+      "line_check": "0 pixels outside 0 and 255. No gray or shading."
+    },
+    "rating": null
+  },
+  "items": {
+    "l2-w04-story-page-nan-and-pam-nap": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": "Nan and Pam sleep under one blanket; no star shows in the color or the line. Pam keeps a yarn fringe and a small yarn tuft; her dress is plain. The toy box stays whole in the print. A window curtain shows in the line and not in the color; this changes no character and no needed prop, so it is a note. The second pigtail is hidden by the pose.",
+      "goal_check": "Nan and the doll Pam sleep under one blanket: yes. No star anywhere: yes.",
+      "line_check": "0 pixels outside 0 and 255 in the line print. No gray or shading."
+    },
+    "l2-w04-check-row-bus": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": "Reads as a bus at book size in the color and the line. Body, front window, side windows, door, grille, lights, roof marker, and wheels are closed shapes. One object on white; nothing cut at a print edge.",
+      "goal_check": "One bus on white: yes.",
+      "line_check": "0 pixels outside 0 and 255. No gray or shading."
+    },
+    "l2-w04-check-row-cat": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": "Reads as a cat at book size in the color and the line: pointed ears, oval muzzle with nose, whiskers, curled tail. The color has stripes and the line has none; this changes no character, so it is a note. The left eye is narrower than the right eye, as in the 3D model.",
+      "goal_check": "One cat on white: yes.",
+      "line_check": "0 pixels outside 0 and 255. No gray or shading."
+    },
+    "l2-w04-check-row-dog": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": "Reads as a dog at book size in the color and the line: floppy ears, muzzle, tongue, red collar with bell. The solid nose and solid eye pupils are allowed. No extra eye rings in this try.",
+      "goal_check": "One dog on white: yes.",
+      "line_check": "0 pixels outside 0 and 255. No gray or shading."
+    },
+    "l2-w04-check-row-fish": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": "Reads as a fish at book size in the color and the line: body, eye with a solid pupil in a ring (allowed), top fin, tail fin, side fin, mouth line. The wavy fin edges match the color.",
+      "goal_check": "One fish on white: yes.",
+      "line_check": "0 pixels outside 0 and 255. No gray or shading."
+    },
+    "l2-w04-check-row-hat": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": "Reads as a hat at book size in the color and the line. One single brim outline; the band and bow show in both files.",
+      "goal_check": "One hat on white: yes.",
+      "line_check": "0 pixels outside 0 and 255. No gray or shading."
+    },
+    "l2-w04-check-row-milk": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": "Milk judgment: the line art reads as a glass filled near the top with liquid; alone it could be read as any drink, but it reads as milk next to the printed word because the glass is full and the shape matches the color's glass of milk. Under the bar this is a note, not a defect: no sentence names a prop, the glass matches the color, and the difference changes no character. A small drop beside the rim shows in the line and not in the color; note. No carton and no splash crown were asked for.",
+      "goal_check": "One glass of milk on white: yes in the color; suggested in the line by the full level and surface oval.",
+      "line_check": "0 pixels outside 0 and 255. No gray or shading."
+    },
+    "l2-w04-check-row-monkey": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": "Reads as a monkey at book size in the color and the line: tan face mask, small round side ears with inner ovals, oval nose, long curled tail, tan belly. The wavy hand and foot edges match the color.",
+      "goal_check": "One monkey on white: yes.",
+      "line_check": "0 pixels outside 0 and 255. No gray or shading."
+    },
+    "l2-w04-check-row-mouse": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": "Reads as a mouse at book size in the color and the line: two big round ears with inner ovals, whiskers, small oval nose, thin curved tail. No rat snout. The left eye shows a solid pupil with a highlight crescent, which reads normally at book size.",
+      "goal_check": "One mouse on white: yes.",
+      "line_check": "0 pixels outside 0 and 255. No gray or shading."
+    },
+    "l2-w04-check-row-sun": {
+      "rating": 10,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": "One disc with exactly eight pointed triangle rays; each wide base sits on the disc and each point faces outward. The color shows the same eight rays. One sun only.",
+      "goal_check": "One sun on white: yes.",
+      "line_check": "0 pixels outside 0 and 255. No gray or shading."
+    }
+  }
+}

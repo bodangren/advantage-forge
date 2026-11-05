@@ -1,0 +1,102 @@
+# Review B security audit: storytime Phase 4 Task 1, week delivery, stage check
+
+Session: Review B · P4 T1 · storytime_l2_unit1_pictures
+Track: asset_storytime_l2_unit1_pictures_20261025
+Phase: Phase 4: Remaining pictures and cover
+Model: opencode-go/deepseek-v4.1-flash
+
+## Provenance
+
+- phase_base_sha: fc76c27209402c54354447693e9b291d4411ff79.
+- role_base_sha: 4d4d86a26def246195d7ad022c3dcbafd4ca965d.
+- audited_head_sha: 4d4d86a26def246195d7ad022c3dcbafd4ca965d (4d4d86a2).
+- `git rev-parse HEAD` returned the audited HEAD. No commit followed it. The audited HEAD was
+  current. Other tracks hold uncommitted edits; every read used `git show 4d4d86a2:<path>`.
+- Scope: b6824b8a (production), c0035c28 (Red), c2ebc72d (fixture path fix).
+- security_applicability: applicable. The diff reads files, checks paths, and writes files.
+
+## Gate
+
+Command 1: `bash heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-stage-check.test.ts
+--maxWorkers=1'`
+
+Result 1: exit 0. Test Files 1 passed (1). Tests 3 passed (3). Duration 2.07s.
+
+Command 2: `bash heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts
+--maxWorkers=1'`
+
+Result 2: exit 0. Test Files 1 passed (1). Tests 23 passed (23). Duration 33.80s.
+
+Command 3: `bash heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts
+tests/storytime-picture-rows.test.ts --maxWorkers=1'`
+
+Result 3: exit 0. Test Files 2 passed (2). Tests 146 passed (146). Duration 267.73s.
+
+Total: 172 tests passed. No exit 75. No skip.
+
+## Live staging gate
+
+Command: `node scripts/storytime-stage-check.mjs --week 2 --list
+/home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --specs
+docs/storytime/l2-unit1/w02/muse`
+
+Result: exit 0. `stage check: pass`. The labels: list sha256 6d05dfc5...2a58, week 2, rows 27,
+specs found 27, text mismatches 0, goal mismatches 0, outDir mismatches 0, rows with no reference
+0, element paths checked 82, missing element paths 0, characters without a reference 0, page
+candidates 0.
+
+Two facts follow. The code pin equals the live Workbooks list. The 82 spec references all resolve
+inside `out/` or `docs/`, with no symbolic link and no `..` segment.
+
+The same command with `--list-sha256 0000...0000` printed `stage check: fail (the picture list
+changed)` and exited 2. The pin path works.
+
+## Findings
+
+- RB10-01 Nit: the `--list-sha256` seam is unguarded and prints no override line. The content
+  checks still bound it: a modified list must match 27 spec ids and the exact text and goal.
+- RB10-02 Nit: `--specs` and `--list` are not confined to the repository. The tool reads only.
+- RB10-03 Nit: the deliver list has no pin; the approval pin is optional. Repeats RB9-03.
+- RB10-04 Nit: the gate needs an approval entry, not a review; an unreviewed row delivers.
+- RB10-05 Nit: contract.md line 6 still names version 3 as the week 1 source.
+- RB10-06 Nit: the skip line prints the list row id without a pattern check.
+
+## Data flows checked
+
+- Workbooks list: readFileSync only, no write path, no network call. The pin is v4 in the code, in
+  contract.md line 9, and in the live file.
+- Stage check references: absolute path refused; `..` refused; first segment must be `out` or
+  `docs`; lstat refuses a symlink and a non-file; realpath must equal the joined real root; the
+  file must be non-empty and start with the PNG signature.
+- Stage check writes: none. The only handle opens with `r`.
+- Arguments: flag and value pairs; unknown flag, missing value, and a value that starts with `--`
+  refused; `--week` is 1 to 8; `--list-sha256` is 64 lower-case hex.
+- Deliver refusal: the unknown rowId error precedes mkdir and every write. T182 asserts an empty
+  folder after the refusal. The copies use the wx flag.
+- Shell: the wrapper uses the spawnSync array form. No shell string from a CLI argument.
+- Secrets: no key or token in the stage check, the deliver log, or the manifest. The OpenRouter key
+  stays in scripts/storytime-muse.mjs. I opened no .env.local file.
+- Tests: every fixture root comes from `mkdtemp(os.tmpdir())` and is removed. After the four runs,
+  `git status --porcelain docs/storytime/ out/storytime/` printed nothing.
+- A2: not triggered. No test flips a draft to a published state. The approval entry is the human
+  artifact. RB10-04 records the review-field gap.
+- A6: measure/tracks.md lines 138-139 list the track as `[~]` with no security-resolved claim.
+
+## Probe status
+
+Reads and the two live stage check runs only. No probe wrote a file. The shell tool refused a
+listing and a hash of `/tmp/opencode/wb-shadow`, so RB10-01 rests on code reading and the two live
+runs.
+
+MEASURE_AGENT_RESULT
+role: measure-review-b-security
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 4: Remaining pictures and cover
+commits: 4d4d86a2 (audited HEAD, current); b6824b8a (production); c0035c28 (Red); c2ebc72d (fixture fix)
+tests_run: heavy-run vitest stage-check 3 passed (3); muse-delivery 23 passed (23); book-pictures and picture-rows 146 passed (146); all exit 0; live stage check week 2 exit 0 with 82 element paths; wrong pin exit 2
+files_changed: measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-4d4d86a2.json, measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-4d4d86a2.log
+plan_updates: none (audit only)
+known_failures: none blocking
+handoff: Verdict is pass. Six nonblocking Nits for Green: RB10-01 (unguarded --list-sha256 seam), RB10-02 (unconfined --specs and --list), RB10-03 (no pin on the deliver list; repeats RB9-03), RB10-04 (approval entry with no review delivers), RB10-05 (contract.md line 6 stale), RB10-06 (skip line takes the list row id unchecked). No product decision is required. No secret and no .env.local file was read.
+END_MEASURE_AGENT_RESULT

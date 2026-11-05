@@ -1,0 +1,58 @@
+Batch 29 item review log
+=======================
+
+Role: item-review (independent, report-only)
+Track: asset_storytime_l2_unit1_pictures_20261025
+Phase: Phase 3: Week 1 pictures
+Audited HEAD: b31f5fcb
+Date: 2026-11-01
+Reviewer model: kimi-code-plan-cn/kimi-for-coding
+
+Method
+------
+Read the brief, the batch-28 review JSON, cast group sheets, the nurse sheet,
+and the Nan face crop. Read all 11 color pages and all 11 line files.
+Cropped every face and every hand to 2x-4x with PIL into
+/tmp/opencode/review-b29 and inspected the crops. Verified every line file
+has pixel values 0 and 255 only (histogram check, all 11 pass). Checked each
+goal word by word, checked for text anywhere, checked ear rims, forehead
+creases, pale blotches, and mouth states. Calibrated hand counts against the
+accepted batch-28 Ben page, which shows a clear 5-digit waving hand.
+
+Main findings
+-------------
+1. Open waving hands in this round show 4 digits instead of 5
+   (three fingers plus a thick inner digit with a deep wide web; the index
+   finger is missing). Seen on Pat, Mia, May (both hands), Sam, the children
+   on hello-i-am-your-teacher, the children on hello-i-am-pip, and the
+   children on cover-hello. Teacher Kim's own waving hand has 5 digits.
+2. Ben keeps the zigzag forehead band from the original render on
+   hello-i-am-your-teacher, hello-i-am-pip, and cover-hello; the cleaned
+   ben-ref-clean reference was not used on these pages.
+3. hello-i-am-your-teacher uses a rectangular rug; the goal word is round rug.
+4. l2-w01-story-page-nan-can-nod line art loses Nan's open mouth (drawn as a
+   closed smile) and adds a large floating circle in the empty background.
+5. l2-w01-cover-nan-can-nod line art has a broken ring on Nan's right eye
+   (pupil present).
+6. Pat page: the white round shape in front of the teddy bear reads as a lump
+   hand or an unexplained belly patch; the bear also has a cream muzzle and
+   white inner ears unlike the plain-brown reference.
+7. No text, letters, or logos found on any page. All line files are 1-bit.
+   Nan keeps her painted eyelash marks everywhere, including the line art.
+
+Result counts
+-------------
+pages: 11
+pass: 3 (a-nurse, a-nest-and-a-nut, cover-nan-can-nod)
+clean: 2 (a-nurse, a-nest-and-a-nut)
+not clean: 9
+
+MEASURE_AGENT_RESULT
+role: item-review
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures
+audited_head: b31f5fcb
+status: complete
+result_json: measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-29.json
+summary: pages 11, pass 3, clean 2, clean_keys [l2-w01-story-page-a-nurse, l2-w01-story-page-a-nest-and-a-nut], not_clean_keys [l2-w01-story-page-hello-i-am-pat, l2-w01-story-page-hello-i-am-mia, l2-w01-story-page-hello-i-am-may, l2-w01-story-page-hello-i-am-sam, l2-w01-story-page-hello-i-am-your-teacher, l2-w01-story-page-hello-i-am-pip, l2-w01-cover-hello, l2-w01-story-page-nan-can-nod, l2-w01-cover-nan-can-nod]
+END_MEASURE_AGENT_RESULT

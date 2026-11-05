@@ -1,0 +1,249 @@
+{
+  "status": "fail",
+  "reviewer": "opencode-go/mimo-v2.6-flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "All nine set B rows are clean. Extra row K1 fails: the line art draws no nose. The read tool in this session stopped returning images after 16 pictures; helper sessions supplied the picture facts and this reviewer applied the bar.",
+  "rows": {
+    "l2-w04-story-page-this-is-my-family": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-line-4-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-line-print-4-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Builder note judged: the red door. The color print shows about one quarter of the red door between Grandma and Grandpa. The line shows only an arch at the same place. Note. The sentence needs the family, not the door, and the house still reads as a house.",
+        "The hedges reach the left and the right print edge in color and in line. Background only, not a person, hand, hair or needed prop.",
+        "The line bushes have no flowers; the color bushes have red and yellow flowers. Color/line difference that changes no character.",
+        "Grandma's color face has faint crow's-feet; the line has none. Small marks.",
+        "Finger counts on the open hands are not verifiable at page size. The hands show separate spread fingers and no clear extra or missing digit.",
+        "Line pupils are small solid black dots. Solid black pupils are allowed."
+      ],
+      "goal_check": "Pass. The fix for B46-FAM-1 holds: all six people, with all hands and all hair, are whole in the color print and in the line print. Dad wears the approved look: yellow polo shirt, dark blue jeans, brown shoes. No shirt has a star, badge or mark. No sun. No letters, words or numbers. No gray in the line file (0 pixels that are not 0 or 255)."
+    },
+    "l2-w04-cover-pam": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-line-2-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Builder note judged: the line shows a window curtain that the color does not have. Note. It changes no character and no needed prop.",
+        "The window frame reaches the left print edge and the toy box the right print edge. Background objects; the girl and the doll stay whole.",
+        "The line doll has ball pigtails with no yarn strands; the color doll has yellow yarn pigtails. The doll keeps two side hair shapes, a red dress and no star in both files.",
+        "The line has no nose line; the color has a nose. The text is 'Pam', so no face part is named. Note.",
+        "A thin unidentified line sits at the girl's shoulder near the doll's hand in the line. Small mark."
+      ],
+      "goal_check": "Pass. One doll with yellow yarn hair and a red dress, no star, hugged by Nan. Nan has two buns and a plain shirt; her star sits behind the doll and does not show. One blanket on the sofa arm. No sun. No letters, words or numbers. No gray in the line file."
+    },
+    "l2-w04-story-page-this-is-the-man": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-line-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-line-print-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The line draws both eyes as large solid black ovals with no white part. Solid black eyes are allowed; there is no ring or band and no gray.",
+        "The line wraps the blanket around the man only; the color also drapes it over the sofa back. Color/line difference that changes no character and no needed prop.",
+        "The window frame reaches the left print edge and the toy box lid is cut at the right print edge. Background objects; no person, hand or hair is cut.",
+        "The color shows a hanging fold of the blanket at the front left of the sofa. One blanket reads in both files."
+      ],
+      "goal_check": "Pass. Dad sits wrapped in the blue blanket with one doll Pam on his head; Nan laughs with open arms. One doll, one blanket. Nan's star is on her T-shirt only; Dad's blue shirt has no mark. No letters, words or numbers. No gray in the line file."
+    },
+    "l2-w04-story-page-is-this-pam": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-line-2-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Builder note judged: Pam shows only as a yarn fringe, a red cloth edge and a small cream shape at the blanket edge. Note. The goal asks only for the corner of the small red doll dress at the edge of the blanket, and that shows in both files. A viewer may not see a whole doll, which is what the goal describes.",
+        "The color shows a folded blue layer on the left sofa arm. It reads as part of the same blanket. Note.",
+        "The line shows yarn strands, a frayed edge and a small hand where the color shows a cream round part. Color/line difference that changes no character and no needed prop.",
+        "The window frame reaches the left print edge and the toy box the right print edge. Background objects; the girl stays whole.",
+        "The heap is wide and lumpy rather than one smooth dome in the color. Small mark."
+      ],
+      "goal_check": "Pass. One big blanket bump on the sofa; Nan points at it with a surprised mouth. The corner of the red doll dress shows at the blanket edge in color and in line. One star on Nan's shirt only. No letters, words or numbers. No gray in the line file."
+    },
+    "l2-w04-story-page-pam-can-nap": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-line-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-line-print-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Builder note judged: small props differ between color and line. The color has a blanket on the sofa arm; the line has none. Note. It changes no character and no needed prop.",
+        "The line shorts and the knee lines run together, so the shorts area is hard to separate for coloring. Small mark. The lines run together; there is no gap.",
+        "The line has no nose line; the color has a nose. The text is 'Pam can nap.', so no face part is named. Note.",
+        "The window frame is cut at the left print edge and the toy box lid comes near the right print edge. Background objects; the girl and the doll stay whole.",
+        "One of the girl's shoes is hidden behind her knee in the color. Occlusion, not a wrong limb."
+      ],
+      "goal_check": "Pass. One doll in one shoe box with one small blanket and a pillow. One star on Nan's shirt only. No sun. No letters, words or numbers. No gray in the line file."
+    },
+    "l2-w04-story-page-pam-is-in-a-pan": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-line-2-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 7.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Builder note judged: a deep round pan with a short handle partly hidden. Note. In the line the pan is a deep round tub with a two-line rim and a long rounded handle bar to the right. The handle makes it read as a pan, and it does not read as a mirror, ring or magnifying glass. It reads less clearly than the color, which shows a wide shallow yellow bowl with a long handle.",
+        "The handle tip comes very near the left side of the toy box. Small mark.",
+        "The seated doll reads at about two-thirds of the girl's height in color, and her head is close to the size of the girl's head. The pan sits nearer the camera, so the doll shows larger. Note.",
+        "The line girl's eyes are solid black discs with no white ring. Solid black eyes are allowed.",
+        "An unclear curved line runs from behind the right side of the girl's head toward the doll's left pigtail. Small mark.",
+        "The window frame is cut at the left print edge and the toy box lid at the right print edge. Background objects; no person is cut."
+      ],
+      "goal_check": "Pass. One doll with yellow yarn pigtails and a red dress, no star, sits in one big yellow toy pan on the rug; Nan laughs. One pan, one doll. One star on Nan's shirt only. No letters, words or numbers. No gray in the line file."
+    },
+    "l2-w04-story-page-pam-is-on-a-man": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-line-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-line-print-despeckled.png"
+      ],
+      "rating": 7.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The line face of the man has no mouth mark and no nose mark; two reads of the line file agree on this, and the color shows a nose and a small closed smile. The text and the goal name only his closed eyes, and the line draws closed eyes. Judged a note, not a defect, under the named-face-part rule.",
+        "Nan's eyes are closed in the color and open in the line. Both files show an open laughing mouth. Color/line difference that changes no character.",
+        "The color blanket on the sofa arm reads as a cushion or pillow in the line, so the line shows two cushion shapes. Note.",
+        "The window frame is cut at the left print edge and the toy box lid comes near the right print edge. Background objects; no person, hand or hair is cut.",
+        "Each of Nan's open hands shows four to five spread fingers at page size. No clear extra or missing digit."
+      ],
+      "goal_check": "Pass. Dad lies on the blue sofa with his eyes closed; one doll Pam sits on his tummy; Nan laughs. One doll. Dad's blue T-shirt has no mark. One star on Nan's shirt only. No letters, words or numbers. No gray in the line file."
+    },
+    "l2-w04-story-page-pam-is-on-a-map": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-line-2-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "In the line the pointing fingertip touches the line of the sofa blanket. Small mark.",
+        "The curled fingers of the pointing hand are drawn as a small cluster that is hard to read at page size. The index finger is out in both files. Small mark.",
+        "The window frame is cut at the left print edge, the rug touches the left edge and the toy box lid is cut at the right print edge. Background objects; no person is cut.",
+        "The map carries a cross mark at the end of the dotted path. The brief calls it a cross. It is not a letter."
+      ],
+      "goal_check": "Pass. One big paper map open on the rug with a river, a house, a dotted path and a cross; one doll Pam lies on the map; Nan points at the doll. One map, one doll. One star on Nan's shirt only. No letters, words or numbers. No gray in the line file."
+    },
+    "l2-w04-story-page-this-is-pam": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-line-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-line-print-despeckled.png"
+      ],
+      "rating": 7.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The doll hides Nan's star in the color; the line shows one outlined star above the doll's head. It is Nan's own star on her shirt. Color/line difference that changes no character and no needed prop.",
+        "The line doll hair reads as two round ball shapes beside a head with a wavy fringe; the color doll has yellow yarn pigtails. The doll keeps two side hair shapes and no star in both files.",
+        "The doll's arms sit above the girl's hands in the color and below them in the line. Color/line difference that changes no character.",
+        "In the line the girl's hands, the doll's hair balls and the doll's arms overlap in the center and make small closed areas. Closed shapes, so they still color. Note.",
+        "The line has no nose line; the color has a nose. The text is 'This is Pam.', so no face part is named. Note.",
+        "The window frame reaches the left print edge and the toy box the right print edge. Background objects; the girl and the doll stay whole."
+      ],
+      "goal_check": "Pass. Nan stands and holds up one doll Pam with yellow yarn hair and a red dress in front of her. One doll. No star on the doll. No letters, words or numbers. No gray in the line file."
+    }
+  },
+  "extra": {
+    "K1": {
+      "text": "A nose.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "rating": 5,
+      "verdict": "defect",
+      "defect_categories": ["broken-face"],
+      "defects": [
+        "The line art draws no nose. Two reads of the line file agree: there is no curve, bump or nostril mark between the eyes and the mouth. The text names the nose, so the nose must show in color and in line."
+      ],
+      "notes": [
+        "The line eyes are empty outlined circles with one small highlight circle each. There is no pupil fill and no iris ring. The color has pupils. The eyes are not named by the text, so this is a note.",
+        "The color has faint light-gray specks at the top edge. They are unreadable specks, not text."
+      ],
+      "goal_check": "Fail in the line file. The color shows Nan touching her own nose with one finger and laughing, with the figure whole in the frame. The line shows the same pose and the same open smile but draws no nose.",
+      "retry_hint": "Add the nose to the line art: draw one small curve or bump between the eyes and above the mouth, as the color shows."
+    },
+    "K2": {
+      "text": "A nut.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Close-up: the bun is cut at the right edge and the legs and shoes at the bottom edge in color and in line. The bar calls a close-up crop of hair or feet a note while the subject of the sentence stays whole. The nut and the open hand stay whole.",
+        "The nut reads as an acorn: brown cap with a stem, tan body. One nut only.",
+        "The line finger separators stop before the palm, so the fingers and the palm form one area. The hand still shows one thumb and four fingers.",
+        "The line eyes are empty circles with two small highlight circles and no pupil fill. Note.",
+        "The color has small light-gray marks cut by the top edge. They are unreadable, not text."
+      ],
+      "goal_check": "Pass. One big brown nut in Nan's open hand, close up. The open hand shows a thumb and four fingers. No letters, words or numbers. No gray in the line file."
+    },
+    "K3": {
+      "text": "nose",
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Close-up: the shirt and shoulders are cut at the bottom edge in color and in line. The head and the nose stay whole.",
+        "The line eye has an upper lid curve and a lash flick but no lower lid, so the eye white joins the face area. The head outline is closed, so color does not leak out of the head. Note.",
+        "The line ear is an open C arc, so the ear area joins the face. Note.",
+        "The line bun is one plain circle. The red hair band of the color has no line. Color/line difference that changes no character.",
+        "The color has faint light-gray specks at the top edge. They are unreadable, not text.",
+        "Both files show the head in profile facing the viewer's right. The reviewer had no second picture to judge the phrase 'facing the other way'."
+      ],
+      "goal_check": "Pass. Nan's head in profile with the nose clearly seen in the color file and in the line file. Both files show the same direction. No letters, words or numbers. No gray in the line file (0 pixels that are not 0 or 255)."
+    }
+  }
+}

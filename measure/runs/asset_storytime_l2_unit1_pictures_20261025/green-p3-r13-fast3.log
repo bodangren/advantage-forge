@@ -1,0 +1,13 @@
+heavy-run: lock wait over 600 s — holder PID 886601: flock -w 600 -E 201 /home/daniebo/Desktop/primary-parity-progress/heavy.lock scripts/jobs/heavy-run.sh --locked npm test 
+sprout-nan: 25,883 triangles, 0.528 x 0.854 x 0.402 m, built in 24325 ms
+  skin                      9217 tris  (3147 ms)
+  mouth-open                 554 tris  (101 ms)
+  eyelid-skin                854 tris  (107 ms)
+  hair                      6128 tris  (2000 ms)
+  bands                     2880 tris  (255 ms)
+  shirt                     2594 tris  (560 ms)
+  shorts                    1878 tris  (341 ms)
+  shoes                     1778 tris  (267 ms)
+texture  none (vertex colors)
+glb      out/sprout-nan/sprout-nan.glb  (1466 KB)
+animate  out/sprout-nan/anim/gesture-touch-nose.png  + .gif  (2.00 s clip, 2693 ms)

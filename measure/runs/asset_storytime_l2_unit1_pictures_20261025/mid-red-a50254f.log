@@ -1,0 +1,98 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 2: Tests and calibrated model pre-checks (P2), task 8
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: a50254fed4684098a7abc52cd6ef077966e4fa1e
+head_sha: 77a7ace917eaa9bf020d9aa6943d128215a73710
+commits:
+  - c33e0b9b59de32036ae66f4725bf89112527dce1 test(storytime): add failing second security remediation tests
+  - 77a7ace917eaa9bf020d9aa6943d128215a73710 docs(measure): record Storytime task 8 Red evidence
+tests_run:
+  command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'
+  exit_code: 1
+  summary_line: Tests  6 failed | 99 passed (105)
+  new_failures:
+    - T88
+    - T89
+    - T90
+    - T91
+    - T93
+    - T94
+  earlier_test_exceptions: none. All 99 earlier tests passed.
+  lock_wait_line: none. The run had no syntax, transform, package, timeout, or preflight error.
+  type_check_command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'
+  type_check_exit_code: 2
+  type_check_owned_test_file_errors: 0
+  type_check_baseline_errors: 31
+files_changed:
+  - tests/storytime-book-pictures.test.ts
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-a50254f.log (not committed)
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t8.log (not committed)
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-tsc-t8.log (not committed)
+plan_updates: Task 8 is set to [~]. The Red evidence block is appended under task 8. No earlier task changed. Every 40-character SHA in plan.md resolves under git rev-parse.
+known_failures:
+  - The 6 new tests fail at HEAD. Each fails for its reviewed defect or its missing seam.
+  - The compiler reports 31 baseline errors outside the owned paths.
+  - RA3-03 for mid-red-245f8c1.log line 24 stays open. The correction moves to Green by orchestrator decision.
+handoff:
+  - T88 seam: runStorytimeBookPicturesEntry(argv, dependencies) in scripts/storytime-book-pictures.ts. The dependencies hold pipeline and errorLog. The production entry calls it with console.error. It returns the exit code and handles a rejected pipeline through the final sanitizing boundary.
+  - T88 fails because runPaidCall rethrows the original provider error and the seam is absent.
+  - T88 catches mutation 1 (rethrow the original provider error) and mutation 2 (print the original rejection at the final CLI boundary).
+  - T89 seam: precheckMiniMax with parseModelReview. The decoded check runs after JSON decoding and before any success entry, review write, raw copy, or success log.
+  - T89 fails because the decoded reason, issues, and count key reach a success entry, a raw copy, and a review write.
+  - T89 catches mutation 3 (check only the raw bytes), mutation 4 (omit a decoded field check), mutation 5 (write a success entry before the decoded check), and mutation 10 (change safe raw bytes).
+  - T90 seam: precheckKimi. The decoded check runs before any write, so a refused record leaves the ledger byte-identical.
+  - T90 fails because the Kimi record writes a review, a raw copy, and a success entry, and its log holds the decoded credential.
+  - T90 catches mutation 3, mutation 4, mutation 5, and mutation 10.
+  - T91 seam: bookServerConfig(input). The deny list holds the four Vite defaults and the absolute Storytime rule.
+  - T91 fails because the deny list holds only out/storytime/**.
+  - T91 catches mutation 6 (remove a Vite default or replace the absolute Storytime pattern with the relative one).
+  - T93 seams: bookFileAllowlist, resolveBookFile, and serveBookFiles. The resolver returns the checked real path and the middleware reads it.
+  - T93 fails because both branches return the candidate path and a protected stage target serves 200 with evidence bytes.
+  - T93 catches mutation 7 (return the candidate path) and mutation 8 (remove the Storytime exclusion from stage reads).
+  - T94 seam: precheckKimi with --failed --reason. The limit counts characters.
+  - T94 fails because the 500-character reason is refused by the UTF-8 byte limit.
+  - T94 catches mutation 9 (restore the UTF-8 byte limit for Kimi reasons).
+  - T92 and T95 stay with Green. T92 is the live smoke run 6. T95 is the documentation gate.
+  - The safe escaped Unicode controls in T89 and T90 pass at HEAD. The safe bytes stay byte-identical.
+  - RA3-03 for mid-red-245f8c1.log line 24 moves to Green by orchestrator decision. Green shortens the invalid full SHA quotation there. The valid value is 245f8c1ae97d660eb475b87f92fd9951306dbc93. The invalid value stays out of plan.md and out of this log, because T95 forbids a new invalid operative SHA.
+dirty_path_classification:
+  relevant:
+    - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+    - measure/runs/asset_storytime_l2_unit1_pictures_20261025/
+  generated_ignorable:
+    - measure/generated/architecture.json
+    - measure/generated/asset-inventory.json
+    - measure/generated/status.md
+  unrelated_user_work_preserved:
+    - .claude/skills/forge-assets/SKILL.md
+    - .claude/skills/forge-assets/references/animation.md
+    - .claude/skills/forge-assets/references/characters.md
+    - .claude/skills/forge-assets/references/review.md
+    - .claude/skills/forge-environments/SKILL.md
+    - AGENTS.md
+    - bench/trials/
+    - bench/sonnet/
+    - bench/haiku/cards/
+    - docs/hero-mockups/samurai_001.jpg
+    - docs/item-mockups/
+    - measure/tracks.md
+    - measure/workflow.md
+    - measure/tracks/asset_equipment_parts_20260930/plan.md
+    - measure/tracks/asset_p1_architecture_20260928/plan.md
+    - measure/tracks/asset_p1_enemies_20260928/plan.md
+    - measure/tracks/asset_p1_heroes_20260928/plan.md
+    - measure/tracks/asset_p1_nature_20260928/plan.md
+    - measure/tracks/asset_p2_monsters_20260928/plan.md
+    - measure/tracks/asset_p2_wildlife_20260928/plan.md
+    - measure/tracks/asset_world_catchup_20261001/evidence.md
+    - measure/tracks/avatar_system_20261001/plan.md
+    - assets/wizard-argon-trial.ts
+    - reference/blacksmith-quest_001.jpg
+    - reference/village-quest_001.jpg
+model_deviation: The table Red model openai/gpt-6.1-sol was replaced by minimax-cn-coding-plan/MiniMax-M3. The Codex 5-hour quota stood at 83 percent. The plan names the same substitute. Green stays volcengine-agent-plan/glm-5.3-flash#high.
+facts_changed: none
+END_MEASURE_AGENT_RESULT

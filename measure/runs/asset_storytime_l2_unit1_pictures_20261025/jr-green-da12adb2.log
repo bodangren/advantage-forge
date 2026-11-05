@@ -1,0 +1,85 @@
+Green round 26 final log (Storytime week 1 pictures, P3)
+track: asset_storytime_l2_unit1_pictures_20261025
+session: Green · P3 · storytime_l2_unit1_pictures · r26
+role_base_sha: 388b42f0
+phase_base_sha: 15a7bf0b
+final Green HEAD: da12adb2
+src commit: 11a06b9c
+stage commit: 0db45aa1
+plan commit: da12adb2
+Red model: minimax-cn-coding-plan/MiniMax-M3
+Green model: xai/grok-4.7#high
+coder: none. No delegation.
+phase range check: 15a7bf0b is an ancestor of HEAD. Red commits for this phase are inside 15a7bf0b..HEAD.
+
+Causes:
+1. Stale cast build. out/sprout-nan/sprout-nan.glb was built 2026-10-30 23:44:28 +0700. Commit 341515a2 came at 2026-10-31 00:45:49 +0800, after that build.
+2. Book stills cleared every sings list in buildBookStillTimeline. A word segment had no effect.
+
+Rebuild: ./forge build sprout-nan exit 0. Log green-p3-r26-build-nan.log. New GLB time 2026-10-31 17:00:32 +0700. warning: lines: 0. No asset file changed.
+
+Opt-in: buildBookStillTimeline keeps sings only from lines that carry explicit word times. Other sings stay empty. Tests T23b and T23c are in tests/storytime-book-pictures.test.ts.
+Vitest: Tests 163 passed (163). Test Files 4 passed (4). Exit 0. Log green-p3-r26-vitest.log.
+Type check: first run exit 134 (Node heap abort, not the 3 GB wrapper). Retry with a 2048 MB heap exit 2. Owned errors 0. Other-session errors 33. Log green-p3-r26-tsc-retry.log.
+Deviation: Green wrote the two sings tests because the Red family has no quota. The round 5 backdrop option is the precedent.
+
+Commands, each one heavy-run.sh call:
+- ./forge build sprout-nan exit 0. Log green-p3-r26-build-nan.log.
+- vitest run of the four named files exit 0. Log green-p3-r26-vitest.log.
+- tsc --noEmit exit 134, then retry exit 2. Logs green-p3-r26-tsc.log and green-p3-r26-tsc-retry.log.
+- render --row l2-w01-story-page-a-nose --version 3 exit 0. Log green-p3-r26-render-v3.log. Line width 24 px. Ink 4.26%. Peak 507 MB.
+- verify --row l2-w01-story-page-a-nose exit 0. Log green-p3-r26-verify.log. Passed for 3 row versions.
+- render --row l2-w01-story-page-a-nose --version 4 exit 0. Log green-p3-r26-render-v4.log. Line width 24 px. Ink 4.41%. Peak 505 MB.
+- verify --row l2-w01-story-page-a-nose exit 0. Log green-p3-r26-verify-v4.log. Passed for 4 row versions.
+No exit 75. No exit 137. No lock wait over 600 s.
+
+v3 kept. Same camera as v2. Still time 0.82 s. The mouth is a dark open oval under the fist. The hand still reads as a fist at the mouth, not one fingertip on the nose. The eyes are open. No letters show. Nan is in frame from the head to the feet. The white edge check passed.
+Color 18596b257d2a378a164ed593fb764fbe2a52e1aa73a393b2df053129b2d64d65
+Line art b2449e1a558fb6fcd53974b94b55baeaf0d266a5d7ce70d390f1aa645810b909
+
+v4 superseded. Camera az -12. The finger-side view did not show one fingertip on the nose.
+Color 61abe6aec73a39bcfaae6a59248e79c32fcb1729b193000e63ff854c7f41bc49
+Line art c189a9806b3f84db5a4c672f1ec3b7f4577a78bec053b7d8fbbc44171859f61f
+
+Eye-corner flaps: yes. Both outer corners show small skin-colored flaps in v3 and in v4. No cast fix was attempted.
+
+Tasks flipped to [x]: none.
+Tasks flipped to [b]: none.
+Week 1 rows rendered: 21 of 30. Rows with no open defect: 17.
+New files: docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nose-v3.json and l2-w01-story-page-a-nose-v4.json.
+Changed files: src/storytime/book-pictures.ts, tests/storytime-book-pictures.test.ts, plan.md.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: blocked
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures
+commits: 11a06b9c 0db45aa1 da12adb2
+tests_run: vitest 163 passed exit 0; tsc owned errors 0 other-session errors 33 exit 2; render v3 exit 0; verify exit 0
+files_changed: src/storytime/book-pictures.ts; tests/storytime-book-pictures.test.ts; docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nose-v3.json; docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nose-v4.json; measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+plan_updates: Green round 26 evidence added. No task marked [x].
+known_failures: the nose page hand still reads as a fist at the mouth; the open laugh does not read clear of the hand
+phase_base_sha: 15a7bf0b
+role_base_sha: 388b42f0
+head: da12adb2
+src_commit: 11a06b9c
+stage_commit: 0db45aa1
+plan_commit: da12adb2
+rebuild_exit: 0
+kept: l2-w01-story-page-a-nose v3
+render_exit: 0
+verify_exit: 0
+line_width_px: 24
+ink_coverage: 4.26%
+peak_rss_mb: 507
+color_sha256: 18596b257d2a378a164ed593fb764fbe2a52e1aa73a393b2df053129b2d64d65
+lineart_sha256: b2449e1a558fb6fcd53974b94b55baeaf0d266a5d7ce70d390f1aa645810b909
+eye_corner_flaps: yes
+week1_rendered: 21 of 30
+week1_no_open_defect: 17
+tasks_x: none
+tasks_b: none
+new_files: docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nose-v3.json, docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nose-v4.json
+models: green xai/grok-4.7#high; red minimax-cn-coding-plan/MiniMax-M3; coder none
+handoff: The nose page stays blocked. v3 is kept. The rebuilt clip and the word-time mouth opt-in are in the picture. The mouth is a dark open oval under the fist. It is not a closed smile. The hand still reads as a fist at the mouth, not one fingertip on the nose. A small camera change in v4 did not fix the finger. Eye-corner flaps show on both outer corners. Do not fix them here. Do not mark the task complete. Week 1 is 21 of 30 rendered and 17 with no open defect. The finger still needs a cast change. That change is out of scope.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,28 @@
+{
+  "group": "prod-r5-line-retry",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w01-story-page-a-nest",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nest-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a nest (1). Nan is a mustShow item. Action: none. Seen: a girl with two round buns with ring bands, a star on her shirt, shorts, and sneakers, who reaches up with one hand. A large nest of crossed twigs with three eggs sits on a branch at the right, and a trunk edge and a leaf cloud show behind it. mustShow: Nan shown (two buns with bands, star shirt, shorts, sneakers match the cast note); a bird's nest with twigs shown (many twig lines, clear to a child); the nest in a tree shown (the nest rests on a branch that grows from the trunk at the right edge). Small marks: eyes have extra outline rings; the trunk is only a curved line at the right. Lines are black on white. No gray, no shading, no text. No gap that blocks coloring."
+    },
+    {
+      "id": "l2-w01-story-page-a-nut",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nut-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a nut (1), Nan's open hand (1). Action: none. Seen: a large nut with a cross-hatch shell texture in the middle of the picture. It sits on a wide open hand with four fingers and a thumb. The hand joins an arm that joins Nan, who is cut by the right frame edge (face, bun with band, star on the shirt). mustShow: one peanut in its shell shown (a tall shell with cross-hatch marks; a long curved seam line inside makes it look like two lobes, which is a small mark, and the cross-hatch and the hand make it read as one peanut); Nan's open hand shown (open, flat, drawn with fingers and thumb); the nut is large in the middle shown (it is the largest object and it sits at the center). Small marks: the right eye and the right side of the head are cut by the frame; Nan is not named in the sentence. Lines are black on white. No gray, no shading, no text. No gap that blocks coloring."
+    }
+  ],
+  "summary": { "files": 2, "pass": 2, "fail": 0 }
+}

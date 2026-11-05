@@ -1,0 +1,176 @@
+{
+  "status": "inconclusive",
+  "reviewer": "opencode-go/mimo-v2.6-flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Read tool failure after 21 images",
+  "rows_finished": [
+    "l2-w04-story-page-nan-and-pam-nap",
+    "l2-w04-check-row-bus"
+  ],
+  "failure": {
+    "at_image": 21,
+    "requested_file": "out/storytime-review/batch-48/pages/l2-w04-check-row-cat-m1-color-print.png",
+    "shown": "the bus color print from the previous batch (an old picture)",
+    "check": "pixel measurement of the file gives meanRGB 225,207,187 and 25.5 percent saturated pixels, which matches the cat source and differs from the bus print (19.8 percent saturated, orange 14.5 percent)",
+    "action": "review stopped at once; no picture was guessed"
+  },
+  "rows": [
+    {
+      "key": "l2-w04-story-page-nan-and-pam-nap",
+      "files": [
+        "out/storytime-review/batch-48/pages/l2-w04-story-page-nan-and-pam-nap-m1-color.png",
+        "out/storytime-review/batch-48/pages/l2-w04-story-page-nan-and-pam-nap-m1-color-print.png",
+        "out/storytime-review/batch-48/pages/l2-w04-story-page-nan-and-pam-nap-m1-line-4-despeckled.png",
+        "out/storytime-review/batch-48/pages/l2-w04-story-page-nan-and-pam-nap-m1-line-print-4-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "No star shows in the color or in the line art; Nan's T-shirt sleeve is plain.",
+        "Pam has a plain red dress and yarn hair with a fringe, a tuft on top and one clear pigtail; the second pigtail is hidden behind her head.",
+        "Nan sleeps with closed eye curves in both files; one blanket and one doll.",
+        "In both prints the window and curtain run off the left edge and the toy box runs off the right edge; both are background, not a person, hand, hair or needed prop.",
+        "The line art draws a window curtain that the color does not show.",
+        "Line art has zero pixels between 0 and 255; no gray."
+      ],
+      "goal_check": "Met: Nan asleep on the sofa under one blanket, hugging one plain-dressed rag doll with yarn hair; no star anywhere; both files agree on the characters."
+    },
+    {
+      "key": "l2-w04-check-row-bus",
+      "files": [
+        "out/storytime-review/batch-48/pages/l2-w04-check-row-bus-m1-color.png",
+        "out/storytime-review/batch-48/pages/l2-w04-check-row-bus-m1-color-print.png",
+        "out/storytime-review/batch-48/pages/l2-w04-check-row-bus-m1-line-2-despeckled.png",
+        "out/storytime-review/batch-48/pages/l2-w04-check-row-bus-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "One whole school bus on plain white; no text, no ground line, no second object.",
+        "The line art reads as a bus at book size: body, windows, door, grille and four wheels as closed shapes.",
+        "Line art has zero pixels between 0 and 255; no gray.",
+        "Both prints keep the whole bus; no dark pixel touches a print edge."
+      ],
+      "goal_check": "Met: exactly one bus, whole, on plain white in color and in line."
+    },
+    {
+      "key": "l2-w04-check-row-cat",
+      "files": [
+        "out/storytime-review/batch-48/pages/l2-w04-check-row-cat-m1-color.png",
+        "out/storytime-review/batch-48/pages/l2-w04-check-row-cat-m1-line-2-despeckled.png"
+      ],
+      "rating": null,
+      "verdict": null,
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Stopped during this row: the color print could not be read."
+      ],
+      "goal_check": ""
+    },
+    {
+      "key": "l2-w04-check-row-dog",
+      "files": [],
+      "rating": null,
+      "verdict": null,
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["Not reviewed."],
+      "goal_check": ""
+    },
+    {
+      "key": "l2-w04-check-row-fish",
+      "files": [],
+      "rating": null,
+      "verdict": null,
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["Not reviewed."],
+      "goal_check": ""
+    },
+    {
+      "key": "l2-w04-check-row-hat",
+      "files": [],
+      "rating": null,
+      "verdict": null,
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["Not reviewed."],
+      "goal_check": ""
+    },
+    {
+      "key": "l2-w04-check-row-milk",
+      "files": [],
+      "rating": null,
+      "verdict": null,
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["Not reviewed."],
+      "goal_check": ""
+    },
+    {
+      "key": "l2-w04-check-row-monkey",
+      "files": [],
+      "rating": null,
+      "verdict": null,
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["Not reviewed."],
+      "goal_check": ""
+    },
+    {
+      "key": "l2-w04-check-row-mouse",
+      "files": [],
+      "rating": null,
+      "verdict": null,
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["Not reviewed."],
+      "goal_check": ""
+    },
+    {
+      "key": "l2-w04-check-row-sun",
+      "files": [],
+      "rating": null,
+      "verdict": null,
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["Not reviewed."],
+      "goal_check": ""
+    },
+    {
+      "key": "K1",
+      "files": [],
+      "rating": null,
+      "verdict": null,
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["Not reviewed."],
+      "goal_check": ""
+    },
+    {
+      "key": "K2",
+      "files": [],
+      "rating": null,
+      "verdict": null,
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["Not reviewed."],
+      "goal_check": ""
+    },
+    {
+      "key": "K3",
+      "files": [],
+      "rating": null,
+      "verdict": null,
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["Not reviewed."],
+      "goal_check": ""
+    }
+  ]
+}

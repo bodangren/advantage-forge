@@ -1,0 +1,253 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/storytime-book-pictures.test.ts (98 tests | 1 failed) 152525ms
+       × T109: both providers refuse an escaped credential at object depth 4000 without a RangeError 7777ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/minimax: the error names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ tests/storytime-book-pictures.test.ts:2372:79
+    2370|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2371|           .not.toBe('RangeError');
+    2372|         expect.soft(message, `${context}: the error names only the pat…
+       |                                                                               ^
+    2373|         expect.soft(message.endsWith(suffix), `${context}: the message…
+    2374|         expect.soft(message, `${context}: the message names no stack o…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/9]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/minimax: the message has the task 9 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2373:97
+    2371|           .not.toBe('RangeError');
+    2372|         expect.soft(message, `${context}: the error names only the pat…
+    2373|         expect.soft(message.endsWith(suffix), `${context}: the message…
+       |                                                                                                 ^
+    2374|         expect.soft(message, `${context}: the message names no stack o…
+    2375|           .not.toMatch(/Maximum call stack size exceeded/);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/9]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "042728ae-0116-4db5-9dd7-16f9a326a4bd",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T04:36:42.751Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2378:12
+    2376|         const entries = await securityLedger(space.space.outputRoot);
+    2377|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    2378|           .toEqual([]);
+       |            ^
+    2379|         const files = await tree(space.space.outputRoot);
+    2380|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/9]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/minimax: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-R2cXRx/repo-dAxWl9/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-042728ae-0116-4db5-9dd7-16f9a326a4bd.txt",
++   "/tmp/opencode/storytime-red-R2cXRx/repo-dAxWl9/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2381:56
+    2379|         const files = await tree(space.space.outputRoot);
+    2380|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    2381|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    2382|         if (provider === 'kimi') {
+    2383|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/9]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/kimi: the error names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ tests/storytime-book-pictures.test.ts:2372:79
+    2370|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2371|           .not.toBe('RangeError');
+    2372|         expect.soft(message, `${context}: the error names only the pat…
+       |                                                                               ^
+    2373|         expect.soft(message.endsWith(suffix), `${context}: the message…
+    2374|         expect.soft(message, `${context}: the message names no stack o…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/9]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/kimi: the message has the task 9 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2373:97
+    2371|           .not.toBe('RangeError');
+    2372|         expect.soft(message, `${context}: the error names only the pat…
+    2373|         expect.soft(message.endsWith(suffix), `${context}: the message…
+       |                                                                                                 ^
+    2374|         expect.soft(message, `${context}: the message names no stack o…
+    2375|           .not.toMatch(/Maximum call stack size exceeded/);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/9]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/kimi: no success entry.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "30d21b8f-8811-49cd-b666-47b885ece14b",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T04:36:48.326Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2378:12
+    2376|         const entries = await securityLedger(space.space.outputRoot);
+    2377|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    2378|           .toEqual([]);
+       |            ^
+    2379|         const files = await tree(space.space.outputRoot);
+    2380|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/9]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/kimi: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-R2cXRx/repo-oXQhmL/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-30d21b8f-8811-49cd-b666-47b885ece14b.txt",
++   "/tmp/opencode/storytime-red-R2cXRx/repo-oXQhmL/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2381:56
+    2379|         const files = await tree(space.space.outputRoot);
+    2380|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    2381|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    2382|         if (provider === 'kimi') {
+    2383|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/9]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/kimi: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "b2dc1624719ae14472c89fe5c0d4b2859d75abb4866c42d6adc5248f5eedf5af",
++     "fc022cff931c018cbcc78c4411ff6a1f9b83e5f7ba834d59760b4be4f4cfcdf7",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-30d21b8f-8811-49cd-b666-47b885ece14b.txt",
++     "b83ed7a7dd82627782a6af5252ae2e01b095931c969749569b8ca6f611770a66",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "fe2acd877f7e4e2d12f9a92eb5d1880d5bbe82ed1a4e2517f327c43392a13d63",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ tests/storytime-book-pictures.test.ts:2384:14
+    2382|         if (provider === 'kimi') {
+    2383|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+    2384|             .toEqual(space.before);
+       |              ^
+    2385|           expect.soft(await readFile(space.rawFile), `${context}: the …
+    2386|             .toEqual(Buffer.from(raw));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/9]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 97 passed (98)
+   Start at  12:34:38
+   Duration  153.89s (transform 755ms, setup 0ms, import 1.08s, tests 152.52s, environment 0ms)
+

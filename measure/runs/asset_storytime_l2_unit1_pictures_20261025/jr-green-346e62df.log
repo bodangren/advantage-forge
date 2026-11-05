@@ -1,0 +1,24 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 - Phase 3: Week 1 pictures (round 9, the bird's nest only)
+role_base_sha: 54889a08
+phase_base_sha: 15a7bf0b
+models: Red minimax-cn-coding-plan/MiniMax-M3; Green claude-code/claude-sonnet-5-5#high; coder none
+commits:
+- 4b33108f fix(storytime): round the nest eggs and rough the twig rim (assets/storytime-nest.ts)
+- 346e62df docs(measure): record storytime green round 9 nest evidence (plan.md)
+final_green_head: 346e62df
+commands (all through bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c; logs green-p3-r9-*.log):
+- ./forge render storytime-nest --fast (3 loops): exit 0, 0, 0
+- ./forge render storytime-nest (textured): exit 0
+- ./forge inspect storytime-nest --fast: exit 0
+warning lines: none (render-textured and inspect logs: 0 matches)
+changes: egg tips are smooth ovals; the smooth rim is now 34 rough crossing twigs; eggs in a triangle, three separate eggs in each of the four views; the bowl lip is lower
+cards: out/storytime-review/batch-1b/storytime-nest.png, brief.md, look-reference-nan-and-pip.png
+rating: none (the nest is not self-rated)
+tasks: none marked [x]; no [b] changes
+not run: tsc, vitest (out of scope); Red command not supplied
+status: waiting-for-review
+next: independent review of batch-1b nest card; then the butterfly net round; then touch-nose
+END_MEASURE_AGENT_RESULT

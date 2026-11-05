@@ -1,0 +1,40 @@
+MEASURE_AGENT_RESULT
+role: strategy
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P2 "Phase 2: Tests and calibrated model pre-checks"
+commits:
+  - fa4692c38212bf32b60c9e43b1ea2da1be71e462 docs(measure): add Storytime still engine hook task
+tests_run: none. This role ran no vitest, tsc, browser, render, paid call, preflight, or lock. Checks run: plan task count 17, [x] count 4, metadata estimated_tasks 17 and actual_tasks 4, git diff --check clean, no plain flock command left in test-strategy.md.
+files_changed:
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/contract.md
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/spec.md
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/metadata.json
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/strategy-f271dce.log (not committed)
+plan_updates:
+  - Phase 2 has a new task 3 before calibration: the additive still engine hook in src/song/main.ts plus the corrected line-art pass. Gate T42 to T51 plus tests/song-timeline.test.ts. One bounded smoke run (T52) under smoke/. No paid call. No book version.
+  - Calibration is now Phase 2 task 4.
+  - Communication log entry 2026-10-26 with the PM note. Facts changed: none.
+  - metadata.json: estimated_tasks 17, actual_tasks 4. The earlier value 2 was stale, because Red and Green marked two tasks [x] without a metadata update.
+known_failures:
+  - Verified at src/storytime/book-pictures.ts:2068 in fafa82dc. The pass uses a wireframe override material, which draws a mesh net. It changes camera.aspect and the projection matrix without a restore. It reads cameraState after the pass. It calls a bare import('three') inside page.evaluate, which the browser cannot resolve. It does not dispose its render target or its material. Task 3 corrects all five.
+  - Baseline tsc errors: 31 (outside the owned paths, from the Green log). Task 3 must keep the total at 31 or less.
+  - measure/anti-patterns.md does not exist. The strategy uses the starter catalog. S6 (a pass that meets the format checks but draws mesh edges) is a new project candidate.
+handoff:
+  - role_base_sha: f271dce63292f6785bc7e3df4bb24ed23859d3b8 (verified). phase_base_sha stays 1d39b8fda457e12d8e7332e7de65d2046ddda78e. fa4692c3 is doc-only and in-phase.
+  - Red command for task 3: ENGINE_HOOK_TEST_COMMAND = bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'. The same command is the Green gate and every later gate. Every heavy command uses heavy-run.sh. Never use a plain flock.
+  - New test IDs and files for Red:
+    - T42, T43, T44: tests/song-still-hook.test.ts (new file, no browser; T44 reads src/song/main.ts as text).
+    - T46, T47, T48: tests/storytime-line-art-pass.test.ts (new file, no browser; fake renderer plus real three.js Scene and PerspectiveCamera).
+    - T49, T50, T51: tests/storytime-book-pictures.test.ts (existing file, add rows; injected driver and capture).
+    - T45: gate row only. Red writes no test. tests/song-timeline.test.ts stays unchanged and green.
+    - T52: live smoke run (LINEART_SMOKE_COMMAND), run by Green after the unit gate. T53: live Phase 3 Nan sample. Red writes no test for T52 or T53.
+  - Valid Red: T42 to T44 and T46 to T51 fail or fail to load. The 41 earlier tests and tests/song-timeline.test.ts pass, or the Red log names each exception. Red commits only the three test files.
+  - Seam names are fixed by the strategy (section 4, task 3). Red must use them: publishBookStill(target, parts), clearBookStill(target), cameraStateOf(camera, lookTarget) in src/song/still-hook.ts; renderLineArtPass(three, parts, size) returning { width, height, data } in src/storytime/line-art-pass.ts; captureStillPair(driver, input) and checkLineArtSmoke(png, fixture) in src/storytime/book-pictures.ts.
+  - Decisions Red must not make itself: (1) the edge technique (depth and normal edges, material-ID edges, or an inverted hull), which Green picks inside the contract rules; (2) the exact driver method names of captureStillPair, beyond the capture order in T49; (3) the smoke limits 1.00 percent interior ink and 342/360 ring rays, and the fixture geometry, which the strategy sets; (4) any song-engine change outside main.ts and still-hook.ts; (5) how the page loads the pass module, except that it uses no bare module name inside page.evaluate.
+  - Smoke run bounds: one run, one Chrome session, one Nan window still plus one fixture pass, output only under out/storytime/l2/unit1/smoke/lineart-<UTC stamp>/. No candidate, version, evidence, manifest entry, ledger line, or paid call. A second run needs a new orchestrator dispatch.
+  - The orchestrator sends the 2026-10-26 PM note before the task 3 Green commit. Song renders stay paused.
+  - Facts changed: none.
+END_MEASURE_AGENT_RESULT

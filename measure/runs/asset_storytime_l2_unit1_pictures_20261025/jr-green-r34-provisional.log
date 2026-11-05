@@ -1,0 +1,17 @@
+# Measure JR Green round 34 — storytime_l2_unit1_pictures, phase P3 (Week 1 pictures)
+
+Role: measure-jr-green, build round 34.
+Session: Green · P3 · storytime_l2_unit1_pictures · r34.
+Model: deepseek/deepseek-flash#high (provider deepseek, model deepseek-flash).
+Red model for phase P3: minimax-cn-coding-plan/MiniMax-M3 (MiniMax). This role is not the Red family.
+Coder model: none. No delegation.
+role_base_sha: 595468c8
+phase_base_sha: 15a7bf0b
+Red contract: the orchestrator defect brief for `storytime-nut` (the 1-bit line art reads as a pot
+or a sugar bowl). The committed Red change in `15a7bf0b..HEAD` is the week 1 row stage files and
+the phase 3 plan blocks; no Red test file covers a picture row.
+
+Task: rework one prop, `storytime-nut`, so a child of about 5 names it "a nut" in color and in
+1-bit line art. Leave the item for the independent re-review. No task is marked `[x]`.
+
+Status: started

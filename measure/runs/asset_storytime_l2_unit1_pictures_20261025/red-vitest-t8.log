@@ -1,0 +1,1011 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/storytime-book-pictures.test.ts (78 tests | 6 failed) 108575ms
+     × T88: the propagated provider error and the final CLI error carry no credential 48ms
+     × T89: the MiniMax decoded review fields pass the credential check before any write 1925ms
+     × T90: the Kimi decoded review fields pass the credential check before any write 2053ms
+     × T91: the server configuration keeps the Vite credential defaults and the absolute Storytime rule 8ms
+     × T93: the server returns and reads the checked real path and refuses a protected stage target 10ms
+     × T94: the Kimi failure reason limit counts characters 1058ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T88: the propagated provider error and the final CLI error carry no credential
+AssertionError: The propagated error holds no credential.: expected 'mmx exited with 1: provider unavailab…' not to contain 'sk-SYNTHETIC00000000000000000000'
+
+- Expected
++ Received
+
+- sk-SYNTHETIC00000000000000000000
++ mmx exited with 1: provider unavailable. sk-SYNTHETIC00000000000000000000 | Authorization: Bearer SYNTHETICBEARER0000000000000 | -----BEGIN PRIVATE KEY-----
++ SYNTHETIC
++ -----END PRIVATE KEY----- | AKIA0000SYNTHETIC000 | api_key=SYNTHETIC-api-key-000000 | eyJhbGciOiJub25lIn0.eyJzdWIiOiJTWU5USEVUSUMifQ.U1lOVEhFVElD | plainvalue-SYNTHETIC-0001 detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line 
+
+ ❯ tests/storytime-book-pictures.test.ts:860:80
+    858|     const propagated = thrown instanceof Error ? thrown.message : Stri…
+    859|     for (const value of values) {
+    860|       expect.soft(propagated, 'The propagated error holds no credentia…
+       |                                                                                ^
+    861|     }
+    862|     expect.soft(propagated.length, 'The propagated error has 500 chara…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T88: the propagated provider error and the final CLI error carry no credential
+AssertionError: The propagated error holds no credential.: expected 'mmx exited with 1: provider unavailab…' not to contain 'Authorization: Bearer SYNTHETICBEARER…'
+
+- Expected
++ Received
+
+- Authorization: Bearer SYNTHETICBEARER0000000000000
++ mmx exited with 1: provider unavailable. sk-SYNTHETIC00000000000000000000 | Authorization: Bearer SYNTHETICBEARER0000000000000 | -----BEGIN PRIVATE KEY-----
++ SYNTHETIC
++ -----END PRIVATE KEY----- | AKIA0000SYNTHETIC000 | api_key=SYNTHETIC-api-key-000000 | eyJhbGciOiJub25lIn0.eyJzdWIiOiJTWU5USEVUSUMifQ.U1lOVEhFVElD | plainvalue-SYNTHETIC-0001 detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line 
+
+ ❯ tests/storytime-book-pictures.test.ts:860:80
+    858|     const propagated = thrown instanceof Error ? thrown.message : Stri…
+    859|     for (const value of values) {
+    860|       expect.soft(propagated, 'The propagated error holds no credentia…
+       |                                                                                ^
+    861|     }
+    862|     expect.soft(propagated.length, 'The propagated error has 500 chara…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T88: the propagated provider error and the final CLI error carry no credential
+AssertionError: The propagated error holds no credential.: expected 'mmx exited with 1: provider unavailab…' not to contain '-----BEGIN PRIVATE KEY-----\nSYNTHETI…'
+
+- Expected
++ Received
+
+- -----BEGIN PRIVATE KEY-----
++ mmx exited with 1: provider unavailable. sk-SYNTHETIC00000000000000000000 | Authorization: Bearer SYNTHETICBEARER0000000000000 | -----BEGIN PRIVATE KEY-----
+  SYNTHETIC
+- -----END PRIVATE KEY-----
++ -----END PRIVATE KEY----- | AKIA0000SYNTHETIC000 | api_key=SYNTHETIC-api-key-000000 | eyJhbGciOiJub25lIn0.eyJzdWIiOiJTWU5USEVUSUMifQ.U1lOVEhFVElD | plainvalue-SYNTHETIC-0001 detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line 
+
+ ❯ tests/storytime-book-pictures.test.ts:860:80
+    858|     const propagated = thrown instanceof Error ? thrown.message : Stri…
+    859|     for (const value of values) {
+    860|       expect.soft(propagated, 'The propagated error holds no credentia…
+       |                                                                                ^
+    861|     }
+    862|     expect.soft(propagated.length, 'The propagated error has 500 chara…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T88: the propagated provider error and the final CLI error carry no credential
+AssertionError: The propagated error holds no credential.: expected 'mmx exited with 1: provider unavailab…' not to contain 'AKIA0000SYNTHETIC000'
+
+- Expected
++ Received
+
+- AKIA0000SYNTHETIC000
++ mmx exited with 1: provider unavailable. sk-SYNTHETIC00000000000000000000 | Authorization: Bearer SYNTHETICBEARER0000000000000 | -----BEGIN PRIVATE KEY-----
++ SYNTHETIC
++ -----END PRIVATE KEY----- | AKIA0000SYNTHETIC000 | api_key=SYNTHETIC-api-key-000000 | eyJhbGciOiJub25lIn0.eyJzdWIiOiJTWU5USEVUSUMifQ.U1lOVEhFVElD | plainvalue-SYNTHETIC-0001 detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line 
+
+ ❯ tests/storytime-book-pictures.test.ts:860:80
+    858|     const propagated = thrown instanceof Error ? thrown.message : Stri…
+    859|     for (const value of values) {
+    860|       expect.soft(propagated, 'The propagated error holds no credentia…
+       |                                                                                ^
+    861|     }
+    862|     expect.soft(propagated.length, 'The propagated error has 500 chara…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T88: the propagated provider error and the final CLI error carry no credential
+AssertionError: The propagated error holds no credential.: expected 'mmx exited with 1: provider unavailab…' not to contain 'api_key=SYNTHETIC-api-key-000000'
+
+- Expected
++ Received
+
+- api_key=SYNTHETIC-api-key-000000
++ mmx exited with 1: provider unavailable. sk-SYNTHETIC00000000000000000000 | Authorization: Bearer SYNTHETICBEARER0000000000000 | -----BEGIN PRIVATE KEY-----
++ SYNTHETIC
++ -----END PRIVATE KEY----- | AKIA0000SYNTHETIC000 | api_key=SYNTHETIC-api-key-000000 | eyJhbGciOiJub25lIn0.eyJzdWIiOiJTWU5USEVUSUMifQ.U1lOVEhFVElD | plainvalue-SYNTHETIC-0001 detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line 
+
+ ❯ tests/storytime-book-pictures.test.ts:860:80
+    858|     const propagated = thrown instanceof Error ? thrown.message : Stri…
+    859|     for (const value of values) {
+    860|       expect.soft(propagated, 'The propagated error holds no credentia…
+       |                                                                                ^
+    861|     }
+    862|     expect.soft(propagated.length, 'The propagated error has 500 chara…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T88: the propagated provider error and the final CLI error carry no credential
+AssertionError: The propagated error holds no credential.: expected 'mmx exited with 1: provider unavailab…' not to contain 'eyJhbGciOiJub25lIn0.eyJzdWIiOiJTWU5US…'
+
+- Expected
++ Received
+
+- eyJhbGciOiJub25lIn0.eyJzdWIiOiJTWU5USEVUSUMifQ.U1lOVEhFVElD
++ mmx exited with 1: provider unavailable. sk-SYNTHETIC00000000000000000000 | Authorization: Bearer SYNTHETICBEARER0000000000000 | -----BEGIN PRIVATE KEY-----
++ SYNTHETIC
++ -----END PRIVATE KEY----- | AKIA0000SYNTHETIC000 | api_key=SYNTHETIC-api-key-000000 | eyJhbGciOiJub25lIn0.eyJzdWIiOiJTWU5USEVUSUMifQ.U1lOVEhFVElD | plainvalue-SYNTHETIC-0001 detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line 
+
+ ❯ tests/storytime-book-pictures.test.ts:860:80
+    858|     const propagated = thrown instanceof Error ? thrown.message : Stri…
+    859|     for (const value of values) {
+    860|       expect.soft(propagated, 'The propagated error holds no credentia…
+       |                                                                                ^
+    861|     }
+    862|     expect.soft(propagated.length, 'The propagated error has 500 chara…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T88: the propagated provider error and the final CLI error carry no credential
+AssertionError: The propagated error holds no credential.: expected 'mmx exited with 1: provider unavailab…' not to contain 'plainvalue-SYNTHETIC-0001'
+
+- Expected
++ Received
+
+- plainvalue-SYNTHETIC-0001
++ mmx exited with 1: provider unavailable. sk-SYNTHETIC00000000000000000000 | Authorization: Bearer SYNTHETICBEARER0000000000000 | -----BEGIN PRIVATE KEY-----
++ SYNTHETIC
++ -----END PRIVATE KEY----- | AKIA0000SYNTHETIC000 | api_key=SYNTHETIC-api-key-000000 | eyJhbGciOiJub25lIn0.eyJzdWIiOiJTWU5USEVUSUMifQ.U1lOVEhFVElD | plainvalue-SYNTHETIC-0001 detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line detail line 
+
+ ❯ tests/storytime-book-pictures.test.ts:860:80
+    858|     const propagated = thrown instanceof Error ? thrown.message : Stri…
+    859|     for (const value of values) {
+    860|       expect.soft(propagated, 'The propagated error holds no credentia…
+       |                                                                                ^
+    861|     }
+    862|     expect.soft(propagated.length, 'The propagated error has 500 chara…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T88: the propagated provider error and the final CLI error carry no credential
+AssertionError: The propagated error has 500 characters at most.: expected 1061 to be less than or equal to 500
+ ❯ tests/storytime-book-pictures.test.ts:863:8
+    861|     }
+    862|     expect.soft(propagated.length, 'The propagated error has 500 chara…
+    863|       .toBeLessThanOrEqual(500);
+       |        ^
+    864|     expect.soft(propagated, 'The propagated error keeps safe text.').t…
+    865|     expect.soft(entries).toHaveLength(2);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T88: the propagated provider error and the final CLI error carry no credential
+AssertionError: The runStorytimeBookPicturesEntry seam exists.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ tests/storytime-book-pictures.test.ts:875:74
+    873|     await assertNoSyntheticValues([space.outputRoot], values);
+    874|     const entry = entrySeam();
+    875|     expect.soft(entry, 'The runStorytimeBookPicturesEntry seam exists.…
+       |                                                                          ^
+    876|     if (typeof entry === 'function') {
+    877|       const logged: string[] = [];
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: reason: the review is refused.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:915:69
+    913|         runner: async () => ({ stdout: item.text, stderr: '' }),
+    914|       }));
+    915|       expect.soft(refused, `${item.label}: the review is refused.`).to…
+       |                                                                     ^
+    916|       const entries = await securityLedger(mini.outputRoot);
+    917|       const successes = entries.filter((entry) => entry.event === 'aft…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: reason: no success entry.: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/storytime-book-pictures.test.ts:918:73
+    916|       const entries = await securityLedger(mini.outputRoot);
+    917|       const successes = entries.filter((entry) => entry.event === 'aft…
+    918|       expect.soft(successes.length, `${item.label}: no success entry.`…
+       |                                                                         ^
+    919|       const failures = entries.filter((entry) => entry.event === 'afte…
+    920|       expect.soft(failures.length, `${item.label}: one failure entry.`…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: reason: one failure entry.: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/storytime-book-pictures.test.ts:920:73
+    918|       expect.soft(successes.length, `${item.label}: no success entry.`…
+    919|       const failures = entries.filter((entry) => entry.event === 'afte…
+    920|       expect.soft(failures.length, `${item.label}: one failure entry.`…
+       |                                                                         ^
+    921|       const failureError = String((failures[0] as unknown as { error?:…
+    922|       expect.soft(failureError, `${item.label}: the failure names the …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: reason: the failure names the pattern.: expected '' to match /api-key/
+
+- Expected:
+/api-key/
+
++ Received:
+""
+
+ ❯ tests/storytime-book-pictures.test.ts:922:82
+    920|       expect.soft(failures.length, `${item.label}: one failure entry.`…
+    921|       const failureError = String((failures[0] as unknown as { error?:…
+    922|       expect.soft(failureError, `${item.label}: the failure names the …
+       |                                                                                  ^
+    923|       expect.soft(failureError, `${item.label}: the failure holds no c…
+    924|       const files = (await tree(mini.outputRoot)).map((file) => path.r…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: reason: no raw copy.: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/storytime-book-pictures.test.ts:925:97
+    923|       expect.soft(failureError, `${item.label}: the failure holds no c…
+    924|       const files = (await tree(mini.outputRoot)).map((file) => path.r…
+    925|       expect.soft(files.some((file) => file.startsWith('raw/')), `${it…
+       |                                                                                                 ^
+    926|       expect.soft(files.some((file) => file.endsWith('-minimax.json'))…
+    927|         .toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: reason: no review write.: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/storytime-book-pictures.test.ts:927:10
+    925|       expect.soft(files.some((file) => file.startsWith('raw/')), `${it…
+    926|       expect.soft(files.some((file) => file.endsWith('-minimax.json'))…
+    927|         .toBe(false);
+       |          ^
+    928|       await assertNoSyntheticValues([mini.outputRoot], values);
+    929|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: reviews/w01-readalong-p01-v1-minimax.json: synthetic fixture 0: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ assertNoSyntheticValues tests/storytime-book-pictures.test.ts:419:120
+    417|     const bytes = await readFile(file);
+    418|     for (const [index, value] of values.entries()) {
+    419|       expect.soft(bytes.includes(Buffer.from(value)), `${path.relative…
+       |                                                                                                                        ^
+    420|     }
+    421|   }
+ ❯ tests/storytime-book-pictures.test.ts:928:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: issue: the review is refused.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:915:69
+    913|         runner: async () => ({ stdout: item.text, stderr: '' }),
+    914|       }));
+    915|       expect.soft(refused, `${item.label}: the review is refused.`).to…
+       |                                                                     ^
+    916|       const entries = await securityLedger(mini.outputRoot);
+    917|       const successes = entries.filter((entry) => entry.event === 'aft…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: issue: no success entry.: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/storytime-book-pictures.test.ts:918:73
+    916|       const entries = await securityLedger(mini.outputRoot);
+    917|       const successes = entries.filter((entry) => entry.event === 'aft…
+    918|       expect.soft(successes.length, `${item.label}: no success entry.`…
+       |                                                                         ^
+    919|       const failures = entries.filter((entry) => entry.event === 'afte…
+    920|       expect.soft(failures.length, `${item.label}: one failure entry.`…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: issue: one failure entry.: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/storytime-book-pictures.test.ts:920:73
+    918|       expect.soft(successes.length, `${item.label}: no success entry.`…
+    919|       const failures = entries.filter((entry) => entry.event === 'afte…
+    920|       expect.soft(failures.length, `${item.label}: one failure entry.`…
+       |                                                                         ^
+    921|       const failureError = String((failures[0] as unknown as { error?:…
+    922|       expect.soft(failureError, `${item.label}: the failure names the …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: issue: the failure names the pattern.: expected '' to match /api-key/
+
+- Expected:
+/api-key/
+
++ Received:
+""
+
+ ❯ tests/storytime-book-pictures.test.ts:922:82
+    920|       expect.soft(failures.length, `${item.label}: one failure entry.`…
+    921|       const failureError = String((failures[0] as unknown as { error?:…
+    922|       expect.soft(failureError, `${item.label}: the failure names the …
+       |                                                                                  ^
+    923|       expect.soft(failureError, `${item.label}: the failure holds no c…
+    924|       const files = (await tree(mini.outputRoot)).map((file) => path.r…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: issue: no raw copy.: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/storytime-book-pictures.test.ts:925:97
+    923|       expect.soft(failureError, `${item.label}: the failure holds no c…
+    924|       const files = (await tree(mini.outputRoot)).map((file) => path.r…
+    925|       expect.soft(files.some((file) => file.startsWith('raw/')), `${it…
+       |                                                                                                 ^
+    926|       expect.soft(files.some((file) => file.endsWith('-minimax.json'))…
+    927|         .toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: issue: no review write.: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/storytime-book-pictures.test.ts:927:10
+    925|       expect.soft(files.some((file) => file.startsWith('raw/')), `${it…
+    926|       expect.soft(files.some((file) => file.endsWith('-minimax.json'))…
+    927|         .toBe(false);
+       |          ^
+    928|       await assertNoSyntheticValues([mini.outputRoot], values);
+    929|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: count key: the review is refused.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:915:69
+    913|         runner: async () => ({ stdout: item.text, stderr: '' }),
+    914|       }));
+    915|       expect.soft(refused, `${item.label}: the review is refused.`).to…
+       |                                                                     ^
+    916|       const entries = await securityLedger(mini.outputRoot);
+    917|       const successes = entries.filter((entry) => entry.event === 'aft…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: count key: no success entry.: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/storytime-book-pictures.test.ts:918:73
+    916|       const entries = await securityLedger(mini.outputRoot);
+    917|       const successes = entries.filter((entry) => entry.event === 'aft…
+    918|       expect.soft(successes.length, `${item.label}: no success entry.`…
+       |                                                                         ^
+    919|       const failures = entries.filter((entry) => entry.event === 'afte…
+    920|       expect.soft(failures.length, `${item.label}: one failure entry.`…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: count key: one failure entry.: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/storytime-book-pictures.test.ts:920:73
+    918|       expect.soft(successes.length, `${item.label}: no success entry.`…
+    919|       const failures = entries.filter((entry) => entry.event === 'afte…
+    920|       expect.soft(failures.length, `${item.label}: one failure entry.`…
+       |                                                                         ^
+    921|       const failureError = String((failures[0] as unknown as { error?:…
+    922|       expect.soft(failureError, `${item.label}: the failure names the …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: count key: the failure names the pattern.: expected '' to match /api-key/
+
+- Expected:
+/api-key/
+
++ Received:
+""
+
+ ❯ tests/storytime-book-pictures.test.ts:922:82
+    920|       expect.soft(failures.length, `${item.label}: one failure entry.`…
+    921|       const failureError = String((failures[0] as unknown as { error?:…
+    922|       expect.soft(failureError, `${item.label}: the failure names the …
+       |                                                                                  ^
+    923|       expect.soft(failureError, `${item.label}: the failure holds no c…
+    924|       const files = (await tree(mini.outputRoot)).map((file) => path.r…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: count key: no raw copy.: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/storytime-book-pictures.test.ts:925:97
+    923|       expect.soft(failureError, `${item.label}: the failure holds no c…
+    924|       const files = (await tree(mini.outputRoot)).map((file) => path.r…
+    925|       expect.soft(files.some((file) => file.startsWith('raw/')), `${it…
+       |                                                                                                 ^
+    926|       expect.soft(files.some((file) => file.endsWith('-minimax.json'))…
+    927|         .toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: count key: no review write.: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/storytime-book-pictures.test.ts:927:10
+    925|       expect.soft(files.some((file) => file.startsWith('raw/')), `${it…
+    926|       expect.soft(files.some((file) => file.endsWith('-minimax.json'))…
+    927|         .toBe(false);
+       |          ^
+    928|       await assertNoSyntheticValues([mini.outputRoot], values);
+    929|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T90: the Kimi decoded review fields pass the credential check before any write
+AssertionError: reason: the record is refused.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:965:69
+    963|         [...kimi.args, '--record', kimi.callId, '--raw', kimi.raw], ki…
+    964|       ));
+    965|       expect.soft(refused, `${item.label}: the record is refused.`).to…
+       |                                                                     ^
+    966|       expect.soft(await fileSnapshot(kimi.outputRoot), `${item.label}:…
+    967|         .toEqual(before);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T90: the Kimi decoded review fields pass the credential check before any write
+AssertionError: reason: the ledger stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "b1dd6b092630c6bccc22e5c4e6cfc4ec32dea2213938535d6933db64e9ffad3e",
++     "1b60136b07243b7f7f932f0b00961aa2e9576dc4bb7c1b709843be146e8f1bea",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-530127bf-220d-493a-8776-5a15e47421b6.txt",
++     "d9704ef1596605c2879c1ff867768c1b6b04e7497503a7bf71d8a6869093a99f",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "61f76a750966619e911f628e638b8eace10f3cb40cb78e59268e4c5c40eddd92",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ tests/storytime-book-pictures.test.ts:967:10
+    965|       expect.soft(refused, `${item.label}: the record is refused.`).to…
+    966|       expect.soft(await fileSnapshot(kimi.outputRoot), `${item.label}:…
+    967|         .toEqual(before);
+       |          ^
+    968|       for (const call of kimi.deps.log.mock.calls) {
+    969|         expect.soft(String(call[0]), `${item.label}: the log holds no …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T90: the Kimi decoded review fields pass the credential check before any write
+AssertionError: reason: the log holds no credential.: expected 'w01-readalong-p01: PASS — The key sk-…' not to contain 'sk-SYNTHETIC00000000000000000000'
+
+Expected: "sk-SYNTHETIC00000000000000000000"
+Received: "w01-readalong-p01: PASS — The key sk-SYNTHETIC00000000000000000000 is present."
+
+ ❯ tests/storytime-book-pictures.test.ts:969:89
+    967|         .toEqual(before);
+    968|       for (const call of kimi.deps.log.mock.calls) {
+    969|         expect.soft(String(call[0]), `${item.label}: the log holds no …
+       |                                                                                         ^
+    970|       }
+    971|       await assertNoSyntheticValues([kimi.outputRoot], values);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[31/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T90: the Kimi decoded review fields pass the credential check before any write
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T90: the Kimi decoded review fields pass the credential check before any write
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T90: the Kimi decoded review fields pass the credential check before any write
+AssertionError: reviews/w01-readalong-p01-v1-kimi.json: synthetic fixture 0: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ assertNoSyntheticValues tests/storytime-book-pictures.test.ts:419:120
+    417|     const bytes = await readFile(file);
+    418|     for (const [index, value] of values.entries()) {
+    419|       expect.soft(bytes.includes(Buffer.from(value)), `${path.relative…
+       |                                                                                                                        ^
+    420|     }
+    421|   }
+ ❯ tests/storytime-book-pictures.test.ts:971:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[32/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T90: the Kimi decoded review fields pass the credential check before any write
+AssertionError: issue: the record is refused.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:965:69
+    963|         [...kimi.args, '--record', kimi.callId, '--raw', kimi.raw], ki…
+    964|       ));
+    965|       expect.soft(refused, `${item.label}: the record is refused.`).to…
+       |                                                                     ^
+    966|       expect.soft(await fileSnapshot(kimi.outputRoot), `${item.label}:…
+    967|         .toEqual(before);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[33/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T90: the Kimi decoded review fields pass the credential check before any write
+AssertionError: issue: the ledger stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "7f0a3fc1214ad0982ca044c10e2569e7aa42b6021c3f13a54e2e6d902a7054ec",
++     "832db04c554913cc1432ccd1b43c990c57de971204bddc3fa157649a3349ca39",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-afa02bd1-0047-4e39-a783-a1ed622dc613.txt",
++     "67cdd9b8866f36de868cc073e9b5fb333020955c9fa69e57388ca1cece514710",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "7c2245f062de9440e9abb3650e4440a3d27e769760d2a6584946482253f58f24",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ tests/storytime-book-pictures.test.ts:967:10
+    965|       expect.soft(refused, `${item.label}: the record is refused.`).to…
+    966|       expect.soft(await fileSnapshot(kimi.outputRoot), `${item.label}:…
+    967|         .toEqual(before);
+       |          ^
+    968|       for (const call of kimi.deps.log.mock.calls) {
+    969|         expect.soft(String(call[0]), `${item.label}: the log holds no …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[34/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T90: the Kimi decoded review fields pass the credential check before any write
+AssertionError: count key: the record is refused.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:965:69
+    963|         [...kimi.args, '--record', kimi.callId, '--raw', kimi.raw], ki…
+    964|       ));
+    965|       expect.soft(refused, `${item.label}: the record is refused.`).to…
+       |                                                                     ^
+    966|       expect.soft(await fileSnapshot(kimi.outputRoot), `${item.label}:…
+    967|         .toEqual(before);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[35/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T90: the Kimi decoded review fields pass the credential check before any write
+AssertionError: count key: the ledger stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "b1e35aabc3cdf851b2902c5599431d276f54d54e68e3a71ad808d97782d2d4e8",
++     "bb35d9860fbaf97a27d81a5677cb792a41310b69bc0516f4398d02d930188d9f",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-696ba4ab-599d-4cb4-8e36-482a7c2a876e.txt",
++     "c6dd7c04aebd660ce7cb29182a538c2ee834d0c60e8d96e1ad4c73fa4969a61a",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "34ec833295c64bb021613ba3fee4229ea0e2dc4a419f5d40a15482fd5fc160ab",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ tests/storytime-book-pictures.test.ts:967:10
+    965|       expect.soft(refused, `${item.label}: the record is refused.`).to…
+    966|       expect.soft(await fileSnapshot(kimi.outputRoot), `${item.label}:…
+    967|         .toEqual(before);
+       |          ^
+    968|       for (const call of kimi.deps.log.mock.calls) {
+    969|         expect.soft(String(call[0]), `${item.label}: the log holds no …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[36/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T91: the server configuration keeps the Vite credential defaults and the absolute Storytime rule
+AssertionError: The deny rule .env stays.: expected [ 'out/storytime/**' ] to include '.env'
+ ❯ tests/storytime-book-pictures.test.ts:996:57
+    994|     const deny = config.server.fs?.deny ?? [];
+    995|     for (const rule of ['.env', '.env.*', '*.{crt,pem}', '**/.git/**']…
+    996|       expect.soft(deny, `The deny rule ${rule} stays.`).toContain(rule…
+       |                                                         ^
+    997|     }
+    998|     const absoluteRules = [
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[37/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T91: the server configuration keeps the Vite credential defaults and the absolute Storytime rule
+AssertionError: The deny rule .env.* stays.: expected [ 'out/storytime/**' ] to include '.env.*'
+ ❯ tests/storytime-book-pictures.test.ts:996:57
+    994|     const deny = config.server.fs?.deny ?? [];
+    995|     for (const rule of ['.env', '.env.*', '*.{crt,pem}', '**/.git/**']…
+    996|       expect.soft(deny, `The deny rule ${rule} stays.`).toContain(rule…
+       |                                                         ^
+    997|     }
+    998|     const absoluteRules = [
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[38/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T91: the server configuration keeps the Vite credential defaults and the absolute Storytime rule
+AssertionError: The deny rule *.{crt,pem} stays.: expected [ 'out/storytime/**' ] to include '*.{crt,pem}'
+ ❯ tests/storytime-book-pictures.test.ts:996:57
+    994|     const deny = config.server.fs?.deny ?? [];
+    995|     for (const rule of ['.env', '.env.*', '*.{crt,pem}', '**/.git/**']…
+    996|       expect.soft(deny, `The deny rule ${rule} stays.`).toContain(rule…
+       |                                                         ^
+    997|     }
+    998|     const absoluteRules = [
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[39/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T91: the server configuration keeps the Vite credential defaults and the absolute Storytime rule
+AssertionError: The deny rule **/.git/** stays.: expected [ 'out/storytime/**' ] to include '**/.git/**'
+ ❯ tests/storytime-book-pictures.test.ts:996:57
+    994|     const deny = config.server.fs?.deny ?? [];
+    995|     for (const rule of ['.env', '.env.*', '*.{crt,pem}', '**/.git/**']…
+    996|       expect.soft(deny, `The deny rule ${rule} stays.`).toContain(rule…
+       |                                                         ^
+    997|     }
+    998|     const absoluteRules = [
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[40/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T91: the server configuration keeps the Vite credential defaults and the absolute Storytime rule
+AssertionError: The absolute Storytime rule stays.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:1003:8
+    1001|     ];
+    1002|     expect.soft(absoluteRules.some((rule) => deny.includes(rule)), 'Th…
+    1003|       .toBe(true);
+       |        ^
+    1004|     expect.soft(deny, 'The relative Storytime rule may stay.').toConta…
+    1005|     expect.soft(config.server.host, 'The loopback host stays.').toBe('…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[41/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T93: the server returns and reads the checked real path and refuses a protected stage target
+AssertionError: The model path is the real path.: expected '/tmp/opencode/storytime-red-pHXAsn/re…' to be '/tmp/opencode/storytime-red-pHXAsn/re…' // Object.is equality
+
+Expected: "/tmp/opencode/storytime-red-pHXAsn/repo-9GSC3I/out/models/target.glb"
+Received: "/tmp/opencode/storytime-red-pHXAsn/repo-9GSC3I/out/hero/hero.glb"
+
+ ❯ tests/storytime-book-pictures.test.ts:1029:8
+    1027|     const allowlist = await allow({ repoRoot: space.repoRoot, stageDir…
+    1028|     expect.soft(await resolve(allowlist, '/out/hero/hero.glb'), 'The m…
+    1029|       .toBe(realpathSync(modelTarget));
+       |        ^
+    1030|     expect.soft(await resolve(allowlist, '/stage/sign.png'), 'The stag…
+    1031|       .toBe(realpathSync(stageTarget));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[42/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T93: the server returns and reads the checked real path and refuses a protected stage target
+AssertionError: The stage path is the real path.: expected '/tmp/opencode/storytime-red-pHXAsn/re…' to be '/tmp/opencode/storytime-red-pHXAsn/re…' // Object.is equality
+
+Expected: "/tmp/opencode/storytime-red-pHXAsn/repo-9GSC3I/docs/stage/target.png"
+Received: "/tmp/opencode/storytime-red-pHXAsn/repo-9GSC3I/docs/stage/sign.png"
+
+ ❯ tests/storytime-book-pictures.test.ts:1031:8
+    1029|       .toBe(realpathSync(modelTarget));
+    1030|     expect.soft(await resolve(allowlist, '/stage/sign.png'), 'The stag…
+    1031|       .toBe(realpathSync(stageTarget));
+       |        ^
+    1032|     const request = await middlewareDriver(serve(allowlist));
+    1033|     const modelResponse = await request('/out/hero/hero.glb');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[43/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T93: the server returns and reads the checked real path and refuses a protected stage target
+AssertionError: The protected stage target is refused.: expected '/tmp/opencode/storytime-red-pHXAsn/re…' to be undefined
+
+- Expected:
+undefined
+
++ Received:
+"/tmp/opencode/storytime-red-pHXAsn/repo-9GSC3I/out/storytime/l2/unit1/stage/sign.png"
+
+ ❯ tests/storytime-book-pictures.test.ts:1047:49
+    1045|     });
+    1046|     expect.soft(await resolve(protectedAllowlist, '/stage/sign.png'),
+    1047|       'The protected stage target is refused.').toBeUndefined();
+       |                                                 ^
+    1048|     const protectedRequest = await middlewareDriver(serve(protectedAll…
+    1049|     const protectedResponse = await protectedRequest('/stage/sign.png'…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[44/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T93: the server returns and reads the checked real path and refuses a protected stage target
+AssertionError: The protected stage target gets 404.: expected 200 to be 404 // Object.is equality
+
+- Expected
++ Received
+
+- 404
++ 200
+
+ ❯ tests/storytime-book-pictures.test.ts:1050:91
+    1048|     const protectedRequest = await middlewareDriver(serve(protectedAll…
+    1049|     const protectedResponse = await protectedRequest('/stage/sign.png'…
+    1050|     expect.soft(protectedResponse.res.statusCode, 'The protected stage…
+       |                                                                                           ^
+    1051|     expect.soft(protectedResponse.next, 'The protected stage target ca…
+    1052|     expect.soft(protectedResponse.body.toString(), 'The protected stag…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[45/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T93: the server returns and reads the checked real path and refuses a protected stage target
+AssertionError: The protected stage target sends no evidence.: expected 'SYNTHETIC private evidence' not to contain 'SYNTHETIC private evidence'
+ ❯ tests/storytime-book-pictures.test.ts:1053:12
+    1051|     expect.soft(protectedResponse.next, 'The protected stage target ca…
+    1052|     expect.soft(protectedResponse.body.toString(), 'The protected stag…
+    1053|       .not.toContain('SYNTHETIC private evidence');
+       |            ^
+    1054|   });
+    1055|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[46/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T94: the Kimi failure reason limit counts characters
+AssertionError: The 500-character reason is accepted.: expected Error: The failure reason is longer than … to be undefined
+
+- Expected:
+undefined
+
++ Received:
+Error {
+  "message": "The failure reason is longer than 500 bytes; nothing is written.",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:1067:65
+    1065|       );
+    1066|     } catch (caught) { error = caught; }
+    1067|     expect.soft(error, 'The 500-character reason is accepted.').toBeUn…
+       |                                                                 ^
+    1068|     expect.soft(code, 'The 500-character reason returns 0.').toBe(0);
+    1069|     const entries = await securityLedger(kimi.outputRoot);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[47/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T94: the Kimi failure reason limit counts characters
+AssertionError: The 500-character reason returns 0.: expected undefined to be +0 // Object.is equality
+
+- Expected:
+0
+
++ Received:
+undefined
+
+ ❯ tests/storytime-book-pictures.test.ts:1068:62
+    1066|     } catch (caught) { error = caught; }
+    1067|     expect.soft(error, 'The 500-character reason is accepted.').toBeUn…
+    1068|     expect.soft(code, 'The 500-character reason returns 0.').toBe(0);
+       |                                                              ^
+    1069|     const entries = await securityLedger(kimi.outputRoot);
+    1070|     expect.soft(entries.length, 'The ledger holds the begin and the fa…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[48/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T94: the Kimi failure reason limit counts characters
+AssertionError: The ledger holds the begin and the failure entry.: expected 1 to be 2 // Object.is equality
+
+- Expected
++ Received
+
+- 2
++ 1
+
+ ❯ tests/storytime-book-pictures.test.ts:1070:86
+    1068|     expect.soft(code, 'The 500-character reason returns 0.').toBe(0);
+    1069|     const entries = await securityLedger(kimi.outputRoot);
+    1070|     expect.soft(entries.length, 'The ledger holds the begin and the fa…
+       |                                                                                      ^
+    1071|     expect.soft(entries[1]).toMatchObject({ event: 'after-call', statu…
+    1072|     const long = await securityKimiFixture();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[49/54]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T94: the Kimi failure reason limit counts characters
+AssertionError: expected undefined to match object { event: 'after-call', …(2) }
+
+- Expected:
+{
+  "event": "after-call",
+  "reason": "กกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกก",
+  "status": "failure",
+}
+
++ Received:
+undefined
+
+ ❯ tests/storytime-book-pictures.test.ts:1071:29
+    1069|     const entries = await securityLedger(kimi.outputRoot);
+    1070|     expect.soft(entries.length, 'The ledger holds the begin and the fa…
+    1071|     expect.soft(entries[1]).toMatchObject({ event: 'after-call', statu…
+       |                             ^
+    1072|     const long = await securityKimiFixture();
+    1073|     const before = await fileSnapshot(long.outputRoot);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[50/54]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  6 failed | 99 passed (105)
+   Start at  14:17:29
+   Duration  113.89s (transform 1.63s, setup 0ms, import 3.17s, tests 108.82s, environment 1ms)
+

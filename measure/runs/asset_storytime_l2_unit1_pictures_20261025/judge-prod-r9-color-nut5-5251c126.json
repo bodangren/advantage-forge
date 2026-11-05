@@ -1,0 +1,19 @@
+{
+  "group": "prod-r9-color-nut5",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w01-story-page-a-nut",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nut-color-t4.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a nut (1). Action: none. Seen: one large peanut in its shell with two round bumps, a narrow waist, and a netted tan texture. It rests on an open, flat hand. Nan stands at the right: two round buns with a red ring band (the right bun is cut by the frame), brown eyes, an orange T-shirt with a white star. She matches the cast note. Nuts counted: 1. No other nut. mustShow: one nut only: shown (1 nut). Clearly a peanut: shown (two bumps, narrow waist, netted shell). Nan's open hand: shown (palm up, fingers spread, the peanut on it). The nut is large in the middle: shown (the nut is the largest object, in the middle band; its center is a little left of the page center because Nan fills the right). Small marks: the pointed tip of the peanut nearly touches Nan's cheek. The right edge cuts Nan's head and her right bun. No text in the picture."
+    }
+  ],
+  "summary": { "files": 1, "pass": 1, "fail": 0 }
+}

@@ -1,0 +1,9 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 15
+book file requests refused: 0
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 3.98% (89536 of 2250000 pixels black).
+l2-w01-check-row-fish v1: rendered; stage c7d7ce4aa3465d8dbbdd109af2053dff07ef00dcea8f38d81641486afb8d3bf7; file w01/rows/l2-w01-check-row-fish-v1.png; lineart w01/rows/l2-w01-check-row-fish-line-v1.png; size 1500 x 1500; render peak rss mb: 496

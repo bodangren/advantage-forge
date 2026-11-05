@@ -1,0 +1,138 @@
+Week 2 element sheet review (Muse input sheets)
+Reviewer: opencode-go/mimo-v2.6-flash
+Bar: Daniel 2026-11-01 14:15 ICT
+Date: 2026-11-02
+Index: out/storytime-review/w02-staging/index.md
+Output: measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-w02-elements.json
+
+Scope
+-----
+11 current sheets in out/storytime/l2/unit1/w02/muse/elements/.
+Each sheet feeds later week 2 pages. The sheets are not pages.
+I opened each sheet file with the read tool, not only the combined sheets-1..3.png.
+I matched each sheet to its page specs in docs/storytime/l2-unit1/w02/muse/.
+I read the text and goal of every matched page.
+
+Bar applied
+-----------
+A small mark at a nose, an open ear line, an outlined eyebrow band, small dark
+shading inside ears, or a simplified branch or bush is not a defect.
+A defect is only what a teacher or a child sees at book size: a wrong or changed
+character, a broken face, a clearly wrong hand or limb, a wrong or missing prop
+the sentence needs, a layout fault, text in the picture, gray or shading in the
+line art, or a line gap that makes coloring hard.
+For an input sheet I also check: plain white background, no people, no text or
+letters, the object count and parts are right, and the object reads as the word
+at book size.
+
+Results (provisional, then refined after a second look)
+------------------------------------------------------
+sheet                                used by   clean  reason if not clean
+prop-alligator-sheet-m1-color.png        1     yes
+prop-ant-sheet-m2-color.png              1     yes
+prop-balls-sheet-m1-color.png            1     yes
+prop-birds-sheet-m1-color.png            1     yes
+prop-cupcakes-sheet-m1-color.png         2     yes
+prop-ducks-sheet-m1-color.png            1     yes
+prop-kites-sheet-m1-color.png            1     yes
+prop-picnic-blanket-sheet-m1-color.png   4     yes
+prop-sun-sheet-m1-color.png              1     yes
+set-park-empty-m2-color.png              9     yes
+set-playground-empty-m3-color.png        9     yes
+
+All 11 sheets are clean. No sheet fails the bar. No page is at blocking risk.
+
+Sheet notes
+-----------
+alligator: one friendly baby alligator, three-quarter view. Four short legs show
+(two front, two back). Big dark eyes with highlights, smile with small white
+teeth, cream belly, thick tail. Plain white background, no text. Reads as
+"alligator" at book size. Page l2-w02-check-row-alligator needs this picture.
+
+ant (m2): one ant, dark red-brown, three round body parts, two antennae, small
+smile, big eyes with highlights. Six legs show: four on the near side, two on the
+far side. Plain white background, no text. Reads as "ant" at book size.
+The prompt asked for three legs per side. The total is six, and six is what a
+teacher counts. Under the bar this is not a defect. Page l2-w02-check-row-ant
+uses m2 (m1 with four legs stays in the folder).
+
+balls: five balls in a row, red, orange, yellow, green, blue. Same size, plain
+color, no pattern. Plain white background, no text. Count is five. Page
+l2-w02-story-page-how-many-balls-five needs five balls on the park grass.
+
+birds: four small blue birds in a row. The first two face front, the third and
+fourth face the side. Orange beaks, black eyes with highlights, folded wings,
+short tails, orange feet. Plain white background, no text. Count is four. Page
+l2-w02-story-page-how-many-birds-four needs four birds on the low branch.
+
+cupcakes: left plate holds seven cupcakes, four at the back and three at the
+front, pink cups with white cream swirls. Right plate is empty with soft cream
+smudges. Plain white background, no text. Count is seven. Pages
+l2-w02-story-page-how-many-cakes-seven and l2-w02-story-page-how-many-cakes-oh-no-pip
+need the full plate and the empty plate.
+
+ducks: three white ducks with orange beaks, small black eyes, orange feet. First
+faces front, second faces the side, third faces three-quarter front. Each sits
+low as if floating. Plain white background, no text. Count is three. Page
+l2-w02-story-page-how-many-ducks-three needs three ducks on the pond.
+
+kites: two diamond kites, one red and one yellow, side by side with clear space.
+Each has a long string with three small bows of the same color. Whole kite and
+whole tail show. Plain white background, no text. Count is two. The string reads
+straight and stiff. Under the bar this is not a defect: the object reads as a
+kite at book size. Page l2-w02-story-page-how-many-kites-two needs two kites
+with strings the children hold.
+
+picnic blanket: one red blanket with a wide cream border and no pattern. Left
+view from a little above, one corner folded. Right view from the low front, flat
+and smooth. Plain white background, no text. Two views of one blanket follow the
+sheet convention. Pages: l2-w02-cover-how-many, l2-w02-story-page-how-many-cakes-seven,
+l2-w02-story-page-how-many-cakes-oh-no-pip, l2-w02-story-page-how-many-friends-six.
+
+sun: one yellow-orange disc with a soft glow and eight short rounded triangle
+rays. No face. Plain white background, no text. Ray count is eight. Page
+l2-w02-check-row-sun needs this picture.
+
+park set (m2): empty sunny park. One large low tree at the left with a wide
+crown and one low thick branch to the right. One pond with gray and tan stones
+and lily pads at the right. One sun, two clouds, bushes at the back, open grass
+in the middle foreground. No people, no animals, no text.
+Builder flaw: the leaf cluster on the low branch is an odd arc shape.
+Judged under the bar: a simplified branch or bush is not a defect. At book size
+the cluster reads as leaves. Not a defect.
+Page risk: low, not blocking. The birds page needs four birds on the branch.
+The branch stays long and mostly bare, so four birds fit. That page also passes
+the low-branch reference out/storytime-low-branch/views/three-quarter.png.
+Pages: cover-how-many, balls-five, birds-four, cakes-seven, cakes-oh-no-pip,
+ducks-three, friends-six, kites-two, suns-one (9 pages).
+
+playground set (m3): empty sunny playground. Left: low climbing frame with a
+front ladder, top platform, and rail. It reads as a frame to climb, not a table,
+and it stands clearly lower than the slide. Middle: one wooden balance beam on
+the ground. Right: taller slide with a left ladder, top platform, rail, and a
+yellow slide down to the right. Clear space between the three. No people, no text.
+Builder flaw: the beam is a round log, not the square bar of the 3D beam asset.
+Judged under the bar: a round wooden beam still reads as a balance beam. A
+teacher or a child sees a beam to walk on. Not a defect.
+Page risk: low, not blocking. The three beam pages also pass the square beam
+asset out/beam/views/three-quarter.png. A page can show the round set beam with
+the square asset. Both read as a beam at book size.
+Pages: cover-can-i, can-i, can-i-b, can-nan, i-can, i-can-b, nan-and-i-can,
+nan-can, nan-can-b (9 pages).
+
+Second look (refinement)
+-----------------------
+I re-opened every sheet after the first pass and re-checked the counts:
+ant 6 legs, alligator 4 legs, balls 5, birds 4, ducks 3, kites 2, sun 8 rays,
+cupcakes 7 plus empty plate, blanket 2 views of 1 blanket, park 1 tree 1 pond
+1 sun, playground 1 frame 1 beam 1 slide. All counts hold. Verdicts unchanged.
+All 11 page reference paths name the current sheet files (m2 for ant and park,
+m3 for playground).
+
+Summary
+-------
+sheets: 11, clean: 11, not clean: 0
+builder flaws judged: 2 of 2 are not defects under the bar
+page risk: no page is at blocking risk
+files written: this log and item-review-w02-elements.json
+no picture or spec edited, no commit made

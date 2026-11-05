@@ -1,0 +1,21 @@
+Batch 49r6 review, week 5, one row.
+Reviewer: minimax-cn-coding-plan/MiniMax-M3.1-Flash
+Bar: Daniel 2026-11-01 14:15 ICT
+
+Set A: 1 row.
+l2-w05-story-page-i-have-two-ears: rating 8, verdict clean.
+- Each arm ends in 1 hand. The index finger touches its ear. The other fingers stay curled. No second palm and no spread fingers in the color file or in the line file.
+- Both ears are clear in both files.
+- Sam is on model: red T-shirt with 2 white stripes, blue shorts, blue shoes.
+- The line file draws the 2 stripes as 2 closed bands.
+- The side branch of the tree reads as a loop with a small oval in the line file. It is background, so it is a note.
+- The big tree is cut at the left print edge and the pond stones at the right print edge. Both are background.
+- The line print is 4000x3000 and pure black on white. Pixels that are neither 0 nor 255: 0.
+- Ear count 2, hand count 1 per arm, sun count 1, in both files.
+
+Controls K1 to K3, the same in both files:
+- K1 a-nose: rating 4, defect, broken-face. The text names the nose. The color file shows 1 nose and the line file shows 0. This is the known-defect control.
+- K2 practice-line nose: rating 9, clean. One profile head with 1 clear nose in both files. The line file is 1600x1600 and pure black on white.
+- K3 a-nut: rating 9, clean. 1 brown nut in the open hand of Nan in both files. The open hand shows 5 digits in both files.
+
+Status: pass. All rows of set A are clean.

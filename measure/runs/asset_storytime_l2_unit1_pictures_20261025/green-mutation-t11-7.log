@@ -1,0 +1,83 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/storytime-book-pictures.test.ts (111 tests | 1 failed) 231212ms
+         × T124: the long pattern name is cut and the task 10 suffix stays in every message 2126ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T124: the long pattern name is cut and the task 10 suffix stays in every message
+AssertionError: long pattern name/minimax: the refusal keeps the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2780:14
+    2778|             .toBeLessThanOrEqual(500);
+    2779|           expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the…
+    2780|             .toBe(true);
+       |              ^
+    2781|           expect.soft(message, `${context}: the refusal holds the firs…
+    2782|             .toContain(pattern.slice(0, 32));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T124: the long pattern name is cut and the task 10 suffix stays in every message
+AssertionError: long pattern name/minimax: the ledger error keeps the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2791:14
+    2789|             .toBeLessThanOrEqual(500);
+    2790|           expect.soft(ledgerError.endsWith(TOKEN_SUFFIX), `${context}:…
+    2791|             .toBe(true);
+       |              ^
+    2792|           expect.soft(ledgerError, `${context}: the ledger error holds…
+    2793|             .toContain(pattern.slice(0, 32));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T124: the long pattern name is cut and the task 10 suffix stays in every message
+AssertionError: long pattern name/minimax: the CLI error keeps the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2809:16
+    2807|               .toBeLessThanOrEqual(500);
+    2808|             expect.soft(finalMessage.endsWith(TOKEN_SUFFIX), `${contex…
+    2809|               .toBe(true);
+       |                ^
+    2810|             expect.soft(finalMessage, `${context}: the CLI error holds…
+    2811|               .toContain(pattern.slice(0, 32));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T124: the long pattern name is cut and the task 10 suffix stays in every message
+AssertionError: long pattern name/kimi: the refusal has 500 characters at most.: expected 528 to be less than or equal to 500
+ ❯ tests/storytime-book-pictures.test.ts:2818:14
+    2816|             .toMatch(/env:TASK11_LONG_/);
+    2817|           expect.soft(kimiMessage.length, 'long pattern name/kimi: the…
+    2818|             .toBeLessThanOrEqual(500);
+       |              ^
+    2819|           expect.soft(kimiMessage.endsWith(TOKEN_SUFFIX), 'long patter…
+    2820|             .toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 110 passed (111)
+   Start at  22:50:31
+   Duration  234.64s (transform 1.73s, setup 0ms, import 2.94s, tests 231.21s, environment 0ms)
+

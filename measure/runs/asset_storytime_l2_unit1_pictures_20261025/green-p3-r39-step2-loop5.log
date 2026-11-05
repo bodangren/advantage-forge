@@ -1,0 +1,6 @@
+storytime-nest: 17,158 triangles, 0.188 x 0.076 x 0.191 m, built in 5632 ms
+  woven-twigs              12800 tris  (4680 ms)
+  three-blue-eggs           4358 tris  (463 ms)
+texture  none (vertex colors)
+glb      out/storytime-nest/storytime-nest.glb  (400 KB)
+render   out/storytime-nest/render.png  (352 ms)

@@ -1,0 +1,21 @@
+{
+  "reviewer": "openai/gpt-6-luna#high",
+  "seen": {
+    "look-reference-nan-and-pip.png": "Nan and Pip have soft, round shapes, clear faces, and bright colors.",
+    "storytime-nut.png": "The cap edge has fewer specks than before, but dark jagged marks remain.",
+    "storytime-nut-batch-6.png": "The earlier cap edge has more black grit than the current image.",
+    "l2-w01-practice-line-nut-v3.png": "One large brown acorn-shaped nut sits alone on white, with a clean outline.",
+    "l2-w01-practice-line-nut-line-v3.png": "The black outline is clean and the pointed nut shape stays clear.",
+    "l2-w01-story-page-a-nut-v3.png": "The nut is clear, but Nan's head is cropped and her hand closes around it.",
+    "l2-w01-story-page-a-nut-line-v3.png": "The nut and figure are clear, but broken marks crowd Nan's face and arm.",
+    "l2-w01-story-page-a-nest-and-a-nut-v5.png": "Pip sniffs a ground-level nut below a visible nest in the tree fork.",
+    "l2-w01-story-page-a-nest-and-a-nut-line-v5.png": "The nest and puppy are identifiable, but the nest edges and scene lines look rough.",
+    "l2-w01-story-page-a-nest-v7.png": "The nest and three eggs sit by a tree fork, while the canopy bends into an odd arch.",
+    "l2-w01-story-page-a-nest-line-v7.png": "The tree and nest are recognizable, but the nest has dense broken black marks."
+  },
+  "storytime-nut": { "overall": 6.2, "pass": false, "critical": ["Black specks remain along the cap edge."], "issues": ["The prop still reads as a nut, not a lid or pot."], "fix": "Remove the remaining black marks along the cap edge." },
+  "l2-w01-practice-line-nut": { "overall": 8.0, "pass": true, "critical": [], "issues": [], "fix": "", "goals": { "One nut alone on a white page": "pass", "A child names the object as a nut in color and line art": "pass", "Nut is large and centered": "pass" } },
+  "l2-w01-story-page-a-nut": { "overall": 5.8, "pass": false, "critical": ["Facial detail breaks into noisy marks in the line art."], "issues": ["Known defect: eye-corner skin flaps remain on Nan's face.", "Known defect: the finger and mouth detail remains on the nose page.", "Nan's head is cut by the frame.", "Nan holds the nut in a closed hand, not an open hand."], "fix": "Show Nan's full head and an open palm holding the nut." , "goals": { "One big brown nut in Nan's open hand, close up": "fail", "Nan matches the specified age, face, hair, and clothes": "partial", "One clear picture with the main thing large in the middle": "partial", "Plain light background": "pass" } },
+  "l2-w01-story-page-a-nest-and-a-nut": { "overall": 6.6, "pass": false, "critical": ["Nest detail breaks into noise in the line art."], "issues": ["The branch fork reads as a branch, not a hand.", "The nest sits in the fork with three eggs and reads as raised above Pip.", "Pip is cropped at the lower edge."], "fix": "Reduce fine nest detail and keep Pip inside the frame.", "goals": { "Pip sniffs a big brown nut in the grass under a low tree": "partial", "Nest with three light blue eggs sits on a low branch": "pass", "Nest and nut are both large and clear": "partial", "Simple garden with soft colors": "partial", "Pip matches the specified puppy appearance": "partial" } },
+  "l2-w01-story-page-a-nest": { "overall": 6.4, "pass": false, "critical": ["Nest detail breaks into noise in the line art."], "issues": ["Known defect: Nan's pointing hand reads as a fist.", "The trunk base reads as a tree, not a lamp post.", "The nest sits at the tree fork, but the leaf arch looks like a curled hook.", "The nest is small and off-center."], "fix": "Enlarge and center the nest, simplify its line detail, and reshape the leaves as a tree canopy.", "goals": { "Small bird's nest with three light blue eggs on a low tree branch": "partial", "Nan points at the nest": "partial", "One clear picture with the main thing large in the middle": "fail", "Simple garden background with soft colors": "partial", "Nan matches the specified age, face, hair, and clothes": "partial" } }
+}

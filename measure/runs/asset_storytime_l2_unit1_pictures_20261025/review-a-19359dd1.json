@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "The writer meets the PM contract (decision 2, points 1-6) and Forge notes (a) and (b). Tests T152 to T161 prove each point with real PNG fixtures and no mocks. Failure atomicity holds: every check runs before the first write, and a refusal leaves no manifest and no delivery folder (T156, T157). A second run repeats the manifest bytes (T161): checkedAt values come from the approval list, not the wall clock, and batch files sort canonically. The deliver CLI requires all four flags, reads the list read-only, logs its SHA-256, and exits 1 on errors (verified live). The rowCaptureJob export is additive and changes no caller. Gate run: Tests 15 passed (15).",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] review-a: No test observes the write order; the mutation 'write manifest.json before the copies' passes all ten tests. Rationale: The current code writes the copies first and the manifest last, so the documented property holds by statement order only; a re-order would survive the suite. Owner: Green.",
+    "F2 [Nit] review-a: The person review schema requires observedCounts; the Red API in plan.md records evidenceClass and observedCounts as optional. Rationale: The implemented contract is stricter than the recorded one, so an approval list built to the plan text without observedCounts is refused; the deviation is undocumented. Owner: Green.",
+    "F3 [Nit] review-a: The writer does not run the class B calm-top or class C white-corner checks on Muse prints. Rationale: Decision 2 and Forge note (a) name only the approved file and the class sizes, so this is out of scope for this task pair; the checks belong to the Phase 3 delivery task and the PM contract if they must gate delivery. Owner: Phase 3 delivery task / PM.",
+    "F4 [Nit] review-a: T142 and T147 of tests/storytime-book-pictures.test.ts pin picture list v3 (c3e23cfd) and fail against Workbooks v4 (6d05dfc5, commit 87ecc6aa); PICTURE_LIST_V3_SHA256 also blocks the row render and verify commands on the v4 list. Rationale: The week 1 rows are identical in v3 and v4, the deliver command pins no hash and logs the list SHA-256, and the failing tests sit outside this task pair. Owner: Phase 4 list reconciliation task or a Mid Red retry of the pinning task."
+  ],
+  "evidence": [
+    "audited_head_sha 19359dd1 equals git HEAD; phase_base_sha 15a7bf0b; role_base_sha 2b59ccaa (Red) and 0bf8858a (Green); scope commits 66d0e57d, 0bf8858a, f41fe108, 7b843204.",
+    "Contract point 1-3 and 6: T153 gives one job per approved row, job.id equals the row id, and the unapproved row l2-w01-story-page-a-mop has no job.",
+    "Contract point 2: T152 asserts exactly one manifest.json at the delivery root in the StorytimeManifest shape (version 1, batchHashAlgorithm, jobs, batches).",
+    "Contract point 4: T154 and T155 prove the delivered names match the list names and the bytes equal the Muse prints with matching SHA-256; T158 proves the Muse originals stay.",
+    "Contract point 5: the writer delivers bare file names at the delivery root; the batch grouping uses directory w01 only inside the manifest; the test resolves files by name part.",
+    "Forge note (a): T156 proves class A, B, and C sizes from PICTURE_SIZES and refuses wrong sizes with the row id in the error.",
+    "Forge note (b): T159 proves the Kimi review maps to reviews.kimi with kind model-pre-check, provider kimi, verdict pass, and the delivered color SHA-256; reviews.minimax stays undefined; reviews.person holds only the named person; a row without reviews gets an empty object; the strict zod schema rejects extra review keys.",
+    "Failure atomicity: src/storytime/muse-delivery.ts collects every check result before the first write; the throw at the problems guard precedes mkdir, the copies, and the manifest write; T156 and T157 assert no manifest.json on a refusal and the delivery folder is never created.",
+    "Determinism: the manifest text is built from row order and canonical batch file order; checkedAt values come from the approval list strings; T161 proves a byte-identical second run.",
+    "Review verdicts: a fail verdict for Kimi or person throws inside mapReviews, lands in problems, and refuses the whole delivery; no unclean row is delivered.",
+    "renderEvidenceFile is the empty string: LineArtManifest is a TypeScript interface with no minimum length; no zod manifest schema exists in the repository; verifyManifest never reads the field; contract point 5 limits Workbooks to the file name part. Verified as accepted, not a defect.",
+    "CLI deliver: live run with no flags prints the usage error and exits 1; the command reads the list read-only through loadPictureList, logs 'Picture list <file> SHA-256 <hash>', resolves paths under repoRoot, and writes only under --delivery.",
+    "Callers: rowCaptureJob is exported with no signature change; the internal caller at book-pictures.ts line 3755 is unchanged; muse-delivery.ts line 228 imports it; tsc owned errors 0.",
+    "Test meaning: T152 to T161 exercise the real writer against real sharp-generated PNG fixtures on real temporary folders; no mock of the code under test.",
+    "Anti-pattern scan: no vacuous-pass check (T152 asserts existence first); no digit-only count assertion; plan exit codes match the red and green logs (A5 clean).",
+    "F1 verified: the copy loop (lines 331-333) precedes the manifest write only by statement order; no test reads intermediate state; the Green mutation log green-mutation-t12-* records the same result.",
+    "F4 verified: T142 and T147 live in tests/storytime-book-pictures.test.ts, which is outside the mandated gate command; the mandated gate passed 15 of 15."
+  ],
+  "commands": [
+    "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts tests/storytime-picture-rows.test.ts --maxWorkers=1' -> exit 0; Test Files 2 passed (2); Tests 15 passed (15)",
+    "node --import tsx scripts/storytime-book-pictures.ts deliver -> usage error, exit 1"
+  ],
+  "changed_files": [
+    "src/storytime/muse-delivery.ts",
+    "src/storytime/book-pictures.ts",
+    "tests/storytime-muse-delivery.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "audited_head": "19359dd1d9f024a4ab7612f4e5fcf08c091ae029",
+  "phase_base_sha": "15a7bf0b2a59b8137a05805666df6736dc256167",
+  "role_base_sha": "2b59ccaa04783fb6ffb478b95e624533bcd5cd24"
+}

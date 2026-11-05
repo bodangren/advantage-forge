@@ -1,0 +1,6 @@
+Line-art line width: 2 px (minimum 12 px).
+Line-art ink coverage: 2.06% (247011 of 12000000 pixels black).
+Line-art line width: 15 px (minimum 12 px).
+Line-art ink coverage: 16.47% (1976064 of 12000000 pixels black).
+Verification failed:
+w01-readalong-p05 v2: line-art structural check failed: Line-art twin lines must be at least 12 px thick; measured 2 px.

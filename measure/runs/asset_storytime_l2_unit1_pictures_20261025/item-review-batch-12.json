@@ -1,0 +1,52 @@
+{
+  "reviewer": "openai/gpt-6-luna#high",
+  "seen": {
+    "look-reference-nan-and-pip.png": "The reference shows soft, rounded, bright chibi characters on white.",
+    "storytime-nest-batch-10-practice-line.png": "The earlier line art has broken, rough edges around the nest and twig marks.",
+    "storytime-nest-batch-10-check-line.png": "The earlier line art has broken rim and crossing twig strokes.",
+    "storytime-nest.png": "Four views show a shallow brown cup with tan twigs and three pale blue eggs.",
+    "l2-w01-practice-line-nest-v8.png": "The nest sits alone on white with three light cyan eggs and visible twig forms.",
+    "l2-w01-practice-line-nest-line-v8.png": "The nest and eggs are recognizable, but many strokes are broken or rough.",
+    "l2-w01-check-row-nest-v6.png": "The nest sits alone on white with three pale cyan eggs inside the cup.",
+    "l2-w01-check-row-nest-line-v6.png": "The nest is recognizable, but the rim and twig strokes have gaps and noisy ends."
+  },
+  "storytime-nest": {
+    "overall": 6.2,
+    "pass": false,
+    "critical": ["The line art has many broken strokes and noisy gaps on the rim and twigs."],
+    "issues": ["The eggs in the row pictures read pale mint-cyan, not clearly light blue.", "The dense round outlines can read as a bowl before they read as a nest."],
+    "fix": "Clean the line art into continuous twig strokes and make the row eggs clearly light blue."
+  },
+  "l2-w01-practice-line-nest": {
+    "overall": 5.9,
+    "pass": false,
+    "critical": ["The line art has broken, dashed, or noisy strokes."],
+    "issues": ["The row eggs read pale mint-cyan, not clearly light blue.", "The dense round line-art shape can read as a bowl."],
+    "fix": "Use continuous clean twig strokes and make the eggs clearly light blue.",
+    "goals": {
+      "one nest alone on white": "pass",
+      "one nest on the page": "pass",
+      "child names it a nest in color": "pass",
+      "child names it a nest in 1-bit line art": "partial",
+      "three eggs read light blue": "fail",
+      "objectCounts { nest: 1 }": "pass",
+      "sizeClass C, 1500 x 1500": "pass"
+    }
+  },
+  "l2-w01-check-row-nest": {
+    "overall": 5.9,
+    "pass": false,
+    "critical": ["The line art has broken, dashed, or noisy strokes."],
+    "issues": ["The row eggs read pale mint-cyan, not clearly light blue.", "The dense round line-art shape can read as a bowl."],
+    "fix": "Use continuous clean twig strokes and make the eggs clearly light blue.",
+    "goals": {
+      "one nest alone on white": "pass",
+      "one nest on the page": "pass",
+      "child names it a nest in color": "pass",
+      "child names it a nest in 1-bit line art": "partial",
+      "three eggs read light blue": "fail",
+      "objectCounts { nest: 1 }": "pass",
+      "sizeClass C, 1500 x 1500": "pass"
+    }
+  }
+}

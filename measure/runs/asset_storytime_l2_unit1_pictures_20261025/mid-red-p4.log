@@ -1,0 +1,112 @@
+# Mid Red log: Phase 4 Task 1, week delivery, and stage check
+
+- Role: measure-mid-red (`opencode-go/deepseek-v4.1-flash`).
+- Track: `asset_storytime_l2_unit1_pictures_20261025`.
+- Phase: "Phase 4: Remaining pictures and cover" (P4).
+- phase_base_sha: `fc76c27209402c54354447693e9b291d4411ff79`.
+- role_base_sha: `fc76c27209402c54354447693e9b291d4411ff79` (`git rev-parse --short=8 HEAD` at start).
+- Green model: `claude-code/claude-sonnet-5-5#high` (Anthropic family). Coder: none.
+
+## Steps
+
+1. Read `measure/index.md`, `measure/tracks.md`, `spec.md`, `plan.md`, `contract.md`, and
+   `test-strategy.md` section 7, subsection "Phase 4 under the Muse path (2026-11-02)" (4.1 to 4.4).
+2. Ran `git status --short`. The dirty paths are other sessions' work (skills, bench trials,
+   other track plans, generated files). No dirty path is one this role owns.
+3. Confirmed the next free test number: 172 is the maximum (T151 in
+   `tests/storytime-book-pictures.test.ts`, T172 in `tests/storytime-muse-delivery.test.ts`).
+   The strategy command `grep -ho "it('T[0-9]*" ... | sort -u | tail -3` sorts as text and shows
+   T97 to T99, so this role used `sort -n`. The new rows start at T173.
+4. Checked the live list read only: `rows 196 week1 30 week8 4 weeks2to7 162 A 96 B 12 C 54
+   renamed 4`. The `pictures.json` SHA-256 is `6d05dfc5...062a58` and the `pictures.md` SHA-256
+   is `7cc4c201...81ad56`.
+5. Wrote the Red tests:
+   - `tests/storytime-book-pictures.test.ts`: T142 and T147 move to the version 4 pins. T173 to
+     T177 are new.
+   - `tests/storytime-muse-delivery.test.ts`: T181 and T182 are new. T152 to T172 do not change.
+   - `tests/storytime-stage-check.test.ts`: new file, T178 to T180, fixtures in a temp folder.
+6. Ran the RED_TEST_COMMAND. Exit code 1. `Tests  3 failed | 166 passed (169)`.
+7. Ran the STAGING_TEST_COMMAND. Exit code 1. `Tests  3 failed (3)`.
+8. measure-guard refused the Phase 4 task marker change. Phase 4 Task 1 stays `[ ]`, and the Red
+   evidence block sits under the task. This role did not bypass the guard.
+9. Committed the tests (`c0035c28`) and the plan evidence (`37fa3501`).
+
+## RED_TEST_COMMAND
+
+```sh
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts tests/storytime-picture-rows.test.ts tests/storytime-muse-delivery.test.ts --maxWorkers=1'
+```
+
+- Exit code: `1`.
+- `Test Files  2 failed | 1 passed (3)`.
+- `Tests  3 failed | 166 passed (169)`.
+- Failing rows: T173, T177, T182. Each failure names a labeled expectation.
+- T173: `PICTURE_LIST_SHA256` is undefined. `PICTURE_LIST_V3_SHA256` is still exported. The
+  render row command refuses the live list. The verify row command reads the version 3 pin.
+  The render row command accepts the version 3 bytes and stops at a missing stage file.
+- T177: `Invalid week: 8`. The weeks 2 to 7 helper is absent. A run with no `--week` stops at the
+  version 3 pin.
+- T182: a week 3 entry in a week 2 run is delivered. The skipped lines name two rows, not one.
+- Guards that pass at the base: T174, T175, T176, and T181. T142 and T147 also pass: they pin the
+  live list, and `loadPictureList` holds no pin. T173 owns the code pin. The strategy expected
+  `f = 4`; the measured value is `f = 3` for this reason.
+- Log: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-p4-red.log`.
+
+## STAGING_TEST_COMMAND
+
+```sh
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-stage-check.test.ts --maxWorkers=1'
+```
+
+- Exit code: `1`.
+- `Test Files  1 failed (1)`.
+- `Tests  3 failed (3)`: T178, T179, T180.
+- Each row fails because `scripts/storytime-stage-check.mjs` is absent. The run log holds the
+  labeled expectations `The stage check script exists.: expected false to be true` and
+  `Stage check exit code: expected 1 to deeply equal 0`.
+- Log: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-p4-staging.log`.
+
+## Test contract for Green
+
+- `PICTURE_LIST_SHA256` holds the version 4 value. `PICTURE_LIST_V3_SHA256` is not exported.
+- The `render --dry-run` and `verify` row commands accept the live list and refuse the version 3
+  bytes with `The picture list changed: expected SHA-256 6d05dfc5...`.
+- `parseWeek` accepts 8 and refuses 0 and 9.
+- `weeksTwoToSevenRows(rows)` returns 162 rows and no week 1 or week 8 row.
+- `deliver --week 2` filters the list to week 2. A week 3 approval entry exits non-zero and
+  writes nothing. The `Skipped` lines name only week 2 rows.
+- The stage check prints the 13 labels in the strategy order. Exit codes are 0, 1, and 2.
+  `--list-sha256 <hex>` is the test seam for a fixture week; the live gate omits it.
+- A row with an empty list prompt passes an empty spec goal. A non-empty goal against an empty
+  prompt fails. The non-empty rule covers `colorPrompt` and `linePrompt` only.
+- Element specs sit in the sibling folder `muse-elements/`, not in the `--specs` folder.
+
+## Questions with defaults
+
+- Question: is `--list-sha256 <hex>` the accepted seam for the stage check fixtures? Default
+  taken: yes. The live gate omits the option and keeps the version 4 pin.
+- Question: is the name `weeksTwoToSevenRows` the accepted helper name? Default taken: yes.
+- Question: do the four week 8 rows stay out of the 162-row production scope until the PM
+  assigns them? Default taken: yes, as strategy 4.2 says.
+
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: done
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4
+task: Phase 4 Task 1 (reconcile picture list version 4), the week delivery change, and the week 2 staging check
+baseline_sha: fc76c27209402c54354447693e9b291d4411ff79
+role_base_sha: fc76c27209402c54354447693e9b291d4411ff79
+head_sha: 37fa3501bb385c7aebc0e83593a946bdb6f10d30
+commits: c0035c28 tests/storytime-book-pictures.test.ts, tests/storytime-muse-delivery.test.ts, tests/storytime-stage-check.test.ts; 37fa3501 measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+tests_run: RED_TEST_COMMAND exit 1; Test Files 2 failed | 1 passed (3); Tests 3 failed | 166 passed (169); failed T173, T177, T182. STAGING_TEST_COMMAND exit 1; Test Files 1 failed (1); Tests 3 failed (3); failed T178, T179, T180.
+files_changed: tests/storytime-book-pictures.test.ts (T142 and T147 moved to version 4, T173 to T177 new); tests/storytime-muse-delivery.test.ts (T181 and T182 new, T152 to T172 unchanged); tests/storytime-stage-check.test.ts (new, T178 to T180); measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md (Red evidence block); this report (untracked evidence)
+plan_updates: A Red evidence block sits under Phase 4 Task 1. It records the role base, the models, the test commit, both commands with exit codes and labeled summaries, each failing row, the passing guards, and the staging test seam. Phase 4 Task 1 stays [ ]. measure-guard refused the marker change while the Phase 3 heading has no checkpoint, and this role did not bypass the guard. No task is [x].
+handoff: Green implements the contract in "Test contract for Green". T142 and T147 pass at the base; do not count them as Red. The v3 hash appears only in T173 as the labeled negative control. T181 passes at the base and is a guard. T152 to T172 must stay green. The stage check script does not exist yet; Green writes it. Run the guard mutations of strategy 4.2 after Green.
+dispositions: none
+model: opencode-go/deepseek-v4.1-flash (Red, this role). Green for this phase runs on the Anthropic family. The families differ.
+model_deviation: none. The orchestrator supplied the Red route. This role ran no ra-quota call.
+facts_changed: The live picture list is version 4: 196 rows, `List SHA-256 6d05dfc5...`, `pictures.md 7cc4c201...`. Weeks 2 to 7 hold 162 rows (A 96, B 12, C 54). Week 8 holds 4 rows. The four renamed `-b` ids are in the list. No task moved to [x].
+dirty_path_classification: Relevant paths were clean at the start and are clean after the commits. The untracked logs `mid-red-p4.log`, `mid-red-p4-red.log`, and `mid-red-p4-staging.log` are evidence. The other modified files (`.claude/skills/`, `AGENTS.md`, `bench/`, `measure/generated/`, `measure/tracks.md`, other track plans, `measure/workflow.md`) and the untracked `assets/` and `bench/` files belong to other sessions and are preserved. No file under `src/`, `scripts/`, `docs/storytime/l2-unit1/w02/`, `assets/`, or another test file changed.
+anti_patterns: No digit-only count: every count is a labeled integer or a labeled key. No vacuous pass: T178 asserts 3 element paths and every label; T174 checks 196 rows and the class coverage; T176 checks all three classes. No over-broad filter. No archived-track path: the tests name no `measure/tracks/` path. The stage fixtures run in a temp folder. Every Red failure names a labeled expectation.
+END_MEASURE_AGENT_RESULT

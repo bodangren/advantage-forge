@@ -1,0 +1,20 @@
+{
+  "reviewer": "openai/gpt-6-luna#high",
+  "seen": {
+    "look-reference-nan-and-pip.png": "Nan and Pip use bright, rounded forms with soft, warm shading.",
+    "storytime-nut-batch-8.png": "The earlier nut has a dark, dotted cap seam and a prominent stem mark.",
+    "storytime-nut.png": "The new nut has a tapered shell, a broad darker cap, and a stem in four views.",
+    "storytime-nut-cap-close.png": "The close cap views show a soft boundary without visible black specks.",
+    "storytime-nut-stem-close.png": "The close stem views show a smooth stem tip without black marks."
+  },
+  "storytime-nut": {
+    "overall": 7.5,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "line art not in this batch",
+      "The cap edge has a soft color blend, but the darker cap remains distinct in the four views."
+    ],
+    "fix": ""
+  }
+}

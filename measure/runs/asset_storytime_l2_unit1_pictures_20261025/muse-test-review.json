@@ -1,0 +1,94 @@
+{
+  "reviewer": "kimi-code-plan-cn/kimi-for-coding",
+  "seen": {
+    "out/storytime-review/batch-21/look-reference-nan-and-pip.png": "Nan: black hair in two buns with red ties, orange T-shirt with white star, red shorts, white shoes, round face, no eyelashes; Pip: golden-brown puppy with cream muzzle and red collar with gold tag.",
+    "out/storytime-review/batch-21/sprout-ben-render.png": "Ben: chibi boy with brown hair, blue T-shirt, dark blue shorts, grey shoes, round head, big brown eyes, no eyelashes.",
+    "out/storytime-review/muse-test/l2-w01-story-page-a-nut-sheet.png": "2x2 sheet for a-nut: 3D color close-up, Muse color full body, thick 3D line art, thin Muse line art.",
+    "out/storytime-review/muse-test/l2-w01-story-page-a-nut-muse-color.png": "Nan holds a big brown acorn in her right hand; full body on a white background.",
+    "out/storytime-review/muse-test/l2-w01-story-page-a-nut-muse-line-1bit.png": "Thin closed black lines of Nan with the acorn; eye rings, eyelash ticks, cheek circles, hem and shoe lines.",
+    "out/storytime-review/muse-test/l2-w01-story-page-hello-i-am-ben-sheet.png": "2x2 sheet for hello-i-am-ben: 3D color and Muse color with green bag on the hook and red bag on the floor; two line arts.",
+    "out/storytime-review/muse-test/l2-w01-story-page-hello-i-am-ben-muse-color-r3.png": "Ben waves with an open hand; green school bag on the wall hook and red bag on the floor; wooden room.",
+    "out/storytime-review/muse-test/l2-w01-story-page-hello-i-am-ben-muse-line-1bit.png": "Thin closed black lines of Ben waving; hair-lock lines, eye rings, cheek circles, hem and shoe lines.",
+    "out/storytime-review/muse-test/l2-w01-story-page-a-nose-sheet.png": "2x2 sheet for a-nose: 3D color close-up of Nan touching her nose, Muse color full body, two line arts.",
+    "out/storytime-review/muse-test/l2-w01-story-page-a-nose-muse-color.png": "Nan laughs with one index finger at her nose; full body on a white background.",
+    "out/storytime-review/muse-test/l2-w01-story-page-a-nose-muse-line-1bit.png": "Thin closed black lines of Nan touching her nose; eye rings, eyelash ticks, hem and shoe lines.",
+    "/tmp/opencode/wb-shadow/content/storytime/l2/print/pictures.json": "Goals: a-nut (one big brown nut in Nan's open hand, close up), a-nose (Nan touches her own nose with one finger and laughs), hello-i-am-ben (Ben hangs his school bag on a hook and waves; Pat's bag moves on the floor)."
+  },
+  "l2-w01-story-page-a-nut": {
+    "color": {
+      "overall": 6.5,
+      "clean": false,
+      "defects": [
+        "the fingers on the hand that holds the acorn are short and partly merged; the hand reads as a lump under the nut",
+        "long eyelashes added; the cast Nan has no eyelashes"
+      ],
+      "same_characters": true,
+      "look_kept": true,
+      "layout_kept": false,
+      "goal_shown": true,
+      "notes": "Nan matches the cast: buns with red ties, orange star shirt, red shorts, white shoes. Soft round 3D chibi look kept. The big brown nut sits in her open hand, so the goal shows. The 3D page is a close-up; the Muse page pulls the camera back and shows the full body with wide white margins, so the size and camera of the layout change. No mouth or eye defect. No text or logo. Rated G."
+    },
+    "line": {
+      "overall": 4.0,
+      "clean": false,
+      "defects": [
+        "thin hairline stroke; much thinner than the thick even stroke of the 3D line art",
+        "blush circles under the eyes",
+        "eyelash ticks at the outer eye corners",
+        "eye rings and highlight circles inside the eyes",
+        "extra hem, sock, and shoe lines and texture dashes on the acorn"
+      ],
+      "print_usable": false,
+      "notes": "Lines are closed, black on white, with no gray, no speck, and no text. The stroke is thin and uneven, and the many fine interior lines are hard for a five-year-old to color. At 1920 x 1280 the lines would get thinner still when scaled to the 4000 x 3000 print size. The drawing matches the Muse color picture and the goal."
+    }
+  },
+  "l2-w01-story-page-hello-i-am-ben": {
+    "color": {
+      "overall": 8.0,
+      "clean": true,
+      "defects": [],
+      "same_characters": true,
+      "look_kept": true,
+      "layout_kept": true,
+      "goal_shown": true,
+      "notes": "Ben matches the cast: brown hair, blue T-shirt, dark blue shorts, grey shoes. The waving hand is open with separated fingers; the side hand is a clean relaxed hand. Mouth and eyes are clean and even. The green school bag hangs on the hook and the red bag sits on the floor, so the goal shows. The pose, framing, and camera match the 3D page. The 3D chibi look stays. Small change: Muse adds eyelashes that the cast Ben does not have; I did not count this as a defect. No text or logo. Rated G."
+    },
+    "line": {
+      "overall": 4.5,
+      "clean": false,
+      "defects": [
+        "thin hairline stroke; much thinner than the thick even stroke of the 3D line art",
+        "many hair-lock lines inside the hair",
+        "eye rings and highlight circles inside the eyes",
+        "blush circles under the eyes",
+        "extra hem and shoe lines"
+      ],
+      "print_usable": false,
+      "notes": "Lines are closed, black on white, with no gray, no speck, and no text. The pose matches the Muse color picture and the goal. The thin stroke and the many interior lines, above all the hair locks, are hard for a five-year-old to color. The low resolution of 1920 x 1280 makes the lines thinner still at print size."
+    }
+  },
+  "l2-w01-story-page-a-nose": {
+    "color": {
+      "overall": 7.5,
+      "clean": true,
+      "defects": [],
+      "same_characters": true,
+      "look_kept": true,
+      "layout_kept": false,
+      "goal_shown": true,
+      "notes": "Nan matches the cast: buns with red ties, orange star shirt, red shorts, white shoes. She laughs with an open mouth, and one index finger touches the base of her nose, as on the 3D page. Eyes and mouth are clean; no skin flaps, no streaks. The 3D chibi look stays. The 3D page is a close-up; the Muse page pulls the camera back and shows the full body with wide white margins, so the size and camera of the layout change. Small change: Muse adds eyelashes that the cast Nan does not have; I did not count this as a defect. No text or logo. Rated G."
+    },
+    "line": {
+      "overall": 4.5,
+      "clean": false,
+      "defects": [
+        "thin hairline stroke; much thinner than the thick even stroke of the 3D line art",
+        "eye rings and highlight circles inside the eyes",
+        "eyelash ticks at the outer eye corners",
+        "extra hem, sock, and shoe lines"
+      ],
+      "print_usable": false,
+      "notes": "Lines are closed, black on white, with no gray, no speck, and no text. The drawing matches the Muse color picture and the goal: one finger at the nose, laughing mouth. The thin stroke and the fine interior lines are hard for a five-year-old to color, and the 1920 x 1280 size makes the lines thinner still at print size."
+    }
+  }
+}

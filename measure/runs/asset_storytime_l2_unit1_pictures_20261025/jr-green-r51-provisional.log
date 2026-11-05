@@ -1,0 +1,12 @@
+Role: measure-jr-green, build round 51 (Storytime week 1 pictures)
+Session: Green · P3 · storytime_l2_unit1_pictures · r51
+Model: deepseek/deepseek-flash#high (provider deepseek, model deepseek-flash)
+Coder delegation: none (Green coder model: none)
+Phase 3 Red model: minimax-cn-coding-plan/MiniMax-M3
+role_base_sha: 47c0c6a4 (git rev-parse --short=8 HEAD at start)
+phase_base_sha: 15a7bf0b
+Track: asset_storytime_l2_unit1_pictures_20261025
+Phase: Phase 3: Week 1 pictures
+Task: render Pat page version 3 so his face shows; fix the framed animal pictures if the cause is in the asset.
+
+Status: started

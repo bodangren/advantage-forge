@@ -1,0 +1,822 @@
+{
+  "reviewer": "opencode-go/mimo-v2.6-flash",
+  "verdict": "final: 18 of 19 sheet keys clean under the bar; cast-tom-sheet-m3 (the Tom remake) is clean; cast-tom-sheet-m2 stays failed as superseded",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "scope": "Week 4 Muse input sheets (11 element sheets, 7 pending-look cast sheets). Sheets feed later week 4 pages. The sheets are not pages.",
+  "index": "out/storytime-review/w04-staging/index.md",
+  "prop-cake-sheet": {
+    "file": "out/storytime/l2/unit1/w04/muse/elements/prop-cake-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w04/muse-elements/prop-cake-sheet.json",
+    "spec_goal": "A small cake.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-grandma.json",
+        "text": "This is my grandma.",
+        "goal": "Lily (drawn young, about five years old) stands next to Grandma in a bright living room with a green sofa and a window and points at Grandma; Grandma holds a small cake. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/prop-cake-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One small round cake on a white plate. Two yellow sponge layers, a white and pink cream swirl, three red cherries, three candles (red, blue, yellow) with flames.",
+      "count_check": "Three candles, three cherries, two sponge layers. The page goal names the same counts.",
+      "input_checks": "Plain white background. No people. No text or letters. One cake. It reads as the word cake at book size.",
+      "page_fit": "The grandma page needs a small cake that Grandma holds. The sheet gives one cake with the exact parts the goal names."
+    }
+  },
+  "prop-doll-pam-sheet": {
+    "file": "out/storytime/l2/unit1/w04/muse/elements/prop-doll-pam-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w04/muse-elements/prop-doll-pam-sheet.json",
+    "spec_goal": "Pam, a small rag doll with yellow yarn hair and a red dress.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-cover-pam.json",
+        "text": "Pam",
+        "goal": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, hugs a small rag doll with yellow yarn hair and a red dress in a cozy living room with a blue sofa, a soft rug, and a toy box. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/prop-doll-pam-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-is-this-pam.json",
+        "text": "Is this Pam?",
+        "goal": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, points at a big round bump under a blanket on the blue sofa; the corner of a small red doll dress shows at the edge of the blanket. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/prop-doll-pam-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-nan-and-pam-nap.json",
+        "text": "Nan and Pam nap.",
+        "goal": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, is asleep on the blue sofa under the blanket and hugs a small rag doll with yellow yarn hair and a red dress. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/prop-doll-pam-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-pam-can-nap.json",
+        "text": "Pam can nap.",
+        "goal": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, puts a small rag doll with yellow yarn hair and a red dress to bed in a small shoe box with a tiny blanket, on the soft rug of the cozy living room with the blue sofa. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/prop-doll-pam-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-pam-is-in-a-pan.json",
+        "text": "Pam is in a pan.",
+        "goal": "A small rag doll with yellow yarn hair and a red dress sits in a big yellow toy pan on the rug; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, laughs. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/prop-doll-pam-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-pam-is-on-a-man.json",
+        "text": "Pam is on a man!",
+        "goal": "Nan's dad, a man of about thirty-five with short straight black hair, a blue T-shirt, gray shorts, and black sandals, lies on the blue sofa with his eyes closed; a small rag doll with yellow yarn hair and a red dress sits on his tummy. Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, laughs. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/prop-doll-pam-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-pam-is-on-a-map.json",
+        "text": "Pam is on a map.",
+        "goal": "A small rag doll with yellow yarn hair and a red dress lies on a big paper map that is open on the rug; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, points at the doll. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/prop-doll-pam-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-pam.json",
+        "text": "This is Pam.",
+        "goal": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, holds up a small rag doll with yellow yarn hair and a red dress in a cozy living room with a blue sofa, a soft rug, and a toy box and smiles. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/prop-doll-pam-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-the-man.json",
+        "text": "This is the man!",
+        "goal": "Nan's dad, a man of about thirty-five with short straight black hair, a blue T-shirt, gray shorts, and black sandals, pops out from under the blanket on the blue sofa with a small rag doll with yellow yarn hair and a red dress on his head, and laughs; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, laughs too. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/prop-doll-pam-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One rag doll in three views: front sitting, three-quarter sitting, lying flat. Yellow yarn hair with a fringe and two yarn bunches, red dress with short sleeves, round black button eyes, stitched smile, cream cloth limbs.",
+      "count_check": "Three views of one doll. Every page draws ONE doll, and the sheet gives the same doll three times.",
+      "input_checks": "Plain white background. No real people. No text or letters. It reads as a rag doll at book size.",
+      "page_fit": "Nine Pam pages need this exact doll: yellow yarn hair, red dress, black button eyes. The sheet shows all three parts in three views, including the lying-flat view the page prompts name."
+    }
+  },
+  "prop-milk-sheet": {
+    "file": "out/storytime/l2/unit1/w04/muse/elements/prop-milk-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w04/muse-elements/prop-milk-sheet.json",
+    "spec_goal": "A glass of milk.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-check-row-milk.json",
+        "text": "milk",
+        "goal": "",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/prop-milk-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One clear glass filled with white milk, standing upright. One small white milk drop sits beside the glass.",
+      "input_checks": "Plain white background. No people. No animals. No text or letters. One glass. It reads as the word milk at book size.",
+      "page_fit": "The check row needs one picture that reads as milk. The sheet gives one glass of milk with the drop the check-row prompt names."
+    }
+  },
+  "prop-monkey-sheet": {
+    "file": "out/storytime/l2/unit1/w04/muse/elements/prop-monkey-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w04/muse-elements/prop-monkey-sheet.json",
+    "spec_goal": "A monkey.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-check-row-monkey.json",
+        "text": "monkey",
+        "goal": "",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/prop-monkey-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One small brown monkey sitting upright. Tan face, tan belly, two big round ears, big round friendly eyes, long curled tail behind the head.",
+      "input_checks": "Plain white background. No people. No text or letters. One monkey. It reads as the word monkey at book size.",
+      "page_fit": "The check row needs one picture that reads as monkey. The sheet gives one monkey with the parts the check-row prompt names."
+    }
+  },
+  "prop-mouse-sheet": {
+    "file": "out/storytime/l2/unit1/w04/muse/elements/prop-mouse-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w04/muse-elements/prop-mouse-sheet.json",
+    "spec_goal": "A mouse.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-check-row-mouse.json",
+        "text": "mouse",
+        "goal": "",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/prop-mouse-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One small gray mouse sitting upright. Cream belly, two big round ears with pink insides, big round eyes, pink nose, whiskers, thin curved pink tail.",
+      "input_checks": "Plain white background. No people. No text or letters. One mouse. It reads as the word mouse at book size.",
+      "page_fit": "The check row needs one picture that reads as mouse. The sheet gives one mouse with the parts the check-row prompt names."
+    }
+  },
+  "prop-newspaper-sheet": {
+    "file": "out/storytime/l2/unit1/w04/muse/elements/prop-newspaper-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w04/muse-elements/prop-newspaper-sheet.json",
+    "spec_goal": "A folded newspaper, with no print.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-grandpa.json",
+        "text": "This is my grandpa.",
+        "goal": "Lily (drawn young, about five years old) stands next to Grandpa in a bright living room with a green sofa and a window and points at him; Grandpa holds a newspaper. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/prop-newspaper-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One blank cream paper object, folded flat, seen from above at an angle. Soft rounded folds at both ends, stacked flat layer edges at the front and right.",
+      "builder_gap_cloth_read": "The builder says it reads as a stack of folded cloth. I judge it reads as folded blank paper at book size. The stacked flat layer edges read as paper layers. The no-print rule removes the newsprint cues, so blank cream paper is the required look.",
+      "input_checks": "Plain white background. No people. No text or letters, no lines, no photos. One folded object. The page prompt calls for plain blank cream paper with no print at all, and the sheet shows that.",
+      "page_fit": "The grandpa page goal has Grandpa hold a newspaper. The page text is only 'This is my grandpa.', so no word names the prop. The sheet gives the blank folded paper the page prompt describes.",
+      "page_risk": "Low, not blocking. At full size the soft folds look a little like cloth. At book size, in Grandpa's hand, the layer edges read as folded paper."
+    }
+  },
+  "prop-paper-map-sheet": {
+    "file": "out/storytime/l2/unit1/w04/muse/elements/prop-paper-map-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w04/muse-elements/prop-paper-map-sheet.json",
+    "spec_goal": "A big paper map, open and flat.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-pam-is-on-a-map.json",
+        "text": "Pam is on a map.",
+        "goal": "A small rag doll with yellow yarn hair and a red dress lies on a big paper map that is open on the rug; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, points at the doll. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/prop-paper-map-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One big cream paper map, open and flat, with soft fold lines. A blue river, a green hill with small trees, a red house, a dotted path, a blue pond, and a red cross marker.",
+      "input_checks": "Plain white background. No people. No text or letters anywhere on the map. One map. It reads as the word map at book size.",
+      "page_fit": "The map page needs one big open paper map on the rug for the doll to lie on. The sheet gives that with the parts the page prompt names: river, hill with trees, red house, dotted path, red cross, no letters."
+    }
+  },
+  "prop-shoe-box-bed-sheet": {
+    "file": "out/storytime/l2/unit1/w04/muse/elements/prop-shoe-box-bed-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w04/muse-elements/prop-shoe-box-bed-sheet.json",
+    "spec_goal": "A shoe box bed with a tiny blanket.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-pam-can-nap.json",
+        "text": "Pam can nap.",
+        "goal": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, puts a small rag doll with yellow yarn hair and a red dress to bed in a small shoe box with a tiny blanket, on the soft rug of the cozy living room with the blue sofa. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/prop-shoe-box-bed-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One kraft-brown cardboard shoe box, open, with its lid leaned upright at the back. A tiny light-blue blanket and a tiny white pillow lie inside the box.",
+      "input_checks": "Plain white background. No people. No animals. No text or letters. One box with three parts: lid, blanket, pillow. It reads as a box bed at book size.",
+      "page_fit": "The nap page needs a shoe box with a tiny blanket for the doll to sleep in. The sheet gives the box, the lid at the back, and the blanket. The white pillow matches the page prompt."
+    }
+  },
+  "set-house-exterior-empty": {
+    "file": "out/storytime/l2/unit1/w04/muse/elements/set-house-exterior-empty-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w04/muse-elements/set-house-exterior-empty.json",
+    "spec_goal": "The small white house with a red door and a green garden, no people.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-dog-pip.json",
+        "text": "This is my dog, Pip!",
+        "goal": "Mom, Dad, Grandma, Grandpa, Tom (drawn young, about eight years old), and Lily (drawn young, about five years old) stand in a row in front of the small white house with the red door; Pip the puppy jumps into the middle of the row with a big happy face, and everyone laughs. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/set-house-exterior-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-family.json",
+        "text": "This is my family.",
+        "goal": "Mom, Dad, Grandma, Grandpa, Tom (drawn young, about eight years old), and Lily (drawn young, about five years old) stand in a row in front of the small white house with the red door and smile at the viewer. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/set-house-exterior-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-house.json",
+        "text": "This is my house.",
+        "goal": "Lily (drawn young, about five years old) stands in front of a small white house with a red door and a green garden, and points at the house. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/set-house-exterior-empty-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One small white house with a gray roof, one red door, two white windows, one gray chimney. A gray stone path runs from the door. Low green hedges with red and yellow flowers line both sides. A wide green lawn fills the front. Light-blue sky behind.",
+      "input_checks": "No people. No animals. No text or letters. One house, one door, two windows, one chimney. The flower marks on the hedges are small marks, not defects.",
+      "page_fit": "Three pages need this house: the family row, the Pip row, and Lily pointing at the house. The wide empty lawn gives space for six people. The red door and the two windows match every page prompt."
+    }
+  },
+  "set-lily-living-room-empty": {
+    "file": "out/storytime/l2/unit1/w04/muse/elements/set-lily-living-room-empty-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w04/muse-elements/set-lily-living-room-empty.json",
+    "spec_goal": "Empty living room of Lily with a green sofa and a window, no people.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-cover-my-family.json",
+        "text": "My Family",
+        "goal": "Lily (drawn young, about five years old) stands in front of Mom, Dad, Grandma, Grandpa, and Tom (drawn young, about eight years old) in a bright living room with a green sofa and a window, and waves. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/set-lily-living-room-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-brother.json",
+        "text": "This is my brother.",
+        "goal": "Lily (drawn young, about five years old) stands next to Tom (drawn young, about eight years old) in a bright living room with a green sofa and a window and points at him; Tom waves. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/set-lily-living-room-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-dad.json",
+        "text": "This is my dad.",
+        "goal": "Lily (drawn young, about five years old) stands next to Dad in a bright living room with a green sofa and a window and points at him. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/set-lily-living-room-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-grandma.json",
+        "text": "This is my grandma.",
+        "goal": "Lily (drawn young, about five years old) stands next to Grandma in a bright living room with a green sofa and a window and points at Grandma; Grandma holds a small cake. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/set-lily-living-room-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-grandpa.json",
+        "text": "This is my grandpa.",
+        "goal": "Lily (drawn young, about five years old) stands next to Grandpa in a bright living room with a green sofa and a window and points at him; Grandpa holds a newspaper. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/set-lily-living-room-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-mom.json",
+        "text": "This is my mom.",
+        "goal": "Lily (drawn young, about five years old) stands next to Mom in a bright living room with a green sofa and a window and points at Mom with a big smile. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/set-lily-living-room-empty-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One empty living room. Warm cream walls, light wooden floor. One green sofa with two green cushions in the middle. One window with cream curtains at the right of the sofa. One small round wooden side table with a lamp at the left. One plain round cream rug in front.",
+      "input_checks": "No people. No animals. No text or letters. One sofa, two cushions, one window, one table with lamp, one rug. No pictures on the walls.",
+      "page_fit": "Six pages use this room: the cover and five family pages. The prompts need a green sofa with two cushions, a window with curtains at the right, a side table with a lamp at the left, and a plain round rug. The sheet gives all four."
+    }
+  },
+  "set-nan-living-room-empty": {
+    "file": "out/storytime/l2/unit1/w04/muse/elements/set-nan-living-room-empty-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w04/muse-elements/set-nan-living-room-empty.json",
+    "spec_goal": "Empty cozy living room of Nan with a blue sofa, a soft rug, and a toy box, no people.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-cover-pam.json",
+        "text": "Pam",
+        "goal": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, hugs a small rag doll with yellow yarn hair and a red dress in a cozy living room with a blue sofa, a soft rug, and a toy box. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/set-nan-living-room-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-is-this-pam.json",
+        "text": "Is this Pam?",
+        "goal": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, points at a big round bump under a blanket on the blue sofa; the corner of a small red doll dress shows at the edge of the blanket. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/set-nan-living-room-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-nan-and-pam-nap.json",
+        "text": "Nan and Pam nap.",
+        "goal": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, is asleep on the blue sofa under the blanket and hugs a small rag doll with yellow yarn hair and a red dress. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/set-nan-living-room-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-pam-can-nap.json",
+        "text": "Pam can nap.",
+        "goal": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, puts a small rag doll with yellow yarn hair and a red dress to bed in a small shoe box with a tiny blanket, on the soft rug of the cozy living room with the blue sofa. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/set-nan-living-room-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-pam-is-in-a-pan.json",
+        "text": "Pam is in a pan.",
+        "goal": "A small rag doll with yellow yarn hair and a red dress sits in a big yellow toy pan on the rug; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, laughs. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/set-nan-living-room-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-pam-is-on-a-man.json",
+        "text": "Pam is on a man!",
+        "goal": "Nan's dad, a man of about thirty-five with short straight black hair, a blue T-shirt, gray shorts, and black sandals, lies on the blue sofa with his eyes closed; a small rag doll with yellow yarn hair and a red dress sits on his tummy. Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, laughs. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/set-nan-living-room-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-pam-is-on-a-map.json",
+        "text": "Pam is on a map.",
+        "goal": "A small rag doll with yellow yarn hair and a red dress lies on a big paper map that is open on the rug; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, points at the doll. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/set-nan-living-room-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-pam.json",
+        "text": "This is Pam.",
+        "goal": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, holds up a small rag doll with yellow yarn hair and a red dress in a cozy living room with a blue sofa, a soft rug, and a toy box and smiles. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/set-nan-living-room-empty-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-the-man.json",
+        "text": "This is the man!",
+        "goal": "Nan's dad, a man of about thirty-five with short straight black hair, a blue T-shirt, gray shorts, and black sandals, pops out from under the blanket on the blue sofa with a small rag doll with yellow yarn hair and a red dress on his head, and laughs; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, laughs too. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/set-nan-living-room-empty-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One empty cozy living room. Warm cream walls, light wooden floor. One blue sofa in the middle with one light-blue cushion and one folded light-blue blanket on its left arm. One big round cream rug in front. One wooden toy box with a ball and blocks at the right. One small window at the left.",
+      "toy_box_check": "The box holds one yellow ball, several small blocks, and one small flat item. No doll in the box. The index check asks for a ball and blocks and no doll, and the sheet gives that. No page counts the toys.",
+      "input_checks": "No people. No animals. No text or letters. One sofa, one cushion, one blanket, one rug, one toy box, one window.",
+      "page_fit": "Nine Pam pages use this room. The prompts need a blue sofa with one cushion, a folded blanket on its arm, a round rug, a toy box, and a small window at the left. The sheet gives all five. The blanket is draped over the arm, which reads as folded at book size."
+    }
+  },
+  "cast-lily-sheet": {
+    "file": "out/storytime/l2/unit1/w04/muse/elements/cast-lily-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w04/muse-elements/cast-lily-sheet.json",
+    "spec_goal": "Cast sheet of Lily, front and three-quarter view, white background. Pending look: a proposal for Daniel; the picture list gives no look.",
+    "style_match": "match: Lily matches the approved child cast style (chibi sprout: big head about half the figure, short body, big eyes). Same soft 3D render. Her rounder build than Tom is within the child style.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-cover-my-family.json",
+        "text": "My Family",
+        "goal": "Lily (drawn young, about five years old) stands in front of Mom, Dad, Grandma, Grandpa, and Tom (drawn young, about eight years old) in a bright living room with a green sofa and a window, and waves. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-lily-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-brother.json",
+        "text": "This is my brother.",
+        "goal": "Lily (drawn young, about five years old) stands next to Tom (drawn young, about eight years old) in a bright living room with a green sofa and a window and points at him; Tom waves. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-lily-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-dad.json",
+        "text": "This is my dad.",
+        "goal": "Lily (drawn young, about five years old) stands next to Dad in a bright living room with a green sofa and a window and points at him. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-lily-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-dog-pip.json",
+        "text": "This is my dog, Pip!",
+        "goal": "Mom, Dad, Grandma, Grandpa, Tom (drawn young, about eight years old), and Lily (drawn young, about five years old) stand in a row in front of the small white house with the red door; Pip the puppy jumps into the middle of the row with a big happy face, and everyone laughs. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-lily-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-family.json",
+        "text": "This is my family.",
+        "goal": "Mom, Dad, Grandma, Grandpa, Tom (drawn young, about eight years old), and Lily (drawn young, about five years old) stand in a row in front of the small white house with the red door and smile at the viewer. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-lily-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-grandma.json",
+        "text": "This is my grandma.",
+        "goal": "Lily (drawn young, about five years old) stands next to Grandma in a bright living room with a green sofa and a window and points at Grandma; Grandma holds a small cake. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-lily-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-grandpa.json",
+        "text": "This is my grandpa.",
+        "goal": "Lily (drawn young, about five years old) stands next to Grandpa in a bright living room with a green sofa and a window and points at him; Grandpa holds a newspaper. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-lily-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-house.json",
+        "text": "This is my house.",
+        "goal": "Lily (drawn young, about five years old) stands in front of a small white house with a red door and a green garden, and points at the house. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-lily-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-mom.json",
+        "text": "This is my mom.",
+        "goal": "Lily (drawn young, about five years old) stands next to Mom in a bright living room with a green sofa and a window and points at Mom with a big smile. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-lily-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Lily in two views: front and three-quarter. Short dark-brown bob with a straight fringe, one small lilac bow at the side, big brown eyes, lilac dress with short sleeves and a small white collar, white socks, pink shoes. Open hands with five fingers.",
+      "two_views_same_person": "Yes. Same hair, bow position, dress, socks, and shoes in both views.",
+      "hair_clothes_match": "Matches the page description exactly: bob, straight fringe, lilac bow, big brown eyes, lilac dress with white collar, white socks, pink shoes.",
+      "checks": "Five-finger hands. No text. Nothing held. Rated G. White background.",
+      "builder_gap_round": "The builder says Lily is rounder than Tom m2. That fits the approved child cast: the approved children are round with big heads. Not a defect."
+    }
+  },
+  "cast-tom-sheet": {
+    "file": "out/storytime/l2/unit1/w04/muse/elements/cast-tom-sheet-m2-color.png",
+    "spec": "docs/storytime/l2-unit1/w04/muse-elements/cast-tom-sheet.json",
+    "spec_goal": "Cast sheet of Tom, front and three-quarter view, white background. Pending look: a proposal for Daniel; the picture list gives no look.",
+    "style_match": "no match: Tom's body is not the chibi sprout style of the approved child cast. His head is about 38 percent of his height; the approved children are about 50 percent. His legs and arms are long and slim, and his neck shows. He reads as a small adult-style boy beside Lily.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-cover-my-family.json",
+        "text": "My Family",
+        "goal": "Lily (drawn young, about five years old) stands in front of Mom, Dad, Grandma, Grandpa, and Tom (drawn young, about eight years old) in a bright living room with a green sofa and a window, and waves. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-tom-sheet-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-brother.json",
+        "text": "This is my brother.",
+        "goal": "Lily (drawn young, about five years old) stands next to Tom (drawn young, about eight years old) in a bright living room with a green sofa and a window and points at him; Tom waves. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-tom-sheet-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-dog-pip.json",
+        "text": "This is my dog, Pip!",
+        "goal": "Mom, Dad, Grandma, Grandpa, Tom (drawn young, about eight years old), and Lily (drawn young, about five years old) stand in a row in front of the small white house with the red door; Pip the puppy jumps into the middle of the row with a big happy face, and everyone laughs. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-tom-sheet-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-family.json",
+        "text": "This is my family.",
+        "goal": "Mom, Dad, Grandma, Grandpa, Tom (drawn young, about eight years old), and Lily (drawn young, about five years old) stand in a row in front of the small white house with the red door and smile at the viewer. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-tom-sheet-m2-color.png"
+      }
+    ],
+    "clean": false,
+    "defects": [
+      "Style mismatch with the approved child cast: Tom is not the chibi sprout style. Body too long, head share too small. Remake before Daniel sees it.",
+      "The second view is a full side profile, not the three-quarter view the cast spec and the page prompts name."
+    ],
+    "notes": {
+      "what_it_shows": "Tom in two views: front and full side profile. Short dark hair swept to the side, big brown eyes, plain navy-blue T-shirt with no stripes, khaki shorts, red sneakers.",
+      "fixes_held": "m2 fixes the m1 defects: no white stripes on the shirt, so Tom no longer looks like Sam.",
+      "hair_clothes_match": "Hair and clothes match the page description: dark hair swept to the side, plain navy tee, khaki shorts, red sneakers.",
+      "two_views_same_person": "Yes. Same hair, face, and clothes. The second view is a profile, not a three-quarter view.",
+      "remake_reason": "Two reasons: (1) body proportions do not match the approved child cast (head about 38 percent of height versus about 50 percent for the approved children; long slim legs and a visible neck); (2) the second view is a side profile, not a three-quarter view. Tom and Lily share four pages, and the style split would show at book size.",
+      "superseded": "m3 replaced m2 in all four Tom page specs. This key keeps the m2 fail verdict for the record."
+    }
+  },
+  "cast-tom-sheet-m3": {
+    "file": "out/storytime/l2/unit1/w04/muse/elements/cast-tom-sheet-m3-color.png",
+    "spec": "docs/storytime/l2-unit1/w04/muse-elements/cast-tom-sheet.json",
+    "spec_goal": "Cast sheet of Tom, front and three-quarter view, white background. Pending look: a proposal for Daniel; the picture list gives no look.",
+    "style_match": "match: m3 holds the approved chibi sprout child style. Head about half the figure, short body, no visible neck. Same soft 3D render as Lily and the week 1 children.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-cover-my-family.json",
+        "text": "My Family",
+        "goal": "Lily (drawn young, about five years old) stands in front of Mom, Dad, Grandma, Grandpa, and Tom (drawn young, about eight years old) in a bright living room with a green sofa and a window, and waves. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-tom-sheet-m3-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-brother.json",
+        "text": "This is my brother.",
+        "goal": "Lily (drawn young, about five years old) stands next to Tom (drawn young, about eight years old) in a bright living room with a green sofa and a window and points at him; Tom waves. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-tom-sheet-m3-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-dog-pip.json",
+        "text": "This is my dog, Pip!",
+        "goal": "Mom, Dad, Grandma, Grandpa, Tom (drawn young, about eight years old), and Lily (drawn young, about five years old) stand in a row in front of the small white house with the red door; Pip the puppy jumps into the middle of the row with a big happy face, and everyone laughs. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-tom-sheet-m3-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-family.json",
+        "text": "This is my family.",
+        "goal": "Mom, Dad, Grandma, Grandpa, Tom (drawn young, about eight years old), and Lily (drawn young, about five years old) stand in a row in front of the small white house with the red door and smile at the viewer. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-tom-sheet-m3-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Tom in two views: front and three-quarter. Big round head at about half the figure, short body, no visible neck. Short dark hair swept to the side, big brown eyes, plain navy-blue T-shirt, khaki shorts, red shoes. Open hands.",
+      "fixes_m2": "Both m2 findings are fixed: chibi proportions now match the approved child cast, and the second view is a true three-quarter view with both eyes visible, not a profile.",
+      "two_views_same_person": "Yes. Same hair sweep, face, and clothes in both views.",
+      "hair_clothes_match": "Matches the page description: short dark hair swept to the side, big brown eyes, plain navy tee with no stripes, khaki shorts, red sneakers.",
+      "checks": "Five-finger open hands. No text. Nothing held. Rated G. White background.",
+      "staging_jpg": "pending-cast-sheets.jpg shows this m3 figure under 'Tom (pending look)': chibi build, front plus three-quarter view. The m2 figure is gone from the collage."
+    }
+  },
+  "cast-mom-sheet": {
+    "file": "out/storytime/l2/unit1/w04/muse/elements/cast-mom-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w04/muse-elements/cast-mom-sheet.json",
+    "spec_goal": "Cast sheet of Mom, front and three-quarter view, white background. Pending look: a proposal for Daniel; the picture list gives no look.",
+    "style_match": "match: Mom matches the approved adult style (teacher-kim-sheet-2.png, nurse-sheet.png): adult proportions, head about one seventh of height, same soft 3D render and gentle face.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-cover-my-family.json",
+        "text": "My Family",
+        "goal": "Lily (drawn young, about five years old) stands in front of Mom, Dad, Grandma, Grandpa, and Tom (drawn young, about eight years old) in a bright living room with a green sofa and a window, and waves. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-mom-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-dog-pip.json",
+        "text": "This is my dog, Pip!",
+        "goal": "Mom, Dad, Grandma, Grandpa, Tom (drawn young, about eight years old), and Lily (drawn young, about five years old) stand in a row in front of the small white house with the red door; Pip the puppy jumps into the middle of the row with a big happy face, and everyone laughs. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-mom-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-family.json",
+        "text": "This is my family.",
+        "goal": "Mom, Dad, Grandma, Grandpa, Tom (drawn young, about eight years old), and Lily (drawn young, about five years old) stand in a row in front of the small white house with the red door and smile at the viewer. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-mom-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-mom.json",
+        "text": "This is my mom.",
+        "goal": "Lily (drawn young, about five years old) stands next to Mom in a bright living room with a green sofa and a window and points at Mom with a big smile. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-mom-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Mom in two views: front and three-quarter. Wavy shoulder-length dark-brown hair with a side parting, coral-pink long-sleeved blouse with a collar, blue jeans, white sneakers.",
+      "two_views_same_person": "Yes. Same hair, face, and clothes in both views.",
+      "hair_clothes_match": "Matches the page description exactly.",
+      "checks": "Hands show five short fingers. No text. Nothing held. Rated G. White background."
+    }
+  },
+  "cast-dad-sheet": {
+    "file": "out/storytime/l2/unit1/w04/muse/elements/cast-dad-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w04/muse-elements/cast-dad-sheet.json",
+    "spec_goal": "Cast sheet of Dad, front and three-quarter view, white background. Pending look: a proposal for Daniel; the picture list gives no look.",
+    "style_match": "match: Dad matches the approved adult style (teacher-kim-sheet-2.png, nurse-sheet.png): adult proportions, same soft 3D render and gentle face.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-cover-my-family.json",
+        "text": "My Family",
+        "goal": "Lily (drawn young, about five years old) stands in front of Mom, Dad, Grandma, Grandpa, and Tom (drawn young, about eight years old) in a bright living room with a green sofa and a window, and waves. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-dad-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-dad.json",
+        "text": "This is my dad.",
+        "goal": "Lily (drawn young, about five years old) stands next to Dad in a bright living room with a green sofa and a window and points at him. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-dad-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-dog-pip.json",
+        "text": "This is my dog, Pip!",
+        "goal": "Mom, Dad, Grandma, Grandpa, Tom (drawn young, about eight years old), and Lily (drawn young, about five years old) stand in a row in front of the small white house with the red door; Pip the puppy jumps into the middle of the row with a big happy face, and everyone laughs. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-dad-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-family.json",
+        "text": "This is my family.",
+        "goal": "Mom, Dad, Grandma, Grandpa, Tom (drawn young, about eight years old), and Lily (drawn young, about five years old) stand in a row in front of the small white house with the red door and smile at the viewer. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-dad-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Dad in two views: front and three-quarter turned far to the side. Short dark-brown hair with a side parting, mustard-yellow polo shirt, dark-blue jeans, brown shoes.",
+      "two_views_same_person": "Yes. Same hair, face, and clothes. Both views show both eyes, so the second view still reads as three-quarter.",
+      "hair_clothes_match": "Matches the page description exactly.",
+      "checks": "Hands show five short fingers. No text. Nothing held. Rated G. White background."
+    }
+  },
+  "cast-grandma-sheet": {
+    "file": "out/storytime/l2/unit1/w04/muse/elements/cast-grandma-sheet-m2-color.png",
+    "spec": "docs/storytime/l2-unit1/w04/muse-elements/cast-grandma-sheet.json",
+    "spec_goal": "Cast sheet of Grandma, front and three-quarter view, white background. Pending look: a proposal for Daniel; the picture list gives no look.",
+    "style_match": "match: Grandma matches the approved adult style (teacher-kim-sheet-2.png, nurse-sheet.png): adult proportions, same soft 3D render, smooth age-appropriate face.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-cover-my-family.json",
+        "text": "My Family",
+        "goal": "Lily (drawn young, about five years old) stands in front of Mom, Dad, Grandma, Grandpa, and Tom (drawn young, about eight years old) in a bright living room with a green sofa and a window, and waves. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-grandma-sheet-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-dog-pip.json",
+        "text": "This is my dog, Pip!",
+        "goal": "Mom, Dad, Grandma, Grandpa, Tom (drawn young, about eight years old), and Lily (drawn young, about five years old) stand in a row in front of the small white house with the red door; Pip the puppy jumps into the middle of the row with a big happy face, and everyone laughs. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-grandma-sheet-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-family.json",
+        "text": "This is my family.",
+        "goal": "Mom, Dad, Grandma, Grandpa, Tom (drawn young, about eight years old), and Lily (drawn young, about five years old) stand in a row in front of the small white house with the red door and smile at the viewer. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-grandma-sheet-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-grandma.json",
+        "text": "This is my grandma.",
+        "goal": "Lily (drawn young, about five years old) stands next to Grandma in a bright living room with a green sofa and a window and points at Grandma; Grandma holds a small cake. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-grandma-sheet-m2-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Grandma in two views: front and three-quarter. Short curly silver-gray hair, rose-red cardigan over a cream blouse, long dark-blue skirt, brown flat shoes. Smooth face.",
+      "fixes_held": "m2 fixes the m1 defect: no wrinkle lines on the face.",
+      "two_views_same_person": "Yes. Same hair, face, and clothes in both views.",
+      "hair_clothes_match": "Matches the page description exactly.",
+      "checks": "Hands show five short fingers. No text. Nothing held. Rated G. White background. Faint eyebrow and eyelid marks are small marks under the bar, not defects."
+    }
+  },
+  "cast-grandpa-sheet": {
+    "file": "out/storytime/l2/unit1/w04/muse/elements/cast-grandpa-sheet-m2-color.png",
+    "spec": "docs/storytime/l2-unit1/w04/muse-elements/cast-grandpa-sheet.json",
+    "spec_goal": "Cast sheet of Grandpa, front and three-quarter view, white background. Pending look: a proposal for Daniel; the picture list gives no look.",
+    "style_match": "match: Grandpa matches the approved adult style (teacher-kim-sheet-2.png, nurse-sheet.png): adult proportions, same soft 3D render, same knitted cardigan fabric as Teacher Kim.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-cover-my-family.json",
+        "text": "My Family",
+        "goal": "Lily (drawn young, about five years old) stands in front of Mom, Dad, Grandma, Grandpa, and Tom (drawn young, about eight years old) in a bright living room with a green sofa and a window, and waves. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-grandpa-sheet-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-dog-pip.json",
+        "text": "This is my dog, Pip!",
+        "goal": "Mom, Dad, Grandma, Grandpa, Tom (drawn young, about eight years old), and Lily (drawn young, about five years old) stand in a row in front of the small white house with the red door; Pip the puppy jumps into the middle of the row with a big happy face, and everyone laughs. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-grandpa-sheet-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-family.json",
+        "text": "This is my family.",
+        "goal": "Mom, Dad, Grandma, Grandpa, Tom (drawn young, about eight years old), and Lily (drawn young, about five years old) stand in a row in front of the small white house with the red door and smile at the viewer. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-grandpa-sheet-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-my-grandpa.json",
+        "text": "This is my grandpa.",
+        "goal": "Lily (drawn young, about five years old) stands next to Grandpa in a bright living room with a green sofa and a window and points at him; Grandpa holds a newspaper. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-grandpa-sheet-m2-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Grandpa in two views: front and three-quarter. Short white hair, small white mustache, green knitted cardigan over a white shirt, brown trousers, brown shoes.",
+      "fixes_held": "m2 fixes the m1 defects: no deep wrinkle lines, and a cardigan instead of a vest, which matches the page description.",
+      "two_views_same_person": "Yes. Same hair, mustache, and clothes in both views.",
+      "hair_clothes_match": "Matches the page description exactly.",
+      "checks": "Hands show five short fingers. No text. Nothing held. Rated G. White background.",
+      "small_marks": "Faint lines at the eye corners. Under the bar these marks are not defects: a teacher or a child does not see them at book size."
+    }
+  },
+  "cast-man-sheet": {
+    "file": "out/storytime/l2/unit1/w04/muse/elements/cast-man-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w04/muse-elements/cast-man-sheet.json",
+    "spec_goal": "Cast sheet of Nan's dad (called the man in the sentences), front and three-quarter view, white background. Pending look: the list gives the look; Daniel has not approved it as a cast sheet.",
+    "style_match": "match: Nan's dad matches the approved adult style (teacher-kim-sheet-2.png, nurse-sheet.png): adult proportions, same soft 3D render and gentle face.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-pam-is-on-a-man.json",
+        "text": "Pam is on a man!",
+        "goal": "Nan's dad, a man of about thirty-five with short straight black hair, a blue T-shirt, gray shorts, and black sandals, lies on the blue sofa with his eyes closed; a small rag doll with yellow yarn hair and a red dress sits on his tummy. Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, laughs. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-man-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w04/muse/l2-w04-story-page-this-is-the-man.json",
+        "text": "This is the man!",
+        "goal": "Nan's dad, a man of about thirty-five with short straight black hair, a blue T-shirt, gray shorts, and black sandals, pops out from under the blanket on the blue sofa with a small rag doll with yellow yarn hair and a red dress on his head, and laughs; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, laughs too. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w04/muse/elements/cast-man-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Nan's dad in two views: front and three-quarter. Short straight black hair, blue T-shirt, gray shorts, black sandals.",
+      "two_views_same_person": "Yes. Same hair, face, and clothes in both views.",
+      "hair_clothes_match": "Matches the page description exactly: short straight black hair, blue tee, gray shorts, black sandals.",
+      "checks": "Hands show five short fingers. No text. Nothing held. Rated G. White background.",
+      "seventh_sheet": "This is the seventh pending sheet, Nan's dad, beyond the six in the order. The picture list gives his look, and the sheet matches it."
+    }
+  },
+  "summary": {
+    "sheets": 19,
+    "clean": 18,
+    "not_clean": 1,
+    "clean_keys": [
+      "prop-cake-sheet",
+      "prop-doll-pam-sheet",
+      "prop-milk-sheet",
+      "prop-monkey-sheet",
+      "prop-mouse-sheet",
+      "prop-newspaper-sheet",
+      "prop-paper-map-sheet",
+      "prop-shoe-box-bed-sheet",
+      "set-house-exterior-empty",
+      "set-lily-living-room-empty",
+      "set-nan-living-room-empty",
+      "cast-lily-sheet",
+      "cast-tom-sheet-m3",
+      "cast-mom-sheet",
+      "cast-dad-sheet",
+      "cast-grandma-sheet",
+      "cast-grandpa-sheet",
+      "cast-man-sheet"
+    ],
+    "not_clean_keys": [
+      "cast-tom-sheet"
+    ],
+    "remake_before_daniel": "The Tom remake is received and accepted: cast-tom-sheet-m3 is clean. The m2 key keeps its fail verdict as the record. Daniel still approves the pending look on all seven cast sheets.",
+    "builder_gaps_judged": "The newspaper cloth read is not a defect: at book size the layered fold edges read as folded blank paper, and the no-print rule makes blank cream paper the required look. Lily's rounder build fits the approved child cast. Both are not defects.",
+    "page_risk": "No page is at blocking risk. Tom's style split is fixed by m3: Tom and Lily now share one chibi style on their four shared pages.",
+    "second_look": "Every sheet was opened again after the first pass, one by one. All counts hold. All original verdicts unchanged. After the remake, cast-tom-sheet-m3 was opened and checked against both m2 findings: chibi head at about half the figure, no visible neck, true three-quarter second view. Verdict clean.",
+    "reference_paths": "All page reference paths name current files: m3 for Tom in the four Tom pages, m2 for Grandma and Grandpa, m1 for the other fifteen keys."
+  }
+}

@@ -1,0 +1,29 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T115: the seam scans a wide answer with 1200 injected secrets within 2000 ms
+rule scan ms: 8330
+
+ ❯ tests/storytime-book-pictures.test.ts (98 tests | 1 failed) 158843ms
+       × T115: the seam scans a wide answer with 1200 injected secrets within 2000 ms 8540ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T115: the seam scans a wide answer with 1200 injected secrets within 2000 ms
+AssertionError: rule scan ms: 8330: expected 8330 to be less than or equal to 2000
+ ❯ tests/storytime-book-pictures.test.ts:2538:60
+    2536|         expect.soft(new Set(run.report?.findings ?? []).size, 'Every i…
+    2537|           .toBe(1200);
+    2538|         expect.soft(measured, `rule scan ms: ${measured}`).toBeLessTha…
+       |                                                            ^
+    2539|       } finally {
+    2540|         for (const name of names) delete process.env[name];
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 97 passed (98)
+   Start at  12:46:32
+   Duration  160.25s (transform 867ms, setup 0ms, import 1.14s, tests 158.84s, environment 0ms)
+

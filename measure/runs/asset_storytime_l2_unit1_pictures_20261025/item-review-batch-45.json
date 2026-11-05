@@ -1,0 +1,387 @@
+{
+  "status": "pass",
+  "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Reviewed. The nine week 3 batch 3 check rows are clean. The extra row K2 holds a defect: the nose named by the text is missing in the line file.",
+  "audited_head": "nine color prints and nine line prints of batch 45, the nine line sources, the three extra rows K1 to K3, the Nan look reference and the nine reference sheets in refs/",
+  "verdict": "the nine check rows pass under the bar. K1 and K3 pass. K2 fails because the nose is missing in its line file.",
+  "line_file_gray_count": {
+    "pages/l2-w03-check-row-bus-m1-line-despeckled.png": "0 of 2560000 pixels are not 0 or 255",
+    "pages/l2-w03-check-row-bus-m1-line-print-despeckled.png": "0 of 2250000 pixels are not 0 or 255",
+    "pages/l2-w03-check-row-cat-m1-line-despeckled.png": "0 of 2560000 pixels are not 0 or 255",
+    "pages/l2-w03-check-row-cat-m1-line-print-despeckled.png": "0 of 2250000 pixels are not 0 or 255",
+    "pages/l2-w03-check-row-dog-m1-line-despeckled.png": "0 of 2560000 pixels are not 0 or 255",
+    "pages/l2-w03-check-row-dog-m1-line-print-despeckled.png": "0 of 2250000 pixels are not 0 or 255",
+    "pages/l2-w03-check-row-fish-m1-line-2-despeckled.png": "0 of 2560000 pixels are not 0 or 255",
+    "pages/l2-w03-check-row-fish-m1-line-print-2-despeckled.png": "0 of 2250000 pixels are not 0 or 255",
+    "pages/l2-w03-check-row-hat-m1-line-2-despeckled.png": "0 of 2560000 pixels are not 0 or 255",
+    "pages/l2-w03-check-row-hat-m1-line-print-2-despeckled.png": "0 of 2250000 pixels are not 0 or 255",
+    "pages/l2-w03-check-row-pear-m1-line-despeckled.png": "0 of 2560000 pixels are not 0 or 255",
+    "pages/l2-w03-check-row-pear-m1-line-print-despeckled.png": "0 of 2250000 pixels are not 0 or 255",
+    "pages/l2-w03-check-row-pen-m1-line-3-despeckled.png": "0 of 2560000 pixels are not 0 or 255",
+    "pages/l2-w03-check-row-pen-m1-line-print-3-despeckled.png": "0 of 2250000 pixels are not 0 or 255",
+    "pages/l2-w03-check-row-pencil-m1-line-2-despeckled.png": "0 of 2560000 pixels are not 0 or 255",
+    "pages/l2-w03-check-row-pencil-m1-line-print-2-despeckled.png": "0 of 2250000 pixels are not 0 or 255",
+    "pages/l2-w03-check-row-sun-m1-line-3-despeckled.png": "0 of 2560000 pixels are not 0 or 255",
+    "pages/l2-w03-check-row-sun-m1-line-print-3-despeckled.png": "0 of 2250000 pixels are not 0 or 255",
+    "w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png": "0 of 2560000 pixels are not 0 or 255",
+    "w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png": "0 of 12000000 pixels are not 0 or 255",
+    "w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png": "0 of 12000000 pixels are not 0 or 255"
+  },
+  "line_art_thickness_scan": {
+    "method": "chamfer distance transform on the black pixels of each line print; the largest radius gives the widest stroke and the widest solid black area",
+    "l2-w03-check-row-bus": "largest radius 13 px, so the widest stroke is 26 px. No solid black band.",
+    "l2-w03-check-row-cat": "largest radius 66 px in the solid black pupil of the right eye. Allowed by the bar. The next solid area is the pupil of the left eye, 30 by 77 px. Allowed.",
+    "l2-w03-check-row-dog": "largest radius 58 px in the solid black nose, 105 by 70 px. Allowed by the bar. The next solid area is a pupil, 38 by 31 px. Allowed.",
+    "l2-w03-check-row-fish": "largest radius 55 px in the solid black pupil of the eye, 65 by 65 px. Allowed by the bar.",
+    "l2-w03-check-row-hat": "largest radius 15 px. No solid black band.",
+    "l2-w03-check-row-pear": "largest radius 13 px. No solid black band.",
+    "l2-w03-check-row-pen": "largest radius 20 px at the place where the clip strokes meet. The stroke width of the whole picture is 34 px and it is even. No solid black band.",
+    "l2-w03-check-row-pencil": "largest radius 18 px. No solid black band.",
+    "l2-w03-check-row-sun": "largest radius 18 px. No solid black band.",
+    "K1": "largest radius 35 px in the solid black pupil of the eye. Allowed by the bar.",
+    "K2": "largest radius 21 px. No solid black band.",
+    "K3": "largest radius 17 px. No solid black band."
+  },
+  "line_gap_scan": {
+    "method": "flood fill of the white pixels from the frame edge, then the distance transform inside each enclosed white region; a region with a radius of 2 px or less is too thin to color",
+    "l2-w03-check-row-bus": "40 enclosed white regions. The smallest has a radius of 2 px over 14 by 4 px. It is a hairline speck between strokes, not a coloring problem.",
+    "l2-w03-check-row-cat": "14 enclosed white regions. The smallest has a radius of 5 px. No region is too thin to color.",
+    "l2-w03-check-row-dog": "23 enclosed white regions. The smallest has a radius of 4 px. No region is too thin to color.",
+    "l2-w03-check-row-fish": "6 enclosed white regions. The smallest has a radius of 20 px. No region is too thin to color.",
+    "l2-w03-check-row-hat": "8 enclosed white regions. The smallest has a radius of 10 px. No region is too thin to color.",
+    "l2-w03-check-row-pear": "4 enclosed white regions. The smallest has a radius of 5 px. No region is too thin to color.",
+    "l2-w03-check-row-pen": "5 enclosed white regions. The smallest has a radius of 28 px. No region is too thin to color.",
+    "l2-w03-check-row-pencil": "7 enclosed white regions. The smallest has a radius of 17 px. No region is too thin to color.",
+    "l2-w03-check-row-sun": "9 enclosed white regions, one per ray. The smallest has a radius of 65 px. Every ray is a closed shape a child can color.",
+    "K1": "6 enclosed white regions. One sliver has a radius of 1 px over 10 by 1 px. It is a hairline speck, not a coloring problem.",
+    "K2": "24 enclosed white regions. The smallest has a radius of 15 px. No region is too thin to color.",
+    "K3": "24 enclosed white regions. The smallest has a radius of 15 px. No region is too thin to color."
+  },
+  "color_print_edge_scan": {
+    "method": "count of non-white pixels on each frame edge and the bounding box of the object at a threshold of 240",
+    "l2-w03-check-row-bus": "no pixel on any frame edge. The object box runs from 150,468 to 1448,1308.",
+    "l2-w03-check-row-cat": "no pixel on any frame edge. The object box runs from 168,159 to 1242,1390.",
+    "l2-w03-check-row-dog": "no pixel on any frame edge. The object box runs from 294,303 to 1136,1311.",
+    "l2-w03-check-row-fish": "no pixel on any frame edge. The object box runs from 216,367 to 1275,1218.",
+    "l2-w03-check-row-hat": "no pixel on any frame edge. The object box runs from 101,383 to 1394,1169.",
+    "l2-w03-check-row-pear": "no pixel on any frame edge. The object box runs from 229,141 to 1446,1429.",
+    "l2-w03-check-row-pen": "no pixel on any frame edge. The object box runs from 96,147 to 1390,1388.",
+    "l2-w03-check-row-pencil": "no pixel on any frame edge. The object box runs from 70,238 to 1416,1346.",
+    "l2-w03-check-row-sun": "no pixel on any frame edge. The object box runs from 79,65 to 1420,1434."
+  },
+  "l2-w03-check-row-bus": {
+    "files": [
+      "out/storytime-review/batch-45/pages/l2-w03-check-row-bus-m1-color-print.png",
+      "out/storytime-review/batch-45/pages/l2-w03-check-row-bus-m1-line-print-despeckled.png"
+    ],
+    "rating": 7.5,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "The color print carries a hard gray cast shadow of the bus on the ground. It covers 4.72 percent of the frame in the gray value 200. The line art has no shadow and no ground line.",
+      "The line art has no gray pixel, no solid black band, no thin white region and no text.",
+      "The line art shows a front grille, a door with two window bars and four side windows as closed shapes.",
+      "The line art draws the side stripe as one line, and the color file shows the same dark stripe."
+    ],
+    "goal_check": {
+      "exactly one bus": "yes: one yellow school bus in both files",
+      "whole object in view": "yes: the bumper, all four wheels, the roof lights and the rear are inside the frame in both files",
+      "no text, no ground line, no second object": "yes: no letters or numbers in either file. The line art has no ground line and no second object.",
+      "reads as bus at book size, in the line art too": "yes: the hood, the windscreen, the door with window bars, the four side windows and the wheels read as a school bus in both files",
+      "no face": "yes in both files: no eyes or mouth show"
+    },
+    "retry_hint": null
+  },
+  "l2-w03-check-row-cat": {
+    "files": [
+      "out/storytime-review/batch-45/pages/l2-w03-check-row-cat-m1-color-print.png",
+      "out/storytime-review/batch-45/pages/l2-w03-check-row-cat-m1-line-print-despeckled.png"
+    ],
+    "rating": 8,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "The line art has no gray pixel, no solid black band, no thin white region and no text.",
+      "Open item: the left eye is narrower than the right eye in the line art. The color file shows the same difference. The head turns to the left, so the far eye sits at an angle. The brief says foreshortening is correct.",
+      "The right eye pupil is a solid black shape of 84 by 87 px. The bar allows a solid black pupil.",
+      "The line art leaves out the tabby stripes of the color file. A note, not a defect."
+    ],
+    "goal_check": {
+      "exactly one cat": "yes: one orange tabby kitten in both files",
+      "whole object in view": "yes: both ears, all four paws, the whiskers and the curled tail are inside the frame in both files",
+      "no text, no ground line, no second object": "yes: no letters or numbers in either file. The line art has no ground line and no second object.",
+      "reads as cat at book size, in the line art too": "yes: two pointed ears, two round eyes, a small nose, a smile, whiskers and a curled tail read as a cat in both files",
+      "eyes show": "yes: both eyes show in both files, each with a solid black pupil"
+    },
+    "retry_hint": null
+  },
+  "l2-w03-check-row-dog": {
+    "files": [
+      "out/storytime-review/batch-45/pages/l2-w03-check-row-dog-m1-color-print.png",
+      "out/storytime-review/batch-45/pages/l2-w03-check-row-dog-m1-line-print-despeckled.png"
+    ],
+    "rating": 8,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "The line art has no gray pixel, no solid black band, no thin white region and no text.",
+      "The line art draws a small outlined oval above each eye. The bar lists an outlined eyebrow band as a mark that is not a defect.",
+      "The nose is a solid black shape of 105 by 70 px. The bar allows a solid black nose.",
+      "The line art leaves out the white blaze of the color file. A note, not a defect."
+    ],
+    "goal_check": {
+      "exactly one dog": "yes: one small puppy in both files",
+      "whole object in view": "yes: both ears, all four paws, the collar and the tag are inside the frame in both files",
+      "no text, no ground line, no second object": "yes: no letters or numbers in either file. The line art has no ground line and no second object.",
+      "reads as dog at book size, in the line art too": "yes: floppy ears, two round eyes, a big nose, a collar with a round tag and a tongue read as a dog in both files",
+      "eyes show": "yes: both eyes show in both files, each with a solid black pupil"
+    },
+    "retry_hint": null
+  },
+  "l2-w03-check-row-fish": {
+    "files": [
+      "out/storytime-review/batch-45/pages/l2-w03-check-row-fish-m1-color-print.png",
+      "out/storytime-review/batch-45/pages/l2-w03-check-row-fish-m1-line-print-2-despeckled.png"
+    ],
+    "rating": 8,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "The line art has no gray pixel, no solid black band, no thin white region and no text.",
+      "Open item: the tail fin has a wavy outline in the line art. The color file draws the same scalloped tail fin. The two files agree.",
+      "Open item: a small smile mark sits at the mouth in the line art. The color file shows no mouth line. The mark is small and the fish still reads as a fish.",
+      "The line art splits the body with one band line, and the color file shows the same yellow belly."
+    ],
+    "goal_check": {
+      "exactly one fish": "yes: one blue and yellow fish in both files",
+      "whole object in view": "yes: the top fin, the tail fin, the side fin and the body are inside the frame in both files",
+      "no text, no ground line, no second object": "yes: no letters or numbers in either file. The line art has no ground line and no second object.",
+      "reads as fish at book size, in the line art too": "yes: the round body, the top fin, the tail fin, the side fin and the big eye read as a fish in both files",
+      "eyes show": "yes: the eye shows in both files, with a solid black pupil inside a ring in the line art"
+    },
+    "retry_hint": null
+  },
+  "l2-w03-check-row-hat": {
+    "files": [
+      "out/storytime-review/batch-45/pages/l2-w03-check-row-hat-m1-color-print.png",
+      "out/storytime-review/batch-45/pages/l2-w03-check-row-hat-m1-line-print-2-despeckled.png"
+    ],
+    "rating": 8.5,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "The line art has no gray pixel, no solid black band, no thin white region and no text.",
+      "The line art draws no straw lines on the brim. A note, not a defect.",
+      "The color file has a soft shadow under the brim. The line art has no shadow."
+    ],
+    "goal_check": {
+      "exactly one hat": "yes: one straw sun hat in both files",
+      "whole object in view": "yes: the whole brim and the whole crown are inside the frame in both files",
+      "no text, no ground line, no second object": "yes: no letters or numbers in either file. The line art has no ground line and no second object.",
+      "reads as hat at book size, in the line art too": "yes: the wide brim, the round crown, the ribbon band and the bow read as a hat in both files",
+      "no face": "yes in both files: no eyes or mouth show"
+    },
+    "retry_hint": null
+  },
+  "l2-w03-check-row-pear": {
+    "files": [
+      "out/storytime-review/batch-45/pages/l2-w03-check-row-pear-m1-color-print.png",
+      "out/storytime-review/batch-45/pages/l2-w03-check-row-pear-m1-line-print-despeckled.png"
+    ],
+    "rating": 8.5,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "The line art has no gray pixel, no solid black band, no thin white region and no text.",
+      "The line art draws one leaf with a center line and a short stem. The color file shows the same."
+    ],
+    "goal_check": {
+      "exactly one pear": "yes: one yellow green pear in both files",
+      "whole object in view": "yes: the stem, the leaf and the whole body are inside the frame in both files",
+      "no text, no ground line, no second object": "yes: no letters or numbers in either file. The line art has no ground line and no second object.",
+      "reads as pear at book size, in the line art too": "yes: the narrow top, the wide bottom, the stem and the leaf read as a pear in both files",
+      "no face": "yes in both files: no eyes or mouth show"
+    },
+    "retry_hint": null
+  },
+  "l2-w03-check-row-pen": {
+    "files": [
+      "out/storytime-review/batch-45/pages/l2-w03-check-row-pen-m1-color-print.png",
+      "out/storytime-review/batch-45/pages/l2-w03-check-row-pen-m1-line-print-3-despeckled.png"
+    ],
+    "rating": 8,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "The line art has no gray pixel, no solid black band, no thin white region and no text.",
+      "Open item: the cap end is a rounded shape in the line art. The spec asks for a rounded cap end, and the color file shows the same rounded clear cap.",
+      "The stroke width of this line print is 34 px, the thickest of the nine. The width is even on every outline, and no solid black band forms.",
+      "The pen in the line art has no sharpened wood cone, so it does not read as a pencil."
+    ],
+    "goal_check": {
+      "exactly one pen": "yes: one blue ballpoint pen in both files",
+      "whole object in view": "yes: the cap end, the clip, the body and the tip are inside the frame in both files",
+      "no text, no ground line, no second object": "yes: no letters or numbers in either file. The line art has no ground line and no second object.",
+      "reads as pen at book size, in the line art too": "yes: the clip and the rounded cap end read as a pen in the line art",
+      "pen and pencil do not look alike": "yes: the pen shows a clip and a small rounded tip. The pencil shows an eraser, a band, a wood cone and a lead point.",
+      "no face": "yes in both files: no eyes or mouth show"
+    },
+    "retry_hint": null
+  },
+  "l2-w03-check-row-pencil": {
+    "files": [
+      "out/storytime-review/batch-45/pages/l2-w03-check-row-pencil-m1-color-print.png",
+      "out/storytime-review/batch-45/pages/l2-w03-check-row-pencil-m1-line-print-2-despeckled.png"
+    ],
+    "rating": 8,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "The line art has no gray pixel, no solid black band, no thin white region and no text.",
+      "The line art draws the lead point as a small closed wedge at the tip.",
+      "The color file has a soft shadow under the pencil. The line art has no shadow."
+    ],
+    "goal_check": {
+      "exactly one pencil": "yes: one yellow pencil in both files",
+      "whole object in view": "yes: the eraser, the band, the body, the wood cone and the lead point are inside the frame in both files",
+      "no text, no ground line, no second object": "yes: no letters or numbers in either file. The line art has no ground line and no second object.",
+      "reads as pencil at book size, in the line art too": "yes: the eraser, the band, the six sided body, the wood cone and the lead point read as a pencil in both files",
+      "pen and pencil do not look alike": "yes: the pencil shows an eraser, a band, a wood cone and a lead point. The pen shows a clip and a rounded cap end.",
+      "no face": "yes in both files: no eyes or mouth show"
+    },
+    "retry_hint": null
+  },
+  "l2-w03-check-row-sun": {
+    "files": [
+      "out/storytime-review/batch-45/pages/l2-w03-check-row-sun-m1-color-print.png",
+      "out/storytime-review/batch-45/pages/l2-w03-check-row-sun-m1-line-print-3-despeckled.png"
+    ],
+    "rating": 8.5,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "The line art has no gray pixel, no solid black band, no thin white region and no text.",
+      "Every ray is a closed shape with a radius of 65 px or more, so a child can color each one.",
+      "The rays of the line art sit close to the disc. The wide base of each triangle touches the disc line."
+    ],
+    "goal_check": {
+      "exactly one sun": "yes: one sun in both files",
+      "whole object in view": "yes: the disc and all eight rays are inside the frame in both files",
+      "no text, no ground line, no second object": "yes: no letters or numbers in either file. The line art has no ground line and no second object.",
+      "reads as sun at book size, in the line art too": "yes: each ray is a sharp triangle with the wide base on the disc and the point outward. The line art reads as a sun and not as a flower.",
+      "eight sharp pointed rays": "yes: eight closed triangles in the line art and eight pointed rays in the color file",
+      "no face": "yes in both files: no eyes or mouth show"
+    },
+    "retry_hint": null
+  },
+  "extra": {
+    "K1": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 8,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The line art has no gray pixel, no solid black band and no text.",
+        "The ear is an open C arc and the eyebrow is a thick stroke. The bar lists both as marks that are not a defect.",
+        "The eye outline is an open arc around a solid black pupil. The eye shows in both files, so the face is not broken.",
+        "Nan keeps her look in the color file: one side bun with a red band, one brown eyebrow, a dark brown eye with a lash flick and a peach ear."
+      ],
+      "goal_check": {
+        "the head of Nan in profile": "yes: the head is in profile and faces the right edge of the picture, the other way from the nose check row",
+        "the nose clearly seen": "yes in the color file: the nose is a clear bump on the profile with a nostril line. Yes in the line file: the profile contour makes a clear nose bump, and the mouth sits below it.",
+        "for a tracing practice line": "yes: one head in the middle of the frame on a plain white background with the bust cut at the lower edge",
+        "no text": "yes: no letters or numbers in either file"
+      },
+      "retry_hint": null
+    },
+    "K2": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "rating": 6,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "defect",
+      "defect_categories": [
+        "broken-face"
+      ],
+      "defects": [
+        "The nose named by the text is missing in the line file. The fingertip stands where the nose should be and no nose shape is drawn, so the face part that the sentence names does not show in the coloring page."
+      ],
+      "notes": [
+        "The line art has no gray pixel, no solid black band, no thin white region and no text.",
+        "Nan keeps her reference look in both files: two buns with red bands, an orange T-shirt with a white star, red shorts, white shoes, large dark brown eyes and lash flicks.",
+        "No hand shows six digits in either file.",
+        "The line art draws each eye as a circle with a small circle inside, so the child colors the pupil. A note, not a defect.",
+        "The fixed line file already exists as out/storytime/l2/unit1/w01/delivery-muse-v2/l2-w01-story-page-a-nose-line-v2.png. It adds a closed round nose bump at the finger tip. The approved record names that file as the line print."
+      ],
+      "goal_check": {
+        "Nan touches her own nose with one finger": "yes in the color file: one index finger rests on her nose and the other arm hangs down. In the line file the finger reaches the place of the nose, but no nose shape is drawn there.",
+        "and laughs": "yes: her mouth is open with a tongue in the color file and an open mouth shape in the line file",
+        "the nose shows in both files": "no: the nose shows in the color file only. The line file draws no nose contour.",
+        "no text": "yes: no letters or numbers in either file"
+      },
+      "retry_hint": "Draw a closed round nose bump at the finger tip in the line art, as the color file shows, and keep the finger touching it."
+    },
+    "K3": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": 8,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The line art has no gray pixel, no solid black band, no thin white region and no text.",
+        "Nan keeps her reference look in both files: two buns with red bands, an orange T-shirt with a white star, red shorts, white shoes, large dark brown eyes and lash flicks.",
+        "The open hand shows a thumb and four fingers in both files. No hand shows six digits.",
+        "The nut is drawn as a brown acorn with a cap and a stem. It reads as a brown nut, so this is a note, not a defect."
+      ],
+      "goal_check": {
+        "one big brown nut": "yes: one big brown acorn with a dark cap and a short stem in both files",
+        "in Nan's open hand": "yes: the nut rests on her open palm in both files",
+        "close up": "yes: the picture shows her head, her arm and the hand at a close distance",
+        "no text": "yes: no letters or numbers in either file"
+      },
+      "retry_hint": null
+    }
+  }
+}

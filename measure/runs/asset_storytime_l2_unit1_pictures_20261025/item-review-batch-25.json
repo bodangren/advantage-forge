@@ -1,0 +1,37 @@
+{
+  "reviewer": "kimi-code-plan-cn/kimi-for-coding",
+  "seen": {
+    "brief.md": "Goals, bars, and critical defects for the eye-corner fix check and the Nan page.",
+    "look-reference-nan-and-pip.png": "Approved style: soft 3D chibi Nan in orange star shirt with small dark eyelash wings at the outer eye corners.",
+    "before-sprout-nan-face.png": "Front and three-quarter close-ups show a small pale skin-colored flap at the outer corner of each eye, past the dark wing.",
+    "after-sprout-nan-face.png": "The pale flap is gone at each outer eye corner; the short dark eyelash wing remains; eyes, brows, nose, and mouth look unchanged.",
+    "before-sprout-ben-face.png": "Front and three-quarter close-ups show a small pale skin-colored flap at the outer corner of each eye.",
+    "after-sprout-ben-face.png": "The pale flap is gone at each outer eye corner; the short dark eyelash wing remains; eyes and the face look unchanged.",
+    "l2-w01-story-page-hello-i-am-nan-v2.png": "Color page: Nan waves beside a small potted fern near a shuttered window in a timber-frame room with bookcases, stools, and a table.",
+    "l2-w01-story-page-hello-i-am-nan-line-v2.png": "1-bit line art of the same page; thick strokes with small square steps along edges; no broken stroke, speck, or stray line found."
+  },
+  "cast-fix-eye-corners": {
+    "overall": 9.0,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "issues": [],
+    "eyelash_wing": "The wing shows in color as a short dark stroke at the outer corner of each eye on Nan and Ben, in front and three-quarter views. In the page line art it also draws a short small mark at the outer corner of each eye. It reads as part of the design, not as the flap.",
+    "fix": "",
+    "notes": "The fix is complete. The before images show a pale skin tab at each outer eye corner; the after images show none. Eye size, shape, color, brows, nose, mouth, and blush are the same in both views for Nan and Ben. No new mark appears. I took the stricter reading and rechecked the outer corners at full zoom."
+  },
+  "l2-w01-story-page-hello-i-am-nan": {
+    "overall": 8.0,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "issues": [
+      "Three groups of white oval blobs sit on the bottom shelf of the right bookcase; their shape is ambiguous in color and line art.",
+      "The page text is not typeset in the image; the upper wall is empty. The brief lists no missing-text failure, so this is a note only.",
+      "The fern center is dense with crossing strokes but each frond reads; I do not count it as a merged blob."
+    ],
+    "line_art": [],
+    "fix": "Name or restyle the white blobs on the bottom shelf of the right bookcase.",
+    "notes": "The page shows the goal: Nan with large dark-brown eyes, black hair in two bunches, orange star shirt, red shorts, and white sneakers waves next to a small green plant in a pot by the window. Eye corners have no flap; the wing shows as a short mark. Hands, mouth, ears, star, plant, pot, window, stools, and shelves all read. No text, face, speck, floating part, or broken outline found. The square steps along stroke edges are the style. Clean is false only because of the ambiguous shelf blobs."
+  }
+}

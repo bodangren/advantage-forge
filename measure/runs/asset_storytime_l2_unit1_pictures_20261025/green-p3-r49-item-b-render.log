@@ -1,0 +1,9 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 18
+book file requests refused: 0
+Line-art line width: 23 px (minimum 12 px).
+Line-art ink coverage: 7.54% (904314 of 12000000 pixels black).
+l2-w01-story-page-hello-i-am-ben v3: rendered; stage 38b57408b5ba2d8281955aa2ea17750caeb1dfc7a096e75933165987c65fe0d0; file w01/rows/l2-w01-story-page-hello-i-am-ben-v3.png; lineart w01/rows/l2-w01-story-page-hello-i-am-ben-line-v3.png; size 4000 x 3000; render peak rss mb: 933

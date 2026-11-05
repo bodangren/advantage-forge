@@ -1,0 +1,39 @@
+Green P4 T2 w07 staging (provisional). role_base_sha b5f0c971; phase_base_sha fc76c272.
+Step 1: git rev-parse = b5f0c971 (expected).
+Step 2: read 27 week 7 rows (A 16, B 2, C 9): May, Ben, Tom, Mom, Pip; toy corner (blanket bump + thought-bubble toys), Tom living room (top). Reading w01 May/Ben, w04 Tom/Mom method next.
+Step 3: viewed refs. Reuse: May = out/sprout-may/render.png (copied may-ref-render.png), Ben = w01 ben-ref-clean-2.png, Tom m3 + Mom m1 pending sheets, Pip w04 render, w04 doll Pam sheet, 3D ox/octopus/bed/cat. No new character -> no new cast sheet. New Muse sheets planned (8): set-toy-corner-empty, set-tom-living-room-empty, prop-red-blanket-bump, prop-toys (ball, car, kite, drum, train, teddy), prop-top, prop-silver-pot, prop-olive.
+Step 4: 7 element specs written (/tmp/opencode/w07/mkelem.mjs); first 4 Muse calls ok (0.04 USD). Next: 3 more calls, then look.
+Step 5: looked at 7 sheets m1: toy corner, Tom living room, blanket, toys, pot OK. Top (turnip look) and olive (reads as a green fruit with stem) -> remake m2.
+Step 6: top m2 and olive m2 ok (9 Muse calls, 0.09 USD). Next: 27 page specs via /tmp/opencode/w07/mkspecs.mjs (castLook pending for Tom, Mom as in w04).
+Step 7: 27 page specs written by /tmp/opencode/w07/mkspecs.mjs (6 check rows reuse w04/w05/w06 specs with new id; octopus, ox, olive new). castLook pending on Tom/Mom pages. Next: stage gate.
+Step 8: stage gate exit 0 (90 element paths, 0 missing, 0 candidates; 9 pending-look specs; max 6 refs/spec). Review folder out/storytime-review/w07-staging/ (index.md, sheets-1.png, sheets-2.png). Next: commit 1, commit 2.
+Step 9: commit 1 = 75c8aeb9 (27 page specs + 7 element specs); commit 2 = 1414a3ea (plan note under Phase 4 Task 2, marker unchanged).
+Stage gate (exit 0): list sha256 6d05dfc5...2a58 | week 7 | rows 27 | specs found 27 | text 0 | goal 0 | outDir 0 | no-reference rows 0 | element paths checked 90 | missing 0 | characters without a reference 0 | page candidates 0 | stage check: pass
+Muse: 9 calls, 9 billed, 0 failed, 0.09 USD; running total 4.19 + 0.09 = 4.28 USD. No page call; no file <row id>-m* in out/storytime/l2/unit1/w07/muse/.
+No new cast sheet (no new character), so no phone JPG. Review folder: out/storytime-review/w07-staging/ (index.md, sheets-1.png, sheets-2.png).
+Elements: reused (Pip w04 render, w04 doll sheet, 3D octopus/ox, May copy may-ref-render.png, Ben copy ben-ref-clean-2.png, Tom m3 + Mom m1 pending sheets, six check-row specs from w04/w05/w06); new Muse sheets (7): set-toy-corner-empty, set-tom-living-room-empty, prop-red-blanket-bump-sheet, prop-toys-sheet, prop-top-sheet (m2), prop-silver-pot-sheet, prop-olive-sheet (m2).
+Staged total weeks 2 to 7: 162 page specs.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Produce weeks 2 to 7 after the week 1 review (week 7 staging, inputs only; marker stays [ ] until the Phase 3 checkpoint)
+role_base_sha: b5f0c971
+phase_base_sha: fc76c272
+commits: 75c8aeb9; 1414a3ea
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+specs: 27 page specs + 7 element specs
+muse_calls_total: 9 (9 billed, 0 failed)
+muse_cost_usd: 0.09
+running_total_usd: 4.28 (4.19 before)
+page_candidates: 0
+stage_gate: exit 0 (90 reference paths, 0 missing)
+review_folder: out/storytime-review/w07-staging/
+cast_jpg: none (no new character)
+handoff: Week 7 inputs are ready; 162 page specs are staged for weeks 2 to 7. Open: (1) 7 new element sheets (toy corner, Tom living room, red blanket, six toys, top, silver pot, olive) need an independent look; the toy shelf is small and the sofa is cut at the left edge. (2) The teddy page shows only the Pip tail tip; the model may draw the whole puppy. (3) The toys sheet holds six toys; a thought-bubble page may draw more than the one it names. (4) The Tom and Mom looks are still pending cast sheets for Daniel. (5) No week 7 page call before Daniel answers on week 1. Default: stage no further week; weeks 2 to 7 are complete.
+dispositions: none
+END_MEASURE_AGENT_RESULT

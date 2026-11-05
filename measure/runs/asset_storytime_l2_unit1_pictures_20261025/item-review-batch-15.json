@@ -1,0 +1,43 @@
+{
+  "reviewer": "openai/gpt-6-luna#high",
+  "seen": {
+    "look-reference-nan-and-pip.png": "Nan and Pip appear in the approved soft, rounded chibi style.",
+    "l2-w01-practice-line-nut-line-v3.png": "The older line art shows the nut cap and its shell line.",
+    "l2-w01-practice-line-nut-line-v4.png": "The failed older line art has only the nut outline and no cap line.",
+    "storytime-nut.png": "Four views show a pointed brown shell, a dark cap, and a leaning stem without visible black specks.",
+    "l2-w01-practice-line-nut-v6.png": "The nut is large and clear on white, with a pointed shell and a dark cap line.",
+    "l2-w01-practice-line-nut-line-v6.png": "The black outline shows a continuous, clear cap line and an acorn-like shape.",
+    "l2-w01-story-page-a-nest-and-a-nut-v8.png": "The scene shows Pip near a nut below a nest with three blue eggs, but the framing cuts off Pip and the tree crown is absent.",
+    "l2-w01-story-page-a-nest-and-a-nut-line-v8.png": "The nest and nut outlines are visible, but Pip and the scene are cut off by the page edges."
+  },
+  "storytime-nut": {
+    "overall": 8.5,
+    "pass": true,
+    "critical": [],
+    "issues": [],
+    "fix": ""
+  },
+  "l2-w01-practice-line-nut": {
+    "overall": 8.0,
+    "pass": true,
+    "critical": [],
+    "issues": [],
+    "fix": ""
+  },
+  "l2-w01-story-page-a-nest-and-a-nut": {
+    "overall": 5.0,
+    "pass": false,
+    "critical": ["Pip is cut off by the lower frame and is not shown whole."],
+    "issues": ["The tree crown is outside the frame, so the tree does not read clearly as a tree.", "Known open defect: the pointing hand reads as a fist.", "The nut and nest are large and clear; the nest is close to the top edge."],
+    "fix": "Reframe the scene to show all of Pip and enough tree crown, while keeping the nest and nut clear.",
+    "goals": {
+      "Pip sniffs a big brown nut in the grass": "partial",
+      "Nest with three light blue eggs sits on a low branch above Pip": "pass",
+      "Pip, nest, and nut are whole, large, and clear inside the frame": "fail",
+      "Simple garden with soft colors and a readable tree": "fail",
+      "Pip matches the required puppy design": "partial",
+      "Nut reads as an acorn with a cap line in line art": "pass",
+      "Nest line art stays clean": "partial"
+    }
+  }
+}

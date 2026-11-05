@@ -1,0 +1,16 @@
+{
+  "reviewer": "xai/grok-4.7#high",
+  "storytime-block-box": {
+    "overall": 7.8,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "The front view hides most of the green cylinder behind the blue cube.",
+      "The arch is pale tan and less clear than the bright blocks.",
+      "Two blue blocks sit close in the front pile.",
+      "The side hole shows small red and green spots. Those spots can read as a mark.",
+      "The block pile is small for the box, but the open box still reads as a box of blocks."
+    ],
+    "fix": "Shift the green cylinder so the front view shows the full cylinder."
+  }
+}

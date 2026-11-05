@@ -1,0 +1,353 @@
+{
+  "status": "fail",
+  "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Two of the nine rows fail. The cover has no calm top 30 percent because Teacher Kim's head starts at 16 percent of the height. The it-is-blue line art puts Nan's star on May's shirt. The other seven rows are clean. Of the three extra rows, K1 and K2 are clean. K3 fails because the nose shows in the color file and not in the line file.",
+  "l2-w03-cover-paint": {
+    "files": {
+      "color": "out/storytime-review/batch-44/pages/l2-w03-cover-paint-m3-color-print.png",
+      "line": "out/storytime-review/batch-44/pages/l2-w03-cover-paint-m3-line-print-3-despeckled.png"
+    },
+    "rating": 7.0,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "verdict": "defect",
+    "defect_categories": ["layout-fault"],
+    "defects": [
+      "The top 30 percent of the cover print has no calm band: the roof trusses and the heavy beam fill rows 0 to 450, the window frame with shutters reaches row 490, and Teacher Kim's head starts at row 476. Her head covers about 47 percent of the band depth, so the cover title 'Paint!' has no quiet wall."
+    ],
+    "notes": [
+      "Cover top 30 percent measured on the color print: the trusses and beam reach row 0 (the whole band), the window reaches row 490 (16 percent of the height) and Teacher Kim's head starts at row 476 (16 percent). The calm-top rule of 2 percent differing pixels fails at 50.7 percent.",
+      "All six children and Teacher Kim show with clear faces; Pat's hair is cut by the left page edge and Nan stands at the right edge. A note, not a defect.",
+      "Ben's hair is clumped instead of a smooth swoosh. The clumped look is his model look in the cast group sheet, so this is a note under the bar.",
+      "A tan post stands behind the left easel in the color print and no post shows in the line print. A note, not a defect, because the sentence needs no post.",
+      "Two brushes lie on the low table in both files. A note, not a defect.",
+      "The line print has no gray pixels, no thick black band, no gap in the outline and no text.",
+      "One paw print shows in the lower right. It reads as a white paw-shaped palette with colored pads.",
+      "The two easels at the right end of the row have a different leg design from the four at the left. A note on prop consistency."
+    ],
+    "goal_check": {
+      "six children paint at easels": "yes: Pat, May, Sam, Mia, Ben and Nan each stand at an easel with a painting, one row, in the color print",
+      "Teacher Kim smiles behind them": "yes: she stands behind Mia and Ben and smiles, but her head sits in the top 30 percent band",
+      "one small colorful paw print on the floor": "yes: one paw print in the lower right",
+      "no letters, words or numbers": "yes: no text in either file",
+      "Nan cast look": "yes: two buns with red bands, orange T-shirt, red shorts, white sneakers, large dark-brown eyes"
+    },
+    "sheet_color": "no sheet on the cover; six easels carry paintings in many colors",
+    "retry_hint": "Redraw the cover so rows 0 to 900 of the 3000 row print stay plain wall: no head, no window and no beam in that band, and keep the six children and Teacher Kim lower in the frame."
+  },
+  "l2-w03-story-page-it-is-blue": {
+    "files": {
+      "color": "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-blue-m1-color-print.png",
+      "line": "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-blue-m1-line-print-3-despeckled.png"
+    },
+    "rating": 7.5,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "verdict": "defect",
+    "defect_categories": ["wrong-or-changed-character"],
+    "defects": [
+      "The line print draws a five-pointed star at May's collar, so May wears Nan's emblem. The color print shows her plain yellow T-shirt without a star. The star is crisp and about 70 px wide on the 4000 px print, so a teacher sees it at book size."
+    ],
+    "notes": [
+      "The sheet in the line print is one closed four-sided shape with nothing inside it.",
+      "The line print has no gray pixels, no thick black band, no gap in the sheet outline and no text.",
+      "May's hands are simple clumps with three or four bumps; no hand shows six digits.",
+      "The top edge of the sheet passes close beside her eye in the line print, but the face stays whole. A note, not a defect.",
+      "Two brushes lie on the low table in both files. A note, not a defect.",
+      "The window and the paint pots carry no letters."
+    ],
+    "goal_check": {
+      "May holds up a big sheet painted all blue": "yes: the sheet is flat blue with no second color and no mark",
+      "May is the right child": "yes: black hair with a fringe, one side ponytail, yellow star hair clip, yellow T-shirt, blue pleated skirt, white socks and white sneakers",
+      "at an easel in the art corner": "yes: an easel with a blank sheet and three paint pots stands beside her",
+      "no letters, words or numbers": "yes: no text in either file"
+    },
+    "sheet_color": "blue only: one flat blue sheet, no other color on it",
+    "retry_hint": "Redraw the line art so May's T-shirt carries no star and no emblem; keep the plain yellow shirt of the color print."
+  },
+  "l2-w03-story-page-it-is-green": {
+    "files": {
+      "color": "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-green-m1-color-print.png",
+      "line": "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-green-m1-line-print-3-despeckled.png"
+    },
+    "rating": 8.5,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "The sheet in the line print is one closed four-sided shape with nothing inside it.",
+      "The line print has no gray pixels, no thick black band, no gap in the sheet outline and no text.",
+      "Mia's hands are simple clumps with three or four bumps; no hand shows six digits.",
+      "The page shows two easel designs: a small flat board at the left and a tall easel with a ledge at the right. A note on prop consistency, not a defect.",
+      "Two brushes lie on the low table in both files. A note, not a defect.",
+      "Mia shows lash flicks at the outer eye corners. The cast group sheet gives Mia the same lashes, so this is a note, not a defect.",
+      "The overalls show a small round button in the line print and no star."
+    ],
+    "goal_check": {
+      "Mia holds up a big sheet painted all green": "yes: the sheet is flat green with no second color and no mark",
+      "Mia is the right child": "yes: light-brown shoulder-length hair with a pink side bow, pink T-shirt, blue denim overalls, white shoes",
+      "at an easel in the art corner": "yes: an easel with a blank sheet and three paint pots stands beside her",
+      "no letters, words or numbers": "yes: no text in either file"
+    },
+    "sheet_color": "green only: one flat green sheet, no other color on it",
+    "retry_hint": null
+  },
+  "l2-w03-story-page-it-is-orange": {
+    "files": {
+      "color": "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-orange-m1-color-print.png",
+      "line": "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-orange-m1-line-print-despeckled.png"
+    },
+    "rating": 8.0,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "The sheet in the line print is one closed four-sided shape with nothing inside it. The star of Nan's T-shirt sits above the sheet edge and does not touch the sheet inside.",
+      "The line print has no gray pixels, no thick black band, no gap in the sheet outline and no text.",
+      "Nan's hands are simple clumps with three or four bumps; no hand shows six digits.",
+      "A thin band of Nan's orange shirt shows beside the right edge of the sheet. Her hand separates the two, so the sheet stays one clear orange rectangle. A note, not a defect.",
+      "The page shows two easel designs: a small flat board at the left and a tall easel with a ledge at the right. A note on prop consistency.",
+      "Two brushes lie on the low table in both files. A note, not a defect."
+    ],
+    "goal_check": {
+      "Nan holds up a big sheet painted all orange": "yes: the sheet is flat orange with no second color and no mark",
+      "Nan is the right child": "yes: black hair in two buns with red bands, orange T-shirt, red shorts, white sneakers, large dark-brown eyes with one lash flick at each outer corner",
+      "at an easel in the art corner": "yes: an easel with a blank sheet and three paint pots stands beside her",
+      "no letters, words or numbers": "yes: no text in either file"
+    },
+    "sheet_color": "orange only: one flat orange sheet, no other color on it",
+    "retry_hint": null
+  },
+  "l2-w03-story-page-it-is-pink": {
+    "files": {
+      "color": "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-pink-m1-color-print.png",
+      "line": "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-pink-m1-line-print-despeckled.png"
+    },
+    "rating": 8.5,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "The sheet in the line print is one closed four-sided shape with nothing inside it.",
+      "The line print has no gray pixels, no thick black band, no gap in the sheet outline and no text.",
+      "Ben's hair is one smooth light-brown swoosh with a few tufts in the color file and in the line file, as the spec note asks. He shows no freckles and no lash marks.",
+      "No star or other emblem shows on Ben's shirt in the line print.",
+      "Ben's hands are simple clumps with three or four bumps; no hand shows six digits.",
+      "The page shows two easel designs: a small flat board at the left and a tall easel at the right. A note on prop consistency.",
+      "Two brushes lie on the low table in both files. A note, not a defect."
+    ],
+    "goal_check": {
+      "Ben holds up a big sheet painted all pink": "yes: the sheet is flat pink with no second color and no mark",
+      "Ben is the right child": "yes: short smooth light-brown hair, big brown eyes, light-blue T-shirt, dark-blue shorts, grey sneakers",
+      "at an easel in the art corner": "yes: an easel with a blank sheet and three paint pots stands beside him",
+      "no letters, words or numbers": "yes: no text in either file"
+    },
+    "sheet_color": "pink only: one flat pink sheet, no other color on it",
+    "retry_hint": null
+  },
+  "l2-w03-story-page-it-is-pip": {
+    "files": {
+      "color": "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-pip-m2-color-print.png",
+      "line": "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-pip-m2-line-print-despeckled.png"
+    },
+    "rating": 8.0,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "Pip has floppy ears only. The head shows no spike and no tuft of hair in the color file or in the line file.",
+      "Pip keeps his reference look: golden-brown fur, cream chest, cream muzzle, cream stripe on the forehead, dark ears, large dark-brown eyes, a black nose, a red collar with a round gold tag.",
+      "Pip shows about twelve paint spots on his fur and paws. The goal names seven colors, and six of them show on him: red, blue, yellow, green, orange and purple. No pink spot shows on Pip's fur or paws; the pink pixels near his head belong to the pink shirt of Mia behind him. A note for the builder, not a defect under the bar, because the sentence 'It is Pip!' needs no spot color.",
+      "The big sheet on the floor carries paw prints in all seven colors: red, blue, yellow, green, orange, pink and purple.",
+      "All seven people show in the color file and in the line file: Pat, May, Sam, Mia, Ben, Nan and Teacher Kim. Nan's star shows on her shirt and on no other child.",
+      "The line print has no gray pixels, no thick black band, no gap in the outlines and no text.",
+      "Ben's hair is clumped, not a smooth swoosh. The clumped look is his model look in the cast group sheet, so this is a note.",
+      "The goal says Pip stands on the sheet; the color file shows him sitting on it. A note, because the sentence only needs Pip on the sheet."
+    ],
+    "goal_check": {
+      "Pip has a happy face and paint spots on his fur and paws": "yes: an open smiling face and many paint spots on the ears, cheeks, head, legs and paws; six of the seven named colors show, pink does not",
+      "Pip has floppy ears only": "yes: two floppy ears with darker tips and no spike",
+      "Pip stands on a big sheet with colorful paw prints": "the sheet shows with paw prints in seven colors; Pip sits on it in the color file",
+      "Pat, May, Sam, Mia, Ben, Nan and Teacher Kim laugh": "yes: all seven people show in both files with clear faces",
+      "Nan cast look": "yes: two buns with red bands, orange T-shirt with a white star, red shorts, white sneakers, large dark-brown eyes with lash flicks",
+      "no letters, words or numbers": "yes: no text in either file"
+    },
+    "sheet_color": "no painted sheet to name: Pip sits on a big white sheet with paw prints in seven colors",
+    "retry_hint": null
+  },
+  "l2-w03-story-page-it-is-purple": {
+    "files": {
+      "color": "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-purple-m1-color-print.png",
+      "line": "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-purple-m1-line-print-3-despeckled.png"
+    },
+    "rating": 8.5,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "The sheet in the line print is one closed four-sided shape with nothing inside it.",
+      "The line print has no gray pixels, no thick black band, no gap in the sheet outline and no text.",
+      "Teacher Kim's hair is drawn as an outline and not as a solid black shape, and no star shows on her cardigan.",
+      "Eight paw prints cross the floor in the line print, as in the color file, in red, blue, yellow, green, orange, pink, purple and red.",
+      "Her two hands each show four fingers; no hand shows six digits.",
+      "Two brushes lie on the low table in both files. A note, not a defect.",
+      "No child and no puppy are in this picture, as the goal asks."
+    ],
+    "goal_check": {
+      "Teacher Kim holds up a big sheet painted all purple": "yes: the sheet is flat purple with no second color and no mark",
+      "Teacher Kim cast look": "yes: a grown woman with a low ponytail, a green cardigan over a cream blouse, navy trousers and brown flat shoes",
+      "a line of small paw prints in many colors goes across the floor behind her": "yes: eight paw prints in seven colors",
+      "no letters, words or numbers": "yes: no text in either file"
+    },
+    "sheet_color": "purple only: one flat purple sheet, no other color on it",
+    "retry_hint": null
+  },
+  "l2-w03-story-page-it-is-red": {
+    "files": {
+      "color": "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-red-m1-color-print.png",
+      "line": "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-red-m1-line-print-2-despeckled.png"
+    },
+    "rating": 8.0,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "The sheet in the line print is one closed rectangle with nothing inside it.",
+      "The line print has no gray pixels, no thick black band, no gap in the sheet outline and no text.",
+      "A small pointed mark shows on Pat's shirt under the sheet in the line print, and a band of his green shirt shows under the sheet in the color print. A note, not a defect.",
+      "Pat's hair shows the same messy black tufts in the color file and in the line file.",
+      "Both hands grip the sheet's edges and each shows four bumps; no hand shows six digits.",
+      "Two brushes lie on the low table and two more brushes stand in a holder at the left wall in the color file. A note, not a defect."
+    ],
+    "goal_check": {
+      "Pat smiles and holds up a big sheet painted all red": "yes: the sheet is flat red with no second color and no mark",
+      "Pat is the right child": "yes: messy black hair with a fringe and tufts, big brown eyes, green T-shirt, brown cargo shorts, brown sandals",
+      "in the art corner with low tables, easels and paint pots": "yes: two easels, a low table with paint pots and brushes",
+      "no letters, words or numbers": "yes: no text in either file"
+    },
+    "sheet_color": "red only: one flat red sheet, no other color on it",
+    "retry_hint": null
+  },
+  "l2-w03-story-page-it-is-yellow": {
+    "files": {
+      "color": "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-yellow-m1-color-print.png",
+      "line": "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-yellow-m1-line-print-3-despeckled.png"
+    },
+    "rating": 8.5,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "The sheet in the line print is one closed four-sided shape with nothing inside it.",
+      "The line print has no gray pixels, no thick black band, no gap in the sheet outline and no text.",
+      "The solid black discs in Sam's eyes are pupils. Every outline has a normal width.",
+      "A thin sliver of Sam's red shirt shows beside the right edge of the sheet in the color file. A note, not a defect, because his hand separates the shirt from the sheet.",
+      "The page shows two easel designs: a tall easel with a ledge and three pots at the left and a small flat board at the right, and the line print keeps both. A note on prop consistency.",
+      "Two brushes lie on the low table in both files. A note, not a defect."
+    ],
+    "goal_check": {
+      "Sam holds up a big sheet painted all yellow": "yes: the sheet is flat yellow with no second color and no mark",
+      "Sam is the right child": "yes: short brown hair with a side-swept fringe, big brown eyes, red T-shirt, blue shorts, blue shoes",
+      "at an easel in the art corner": "yes: an easel with a blank sheet and three paint pots stands beside him",
+      "no letters, words or numbers": "yes: no text in either file"
+    },
+    "sheet_color": "yellow only: one flat yellow sheet, no other color on it",
+    "retry_hint": null
+  },
+  "extra": {
+    "K1": {
+      "files": {
+        "color": "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "line": "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      },
+      "rating": 8.0,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The line print has no gray pixels, no thick black band, no gap in the outline and no text.",
+        "Nan keeps her reference look in both files: two buns with red bands, orange T-shirt with a white star, red shorts and white sneakers, with lash flicks at the outer eye corners.",
+        "The open hand shows a thumb and four fingers in the color file and in the line file. No hand shows six digits.",
+        "The nut is drawn as a brown acorn with a cap and a stem. It reads as a brown nut for the sentence 'A nut.', so this is a note, not a defect."
+      ],
+      "goal_check": {
+        "one big brown nut": "yes: one big brown nut with a cap and a stem",
+        "in Nan's open hand": "yes: the nut rests on her open palm",
+        "close up": "yes: the picture shows her head, her arm and the hand at a close distance",
+        "no letters, words or numbers": "yes: no text in either file"
+      },
+      "retry_hint": null
+    },
+    "K2": {
+      "files": {
+        "color": "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "line": "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      },
+      "rating": 8.0,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The line print has no gray pixels, no thick black band, no gap in the nose outline and no text.",
+        "The nose shows in the color file and in the line file, so the face part named by the text 'nose' shows in both files.",
+        "The ear is an open C shape and the eyebrow is a thick stroke. Both are marks of that size, so they are not defects under the bar.",
+        "The line art omits the red band of the bun, because line art has no color. A note, not a defect.",
+        "This review covers line try 7. The approved record for this row names line try 13. Try 13 also shows the nose clearly in profile, so the row reads the same way in both tries."
+      ],
+      "goal_check": {
+        "the head of Nan in profile": "yes: the head is in profile facing right, with the bun, the ear and the cheek visible",
+        "the nose clearly seen": "yes: the nose and the nostril are drawn clearly in both files",
+        "a tracing practice line": "yes: the line art is a clean outline on a white ground with normal line widths",
+        "no letters, words or numbers": "yes: no text in either file"
+      },
+      "retry_hint": null
+    },
+    "K3": {
+      "files": {
+        "color": "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "line": "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      },
+      "rating": 6.5,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "defect",
+      "defect_categories": ["broken-face"],
+      "defects": [
+        "The nose named by the text shows in the color file and not in the line file. In the color file the nose is a clear round bump above her finger. In the line file the finger tip stands where the nose should be and no nose shape is drawn, so the face part that the sentence names is missing in the coloring page."
+      ],
+      "notes": [
+        "The line print has no gray pixels, no thick black band, no gap in the outline and no text.",
+        "Nan keeps her reference look in the color file and in the line file: two buns with red bands, orange T-shirt with a white star, red shorts and white sneakers, large dark-brown eyes and lash flicks.",
+        "One finger touches her nose and the other arm hangs down in both files. No hand shows six digits.",
+        "The mouth is open with a tongue in the color file and an open mouth shape in the line file, so she laughs in both files.",
+        "The line art draws the eyes as circles with a small circle inside, so the child colors the pupil. A note, not a defect."
+      ],
+      "goal_check": {
+        "Nan touches her own nose with one finger": "yes in the color file; in the line file the finger reaches the place of the nose but the nose is not drawn",
+        "and laughs": "yes: her mouth is open in both files",
+        "the nose shows in both files": "no: the nose shows in the color file only",
+        "no letters, words or numbers": "yes: no text in either file"
+      },
+      "retry_hint": "Redraw the line art so the nose shows as a round bump above her finger tip, as in the color file, and keep the finger touching it."
+    }
+  }
+}

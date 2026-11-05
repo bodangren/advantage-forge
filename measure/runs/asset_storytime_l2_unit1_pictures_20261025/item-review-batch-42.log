@@ -1,0 +1,38 @@
+item-review-batch-42.log
+Reviewer: kimi-code-plan-cn/kimi-for-coding
+Bar: Daniel 2026-11-01 14:15 ICT
+Batch: week 2 batch 3, nine check rows (alligator, ant, apple, bed, bus, dog, fish, pig, sun)
+
+State: COMPLETE. Top status: fail (one row not clean).
+
+Row-by-row:
+- l2-w02-check-row-alligator: rating 8, clean. One alligator in both files, whole, white, no text. Far eye ring clipped by the head outline; reads as an eye. Teeth are small closed shapes.
+- l2-w02-check-row-ant: rating 8, clean. One ant, six legs (five full plus far-side stubs), matches the m2 reference. Second eye is a thin ring with a pupil at the head edge; reads as an eye in both files.
+- l2-w02-check-row-apple: rating 9, clean. One apple, stem and leaf closed, small open dimple curve is under the bar.
+- l2-w02-check-row-bed: rating 8, clean. One bed, bold even lines, plain blanket in the line art (color has a red check). Headboard arch reads as one arched opening.
+- l2-w02-check-row-bus: rating 8, clean. Open grille lines judged not a defect (normal convention; color file shows slats). One bus, whole, no text.
+- l2-w02-check-row-dog: rating 8, clean. Outlined eyebrow bands accepted under the bar. Solid black nose is a standard fill, not a ring or band.
+- l2-w02-check-row-fish: rating 8, clean. The small closed nub at the lower left of the body is under the bar and reads as a small fin.
+- l2-w02-check-row-pig: rating 8, clean. Far eye clipped by the head outline but reads. No cheek blush or skin texture in the line art is fine.
+- l2-w02-check-row-sun: rating 5, NOT CLEAN. The line art is a circle with eight closed rays that are each wider at the outer end than at the inner end, and no ray touches the disc. A teacher can read it as a flower (center plus petals). The color print still reads as a sun through warm colors and glow. Retry hint: make rays narrower or pointed at the outer end and let them touch or nearly touch the disc.
+
+Checks across all rows:
+- Gray pixels: 0 of 2250000 not 0 or 255 in every line print (node scan).
+- Thick solid black ring or band: none; only eye pupils and the dog nose are solid black.
+- Faces: every object with eyes shows its eyes in both files.
+- One object, whole, nothing else: met on all nine rows.
+
+Retry hint: make each ray narrower at its outer end or pointed, and let the rays touch or nearly touch the disc, so the line art cannot read as petals around a center.
+
+Follow-up: three control rows judged under the same bar (Daniel 2026-11-01 14:15 ICT). Verdict and defect_categories now stand on all 12 rows. Categories use only the bar names.
+
+Controls (top-level "controls" in the JSON):
+- C1 (text "A nose."; goal "Nan touches her own nose with one finger and laughs."): rating 8, verdict clean, defect_categories []. Files: out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png and -line-v1.png. One finger touches the nose and the mouth laughs in both files. Nan keeps her cast look (bunches with red ties, orange star shirt, red shorts, white shoes, lash flicks). Line art holds 0 gray pixels; pupils are thin rings at normal width.
+- C2 (text "A nut."; goal "One big brown nut in Nan's open hand, close up."): rating 8, verdict clean, defect_categories []. Files: out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png and -line-v1.png. One big brown acorn with a cap and stem sits in the open hand in both files. The hand reads four fingers and one thumb in both files. Line art holds 0 gray pixels.
+- C3 (text "nose"; goal "The head of Nan in profile facing the other way, the nose clearly seen, for a tracing practice line."): rating 8, verdict clean, defect_categories []. Files: out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png and -line-7-despeckled.png. Right profile, nose clearly seen in both files. The ear is an open C-shaped line, an accepted mark under the bar. Line art holds 0 gray pixels.
+
+Defect categories on the 12 rows:
+- l2-w02-check-row-sun: verdict defect, defect_categories [wrong-or-missing-prop] (the line art reads as a flower, so the object is wrong for the word "sun").
+- All other 11 rows: verdict clean, defect_categories [].
+
+Files: see item-review-batch-42.json for the full per-row record.

@@ -1,0 +1,36 @@
+Batch 51 review (audit only)
+Reviewer: opencode/glm-5.3-flash-free#high
+Bar: Daniel 2026-11-01 14:15 ICT
+Status: pass (all 9 check rows clean)
+
+Line checks (node script, /tmp/opencode/line-check-51.js): every line print has zero pixels that
+are not 0 or 255 (pure black-and-white), and zero dark pixels on the outer pixel row and column
+(nothing cut at a print edge). Control line files: K1 clean (no edge ink); K2 ink on the outer
+bottom row (89 px, shorts/feet crop) and outer right column (49 px, bun clip); K3 ink on the outer
+bottom row only (40 px, neck/shirt crop).
+
+K rows:
+- K1 "A nose." rating 5.5 DEFECT (wrong-or-missing-prop). The line art draws no nose and moves the
+  fingertip to the mouth; the color shows the nose under the fingertip. A face part the text names
+  must show in both files. Retry hint: line.
+- K2 "A nut." rating 8.1 clean. Notes: line-only right bun clipped at the frame edge; feet cut at
+  the bottom edge in both (close-up). One big brown nut, exact counts.
+- K3 "nose" rating 8.6 clean. Profile facing right in both files, nose clearly seen, traceable
+  line. Bottom-edge neck/shirt crop is a note. "Facing the other way" could not be checked against
+  an orientation reference, but color and line agree.
+
+The 9 check rows (week 5, batch 51):
+- bed  rating 8.4 clean. Notes: double outline on left foot-post knob; blanket check pattern not in the line.
+- cat  rating 8.6 clean. Notes: rear-leg region slightly muddled; color stripes and lash ticks not in the line.
+- cup  rating 9.0 clean. Reads as cup in both; same shapes, no steam, no drink.
+- dog  rating 8.7 clean. Notes: double ring on the left eye; small curved stroke near the belly.
+- hat  rating 8.9 clean. Single brim outline, bow of closed loops, band present in both.
+- pen  rating 8.5 clean. Note: translucent top cap of the color reads as a plain round cap in the line.
+- sock rating 8.7 clean. Cuff, heel patch, toe patch closed shapes in both; wavy instep bump in both.
+- sofa rating 8.8 clean. Two back cushions, two arms, seat, base, feet; no stray seat line.
+- sun  rating 9.0 clean. One sun only; exactly eight pointed triangle rays, wide base on the disc,
+  points outward, in both color and line.
+
+Top rating of the 9 rows: 8.7 of 10.
+
+Facts changed: none.

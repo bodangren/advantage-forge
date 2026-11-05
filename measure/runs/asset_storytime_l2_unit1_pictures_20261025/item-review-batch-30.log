@@ -1,0 +1,27 @@
+Batch 30 independent review (Muse fix round 58). Track asset_storytime_l2_unit1_pictures_20261025, Phase 3.
+Reviewer opencode-go/mimo-v2.6-flash. Audited HEAD 682f4b2f. Report-only. No files changed except this log and the JSON.
+
+Method: read every color and line file with the vision tool; crop and enlarge faces, ears, and hands to 3x-6x with python3 + PIL under /tmp/opencode/review-b30; pixel-histogram check of every line file; compare Nan with batch-21 look reference, Ben with batch-21 Ben render, and Teacher Kim with the earlier muse-cast sheet.
+
+Results per key (rating / pass / clean):
+- cast-sheet-teacher-kim: 8.5 / pass / clean. Front-view fingers now separate; the batch 28 mitten defect is gone. Look matches the earlier sheet.
+- l2-w01-check-row-nose: 8.5 / pass / clean. Exact left profile, nose tip most forward, one eye, smooth ear, head fills the square. Batch 28 profile and ear defects gone.
+- l2-w01-practice-line-nose: 8.5 / pass / clean. Exact right profile, nose tip most forward, one eye with the eyelash mark, smooth ear. Batch 28 defects gone.
+- l2-w01-story-page-a-neck: 7.5 / pass / NOT clean. Chin lifted, neck is a skin column, fingers on both neck sides, even orange shirt. Defect: both ears ragged with dark jagged holes (open in m4).
+- l2-w01-story-page-hello-i-am-ben: 8.5 / pass / clean. Forehead is one smooth skin color; the pale crease is gone. No temple spot. Wave and hanging hands show separate fingers. No eyelash ticks on Ben.
+- l2-w01-story-page-a-nest: 7.0 / pass / NOT clean. Points with index finger, three blue eggs, even shirt. Defects: Nan's ear ragged with a dark hole (open in m5); in the line art the branch tip and leaf cluster are thin jagged open strokes.
+- l2-w01-story-page-a-net: 7.0 / pass / NOT clean. Rim is now one thick line (double-line defect gone). Defect: the mesh is a fine grid of 6-11 crossing lines each way, about 40+ cells, over the brief's 4x4 limit.
+
+Line-art pixel check: all six line files are pure 0 and 255 only (2 unique values, no gray, no specks). m3-color is the full-color file and is correctly 256 values.
+
+Eyelash-mark note: batch 28's accepted check-row line art also omits the painted eyelash wing, so the line art convention omits it. I did not count that as a defect. Both color profiles keep the eyelash mark.
+
+MEASURE_AGENT_RESULT
+role: item-review
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures
+audited_head: 682f4b2f
+status: complete
+result_json: measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-30.json
+summary: items 7, pass 7, clean 4, not clean 3 (l2-w01-story-page-a-neck, l2-w01-story-page-a-nest, l2-w01-story-page-a-net)
+END_MEASURE_AGENT_RESULT

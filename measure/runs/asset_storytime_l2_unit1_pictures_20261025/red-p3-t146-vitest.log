@@ -1,0 +1,41 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+stdout | tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T146: the line-art check rejects a line thinner than 12 px and prints the measured width
+Line-art line width: 6 px (minimum 12 px).
+Line-art ink coverage: 0.75% (1200 of 160000 pixels black).
+
+stdout | tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T146: the line-art check rejects a line thinner than 12 px and prints the measured width
+Line-art line width: 11 px (minimum 12 px).
+Line-art ink coverage: 1.38% (2200 of 160000 pixels black).
+
+ ❯ tests/storytime-book-pictures.test.ts (134 tests | 1 failed) 274903ms
+     × T146: the line-art check rejects a line thinner than 12 px and prints the measured width 586ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T146: the line-art check rejects a line thinner than 12 px and prints the measured width
+AssertionError: The measured width follows the typical outline, not the solid block.: expected +0 to be 4 // Object.is equality
+
+- Expected
++ Received
+
+- 4
++ 0
+
+ ❯ tests/storytime-book-pictures.test.ts:4255:103
+    4253|       const mixedWidth = Number(/width[^\n]*?([0-9]+)/i.exec(mixedLine…
+    4254|       expect.soft(mixedCheck.valid, 'A solid block makes the mixed lin…
+    4255|       expect.soft(mixedWidth, 'The measured width follows the typical …
+       |                                                                                                       ^
+    4256|     } finally {
+    4257|       await rm(directory, { recursive: true, force: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 133 passed (134)
+   Start at  18:35:38
+   Duration  277.42s (transform 1.20s, setup 0ms, import 2.12s, tests 274.90s, environment 0ms)
+

@@ -1,0 +1,38 @@
+{
+  "reviewer": "kimi-code-plan-cn/kimi-for-coding",
+  "seen": {
+    "brief.md": "The brief sets a 7.0 bar, the critical defect lists, the page goal, and the known open defects for batch 21.",
+    "look-reference-nan-and-pip.png": "The approved soft, round, bright chibi look: Nan in an orange shirt and Pip the dog on a white background.",
+    "sprout-ben-render.png": "Ben in four views: chibi boy with brown hair, blue T-shirt, dark blue shorts, about 0.908 m tall.",
+    "storytime-animal-pictures.png": "Three framed animal pictures in a row (lion, elephant, frog) shown from front, three-quarter, side, and back.",
+    "l2-w01-story-page-hello-i-am-ben-v3.png": "Color page: Ben waves beside a green bag hanging on a wall hook, with a red bag on the floor to his side.",
+    "l2-w01-story-page-hello-i-am-ben-line-v3.png": "1-bit line art of the same page with the classroom wall beams and floor planks."
+  },
+  "storytime-animal-pictures": {
+    "overall": 8.0,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "The three animals (lion, elephant, frog) are big, bright, and simple, and a child of about 5 years can name each one."
+    ],
+    "fix": "",
+    "notes": "Front view shows a lion, an elephant, and a frog in orange frames on colored backgrounds. No text, letters, numbers, or logos. No human face. The frames sit on the ground plane with the backs flat, and the side and back views show no floating or buried part. No black specks are visible. No detail is small enough to become a blob in line art. The row matches the brief size and faces +Z."
+  },
+  "l2-w01-story-page-hello-i-am-ben": {
+    "overall": 7.5,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "A pale streak runs across Ben's forehead in the color page; it reads as a mark that does not belong to the face.",
+      "The grab loop and strap bumps on top of the red bag sit close together; they still read as a handle and straps, not as a face.",
+      "The small dash marks at the outer eye corners match the known skin-flap defect and are not worse than the brief describes."
+    ],
+    "fix": "Remove the pale streak across Ben's forehead in the color page.",
+    "line_art": [
+      "A short curved dash on the upper left forehead, just under the hairline.",
+      "Small dash marks at the outer corner of the left eye and the outer corner of the right eye (the known skin-flap defect).",
+      "Two short vertical dashes beside each ear, at the cheek edge."
+    ],
+    "notes": "The page shows the goal: Ben hangs his green bag on a hook and waves. The raised hand reads as a wave. The green bag hangs from the peg on the hook board, and its place next to Ben's head links it to him. The red bag sits on the floor behind Ben, and the round bump on its top right changes its outline so it reads as moved a little. The shapes on top of the red bag (grab loop circle with strap bumps) do not form a face; there is no mouth and the pocket reads as a pocket, so this is not the critical face-on-a-prop defect. Ben is whole and no important part is cut by the frame. The wall beams and floor planks are the classroom lines, not defects. The mouth and pupil fills are solid black by design. I see no broken stroke, open line end, or black speck beyond the dashes listed. No object is one a child cannot name."
+  }
+}

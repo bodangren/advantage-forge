@@ -1,0 +1,25 @@
+Some extensions were not registered for I/O, and will not be written.
+sprout-pip: 34,312 triangles, 0.303 x 0.436 x 0.477 m, built in 79420 ms
+  fur                       9904 tris  (7098 ms)
+  jawFur                    1484 tris  (1121 ms)
+  mouth                     1018 tris  (265 ms)
+  tongue                     534 tris  (94 ms)
+  jawCream                   878 tris  (274 ms)
+  cream                     2442 tris  (710 ms)
+  nose                       566 tris  (52 ms)
+  ears                      4020 tris  (1812 ms)
+  tufts                     1690 tris  (277 ms)
+  brows                     1048 tris  (129 ms)
+  mouth-open                 808 tris  (118 ms)
+  tongue-in                  716 tris  (94 ms)
+  eye-shine                  588 tris  (187 ms)
+  collar                    3418 tris  (1407 ms)
+  tag                        692 tris  (82 ms)
+  tail-fur                  4506 tris  (1120 ms)
+texture  1024x1024 atlas: base color, normal, occlusion/roughness/metal (64875 ms)
+glb      out/sprout-pip/sprout-pip.glb  (5320 KB)
+cutout   ../../../../tmp/pipsniff29/sprout-pip/sniff-front.png
+cutout   ../../../../tmp/pipsniff29/sprout-pip/sniff-three-quarter.png
+cutout   ../../../../tmp/pipsniff29/sprout-pip/sniff-side.png
+cutout   ../../../../tmp/pipsniff29/sprout-pip/sniff-back.png
+cutout   ../../../../tmp/pipsniff29/manifest.json  (620 px/m, 500x500, ss 3, 1685 ms)

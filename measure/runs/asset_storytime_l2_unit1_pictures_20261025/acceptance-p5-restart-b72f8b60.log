@@ -1,0 +1,123 @@
+# Phase 5 acceptance rerun (restart amendment), audited HEAD b72f8b60aba82dd99c09eb2c60292016ae3d9b3f
+
+Checker: measure-phase-acceptance (coding-plan/glm-5.3-flash#high). Light lane: this role is the only checker.
+Scope: gates X1 to X15 as amended by 5.11.14 and 5.11.15, plus G5. Read-only except temp files and this artifact pair.
+
+Status at creation: provisional (inconclusive). The verdict line below is updated after each gate group.
+
+VERDICT: pending
+
+## Group 4: heavy runs (2026-11-05, HEAD b72f8b60)
+
+### X10 Type check: PASS
+- Command: `HEAVY_MIN_AVAIL_MB=1500 bash …/heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=6144 node_modules/.bin/tsc --noEmit'`.
+- The raw run exits 2 (the wrapper's exit status; pre-existing errors of other tracks). Error files
+  are only `assets/*` (airship, longship, merchant-cart, mushroom-cap, plank, rowboat,
+  storytime-crayon-box, storytime-nut, storytime-picture-book, waterskin, wool) and
+  `tests/games/castle-defense/rules.adversarial.test.ts`, `tests/part.test.ts` — no owned path.
+- Labeled counts (awk single pass over the same output): `tsc errors total: 38` (limit <= 38),
+  `owned tsc errors: 0`.
+
+### X11 Tests: PASS (PROJECT_TESTS run)
+- Maker's N from the plan (T4 step 15, GREEN_TEST_COMMAND): `Tests  84 passed (84)`, 4 files, exit 0.
+- PROJECT_TESTS (checker, once): the seven 5.11.4 files in one heavy-run wrapper with
+  `--maxWorkers=1`. Result: exit `0`; `Test Files  7 passed (7)`; `Tests  105 passed (105)`.
+  `M` = 105 is above the maker's `N` = 84. No skip and no `-t` filter in the command.
+
+## Group 1: X1, X2, X2b (2026-11-05, HEAD b72f8b60)
+
+Method note: the sandbox blocks shell redirects and temp-file writes, so every spec command runs
+as an equivalent stdin pipe or line-range slice. Outputs are identical in value.
+
+### Group 2: X8, X9, X12 (2026-11-05, HEAD b72f8b60)
+
+### X8 Earlier deliveries: PASS
+- Ledger extraction per the X8 command (header dropped with sed, awk body unchanged): 385 lines.
+- `sha256sum -c --quiet` over the 385 ledger lines: exit 0.
+- The nine pre-restart manifest SHA-256 values were verified inside restart check v3 (X4 output).
+
+### X9 Task 3 content: PASS
+- `ls out/storytime/l2/unit1/w08/delivery-muse-v1/*.png | wc -l` prints 6 (drum, moon, mango, color and line each).
+- `ls out/storytime/l2/unit1/w07/delivery-muse-v2/ | grep -c '^l2-w07-check-row-ostrich'` prints 2.
+- X4 passes, so each of these files maps to a delivered file with a pass verdict.
+
+### X12 Task lines: PASS (status line below)
+- Phase 5 task lines: 7. Phase 5 tasks `[x]`: 7.
+- First-line commit SHAs, all 7 tasks: `7c4f8b63f4d11edae5fae07ac28b0bedde5f2039` (reconcile),
+  `69fdfcc7eb270d05ca13b3929716d7e6e8a827ff` (records), `6fd626c6` (week 8 approval list),
+  `c132d866` (T3a judge prompt v6), `38cb0ca4` (T4 round 6 line batch), `f25d8399` (T5 and T6
+  delivery record). 6 unique SHAs; each resolves with `git cat-file -t` as `commit`.
+- `git show --stat --name-only` evidence per SHA: 7c4f8b63 holds reconcile-p5.log/.mjs and
+  release-files-p5.tsv; 69fdfcc7 holds plan.md, metadata.json, tracks.md, status, lessons;
+  6fd626c6 holds docs/storytime/l2-unit1/w08/muse/approved.json; c132d866 holds judge-prompt.md;
+  38cb0ca4 holds judge/prod/batch-r6-line.json; f25d8399 holds the plan step 8 record and the
+  jr-green-p5-t4 log. Each holds its task's evidence.
+- Whole plan `^- \[x\] Task` count: 29. `metadata.json`: `actual_tasks` 29, `status` `in_progress`.
+- Interphase status: `python3 /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py
+  status --repo /home/daniebo/Desktop/advantage-forge` prints `incomplete_phases: 176` (all other
+  tracks) and the closeout-candidate section prints `[C19] asset_storytime_l2_unit1_pictures_20261025`.
+  No incomplete-phase line names this track, so this track lists no incomplete phase (X12 holds).
+
+### Group 3: X13, X14, X15 (2026-11-05, HEAD b72f8b60)
+
+### X13 Wording: PASS
+- The X13 command over the diff `P5BASE..HEAD` prints exactly 3 lines: the w08 approval notes of
+  the drum, the moon, and the mango (each says "The approved color print is …").
+- File-level rule check: in `docs/storytime/l2-unit1/w08/muse/approved.json`, each of the three
+  entries has `notes[0]` = "Independent review (model evidence, not the person count): judge
+  claude-code/claude-sonnet-5-5#high …", so the file-level rule qualifies all three.
+- The 5 plan lines of finding F3 no longer match: the M3 fixes are in the diff and pass the grep.
+- Handoff manifests: X4 verified each of the six holds "model evidence, not acceptance" (evidence
+  words: yes), which qualifies the "approved Muse prints" wording per the second file-level rule.
+- Seed control: the seeded line `+  The nut v3 pair is accepted.` prints `1` from
+  `grep -c accepted`, so the seed is not missed.
+
+### X14 No secret: PASS
+- The X14 grep over the a48, judge, and w08 docs, the judge-*.json and jr-green-p5-* and
+  strategy-p5-* run files, the four storytime scripts, the delivery manifests, and the six handoff
+  MANIFEST.txt files prints nothing (grep exit 1).
+
+### X15 Facts and doctor: PASS
+- `node measure/tools/doctor.mjs --structural-only --root .` prints 12 error lines, exit 1:
+  6 `new track has started tasks` (filled_shelves, p2_npcs, archers_revenge_rebuild,
+  castle_defense_rebuild, magic_defense_rebuild, paladins_twin_soul_rebuild), 5 `missing registry
+  link for …` in measure/tracks.md (the same rebuild tracks and filled_shelves), and
+  `measure/generated/status.md: stale generated fact`.
+- No error line names `asset_storytime_l2_unit1_pictures_20261025` or an owned path. The stale
+  generated fact is the known state until closeout (5.11.7 X15). Other sessions hold the
+  uncommitted tracks.md and generated hunks; nobody stages them (5.11.13 N5).
+
+### X1 Code drift: PASS
+- merge commits in range: 0
+- own files (unique paths of the 75 own commits): 76
+- own files outside the allowed set: 0
+- foreign commits: 1 — `d6867c52 measure(tracks): drop the unrelated Contents hunk from the step 12 commit (Q3)`.
+  Named per 5.11.15 (finding N4): its subject is `measure(tracks):`, so the subject filter lists it
+  as foreign; it touches only `measure/tracks.md` and no Storytime path (`foreign storytime paths: 0`).
+  It is the hunk fix that 5.11.15 records; not a failure.
+- a48 specs in git: 24
+
+### X2 Freeze: PASS
+- judge files changed or removed after P5R_BASE (df2aa52e): 0
+- a48 specs changed after P5R_BASE (excluding the nut spec): 0
+- judge kit changed after c132d866: 0
+- X2b: code files changed after P5R_BASE outside {scripts/storytime-muse-guards.mjs,
+  scripts/storytime-muse-guards.d.mts, tests/storytime-muse-attempts.test.ts}: 0.
+  Files changed: exactly those three. No file under src/ changes.
+
+### X2b diff read: PASS
+- The guards diff adds TRY_EXCEPTIONS (3 entries, all `l2-w01-story-page-a-nut`: line +1 PM 09:17 ICT,
+  color +1 and line +1 PM ~10:23 ICT, each with a PM source), `maxTriesFor` (MAX_TRIES plus the
+  extras of the matching id and kind), and the tryGuard rewrite that uses the computed limit.
+  Every changed runtime line belongs to the exception map or its use in the try count.
+- Try counter across color versions: `countTries` filters rows only on time (>= RESTART_START),
+  kind, picture id (via pictureKey), and excludes failed zero-cost rows. It has no version and no
+  output-name filter. The printed "try t" of `doLine` in scripts/storytime-muse.mjs is a per
+  color-version file suffix (t = first free `-line{t}` slot of the base `m{n}`) used for names
+  only. The guard therefore counts every restart row of the picture and kind across color
+  versions. Tests confirm it: `nutRows` builds rows with outputs `m1..m{n}` of the same kind and
+  all count; the "another id" test counts 3 rows across m1/m2/m3 and refuses.
+- The four required test facts hold in tests/storytime-muse-attempts.test.ts, adapted to the
+  final caps of 5.11.15: nut line 3 rows allowed one more (cap 5), nut line 4 rows allowed and
+  5 rows refused, nut color 3 rows allowed one more and 4 rows refused, another id at 3 rows
+  refused in both kinds; `maxTriesFor` keeps every other id at MAX_TRIES (3).

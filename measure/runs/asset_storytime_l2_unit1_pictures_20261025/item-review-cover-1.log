@@ -1,0 +1,15 @@
+Item review, cover round 1 (l2-cover-v1, candidate m6), 2026-11-03
+Reviewer: claude-code/claude-opus-5-5[1m]#high
+Bar: Daniel 2026-11-01 14:15 ICT
+Status: fail
+
+l2-cover-v1  6.5  defect  layout-fault
+- Ben's raised hand is 11 px from the left print edge. The spec asks for at least 640 px (16 percent) free at each side. The group spans x = 11 to 3886 of 4000 px.
+C2 "Is the top 30 percent calm: no character, no prop, no text?": yes. Rows 0 to 899 are one plain cream wall (largest channel difference 7 of 255). The panels start at row 917.
+Notes: six children in the approved 3D look with the correct outfits; Pip whole with floppy ears with darker tips; each raised hand shows four fingers and a thumb against the cheek (no extra digits); feet without contact shadow look slightly raised; Pip's fur is more orange than the drawn reference but matches the 3D sheet; eye corners are clean, and Nan keeps the small ticks of her look sheet. No text.
+Retry hint: move the camera back so the children fill the middle 68 percent of the width.
+
+Control rows K1 to K3 (same results as item-review-batch-57):
+K1  5.5  defect  broken-face: no nose in the line file.
+K2  8.0  clean
+K3  7.5  clean

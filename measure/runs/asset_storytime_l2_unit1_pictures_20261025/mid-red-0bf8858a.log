@@ -1,0 +1,60 @@
+# Mid Red report: Muse week 1 delivery manifest
+
+Track: `asset_storytime_l2_unit1_pictures_20261025`. Phase 3, "Phase 3: Week 1 pictures".
+Task: "Add failing tests for the Muse week 1 delivery manifest (Red)".
+
+## The delivery contract that the tests encode
+
+The specification amendment of 2026-11-01, decision 2, gives the contract. The PM words:
+
+```text
+PM decision (the shape of 11a06b9c stays the contract):
+1. The Muse flow delivers the week 1 list rows.
+2. At the delivery batch root, write one manifest.json in the 11a06b9c shape, with one entry per picture-list row.
+3. job.id = the picture-list row id (for example l2-w01-story-page-hello-i-am-pat).
+4. candidate.file = the approved 4000 x 3000 color print file, named as the list names it: <row id>-v1.png. lineArt.file = the approved 4000 x 3000 1-bit line-art print file: <row id>-line-v1.png. Copy the approved Muse print files to those names in the delivery folder; keep the Muse originals.
+5. Workbooks matches the file name part only, so the folder prefix is free.
+6. Only clean rows go into the manifest. Any change to this contract goes through the PM first.
+```
+
+Forge notes (a) and (b) add the class C size 1500 x 1500 and limit the review fields to Kimi
+reviews in `reviews.kimi`.
+
+## Red evidence
+
+The test file is `tests/storytime-muse-delivery.test.ts`. It holds ten tests, T152 to T161.
+Each test carries one rule of the plan task.
+
+The tests use real 4000 x 3000 and 1500 x 1500 PNG files. One buffer of each shape is cached, so
+the file stays fast. The tests read no path under `out/`, `/tmp`, or the Workbooks tree.
+
+Measured commands:
+
+- Red: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts --maxWorkers=1'`.
+  Exit code `1`. Summary: `Test Files  1 failed (1)` and `Tests  no tests`.
+  Reason: `Cannot find module '../src/storytime/muse-delivery.js'`.
+- Type check: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=2560 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'`.
+  Exit code `2`. Owned errors: `1`. Total errors: `39`.
+
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: done
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3
+task: Add failing tests for the Muse week 1 delivery manifest (Red)
+baseline_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+role_base_sha: 2b59ccaa04783fb6ffb478b95e624533bcd5cd24
+head_sha: 0bf8858ab9a61ef3a80419b236db7dee9ea51396
+commits: 66d0e57db47731bef69726e6da65fc4297bbb1a3 tests/storytime-muse-delivery.test.ts (T152 to T161); 0bf8858ab9a61ef3a80419b236db7dee9ea51396 plan.md red evidence
+tests_run: command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts --maxWorkers=1'; exit code: 1; summary line: Test Files  1 failed (1) and Tests  no tests; new_failures: T152 to T161; reason: Cannot find module '../src/storytime/muse-delivery.js'; earlier_test_exceptions: none; lock_wait_line: none
+typecheck: command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=2560 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'; exit code: 2; owned_errors: 1 (the missing module only); total_errors: 39
+files_changed: tests/storytime-muse-delivery.test.ts; measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md; this report
+plan_updates: The Red task is [~] with the test file, the ten test ids, the two commands, the exit codes, the summary lines, the compiler counts, the API for Green, and the model note. No task is [x].
+handoff: Green adds src/storytime/muse-delivery.ts. The module exports the async writeMuseDelivery(options) and the type of one approval entry. The options are rows (PictureListRow[]), approvals (list object or path), museRoot, and deliveryRoot. The approval list is {version:1, entries:[{rowId, version, colorPrint, linePrint, reviews:{kimi?, person?}, notes?}]}. The writer reads the two Muse print files and copies them to deliveryRoot under the row fileName and lineArtFileName. It writes deliveryRoot/manifest.json in the StorytimeManifest shape. It reuses PICTURE_SIZES, planPictureRow, BATCH_HASH_ALGORITHM, and batchSha256. It writes exactly one batch for color and one for lineart. It marks each job ready with one candidate. It sets job.size to story, cover, or small from the row size class. It refuses a wrong pixel size, a gray line-art pixel, and a different existing manifest. It writes no manifest.json on a refusal. It leaves the Muse originals in place. Green must keep the type names and the option keys above, because the tests call them directly.
+dispositions: none
+model: deepseek/deepseek-flash#high (Red, this role). Green of this task: claude-code/claude-sonnet-5-5#high (Anthropic). The families differ.
+model_deviation: none. The orchestrator supplied the red route. This role ran no ra-quota call.
+facts_changed: none
+dirty_path_classification: Relevant assigned paths are clean after the two commits. The new run log is untracked evidence and is preserved. `measure/generated/` files, `measure/tracks.md`, and the other modified track plans and bench files belong to other sessions and are preserved. No file under src/, assets/, scripts/, or another test file changed.
+anti_patterns: No digit-only count assertion. The tests use PICTURE_SIZES values and the batch hash function itself. No over-broad rg filter and no archived-track path. The catalog at measure/anti-patterns.md does not exist in this repository; the starter catalog was the reference.
+END_MEASURE_AGENT_RESULT

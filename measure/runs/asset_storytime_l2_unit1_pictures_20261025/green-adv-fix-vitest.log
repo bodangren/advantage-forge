@@ -1,0 +1,9 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+
+ Test Files  5 passed (5)
+      Tests  190 passed (190)
+   Start at  08:04:29
+   Duration  291.91s (transform 1.38s, setup 0ms, import 2.83s, tests 287.66s, environment 1ms)
+

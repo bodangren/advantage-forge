@@ -1,0 +1,6 @@
+storytime-child-cup: 8,796 triangles, 0.145 x 0.097 x 0.097 m, built in 9193 ms
+  cup                       6228 tris  (680 ms)
+  rim                       2568 tris  (114 ms)
+texture  1024x1024 atlas: base color, normal, occlusion/roughness/metal (7411 ms)
+glb      out/storytime-child-cup/storytime-child-cup.glb  (936 KB)
+render   out/storytime-child-cup/render.png  (1228 ms)

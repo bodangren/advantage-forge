@@ -1,0 +1,26 @@
+role: measure-jr-green (Green · P3 · storytime_l2_unit1_pictures · r28)
+model: claude-code/claude-sonnet-5-5#high; coder: none; Red model: minimax-cn-coding-plan/MiniMax-M3
+
+MEASURE_AGENT_RESULT
+role: green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3
+round: 28
+status: complete
+phase_base_sha: 15a7bf0b
+role_base_sha: da12adb2
+head: abdd5cec
+commits:
+  - f81cf760 feat(storytime): add the opt-in sniff clip for Pip (assets/parts/wolf-kind.ts, assets/sprout-pip.ts)
+  - 8433a0f6 feat(storytime): map the dog sniff gesture to the sniff clip (src/song/timeline.ts, tests/song-timeline.test.ts)
+  - abdd5cec docs(measure): record storytime green round 28 sniff evidence (plan.md)
+continued: the uncommitted round 27 files (xai/grok-4.7 stopped at 18:17 ICT, credits out, no commit). Wolf-kind change is opt-in (kind.sniff); only Pip sets it.
+forge exits: build sprout-pip exit 0 (593 s, GLB 5320 KB / 5447352 bytes, 0 warning lines; restores the textured GLB that the r27 fast run overwrote with 1813 KB); cutout runs exit 1, 1 (canvas too small), then 0 (620 ppm); no animate loop needed in r28 (r27 strip current).
+tests: vitest 4 files, "Tests  164 passed (164)", exit 0 (green-p3-r28-vitest.log)
+typecheck: tsc exit 2; owned errors 0; other-session errors 33 (green-p3-r28-tsc.log)
+deviation: Green wrote the dog sniff test because the Red family (MiniMax) has no quota; rounds 5 and 26 are the precedent.
+tasks flipped: none ([x] not set); no [b] deferrals.
+new files for reviewers (not in git): out/storytime-review/batch-4/{sprout-pip-sniff.png, sprout-pip-sniff-strip.png, look-reference-nan-and-pip.png, brief.md}; logs green-p3-r28-{build,vitest,tsc,cutout}.log
+review_card: out/storytime-review/batch-4/sprout-pip-sniff.png (JSON key sprout-pip-sniff)
+handoff: independent review of the Pip sniff pose against batch-4 brief (bar 7.0). Watch point: cream shape under the neck in the side view (chest, or floating paw?). Green did not rate the item. Then row render of l2-w01-story-page-a-nest-and-a-nut can start.
+END_MEASURE_AGENT_RESULT

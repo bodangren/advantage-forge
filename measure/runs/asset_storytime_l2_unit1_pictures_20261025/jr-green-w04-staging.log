@@ -1,0 +1,62 @@
+Green P4 T2 w04 staging (provisional). role_base_sha 0755ef8d; phase_base_sha fc76c272.
+Step 1: git rev-parse = 0755ef8d (expected).
+Step 2: read 27 week 4 rows (A 16, B 2, C 9). Pending-look characters: Lily, Mom, Dad, Grandma, Grandpa, Tom, plus Nan's dad (a 7th, not in the order). The list gives no looks for the family (only Nan's dad).
+Step 3: 17 element specs written by /tmp/opencode/w04/mkelem.mjs (7 cast sheets with castLook pending; 3 sets; doll, shoe box, map, cake, newspaper, monkey, mouse, milk). Sets/props: no Forge 3D asset for them; reuse 3D cat, dog, fish, bus, sun-hat; w02 sun sheet; w03 pans sheet.
+Step 4: 18 Muse element calls: 17 ok (0.17 USD), cast-mom-sheet 502 (cost 0). Retrying Mom. Then look at sheets.
+Step 5: looked at 7 cast sheets m1: Lily, Mom, Dad, Grandma, Grandpa, man OK (adults in the Kim style); Tom has two white stripes (Sam has them too) and Grandma/Grandpa show wrinkle lines -> try 2 for Tom, Grandma, Grandpa. Mom first call 502 (0 cost) then m1 ok.
+Step 6: looked at all 18 sheets + 3 retries. Keep: Lily m1, Mom m1, Dad m1, man m1, Tom m2 (plain navy shirt), Grandma m2 (no wrinkles), Grandpa m2 (green cardigan, no wrinkles). Props/sets m1 all fine (newspaper reads as a blank folded paper stack; open item). Muse calls so far 22 (21 billed, 1x502 cost 0), 0.21 USD.
+Step 7: 27 page specs written by /tmp/opencode/w04/mkspecs.mjs (11 carry castLook pending + castLookNames).
+Step 8: stage gate exit 0 (91 element paths, 0 missing, 0 candidates). Next: review folder + cast JPG, commit 1 (specs), commit 2 (plan note).
+Step 9: review folder out/storytime-review/w04-staging/ (index.md, sheets-1..3.png, pending-cast-sheets.jpg 368 KB). Committing specs.
+Step 10: commit 1 = 31ba6174 (27 page specs + 18 element/cast specs); commit 2 = b550745c (plan note under Phase 4 Task 2, marker unchanged; guard accepted).
+Stage gate (exit 0): list sha256 6d05dfc5...2a58 | week 4 | rows 27 | specs found 27 | text 0 | goal 0 | outDir 0 | no-reference rows 0 | element paths checked 91 | missing 0 | characters without a reference 0 | page candidates 0 | stage check: pass
+Muse: 22 calls, 21 billed, 1 failed (Mom HTTP 502, cost 0), 0.21 USD; running total 3.82 + 0.21 = 4.03 USD. No page call; no file <row id>-m* in out/storytime/l2/unit1/w04/muse/.
+Pending-look cast sheets (7; castLook pending in 11 page specs): Lily m1 (1 try), Tom m2 (2), Mom m1 (1 + 1 failed call), Dad m1 (1), Grandma m2 (2), Grandpa m2 (2), Nan's dad "man" m1 (1).
+Elements: reused (nan refs, w02 sun sheet, w03 pans sheet, 3D cat/dog/fish/bus/sun-hat; Pip render copied as pip-ref-render.png); Muse sheets (11): set-lily-living-room-empty, set-nan-living-room-empty, set-house-exterior-empty, prop-doll-pam, prop-shoe-box-bed, prop-paper-map, prop-cake, prop-newspaper, prop-monkey, prop-mouse, prop-milk.
+Review folder: out/storytime-review/w04-staging/ (index.md, sheets-1..3.png, pending-cast-sheets.jpg).
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Produce weeks 2 to 7 after the week 1 review (week 4 staging, inputs only; marker stays [ ] until the Phase 3 checkpoint)
+role_base_sha: 0755ef8d
+phase_base_sha: fc76c272
+commits: 31ba6174; b550745c
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+specs: 27 page specs + 18 element and cast specs
+muse_element_calls_total: 22 (21 billed, 1 failed)
+muse_element_cost_usd: 0.21
+running_total_usd: 4.03 (3.82 before)
+page_candidates: 0
+stage_gate: exit 0 (91 reference paths, 0 missing)
+review_folder: out/storytime-review/w04-staging/
+cast_jpg: out/storytime-review/w04-staging/pending-cast-sheets.jpg
+handoff: Week 4 inputs are ready. Open: (1) 7 pending-look cast sheets (Lily, Tom, Mom, Dad, Grandma, Grandpa, and Nan's dad) need Daniel's look approval; 11 page specs carry castLook pending and must not go to a production call before it. Nan's dad is a seventh sheet beyond the six in the order. (2) The 11 element sheets need an independent look (newspaper reads as folded cloth; Lily is a rounder chibi render than Tom). (3) The family dog page has 8 references; the Muse reference limit is unknown. (4) No week 4 page call before Daniel answers on week 1. Default: stage week 5 the same way.
+dispositions: none
+END_MEASURE_AGENT_RESULT
+Follow-up (Tom remake): started at HEAD b550745c.
+Follow-up step: Tom try 1 (m3) ok, 0.01 USD: chibi sprout proportions (head about half, no neck), true three-quarter view. Kept; m1, m2 stay.
+Follow-up result (Tom remake): new file cast-tom-sheet-m3-color.png (1 try, 0.01 USD, running total 4.04). 4 Tom specs updated (cover-my-family, brother, dog-pip, family). Stage gate exit 0 (91 paths, 0 missing, 0 candidates). pending-cast-sheets.jpg rebuilt (379693 bytes). Commits b4884fa7 (specs), 4af2b605 (plan note).
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Week 4 staging follow-up: Tom cast sheet remake
+role_base_sha: b550745c
+phase_base_sha: fc76c272
+commits: b4884fa7; 4af2b605
+models: green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+muse_calls: 1 (billed 1), cost 0.01 USD, running total 4.04 USD
+page_candidates: 0
+stage_gate: exit 0
+handoff: Tom m3 is ready and still pending look. Needs an independent look against the item review rule.
+dispositions: none
+END_MEASURE_AGENT_RESULT

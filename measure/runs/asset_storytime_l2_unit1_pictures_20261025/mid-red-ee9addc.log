@@ -1,0 +1,31 @@
+MEASURE_AGENT_RESULT
+status: pass
+role: red
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3
+phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+role_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+red_pre_commit_head: d0ab323222b28aa51442bf9b9bca2d310e506d81
+red_test_commit: d7031d18e3cdfb8c6cb21540a1fd22ead3a644c1
+plan_evidence_commit: ee9addc87b3889ca48ad97c1fc002f2b888fc2ef
+head_after_plan_commit: ee9addc87b3889ca48ad97c1fc002f2b888fc2ef
+files_changed:
+  - tests/storytime-book-pictures.test.ts (T146 and its fixture helper only)
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md (T146 retry evidence; task remains [~])
+production_code_changed: none
+vitest_command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 3600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'
+vitest_exit: 1
+vitest_summary: Tests  1 failed | 133 passed (134)
+vitest_failure: The measured width follows the typical outline, not the solid block.: expected +0 to be 4
+vitest_failure_row: T146 only; all other 133 cases pass
+vitest_log: measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-p3-t146-vitest.log
+type_check_command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'
+type_check_exit: 2
+type_check_owned_errors: 0
+type_check_total_errors: 31
+type_check_log: measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-p3-t146-tsc.log
+T146_changes: The 12 px expectation now passes. The row retains the 6 px and 11 px cases. It adds eight closed 4 px rectangles and a solid 50 px block. It asserts the typical outline width is 4 px and the 12 px case reports 12 px.
+model_deviation: Retry route was openai/gpt-6-luna#high. Earlier Red turns used MiniMax-M3. Green runs on GLM; independence holds.
+earlier_other_track_commits: 8a457be7 and cd9029c3; excluded from this role's changes.
+remaining_failure: T146's mixed-fixture measured-width assertion reports 0 instead of 4. The logged exact failure is above. No production source changed.
+END_MEASURE_AGENT_RESULT

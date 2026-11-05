@@ -1,0 +1,9 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 15
+book file requests refused: 0
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 2.03% (45648 of 2250000 pixels black).
+l2-w01-practice-line-nut v6: rendered; stage a5f031729cd5f7962965f568111db2ff350fc05ff4c3654cb643b8be41783d20; file w01/rows/l2-w01-practice-line-nut-v6.png; lineart w01/rows/l2-w01-practice-line-nut-line-v6.png; size 1500 x 1500; render peak rss mb: 927

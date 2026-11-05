@@ -1,0 +1,19 @@
+{
+  "group": "prod-r7-color-nut3",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w01-story-page-a-nut",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nut-color-t3.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a nut (1), Nan (1), Nan's open hand (1). Action: none. Seen: one tan shell with a netted texture, standing upright on an open palm; it has two lobes, a narrow waist at the middle of the outline, and a lengthwise seam. Nan: two dark buns with red ring bands, big brown eyes, orange T-shirt with a white star; matches the cast note. Her open hand holds the nut. mustShow: (1) one nut only: shown, I counted 1 nut, no other nut in the picture. (2) clearly a peanut: shown; two lobes, narrow waist, netted texture; I read it as one peanut. (3) Nan's open hand: shown, palm up, fingers spread. (4) the nut is large in the middle: shown; the nut is large and sits in the left-center part of the picture, not at the exact center. Small marks: the lengthwise seam makes the shell look like two halves side by side; it is a seam of one shell, so it is a note. Only one bun and one red band of the second bun show because of the frame."
+    }
+  ],
+  "summary": { "files": 1, "pass": 1, "fail": 0 }
+}

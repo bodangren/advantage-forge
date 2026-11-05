@@ -1,0 +1,23 @@
+Batch 56 independent picture review (week 7, batch 2)
+Reviewer: claude-code/claude-opus-5-5[1m]#high
+Bar: Daniel 2026-11-01 14:15 ICT
+Date: 2026-11-03
+Status: pass (9 of 9 rows clean)
+
+Line check: one node script (/tmp/opencode/b56-linecheck.mjs, sharp) counted the pixels that are not 0 or 255 in each line print and each control line file. Every count is 0.
+
+Controls (reviewed first, once):
+K1 a-nose      4.0  defect  broken-face   The text names the nose. The line file has no nose; the finger tip goes into the mouth corner.
+K2 nose (line) 8.0  clean                 The nose shows in color and in line. The head faces right; the first direction is not available to check.
+K3 a-nut       8.0  clean                 One big brown nut on an open hand with five digits, in color and in line.
+
+Set:
+l2-w07-cover-the-top                    8.0 clean  One top in Tom's hand; Pip sits whole; line hand pinches the stick (five digits).
+l2-w07-story-page-tom-can-see-a-top     8.0 clean  One top in the toy box; Tom kneels with hands on his knees.
+l2-w07-story-page-the-top-is-on-mom     7.5 clean  One top on Mom's head; Mom's eyes closed in color, open in line (note).
+l2-w07-story-page-the-top-is-on-pip     8.0 clean  One top on the sleeping Pip; Tom points with one index finger.
+l2-w07-story-page-run-tom-run           8.0 clean  One top on the mat; Tom runs; Pip sleeps on the rug; ring eyes in line.
+l2-w07-story-page-can-tom-see-the-top   7.0 clean  Tom's head covers part of the sofa gap and he looks at seat level (note); Mom's hair is curly in line (note).
+l2-w07-story-page-the-top-on-a-mat      7.5 clean  One top spins on the mat; Tom claps; Tom's line eyes are solid ovals without an outline (note).
+l2-w07-story-page-the-top-on-a-pot      8.0 clean  The pot shows whole; one top spins on the lid; the point touches the lid.
+l2-w07-story-page-tom-can-get-the-top   7.5 clean  Tom holds up one top; the toy box has no top; no eyebrows or nose in line (note).

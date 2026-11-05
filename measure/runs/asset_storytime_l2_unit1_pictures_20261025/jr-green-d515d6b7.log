@@ -1,0 +1,172 @@
+# Measure Jr Green, round 36: Storytime week 1 nut specks (fix 2)
+
+- Role: measure-jr-green (Green phase, build round 36)
+- Session name: Green · P3 · storytime_l2_unit1_pictures · r36
+- Model: deepseek/deepseek-flash#high. Route: `ra-quota --fresh pick green --not-family minimax
+  --not-family openai`. Daniel approved the DeepSeek route on 2026-10-31.
+- Phase 3 Red model: minimax-cn-coding-plan/MiniMax-M3 (MiniMax family). It is not the Green
+  family. Green keeps Red and Green model independence.
+- Delegation: none. The coder model is none. This role wrote every file in this round.
+- role_base_sha: 0677e3a0
+- phase_base_sha: 15a7bf0b
+- final Green HEAD: d515d6b7
+- Track: measure/tracks/asset_storytime_l2_unit1_pictures_20261025/
+- Phase heading: Phase 3: Week 1 pictures (phase id P3)
+- Task: find the cause of the black specks on `storytime-nut` and remove them. One item. No row
+  renders. No task is marked `[x]`.
+- Routed finding: `item-review-batch-7.json` (reviewer `openai/gpt-6-luna#high`), `storytime-nut`
+  overall 6.2, fail, critical "Black specks remain along the cap edge."
+- Immutable Red tests: `tests/storytime-book-pictures.test.ts` and
+  `tests/storytime-picture-rows.test.ts` did not change in this round. This round answers an
+  independent audit finding, so it has no new Red test. The targeted check is the textured focus
+  render. The committed Red change is inside `phase_base_sha..HEAD`.
+
+## Cause
+
+The black specks came from the texture bake, not from the paint and not from the shape.
+
+1. Texture bake against shape. `forge render storytime-nut --fast --focus 0,0.030,0,0.030`
+   exited 0. The vertex-color render showed a smooth cap edge with one soft crease.
+   `forge render storytime-nut --focus 0,0.030,0,0.030` exited 0. The textured render showed the
+   black marks on the same framing. The marks appear only in the textured render, so the bake is
+   the cause.
+2. Atlas evidence on the batch 7 build: the base color atlas had 25,156 colored texels that touch
+   pure black, and 322 pure black texels inside a chart.
+3. Seams between separate bodies. The shell, the cap, and the stem were three bodies. The faces
+   that each body hides from the others baked near black. The cap rim and the stem tip are the
+   thinnest charts, so their chart edges read that black. This is the cause that the fix uses.
+4. The mesh detail was not tested alone. The one-body fix at detail 0.0008 removed the marks, so
+   the detail loop did not run.
+
+`src/` did not change. The atlas textel counts above are evidence of the asset-level cause. This
+round did not claim a bake bug in `src/`.
+
+## Fix
+
+File: `assets/storytime-nut.ts`. Commit `d6d9f5b9`.
+
+- The shell, the cap with its five lobes, and the stem become one body with a 3 mm `smoothUnion`.
+  No face is buried, so no chart sits on a hidden knife edge.
+- The paint follows the union. The nearest part gives the color, with a 0.7 mm blend, so the cap
+  color stops at the crease and leaves no dark fingers.
+- The detail is one value of 0.0008 m. The roughness is one value of 0.85. The bump is one calm
+  noise.
+- Two earlier loops failed and Green dropped them. Loose spheres at a 0.7 mm union left dark
+  drips. A displaced rim wave left dark teeth.
+- Shape contract kept: the acorn shape, the pointed bottom, five soft cap lobes, the stem that
+  leans to +X, the colors, the size of about 0.048 m by 0.055 m, the ground contact on y = 0, the
+  +Z facing, the asset name, and the 1024 texture.
+
+## Gates
+
+Each forge command ran in one `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<command>'`
+call. Each run wrote its output to `measure/runs/.../green-p3-r36-<step>.log`.
+
+| Command | Exit | Result |
+| --- | --- | --- |
+| `render --fast --focus 0,0.034,0,0.014` | 0 | baseline focus render, vertex colors |
+| `render --fast --focus 0,0.030,0,0.030` | 0 | baseline wide render, clean edge |
+| `render --focus 0,0.030,0,0.030` | 0 | baseline textured render, marks show |
+| fix loop 1, `render --fast --focus` | 0 | 3,747 triangles, dark drips |
+| fix loop 2, `render --fast --focus` | 0 | 3,861 triangles, dark teeth |
+| fix loop 3, `render --fast --focus` | 0 | 3,470 triangles, paint fingers |
+| fix loop 4, `render --fast --focus` | 0 | 2,530 triangles, clean edge |
+| `render storytime-nut` (textured) | 0 | 1024 atlas, 2,266 triangles, GLB 601 KB |
+| `inspect storytime-nut --fast` | 0 | nut visible 100% in five views |
+| `render --focus 0,0.034,0,0.014` (textured) | 0 | final check and cap-close card |
+
+`warning:` lines: 0 in every run. The inspect keeps one advisory: "Almost everything is
+mid-value". No exit 75, no exit 137, no lock wait over 600 s.
+
+## Final check
+
+The textured focus render shows no black specks on the cap edge in the front, side, and back
+views. The stem tip shows no black mark. One thin dashed seam mark of about 4 mm remains on the
+cap edge in the three-quarter view. Green reports it and did not test a coarser detail, because
+the step budget ended.
+
+## Review card
+
+Folder `out/storytime-review/batch-8/`:
+
+- `storytime-nut.png`: front, three-quarter, side, and back, 2060 by 512, the batch 7 layout, from
+  the textured render.
+- `storytime-nut-cap-close.png`: the textured focus render of the cap edge.
+- `storytime-nut-batch-7.png`: the batch 7 card, for comparison.
+- `look-reference-nan-and-pip.png`.
+- `brief.md`: item "a big brown nut (specks fix 2)", bar 7.0, the batch 7 critical defects, the
+  key `storytime-nut`, and the section "Why the rework". Green did not rate the item.
+
+PNG files stay out of git. `measure/runs/` and `out/` stay out of git.
+
+## Commits
+
+- `d6d9f5b9` fix(storytime): bake the week 1 nut cap edge as one body (specks fix 2). Path:
+  `assets/storytime-nut.ts`. This is the implementation commit.
+- `d515d6b7` docs(measure): record storytime green round 36 nut specks cause and fix. Path:
+  `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md`. This is the plan-evidence
+  commit. It records `d6d9f5b9`.
+
+No other file changed. No `src/`, test, row, cast, picture-list, registry, metadata, or archive
+file changed.
+
+## Deviation
+
+- Step limit. The tool budget ended after the plan-evidence commit. This role stopped before
+  step 5, the final log. The orchestrator sent one follow-up for step 5 only. In that follow-up
+  this role wrote this log and no other file. This role ran no forge command and no git commit in
+  the follow-up.
+- The known 4 mm three-quarter seam mark stays open for the re-review. One Green round with the
+  detail at 0.001 can remove it if the review fails the item.
+
+## Task markers
+
+- Tasks flipped to `[x]`: none.
+- Tasks flipped to `[b]`: none. No task is human-gated in this round.
+
+MEASURE_AGENT_RESULT
+status: done
+role: measure-jr-green
+round: 36
+
+phase_base_sha: 15a7bf0b
+role_base_sha: 0677e3a0
+final_green_head: d515d6b7
+commits:
+  implementation: d6d9f5b9
+  plan_evidence: d515d6b7
+models:
+  green: deepseek/deepseek-flash#high
+  red_family: minimax-cn-coding-plan/MiniMax-M3
+  coder: none
+
+targeted_check:
+  command: ./forge render storytime-nut --focus 0,0.034,0,0.014
+  exit: 0
+  result: no black specks on the cap edge in the front, side, and back views; no black mark on the stem tip; one thin dashed seam mark of about 4 mm on the cap edge in the three-quarter view
+green_gate:
+  command: ./forge inspect storytime-nut --fast
+  exit: 0
+  result: nut visible 100% in five views; one advisory "Almost everything is mid-value"
+warning_lines: 0
+
+tasks_flipped_to_x: none
+tasks_flipped_to_b: none
+new_files:
+  - out/storytime-review/batch-8/storytime-nut.png
+  - out/storytime-review/batch-8/storytime-nut-cap-close.png
+  - out/storytime-review/batch-8/storytime-nut-batch-7.png
+  - out/storytime-review/batch-8/look-reference-nan-and-pip.png
+  - out/storytime-review/batch-8/brief.md
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-r36-provisional.log
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-d515d6b7.log
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-p3-r36-1-fastfocus.log to green-p3-r36-11-texclose-final.log
+
+dispositions: F1=FIX(d6d9f5b9: the shell, the cap, and the stem become one body, so the cap edge and the stem tip keep no black texels; the batch 8 cap-close card shows the edge. Known remainder: one 4 mm dashed seam mark in the three-quarter view)
+
+handoff:
+  next_roles: independent re-review, phase acceptance
+  evidence: the batch 8 card at out/storytime-review/batch-8/, this log, and the Phase 3 plan block "Green round 36 evidence"
+  open: the 4 mm three-quarter seam mark on the cap edge; the week 1 rows did not change and stay at 22 of 30 rendered and 16 with no open defect
+  do_not_claim: do not claim a clean cap edge in every view; do not rate the item in Green
+END_MEASURE_AGENT_RESULT

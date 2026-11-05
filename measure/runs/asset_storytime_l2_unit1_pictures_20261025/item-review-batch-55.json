@@ -1,0 +1,233 @@
+{
+  "status": "pass",
+  "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "All 9 rows of batch 55 are clean. Each toy page shows 1 thought bubble with 1 toy, 2 children and 1 blanket over 1 bump. Every line print is pure black on white. The K1 control shows the known defect of a missing nose in the line art.",
+  "items": {
+    "l2-w07-cover-is-it-a-ball": {
+      "files": [
+        "out/storytime-review/batch-55/pages/l2-w07-cover-is-it-a-ball-m1-color-print.png",
+        "out/storytime-review/batch-55/pages/l2-w07-cover-is-it-a-ball-m1-line-print-6-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The picture shows 2 children, 1 red blanket over 1 small round bump, 1 blue rug, 1 toy shelf and 1 window.",
+        "No toy and no thought bubble show, as the goal asks.",
+        "May holds one finger on her chin in the color file and in the line file. Each hand has 1 index finger and no open palm.",
+        "Both children keep their approved looks and have ring eyes with solid pupils, a nose and a smile in the line file.",
+        "The line file draws the toy shelf as a tall shelf with boxes and not the low shelf of the color file. It is background, so it is a note.",
+        "The wall beams run off the top print edge. They are background."
+      ],
+      "goal_check": "Met. May and Ben sit on a blue rug next to a red blanket over a small round bump in the toy corner, and May holds one finger on her chin.",
+      "line_check": "Line print is 4000x3000 and pure black on white: 0 pixels are neither 0 nor 255. Child count: 2 in both files. Blanket count: 1 in both files. Bump count: 1 in both files. Thought bubble count: 0 in both files."
+    },
+    "l2-w07-story-page-is-it-a-ball-no": {
+      "files": [
+        "out/storytime-review/batch-55/pages/l2-w07-story-page-is-it-a-ball-no-m1-color-print.png",
+        "out/storytime-review/batch-55/pages/l2-w07-story-page-is-it-a-ball-no-m1-line-print-6-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The thought bubble shows 1 red-and-yellow striped ball in the color file and 1 ball with 3 curves in the line file. No other toy shows.",
+        "May points at the bump with 1 index finger in the color file and in the line file. The other fingers stay curled.",
+        "Both children have ring eyes with solid pupils and a smile.",
+        "The line file draws the toy shelf as a tall shelf with boxes. It is background, so it is a note."
+      ],
+      "goal_check": "Met. May kneels and points at the bump under the blanket, the bubble over her head shows 1 red-and-yellow ball, and Ben sits at the other side and smiles.",
+      "line_check": "Line print is 4000x3000 and pure black on white: 0 pixels are neither 0 nor 255. Thought bubble count: 1 in both files. Toy count in the bubble: 1 in both files. Child count: 2 in both files. Pointing hand count: 1 in both files."
+    },
+    "l2-w07-story-page-is-it-a-train-no": {
+      "files": [
+        "out/storytime-review/batch-55/pages/l2-w07-story-page-is-it-a-train-no-m1-color-print.png",
+        "out/storytime-review/batch-55/pages/l2-w07-story-page-is-it-a-train-no-m1-line-print-3-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The thought bubble shows 1 green train with a red wagon in the color file and 1 engine with 1 wagon in the line file. No other toy shows.",
+        "May points at the bump with 1 index finger in the color file and in the line file. The other fingers stay curled.",
+        "Ben has a closed smile in the line file and an open smile in the color file. It is a note.",
+        "The line file draws the toy shelf as a tall shelf with boxes. It is background, so it is a note."
+      ],
+      "goal_check": "Met. May kneels and points at the bump under the blanket, the bubble over her head shows 1 small green toy train, and Ben sits at the other side and smiles.",
+      "line_check": "Line print is 4000x3000 and pure black on white: 0 pixels are neither 0 nor 255. Thought bubble count: 1 in both files. Toy count in the bubble: 1 in both files. Child count: 2 in both files. Pointing hand count: 1 in both files."
+    },
+    "l2-w07-story-page-is-it-a-kite-no": {
+      "files": [
+        "out/storytime-review/batch-55/pages/l2-w07-story-page-is-it-a-kite-no-m1-color-print.png",
+        "out/storytime-review/batch-55/pages/l2-w07-story-page-is-it-a-kite-no-m1-line-print-4-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The thought bubble shows 1 red-and-yellow kite with a string and 3 red bows in the color file and 1 kite with 3 bows in the line file. No other toy shows.",
+        "May points at the bump with 1 index finger in the color file and in the line file. The other fingers stay curled.",
+        "The shoe of Ben rests on the blanket edge in both files. It is a small overlap, so it is a note.",
+        "The line file draws the toy shelf as a tall shelf with boxes. It is background, so it is a note."
+      ],
+      "goal_check": "Met. May kneels and points at the bump under the blanket, the bubble over her head shows 1 red-and-yellow kite, and Ben sits at the other side and smiles.",
+      "line_check": "Line print is 4000x3000 and pure black on white: 0 pixels are neither 0 nor 255. Thought bubble count: 1 in both files. Toy count in the bubble: 1 in both files. Child count: 2 in both files. Pointing hand count: 1 in both files."
+    },
+    "l2-w07-story-page-is-it-a-car-no": {
+      "files": [
+        "out/storytime-review/batch-55/pages/l2-w07-story-page-is-it-a-car-no-m1-color-print.png",
+        "out/storytime-review/batch-55/pages/l2-w07-story-page-is-it-a-car-no-m1-line-print-3-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The thought bubble shows 1 blue car in the color file and 1 car in the line file. No other toy shows.",
+        "May points at the bump with 1 index finger in the color file and in the line file. In the line file the thumb points up beside the index finger. It is a note.",
+        "The fringe of May is drawn with several short strokes in the line file and as one shape in the color file. It is a note.",
+        "The line file draws the toy shelf as a tall shelf with boxes. It is background, so it is a note."
+      ],
+      "goal_check": "Met. May kneels and points at the bump under the blanket, the bubble over her head shows 1 small blue toy car, and Ben sits at the other side and smiles.",
+      "line_check": "Line print is 4000x3000 and pure black on white: 0 pixels are neither 0 nor 255. Thought bubble count: 1 in both files. Toy count in the bubble: 1 in both files. Child count: 2 in both files. Pointing hand count: 1 in both files."
+    },
+    "l2-w07-story-page-is-it-a-teddy-no": {
+      "files": [
+        "out/storytime-review/batch-55/pages/l2-w07-story-page-is-it-a-teddy-no-m1-color-print.png",
+        "out/storytime-review/batch-55/pages/l2-w07-story-page-is-it-a-teddy-no-m1-line-print-9-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The thought bubble shows 1 white teddy bear with a blue bow, 2 dot eyes, a nose and a smile in the color file, and 1 teddy bear with a bow in the line file. No other toy shows.",
+        "Only the golden-brown fluffy tip of the tail shows at the edge of the blanket in the color file. The line file shows 1 closed fluffy shape and no other part of Pip.",
+        "The tail tip in the color file sits in front of the blanket edge beside May, not behind her. It is a small place difference, so it is a note.",
+        "May keeps both hands low on her knees in the color file and in the line file. No hand is raised."
+      ],
+      "goal_check": "Met. May kneels and looks up at a bubble with 1 white teddy bear, Ben smiles at the other side, and only the tip of the fluffy tail shows at the blanket edge.",
+      "line_check": "Line print is 4000x3000 and pure black on white: 0 pixels are neither 0 nor 255. Thought bubble count: 1 in both files. Toy count in the bubble: 1 in both files. Pip part count: 1 tail tip in both files. Child count: 2 in both files."
+    },
+    "l2-w07-story-page-is-it-a-doll-no": {
+      "files": [
+        "out/storytime-review/batch-55/pages/l2-w07-story-page-is-it-a-doll-no-m1-color-print.png",
+        "out/storytime-review/batch-55/pages/l2-w07-story-page-is-it-a-doll-no-m1-line-print-3-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The thought bubble shows 1 rag doll with yellow yarn hair and a red dress in the color file and 1 doll with 2 pigtails and a dress in the line file. No other toy shows.",
+        "May points at the bump with 1 index finger in the color file and in the line file. The other fingers stay curled.",
+        "The lines of the line file are thin, but they close and a child can color them.",
+        "The line file draws the toy shelf as a tall shelf with boxes. It is background, so it is a note."
+      ],
+      "goal_check": "Met. May kneels and points at the bump under the blanket, the bubble over her head shows 1 small doll, and Ben sits at the other side and smiles.",
+      "line_check": "Line print is 4000x3000 and pure black on white: 0 pixels are neither 0 nor 255. Thought bubble count: 1 in both files. Toy count in the bubble: 1 in both files. Child count: 2 in both files. Pointing hand count: 1 in both files."
+    },
+    "l2-w07-story-page-is-it-a-drum-no": {
+      "files": [
+        "out/storytime-review/batch-55/pages/l2-w07-story-page-is-it-a-drum-no-m1-color-print.png",
+        "out/storytime-review/batch-55/pages/l2-w07-story-page-is-it-a-drum-no-m1-line-print-6-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The thought bubble shows 1 red drum with a white band and 2 drumsticks in the color file and 1 drum with 2 sticks in the line file. No other toy shows.",
+        "May points at the bump with 1 index finger in the color file and in the line file. The other fingers stay curled.",
+        "The eye rings of May are thin in the line file. It is a note.",
+        "The line file draws the toy shelf as a tall shelf with boxes. It is background, so it is a note."
+      ],
+      "goal_check": "Met. May kneels and points at the bump under the blanket, the bubble over her head shows 1 small red toy drum with 2 drumsticks, and Ben sits at the other side and smiles.",
+      "line_check": "Line print is 4000x3000 and pure black on white: 0 pixels are neither 0 nor 255. Thought bubble count: 1 in both files. Toy count in the bubble: 1 in both files. Drumstick count: 2 in both files. Child count: 2 in both files."
+    },
+    "l2-w07-story-page-is-it-pip-yes": {
+      "files": [
+        "out/storytime-review/batch-55/pages/l2-w07-story-page-is-it-pip-yes-m1-color-print.png",
+        "out/storytime-review/batch-55/pages/l2-w07-story-page-is-it-pip-yes-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Pip shows whole in the color file and in the line file: floppy ears, a red collar with a round gold tag, a fluffy tail, 4 legs and 1 tail.",
+        "May opens both arms with 5 fingers on each hand in the color file and in the line file.",
+        "Ben holds the blanket with 2 fists, one on each side. No finger is spread.",
+        "The hair of Ben is a curly cloud shape in the line file and messy tufts in the color file. It is a note.",
+        "The line file draws the toy shelf as a tall shelf with boxes. It is background, so it is a note."
+      ],
+      "goal_check": "Met. Ben lifts the red blanket with both hands, Pip jumps out whole with a big happy face, and May laughs and opens both arms.",
+      "line_check": "Line print is 4000x3000 and pure black on white: 0 pixels are neither 0 nor 255. Child count: 2 in both files. Puppy count: 1 in both files. Puppy leg count: 4 in both files. Puppy tail count: 1 in both files. Blanket count: 1 in both files."
+    }
+  },
+  "extra": {
+    "K1": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "rating": 4,
+      "verdict": "defect",
+      "defect_categories": [
+        "broken-face"
+      ],
+      "defects": [
+        "The line file has no nose. The page text is \"A nose.\", so the nose must show in the color file and in the line file. The color file shows 1 nose. The line file shows 0."
+      ],
+      "notes": [
+        "The color file is good: Nan has one hand with one index finger on her nose and an open laughing mouth.",
+        "The line file shows eyebrows, two eyes and an open mouth but no nose, so the face reads without the part the text names.",
+        "The hanging hand in the line file is a closed blob with no fingers. That is a note only."
+      ],
+      "goal_check": "Partly met. The color file shows Nan touching her nose with one finger and laughing. The line file drops the nose.",
+      "line_check": "Line file is 4000x3000 and pure black on white: 0 pixels are neither 0 nor 255. Nose count: 1 in the color file, 0 in the line file.",
+      "retry_hint": "line: draw one small nose on the face between the eyes and the mouth so the named part shows in the line file."
+    },
+    "K2": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The color file shows one head of Nan in profile with one clear nose, one eye, one eyebrow, one ear and one mouth curve.",
+        "The line file shows the same head in profile with the nose as one bump of the face outline, one eye with a solid pupil and one eyebrow.",
+        "A small eyelash tick sits at the lower left of the eye in the line file. It is a small mark, so it is a note.",
+        "No text, no gray, no solid black band."
+      ],
+      "goal_check": "Met. The head of Nan is in profile facing away from the story page and the nose is clear for a tracing practice line.",
+      "line_check": "Line file is 1600x1600 and pure black on white: 0 pixels are neither 0 nor 255. Nose count: 1 in the color file and 1 in the line file."
+    },
+    "K3": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The color file shows 1 big brown nut with a cap and a stem on the open palm.",
+        "The open hand shows 5 digits in the color file and 5 digits in the line file: 4 fingers and 1 thumb.",
+        "The other hand is a closed mitten shape in both files. That is a note only.",
+        "The eyes in the line file are rings with two small circles. That is a small mark, so it is a note."
+      ],
+      "goal_check": "Met. One big brown nut rests in the open hand of Nan in a close up.",
+      "line_check": "Line file is 4000x3000 and pure black on white: 0 pixels are neither 0 nor 255. Nut count: 1 in the color file and 1 in the line file. Hand count: 5 fingers and 1 thumb in both files."
+    }
+  }
+}

@@ -1,0 +1,46 @@
+MEASURE_AGENT_RESULT
+role: measure-strategy
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 2: Tests and calibrated model pre-checks (P2), task 8
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: 84c8ffdb8359939ef86d043f58443200cabfdbc5
+head_sha: a50254fed4684098a7abc52cd6ef077966e4fa1e
+commits:
+  - a50254fed4684098a7abc52cd6ef077966e4fa1e docs(measure): plan Storytime Phase 2 second security remediation
+tests_run: none. This role ran no vitest, tsc, Chrome, vite, render, heavy command, or paid call. Read-only checks: git diff --check passed; Phase 2 has eight tasks; no graph.db exists.
+files_changed:
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/contract.md
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/strategy-84c8ffd.log (not committed)
+plan_updates:
+  - Added pending Phase 2 task 8 for RB2-01 to RB2-04, RA3-01 to RA3-03, and RC3-1.
+  - Added T88 to T95, Red and Green gates, smoke run 6, closeout rules, and 11 adversarial mutations.
+  - Added fixtures, seams, architecture guardrails, contract risks, anti-pattern defenses, and review applicability.
+  - Contract rules now cover decoded review fields, final CLI errors, checked real paths, and Vite deny entries.
+  - RA3-N1 stays a closeout item. T1 to T87 stay unchanged.
+known_failures:
+  - Review B failed at 84c8ffdb with RB2-01 to RB2-04. Review A failed with RA3-01 to RA3-03. Task 8 owns the corrections.
+  - Review C passed with nonblocking RC3-1. The Kimi implementation still counts bytes before task 8.
+  - Baseline tsc errors remain 31 outside owned paths. Task 8 must keep the total at 31 or less.
+  - metadata.json has estimated_tasks 20 and actual_tasks 6. The plan now has 21 tasks. Closeout owns both refresh and generated facts.
+  - Generated files were already dirty. This role preserved them and ran no generator.
+  - measure/anti-patterns.md is absent. This strategy used the canonical fallback catalog.
+  - Smoke run 6, task 8 tests, reviews, and adversarial mutations have not run.
+handoff:
+  - The orchestrator must capture a50254fed4684098a7abc52cd6ef077966e4fa1e as the immutable task 8 Red base now. This is the committed strategy HEAD. phase_base_sha stays 1d39b8fda457e12d8e7332e7de65d2046ddda78e. No Red edit predates this capture.
+  - Task text: Correct the second Review B and third Review A findings. Sanitize propagated and final CLI errors. Check decoded review fields for MiniMax and Kimi. Retain Vite defaults and add the absolute Storytime deny rule. Return and read checked real paths. Protect stage reads. Enforce 500 characters. Correct both historical SHA quotations.
+  - New tests: T88 propagated and final CLI errors; T89 MiniMax decoded fields; T90 Kimi decoded fields; T91 Vite deny configuration; T92 live middleware smoke; T93 checked real paths and protected stage reads; T94 multibyte reason boundaries; T95 operative SHA documentation gate.
+  - Red and Green gate: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'
+  - Type gate: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'
+  - Smoke run 6 is necessary. Unit mocks cannot prove Vite default static refusal or middleware ordering. Use one run: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node --import tsx scripts/storytime-book-pictures.ts lineart-smoke --job w01-readalong-p05'
+  - T92 uses one Chrome launch, one stage still, and one temporary real Vite probe server. Synthetic .env, key.pem, .git/config, and Storytime evidence must fail with HTTP 403 or 404. The allowlisted stage control must serve exact bytes. Repeat every T86 label. Require middleware probe synthetic bytes exposed: 0.
+  - T95 scans plan.md, both corrected task 7 role logs, and new task 8 role logs. Every operative full 40-character Git ID must resolve. Print operative full SHAs checked: <n> with n >= 1 and unresolved full SHAs: 0. Immutable review quotations are excluded.
+  - Adversarial mutations: original provider rethrow (T88); original final CLI log (T88); raw-only MiniMax scan (T89); omitted reason, issue, or count-key check (T89, T90); success before decoded check (T89, T90); removed Vite default or absolute Storytime rule (T91, T92); returned candidate path (T93); removed stage exclusion (T93); UTF-8 byte limit (T94); changed safe raw bytes (T82, T89, T90); invalid operative SHA (T95).
+  - New seam: runStorytimeBookPicturesEntry(argv, dependencies) with pipeline and errorLog. Production binds console.error. Existing provider, parser, server, and middleware seams stay in use.
+  - Limits: no paid call; no src/song change; no rubric or PICTURE_RUBRIC_VERSION change; no earlier assertion change; no new test file; no unrelated file change. Exit 75 is a hold, never a Red result.
+  - Review A, Review B, and Review C apply on the task 8 HEAD. Adversarial testing is required. Browser review is not applicable because no UI changes.
+model_deviation: Kimi K3.1 Pro substitutes for the table Claude model because Claude used 80 percent of its 7-day quota. Red routes to minimax-cn-coding-plan/MiniMax-M3#high because Codex used 83 percent of its 5-hour quota. Green routes to volcengine-agent-plan/glm-5.3-flash#high.
+facts_changed: none
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,104 @@
+{
+  "status": "fail",
+  "reviewer": "opencode-go/mimo-v2.6-flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Set A rows are clean. Extra row K1 fails: the line art draws no nose. The read tool in this session stopped returning images after 16 pictures; helper sessions supplied the picture facts and this reviewer applied the bar.",
+  "rows": {
+    "l2-w03-story-page-it-is-blue": {
+      "files": [
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-color.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-color-print.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-line-6-despeckled.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-line-print-6-despeckled.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The ponytail and the yellow hair clip sit on the viewer's right. The look sheet cast-group-a-2.png shows them on the viewer's left. Outfit, face and hair color match the look sheet.",
+        "The paint-pot table reaches the left print edge in color and in line. It is background, not a prop the sentence needs.",
+        "Line eyes are outlined circles with solid black pupils. Solid black pupils are allowed."
+      ],
+      "goal_check": "Pass. May holds one solid blue sheet at an easel in the art corner. Her shirt is plain in color and in line: no star, badge or mark. The sheet reads as one sheet of paper in both files. Counts match: one easel with a blank sheet, three ledge pots, one side table with paint pots and two brushes. No letters, words or numbers. No gray in the line file (0 pixels that are not 0 or 255)."
+    },
+    "l2-w03-story-page-nan-can-get-a-pan": {
+      "files": [
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-color.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-color-print.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-9-despeckled.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-print-9-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Judge (a): the end of the handle touches the top-left corner line of the toy kitchen counter. Note. The pan stays whole and reads as a pan; the touch is a small overlap.",
+        "Judge (b): in the line the fist grips the side of the bowl and the handle points right; in the color she holds a short handle below the fist. Note. The bar calls a color/line difference that changes no character and no needed prop a note. The pan is present in both files.",
+        "The m4 color has a small pale seam at one eye corner. Known since the first pan round. Small mark."
+      ],
+      "goal_check": "Pass. Exactly one toy frying pan in color and in line. The line bowl is one closed oval rim seen at an angle with the inside as one closed shape, and the handle is one long thick straight bar from the rim past the fist. It reads as a toy frying pan, not a mirror, ring or magnifying glass. Nan keeps the white star, two buns with bands and the eyelash mark. The shelf holds three cups and three plates. No letters, words or numbers. No gray in the line file."
+    }
+  },
+  "extra": {
+    "K1": {
+      "text": "A nose.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "rating": 5,
+      "verdict": "defect",
+      "defect_categories": ["broken-face"],
+      "defects": [
+        "The line art draws no nose. Two reads of the line file agree: there is no curve, bump or nostril mark between the eyes and the mouth. The text names the nose, so the nose must show in color and in line."
+      ],
+      "notes": [
+        "The line eyes are empty outlined circles with one small highlight circle each. There is no pupil fill and no iris ring. The color has pupils. The eyes are not named by the text, so this is a note.",
+        "The color has faint light-gray specks at the top edge. They are unreadable specks, not text."
+      ],
+      "goal_check": "Fail in the line file. The color shows Nan touching her own nose with one finger and laughing, with the figure whole in the frame. The line shows the same pose and the same open smile but draws no nose.",
+      "retry_hint": "Add the nose to the line art: draw one small curve or bump between the eyes and above the mouth, as the color shows."
+    },
+    "K2": {
+      "text": "A nut.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Close-up: the bun is cut at the right edge and the legs and shoes at the bottom edge in color and in line. The bar calls a close-up crop of hair or feet a note while the subject of the sentence stays whole. The nut and the open hand stay whole.",
+        "The nut reads as an acorn: brown cap with a stem, tan body. One nut only.",
+        "The line finger separators stop before the palm, so the fingers and the palm form one area. The hand still shows one thumb and four fingers.",
+        "The line eyes are empty circles with two small highlight circles and no pupil fill. Note.",
+        "The color has small light-gray marks cut by the top edge. They are unreadable, not text."
+      ],
+      "goal_check": "Pass. One big brown nut in Nan's open hand, close up. The open hand shows a thumb and four fingers. No letters, words or numbers. No gray in the line file."
+    },
+    "K3": {
+      "text": "nose",
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Close-up: the shirt and shoulders are cut at the bottom edge in color and in line. The head and the nose stay whole.",
+        "The line eye has an upper lid curve and a lash flick but no lower lid, so the eye white joins the face area. The head outline is closed, so color does not leak out of the head. Note.",
+        "The line ear is an open C arc, so the ear area joins the face. Note.",
+        "The line bun is one plain circle. The red hair band of the color has no line. Color/line difference that changes no character.",
+        "The color has faint light-gray specks at the top edge. They are unreadable, not text.",
+        "Both files show the head in profile facing the viewer's right. The reviewer had no second picture to judge the phrase 'facing the other way'."
+      ],
+      "goal_check": "Pass. Nan's head in profile with the nose clearly seen in the color file and in the line file. Both files show the same direction. No letters, words or numbers. No gray in the line file (0 pixels that are not 0 or 255)."
+    }
+  }
+}

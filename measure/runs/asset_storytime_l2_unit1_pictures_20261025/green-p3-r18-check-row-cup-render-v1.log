@@ -1,0 +1,32 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 15
+book file requests refused: 0
+Line-art line width: 20 px (minimum 12 px).
+Line-art ink coverage: 4.02% (90425 of 2250000 pixels black).
+l2-w01-check-row-cup v1: rendered; stage efd32579b29ab051e30e74dde4f60a453fd2e59cf11be1c2cd9eecd79a173138; file w01/rows/l2-w01-check-row-cup-v1.png; lineart w01/rows/l2-w01-check-row-cup-line-v1.png; size 1500 x 1500; render peak rss mb: 458
+	Command being timed: "node --import tsx scripts/storytime-book-pictures.ts render --row l2-w01-check-row-cup --version 1"
+	User time (seconds): 5.35
+	System time (seconds): 1.42
+	Percent of CPU this job got: 25%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:26.26
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 509176
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1588
+	Minor (reclaiming a frame) page faults: 219214
+	Voluntary context switches: 9819
+	Involuntary context switches: 7201
+	Swaps: 0
+	File system inputs: 271848
+	File system outputs: 152488
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

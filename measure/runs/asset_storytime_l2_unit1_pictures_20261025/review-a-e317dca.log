@@ -1,0 +1,57 @@
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-review-a-correctness
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 2: Tests and calibrated model pre-checks (P2)
+task: 12 (malformed-string credential scan remediation, design B)
+audited_head_sha: e317dcae392d082c7e781569ff95dfad82bd5ebc
+phase_base_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: 3f604b62a50099c383169e766aef6d737f59f504
+verdict: pass
+retry_recommendation: none
+blocking_findings: 0
+nonblocking_findings: 0
+
+Summary:
+Task 12 implements design B correctly. The quote-segment split loop and the
+tolerant decoder find an escaped credential in the head, every segment between
+consecutive unescaped quotes, and the tail. No path uses JSON.parse as a scan
+gate, no path drops a segment, and no path decodes a whole layer without
+segment boundaries. The shared rule builder reads the environment at call time.
+Both provider callers keep secretFindings before decodedAnswerFindings and both
+check before any write. The task 10 refusal suffix stays byte-identical.
+T129-T138 assert real provider-boundary behavior: they run in the worker, read
+the ledger and the file tree, assert the refusal suffix and pattern name, parse
+labeled integers, and pair each hostile case with a safe twin. Mutation 1..5
+each fail their named test (T129, T131, T133, T134, T137). The gate, tsc, and
+cost-label evidence in the plan match the recorded logs exactly.
+
+Findings (id, severity, class, line):
+- none. No new malformed-string finding and no correctness finding remains.
+  Review B's RB7-01 (low, class other, api-key-prefix word boundary at
+  book-pictures.ts:927) is recorded in review-b-e317dca.json and is not
+  re-raised here.
+
+Checks:
+- [x] HEAD equals e317dcae392d082c7e781569ff95dfad82bd5ebc before and after.
+- [x] Owning paths carry no uncommitted change.
+- [x] 64073051 changes only src/storytime/book-pictures.ts. secretFindings and
+      credentialRules are unchanged.
+- [x] Split loop emits head, segments, and tail; escape flag matches JSON.
+- [x] tolerantDecode resolves valid escapes and keeps invalid ones; no throw.
+- [x] Callers: MiniMax 3401/3409, Kimi 3723/3732, both before writes.
+- [x] T129-T138 fall on the right input, assert real behavior, no vacuous pass.
+- [x] A3 labeled-integer parsing present; A4 safe-twin pairs present; A5 claims
+      match green-vitest-t12.log (148 passed), green-tsc-t12.log (31 total, 0
+      owned), and green-vitest-t12-labels.log (wide 473 / chain 351).
+- [x] No regression in T1-T128 (gate 148 passed; Review B full file 121 passed).
+
+Test command run this audit: none. Review B already ran the full file
+(tests/storytime-book-pictures.test.ts, Tests 121 passed (121)) at this HEAD;
+the plan logs plus Review B's commands reproduce the gate, mutation, and label
+evidence. No vitest or tsc command was run here.
+
+End of review. Two artifacts written:
+measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-e317dca.json
+measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-e317dca.log
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,15 @@
+Green round 19 provisional log — storytime-block-box
+Role: measure-jr-green (build round 19, Storytime week 1 pictures)
+Model: opencode-go/muse-spark-1.3-contributor#high
+Red model (Phase 3): minimax-cn-coding-plan/MiniMax-M3
+Item reviewer: openai/gpt-6-luna#high
+Green coder model: none (no delegation)
+phase_base_sha: 15a7bf0b
+role_base_sha: fdc1b2b0
+Task: build assets/storytime-block-box.ts (big box of colored blocks, unblocks story-page-hello-i-am-mia)
+Orchestrator decision (recorded): build order changed. Items that alone unblock a row come
+first: this box of blocks (unblocks story-page-hello-i-am-mia), then a low branch (unblocks
+story-page-a-nest). The kindergarten room set comes after them. Reason: 12 week 1 rows are
+still blocked and the due date is 2026-11-02, so the next rounds build the items that unblock
+one row each.
+Status: started

@@ -1,0 +1,74 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P2
+task: 5
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: 8148b706bf5a5cedac86aa50e87b245925f2149c
+head_sha: d05527ade5f3705cc1f8f135b6f77eba88ee9e3a
+commits:
+  - b60dec4f32ff3f750c152213aea38803bc507886: test(storytime): add failing review remediation tests
+  - fef344c0d2546fd94a64f042f9199d8bb44a42d6: measure(plan): record Storytime remediation Red evidence
+  - a310683d508bb1cf8fc4f2d35e68b70d13de0486: test(storytime): seed calibration fixtures for the strict gate
+  - d05527ade5f3705cc1f8f135b6f77eba88ee9e3a: measure(plan): update Storytime remediation Red evidence
+tests:
+  command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'
+  runs_total: 2
+  latest_attempts: 1
+  exit_code: 1
+  summary: "Tests  14 failed | 75 passed (89)"
+  file_summary: "Test Files  2 failed | 2 passed (4)"
+  new_failures: [T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73]
+  new_passes_and_required_mutations: []
+  earlier_tests_passed: 75
+  earlier_test_exceptions:
+    - T49: the amended order requires two live reads. The current capture reads the published copy twice.
+  invalid_red_errors: []
+  preflight_hold_lines: []
+files:
+  - tests/storytime-book-pictures.test.ts
+  - tests/storytime-line-art-pass.test.ts
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-8148b70.log
+remaining_failures:
+  - T61: the required loadBookTimeline seam is missing. The fake page is ready to test the production capture.
+  - T62: loadBookTimeline is missing. The test covers empty notes and a note before any seek.
+  - T63: the missing loader prevents capture. The test covers live fov drift, projection drift, and a stale published copy.
+  - T64: non-sample twins become failed instead of ready or pending. The style look binds each twin to sampleFiles.
+  - T65: each calibration log accepts a stale rubric, a changed hash, old source text, and an old source prompt.
+  - T66: good-nan retains approval words instead of the neutral Workbooks text.
+  - T67: the CLI rejects --failed. Raw mode also accepts duplicate records and target mismatches, then changes output bytes.
+  - T68: ledger entries and logs lack modelSource. The MiniMax log discards the reported model.
+  - T69: reviews lack callId and rawFile. Two calls produce no files under raw/.
+  - T70: viewDistance is missing. The test also requires isDepthEdge and same-normal depth borders.
+  - T71: the export, render evidence, and smoke evidence retain the old technique ID.
+  - T72: the skip has no next-free-version hint. Explicit v2 rendering already passes within this test.
+  - T73: the check accepts missing border ink and prints no depth-step row label.
+  - T49: the current capture omits both live reads from the amended order.
+checks:
+  - Production diff against role_base_sha: exit 0 for src/ and scripts/.
+  - Timeline diff against phase_base_sha: exit 0 for src/song/timeline.ts and tests/song-timeline.test.ts.
+  - T54 fixture: all 379 bytes unchanged from role_base_sha.
+  - Earlier test edits: the permitted T49 reads, style-look fields, T54 comment, and authorized calibration helper with root arguments.
+  - Fixture amendment: current rubric version, neutral contract text, temporary source files, and matching SHA-256 values.
+  - Parser and remediation tests: unchanged by the fixture amendment.
+  - ./measure/generate.sh: exit 0; Generated 4 Measure facts.
+  - Assigned test and plan paths: clean after the four commits.
+dirty_path_classification:
+  - Relevant: the assigned tests and plan were clean before work.
+  - Generated or ignorable: measure/generated/* and measure/runs/; exclude them from commits.
+  - Unrelated user work: every other initial dirty path; preserve it.
+handoff:
+  - Green implements the required seams and repairs the listed failures. Task 5 remains [~]. Task 6 remains [ ].
+  - Green keeps src/song/, the rubric text, and PICTURE_RUBRIC_VERSION unchanged.
+  - The depth-step adapter uses depthStep with column, rowStart, and inclusive rowEnd. It selects no live plane placement.
+  - The authorized seedCalibration amendment is complete. Assertions and falsification conditions remain unchanged.
+  - Green forwards workbooksRoot through renderCandidates to assertCalibrationReady. The fixture calls now pass temporary roots.
+  - New calibration fixtures use temporary source files and current neutral text. No test reads the live output root or track documents.
+  - No new test passed. Red ran no source mutation.
+  - No compiler, browser, render, real provider call, or pnpm command ran.
+  - Generated facts and the role log remain uncommitted. Unrelated work remains preserved.
+  - master is the only local branch and worktree. origin/gh-pages remains outside this assignment; leave it unchanged.
+facts_changed: []
+END_MEASURE_AGENT_RESULT

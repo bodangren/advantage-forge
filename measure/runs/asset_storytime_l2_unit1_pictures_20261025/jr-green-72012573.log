@@ -1,0 +1,25 @@
+role: measure-jr-green (Green · P3 · storytime_l2_unit1_pictures · r29)
+model: claude-code/claude-sonnet-5-5#high; coder: none; Red model: minimax-cn-coding-plan/MiniMax-M3
+
+MEASURE_AGENT_RESULT
+role: green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3
+round: 29
+status: complete
+phase_base_sha: 15a7bf0b
+role_base_sha: abdd5cec
+head: 72012573
+commits:
+  - d799f1f1 fix(storytime): keep the cream chest joined to the torso in the Pip sniff pose (assets/parts/wolf-kind.ts)
+  - 72012573 docs(measure): record storytime green round 29 sniff evidence (plan.md)
+defect: review 7.2, pass false (kimi-code-plan-cn/k3.1-pro#high): the cream chest read as a floating paw in the side view.
+shape: the cream chest ruff, bound rigidly to the neck bone. The round 28 neck tilt (14 deg) and move (9 cm) pulled it off the torso.
+change: sniff pose only. Neck 2 deg and no move (was 14 deg and 9 cm); head 19 deg (was 6). Mesh, colors, paint, and other clips unchanged. The tongue still shows a little (a mesh change would be needed).
+forge exits: animate --fast exit 0 (3 loops); build sprout-pip exit 0 (82 s, GLB 5447352 bytes = 5320 KB, 0 warning lines, green-p3-r29-build.log); cutout exit 0 (GLB size unchanged).
+tests: vitest 4 files, "Tests  164 passed (164)", exit 0 (green-p3-r29-vitest.log). No type check (only assets/ changed).
+tasks flipped: none ([x] not set); no [b] deferrals.
+new files for reviewers (not in git): out/storytime-review/batch-4/{sprout-pip-sniff.png, sprout-pip-sniff-strip.png, brief.md (section "Round 29 change")}; logs green-p3-r29-{anim1,anim2,anim3,build,cutout,vitest}.log
+review_card: out/storytime-review/batch-4/sprout-pip-sniff.png (JSON key sprout-pip-sniff)
+handoff: independent re-review of the Pip sniff pose against the batch-4 brief (bar 7.0). Green did not rate the item. Then the row render of l2-w01-story-page-a-nest-and-a-nut can start.
+END_MEASURE_AGENT_RESULT

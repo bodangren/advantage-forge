@@ -1,0 +1,500 @@
+{
+  "group": "w06",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v4",
+  "cast": "cast.json 88cbc951",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w06-story-page-i-can-see-a-cat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-cat-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia (1), a cat (1), see/point action. Seen: Mia in pink top and overalls with pink bow points at a gray cat sitting on a fence. Both clear. Mia matches the cast."
+    },
+    {
+      "id": "l2-w06-story-page-i-can-see-a-cat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-cat-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia, a cat (1). Seen: Mia points at a cat on the fence. Clear and complete. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-story-page-i-can-see-a-dog",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-dog-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia, a dog (1). Seen: Mia points at a black and white dog that runs toward her. Dog clear. Mia matches the cast."
+    },
+    {
+      "id": "l2-w06-story-page-i-can-see-a-dog",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-dog-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia, a dog (1). Seen: Mia points at a dog. Dog clear. Note: the dog has solid black patches (ear, eye, spot, tail). They are black, not gray. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-story-page-i-can-see-a-bird",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-bird-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia, a bird (1). Seen: Mia points up at a blue bird on a tree branch. Bird clear. Mia matches the cast."
+    },
+    {
+      "id": "l2-w06-story-page-i-can-see-a-bird",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-bird-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia, a bird (1). Seen: Mia points up at a bird on a branch. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-story-page-i-can-see-a-fish",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-fish-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia, a fish (1). Seen: Mia kneels at a pond and points at an orange fish in the water. Fish clear. Mia matches the cast."
+    },
+    {
+      "id": "l2-w06-story-page-i-can-see-a-fish",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-fish-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia, a fish (1). Seen: Mia kneels and points at a fish in the pond. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-story-page-i-can-see-a-frog",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-frog-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia, a frog (1). Seen: Mia kneels and points at a green frog on a lily pad. Frog clear. Mia matches the cast."
+    },
+    {
+      "id": "l2-w06-story-page-i-can-see-a-frog",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-frog-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia, a frog (1). Seen: Mia points at a frog on a lily pad. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-story-page-i-can-see-a-duck",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-duck-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia, a duck (1). Seen: Mia waves; a white duck with an orange beak sits in the pond. Duck clear. Mia matches the cast."
+    },
+    {
+      "id": "l2-w06-story-page-i-can-see-a-duck",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-duck-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia, a duck (1). Seen: Mia waves; a duck sits in the pond. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-story-page-i-can-see-a-horse",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-horse-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia, a horse (1). Seen: Mia points at a white horse with a cream mane behind a fence. Horse clear and complete enough. Note: a brown fluffy tail shows at the bottom right edge, cut by the frame. It is not a named thing. I read it as a small hidden-animal clue, not a defect."
+    },
+    {
+      "id": "l2-w06-story-page-i-can-see-a-horse",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-a-horse-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia, a horse (1). Seen: Mia points at a horse behind a fence. Horse clear. Note: a fluffy tail at the bottom edge is cut by the frame. It is not a named thing, so it is not a defect. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-story-page-i-can-see-pip",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-pip-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia, Pip (1). Seen: Mia holds her arms out; Pip, a golden-brown puppy with cream chest, floppy ears, red collar and gold tag, jumps toward her. Pip matches the cast. Mia matches the cast."
+    },
+    {
+      "id": "l2-w06-story-page-i-can-see-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-i-can-see-pip-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia, Pip (1). Seen: Mia with open arms; Pip with collar and tag runs at her. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-cover-i-can-see",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-cover-i-can-see-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Cover with the title text not drawn. Items: Mia (1), see action. Seen: Mia holds a hand over her brow like looking far; a cat on a fence and a duck in the pond. No text in the picture. Mia matches the cast."
+    },
+    {
+      "id": "l2-w06-cover-i-can-see",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-cover-i-can-see-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Cover. Seen: Mia with a hand over her brow, a cat, a duck, tree, sun. No text. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-story-page-pat-sat-on-a-mat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-pat-sat-on-a-mat-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1), a mat (1), sitting action. Seen: a boy with spiky black hair, green T-shirt, brown shorts and sandals sits cross-legged on a green mat. Pat matches the cast, except the teddy bear is not drawn (not in the sentence). Note: a second green mat lies empty beside him."
+    },
+    {
+      "id": "l2-w06-story-page-pat-sat-on-a-mat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-pat-sat-on-a-mat-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1), a mat (1). Seen: a boy sits on a mat; a second empty mat beside him. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-story-page-sam-sat-on-a-mat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-sam-sat-on-a-mat-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), a mat (1), sitting action. Seen: Sam (brown hair, red striped T-shirt, blue shorts, blue shoes) sits on a green mat. Pat (black spiky hair, green T-shirt) also sits on the other mat. Sam matches the cast. Note: the sentence names only Sam; Pat is an extra but not a wrong thing."
+    },
+    {
+      "id": "l2-w06-story-page-sam-sat-on-a-mat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-sam-sat-on-a-mat-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), a mat (1). Seen: two boys sit, each on a mat. Sam is on one mat. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-story-page-pat-can-see-a-map",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-pat-can-see-a-map-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1), a map (1), see action. Seen: Pat looks up at a wall map (blue river, green hill, red house) and lifts its corner. Map reads as a map. Pat matches the cast."
+    },
+    {
+      "id": "l2-w06-story-page-pat-can-see-a-map",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-pat-can-see-a-map-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1), a map (1). Seen: Pat looks at a wall map and lifts its corner. Map clear with river, hill, house. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-story-page-sam-can-see-a-pan",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-sam-can-see-a-pan-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), a pan (1), see action. Seen: Sam looks at a red pan on a toy stove and holds its handle. Pan is visible and reads as a pan. Sam matches the cast."
+    },
+    {
+      "id": "l2-w06-story-page-sam-can-see-a-pan",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-sam-can-see-a-pan-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), a pan (1). Seen: Sam touches the handle of a pan on a toy stove. Pan visible. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-story-page-pip-sat-on-the-mat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-pip-sat-on-the-mat-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), a mat (1), sitting action. Seen: Pip sits where two green mats meet; Pat on the left, Sam on the right, both laugh. Pip matches the cast (golden-brown, cream chest, red collar and tag). Note: Pip sits on the join of two mats."
+    },
+    {
+      "id": "l2-w06-story-page-pip-sat-on-the-mat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-pip-sat-on-the-mat-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), a mat (1). Seen: Pip sits in the middle on the mats; two laughing boys at the sides. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-cover-tap-tap",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-cover-tap-tap-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Cover. Items: two children listening. Seen: Pat and Sam each hold a hand to an ear on two mats. No text in the picture. Both match the cast."
+    },
+    {
+      "id": "l2-w06-cover-tap-tap",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-cover-tap-tap-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Cover. Seen: two boys with a hand at the ear on mats. No text. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-check-row-tiger",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-tiger-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Word: tiger. Seen: one orange tiger cub with black stripes sits. Reads as a tiger."
+    },
+    {
+      "id": "l2-w06-check-row-tiger",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-tiger-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Word: tiger. Seen: one tiger cub with stripes. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-check-row-sun",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-sun-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Word: sun. Seen: one sun with a round center and eight rays. Reads as a sun."
+    },
+    {
+      "id": "l2-w06-check-row-sun",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-sun-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Word: sun. Seen: one sun with rays. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-check-row-bag",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-bag-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Word: bag. Seen: a red backpack with a yellow pocket and a blue handle. Reads as a bag."
+    },
+    {
+      "id": "l2-w06-check-row-bag",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-bag-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Word: bag. Seen: a backpack with a pocket and a handle. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-check-row-cup",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-cup-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Word: cup. Seen: a blue cup with a cream rim and a round handle. Reads as a cup."
+    },
+    {
+      "id": "l2-w06-check-row-cup",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-cup-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Word: cup. Seen: a cup with a rim and a handle. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-check-row-fish",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-fish-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Word: fish. Seen: one round blue fish with a yellow belly, big eye, fins and tail. Reads as a fish. Note: no mouth drawn."
+    },
+    {
+      "id": "l2-w06-check-row-fish",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-fish-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Word: fish. Seen: one round fish with an eye, fins and a tail. Reads as a fish. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-check-row-dog",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-dog-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Word: dog. Seen: one brown puppy with floppy ears, red collar and tag, tongue out. Reads as a dog. Note: the muzzle shape is a little odd."
+    },
+    {
+      "id": "l2-w06-check-row-dog",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-dog-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Word: dog. Seen: one puppy with a collar and tag. Reads as a dog. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-check-row-pen",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-pen-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Word: pen. Seen: one chubby blue pen with a white clip, a ring at the top and a silver tip. Reads as a pen at book size. Note: the body is fat."
+    },
+    {
+      "id": "l2-w06-check-row-pen",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-pen-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Word: pen. Seen: one pen with a clip and a tip. Reads as a pen. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-check-row-table",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-table-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Word: table. Seen: one table with a light top and four red legs. Reads as a table."
+    },
+    {
+      "id": "l2-w06-check-row-table",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-table-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Word: table. Seen: one table with four legs. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-story-page-tap-tap-tap",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-tap-tap-tap-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Sound page; no named props. Seen: Pat and Sam sit on mats with open mouths, listening. Both match the cast. Note: a fluffy tail shows behind the basket (a hidden animal clue)."
+    },
+    {
+      "id": "l2-w06-story-page-tap-tap-tap",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-tap-tap-tap-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Sound page. Seen: two boys sit on mats with open mouths; a tail behind the basket. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-story-page-tap-tap-tap-b",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-tap-tap-tap-b-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Sound page; no named props. Seen: Sam stands behind the book basket and speaks; Pat stands and looks up at the map. Both match the cast. Note: a fluffy tail shows behind the basket."
+    },
+    {
+      "id": "l2-w06-story-page-tap-tap-tap-b",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-tap-tap-tap-b-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Sound page. Seen: one boy behind the basket, one boy looks at the map; a tail behind the basket. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-story-page-he-can-see-pip",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-he-can-see-pip-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (he) (1), Pip (1), see action. Seen: Sam in red striped T-shirt and blue shoes points at Pip, who lies on the floor with collar and tag. Both match the cast."
+    },
+    {
+      "id": "l2-w06-story-page-he-can-see-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-story-page-he-can-see-pip-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), Pip (1). Seen: a boy points at a puppy that lies on the floor with a collar and tag. Note: the puppy tail shape is a little busy. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w06-check-row-ten",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-ten-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Word: ten. Count: 10. Seen: 10 red balls in two rows of 5. Count correct."
+    },
+    {
+      "id": "l2-w06-check-row-ten",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w06/l2-w06-check-row-ten-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Word: ten. Count: 10. Seen: 10 circles in two rows of 5. Count correct. Line art: black lines on white, no gray, no gap that blocks coloring."
+    }
+  ],
+  "summary": {
+    "files": 54,
+    "pass": 54,
+    "fail": 0
+  }
+}

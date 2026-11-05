@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Phase 5 acceptance rerun per test-strategy.md 5.11.16 on audited HEAD 325b92a0d2789e4ab00ff2313129f53dbe626ec7. CARRY_OVER_CHECK holds, so the gate results measured at b72f8b60 carry over. KNOWN_RED_CHECK passes under the 5.11.16 known-red rule (7 failing tests, all inside the named pin set, 4 of 4 drift sentinels failing). X13, X14, X15 rerun and pass at the new HEAD. G5 and the plan-quote comparison pass. No blocking finding.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "CARRY_OVER_CHECK: files changed since b72f8b60 other than the strategy = 0 (only test-strategy.md, commit 325b92a0, subject measure(storytime_l2_unit1_pictures):); strategy lines removed since b72f8b60 = 0; block SHAs all match the 5.11.16 table (restart-check.mjs c3ecbeb7…, v2 30f68eaf…, v3 6ae82ad4…, restart-pins 3b9b4077…, pins-2 fe0370b4…, pins-3 335b8e9a…); pins checks exit 0/0/0; restart check v3 --final exit 0 with last line 'restart check: pass'",
+    "KNOWN_RED_CHECK: pin-set.mjs SHA f67cfa8f… matches the table; tests in the file 142; pin-dependent tests 13 (T142,T143,T144,T145,T147,T148,T149,T150,T173,T174,T175,T176,T177); test file changed since b72f8b60 = 0; live list sha256 89b2910c… differs from the pin 6d05dfc5… (yes); known red exit 1; Tests 7 failed | 135 passed (142), F+P = 142; failing tests 7 = T142,T145,T147,T150,T173,T174,T177; failing tests outside the pin set 0; drift sentinels failing 4 of 4; skipped or todo 0",
+    "X13 rerun at 325b92a: the wording grep prints exactly the 3 w08 approval notes (drum, moon, mango), each qualified by notes[0] 'model evidence, not the person count'; seed control prints 1",
+    "X14 rerun at 325b92a: the secret grep prints nothing (exit 1)",
+    "X15 rerun at 325b92a: structural doctor prints 12 errors (6 new-track-started, 5 missing registry links, 1 stale generated fact); none names this track or an owned path",
+    "G5: tech-debt lines 43, lessons lines 50 (both <= 50); ledger ids RB-P4-1 4, RB12-01 4, RA-P3ADV-2 3, RC5-3 5, PA3-N6 2, PA4-N2 2, PA4-N3 2, PA4-N4 2 (each >= 1)",
+    "Plan quotes: step 13 and 14 notes (57 rows, 0.57 USD, guard limits nut color 4 line 5, 51 delivered files byte-equal with pass verdicts, nut3 handoff 2 files 2 OK lines) and step 15 notes (GREEN N=84, tsc total 38 owned 0 exit 2, restart check script SHA 6ae82ad4…, the 5.11.15 label values, the control FAIL lines) all match the measured X4 and X10 outputs; Task 3 note metadata count 29 = measured grep 29; no PASS/FAIL count claim in the plan differs from reality (A5)",
+    "Method note: the sandbox blocks redirects, temp files, 2>&1, NR>1 in awk, and > inside patterns; every spec command ran as an equivalent stdin/pipe form with identical values, named in the log"
+  ],
+  "commands": [
+    "CARRY_OVER_CHECK per 5.11.16 (light, stdin/pipe forms)",
+    "KNOWN_RED_CHECK per 5.11.16: heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1' once, labels via awk on merged output",
+    "X13 wording grep + seed control, X14 secret grep, X15 node measure/tools/doctor.mjs --structural-only --root .",
+    "G5 line counts and ledger greps",
+    "Plan-quote comparison against the T4 step 13/14/15 notes, the Task 3 note, and metadata.json"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/acceptance-p5-restart-325b92a.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/acceptance-p5-restart-325b92a.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "audited_head": "325b92a0d2789e4ab00ff2313129f53dbe626ec7",
+  "carry_over_base": "b72f8b60aba82dd99c09eb2c60292016ae3d9b3f",
+  "verdict": "pass",
+  "gates": {
+    "carry_over": "pass — only test-strategy.md changed; no line removed; all six block SHAs match; pins checks 0/0/0; restart check v3 --final exit 0, 'restart check: pass'",
+    "X1": "pass (carried over from b72f8b60) — merges 0; own files 76, outside allowed set 0; foreign commit d6867c52 named (touches only measure/tracks.md, no Storytime path); a48 specs in git 24",
+    "X2": "pass (carried over from b72f8b60) — after P5R_BASE: judge files 0, a48 specs (except nut) 0, judge kit after c132d866 0; no src/ change",
+    "X2b": "pass (carried over from b72f8b60) — code files outside the allowed three 0; guards diff = TRY_EXCEPTIONS (3 nut entries with PM sources), maxTriesFor, tryGuard limit use; countTries counts every restart row per picture and kind across color versions; tests confirm at final caps (nut line 5, nut color 4, others 3)",
+    "X3": "pass (carried over from b72f8b60) — pin blocks 28/7/12 lines, sha256sum -c exit 0 each; block SHAs re-verified at 325b92a",
+    "X4": "pass (carried over from b72f8b60) — restart check v3 SHA 6ae82ad4…; --final exit 0 with every label at the 5.11.15 value (rows 57, spend 0.57, folders 11, files 51/51/51, pictures 24, guard 3/3/4-5/0/0); --final --control exit 1 with the three named FAIL lines; --final rerun at 325b92a exits 0 with 'restart check: pass'",
+    "X5": "pass (carried over from b72f8b60, via X4) — spend 0.57 USD <= 1.00; pairs above limit 0; pairs above 3 tries only the nut color and nut line (2, named)",
+    "X6": "pass (carried over from b72f8b60, via X4) — kit SHAs match; calibration 388/381/7, controls 2 failed 2; 51/51 delivered files with a pass verdict; retries 9/6/3; second-judge differences 0; nut verdicts pass/fail/fail/pass/pass",
+    "X7": "pass (carried over from b72f8b60) — handoff checks drum 2, c 4, a 25, b 14, d 4, nut3 2, each exit 0 with one OK line per file; evidence words yes",
+    "X8": "pass (carried over from b72f8b60) — ledger lines 385, sha256sum -c exit 0; nine pre-restart manifests verified in X4; untracked evidence unchanged per CARRY_OVER_CHECK",
+    "X9": "pass (carried over from b72f8b60) — w08 delivery pngs 6; ostrich files in w07 v2 delivery 2; X4 ties them to pass verdicts",
+    "X10": "pass — type check carried over from b72f8b60 (tsc exit 2, errors only outside the track; total 38, owned 0); KNOWN_RED_CHECK at 325b92a passes the 5.11.16 rule (exit 1, 7 failing tests all in the named set, 4 of 4 sentinels, total 142, no skip)",
+    "X11": "pass — PROJECT_TESTS carried over from b72f8b60 (exit 0, Test Files 7 passed (7), Tests 105 passed (105), M=105 above the maker's N=84, no skip, no filter); KNOWN_RED_CHECK at 325b92a passes per 5.11.16",
+    "X12": "pass (carried over from b72f8b60) — task lines 7/7/7, SHAs commit and hold evidence; metadata actual_tasks 29 = grep, status in_progress; interphase status lists no incomplete phase for this track",
+    "X13": "pass (rerun at 325b92a) — the wording grep prints exactly the 3 w08 approval notes, each qualified by notes[0]; seed control prints 1",
+    "X14": "pass (rerun at 325b92a) — the secret grep prints nothing (exit 1)",
+    "X15": "pass (rerun at 325b92a) — structural doctor prints 12 errors (6 new-track-started, 5 missing registry links, 1 stale generated fact); none names this track or an owned path",
+    "G5": "pass — tech-debt 43 lines, lessons 50 lines (both <= 50); every ledger id count >= 1 (RB-P4-1 4, RB12-01 4, RA-P3ADV-2 3, RC5-3 5, PA3-N6 2, PA4-N2 2, PA4-N3 2, PA4-N4 2)",
+    "plan_quotes": "pass — the T4 step 13/14/15 notes, the Task 3 note, and metadata.json match the measured values (57 rows, 0.57 USD, N=84, tsc 38/0, guard limits 4/5, 51 files, handoff 2/4/25/14/4/2, actual_tasks 29); no false PASS/FAIL claim found (A5)"
+  }
+}

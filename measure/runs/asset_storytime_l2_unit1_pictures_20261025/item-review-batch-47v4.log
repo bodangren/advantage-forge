@@ -1,0 +1,31 @@
+Review log: item-review-batch-47v4
+Reviewer: minimax-cn-coding-plan/MiniMax-M3.1-Flash
+Bar: Daniel 2026-11-01 14:15 ICT
+Set: week 4 batch 2, out/storytime-review/batch-47/
+Date: 2026-11-02
+Status: fail
+
+Method
+- I read the brief, the color source, the line source, and both prints of every row.
+- I counted the pixels that are not 0 or 255 in every line file with a node script under /tmp/opencode/.
+- Every line file has zero such pixels. No line file has gray or shading.
+- I cropped faces at 4x to 8x to check the nose at book size.
+- No person, hand, hair, or needed prop is cut at a print edge in any row. The window, the toy box, and the curtain run off the print edge. They are background props.
+
+Rows
+- l2-w04-story-page-this-is-my-family: rating 9, clean. The print fix holds. All six people stay whole in the color print and the line print. Dad keeps the yellow polo shirt, blue jeans, and brown shoes. No shirt carries a star or a badge. The red door hides behind Grandma and Grandpa: a note. The line art draws the path as a coil and adds shirt buttons: notes.
+- l2-w04-cover-pam: rating 7.5, defect, broken-face. The line art face of Nan has no nose. The color face shows a nose. One doll with yellow yarn hair, two pigtails, and a plain red dress. The line art adds a curtain that the color lacks: a note.
+- l2-w04-story-page-this-is-the-man: rating 7, defect, wrong-or-changed-character. The line art gives Dad no hair. The color shows short straight black hair and the goal names it. Nan and Dad show eyes, a nose, and a mouth. One doll, one blanket.
+- l2-w04-story-page-is-this-pam: rating 6.5, defect, wrong-or-missing-prop. The line art has no corner of the red doll dress at the edge of the blanket. The color shows a red dress corner, yellow yarn, and a foot. The line art shows a sawtooth blanket edge, yarn strands, and a foot only. The face of Nan is whole.
+- l2-w04-story-page-pam-can-nap: rating 7.5, defect, broken-face. The line art face of Nan has no nose. The color face shows a nose. One doll in one shoe box with one small blanket.
+- l2-w04-story-page-pam-is-in-a-pan: rating 9, clean. One doll in one yellow toy pan. The face of Nan shows eyes, a nose, and a laughing mouth. The pan handle hides partly behind the sofa in the line art: a note.
+- l2-w04-story-page-pam-is-on-a-map: rating 9, clean. One map, one doll, one pointing hand. The face of Nan shows eyes, a nose, and a smiling mouth. The red cross on the map marks a place: a note.
+- l2-w04-story-page-this-is-pam: rating 6, defect, broken-face and wrong-or-changed-character. The line art face of Nan has no nose. The point of the star on the T-shirt of Nan shows above the head of the doll, so the doll looks as if she wears a star. The color shows no star.
+
+Extra rows, one review, written into both files
+- K1 clean, rating 9. The head of Nan in profile with the nose in clear profile in both files.
+- K2 clean, rating 9. One big brown nut in the open hand of Nan. The line face shows eyes, a nose mark, and a mouth.
+- K3 defect, rating 6.5, broken-face. The line art face has no nose. The color shows a nose where the finger touches.
+
+Pattern for the builder
+- The line art drops the nose of Nan in five rows of these two sets. The line art of the family page, the page with the man, the page with the blanket, and the page with the pan keep the nose. The line prompt should name the nose.

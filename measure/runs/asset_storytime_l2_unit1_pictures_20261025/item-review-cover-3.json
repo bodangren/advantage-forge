@@ -1,0 +1,121 @@
+{
+  "status": "pass",
+  "reviewer": "claude-code/claude-opus-5-5[1m]#high",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Cover m13 is clean (8.0) and the top 30 percent is calm. Each of the six waving hands has five digits at 4x: four spread fingers and one short thumb against the cheek. Margins: left 590 px, right 657 px. K1 is a defect (no nose in the line art), K2 is clean, and K3 is a defect (Nan leaves the frame).",
+  "items": {
+    "l2-cover-v1": {
+      "files": [
+        "out/storytime-review/cover-3/brief.md",
+        "docs/storytime/l2-unit1/cover/muse/l2-cover.json",
+        "out/storytime-review/cover-3/pages/l2-cover-v1-m13-color-print.png",
+        "out/storytime-review/cover-3/refs/ref2-cast-group-a-2.png",
+        "out/storytime-review/cover-3/refs/ref3-ben-ref-clean-2.png",
+        "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
+        "out/storytime-review/cover-3/refs/ref5-pip-ref-render.png"
+      ],
+      "sha256_checked": "d32b5cc7caf9b02b5451c1c009b3733e75f05353b7a7ff03bce1d8e7661abf01 (match)",
+      "rating": 8.0,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "calm_top": "yes",
+      "calm_top_reason": "Rows 0 to 899 are one plain cream wall (mean RGB 252, 233, 203). The largest channel difference from the mean is 12.7, and 0 pixels differ by more than 20. The first busy row is 1070 (the timber beam). The highest child head starts near row 1490. No character, no prop, and no text is in the top 30 percent.",
+      "left_margin_px": 590,
+      "right_margin_px": 657,
+      "margin_method": "Script /tmp/opencode/c3/margins2.cjs (skin class, rows 1100 to 2600) gives the leftmost child column 590 (the fingertip of Ben's waving hand). Script /tmp/opencode/c3/hair.cjs and a dark-pixel scan (rows 1450 to 1750) give the rightmost child column 3342 (the right bun of Nan). The red hair tie ends at 3294 and the skin at 3297. A by-eye crop of both side bands (x 400 to 900 and x 3100 to 3600) agrees. The dark timber beams are background. The 40 px book trim cuts nothing.",
+      "hands": [
+        { "child": "Ben", "hand": "waving (right hand, screen left)", "digits": 5, "thumb": "short tapered thumb that points right and touches his own cheek; a background gap separates it from the index finger" },
+        { "child": "Mia", "hand": "waving", "digits": 5, "thumb": "short tapered thumb against her own cheek; the ring finger shows in a lighter tone, partly behind the middle finger" },
+        { "child": "Sam", "hand": "waving", "digits": 5, "thumb": "short tapered thumb against his own cheek; the ring and little fingers lie in front of Mia's eye area" },
+        { "child": "May", "hand": "waving", "digits": 5, "thumb": "short tapered thumb against her own cheek; a lock of her side ponytail crosses the palm near the index finger" },
+        { "child": "Pat", "hand": "waving", "digits": 5, "thumb": "short tapered thumb against his own cheek; the ring finger tip lies on the lower outer edge of May's right eye, and the middle and index fingers have low contrast against May's face" },
+        { "child": "Nan", "hand": "waving", "digits": 5, "thumb": "short tapered thumb against her own cheek; a background gap separates it from the index finger" },
+        { "child": "Ben, Mia, May, Pat, Nan", "hand": "lowered", "digits": "mitten", "thumb": "smooth mitten hand without fingers, as on the approved sheets" },
+        { "child": "Sam", "hand": "lowered", "digits": "mostly hidden", "thumb": "the hand hangs behind Pip's left ear; no wrong form shows" }
+      ],
+      "hands_book_size": "Yes for five of the six hands. A child who counts the digits of Ben, Mia, Sam, May, or Nan finds four spread fingers and a short thumb point, five in all. On Pat's hand the count is five, but two fingers lie on May's face with low contrast, so a fast count can give four. No hand has extra digits, a second palm, or two hands on one arm.",
+      "notes": [
+        "The thumbs are short and touch the cheeks. They are separate digits with a rounded point, but they are less clear than the fingers at book size.",
+        "Pat's ring finger tip lies on the lower outer edge of May's right eye. May's eye still reads as a full eye.",
+        "No child has a contact shadow. The shoes seem to float slightly above the floor. This is not a bar category.",
+        "Pip stands. The goal says that Pip sits.",
+        "Pip has three small tufts on the top of the head. The approved Pip render has the same tufts. The floppy ears with darker tips are the only ears.",
+        "Mia, May, and Pat have small eyelash flicks, and Nan has small marks at the outer eye corners. These match the approved sheets.",
+        "May's side ponytail crosses her own waving palm near the index finger."
+      ],
+      "cast_check": "Six children, in the approved 3D look and outfits, from the left: Ben (spiky light-brown hair, blue T-shirt, blue trousers, gray shoes), Mia (light-brown hair, pink bow, pink shirt, blue overalls, white shoes), Sam (brown hair, red shirt with white stripes, blue shorts, blue shoes), May (black hair, side ponytail, yellow clip, yellow shirt, blue skirt, white sneakers and socks), Pat (black hair with knots, green shirt, brown shorts, brown sandals), Nan (two buns with red ties, orange shirt with a white star, red shorts, white shoes). No child reads as a different or changed character.",
+      "face_check": "Each of the six children has two eyes, a nose, and a mouth. The eye corners are clean at full size. Pip has two eyes, a black nose, and an open mouth.",
+      "goal_check": "Yes. Six sprouts stand close together in a bright classroom, wave hello, and smile. Pip is whole in front with floppy ears, a red collar, and a gold tag. The top 30 percent is a plain cream wall. Pip stands, not sits (note).",
+      "line_check": "none: color only",
+      "text_check": "No letters, words, or numbers anywhere, also not on Pip's tag."
+    }
+  },
+  "extra": {
+    "K1": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "rating": 5.5,
+      "verdict": "defect",
+      "defect_categories": ["wrong-or-missing-prop"],
+      "defects": [
+        "The line art has no nose. The text is \"A nose.\" and the color page shows the nose, but the line art shows only eyes, a mouth, and a finger that points at an empty part of the face. A child who colors the page cannot find the nose that the sentence names."
+      ],
+      "notes": [
+        "Color: Nan matches the look sheet (buns with red ties, orange star shirt, red shorts, white shoes). Her face has eyes, a nose, and an open laughing mouth.",
+        "Color: the touching hand is a fist with one extended index finger. The curled fingers show as one rounded form, in the same mitten style as the look sheet. The hanging hand is a mitten, as on the look sheet.",
+        "Line art: the eyes are plain circles with a highlight circle and no iris. This is a simplification, not a broken face.",
+        "Line art: the file is pure black and white (0 mid-gray pixels). The line art has closed regions and no line gap that makes coloring hard."
+      ],
+      "goal_check": "Color: yes. Nan touches the underside of her own nose with one finger and laughs. Line art: no. The nose is missing, so the finger touches nothing that the text names.",
+      "line_check": "Pure black and white (0 mid-gray pixels at 4000 x 3000). Closed shapes. The nose contour is missing.",
+      "retry_hint": "Redraw the line art with a clear nose contour above the fingertip, as in the color page."
+    },
+    "K2": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 8.0,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Nan shows in a clean profile that faces right. The dark hair, the side bun with the red tie, the orange shirt, the brown eyes, and the blush match the look sheet.",
+        "The nose is clear in the color and in the line art. The face has an eye, an eyebrow, a nose, a mouth, and an ear.",
+        "Line art: the bun is one plain circle, so the red tie ring is not drawn. A child can still color the bun.",
+        "Line art: the file is pure black and white (0 mid-gray pixels). The hairline and the forehead junction are closed at full size.",
+        "The shirt is cut at the bottom edge. This is background cut at a print edge."
+      ],
+      "goal_check": "Yes. The head of Nan is in profile, facing right, and the nose is clearly seen for a tracing line.",
+      "line_check": "Pure black and white (0 mid-gray pixels at 1600 x 1600). Closed regions. No line gap that makes coloring hard."
+    },
+    "K3": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": 6.5,
+      "verdict": "defect",
+      "defect_categories": ["layout-fault"],
+      "defects": [
+        "Nan leaves the frame. Her right-side bun and red tie go out of the right edge (381 color pixels on the last column, x = 3999), and her shoes go out of the bottom edge (184 color pixels on the last row). The bar names a character that touches or leaves the frame as a layout fault. The close-up framing causes this cut."
+      ],
+      "notes": [
+        "The open hand has five digits at full size: one thumb at the top and four fingers. The hand is very large because it is near the camera. This is foreshortening, a note.",
+        "The leftmost fingertip is at x = 51 (color) and x = 55 (line). The 40 px book trim does not cut it, but the margin is only about 11 px.",
+        "The nut is one big brown acorn-shaped nut. It sits on the open palm, and its tip touches the palm.",
+        "Nan matches the look sheet. Her face has eyes, a nose, and a smiling mouth in the color and in the line art.",
+        "Line art: the file is pure black and white (0 mid-gray pixels). The finger separation strokes stop short inside the hand, so the fingers and the palm are one region. This is acceptable because they take one skin color."
+      ],
+      "goal_check": "Yes for the content: one big brown nut in Nan's open hand, close up. The framing cuts Nan at the right and bottom edges.",
+      "line_check": "Pure black and white (0 mid-gray pixels at 4000 x 3000). Closed regions. No line gap that makes coloring hard.",
+      "retry_hint": "Zoom out or move the camera so that the right bun stays inside the frame by more than 40 px, or confirm with Daniel that a close-up crop is allowed."
+    }
+  }
+}

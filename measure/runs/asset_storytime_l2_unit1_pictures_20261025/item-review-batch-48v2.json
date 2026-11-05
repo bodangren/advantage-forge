@@ -1,0 +1,91 @@
+{
+  "status": "inconclusive",
+  "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Provisional. Review in progress.",
+  "items": {
+    "l2-w04-story-page-nan-and-pam-nap": {
+      "rating": 8.5,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "files": [
+        "out/storytime-review/batch-48/pages/l2-w04-story-page-nan-and-pam-nap-m1-color-print.png",
+        "out/storytime-review/batch-48/pages/l2-w04-story-page-nan-and-pam-nap-m1-line-print-4-despeckled.png"
+      ],
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The old star on Pam is gone. The place where the star sat now holds yarn strands, so no five-pointed shape shows anywhere on the page.",
+        "Pam keeps a wavy fringe, a yarn tuft on top and one yarn bunch near her hand. Her dress carries no mark.",
+        "Nan sleeps in both files. Her eyes are closed curves and her lash strokes show in the line art.",
+        "The line art does not draw the outline of Pam red dress as its own closed shape. The doll still reads as the doll, so this is a note and not a defect.",
+        "The toy box lid at the right and the window frame at the left run past the print edge. Both are background and the subject stays whole, so this is a note."
+      ],
+      "goal_check": "Nan sleeps on the blue sofa under one blanket and hugs one doll. Pam shows yellow yarn hair, a fringe and yarn bunches, two button eyes and a stitched smile. No star shows in the color file or in the line file.",
+      "line_check": "Zero gray pixels. The line art is pure black and white. No thick solid black ring or band. The eyes use a thin outline with a solid black pupil, which the bar allows. No gap makes coloring hard."
+    },
+    "l2-w04-check-row-bus": {
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    },
+    "l2-w04-check-row-cat": {
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    },
+    "l2-w04-check-row-dog": {
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    },
+    "l2-w04-check-row-fish": {
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    },
+    "l2-w04-check-row-hat": {
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    },
+    "l2-w04-check-row-milk": {
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    },
+    "l2-w04-check-row-monkey": {
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    },
+    "l2-w04-check-row-mouse": {
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    },
+    "l2-w04-check-row-sun": {
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    }
+  },
+  "extra": {
+    "K1": {
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    },
+    "K2": {
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    },
+    "K3": {
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    }
+  }
+}

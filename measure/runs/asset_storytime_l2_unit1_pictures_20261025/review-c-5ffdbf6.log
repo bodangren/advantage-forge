@@ -1,0 +1,18 @@
+Review C (UX and API end-to-end contract) audit for phase "Phase 2: Tests and calibrated model pre-checks" (P2).
+
+Scope: CLI commands and flags, exit codes (2 for a pre-check fail), --dry-run on every paid and render command, the provisional line-art file name and its collision rules, the window.__bookStill shape, and the manifest schema with output kinds that Workbooks reads. Audited range 1d39b8fd..5ffdbf6e. HEAD matched the audited HEAD 5ffdbf6e41a0c30ec4330f7f23137cc7a218d61e.
+
+Verdict: pass. No blocking findings. Three nonblocking findings are in review-c-5ffdbf6.json.
+
+MEASURE_AGENT_RESULT
+role: Review C (UX and API end-to-end contract)
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 2: Tests and calibrated model pre-checks (P2)
+commits: 1d39b8fd..5ffdbf6e
+tests_run: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1' (pass, Tests  76 passed (76), 4 files)
+files_changed: measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-5ffdbf6.json, measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-5ffdbf6.log
+plan_updates: none
+known_failures: none
+handoff: Audit passed. Three nonblocking findings: (1) precheck-kimi has no path to record a failed call; the live ledger holds orphaned before-call 9d0bddf7-d2ea-4bdb-a672-56c308e3f6d0 (kimi, bad-one-sun) with no after-call; add a failure-record path under a new task. (2) A repeated precheck-minimax overwrites the review log and raw text at a fixed path. (3) render without --version reuses the newest existing version and reports skipped; advancing needs an explicit --version N+1.
+END_MEASURE_AGENT_RESULT

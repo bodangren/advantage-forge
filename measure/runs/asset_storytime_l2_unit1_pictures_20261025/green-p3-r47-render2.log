@@ -1,0 +1,9 @@
+storytime-school-bag: 11,352 triangles, 0.252 x 0.291 x 0.151 m, built in 3207 ms
+  bag-body                  5080 tris  (1853 ms)
+  pocket                    1330 tris  (345 ms)
+  strap.L                   1598 tris  (379 ms)
+  strap.R                   1604 tris  (357 ms)
+  grab-loop                 1740 tris  (194 ms)
+texture  none (vertex colors)
+glb      out/storytime-school-bag/storytime-school-bag.glb  (271 KB)
+render   out/storytime-school-bag/render.png  (495 ms)

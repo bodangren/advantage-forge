@@ -1,0 +1,113 @@
+{
+  "status": "fail",
+  "reviewer": "opencode-go/deepseek-v4.1-flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "All eleven story rows are clean. The family print fix holds. K2 lacks the named nose in the line file. K3 cuts the hair bun and the shoe soles at the frame edges.",
+  "set_status": "pass",
+  "extra_status": "fail",
+  "items": {
+    "l2-w03-story-page-it-is-blue": {
+      "files": [
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-color.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-color-print.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-line-6-despeckled.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-line-print-6-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The small clip at the top of May's hair is a hair clip, not a shirt mark.",
+        "The line draws May's eyes as big solid pupils with a lash tick. The face stays readable, and the rule allows solid pupils.",
+        "The color print cuts only the left end of the small paint table and the room edges. May, her hands, her hair, and the blue sheet stay whole.",
+        "Two brushes on the small table show in the color. The line draws them as two short marks. They are background props."
+      ],
+      "goal_check": "May matches the cast look sheet: black hair with a side ponytail, a yellow shirt, a blue skirt, and white shoes. Her shirt is plain in color and in line, with no star, badge, or mark. One blue sheet shows as one closed four-sided shape with nothing inside. The easel holds three pots in both files. May, her hands, and the sheet stay whole in both prints. No text appears.",
+      "line_check": "Both line files have zero non-binary pixels. No thick black ring or band appears. Faces stay readable. No line gap blocks coloring."
+    },
+    "l2-w03-story-page-nan-can-get-a-pan": {
+      "files": [
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-color.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-color-print.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-9-despeckled.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-print-9-despeckled.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "(a) The end of the handle touches the top-left corner of the toy kitchen counter line. The bowl stays clear, and a child still reads one pan. This contact is a note.",
+        "(b) The line fist holds the bowl rim and the handle points right, away from Nan. The color holds a short handle below the fist. This difference changes no character and no needed pan. It is a note.",
+        "A small pale seam shows at one eye corner of Nan in the color. Her face stays readable.",
+        "The prints cut the right side of the toy kitchen only. Nan, her hands, her hair, and the pan stay whole."
+      ],
+      "goal_check": "Nan matches her look: two low buns with red bands, an orange T-shirt with a white star, red shorts, white sneakers, and the eyelash mark. Both files show exactly one toy frying pan: a wide bowl with a rim and one long thick handle. The pan reads as a pan at book size. Three cups and three plates stay on the shelf in both files. No text appears.",
+      "line_check": "Both line files have zero non-binary pixels. The bowl uses two thin outlines with white between them, not a solid band. Faces stay readable. No line gap blocks coloring."
+    }
+  },
+  "extra": {
+    "K1": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The goal says the head faces the other way. The brief supplies no second image, and both files face right.",
+        "The line draws the hair bun as one thin circle. It is not a thick black band, and the earlier round does not reproduce.",
+        "The neck and the shirt cross the bottom edge of this head study. The head and the named nose stay whole."
+      ],
+      "goal_check": "One profile head shows the dark hair, the bun, an ear, one eye, and a clear nose of Nan. The nose projects from the face in color and in line. The head supports a tracing line. No extra person, animal, prop, or text appears.",
+      "line_check": "The line file has zero non-binary pixels. The nose, eye, mouth, and face contour stay readable. No thick black ring, band, or gap makes coloring hard."
+    },
+    "K2": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "rating": 6,
+      "verdict": "defect",
+      "defect_categories": [
+        "broken-face"
+      ],
+      "defects": [
+        "The line file does not draw the nose of Nan. Her fingertip stops on her cheek below the eye, so the face part that the text names is missing."
+      ],
+      "notes": [
+        "The color file shows a clear nose and the intended touch.",
+        "Both files keep Nan inside the frame.",
+        "The eyes and the mouth stay readable in the line."
+      ],
+      "goal_check": "The color shows Nan touching her nose with one finger while she laughs. The line fails the named face part: it shows no nose and no touch on the nose. A teacher or a child cannot read 'A nose.' from the line file.",
+      "line_check": "The line file has zero non-binary pixels. The eyes and the mouth stay readable. The missing nose breaks the face.",
+      "retry_hint": "Line: Draw the nose of Nan above the smile and set the fingertip against its side."
+    },
+    "K3": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": 7.5,
+      "verdict": "defect",
+      "defect_categories": [
+        "layout-fault"
+      ],
+      "defects": [
+        "The right hair bun runs off the right edge, and the shoe soles run off the bottom edge, in the color file and in the line file."
+      ],
+      "notes": [
+        "The goal asks for a close-up. The hand and the big nut stay whole in both files.",
+        "No open hand shows a clearly wrong finger count in either file.",
+        "The nut is one acorn with a cap and a stem in both files."
+      ],
+      "goal_check": "Both files show one large brown nut on the open hand of Nan, close up. Nan matches her look. The hand and the nut stay whole. The frame cuts the right hair bun and the shoe soles.",
+      "line_check": "The line file has zero non-binary pixels. The nut, the cap, the stem, and the fingers stay readable. No thick black band or gap makes coloring hard.",
+      "retry_hint": "Color and line: Keep the close-up of the hand and the nut; widen the frame so the hair bun and the shoes stay whole."
+    }
+  }
+}

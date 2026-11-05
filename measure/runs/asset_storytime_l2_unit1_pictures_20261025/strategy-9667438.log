@@ -1,0 +1,31 @@
+MEASURE_AGENT_RESULT
+role: strategy
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P2 "Phase 2: Tests and calibrated model pre-checks"
+commits:
+  - 1d39b8fda457e12d8e7332e7de65d2046ddda78e docs(measure): add Storytime picture test strategy
+tests_run: none. This role runs no heavy job: no vitest, tsc, browser, render, paid call, preflight, or lock.
+files_changed:
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md (committed)
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/strategy-9667438.log (not committed)
+plan_updates: none. The plan, spec, contract, and metadata are unchanged.
+known_failures:
+  - measure/anti-patterns.md does not exist. The strategy uses the starter catalog (A2-A7, A9, A10; A1 and A8 are retired).
+  - The repository baseline tsc error count is unknown. Green records it as "baseline tsc errors: <n>".
+  - The three untracked draft files have no Red or Green evidence. Red owns the test file. Green owns the source and the script.
+handoff:
+  - RED_TEST_COMMAND: flock /home/daniebo/Desktop/primary-parity-progress/heavy.lock node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1
+  - GREEN_TEST_COMMAND: the same vitest command, then the flock-wrapped tsc check in test-strategy.md section 3. The gate is "owned tsc errors: 0".
+  - Run heavy-preflight.sh as a separate step before each gate. A hold gives status blocked, never a Red result.
+  - phase_base_sha: capture "git rev-parse HEAD" after the strategy commit 1d39b8fd. If you apply the amendment below, capture after that commit. Capture before the Red dispatch. Check that 1d39b8fd is an ancestor.
+  - Proposed contract amendment (contract.md). Route it to a doc owner before Red, or tell Red to drop test T25.
+    (a) In "Commands", add: "- `precheck-kimi --begin` and `precheck-kimi --record <callId> --raw <file>`: write the before-call ledger entry and the review prompt, then write the after-call entry and the Kimi log from the reviewer's raw native-image output."
+    (b) In "Model pre-check logs", replace "The primary agent writes the Kimi log from the independent reviewer's native-image result." with "The task executor writes the Kimi log through `precheck-kimi --record` from the independent reviewer's raw native-image output. The orchestrator stays read-only."
+  - Kimi owner: a Green-role executor runs task 3. It dispatches one bounded Kimi K3.1 Pro reviewer per picture. The reviewer gets read access to one image and the prompt only, gets no expected verdict, and returns raw text only.
+  - Kimi quota was 94% of the 5-hour window. Start no Kimi call before the reset at 22:46 local on 2026-10-25. Kimi-dependent steps: P2 task 3, P3 task 3, P4 tasks 2 and 3.
+  - MiniMax quota was 94% for the interval and 89% for the week at plan time. Check it before each paid call.
+  - Deferrals: P3 task 1 becomes [b] deferred:pm-asset-approval at Phase 3 start without a recorded PM approval. P3 task 4 becomes [b] deferred:daniel-or-named-reviewer when the count review goes to the PM. P4 task 1 becomes [b] deferred:workbooks-via-pm without the final picture list (due 2026-10-28).
+  - Risk classes: P2 high, P3 high, P4 medium, P5 low.
+  - Facts changed: none.
+END_MEASURE_AGENT_RESULT

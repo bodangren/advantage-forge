@@ -1,0 +1,280 @@
+{
+  "status": "fail",
+  "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "audited_head": "batch 43 (nine pan rows: color print and line print), batch 43r2 (three fixed pan rows), three week 1 rows (K1 nose practice line, K2 a nose, K3 a nut)",
+  "verdict": "Eight of the nine pan rows are clean. The line art of nan-can-get-a-pan r2 fails because its pan reads as a hand mirror at book size. The a-nose control fails because the nose does not show in the line art.",
+  "l2-w03-cover-the-pan": {
+    "files": [
+      "out/storytime-review/batch-43/pages/l2-w03-cover-the-pan-m1-color-print.png",
+      "out/storytime-review/batch-43/pages/l2-w03-cover-the-pan-m1-line-print-6-despeckled.png"
+    ],
+    "rating": 9,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "The shelf behind the children holds cups and plates only."
+    ],
+    "pans": {
+      "color": "2 pans: the small red pan in Nan's hands and the tiny blue pan in Ben's hands.",
+      "line": "2 pans: one pan in each child's hands. Each pan is a wide shallow bowl with a rim."
+    },
+    "goal_check": "Ben and Nan hold up one pan each in the classroom play corner. Both pans show in the color and in the line art. No text or number shows. The line art has no gray pixel. The line art has no thick solid black ring or band. No line gap makes coloring hard.",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "summary": "Reviewed. No visible defect."
+  },
+  "l2-w03-story-page-a-nap-in-the-pan": {
+    "files": [
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-a-nap-in-the-pan-m2-color-print.png",
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-a-nap-in-the-pan-m2-line-print-2-despeckled.png"
+    ],
+    "rating": 9,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "The shelf holds cups and plates only."
+    ],
+    "pans": {
+      "color": "1 pan: the big yellow pan on the floor with Pip asleep inside.",
+      "line": "1 pan: the big bowl with Pip inside and a handle to the right."
+    },
+    "goal_check": "Pip sleeps curled up inside the big yellow pan. Ben and Nan look in and smile. Pip has floppy ears with darker tips. He has no spike. The pan shows in the color and in the line art. The line art has no gray pixel. The line art has no thick solid black ring or band. No line gap makes coloring hard.",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "summary": "Reviewed. No visible defect."
+  },
+  "l2-w03-story-page-a-pan-on-a-pan": {
+    "files": [
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-a-pan-on-a-pan-m1-color-print.png",
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-a-pan-on-a-pan-m1-line-print-despeckled.png"
+    ],
+    "rating": 9,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "Ben's hair is a smooth swoosh in the color."
+    ],
+    "pans": {
+      "color": "2 pans: the tiny blue pan on top of the small red pan on the table.",
+      "line": "2 pans: a small pan on a larger pan on the table. Both show a rim."
+    },
+    "goal_check": "The small red pan sits upside down on the low table. The tiny blue pan sits on top of it. Ben and Nan look at the stack. Both pans show in the color and in the line art. The line art has no gray pixel. The line art has no thick solid black ring or band. No line gap makes coloring hard.",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "summary": "Reviewed. No visible defect."
+  },
+  "l2-w03-story-page-a-pan-on-nan": {
+    "files": [
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-a-pan-on-nan-m3-color-print.png",
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-a-pan-on-nan-m3-line-print-despeckled.png"
+    ],
+    "rating": 8,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "Nan's eyes are closed in the color because she laughs. Her eyes are open circles with pupils in the line art. Her face is whole in both files.",
+      "Ben's hair looks lumpy in the color. The batch check list for this row does not name hair."
+    ],
+    "pans": {
+      "color": "1 pan: the small red pan upside down on Nan's head. Ben's hand holds it.",
+      "line": "1 pan: on Nan's head. Ben's hand holds it."
+    },
+    "goal_check": "Ben puts the small red pan on Nan's head like a hat. Nan laughs. The pan shows in the color and in the line art. The line art has no gray pixel. The line art has no thick solid black ring or band. No line gap makes coloring hard.",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "summary": "Reviewed. No visible defect."
+  },
+  "l2-w03-story-page-can-i-get-the-pan": {
+    "files": [
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-can-i-get-the-pan-m2-color-print.png",
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-can-i-get-the-pan-m2-line-print-despeckled.png"
+    ],
+    "rating": 9,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "Ben stands small at the lower left. His raised arm reaches the shelf."
+    ],
+    "pans": {
+      "color": "1 pan: the big yellow pan on the top shelf, with the tip of a tail over its edge.",
+      "line": "1 pan: on the top shelf, with the tail tip drawn as a small tuft above it."
+    },
+    "goal_check": "Ben points up at the big yellow pan on the top shelf of the toy kitchen. The tip of a tail hangs over the pan edge. The pan shows in the color and in the line art. The line art has no gray pixel. The line art has no thick solid black ring or band. No line gap makes coloring hard.",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "summary": "Reviewed. No visible defect."
+  },
+  "l2-w03-story-page-i-can-get-a-pan-r2": {
+    "files": [
+      "out/storytime-review/batch-43r2/pages/l2-w03-story-page-i-can-get-a-pan-m4-color-print.png",
+      "out/storytime-review/batch-43r2/pages/l2-w03-story-page-i-can-get-a-pan-m4-line-print-8-despeckled.png"
+    ],
+    "rating": 9,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "The picture edge is plain white. No frame shows."
+    ],
+    "pans": {
+      "color": "1 pan: the blue frying pan in Ben's raised hand, bowl tilted to the viewer.",
+      "line": "1 pan: a wide shallow bowl with a rim, an inner oval, and a long thick handle in Ben's hand."
+    },
+    "goal_check": "Ben takes the tiny blue toy pan from the low shelf of the toy kitchen. The pan shows in the color and in the line art. At book size the line art pan reads as a frying pan. The line art has no gray pixel. The line art has no thick solid black ring or band. No line gap makes coloring hard.",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "summary": "Reviewed. No visible defect."
+  },
+  "l2-w03-story-page-i-can-get-the-pan": {
+    "files": [
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-i-can-get-the-pan-m2-color-print.png",
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-i-can-get-the-pan-m2-line-print-despeckled.png"
+    ],
+    "rating": 8,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "The color shows Ben's face squeezed shut with strain. The line art draws his eyes as two wide open circles. His face is whole in both files."
+    ],
+    "pans": {
+      "color": "1 pan: the big yellow pan that Ben lifts from the top shelf, with the tail over its edge.",
+      "line": "1 pan: in Ben's raised hands, with the tail tip above it."
+    },
+    "goal_check": "Ben stands on his toes and lifts the big yellow pan down from the top shelf. The tip of a tail hangs over the pan edge. The pan shows in the color and in the line art. The line art has no gray pixel. The line art has no thick solid black ring or band. No line gap makes coloring hard.",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "summary": "Reviewed. No visible defect."
+  },
+  "l2-w03-story-page-nan-can-get-a-pan-r2": {
+    "files": [
+      "out/storytime-review/batch-43r2/pages/l2-w03-story-page-nan-can-get-a-pan-m4-color-print.png",
+      "out/storytime-review/batch-43r2/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-print-3-despeckled.png"
+    ],
+    "rating": 5,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "verdict": "defect",
+    "defect_categories": [
+      "wrong-or-missing-prop"
+    ],
+    "defects": [
+      "In the line art the pan is a near-circular disc with a double rim and an inner oval. The handle hides inside Nan's fist. At book size the object reads as a hand mirror or a magnifying glass, not as a frying pan."
+    ],
+    "notes": [
+      "A pale seam shows at one eye corner of Nan in the color. The mark is small and does not break her face.",
+      "The line art of i-can-get-a-pan r2 shows the same pan shape with a long handle. That file reads as a pan."
+    ],
+    "pans": {
+      "color": "1 pan: the red frying pan in Nan's hand, with the handle visible below her fist.",
+      "line": "1 pan: a round double rim with an inner oval. No handle shows, so the shape reads as a hand mirror."
+    },
+    "goal_check": "Nan takes the small red toy pan from the low shelf. The count and the place of the pan match the sentence in both files. The color pan reads as a frying pan. The line art pan does not. The line art has no gray pixel. The line art has no thick solid black ring or band. No line gap makes coloring hard.",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "summary": "Reviewed. Defect found.",
+    "retry": "Draw the pan in the line art as a wide shallow bowl with a thick rim, a visible inside floor, and a long straight thick handle that leaves Nan's fist and shows at its end. Use the line art of i-can-get-a-pan r2 as the model."
+  },
+  "l2-w03-story-page-a-pan-in-a-pan-r2": {
+    "files": [
+      "out/storytime-review/batch-43r2/pages/l2-w03-story-page-a-pan-in-a-pan-m5-color-print.png",
+      "out/storytime-review/batch-43r2/pages/l2-w03-story-page-a-pan-in-a-pan-m5-line-print-2-despeckled.png"
+    ],
+    "rating": 9,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "notes": [
+      "Ben's hair is a smooth swoosh. He has a small lash flick at one eye in the line art."
+    ],
+    "pans": {
+      "color": "2 pans: the big red frying pan that Nan holds, and the small blue frying pan inside its bowl.",
+      "line": "2 pans: the small pan inside the big pan's rim, with its handle going to Ben's hand."
+    },
+    "goal_check": "Ben puts the tiny blue toy pan inside the small red toy pan. Nan holds the red pan and smiles. Both pans show in the color and in the line art. At book size both line art pans read as frying pans. The line art has no gray pixel. The line art has no thick solid black ring or band. No line gap makes coloring hard.",
+    "bar": "Daniel 2026-11-01 14:15 ICT",
+    "summary": "Reviewed. No visible defect."
+  },
+  "extra": {
+    "K1-nose-practice-line": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 9,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [],
+      "pans": {
+        "color": "no pan in this row",
+        "line": "no pan in this row"
+      },
+      "goal_check": "Nan faces the other way in profile. Her nose shows in the color and in the line art. The line art has no gray pixel. The line art has no thick solid black ring or band.",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "summary": "Reviewed. No visible defect."
+    },
+    "K2-a-nose": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "rating": 6,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "verdict": "defect",
+      "defect_categories": [
+        "broken-face"
+      ],
+      "defects": [
+        "The nose does not show in the line art."
+      ],
+      "notes": [
+        "The color and the line files frame Nan differently. The finding rests on the shape at the fingertip, not on the pixel place.",
+        "This row is the control of the G3 check. The earlier batch 42 review also scored this row 6 for a broken face."
+      ],
+      "pans": {
+        "color": "no pan in this row",
+        "line": "no pan in this row"
+      },
+      "goal_check": "Nan touches her nose and laughs. The color file shows a nose bump under her fingertip. The line file has no nose contour. The shape at the fingertip is the open laughing mouth. The line art has no gray pixel. The line art has no thick solid black ring or band.",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "summary": "Reviewed. Defect found.",
+      "retry": "Add a nose contour to the line art under the fingertip. Keep the two eyes, the eyebrows, and the open laughing mouth."
+    },
+    "K3-a-nut": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": 9,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [],
+      "pans": {
+        "color": "no pan in this row",
+        "line": "no pan in this row"
+      },
+      "goal_check": "One large brown nut rests in Nan's open hand. The nut, the hand, and Nan read in the color and in the line art. The line art has no gray pixel. The line art has no thick solid black ring or band.",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "summary": "Reviewed. No visible defect."
+    }
+  },
+  "checks_run": {
+    "gray_pixels": "0 gray pixels in all 15 line files. The count used a script under /tmp/opencode/.",
+    "thick_solid_black": "No thick solid black ring or band in any line file. The scan used an erosion and a flood fill. The largest solid parts are the eye pupils.",
+    "text": "No letters, words, or numbers in any picture of this batch.",
+    "sun": "No page has a sun. Every page is indoors.",
+    "page_frame": "No picture frame surrounds a page in the chosen prints.",
+    "line_gaps": "No line gap makes coloring hard.",
+    "scale": "Every pan and every face part was read at page scale and at book scale. The book scale is a page 500 pixels wide."
+  },
+  "summary": "Eight of the nine pan rows are clean. The line art of nan-can-get-a-pan r2 fails because its pan reads as a hand mirror at book size. The a-nose control fails because the nose does not show in the line art."
+}

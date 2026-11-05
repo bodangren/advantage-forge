@@ -1,0 +1,35 @@
+{
+  "reviewer": "openai/gpt-6-luna#high",
+  "seen": {
+    "look-reference-nan-and-pip.png": "Nan and Pip appear as rounded chibi characters on a plain white background.",
+    "l2-w01-story-page-a-nest-and-a-nut-v12.png": "Pip and the large acorn sit below a nest, while the tree crown and parts of Pip are cropped.",
+    "l2-w01-story-page-a-nest-and-a-nut-line-v12.png": "The monochrome scene has clear major outlines, but the frame cuts through the tree and Pip.",
+    "l2-w01-story-page-a-nut-v3.png": "Nan's head and lower body are cropped, and she holds a large brown acorn near a closed hand.",
+    "l2-w01-story-page-a-nut-line-v3.png": "Nan's facial line art has scattered marks and broken details around the eyes and mouth.",
+    "l2-w01-story-page-a-nest-and-a-nut-v13.png": "Pip sniffs the brown acorn below a nest with three blue eggs, while the crown and Pip's feet are cropped.",
+    "l2-w01-story-page-a-nest-and-a-nut-line-v13.png": "The line art keeps the nest, eggs, acorn, and Pip readable, but crops the tree crown and Pip's lower feet.",
+    "l2-w01-story-page-a-nut-v5.png": "Nan holds a large brown acorn against a closed hand, with her shoes cut by the lower frame edge.",
+    "l2-w01-story-page-a-nut-line-v5.png": "The acorn and Nan read clearly in line art, with small marks beside her eyes and her feet cropped."
+  },
+  "l2-w01-story-page-a-nest-and-a-nut": {
+    "overall": 6.5,
+    "pass": false,
+    "critical": [],
+    "issues": ["The tree crown is cropped by the top edge.", "Pip's lower feet are cropped by the bottom edge.", "Pip's pointing hand reads as a fist, a known open defect."],
+    "fix": "Reframe to show the full crown and Pip with margins.",
+    "goals": {
+      "Pip the puppy sniffs a big brown nut in the grass under a low tree. Above him, the bird's nest with three light blue eggs sits on a low branch. The nest and the nut are both large and clear. A simple garden with soft colors. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag.": "partial"
+    }
+  },
+  "l2-w01-story-page-a-nut": {
+    "overall": 6.0,
+    "pass": false,
+    "critical": [],
+    "issues": ["Nan's closed hand does not show an open palm, a known open defect.", "The line art has small marks beside Nan's eye corners.", "Nan's shoes are cropped by the lower frame edge."],
+    "fix": "Show the acorn resting on Nan's open palm and keep her whole in frame.",
+    "goals": {
+      "One big brown nut in Nan's open hand, close up": "partial",
+      "One clear picture, the main thing large in the middle, a plain light background.": "pass"
+    }
+  }
+}

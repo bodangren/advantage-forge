@@ -3,8 +3,9 @@
 Date: 2026-11-02. Reviewer: minimax-cn-coding-plan/MiniMax-M3.1-Flash. Audit only.
 Bar: Daniel 2026-11-01 14:15 ICT. A defect is only what a teacher or a child sees at book size.
 Nine rows. Week 2 batch 1, Phase 4. I opened both files of every row and the five reference pictures.
+Three control rows from week 1 follow the nine rows. I opened both files of each control row.
 
-Status: pass. All nine rows pass and none carries a defect.
+Status: pass. All nine rows pass and none carries a defect. The controls do not change the status.
 
 | key | rating | clean | reason if not clean |
 | --- | --- | --- | --- |
@@ -153,8 +154,53 @@ These four notes are not defects under the bar. They come from the reference set
    No sentence of this batch names the nose.
 4. The cover slide tower reaches 15 percent of the page height in the right quarter.
 
+## Control rows
+
+The builder asked for three more rows from week 1. The control rows do not change the status of the nine rows.
+Every row now carries a verdict and a list of defect categories. The nine rows all read clean.
+
+| key | rating | verdict | categories | reason if not clean |
+| --- | --- | --- | --- | --- |
+| C1 | 4 | defect | broken-face | the line art draws no nose, and the page text names the nose |
+| C2 | 8 | clean | none | |
+| C3 | 8 | clean | none | |
+
+### C1, the nose page
+
+The text is "A nose." The goal says that Nan touches her own nose with one finger and laughs.
+The color file shows this. The nose sits between the eyes and the mouth, and the fingertip touches it.
+Nan laughs with an open mouth. Her cast look holds in the color file.
+The line art fails on its own subject. The fingertip rises to the place of the nose and then joins the mouth outline.
+No nose shape shows between the eyes and the mouth. So the named face part does not show.
+This is the stage 2 finding R13, and it stays in this file.
+The line file holds 0 pixels outside 0 and 255. No stroke is wider than 40 px.
+So the defect sits in the face alone, and the category is broken-face.
+
+### C2, the nut page
+
+The text is "A nut." The goal says that one big brown nut sits in Nan's open hand, close up.
+Both files show this. One nut rests in her open palm, and the nut fills the left of the picture.
+The nut has a dark brown cap, a tan body, a point at the bottom and a stem at the top in both files.
+Nan's cast look holds. Her bunches have red ties, her shirt is orange with a white star, and her eyes are large and dark brown.
+Each hand shows four fingers and one thumb in both files.
+The line file holds 0 pixels outside 0 and 255. No stroke is wider than 40 px.
+One note that is not a defect: the line art draws a ring pupil and a small highlight in each eye.
+
+### C3, the practice line for the nose
+
+The text is "nose". The goal says that the head of Nan is in profile facing the other way,
+with the nose clearly seen, for a tracing practice line.
+Both files show the head in profile. The nose stands clear in the profile outline.
+The check row for the same word shows the head facing left. This page faces right, so the direction is the other way.
+The line art is a closed outline that a child can trace. The eye has a solid pupil and a lash mark.
+The line file holds 0 pixels outside 0 and 255. No stroke is wider than 40 px apart from the eye pupil.
+Two notes that are not defects: the line art draws the hair bunch as a plain circle without the tie band,
+and a white speck of 12 by 3 px sits inside the black hair mass at the top of the head.
+
 ## Result
 
 Nine pages. Nine pass. Nine clean. No defect found. Four notes for the builder.
 The three stage 2 findings from week 1 are gone on every page of this batch.
 Pip does not appear in this batch.
+The three control rows hold two clean rows and one defect row.
+The top status of the nine rows stays pass. The controls do not change it.

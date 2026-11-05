@@ -1,0 +1,33 @@
+sprout-nan: 29,406 triangles, 0.528 x 0.854 x 0.407 m, built in 19891 ms
+  skin                      8769 tris  (3452 ms)
+  hands                     4324 tris  (606 ms)
+  mouth-open                 307 tris  (277 ms)
+  eyelid-skin                748 tris  (720 ms)
+  hair                      6128 tris  (1907 ms)
+  bands                     2880 tris  (243 ms)
+  shirt                     2594 tris  (849 ms)
+  shorts                    1878 tris  (380 ms)
+  shoes                     1778 tris  (325 ms)
+texture  none (vertex colors)
+glb      out/sprout-nan/sprout-nan.glb  (1608 KB)
+sprout-nan: 29,406 triangles, 0.528 x 0.854 x 0.407 m, built in 16672 ms
+  skin                      8769 tris  (2703 ms)
+  hands                     4324 tris  (467 ms)
+  mouth-open                 307 tris  (201 ms)
+  eyelid-skin                748 tris  (630 ms)
+  hair                      6128 tris  (1467 ms)
+  bands                     2880 tris  (166 ms)
+  shirt                     2594 tris  (537 ms)
+  shorts                    1878 tris  (279 ms)
+  shoes                     1778 tris  (210 ms)
+texture  none (vertex colors)
+glb      out/sprout-nan/sprout-nan.glb  (1608 KB)
+
+BUILD FAILED: page.evaluate: Error: The view 'front' does not fit the 1400x1400 canvas at 2400 px/m: needed canvas height 1947 (at least) and width 1400 with margin 16.
+    at Object.renderCutouts (http://localhost:5647/src/render/page.ts:696:55)
+    at async <anonymous>:337:30
+    at Object.renderCutouts (http://localhost:5647/src/render/page.ts:696:55)
+    at async <anonymous>:337:30
+    at run (/home/daniebo/Desktop/advantage-forge/src/cli/forge.ts:406:32)
+    at async runSafely (/home/daniebo/Desktop/advantage-forge/src/cli/forge.ts:582:5)
+    at async main (/home/daniebo/Desktop/advantage-forge/src/cli/forge.ts:551:5)

@@ -1,0 +1,24 @@
+Batch 55 review, week 7, nine rows.
+Reviewer: minimax-cn-coding-plan/MiniMax-M3.1-Flash
+Bar: Daniel 2026-11-01 14:15 ICT
+
+Set B: 9 rows, all clean, rating 8 each.
+l2-w07-cover-is-it-a-ball: clean. 2 children, 1 blanket over 1 bump, no toy and no bubble. May holds 1 finger on her chin in both files.
+l2-w07-story-page-is-it-a-ball-no: clean. 1 bubble with 1 striped ball in both files. May points with 1 index finger.
+l2-w07-story-page-is-it-a-train-no: clean. 1 bubble with 1 green train and 1 red wagon in both files. Ben has a closed smile in the line file.
+l2-w07-story-page-is-it-a-kite-no: clean. 1 bubble with 1 kite, a string and 3 bows in both files. The shoe of Ben rests on the blanket edge.
+l2-w07-story-page-is-it-a-car-no: clean. 1 bubble with 1 blue car in both files. The thumb points up beside the index finger in the line file.
+l2-w07-story-page-is-it-a-teddy-no: clean. 1 bubble with 1 white teddy and a blue bow in both files. Only the tail tip of Pip shows. May keeps both hands on her knees.
+l2-w07-story-page-is-it-a-doll-no: clean. 1 bubble with 1 rag doll in both files. The lines of the line file are thin but they close.
+l2-w07-story-page-is-it-a-drum-no: clean. 1 bubble with 1 drum and 2 sticks in both files. The eye rings of May are thin in the line file.
+l2-w07-story-page-is-it-pip-yes: clean. Pip shows whole with floppy ears, a collar and a tag, 4 legs and 1 tail in both files. May opens both arms with 5 fingers on each hand.
+
+Line check: every line print is 4000x3000 and pure black on white. Pixels that are neither 0 nor 255: 0 in all 9 files.
+Note in every row: the line file draws the toy shelf as a tall shelf with boxes. It is background, so it is a note.
+
+Controls K1 to K3, the same in both files:
+- K1 a-nose: rating 4, defect, broken-face. The text names the nose. The color file shows 1 nose and the line file shows 0. This is the known-defect control.
+- K2 practice-line nose: rating 9, clean. One profile head with 1 clear nose in both files.
+- K3 a-nut: rating 9, clean. 1 brown nut in the open hand of Nan in both files. The open hand shows 5 digits in both files.
+
+Status: pass. All rows of set B are clean.

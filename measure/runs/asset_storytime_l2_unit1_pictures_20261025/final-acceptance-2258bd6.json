@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Track final acceptance at HEAD 2258bd60773e06ddb68b9326f0e5732720dcf47b. PROJECT_LINT, PROJECT_CHECKS, and PROJECT_TESTS all pass at HEAD. The carry-over from 325b92a0 holds: the only own commit since the base is the strategy commit and it changes only test-strategy.md, with no line removed and no uncommitted change. The 38 tsc errors are all outside the owned prefixes and at or below each pinned baseline row (0 owned, 0 outside baseline, 0 above baseline). The known-red file stays red by the 5.11.16 rule: 7 failures all inside the 13-name pin set, 4 of 4 drift sentinels fail, total 142, no skip or todo. The seven focused test files pass with 105 tests. Light gates X13 (3 qualified w08 notes, seed control 1), X14 (no secret), and G5 (memory files within 50 lines; every ledger id present) pass. Plan has 33 task lines, 29 done, 4 deferred, 0 non-deferred incomplete. Only nonblocking items are FA-N1 and the Phase 5 checkpoint nit.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "FA-N1 [Nit] plan.md: two completed task lines (line 30 commit 2fdce9d, line 32 commit c52e495) carry the commit SHA on the continuation line rather than the first line. Both SHAs resolve to commits. Closeout CG3 corrects them; the final-acceptance gate does not read this.",
+    "FA-P5-CHECKPOINT [Nit] plan.md: the Phase 5 heading has no [checkpoint] marker, unlike Phases 1 to 4. The closeout manifest uses 325b92a0 for Phase 5 by design (F.10 default D6)."
+  ],
+  "evidence": [
+    "HEAD 2258bd60773e06ddb68b9326f0e5732720dcf47b equals the audited HEAD and the phase_base_sha; git rev-parse HEAD confirmed at the start and before each gate. Carry-over base 325b92a0 is an ancestor of HEAD (L1 label 'carry-over base is an ancestor of HEAD: yes').",
+    "PROJECT_LINT (node final-gates.mjs lint, script SHA-256 83b22adc2ca57d3b0bbd306a0b3308ef336e62980abc28030c592b8c61ac3aef) exit 0, final line 'final lint: pass'. L0 selftest cases 31 failed expectations 0. L1: merge commits 0; own commits 1; own-commit files other than the strategy 0; foreign commits 0; foreign Storytime paths 0; strategy lines removed 0; strategy uncommitted change no. L2: all seven block SHA-256 values match the 5.11.16 pins. L3: restart-pins 28 lines, restart-pins-2 7, restart-pins-3 12, each sha256sum check exit 0. L4: restart check v3 --final exit 0 last line 'restart check: pass'; control exit 1 with 0 missing FAIL texts. L5: doctor exit 1, 12 errors, 0 naming this track or an owned path, 0 outside the known list of 12.",
+    "PROJECT_CHECKS (node final-gates.mjs checks) exit 0, final line 'final checks: pass'. tsc exit 2; tsc errors total 38; baseline total 38; owned tsc errors 0; unparsed error lines 0; files outside baseline 0; files above baseline 0; every one of the 13 baseline files equals its pinned count.",
+    "Known-red rule: live list SHA-256 89b2910c28f07dcda1bd6a93349a26f31a32e971b72a55ec68e1bc9e48d9b33d differs from pin 6d05dfc5...; known red exit 1; Tests line 7 failed, 135 passed, 0 skipped, 0 todo, total 142; tests in file 142; pin-dependent tests 13 (T142,T143,T144,T145,T147,T148,T149,T150,T173,T174,T175,T176,T177); test file changed since b72f8b60 = 0 and no uncommitted change; failing tests 7 = T142,T145,T147,T150,T173,T174,T177; failing tests outside the pin set 0; drift sentinels failing 4 of 4; skipped or todo 0; unparsed FAIL lines 0.",
+    "PROJECT_TESTS first run failed only on T180 in storytime-stage-check.test.ts because the temp fixture /tmp/opencode/wb-shadow/content/storytime/l2/print/pictures.json was absent (ENOENT). This is the documented environment condition of plan line 4499 and jr-green-p5-4e171648.log: other sessions clean /tmp/opencode. No repo file changed. The exact v3 bytes were restored from Workbooks commit 078917f1; the restored file hashes to c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b, the value pinned at test-strategy line 1969.",
+    "PROJECT_TESTS rerun after the fixture restore: heavy-run.sh vitest of the seven 5.11.4 files, --maxWorkers=1, exit 0; 'Test Files  7 passed (7)' and 'Tests  105 passed (105)'; no skipped test.",
+    "X13 wording diff from P5BASE 4e171648 prints exactly 3 unqualified lines, the w08 drum, moon, and mango approval notes that the approved.json file-level rule qualifies; seed control prints 1. X14 secret grep over the docs, run-folder judge/log globs, the four scripts, delivery manifests, and handoff MANIFEST files prints nothing (grep exit 1).",
+    "G5: tech-debt 43 lines and lessons-learned 50 lines (both <= 50); ledger id counts in plan.md RB-P4-1 4, RB12-01 4, RA-P3ADV-2 3, RC5-3 5, PA3-N6 2, PA4-N2 2, PA4-N3 2, PA4-N4 2, each >= 1. TD-29 and TD-30 are present in tech-debt.md.",
+    "Restart check v3 --final run independently at HEAD (extracted block SHA-256 6ae82ad4...) exit 0: restart cost rows 57; restart spend 0.57 USD; restart delivery folders 11; restart delivered files 51 byte-equal and 51 with a pass verdict; restart delivered pictures 24; pairs above limit 0; handoff drum 2, c 4, a 25, b 14, d 4, nut3 2, each byte-equal with evidence words yes. Handoff folder file counts measured directly total 57 (51 prints plus 6 manifests).",
+    "Plan state: 33 task lines, 29 [x], 4 deferred [ ] Muse-path tasks (lines 1172, 1238, 1343, 1388), 0 non-deferred incomplete; the [b] deferred Nan window sample is separate. metadata actual_tasks 29 equals the [x] count. Orchestrator-ran interphase status at 15:11 ICT reported no incomplete phase for this track and one closeout candidate.",
+    "Phase records: phase-acceptance-061694f.json, phase-acceptance-21de99f6.json, phase-acceptance-35f4a12c.json each status pass with the matching audited_head; acceptance-p5-restart-325b92a.json status pass verdict pass at 325b92a0. Checkpoint SHAs 3ea5fca, 061694f, 21de99f6, 35f4a12c and 325b92a0 all resolve to commit objects (git cat-file -t).",
+    "Anti-pattern audit: A5 every PASS/FAIL label quoted matches the command output; A6 the registry entry and metadata keep 'model evidence, not acceptance' wording and no Workbooks acceptance is claimed; A9 no test under tests/ references a measure/tracks path (the only measure path references are inside measure/ documents).",
+    "Read-only discipline: the only repo writes are the two result files named in changed_files. The wb-shadow restore wrote only under /tmp/opencode, outside the repository. No product, test, script, plan, or Measure document was edited; nothing was staged or committed; generate.sh, Muse, the judge, and pnpm were not run."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --porcelain | sha256sum (baseline hash 80c657c26b66ad60879dc81d2e0cb58e9af885e28378df081cd5c60259b7fe96)",
+    "node /tmp/opencode/fa.TG6mN9/fg.mjs lint /tmp/opencode/fa.TG6mN9 (PROJECT_LINT, exit 0)",
+    "node /tmp/opencode/fa.TG6mN9/fg.mjs checks /tmp/opencode/fa.TG6mN9 (PROJECT_CHECKS tsc + known red, exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 heavy-run.sh -c 'vitest run <seven 5.11.4 files> --maxWorkers=1' (PROJECT_TESTS first attempt exit 1, T180 missing temp fixture; rerun after documented fixture restore exit 0, 7 files 105 tests)",
+    "git -C /home/daniebo/Desktop/Workbooks show 078917f1:content/storytime/l2/print/pictures.json -> /tmp/opencode/wb-shadow (hash c3e23cfd..., outside repo)",
+    "X13 git diff 4e171648..HEAD wording grep plus seed control; X14 secret grep; G5 wc -l and ledger grep",
+    "node /tmp/opencode/fa.TG6mN9/rc3.mjs --final (restart check v3, exit 0)",
+    "git cat-file -t for the four phase checkpoints and 325b92a0; grep counts on plan.md and metadata.json"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/final-acceptance-2258bd6.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/final-acceptance-2258bd6.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "audited_head": "2258bd60773e06ddb68b9326f0e5732720dcf47b",
+  "carry_over_base": "325b92a0d2789e4ab00ff2313129f53dbe626ec7",
+  "verdict": "pass",
+  "gates": {
+    "PROJECT_LINT": "pass — exit 0; L0 selftest 31/0; L1 carry-over clean (1 own strategy-only commit, 0 foreign, 0 merges, 0 removed lines); L2 seven block hashes match; L3 pin blocks 28/7/12 with check exit 0; L4 restart check exit 0 'restart check: pass', control exit 1; L5 doctor 12 known errors, 0 owned, 0 unknown; final lint: pass",
+    "PROJECT_CHECKS": "pass — exit 0; tsc 38 total, 0 owned, 0 outside baseline, 0 above baseline, 0 unparsed; known-red exit 1 with 7 failures all in the 13-name set, drift sentinels 4 of 4, total 142, 0 skipped/todo, test file unchanged; final checks: pass",
+    "PROJECT_TESTS": "pass — rerun exit 0; Test Files 7 passed (7); Tests 105 passed (105); first attempt failed only on T180 from a cleaned /tmp/opencode fixture, restored from Workbooks 078917f1 with the pinned hash c3e23cfd..."
+  }
+}

@@ -1,0 +1,21 @@
+Review log: item-review-w03-fixes-r5
+Reviewer: minimax-cn-coding-plan/MiniMax-M3.1-Flash
+Bar: Daniel 2026-11-01 14:15 ICT
+Set: week 3 fixes, out/storytime-review/w03-fixes/
+Date: 2026-11-02
+Status: fail
+
+Method
+- I read the brief, the color source, the line source, and both prints of every row.
+- I counted the pixels that are not 0 or 255 in every line file with a node script under /tmp/opencode/.
+- Every line file has zero such pixels. No line file has gray or shading.
+- I cropped faces to check the nose at book size.
+
+Rows
+- l2-w03-story-page-it-is-blue: rating 7.5, defect, broken-face. The line art face has no nose. The color face shows a nose. May matches the cast sheet. Her shirt is plain in color and in line. One blue sheet, one easel, three pots on the ledge. The print shows May whole.
+- l2-w03-story-page-nan-can-get-a-pan: rating 7.5, defect, broken-face. The line art face has no nose. The color face shows a nose. One red toy pan in color and in line. The pan reads as a frying pan, not a mirror, a ring, or a magnifying glass. The end of the handle touches the counter corner in the line art. The fist holds the side of the bowl in the line art and the handle in the color. Both notes, not defects.
+
+Extra rows, one review, written into both files
+- K1 clean, rating 9. The head of Nan in profile with the nose in clear profile in both files.
+- K2 clean, rating 9. One big brown nut in the open hand of Nan. The line face shows eyes, a nose mark, and a mouth.
+- K3 defect, rating 6.5, broken-face. The line art face has no nose. The color shows a nose where the finger touches.

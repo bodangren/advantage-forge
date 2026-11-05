@@ -1,0 +1,19 @@
+{
+  "group": "prod-r8-line-nut4",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w01-story-page-a-nut",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nut-line-t4.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the nut on Nan's open hand, left of center: two overlapping pods stand side by side, a back pod on the left and a front pod on the right",
+      "notes": "Question page: no. Items: a nut (1). Action: none. Seen: a netted, crosshatched shape on an open hand. It has two outlines. A left pod has its own top bump at upper left, its own waist on its left side, and its own bottom bump. A right pod overlaps it in front, with its own top bump slightly lower and its own waist on its right side. A curved line runs down between them. The outline has a notch at the top and a notch at the bottom where the two pods meet. A child reads two peanut pods side by side, not one peanut. I count 2 nuts. mustShow: (1) one nut only: ABSENT, 2 nuts counted. (2) clearly a peanut, one shell with two round bumps, a narrow waist, a netted texture: the netted texture and waists are drawn, but the shape is two shells, not one: ABSENT. (3) Nan's open hand: shown, a flat open hand with four fingers and a thumb under the nut. (4) the nut is large in the middle: shown, the nut is large and sits in the left-center of the frame beside Nan's head. Character: Nan matches the note. She has a round bun with a red ring band at the left, a second bun cut by the right edge, large eyes with high lights, a star on the shirt. No change. Line art: black lines on white, no gray, no shading, no gap that makes coloring hard. No text in the picture. The fail is the count of the nut."
+    }
+  ],
+  "summary": { "files": 1, "pass": 0, "fail": 1 }
+}

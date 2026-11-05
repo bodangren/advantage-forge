@@ -1,0 +1,11 @@
+Role: measure-jr-green
+Session: Green · P3 · storytime_l2_unit1_pictures · r49
+Model: deepseek/deepseek-flash#high (provider deepseek, model deepseek-flash)
+Red model for the phase: minimax-cn-coding-plan/MiniMax-M3
+Green coder model: none (no delegation used)
+Track: asset_storytime_l2_unit1_pictures_20261025
+Phase: Phase 3: Week 1 pictures (P3)
+role_base_sha: 71c09e10
+phase_base_sha: 15a7bf0b
+Task: build storytime-animal-pictures, then render Ben row v3 to close the batch 20 open points
+Status: started

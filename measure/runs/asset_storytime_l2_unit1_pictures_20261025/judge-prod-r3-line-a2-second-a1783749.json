@@ -1,0 +1,19 @@
+{
+  "group": "prod-r3-line-a2-second",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w01-story-page-a-nut",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nut-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the nut in the middle above the open hand: it is drawn as two plain bean-like shapes side by side with a seam and a notch at the top, with no pod pinch and no shell marks",
+      "notes": "Question page: no. Items: a nut, one peanut in its shell (1); Nan's open hand (1); the nut large in the middle. Action: none. Seen: a large upright object above an open palm. It is split by one vertical line into two plain, wavy-sided oval shapes with a notch at the top where they meet. It has no pinch across the middle and no shell marks. At book size it reads as two beans or two fat fingers, not as one peanut in its shell, so the count and the form are wrong for a young child. Nan's open hand: shown, with a thumb and four fingers, palm up, and the object is above it. The nut is large, left of the middle. Small marks: Nan's face is cut by the right edge of the frame; a small mark near the left eye. Line art is black on white with no gray and no gap. This verdict is a close call."
+    }
+  ],
+  "summary": { "files": 1, "pass": 0, "fail": 1 }
+}

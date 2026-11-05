@@ -1,0 +1,4 @@
+error: measure/tracks/asset_p2_npcs_20260928/plan.md: new track has started tasks
+error: measure/lessons-learned.md: 52 lines exceeds 50
+error: measure/generated/status.md: stale generated fact
+error: measure/generated/asset-inventory.json: stale generated fact

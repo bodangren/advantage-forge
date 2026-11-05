@@ -1,0 +1,29 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T121: the seam scans 65,536 unmatched opening braces within 2000 ms
+malformed scan ms: 2518
+
+ ❯ tests/storytime-book-pictures.test.ts (111 tests | 1 failed) 233467ms
+         × T121: the seam scans 65,536 unmatched opening braces within 2000 ms 2693ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T121: the seam scans 65,536 unmatched opening braces within 2000 ms
+AssertionError: malformed scan ms: 2518: expected 2518 to be less than or equal to 2000
+ ❯ tests/storytime-book-pictures.test.ts:2692:38
+    2690|         expect.soft(run.report?.findings ?? [], 'The malformed text ho…
+    2691|         expect.soft(parsed, 'The labeled duration is an integer.').toB…
+    2692|         expect.soft(parsed, printed).toBeLessThanOrEqual(2000);
+       |                                      ^
+    2693|       }, 120000);
+    2694|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 110 passed (111)
+   Start at  22:44:44
+   Duration  235.99s (transform 1.22s, setup 0ms, import 2.00s, tests 233.47s, environment 0ms)
+

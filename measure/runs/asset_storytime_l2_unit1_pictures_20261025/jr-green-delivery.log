@@ -1,0 +1,72 @@
+Green P3 delivery task (provisional log). role_base_sha a0a67275; phase_base_sha 15a7bf0b.
+Step 1: started.
+Step 1 in progress: table of 30 rows being built
+Step 1/2 prep: prints are made by scripts/storytime-muse.mjs (doLine/despeckle); verifying by byte compare + recompute
+Step 1/2: verify.mjs run: 30 rows, prints recompute identical; open: 5 SHA mismatches (a-nurse, nest, fish, hat, cup m1-line), 2 missing review pages (practice-line-nest/nut), metadata check to look at
+Step 1 finding: 7 rows have a reviewed page named -m1-line.png that is byte-identical to a different Muse try, not to the Muse file of that name:
+  a-nurse (b29 -> m1-line-2; b32 -> m1-line-3), check-row-nest/fish/hat/cup (b31 -> m1-line-2), practice-line-nest/nut (b36 used the b31 pages -> m1-line-2).
+  Plan: deliver the byte-matched try (nurse: line-3, latest clean verdict); flag for the PM.
+Step 1/2 done: all 30 rows: reviewed pages byte-equal to Muse files (7 rows by content match to a later try), prints recompute identical (verify.json in /tmp/opencode/p3-delivery)
+Step 3: approved.json written (30 entries, 5 kimi reviews)
+Step 4: deliver exit=1, nothing written. Two rows failed: cover-hello (line print edge frame < 90% white), practice-line-nest (line width 10 px < 12 px). Output in /tmp/opencode/p3-delivery/deliver.out
+
+Result: the deliver command exited 1 and wrote nothing. 28 of 30 rows pass all writer checks.
+Failed rows: l2-w01-cover-hello (line print edge frame under 90 percent white, tries 1 to 3) and
+l2-w01-practice-line-nest (reviewed try 2 line width 10 px; try 1 print passes but was not the reviewed bytes).
+Name mismatch (reviewed -m1-line.png equals a later Muse try): a-nurse (line-3), check-row-nest/fish/hat/cup, practice-line-nest/nut (line-2).
+Batch 31 rows (nest, fish, hat, cup) are mimo reviews, not Kimi. Kimi review slots exist for 5 rows only.
+Commits: 37087467 (approved.json), 5b57ceab (plan.md). Helper scripts: /tmp/opencode/p3-delivery/ (rows.mjs, verify.mjs, gen.mjs).
+
+MEASURE_AGENT_RESULT
+status: blocked
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 (Phase 3: Week 1 pictures)
+task: Deliver the week 1 Muse batch to the PM under the 2026-11-01 contract
+role_base_sha: a0a67275
+phase_base_sha: 15a7bf0b
+commits: 37087467 (approved.json, 30 rows); 5b57ceab (plan.md evidence)
+models: red=deepseek/deepseek-flash#high; green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: Add failing tests for the Muse week 1 delivery manifest (Red); Implement the Muse week 1 delivery manifest writer (Green)
+tasks_flipped_b: none
+delivery_folder: out/storytime/l2/unit1/w01/delivery-muse-v1 (not created)
+manifest_sha256: none (no manifest written)
+deliver_exit_code: 1
+job_count: 0 (28 of 30 rows pass every check)
+failed_rows: l2-w01-cover-hello; l2-w01-practice-line-nest
+muse_calls: 0
+handoff: Decide for the 2 failed rows, then rerun deliver. (1) cover-hello: all line prints fail the edge-frame gate (needs a new line try or a PM waiver). (2) practice-line-nest: the reviewed bytes (try 2) are 10 px thick; try 1 passes but was not reviewed (needs a review of try 1 or a new try). Default if no answer: deliver the other 28 in a new folder after the fix. Also confirm the 7 name-mismatch rows use the byte-matched try (a-nurse line-3, check-row-nest/fish/hat/cup and practice-line-nest/nut line-2).
+dispositions: none
+END_MEASURE_AGENT_RESULT
+Round 2 started (HEAD 31f2b0eb)
+Round 2: batch-38 pages byte-equal to Muse; approved.json edited (2 entries)
+Round 2: batch-38 pages byte-equal to Muse; approved.json edited (2 entries)
+Round 2: deliver exit 0, 30 rows
+
+Round 2 result: batch-38 pages equal the Muse files by bytes. Two entries of approved.json edited (practice-line-nest line try 3 despeckled; cover-hello pad prints).
+deliver exit 0: Delivered 30 rows and 2 batch hashes. Folder out/storytime/l2/unit1/w01/delivery-muse-v1: 60 PNG + manifest.json.
+manifest.json SHA-256 00ea0c5b06d18e3f54cbceed9caa943100c0711bb515c44561eb46b7e03ed369. 30 jobs; names, bytes, and manifest hashes checked (0 mismatches).
+Commits: 53de545c (approved.json), 5003c9d5 (plan.md). status: complete.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 (Phase 3: Week 1 pictures)
+task: Deliver the week 1 Muse batch to the PM under the 2026-11-01 contract
+role_base_sha: 31f2b0eb
+phase_base_sha: 15a7bf0b
+commits: 53de545c (approved.json); 5003c9d5 (plan.md evidence)
+models: red=deepseek/deepseek-flash#high; green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: Deliver the week 1 Muse batch to the PM under the 2026-11-01 contract; (earlier round 1) Red and Green writer tasks, now with SHAs on the task lines
+tasks_flipped_b: none
+delivery_folder: out/storytime/l2/unit1/w01/delivery-muse-v1
+manifest_sha256: 00ea0c5b06d18e3f54cbceed9caa943100c0711bb515c44561eb46b7e03ed369
+deliver_exit_code: 0
+job_count: 30 (60 PNG files plus manifest.json)
+failed_rows: none
+muse_calls: 0
+open_items: Daniel's answer on the cover (Pat's back to the camera, white bands) is open; default acceptable. 4 batch-31 rows have a mimo review only.
+handoff: Send the delivery path and the manifest SHA-256 to the PM.
+dispositions: none
+END_MEASURE_AGENT_RESULT

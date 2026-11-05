@@ -1,0 +1,9 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 15
+book file requests refused: 0
+Line-art line width: 15 px (minimum 12 px).
+Line-art ink coverage: 16.47% (1976064 of 12000000 pixels black).
+l2-w01-story-page-hello-i-am-nan v1: rendered; stage 2540aca78b593b6e2bcaaa03e0ec6c9942c4ce04236b0d7f4f747e0c4f004fe7; file w01/rows/l2-w01-story-page-hello-i-am-nan-v1.png; lineart w01/rows/l2-w01-story-page-hello-i-am-nan-line-v1.png; size 4000 x 3000; render peak rss mb: 886

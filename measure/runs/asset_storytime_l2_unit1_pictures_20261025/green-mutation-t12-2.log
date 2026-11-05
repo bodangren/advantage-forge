@@ -1,0 +1,1962 @@
+heavy-run: lock wait over 600 s — holder PID 3747211: flock /home/daniebo/Desktop/primary-parity-progress/heavy.lock /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh --locked -c '/home/daniebo/.local/share/storytime-word-audio-venv/bin/python' '/home/daniebo/Desktop/asset-requests/2026-10-27/primary-word-clip-check/tools/recognize.py' < 'clips/adventure-7.1.json' > 'recognized/adventure-7.1.json.tmp' 
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T130: both providers refuse the trailing backslash
+trailing backslash refused
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T131: both providers refuse the raw control character and the MiniMax envelope
+raw control character refused
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T132: both providers refuse the invalid escape
+invalid escape refused
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T134: the seeded generator finds every credential case and no twin
+generated cases: 240
+generated findings: 149
+generated twin findings: 0
+missed case: 0:control
+missed case: 2:invalid-escape
+missed case: 3:invalid-escape
+missed case: 8:control
+missed case: 10:backslash
+missed case: 11:control
+missed case: 12:backslash
+missed case: 13:invalid-escape
+missed case: 15:backslash
+missed case: 17:control
+missed case: 19:control
+missed case: 21:invalid-escape
+missed case: 23:backslash
+missed case: 24:control
+missed case: 30:invalid-escape
+missed case: 34:backslash
+missed case: 35:control
+missed case: 40:backslash
+missed case: 41:backslash
+missed case: 43:invalid-escape
+missed case: 44:backslash
+missed case: 45:control
+missed case: 50:control
+missed case: 51:invalid-escape
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample case: 0 shape: control provider: minimax
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample case: 0 shape: control provider: kimi
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample case: 2 shape: invalid-escape provider: minimax
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample case: 2 shape: invalid-escape provider: kimi
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample case: 35 shape: control provider: minimax
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample case: 35 shape: control provider: kimi
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample case: 44 shape: backslash provider: minimax
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample case: 44 shape: backslash provider: kimi
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample cases: 12
+sample refusals: 16
+
+ ❯ tests/storytime-book-pictures.test.ts (121 tests | 5 failed) 227914ms
+         × T130: both providers refuse the trailing backslash 1842ms
+         × T131: both providers refuse the raw control character and the MiniMax envelope 2703ms
+         × T132: both providers refuse the invalid escape 1773ms
+         × T134: the seeded generator finds every credential case and no twin 574ms
+         × T135: both providers refuse the sampled generated cases 22085ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T130: both providers refuse the trailing backslash
+AssertionError: trailing backslash/minimax: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3099:81
+    3097|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3098|           .not.toBe('RangeError');
+    3099|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3128:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T130: both providers refuse the trailing backslash
+AssertionError: trailing backslash/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3102:12
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3102|           .toBe(true);
+       |            ^
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3128:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T130: both providers refuse the trailing backslash
+AssertionError: trailing backslash/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "7dff7db4-8419-4019-8fa2-dec3a8d7440f",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T23:20:47.539Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3105:12
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    3105|           .toEqual([]);
+       |            ^
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:3128:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T130: both providers refuse the trailing backslash
+AssertionError: trailing backslash/minimax: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-F3tTEf/repo-9mpamN/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-7dff7db4-8419-4019-8fa2-dec3a8d7440f.txt",
++   "/tmp/opencode/storytime-red-F3tTEf/repo-9mpamN/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3108:56
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    3108|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:3128:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T130: both providers refuse the trailing backslash
+AssertionError: trailing backslash/kimi: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3099:81
+    3097|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3098|           .not.toBe('RangeError');
+    3099|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3128:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T130: both providers refuse the trailing backslash
+AssertionError: trailing backslash/kimi: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3102:12
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3102|           .toBe(true);
+       |            ^
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3128:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T130: both providers refuse the trailing backslash
+AssertionError: trailing backslash/kimi: no success entry.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "8ac6883f-02ff-4e48-abcc-e4653152de5e",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T23:20:48.498Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3105:12
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    3105|           .toEqual([]);
+       |            ^
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:3128:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T130: both providers refuse the trailing backslash
+AssertionError: trailing backslash/kimi: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-F3tTEf/repo-j5Q5zO/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-8ac6883f-02ff-4e48-abcc-e4653152de5e.txt",
++   "/tmp/opencode/storytime-red-F3tTEf/repo-j5Q5zO/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3108:56
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    3108|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:3128:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T130: both providers refuse the trailing backslash
+AssertionError: trailing backslash/kimi: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "359f3f6b64199990ca26b6fcf31ac218e6719aec7c4485956c445e7287038b44",
++     "c7984004e81b4054f77841806760e475d508339a3034a98dd38e9772019f8a76",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-8ac6883f-02ff-4e48-abcc-e4653152de5e.txt",
++     "42d7b3a9cd8c9dc0ba5f4e210f56a7d234c8389f97020d55ec10567256228aec",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "bb7d8f346c55f50acb8206075ba43a2172796ac8431d4fb31fc38d832775fee4",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3111:14
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+    3111|             .toEqual(space.before);
+       |              ^
+    3112|           expect.soft(await readFile(space.rawFile), `${context}: the …
+    3113|             .toEqual(Buffer.from(raw));
+ ❯ tests/storytime-book-pictures.test.ts:3128:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T131: both providers refuse the raw control character and the MiniMax envelope
+AssertionError: raw control character/minimax: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3099:81
+    3097|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3098|           .not.toBe('RangeError');
+    3099|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3135:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T131: both providers refuse the raw control character and the MiniMax envelope
+AssertionError: raw control character/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3102:12
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3102|           .toBe(true);
+       |            ^
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3135:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T131: both providers refuse the raw control character and the MiniMax envelope
+AssertionError: raw control character/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "629bc1f3-6de6-49aa-9320-a074a505faa3",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T23:20:49.435Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3105:12
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    3105|           .toEqual([]);
+       |            ^
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:3135:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T131: both providers refuse the raw control character and the MiniMax envelope
+AssertionError: raw control character/minimax: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-F3tTEf/repo-eDtyAE/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-629bc1f3-6de6-49aa-9320-a074a505faa3.txt",
++   "/tmp/opencode/storytime-red-F3tTEf/repo-eDtyAE/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3108:56
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    3108|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:3135:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T131: both providers refuse the raw control character and the MiniMax envelope
+AssertionError: raw control character/kimi: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3099:81
+    3097|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3098|           .not.toBe('RangeError');
+    3099|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3135:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T131: both providers refuse the raw control character and the MiniMax envelope
+AssertionError: raw control character/kimi: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3102:12
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3102|           .toBe(true);
+       |            ^
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3135:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T131: both providers refuse the raw control character and the MiniMax envelope
+AssertionError: raw control character/kimi: no success entry.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "4d679893-de00-4750-9bb6-635c40543093",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T23:20:50.297Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3105:12
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    3105|           .toEqual([]);
+       |            ^
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:3135:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T131: both providers refuse the raw control character and the MiniMax envelope
+AssertionError: raw control character/kimi: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-F3tTEf/repo-QSwUUS/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-4d679893-de00-4750-9bb6-635c40543093.txt",
++   "/tmp/opencode/storytime-red-F3tTEf/repo-QSwUUS/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3108:56
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    3108|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:3135:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T131: both providers refuse the raw control character and the MiniMax envelope
+AssertionError: raw control character/kimi: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "c8a3d0d038c666c66ae2b963dbbb30c0352afd1d0862ba0c9d1ad1c36deffb42",
++     "6f47d5f374c9790c4b848935bd7b384279829c85707df350f206b370dd72eff7",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-4d679893-de00-4750-9bb6-635c40543093.txt",
++     "870dddcca51afbba82634115397ca4abfd8aa2a4a951905144a7df3dcabc7b1b",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "00a381ef227532cd61c5f4c638ad4c6d9a0aa077d8a98755d668e8c5159f5eea",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3111:14
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+    3111|             .toEqual(space.before);
+       |              ^
+    3112|           expect.soft(await readFile(space.rawFile), `${context}: the …
+    3113|             .toEqual(Buffer.from(raw));
+ ❯ tests/storytime-book-pictures.test.ts:3135:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T131: both providers refuse the raw control character and the MiniMax envelope
+AssertionError: raw control character in the MiniMax envelope/minimax: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3099:81
+    3097|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3098|           .not.toBe('RangeError');
+    3099|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3138:9
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T131: both providers refuse the raw control character and the MiniMax envelope
+AssertionError: raw control character in the MiniMax envelope/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3102:12
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3102|           .toBe(true);
+       |            ^
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3138:9
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T131: both providers refuse the raw control character and the MiniMax envelope
+AssertionError: raw control character in the MiniMax envelope/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "19981679-6381-4910-9aad-ce7c3e638fc6",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T23:20:51.210Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3105:12
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    3105|           .toEqual([]);
+       |            ^
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:3138:9
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T131: both providers refuse the raw control character and the MiniMax envelope
+AssertionError: raw control character in the MiniMax envelope/minimax: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-F3tTEf/repo-wfOMTK/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-19981679-6381-4910-9aad-ce7c3e638fc6.txt",
++   "/tmp/opencode/storytime-red-F3tTEf/repo-wfOMTK/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3108:56
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    3108|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:3138:9
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T132: both providers refuse the invalid escape
+AssertionError: invalid escape/minimax: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3099:81
+    3097|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3098|           .not.toBe('RangeError');
+    3099|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3144:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T132: both providers refuse the invalid escape
+AssertionError: invalid escape/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3102:12
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3102|           .toBe(true);
+       |            ^
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3144:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T132: both providers refuse the invalid escape
+AssertionError: invalid escape/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "27819099-1c91-4c74-bb0c-5a9bf3c7fe0b",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T23:20:52.069Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3105:12
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    3105|           .toEqual([]);
+       |            ^
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:3144:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T132: both providers refuse the invalid escape
+AssertionError: invalid escape/minimax: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-F3tTEf/repo-UNqmiK/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-27819099-1c91-4c74-bb0c-5a9bf3c7fe0b.txt",
++   "/tmp/opencode/storytime-red-F3tTEf/repo-UNqmiK/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3108:56
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    3108|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:3144:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T132: both providers refuse the invalid escape
+AssertionError: invalid escape/kimi: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3099:81
+    3097|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3098|           .not.toBe('RangeError');
+    3099|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3144:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T132: both providers refuse the invalid escape
+AssertionError: invalid escape/kimi: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3102:12
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3102|           .toBe(true);
+       |            ^
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3144:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T132: both providers refuse the invalid escape
+AssertionError: invalid escape/kimi: no success entry.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "ad18e497-a00e-4e9c-b574-fd855faffcac",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T23:20:52.957Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3105:12
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    3105|           .toEqual([]);
+       |            ^
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:3144:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T132: both providers refuse the invalid escape
+AssertionError: invalid escape/kimi: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-F3tTEf/repo-3KtuQY/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-ad18e497-a00e-4e9c-b574-fd855faffcac.txt",
++   "/tmp/opencode/storytime-red-F3tTEf/repo-3KtuQY/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3108:56
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    3108|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:3144:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T132: both providers refuse the invalid escape
+AssertionError: invalid escape/kimi: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "1b56cb05cbbd9e4433833e3e9045514d7701dcce92b12608e05c881a343957c3",
++     "45e4c763e59db2b817d4ca320321c34c859b40eed69f444ac9d2e3e2b9721553",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-ad18e497-a00e-4e9c-b574-fd855faffcac.txt",
++     "85dfdd4809ee16b03f4ff1c6b4e4070b4583d81be9ceb95f763b8ffb93e76aa3",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "008e1207a7dafdb79c7ddd912664bdbc2fa19eab161a67496c60c3fa58c17583",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3111:14
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+    3111|             .toEqual(space.before);
+       |              ^
+    3112|           expect.soft(await readFile(space.rawFile), `${context}: the …
+    3113|             .toEqual(Buffer.from(raw));
+ ❯ tests/storytime-book-pictures.test.ts:3144:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[31/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T134: the seeded generator finds every credential case and no twin
+AssertionError: generated findings: 149: expected 149 to be 240 // Object.is equality
+
+- Expected
++ Received
+
+- 240
++ 149
+
+ ❯ tests/storytime-book-pictures.test.ts:3184:54
+    3182|         expect.soft(parsedFindings, 'The labeled finding count is an i…
+    3183|         expect.soft(parsedCases, casesPrinted).toBe(GENERATOR_CASES);
+    3184|         expect.soft(parsedFindings, findingsPrinted).toBe(GENERATOR_CA…
+       |                                                      ^
+    3185|         expect.soft(twinFindings, twinPrinted).toBe(0);
+    3186|       }, 180000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[32/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 0 shape control/minimax: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3099:81
+    3097|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3098|           .not.toBe('RangeError');
+    3099|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[33/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 0 shape control/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3102:12
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3102|           .toBe(true);
+       |            ^
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[34/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 0 shape control/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "89ffb321-6831-4913-a84b-2481e3346062",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T23:20:56.641Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3105:12
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    3105|           .toEqual([]);
+       |            ^
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[35/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 0 shape control/minimax: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-F3tTEf/repo-ils84W/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-89ffb321-6831-4913-a84b-2481e3346062.txt",
++   "/tmp/opencode/storytime-red-F3tTEf/repo-ils84W/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3108:56
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    3108|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[36/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 0 shape control/kimi: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3099:81
+    3097|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3098|           .not.toBe('RangeError');
+    3099|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[37/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 0 shape control/kimi: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3102:12
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3102|           .toBe(true);
+       |            ^
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[38/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 0 shape control/kimi: no success entry.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "522f76cf-881a-485a-bd1f-0841768972d7",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T23:20:57.654Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3105:12
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    3105|           .toEqual([]);
+       |            ^
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[39/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 0 shape control/kimi: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-F3tTEf/repo-RNmvSw/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-522f76cf-881a-485a-bd1f-0841768972d7.txt",
++   "/tmp/opencode/storytime-red-F3tTEf/repo-RNmvSw/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3108:56
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    3108|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[40/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 0 shape control/kimi: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "35467a9ee7cec1d1549a46d4b35d86aa50d3a74f4f3aab03947cfe9fa85d4825",
++     "e52b00277392c73bc0e9261aaa501db2f9e5784c6d82c570acc2a083c6a1fe02",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-522f76cf-881a-485a-bd1f-0841768972d7.txt",
++     "ce0f0efe3493db7c69701ace7f00036991c0b15ebe5f0c4ec760fe2b8f6e2a3c",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "15b971af3f9a3e5a3a9d9c32de0308c6a9ab2bc01c081e287422ae494a0bfc29",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3111:14
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+    3111|             .toEqual(space.before);
+       |              ^
+    3112|           expect.soft(await readFile(space.rawFile), `${context}: the …
+    3113|             .toEqual(Buffer.from(raw));
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[41/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 2 shape invalid-escape/minimax: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3099:81
+    3097|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3098|           .not.toBe('RangeError');
+    3099|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[42/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 2 shape invalid-escape/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3102:12
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3102|           .toBe(true);
+       |            ^
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[43/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 2 shape invalid-escape/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "6e2cf24c-4fcc-4158-ac8a-11b761de0aaf",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T23:20:58.596Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3105:12
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    3105|           .toEqual([]);
+       |            ^
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[44/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 2 shape invalid-escape/minimax: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-F3tTEf/repo-zOQc3p/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-6e2cf24c-4fcc-4158-ac8a-11b761de0aaf.txt",
++   "/tmp/opencode/storytime-red-F3tTEf/repo-zOQc3p/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3108:56
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    3108|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[45/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 2 shape invalid-escape/kimi: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3099:81
+    3097|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3098|           .not.toBe('RangeError');
+    3099|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[46/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 2 shape invalid-escape/kimi: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3102:12
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3102|           .toBe(true);
+       |            ^
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[47/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 2 shape invalid-escape/kimi: no success entry.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "50258710-fa70-4d68-9aec-b68fa01fec7b",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T23:20:59.510Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3105:12
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    3105|           .toEqual([]);
+       |            ^
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[48/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 2 shape invalid-escape/kimi: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-F3tTEf/repo-SJ67zO/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-50258710-fa70-4d68-9aec-b68fa01fec7b.txt",
++   "/tmp/opencode/storytime-red-F3tTEf/repo-SJ67zO/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3108:56
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    3108|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[49/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 2 shape invalid-escape/kimi: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "bc28fbb29f4a6b729b4991ba172127631bbbccd6b80d3134868d005c9e487e15",
++     "c5d4f0541884284eeb9d4cb61c221026e117815c5f8d7fb2b1ae389ad60849ec",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-50258710-fa70-4d68-9aec-b68fa01fec7b.txt",
++     "6e0c0333216c99a676f6ec9794ddb093e95c0a3577249067422b9dcde3e4cb03",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "7245952c7b89c20b95b6d4fa78362b5b71bbb2c38629510af5fff155de61121a",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3111:14
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+    3111|             .toEqual(space.before);
+       |              ^
+    3112|           expect.soft(await readFile(space.rawFile), `${context}: the …
+    3113|             .toEqual(Buffer.from(raw));
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[50/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 35 shape control/minimax: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3099:81
+    3097|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3098|           .not.toBe('RangeError');
+    3099|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[51/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 35 shape control/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3102:12
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3102|           .toBe(true);
+       |            ^
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[52/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 35 shape control/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "78241972-f096-482c-ba27-cf8c6c4980cd",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T23:21:09.566Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3105:12
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    3105|           .toEqual([]);
+       |            ^
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[53/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 35 shape control/minimax: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-F3tTEf/repo-SR9QjX/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-78241972-f096-482c-ba27-cf8c6c4980cd.txt",
++   "/tmp/opencode/storytime-red-F3tTEf/repo-SR9QjX/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3108:56
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    3108|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[54/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 35 shape control/kimi: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3099:81
+    3097|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3098|           .not.toBe('RangeError');
+    3099|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[55/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 35 shape control/kimi: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3102:12
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3102|           .toBe(true);
+       |            ^
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[56/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 35 shape control/kimi: no success entry.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "5c95b90d-1077-4f3d-a2b6-c61925ef7f52",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T23:21:10.457Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3105:12
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    3105|           .toEqual([]);
+       |            ^
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[57/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 35 shape control/kimi: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-F3tTEf/repo-Uu0lQ5/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-5c95b90d-1077-4f3d-a2b6-c61925ef7f52.txt",
++   "/tmp/opencode/storytime-red-F3tTEf/repo-Uu0lQ5/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3108:56
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    3108|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[58/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 35 shape control/kimi: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "2bc563c5bf29b766a16d828a204f40a58bd7eb865e4e8b46611e2939560bee59",
++     "7a67bfd9a82d001348de71f811aa0dc1df88414025765abe2216e6abf46280be",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-5c95b90d-1077-4f3d-a2b6-c61925ef7f52.txt",
++     "1e6103f991b69819296fa6d208a07803056c2126d82e6fd4d058b35fca7617f7",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "f459f8db06dcfb2b99da803958648e6f8c028231815501af25848ef8c5c70832",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3111:14
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+    3111|             .toEqual(space.before);
+       |              ^
+    3112|           expect.soft(await readFile(space.rawFile), `${context}: the …
+    3113|             .toEqual(Buffer.from(raw));
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[59/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 44 shape backslash/minimax: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3099:81
+    3097|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3098|           .not.toBe('RangeError');
+    3099|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[60/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 44 shape backslash/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3102:12
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3102|           .toBe(true);
+       |            ^
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[61/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 44 shape backslash/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "77d52b3f-50e4-45d1-8a8b-f9bc45c63c6b",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T23:21:11.348Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3105:12
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    3105|           .toEqual([]);
+       |            ^
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[62/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 44 shape backslash/minimax: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-F3tTEf/repo-lVInVb/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-77d52b3f-50e4-45d1-8a8b-f9bc45c63c6b.txt",
++   "/tmp/opencode/storytime-red-F3tTEf/repo-lVInVb/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3108:56
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    3108|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[63/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 44 shape backslash/kimi: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3099:81
+    3097|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3098|           .not.toBe('RangeError');
+    3099|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[64/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 44 shape backslash/kimi: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3102:12
+    3100|         expect.soft(message, `${context}: the refusal holds no matched…
+    3101|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3102|           .toBe(true);
+       |            ^
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[65/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 44 shape backslash/kimi: no success entry.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "fe88cc9a-8799-4a48-a9d2-5f73549f260c",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T23:21:12.223Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3105:12
+    3103|         const entries = await securityLedger(space.space.outputRoot);
+    3104|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    3105|           .toEqual([]);
+       |            ^
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[66/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 44 shape backslash/kimi: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-F3tTEf/repo-pbIC9g/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-fe88cc9a-8799-4a48-a9d2-5f73549f260c.txt",
++   "/tmp/opencode/storytime-red-F3tTEf/repo-pbIC9g/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3108:56
+    3106|         const files = await tree(space.space.outputRoot);
+    3107|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    3108|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[67/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 44 shape backslash/kimi: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "c6d5233aa1a17730ff28bb8e449024fe42a664a4c5d9fc6679d77250a448bfbb",
++     "6f0f688bfb5798c8d891c6456f99deff5405746e497058c5d2c97e60bb0ab341",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-fe88cc9a-8799-4a48-a9d2-5f73549f260c.txt",
++     "70589ffd2db9c5652c56c83b11c68642bf2176438fee646ad07d8a58628816d5",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "8fcb8ee2668be3a4dbb9be3980cf5bfda6a6f0e455ac0366d0620a01a034c8ba",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3111:14
+    3109|         if (provider === 'kimi') {
+    3110|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+    3111|             .toEqual(space.before);
+       |              ^
+    3112|           expect.soft(await readFile(space.rawFile), `${context}: the …
+    3113|             .toEqual(Buffer.from(raw));
+ ❯ tests/storytime-book-pictures.test.ts:3194:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[68/69]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample refusals: 16: expected 16 to be 24 // Object.is equality
+
+- Expected
++ Received
+
+- 24
++ 16
+
+ ❯ tests/storytime-book-pictures.test.ts:3209:54
+    3207|         expect.soft(parsedRefusals, 'The labeled refusal count is an i…
+    3208|         expect.soft(parsedCases, casesPrinted).toBe(SAMPLE_INDEXES.len…
+    3209|         expect.soft(parsedRefusals, refusalsPrinted).toBe(SAMPLE_INDEX…
+       |                                                      ^
+    3210|       }, 300000);
+    3211|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[69/69]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 116 passed (121)
+   Start at  07:17:52
+   Duration  230.26s (transform 1.05s, setup 0ms, import 1.88s, tests 227.91s, environment 0ms)
+
+mutation2-exit=1

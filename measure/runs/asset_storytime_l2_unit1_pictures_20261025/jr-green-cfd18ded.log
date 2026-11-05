@@ -1,0 +1,28 @@
+role: measure-jr-green
+session: Green · P3 · storytime_l2_unit1_pictures · r17
+models: Green r17 claude-code/claude-sonnet-5-5#high; Red minimax-cn-coding-plan/MiniMax-M3; coder none; item reviewer openai/gpt-6-luna#high
+phase_base_sha: 15a7bf0b
+role_base_sha: 670b91e9
+final_green_head: cfd18ded
+
+MEASURE_AGENT_RESULT
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3
+commits:
+  - 6e880721 feat(storytime): add the child's sun hat prop for the week 1 hat row (assets/storytime-sun-hat.ts)
+  - cfd18ded docs(measure): record storytime green round 17 sun hat evidence (plan.md, Green round 17 block)
+tasks_flipped_x: none
+tasks_flipped_b: none
+new_files: assets/storytime-sun-hat.ts
+render_exits:
+  - ./forge render storytime-sun-hat --fast loop 1: 0 (green-p3-r17-fast1.log)
+  - ./forge render storytime-sun-hat --fast loop 2: 0 (green-p3-r17-fast2.log)
+  - ./forge render storytime-sun-hat (textured): 0 (green-p3-r17-tex.log)
+  - ./forge inspect storytime-sun-hat --fast: 0 (green-p3-r17-inspect.log)
+warning_lines: 0 in all runs; inspect warnings: none
+card: out/storytime-review/batch-2c/storytime-sun-hat.png (with brief.md and look-reference-nan-and-pip.png)
+carried_note: child's cup passed review at 7.4 (item-review-batch-2b.json); note "Show a darker, empty inside above the rim" carries to the cup row (higher camera).
+open_risk: reviewer may find the crown plain or the bow loops blobby.
+handoff: Independent reviewer (openai/gpt-6-luna#high) rates batch-2c storytime-sun-hat from the card; Green does not rate its own item. Then the hat row can use the sun hat in place of explorer-hat (weeks 1, 3, 4, 5). assets/explorer-hat.ts was not changed.
+END_MEASURE_AGENT_RESULT

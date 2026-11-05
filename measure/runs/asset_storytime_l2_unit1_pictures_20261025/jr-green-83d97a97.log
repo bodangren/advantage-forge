@@ -1,0 +1,108 @@
+Role: measure-jr-green, build round 51 (Storytime week 1 pictures)
+Session: Green · P3 · storytime_l2_unit1_pictures · r51
+Model: deepseek/deepseek-flash#high (provider deepseek, model deepseek-flash)
+Phase 3 Red model: minimax-cn-coding-plan/MiniMax-M3 (MiniMax), not the Green family
+Coder delegation: none (Green coder model: none)
+Track: asset_storytime_l2_unit1_pictures_20261025
+Phase: Phase 3: Week 1 pictures
+role_base_sha: 47c0c6a4 (git rev-parse --short=8 HEAD at start)
+phase_base_sha: 15a7bf0b
+Green implementation commit: 9e249f80
+Green plan-evidence commit (final HEAD): 83d97a97
+
+Task: render Pat page version 3 so his face shows, and fix the framed animal pictures if the cause
+is in the asset.
+
+Red signal: batch 22 review, item-review-batch-22.json (kimi-code-plan-cn/kimi-for-coding). The
+green door passed at 8.0, the low table passed at 7.5, the Pat page v2 failed at 5.0. Critical
+defect: "Pat's face is not visible. The page shows the back of his head, so a child cannot see who
+Pat is on the page that introduces him."
+
+Step A, the animal pictures. Cause is in the asset geometry. The frame was a 0.014 m box at z 0 to
+0.014 and the picture backdrop ran from z 0.004 to 0.024, so the picture face sat 0.010 m in front
+of the frame front. At the oblique classroom camera the border read as a second board offset behind
+the picture, with the frame's bottom side face as the wood tab below each picture. Fix: the frame is
+now a border ring of the full picture depth, FRAME_DEPTH 0.038 m (flush with the front face of the
+deepest animal layer), cut from a 0.55 by 0.45 m box with a 0.49 by 0.39 m opening; the backdrop is
+0.01 m wider than the opening so its edge sits inside the frame.
+Asset renders: first render exit 0 but the back plate of 0.004 m is thinner than the 0.007 m mesh
+cell and collapsed, so the picture colors showed through from behind. FRAME_BACK rose to 0.012 m.
+Second render exit 0, `./forge inspect storytime-animal-pictures --fast` exit 0 with the same two
+notes as round 49 only (lion-nose barely visible; side silhouette very thin). No `warning:` line.
+Logs: green-p3-r51-asset.log, green-p3-r51-asset2.log.
+
+Step B, the Pat page. Stage files l2-w01-story-page-hello-i-am-pat-v3.json and -v4.json.
+v3: camera az -90, el 4, dist 2.1, ty 0.5, tz 1.0; Pat at 3.2 / 1.15 yaw -60; door at 5.94 / 0.2;
+pictures at 5.94 / 1.75 y 0.95; table at 4.4 / 2.45 yaw 15; bag offset [0, -0.03, -0.115].
+Render exit 0, verify exit 0, line 18 px, ink 9.96 percent, peak 859 MB.
+Color SHA-256 d0af11f419a457f299bb064858bbff53f79ff585fd4b5a2af3b192c41e16f93a
+Line-art SHA-256 aba4f6b1dbb25d1f3a2fba7b9861191af78c180352c21fe844d8393c05de2e07
+Points 1 to 7 for v3: 1 face clear, both eyes and the mouth, yes. 2 teddy shows its face, yes.
+3 wave clear toward the door side, yes. 4 bag shows only as a thin red sliver and the bump does not
+read, no. 5 composition good but the door top is cut and the table is cut at the right. 6 Pat is 73
+percent of the page height but the margins are uneven, the head fills the top. 7 no seam line
+crosses Pat, the door, or a picture.
+v4 (kept): camera az -90, el 0, dist 2.9, ty 0.67, tz 1.1; door 5.94 / 0.10; pictures 5.94 / 1.60
+y 0.95; one table at 4.6 / 1.75 yaw 90; bag offset [-0.05, 0, -0.115], rotate [0, 180, 0], scale
+1.12. Render exit 0, verify exit 0, line 17 px, ink 11.14 percent, peak 479 MB.
+Color SHA-256 e29fe32df9cb59cc312f1d8415b94603040cfdfc92dd8fb9d8218e04a449a3e9
+Line-art SHA-256 ff92b0209cdcee09bfb65f3b6d03a0b1576a24f58182b8718257858d8875aaf5
+`verify --row` exits 0 with "Row verification passed for 4 row versions".
+Points 1 to 7 for v4: 1 face clear with both eyes, brows, nose, and mouth, yes. 2 teddy shows its
+head, ears, muzzle, and eyes, yes. 3 the raised right arm is on the door side and clear, yes. 4 the
+bag shows beside his shoulder with its strap, no gap, no sinking; the bump makes a small rise in the
+bag top outline but does not read as its own round shape, partly met. 5 three-quarter view toward the
+camera, door whole at the left, three pictures whole above him, one table whole at the right. 6 Pat
+is 53 percent of the page height, whole, with a margin below the feet and above the hair, yes.
+7 no wall or floor seam crosses Pat, the door, or a picture.
+v4 was rendered three times inside the v4 file: the first attempt repeated the v3 camera, the second
+moved the camera back, the third slung the bag toward the visible side. Green removed each earlier
+v4 output before the next render.
+
+Heavy commands: all forge, render, and verify calls ran inside
+`bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'`. No exit 75, no exit 137, no
+net::ERR_UNSAFE_PORT, no lock wait over 600 s.
+Shadow root: /tmp/opencode/wb-shadow, pictures.json sha256
+c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b, no new copy made. The live
+Workbooks list is not written to. out/sprout-pat/sprout-pat.glb was the textured build at 3,396,088
+bytes, so no rebuild ran.
+Warning lines: none.
+Batch 23: out/storytime-review/batch-23/ holds storytime-animal-pictures.png,
+l2-w01-story-page-hello-i-am-pat-v4.png, l2-w01-story-page-hello-i-am-pat-line-v4.png,
+sprout-pat-render.png, look-reference-nan-and-pip.png, and brief.md.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+session: Green · P3 · storytime_l2_unit1_pictures · r51
+model: deepseek/deepseek-flash#high
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 Phase 3: Week 1 pictures
+phase_base_sha: 15a7bf0b
+role_base_sha: 47c0c6a4
+implementation_commit: 9e249f80
+plan_commit: 83d97a97
+green_head: 83d97a97
+targeted_red_command: node --import tsx scripts/storytime-book-pictures.ts render --row l2-w01-story-page-hello-i-am-pat --version 4 --workbooks /tmp/opencode/wb-shadow (exit 0)
+green_gate: node --import tsx scripts/storytime-book-pictures.ts verify --row l2-w01-story-page-hello-i-am-pat --workbooks /tmp/opencode/wb-shadow (exit 0, "Row verification passed for 4 row versions")
+files_added_or_changed:
+  - assets/storytime-animal-pictures.ts (frame ring of full depth, flush front, 0.012 m back plate)
+  - docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-hello-i-am-pat-v3.json (new)
+  - docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-hello-i-am-pat-v4.json (new)
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md (round 51 evidence)
+tasks_flipped_x: none
+tasks_flipped_b: none
+warning_lines: none
+shadow_root_pictures_sha256: c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b
+review_folder: out/storytime-review/batch-23/
+handoff: |
+  Batch 23 waits for the independent review: the re-framed `storytime-animal-pictures` card and the
+  Pat page v4 (color and line art), with brief.md at bar 7.0.
+  Read Pat page v4 in out/storytime-review/batch-23/. Point 4 is partly met: the bag shows beside his
+  shoulder with no gap and no sinking, but the bump makes only a small rise in the bag top outline
+  and does not read as its own round shape. The 0.084 m bump rises 0.018 m above the bag top, which
+  is about 10 px at page size.
+  The cast puts the teddy bear in `hand.R`, the same arm that waves, so the teddy and the wave share
+  one raised arm. The goal does not name an arm for the teddy.
+  The animal pictures were re-framed; the frame border is now one ring at the full picture depth, so
+  the offset plate and the wood tab of batch 22 should be gone at every camera angle.
+END_MEASURE_AGENT_RESULT

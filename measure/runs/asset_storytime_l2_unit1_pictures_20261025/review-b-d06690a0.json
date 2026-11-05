@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "The Muse delivery writer closes RB8-01 to RB8-07 at d06690a0, and the gate passes 21 of 21 tests. An optional picture-list pin is now enforced when the approval list declares it, and the deliver CLI passes the measured hash. The CLI confines --muse and --delivery to <repo>/out/. Muse reads refuse a symlink, a path outside the Muse folder, and a non-file. Delivery targets pass lstat and are created with the wx flag. Duplicate, degenerate, and reserved names stop the run before any read or write. The writer still reads local files only: no network, no key, and no environment. Five nonblocking findings remain. They cover a lexical containment rule, the enforcement layer, an optional pin, a root overlap, and one test-coverage gap.",
+  "phase_base_sha": "15a7bf0b2a59b8137a05805666df6736dc256167",
+  "role_base_sha": "3509efd5d44f4bd596e5fe4d86dee8bccc47f2dd",
+  "audited_head_sha": "d06690a046b67a5d08fa0ba2ac4f5034bbe2287e",
+  "audited_head": "d06690a046b67a5d08fa0ba2ac4f5034bbe2287e",
+  "head_current": true,
+  "security_applicability": "applicable",
+  "track": "asset_storytime_l2_unit1_pictures_20261025",
+  "phase": "Phase 3: Week 1 pictures",
+  "role": "measure-review-b-security",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "RB9-01 Nit path containment: resolveMuseDeliveryPaths compares path.resolve strings only. It calls no realpath and tests no existence, so a folder inside out/ that is a symlink to a folder outside the repository passes the check, and writeMuseDelivery then creates files outside out/. contract.md:353 says output paths cannot escape out/. Risk judged low: the actor who plants the link needs write access inside out/ first, and that actor already controls the delivery folder. (code reading; confirmed; probe blocked by tool permission)",
+    "RB9-02 Nit enforcement layer: the containment rule lives only in resolveMuseDeliveryPaths, which the deliver CLI calls. writeMuseDelivery accepts any absolute root, so a new caller can write outside out/ by design. The tests rely on this freedom with temporary roots. (code reading; confirmed)",
+    "RB9-03 Nit provenance: the picture-list pin is optional. A run with an approval list that holds no pictureListSha256 writes a manifest with no list binding, and manifest.json carries no list SHA-256 in either case. The pin guards one run only. A recorded hash needs the PM contract shape. (code reading; confirmed; T162 covers both paths)",
+    "RB9-04 Nit test meaning: T170 fails at the pre-write lstat with ENAMETOOLONG, before mkdir, so it does not exercise a copy failure at write time. plan.md:1492 records that failure as 'at the copy write', which is imprecise. No test covers a symlink at the manifest path, and an I/O failure in the middle of the copies leaves the earlier copies with no manifest. (code reading; confirmed)",
+    "RB9-05 Nit root overlap: the resolver and the writer accept a delivery root inside the Muse root, and the reverse. A delivery then lands inside the Muse folder beside the prints. No test covers the overlap. (code reading; confirmed)"
+  ],
+  "evidence": [
+    "Provenance: git rev-parse HEAD returned d06690a046b67a5d08fa0ba2ac4f5034bbe2287e, the audited HEAD. No commit followed it at the audit start. The working tree matched the commit for src/storytime and tests; the only tracked change in scope was measure/tracks.md, which I read with git show d06690a0:measure/tracks.md. phase_base_sha 15a7bf0b comes from plan.md:1418 and 1429; role_base_sha 3509efd5d44f4bd596e5fe4d86dee8bccc47f2dd is the Red commit of this round; I checked it with git rev-parse.",
+    "Scope: Red 3509efd5 adds T162 to T172 to tests/storytime-muse-delivery.test.ts. Green 44c2ec84 changes src/storytime/muse-delivery.ts (+140 lines) and the deliver wiring in src/storytime/book-pictures.ts (+15 lines). d06690a0 records the plan evidence. scripts/storytime-muse.mjs also differs from 19359dd1, from the earlier batch rounds; this path does not import the delivery writer.",
+    "Gate: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts --maxWorkers=1' printed Test Files 1 passed (1), Tests 21 passed (21), Duration 16.14s, exit 0. No exit 75.",
+    "RB8-01 withdrawn: I checked checkPictureListPin, the optional pictureListSha256 field of the approval schema, the inline check in writeMuseDelivery (a pin with no measured hash is refused; a mismatch is refused), the CLI wiring that passes list.sha256, and T162. T162 covers a match, a mismatch, no pin, the deliver path with a mismatch that writes nothing, and the deliver path with a match.",
+    "RB8-02 withdrawn: I checked resolveMuseDeliveryPaths, the deliver CLI call, T163, and T164. T163 refuses an absolute path outside out/ and a ../ path. T164 refuses the same paths through runStorytimeCli, asserts that nothing is created, and asserts exit 0 for a valid out/ run.",
+    "RB8-03 withdrawn: I checked the lstat check on each target, the wx create for the copies and the manifest, the identical-manifest skip, and T165. T165 plants a dangling symlink at a target name and asserts a refusal, no byte at the link target, and no manifest.",
+    "RB8-04 withdrawn: I checked the delivered map in the name-check loop and T166. planPictureRow returns row.fileName as colorFile, so the map key equals the copy name. T166 covers a duplicate color name and a duplicate line-art name, and both runs leave the delivery folder empty.",
+    "RB8-05 withdrawn: I checked the reserved and degenerate line-art rule, the same-row color and line rule, the delivered map, the PICTURE_ROW_FILE_NAME_PATTERN refusal inside planPictureRow, and T167. T167 covers dot, dot-dot, manifest.json, a line name equal to the color name, and a list name of manifest.json; each run leaves the folder empty.",
+    "RB8-06 withdrawn: I checked readMuseFile and T168. The function calls lstat and refuses a symlink, calls realpath and refuses a real path outside realpath(museRoot), calls stat on the real path and refuses a non-file, and reads the real path. T168 covers an outside symlink, an inside symlink, and a directory.",
+    "RB8-07 withdrawn: I read T162 to T172 as the refusal coverage. A mutation that drops the MuseFileName refine now fails T169, because the plain-name message is asserted. A mutation that drops the list-name pattern fails T167, because the manifest.json copy leaves a file in the folder. A mutation that drops the duplicate check fails T166.",
+    "Input validation: the approval list passes MuseApprovalListSchema before use. The writer refuses a repeated rowId, an unknown rowId, and a malformed list. Row ids never form a path. The color name comes from the list pattern ^l2-w\\d{2}-[a-z-]+-v\\d+\\.png$; the line-art name passes the plain-name, reserved-name, and duplicate rules.",
+    "Read boundary: the Muse bytes pass a length-free PNG inspection (format, class size, 8-bit, srgb, three channels, no alpha, no palette) and the existing line-art gate. A symlink, a folder, or an outside path stops the run. A time-of-check to time-of-use window remains between stat and readFile; the byte checks bound the impact.",
+    "Write boundary: every refusal precedes mkdir and every write. An existing target with the same bytes is skipped; a different byte, a symlink, or a non-file stops the run. The wx flag closes the overwrite race on the final path component. A folder swap between lstat and write stays open; the actor needs write access inside out/ for that.",
+    "Secrets and network: src/storytime/muse-delivery.ts imports node:crypto, node:fs, node:fs/promises, node:path, sharp, zod, and ./book-pictures.js. It holds no fetch, child process, process.env read, or credential. The deliver CLI reaches the redactSecrets 500-character boundary in scripts/storytime-book-pictures.ts. The Muse key stays in scripts/storytime-muse.mjs and is not reachable from this path.",
+    "Sensitive data: manifest.json carries the row text and prompt from the Workbooks list, the review fields of the approval entry, and the reviewer name in the person review. It carries no key, no token, and no local path.",
+    "A2: not triggered. No test flips a draft to a published state. The writer sets job status 'ready' for an internal delivery and names no school or real person as a picture subject. A residual note stays: a row with zero review artifacts delivers with reviews {} (T159), as the round 1 review recorded.",
+    "A6: not triggered. measure/tracks.md at d06690a0 lists the track as [~] with no security-resolved claim. The plan round 2 evidence claims match the code: 21 tests pass, the targets use lstat and wx, and the Muse reads use lstat, realpath, and stat.",
+    "The task adds no endpoint, authentication boundary, tenant or organization scope, migration, or secret store.",
+    "Probe status: the sandbox refused every probe write. An edit to /tmp/opencode, a printf redirect, and node --import tsx -e programs were refused with permission.rejected. RB9-01 to RB9-05 rest on code reading. The read of out/ was refused too; no probe ran against the repository."
+  ],
+  "commands": [
+    "git rev-parse HEAD -> d06690a046b67a5d08fa0ba2ac4f5034bbe2287e; git rev-parse d06690a0 -> same",
+    "git show d06690a0:src/storytime/muse-delivery.ts; git show d06690a0:src/storytime/book-pictures.ts; git show d06690a0:tests/storytime-muse-delivery.test.ts; git show d06690a0:measure/tracks.md",
+    "git diff 19359dd1 d06690a0 -- src/storytime/book-pictures.ts src/storytime scripts tests",
+    "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts --maxWorkers=1' -> exit 0; Tests 21 passed (21); Duration 16.14s",
+    "grep -rn 'checkPictureListPin|resolveMuseDeliveryPaths' --include=*.ts -> the first is used by tests only; the CLI uses the second",
+    "probe attempts under /tmp/opencode and node --import tsx -e -> permission.rejected; no probe ran"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-d06690a0.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-d06690a0.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "handoff": "Verdict is pass. RB8-01 to RB8-07 are closed, and the gate passes 21 of 21 tests at d06690a0. Five new nonblocking findings stay for Green: RB9-01 (Nit, the out/ containment is lexical, so a symlinked folder inside out/ escapes), RB9-02 (Nit, only the CLI resolver enforces containment), RB9-03 (Nit, the picture-list pin is optional and the manifest records no list hash), RB9-04 (Nit, T170 fails before any write, so the write-time path is untested), RB9-05 (Nit, a delivery root inside the Muse root is accepted). No probe could run: the sandbox refused every write under /tmp/opencode and every node -e program. No product decision is required.",
+  "facts_changed": []
+}

@@ -1,0 +1,25 @@
+Green round 12 final log (Storytime week 1 pictures, P3)
+role_base_sha: 36c4b825   phase_base_sha: 15a7bf0b   final HEAD: 936c8a8b
+models: Red minimax-cn-coding-plan/MiniMax-M3; Green claude-code/claude-sonnet-5-5#high; coder none
+commits: edabdff3 (stage file v3), 936c8a8b (plan evidence)
+
+MEASURE_AGENT_RESULT
+status: complete
+role: green
+task: story-page-a-net (Phase 3 Week 1 pictures, round 12)
+files_added: docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-net-v3.json
+files_changed: measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+changed_keys: held net rotate [0,55,0]; offset [-0.03,-0.2,0]. Camera, gesture, scene, mark, prop asset, scale unchanged.
+runs:
+  v3 render: exit 0; line 23 px; ink 10.55%; peak 489 MB
+  verify --row: exit 0; "Row verification passed for 3 row versions."; peak 312 MB
+  v4: not needed
+sha256 (kept v3):
+  color     62f64283dd73cb515fc1576847d58c0cd0aa10063de399d74cf18b77f20ac665
+  line art  a38eb5a821b628f1bcbf22bbac1a8cf8dee6eacd1d85cf1a868ad12eb7e6ce34
+seen: Nan smiles, face clear. Hoop in three-quarter view, deep woven bag hangs left away from the head, grip and handle visible. Reads as a butterfly net. Hoop edge touches hair at one point.
+tasks_marked_x: none
+rows: 16 of 30 week 1 rows rendered; 13 with no open defect
+logs: green-p3-r12-story-page-a-net-render-v3.log, green-p3-r12-story-page-a-net-verify.log
+handoff: independent picture review of story-page-a-net v3 against the book line "Nan holds up a green butterfly net."
+END_MEASURE_AGENT_RESULT

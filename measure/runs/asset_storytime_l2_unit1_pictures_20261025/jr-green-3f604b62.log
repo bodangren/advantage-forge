@@ -1,0 +1,121 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025 (short id asset_storytime_l2_unit1_pictures)
+phase: P2 — Phase 2: Tests and calibrated model pre-checks
+task: T10 — Check every decoded JSON value before provider evidence writes
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e (immutable, unchanged)
+role_base_sha: 425f5a94f9b87875b08fe503199f34ded8b97e2d (confirmed at role start)
+head_sha: 3f604b62a50099c383169e766aef6d737f59f504 (the code SHA is b2a02238)
+commits:
+  - b2a02238a8f217b175b70fd38c737f0593eed16a — fix(storytime): decode every JSON layer before provider evidence writes. Implementation. Explicit paths only: src/storytime/book-pictures.ts.
+  - 20b144ac55f50ad390a11d747088ef71b38595e3 — docs(measure): record Storytime task 10 green evidence. Plan evidence. Explicit path only: measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md.
+  - c37c21d59e1e350bc82fc81be3387364e0c3a080 — docs(measure): lesson on synchronous CPU work and the vitest timeout. Explicit path only: measure/lessons-learned.md.
+  - 3f604b62a50099c383169e766aef6d737f59f504 — docs(measure): put task 10 commit SHA on the task line. Plan-only commit. Explicit path only: measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md.
+  - The Red change (5a46415e) and its evidence commit (425f5a94) sat inside phase_base_sha..HEAD before this role started. Verified.
+tasks_flipped:
+  - Task 10 marked [x] with implementation SHA b2a02238 on the task line. Plan evidence commit 20b144ac. No other task changed.
+files_changed:
+  - src/storytime/book-pictures.ts (implementation commit b2a02238). No other source path changed.
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md (plan evidence commit 20b144ac).
+  - New run logs under measure/runs/asset_storytime_l2_unit1_pictures_20261025/ (uncommitted, as in task 9):
+    green-vitest-t10-pre.log, green-vitest-t10.log, green-vitest-t10-hostile.log, task10-tsc.log,
+    green-mutation-t10-1.log through green-mutation-t10-17.log, green-vitest-t10-final.log,
+    jr-green-425f5a9-provisional.log, jr-green-c37c21d5.log, jr-green-3f604b62.log.
+tests_run:
+  - Red rerun before the edit: ENGINE_HOOK_TEST_COMMAND with timeout -k 30 900 through one
+    heavy-run call. Exit 1. Tests  11 failed | 114 passed (125). The 11 failures match the Red
+    log (T104 to T111, T113, T114, T115; T112 passed at Red). Log: green-vitest-t10-pre.log.
+  - Green gate: same command. Exit 0. Tests  125 passed (125). No skipped test. No timeout.
+    Duration 155.31 s. Log: green-vitest-t10.log.
+  - Focused hostile rows (-t "T109|T110|T111|T115"): exit 0. Tests  4 passed | 94 skipped (98).
+    Duration 10.23 s. Log: green-vitest-t10-hostile.log. The default reporter prints no console
+    output for passing tests, so the labeled decoded scan ms and rule scan ms values are not in
+    the logs. In-process probes measured T111 at 3 to 6 ms and T115 at 239 ms; depth 4000 took
+    10 to 21 ms.
+  - Type check TASK10_TYPECHECK_COMMAND: tsc exit 2; owned tsc errors 0; total tsc errors 31
+    (the baseline). All 31 errors sit in assets/*.ts and tests/part.test.ts; none owned; each
+    inspected. Log: task10-tsc.log.
+  - git diff --quiet cf5743b7 -- src/song src/storytime/line-art-pass.ts: exit 0.
+  - Final 4-file gate on b2a02238 with timeout -k 30 900: exit 0. Tests  125 passed (125).
+    Duration 163.92 s. Log: green-vitest-t10-final.log.
+  - No exit 124, 137, or 75 in any step. One heavy-run call per vitest or tsc command. One
+    mutation 7 attempt was killed by this agent's own tool timeout while it waited for the
+    shared lock; the log held no result, the run was repeated, and no lock wait over 600 s
+    line appeared.
+mutation_table: (each run: heavy-run with timeout -k 30 600, log green-mutation-t10-<n>.log,
+  restore, git diff --quiet HEAD clean before the next run)
+  1. No JSON string-layer parse — exit 1 — T104 (named); co: T105, T107, T108.
+  2. One string layer only — exit 1 — T105 (named); co: T108.
+  3. Root array not walked — exit 1 — T106 only, isolated.
+  4. Scalar array elements skipped — exit 1 — T107 (named); co: T106, T100, T108.
+  5. Schema result passed to the Kimi check — exit 1 — T108 (named); co: T100, T102, T104 to T107, T109.
+  6. Direct recursion restored — exit 1 — T110 (named); co: T109. Matches the strategy.
+  7. Depth ceiling 3500 — exit 1 — T109 (named); T110 passed as required.
+  8. Catch RangeError, return no findings — exit 1 — T109 (named); T110 passed.
+  9. Re-extract from raw text and every string — exit 0 — none; T111 passed. Test gap.
+  10. Rules rebuilt inside the per-key loop — exit 1 — T115 (named); rule scan ms: 8330.
+  11. decodedReviewFindings exported again — exit 1 — T113 only.
+  12. Kimi parse before the decoded check — exit 1 — T114 only.
+  13. Contradicting Kimi comment — exit 1 — T114 only.
+  14. Declared model replaces the reported model — exit 1 — T112 (named); co: T101.
+  15. Refuse every JSON string — exit 1 — T112 (named); co: T101, T102, T104, T105, T107, T108, T110.
+  16. Refuse every root array — exit 1 — T112 (named); co: T106 (root-array finding lands first,
+      so the message names the wrong pattern).
+  17. Catch every walker error, refuse every answer — exit 0 — none; T112 passed. Test gap.
+implementation_summary:
+  - One shared walker decodedAnswerFindings(rawOutput) in src/storytime/book-pictures.ts.
+    Explicit worklist; no call-stack recursion; no depth ceiling. Root JSON.parse first; when
+    the whole answer does not parse, the task 9 prose and fence extraction stays. Every
+    decoded string parses as JSON at any number of layers; non-JSON strings keep the fence
+    extraction. Root arrays, object keys and values, and scalar array elements are walked,
+    with no field allowlist. Credential rules are built once per call; each decoded value is
+    visited once. Findings name patterns only.
+  - The dead decodedReviewFindings export and function are deleted (RA5-02, RC5-4).
+  - Kimi runs the decoded check before parseModelReview and before any record write; the
+    comment states that the check reads the raw answer (RA5-03). MiniMax already called the
+    seam inside the paid callback before success; unchanged.
+  - The task 9 decoded-refusal suffix and the raw-byte refusal text stay byte-identical (RC5-3
+    out of scope). Safe raw bytes and safe reported models stay unchanged.
+findings_closed: RB4-01, RA5-02, RA5-03, RC5-1, RC5-2, RC5-4. RC5-3 stays a tech-debt candidate.
+  RA4-N1 and RA3-N1 stay closeout items.
+known_failures:
+  - None in the test suite. The final gate passes 125 of 125.
+  - Two mutation test gaps, recorded above (mutations 9 and 17). Both are strategy
+    falsification gaps, not Green defects; no test was edited.
+deviations:
+  - Mutation 1: the strategy names T109 as a co-failure. T109 did not fail. Its credential is
+    decoded by the root JSON.parse, not by a string layer, so the string-layer omission cannot
+    hide it. T109 keeps coverage through mutations 6, 7, and 8.
+  - Mutation 8: combined with mutation 6's recursion, because the committed worklist walker
+    cannot raise RangeError. The catch returned no findings, and T109 failed.
+  - Mutation 9 (test gap): T111 passed. With the rules built once per call, re-extraction from
+    the raw text and every string measured 877 ms on the T111 answer, under the 2000 ms bound.
+    The Red-era 20 s cost came from the per-string environment rule rebuild, which mutation 10
+    covers (rule scan ms: 8330).
+  - Mutation 17 (test gap): T112 passed. The worklist walker raises no error on safe answers,
+    so a catch cannot fire and cannot refuse anything. T110 requires exactly that; the
+    mutation's premise contradicts T110.
+  - Plan-only commit 3f604b62 puts the task 10 SHA on the task line after the mechanical gate failed.
+  - Labeled scan ms values are absent from the vitest logs because the default reporter hides
+    console output for passing tests; in-process probe values are recorded instead.
+  - No other deviation. No test file changed. src/song/, src/storytime/line-art-pass.ts, the
+    server, capture code, rubric text, and PICTURE_RUBRIC_VERSION are unchanged (diff gate exit 0).
+handoff:
+  - Reviews A, B, and C run next on task 10 HEAD 3f604b62 (code SHA b2a02238). Review B audits
+    every decoded credential path and write boundary; security review applies. Review A audits
+    layer coverage, call order, mutation isolation, the dead export, and evidence truthfulness;
+    it should read the four recorded deviations, especially the two mutation test gaps.
+    Review C audits refusal text, the deep-answer result, the export change, and the time
+    bound; a short delta check is sufficient. Adversarial testing applies; browser review does
+    not apply (no UI change).
+  - The two mutation test gaps (9 and 17) are candidates for the acceptance role to record; do
+    not treat them as closed mutations.
+  - RC5-3 stays a tech-debt candidate. RA4-N1 and RA3-N1 stay closeout items. Run
+    ./measure/generate.sh and refresh metadata.json actual_tasks during closeout.
+  - The walker reads process.env once per call through envCredentialPatterns(process.env); any
+    future caller that needs a different environment must keep the rules-built-once property
+    or T115 fails.
+  - No paid call, no render, no Vite server, no browser was run by this role.
+facts_changed: none.
+END_MEASURE_AGENT_RESULT

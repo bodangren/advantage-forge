@@ -1,0 +1,53 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 15
+book file requests refused: 0
+Line-art line width: 23 px (minimum 12 px).
+Line-art ink coverage: 7.29% (164012 of 2250000 pixels black).
+l2-w01-practice-line-nest v6: rendered; stage eed975b48f39f2515c956e1409172eb168fe711d852762745d9672588b6812c1; file w01/rows/l2-w01-practice-line-nest-v6.png; lineart w01/rows/l2-w01-practice-line-nest-line-v6.png; size 1500 x 1500; render peak rss mb: 931
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 9.69% (217928 of 2250000 pixels black).
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 9.48% (213218 of 2250000 pixels black).
+Line-art line width: 22 px (minimum 12 px).
+Line-art ink coverage: 6.93% (156010 of 2250000 pixels black).
+Line-art line width: 23 px (minimum 12 px).
+Line-art ink coverage: 7.54% (169633 of 2250000 pixels black).
+Line-art line width: 23 px (minimum 12 px).
+Line-art ink coverage: 7.20% (162005 of 2250000 pixels black).
+Line-art line width: 23 px (minimum 12 px).
+Line-art ink coverage: 7.29% (164012 of 2250000 pixels black).
+l2-w01-practice-line-nest v1: passed
+l2-w01-practice-line-nest v2: passed
+l2-w01-practice-line-nest v3: passed
+l2-w01-practice-line-nest v4: passed
+l2-w01-practice-line-nest v5: passed
+l2-w01-practice-line-nest v6: passed
+Row verification passed for 6 row versions.
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 15
+book file requests refused: 0
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 7.49% (168548 of 2250000 pixels black).
+l2-w01-check-row-nest v5: rendered; stage cb902c8846fa169bef2a96736e57eb65b955750be47a0a2d2eb3b20a8e6010db; file w01/rows/l2-w01-check-row-nest-v5.png; lineart w01/rows/l2-w01-check-row-nest-line-v5.png; size 1500 x 1500; render peak rss mb: 493
+Line-art line width: 25 px (minimum 12 px).
+Line-art ink coverage: 9.87% (221972 of 2250000 pixels black).
+Line-art line width: 26 px (minimum 12 px).
+Line-art ink coverage: 9.69% (218093 of 2250000 pixels black).
+Line-art line width: 23 px (minimum 12 px).
+Line-art ink coverage: 7.74% (174094 of 2250000 pixels black).
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 7.29% (164010 of 2250000 pixels black).
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 7.49% (168548 of 2250000 pixels black).
+l2-w01-check-row-nest v1: passed
+l2-w01-check-row-nest v2: passed
+l2-w01-check-row-nest v3: passed
+l2-w01-check-row-nest v4: passed
+l2-w01-check-row-nest v5: passed
+Row verification passed for 5 row versions.

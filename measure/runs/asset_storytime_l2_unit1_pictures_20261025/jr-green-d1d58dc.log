@@ -1,0 +1,139 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P2 task 9 (Phase 2: Tests and calibrated model pre-checks)
+phase_base_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: d1d58dcd38d8d0d6105a3d33e75ac803b37fa428
+head_sha: 53cc3ada842cffbf1a5bb7b1298f095f9bad3b06
+commits: |
+  e9d8132b0fafc05dc817a4bb9cc1986e32a08b56 fix(storytime): inspect every decoded key and
+  string value before evidence writes (src/storytime/book-pictures.ts only).
+  0f6ed8a08ca0c77f398f4c26b1ceb37bdcba8cbc docs(measure): record Storytime task 9 green
+  evidence (plan.md only; task 9 marked [x] with the implementation SHA and the gate and
+  mutation evidence).
+  53cc3ada842cffbf1a5bb7b1298f095f9bad3b06 docs(measure): put task 9 commit SHA on the task
+  line (plan.md only; `Commit e9d8132b` moved onto the `- [x] Task:` line, duplicate removed).
+  Verified outside my commits: Red test commit a190019472ef25313e19e201f7fc574dacf2cfc0 and
+  Red evidence commit d1d58dcd38d8d0d6105a3d33e75ac803b37fa428 sit inside
+  1d39b8fda457e12d8e7332e7de65d2046ddda78e..HEAD. `git diff --quiet d1d58dcd -- tests/
+  src/song/` exits 0: no Red test, no src/song file, no rubric text, and no
+  PICTURE_RUBRIC_VERSION change. No push, no archive move, no closeout metadata change.
+tests_run: |
+  Red rerun before implementation: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c
+  'node_modules/.bin/vitest run tests/song-still-hook.test.ts
+  tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts
+  tests/song-timeline.test.ts --maxWorkers=1'; exit code 1; summary line:
+  `Tests  8 failed | 105 passed (113)`; T96 to T103 failed as recorded.
+  Green unit gate after implementation: same command; exit code 0; summary line:
+  `Tests  113 passed (113)`; no skip; Test Files 4 passed (4).
+  Final unit gate after the last mutation revert (same command): exit code 0; summary line:
+  `Tests  113 passed (113)`; no skip.
+  Type check (TASK9_TYPECHECK_COMMAND, measure/runs/asset_storytime_l2_unit1_pictures_20261025/
+  green-tsc-t9.log): tsc exit 2; `owned tsc errors: 0`; `total tsc errors: 31` (the unchanged
+  baseline, all outside the owned paths: assets/rowboat.ts 8, assets/airship.ts 7,
+  assets/plank.ts 6, assets/waterskin.ts 3, assets/mushroom-cap.ts 3, tests/part.test.ts 1,
+  assets/wool.ts 1, assets/merchant-cart.ts 1, assets/longship.ts 1).
+  Unchanged-path gate: `git diff --quiet cf5743b7 -- src/song src/storytime/line-art-pass.ts`
+  exit 0. No paid call, no render, no Vite server, no browser, no new smoke run.
+mutation_results: |
+  All nine declared mutations ran one at a time under the focused command
+  (bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run
+  tests/storytime-book-pictures.test.ts --maxWorkers=1'), and Green reverted each one before
+  the next run; the reverted file matched the implementation sha256
+  47b0645ae938cc2afc673f3c7bb734110e7518ba612bfa230e931ca1a8818adc every time.
+  1. Named-fields-only check over reason, issues, and valid count keys: exit 1;
+     `Tests  6 failed | 80 passed (86)`; failed T96, T97, T98, T99, T100, T102. Named tests fail.
+  2. Walk only the first decoded object: exit 1; `Tests  1 failed | 85 passed (86)`;
+     failed T102. Named test fails.
+  3. Check only after CountsSchema or a verdict fallback discards data: exit 1;
+     `Tests  6 failed | 80 passed (86)`; failed T96 to T100 and T102. Named tests T98 and T102 fail.
+  4. Skip keys: exit 1; `Tests  5 failed | 81 passed (86)`; failed T89, T90, T98, T99, T100.
+     Named test T98 fails.
+  4. Skip nested unknown objects, first form (no recursion into object values, full
+     extraction kept): exit 0; `Tests  86 passed (86)`. The direct `jsonObjects` extraction
+     re-supplies every nested object from the raw text, so the recursion-only omission cannot
+     hide a nested credential; the implementation is stronger than that omission. The mutation
+     was restated in the falsifying form that T99 names (a depth or allowlist limit with one
+     parsed answer object): exit 1; `Tests  6 failed | 80 passed (86)`; failed T89, T90, T98,
+     T99, T100, T102. Named test T99 fails.
+  4. Skip arrays: exit 1; `Tests  3 failed | 83 passed (86)`; failed T89, T90, T100.
+     Named test T100 fails.
+  4. Skip embedded `content` decoding: exit 1; `Tests  2 failed | 84 passed (86)`;
+     failed T97, T102. Named test T97 fails.
+  5. MiniMax check moved after the paid callback returns (a success entry appears): exit 1;
+     `Tests  8 failed | 78 passed (86)`; failed T89, T96, T97, T98, T99, T100, T102, T103.
+     Named tests T96 to T100 fail.
+  6. Kimi check moved after its first write (the review file changes): exit 1;
+     `Tests  8 failed | 78 passed (86)`; failed T90, T96, T97, T98, T99, T100, T102, T103.
+     Named tests T96 to T100 fail.
+  7. Safe reported MiniMax models replaced with the declared model: exit 1;
+     `Tests  2 failed | 84 passed (86)`; failed T101, T68. Named test T101 fails.
+  8. Refuse every JSON answer: exit 1; `Tests  8 failed | 78 passed (86)`; failed T82, T89,
+     T90, T24, T25, T101, T102, T68. Named test T101 fails.
+  9. A different decoded-refusal suffix for the Kimi provider: exit 1;
+     `Tests  1 failed | 85 passed (86)`; failed T103. Named test fails.
+  Lock note: one `heavy-run: lock wait over 600 s` line appeared during mutation 7, because
+  other agents held the shared heavy lock; heavy-run retried and finished. The first mutation 7
+  attempt stopped on a 15-minute tool timeout during that lock queue and was restarted with no
+  source change between the attempts. The lock wait is not a test failure.
+files_changed: |
+  src/storytime/book-pictures.ts (implementation commit e9d8132b): new exported seam
+  `decodedAnswerFindings(rawOutput)`, and the two provider call sites replaced their
+  `decodedReviewFindings` checks with it. `decodedReviewFindings` stays exported with no
+  production caller. scripts/storytime-book-pictures.ts needed no change: the existing
+  `runStorytimeBookPicturesEntry` boundary already keeps the new suffix under the same
+  redaction and 500-character limit (T103 passes unchanged).
+  measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md (evidence commits 0f6ed8a0
+  and 53cc3ada).
+  New implementation-owned files: none.
+  measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-tsc-t9.log: type-check output.
+plan_updates: |
+  Task 9 is `[x]`; the `- [x] Task:` line itself carries `Commit e9d8132b` in the same form
+  as task 8. The role gate needs the SHA on that line, not on a following line. The Green
+  evidence under the task records: the Red rerun, the seam and call-site design, the unit gate lines, the type-check
+  labels, the unchanged-path gate, all nine mutation results with their exact summaries, the
+  restated mutation 4 note, the lock-wait note, and the Green model deviation. RA4-N1 and
+  RA3-N1 stay closeout items. No archive move, no metadata.json change, no registry update,
+  no generated-facts run.
+handoff: |
+  Task 9 is complete on HEAD 53cc3ada (code state e9d8132b; the plan-only commits 0f6ed8a0 and
+  53cc3ada add the evidence and the task-line SHA). RB3-01 and RA4-01 are closed:
+  one shared `decodedAnswerFindings` walker inspects every decoded key and string value of
+  every JSON object that the answer yields, including unknown fields, arrays, model envelopes,
+  and objects decoded from embedded `content` strings, before schema validation, field
+  selection, or status fallback. MiniMax refuses inside the paid callback and appends only its
+  sanitized failure entry. Kimi refuses before any record write. Both decoded refusals end
+  with `the raw answer is refused; no review or raw copy is written.` and name only the
+  pattern. Next roles: Reviews A, B, and C run on the task 9 HEAD e9d8132b; Review B covers
+  every decoded credential path and write boundary; Review C may use a short delta check on
+  refusal timing, message parity, safe model preservation, and byte preservation. Phase 2
+  closeout then reruns ENGINE_HOOK_TEST_COMMAND and TASK9_TYPECHECK_COMMAND, corrects RA4-N1
+  (the stale task 8 Green handoff), refreshes metadata.json actual_tasks and the generated
+  facts (RA3-N1, A10), and keeps the earlier task mutations in the closeout gate. The task 9
+  mutations ran and each failed its named test; the phase-acceptance role may re-run them.
+  No question blocks this handoff. Default taken: the mutation 4 omission was restated in the
+  falsifying form that the test names, after the recursion-only form passed; see
+  mutation_results.
+dirty_path_classification: |
+  relevant: src/storytime/book-pictures.ts and the task plan are committed; the owned paths
+  are clean.
+  generated/ignorable: measure/runs/ holds the role logs and the type-check output and stays
+  untracked by design, as in the earlier tasks of this track. measure/generated/* and
+  measure/tracks.md hold other agents' concurrent work and stay untouched.
+  unrelated_user_work: skills files, AGENTS.md, bench/, docs mockups, reference images,
+  other track plans, measure/workflow.md, assets/wizard-argon-trial.ts, and every other
+  pre-existing dirty path are preserved untouched. No `git add -A`; each commit used one
+  explicit path.
+model_deviation: |
+  The strategy and the session plan name volcengine-agent-plan/glm-5.3-flash#high for Green.
+  That model reached its 5-hour provider quota before this run. This role ran
+  volcengine-agent-plan/glm-latest#high (GLM family, same provider plan), the route chosen
+  by `ra-quota pick green`. The Red role ran minimax-cn-coding-plan/MiniMax-M3#high; this role
+  used no MiniMax or other Red-family model and delegated nothing to a coder.
+  The plan-format fix ran on kimi-code-plan-cn/k3.1-pro#high, the route from `ra-quota pick
+  green`, because the GLM route was over its limit.
+facts_changed:
+  - Task 9 of track asset_storytime_l2_unit1_pictures_20261025 moved from [~] to [x].
+  - Phase 2 task 9 (RB3-01, RA4-01) is implemented and its unit, type, and adversarial gates pass.
+END_MEASURE_AGENT_RESULT

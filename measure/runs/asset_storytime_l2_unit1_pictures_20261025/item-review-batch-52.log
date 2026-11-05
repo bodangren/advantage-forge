@@ -1,0 +1,53 @@
+Item review, batch 52 (week 6, batch 52, cover and the eight "I can see ..." pages).
+Reviewer: minimax-cn-coding-plan/MiniMax-M3.1-Flash. Bar: Daniel 2026-11-01 14:15 ICT.
+Each row was judged on the color print and the line print in out/storytime-review/batch-52/pages/.
+
+l2-w06-cover-i-can-see: rating 8.5, clean.
+One gray cat sits whole on the fence rail and one white duck swims on the pond. Mia holds one flat hand
+over her eyes. The cat is small at book size. Note. Mia has a nose curve and a smile.
+The sun ray strokes sit 16 pixels from the disc. Note.
+
+l2-w06-story-page-i-can-see-a-cat: rating 8.5, clean.
+Exactly one cat on the fence rail in both prints, with two pointed ears, whiskers, a nose and a mouth.
+Mia points at the cat with one index finger. The sun ray strokes sit 23 pixels from the disc. Note.
+
+l2-w06-story-page-i-can-see-a-dog: rating 8.5, clean.
+Exactly one puppy runs in the air in both prints. The black patches of the puppy are solid black fills,
+as in the color. Note. The sun ray bases sit on the disc on this page.
+
+l2-w06-story-page-i-can-see-a-horse: rating 8.0, clean.
+Exactly one white horse behind the fence in both prints. Only the golden brown tail tip of Pip shows, as
+one closed fluffy shape that runs to the bottom frame edge. Note. The eyes of Mia are solid black circles
+with no eye outline. Note. The sun ray strokes sit 20 pixels from the disc. Note.
+
+l2-w06-story-page-i-can-see-a-duck: rating 8.5, clean.
+Exactly one white duck swims on the pond in both prints. Mia waves with an open hand of five fingers.
+Two buttons on the straps of the overalls. The sun ray strokes sit 25 pixels from the disc. Note.
+
+l2-w06-story-page-i-can-see-a-fish: rating 8.5, clean.
+Exactly one orange fish swims in the pond in both prints, with one eye, a tail and two fins.
+Mia kneels and points at the fish. The sun ray strokes sit 28 pixels from the disc. Note.
+
+l2-w06-story-page-i-can-see-a-bird: rating 8.5, clean.
+Exactly one blue bird sits on a branch in both prints. Mia points up with one index finger and faces the
+camera, so she does not look up. Note. The sun ray strokes sit 20 pixels from the disc. Note.
+
+l2-w06-story-page-i-can-see-a-frog: rating 8.5, clean.
+Exactly one green frog sits on a lily pad in both prints, with two big eyes on top.
+Mia kneels and points at the frog. The sun ray strokes sit 20 pixels from the disc. Note.
+
+l2-w06-story-page-i-can-see-pip: rating 8.5, clean.
+Exactly one Pip jumps at the right in both prints. He has floppy ears only, a collar with one round tag
+and one fluffy tail. Mia opens both arms. The sun ray strokes sit 8 pixels from the disc. Note.
+
+Control rows K1 to K3 (same results in this file and in item-review-batch-49r5.json):
+K1, "A nose.": rating 5.0, defect, category wrong-or-missing-prop.
+The color print shows one nose and the fingertip touches its side. The line print has no nose shape. The
+fingertip ends on the face at the nose place and the open mouth sits at its right.
+K2, "nose" practice line: rating 9.0, clean. The head is in profile and the nose is clear in both prints.
+K3, "A nut.": rating 9.0, clean. One big brown nut in the open hand of Nan in both prints.
+
+Line check: the 9 line prints of this set and the 3 control line files have 0 pixels that are not 0 or 255.
+No gray or shading in any line art.
+
+Set B status: pass. All 9 rows are clean.

@@ -1,0 +1,16 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 15
+book file requests refused: 0
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 7.06% (158929 of 2250000 pixels black).
+l2-w01-practice-line-nose v2: rendered; stage 3d19b85f259039ad235a65d11edd5da810dcde4ce846353e30e47431f4e7f1aa; file w01/rows/l2-w01-practice-line-nose-v2.png; lineart w01/rows/l2-w01-practice-line-nose-line-v2.png; size 1500 x 1500; render peak rss mb: 477
+Line-art line width: 25 px (minimum 12 px).
+Line-art ink coverage: 10.67% (240098 of 2250000 pixels black).
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 7.06% (158929 of 2250000 pixels black).
+l2-w01-practice-line-nose v1: passed
+l2-w01-practice-line-nose v2: passed
+Row verification passed for 2 row versions.

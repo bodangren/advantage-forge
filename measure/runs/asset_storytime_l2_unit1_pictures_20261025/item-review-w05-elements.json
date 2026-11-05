@@ -1,0 +1,139 @@
+{
+  "reviewer": "opencode-go/mimo-v2.6-flash",
+  "verdict": "accept: 4 of 4 sheets clean under the bar",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "scope": "Week 5 Muse input sheets (props). Sheets feed later week 5 pages. The sheets are not pages.",
+  "index": "out/storytime-review/w05-staging/index.md",
+  "prop-sock-sheet": {
+    "file": "out/storytime/l2/unit1/w05/muse/elements/prop-sock-sheet-m2-color.png",
+    "spec": "docs/storytime/l2-unit1/w05/muse-elements/prop-sock-sheet.json",
+    "spec_goal": "One child sock.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w05/muse/l2-w05-check-row-sock.json",
+        "text": "sock",
+        "goal": "",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w05/muse/elements/prop-sock-sheet-m2-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One sky-blue child ankle sock in a side three-quarter view. One narrow white band at the top edge. One yellow heel patch. One yellow toe patch. The surface is smooth with no knit lines.",
+      "input_checks": "Plain white background. No people. No animals. No text or letters. One sock. No sole, no laces, and no hard toe cap.",
+      "page_fit": "The sock check row needs one picture that reads as sock. The sheet gives that. The check row prompt also says the sock lies on its side, which reads as a sock.",
+      "builder_doubt_chunky_boot": "The builder said the sock is chunky and may read as a small boot. Under the bar, chunkiness alone is not a defect. The sheet keeps three sock cues (soft rounded toe, no sole line, white cuff band) and shows no boot cue. A boot shows a sole and a hard toe cap. The ankle dip and one soft fold also read as a sock. A child at book size reads a sock. The same round chubby style runs across the week 5 sheets, so the sock matches the book look.",
+      "second_look": "re-checked: one sock, white top band, yellow heel patch, yellow toe patch, no sole and no laces. Verdict unchanged."
+    }
+  },
+  "prop-sofa-sheet": {
+    "file": "out/storytime/l2/unit1/w05/muse/elements/prop-sofa-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w05/muse-elements/prop-sofa-sheet.json",
+    "spec_goal": "One sofa.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w05/muse/l2-w05-check-row-sofa.json",
+        "text": "sofa",
+        "goal": "",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w05/muse/elements/prop-sofa-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One soft blue two-seat sofa in a three-quarter front view. Two rounded arms. One rounded back. One seat cushion. Two cream square cushions lean against the back. Short round wooden feet show under the body.",
+      "input_checks": "Plain white background. No people. No animals. No text or letters. No eyes and no face. One sofa.",
+      "foot_count": "Three wooden feet show in this view; the fourth sits behind the front-left body and stays hidden. A hidden foot is normal in a three-quarter view and no teacher sees a wrong foot. Not a defect.",
+      "page_fit": "The sofa check row needs one picture that reads as sofa. The sheet gives that. The two seats and two cushions read as a small two-seat sofa at book size.",
+      "no_sofa_conflict": "The week 5 check row is the only page that uses this sofa. The living room pages use the w04 living room set with its own sofa, so the two sofas never meet in one picture.",
+      "second_look": "re-checked: one sofa, two arms, two cream cushions, three visible wooden feet, no face, no text. Verdict unchanged."
+    }
+  },
+  "prop-nap-blanket-sheet": {
+    "file": "out/storytime/l2/unit1/w05/muse/elements/prop-nap-blanket-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w05/muse-elements/prop-nap-blanket-sheet.json",
+    "spec_goal": "One soft blanket for two children.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w05/muse/l2-w05-story-page-sam-nan-and-pam-nap.json",
+        "text": "Sam, Nan, and Pam nap.",
+        "goal": "Sam (drawn young, about five years old) and Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, are asleep side by side on the soft rug of the same cozy living room under one blanket, with a small rag doll with yellow yarn hair and a red dress asleep between them. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w05/muse/elements/prop-nap-blanket-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One pale-green soft blanket seen from a little above. One cream border band runs around the edge. One corner is turned back at the front left. A few soft round folds sit in the middle.",
+      "input_checks": "Plain white background. No people. No animals. No text or letters. No pattern, no stripes, no stars, and no pillow. One blanket.",
+      "builder_doubt_nearly_square": "The builder said the blanket looks nearly square while the page covers two children. The sheet shows a rectangle wider than tall, not a square. A sheet has no size mark, so a child cannot judge size from it. The nap colorPrompt already states: draw ONE blanket, big enough to cover two small children. The page prompt, not the sheet, carries the size rule. Under the bar this is not a defect.",
+      "page_fit": "The nap page needs one pale-green blanket with a cream border that covers two small children. The sheet gives the color, the border, and the soft look. The page prompt gives the size.",
+      "second_look": "re-checked: one blanket, cream border all round, one corner turned back, a few soft folds. Rectangle, not square. Verdict unchanged."
+    }
+  },
+  "prop-blue-sneakers-sheet": {
+    "file": "out/storytime/l2/unit1/w05/muse/elements/prop-blue-sneakers-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w05/muse-elements/prop-blue-sneakers-sheet.json",
+    "spec_goal": "One pair of blue sneakers with white soles.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w05/muse/l2-w05-story-page-i-have-two-feet.json",
+        "text": "I have two feet.",
+        "goal": "Sam, a five-year-old boy with large dark-brown eyes and short neat dark-brown hair, in a red T-shirt with two white stripes across the chest and blue denim shorts, sits on the grass in the same sunny park with green grass and a low tree with bare feet; his blue sneakers with white soles stand next to him. He points at his two bare feet. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w05/muse/elements/prop-blue-sneakers-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One pair of two blue child sneakers, side by side in a front three-quarter view. Each shoe has one thick white sole, one white toe cap, and white laces tied in a bow. The two shoes match in size and look.",
+      "count_check": "Exactly two shoes. No third shoe.",
+      "input_checks": "Plain white background. No people. No animals. No text or letters. No logo. No pattern.",
+      "page_fit": "The two-feet page needs one pair of blue sneakers with white soles that stand next to Sam. The sheet gives the pair with the white soles, white toe caps, and white laces that the page prompt names. The page also needs Sam barefoot, so the empty shoes fit the page idea.",
+      "second_look": "re-counted: two shoes, each with one white sole, one white toe cap, and one white lace bow. Verdict unchanged."
+    }
+  },
+  "page_risks": [
+    {
+      "risk": "Door pages",
+      "builder_said": "Three pages show a girl at an open door, and the living room set has no door.",
+      "found": "A case-insensitive grep for door in docs/storytime/l2-unit1/w05/ finds TWO specs, not three: l2-w05-story-page-pam-is-off-sam (Nan full body in the door opening) and l2-w05-story-page-pam-is-on-sam (only one sneaker and one leg step in at the right edge). No third week 5 spec names a door.",
+      "spec_clarity": "Clear enough. Each colorPrompt names the door to draw: a plain wooden door frame with a plain open door at the right of the picture. The set picture has no door, and the prompt describes the door in the composition, so the model must add it. The linePrompts also give the door as one closed rectangle frame.",
+      "advice": "At page review, check exactly one door at the right with a clear opening, and no second window-like shape. If a page returns with no door, re-run that page with the door sentence kept first in the picture block."
+    },
+    {
+      "risk": "Leg-only page",
+      "builder_said": "The leg-only page may show the whole girl.",
+      "found": "l2-w05-story-page-pam-is-on-sam carries a strong guard: ONLY one small white sneaker and one bare child leg up to a hint of red shorts step in, cropped by the picture edge, with the list no body, no arms, no head, no face.",
+      "spec_clarity": "Clear. The prompt names what must not appear and states that exactly one boy is fully visible.",
+      "advice": "At page review, check that no head, torso, or arm of Nan appears. A model that completes the figure fails this page, so re-run with the negative list kept if that happens."
+    },
+    {
+      "risk": "Nose page tail",
+      "builder_said": "The nose page shows only the puppy tail behind the tree.",
+      "found": "l2-w05-story-page-i-have-one-nose states that ONLY the fluffy golden-brown tail sticks out behind the trunk, and lists no puppy head, no puppy body, and no puppy legs. The wording is clear. One gap stands: this page references no Pip picture, so the model must build the tail from text alone.",
+      "spec_clarity": "Clear on what shows and what must hide. The gap is the missing Pip reference, not the wording.",
+      "advice": "At page review, check one closed fluffy tail shape that ends on the tree trunk line, and no other puppy part. If the tail reads wrong, add the Pip render to the references and re-run."
+    }
+  ],
+  "summary": {
+    "sheets": 4,
+    "clean": 4,
+    "not_clean": 0,
+    "clean_keys": [
+      "prop-sock-sheet",
+      "prop-sofa-sheet",
+      "prop-nap-blanket-sheet",
+      "prop-blue-sneakers-sheet"
+    ],
+    "not_clean_keys": [],
+    "builder_doubts_judged": "Both builder doubts judge as not defects. The chunky sock keeps three sock cues (soft rounded toe, no sole line, white cuff band) and shows no boot cue, and the check row picture shows it on its side. The blanket sheet shows a rectangle wider than tall, and the nap page prompt states the size rule the sheet cannot carry.",
+    "page_risk": "No sheet is at blocking risk. Three page risks stand for the page review: the door must be drawn on two door pages (the handoff says three; the specs show two), the leg-only page must show no head or body, and the nose page tail has no Pip reference.",
+    "second_look": "Every sheet was opened again after the first pass. All counts hold. All verdicts unchanged.",
+    "reference_paths": "All four page references name the current sheet files: m2 for the sock, m1 for the sofa, blanket, and sneakers."
+  }
+}

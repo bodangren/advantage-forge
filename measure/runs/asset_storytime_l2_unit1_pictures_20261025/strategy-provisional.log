@@ -1,0 +1,67 @@
+MEASURE_AGENT_RESULT
+status: incomplete
+role: measure-strategy
+phase: Phase 3: Week 1 pictures
+phase_id: P3
+track: asset_storytime_l2_unit1_pictures_20261025
+role_base_sha: 455d2c1d60f6a7b2d88cda8391d1771831476d5f
+strategy_commit: none yet
+phase_base_sha: not captured yet. The orchestrator captures it immediately after the strategy commit.
+note: provisional artifact. The strategy file is written next. This log lists the verified facts.
+
+verified_facts:
+  - "picture list v3: /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json"
+  - "pictures.json sha256: c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b"
+  - "pictures.md sha256: e97d649f8de5597494730ee17c8785a1ebe36ee2f7f7c0897701d5422929f848"
+  - "Workbooks commit for list v3: 078917f1"
+  - "picture specification v1 arrived 2026-10-27 in Workbooks commit a9178413"
+  - "192 rows in total. Week 1 has 30 rows: 16 of class A, 2 of class B, 12 of class C."
+  - "week 1 uses: 16 story-page, 2 cover, 9 check-row, 3 practice-line"
+  - "weeks 2 to 7 have 27 rows each. That is 162 rows."
+  - "class A and class B render at 4000 x 3000 pixels. Class C renders at 1500 x 1500 pixels."
+  - "all 192 color names match ^l2-w\\d{2}-[a-z-]+-v\\d+\\.png$"
+  - "every lineArtFileName equals the color name with -line before the version"
+  - "week 1 output is 30 color and 30 line-art files. The date is 2026-11-02."
+  - "weeks 2 to 7 and the cover render are due 2026-11-16 and belong to Phase 4"
+  - "the two class B rows of week 1 are the reader covers l2-w01-cover-hello and l2-w01-cover-nan-can-nod"
+  - "picture list v4 is pending before 2026-11-16. It adds a week 8 review and the Benchmark 1 rows for moon, mango, ostrich, and drum."
+  - "machine memory: 7316 MiB total. 4 cores."
+  - "heavy-run.sh stops a job after 5400 s with exit 124. Exit 75 means hold."
+  - "heavy preflight thresholds: HEAVY_MIN_AVAIL_MB 1200, load at most 2 x cores"
+  - "out/bookcase/stats.json currently records texture size 512. The approved source build is texture 1024 and detail 0.006."
+  - "the classroom map is generated code scenes/maps/classroom.ts. The PNG files under out/chibi-sprouts/r1/week1/scenes are reference renders, not pipeline inputs."
+  - "verify prints: Verification passed for <count> jobs with release evidence. Week 1 needs 30 jobs."
+  - "the cost ledger holds 8 before-call and 8 after-call entries today. No candidate exists yet."
+
+pipeline_gap_for_phase_3_red_and_green:
+  - "PICTURE_SIZES still holds spec v0 sizes: story 3000 x 2250, cover 3600 x 2700, small 1500 x 1500"
+  - "the line-art file name is <directory>/lineart/<name>-lineart.png. Spec v1 wants the sibling name <color name>-line-v1.png"
+  - "only readalong and decodable jobs get a twin. Spec v1 wants one twin for every row"
+  - "plan builds 112 package jobs. It builds no cover, check-row, or practice-line job"
+  - "contract.md still states the provisional format, 3000 x 2250 pages, 3600 x 2700 covers, and the -lineart.png name"
+
+gate_commands:
+  RED_TEST_COMMAND: "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 3600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'"
+  GREEN_TEST_COMMAND: "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 3600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'"
+  TYPECHECK_COMMAND: "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'"
+  CLOSEOUT_COMMAND: "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 3600 node --import tsx scripts/storytime-book-pictures.ts verify --release --week 1'"
+
+review_applicability:
+  review_a: applies. The list loader, the size classes, the file names, and the twin rule change the output contract.
+  review_b: applies. The list is read only. The ledger and the raw model outputs must hold no credential.
+  review_c: applies. The CLI gains list-driven names and the release gate changes.
+  adversarial_testing: required. Tamper a file, change one line-art pixel to 128, and change a list row.
+  ux_browser_review: does not apply. The pictures are files. The human review is the count review and the line-art look.
+
+risks:
+  - "machine limits: 4000 x 3000 renders on 7.1 GiB of memory"
+  - "shared asset drift: out/bookcase/stats.json holds texture size 512 today"
+  - "classroom map version: classroom-v2.png does not replace classroom.png until Daniel decides"
+  - "the line-art look of Daniel is pending"
+  - "the count review of Daniel or his named reviewer is pending"
+
+deviations:
+  - "the quota tool routed this role to minimax-cn-coding-plan/MiniMax-M3#high. The role table names Claude Opus."
+  - "measure/anti-patterns.md does not exist in this repository. The strategy uses the canonical catalog at ~/.agents/skills/measure-orchestrator/references/anti-pattern-catalog.md"
+
+log_path: measure/runs/asset_storytime_l2_unit1_pictures_20261025/strategy-provisional.log

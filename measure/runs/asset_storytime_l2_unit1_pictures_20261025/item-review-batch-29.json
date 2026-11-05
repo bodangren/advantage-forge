@@ -1,0 +1,320 @@
+{
+  "reviewer": "kimi-code-plan-cn/kimi-for-coding",
+  "audited_head": "b31f5fcb",
+  "verdict": "final",
+  "seen": {
+    "out/storytime-review/batch-29/brief.md": "11 keys, bar 7.0, critical defects list, round-2 Muse character pages; brief notes the classroom rug is rectangular while the goal says round rug, and that pages used the original Ben panel (ben-ref-clean was made after).",
+    "out/storytime-review/batch-29/refs/storytime_l2_unit1_w01_muse_elements_cast-group-a.png": "Cast group A on gray: Pat (green shirt, teddy), May (yellow shirt, blue skirt, black side ponytail, yellow star tie), Sam (red striped shirt), Mia (pink shirt, blue overalls, blonde hair, pink bow).",
+    "out/storytime-review/batch-29/refs/storytime_l2_unit1_w01_muse_elements_cast-group-b.png": "Cast group B: Ben (blue shirt, zigzag band across forehead under hair), Nan (orange star shirt, two bunches, red ties), Teacher Kim (green cardigan, cream blouse, navy trousers), Pip (golden-brown puppy, red collar, gold tag).",
+    "out/storytime-review/batch-29/refs/storytime-review_batch-22_sprout-pat-render.png": "Pat reference: black hair, green shirt, brown shorts, sandals, plain brown teddy bear with no cream parts.",
+    "out/storytime-review/batch-29/refs/sprout-mia_render.png": "Mia reference: blonde hair, pink shirt, blue overalls, pink bow; the blonde overalls girl is Mia.",
+    "out/storytime-review/batch-29/refs/sprout-may_render.png": "May reference: black side ponytail with yellow star tie, yellow shirt, blue skirt.",
+    "out/storytime-review/batch-29/refs/sprout-pip_render.png": "Pip reference: golden-brown, cream blaze and chest, floppy ears, red collar with gold tag; the 3D render has two small tufts on the head.",
+    "out/storytime-review/batch-29/refs/storytime-review_muse-test-2_nan-face-clean-crop.png": "Nan face reference: large dark-brown eyes with highlights, thick brows, painted eyelash marks at outer corners, blush, small nose and smile.",
+    "out/storytime-review/muse-cast/nurse-sheet.png": "Nurse reference sheet: short black hair, white cap, white polo tunic and trousers, white shoes, plain bag, bag in right hand.",
+    "out/storytime-review/batch-28/pages/l2-w01-story-page-hello-i-am-ben-m3-color.png": "Calibration for hands: the accepted batch-28 Ben wave shows a clear 5-digit hand (4 fingers plus a small lower thumb).",
+    "/tmp/opencode/review-b29 crops": "Face and hand crops at 2x-4x for every page; line art histograms verified 0/255 only for all 11 line files."
+  },
+  "l2-w01-story-page-hello-i-am-pat": {
+    "files": [
+      "out/storytime-review/batch-29/pages/l2-w01-story-page-hello-i-am-pat-m2-color.png",
+      "out/storytime-review/batch-29/pages/l2-w01-story-page-hello-i-am-pat-m2-line.png"
+    ],
+    "rating": 6.0,
+    "pass": false,
+    "clean": false,
+    "critical": [
+      "waving right hand shows only 4 digits (three fingers plus a thick inner digit with a deep wide web); the index finger is missing; the accepted batch-28 standard shows 5 digits"
+    ],
+    "defects": [
+      "waving hand: 4 digits instead of 5 (critical hand defect)",
+      "the white round shape in front of the teddy bear has no finger separation; it reads as a lump hand or an unexplained white belly patch (the reference bear is plain brown)",
+      "the teddy bear has a cream muzzle and white inner ears; the reference bear is plain brown",
+      "only one low table, half cut off at the right frame edge; the goal names low tables"
+    ],
+    "goal_check": {
+      "Pat drawn about five": "yes: chibi, about five",
+      "holds small brown teddy bear": "yes: small brown teddy held in the left arm",
+      "waves": "yes: right hand raised, but the hand has 4 digits",
+      "green door": "yes: green door with round window at right",
+      "bright kindergarten classroom with low tables": "partial: one low table half cut off at the frame edge",
+      "wall with big colorful animal pictures": "yes: three framed pictures, lion, elephant, frog, no letters",
+      "school bag on his back with a small round bump": "yes: red bag with strap and a pink round bump at the top",
+      "no letters or words anywhere": "yes: no text seen on walls, pictures, bag"
+    },
+    "goal_shown": true,
+    "retry_hint": "Redraw the waving hand with 5 separated digits and give the hand under the bear visible fingers or make the bear plain brown like the reference."
+  },
+  "l2-w01-story-page-hello-i-am-mia": {
+    "files": [
+      "out/storytime-review/batch-29/pages/l2-w01-story-page-hello-i-am-mia-m1-color.png",
+      "out/storytime-review/batch-29/pages/l2-w01-story-page-hello-i-am-mia-m1-line.png"
+    ],
+    "rating": 6.5,
+    "pass": false,
+    "clean": false,
+    "critical": [
+      "waving right hand shows only 4 digits; the index finger is missing (deep wide web before the thick inner digit)"
+    ],
+    "defects": [
+      "waving hand: 4 digits instead of 5 (critical hand defect)",
+      "line art adds a short interior dash inside the waving palm that is not in the color picture (minor)"
+    ],
+    "goal_check": {
+      "Mia drawn about five": "yes: chibi, about five, matches her reference (blonde, pink shirt, blue overalls)",
+      "waves": "yes: right hand raised, but the hand has 4 digits",
+      "big box of colored blocks": "yes: big wooden crate full of colored blocks",
+      "classroom rug": "yes: red rug under her and the box"
+    },
+    "goal_shown": true,
+    "retry_hint": "Redraw the waving hand with 5 separated digits."
+  },
+  "l2-w01-story-page-hello-i-am-may": {
+    "files": [
+      "out/storytime-review/batch-29/pages/l2-w01-story-page-hello-i-am-may-m1-color.png",
+      "out/storytime-review/batch-29/pages/l2-w01-story-page-hello-i-am-may-m1-line.png"
+    ],
+    "rating": 6.0,
+    "pass": false,
+    "clean": false,
+    "critical": [
+      "both open waving hands show only 4 digits each; the index finger is missing on each hand"
+    ],
+    "defects": [
+      "left waving hand: 4 digits instead of 5 (critical hand defect)",
+      "right waving hand: 4 digits instead of 5 (critical hand defect)"
+    ],
+    "goal_check": {
+      "May drawn about five": "yes: chibi, about five, matches her reference (black ponytail, yellow shirt, blue skirt)",
+      "waves with both hands": "yes: both hands raised, each with 4 digits",
+      "low table with a box of crayons": "yes: low table with a blue box of five big crayons, no letters on the crayons",
+      "green door": "yes: green door with round window",
+      "low tables": "yes: one low table beside her",
+      "wall with big colorful animal pictures": "yes: three framed pictures, no letters",
+      "no letters or words anywhere": "yes"
+    },
+    "goal_shown": true,
+    "retry_hint": "Redraw both waving hands with 5 separated digits."
+  },
+  "l2-w01-story-page-hello-i-am-sam": {
+    "files": [
+      "out/storytime-review/batch-29/pages/l2-w01-story-page-hello-i-am-sam-m1-color.png",
+      "out/storytime-review/batch-29/pages/l2-w01-story-page-hello-i-am-sam-m1-line.png"
+    ],
+    "rating": 6.5,
+    "pass": false,
+    "clean": false,
+    "critical": [
+      "waving right hand shows only 4 digits; the index finger is missing"
+    ],
+    "defects": [
+      "waving hand: 4 digits instead of 5 (critical hand defect)",
+      "line art draws many small tassel loops along the rug edges; bold but borderline fine for a 5-year-old (minor)"
+    ],
+    "goal_check": {
+      "Sam drawn about five": "yes: chibi, about five, red striped shirt, blue shorts, matches reference",
+      "sits in the reading corner": "yes: cross-legged on the rug with bookshelves behind",
+      "picture book on his lap": "yes: open picture book with a yellow sun and a blue bird shape, no letters",
+      "waves": "yes: right hand raised, but the hand has 4 digits"
+    },
+    "goal_shown": true,
+    "retry_hint": "Redraw the waving hand with 5 separated digits."
+  },
+  "l2-w01-story-page-hello-i-am-your-teacher": {
+    "files": [
+      "out/storytime-review/batch-29/pages/l2-w01-story-page-hello-i-am-your-teacher-m1-color.png",
+      "out/storytime-review/batch-29/pages/l2-w01-story-page-hello-i-am-your-teacher-m1-line.png"
+    ],
+    "rating": 6.0,
+    "pass": false,
+    "clean": false,
+    "critical": [
+      "the goal says the children sit on a round rug; the picture shows a rectangular rug",
+      "the open waving hands of the children show 4 digits (Pat, May, Sam, Mia, Nan checked; Nan's raised hand has 4 digits)"
+    ],
+    "defects": [
+      "rug is rectangular, the goal word is round rug (goal-word miss)",
+      "Ben keeps the zigzag band across his forehead from the original render; the blurred ben-ref-clean was not used",
+      "children's waving hands: 4 digits instead of 5 (critical hand defect on multiple hands)",
+      "Teacher Kim's own waving hand is correct with 5 digits (no defect there)"
+    ],
+    "goal_check": {
+      "Teacher Kim kneels at the children's eye level": "yes: kneeling at the left, face at the children's height",
+      "Teacher Kim waves": "yes: right hand raised with 5 correct digits",
+      "six children sit on a round rug and wave back": "no: six children present (Ben, Pat, Nan, May, Mia, Sam) and all wave, but the rug is rectangular, not round",
+      "Nan look": "yes: orange star shirt, red shorts, two bunches with red ties, white sneakers, eyelash marks kept"
+    },
+    "goal_shown": true,
+    "retry_hint": "Use a round rug, give each child 5-digit waving hands, and use the cleaned Ben reference without the forehead band."
+  },
+  "l2-w01-story-page-hello-i-am-pip": {
+    "files": [
+      "out/storytime-review/batch-29/pages/l2-w01-story-page-hello-i-am-pip-m2-color.png",
+      "out/storytime-review/batch-29/pages/l2-w01-story-page-hello-i-am-pip-m2-line.png"
+    ],
+    "rating": 6.5,
+    "pass": false,
+    "clean": false,
+    "critical": [
+      "the open hands of the children show 4 digits (May's raised hand, Nan's raised hand, and Pat's raised hand checked)"
+    ],
+    "defects": [
+      "children's raised hands: 4 digits instead of 5 (critical hand defect on multiple hands)",
+      "Ben keeps the zigzag band across his forehead from the original render",
+      "Pip himself is correct: cream blaze and chest, floppy ears, black nose, red collar with round gold tag, happy open face"
+    ],
+    "goal_check": {
+      "Pip pops his head out of Pat's open school bag": "yes: head and paws out of the open red bag",
+      "Pip big happy face": "yes: open mouth, tongue out",
+      "seven people": "yes: Pat, May, Sam, Mia, Nan, Ben, and Teacher Kim",
+      "all laugh in surprise": "yes: open laughing mouths on all seven",
+      "Nan look": "yes: star shirt, red shorts, bunches with red ties, eyelash marks kept",
+      "Pip look": "yes: matches the Pip reference including the gold tag"
+    },
+    "goal_shown": true,
+    "retry_hint": "Give the children's raised hands 5 digits and use the cleaned Ben reference without the forehead band."
+  },
+  "l2-w01-story-page-a-nurse": {
+    "files": [
+      "out/storytime-review/batch-29/pages/l2-w01-story-page-a-nurse-m1-color.png",
+      "out/storytime-review/batch-29/pages/l2-w01-story-page-a-nurse-m1-line.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "woman of about thirty": "yes: adult woman, soft 3D style",
+      "short black hair": "yes",
+      "white nurse's uniform": "yes: white polo tunic and trousers",
+      "small white nurse's cap": "yes",
+      "white shoes": "yes",
+      "smiles": "yes: gentle smile, both pupils",
+      "holds a small first-aid bag with no symbol": "yes: plain white bag in her right hand, no cross or symbol",
+      "one clear picture, main thing large in the middle": "yes",
+      "plain light background": "yes: plain cream background with two soft wall curves"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-cover-hello": {
+    "files": [
+      "out/storytime-review/batch-29/pages/l2-w01-cover-hello-m3-color.png",
+      "out/storytime-review/batch-29/pages/l2-w01-cover-hello-m3-line.png"
+    ],
+    "rating": 6.0,
+    "pass": false,
+    "clean": false,
+    "critical": [
+      "the open waving hands of the children show 4 digits (May's, Mia's, and Ben's raised hands checked)"
+    ],
+    "defects": [
+      "children's waving hands: 4 digits instead of 5 (critical hand defect on multiple hands)",
+      "Ben keeps the zigzag band across his forehead from the original render",
+      "no low tables are visible; the goal names low tables in the classroom (the shown wall, green door, and animal pictures are correct)"
+    ],
+    "goal_check": {
+      "six children and Nan wave hello": "yes: Ben, Mia, Sam, May, Pat (back turned, waving), Nan all wave; hands have 4 digits",
+      "Teacher Kim smiles behind them": "yes: standing behind, smiling, small wave",
+      "green door": "yes",
+      "bright kindergarten classroom with low tables": "partial: no low tables visible",
+      "wall with big colorful animal pictures, no letters": "yes: three framed pictures, no letters",
+      "Pat's school bag has a small round bump": "yes: beige round bump on top of the red bag",
+      "no letters or words anywhere": "yes"
+    },
+    "goal_shown": true,
+    "retry_hint": "Give the children's waving hands 5 digits, use the cleaned Ben reference, and include a low table."
+  },
+  "l2-w01-story-page-a-nest-and-a-nut": {
+    "files": [
+      "out/storytime-review/batch-29/pages/l2-w01-story-page-a-nest-and-a-nut-m1-color.png",
+      "out/storytime-review/batch-29/pages/l2-w01-story-page-a-nest-and-a-nut-m1-line.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Pip sniffs a big brown nut in the grass": "yes: nose at the big brown acorn, tongue out, in grass",
+      "low tree above him": "yes: low branch over Pip",
+      "bird's nest with three light blue eggs on a low branch": "yes: nest with three eggs, large and clear",
+      "nest and nut both large and clear": "yes",
+      "simple garden with soft colors": "yes",
+      "Pip look": "yes: golden-brown, cream chest and muzzle, cream blaze, floppy ears with darker tips, dark eyes, black nose, fluffy tail, red collar with gold tag; head tufts match the render"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-nan-can-nod": {
+    "files": [
+      "out/storytime-review/batch-29/pages/l2-w01-story-page-nan-can-nod-m2-color.png",
+      "out/storytime-review/batch-29/pages/l2-w01-story-page-nan-can-nod-m2-line.png"
+    ],
+    "rating": 6.5,
+    "pass": false,
+    "clean": false,
+    "critical": [
+      "line art: Nan's open smiling mouth from the color picture is drawn as a closed smile; the open mouth is lost"
+    ],
+    "defects": [
+      "line art loses Nan's open mouth (critical line-art defect)",
+      "line art adds a large spurious circle floating in the empty background at the top right that does not exist in the color picture",
+      "line art: the ring of Nan's right eye is broken where the pupil oval meets the outline (pupil still present; minor)",
+      "color picture itself is good: Nan nods with a big open smile, Pip sits and nods beside her, plain light background"
+    ],
+    "goal_check": {
+      "Nan look": "yes: star shirt, red shorts, bunches with red ties, white sneakers, eyelash marks kept",
+      "nods yes with a big smile": "yes: head dipped toward Pip, big open smile (open mouth lost only in the line art)",
+      "Pip sits next to her and nods too": "yes: sitting, head dipped",
+      "one clear picture, main thing large": "yes",
+      "plain light background": "yes in color; the line art adds a floating circle"
+    },
+    "goal_shown": true,
+    "retry_hint": "Regenerate the line art so Nan's mouth stays open and the floating circle disappears."
+  },
+  "l2-w01-cover-nan-can-nod": {
+    "files": [
+      "out/storytime-review/batch-29/pages/l2-w01-cover-nan-can-nod-m1-color.png",
+      "out/storytime-review/batch-29/pages/l2-w01-cover-nan-can-nod-m1-line.png"
+    ],
+    "rating": 7.5,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "line art: the ring of Nan's right eye is broken where the pupil oval meets the outline (pupil still present; minor)",
+      "line art: Nan's open smile is kept but reduced to a small shape; it still reads as open (minor)"
+    ],
+    "goal_check": {
+      "Nan look": "yes: star shirt, red shorts, bunches with red ties, white sneakers, eyelash marks kept",
+      "nods with a big smile": "yes: head dipped, open smile",
+      "garden with a low tree": "yes: soft garden, low tree with one branch",
+      "Pip sits next to her": "yes: sitting, red collar with gold tag, happy face",
+      "Pip look": "yes: matches the reference"
+    },
+    "goal_shown": true,
+    "retry_hint": "Close the ring of Nan's right eye in the line art."
+  },
+  "summary": {
+    "pages": 11,
+    "pass": 3,
+    "clean": 2,
+    "clean_keys": [
+      "l2-w01-story-page-a-nurse",
+      "l2-w01-story-page-a-nest-and-a-nut"
+    ],
+    "not_clean_keys": [
+      "l2-w01-story-page-hello-i-am-pat",
+      "l2-w01-story-page-hello-i-am-mia",
+      "l2-w01-story-page-hello-i-am-may",
+      "l2-w01-story-page-hello-i-am-sam",
+      "l2-w01-story-page-hello-i-am-your-teacher",
+      "l2-w01-story-page-hello-i-am-pip",
+      "l2-w01-cover-hello",
+      "l2-w01-story-page-nan-can-nod",
+      "l2-w01-cover-nan-can-nod"
+    ]
+  }
+}

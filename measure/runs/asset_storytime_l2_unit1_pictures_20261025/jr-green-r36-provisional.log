@@ -1,0 +1,20 @@
+# Measure Jr Green, round 36: Storytime week 1 nut specks (fix 2)
+
+- Role: measure-jr-green (Green phase, build round 36)
+- Session name: Green · P3 · storytime_l2_unit1_pictures · r36
+- Model: deepseek/deepseek-flash#high (route: ra-quota --fresh pick green --not-family
+  minimax --not-family openai; Daniel approved the DeepSeek route on 2026-10-31)
+- Phase 3 Red model: minimax-cn-coding-plan/MiniMax-M3 (MiniMax). Not the Green family.
+- Delegation: none. The coder model is none. Every file in this round is written by this role.
+- role_base_sha: 0677e3a0
+- phase_base_sha: 15a7bf0b
+- Track: measure/tracks/asset_storytime_l2_unit1_pictures_20261025/
+- Phase heading: Phase 3: Week 1 pictures (phase id P3)
+- Task: find the cause of the black specks on storytime-nut and remove them. ONE item. No row
+  renders.
+- Routed finding: item-review-batch-7.json, storytime-nut overall 6.2, critical
+  "Black specks remain along the cap edge."
+- Immutable Red tests: tests/storytime-book-pictures.test.ts and tests/storytime-picture-rows.test.ts
+  are unchanged in this round. This round is a routed audit finding with no new Red test. The
+  targeted check is the textured focus render, not a vitest file.
+- Status: started

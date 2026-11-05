@@ -1,0 +1,86 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 2: Tests and calibrated model pre-checks (P2), task 8
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: 77a7ace917eaa9bf020d9aa6943d128215a73710
+head_sha: cf5743b7071ac8dbbaa2f85d0e74b8578829431c
+commits:
+  - c166c8e1d95849fdebcc885e0b9676686243bbac fix(storytime): close second Review B and third Review A findings
+  - cf5743b7 docs(measure): record Storytime task 8 green evidence (plan evidence, separate commit)
+tests_run:
+  command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'
+  exit_code: 0
+  summary_line: Tests  105 passed (105)
+  red_rerun_before_implementation: exit 1; Tests  6 failed | 99 passed (105); T88, T89, T90, T91, T93, T94 failed for the reviewed defects and missing seams.
+  type_check_command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'
+  type_check_exit_code: 2
+  owned_tsc_errors: 0
+  baseline_tsc_errors: 31
+  smoke_run_6_command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node --import tsx scripts/storytime-book-pictures.ts lineart-smoke --job w01-readalong-p05'
+  smoke_run_6_exit_code: 0
+  smoke_run_6_output: out/storytime/l2/unit1/smoke/lineart-2026-10-26T06-58-43-705Z
+  smoke_run_6_labels: middleware probe .env: refused; middleware probe pem: refused; middleware probe git config: refused; middleware probe storytime: refused; middleware probe stage control: served; middleware probe synthetic bytes exposed: 0; hook before seek: absent; window.__song keys: load,portrait,ready,seek; capture path: captureBookStill; camera drift source: live; camera state drift: 0; color repeat identical: yes; stage ink share: 2.12%; book files served: 15; book file requests refused: 0; lineart technique: song-page-form-edges-viewdepth-1bit-v2; fixture interior ink: 0.00%; fixture ring rays: 360/360; fixture depth step rows: 159/159; lineart-smoke: wrote 4 files under out/storytime/l2/unit1/smoke/lineart-2026-10-26T06-58-43-705Z; wrote no book version.
+  t95_labels: operative full SHAs checked: 14; unresolved full SHAs: 0
+files_changed:
+  - src/storytime/book-pictures.ts
+  - scripts/storytime-book-pictures.ts
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md (plan evidence commit)
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-77a7ace.log (not committed)
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-ec83581.log line 71 (RA3-03 short form, not committed)
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-245f8c1.log line 24 (RA3-03 short form, not committed)
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-tsc-t8.log (not committed)
+plan_updates: Task 8 is [x]. The first line carries Commit `c166c8e1`. The Green evidence block is appended under task 8 with the commit SHA, exit codes, the Tests  105 passed (105) line, the tsc labels, the smoke run 6 labels and output path, and the T95 labels. No earlier task changed. No measure/generated/* or measure/runs/* file is committed. ./measure/generate.sh did not run.
+known_failures:
+  - baseline tsc errors: 31 (outside the owned paths; unchanged from the Red and earlier Green records)
+  - tsc exit code is 2 because of those baseline errors; owned tsc errors are 0.
+  - RA3-N1 metadata.json actual_tasks stays a closeout item (RA3-N1); not touched in task 8.
+  - Reviews A, B, and C must run again on the task 8 HEAD; adversarial testing is required.
+handoff: >
+  Task 8 is complete. Implementation commit c166c8e1d95849fdebcc885e0b9676686243bbac contains the
+  whole Green change in src/storytime/book-pictures.ts and scripts/storytime-book-pictures.ts.
+  RB2-01: runStorytimeBookPicturesEntry(argv, { pipeline, errorLog }) is the final CLI boundary in
+  scripts/storytime-book-pictures.ts; production binds console.error; runPaidCall throws a
+  sanitized error (redactSecrets plus the 500-character limit), so the propagated error and the
+  final log carry no credential. RB2-02: decodedReviewFindings checks the decoded reason, issues,
+  and count keys; the MiniMax call refuses inside the paid call, the Kimi record refuses before
+  any write, and safe raw bytes stay byte-identical. RB2-03: bookServerConfig keeps the four Vite
+  defaults and adds the absolute `<real repoRoot>/out/storytime/**` rule beside the relative one.
+  RB2-04 and RA3-01: checkedModelFile and the stage branch of resolveBookFile return the checked
+  real path, and the stage branch refuses a target inside the Storytime evidence tree.
+  RA3-02: the Kimi failure reason limit counts 500 characters. Smoke run 6 (T92) passed once with
+  all probe and T86 labels in range; the color and line-art PNGs show every scene model (Nan,
+  table, stools, bookcase, window, plant, pot). RA3-03: the invalid full SHA became the short
+  form 245f8c1a in jr-green-ec83581.log line 71 and mid-red-245f8c1.log line 24; nothing else
+  changed there; the short form resolves. T95 passed with 13 operative full SHAs and 0
+  unresolved. No new implementation-owned test file was added; the committed Red tests stayed
+  unchanged (git status over the owned test paths is clean). Next roles: phase-acceptance and
+  the re-reviews run on HEAD 9d6d8542 with the task 8 mutations from test-strategy.md; the unit
+  gate command is in tests_run. No owner decision is pending. No seventh smoke run happened and
+  no paid call ran.
+dirty_path_classification:
+  relevant:
+    - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md (committed)
+    - measure/runs/asset_storytime_l2_unit1_pictures_20261025/ (role logs; not committed by design)
+  generated_ignorable:
+    - measure/generated/architecture.json
+    - measure/generated/asset-inventory.json
+    - measure/generated/status.md
+  unrelated_user_work_preserved:
+    - .claude/skills/forge-assets/ and forge-environments edits
+    - AGENTS.md
+    - bench/trials/
+    - bench/sonnet/
+    - bench/haiku/cards/
+    - docs/hero-mockups/ and docs/item-mockups/
+    - measure/tracks.md
+    - measure/workflow.md
+    - measure/tracks/asset_equipment_parts_20260930/ and other unrelated track plan edits
+    - measure/tracks/avatar_system_20261001/
+    - assets/wizard-argon-trial.ts
+    - reference/blacksmith-quest_001.jpg and reference/village-quest_001.jpg
+    - out/storytime/l2/unit1/smoke/lineart-2026-10-26T06-58-43-705Z (smoke run 6 output; role output, untracked)
+model_deviation: None. Green is volcengine-agent-plan/glm-5.3-flash#high as planned. No coder subagent was needed; the implementation stayed in one bounded change set.
+facts_changed: none
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,500 @@
+{
+  "group": "w07",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v4",
+  "cast": "cast.json 88cbc951",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w07-story-page-is-it-a-ball-no",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-ball-no-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: May, Ben, a cover cloth over a lump, a thought bubble with a ball. Seen: May (black side ponytail, yellow clip, yellow top, blue skirt) points at the red cloth lump; Ben (light-brown hair, light-blue T-shirt, blue shorts, gray shoes) sits on the blue mat; the bubble shows a striped red, yellow and white ball. Cover and bubble are clear. Text answers No, so a different thing in the bubble is correct. Note: Ben wears blue shorts with bare knees; the cast sheet says trousers. I judge this a small mark."
+    },
+    {
+      "id": "l2-w07-story-page-is-it-a-ball-no",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-ball-no-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: May, Ben, a cover cloth, a bubble with a ball. Seen: May points at the cloth lump; Ben sits on the mat; the bubble shows a ball with curved stripes. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-story-page-is-it-a-doll-no",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-doll-no-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: May, Ben, a cover cloth over a lump, a thought bubble with a doll. Seen: May (black side ponytail, yellow clip, yellow top, blue skirt) points at the red cloth lump; Ben (light-brown hair, light-blue T-shirt, blue shorts, gray shoes) sits on the blue mat; the bubble shows Pam, the doll with yellow pigtails and a red dress. Cover and bubble are clear. Text answers No, so a different thing in the bubble is correct. Note: Ben wears blue shorts with bare knees; the cast sheet says trousers. I judge this a small mark."
+    },
+    {
+      "id": "l2-w07-story-page-is-it-a-doll-no",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-doll-no-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: May, Ben, a cover cloth, a bubble with a doll. Seen: May points at the cloth lump; Ben sits on the mat; the bubble shows a doll with pigtails and a dress. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-story-page-is-it-a-car-no",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-car-no-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: May, Ben, a cover cloth over a lump, a thought bubble with a car. Seen: May (black side ponytail, yellow clip, yellow top, blue skirt) points at the red cloth lump; Ben (light-brown hair, light-blue T-shirt, blue shorts, gray shoes) sits on the blue mat; the bubble shows a blue toy car. Cover and bubble are clear. Text answers No, so a different thing in the bubble is correct. Note: Ben wears blue shorts with bare knees; the cast sheet says trousers. I judge this a small mark."
+    },
+    {
+      "id": "l2-w07-story-page-is-it-a-car-no",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-car-no-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: May, Ben, a cover cloth, a bubble with a car. Seen: May points at the cloth lump; Ben sits on the mat; the bubble shows a toy car with two visible wheels. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-story-page-is-it-a-kite-no",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-kite-no-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: May, Ben, a cover cloth over a lump, a thought bubble with a kite. Seen: May (black side ponytail, yellow clip, yellow top, blue skirt) points at the red cloth lump; Ben (light-brown hair, light-blue T-shirt, blue shorts, gray shoes) sits on the blue mat; the bubble shows a red and yellow diamond kite with a bow tail. Cover and bubble are clear. Text answers No, so a different thing in the bubble is correct. Note: Ben wears blue shorts with bare knees; the cast sheet says trousers. I judge this a small mark."
+    },
+    {
+      "id": "l2-w07-story-page-is-it-a-kite-no",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-kite-no-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: May, Ben, a cover cloth, a bubble with a kite. Seen: May points at the cloth lump; Ben sits on the mat; the bubble shows a diamond kite with a bow tail. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-story-page-is-it-a-drum-no",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-drum-no-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: May, Ben, a cover cloth over a lump, a thought bubble with a drum. Seen: May (black side ponytail, yellow clip, yellow top, blue skirt) points at the red cloth lump; Ben (light-brown hair, light-blue T-shirt, blue shorts, gray shoes) sits on the blue mat; the bubble shows a red drum with two sticks. Cover and bubble are clear. Text answers No, so a different thing in the bubble is correct. Note: Ben wears blue shorts with bare knees; the cast sheet says trousers. I judge this a small mark."
+    },
+    {
+      "id": "l2-w07-story-page-is-it-a-drum-no",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-drum-no-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: May, Ben, a cover cloth, a bubble with a drum. Seen: May points at the cloth lump; Ben sits on the mat; the bubble shows a drum with two sticks. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-story-page-is-it-a-train-no",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-train-no-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: May, Ben, a cover cloth over a lump, a thought bubble with a train. Seen: May (black side ponytail, yellow clip, yellow top, blue skirt) points at the red cloth lump; Ben (light-brown hair, light-blue T-shirt, blue shorts, gray shoes) sits on the blue mat; the bubble shows a green toy train with a red wagon. Cover and bubble are clear. Text answers No, so a different thing in the bubble is correct. Note: Ben wears blue shorts with bare knees; the cast sheet says trousers. I judge this a small mark."
+    },
+    {
+      "id": "l2-w07-story-page-is-it-a-train-no",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-train-no-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: May, Ben, a cover cloth, a bubble with a train. Seen: May points at the cloth lump; Ben sits on the mat; the bubble shows a toy train with a wagon. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-story-page-is-it-a-teddy-no",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-teddy-no-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: May, Ben, a cover cloth, a bubble with a teddy. Seen: bubble shows a white teddy bear with a blue bow; a fluffy brown tail sticks out under the cloth as a clue. Both characters look at the cloth. Clear. Same Ben note: blue shorts, small mark."
+    },
+    {
+      "id": "l2-w07-story-page-is-it-a-teddy-no",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-a-teddy-no-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: May, Ben, a cloth, a bubble with a teddy. Seen: a teddy bear with a bow tie in the bubble; a tail sticks out from the cloth. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-story-page-is-it-pip-yes",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-pip-yes-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes (the answer Yes). Items: Pip (1), a cloth lifted. Seen: Ben lifts the red cloth high; Pip (golden-brown, cream chest, red collar and gold tag) jumps out; May opens her arms. Pip clear and matches the cast. Note: Ben in blue shorts, small mark."
+    },
+    {
+      "id": "l2-w07-story-page-is-it-pip-yes",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-is-it-pip-yes-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Pip, the cloth. Seen: a boy lifts the cloth; Pip jumps; May opens her arms. Pip has a collar and tag. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-cover-is-it-a-ball",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-cover-is-it-a-ball-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes (cover). Items: a cover cloth over a lump, May, Ben. Seen: May has a finger at her chin; Ben looks at the cloth; no bubble. A hidden thing is allowed on a question page; the cloth lump is clear. No text in the picture."
+    },
+    {
+      "id": "l2-w07-cover-is-it-a-ball",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-cover-is-it-a-ball-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes (cover). Seen: May with a finger at her chin, Ben, a cloth lump. No text. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-story-page-tom-can-see-a-top",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-tom-can-see-a-top-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), a top (1), see action. Seen: Tom (dark side-swept hair, dark-blue T-shirt, tan shorts, red shoes) kneels and looks at the open toy chest; a red and yellow top with a stem is in the chest among blocks and a duck. Top is visible and reads as a top. Note: the top is small. A pot stands on a table."
+    },
+    {
+      "id": "l2-w07-story-page-tom-can-see-a-top",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-tom-can-see-a-top-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom, a top. Seen: Tom looks into the toy chest; a top with a stem is visible in it among blocks. Small but readable. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-story-page-tom-can-get-the-top",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-tom-can-get-the-top-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), a top (1), get action. Seen: Tom holds a red and yellow top in his raised hand and smiles. Top clear. Tom matches the cast."
+    },
+    {
+      "id": "l2-w07-story-page-tom-can-get-the-top",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-tom-can-get-the-top-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom, a top. Seen: Tom holds up a top. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-story-page-the-top-on-a-mat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-the-top-on-a-mat-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a top (1), a mat (1). Seen: a red and yellow top spins on the round blue mat; Tom kneels and claps. Both clear. Tom matches the cast."
+    },
+    {
+      "id": "l2-w07-story-page-the-top-on-a-mat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-the-top-on-a-mat-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a top, a mat. Seen: a top on the round mat; Tom kneels and claps. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-story-page-the-top-is-on-mom",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-the-top-is-on-mom-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a top (1), Mom (1). Seen: Mom (wavy dark-brown hair, coral blouse, jeans, white sneakers) sits on the sofa and laughs; a red and yellow top rests on top of her head. Tom has his arms up. Mom matches the cast. Top clear."
+    },
+    {
+      "id": "l2-w07-story-page-the-top-is-on-mom",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-the-top-is-on-mom-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a top, Mom. Seen: Mom laughs on the sofa with a top above her head; the top touches or nearly touches her hair. Tom has his arms up. Clear enough. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-story-page-run-tom-run",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-run-tom-run-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), run action. Seen: Tom runs with an arm out; Mom laughs on the sofa; a top lies on the blue mat; Pip sleeps on a small rug. All match the cast."
+    },
+    {
+      "id": "l2-w07-story-page-run-tom-run",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-run-tom-run-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom, run action. Seen: Tom runs; Mom on the sofa; a top on the mat; Pip sleeps. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-story-page-can-tom-see-the-top",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-can-tom-see-the-top-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Tom (1), a top (1). Seen: Tom crawls and looks down at the floor; Mom watches; the red and yellow top stands on sleeping Pip's back. The top is visible. Tom and Mom match the cast."
+    },
+    {
+      "id": "l2-w07-story-page-can-tom-see-the-top",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-can-tom-see-the-top-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Tom, a top. Seen: Tom crawls; Mom on the sofa; a top on Pip's back. Note: Mom's hair is a large curly shape here, more voluminous than wavy; I judge this a small mark. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-story-page-the-top-is-on-pip",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-the-top-is-on-pip-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a top (1), Pip (1). Seen: Tom points at Pip, who sleeps on a small rug; a red and yellow top sits on Pip's back. Both clear. Tom and Mom match the cast."
+    },
+    {
+      "id": "l2-w07-story-page-the-top-is-on-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-the-top-is-on-pip-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a top, Pip. Seen: Tom points at sleeping Pip; a top is on Pip's back. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-cover-the-top",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-cover-the-top-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Cover. Items: a top, Tom. Seen: Tom holds up a red and yellow top; Pip sits and looks at it. No text in the picture. Tom and Pip match the cast."
+    },
+    {
+      "id": "l2-w07-cover-the-top",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-cover-the-top-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Cover. Seen: Tom holds up a top; Pip sits next to him. No text. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-check-row-octopus",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-octopus-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Word: octopus. Seen: one purple octopus with big eyes and curled arms. Reads as an octopus."
+    },
+    {
+      "id": "l2-w07-check-row-octopus",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-octopus-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Word: octopus. Seen: one octopus with curled arms. Reads as an octopus. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-check-row-sun",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-sun-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Word: sun. Seen: one sun with a round center and eight rays. Reads as a sun."
+    },
+    {
+      "id": "l2-w07-check-row-sun",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-sun-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Word: sun. Seen: one sun with rays. Clear. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-check-row-bed",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-bed-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Word: bed. Seen: one wooden bed with a red quilt and a pillow. Reads as a bed."
+    },
+    {
+      "id": "l2-w07-check-row-bed",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-bed-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Word: bed. Seen: one bed with a pillow and a headboard. Reads as a bed. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-check-row-cat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-cat-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Word: cat. Seen: one orange cat with green eyes and whiskers. Reads as a cat."
+    },
+    {
+      "id": "l2-w07-check-row-cat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-cat-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Word: cat. Seen: one cat with whiskers. Reads as a cat. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-check-row-ox",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-ox-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Word: ox. Seen: one brown ox with large horns, a big pink nose and black hooves. Reads as an ox or bull."
+    },
+    {
+      "id": "l2-w07-check-row-ox",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-ox-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Word: ox. Seen: one ox with large horns. Reads as an ox or bull. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-check-row-fish",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-fish-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Word: fish. Seen: one round blue fish with a yellow belly, big eye, fins and tail. Reads as a fish. Note: no mouth."
+    },
+    {
+      "id": "l2-w07-check-row-fish",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-fish-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Word: fish. Seen: one round fish with an eye, fins and a tail. Reads as a fish. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-check-row-pen",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-pen-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Word: pen. Seen: one chubby blue pen with a white clip and a silver tip. Reads as a pen at book size. Note: the body is fat."
+    },
+    {
+      "id": "l2-w07-check-row-pen",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-pen-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Word: pen. Seen: one pen with a clip and a tip. Reads as a pen. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-check-row-bus",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-bus-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Word: bus. Seen: one yellow school bus with windows, door and wheels. Reads as a bus."
+    },
+    {
+      "id": "l2-w07-check-row-bus",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-bus-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Word: bus. Seen: one bus with windows, door and wheels. Reads as a bus. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-story-page-the-top-on-a-pot",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-the-top-on-a-pot-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a top (1), a pot (1), Tom. Seen: Tom with open arms in front; a steel pot with a lid on a low table; a red and yellow top at the back edge of the pot lid, tilted, in front of the toy chest. The contact with the lid is small. Reads as the top on the pot. Tom matches the cast. Note: borderline contact."
+    },
+    {
+      "id": "l2-w07-story-page-the-top-on-a-pot",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-story-page-the-top-on-a-pot-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a top, a pot, Tom. Seen: Tom with open arms; a pot with a lid on a table; a top touches the back edge of the lid. Reads as on the pot. Line art: black lines on white, no gray, no gap that blocks coloring."
+    },
+    {
+      "id": "l2-w07-check-row-olive",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-olive-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Word: olive. Seen: one green oval olive with a red center at one end. Reads as a stuffed olive."
+    },
+    {
+      "id": "l2-w07-check-row-olive",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w07/l2-w07-check-row-olive-line-v1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole picture: an oval with a small ring at the right end",
+      "notes": "Word: olive. Seen: a plain oval with a small ring near one end and no color. At book size it reads as an egg or a plain oval, not as an olive. The shape of the olive is not clear without the color. Line art: black lines on white, no gray, no gap that blocks coloring."
+    }
+  ],
+  "summary": {
+    "files": 54,
+    "pass": 53,
+    "fail": 1
+  }
+}

@@ -1,0 +1,33 @@
+Line-art line width: 22 px (minimum 12 px).
+Line-art ink coverage: 3.45% (77720 of 2250000 pixels black).
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 4.56% (102514 of 2250000 pixels black).
+Line-art line width: 22 px (minimum 12 px).
+Line-art ink coverage: 5.26% (118461 of 2250000 pixels black).
+l2-w01-check-row-hat v1: passed
+l2-w01-check-row-hat v2: passed
+l2-w01-check-row-hat v3: passed
+Row verification passed for 3 row versions.
+	Command being timed: "node --import tsx scripts/storytime-book-pictures.ts verify --row l2-w01-check-row-hat"
+	User time (seconds): 1.93
+	System time (seconds): 0.19
+	Percent of CPU this job got: 112%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.89
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 159844
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 42862
+	Voluntary context switches: 3421
+	Involuntary context switches: 1712
+	Swaps: 0
+	File system inputs: 1536
+	File system outputs: 8
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

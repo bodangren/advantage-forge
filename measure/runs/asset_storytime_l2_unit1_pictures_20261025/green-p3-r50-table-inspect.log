@@ -1,0 +1,40 @@
+storytime-low-table: 22,676 triangles, 1 x 0.48 x 0.6 m, built in 5215 ms
+  top                      20860 tris  (4374 ms)
+  leg-1                      454 tris  (192 ms)
+  leg-2                      456 tris  (198 ms)
+  leg-3                      452 tris  (227 ms)
+  leg-4                      454 tris  (244 ms)
+texture  none (vertex colors)
+glb      out/storytime-low-table/storytime-low-table.glb  (536 KB)
+# Inspection: storytime-low-table
+
+Size 1 x 0.48 x 0.6 m (x y z); 22,676 triangles; lowest point y = 0 m.
+
+## Silhouette per view (fractions of the frame)
+
+| view | width | height | coverage |
+|---|---|---|---|
+| front | 0.828 | 0.395 | 0.086 |
+| three-quarter | 0.852 | 0.48 | 0.108 |
+| side | 0.539 | 0.422 | 0.072 |
+| back | 0.828 | 0.395 | 0.086 |
+| top | 0.898 | 0.691 | 0.307 |
+
+## Visible share of the silhouette per part
+
+| part | front | three-quarter | side | back | top |
+|---|---|---|---|---|---|
+| top | 46.4% | 59.5% | 33.2% | 46.4% | 97.3% |
+| leg-1 | 11% | 6.4% | 11.2% | 15.9% | 0 (hidden) |
+| leg-2 | 11% | 10.5% | 22.2% | 15.8% | 0 (hidden) |
+| leg-3 | 15.8% | 9.7% | 11.2% | 11% | 1.4% |
+| leg-4 | 15.9% | 14% | 22.2% | 10.9% | 1.4% |
+
+## Values and colors (shaded render)
+
+Values: dark 0%, mid 57%, light 43%.
+Dominant colors: #ec4a3b 29%, #f8d7a6 28%, #cc3828 25%, #f6d39c 11%, #d9b77f 4%, #d77156 4%.
+
+## Warnings
+
+- none

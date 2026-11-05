@@ -1,0 +1,17 @@
+Green round 23 provisional log (Storytime week 1 pictures, P3)
+track: asset_storytime_l2_unit1_pictures_20261025
+role_base_sha: 17d169ab
+phase_base_sha: 15a7bf0b
+HEAD at start: 17d169ab
+Red model: minimax-cn-coding-plan/MiniMax-M3
+Green model: xai/grok-4.7#high
+coder: none
+task: one new version of l2-w01-story-page-a-nest. Camera and Nan mark only.
+v2 open defects from the orchestrator:
+1. The nest is about one tenth of the page width. The crown and the trunk take most of the page.
+2. Nan is cut off at the right edge and at the bottom.
+3. The point reads as a fist. The camera sees her from the side. The index finger is hidden.
+v3 goals: nest about one quarter to one third of the page width, in the middle, with three eggs. Keep the fork and two leaf caps. Nan in frame from the head to the waist. Front three-quarter view. The index finger shows against white or grass. White top band. Line-art edge stays 90 percent white.
+command form: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 1800 node --import tsx scripts/storytime-book-pictures.ts render --row l2-w01-story-page-a-nest --version <n>'
+verify form: the same wrapper with verify --row l2-w01-story-page-a-nest
+status: started; no render has run yet

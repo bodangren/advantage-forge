@@ -1,0 +1,44 @@
+{
+  "reviewer": "openai/gpt-6-luna#high",
+  "seen": {
+    "look-reference-nan-and-pip.png": "Nan and Pip use a soft, rounded chibi style.",
+    "storytime-nest-batch-12-practice-line.png": "The earlier practice drawing has broken and noisy strokes.",
+    "storytime-nest-batch-12-check-line.png": "The earlier check drawing has broken and noisy strokes.",
+    "storytime-nest.png": "Four views show a brown nest with tan twigs and three blue eggs.",
+    "l2-w01-practice-line-nest-v11.png": "The practice row shows one nest with three muted blue eggs.",
+    "l2-w01-practice-line-nest-line-v11.png": "The practice drawing has continuous thick outlines with some tight crossings.",
+    "l2-w01-check-row-nest-v7.png": "The check row shows one nest with three muted blue eggs.",
+    "l2-w01-check-row-nest-line-v7.png": "The check drawing has mostly closed outlines and small detached marks near the right edge."
+  },
+  "storytime-nest": {
+    "overall": 7.8,
+    "pass": true,
+    "critical": [],
+    "issues": ["The rounded cup and rim can still resemble a bowl at first glance."],
+    "fix": "Keep the protruding twigs distinct from the rim."
+  },
+  "l2-w01-practice-line-nest": {
+    "overall": 7.3,
+    "pass": true,
+    "critical": [],
+    "issues": ["The eggs read blue but look muted in the row lighting."],
+    "fix": "Increase the egg blue in the row render.",
+    "goals": {
+      "One nest alone on a white page, one nest on the page": "pass",
+      "A child of about 5 years must name it a nest, at 1500 x 1500 and in 1-bit line art": "pass",
+      "objectCounts = { \"nest\": 1 }, sizeClass C, width 1500, height 1500": "pass"
+    }
+  },
+  "l2-w01-check-row-nest": {
+    "overall": 6.8,
+    "pass": false,
+    "critical": ["The line art has detached dash-like marks near the right edge."],
+    "issues": ["The eggs read blue but look muted in the row lighting.", "The line drawing has a few small detached marks near the right edge."],
+    "fix": "Remove the detached line marks and increase the egg blue.",
+    "goals": {
+      "One nest alone on a white page, one nest on the page": "pass",
+      "A child of about 5 years must name it a nest, at 1500 x 1500 and in 1-bit line art": "pass",
+      "objectCounts = { \"nest\": 1 }, sizeClass C, width 1500, height 1500": "pass"
+    }
+  }
+}

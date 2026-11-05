@@ -1,0 +1,35 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+stdout | tests/storytime-muse-delivery-adversarial.test.ts > Muse delivery adversarial probes > ADV9 refuses two picture-list rows with one id before any write
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery-adversarial.test.ts > Muse delivery adversarial probes > ADV9 refuses two picture-list rows with one id before any write
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+ ❯ tests/storytime-muse-delivery-adversarial.test.ts (12 tests | 1 failed | 11 skipped) 798ms
+     × ADV9 refuses two picture-list rows with one id before any write 793ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-muse-delivery-adversarial.test.ts > Muse delivery adversarial probes > ADV9 refuses two picture-list rows with one id before any write
+Error: The writer resolved, but this test expects a rejection.
+ ❯ rejection tests/storytime-muse-delivery-adversarial.test.ts:251:9
+    249|     return error instanceof Error ? error : new Error(String(error));
+    250|   }
+    251|   throw new Error('The writer resolved, but this test expects a reject…
+       |         ^
+    252| }
+    253|
+ ❯ tests/storytime-muse-delivery-adversarial.test.ts:578:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 11 skipped (12)
+   Start at  08:15:47
+   Duration  3.11s (transform 642ms, setup 0ms, import 1.85s, tests 798ms, environment 0ms)
+

@@ -1,0 +1,57 @@
+Green round 34 final log (Storytime week 1 pictures, P3)
+role_base_sha: 595468c8
+phase_base_sha: 15a7bf0b
+final HEAD: 40709385
+models: Red minimax-cn-coding-plan/MiniMax-M3; Green deepseek/deepseek-flash#high; coder none
+commits: 4fb40943 (asset and row stage file), 40709385 (plan evidence)
+decision: the nut is a classic picture-book acorn. Safer default: keep the asset name, keep
+facing +Z, keep the size. One row version was enough.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: green
+task: Phase 3 Week 1 pictures, Green round 34, rework of storytime-nut
+phase_base_sha: 15a7bf0b
+role_base_sha: 595468c8
+final_head: 40709385
+tasks_marked_x: none
+tasks_marked_b: none
+files_added:
+  docs/storytime/l2-unit1/w01/rows/l2-w01-practice-line-nut-v2.json
+files_changed:
+  assets/storytime-nut.ts
+  measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+implementation_commit: 4fb40943
+plan_commit: 40709385
+runs:
+  render --fast loop 1: exit 0; cap read as a beret; shell poked through the cap crown
+  render --fast loop 2: exit 0; acorn read; 5 mm pale shell patch at the stem base
+  render --fast loop 3: exit 0; point softened; lowest point y = -0.002 m
+  render --fast loop 4: exit 0; lowest point y = 0 m
+  inspect --fast: exit 0; one advisory, no warning: line
+  textured render: exit 0; atlas 512; 6076 triangles; GLB 508 KB; warning: lines 0
+  inspect --fast again: exit 0; lowest point y = 0 m; warning: lines 0
+  practice-line-nut v2 render --row: exit 0; line 23 px; ink 1.99%; peak 875 MB
+  practice-line-nut verify --row: exit 0; Row verification passed for 2 row versions
+  measure/doctor.sh: exit 1; 15 errors, none in this track (other tracks and stale generated
+    facts); log green-p3-r34-doctor.log
+sha256:
+  row v2 color 87073fa0445af08c877a27a335ce0c42f70fd195572723c1197f720a268d7575
+  row v2 line d337f955d506b29f9a7faebf3531c20d081ecc9715a72d2f03d3f9be23a6e331
+kept:
+  l2-w01-practice-line-nut v2
+assets:
+  storytime-nut: acorn; egg body with a point at the bottom; cap cup over the top third; four
+    large soft lobes on the cap edge; cap tilted 5 degrees; short stem leaning +X; 0.049 x
+    0.055 x 0.048 m; lowest point y = 0 m
+card: out/storytime-review/batch-6/storytime-nut.png, with brief.md and the row files
+seen:
+  The line art shows a wavy cap edge, a cap wider than the nut under it, a pointed bottom, and
+  a leaning stem. It does not show a level rim, a knob, or a pot base. The old line art showed a
+  round pot with a lid and a knob.
+rows: 22 of 30 week 1 rows rendered; 15 with no open defect before this round; no new row
+open_defect:
+  l2-w01-story-page-a-nut used the old nut; it needs a re-render after the review
+  l2-w01-story-page-a-nest-and-a-nut used the old nut; it needs a re-render after the review
+handoff: independent re-review of the batch 6 item storytime-nut (a big brown nut, rework)
+END_MEASURE_AGENT_RESULT

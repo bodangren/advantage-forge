@@ -1,0 +1,20 @@
+{
+  "reviewer": "kimi-code-plan-cn/kimi-for-coding",
+  "seen": {
+    "brief.md": "The brief sets the 7.0 bar, the critical defect list, the sizes, and the three week 1 row goals for Pat's school bag.",
+    "look-reference-nan-and-pip.png": "The approved style is a soft, round, bright 3D chibi look, shown on Nan and the dog Pip.",
+    "sprout-pat-render.png": "Pat stands about 0.858 m tall with a green shirt and brown shorts and holds a small brown teddy bear.",
+    "storytime-school-bag.png": "Four views show a red school bag with a yellow front pocket, dark blue straps on the back, a blue grab loop on top, and a round bump in the upper front panel."
+  },
+  "storytime-school-bag": {
+    "overall": 8.0,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "The round bump is clear in the three-quarter view but faint in the front view.",
+      "The straps sit close to the back panel and read thin from the side."
+    ],
+    "fix": "",
+    "notes": "A child of about 5 years names this a school bag. The red body, the yellow front pocket, and the back straps read as a child's school bag, not as an adventurer's pack. The round bump sits in the upper front panel. It reads as something round that moves inside. It does not read as a face or as a second pocket. The bump changes the outline in the three-quarter view and makes a smaller change in the front view. The straps and the grab loop attach to the body with no floating and no buried part. I see no black specks, no grit, no text, no letters, no numbers, no logo, and no face. The bag is about 0.291 m tall with the loop and about 0.252 m wide, so the size fits Pat's back. The red body stands out against Pat's green shirt and fits the approved soft, round, bright style."
+  }
+}

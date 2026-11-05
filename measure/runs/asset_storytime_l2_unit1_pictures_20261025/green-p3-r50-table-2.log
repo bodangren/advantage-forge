@@ -1,0 +1,9 @@
+storytime-low-table: 22,676 triangles, 1 x 0.48 x 0.6 m, built in 4995 ms
+  top                      20860 tris  (4066 ms)
+  leg-1                      454 tris  (194 ms)
+  leg-2                      456 tris  (178 ms)
+  leg-3                      452 tris  (155 ms)
+  leg-4                      454 tris  (156 ms)
+texture  none (vertex colors)
+glb      out/storytime-low-table/storytime-low-table.glb  (536 KB)
+render   out/storytime-low-table/render.png  (290 ms)

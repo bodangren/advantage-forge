@@ -1,0 +1,142 @@
+heavy-run: lock wait over 600 s — holder PID 3956179: flock /home/daniebo/Desktop/primary-parity-progress/heavy.lock /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh --locked -c bash 'apps/storytime/__tests__/phase1-docker-smoke.sh' --locked 
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ↓ tests/storytime-book-pictures.test.ts > Review B security remediation > T77: the render wrapper preserves argv and the hold code without a shell string
+ ↓ tests/storytime-book-pictures.test.ts > Review B security remediation > T78: the file server allows named files and refuses physical escapes without next
+ ↓ tests/storytime-book-pictures.test.ts > Review B security remediation > T79: the production opener uses the loopback server and the protected file plugin
+ ↓ tests/storytime-book-pictures.test.ts > Review B security remediation > T80: exclusive output writes and the smoke writer refuse existing paths and symlink escapes
+ ↓ tests/storytime-book-pictures.test.ts > Review B security remediation > T81: credential findings name patterns and provider failures persist only bounded redacted text
+ ↓ tests/storytime-book-pictures.test.ts > Review B security remediation > T82: raw answers reject credentials and unsafe files and preserve safe bytes
+ ↓ tests/storytime-book-pictures.test.ts > Review B security remediation > T83: Kimi refuses credential reasons and long reasons before any write
+ ↓ tests/storytime-book-pictures.test.ts > Review B security remediation > T84: release rechecks calibration while plain verification does not
+ ↓ tests/storytime-book-pictures.test.ts > Review B security remediation > T85: an empty or absent style sample list fails every twin
+ ↓ tests/storytime-book-pictures.test.ts > Second security remediation > T88: the propagated provider error and the final CLI error carry no credential
+ ↓ tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+ ↓ tests/storytime-book-pictures.test.ts > Second security remediation > T90: the Kimi decoded review fields pass the credential check before any write
+ ↓ tests/storytime-book-pictures.test.ts > Second security remediation > T91: the server configuration keeps the Vite credential defaults and the absolute Storytime rule
+ ↓ tests/storytime-book-pictures.test.ts > Second security remediation > T93: the server returns and reads the checked real path and refuses a protected stage target
+ ↓ tests/storytime-book-pictures.test.ts > Second security remediation > T94: the Kimi failure reason limit counts characters
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T1: extracts exactly 112 jobs, 16 per week, and 8 per book kind
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T2: ignores the w08 package in a temporary Workbooks copy
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T3: plan preserves real package bytes and records independently computed hashes
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T4: a changed package byte stops render before capture
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T5: a week filter preserves all 112 jobs and their source hashes
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T6: filenames describe subjects rather than gestures
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T7: a retry preserves v1 bytes and writes v2 or refuses
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T8: stages use exact byte hashes and reject wrong identities and media keys
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T9: changed stage bytes invalidate render evidence
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T10: rejects traversal, absolute escape, and symlink escape
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T11: preflight precedes the lock; a hold stops work; a dry run avoids both
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T12: injected capture keeps real processes, browsers, and servers unused
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T13: paid calls require consent and ledger order on success and failure
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T14: only a labeled verdict and labeled integer counts can pass
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T15: PNG checks reject alpha, deep channels, wrong sizes, grey, flat color, and dark small corners
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T16: cover validation distinguishes a calm title region from a focal prop in the top 30 percent
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T17: release requires valid model logs and a named person log bound to the file and rubric
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T18: an empty release selection and a manifest with zero jobs fail
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T19: selection keeps ready v1 over pending v2 and then selects ready v3
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T20: the batch hash matches an independent canonical computation
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T21: contact sheets preserve all candidate bytes and write only below the output root
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T22: a production render stops until all four calibration verdicts pass
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T23: the CLI rejects song, video, and unknown commands; still timelines have no singing or page notes
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T24: MiniMax receives native image arguments, source text, and the rubric without a shell
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T25: Kimi begin precedes record; raw output and file hashes stay unchanged
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T26: one capture binds both written twins to one stage, time, and camera
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T27: competing twin bindings and a changed line-art hash fail release
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T28: line-art size equals the color size, including the last pixel row
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T29: one pixel of 1, 128, or 254 fails the binary check
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T30: line art requires one opaque 8-bit grey channel
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T31: line art rejects an inverted background and a black edge frame
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T32: ink coverage has labeled measurements and inclusive provisional limits
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T33: generated twin paths preserve the color use, subject, and version without pattern overlap
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T34: changed twins write v2 together and preserve both v1 hashes
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T35: line-art batches have independent hashes and complete version records
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T36: line-art readiness needs color, binding, person, and owner style evidence
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T37: release checks both twins unless an output filter limits the selection
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T38: render dry runs print both paths without capture or output writes
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T39: contact sheets show both twins side by side without changing either file
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T40: a missing or failed line-art pass writes neither twin nor evidence
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T41: a size parameter writes a new twin version from unchanged stage bytes and camera
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T49: capture order binds the first camera read and rejects drift, changed pixels, and a missing hook
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T50: smoke checks accept a full ring and reject interior mesh lines and a 30-degree gap
+ ↓ tests/storytime-book-pictures.test.ts > Storytime picture contract > T51: smoke capture stays isolated, leaves v1 available, and has a capture-free dry run
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T96: both providers refuse an escaped top-level model before evidence writes
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T97: both providers inspect plain and fenced content models
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T98: malformed FAIL and PASS count keys are inspected before schema fallback
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T99: unknown fields retain credential keys and strings at every depth
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T100: unknown arrays retain string elements and object keys
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T101: safe controls preserve raw bytes, models, and malformed parser results
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T103: decoded refusal messages share the exact suffix through the final CLI boundary
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T110: a safe object at depth 4000 keeps the parser result and the raw bytes
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T111: the seam scans a 65,536-byte answer at depth 400 within 2000 ms
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T113: the decodedReviewFindings export is gone
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T114: the decoded check runs before parseModelReview and the Kimi comment matches
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T115: the seam scans a wide answer with 1200 injected secrets within 2000 ms
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T116: both providers refuse Review B case 1, the fenced root array
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T117: both providers refuse Review B case 2, a safe review then a root array
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T118: both providers refuse Review B case 3, the earlier duplicate value
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T119: both providers refuse Review B case 4, the duplicate key
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T120: both providers refuse Review B case 5, the malformed unknown field
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T121: the seam scans 65,536 unmatched opening braces within 2000 ms
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T122: both providers refuse the fence, the duplicate key, and the malformed tail
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T123: both providers accept the safe answers and keep the bytes, the models, and the writes
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T124: the long pattern name is cut and the task 10 suffix stays in every message
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T125: one rule builder serves the raw path and the decoded path
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T126: the decoded-check comments name the raw answer, the order, and the current finding
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T128: the Kimi path writes no evidence for every refused construction
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T129: both providers refuse the unterminated token
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T130: both providers refuse the trailing backslash
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T131: both providers refuse the raw control character and the MiniMax envelope
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T132: both providers refuse the invalid escape
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T133: both providers refuse the stray prose quote
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T134: the seeded generator finds every credential case and no twin
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T136: the seam scans the wide answer with the T115 rules within the labeled bound
+wide scan ms: 473
+wide tokens: 9543
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T137: the seam scans the chain answer within the labeled bound
+chain levels: 14
+
+ ✓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T136: the seam scans the wide answer with the T115 rules within the labeled bound 826ms
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T137: the seam scans the chain answer within the labeled bound
+chain scan ms: 351
+
+ ✓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T137: the seam scans the chain answer within the labeled bound 524ms
+ ↓ tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T138: the safe twins yield no finding and both providers accept them
+ ↓ tests/storytime-book-pictures.test.ts > Model review parser regressions > T54: the real mmx FAIL envelope preserves the model reason, counts, and issue
+ ↓ tests/storytime-book-pictures.test.ts > Model review parser regressions > T55: a structured PASS inside the mmx envelope preserves its counts
+ ↓ tests/storytime-book-pictures.test.ts > Model review parser regressions > T56: a plain fenced JSON PASS preserves the review fields
+ ↓ tests/storytime-book-pictures.test.ts > Model review parser regressions > T57: a non-zero provider status rejects an enclosed PASS
+ ↓ tests/storytime-book-pictures.test.ts > Model review parser regressions > T58: unstructured FAIL text remains a failure
+ ↓ tests/storytime-book-pictures.test.ts > Model review parser regressions > T59: unstructured PASS text cannot pass
+ ↓ tests/storytime-book-pictures.test.ts > Model review parser regressions > T60: a PASS object needs valid counts and issues
+ ↓ tests/storytime-book-pictures.test.ts > Review A remediation > T61: the production capture loads the timeline before its first seek
+ ↓ tests/storytime-book-pictures.test.ts > Review A remediation > T62: the shared loader accepts no notes and rejects a note before any seek
+ ↓ tests/storytime-book-pictures.test.ts > Review A remediation > T63: live camera reads detect fov and projection drift and retain the published evidence
+ ↓ tests/storytime-book-pictures.test.ts > Review A remediation > T64: one style look covers other twins of the same technique and validates the sample bytes
+ ↓ tests/storytime-book-pictures.test.ts > Review A remediation > T65: calibration rejects a stale rubric, a changed hash, and the old good-nan text
+ ↓ tests/storytime-book-pictures.test.ts > Review A remediation > T66: good-nan uses the neutral Workbooks character text
+ ↓ tests/storytime-book-pictures.test.ts > Review A remediation > T67: Kimi failure records close one call and refuse invalid or duplicate records without writes
+ ↓ tests/storytime-book-pictures.test.ts > Review A remediation > T68: provider logs label declared models and preserve a reported MiniMax model
+ ↓ tests/storytime-book-pictures.test.ts > Review A remediation > T69: repeated MiniMax calls keep separate callId raw files and bind each review
+ ↓ tests/storytime-book-pictures.test.ts > Review A remediation > T71: render evidence and smoke evidence name the view-distance technique
+ ↓ tests/storytime-book-pictures.test.ts > Review A remediation > T72: a completed newest version prints the next version and an explicit v2 needs no v1
+ ↓ tests/storytime-book-pictures.test.ts > Review A remediation > T73: the smoke depth-step check needs border ink on at least 90 percent of the declared rows
+
+ Test Files  1 passed (1)
+      Tests  2 passed | 119 skipped (121)
+   Start at  10:30:11
+   Duration  6.19s (transform 1.80s, setup 0ms, import 3.35s, tests 2.23s, environment 0ms)
+
+labels-exit=0

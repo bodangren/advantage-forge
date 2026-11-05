@@ -1,0 +1,18 @@
+{
+  "status": "inconclusive",
+  "reviewer": "nvidia/minimaxai/minimax-m3.1-flash#thinking",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Provisional. Review in progress.",
+  "items": {
+    "l2-w05-story-page-i-have-two-ears": { "rating": null },
+    "l2-w05-story-page-i-have-two-eyes": { "rating": null },
+    "l2-w05-story-page-i-have-two-feet": { "rating": null },
+    "l2-w05-story-page-i-have-two-hands": { "rating": null },
+    "l2-w05-story-page-i-have-two-legs": { "rating": null }
+  },
+  "extra": {
+    "K1": { "rating": null },
+    "K2": { "rating": null },
+    "K3": { "rating": null }
+  }
+}

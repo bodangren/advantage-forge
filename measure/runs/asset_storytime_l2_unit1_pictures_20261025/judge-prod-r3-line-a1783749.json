@@ -1,0 +1,19 @@
+{
+  "group": "prod-r3-line",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w01-story-page-a-nut",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nut-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the nut above the open hand, center left of the picture",
+      "notes": "Question page: no. Items: a nut (1). Action: none. Seen: Nan at the right edge (one bun with a ring band, star on her shirt, cut by the right frame); an open hand with four fingers at the lower left; above the hand a tall shape made of two long rounded lobes side by side, split by one long vertical line, with no shell texture and no waist across the middle. This reads as two thumbs or two bean pods, not as a peanut in its shell. A young child would not know it as a nut. mustShow: one peanut in its shell - absent as a peanut (the shape reads as another object); Nan's open hand - shown; the nut is large in the middle - the shape is large and near the middle, but it is not a clear nut. Cast match for Nan is ok. Black lines on white, no gray, no text. The fail is the nut shape."
+    }
+  ],
+  "summary": { "files": 1, "pass": 0, "fail": 1 }
+}

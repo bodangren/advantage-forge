@@ -1,0 +1,159 @@
+{
+  "batch": "57r2",
+  "status": "pass",
+  "reviewer": "claude-code/claude-opus-5-5[1m]#high",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "The octopus check row is clean (8.0). It has exactly eight arms in the color print and in the line print (left 3, center 1, right 4). The line print has 0 gray pixels. Control K1 is a defect: the line file has no nose, and the text names the nose. Controls K2 and K3 are clean.",
+  "items": {
+    "l2-w07-check-row-octopus": {
+      "files": [
+        "out/storytime-review/batch-57r2/brief.md",
+        "out/storytime-review/batch-57r2/refs/out_octopus_views_three-quarter.png",
+        "out/storytime-review/batch-57r2/pages/l2-w07-check-row-octopus-m2-color-print.png",
+        "out/storytime-review/batch-57r2/pages/l2-w07-check-row-octopus-m2-line-print-3-despeckled.png"
+      ],
+      "rating": 8.0,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "arm_count": {
+        "color": {
+          "left": 3,
+          "center": 1,
+          "right": 4,
+          "total": 8
+        },
+        "line": {
+          "left": 3,
+          "center": 1,
+          "right": 4,
+          "total": 8
+        }
+      },
+      "notes": [
+        "The object reads as an octopus at book size in color and in line. It matches the look sheet: a round purple head, two big dark eyes, a small smile, and curled arms.",
+        "The color print has one head, two eyes with white highlights, a smile, and a blush mark on each cheek. The line print has one head, two eyes (each a ring with a solid black pupil), and a smile.",
+        "The center arm in color has its tip toward the viewer. The line print shows the same tip as an inner hook line inside the closed arm outline.",
+        "Builder note 1 is correct: the upper left arm in the line print rises from the side of the head on a stalk and ends in a curl. In color, this arm lies lower behind the middle left arm. The arm count is the same, so this difference changes no character.",
+        "Builder note 2 is correct: the four right curls are close together. Each curl has its own closed outline. The second and third curls share one boundary line.",
+        "Builder note 3 is correct: the line print has open line ends inside the body. These lines start the arm edges and the center arm sides, and one hook line marks the center arm tip. The outer outline of the octopus is closed, so the line ends do not make a coloring gap.",
+        "The arm areas near the right join of the body are thin wedges. The curls at the arm ends are large, so a child can color each arm.",
+        "The line print has no blush, no suckers, and no head bumps. The color print has small bumps on the top of the head, as in the look sheet. These are small marks.",
+        "The line print has no thick black band. Only the pupils are solid black. Nothing is cut at a print edge in color or in line."
+      ],
+      "goal_check": "Pass. The check row has no goal. The object reads as an octopus next to the printed word 'octopus', with exactly eight arms in color and in line.",
+      "line_check": {
+        "script": "/tmp/opencode/b57r2/gray-count.cjs",
+        "file": "out/storytime-review/batch-57r2/pages/l2-w07-check-row-octopus-m2-line-print-3-despeckled.png",
+        "width": 1500,
+        "height": 1500,
+        "channels": 1,
+        "pixels": 2250000,
+        "not_0_or_255": 0,
+        "black_pixels": 162739,
+        "ink_percent": 7.23,
+        "result": "pass"
+      }
+    }
+  },
+  "extra": {
+    "K1": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "rating": 4.0,
+      "verdict": "defect",
+      "defect_categories": [
+        "broken-face"
+      ],
+      "defects": [
+        "The text names the nose, but the line file has no nose. The finger tip goes to the empty area between the eyes and the mouth. A child who colors the page cannot find the nose that the sentence names."
+      ],
+      "notes": [
+        "The color file matches Nan: two buns with red bands, brown eyebrows, brown eyes, orange shirt with a white star, red shorts, white shoes.",
+        "In the color file, the index finger touches the lower left side of the nose. The nose shows clearly. The open mouth reads as a laugh.",
+        "The color hand has one extended index finger and the other fingers curl into a fist. The hand reads correctly at book size.",
+        "In the line file, the hand is one finger shape on a fist outline with no separate fingers. This is acceptable at book size.",
+        "The line eyes are rings with a small ring pupil. The line art has no gray and no thick black band."
+      ],
+      "goal_check": "Color: pass. Nan touches her nose with one finger and laughs. Line: fail. The line file has no nose, so the touch on the nose does not show.",
+      "line_check": {
+        "script": "/tmp/opencode/b57r2/gray-count.cjs",
+        "file": "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png",
+        "width": 4000,
+        "height": 3000,
+        "channels": 1,
+        "pixels": 12000000,
+        "not_0_or_255": 0,
+        "black_pixels": 461529,
+        "ink_percent": 3.85,
+        "result": "pass"
+      },
+      "retry_hint": "Make a new line try from the same color file and draw the small round nose above the finger tip, between the eyes and the mouth."
+    },
+    "K2": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 8.0,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The head of Nan shows in profile and faces to the right. The goal says 'the other way' with no reference direction, so I cannot check the direction. The profile view is correct.",
+        "The nose shows clearly in the color file and in the line file. The line nose is a closed bump on the face outline.",
+        "The line file has one eye with a solid black pupil, one eyebrow, a smile, an ear, and the bun. These match the color file.",
+        "The line bun has no red band ring. The color bun has a red band. This difference changes no character and no needed prop.",
+        "The ear line and the smile line are open curves inside the face area. They do not make a coloring gap.",
+        "The hair, face, neck, and collar outlines join with no gaps. The line art has no gray and no thick black band."
+      ],
+      "goal_check": "Pass. The head of Nan is in profile and the nose shows clearly in color and line, so the page works for a tracing practice line.",
+      "line_check": {
+        "script": "/tmp/opencode/b57r2/gray-count.cjs",
+        "file": "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png",
+        "width": 1600,
+        "height": 1600,
+        "channels": 1,
+        "pixels": 2560000,
+        "not_0_or_255": 0,
+        "black_pixels": 167096,
+        "ink_percent": 6.53,
+        "result": "pass"
+      }
+    },
+    "K3": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": 8.0,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "One big nut (an acorn with a dark brown cap and a light brown body) sits on the open palm of Nan. It reads as a nut at book size in color and line.",
+        "The open hand has exactly five digits in color and in line: one thumb at the top and four fingers.",
+        "Nan matches the look reference: two buns with red bands, brown eyebrows, brown eyes, a small nose, a smile, blush, an orange shirt with a white star, red shorts.",
+        "The close-up frame cuts the top of the hair, the right bun, and the feet at the print edges. The goal asks for a close-up, so this is a note.",
+        "The line eyes are rings with two small highlight rings. The line nose is a short curve. The line art has no gray and no thick black band.",
+        "The short lines between the fingers and on the palm are open crease lines inside closed outlines. They do not make a coloring gap."
+      ],
+      "goal_check": "Pass. One big brown nut is in the open hand of Nan, close up, in color and line.",
+      "line_check": {
+        "script": "/tmp/opencode/b57r2/gray-count.cjs",
+        "file": "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png",
+        "width": 4000,
+        "height": 3000,
+        "channels": 1,
+        "pixels": 12000000,
+        "not_0_or_255": 0,
+        "black_pixels": 714600,
+        "ink_percent": 5.96,
+        "result": "pass"
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+Green round 15, track asset_storytime_l2_unit1_pictures_20261025, phase P3 (session: Green · P3 · storytime_l2_unit1_pictures · r15)
+Models: Green r15 = claude-code/claude-sonnet-5-5#high; Green coder model: none (no delegation); Red = minimax-cn-coding-plan/MiniMax-M3; item reviewer = openai/gpt-6-luna#high.
+Earlier Green: opus-5-5 (r1-r7), gpt-6-luna (r8), sonnet-5-5 (r9-r14).
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3
+round: 15
+phase_base_sha: 15a7bf0b
+role_base_sha: f57d7ea1
+final_green_head: a3a95c70
+commits:
+  - e00cec90 fix(storytime): move the school bus door to the +X side with a dark frame and a step (assets/storytime-school-bus.ts)
+  - a3a95c70 docs(measure): record storytime green round 15 school bus door evidence (plan.md)
+tasks_flipped_x: none
+tasks_flipped_b: none
+cause: independent review item-review-batch-2.json rated the bus 8.2 but failed it: "The bus has no clear door." The door was on -X; the views show +X.
+orchestrator_decision: door moves to +X (left side; Thailand drives on the left; row views show +X). Replaces "right side" of the r14 brief.
+change: -X door removed; -X has four plain windows. +X has a two-leaf door near the front wheel: dark rubber frame proud of the side, two tall glass panes, dark center seam, one low grey step. Windows, wheels, lamps, bumpers, colors, size unchanged. No text, number, logo, or flag.
+renders:
+  - fast render 1: exit 1 (box radius error, fixed) green-p3-r15-render1.log
+  - fast render 2: exit 0, 0 warning lines, green-p3-r15-render2.log
+  - textured render: exit 0, 0 warning lines, green-p3-r15-render-tex.log
+  - inspect --fast: exit 0, warnings: none, green-p3-r15-inspect.log
+  - no exit 75, no exit 137, no lock wait over 600 s
+  - every forge command ran as one heavy-run.sh command
+card: out/storytime-review/batch-2/storytime-school-bus.png (front, three-quarter, side, back; 2060x512, same layout as batch-1b nest card)
+brief: out/storytime-review/batch-2/brief.md updated (door on +X side; back-three-quarter note removed; bar and critical list kept)
+new_files: none in git. Edited: assets/storytime-school-bus.ts, plan.md.
+open_risk: in the front view the proud door frame shows as a thin dark bar at the side edge.
+handoff: independent review r2 of storytime-school-bus (card and brief above). Do not rate from the builder notes.
+END_MEASURE_AGENT_RESULT

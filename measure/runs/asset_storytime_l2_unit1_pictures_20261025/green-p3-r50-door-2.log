@@ -1,0 +1,9 @@
+storytime-green-door: 77,876 triangles, 1.09 x 2.07 x 0.122 m, built in 8428 ms
+  frame                    18320 tris  (1434 ms)
+  leaf                     44152 tris  (7439 ms)
+  glass                     8002 tris  (1084 ms)
+  window-rim                5552 tris  (607 ms)
+  knob                      1850 tris  (113 ms)
+texture  none (vertex colors)
+glb      out/storytime-green-door/storytime-green-door.glb  (1830 KB)
+render   out/storytime-green-door/render.png  (321 ms)

@@ -1,0 +1,45 @@
+Phase 4 acceptance audit at 35f4a12c (phase base fc76c272, role base 376ae5dd).
+
+Verdict: ACCEPT. retry_recommendation: none.
+
+Tasks:
+- Task 1 [x], first line b6824b8a (in range). Red c0035c28, c2ebc72d; reviews 4d4d86a2.
+- Task 2 [x], first line 6466dd05 (in range). Approval lists, delivery evidence, person records all in range.
+- Task 3 [x], first line 569e62cc (in range). Cover code 8c9a4082, 6f7c1444; Red f88af46a, 0f232b1e; approval 0629e1e2.
+- No [~] task, no [b] task in Phase 4. Interphase checker: only Phase 5 incomplete.
+
+Closeout gate 4.5 items 1 to 9:
+1. GREEN_TEST_COMMAND run 2 exit 0, Tests 185 passed (185); staging 3 passed; tsc owned 0, total 38. Reviews A, B, C pass, no blocking finding.
+2. v3 pin grep: only the T173 negative control; contract.md names the v4 SHA.
+3. Staging gate exit 0 for weeks 2 to 7 with element paths 82/94/91/63/70/90.
+4. 162-row count command printed the labeled line: jobs 162, files 324, A 96, B 12, C 54, missing 0, extra 0.
+5. G3, G4, and G7 records for all six weeks. G7: 48c71d42 (weeks 2 to 6, Daniel "Approved") and 1ff8e1c1 (week 7, Daniel "Ok").
+6. Cover delivered; C1 share 0 over 900 rows; C2, C3, C4 pass; C5 in 1ff8e1c1. Manifest SHA 27710b37 matches.
+7. Week 8 out of scope per PM; count shows extra: 0.
+8. Cost totals 9.25 (weeks 2 to 7) and 12.93 (track), labeled.
+9. generate.sh exit 0; generated files unstaged; tracks.md unchanged.
+
+Person records: both files carry person, time, rows, verdict, note, Tasks items, relayedBy PM. No reviews.person field written; no delivery rerun.
+
+Adversarial at 35f4a12c: pass. RA-P4-1 (30000 ms timeout), RA-P4-4 (PNG message match), RA-P4-5 (exact T183 share) resolved. Timeout verified at tests/storytime-muse-delivery.test.ts line 21.
+
+Remediation note: every finding RA-P4-1 to 5, RB-P4-1, RC-P4-1 to 5 has a disposition (FIX, ROUTED, or DEFER).
+
+Registry (A6): no "accepted" claim without a person record. metadata.json stays in_progress.
+
+Nonblocking: PA4-N1 RB-P4-1 deferred to Phase 5 tech-debt; PA4-N2 stale review-b sentence in the remediation note; PA4-N3 adversarial gate quote names baseline 376ae5dd, gap is the adversarial test commit itself, covered by the adversarial result's own run at 35f4a12c; PA4-N4 registry, metadata, checkpoints belong to Phase 5.
+
+No test, plan, or source file was changed by this role. Only the two artifact files under measure/runs/ were written.
+
+MEASURE_AGENT_RESULT
+status: complete
+verdict: ACCEPT
+blocking_findings: []
+nonblocking_findings:
+- PA4-N1 (open review item): RB-P4-1 (Low) stays open. cover-calm-top --print reads a path with no out/ confinement. Deferred to Phase 5 as a tech-debt candidate.
+- PA4-N2 (stale plan text, A5 class): the remediation note says review-b-b6326503.json "still says inconclusive", but the artifact now says pass. Phase 5 should correct the sentence.
+- PA4-N3 (prerequisite HEAD, informational): the adversarial role gate quote names baseline 376ae5dd; the gap to 35f4a12c is the adversarial test commit itself, and the adversarial result holds its own passing run (exit 0, 186 tests) at 35f4a12c.
+- PA4-N4 (by design, carry): no Phase 4 checkpoint yet and metadata in_progress; Phase 5 owns generate.sh, doctor.sh, registry, and metadata.
+retry_recommendation: none
+confidence: high
+END_MEASURE_AGENT_RESULT

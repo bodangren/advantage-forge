@@ -1,0 +1,9 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 22
+book file requests refused: 0
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 10.15% (1218595 of 12000000 pixels black).
+l2-w01-story-page-a-net v2: rendered; stage 4bc841197b816b388f019a68ad09e863956254f8a061ea80f0dd481a67b5edbe; file w01/rows/l2-w01-story-page-a-net-v2.png; lineart w01/rows/l2-w01-story-page-a-net-line-v2.png; size 4000 x 3000; render peak rss mb: 511

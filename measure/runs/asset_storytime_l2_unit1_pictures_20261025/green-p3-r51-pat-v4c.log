@@ -1,0 +1,22 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 19
+book file requests refused: 0
+Line-art line width: 17 px (minimum 12 px).
+Line-art ink coverage: 11.14% (1336956 of 12000000 pixels black).
+l2-w01-story-page-hello-i-am-pat v4: rendered; stage b3553962fb38bdb430649f18682e00a1cc6e8106a8a72e437ad83f221e0ca299; file w01/rows/l2-w01-story-page-hello-i-am-pat-v4.png; lineart w01/rows/l2-w01-story-page-hello-i-am-pat-line-v4.png; size 4000 x 3000; render peak rss mb: 479
+Line-art line width: 18 px (minimum 12 px).
+Line-art ink coverage: 10.45% (1254488 of 12000000 pixels black).
+Line-art line width: 18 px (minimum 12 px).
+Line-art ink coverage: 10.54% (1264916 of 12000000 pixels black).
+Line-art line width: 18 px (minimum 12 px).
+Line-art ink coverage: 9.96% (1194900 of 12000000 pixels black).
+Line-art line width: 17 px (minimum 12 px).
+Line-art ink coverage: 11.14% (1336956 of 12000000 pixels black).
+l2-w01-story-page-hello-i-am-pat v1: passed
+l2-w01-story-page-hello-i-am-pat v2: passed
+l2-w01-story-page-hello-i-am-pat v3: passed
+l2-w01-story-page-hello-i-am-pat v4: passed
+Row verification passed for 4 row versions.

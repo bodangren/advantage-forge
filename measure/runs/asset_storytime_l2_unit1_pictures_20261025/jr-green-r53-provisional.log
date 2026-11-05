@@ -1,0 +1,6 @@
+Role: measure-jr-green (Green r53, cast fix round 1 of 3)
+Model: claude-code/claude-sonnet-5-5#high
+role_base_sha: ad2705be
+phase_base_sha: 15a7bf0b
+Task: find causes of six cast defects; fix defect 1 (eye-corner flaps) for Chibi Sprouts only
+Status: started

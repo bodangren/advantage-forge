@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Task 12 implements design B correctly. The split loop and tolerantDecode find an escaped credential in every quote segment, the head, and the tail without JSON.parse, without a depth ceiling, and without dropping a segment. Both provider callers keep secretFindings before decodedAnswerFindings and check before every write. T129-T138 assert real provider-boundary behavior: they run in the worker, inspect the ledger and file tree, assert the refusal suffix and pattern name, parse labeled integers, and pair every hostile case with a safe twin. The five mutations each fail their named test, and the gate, tsc, and cost-label evidence in the plan all match the recorded logs. No new malformed-string finding and no correctness finding remains. Review B's RB7-01 (api-key-prefix word boundary) is class Other and already recorded there; I do not re-raise it.",
+  "phase_base_sha": "1d39b8fda457e12d8e7332e7de65d2046ddda78e",
+  "role_base_sha": "3f604b62a50099c383169e766aef6d737f59f504",
+  "audited_head_sha": "e317dcae392d082c7e781569ff95dfad82bd5ebc",
+  "audited_head": "e317dcae392d082c7e781569ff95dfad82bd5ebc",
+  "task_base_sha": "e8d605ab0c4f211e380af3a7a3684d869cf5bc02",
+  "head_at_start": "e317dcae392d082c7e781569ff95dfad82bd5ebc",
+  "head_at_finish": "e317dcae392d082c7e781569ff95dfad82bd5ebc",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Provenance: git rev-parse HEAD returned e317dcae392d082c7e781569ff95dfad82bd5ebc at the start and after the last read. No owned path (src/storytime/, tests/storytime-book-pictures.test.ts, measure/tracks/asset_storytime_l2_unit1_pictures_20261025/) carries an uncommitted change; git status --short for those paths printed nothing.",
+    "Scope: the task 12 commits are 0cd4b024 (Red tests T129-T138), e0a156af (Red evidence), 64073051 (Green code), and 42de3ecd (Green evidence). git diff --stat 42de3ecd..e317dcae -- src/storytime/book-pictures.ts tests/storytime-book-pictures.test.ts measure/tracks/... printed nothing, so the audited HEAD source equals the task 12 Green source. The only file in 42de3ecd..e317dcae is docs/storytime-settings.md, which is out of scope.",
+    "Out of scope, named and not audited: e4e5c593 (scenes/maps/classroom.ts and scripts/design-classroom.mjs), d2928bbc and 08682665 (filled-shelves track), f7f283b6 and e317dcae (docs/storytime-settings.md).",
+    "64073051 changes only src/storytime/book-pictures.ts (+100/-30) and touches only decodedAnswerFindings plus the new tolerantDecode and UNICODE_HEX. secretFindings, credentialRules, and redactSecrets are unchanged from bb4e11f0.",
+    "Split correctness: the loop runs index 0..text.length inclusive, so the head, every segment between consecutive unescaped quotes, and the tail are each emitted as a segment. The escape flag toggles once per backslash, which keeps \\\" quote-unescaped and \\\\\\\" quote-escaped as JSON does. The tail always decodes, so an unterminated token (T129), a trailing backslash (T130), a raw control char (T131), an invalid escape (T132), and a stray prose quote (T133) each reach the decoder.",
+    "tolerantDecode correctness: it resolves \\uXXXX (both hex cases), surrogate pairs, and the seven single-character escapes \\\" \\\\ \\/ \\b \\f \\n \\r \\t. It keeps an invalid escape, a lone backslash, and a raw control character as literal text. It is iterative and never throws. The scan resets rule.regex.lastIndex to 0 before each test, so the shared rule objects cannot skip a later segment.",
+    "Next layers: a decoded segment that holds a quote goes onto the worklist and is split and decoded again; a decoded segment without a quote is scanned only. This is why the T131 MiniMax envelope (a valid JSON envelope string-encoding the malformed answer) is found: layer 1 decodes the envelope to the inner text, layer 2 decodes the inner \\uXXXX to the credential. The two-layer trace was confirmed by reading the code.",
+    "Cost and ceiling: the worklist replaces recursion, so a hostile depth returns findings or empty and never raises RangeError. No path decodes a whole layer without segment boundaries. tolerantDecode returns the segment unchanged when no backslash is present, so the T136 wide answer costs one pass only.",
+    "Callers keep order and contract: MiniMax calls secretFindings at book-pictures.ts:3401 then decodedAnswerFindings at 3409 inside the paid callback, before the raw copy at 3452 and the review write. Kimi calls readRawAnswer at 3722, secretFindings at 3723, and decodedAnswerFindings at 3732, all before parseModelReview at 3739 and before any write. The task 10 refusal suffix 'the raw answer is refused; no review or raw copy is written.' is byte-identical in both paths. No other production caller of decodedAnswerFindings or secretFindings exists outside book-pictures.ts.",
+    "Test meaning: expectMalformedRefusal asserts no timeout, no RangeError, a refusal that names api-key-prefix, no matched secret text, the task 10 suffix, no success ledger entry, no review or raw copies, and byte-identical Kimi snapshots. assertNoSyntheticValues reads real file bytes. T134 and T138 count real finding sets from the worker report; T136 and T137 assert real durations against the 60000 ms and 20000 ms bounds.",
+    "A3/A4/A5 review: the time and count assertions parse labeled integers (for example /^wide scan ms:s*([0-9]+)$/ and /^generated findings:s*([0-9]+)$/), not bare digits. Every hostile row pairs with a safe twin (T138: twin cases 245, twin findings 0). No test passes on a missing deliverable: T134 requires 240 findings and 0 twin findings, and a no-op scan yields 0 findings.",
+    "Mutation isolation: green-mutation-t12-1.log to -5.log show the exact named failures. Mutation 1 fails T129 (plus T130, T134, T135), 2 fails T131 (plus T130, T132, T134, T135), 3 fails T133 (plus T97, T102, T104, T105, T107, T108, T131, T134, T135), 4 fails T134 (plus T97, T102, T104, T105, T107, T108, T131, T135), and 5 fails T137 with chain scan ms 60110 over the 60000 ms bound.",
+    "Plan claim truth: green-vitest-t12.log shows exit 0 and Tests 148 passed (148), 285.81 s. green-tsc-t12.log holds 31 error TS lines, none in src/storytime/ or tests/storytime-book-pictures.test.ts (the one 'storytime' match is the lock-wait holder path). green-vitest-t12-labels.log prints wide scan ms 473, wide tokens 9543, chain levels 14, and chain scan ms 351. The plan marks task 12 [x] with commit 64073051 at plan.md line 778. The known deviations (9543 strings not 21800, 14 levels not 113, the corpus mode, the Green route) are recorded in the plan and accepted as stated.",
+    "No regression in T1-T128: the gate passes 148 tests (all earlier tests plus T129-T138) and Review B's independent full-file run reports Tests 121 passed (121). The mutation logs also confirm the earlier tests only re-open where the mutation genuinely changes shared behavior.",
+    "No verify needed: Review B already ran the full file at this HEAD (Tests 121 passed (121)). I ran no vitest or tsc command; the plan logs plus Review B's commands reproduce the gate, mutation, and label evidence exactly.",
+    "The audit made no paid call, no render, no build, no server, no browser, and no commit. Unrelated dirty paths stayed untouched. Only the two result artifacts were written."
+  ],
+  "commands": [
+    "git rev-parse HEAD -> e317dcae392d082c7e781569ff95dfad82bd5ebc (start and finish)",
+    "git log --oneline 1d39b8fd..e317dcae; git diff --stat 1d39b8fd..e317dcae",
+    "git show 64073051 -- src/storytime/book-pictures.ts (the 130-line Green delta)",
+    "git show 0cd4b024 -- tests/storytime-book-pictures.test.ts (the Red rows T129-T138)",
+    "git diff --stat 42de3ecd..e317dcae -- src/storytime/book-pictures.ts tests/storytime-book-pictures.test.ts (empty)",
+    "read plan.md task 12 entry (lines ~778-920), test-strategy.md task 12 gate (~963-1130), review-b-e317dca.json, green-vitest-t12.log, green-tsc-t12.log, green-vitest-t12-labels.log, green-mutation-t12-1..5.log",
+    "grep callers of decodedAnswerFindings and secretFindings across src/ and scripts/ (only book-pictures.ts lines 3401/3409 and 3723/3732)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-e317dca.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-e317dca.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "model_deviation": "Review A ran on volcengine-agent-plan/deepseek-v4-pro#high. This is the recorded route deviation: the quota tool routed Review A to MiniMax (the task 12 Red family) and the coding-plan route had no quota, so the orchestrator kept DeepSeek for Review A. Model has no audit effect.",
+  "handoff": "Review A passes task 12 at e317dcae. The tolerant decoder and quote-segment split implement design B exactly, both provider callers keep their order and contracts, and T129-T138 assert real behavior with no vacuous pass and no product helper as its own oracle. No new malformed-string finding remains, so nothing new enters the residual risk list. RB7-01 (low, class other, api-key-prefix word boundary) is Review B's recorded tech-debt candidate and needs no task 12 change."
+}

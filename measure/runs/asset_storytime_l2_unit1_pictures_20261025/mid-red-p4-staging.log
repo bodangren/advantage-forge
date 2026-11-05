@@ -1,0 +1,467 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/storytime-stage-check.test.ts (3 tests | 3 failed) 1529ms
+     × T178 passes a fixture week of 3 rows and prints every label with its exact value 213ms
+     × T179 refuses every fixture mutation with exit 1 and names the row 1129ms
+     × T180 exits 2 for a list whose SHA-256 is not the version 4 value 178ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T178 passes a fixture week of 3 rows and prints every label with its exact value
+AssertionError: The stage check script exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-stage-check.test.ts:240:71
+    238| describe('Week staging check', () => {
+    239|   it('T178 passes a fixture week of 3 rows and prints every label with…
+    240|     expect.soft(existsSync(SCRIPT), 'The stage check script exists.').…
+       |                                                                       ^
+    241|     const run = runCheck(fixture, ['--list-sha256', fixture.listSha256…
+    242|     expect.soft({ 'Stage check exit code': run.status }).toEqual({ 'St…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T178 passes a fixture week of 3 rows and prints every label with its exact value
+AssertionError: expected { 'Stage check exit code': 1 } to deeply equal { 'Stage check exit code': +0 }
+
+- Expected
++ Received
+
+  {
+-   "Stage check exit code": 0,
++   "Stage check exit code": 1,
+  }
+
+ ❯ tests/storytime-stage-check.test.ts:242:58
+    240|     expect.soft(existsSync(SCRIPT), 'The stage check script exists.').…
+    241|     const run = runCheck(fixture, ['--list-sha256', fixture.listSha256…
+    242|     expect.soft({ 'Stage check exit code': run.status }).toEqual({ 'St…
+       |                                                          ^
+    243|     expect.soft({ 'Stage check labels': labels(run) })
+    244|       .toEqual({ 'Stage check labels': expectedLabels(fixture) });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T178 passes a fixture week of 3 rows and prints every label with its exact value
+AssertionError: expected { 'Stage check labels': [] } to deeply equal { 'Stage check labels': [ …(13) ] }
+
+- Expected
++ Received
+
+  {
+-   "Stage check labels": [
+-     "list sha256: 337c69e07959f6a29a180961d7fa3caaf3aa6293ab14e967b28e6d0a47433349",
+-     "week: 2",
+-     "rows: 3",
+-     "specs found: 3",
+-     "text mismatches: 0",
+-     "goal mismatches: 0",
+-     "outDir mismatches: 0",
+-     "rows with no reference (class A and B): 0",
+-     "element paths checked: 3",
+-     "missing element paths: 0",
+-     "characters without a reference: 0",
+-     "page candidates: 0",
+-     "stage check: pass",
+-   ],
++   "Stage check labels": [],
+  }
+
+ ❯ tests/storytime-stage-check.test.ts:244:8
+    242|     expect.soft({ 'Stage check exit code': run.status }).toEqual({ 'St…
+    243|     expect.soft({ 'Stage check labels': labels(run) })
+    244|       .toEqual({ 'Stage check labels': expectedLabels(fixture) });
+       |        ^
+    245|     expect.soft({
+    246|       'Element paths checked': labels(run).filter((line) => line.start…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T178 passes a fixture week of 3 rows and prints every label with its exact value
+AssertionError: expected { 'Element paths checked': [] } to deeply equal { Object (Element paths checked) }
+
+- Expected
++ Received
+
+  {
+-   "Element paths checked": [
+-     "element paths checked: 3",
+-   ],
++   "Element paths checked": [],
+  }
+
+ ❯ tests/storytime-stage-check.test.ts:247:8
+    245|     expect.soft({
+    246|       'Element paths checked': labels(run).filter((line) => line.start…
+    247|     }).toEqual({ 'Element paths checked': ['element paths checked: 3']…
+       |        ^
+    248|   }, 120000);
+    249|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T179 refuses every fixture mutation with exit 1 and names the row
+AssertionError: The stage check script exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-stage-check.test.ts:251:71
+    249|
+    250|   it('T179 refuses every fixture mutation with exit 1 and names the ro…
+    251|     expect.soft(existsSync(SCRIPT), 'The stage check script exists.').…
+       |                                                                       ^
+    252|     const good = runCheck(fixture, ['--list-sha256', fixture.listSha25…
+    253|     expect.soft({ 'The unmutated fixture passes': good.status })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T179 refuses every fixture mutation with exit 1 and names the row
+AssertionError: expected { 'The unmutated fixture passes': 1 } to deeply equal { 'The unmutated fixture passes': +0 }
+
+- Expected
++ Received
+
+  {
+-   "The unmutated fixture passes": 0,
++   "The unmutated fixture passes": 1,
+  }
+
+ ❯ tests/storytime-stage-check.test.ts:254:8
+    252|     const good = runCheck(fixture, ['--list-sha256', fixture.listSha25…
+    253|     expect.soft({ 'The unmutated fixture passes': good.status })
+    254|       .toEqual({ 'The unmutated fixture passes': 0 });
+       |        ^
+    255|
+    256|     const row = ROWS[0]!;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T179 refuses every fixture mutation with exit 1 and names the row
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The refusal of a deleted spec names the row": true,
++   "The refusal of a deleted spec names the row": false,
+  }
+
+ ❯ tests/storytime-stage-check.test.ts:355:12
+    353|           .toEqual({ [`Stage check refuses ${mutation.name}`]: 1 });
+    354|         expect.soft({ [`The refusal of ${mutation.name} names the row`…
+    355|           .toEqual({ [`The refusal of ${mutation.name} names the row`]…
+       |            ^
+    356|       } finally {
+    357|         await rm(current.root, { recursive: true, force: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T179 refuses every fixture mutation with exit 1 and names the row
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The refusal of a changed text character names the row": true,
++   "The refusal of a changed text character names the row": false,
+  }
+
+ ❯ tests/storytime-stage-check.test.ts:355:12
+    353|           .toEqual({ [`Stage check refuses ${mutation.name}`]: 1 });
+    354|         expect.soft({ [`The refusal of ${mutation.name} names the row`…
+    355|           .toEqual({ [`The refusal of ${mutation.name} names the row`]…
+       |            ^
+    356|       } finally {
+    357|         await rm(current.root, { recursive: true, force: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T179 refuses every fixture mutation with exit 1 and names the row
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The refusal of a changed goal character names the row": true,
++   "The refusal of a changed goal character names the row": false,
+  }
+
+ ❯ tests/storytime-stage-check.test.ts:355:12
+    353|           .toEqual({ [`Stage check refuses ${mutation.name}`]: 1 });
+    354|         expect.soft({ [`The refusal of ${mutation.name} names the row`…
+    355|           .toEqual({ [`The refusal of ${mutation.name} names the row`]…
+       |            ^
+    356|       } finally {
+    357|         await rm(current.root, { recursive: true, force: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T179 refuses every fixture mutation with exit 1 and names the row
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The refusal of a trailing space in the goal names the row": true,
++   "The refusal of a trailing space in the goal names the row": false,
+  }
+
+ ❯ tests/storytime-stage-check.test.ts:355:12
+    353|           .toEqual({ [`Stage check refuses ${mutation.name}`]: 1 });
+    354|         expect.soft({ [`The refusal of ${mutation.name} names the row`…
+    355|           .toEqual({ [`The refusal of ${mutation.name} names the row`]…
+       |            ^
+    356|       } finally {
+    357|         await rm(current.root, { recursive: true, force: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T179 refuses every fixture mutation with exit 1 and names the row
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The refusal of a missing reference file names the row": true,
++   "The refusal of a missing reference file names the row": false,
+  }
+
+ ❯ tests/storytime-stage-check.test.ts:355:12
+    353|           .toEqual({ [`Stage check refuses ${mutation.name}`]: 1 });
+    354|         expect.soft({ [`The refusal of ${mutation.name} names the row`…
+    355|           .toEqual({ [`The refusal of ${mutation.name} names the row`]…
+       |            ^
+    356|       } finally {
+    357|         await rm(current.root, { recursive: true, force: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T179 refuses every fixture mutation with exit 1 and names the row
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The refusal of an empty reference list on a class A row names the row": true,
++   "The refusal of an empty reference list on a class A row names the row": false,
+  }
+
+ ❯ tests/storytime-stage-check.test.ts:355:12
+    353|           .toEqual({ [`Stage check refuses ${mutation.name}`]: 1 });
+    354|         expect.soft({ [`The refusal of ${mutation.name} names the row`…
+    355|           .toEqual({ [`The refusal of ${mutation.name} names the row`]…
+       |            ^
+    356|       } finally {
+    357|         await rm(current.root, { recursive: true, force: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T179 refuses every fixture mutation with exit 1 and names the row
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The refusal of a parent-directory reference names the row": true,
++   "The refusal of a parent-directory reference names the row": false,
+  }
+
+ ❯ tests/storytime-stage-check.test.ts:355:12
+    353|           .toEqual({ [`Stage check refuses ${mutation.name}`]: 1 });
+    354|         expect.soft({ [`The refusal of ${mutation.name} names the row`…
+    355|           .toEqual({ [`The refusal of ${mutation.name} names the row`]…
+       |            ^
+    356|       } finally {
+    357|         await rm(current.root, { recursive: true, force: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T179 refuses every fixture mutation with exit 1 and names the row
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The refusal of a symbolic-link reference names the row": true,
++   "The refusal of a symbolic-link reference names the row": false,
+  }
+
+ ❯ tests/storytime-stage-check.test.ts:355:12
+    353|           .toEqual({ [`Stage check refuses ${mutation.name}`]: 1 });
+    354|         expect.soft({ [`The refusal of ${mutation.name} names the row`…
+    355|           .toEqual({ [`The refusal of ${mutation.name} names the row`]…
+       |            ^
+    356|       } finally {
+    357|         await rm(current.root, { recursive: true, force: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T179 refuses every fixture mutation with exit 1 and names the row
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The refusal of a changed outDir names the row": true,
++   "The refusal of a changed outDir names the row": false,
+  }
+
+ ❯ tests/storytime-stage-check.test.ts:355:12
+    353|           .toEqual({ [`Stage check refuses ${mutation.name}`]: 1 });
+    354|         expect.soft({ [`The refusal of ${mutation.name} names the row`…
+    355|           .toEqual({ [`The refusal of ${mutation.name} names the row`]…
+       |            ^
+    356|       } finally {
+    357|         await rm(current.root, { recursive: true, force: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T179 refuses every fixture mutation with exit 1 and names the row
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The refusal of a non-empty goal against an empty list prompt names the row": true,
++   "The refusal of a non-empty goal against an empty list prompt names the row": false,
+  }
+
+ ❯ tests/storytime-stage-check.test.ts:355:12
+    353|           .toEqual({ [`Stage check refuses ${mutation.name}`]: 1 });
+    354|         expect.soft({ [`The refusal of ${mutation.name} names the row`…
+    355|           .toEqual({ [`The refusal of ${mutation.name} names the row`]…
+       |            ^
+    356|       } finally {
+    357|         await rm(current.root, { recursive: true, force: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T179 refuses every fixture mutation with exit 1 and names the row
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The refusal of a page candidate file names the row": true,
++   "The refusal of a page candidate file names the row": false,
+  }
+
+ ❯ tests/storytime-stage-check.test.ts:355:12
+    353|           .toEqual({ [`Stage check refuses ${mutation.name}`]: 1 });
+    354|         expect.soft({ [`The refusal of ${mutation.name} names the row`…
+    355|           .toEqual({ [`The refusal of ${mutation.name} names the row`]…
+       |            ^
+    356|       } finally {
+    357|         await rm(current.root, { recursive: true, force: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T180 exits 2 for a list whose SHA-256 is not the version 4 value
+AssertionError: The stage check script exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-stage-check.test.ts:363:71
+    361|
+    362|   it('T180 exits 2 for a list whose SHA-256 is not the version 4 value…
+    363|     expect.soft(existsSync(SCRIPT), 'The stage check script exists.').…
+       |                                                                       ^
+    364|
+    365|     const fixtureRun = runCheck(fixture);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T180 exits 2 for a list whose SHA-256 is not the version 4 value
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The fixture list without the pin exits 2": 2,
++   "The fixture list without the pin exits 2": 1,
+  }
+
+ ❯ tests/storytime-stage-check.test.ts:367:8
+    365|     const fixtureRun = runCheck(fixture);
+    366|     expect.soft({ 'The fixture list without the pin exits 2': fixtureR…
+    367|       .toEqual({ 'The fixture list without the pin exits 2': 2 });
+       |        ^
+    368|
+    369|     expect.soft(existsSync(V3_SHADOW_FILE), 'The version 3 shadow copy…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T180 exits 2 for a list whose SHA-256 is not the version 4 value
+AssertionError: expected { 'The version 3 list exits 2': 1 } to deeply equal { 'The version 3 list exits 2': 2 }
+
+- Expected
++ Received
+
+  {
+-   "The version 3 list exits 2": 2,
++   "The version 3 list exits 2": 1,
+  }
+
+ ❯ tests/storytime-stage-check.test.ts:373:8
+    371|     const version3 = runCheck(fixture);
+    372|     expect.soft({ 'The version 3 list exits 2': version3.status })
+    373|       .toEqual({ 'The version 3 list exits 2': 2 });
+       |        ^
+    374|     expect.soft({ 'The refusal names the version 4 SHA-256': version3.…
+    375|       .toEqual({ 'The refusal names the version 4 SHA-256': true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/21]⎯
+
+ FAIL  tests/storytime-stage-check.test.ts > Week staging check > T180 exits 2 for a list whose SHA-256 is not the version 4 value
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The refusal names the version 4 SHA-256": true,
++   "The refusal names the version 4 SHA-256": false,
+  }
+
+ ❯ tests/storytime-stage-check.test.ts:375:8
+    373|       .toEqual({ 'The version 3 list exits 2': 2 });
+    374|     expect.soft({ 'The refusal names the version 4 SHA-256': version3.…
+    375|       .toEqual({ 'The refusal names the version 4 SHA-256': true });
+       |        ^
+    376|   }, 120000);
+    377| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/21]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed (3)
+   Start at  00:59:04
+   Duration  2.09s (transform 133ms, setup 0ms, import 201ms, tests 1.53s, environment 0ms)
+

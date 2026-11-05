@@ -1,0 +1,416 @@
+{
+  "reviewer": "opencode-go/mimo-v2.6-flash",
+  "verdict": "accept: 11 of 11 sheets clean under the bar",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "scope": "Week 2 Muse input sheets. Sheets feed later week 2 pages. The sheets are not pages.",
+  "index": "out/storytime-review/w02-staging/index.md",
+  "prop-alligator-sheet": {
+    "file": "out/storytime/l2/unit1/w02/muse/elements/prop-alligator-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w02/muse-elements/prop-alligator-sheet.json",
+    "spec_goal": "A friendly alligator.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-check-row-alligator.json",
+        "text": "alligator",
+        "goal": "",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/prop-alligator-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One chubby baby alligator, three-quarter view. Green skin, cream belly, thick tail, four short legs with toes, a smile with a few small white teeth, two big dark eyes with highlights.",
+      "input_checks": "Plain white background. No people. No text or letters. One alligator. It reads as the word at book size.",
+      "page_fit": "The check row needs one picture that reads as alligator. The sheet gives that.",
+      "second_look": "re-counted: four short legs show. Verdict unchanged."
+    }
+  },
+  "prop-ant-sheet": {
+    "file": "out/storytime/l2/unit1/w02/muse/elements/prop-ant-sheet-m2-color.png",
+    "spec": "docs/storytime/l2-unit1/w02/muse-elements/prop-ant-sheet.json",
+    "spec_goal": "A friendly ant.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-check-row-ant.json",
+        "text": "ant",
+        "goal": "",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/prop-ant-sheet-m2-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One friendly ant, dark red-brown, three round body parts, two curved antennae, two big eyes with highlights, a small smile.",
+      "leg_count": "Six legs show. Four legs show on the near side and two legs show on the far side.",
+      "bar_note": "The prompt asked for three legs per side. The total is six, and six is what a teacher counts. Under the bar this is not a defect.",
+      "input_checks": "Plain white background. No people. No text or letters. One ant. It reads as the word at book size.",
+      "second_look": "re-counted: six legs show, four near side and two far side. Verdict unchanged."
+    }
+  },
+  "prop-balls-sheet": {
+    "file": "out/storytime/l2/unit1/w02/muse/elements/prop-balls-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w02/muse-elements/prop-balls-sheet.json",
+    "spec_goal": "Five colorful balls.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-how-many-balls-five.json",
+        "text": "How many balls? Five!",
+        "goal": "Five colorful balls lie in a row on the green grass of the park; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, holds up one hand with five fingers. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/prop-balls-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Five balls in one row: red, orange, yellow, green, blue. All the same size. Clear space between each ball.",
+      "input_checks": "Plain white background. No people. No text or letters. Count is five.",
+      "page_fit": "The page counts to five. Five separate balls in a row let a child point and count.",
+      "second_look": "re-counted: five balls, red, orange, yellow, green, blue. Verdict unchanged."
+    }
+  },
+  "prop-birds-sheet": {
+    "file": "out/storytime/l2/unit1/w02/muse/elements/prop-birds-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w02/muse-elements/prop-birds-sheet.json",
+    "spec_goal": "Four small blue birds.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-how-many-birds-four.json",
+        "text": "How many birds? Four!",
+        "goal": "Four small blue birds sit in a row on a branch of the low tree in the park; Ben (drawn young, about five years old) looks up at them. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/prop-birds-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Four small blue birds in one row. The first two face front. The third and fourth face the side. Each has an orange beak, black eyes with highlights, folded wings, a short tail, and orange feet.",
+      "input_checks": "Plain white background. No people. No text or letters. Count is four.",
+      "page_fit": "The page needs four birds that sit on a branch. The sitting posture fits a branch. The park set carries the low branch.",
+      "second_look": "re-counted: four birds, two front and two side. Verdict unchanged."
+    }
+  },
+  "prop-cupcakes-sheet": {
+    "file": "out/storytime/l2/unit1/w02/muse/elements/prop-cupcakes-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w02/muse-elements/prop-cupcakes-sheet.json",
+    "spec_goal": "A plate with seven cupcakes.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-how-many-cakes-oh-no-pip.json",
+        "text": "How many cakes? Oh no, Pip!",
+        "goal": "The plate is empty. Pip the puppy sits next to it with white cream on his nose and a happy face. Pat, May, Sam, Mia, Ben (drawn young, about five years old), Nan, and Teacher Kim laugh in surprise. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/prop-cupcakes-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-how-many-cakes-seven.json",
+        "text": "How many cakes? Seven!",
+        "goal": "Seven small cupcakes with white cream on a plate on the picnic blanket, in two rows: four at the back and three at the front; Teacher Kim counts them with one finger. The tip of a small black puppy nose peeks out of the open school bag next to the plate. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/prop-cupcakes-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Left: one white plate with seven cupcakes, four at the back and three at the front, each a pink cup with a white cream swirl. Right: the same plate empty, with soft white cream smudges.",
+      "input_checks": "Plain white background. No people. No text or letters. Count is seven.",
+      "page_fit": "The seven page needs seven cakes in two rows. The oh-no-Pip page needs an empty plate with cream marks. Both are here.",
+      "second_look": "re-counted: seven cupcakes, four back and three front, plus the empty plate. Verdict unchanged."
+    }
+  },
+  "prop-ducks-sheet": {
+    "file": "out/storytime/l2/unit1/w02/muse/elements/prop-ducks-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w02/muse-elements/prop-ducks-sheet.json",
+    "spec_goal": "Three white ducks with orange beaks.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-how-many-ducks-three.json",
+        "text": "How many ducks? Three!",
+        "goal": "Three white ducks with orange beaks swim on the small pond in the park; Mia (drawn young, about five years old) kneels at the edge and points at them. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/prop-ducks-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Three white ducks with orange beaks, small black eyes with highlights, and orange feet. The first faces front, the second faces the side, the third faces three-quarter front. Each sits low as if floating.",
+      "input_checks": "Plain white background. No people. No text or letters. Count is three.",
+      "page_fit": "The page needs three ducks on the pond. The low floating posture fits the pond in the park set.",
+      "second_look": "re-counted: three ducks. Verdict unchanged."
+    }
+  },
+  "prop-kites-sheet": {
+    "file": "out/storytime/l2/unit1/w02/muse/elements/prop-kites-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w02/muse-elements/prop-kites-sheet.json",
+    "spec_goal": "Two kites, one red and one yellow.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-how-many-kites-two.json",
+        "text": "How many kites? Two!",
+        "goal": "Two kites, one red and one yellow, fly high over a sunny park with green grass, a small pond, and a low tree; May and Sam (drawn young, about five years old) hold the strings and look up. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/prop-kites-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Two diamond kites, one red and one yellow, side by side with clear space. Each kite has a long thin string that ends in three small bows of the same color. The whole kite and the whole tail show.",
+      "input_checks": "Plain white background. No people. No text or letters. Count is two.",
+      "page_fit": "The page needs two kites held by the string. The string ends read clear, so a page can put a hand on each.",
+      "second_look": "re-counted: two kites, each string with three bows. Verdict unchanged."
+    }
+  },
+  "prop-picnic-blanket-sheet": {
+    "file": "out/storytime/l2/unit1/w02/muse/elements/prop-picnic-blanket-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w02/muse-elements/prop-picnic-blanket-sheet.json",
+    "spec_goal": "A picnic blanket.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-cover-how-many.json",
+        "text": "How Many?",
+        "goal": "Pat, May, Sam, Mia, and Ben (drawn young, about five years old) and Nan count on their fingers on a picnic blanket in a sunny park with green grass, a small pond, and a low tree; Teacher Kim smiles behind them. Pat's school bag has a small round bump, as if something moves inside. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/prop-picnic-blanket-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-how-many-cakes-oh-no-pip.json",
+        "text": "How many cakes? Oh no, Pip!",
+        "goal": "The plate is empty. Pip the puppy sits next to it with white cream on his nose and a happy face. Pat, May, Sam, Mia, Ben (drawn young, about five years old), Nan, and Teacher Kim laugh in surprise. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/prop-picnic-blanket-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-how-many-cakes-seven.json",
+        "text": "How many cakes? Seven!",
+        "goal": "Seven small cupcakes with white cream on a plate on the picnic blanket, in two rows: four at the back and three at the front; Teacher Kim counts them with one finger. The tip of a small black puppy nose peeks out of the open school bag next to the plate. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/prop-picnic-blanket-sheet-m1-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-how-many-friends-six.json",
+        "text": "How many friends? Six!",
+        "goal": "Pat, May, Sam, Mia, and Ben (drawn young, about five years old) and Nan sit in a row on a big picnic blanket in the park and smile. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. Pat's school bag lies on the blanket. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/prop-picnic-blanket-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One red blanket with a wide cream border and no pattern. Left: the large view from a little above, with one corner folded. Right: the same blanket from the low front, flat and smooth.",
+      "sheet_note": "The sheet shows two views of one blanket. This follows the sheet convention. It does not show two blankets.",
+      "input_checks": "Plain white background. No people. No text or letters. No checks or letters on the cloth.",
+      "page_fit": "The cover, cakes, and friends pages sit children on one big blanket. The plain red field keeps children easy to read on it.",
+      "second_look": "re-checked: two views of one blanket. Verdict unchanged."
+    }
+  },
+  "prop-sun-sheet": {
+    "file": "out/storytime/l2/unit1/w02/muse/elements/prop-sun-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w02/muse-elements/prop-sun-sheet.json",
+    "spec_goal": "A bright sun.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-check-row-sun.json",
+        "text": "sun",
+        "goal": "",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/prop-sun-sheet-m1-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One round yellow-orange sun disc with a soft glow and eight short rounded triangle rays. No face.",
+      "input_checks": "Plain white background. No people. No text or letters. One sun.",
+      "page_fit": "The check row needs one picture that reads as sun. The park set also carries one sun for the suns page.",
+      "second_look": "re-counted: eight rays, no face. Verdict unchanged."
+    }
+  },
+  "set-park-empty": {
+    "file": "out/storytime/l2/unit1/w02/muse/elements/set-park-empty-m2-color.png",
+    "spec": "docs/storytime/l2-unit1/w02/muse-elements/set-park-empty.json",
+    "spec_goal": "Empty park set, no people.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-cover-how-many.json",
+        "text": "How Many?",
+        "goal": "Pat, May, Sam, Mia, and Ben (drawn young, about five years old) and Nan count on their fingers on a picnic blanket in a sunny park with green grass, a small pond, and a low tree; Teacher Kim smiles behind them. Pat's school bag has a small round bump, as if something moves inside. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/set-park-empty-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-how-many-balls-five.json",
+        "text": "How many balls? Five!",
+        "goal": "Five colorful balls lie in a row on the green grass of the park; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, holds up one hand with five fingers. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/set-park-empty-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-how-many-birds-four.json",
+        "text": "How many birds? Four!",
+        "goal": "Four small blue birds sit in a row on a branch of the low tree in the park; Ben (drawn young, about five years old) looks up at them. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/set-park-empty-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-how-many-cakes-oh-no-pip.json",
+        "text": "How many cakes? Oh no, Pip!",
+        "goal": "The plate is empty. Pip the puppy sits next to it with white cream on his nose and a happy face. Pat, May, Sam, Mia, Ben (drawn young, about five years old), Nan, and Teacher Kim laugh in surprise. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/set-park-empty-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-how-many-cakes-seven.json",
+        "text": "How many cakes? Seven!",
+        "goal": "Seven small cupcakes with white cream on a plate on the picnic blanket, in two rows: four at the back and three at the front; Teacher Kim counts them with one finger. The tip of a small black puppy nose peeks out of the open school bag next to the plate. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/set-park-empty-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-how-many-ducks-three.json",
+        "text": "How many ducks? Three!",
+        "goal": "Three white ducks with orange beaks swim on the small pond in the park; Mia (drawn young, about five years old) kneels at the edge and points at them. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/set-park-empty-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-how-many-friends-six.json",
+        "text": "How many friends? Six!",
+        "goal": "Pat, May, Sam, Mia, and Ben (drawn young, about five years old) and Nan sit in a row on a big picnic blanket in the park and smile. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. Pat's school bag lies on the blanket. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/set-park-empty-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-how-many-kites-two.json",
+        "text": "How many kites? Two!",
+        "goal": "Two kites, one red and one yellow, fly high over a sunny park with green grass, a small pond, and a low tree; May and Sam (drawn young, about five years old) hold the strings and look up. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/set-park-empty-m2-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-how-many-suns-one.json",
+        "text": "How many suns? One!",
+        "goal": "Pat (drawn young, about five years old) and Teacher Kim carry a picnic basket into a sunny park with green grass, a small pond, and a low tree; Pat points up at the one bright sun in a blue sky. Pat's school bag has a small round bump, as if something moves inside. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/set-park-empty-m2-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One empty sunny park. One large low tree at the left with a wide crown and one low thick branch to the right. One small pond with gray and tan stones and green lily pads at the right. One sun, two white clouds, soft bushes far at the back. The middle foreground is open grass.",
+      "builder_flaw_arc_leaf_cluster": "The leaf cluster on the low branch is an odd arc shape. Under the bar a simplified branch or bush is not a defect. At book size the cluster reads as leaves.",
+      "page_risk": "Low, not blocking. The birds page needs a branch for four birds. The branch is long and mostly bare, so four birds fit. That page also passes the low-branch reference.",
+      "input_checks": "No people. No text or letters. Exactly one tree, one pond, one sun. No ducks, birds, kites, benches, or balls in the set.",
+      "second_look": "re-checked: one tree, one pond, one sun, no people or text. Verdict unchanged."
+    }
+  },
+  "set-playground-empty": {
+    "file": "out/storytime/l2/unit1/w02/muse/elements/set-playground-empty-m3-color.png",
+    "spec": "docs/storytime/l2-unit1/w02/muse-elements/set-playground-empty.json",
+    "spec_goal": "Empty playground set, no people.",
+    "used_by": [
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-cover-can-i.json",
+        "text": "Can I?",
+        "goal": "Ben (drawn young, about five years old) and Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, stand at the bottom of the tall slide in a sunny playground with a low climbing frame, a low balance beam, and a tall slide and look up at it. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/set-playground-empty-m3-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-can-i-b.json",
+        "text": "Can I?",
+        "goal": "Ben (drawn young, about five years old) puts one foot on the low balance beam and holds his arms out; he wobbles a little. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/set-playground-empty-m3-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-can-i.json",
+        "text": "Can I?",
+        "goal": "Ben (drawn young, about five years old) stands at the bottom of the low climbing frame and looks up with a worried face. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/set-playground-empty-m3-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-can-nan.json",
+        "text": "Can Nan?",
+        "goal": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, sits at the top of the tall slide and holds on tight; she looks scared. Ben (drawn young, about five years old) climbs the slide ladder behind her and holds out his hand. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/set-playground-empty-m3-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-i-can-b.json",
+        "text": "I can!",
+        "goal": "Ben (drawn young, about five years old) walks along the low balance beam with his arms out and a big smile. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/set-playground-empty-m3-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-i-can.json",
+        "text": "I can!",
+        "goal": "Ben (drawn young, about five years old) sits at the top of the low climbing frame with a big proud smile. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/set-playground-empty-m3-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-nan-and-i-can.json",
+        "text": "Nan and I can!",
+        "goal": "Ben (drawn young, about five years old) and Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, slide down the tall slide together, Ben behind Nan, both laughing with their arms up. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/set-playground-empty-m3-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-nan-can-b.json",
+        "text": "Nan can.",
+        "goal": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, walks along a low balance beam with her arms out. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/set-playground-empty-m3-color.png"
+      },
+      {
+        "spec": "docs/storytime/l2-unit1/w02/muse/l2-w02-story-page-nan-can.json",
+        "text": "Nan can.",
+        "goal": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, climbs to the top of a low climbing frame in a sunny playground with a low climbing frame, a low balance beam, and a tall slide and smiles. No letters, words, or numbers anywhere.",
+        "references_this_sheet": true,
+        "reference_named": "out/storytime/l2/unit1/w02/muse/elements/set-playground-empty-m3-color.png"
+      }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One empty sunny playground. Left: a low climbing frame with a front ladder, a top platform, and a rail. Middle: one wooden balance beam on the ground. Right: a taller slide with a left ladder, a top platform, a rail, and a yellow slide. Clear space stands between the three.",
+      "builder_flaw_round_beam": "The beam is a round log, not the square bar of the 3D beam asset. Under the bar a round wooden beam still reads as a balance beam. A teacher or a child sees a beam to walk on. This is not a defect.",
+      "page_risk": "Low, not blocking. The three beam pages also pass the square beam asset, so a page can show the round set beam with the square asset. Both read as a beam at book size.",
+      "input_checks": "No people. No text or letters. The climbing frame reads as a frame to climb, not a table, and it stands lower than the slide. One frame, one beam, one slide.",
+      "second_look": "re-checked: one frame, one beam, one slide, no people or text. Verdict unchanged."
+    }
+  },
+  "summary": {
+    "sheets": 11,
+    "clean": 11,
+    "not_clean": 0,
+    "clean_keys": [
+      "prop-alligator-sheet",
+      "prop-ant-sheet",
+      "prop-balls-sheet",
+      "prop-birds-sheet",
+      "prop-cupcakes-sheet",
+      "prop-ducks-sheet",
+      "prop-kites-sheet",
+      "prop-picnic-blanket-sheet",
+      "prop-sun-sheet",
+      "set-park-empty",
+      "set-playground-empty"
+    ],
+    "not_clean_keys": [],
+    "builder_flaws_judged": "Two of two are not defects under the bar: the park arc leaf cluster reads as simplified foliage, and the playground round log beam still reads as a balance beam.",
+    "page_risk": "No page is at blocking risk. The birds page and the three beam pages carry a low, noted risk only.",
+    "second_look": "Every sheet was opened again after the first pass. All counts hold. All verdicts unchanged.",
+    "reference_paths": "All 11 page reference paths name the current sheet files: m2 for ant and park, m3 for playground."
+  }
+}

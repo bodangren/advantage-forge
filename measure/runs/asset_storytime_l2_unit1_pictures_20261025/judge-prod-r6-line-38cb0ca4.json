@@ -1,0 +1,19 @@
+{
+  "group": "prod-r6-line",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w03-story-page-a-pan-in-a-pan",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w03-story-page-a-pan-in-a-pan-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one big pan (1), a small pan (1) inside the big pan. Action: none named. Seen: two children stand in a kitchen and hold a wide round pan between them; inside it sits a smaller oval pan with its own rim, fully within the big pan's rim. Both pans are drawn and visible, and read as pans at book size. mustShow: one big pan = shown; a small pan = shown; the small pan sits inside the big pan = shown. Characters: the left girl matches Nan (two round buns with ring bands, star on the T-shirt, shorts). The right child has a smooth rounded cap of hair and no clear fringe, so the cast match is not certain; the page text names no character, so this is a note only. Line art: black lines on white, no gray, no shading, no words or letters. No gap that makes coloring hard. Small marks: the small pan has no clear handle; the kitchen background lines are simple."
+    }
+  ],
+  "summary": { "files": 1, "pass": 1, "fail": 0 }
+}

@@ -1,0 +1,51 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/zz-green-probe-fix.test.ts (141 tests | 1 failed | 136 skipped) 561ms
+     × T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows 287ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/zz-green-probe-fix.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: The week parser accepts week 8.: expected 'Invalid week: 8' to deeply equal 'accepted'
+
+Expected: "accepted"
+Received: "Invalid week: 8"
+
+ ❯ tests/zz-green-probe-fix.test.ts:4687:81
+    4685|
+    4686|       const week8 = await dryRun('8');
+    4687|       expect.soft(week8.error ?? 'accepted', 'The week parser accepts …
+       |                                                                                 ^
+    4688|       expect.soft({ 'Week 8 rows rendered in a dry run': week8.count })
+    4689|         .toEqual({ 'Week 8 rows rendered in a dry run': 4 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/zz-green-probe-fix.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "Week 8 rows rendered in a dry run": 4,
++   "Week 8 rows rendered in a dry run": -1,
+  }
+
+ ❯ tests/zz-green-probe-fix.test.ts:4689:10
+    4687|       expect.soft(week8.error ?? 'accepted', 'The week parser accepts …
+    4688|       expect.soft({ 'Week 8 rows rendered in a dry run': week8.count })
+    4689|         .toEqual({ 'Week 8 rows rendered in a dry run': 4 });
+       |          ^
+    4690|       const allWeeks = await dryRun();
+    4691|       expect.soft(allWeeks.error ?? 'accepted', 'A run with no --week …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed | 136 skipped (141)
+   Start at  01:32:15
+   Duration  2.16s (transform 968ms, setup 0ms, import 1.27s, tests 561ms, environment 0ms)
+

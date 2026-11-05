@@ -1,0 +1,192 @@
+# Closeout log: asset_storytime_l2_unit1_pictures_20261025
+
+Role: measure-closeout. Model: minimax-cn-coding-plan/MiniMax-M3.1-Flash.
+Track: asset_storytime_l2_unit1_pictures_20261025.
+Reference: test-strategy.md section "Track final acceptance (2026-11-05)", subsection "F.8 Closeout brief".
+Closeout start HEAD: 2258bd60773e06ddb68b9326f0e5732720dcf47b.
+Final acceptance audited_head: 2258bd60773e06ddb68b9326f0e5732720dcf47b. The two values match.
+Run folder R: measure/runs/asset_storytime_l2_unit1_pictures_20261025.
+
+## Step 1 (CG0): foreign state - PASS
+
+Command: `git status --short measure/tracks.md measure/tracks measure/generated measure/status.md measure/tech-debt.md measure/lessons-learned.md`
+
+Output:
+
+```
+ M measure/generated/architecture.json
+ M measure/generated/asset-inventory.json
+ M measure/generated/status.md
+ M measure/tracks.md
+ M measure/tracks/asset_equipment_parts_20260930/plan.md
+ M measure/tracks/asset_p1_architecture_20260928/plan.md
+ M measure/tracks/asset_p1_enemies_20260928/plan.md
+ M measure/tracks/asset_p1_heroes_20260928/plan.md
+ M measure/tracks/asset_p1_nature_20260928/plan.md
+ M measure/tracks/asset_p2_monsters_20260928/plan.md
+ M measure/tracks/asset_p2_wildlife_20260928/plan.md
+ M measure/tracks/asset_world_catchup_20261001/evidence.md
+ M measure/tracks/avatar_system_20261001/plan.md
+```
+
+Every path above is foreign. None belongs to this track. The path of this track is not in the
+output. `measure/status.md`, `measure/tech-debt.md`, and `measure/lessons-learned.md` have no
+uncommitted change. The CG0 condition holds.
+
+The foreign hunk in `measure/tracks.md` is the `## Contents` block at the top of the file. It
+stays unstaged. It is not part of any commit of this role.
+
+## Step 2 (CG2): secret scan of the run folder - PASS
+
+PM decision, 2026-11-05 (orchestrator relay), quoted:
+
+> it passes if each secret-scan match is a declared synthetic fixture string; list each match
+> (file and line) in the closeout log; a real key fails the gate.
+
+Command: `grep -rEnI 'sk-[A-Za-z0-9]{16,}|Bearer [A-Za-z0-9._-]{16,}|api[_-]?key.{0,20}[:=]|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY' "$R"`
+Grep exit code: 0. The grep printed 32 lines in 2 files. The distinct matched tokens are 5.
+
+Match list, file `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t8.log`,
+26 lines. The lines carry these token kinds:
+
+- API key token: lines 15, 20, 21, 42, 63, 85, 106, 127, 148, 616, 618, 619
+- Bearer token: lines 21, 41, 42, 63, 85, 106, 127, 148
+- api_key token: lines 23, 44, 66, 87, 100, 105, 108, 129, 150
+- access key id token: lines 23, 44, 66, 79, 84, 87, 108, 129, 150
+- private key header: lines 21, 42, 57, 62, 63, 85, 106, 127, 148
+
+Match list, file `measure/runs/asset_storytime_l2_unit1_pictures_20261025/closeout-2258bd6.log`,
+6 lines. They are the declaration quotes below. The file names no live key.
+
+Declaration evidence. The fixture set is declared in the committed strategy. The command
+`git grep -n -F -- '<string>' HEAD -- measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md measure/tracks/asset_storytime_l2_unit1_pictures_20261025/contract.md tests/` prints:
+
+```
+HEAD:measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md:1341:- an API key `sk-SYNTHETIC00000000000000000000`;
+HEAD:measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md:1342:- `Authorization: Bearer SYNTHETICBEARER0000000000000`;
+HEAD:measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md:1343:- a `-----BEGIN PRIVATE KEY-----` block with the body `SYNTHETIC`;
+HEAD:measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md:1344:- an access key ID `AKIA0000SYNTHETIC000`;
+HEAD:measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md:1345:- `api_key=SYNTHETIC-api-key-000000`;
+HEAD:measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md:1346:- a token `eyJhbGciOiJub25lIn0.eyJzdWIiOiJTWU5USEVUSUMifQ.U1lOVEhFVElD`;
+HEAD:measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md:1347:- the value `plainvalue-SYNTHETIC-0001` of `STORYTIME_SYNTHETIC_API_KEY`, set with `vi.stubEnv`.
+HEAD:tests/storytime-book-pictures.test.ts:445:    `-----BEGIN PRIVATE KEY-----\n${marker}\n-----END PRIVATE KEY-----`,
+```
+
+The declaration heading at strategy line 1339 reads: "Credential fixture set for T81 to T83. Each
+value is synthetic:". The Red log holds the output of those credential-refusal tests. The plan
+names that log at plan line 357.
+
+Result: CG2 pass (PM decision 2026-11-05): 32 matches in 2 files, all declared synthetic
+fixtures. No real key. No tracked file of the run folder matches the pattern.
+
+## Step 3 and step 9 (CG1): the move and the commit
+
+The `git mv` runs in the same command line as the commit, as F.8 requires. The staged path check
+and the check that the staged `measure/tracks.md` diff holds no line of the foreign hunk run
+before the commit. The result is recorded in step 9 below.
+
+## Step 4 (CG3): plan first-line SHA - PASS
+
+In the plan, ` (commit 2fdce9d)` is appended to the first line of the task at line 30 and
+` (commit c52e495)` to the first line of the task at line 32. Nothing else changed.
+
+Check: `grep -E '^\s*- \[x\] ' plan.md | grep -vcE '\b[0-9a-f]{7,40}\b'` printed 2 before the
+edit and prints 0 after it. The plan diff holds two changed lines.
+
+## Step 5 (CG4): metadata - PASS
+
+In the track metadata, `status` is `done`, `completed` is `2026-11-05`, and `updated_at` is
+`2026-11-05T09:30:00Z`. `python3 -m json.tool` parses the file.
+
+One more field changed. The `deviation_notes` read "Week 8 is deferred to PM assignment." That
+sentence was false after Task 3 (commit 6fd626c6) delivered the week 8 pictures. The sentence
+now names that delivery. The last clause now says the generated facts stay uncommitted at
+closeout under T5. The closeout makes no false claim in the archived record.
+
+## Step 6 (CG6): links in tech-debt.md and status.md - PASS
+
+The link `./tracks/asset_storytime_l2_unit1_pictures_20261025/` now reads
+`./archive/asset_storytime_l2_unit1_pictures_20261025/` in `measure/tech-debt.md` (TD-29 and
+TD-30) and in `measure/status.md`. RB-P4-1 stays TD-29 (Low, Open). No debt row was added.
+
+Two more clauses in `measure/status.md` changed. The paragraph read "Week 8 is deferred to PM
+assignment. The track remains in progress". Both clauses were false after this closeout. The
+paragraph now names the week 8 delivery and states that the track is done and archived. The
+paragraph keeps the sentence that no Workbooks acceptance is recorded. F.8 step 6 asks for no
+other text in that file; these two clauses were false claims, so they were corrected.
+
+Check: `grep -n 'tracks/asset_storytime_l2_unit1_pictures_20261025' measure/*.md` printed nothing
+after step 7.
+
+## Step 7 (CG5): registry - PASS
+
+The copy `git show HEAD:measure/tracks.md` lost the active entry of this track (its title, link,
+and status lines plus the blank line after them). The file gained the heading `## Archived
+Tracks` and one entry at the end. The entry has no `**Track:` text:
+
+```
+- [x] Storytime Level 2 unit 1 book pictures and cover render, completed 2026-11-05; weeks 1 to 7 and the cover delivered and person-reviewed by Daniel; the 24 A-48 restart pictures (including week 8) delivered with Sonnet judge evidence (model evidence, not acceptance); restart spend 0.57 USD.
+  *Link: [./archive/asset_storytime_l2_unit1_pictures_20261025/](./archive/asset_storytime_l2_unit1_pictures_20261025/)*
+```
+
+The index blob came from `git hash-object -w` on that copy, then
+`git update-index --cacheinfo 100644,$BLOB,measure/tracks.md`. The working file
+`measure/tracks.md` got the same two edits by exact-text edit. The foreign `## Contents` hunk
+stayed in the working file and stayed out of the index.
+
+Check: `git diff --cached -U0 -- measure/tracks.md` shows only the deleted active entry and the
+added archived entry. The count of the word `Contents` in that staged diff is 0.
+
+## Step 8 (CG7): closeout manifest - PASS
+
+The file `measure/archive/asset_storytime_l2_unit1_pictures_20261025/automation-supervisor-closeout-manifest.json`
+holds the F.8 step 8 fields: `schema_version`, `track`, `archived_at`, `track_base_sha`,
+`track_final_sha`, `phase_acceptance_results`, `completed_phases`, `gates`,
+`antipatterns_clean`, `antipatterns_known_limitations`, `deferred`, `deferred_note`,
+`tech_debt`, and `generated_facts`. `python3 -m json.tool` parses it.
+
+The manifest never says that Daniel or Workbooks accepted a picture. The `deferred` field lists
+the four Muse-path deferred tasks and the Nan window sample. The `deferred_note` names the week 8
+rows as delivered, not deferred. `generated_facts` records that the facts stay uncommitted under
+T5.
+
+## Step 9 (CG1): the commit
+
+Result: recorded in the reply of this role and in the closeout commit message.
+
+## Step 10 (CG9): facts and doctor after the move - PENDING
+
+## Step 11 (CG8): closeout role-gate - PENDING
+
+## Step 12: report - PENDING
+
+## Superseded earlier result block
+
+The block below is the first closeout result block. It was written under a PM shutdown order
+and it reports the CG2 stop. It is superseded by the last block of this file.
+
+MEASURE_AGENT_RESULT
+role: closeout
+status: blocked
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: track closeout
+commits: none
+tests_run: CG0 status check (pass); CG2 secret grep over the run folder (exit 0, 32 lines in 2 files)
+files_changed: measure/runs/asset_storytime_l2_unit1_pictures_20261025/closeout-2258bd6.log
+plan_updates: none
+known_failures: CG2 secret scan matched the declared synthetic credential fixture set in one run log
+handoff: closeout stopped at CG2 under a PM shutdown order. Nothing was staged and nothing was committed.
+END_MEASURE_AGENT_RESULT
+
+MEASURE_AGENT_RESULT
+role: closeout
+status: partial
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: track closeout
+commits: pending (steps 1 to 9 done)
+tests_run: CG0 status check (pass); CG2 secret grep over the run folder (exit 0, 32 matches in 2 files, all declared synthetic fixtures)
+files_changed: measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md; measure/tracks/asset_storytime_l2_unit1_pictures_20261025/metadata.json; measure/tracks/asset_storytime_l2_unit1_pictures_20261025/automation-supervisor-closeout-manifest.json; measure/tech-debt.md; measure/status.md; measure/tracks.md
+plan_updates: plan lines 30 and 32 carry their commit SHA on the first line
+known_failures: 38 pinned tsc errors of other tracks; 12 structural doctor errors of other tracks; known-red file tests/storytime-book-pictures.test.ts stays red by the 5.11.16 rule
+handoff: steps 1 to 9 are done. Step 10 (generate.sh and doctor) and step 11 (the closeout role-gate) run next. The final block of this file replaces this one.
+END_MEASURE_AGENT_RESULT

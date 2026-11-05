@@ -1,0 +1,32 @@
+MEASURE_AGENT_RESULT
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 (Phase 3: Week 1 pictures)
+role: jr-green (build plan batch 1)
+status: waiting-for-review
+phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+role_base_sha: 5e8582e0
+final_green_head: e2147120
+green_model: claude-code/claude-opus-5-5[1m]#high
+commits:
+- cc9c8704 feat(storytime): stage the nose and hat row corrections v2 (3 stage files)
+- 2218b1c1 docs(measure): record the nose and hat v2 evidence and the batch 1 review block (plan.md)
+- ad03e17e fix(assets): storytime first-aid bag with no symbol (assets/storytime-first-aid-box.ts)
+- e2147120 docs(measure): record the first-aid fix and the batch 1 review cards (plan.md)
+batch_1:
+- review cards: out/storytime-review/batch-1/ (brief.md, storytime-nest.png, storytime-nut.png, storytime-butterfly-net.png, storytime-first-aid-box.png, storytime-nurse-cap.png, gesture-touch-nose.png, gesture-touch-neck.png, look-reference-nan-and-pip.png)
+- ratings: none yet; the orchestrator starts the reviewer on another family. Green rated nothing.
+- first-aid bag: no symbol now (ad03e17e); --fast and textured render exit 0, no warning lines
+- gesture strips: fresh from ./forge animate sprout-nan (textured, no warning lines, GLB bytes unchanged)
+- GESTURES mapping of touch-nose and touch-neck: waits for a pass
+renders (verify --row exit 0 on each; SHA-256 in plan.md):
+- check-row-nose v2 (az 90) and practice-line-nose v2 (az -90): content fail; the side view shows the ear, and the cheek hides the nose
+- check-row-hat v2 (el 40): content fail; still a dome, from the explorer-hat shape
+rows_done_no_open_defect: 6 of 30 (story-page-hello-i-am-nan v1, story-page-nan-can-nod v2, cover-nan-can-nod v2, check-row-cat v1, check-row-fish v1, check-row-dog v1)
+rows_with_open_defect: check-row-nose, practice-line-nose, check-row-hat
+rows_blocked: 21
+questions_with_defaults:
+- Nose rows: add a painted nose line to the Sprouts face (an approved-cast change), built in batch 3 with its review. Default: yes, Storytime renders only.
+- Hat row: build a child's sun hat in batch 4 in place of explorer-hat. Default: yes (one more missing item).
+- Nurse cap: it has a small green cross; the brief asks the reviewer. Default: keep it unless the reviewer flags it.
+next_batch: on the ratings, fix the failed batch 1 items, map the passed gestures, and render the rows batch 1 unblocks (a-net, a-nut, a-nose, a-neck, the nest rows, check-row-net, practice-line-nut). Then batch 2: green door, wall animal pictures, low tables, wall hook, bag with a bump, open bag.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,109 @@
+{
+  "group": "prod-r2-color",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w01-check-row-nose",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-check-row-nose-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a nose (1), the nose tip, one nostril. Action: none. Seen: one side-view nose in skin color that fills most of the picture; a round tip; one nostril under the tip. All drawn, visible, and clear. mustShow: one nose shown; tip and one nostril shown; fills most of the picture shown."
+    },
+    {
+      "id": "l2-w04-check-row-milk",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-check-row-milk-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a milk carton (1), a cow picture on it. Action: none. Seen: one white gabled carton with a small straw; a drawn cow on grass on the front. Large, in the middle. mustShow: one milk carton shown; cow picture shown; carton large in the middle shown."
+    },
+    {
+      "id": "l2-w02-check-row-axe",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w02-check-row-axe-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: an axe (1), a handle, a blade. Action: none. Seen: one gray blade on a brown handle, large, in the middle. Reads as an axe. mustShow: one axe shown; handle and blade shown; large in the middle shown."
+    },
+    {
+      "id": "l2-w07-check-row-ostrich",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-check-row-ostrich-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: an ostrich (1), a long neck, long legs. Action: none. Seen: one black fluffy ostrich with a long neck, a pink beak, and two long pink legs. Large, in the middle. mustShow: all three shown."
+    },
+    {
+      "id": "l2-w06-check-row-ten",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-check-row-ten-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: ten apples. Action: none. Seen: five red apples with green leaves in a top row; five in a bottom row. Total ten. All separate and clear. mustShow: ten apples shown; two rows of five shown."
+    },
+    {
+      "id": "l2-w07-story-page-the-top-on-a-pot",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-story-page-the-top-on-a-pot-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a top (1), a pot (1). Action: none. Seen: a red and yellow spinning top with its point on the center of a silver pot lid; a silver pot with two side handles on a low wooden table. A boy with dark hair, navy T-shirt, khaki shorts, and red shoes matches Tom. Small mark: the top is small but clear. mustShow: a spinning top shown; a pot with a lid shown; the top sits on the lid shown."
+    },
+    {
+      "id": "l2-w03-story-page-a-pan-on-a-pan",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w03-story-page-a-pan-on-a-pan-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a pan (1), a second pan (1), one on the other. Action: none. Seen: a red pan on the table; a smaller blue pan sits on top of it, handle to the right. Two pans, one stacked on the other. Characters: Nan (two buns with red bands, orange shirt, red shorts) and Ben (messy light-brown hair, light-blue shirt, dark-blue shorts, gray shoes) match the cast. Small mark: the blue pan could read a little like it sits in the red pan, but it is clearly on top at book size. mustShow: one pan shown; a second pan shown; one stacked on the other shown."
+    },
+    {
+      "id": "l2-w03-story-page-a-pan-in-a-pan",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w03-story-page-a-pan-in-a-pan-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "centre of the picture: a second blue pan, held by Ben, floats above the big red pan, so three pans show",
+      "notes": "Question page: no. Items: a big pan (1), a small pan (1) inside it. Action: none. Seen: a big red pan held by Nan; a small blue pan inside it; and a second blue pan held by Ben's hand above the red pan with its handle to the right. That is three pans, not two. The sentence counts one pan in one pan. Characters match the cast (Nan, Ben). mustShow: one big pan shown; a small pan shown; the small pan sits inside the big pan shown, but the extra blue pan is a wrong count."
+    },
+    {
+      "id": "l2-w01-story-page-a-neck",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-neck-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a neck (1), Nan, a hand on the neck. Action: touching the neck (note only). Seen: Nan with two buns and red bands, brown eyes, orange T-shirt with a white star; a short neck shows between the chin and the orange collar; a hand on each side of the neck with fingers at the neck. Character matches the cast. Small mark: two hands, not one; the neck is short, as in the chibi look. mustShow: Nan shown; hand on her neck shown; neck clear between chin and collar shown."
+    },
+    {
+      "id": "l2-w08-check-row-moon",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w08-check-row-moon-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a moon (1), round hollows. Action: none. Seen: one round pale-yellow ball with many round craters, large, in the middle. Small mark: the pale yellow color is a little like cheese, but the craters make it read as a moon. mustShow: one moon shown; round moon with round hollows shown; large in the middle shown."
+    },
+    {
+      "id": "l2-w08-check-row-mango",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w08-check-row-mango-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a mango (1), a small stem. Action: none. Seen: one oval fruit, yellow at the top and green at the bottom, with a small brown stem at the top right. Large, in the middle. mustShow: one mango shown; oval yellow and green fruit with a small stem shown; large in the middle shown."
+    }
+  ],
+  "summary": { "files": 11, "pass": 10, "fail": 1 }
+}

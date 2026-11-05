@@ -1,0 +1,47 @@
+Batch 44 review r2, independent picture review by minimax-cn-coding-plan/MiniMax-M3.1-Flash
+Bar: Daniel 2026-11-01 14:15 ICT
+Files: measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-44v2.json
+       measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-44v2.log
+
+2026-11-02 Status: inconclusive. Provisional. Review in progress.
+Rows: 9 story pages (cover + 8 paint pages) plus K1 (a nut), K2 (practice line nose), K3 (a nose).
+Rule: the bar decides defects. A spec detail outside the listed categories is a note.
+
+Row l2-w03-cover-paint: reviewed. Color print and line print opened, top 30 percent measured.
+  Verdict defect, category layout-fault. Rating 7.0.
+  Teacher Kim's head starts at row 476 of 3000 (16 percent); the window frame reaches row 490.
+  The roof trusses and the beam fill rows 0 to 450. The top 30 percent has no calm band.
+  Notes: Ben's hair is clumped (note), a tan post is in the color only (note), two brushes lie on
+  the low table (note), no gray pixels, no text, one paw print, all seven people show.
+Row l2-w03-story-page-it-is-blue: reviewed. Verdict defect, category wrong-or-changed-character.
+  Rating 7.5. The line print puts a five-pointed star on May's collar; her shirt has no star.
+  Sheet flat blue, one closed shape, no gray, no text, May's cast look matches.
+Row l2-w03-story-page-it-is-green: reviewed. Verdict clean. Rating 8.5. Sheet flat green, one
+  closed shape, no gray, no text, Mia's cast look matches. Notes: two easel designs, two brushes
+  on the low table, lash flicks on Mia.
+Row l2-w03-story-page-it-is-pink: reviewed. Verdict clean. Rating 8.5. Sheet flat pink, one closed
+  shape, no gray, no text, Ben's hair is a smooth swoosh in both files, no emblem on his shirt.
+Row l2-w03-story-page-it-is-pip: reviewed. Verdict clean. Rating 8.0. Pip has floppy ears only, his
+  reference look, about twelve spots, all seven people show in both files, sheet paw prints in seven
+  colors. Note: no pink spot on Pip (six of seven named colors show); the pink pixels near his head
+  are the pink shirt of Mia behind him.
+Row l2-w03-story-page-it-is-purple: reviewed. Verdict clean. Rating 8.5. Sheet flat purple, one closed
+  shape, no gray, no text, eight paw prints, no star on her cardigan, her hair is outlined.
+Row l2-w03-story-page-it-is-red: reviewed. Verdict clean. Rating 8.0. Sheet flat red, one closed shape,
+  no gray, no text, Pat's cast look matches. Note: a green band of his shirt under the sheet and a
+  small mark on his shirt in the line print.
+Row l2-w03-story-page-it-is-yellow: reviewed. Verdict clean. Rating 8.5. Sheet flat yellow, one closed
+  shape, no gray, no text, Sam's cast look matches. Note: a red sliver of his shirt beside the sheet.
+Row K1 (A nut.): reviewed. Verdict clean. Rating 8.0. One big brown nut in Nan's open hand, close up,
+  in both files. Note: the nut is drawn as an acorn.
+Row K2 (practice line, nose): reviewed. Verdict clean. Rating 8.0. The head of Nan in profile with the
+  nose clearly seen in both files. Note: this review covers line try 7 while the approved record names
+  try 13; try 13 also shows the nose clearly.
+Row K3 (A nose.): reviewed. Verdict defect, category broken-face. Rating 6.5. The nose shows in the
+  color file and not in the line file, so the face part named by the text is missing in the line file.
+
+Final status: fail. Two of the nine rows fail: cover-paint (layout-fault) and it-is-blue
+  (wrong-or-changed-character). Seven rows are clean. Of the three extra rows K1 and K2 are clean and
+  K3 fails (broken-face).
+Checks on every line file: no gray pixels in any of the 12 line files, no thick solid black band, no
+  line gap in any sheet outline, no text in any file.

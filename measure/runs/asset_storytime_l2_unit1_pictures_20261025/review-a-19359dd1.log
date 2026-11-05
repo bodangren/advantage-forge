@@ -1,0 +1,84 @@
+# Review A (correctness and architecture): P3 Muse week 1 delivery manifest
+
+Track: `asset_storytime_l2_unit1_pictures_20261025`. Phase 3, "Phase 3: Week 1 pictures".
+Audited HEAD: `19359dd1d9f024a4ab7612f4e5fcf08c091ae029` (equals git HEAD).
+Phase base: `15a7bf0b2a59b8137a05805666df6736dc256167`. Role base: `2b59ccaa` (Red), `0bf8858a` (Green).
+Scope commits: `66d0e57d`, `0bf8858a` (Red); `f41fe108`, `7b843204` (Green).
+Files in scope: `tests/storytime-muse-delivery.test.ts` (new), `src/storytime/muse-delivery.ts` (new),
+`src/storytime/book-pictures.ts` (the `rowCaptureJob` export and the `deliver` command only).
+
+## Verdict
+
+PASS. No blocking findings. Four Nit findings, all recorded with an owner.
+
+## Contract check (spec.md amendment 2026-11-01, decision 2, points 1-6, Forge notes (a) and (b))
+
+1. The Muse flow delivers the week 1 list rows. Met: the writer takes list rows plus the approval
+   list. T153 proves one job per approved row.
+2. One `manifest.json` in the 11a06b9c shape at the batch root, one entry per clean row. Met. T152
+   proves the shape and exactly one manifest at the delivery root.
+3. `job.id` = the picture-list row id. Met. T153 proves it.
+4. `candidate.file` = `<row id>-v1.png`, `lineArt.file` = `<row id>-line-v1.png`; copies of the
+   approved Muse prints; originals kept. Met. T154, T155, and T158 prove names, bytes, and SHA-256.
+5. The folder prefix is free. Met: the writer delivers bare names at the root; the manifest uses
+   directory `w01` only to group batch hashes; the test resolves files by name part.
+6. Only clean rows go into the manifest. Met: an unapproved row gets no job (T153), and a failing
+   review verdict refuses the whole delivery.
+
+Forge note (a): class A and B at 4000 x 3000, class C at 1500 x 1500. Met through
+`planPictureRow` and `PICTURE_SIZES`. T156 proves all three classes and the refusal text names the
+row.
+
+Forge note (b): only Kimi reviews in `reviews.kimi`; no invented person review. Met: the mapper
+copies only the Kimi entry and a named person entry; the strict zod schema rejects extra review
+keys. T159 proves the mapping and the empty `reviews` object.
+
+## Failure atomicity
+
+Every check runs before the first write. The writer collects problems and throws before `mkdir`,
+the copies, and the manifest write. A refusal on row 5 leaves no copies, no folder, and no
+manifest. T156 and T157 prove the claim for size and gray-pixel refusals.
+
+## Determinism
+
+The manifest text depends on row order, canonical batch file order, and approval-list strings.
+`checkedAt` values come from the list, not the wall clock. T161 proves a byte-identical second run.
+
+## Review mapping, CLI, callers, test meaning
+
+- A failing Kimi or person verdict lands in problems and refuses the batch. No unclean row ships.
+- The `deliver` command requires all four flags; a live run with no flags exits 1 with the usage
+  error. It reads the list read-only and logs its SHA-256. It pins no list hash by design.
+- The `rowCaptureJob` export is one additive word; the internal caller is unchanged; owned tsc
+  errors are 0.
+- T152 to T161 run the real writer against real sharp fixtures on real temporary folders. No mock
+  of the code under test.
+
+## Green-log gaps judged
+
+- Write-order mutation: a real coverage gap. The code writes the manifest last by statement order
+  only. Nit F1, owner Green.
+- `lineArt.renderEvidenceFile` is the empty string: accepted. The interface has no minimum, no zod
+  manifest schema exists, and `verifyManifest` never reads the field. Not a defect.
+- No class B calm-top or class C white-corner check on Muse prints: out of scope for this task
+  pair. Nit F3, owner the Phase 3 delivery task and the PM contract.
+- T142/T147 pin list v3 against Workbooks v4: out of scope. The 30 week 1 rows are identical in
+  v3 and v4, and `deliver` pins no hash. Nit F4, owner the Phase 4 reconciliation task.
+
+## Test run
+
+`bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts tests/storytime-picture-rows.test.ts --maxWorkers=1'`
+Exit code 0. Summary: `Test Files 2 passed (2)` and `Tests 15 passed (15)`.
+
+MEASURE_AGENT_RESULT
+role: measure-review-a
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures
+commits: none
+tests_run: command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts tests/storytime-picture-rows.test.ts --maxWorkers=1'; exit code: 0; summary: Test Files 2 passed (2); Tests 15 passed (15); CLI check: node --import tsx scripts/storytime-book-pictures.ts deliver -> exit 1 with usage error
+files_changed: measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-19359dd1.json; measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-19359dd1.log
+plan_updates: none
+known_failures: none
+handoff: Pass with four Nits. F1 (write order unobserved) and F2 (person schema stricter than plan.md records) go to Green. F3 (no calm-top or white-corner check on Muse prints) goes to the Phase 3 delivery task and the PM. F4 (T142/T147 and PICTURE_LIST_V3_SHA256 pin list v3 against Workbooks v4) goes to the Phase 4 list reconciliation task. T142/T147 live in tests/storytime-book-pictures.test.ts, outside the mandated gate; the mandated gate passed 15 of 15.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,26 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/storytime-book-pictures.test.ts (98 tests | 1 failed) 151377ms
+       × T113: the decodedReviewFindings export is gone 18ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T113: the decodedReviewFindings export is gone
+AssertionError: decodedReviewFindings is not exported.: expected [ 'PICTURE_RUBRIC_VERSION', …(61) ] to not include 'decodedReviewFindings'
+ ❯ tests/storytime-book-pictures.test.ts:2492:87
+    2490|
+    2491|     it('T113: the decodedReviewFindings export is gone', () => {
+    2492|       expect(Object.keys(pictureSeams), 'decodedReviewFindings is not …
+       |                                                                                       ^
+    2493|       expect('decodedReviewFindings' in pictureSeams, 'decodedReviewFi…
+    2494|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 97 passed (98)
+   Start at  12:49:44
+   Duration  153.43s (transform 912ms, setup 0ms, import 1.22s, tests 151.38s, environment 0ms)
+

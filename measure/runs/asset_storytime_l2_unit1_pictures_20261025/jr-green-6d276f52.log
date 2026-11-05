@@ -1,0 +1,53 @@
+Green round 24 final log (Storytime week 1 pictures, P3)
+role_base_sha: 71f66b9a
+phase_base_sha: 15a7bf0b
+final HEAD: 6d276f52
+models: Red minimax-cn-coding-plan/MiniMax-M3; Green xai/grok-4.7#high; coder none
+commits: 4b6ac5f5 (stage files), 6d276f52 (plan evidence)
+kept: story-page-a-nest v3
+superseded: story-page-a-nest v5, story-page-a-nest v6
+decision: v5 still puts a leaf on Nan's cheek and cuts her face and body. v6 clears her face, but the nest is small and her point does not aim at it. v3 is better.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: green
+task: Phase 3 Week 1 pictures, Green round 24, nest page frame
+phase_base_sha: 15a7bf0b
+role_base_sha: 71f66b9a
+final_head: 6d276f52
+tasks_marked_x: none
+tasks_marked_b: none
+files_added:
+  docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-v5.json
+  docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-v6.json
+files_changed: measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+implementation_commit: 4b6ac5f5
+plan_commit: 6d276f52
+v3_open_defects:
+  The branch and the fork pass in front of Nan's face. The right leaf cap sits on her head. The line art cuts through her face.
+  The close low angle makes the fork read as a hand.
+  Nan's point still reads as a fist.
+runs:
+  nest v5 render: exit 0; line 23 px; ink 5.67%; peak 516 MB; log green-p3-r24-render-v5.log
+  nest v6 render: exit 0; line 22 px; ink 5.83%; peak 508 MB; log green-p3-r24-render-v6.log; lock wait over 600 s, then the wrapper finished; not repeated
+  verify --row l2-w01-story-page-a-nest: exit 0; Row verification passed for 6 row versions; log green-p3-r24-verify.log; lock wait over 600 s, then the wrapper finished; not repeated
+sha256:
+  kept nest v3 color 6062f8268ef99e8a3fa5e0e307f7b015598eab76dfd10690a5eaab18370da62e
+  kept nest v3 line bc790f9aeb92bba8390b50ee9c77c39a234fe8e2337cae1217d1f920944c539d
+  nest v5 color ebb87f53d65a994fe1276a1681cdc8e0d1dcf3d6bf103244f83a354c05d24810
+  nest v5 line bf34d234e34cec5605364fab1e10bcb558271fb39af36c886b0058064e781ced
+  nest v6 color fd2a72575817c6f5a802726596b4d0885a0e5c29dc0f40e8c95ffab56f135030
+  nest v6 line 14ee0f935aa48ac9a9dac391a751a5e9ddefd07896a13309935e808e014f7f7d
+kept:
+  story-page-a-nest v3
+  round 23 render exit 0; line 22 px; ink 6.31%; peak 535 MB
+seen:
+  v5 still puts the right leaf cap on her cheek. The fork still reads as a hand. Her face and her body are cut off.
+  v6 stands Nan clear of the fork. Her face is free. The nest is small and low on the left. Her point does not aim at the nest.
+open_defect:
+  The three v3 defects remain open. v5 and v6 do not close them without a worse page.
+counts:
+  before this round: 20 of 30 week 1 rows rendered; 17 with no open defect
+  after this round: 20 of 30 week 1 rows rendered; 17 with no open defect
+handoff: independent picture review of story-page-a-nest v3. v5 and v6 are superseded. The face overlap, the hand-shaped fork, and the fist point remain open.
+END_MEASURE_AGENT_RESULT

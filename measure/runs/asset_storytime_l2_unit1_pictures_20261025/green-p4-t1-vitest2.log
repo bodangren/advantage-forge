@@ -1,0 +1,110 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/storytime-book-pictures.test.ts (141 tests | 2 failed) 249605ms
+     × T173: the pipeline pins picture list version 4 and refuses the version 3 bytes 70ms
+     × T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows 74ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T173: the pipeline pins picture list version 4 and refuses the version 3 bytes
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The render row command accepts the live list": "accepted",
++   "The render row command accepts the live list": "ENOENT: no such file or directory, open '/tmp/opencode/storytime-red-iaCVtA/list-v4-sf3yBq/docs/storytime/l2-unit1/w02/rows/l2-w02-story-page-nan-can-b-v1.json'",
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4601:10
+    4599|       );
+    4600|       expect.soft({ 'The render row command accepts the live list': li…
+    4601|         .toEqual({ 'The render row command accepts the live list': 'ac…
+       |          ^
+    4602|       const liveVerify = await rowCommandError(
+    4603|         ['verify', '--row', rowId, '--workbooks', WORKBOOKS, '--out', …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: The week parser accepts week 8.: expected 'ENOENT: no such file or directory, op…' to deeply equal 'accepted'
+
+Expected: "accepted"
+Received: "ENOENT: no such file or directory, open '/tmp/opencode/storytime-red-iaCVtA/week-8-So6JeP/docs/storytime/l2-unit1/w08/rows/l2-w08-check-row-moon-v1.json'"
+
+ ❯ tests/storytime-book-pictures.test.ts:4686:81
+    4684|
+    4685|       const week8 = await dryRun('8');
+    4686|       expect.soft(week8.error ?? 'accepted', 'The week parser accepts …
+       |                                                                                 ^
+    4687|       expect.soft({ 'Week 8 rows rendered in a dry run': week8.count })
+    4688|         .toEqual({ 'Week 8 rows rendered in a dry run': 4 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "Week 8 rows rendered in a dry run": 4,
++   "Week 8 rows rendered in a dry run": -1,
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4688:10
+    4686|       expect.soft(week8.error ?? 'accepted', 'The week parser accepts …
+    4687|       expect.soft({ 'Week 8 rows rendered in a dry run': week8.count })
+    4688|         .toEqual({ 'Week 8 rows rendered in a dry run': 4 });
+       |          ^
+    4689|       const allWeeks = await dryRun();
+    4690|       expect.soft(allWeeks.error ?? 'accepted', 'A run with no --week …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: A run with no --week reads the live list.: expected 'ENOENT: no such file or directory, op…' to deeply equal 'accepted'
+
+Expected: "accepted"
+Received: "ENOENT: no such file or directory, open '/tmp/opencode/storytime-red-iaCVtA/week-8-So6JeP/docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-hello-i-am-pat-v1.json'"
+
+ ❯ tests/storytime-book-pictures.test.ts:4690:94
+    4688|         .toEqual({ 'Week 8 rows rendered in a dry run': 4 });
+    4689|       const allWeeks = await dryRun();
+    4690|       expect.soft(allWeeks.error ?? 'accepted', 'A run with no --week …
+       |                                                                                              ^
+    4691|       expect.soft({ 'Rows rendered in a dry run with no --week': allWe…
+    4692|         .toEqual({ 'Rows rendered in a dry run with no --week': 196 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "Rows rendered in a dry run with no --week": 196,
++   "Rows rendered in a dry run with no --week": -1,
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4692:10
+    4690|       expect.soft(allWeeks.error ?? 'accepted', 'A run with no --week …
+    4691|       expect.soft({ 'Rows rendered in a dry run with no --week': allWe…
+    4692|         .toEqual({ 'Rows rendered in a dry run with no --week': 196 });
+       |          ^
+    4693|
+    4694|       for (const value of ['0', '9']) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  2 failed | 170 passed (172)
+   Start at  01:33:01
+   Duration  289.50s (transform 1.23s, setup 0ms, import 2.04s, tests 286.45s, environment 1ms)
+

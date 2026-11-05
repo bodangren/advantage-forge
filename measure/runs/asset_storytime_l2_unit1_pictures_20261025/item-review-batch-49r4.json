@@ -1,0 +1,95 @@
+{
+  "status": "fail",
+  "reviewer": "opencode/glm-5.3-flash-free#high",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Fail. K3 fails on a finger and nose line gap. Legs fail because one hand does not point at the second leg.",
+  "extra": {
+    "rating": "fail",
+    "K1": {
+      "rating": 8,
+      "verdict": "pass",
+      "defect_categories": [],
+      "defects": [],
+      "notes": "Nan holds one whole acorn on an open palm. Buns, red ties, orange star shirt, and red shorts match the goal. Five fingers visible. No text.",
+      "goal_check": "pass",
+      "line_check": "pass. Closed outlines for acorn, head, and body. Pixel check: 0 non-binary pixels."
+    },
+    "K2": {
+      "rating": 8,
+      "verdict": "pass",
+      "defect_categories": [],
+      "defects": [],
+      "notes": "Profile head faces the other way. Closed nose outline, closed eye ring with solid pupil, eyebrow, mouth line, and C-shaped ear. Pixel check: 0 non-binary pixels.",
+      "goal_check": "pass",
+      "line_check": "pass. Closed nose outline and eye ring. Pixel check: 0 non-binary pixels."
+    },
+    "K3": {
+      "rating": 5,
+      "verdict": "fail",
+      "defect_categories": ["broken-face", "line-gap-hard-to-color"],
+      "defects": [
+        "The finger outline meets the face outline at the nose. No closed, separate nose outline appears in the line print.",
+        "The open laughing mouth sits close to the finger tip, so the finger and face share one closed area."
+      ],
+      "notes": "Nan touches her nose with one index finger and laughs. The pose matches the goal. The nose is not a separate closed shape.",
+      "goal_check": "pass",
+      "line_check": "fail. The finger and nose areas are not separated by white space.",
+      "retry_hint": "Draw a separate closed nose outline. Leave white space between the index finger and the nose outline."
+    },
+    "ears": {
+      "rating": 8,
+      "verdict": "pass",
+      "defect_categories": [],
+      "defects": [],
+      "notes": "Sam wears a red striped shirt and blue shorts. Index fingers touch both ears. One sun with triangle rays. Line clean.",
+      "goal_check": "pass",
+      "line_check": "pass. Pixel check: 0 non-binary pixels."
+    },
+    "eyes": {
+      "rating": 7.5,
+      "verdict": "pass",
+      "defect_categories": [],
+      "defects": [],
+      "notes": "Index fingers sit at the lower outer edges of both eyes. Open smile, pink cheeks, one sun with thin rays. Solid black pupils are allowed.",
+      "goal_check": "pass",
+      "line_check": "pass. Pixel check: 0 non-binary pixels."
+    },
+    "feet": {
+      "rating": 7.5,
+      "verdict": "pass",
+      "defect_categories": [],
+      "defects": [],
+      "notes": "Sam sits on grass with bare feet visible. Blue sneakers stand beside him. One sun with a plain circle. His index finger points down toward the shin, near the feet.",
+      "goal_check": "pass",
+      "line_check": "pass. Shin and foot outlines overlap tightly near the left foot. Pixel check: 0 non-binary pixels."
+    },
+    "hands": {
+      "rating": 7.5,
+      "verdict": "pass",
+      "defect_categories": [],
+      "defects": [],
+      "notes": "Sam stands with both arms raised. Open hands show five fingers each. Sunny park, no text.",
+      "goal_check": "pass",
+      "line_check": "pass. Both arms raised, five fingers per hand. Pixel check: 0 non-binary pixels."
+    },
+    "legs": {
+      "rating": 6.5,
+      "verdict": "fail",
+      "defect_categories": ["wrong-hand-or-limb"],
+      "defects": [
+        "Sam's right hand points at his left leg (image-left). His other hand is open at his side and does not point at the other leg."
+      ],
+      "notes": "Sam stands. Both legs and blue sneakers are fully visible and separate. One sun with triangle rays.",
+      "goal_check": "fail. The brief asks for pointing at both legs. Only one leg is pointed at.",
+      "line_check": "pass. Both legs and sneakers are separate. Pixel check: 0 non-binary pixels. The line print gives no pixel-level proof of hand position.",
+      "retry_hint": "Draw the second hand pointing at the other leg. Keep the open hand as a clear pointing gesture."
+    }
+  },
+  "items": {
+    "l2-w05-story-page-i-have-two-ears": { "rating": 8, "verdict": "pass" },
+    "l2-w05-story-page-i-have-two-eyes": { "rating": 7.5, "verdict": "pass" },
+    "l2-w05-story-page-i-have-two-feet": { "rating": 7.5, "verdict": "pass" },
+    "l2-w05-story-page-i-have-two-hands": { "rating": 7.5, "verdict": "pass" },
+    "l2-w05-story-page-i-have-two-legs": { "rating": 6.5, "verdict": "fail" }
+  }
+}

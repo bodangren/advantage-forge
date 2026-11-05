@@ -1,0 +1,87 @@
+# Review B security audit: storytime Muse delivery writer, round 2
+
+Session: Review B · P3 · storytime_l2_unit1_pictures · r2
+Track: asset_storytime_l2_unit1_pictures_20261025
+Phase: Phase 3: Week 1 pictures
+Model: deepseek/deepseek-flash#high
+
+## Provenance
+
+- phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167 (plan.md:1418 and 1429).
+- role_base_sha: 3509efd5d44f4bd596e5fe4d86dee8bccc47f2dd (Red 3509efd5).
+- audited_head_sha: d06690a046b67a5d08fa0ba2ac4f5034bbe2287e (d06690a0).
+- `git rev-parse HEAD` returned the audited HEAD. No commit followed it. The audited HEAD was current.
+- Red 3509efd5 adds T162 to T172. Green 44c2ec84 changes src/storytime/muse-delivery.ts and the
+  deliver wiring. d06690a0 records the plan evidence.
+- All reads used `git show d06690a0:<path>`. The working tree changed only measure/tracks.md in
+  scope, so I read the committed copy.
+- security_applicability: applicable. The diff reads files, checks paths, and writes files.
+
+## Gate
+
+Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run
+tests/storytime-muse-delivery.test.ts --maxWorkers=1'`
+
+Result: exit 0. Test Files 1 passed (1). Tests 21 passed (21). Duration 16.14s. No exit 75.
+
+## Earlier findings
+
+- RB8-01 withdrawn. The approval schema holds an optional pictureListSha256. writeMuseDelivery
+  refuses a pin with no measured hash and refuses a mismatch. The deliver CLI passes list.sha256.
+  T162 proves a match, a mismatch, a no-pin run, and a refusal that writes nothing.
+- RB8-02 withdrawn. resolveMuseDeliveryPaths confines both flags to <repo>/out/. The CLI calls it.
+  T163 and T164 prove the refusal for an absolute path, a ../ path, and a Muse path, and prove
+  that a refused run creates nothing.
+- RB8-03 withdrawn. Each target passes lstat, which refuses a symlink and a non-file. The copies
+  and the manifest use the wx flag. T165 proves that a dangling symlink gets no byte.
+- RB8-04 withdrawn. The name-check loop maps every delivered name and refuses a repeat. plan.colorFile
+  equals row.fileName, so the map key equals the copy name. T166 proves both duplicate cases.
+- RB8-05 withdrawn. The writer refuses "." , "..", manifest.json, and a line name equal to the
+  color name. planPictureRow refuses a list name that breaks the pattern. T167 proves each case.
+- RB8-06 withdrawn. readMuseFile calls lstat, realpath, and stat. It refuses a symlink, a real path
+  outside realpath(museRoot), and a non-file. T168 proves the three cases.
+- RB8-07 withdrawn. The refusal cases now have tests (T163 to T169, T171). A mutation that drops a
+  name or pattern check fails a test.
+
+## New findings
+
+- RB9-01 Nit: the out/ containment is lexical. A symlinked folder inside out/ escapes.
+- RB9-02 Nit: only the CLI resolver enforces containment; the writer accepts any root.
+- RB9-03 Nit: the pin is optional and the manifest records no list hash.
+- RB9-04 Nit: T170 fails at the pre-write lstat, so the write-time path is untested.
+- RB9-05 Nit: a delivery root inside the Muse root is accepted.
+
+## Data flows checked
+
+- Approval list: zod schema first; a repeated rowId and an unknown rowId stop the run. A row id
+  never forms a path.
+- Picture-list names: the color name passes the list pattern; the line name passes the plain-name,
+  reserved-name, and duplicate rules.
+- Muse reads: no symlink, real path inside realpath(museRoot), regular file. The bytes pass the PNG
+  rules and the line-art gate. A time-of-check to time-of-use window stays between stat and readFile.
+- Writes: all refusals precede mkdir and the first write. An identical manifest is skipped. A
+  different byte, a symlink, or a non-file stops the run. A folder swap between lstat and write
+  stays open.
+- Secrets: the module imports no network, no child process, and no environment read. The CLI error
+  boundary redacts and truncates. The Muse key stays in scripts/storytime-muse.mjs.
+- A2: not triggered. No test flips a draft to published.
+- A6: not triggered. measure/tracks.md lists the track as [~] with no security-resolved claim.
+
+## Probe status
+
+The sandbox refused every probe write: an edit under /tmp/opencode, a printf redirect, a listing of
+out/, and node --import tsx -e programs all returned permission.rejected. RB9-01 to RB9-05 rest on
+code reading. The two test-coverage notes rest on test reading.
+
+MEASURE_AGENT_RESULT
+role: measure-review-b-security
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures
+commits: d06690a0 (audited HEAD, current); Green 44c2ec84; Red 3509efd5
+tests_run: heavy-run vitest tests/storytime-muse-delivery.test.ts --maxWorkers=1; exit 0; Tests 21 passed (21); Duration 16.14s
+files_changed: measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-d06690a0.json, measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-d06690a0.log
+plan_updates: none (audit only)
+known_failures: every probe write was refused by tool permission; RB9-01 to RB9-05 rest on code reading
+handoff: Verdict is pass. RB8-01 to RB8-07 are closed with test proof. Five nonblocking findings stay for Green: RB9-01 (Nit, lexical out/ containment), RB9-02 (Nit, containment only in the CLI resolver), RB9-03 (Nit, optional list pin and no list hash in the manifest), RB9-04 (Nit, T170 fails before any write, so the write-time path is untested), RB9-05 (Nit, a delivery root inside the Muse root is accepted). No product decision is required. No secret and no Workbooks path was read.
+END_MEASURE_AGENT_RESULT

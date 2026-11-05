@@ -1,0 +1,64 @@
+item-review-w05-elements
+Reviewer: opencode-go/mimo-v2.6-flash (independent, audit only)
+Track: asset_storytime_l2_unit1_pictures_20261025, Phase 4 (P4)
+Bar: Daniel 2026-11-01 14:15 ICT, verbatim.
+Scope: 4 current week 5 Muse input sheets. Sheets are inputs for later pages, not pages.
+
+Index read: out/storytime-review/w05-staging/index.md.
+Green log read: measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w05-staging.log.
+Specs read: docs/storytime/l2-unit1/w05/muse-elements/ (4 files).
+Page refs grepped: docs/storytime/l2-unit1/w05/muse/*.json per sheet file name.
+
+PROVISIONAL PASS (first look, one open of each sheet)
+
+1. prop-sock-sheet-m2-color.png
+   Used by: check-row-sock (1 page).
+   Shows: one sky-blue child ankle sock, white top band, yellow heel patch, yellow toe patch, smooth surface.
+   Input checks: white bg, no people, no text, one sock. No sole, no laces, no hard toe cap.
+   Builder doubt (chunky, may read as a small boot): chunkiness alone is not a defect under the bar. The sheet keeps three sock cues (soft rounded toe, no sole line, white cuff band) and shows no boot cue. A child at book size reads a sock. The check row prompt also places the sock on its side.
+   Verdict: clean.
+
+2. prop-sofa-sheet-m1-color.png
+   Used by: check-row-sofa (1 page).
+   Shows: one soft blue two-seat sofa, two rounded arms, one rounded back, one seat cushion, two cream square cushions, short round wooden feet.
+   Input checks: white bg, no people, no text, no face, one sofa.
+   Verdict: clean.
+
+3. prop-nap-blanket-sheet-m1-color.png
+   Used by: sam-nan-and-pam-nap (1 page).
+   Shows: one pale-green blanket, cream border band, one corner turned back, a few soft folds, seen from a little above.
+   Input checks: white bg, no people, no text, no pattern, no pillow, one blanket.
+   Builder doubt (nearly square, but the page covers two children): the sheet shows a rectangle wider than tall. A sheet has no size mark, so a child cannot judge size from it. The nap colorPrompt already states: draw ONE blanket, big enough to cover two small children. The page prompt carries the size rule. Not a defect.
+   Verdict: clean.
+
+4. prop-blue-sneakers-sheet-m1-color.png
+   Used by: i-have-two-feet (1 page).
+   Shows: one pair of two blue child sneakers, side by side, each with one thick white sole, one white toe cap, white laces in a bow.
+   Input checks: white bg, no people, no text, no logo, exactly two shoes.
+   Verdict: clean.
+
+Reference paths (provisional): all four page refs name current files. m2 for the sock; m1 for sofa, blanket, sneakers.
+
+Provisional totals: 4 of 4 clean. Both builder doubts judge as not defects under the bar. No sheet at blocking risk.
+
+PAGE RISKS (builder handoff, judged from the page specs)
+
+- Door pages: the builder said three pages show a girl at an open door. A case-insensitive grep for "door" in docs/storytime/l2-unit1/w05/ finds TWO specs, not three: pam-is-off-sam (Nan full body in the door opening) and pam-is-on-sam (only one sneaker and one leg step in at the right edge). Both colorPrompts are clear: each names the door to draw as a plain wooden door frame with a plain open door at the right. The set picture has no door, so the model must add it. Advice: at page review, check exactly one door at the right with a clear opening, and no second window shape.
+- Leg-only page: pam-is-on-sam carries a strong guard. It names only one small white sneaker and one bare child leg up to a hint of red shorts, cropped by the picture edge, and lists no body, no arms, no head, no face. The prompt is clear enough. Advice: at page review, check that no head, torso, or arm of Nan appears.
+- Nose page tail: i-have-one-nose states that ONLY the fluffy golden-brown tail sticks out behind the tree trunk, and lists no puppy head, no puppy body, no puppy legs. The wording is clear. The gap is different: this page has no Pip picture in its references, so the model must build the tail from text alone. Advice: at page review, check one closed fluffy tail shape that ends on the tree trunk line and no other puppy part; if the tail reads wrong, add the Pip render and re-run.
+
+SECOND LOOK
+Every sheet was opened again after the first pass.
+
+- sock m2: re-checked one sock, white top band, yellow heel patch, yellow toe patch, no sole and no laces.
+- sofa: re-checked one sofa, two arms, two cream cushions, three visible wooden feet, no face, no text. The fourth foot sits behind the front-left body and stays hidden; that is normal in a three-quarter view and no teacher sees a wrong foot.
+- nap blanket: re-checked one blanket, cream border all round, one corner turned back, a few soft folds. Rectangle, not square.
+- blue sneakers: re-counted two shoes, each with one white sole, one white toe cap, and one white lace bow.
+
+All counts hold. All verdicts unchanged.
+Reference paths hold: m2 for the sock; m1 for sofa, blanket, sneakers.
+
+FINAL TOTALS
+4 of 4 clean. 0 not clean.
+Builder doubts: 2 of 2 judge as not defects under the bar.
+Page risk: no sheet at blocking risk. Three page risks stand for the page review: the door pages, the leg-only page, and the nose page tail. The door risk count differs from the handoff: the specs show two door pages, not three.

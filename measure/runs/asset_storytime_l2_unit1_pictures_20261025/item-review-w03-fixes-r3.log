@@ -1,0 +1,49 @@
+Reviewer: opencode-go/deepseek-v4.1-flash
+Bar: Daniel 2026-11-01 14:15 ICT
+Date: 2026-11-02. Audit only. No picture changed. No commit.
+Picture check: the read tool returns images.
+Row 1 color: a dark-haired girl in a yellow shirt and blue skirt holds one blue sheet beside an easel in a timber room.
+
+l2-w03-story-page-it-is-blue: 9/10; clean; categories: none.
+Files: out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-color-print.png; out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-color.png; out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-line-6-despeckled.png; out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-line-print-6-despeckled.png
+Goal: May matches the cast look sheet. Both shirts are plain. One blue sheet has one closed outline. The easel holds three pots in both files. May, her hands, her hair, and the sheet stay whole in both prints.
+Defects: None.
+Notes: The hair clip sits on the hair and is not a shirt mark. The line draws big solid pupils for May. The rule allows solid pupils. The prints cut only the small paint table and the room edges.
+Line pixels: {"out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-line-6-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0},"out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-line-print-6-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0}}
+
+l2-w03-story-page-nan-can-get-a-pan: 8.5/10; clean; categories: none.
+Files: out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-color-print.png; out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-color.png; out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-9-despeckled.png; out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-print-9-despeckled.png
+Goal: Both files show Nan and exactly one toy frying pan. The bowl, the rim, and the long thick handle read as a pan at book size. Three cups and three plates match. Nan, her hands, her hair, and the pan stay whole in both prints.
+Defects: None.
+Notes: The handle end touches the counter corner. The bowl stays clear, and a child still reads one pan. The line fist holds the bowl rim and the handle points right. The color holds a short handle below the fist. This difference changes no character and no needed pan. A small pale seam at one eye corner of Nan does not break the face.
+Line pixels: {"out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-9-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0},"out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-print-9-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0}}
+
+K1: 9/10; clean; categories: none.
+Files: out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png; out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png
+Goal: Both exact files show the head of Nan in right profile with a clear nose. The nose, eye, ear, and mouth stay readable. The head supports a tracing line. No extra person, animal, prop, or text appears.
+Defects: None.
+Notes: The goal says the head faces the other way. The brief supplies no second image, and both files face right. The line draws the hair bun as one thin circle. It is not a thick black band, and the earlier round does not reproduce. The neck and the shirt cross the bottom edge of this head study. The head and the named nose stay whole.
+Line pixels: {"out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png":{"width":1600,"height":1600,"non_binary_pixels":0}}
+
+K2: 6/10; defect; categories: broken-face.
+Files: out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png; out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png
+Goal: The color shows Nan touching her nose with one finger while she laughs. The line fails the named face part. A teacher or a child cannot read 'A nose.' from the line file.
+Defects: The line file does not draw the nose of Nan. Her fingertip stops on her cheek below the eye, so the face part that the text names is missing.
+Notes: The color file shows a clear nose and the intended touch. Both files keep Nan inside the frame. The eyes and the mouth stay readable in the line.
+Line pixels: {"out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png":{"width":4000,"height":3000,"non_binary_pixels":0}}
+Retry: Line: Draw the nose of Nan above the smile and set the fingertip against its side.
+
+K3: 7.5/10; defect; categories: layout-fault.
+Files: out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png; out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png
+Goal: Both files show one large brown nut on the open hand of Nan, close up. Nan matches her look. The hand and the nut stay whole. The frame cuts the right hair bun and the shoe soles.
+Defects: The right hair bun runs off the right edge, and the shoe soles run off the bottom edge, in the color file and in the line file.
+Notes: The goal asks for a close-up. The hand and the big nut stay whole in both files. No open hand shows a clearly wrong finger count in either file. The nut is one acorn with a cap and a stem in both files.
+Line pixels: {"out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png":{"width":4000,"height":3000,"non_binary_pixels":0}}
+Retry: Color and line: Keep the close-up of the hand and the nut; widen the frame so the hair bun and the shoes stay whole.
+
+Checks: the read tool returns every named picture. I looked at the color source, the color print, the line source, and the line print of each row.
+Book-size check: I looked at the family color and the line art of the pan row at 700 pixels wide. The pan still reads as a pan. All six family members stay clear.
+Line totals: 25 line files; 0 non-binary pixels. The color source of K1 is not a line file.
+Set status: pass. Extra status: fail. Final status: fail.
+K1 is clean. K2 lacks the named nose in the line. K3 cuts the hair bun and the shoe soles at the frame edges.
+Facts changed: the week 3 fix rows stay clean. All nine batch 47 rows are clean. The family print fix holds. K2 and K3 keep defects.

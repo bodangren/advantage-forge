@@ -1,0 +1,19 @@
+{
+  "group": "prod-r1-color-a2-second",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w01-story-page-a-nut",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nut-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "The peanut is small and sits left of center on Nan's palm. Nan fills the frame. The nut is not large and not in the middle.",
+      "notes": "Question page: no. Items: a nut (1), the mustShow items. Action: none. Seen: Nan with two round buns and red bands, orange star T-shirt, red shorts, white sneakers (matches the cast note). Her right arm reaches out to the left of the picture. An open hand holds one peanut in its shell. The peanut is about one tenth of the picture width, at the left-middle. Nan's head and body are the largest forms. mustShow: 'one peanut in its shell' = shown. 'Nan's open hand' = shown (open palm, fingers visible, peanut resting on it). 'the nut is large in the middle' = absent (small, off center, Nan is the main subject). The page text is 'A nut.', so the nut must be the main subject. Character: no defect. Face: no defect. No text in the picture."
+    }
+  ],
+  "summary": { "files": 1, "pass": 0, "fail": 1 }
+}

@@ -1,0 +1,155 @@
+Role: measure-jr-green
+Session: Green · P3 · storytime_l2_unit1_pictures · r35
+Round: 35 (Storytime week 1 pictures, P3)
+Model: deepseek/deepseek-flash#high (DeepSeek V4.1 Flash 1017, provider deepseek)
+Red model for Phase 3: minimax-cn-coding-plan/MiniMax-M3 (MiniMax)
+Earlier Phase 3 Green models: claude-opus-5-5 (r1-r7), gpt-6-luna (r8), claude-sonnet-5-5
+(r9-r18, r28, r29, r31, r32), muse-spark-1.3-contributor (r19), grok-4.7 (r20-r27),
+k3.1-pro (r30), deepseek-flash (r33, r34, r35)
+Coder model: none (no delegation)
+role_base_sha: 40709385
+phase_base_sha: 15a7bf0b
+Green HEAD at end: 0677e3a0
+
+STATUS: ok
+
+## Task
+A. Remove the black specks along the acorn cap edge of `assets/storytime-nut.ts`.
+B. Render the practice-line-nut row again (v3).
+C. Render the three story pages that use the new nut and the reworked branch again
+   (a-nut v3, nest-and-a-nut v5, a-nest v7).
+D. Build `out/storytime-review/batch-7/` with the nut card, the four rows, and `brief.md`.
+E. Add a Green round 35 block to the Phase 3 task in `plan.md`.
+F. Write this log.
+
+## Specks cause and fix
+Cause: the cap rim under-cut sat level with the shell surface (0.0220 m against 0.0221 m). The
+two surfaces met at a grazing angle, so the crossing raised dark facets along the rim. Green
+tested the occlusion bake and the normal map; neither was the cause.
+
+Fix in `assets/storytime-nut.ts`:
+- the rim under-cut pulls 1.6 mm inside the shell (0.0204 m), so the rim is buried;
+- the cap rim band paint is lighter, and the mottle frequency falls from 260 to 190;
+- the cap bump noise falls from 0.00016 to 0.00009 m, at a lower frequency;
+- the cap mesh detail falls from 0.0006 to 0.0005, and `maxTriangles` rises to 7000;
+- the atlas rises from 512 to 1024, the storytime prop size.
+
+The shape, the pointed bottom, the cap lobe bumps, the stem, and the colors did not change.
+Deviation: Green ran six specks loops, not three. Loop 2 widened the cap profile and exposed the
+dark underside; Green reverted it. Loops 3 and 4 were the occlusion and normal-map tests.
+
+## Commits
+- `eaa12abb` fix(storytime): remove the black specks along the nut cap edge
+  (`assets/storytime-nut.ts`)
+- `2adf33ae` feat(storytime): render the four week 1 rows on the fixed nut
+  (the four row stage files; each copies its latest version, and only the version changed)
+- `0677e3a0` docs(measure): record storytime green round 35 nut and row evidence
+  (`plan.md`)
+
+## Stale-GLB check
+No rebuilt GLB was needed. `out/sprout-nan/sprout-nan.glb` is 10-31 17:00, and its source commit
+is 10-23. `out/sprout-pip/sprout-pip.glb` is 10-31 20:25 and textured (5,449,100 bytes); the
+source file time is 20:18, so the GLB is newer than the source. The last commit on
+`assets/parts/wolf-kind.ts` is `2527fc6a`. No cast file changed.
+
+## Nut gates
+Each ran in one `heavy-run.sh` command. Textured `render` exit 0 (1024 atlas, 6,046 triangles,
+GLB 792 KB). `inspect --fast` exit 0, size 0.048 x 0.055 x 0.048 m, lowest point y = 0 m.
+`warning:` lines: 0. One inspect advisory stays: "Almost everything is mid-value". No exit 75, no
+exit 137, no lock wait over 600 s. Logs: `green-p3-r35-step3-*.log`.
+
+## Row renders
+Form: `render --row <jobId> --version <n>` then `verify --row <jobId>`. Render and verify ran in
+one `heavy-run.sh` command per row. All exits were 0.
+Logs: `green-p3-r35-step4-<row>.log`.
+
+| Row | Version | Line | Ink | Peak | Color SHA-256 | Line-art SHA-256 |
+| --- | --- | --- | --- | --- | --- | --- |
+| `l2-w01-practice-line-nut` | v3 | 23 px | 1.97% | 988 MB | `343bc5799e28f4a9c6ee134331a3053749ac32614da0fa0d97cf7ae568603028` | `2aa236d1c570c820e09843cbc88ff8c0043bf4ff7f6751f1feeb77440d3d1dcf` |
+| `l2-w01-story-page-a-nut` | v3 | 24 px | 3.52% | 503 MB | `d195b1628052c98b8d44917553868a02d74dc0a5fb302481967e5bb845fbf16f` | `33d3040fe9af5d4f0fd2dc579260bb5825d09413abaec2b8e86b61f14b9608b4` |
+| `l2-w01-story-page-a-nest-and-a-nut` | v5 | 22 px | 5.58% | 511 MB | `29e9b34834228b1258b11e76538d904ea12a05161b5e0cb873d3cb28aa3f69bd` | `37c73a380a4589d13629e5b2b72509962394d2f778f623c6fc9dec92f1f0de74` |
+| `l2-w01-story-page-a-nest` | v7 | 22 px | 6.37% | 511 MB | `2f06db7ef080d3a330c4ece065084213bcb6b44f7f829fc655ae4cc98ce70820` | `2c3bba86296541bf973bd6c8f4b14e718f65717323a98bbd2cce1e6d536ba4a3` |
+
+Verify passed for 3, 3, 5, and 7 row versions. The white edge check passed on every row.
+
+## Builder notes (not a rating)
+Green looked at the four color files and the four line-art files in one montage.
+- The nut alone reads as a nut in color and in line art. The cap edge shows one thin dark crease
+  line and no scattered black specks. The bottom ends in a point, and the stem leans.
+- The nut in Nan's hand reads as an acorn, and the hand stays closed around it. Small dark marks
+  show at the outer eye corners.
+- On the nest-and-a-nut page, Pip's nose meets the nut on the grass. The low branch is a Y shape
+  that reads as a branch, not as a hand. The nest sits in the fork with three eggs.
+- On the a-nest page, one straight trunk reads as a tree, not as a lamp post. The nest sits in
+  the fork. Nan's held-out hand reads as a mitt.
+- No letter, number, or logo shows in any file.
+
+## Files added
+- `docs/storytime/l2-unit1/w01/rows/l2-w01-practice-line-nut-v3.json`
+- `docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nut-v3.json`
+- `docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-and-a-nut-v5.json`
+- `docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-v7.json`
+
+## Untracked review output
+`out/storytime-review/batch-7/` holds `brief.md`, `storytime-nut.png`, the four color PNGs, the
+four line-art PNGs, and `look-reference-nan-and-pip.png`. PNG files stay out of git.
+
+## Process note
+The tool budget ended after the four row renders. The orchestrator restarted Green for the
+brief, the commits, and the plan block. No forge command ran again, and no asset file changed in
+that follow-up.
+
+## Counts
+Week 1 rows rendered: 22 of 30. Rows with no open defect: 15. These counts do not change in this
+round; the orchestrator updates them after the review. No task is marked `[x]`.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: ok
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3
+round: 35
+model: deepseek/deepseek-flash#high
+red_model: minimax-cn-coding-plan/MiniMax-M3
+coder_model: none
+phase_base_sha: 15a7bf0b
+role_base_sha: 40709385
+green_head: 0677e3a0
+commits:
+  - eaa12abb assets/storytime-nut.ts (specks fix)
+  - 2adf33ae four row stage files
+  - 0677e3a0 plan.md evidence block
+tasks_marked_x: none
+tasks_marked_b: none
+targeted_checks:
+  - command: "./forge render storytime-nut"
+    exit: 0
+    note: 1024 atlas, 6,046 triangles, GLB 792 KB, 0 warning lines
+  - command: "./forge inspect storytime-nut --fast"
+    exit: 0
+    note: lowest point y = 0 m; one advisory "Almost everything is mid-value"
+  - command: "render --row <jobId> --version <n> && verify --row <jobId>"
+    exit: 0
+    note: four rows; verify passed for 3, 3, 5, 7 row versions
+new_files:
+  - docs/storytime/l2-unit1/w01/rows/l2-w01-practice-line-nut-v3.json
+  - docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nut-v3.json
+  - docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-and-a-nut-v5.json
+  - docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-v7.json
+review_folder: out/storytime-review/batch-7/
+handoff:
+  next_roles: independent re-review, then phase-acceptance
+  reads:
+    - out/storytime-review/batch-7/brief.md
+    - out/storytime-review/batch-7/storytime-nut.png
+    - out/storytime-review/batch-7/l2-w01-practice-line-nut-v3.png
+    - out/storytime-review/batch-7/l2-w01-story-page-a-nut-v3.png
+    - out/storytime-review/batch-7/l2-w01-story-page-a-nest-and-a-nut-v5.png
+    - out/storytime-review/batch-7/l2-w01-story-page-a-nest-v7.png
+  asks:
+    - Rate 5 items at bar 7.0; Green rated none.
+    - Record the eye-corner flaps, the a-nest fist hand, and the nose-page finger as issues, not
+      as new findings.
+  counts_unchanged: "22 of 30 rendered; 15 with no open defect"
+  open_defects: the three cast defects above wait for an owner decision about a cast change
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,188 @@
+Measure Review C (UX and API end-to-end contract) — audit only
+Track: asset_storytime_l2_unit1_pictures_20261025 — Phase 3: Week 1 pictures (P3)
+Session: Review C · P3 · storytime_l2_unit1_pictures · v2 delivery
+Audited HEAD: 4330cb420dd9cc11576ab089c8046aa716889524 (current; git rev-parse HEAD matched)
+role_base_sha: 4330cb420dd9cc11576ab089c8046aa716889524
+phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+Change range: c4755d25..4330cb42 (production f1e797cb, src/storytime/muse-delivery.ts; Red 13896a21 T184 to T189 sits before the range start)
+contract_applicability: applicable — the change moves the approval field fileVersion and the manifest job names, and the Workbooks stage-1 reader consumes those names.
+
+VERDICT: fail (2 blocking findings, 1 nit). retry_recommendation: escalate_human.
+
+RCV2-1 [blocking]
+src/storytime/muse-delivery.ts:189-204, src/storytime/muse-delivery.ts:410-431,
+/home/daniebo/Desktop/Workbooks/dashboard/lib/storytime/print/picture-check.ts:315
+A v2 candidate stores the -v2 file names. The stage-1 row check matches the manifest entries
+to the list file name, and the list file name ends in -v1. The row fails with
+"picture check: the manifest holds no entry for the file name <row id>-v1.png".
+The command then exits 1.
+Chain: deliveredNames writes the -v2 names (muse-delivery.ts:189-204); the candidate and the
+lineArt record those names (410-431); forgeManifestEntriesForRow returns them
+(picture-check.ts:385-430); checkStorytimePictureBatch passes the entries to
+checkStorytimePicture (514-517); checkStorytimePicture reads row.fileName from the list
+(306-307) and calls entryOf (315-316); entryOf matches by path.basename (170-176).
+The Workbooks list names -v1 on all 196 rows.
+
+RCV2-2 [blocking]
+/home/daniebo/Desktop/Workbooks/dashboard/scripts/storytime/check-storytime-pictures.ts:88-98
+The stage-1 command checks every picture-list row of the requested weeks. It takes no row
+filter; the usage text lists only --level and --weeks (lines 7-17). Week 1 gives 30 rows.
+A batch manifest that holds only the 4 v2 jobs fails the other 26 rows with
+"forge manifest: the manifest holds no job for the row <id>" (picture-check.ts:394).
+Stage 1 cannot exit 0 for the plan "stages 1 and 2 on the 4 rows only".
+
+RCV2-3 [nit]
+measure/tracks/asset_storytime_l2_unit1_pictures_20261025/contract.md:20-23
+The contract still says the color file is the row fileName and the line-art file is the row
+lineArtFileName. It records no fileVersion rewrite. plan.md:4611-4617 records the new rule.
+This confirms Review B RB11-03.
+
+EVIDENCE
+1. Provenance. git rev-parse HEAD returned the audited HEAD 4330cb42, and git log shows it as
+   the newest commit. git rev-parse 15a7bf0b returned the phase base. role_base_sha equals the
+   audited HEAD. The working tree holds edits outside this track, so every Forge read used
+   git show 4330cb42:<path>. The Workbooks file was read in its own working tree at commit
+   5ef3df28.
+2. Scope. The range c4755d25..4330cb42 touches plan.md (+21 lines) and muse-delivery.ts
+   (+47, -16). Production commit f1e797cb sits in the range.
+3. PM contract. spec.md Amendment 2026-11-01 Decision 2 pins job.id = row id, candidate.file =
+   <row id>-v1.png, and one manifest.json in the 11a06b9c shape. The later -v2 order changes the
+   name of the 4 rows only. The shape holds: assembleManifest (book-pictures.ts:2079-2130)
+   returns version 1, batchHashAlgorithm, jobs, and batches w01/color and w01/lineart.
+4. selectedVersion. assembleManifest sets it to the highest ready candidate version
+   (book-pictures.ts:2081-2094). A job with one version 2 candidate gets selectedVersion 2 and
+   status ready. T185 asserts one candidate and selectedVersion 2.
+5. Adapter. forgeManifestEntriesForRow (picture-check.ts:385-430) reads job.id, job status,
+   selectedVersion, candidate.version, candidate status, lineArt status, candidate.file, the
+   SHA-256, and the pixel size. It compares no name with the list, so it accepts the v2 job.
+6. Fields. The writer sets candidate.file, candidate.fileSha256, candidate.structural
+   (width, height, SHA-256), lineArt.file, lineArt.fileSha256, lineArt.status,
+   lineArt.structural (muse-delivery.ts:410-431), and job.id, job.candidates,
+   job.selectedVersion, job.selectedFile, job.selectedSha256, job.status
+   (book-pictures.ts:2079-2094). No field that the reader needs is missing.
+7. The break. entryOf (picture-check.ts:170-176) matches the entry name to the list name by
+   basename. The -v2 entry set has no -v1 name, so the row fails at line 315 before any file is
+   measured. The command exits 1 (picture-check.ts:518-524; check-storytime-pictures.ts:98-104).
+8. Row scope. check-storytime-pictures.ts:88-98 builds the rows from the level week files for
+   the requested weeks, with no row filter.
+9. Error text for an invalid fileVersion. The field is z.number().int().min(1).optional()
+   (muse-delivery.ts:69). parseApprovals (169-176) throws
+   "The approval list is invalid at entries.0.fileVersion: <zod message>.", so the path names
+   fileVersion for every bad value. The suffix refusal (line 200) reads
+   "<row id>: fileVersion needs a list file name with a -v<n>.png suffix; got <name>".
+   T188 asserts exit 1 and a message that names fileVersion for 0, -1, 2.5, and "2".
+10. contract.md lines 20 to 23 state the list-name rule and record no rewrite. RB11-03 holds.
+11. Reachability. docs/storytime/l2-unit1/w01/muse/approved.json holds no fileVersion field,
+    and out/storytime/l2/unit1/w01/ holds only delivery-muse-v1 with -v1 files. The break
+    appears at the first run that sets fileVersion 2.
+12. No vitest ran in this review. No file outside measure/runs/** changed.
+
+COMMANDS
+git rev-parse HEAD; git log --oneline -5; git status --porcelain
+git diff --stat c4755d25..4330cb42
+git diff c4755d25..4330cb42 -- src/storytime/muse-delivery.ts
+git diff c4755d25..4330cb42 -- measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+git show 4330cb42:src/storytime/muse-delivery.ts | grep -n / sed -n
+git show 4330cb42:src/storytime/book-pictures.ts | sed -n '2050,2135p'
+git show 4330cb42:src/storytime/book-pictures.ts | grep -n "interface CandidateManifest" -A 40
+git show 4330cb42:src/storytime/book-pictures.ts | grep -n "interface LineArtManifest" -A 15
+git rev-parse 15a7bf0b
+grep -n forgeManifestEntriesForRow, selectedVersion, candidates, version, fileName <picture-check.ts>
+grep -rn forgeManifestEntriesForRow, selectedVersion /home/daniebo/Desktop/Workbooks/dashboard/lib/storytime/
+sed -n '100,175p' / '280,360p' / '360,540p' <picture-check.ts>
+grep -n and sed -n '1,60p' / '60,110p' <check-storytime-pictures.ts>
+cd /home/daniebo/Desktop/Workbooks && git log --oneline -6 -- dashboard/lib/storytime/print/picture-check.ts
+python3 read of /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json
+grep -c fileVersion docs/storytime/l2-unit1/w01/muse/approved.json
+ls out/storytime/l2/unit1/w01/ and ls out/storytime/l2/unit1/w01/delivery-muse-v1
+grep -n '' measure/tracks/asset_storytime_l2_unit1_pictures_20261025/contract.md | sed -n '14,30p'
+grep -l RB11-03 measure/runs/asset_storytime_l2_unit1_pictures_20261025/*.json
+read review-b-4330cb42.json; read review-c-4d4d86a2.json; tail/grep review-c-3f604b6.log
+
+MEASURE_AGENT_RESULT
+role: measure-review-c-ux-api
+status: blocked
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures (P3)
+phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+role_base_sha: 4330cb420dd9cc11576ab089c8046aa716889524
+audited_head_sha: 4330cb420dd9cc11576ab089c8046aa716889524
+head_sha: 4330cb420dd9cc11576ab089c8046aa716889524
+audited_head: 4330cb420dd9cc11576ab089c8046aa716889524
+head_current: true (git rev-parse HEAD matched at the start and at the finish)
+contract_applicability: |
+  applicable. The phase range c4755d25..4330cb42 moves the approval field fileVersion and the
+  manifest job names (src/storytime/muse-delivery.ts, production f1e797cb). The Workbooks
+  stage-1 reader consumes candidate.file, lineArt.file, and selectedVersion, so the end-to-end
+  contract applies. The 11a06b9c shape holds; the file names do not.
+verdict: fail
+retry_recommendation: escalate_human
+confidence: high
+blocking_findings:
+  - RCV2-1 [blocking] src/storytime/muse-delivery.ts:189-204, src/storytime/muse-delivery.ts:410-431,
+    /home/daniebo/Desktop/Workbooks/dashboard/lib/storytime/print/picture-check.ts:315 — a v2
+    candidate stores the -v2 file names, and the stage-1 row check matches the entries to the
+    list file name, which ends in -v1. The row fails with "picture check: the manifest holds no
+    entry for the file name <row id>-v1.png", and the command exits 1.
+  - RCV2-2 [blocking] /home/daniebo/Desktop/Workbooks/dashboard/scripts/storytime/check-storytime-pictures.ts:88-98
+    — the stage-1 command checks all 30 week-1 rows and takes no row filter. A 4-job batch fails
+    the other 26 rows with "forge manifest: the manifest holds no job for the row <id>"
+    (picture-check.ts:394), so the plan "stages 1 and 2 on the 4 rows only" cannot exit 0.
+nonblocking_findings:
+  - RCV2-3 [nit] measure/tracks/asset_storytime_l2_unit1_pictures_20261025/contract.md:20-23 —
+    the contract still states the list-name rule and records no fileVersion rewrite. Confirms
+    Review B RB11-03.
+evidence:
+  - Provenance: HEAD matched the audited HEAD 4330cb42; phase base 15a7bf0b resolved; role base
+    equals the audited HEAD; Forge reads used git show 4330cb42:<path>; the Workbooks file was
+    read at commit 5ef3df28.
+  - Applicability and scope: production f1e797cb in the range; plan.md +21 lines;
+    muse-delivery.ts +47/-16.
+  - PM contract: spec.md Amendment 2026-11-01 Decision 2 and the 11a06b9c shape hold
+    (book-pictures.ts:2079-2130: version 1, job.id = row id, batches w01/color and w01/lineart).
+  - selectedVersion: assembleManifest sets it to the highest ready candidate version
+    (book-pictures.ts:2081-2094); a version 2 job gets selectedVersion 2; T185 asserts it.
+  - Adapter: forgeManifestEntriesForRow (picture-check.ts:385-430) accepts the v2 job; it reads
+    no list name.
+  - Fields: the writer sets every field the reader reads (muse-delivery.ts:410-431;
+    book-pictures.ts:2079-2094). No field is missing.
+  - Break: entryOf (picture-check.ts:170-176) matches by basename; the list names -v1 on all 196
+    rows (Workbooks/content/storytime/l2/print/pictures.json); the check fails at
+    picture-check.ts:315 and exits 1 at picture-check.ts:518-524.
+  - Row scope: check-storytime-pictures.ts:88-98 takes no row filter; week 1 gives 30 rows.
+  - Error text: "The approval list is invalid at entries.0.fileVersion: <zod message>."
+    (muse-delivery.ts:169-176) and the suffix refusal at line 200; T188 asserts exit 1.
+  - contract.md:20-23 is stale; plan.md:4611-4617 holds the new rule (RB11-03).
+  - Reachability: approved.json holds no fileVersion; only delivery-muse-v1 exists under
+    out/storytime/l2/unit1/w01/.
+  - No vitest ran; no file outside measure/runs/** changed.
+changed_files:
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-4330cb42.json
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-4330cb42.log
+test_strategy_violations: none
+live_contract_violations: none
+prod_wiring_violations:
+  - RCV2-1: the writer emits -v2 names that the Workbooks stage-1 row check cannot match to the
+    list row.
+route_parity_violations: none
+retry_recommendation: escalate_human
+confidence: high
+handoff: |
+  Verdict is fail at 4330cb42. Two blocking findings and one nit are open. The exact question
+  for the user: a v2 Muse delivery names the -v2 files, but the Workbooks stage-1 check matches
+  manifest entries to the list file name, which ends in -v1. Who changes the contract?
+  Options: A) the Workbooks reader matches the entry by row id or by the name without the
+  version (Workbooks commit and a PM hand-off); B) the PM orders a new picture-list version
+  where the 4 rows name -v2, with a new list SHA pin (a Workbooks file that the Forge contract
+  keeps read only); C) Forge delivers the -v2 bytes under the list -v1 names (needs PM approval,
+  because Decision 2 and the -v2 order name the files differently); D) Forge writes a -v1 alias
+  beside each -v2 file (adds a file that the current contract refuses).
+  Second question: the stage-1 command checks all 30 week-1 rows and takes no row filter, so a
+  4-job batch fails the other 26 rows. The user sets the row scope of the Workbooks run.
+  RCV2-3 stays a nit for Green: contract.md lines 20 to 23 still state the list-name rule.
+  RCV2-1 and RCV2-2 need a fix outside advantage-forge in two of the four options, so the
+  orchestrator sends both questions to the user before Green starts. No CONTEST items were sent
+  to this run. No paid model call, no render, no server, no browser, and no vitest were used.
+  facts_changed: none.
+facts_changed: none
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,47 @@
+Green round 22 final log (Storytime week 1 pictures, P3)
+role_base_sha: 3a79d229
+phase_base_sha: 15a7bf0b
+final HEAD: 17d169ab
+models: Red minimax-cn-coding-plan/MiniMax-M3; Green xai/grok-4.7#high; coder none
+reviews: storytime-block-box 7.8 pass (xai/grok-4.7); storytime-low-branch 7.2 pass (bailian-token-plan/qwen3.8-max)
+commits: 24ff0f85 (stage files), 17d169ab (plan evidence)
+decision: white-page method from cover-nan-can-nod v2. Scene classroom. Backdrop white. The PM will see this as a look choice.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: green
+task: Phase 3 Week 1 pictures, Green round 22
+phase_base_sha: 15a7bf0b
+role_base_sha: 3a79d229
+final_head: 17d169ab
+tasks_marked_x: none
+tasks_marked_b: none
+files_added:
+  docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-hello-i-am-mia-v1.json
+  docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-v1.json
+  docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-v2.json
+files_changed: measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+implementation_commit: 24ff0f85
+plan_commit: 17d169ab
+runs:
+  mia classroom map render 1: exit 1; line 18 px; ink 19.93%; edge check failed; log green-p3-r22-hello-i-am-mia-render-v1-edge-fail.log
+  mia classroom map render 2: exit 1; line 18 px; ink 20.95%; lock wait over 600 s; log replaced by the passing render
+  mia v1 render: exit 0; line 21 px; ink 5.75%; peak 520 MB
+  mia verify --row: exit 0; Row verification passed for 1 row versions.
+  nest v1 render: exit 0; line 23 px; ink 5.74%; peak 520 MB; visual fail; superseded
+  nest v2 render: exit 0; line 24 px; ink 5.07%; peak 507 MB
+  nest verify --row: exit 0; Row verification passed for 2 row versions.
+sha256:
+  mia v1 color 7ed8824b1c729276ffedabb977b81ba2504b47b299c5f37c3eb8680b12fc9735
+  mia v1 line 939e39c520be3ce38a12b9516f0994d1956ec6f0dd01838f4d53b83f9a43d318
+  nest v2 color d5704a92ff74e57f9c21227a1d0e28a7ec8bcaebb207d5faa10f5442fa352021
+  nest v2 line e48c2f9d0af652a4eba70739af45a35dc0940d8e5266a5f4b9fa199766daadad
+kept:
+  story-page-hello-i-am-mia v1
+  story-page-a-nest v2
+seen:
+  Mia stands on the rug and waves. Her face reads. Blocks show above the rim. The green cylinder is fully in frame. The rug has a white margin. No letters.
+  The nest sits in the fork. Three eggs show in both files. Nan's face reads. Her raised hand points at the nest. The top is white.
+rows: 20 of 30 week 1 rows rendered; 18 with no open defect
+handoff: independent picture review of story-page-hello-i-am-mia v1 and story-page-a-nest v2
+END_MEASURE_AGENT_RESULT

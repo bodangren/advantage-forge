@@ -1,0 +1,20 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 21
+book file requests refused: 0
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 6.40% (767784 of 12000000 pixels black).
+l2-w01-story-page-a-nest-and-a-nut v10: rendered; stage 731fc4127c2ba225ee130d056effd29c05b7351a0a8d339f39b70741ef20d727; file w01/rows/l2-w01-story-page-a-nest-and-a-nut-v10.png; lineart w01/rows/l2-w01-story-page-a-nest-and-a-nut-line-v10.png; size 4000 x 3000; render peak rss mb: 469
+EXIT_ROW1_RENDER=0
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 20
+book file requests refused: 0
+Line-art line width: 22 px (minimum 12 px).
+Line-art ink coverage: 5.47% (656548 of 12000000 pixels black).
+l2-w01-story-page-a-nest v9: rendered; stage 7e7d98b9d42d79bd4dc19d5af7759e4e53fc098a9fdb8b4db764793922276db7; file w01/rows/l2-w01-story-page-a-nest-v9.png; lineart w01/rows/l2-w01-story-page-a-nest-line-v9.png; size 4000 x 3000; render peak rss mb: 504
+EXIT_ROW2_RENDER=0

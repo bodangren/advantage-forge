@@ -1,0 +1,27 @@
+Line-art line width: 21 px (minimum 12 px).
+Line-art ink coverage: 10.90% (245236 of 2250000 pixels black).
+l2-w01-check-row-bus v1: passed
+Row verification passed for 1 row versions.
+	Command being timed: "node --import tsx scripts/storytime-book-pictures.ts verify --row l2-w01-check-row-bus"
+	User time (seconds): 1.28
+	System time (seconds): 0.13
+	Percent of CPU this job got: 58%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.42
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 136024
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 94
+	Minor (reclaiming a frame) page faults: 24057
+	Voluntary context switches: 1935
+	Involuntary context switches: 1423
+	Swaps: 0
+	File system inputs: 19632
+	File system outputs: 8
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

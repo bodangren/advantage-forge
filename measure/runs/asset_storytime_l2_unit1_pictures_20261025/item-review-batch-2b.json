@@ -1,0 +1,12 @@
+{
+  "reviewer": "openai/gpt-6-luna#high",
+  "storytime-child-cup": {
+    "overall": 7.4,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "The opening looks sealed. The empty inside does not read clearly."
+    ],
+    "fix": "Show a darker, empty inside above the rim."
+  }
+}

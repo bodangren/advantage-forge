@@ -1,0 +1,34 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 — Phase 3: Week 1 pictures
+role_base_sha: 4166d644
+phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+models: Red minimax-cn-coding-plan/MiniMax-M3; Green openai/gpt-6-luna#high; coder none
+commits:
+- d6f1a332 feat(storytime): adopt neck and nut week 1 rows
+- 54889a08 docs(measure): record storytime green round 8 row evidence
+final_green_head: 54889a08
+red_change_range_check: The phase base is an ancestor of HEAD. No storytime Red test commit was identified in the inspected path-limited history.
+targeted_red_command: Not run. The committed Red command and test paths were not supplied or located.
+targeted_red_output: Not available; the Red gate is unverified.
+implementation:
+- Adopted the existing neck v1, nut v1, and practice-line-nut v1 stages.
+- Kept nut v2 because it changes from a held nut to a standalone close-up. Rendered and verified it.
+- Committed the pre-existing `touch neck` GESTURES mapping and the stage rows in d6f1a332.
+- `node_modules/.bin/vitest run tests/song-timeline.test.ts --maxWorkers=1`: exit 0; 19 tests passed.
+- Corrected row verify commands exited 0 for neck v1, nut v1/v2, and practice-line-nut v1.
+- The first verify command used repeated `--row` flags and exited 1. A mistaken `./forge verify` command exited 1. These attempts did not modify source files.
+renders:
+- Neck v1 color SHA-256 `2e90f4ce09a676bd930ff8698be31be2854e3fbd0af7dc3edb0c1862c5534d54`; line art `40ddddd95a7ef8464722b0262dfd434ea621e4dd0bb5241792913cd37938fc9d`.
+- Nut v1 color SHA-256 `bb4a607b154b79256155fa684b06d7bb897f5fdcb68efc31499a3d7b3f71a46d`; line art `1d8214864971d3e3a103eb15fd1951ea529c3133517107a21589e8c787fa6f1a`.
+- Nut v2 color SHA-256 `c583e8e3bff063776cf80e527a1129c773ac2b3e44653949efb3c1ab1a50c08e`; line art `e846f4fdac7762e70d0e42584f8daa4c9b79f1461a63880bc6af8f3b98ae8f12`.
+- Practice-line-nut v1 color SHA-256 `b211c813889844efa57800fbbfb59789b6ed192344f595cd41f1607070297aa1`; line art `00be9a568d80d6089a812c5af49bc3ac8cf9ece56cb74e852c0d9bd0b44aaf95`.
+new_files_added: Four stage JSON files were committed in d6f1a332. No tests or review cards were added.
+cards: None. Independent review cards were not produced.
+rows_done: Row verification passed for a-neck v1, a-nut v1/v2, and practice-line-nut v1. These rows await independent content review.
+rows_blocked: Nest and butterfly-net asset corrections and review cards remain undone. No task was marked [x].
+next_batch: Complete nest and net fixes and independent review. Fix touch-nose. Then continue batch 2 items, the nose line, and the sun hat.
+status: blocked
+handoff: Green round 8 is incomplete. Nest and net fixes, their renders, review cards, and the independent review handoff remain. The targeted Red gate and `bash measure/doctor.sh` were not run. No asset files changed. Continue these tasks before review acceptance.
+END_MEASURE_AGENT_RESULT

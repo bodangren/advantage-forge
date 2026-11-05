@@ -1,0 +1,19 @@
+{
+  "reviewer": "openai/gpt-6-luna#high",
+  "seen": {
+    "front": "The slim trunk rises from a small root flare, and a branch fork supports the open seat beneath a joined arch of leaves.",
+    "three_quarter": "The tapering trunk and irregular roots support a forked branch, with an open nest seat below an arch of leaves.",
+    "side": "The narrow trunk and branch fork are visible in profile, with the leafy arch above the seat and a small grounded base.",
+    "back": "The trunk joins the low branch from behind, while its open fork sits below the leafy arch and above uneven roots.",
+    "nest_check": "The nest rests on the rounded seat within the fork, below the leafy arch, with no visible gap or sinking."
+  },
+  "storytime-low-branch": {
+    "overall": 7.6,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "The leafy arch reads as foliage, but its even curve can suggest a small hood or separate canopy."
+    ],
+    "fix": "Keep the arch connected to the branch and vary its leaf cluster sizes slightly."
+  }
+}

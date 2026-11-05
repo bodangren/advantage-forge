@@ -1,0 +1,244 @@
+{
+  "status": "fail",
+  "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Six of the eight week 4 rows keep the goal and the cast. Four rows lose a nose in the line art. The family print fix holds. The dress corner of the doll is missing in one line art. Dad has no hair in one line art. K1 and K2 are clean. K3 has no nose in the line art.",
+  "items": {
+    "l2-w04-story-page-this-is-my-family": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-line-4-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-line-print-4-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The red door hides mostly behind Grandma and Grandpa. The sentence names the family, and all six people stay clear.",
+        "The line art draws the path as a coil of loops. The color shows a stone path. The change touches no character and no needed prop.",
+        "The line art adds shirt buttons to Mom, Dad, and Grandma. The color shows plain shirts. Buttons are not a star or a badge.",
+        "Grandma shows faint crow's feet in the color. The line art has none. This is a small mark."
+      ],
+      "goal_check": "Both prints show all six people whole, with lawn at each side. The earlier cut of Lily's hand and hair is gone. Dad keeps the yellow polo shirt, blue jeans, and brown shoes. Tom wears a blue T-shirt and khaki shorts, and Lily wears a purple dress with a pink bow. No shirt carries a star or a badge. No animals, sun, letters, words, or numbers appear.",
+      "line_check": "Zero nonbinary pixels in the line source and the line print. The eyes are solid black dots. Mom, Dad, Tom, and Lily show eyes, a nose, and a mouth. Grandpa shows a mustache and a mouth. No thick black ring, band, or gap makes coloring hard."
+    },
+    "l2-w04-cover-pam": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-line-2-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 7.5,
+      "verdict": "defect",
+      "defect_categories": [
+        "broken-face"
+      ],
+      "defects": [
+        "The line art face of Nan has no nose. The color face shows a nose."
+      ],
+      "notes": [
+        "The line art adds a curtain at the window. The color has a plain window. The change touches no character and no needed prop.",
+        "The curtain at the left edge of the line print runs off the frame. It is a background prop and the sentence does not need it."
+      ],
+      "goal_check": "Nan holds one doll Pam with yellow yarn hair, two pigtails, and a plain red dress in front of a blue sofa in the color and in the line. Nan's star sits under the doll in both files. One doll. One sofa. No letters, words, or numbers appear. Both prints show Nan and the doll whole.",
+      "line_check": "Zero nonbinary pixels in the line source and the line print. The eyes use a thin outline ring with a solid black pupil, which the bar allows. The mouth shows. No gap makes coloring hard.",
+      "retry_hint": "Line: add a small nose mark between the eyes and the mouth, as the color shows."
+    },
+    "l2-w04-story-page-this-is-the-man": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-line-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-line-print-despeckled.png"
+      ],
+      "rating": 7,
+      "verdict": "defect",
+      "defect_categories": [
+        "wrong-or-changed-character"
+      ],
+      "defects": [
+        "The line art gives Dad no hair. The color shows short straight black hair and the goal names it. The line art shows a bald head under the doll."
+      ],
+      "notes": [
+        "Dad shows eyes, a nose, and a laughing mouth in the line art.",
+        "The doll keeps her look in both files: yellow yarn hair, two pigtails, dot eyes, a smile, and a plain dress.",
+        "Nan has a star on her T-shirt only. One doll and one blanket in both files.",
+        "The toy box at the right runs off the print edge in both prints, and the window at the left runs off the line print. Both are background props.",
+        "The goal gives Dad a blue T-shirt, gray shorts, and black sandals. The color shows the blue T-shirt at his neck. The rest of him stays under the blanket."
+      ],
+      "goal_check": "Dad pops out from under the blue blanket on the sofa with the doll on his head, and Nan laughs at the left with open arms, in the color and in the line. One doll and one blanket. The hair that the goal names shows in the color and not in the line.",
+      "line_check": "Zero nonbinary pixels in the line source and the line print. Dad has solid black dot eyes. Nan shows eyes, a nose, and a mouth. No thick black ring, band, or gap makes coloring hard.",
+      "retry_hint": "Line: draw the cap of short hair and the hairline on Dad head, as the color shows."
+    },
+    "l2-w04-story-page-is-this-pam": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-line-2-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 6.5,
+      "verdict": "defect",
+      "defect_categories": [
+        "wrong-or-missing-prop"
+      ],
+      "defects": [
+        "The line art has no corner of the red doll dress at the edge of the blanket. The color shows a red dress corner with a frayed hem, yellow yarn, and a foot. The line art shows a sawtooth blanket edge, yarn strands, and a foot only, so a child cannot find Pam in the coloring book."
+      ],
+      "notes": [
+        "Nan keeps her approved look in both files: orange T-shirt with a white star, red shorts, white sneakers, two bunches with red bands, and large dark-brown eyes. Her face shows eyes, a nose, and a surprised round mouth.",
+        "The window at the left and the toy box at the right run off the print edge in both prints. They are background props and the sentence does not need them.",
+        "The builder note says only a fringe and a shoe show. The color shows a red dress corner as well."
+      ],
+      "goal_check": "One blanket lies over the sofa end. Nan points at the blanket in the color and in the line. The goal names the corner of a small red doll dress at the blanket edge. It shows in the color file and not in the line file.",
+      "line_check": "Zero nonbinary pixels in the line source and the line print. The eyes use a thin outline ring with a solid black pupil, which the bar allows. The nose and the mouth show. No gap makes coloring hard.",
+      "retry_hint": "Line: draw the corner of the doll dress at the blanket edge with the frayed hem, the yarn, and the foot, as the color shows."
+    },
+    "l2-w04-story-page-pam-can-nap": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-line-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-line-print-despeckled.png"
+      ],
+      "rating": 7.5,
+      "verdict": "defect",
+      "defect_categories": [
+        "broken-face"
+      ],
+      "defects": [
+        "The line art face of Nan has no nose. The color face shows a nose."
+      ],
+      "notes": [
+        "The doll keeps her look in both files: yellow yarn hair, two pigtails, dot eyes, and a smile. The color shows a red dress. The line art hides most of the dress behind the box edge.",
+        "The toy box at the right runs off the print edge in both prints. It is a background prop and the sentence does not need it.",
+        "The window at the left runs off the print edge in the line print. It is a background prop."
+      ],
+      "goal_check": "One doll sits in one shoe box with one small blanket on the rug. Nan keeps her orange T-shirt with a white star, red shorts, white sneakers, two bunches with red bands, and large dark-brown eyes. One box, one blanket, and one doll in the color and in the line. No letters, words, or numbers appear. Both prints show Nan and the box whole.",
+      "line_check": "Zero nonbinary pixels in the line source and the line print. The eyes use a thin outline ring with a solid black pupil, which the bar allows. The mouth shows. No gap makes coloring hard.",
+      "retry_hint": "Line: add a small nose mark between the eyes and the mouth, as the color shows."
+    },
+    "l2-w04-story-page-pam-is-in-a-pan": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-line-2-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The line art hides the pan handle partly behind the sofa and the toy box. The color shows the full handle. The pan still reads as a pan at book size.",
+        "The toy box at the right runs off the print edge in both prints. It is a background prop and the sentence does not need it.",
+        "The window at the left runs off the print edge in the line print. It is a background prop."
+      ],
+      "goal_check": "One doll sits in one big yellow toy pan on the rug, and Nan laughs at the left, in the color and in the line. Nan keeps her orange T-shirt with a white star, red shorts, white sneakers, two bunches with red bands, and large dark-brown eyes. Her face shows eyes, a nose, and a laughing mouth. The doll keeps her look: yellow yarn hair with two pigtails, dot eyes, a smile, and a plain red dress. One pan and one doll. No letters, words, or numbers appear. Both prints show Nan, the pan, and the doll whole.",
+      "line_check": "Zero nonbinary pixels in the line source and the line print. The eyes use a thin outline ring with a solid black pupil, which the bar allows. The nose and the mouth show. No gap makes coloring hard."
+    },
+    "l2-w04-story-page-pam-is-on-a-map": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-line-2-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The map shows a red cross marker in the color and in the line. It marks a place on the map. It is not a word or a number.",
+        "The toy box at the right runs off the print edge in both prints. It is a background prop and the sentence does not need it.",
+        "The window at the left runs off the print edge in the line print. It is a background prop."
+      ],
+      "goal_check": "One big paper map lies open on the rug, one doll lies on it, and Nan kneels and points at the doll in the color and in the line. Nan keeps her orange T-shirt with a white star, red shorts, white sneakers, two bunches with red bands, and large dark-brown eyes. Her face shows eyes, a nose, and a smiling mouth. The doll keeps her look: yellow yarn hair with two pigtails, dot eyes, a smile, and a plain red dress. One map and one doll. No letters, words, or numbers appear. Both prints show Nan, the map, and the doll whole.",
+      "line_check": "Zero nonbinary pixels in the line source and the line print. The eyes use a thin outline ring with a solid black pupil, which the bar allows. The nose and the mouth show. No gap makes coloring hard."
+    },
+    "l2-w04-story-page-this-is-pam": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-line-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-line-print-despeckled.png"
+      ],
+      "rating": 6,
+      "verdict": "defect",
+      "defect_categories": [
+        "broken-face",
+        "wrong-or-changed-character"
+      ],
+      "defects": [
+        "The line art face of Nan has no nose. The color face shows a nose.",
+        "In the line art the top point of the star on the T-shirt of Nan shows above the head of the doll, so the doll looks as if she wears a star. The color shows no star because the doll covers it."
+      ],
+      "notes": [
+        "The doll keeps her look in both files: yellow yarn hair, two pigtails, dot eyes, a smile, and a plain red dress.",
+        "The toy box at the right runs off the print edge in both prints, and the window at the left runs off the line print. Both are background props."
+      ],
+      "goal_check": "Nan holds up one doll Pam in front of a blue sofa and smiles in the color and in the line. Nan keeps her orange T-shirt, red shorts, white sneakers, two bunches with red bands, and large dark-brown eyes. One doll. No letters, words, or numbers appear. Both prints show Nan and the doll whole.",
+      "line_check": "Zero nonbinary pixels in the line source and the line print. The eyes use a thin outline ring with a solid black pupil, which the bar allows. The mouth shows. No gap makes coloring hard.",
+      "retry_hint": "Line: move the star on the T-shirt of Nan clear of the doll and add a small nose mark, as the color shows."
+    }
+  },
+  "extra": {
+    "K1": {
+      "text": "nose",
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The hair band on the bun shows in the color but not in the line. The practice line needs only the nose."
+      ],
+      "goal_check": "Both files show the head of Nan in profile facing the right, with the nose in clear profile. One eye, one ear, the hair mass, and the neck show. The subject of the sentence stays whole in the close-up.",
+      "line_check": "Zero nonbinary pixels. The eye uses a thin outline ring with a solid black pupil, which the bar allows. The mouth and the nose profile show. No gap makes coloring hard."
+    },
+    "K2": {
+      "text": "A nut.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The line art draws the pupils as outline circles. The color uses solid dark pupils. The style changes no character and no needed prop.",
+        "The open hand shows a thumb and four fingers in the color. The line shows the same hand."
+      ],
+      "goal_check": "One big brown nut sits in the open hand of Nan in color and in line. Nan keeps her orange T-shirt with a white star, red shorts, black hair in two bunches with red bands, and her large dark-brown eyes. The close-up keeps the subject whole.",
+      "line_check": "Zero nonbinary pixels. The face shows eyes, a small nose mark, and a mouth. No thick black ring, band, or gap makes coloring hard."
+    },
+    "K3": {
+      "text": "A nose.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "rating": 6.5,
+      "verdict": "defect",
+      "defect_categories": [
+        "broken-face"
+      ],
+      "defects": [
+        "The line art face has no nose. The color shows a nose, and the finger touches the place where the nose should be."
+      ],
+      "notes": [
+        "The line art shows one finger raised to the face and an open laughing mouth."
+      ],
+      "goal_check": "Nan touches her own nose with one finger and laughs in color and in line. Her T-shirt shows one white star. The named part, the nose, shows in the color file but not in the line file.",
+      "line_check": "Zero nonbinary pixels. Both eyes and the mouth show. No thick black ring, band, or gap makes coloring hard.",
+      "retry_hint": "Line: draw the nose shape at the point the finger touches, as the color shows."
+    }
+  }
+}

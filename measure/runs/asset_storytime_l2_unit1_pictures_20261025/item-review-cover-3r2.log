@@ -1,0 +1,35 @@
+item-review-cover-3r2
+reviewer: claude-code/claude-opus-5-5[1m]#high
+bar: Daniel 2026-11-01 14:15 ICT
+status: pass
+
+Order: K1 to K3 first (one time each), then the cover.
+
+K1 "A nose."      rating 5.0  defect  broken-face
+  The line file shows no nose. The text names the nose, so the nose must show in both files.
+  Retry: draw the nose outline in the line file above the finger tip.
+K2 "nose"         rating 8.5  clean
+  The profile shows the nose clearly in both files. The words "the other way" stay unchecked.
+K3 "A nut."       rating 8.5  clean
+  The open hand has five digits in both files. The nut is a big brown acorn.
+
+Cover l2-cover-v1, candidate m13 (SHA-256 d32b5cc7...abf01, match)
+  rating 8.0  clean  categories: none
+  C2 calm top: yes. Rows 0 to 899 are one plain cream wall (stdev about 1 per channel).
+  left_margin_px 590 (tip of the waving finger of Ben, row 1864)
+  right_margin_px 658 (edge of the right hair bun of Nan, x = 3341)
+  Hands (crops of 280 px, enlarged 4 times, counted from the thumb):
+    Ben   5  short thumb against the cheek, separate digit
+    Mia   5  short thumb against the cheek, separate digit
+    Sam   5  short thumb against the cheek, separate digit
+    May   5  short thumb against the cheek, separate digit
+    Pat   5  short thumb against the cheek; the upper fingers have low contrast on the cheek of May
+    Nan   5  short thumb against the cheek, separate digit
+    lowered hands: round mittens, the same as the approved cast sheets
+  Book size: a child who counts slowly counts five on each waving hand.
+  Six children in the approved look and outfits; no changed character.
+  Each face has eyes, a nose, and a mouth. Pip is whole with floppy ears.
+  Notes: Pip stands (the goal says he sits); no clear contact shadows under the feet;
+  the thumbs are short; no text anywhere.
+
+Overall: pass (the cover is clean and calm_top is yes). K1 is a separate defect.

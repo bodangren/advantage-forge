@@ -1,0 +1,11 @@
+storytime-school-bus: 18,356 triangles, 0.846 x 0.787 x 1.5 m, built in 22511 ms
+  bus-body                  5628 tris  (3632 ms)
+  windows                   1976 tris  (934 ms)
+  tires                     3000 tris  (638 ms)
+  hubs                      2500 tris  (911 ms)
+  trim                      2500 tris  (972 ms)
+  door-step                  252 tris  (35 ms)
+  lamps                     2500 tris  (429 ms)
+texture  1024x1024 atlas: base color, normal, occlusion/roughness/metal (17210 ms)
+glb      out/storytime-school-bus/storytime-school-bus.glb  (1629 KB)
+render   out/storytime-school-bus/render.png  (2825 ms)

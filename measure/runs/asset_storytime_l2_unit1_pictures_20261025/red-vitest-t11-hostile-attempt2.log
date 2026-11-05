@@ -1,0 +1,1719 @@
+heavy-run: lock wait over 600 s — holder PID 2592535: flock -w 600 -E 201 /home/daniebo/Desktop/primary-parity-progress/heavy.lock /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh --locked -c bash 'apps/storytime/__tests__/phase1-docker-smoke.sh' --locked 
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T121: the seam scans 65,536 unmatched opening braces within 2000 ms
+malformed scan ms: 21993
+
+ ❯ tests/storytime-book-pictures.test.ts (111 tests | 9 failed | 98 skipped) 79083ms
+         × T116: both providers refuse Review B case 1, the fenced root array 2357ms
+         × T117: both providers refuse Review B case 2, a safe review then a root array 1940ms
+         × T118: both providers refuse Review B case 3, the earlier duplicate value 4319ms
+         × T120: both providers refuse Review B case 5, the malformed unknown field 4171ms
+         × T121: the seam scans 65,536 unmatched opening braces within 2000 ms 22770ms
+         × T124: the long pattern name is cut and the task 10 suffix stays in every message 4196ms
+         × T126: the decoded-check comments name the raw answer, the order, and the current finding 17ms
+         × T127: the MiniMax path writes no evidence for every refused construction 9793ms
+         × T128: the Kimi path writes no evidence for every refused construction 6683ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T116: both providers refuse Review B case 1, the fenced root array
+AssertionError: fenced root array/minimax: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2616:81
+    2614|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2615|           .not.toBe('RangeError');
+    2616|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    2617|         expect.soft(message, `${context}: the refusal holds no matched…
+    2618|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+ ❯ tests/storytime-book-pictures.test.ts:2637:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T116: both providers refuse Review B case 1, the fenced root array
+AssertionError: fenced root array/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2619:12
+    2617|         expect.soft(message, `${context}: the refusal holds no matched…
+    2618|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+    2619|           .toBe(true);
+       |            ^
+    2620|         const entries = await securityLedger(space.space.outputRoot);
+    2621|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:2637:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T116: both providers refuse Review B case 1, the fenced root array
+AssertionError: fenced root array/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "3d85ea2e-61bd-4e45-ac66-a733fc7d90c9",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T09:17:43.051Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2622:12
+    2620|         const entries = await securityLedger(space.space.outputRoot);
+    2621|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    2622|           .toEqual([]);
+       |            ^
+    2623|         const files = await tree(space.space.outputRoot);
+    2624|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:2637:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T116: both providers refuse Review B case 1, the fenced root array
+AssertionError: fenced root array/minimax: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-immNJt/repo-o4XVYm/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-3d85ea2e-61bd-4e45-ac66-a733fc7d90c9.txt",
++   "/tmp/opencode/storytime-red-immNJt/repo-o4XVYm/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2625:56
+    2623|         const files = await tree(space.space.outputRoot);
+    2624|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    2625|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    2626|         if (provider === 'kimi') {
+    2627|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:2637:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T116: both providers refuse Review B case 1, the fenced root array
+AssertionError: fenced root array/kimi: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2616:81
+    2614|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2615|           .not.toBe('RangeError');
+    2616|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    2617|         expect.soft(message, `${context}: the refusal holds no matched…
+    2618|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+ ❯ tests/storytime-book-pictures.test.ts:2637:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T116: both providers refuse Review B case 1, the fenced root array
+AssertionError: fenced root array/kimi: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2619:12
+    2617|         expect.soft(message, `${context}: the refusal holds no matched…
+    2618|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+    2619|           .toBe(true);
+       |            ^
+    2620|         const entries = await securityLedger(space.space.outputRoot);
+    2621|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:2637:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T116: both providers refuse Review B case 1, the fenced root array
+AssertionError: fenced root array/kimi: no success entry.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "88fa3312-25b1-4aad-b55b-0211948091ee",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T09:17:44.029Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2622:12
+    2620|         const entries = await securityLedger(space.space.outputRoot);
+    2621|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    2622|           .toEqual([]);
+       |            ^
+    2623|         const files = await tree(space.space.outputRoot);
+    2624|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:2637:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T116: both providers refuse Review B case 1, the fenced root array
+AssertionError: fenced root array/kimi: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-immNJt/repo-olijYH/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-88fa3312-25b1-4aad-b55b-0211948091ee.txt",
++   "/tmp/opencode/storytime-red-immNJt/repo-olijYH/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2625:56
+    2623|         const files = await tree(space.space.outputRoot);
+    2624|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    2625|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    2626|         if (provider === 'kimi') {
+    2627|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:2637:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T116: both providers refuse Review B case 1, the fenced root array
+AssertionError: fenced root array/kimi: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "5d12fb8150fda5a1dc35e37df13bd76dea35888b4c9f6a7fe37373463bf4c6fe",
++     "b90c331585b69421b3ed2a3deb5bfe6751e3f1736f83f375d47440b5c0df0dc0",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-88fa3312-25b1-4aad-b55b-0211948091ee.txt",
++     "f75c09c4dd9528df67d8809dbabd89af3cbb3456e47b862e152461ee451d01fb",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "dc066990914b8af7e875287a588e29292b3e77d61e97c8dc6efb3154aec2cf65",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2628:14
+    2626|         if (provider === 'kimi') {
+    2627|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+    2628|             .toEqual(space.before);
+       |              ^
+    2629|           expect.soft(await readFile(space.rawFile), `${context}: the …
+    2630|             .toEqual(Buffer.from(raw));
+ ❯ tests/storytime-book-pictures.test.ts:2637:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T117: both providers refuse Review B case 2, a safe review then a root array
+AssertionError: safe review then root array/minimax: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2616:81
+    2614|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2615|           .not.toBe('RangeError');
+    2616|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    2617|         expect.soft(message, `${context}: the refusal holds no matched…
+    2618|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+ ❯ tests/storytime-book-pictures.test.ts:2642:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T117: both providers refuse Review B case 2, a safe review then a root array
+AssertionError: safe review then root array/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2619:12
+    2617|         expect.soft(message, `${context}: the refusal holds no matched…
+    2618|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+    2619|           .toBe(true);
+       |            ^
+    2620|         const entries = await securityLedger(space.space.outputRoot);
+    2621|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:2642:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T117: both providers refuse Review B case 2, a safe review then a root array
+AssertionError: safe review then root array/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "ab452359-832b-4c61-82cf-39c943b6a4c2",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T09:17:45.028Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2622:12
+    2620|         const entries = await securityLedger(space.space.outputRoot);
+    2621|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    2622|           .toEqual([]);
+       |            ^
+    2623|         const files = await tree(space.space.outputRoot);
+    2624|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:2642:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T117: both providers refuse Review B case 2, a safe review then a root array
+AssertionError: safe review then root array/minimax: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-immNJt/repo-5OBvEt/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-ab452359-832b-4c61-82cf-39c943b6a4c2.txt",
++   "/tmp/opencode/storytime-red-immNJt/repo-5OBvEt/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2625:56
+    2623|         const files = await tree(space.space.outputRoot);
+    2624|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    2625|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    2626|         if (provider === 'kimi') {
+    2627|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:2642:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T117: both providers refuse Review B case 2, a safe review then a root array
+AssertionError: safe review then root array/kimi: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2616:81
+    2614|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2615|           .not.toBe('RangeError');
+    2616|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    2617|         expect.soft(message, `${context}: the refusal holds no matched…
+    2618|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+ ❯ tests/storytime-book-pictures.test.ts:2642:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T117: both providers refuse Review B case 2, a safe review then a root array
+AssertionError: safe review then root array/kimi: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2619:12
+    2617|         expect.soft(message, `${context}: the refusal holds no matched…
+    2618|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+    2619|           .toBe(true);
+       |            ^
+    2620|         const entries = await securityLedger(space.space.outputRoot);
+    2621|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:2642:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T117: both providers refuse Review B case 2, a safe review then a root array
+AssertionError: safe review then root array/kimi: no success entry.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "a671af67-1466-4e1b-bb70-cba65e2a56fb",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T09:17:45.981Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2622:12
+    2620|         const entries = await securityLedger(space.space.outputRoot);
+    2621|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    2622|           .toEqual([]);
+       |            ^
+    2623|         const files = await tree(space.space.outputRoot);
+    2624|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:2642:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T117: both providers refuse Review B case 2, a safe review then a root array
+AssertionError: safe review then root array/kimi: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-immNJt/repo-VNq0bz/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-a671af67-1466-4e1b-bb70-cba65e2a56fb.txt",
++   "/tmp/opencode/storytime-red-immNJt/repo-VNq0bz/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2625:56
+    2623|         const files = await tree(space.space.outputRoot);
+    2624|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    2625|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    2626|         if (provider === 'kimi') {
+    2627|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:2642:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T117: both providers refuse Review B case 2, a safe review then a root array
+AssertionError: safe review then root array/kimi: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "79a5bff4327bcf9ca88ce259d49998f7834b92a85d5a05ccad9f54694bc45d56",
++     "7dadad79593e509e8fb51b9eccf6b2935e9104de1779a3de8f79483b522b7737",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-a671af67-1466-4e1b-bb70-cba65e2a56fb.txt",
++     "3250ab11e8f9ff5b5009454661af3af26cfa7be2974e0c6f41b07c40619cbf7a",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "f1707359438bd055888e0e25688434eb24af33093a3a5543f7f1db2e5d14ee8f",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2628:14
+    2626|         if (provider === 'kimi') {
+    2627|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+    2628|             .toEqual(space.before);
+       |              ^
+    2629|           expect.soft(await readFile(space.rawFile), `${context}: the …
+    2630|             .toEqual(Buffer.from(raw));
+ ❯ tests/storytime-book-pictures.test.ts:2642:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T118: both providers refuse Review B case 3, the earlier duplicate value
+AssertionError: earlier duplicate value/minimax: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2616:81
+    2614|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2615|           .not.toBe('RangeError');
+    2616|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    2617|         expect.soft(message, `${context}: the refusal holds no matched…
+    2618|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+ ❯ tests/storytime-book-pictures.test.ts:2647:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T118: both providers refuse Review B case 3, the earlier duplicate value
+AssertionError: earlier duplicate value/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2619:12
+    2617|         expect.soft(message, `${context}: the refusal holds no matched…
+    2618|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+    2619|           .toBe(true);
+       |            ^
+    2620|         const entries = await securityLedger(space.space.outputRoot);
+    2621|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:2647:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T118: both providers refuse Review B case 3, the earlier duplicate value
+AssertionError: earlier duplicate value/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "9dfb498e-c780-43c4-b133-7bebb72f0bc1",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T09:17:46.952Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2622:12
+    2620|         const entries = await securityLedger(space.space.outputRoot);
+    2621|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    2622|           .toEqual([]);
+       |            ^
+    2623|         const files = await tree(space.space.outputRoot);
+    2624|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:2647:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T118: both providers refuse Review B case 3, the earlier duplicate value
+AssertionError: earlier duplicate value/minimax: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-immNJt/repo-fBzMA9/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-9dfb498e-c780-43c4-b133-7bebb72f0bc1.txt",
++   "/tmp/opencode/storytime-red-immNJt/repo-fBzMA9/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2625:56
+    2623|         const files = await tree(space.space.outputRoot);
+    2624|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    2625|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    2626|         if (provider === 'kimi') {
+    2627|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:2647:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T118: both providers refuse Review B case 3, the earlier duplicate value
+AssertionError: earlier duplicate value/kimi: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2616:81
+    2614|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2615|           .not.toBe('RangeError');
+    2616|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    2617|         expect.soft(message, `${context}: the refusal holds no matched…
+    2618|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+ ❯ tests/storytime-book-pictures.test.ts:2647:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T118: both providers refuse Review B case 3, the earlier duplicate value
+AssertionError: earlier duplicate value/kimi: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2619:12
+    2617|         expect.soft(message, `${context}: the refusal holds no matched…
+    2618|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+    2619|           .toBe(true);
+       |            ^
+    2620|         const entries = await securityLedger(space.space.outputRoot);
+    2621|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:2647:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T118: both providers refuse Review B case 3, the earlier duplicate value
+AssertionError: earlier duplicate value/kimi: no success entry.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "87f1e4bc-210d-4e41-abbc-ec0036a02532",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T09:17:50.300Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2622:12
+    2620|         const entries = await securityLedger(space.space.outputRoot);
+    2621|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    2622|           .toEqual([]);
+       |            ^
+    2623|         const files = await tree(space.space.outputRoot);
+    2624|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:2647:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T118: both providers refuse Review B case 3, the earlier duplicate value
+AssertionError: earlier duplicate value/kimi: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-immNJt/repo-dobC6P/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-87f1e4bc-210d-4e41-abbc-ec0036a02532.txt",
++   "/tmp/opencode/storytime-red-immNJt/repo-dobC6P/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2625:56
+    2623|         const files = await tree(space.space.outputRoot);
+    2624|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    2625|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    2626|         if (provider === 'kimi') {
+    2627|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:2647:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T118: both providers refuse Review B case 3, the earlier duplicate value
+AssertionError: earlier duplicate value/kimi: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "1956644e67b511372da34bff83e23ab1c1ca325d54785c17690339c1866dde2b",
++     "0d685dd55bba573225260fa50e2ffaa40a54770fca957a41a0f738929a886afb",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-87f1e4bc-210d-4e41-abbc-ec0036a02532.txt",
++     "604c634f023dba2fe69e9c3493c038d5f7b13b81702da225ea42746f347ae3c9",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "002a84493af9bc5d2b60c5781e5152c99e2485f2ab9fa6bb582ad87c33ac78bf",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2628:14
+    2626|         if (provider === 'kimi') {
+    2627|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+    2628|             .toEqual(space.before);
+       |              ^
+    2629|           expect.soft(await readFile(space.rawFile), `${context}: the …
+    2630|             .toEqual(Buffer.from(raw));
+ ❯ tests/storytime-book-pictures.test.ts:2647:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T120: both providers refuse Review B case 5, the malformed unknown field
+AssertionError: malformed unknown field/minimax: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2616:81
+    2614|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2615|           .not.toBe('RangeError');
+    2616|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    2617|         expect.soft(message, `${context}: the refusal holds no matched…
+    2618|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+ ❯ tests/storytime-book-pictures.test.ts:2657:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T120: both providers refuse Review B case 5, the malformed unknown field
+AssertionError: malformed unknown field/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2619:12
+    2617|         expect.soft(message, `${context}: the refusal holds no matched…
+    2618|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+    2619|           .toBe(true);
+       |            ^
+    2620|         const entries = await securityLedger(space.space.outputRoot);
+    2621|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:2657:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T120: both providers refuse Review B case 5, the malformed unknown field
+AssertionError: malformed unknown field/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "6e7da9a0-409e-4dff-ad39-a1cfc77d029b",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T09:17:55.786Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2622:12
+    2620|         const entries = await securityLedger(space.space.outputRoot);
+    2621|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    2622|           .toEqual([]);
+       |            ^
+    2623|         const files = await tree(space.space.outputRoot);
+    2624|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:2657:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T120: both providers refuse Review B case 5, the malformed unknown field
+AssertionError: malformed unknown field/minimax: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-immNJt/repo-GWYsFn/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-6e7da9a0-409e-4dff-ad39-a1cfc77d029b.txt",
++   "/tmp/opencode/storytime-red-immNJt/repo-GWYsFn/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2625:56
+    2623|         const files = await tree(space.space.outputRoot);
+    2624|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    2625|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    2626|         if (provider === 'kimi') {
+    2627|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:2657:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[31/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T120: both providers refuse Review B case 5, the malformed unknown field
+AssertionError: malformed unknown field/kimi: the refusal names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2616:81
+    2614|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2615|           .not.toBe('RangeError');
+    2616|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    2617|         expect.soft(message, `${context}: the refusal holds no matched…
+    2618|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+ ❯ tests/storytime-book-pictures.test.ts:2657:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[32/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T120: both providers refuse Review B case 5, the malformed unknown field
+AssertionError: malformed unknown field/kimi: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2619:12
+    2617|         expect.soft(message, `${context}: the refusal holds no matched…
+    2618|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+    2619|           .toBe(true);
+       |            ^
+    2620|         const entries = await securityLedger(space.space.outputRoot);
+    2621|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:2657:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[33/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T120: both providers refuse Review B case 5, the malformed unknown field
+AssertionError: malformed unknown field/kimi: no success entry.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "f371e729-7f36-4539-a852-56dbea473335",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T09:17:57.913Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2622:12
+    2620|         const entries = await securityLedger(space.space.outputRoot);
+    2621|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    2622|           .toEqual([]);
+       |            ^
+    2623|         const files = await tree(space.space.outputRoot);
+    2624|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:2657:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[34/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T120: both providers refuse Review B case 5, the malformed unknown field
+AssertionError: malformed unknown field/kimi: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-immNJt/repo-6zSpIT/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-f371e729-7f36-4539-a852-56dbea473335.txt",
++   "/tmp/opencode/storytime-red-immNJt/repo-6zSpIT/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2625:56
+    2623|         const files = await tree(space.space.outputRoot);
+    2624|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+    2625|           `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                        ^
+    2626|         if (provider === 'kimi') {
+    2627|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+ ❯ tests/storytime-book-pictures.test.ts:2657:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[35/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T120: both providers refuse Review B case 5, the malformed unknown field
+AssertionError: malformed unknown field/kimi: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "7fdfaea585c8e928839aae1de17249aed2449f4b5bb5e2ca566f87de5c09ace1",
++     "576d03424d72d1783fc30a5dd576c617f284488f305732984e3f6b423f095576",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-f371e729-7f36-4539-a852-56dbea473335.txt",
++     "a06e2e2a91f17ae25e7361b66a2304ad03e64698f50db945ed14cf655b9fd680",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "da07671aed110db674fec742f213c849bf2cb8612973fbbee58ce035ecf83a72",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2628:14
+    2626|         if (provider === 'kimi') {
+    2627|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+    2628|             .toEqual(space.before);
+       |              ^
+    2629|           expect.soft(await readFile(space.rawFile), `${context}: the …
+    2630|             .toEqual(Buffer.from(raw));
+ ❯ tests/storytime-book-pictures.test.ts:2657:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[36/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T121: the seam scans 65,536 unmatched opening braces within 2000 ms
+AssertionError: malformed scan ms: 21993: expected 21993 to be less than or equal to 2000
+ ❯ tests/storytime-book-pictures.test.ts:2675:38
+    2673|         expect.soft(run.report?.findings ?? [], 'The malformed text ho…
+    2674|         expect.soft(parsed, 'The labeled duration is an integer.').toB…
+    2675|         expect.soft(parsed, printed).toBeLessThanOrEqual(2000);
+       |                                      ^
+    2676|       }, 120000);
+    2677|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[37/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T124: the long pattern name is cut and the task 10 suffix stays in every message
+AssertionError: long pattern name/minimax: the refusal keeps the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2759:14
+    2757|             .toBeLessThanOrEqual(500);
+    2758|           expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the…
+    2759|             .toBe(true);
+       |              ^
+    2760|           expect.soft(message, `${context}: the refusal holds the firs…
+    2761|             .toContain(pattern.slice(0, 32));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[38/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T124: the long pattern name is cut and the task 10 suffix stays in every message
+AssertionError: long pattern name/minimax: the ledger error keeps the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2770:14
+    2768|             .toBeLessThanOrEqual(500);
+    2769|           expect.soft(ledgerError.endsWith(TOKEN_SUFFIX), `${context}:…
+    2770|             .toBe(true);
+       |              ^
+    2771|           expect.soft(ledgerError, `${context}: the ledger error holds…
+    2772|             .toContain(pattern.slice(0, 32));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[39/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T124: the long pattern name is cut and the task 10 suffix stays in every message
+AssertionError: long pattern name/minimax: the CLI error keeps the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2788:16
+    2786|               .toBeLessThanOrEqual(500);
+    2787|             expect.soft(finalMessage.endsWith(TOKEN_SUFFIX), `${contex…
+    2788|               .toBe(true);
+       |                ^
+    2789|             expect.soft(finalMessage, `${context}: the CLI error holds…
+    2790|               .toContain(pattern.slice(0, 32));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[40/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T124: the long pattern name is cut and the task 10 suffix stays in every message
+AssertionError: long pattern name/kimi: the refusal has 500 characters at most.: expected 528 to be less than or equal to 500
+ ❯ tests/storytime-book-pictures.test.ts:2797:14
+    2795|             .toMatch(/env:TASK11_LONG_/);
+    2796|           expect.soft(kimiMessage.length, 'long pattern name/kimi: the…
+    2797|             .toBeLessThanOrEqual(500);
+       |              ^
+    2798|           expect.soft(kimiMessage.endsWith(TOKEN_SUFFIX), 'long patter…
+    2799|             .toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[41/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T126: the decoded-check comments name the raw answer, the order, and the current finding
+AssertionError: The MiniMax decoded check has a comment.: expected '      // RB3-01: every decoded key an…' not to contain 'RB3-01'
+
+Expected: "RB3-01"
+Received: "      // RB3-01: every decoded key and string value of the answer passes the credential check       // before any write, before the schema, the field selection, or a status fallback can       // discard data. A JSON Unicode escape hides a credential from the raw-byte scan."
+
+ ❯ tests/storytime-book-pictures.test.ts:2840:78
+    2838|         const source = readFileSync(path.resolve(import.meta.dirname, …
+    2839|         const minimax = commentAbove(functionRegion(source, 'precheckM…
+    2840|         expect.soft(minimax, 'The MiniMax decoded check has a comment.…
+       |                                                                              ^
+    2841|         expect.soft(minimax, 'The MiniMax comment states that the chec…
+    2842|           .toMatch(/raw\s+(answer|output|bytes|text|response|provider)…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[42/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T126: the decoded-check comments name the raw answer, the order, and the current finding
+AssertionError: The MiniMax comment states that the check reads the raw answer.: expected '      // RB3-01: every decoded key an…' to match /raw\s+(answer|output|bytes|text|resp…/i
+
+- Expected:
+/raw\s+(answer|output|bytes|text|response|provider)/i
+
++ Received:
+"      // RB3-01: every decoded key and string value of the answer passes the credential check       // before any write, before the schema, the field selection, or a status fallback can       // discard data. A JSON Unicode escape hides a credential from the raw-byte scan."
+
+ ❯ tests/storytime-book-pictures.test.ts:2842:12
+    2840|         expect.soft(minimax, 'The MiniMax decoded check has a comment.…
+    2841|         expect.soft(minimax, 'The MiniMax comment states that the chec…
+    2842|           .toMatch(/raw\s+(answer|output|bytes|text|response|provider)…
+       |            ^
+    2843|         expect.soft(minimax, 'The MiniMax comment states that the chec…
+    2844|           .toMatch(/before\s+(any|every|a|the)\s+(record\s+)?write/i);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[43/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/fencedRootArray: the after-call is a failure.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure' }
+(14 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:2865:82
+    2863|           expect.soft(beforeCalls, `${context}: exactly one before-cal…
+    2864|           expect.soft(afterCalls, `${context}: exactly one after-call.…
+    2865|           expect.soft(afterCalls[0], `${context}: the after-call is a …
+       |                                                                                  ^
+    2866|           const failure = String(afterCalls[0]?.error ?? '');
+    2867|           expect.soft(failure, `${context}: the failure holds no match…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[44/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/fencedRootArray: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "785b8d9c-e947-4234-9625-494d04e58884",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T09:18:45.380Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2871:14
+    2869|             .toBeLessThanOrEqual(500);
+    2870|           expect.soft(entries.filter((entry) => entry.status === 'succ…
+    2871|             .toEqual([]);
+       |              ^
+    2872|           const files = await tree(space.space.outputRoot);
+    2873|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[45/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/fencedRootArray: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-immNJt/repo-4TbvTT/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-785b8d9c-e947-4234-9625-494d04e58884.txt",
++   "/tmp/opencode/storytime-red-immNJt/repo-4TbvTT/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2874:58
+    2872|           const files = await tree(space.space.outputRoot);
+    2873|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+    2874|             `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                          ^
+    2875|           await assertNoSyntheticValues([space.space.outputRoot], [sec…
+    2876|         }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[46/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/safeThenRootArray: the after-call is a failure.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure' }
+(14 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:2865:82
+    2863|           expect.soft(beforeCalls, `${context}: exactly one before-cal…
+    2864|           expect.soft(afterCalls, `${context}: exactly one after-call.…
+    2865|           expect.soft(afterCalls[0], `${context}: the after-call is a …
+       |                                                                                  ^
+    2866|           const failure = String(afterCalls[0]?.error ?? '');
+    2867|           expect.soft(failure, `${context}: the failure holds no match…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[47/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/safeThenRootArray: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "d2e5f3a9-5f37-45fe-815f-77eaa166f570",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T09:18:47.157Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2871:14
+    2869|             .toBeLessThanOrEqual(500);
+    2870|           expect.soft(entries.filter((entry) => entry.status === 'succ…
+    2871|             .toEqual([]);
+       |              ^
+    2872|           const files = await tree(space.space.outputRoot);
+    2873|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[48/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/safeThenRootArray: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-immNJt/repo-6TyK3h/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-d2e5f3a9-5f37-45fe-815f-77eaa166f570.txt",
++   "/tmp/opencode/storytime-red-immNJt/repo-6TyK3h/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2874:58
+    2872|           const files = await tree(space.space.outputRoot);
+    2873|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+    2874|             `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                          ^
+    2875|           await assertNoSyntheticValues([space.space.outputRoot], [sec…
+    2876|         }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[49/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/earlierDuplicateValue: the after-call is a failure.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure' }
+(14 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:2865:82
+    2863|           expect.soft(beforeCalls, `${context}: exactly one before-cal…
+    2864|           expect.soft(afterCalls, `${context}: exactly one after-call.…
+    2865|           expect.soft(afterCalls[0], `${context}: the after-call is a …
+       |                                                                                  ^
+    2866|           const failure = String(afterCalls[0]?.error ?? '');
+    2867|           expect.soft(failure, `${context}: the failure holds no match…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[50/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/earlierDuplicateValue: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "6dcaa494-1e70-49ff-81bb-d89d622f2fcd",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T09:18:49.534Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2871:14
+    2869|             .toBeLessThanOrEqual(500);
+    2870|           expect.soft(entries.filter((entry) => entry.status === 'succ…
+    2871|             .toEqual([]);
+       |              ^
+    2872|           const files = await tree(space.space.outputRoot);
+    2873|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[51/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/earlierDuplicateValue: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-immNJt/repo-KmVQRk/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-6dcaa494-1e70-49ff-81bb-d89d622f2fcd.txt",
++   "/tmp/opencode/storytime-red-immNJt/repo-KmVQRk/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2874:58
+    2872|           const files = await tree(space.space.outputRoot);
+    2873|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+    2874|             `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                          ^
+    2875|           await assertNoSyntheticValues([space.space.outputRoot], [sec…
+    2876|         }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[52/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/malformedUnknownField: the after-call is a failure.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure' }
+(14 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:2865:82
+    2863|           expect.soft(beforeCalls, `${context}: exactly one before-cal…
+    2864|           expect.soft(afterCalls, `${context}: exactly one after-call.…
+    2865|           expect.soft(afterCalls[0], `${context}: the after-call is a …
+       |                                                                                  ^
+    2866|           const failure = String(afterCalls[0]?.error ?? '');
+    2867|           expect.soft(failure, `${context}: the failure holds no match…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[53/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/malformedUnknownField: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "05fbb2bd-6ef7-4e5e-8f99-c1f1f9ea41ba",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T09:18:52.106Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2871:14
+    2869|             .toBeLessThanOrEqual(500);
+    2870|           expect.soft(entries.filter((entry) => entry.status === 'succ…
+    2871|             .toEqual([]);
+       |              ^
+    2872|           const files = await tree(space.space.outputRoot);
+    2873|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[54/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/malformedUnknownField: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-immNJt/repo-Ende5l/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-05fbb2bd-6ef7-4e5e-8f99-c1f1f9ea41ba.txt",
++   "/tmp/opencode/storytime-red-immNJt/repo-Ende5l/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2874:58
+    2872|           const files = await tree(space.space.outputRoot);
+    2873|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+    2874|             `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                          ^
+    2875|           await assertNoSyntheticValues([space.space.outputRoot], [sec…
+    2876|         }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[55/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T128: the Kimi path writes no evidence for every refused construction
+AssertionError: Kimi write boundary/fencedRootArray: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "a7328e643407343500b22a5e28efbc61cbbb43e54877c3fd8169a2e50ed3fcfe",
++     "0ff9dd3545097b7f1be001a05ad38645c084faf0a64cb83261a93b507918feb5",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-98f39db5-445f-4d8a-a0ec-dbef15fb3fbe.txt",
++     "f75c09c4dd9528df67d8809dbabd89af3cbb3456e47b862e152461ee451d01fb",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "64fc1f9458a32a16353f8f75a3deeb19d99d2c151512b099730b2886a3a844b5",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ tests/storytime-book-pictures.test.ts:2887:14
+    2885|             .toBe(false);
+    2886|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+    2887|             .toEqual(space.before);
+       |              ^
+    2888|           expect.soft(await readFile(space.rawFile), `${context}: the …
+    2889|             .toEqual(Buffer.from(raw));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[56/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T128: the Kimi path writes no evidence for every refused construction
+AssertionError: Kimi write boundary/fencedRootArray: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-immNJt/repo-dqZDGn/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-98f39db5-445f-4d8a-a0ec-dbef15fb3fbe.txt",
++   "/tmp/opencode/storytime-red-immNJt/repo-dqZDGn/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2892:58
+    2890|           const files = await tree(space.space.outputRoot);
+    2891|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+    2892|             `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                          ^
+    2893|           await assertNoSyntheticValues([space.space.outputRoot], [sec…
+    2894|         }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[57/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T128: the Kimi path writes no evidence for every refused construction
+AssertionError: Kimi write boundary/safeThenRootArray: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "36e0dba5e3fc1fe0a7032cc545333c8b4f74b2159d18c67bca2a9466a1685277",
++     "4e8173ecc220d27fc38543a128e72b92e9ae3c81a2417693e0152f0655ef112b",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-fee5a09b-ee11-4d18-b6e4-8ab417ae894e.txt",
++     "3250ab11e8f9ff5b5009454661af3af26cfa7be2974e0c6f41b07c40619cbf7a",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "b246c866d8c9463a716a65c617768f6c795f17ac517f87de0bb7c1837c4dd61e",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ tests/storytime-book-pictures.test.ts:2887:14
+    2885|             .toBe(false);
+    2886|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+    2887|             .toEqual(space.before);
+       |              ^
+    2888|           expect.soft(await readFile(space.rawFile), `${context}: the …
+    2889|             .toEqual(Buffer.from(raw));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[58/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T128: the Kimi path writes no evidence for every refused construction
+AssertionError: Kimi write boundary/safeThenRootArray: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-immNJt/repo-qikop9/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-fee5a09b-ee11-4d18-b6e4-8ab417ae894e.txt",
++   "/tmp/opencode/storytime-red-immNJt/repo-qikop9/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2892:58
+    2890|           const files = await tree(space.space.outputRoot);
+    2891|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+    2892|             `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                          ^
+    2893|           await assertNoSyntheticValues([space.space.outputRoot], [sec…
+    2894|         }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[59/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T128: the Kimi path writes no evidence for every refused construction
+AssertionError: Kimi write boundary/earlierDuplicateValue: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "5531cca98c5982d3375dfb8417820f910547d79cae4bc338483b9c8374eccda1",
++     "0cdc3fdf4354f45234ae8644331871d0a6826c8694230f6995d7dab0f3968d50",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-9d6986bd-3d75-4fa1-bfe7-accf6f306699.txt",
++     "604c634f023dba2fe69e9c3493c038d5f7b13b81702da225ea42746f347ae3c9",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "d85d86906189db6cc51fac3914f5967cf65f4285edc9a8d804d3615ab1a4d14d",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ tests/storytime-book-pictures.test.ts:2887:14
+    2885|             .toBe(false);
+    2886|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+    2887|             .toEqual(space.before);
+       |              ^
+    2888|           expect.soft(await readFile(space.rawFile), `${context}: the …
+    2889|             .toEqual(Buffer.from(raw));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[60/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T128: the Kimi path writes no evidence for every refused construction
+AssertionError: Kimi write boundary/earlierDuplicateValue: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-immNJt/repo-BVHOmf/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-9d6986bd-3d75-4fa1-bfe7-accf6f306699.txt",
++   "/tmp/opencode/storytime-red-immNJt/repo-BVHOmf/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2892:58
+    2890|           const files = await tree(space.space.outputRoot);
+    2891|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+    2892|             `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                          ^
+    2893|           await assertNoSyntheticValues([space.space.outputRoot], [sec…
+    2894|         }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[61/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T128: the Kimi path writes no evidence for every refused construction
+AssertionError: Kimi write boundary/malformedUnknownField: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "0125b6407c9a047fbc7f83191214c6e68baee0e92e2d85d1d4fa0b44e84c1980",
++     "096a5a1dfbb6bdfa033f41446c675c6b0cd556ce53f1b693431610f6c2358ec2",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-698e4b31-507b-4b88-a664-e79ae6d7dd9f.txt",
++     "a06e2e2a91f17ae25e7361b66a2304ad03e64698f50db945ed14cf655b9fd680",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "450e6d2fe19519e880382a6353c77e97fbc5dfc5494ccb39c11c9f639318bccb",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ tests/storytime-book-pictures.test.ts:2887:14
+    2885|             .toBe(false);
+    2886|           expect.soft(await fileSnapshot(space.space.outputRoot), `${c…
+    2887|             .toEqual(space.before);
+       |              ^
+    2888|           expect.soft(await readFile(space.rawFile), `${context}: the …
+    2889|             .toEqual(Buffer.from(raw));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[62/63]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T128: the Kimi path writes no evidence for every refused construction
+AssertionError: Kimi write boundary/malformedUnknownField: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-immNJt/repo-JauZRv/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-698e4b31-507b-4b88-a664-e79ae6d7dd9f.txt",
++   "/tmp/opencode/storytime-red-immNJt/repo-JauZRv/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2892:58
+    2890|           const files = await tree(space.space.outputRoot);
+    2891|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+    2892|             `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                          ^
+    2893|           await assertNoSyntheticValues([space.space.outputRoot], [sec…
+    2894|         }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[63/63]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  9 failed | 4 passed | 98 skipped (111)
+   Start at  17:17:36
+   Duration  83.84s (transform 1.25s, setup 0ms, import 3.52s, tests 79.08s, environment 1ms)
+
+EXIT=1

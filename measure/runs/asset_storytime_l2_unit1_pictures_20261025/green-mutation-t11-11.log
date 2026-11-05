@@ -1,0 +1,3259 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/storytime-book-pictures.test.ts (111 tests | 24 failed) 210013ms
+     × T82: raw answers reject credentials and unsafe files and preserve safe bytes 13056ms
+     × T89: the MiniMax decoded review fields pass the credential check before any write 2168ms
+     × T96: both providers refuse an escaped top-level model before evidence writes 1450ms
+     × T97: both providers inspect plain and fenced content models 2732ms
+     × T98: malformed FAIL and PASS count keys are inspected before schema fallback 3220ms
+     × T99: unknown fields retain credential keys and strings at every depth 5784ms
+     × T100: unknown arrays retain string elements and object keys 2244ms
+     × T102: the shared walker inspects every object before selection and status fallback 5178ms
+     × T103: decoded refusal messages share the exact suffix through the final CLI boundary 1422ms
+       × T104: both providers refuse Review B case 1 with an extra string layer 1535ms
+       × T105: both providers refuse three string layers 1376ms
+       × T106: both providers refuse Review B case 3 with a root array 1336ms
+       × T107: both providers refuse Review B case 2 with a scalar array element 1362ms
+       × T108: both providers refuse a nonzero-status envelope with a string-layer array 1328ms
+       × T109: both providers refuse an escaped credential at object depth 4000 without a RangeError 3029ms
+         × T116: both providers refuse Review B case 1, the fenced root array 1897ms
+         × T117: both providers refuse Review B case 2, a safe review then a root array 1949ms
+         × T118: both providers refuse Review B case 3, the earlier duplicate value 1958ms
+         × T119: both providers refuse Review B case 4, the duplicate key 4075ms
+         × T120: both providers refuse Review B case 5, the malformed unknown field 1990ms
+         × T122: both providers refuse the fence, the duplicate key, and the malformed tail 3881ms
+         × T124: the long pattern name is cut and the task 10 suffix stays in every message 2041ms
+         × T126: the decoded-check comments name the raw answer, the order, and the current finding 3ms
+         × T127: the MiniMax path writes no evidence for every refused construction 7632ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 24 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T82: raw answers reject credentials and unsafe files and preserve safe bytes
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T82: raw answers reject credentials and unsafe files and preserve safe bytes
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T82: raw answers reject credentials and unsafe files and preserve safe bytes
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T82: raw answers reject credentials and unsafe files and preserve safe bytes
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T82: raw answers reject credentials and unsafe files and preserve safe bytes
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T82: raw answers reject credentials and unsafe files and preserve safe bytes
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T82: raw answers reject credentials and unsafe files and preserve safe bytes
+AssertionError: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure' }
+(14 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:692:29
+    690|       const after = (await securityLedger(mini.outputRoot)).filter((en…
+    691|       expect.soft(after).toHaveLength(1);
+    692|       expect.soft(after[0]).toMatchObject({ status: 'failure' });
+       |                             ^
+    693|       const reason = String(after[0]?.error ?? '');
+    694|       expect.soft(findings(value).some((pattern) => reason.includes(pa…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T82: raw answers reject credentials and unsafe files and preserve safe bytes
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T82: raw answers reject credentials and unsafe files and preserve safe bytes
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T82: raw answers reject credentials and unsafe files and preserve safe bytes
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T82: raw answers reject credentials and unsafe files and preserve safe bytes
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T82: raw answers reject credentials and unsafe files and preserve safe bytes
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T82: raw answers reject credentials and unsafe files and preserve safe bytes
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T82: raw answers reject credentials and unsafe files and preserve safe bytes
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:694:80
+    692|       expect.soft(after[0]).toMatchObject({ status: 'failure' });
+    693|       const reason = String(after[0]?.error ?? '');
+    694|       expect.soft(findings(value).some((pattern) => reason.includes(pa…
+       |                                                                                ^
+    695|       expect.soft((await tree(mini.outputRoot)).map((file) => path.rel…
+    696|         .toEqual([candidateRelativePath(job(), 1), 'cost-ledger.jsonl'…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: reason: no success entry.: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/storytime-book-pictures.test.ts:919:73
+    917|       const entries = await securityLedger(mini.outputRoot);
+    918|       const successes = entries.filter((entry) => entry.event === 'aft…
+    919|       expect.soft(successes.length, `${item.label}: no success entry.`…
+       |                                                                         ^
+    920|       const failures = entries.filter((entry) => entry.event === 'afte…
+    921|       expect.soft(failures.length, `${item.label}: one failure entry.`…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: reason: one failure entry.: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/storytime-book-pictures.test.ts:921:73
+    919|       expect.soft(successes.length, `${item.label}: no success entry.`…
+    920|       const failures = entries.filter((entry) => entry.event === 'afte…
+    921|       expect.soft(failures.length, `${item.label}: one failure entry.`…
+       |                                                                         ^
+    922|       const failureError = String((failures[0] as unknown as { error?:…
+    923|       expect.soft(failureError, `${item.label}: the failure names the …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: reason: the failure names the pattern.: expected '' to match /api-key/
+
+- Expected:
+/api-key/
+
++ Received:
+""
+
+ ❯ tests/storytime-book-pictures.test.ts:923:82
+    921|       expect.soft(failures.length, `${item.label}: one failure entry.`…
+    922|       const failureError = String((failures[0] as unknown as { error?:…
+    923|       expect.soft(failureError, `${item.label}: the failure names the …
+       |                                                                                  ^
+    924|       expect.soft(failureError, `${item.label}: the failure holds no c…
+    925|       const files = (await tree(mini.outputRoot)).map((file) => path.r…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: issue: no success entry.: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/storytime-book-pictures.test.ts:919:73
+    917|       const entries = await securityLedger(mini.outputRoot);
+    918|       const successes = entries.filter((entry) => entry.event === 'aft…
+    919|       expect.soft(successes.length, `${item.label}: no success entry.`…
+       |                                                                         ^
+    920|       const failures = entries.filter((entry) => entry.event === 'afte…
+    921|       expect.soft(failures.length, `${item.label}: one failure entry.`…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: issue: one failure entry.: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/storytime-book-pictures.test.ts:921:73
+    919|       expect.soft(successes.length, `${item.label}: no success entry.`…
+    920|       const failures = entries.filter((entry) => entry.event === 'afte…
+    921|       expect.soft(failures.length, `${item.label}: one failure entry.`…
+       |                                                                         ^
+    922|       const failureError = String((failures[0] as unknown as { error?:…
+    923|       expect.soft(failureError, `${item.label}: the failure names the …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: issue: the failure names the pattern.: expected '' to match /api-key/
+
+- Expected:
+/api-key/
+
++ Received:
+""
+
+ ❯ tests/storytime-book-pictures.test.ts:923:82
+    921|       expect.soft(failures.length, `${item.label}: one failure entry.`…
+    922|       const failureError = String((failures[0] as unknown as { error?:…
+    923|       expect.soft(failureError, `${item.label}: the failure names the …
+       |                                                                                  ^
+    924|       expect.soft(failureError, `${item.label}: the failure holds no c…
+    925|       const files = (await tree(mini.outputRoot)).map((file) => path.r…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: count key: no success entry.: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/storytime-book-pictures.test.ts:919:73
+    917|       const entries = await securityLedger(mini.outputRoot);
+    918|       const successes = entries.filter((entry) => entry.event === 'aft…
+    919|       expect.soft(successes.length, `${item.label}: no success entry.`…
+       |                                                                         ^
+    920|       const failures = entries.filter((entry) => entry.event === 'afte…
+    921|       expect.soft(failures.length, `${item.label}: one failure entry.`…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: count key: one failure entry.: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/storytime-book-pictures.test.ts:921:73
+    919|       expect.soft(successes.length, `${item.label}: no success entry.`…
+    920|       const failures = entries.filter((entry) => entry.event === 'afte…
+    921|       expect.soft(failures.length, `${item.label}: one failure entry.`…
+       |                                                                         ^
+    922|       const failureError = String((failures[0] as unknown as { error?:…
+    923|       expect.soft(failureError, `${item.label}: the failure names the …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Second security remediation > T89: the MiniMax decoded review fields pass the credential check before any write
+AssertionError: count key: the failure names the pattern.: expected '' to match /api-key/
+
+- Expected:
+/api-key/
+
++ Received:
+""
+
+ ❯ tests/storytime-book-pictures.test.ts:923:82
+    921|       expect.soft(failures.length, `${item.label}: one failure entry.`…
+    922|       const failureError = String((failures[0] as unknown as { error?:…
+    923|       expect.soft(failureError, `${item.label}: the failure names the …
+       |                                                                                  ^
+    924|       expect.soft(failureError, `${item.label}: the failure holds no c…
+    925|       const files = (await tree(mini.outputRoot)).map((file) => path.r…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T96: both providers refuse an escaped top-level model before evidence writes
+AssertionError: top-level model/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "bf4fe7c0-4677-44cd-9829-c564a47c86fb",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2056:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T96: both providers refuse an escaped top-level model before evidence writes
+AssertionError: top-level model/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "bf4fe7c0-4677-44cd-9829-c564a47c86fb",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2056:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T96: both providers refuse an escaped top-level model before evidence writes
+AssertionError: top-level model/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2056:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T97: both providers inspect plain and fenced content models
+AssertionError: plain content/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "8eebb06b-830b-42b3-9e98-b26dcdea496f",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2063:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T97: both providers inspect plain and fenced content models
+AssertionError: plain content/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "8eebb06b-830b-42b3-9e98-b26dcdea496f",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2063:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T97: both providers inspect plain and fenced content models
+AssertionError: plain content/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2063:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T97: both providers inspect plain and fenced content models
+AssertionError: fenced content/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "e0d45c5b-ea58-474a-9e08-6d3beec91ca3",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2063:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T97: both providers inspect plain and fenced content models
+AssertionError: fenced content/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "e0d45c5b-ea58-474a-9e08-6d3beec91ca3",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2063:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T97: both providers inspect plain and fenced content models
+AssertionError: fenced content/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2063:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T98: malformed FAIL and PASS count keys are inspected before schema fallback
+AssertionError: FAIL: malformed count key/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "5a06b882-1f76-4a18-8093-534130b33736",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2071:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T98: malformed FAIL and PASS count keys are inspected before schema fallback
+AssertionError: FAIL: malformed count key/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "5a06b882-1f76-4a18-8093-534130b33736",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2071:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T98: malformed FAIL and PASS count keys are inspected before schema fallback
+AssertionError: FAIL: malformed count key/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2071:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T98: malformed FAIL and PASS count keys are inspected before schema fallback
+AssertionError: PASS: malformed count key/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "b9b889ba-0a86-4776-8ef8-98a69b153186",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2071:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T98: malformed FAIL and PASS count keys are inspected before schema fallback
+AssertionError: PASS: malformed count key/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "b9b889ba-0a86-4776-8ef8-98a69b153186",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2071:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T98: malformed FAIL and PASS count keys are inspected before schema fallback
+AssertionError: PASS: malformed count key/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2071:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T99: unknown fields retain credential keys and strings at every depth
+AssertionError: key at depth 2/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "9b396910-9fd0-4ffb-9173-5a92f040b1e1",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2080:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T99: unknown fields retain credential keys and strings at every depth
+AssertionError: key at depth 2/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "9b396910-9fd0-4ffb-9173-5a92f040b1e1",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2080:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T99: unknown fields retain credential keys and strings at every depth
+AssertionError: key at depth 2/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2080:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T99: unknown fields retain credential keys and strings at every depth
+AssertionError: value at depth 2/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "8cea713d-5b14-4cf6-9219-181ac5f3994e",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2080:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T99: unknown fields retain credential keys and strings at every depth
+AssertionError: value at depth 2/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "8cea713d-5b14-4cf6-9219-181ac5f3994e",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2080:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[31/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T99: unknown fields retain credential keys and strings at every depth
+AssertionError: value at depth 2/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2080:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[32/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T99: unknown fields retain credential keys and strings at every depth
+AssertionError: key at depth 12/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "8a24fb1c-f910-440b-a880-9f13f81c238b",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2080:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[33/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T99: unknown fields retain credential keys and strings at every depth
+AssertionError: key at depth 12/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "8a24fb1c-f910-440b-a880-9f13f81c238b",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2080:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[34/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T99: unknown fields retain credential keys and strings at every depth
+AssertionError: key at depth 12/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2080:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[35/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T99: unknown fields retain credential keys and strings at every depth
+AssertionError: value at depth 12/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "0c0565a3-c9b6-4e36-83a1-dd35f3d1f1f8",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2080:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[36/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T99: unknown fields retain credential keys and strings at every depth
+AssertionError: value at depth 12/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "0c0565a3-c9b6-4e36-83a1-dd35f3d1f1f8",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2080:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[37/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T99: unknown fields retain credential keys and strings at every depth
+AssertionError: value at depth 12/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2080:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[38/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T100: unknown arrays retain string elements and object keys
+AssertionError: array string/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "d546af3d-58e5-4510-b458-74111b96e708",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2088:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[39/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T100: unknown arrays retain string elements and object keys
+AssertionError: array string/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "d546af3d-58e5-4510-b458-74111b96e708",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2088:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[40/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T100: unknown arrays retain string elements and object keys
+AssertionError: array string/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2088:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[41/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T100: unknown arrays retain string elements and object keys
+AssertionError: array object key/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "bd894974-1def-45f2-9d31-3c19ac0b77ff",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2088:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[42/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T100: unknown arrays retain string elements and object keys
+AssertionError: array object key/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "bd894974-1def-45f2-9d31-3c19ac0b77ff",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2088:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[43/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T100: unknown arrays retain string elements and object keys
+AssertionError: array object key/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2088:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[44/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: unselected earlier object/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "772425f3-9dd4-4fb6-acab-06a068798249",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2130:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[45/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: unselected earlier object/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "772425f3-9dd4-4fb6-acab-06a068798249",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2130:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[46/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: unselected earlier object/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2130:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[47/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: unselected later object/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "e62d2711-1478-4256-8030-646d599ed637",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2130:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[48/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: unselected later object/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "e62d2711-1478-4256-8030-646d599ed637",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2130:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[49/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: unselected later object/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2130:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[50/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: nonzero status envelope/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "c837cbd2-df76-46fe-a9e3-47b30af3452f",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2130:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[51/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: nonzero status envelope/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "c837cbd2-df76-46fe-a9e3-47b30af3452f",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2130:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[52/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: nonzero status envelope/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2130:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[53/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: embedded unknown JSON string/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "97ce18ba-0f28-4492-8ed2-e4f8dcfbab58",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2130:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[54/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: embedded unknown JSON string/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "97ce18ba-0f28-4492-8ed2-e4f8dcfbab58",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2130:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[55/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: embedded unknown JSON string/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2130:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[56/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T103: decoded refusal messages share the exact suffix through the final CLI boundary
+AssertionError: decoded message/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "0d90d6aa-ac27-40b3-853a-3e32c9b99245",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ tests/storytime-book-pictures.test.ts:2164:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[57/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T103: decoded refusal messages share the exact suffix through the final CLI boundary
+AssertionError: decoded message/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "0d90d6aa-ac27-40b3-853a-3e32c9b99245",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ tests/storytime-book-pictures.test.ts:2164:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[58/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T103: decoded refusal messages share the exact suffix through the final CLI boundary
+AssertionError: decoded message/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ tests/storytime-book-pictures.test.ts:2164:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[59/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T103: decoded refusal messages share the exact suffix through the final CLI boundary
+AssertionError: minimax: the thrown message has the exact suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2167:102
+    2165|       const message = run.error instanceof Error ? run.error.message :…
+    2166|       messages.push(message);
+    2167|       expect.soft(message.endsWith(suffix), `${provider}: the thrown m…
+       |                                                                                                      ^
+    2168|       expect.soft(message, `${provider}: the message claims no broader…
+    2169|       const logged: string[] = [];
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[60/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T103: decoded refusal messages share the exact suffix through the final CLI boundary
+AssertionError: minimax: the final CLI keeps the suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2172:96
+    2170|       expect.soft(await entry!([], { pipeline: async () => { throw run…
+    2171|       expect.soft(logged).toHaveLength(1);
+    2172|       expect.soft(logged[0]?.endsWith(suffix), `${provider}: the final…
+       |                                                                                                ^
+    2173|       expect.soft(logged[0]?.length ?? Infinity).toBeLessThanOrEqual(5…
+    2174|       for (const text of [message, ...logged]) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[61/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T103: decoded refusal messages share the exact suffix through the final CLI boundary
+AssertionError: expected 'late api-key-prefix' to be 'the raw answer is refused; no review …' // Object.is equality
+
+Expected: "the raw answer is refused; no review or raw copy is written."
+Received: "late api-key-prefix"
+
+ ❯ tests/storytime-book-pictures.test.ts:2180:53
+    2178|     }
+    2179|     // Both providers end with the same suffix. The prefix before it s…
+    2180|     expect.soft(messages[0]?.slice(-suffix.length)).toBe(messages[1]?.…
+       |                                                     ^
+    2181|   }, 120000);
+    2182|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[62/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "542737ef-0105-4b13-ba1c-6366e150e9e7",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2331:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[63/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "542737ef-0105-4b13-ba1c-6366e150e9e7",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2331:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[64/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2331:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[65/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "1979992d-055e-4aec-a966-d65dc45e571b",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2339:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[66/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "1979992d-055e-4aec-a966-d65dc45e571b",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2339:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[67/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2339:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[68/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "b02000df-6479-475c-a169-0b6f5048f67a",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2346:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[69/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "b02000df-6479-475c-a169-0b6f5048f67a",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2346:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[70/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2346:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[71/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "21beb2c8-b0fd-44f6-a35d-03bd036285cf",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2355:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[72/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "21beb2c8-b0fd-44f6-a35d-03bd036285cf",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2355:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[73/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2355:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[74/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "2a9f35d8-79d9-4c0e-89b8-a2f3eef9cbd4",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2363:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[75/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "2a9f35d8-79d9-4c0e-89b8-a2f3eef9cbd4",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2363:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[76/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2363:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[77/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/minimax: the message has the task 9 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2385:97
+    2383|           .not.toBe('RangeError');
+    2384|         expect.soft(message, `${context}: the error names only the pat…
+    2385|         expect.soft(message.endsWith(suffix), `${context}: the message…
+       |                                                                                                 ^
+    2386|         expect.soft(message, `${context}: the message names no stack o…
+    2387|           .not.toMatch(/Maximum call stack size exceeded/);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[78/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "8b8fd7d3-809a-4a8b-b0c4-e9a940b8d174",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T15:12:14.243Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2390:12
+    2388|         const entries = await securityLedger(space.space.outputRoot);
+    2389|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    2390|           .toEqual([]);
+       |            ^
+    2391|         const files = await tree(space.space.outputRoot);
+    2392|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[79/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T116: both providers refuse Review B case 1, the fenced root array
+AssertionError: fenced root array/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2630:12
+    2628|         expect.soft(message, `${context}: the refusal holds no matched…
+    2629|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+    2630|           .toBe(true);
+       |            ^
+    2631|         const entries = await securityLedger(space.space.outputRoot);
+    2632|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:2648:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[80/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T116: both providers refuse Review B case 1, the fenced root array
+AssertionError: fenced root array/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "0495354f-d0ae-4373-a9ec-cf7fa4b4f8a5",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T15:12:25.396Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2633:12
+    2631|         const entries = await securityLedger(space.space.outputRoot);
+    2632|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    2633|           .toEqual([]);
+       |            ^
+    2634|         const files = await tree(space.space.outputRoot);
+    2635|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:2648:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[81/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T117: both providers refuse Review B case 2, a safe review then a root array
+AssertionError: safe review then root array/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2630:12
+    2628|         expect.soft(message, `${context}: the refusal holds no matched…
+    2629|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+    2630|           .toBe(true);
+       |            ^
+    2631|         const entries = await securityLedger(space.space.outputRoot);
+    2632|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:2653:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[82/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T117: both providers refuse Review B case 2, a safe review then a root array
+AssertionError: safe review then root array/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "00babc80-18b5-4162-b211-064d73462876",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T15:12:27.347Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2633:12
+    2631|         const entries = await securityLedger(space.space.outputRoot);
+    2632|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    2633|           .toEqual([]);
+       |            ^
+    2634|         const files = await tree(space.space.outputRoot);
+    2635|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:2653:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[83/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T118: both providers refuse Review B case 3, the earlier duplicate value
+AssertionError: earlier duplicate value/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2630:12
+    2628|         expect.soft(message, `${context}: the refusal holds no matched…
+    2629|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+    2630|           .toBe(true);
+       |            ^
+    2631|         const entries = await securityLedger(space.space.outputRoot);
+    2632|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:2658:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[84/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T118: both providers refuse Review B case 3, the earlier duplicate value
+AssertionError: earlier duplicate value/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "355752b5-4263-47c3-af86-5f70069af358",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T15:12:29.174Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2633:12
+    2631|         const entries = await securityLedger(space.space.outputRoot);
+    2632|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    2633|           .toEqual([]);
+       |            ^
+    2634|         const files = await tree(space.space.outputRoot);
+    2635|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:2658:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[85/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T119: both providers refuse Review B case 4, the duplicate key
+AssertionError: duplicate key/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2630:12
+    2628|         expect.soft(message, `${context}: the refusal holds no matched…
+    2629|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+    2630|           .toBe(true);
+       |            ^
+    2631|         const entries = await securityLedger(space.space.outputRoot);
+    2632|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:2668:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[86/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T119: both providers refuse Review B case 4, the duplicate key
+AssertionError: duplicate key/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "a2d32259-c268-4a89-b696-41bd555e4145",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T15:12:31.414Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2633:12
+    2631|         const entries = await securityLedger(space.space.outputRoot);
+    2632|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    2633|           .toEqual([]);
+       |            ^
+    2634|         const files = await tree(space.space.outputRoot);
+    2635|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:2668:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[87/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T119: both providers refuse Review B case 4, the duplicate key
+AssertionError: duplicate key in an earlier duplicate value/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2630:12
+    2628|         expect.soft(message, `${context}: the refusal holds no matched…
+    2629|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+    2630|           .toBe(true);
+       |            ^
+    2631|         const entries = await securityLedger(space.space.outputRoot);
+    2632|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:2668:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[88/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T119: both providers refuse Review B case 4, the duplicate key
+AssertionError: duplicate key in an earlier duplicate value/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "4a704fee-4e66-42db-9046-7a3336ceedd3",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T15:12:33.343Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2633:12
+    2631|         const entries = await securityLedger(space.space.outputRoot);
+    2632|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    2633|           .toEqual([]);
+       |            ^
+    2634|         const files = await tree(space.space.outputRoot);
+    2635|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:2668:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[89/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T120: both providers refuse Review B case 5, the malformed unknown field
+AssertionError: malformed unknown field/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2630:12
+    2628|         expect.soft(message, `${context}: the refusal holds no matched…
+    2629|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+    2630|           .toBe(true);
+       |            ^
+    2631|         const entries = await securityLedger(space.space.outputRoot);
+    2632|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:2674:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[90/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T120: both providers refuse Review B case 5, the malformed unknown field
+AssertionError: malformed unknown field/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "72195081-bb8c-461f-96d8-77041a9382e7",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T15:12:35.264Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2633:12
+    2631|         const entries = await securityLedger(space.space.outputRoot);
+    2632|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    2633|           .toEqual([]);
+       |            ^
+    2634|         const files = await tree(space.space.outputRoot);
+    2635|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:2674:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[91/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T122: both providers refuse the fence, the duplicate key, and the malformed tail
+AssertionError: fence, duplicate key, and malformed tail/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2630:12
+    2628|         expect.soft(message, `${context}: the refusal holds no matched…
+    2629|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+    2630|           .toBe(true);
+       |            ^
+    2631|         const entries = await securityLedger(space.space.outputRoot);
+    2632|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:2702:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[92/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T122: both providers refuse the fence, the duplicate key, and the malformed tail
+AssertionError: fence, duplicate key, and malformed tail/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "a43b3171-3b5b-43e8-b1d7-19442ebcd270",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T15:12:37.612Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2633:12
+    2631|         const entries = await securityLedger(space.space.outputRoot);
+    2632|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    2633|           .toEqual([]);
+       |            ^
+    2634|         const files = await tree(space.space.outputRoot);
+    2635|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:2702:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[93/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T122: both providers refuse the fence, the duplicate key, and the malformed tail
+AssertionError: fence and malformed tail with the credential/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2630:12
+    2628|         expect.soft(message, `${context}: the refusal holds no matched…
+    2629|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+    2630|           .toBe(true);
+       |            ^
+    2631|         const entries = await securityLedger(space.space.outputRoot);
+    2632|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:2702:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[94/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T122: both providers refuse the fence, the duplicate key, and the malformed tail
+AssertionError: fence and malformed tail with the credential/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "cf70b329-3828-449c-8d15-d7f4f445fd7f",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T15:12:39.560Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2633:12
+    2631|         const entries = await securityLedger(space.space.outputRoot);
+    2632|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+    2633|           .toEqual([]);
+       |            ^
+    2634|         const files = await tree(space.space.outputRoot);
+    2635|         expect.soft(files.filter((file) => /^(raw|reviews)\//.test(pat…
+ ❯ tests/storytime-book-pictures.test.ts:2702:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[95/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T124: the long pattern name is cut and the task 10 suffix stays in every message
+AssertionError: long pattern name/minimax: the refusal keeps the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2780:14
+    2778|             .toBeLessThanOrEqual(500);
+    2779|           expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the…
+    2780|             .toBe(true);
+       |              ^
+    2781|           expect.soft(message, `${context}: the refusal holds the firs…
+    2782|             .toContain(pattern.slice(0, 32));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[96/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T124: the long pattern name is cut and the task 10 suffix stays in every message
+AssertionError: long pattern name/minimax: one failure entry.: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/storytime-book-pictures.test.ts:2785:67
+    2783|           const entries = await securityLedger(space.space.outputRoot);
+    2784|           const failures = entries.filter((entry) => entry.status === …
+    2785|           expect.soft(failures, `${context}: one failure entry.`).toHa…
+       |                                                                   ^
+    2786|           const ledgerError = String(failures[0]?.error ?? '');
+    2787|           expect.soft(ledgerError, `${context}: the ledger error holds…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[97/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T124: the long pattern name is cut and the task 10 suffix stays in every message
+AssertionError: long pattern name/minimax: the ledger error keeps the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2791:14
+    2789|             .toBeLessThanOrEqual(500);
+    2790|           expect.soft(ledgerError.endsWith(TOKEN_SUFFIX), `${context}:…
+    2791|             .toBe(true);
+       |              ^
+    2792|           expect.soft(ledgerError, `${context}: the ledger error holds…
+    2793|             .toContain(pattern.slice(0, 32));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[98/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T124: the long pattern name is cut and the task 10 suffix stays in every message
+AssertionError: long pattern name/minimax: the ledger error holds the first 32 characters of the pattern name.: expected '' to contain 'env:TASK11_LONG_AAAAAAAAAAAAAAAA'
+
+- Expected
++ Received
+
+- env:TASK11_LONG_AAAAAAAAAAAAAAAA
+
+ ❯ tests/storytime-book-pictures.test.ts:2793:14
+    2791|             .toBe(true);
+    2792|           expect.soft(ledgerError, `${context}: the ledger error holds…
+    2793|             .toContain(pattern.slice(0, 32));
+       |              ^
+    2794|           const entry = entrySeam();
+    2795|           expect.soft(entry, 'The runStorytimeBookPicturesEntry seam e…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[99/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T124: the long pattern name is cut and the task 10 suffix stays in every message
+AssertionError: long pattern name/minimax: the CLI error keeps the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2809:16
+    2807|               .toBeLessThanOrEqual(500);
+    2808|             expect.soft(finalMessage.endsWith(TOKEN_SUFFIX), `${contex…
+    2809|               .toBe(true);
+       |                ^
+    2810|             expect.soft(finalMessage, `${context}: the CLI error holds…
+    2811|               .toContain(pattern.slice(0, 32));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[100/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T126: the decoded-check comments name the raw answer, the order, and the current finding
+AssertionError: The MiniMax comment states that the check reads the raw answer.: expected '' to match /raw\s+(answer|output|bytes|text|resp…/i
+
+- Expected:
+/raw\s+(answer|output|bytes|text|response|provider)/i
+
++ Received:
+""
+
+ ❯ tests/storytime-book-pictures.test.ts:2863:12
+    2861|         expect.soft(minimax, 'The MiniMax decoded check has a comment.…
+    2862|         expect.soft(minimax, 'The MiniMax comment states that the chec…
+    2863|           .toMatch(/raw\s+(answer|output|bytes|text|response|provider)…
+       |            ^
+    2864|         expect.soft(minimax, 'The MiniMax comment states that the chec…
+    2865|           .toMatch(/before\s+(any|every|a|the)\s+(record\s+)?write/i);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[101/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T126: the decoded-check comments name the raw answer, the order, and the current finding
+AssertionError: The MiniMax comment states that the check runs before any write.: expected '' to match /before\s+(any|every|a|the)\s+(record…/i
+
+- Expected:
+/before\s+(any|every|a|the)\s+(record\s+)?write/i
+
++ Received:
+""
+
+ ❯ tests/storytime-book-pictures.test.ts:2865:12
+    2863|           .toMatch(/raw\s+(answer|output|bytes|text|response|provider)…
+    2864|         expect.soft(minimax, 'The MiniMax comment states that the chec…
+    2865|           .toMatch(/before\s+(any|every|a|the)\s+(record\s+)?write/i);
+       |            ^
+    2866|         const kimi = commentAbove(functionRegion(source, 'precheckKimi…
+    2867|         expect.soft(kimi, 'The Kimi decoded check has a comment.').not…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[102/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/fencedRootArray: the after-call is a failure.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure' }
+(14 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:2886:82
+    2884|           expect.soft(beforeCalls, `${context}: exactly one before-cal…
+    2885|           expect.soft(afterCalls, `${context}: exactly one after-call.…
+    2886|           expect.soft(afterCalls[0], `${context}: the after-call is a …
+       |                                                                                  ^
+    2887|           const failure = String(afterCalls[0]?.error ?? '');
+    2888|           expect.soft(failure, `${context}: the failure holds no match…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[103/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/fencedRootArray: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "2aad3e62-483f-4199-a11f-9a8e711465a4",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T15:12:52.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2892:14
+    2890|             .toBeLessThanOrEqual(500);
+    2891|           expect.soft(entries.filter((entry) => entry.status === 'succ…
+    2892|             .toEqual([]);
+       |              ^
+    2893|           const files = await tree(space.space.outputRoot);
+    2894|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[104/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/safeThenRootArray: the after-call is a failure.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure' }
+(14 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:2886:82
+    2884|           expect.soft(beforeCalls, `${context}: exactly one before-cal…
+    2885|           expect.soft(afterCalls, `${context}: exactly one after-call.…
+    2886|           expect.soft(afterCalls[0], `${context}: the after-call is a …
+       |                                                                                  ^
+    2887|           const failure = String(afterCalls[0]?.error ?? '');
+    2888|           expect.soft(failure, `${context}: the failure holds no match…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[105/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/safeThenRootArray: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "5a502d2e-d348-4375-845c-91df209a164e",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T15:12:52.847Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2892:14
+    2890|             .toBeLessThanOrEqual(500);
+    2891|           expect.soft(entries.filter((entry) => entry.status === 'succ…
+    2892|             .toEqual([]);
+       |              ^
+    2893|           const files = await tree(space.space.outputRoot);
+    2894|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[106/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/earlierDuplicateValue: the after-call is a failure.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure' }
+(14 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:2886:82
+    2884|           expect.soft(beforeCalls, `${context}: exactly one before-cal…
+    2885|           expect.soft(afterCalls, `${context}: exactly one after-call.…
+    2886|           expect.soft(afterCalls[0], `${context}: the after-call is a …
+       |                                                                                  ^
+    2887|           const failure = String(afterCalls[0]?.error ?? '');
+    2888|           expect.soft(failure, `${context}: the failure holds no match…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[107/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/earlierDuplicateValue: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "add85807-b4d5-46ca-b744-e5053ed99b13",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T15:12:53.753Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2892:14
+    2890|             .toBeLessThanOrEqual(500);
+    2891|           expect.soft(entries.filter((entry) => entry.status === 'succ…
+    2892|             .toEqual([]);
+       |              ^
+    2893|           const files = await tree(space.space.outputRoot);
+    2894|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[108/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/duplicateKey: the after-call is a failure.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure' }
+(14 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:2886:82
+    2884|           expect.soft(beforeCalls, `${context}: exactly one before-cal…
+    2885|           expect.soft(afterCalls, `${context}: exactly one after-call.…
+    2886|           expect.soft(afterCalls[0], `${context}: the after-call is a …
+       |                                                                                  ^
+    2887|           const failure = String(afterCalls[0]?.error ?? '');
+    2888|           expect.soft(failure, `${context}: the failure holds no match…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[109/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/duplicateKey: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "782183ac-f94d-4bbf-b69a-b6340b00e8b1",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T15:12:54.722Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2892:14
+    2890|             .toBeLessThanOrEqual(500);
+    2891|           expect.soft(entries.filter((entry) => entry.status === 'succ…
+    2892|             .toEqual([]);
+       |              ^
+    2893|           const files = await tree(space.space.outputRoot);
+    2894|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[110/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/earlierDuplicateKey: the after-call is a failure.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure' }
+(14 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:2886:82
+    2884|           expect.soft(beforeCalls, `${context}: exactly one before-cal…
+    2885|           expect.soft(afterCalls, `${context}: exactly one after-call.…
+    2886|           expect.soft(afterCalls[0], `${context}: the after-call is a …
+       |                                                                                  ^
+    2887|           const failure = String(afterCalls[0]?.error ?? '');
+    2888|           expect.soft(failure, `${context}: the failure holds no match…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[111/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/earlierDuplicateKey: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "75441dab-3e87-4926-b7b1-7303d5799860",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T15:12:55.746Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2892:14
+    2890|             .toBeLessThanOrEqual(500);
+    2891|           expect.soft(entries.filter((entry) => entry.status === 'succ…
+    2892|             .toEqual([]);
+       |              ^
+    2893|           const files = await tree(space.space.outputRoot);
+    2894|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[112/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/malformedUnknownField: the after-call is a failure.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure' }
+(14 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:2886:82
+    2884|           expect.soft(beforeCalls, `${context}: exactly one before-cal…
+    2885|           expect.soft(afterCalls, `${context}: exactly one after-call.…
+    2886|           expect.soft(afterCalls[0], `${context}: the after-call is a …
+       |                                                                                  ^
+    2887|           const failure = String(afterCalls[0]?.error ?? '');
+    2888|           expect.soft(failure, `${context}: the failure holds no match…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[113/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/malformedUnknownField: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "25ae248a-2667-4cda-a1b9-81b4ad5a7c45",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T15:12:56.763Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2892:14
+    2890|             .toBeLessThanOrEqual(500);
+    2891|           expect.soft(entries.filter((entry) => entry.status === 'succ…
+    2892|             .toEqual([]);
+       |              ^
+    2893|           const files = await tree(space.space.outputRoot);
+    2894|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[114/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/fenceDuplicateKeyTail: the after-call is a failure.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure' }
+(14 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:2886:82
+    2884|           expect.soft(beforeCalls, `${context}: exactly one before-cal…
+    2885|           expect.soft(afterCalls, `${context}: exactly one after-call.…
+    2886|           expect.soft(afterCalls[0], `${context}: the after-call is a …
+       |                                                                                  ^
+    2887|           const failure = String(afterCalls[0]?.error ?? '');
+    2888|           expect.soft(failure, `${context}: the failure holds no match…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[115/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/fenceDuplicateKeyTail: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "c6316cd7-50d9-4bc3-9e36-1e75c4487a29",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T15:12:57.639Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2892:14
+    2890|             .toBeLessThanOrEqual(500);
+    2891|           expect.soft(entries.filter((entry) => entry.status === 'succ…
+    2892|             .toEqual([]);
+       |              ^
+    2893|           const files = await tree(space.space.outputRoot);
+    2894|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[116/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/fenceTailCredential: the after-call is a failure.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure' }
+(14 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:2886:82
+    2884|           expect.soft(beforeCalls, `${context}: exactly one before-cal…
+    2885|           expect.soft(afterCalls, `${context}: exactly one after-call.…
+    2886|           expect.soft(afterCalls[0], `${context}: the after-call is a …
+       |                                                                                  ^
+    2887|           const failure = String(afterCalls[0]?.error ?? '');
+    2888|           expect.soft(failure, `${context}: the failure holds no match…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[117/130]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T127: the MiniMax path writes no evidence for every refused construction
+AssertionError: MiniMax write boundary/fenceTailCredential: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "e48e570b-0574-452e-8e87-1ea70180f49c",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-27T15:12:58.695Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2892:14
+    2890|             .toBeLessThanOrEqual(500);
+    2891|           expect.soft(entries.filter((entry) => entry.status === 'succ…
+    2892|             .toEqual([]);
+       |              ^
+    2893|           const files = await tree(space.space.outputRoot);
+    2894|           expect.soft(files.filter((file) => /^(raw|reviews)\//.test(p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[118/130]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  24 failed | 87 passed (111)
+   Start at  23:09:51
+   Duration  211.88s (transform 868ms, setup 0ms, import 1.22s, tests 210.01s, environment 0ms)
+

@@ -1,0 +1,59 @@
+{
+  "reviewer": "opencode-go/mimo-v2.6-flash",
+  "audited_head": "m14",
+  "verdict": "fix-round review",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "line_art_rule": "brief line-art rule as amended by Daniel's bar 2026-11-01",
+  "seen": {
+    "out/storytime-review/batch-37/brief.md": "Batch 37 brief; one row, Muse fix round; Daniel's bar at the top.",
+    "out/storytime-review/batch-37/refs/sprout-pat-render.png": "Pat reference: black tufted hair, big brown eyes with lash marks, blush, green shirt, brown cargo shorts, white socks, brown sandals, small brown teddy bear held at the chest.",
+    "out/storytime-review/batch-37/refs/storytime-school-bag.png": "Bag reference: red backpack, yellow label patch, blue strap and top handle.",
+    "out/storytime-review/batch-37/pages/l2-w01-story-page-hello-i-am-pat-m14-color.png": "Pat, young and chibi, stands in a cream classroom and waves with his raised left-side hand; he holds a small brown bear at his chest with a peach-skin hand; red bag with yellow label, blue strap and one round dome on top at his back; three framed animal pictures (lion, elephant, frog) on the left wall; green door with round window and knob at the right; one low white table with four red legs in the middle; wood floor; no text.",
+    "out/storytime-review/batch-37/pages/l2-w01-story-page-hello-i-am-pat-m14-line-3-despeckled.png": "1-bit line art of the same scene; pure black and white, 0 mid-gray pixels; waving hand shows four fingers and one thumb; bear drawn small with a rounded gripping hand; bag with label rectangle, strap, and one round lobe above it behind the head; three picture frames, door, window, knob, table whole; no text."
+  },
+  "l2-w01-story-page-hello-i-am-pat": {
+    "files": [
+      "out/storytime-review/batch-37/pages/l2-w01-story-page-hello-i-am-pat-m14-color.png",
+      "out/storytime-review/batch-37/pages/l2-w01-story-page-hello-i-am-pat-m14-line-3-despeckled.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Pat young, about five": "yes: small chibi boy with a big head; look matches the Pat render reference",
+      "holds his small brown teddy bear": "yes: brown bear at his chest in color and line art",
+      "waves": "yes: raised open hand on the left of the picture in both files",
+      "the green door": "yes: green door with a round window and a knob at the right in both files",
+      "low tables": "yes: one low table with four legs, whole, in the middle of the room",
+      "a wall with big colorful animal pictures": "yes: three framed pictures (lion, elephant, frog) on the left wall in both files",
+      "no letters": "yes: no letters, words, or symbols in either file",
+      "school bag on his back with a small round bump": "yes: red bag with yellow label and blue strap; one round dome on top; clear in both files",
+      "line art no gray/shading": "yes: pure 1-bit, 0 mid-gray pixels",
+      "Pat look matches the reference": "yes: black tufted hair, big brown eyes, blush, green shirt, brown shorts, white socks, brown sandals"
+    },
+    "defects_gone": {
+      "batch 34: the waving hand showed six digits": "yes: gone; both files show four fingers and one thumb",
+      "batch 34: the hand on the bear looked white like a glove": "yes: gone; the hand has peach skin (RGB about 252,218,190), same tone as the waving hand; the line art draws finger shapes on the bear",
+      "batch 34: the bag showed no round bump": "yes: gone; the bag and its round dome are clearly visible in both files"
+    },
+    "builder_items": {
+      "dark patch on the brown shorts in color": "not a defect under the bar: the patch is a pocket-shaped darker brown mark; at book size it reads as a pocket or shading; the Pat reference has cargo pockets",
+      "the bear in the line art is small and its hand is a simple rounded shape": "not a defect under the bar: the bear reads as a small teddy bear and the hand reads as a hand that holds it; simplified shapes, not wrong shapes",
+      "the bump in the line art is a large lobe behind Pat's head": "not a defect under the bar: the color file shows a round dome of the same size and place on the bag top; both files read as the bag's bump",
+      "the room differs from the earlier version": "not a defect under the bar: all goal items are present (green door, low table, animal pictures, no letters)"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "summary": {
+    "pages": 1,
+    "pass": 1,
+    "clean": 1,
+    "clean_keys": [
+      "l2-w01-story-page-hello-i-am-pat"
+    ],
+    "not_clean_keys": []
+  }
+}

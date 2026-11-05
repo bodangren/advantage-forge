@@ -1,0 +1,14 @@
+# Green round 50 provisional log — storytime week 1 pictures
+
+- Role: Measure Jr Green (build round 50). Session `Green · P3 · storytime_l2_unit1_pictures · r50`.
+- Track: `asset_storytime_l2_unit1_pictures_20261025`, phase "Phase 3: Week 1 pictures" (P3).
+- Green model: `deepseek/deepseek-flash#high` (Daniel approved the DeepSeek route; not the Red family).
+- Red model: `minimax-cn-coding-plan/MiniMax-M3`. Coder model: none. No delegation.
+- role_base_sha: 80c5fb3a (`git rev-parse --short=8 HEAD` at start).
+- phase_base_sha: 15a7bf0b. It is an ancestor of HEAD.
+- Red signal: this is an item round. No new Red test file. The Red contract is batch 21 of the
+  item review, the plan picture list, and the week 1 rows that ask for a classroom door and table.
+- Task: build `assets/storytime-green-door.ts` and `assets/storytime-low-table.ts`, then render row
+  `l2-w01-story-page-hello-i-am-pat` version 1 (v2 only for a clear placement defect).
+
+Status: started

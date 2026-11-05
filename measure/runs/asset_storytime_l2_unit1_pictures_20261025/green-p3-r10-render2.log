@@ -1,0 +1,7 @@
+storytime-butterfly-net: 21,144 triangles, 0.328 x 0.899 x 0.377 m, built in 26792 ms
+  wooden-handle             3252 tris  (822 ms)
+  green-hoop                3892 tris  (356 ms)
+  green-net-bag            14000 tris  (24784 ms)
+texture  none (vertex colors)
+glb      out/storytime-butterfly-net/storytime-butterfly-net.glb  (762 KB)
+render   out/storytime-butterfly-net/render.png  (866 ms)

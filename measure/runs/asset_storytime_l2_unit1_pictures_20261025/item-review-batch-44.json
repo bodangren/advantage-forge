@@ -1,0 +1,135 @@
+{
+  "status": "fail",
+  "reviewer": "openai/gpt-6-luna#high",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "audited_head": "Nine week 3 batch 2 rows, all 36 files in out/storytime-review/batch-44/pages, all nine refs, and three extra color-line pairs with Nan's reference.",
+  "summary": "Eight story rows are clean. The cover has loose brushes outside the children's hands and a tan post that is missing from line art. All three extra rows are clean.",
+  "l2-w03-cover-paint": {
+    "files": ["out/storytime-review/batch-44/pages/l2-w03-cover-paint-m3-color-print.png", "out/storytime-review/batch-44/pages/l2-w03-cover-paint-m3-line-print-3-despeckled.png"],
+    "rating": 6,
+    "verdict": "defect",
+    "defect_categories": ["wrong-or-missing-prop"],
+    "defects": [
+      {"description": "Two loose brushes lie on the low table, although the goal says every brush is in a hand.", "retry_hint": "Remove the loose brushes from the table and keep each brush in a child's hand."},
+      {"description": "A tan vertical post stands behind the left easel in color and does not appear in the line file.", "retry_hint": "Remove the tan post from both files or draw the same post in both files."}
+    ],
+    "goal_check": "Six children and Teacher Kim show; Nan has her named look; easels, paint pots, and the floor paw print show; no text shows. Teacher Kim's head begins near 19% of page height, so it reaches about 11 percentage points into the top 30% band. The named brush placement does not match.",
+    "retry_hint": "Remove the loose table brushes and reconcile the tan post across color and line."
+  },
+  "l2-w03-story-page-it-is-blue": {
+    "files": ["out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-blue-m1-color-print.png", "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-blue-m1-line-print-3-despeckled.png"],
+    "rating": 9,
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "goal_check": "May matches her reference clothes and holds the sheet at the easel. The line sheet is one large closed four-sided shape with nothing inside. No text shows.",
+    "sheet_color": "Blue only on the sheet. The yellow shirt and the red, blue, and yellow pots sit outside it."
+  },
+  "l2-w03-story-page-it-is-green": {
+    "files": ["out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-green-m1-color-print.png", "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-green-m1-line-print-3-despeckled.png"],
+    "rating": 9,
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "goal_check": "Mia matches her reference clothes and holds the sheet. The line sheet is one large closed four-sided shape with nothing inside. No text shows.",
+    "sheet_color": "Green only on the sheet. Mia's pink shirt and blue overalls do not touch it."
+  },
+  "l2-w03-story-page-it-is-orange": {
+    "files": ["out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-orange-m1-color-print.png", "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-orange-m1-line-print-despeckled.png"],
+    "rating": 9,
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "goal_check": "Nan has two tied bunches, dark-brown eyes, the star shirt, red shorts, and white shoes. The face and eyes show in both files. The line sheet is one closed blank shape. No text shows.",
+    "sheet_color": "Orange only on the sheet. A small orange shirt edge touches its right side, but the sheet still reads as a separate orange rectangle."
+  },
+  "l2-w03-story-page-it-is-pink": {
+    "files": ["out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-pink-m1-color-print.png", "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-pink-m1-line-print-despeckled.png"],
+    "rating": 9,
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "goal_check": "Ben reads as the young boy in the reference, with a smooth swoosh and no freckles. He holds the sheet at the easel. The line sheet is one closed blank shape. No text shows.",
+    "sheet_color": "Pink only on the sheet. Ben's light-blue shirt and dark-blue shorts do not touch it."
+  },
+  "l2-w03-story-page-it-is-pip": {
+    "files": ["out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-pip-m2-color-print.png", "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-pip-m2-line-print-despeckled.png"],
+    "rating": 8,
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "goal_check": "Pip sits on the white sheet with multicolor paw prints. Red, blue, yellow, green, orange, pink, and purple marks show on Pip and his paws. Pip has floppy ears and reads as the puppy. Pat, May, Sam, Mia, Ben, Nan, and Teacher Kim show in both files. No text shows.",
+    "retry_hint": "",
+    "open_items_judged": {
+      "Ben's clumped hair": "Not a defect under the bar. Ben still reads as the reference boy at book size; the hair is a style deviation.",
+      "Pip has about ten spots": "Not a defect. The goal requires the named paint colors, and all seven colors show; it does not set an exact spot count."
+    }
+  },
+  "l2-w03-story-page-it-is-purple": {
+    "files": ["out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-purple-m1-color-print.png", "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-purple-m1-line-print-3-despeckled.png"],
+    "rating": 9,
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "goal_check": "Teacher Kim holds up the paper. Eight multicolor paw prints cross the floor behind her. The sheet is one closed blank shape in line art. No text shows.",
+    "sheet_color": "Purple only on the sheet. Kim's green cardigan and navy trousers stay outside it."
+  },
+  "l2-w03-story-page-it-is-red": {
+    "files": ["out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-red-m1-color-print.png", "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-red-m1-line-print-2-despeckled.png"],
+    "rating": 9,
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "goal_check": "Pat smiles and holds the sheet. Easels and paint pots show. The line sheet is one closed blank shape. No text shows.",
+    "sheet_color": "Red only on the sheet. A narrow green shirt band below it does not confuse the sheet."
+  },
+  "l2-w03-story-page-it-is-yellow": {
+    "files": ["out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-yellow-m1-color-print.png", "out/storytime-review/batch-44/pages/l2-w03-story-page-it-is-yellow-m1-line-print-3-despeckled.png"],
+    "rating": 9,
+    "verdict": "clean",
+    "defect_categories": [],
+    "defects": [],
+    "goal_check": "Sam holds up the sheet at an easel. The line sheet is one closed blank shape. No text shows.",
+    "sheet_color": "Yellow only on the sheet. A thin red shirt edge sits beside it but does not confuse the yellow sheet."
+  },
+  "extra": {
+    "K1": {
+      "files": ["out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png", "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "goal_check": "Nan touches her nose with one finger and laughs. Her nose shows in color and line art. The touching hand reads as one pointing finger, not a five-digit hand.",
+      "retry_hint": ""
+    },
+    "K2": {
+      "files": ["out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png", "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "goal_check": "One large brown acorn-shaped nut rests on Nan's open hand in close view. The line art keeps the nut and hand clear. No extra finger stands out.",
+      "retry_hint": ""
+    },
+    "K3": {
+      "files": ["out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png", "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "goal_check": "Nan's head faces left, opposite the right-facing reference. Her profile nose reads clearly in both files for tracing practice.",
+      "retry_hint": ""
+    }
+  },
+  "batch_checks": {
+    "line_gray_scan": {
+      "method": "A Node script with sharp counted every grayscale pixel whose value was not 0 or 255.",
+      "files_checked": 21,
+      "gray_pixels": 0,
+      "scratch_script": "/tmp/opencode/batch44-gray-scan.js"
+    },
+    "line_art_visual_checks": "No thick solid black ring or band, coloring-hard gap, broken face, or six-digit hand stood out. Solid black pupils are allowed.",
+    "text_check": "No letters, words, or numbers show in the nine story rows.",
+    "cover_top_30_percent": "Teacher Kim's head starts near 19% of page height. It reaches about 11 percentage points into the top 30% band."
+  }
+}

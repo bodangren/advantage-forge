@@ -1,0 +1,10 @@
+{
+  "reviewer": "openai/gpt-6-luna#high",
+  "storytime-school-bus": {
+    "overall": 8.2,
+    "pass": false,
+    "critical": ["The bus has no clear door."],
+    "issues": ["The side views do not show clear door panels."],
+    "fix": "Make the two-leaf door clear on the right side."
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "summary": "Four security findings block Phase 2. RB-01, RB-03, and RB-05 have implemented protections. RB-02 and RB-04 remain incomplete.",
+  "phase_base_sha": "1d39b8fda457e12d8e7332e7de65d2046ddda78e",
+  "role_base_sha": "84c8ffdb8359939ef86d043f58443200cabfdbc5",
+  "audited_head_sha": "84c8ffdb8359939ef86d043f58443200cabfdbc5",
+  "audited_head": "84c8ffdb8359939ef86d043f58443200cabfdbc5",
+  "security_applicability": "applicable",
+  "blocking_findings": [
+    "RB2-01 high src/storytime/book-pictures.ts:1045-1055 and scripts/storytime-book-pictures.ts:57-59: Provider errors still expose credentials through stderr. runPaidCall redacts the ledger error, but it throws the original error. The production CLI prints that original message with console.error. runProviderProcess includes provider stderr in that message at book-pictures.ts:1080. A provider failure containing a credential therefore reaches the command log unchanged. Green must sanitize the propagated error and the final logging boundary. Add a regression test for the CLI error path, not only ledger files.",
+    "RB2-02 high src/storytime/book-pictures.ts:3181-3214,3493-3525,3542: The credential check runs before JSON decoding only. JSON Unicode escapes can hide a credential from the raw scan. jsonObjects calls JSON.parse at line 514. parseModelReview then returns decoded reason, issues, and count keys. Both providers persist these decoded fields without another credential check. Kimi also prints the decoded reason. A raw reason beginning sk- followed by an escaped S and the remaining synthetic key illustrates this bypass. Green must check decoded fields before any success entry, review write, or log. Add escaped-credential cases for both providers while preserving safe raw bytes.",
+    "RB2-03 high src/storytime/book-pictures.ts:2300-2302,2359-2370: The Vite configuration replaces its credential deny rules with only out/storytime/**. The plugin delegates paths outside /out/, /stage/, and /@fs/. Default static middleware can therefore serve repository credential files, including PEM files, .env files, and .git/config. The new deny pattern also contains a slash and lacks an absolute prefix or leading glob. Installed Vite matches that pattern against absolute filesystem paths, so it does not protect the absolute Storytime path. Green must preserve credential deny rules and use a matching Storytime deny rule. Check the complete middleware path with synthetic files. T79 checks configuration presence only and misses this regression.",
+    "RB2-04 medium src/storytime/book-pictures.ts:2194-2208,2239-2253,2313: The server validates a real path but returns and reads the original candidate path. A concurrent symlink replacement can change the target between validation and reading. The strategy explicitly requires the server to read the checked real path. The stage branch also omits the required Storytime exclusion. Green must return the checked real path and apply the protected-tree exclusion to stage reads. Add an internal-symlink case and a stage-root case that targets protected evidence. No race probe ran during this audit."
+  ],
+  "nonblocking_findings": [
+    "RB2-N1 low: Earlier RB-06 remains open. measure/anti-patterns.md is absent. The strategy records the gap and uses the canonical fallback. This audit read that fallback."
+  ],
+  "evidence": [
+    "Provenance: phase_base_sha=1d39b8fda457e12d8e7332e7de65d2046ddda78e; role_base_sha=84c8ffdb8359939ef86d043f58443200cabfdbc5, observed at role start; audited_head_sha=84c8ffdb8359939ef86d043f58443200cabfdbc5.",
+    "git rev-parse HEAD matched the assigned commit at audit start. The final .git/HEAD and .git/refs/heads/master reads confirmed that commit. No HEAD move was observed.",
+    "git diff --quiet 84c8ffdb returned 0 for the audited source, tests, and track documents. Unrelated dirty files remained unchanged.",
+    "Applicability evidence: the actual phase diff adds src/storytime/book-pictures.ts, src/storytime/line-art-pass.ts, src/song/still-hook.ts, and scripts/storytime-book-pictures.ts. It changes src/song/main.ts. The pipeline executes processes, serves local files, reads provider text, and persists evidence. test-strategy.md:435-441 explicitly requires Review B.",
+    "The audit compared c2353433..84c8ffdb for the remediation and inspected the actual 1d39b8fd..84c8ffdb path list. Demo asset commits a8fdb560 and bbcdf085 remain excluded.",
+    "RB-01 closure: scripts/storytime-book-pictures.ts:41-47 uses bash with an argument array. Each CLI argument remains separate. The inner marker travels in env. No shell string remains on that render path. heavy-run.sh:121-126 executes its argument array unchanged. T77 covers argv, env, shell absence, and exit 75. The recorded T87 probe printed the literal substitution text.",
+    "RB-02 partial closure: the plugin restricts model names and stage picture names. It checks realpath containment and refuses ordinary protected, traversal, external-symlink, and /@fs/ requests. T78 covers these cases. T79 confirms production wiring, loopback host, and fs.strict. RB2-03 and RB2-04 prevent closure.",
+    "RB-03 closure: book-pictures.ts:3789-3791 resolves the smoke paths. Lines 3819-3834 reject a smoke symlink and create the stamp directory exclusively. Lines 3858-3859 use writeOutputFile. That helper resolves each destination and writes with wx at lines 1009-1011. T80 covers existing files, file symlinks, directory symlinks, and clean output.",
+    "RB-04 partial closure: secretFindings covers the required credential patterns and environment values. Provider ledger errors receive redaction and a 500-character limit. Kimi reasons receive a 500-byte limit. readRawAnswer rejects non-regular files, symlinks, oversized content, NUL bytes, and invalid UTF-8. It preserves safe UTF-8 bytes, including CRLF and a BOM. T81 to T83 cover literal credentials and safe raw preservation. They do not check the final CLI error log or decoded credential fields.",
+    "RB-05 closure: book-pictures.ts:3931 calls assertCalibrationReady before the manifest check when --release is set. T84 covers missing logs, a stale rubric, changed source bytes, and plain verify behavior. T65 retains current-text and source-hash checks.",
+    "The orchestrator reports Tests 99 passed (99) and owned tsc errors: 0 on the assigned HEAD. The plan records the same gates. This audit does not claim an independent passing test run.",
+    "The single independent heavy command timed out after 120000 ms. Its output contained the Vitest RUN header but no test summary. No second heavy command ran.",
+    "The bounded in-memory probe was denied by shell permissions. It made no provider call and produced no result. The blocking findings rest on source inspection.",
+    "Installed Vite evidence: node_modules/vite/dist/node/chunks/node.js:2707-2727 replaces array defaults during configuration merging. Lines 26085-26094 define the credential deny defaults. Lines 35835-35838 compile slash-containing deny patterns unchanged. Lines 19928-19936 test absolute file paths. Lines 19845-19880 implement repository static serving. These paths support RB2-03 without reading a credential file.",
+    "Live evidence: smoke run 5 smoke.json exists at out/storytime/l2/unit1/smoke/lineart-2026-10-26T05-22-09-300Z/. It identifies w01-readalong-p05 and the current technique. The plan records book files served: 15 and book file requests refused: 0. These successful requests do not prove refusal of alternate static paths.",
+    "The live ledger contains eight before-call entries and eight after-call entries, including one failure record. The recorded T87 scan covered 15 files and found zero credentials. This audit did not independently repeat that scan or call assertCalibrationReady on the live root.",
+    "A2: No audited test changes a draft into a published artifact. The local ready state concerns fictional Storytime characters. This phase performs no public publish operation. Person counts are quality checks, not consent verification.",
+    "A6: The immutable measure/tracks.md has no security-resolved claim. Its phase diff is empty. The unrelated working registry edits remain outside this audit.",
+    "This phase adds no database, migration, authenticated endpoint, or tenant boundary. Provider execution still requires --paid unless --dry-run applies. The wrapper passes argv without shell interpolation.",
+    "No graph.db exists. The audit used direct source inspection and created no graph database.",
+    "Worktree inventory: one master worktree. Local branch: master. Remote origin/gh-pages remains outside this audit. No branch or worktree cleanup applies to this report-only role."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short",
+    "git diff --name-status 1d39b8fda457e12d8e7332e7de65d2046ddda78e 84c8ffdb8359939ef86d043f58443200cabfdbc5",
+    "git diff c23534333d4d40ee3740327a7505e02c4f76079f 84c8ffdb -- scripts/storytime-book-pictures.ts src/storytime/book-pictures.ts",
+    "git diff --quiet 84c8ffdb -- src/storytime src/song scripts/storytime-book-pictures.ts tests/storytime-book-pictures.test.ts tests/storytime-line-art-pass.test.ts tests/song-still-hook.test.ts measure/tracks/asset_storytime_l2_unit1_pictures_20261025",
+    "git show 84c8ffdb:measure/tracks.md | grep -nEi 'storytime_l2_unit1_pictures|security|encryption|resolved|fully solved|completely fixed|all (checks |tests )?pass'",
+    "git diff --stat 1d39b8fd 84c8ffdb -- measure/tracks.md; git log --oneline -15",
+    "git worktree list; git branch -a",
+    "TIMEOUT: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'",
+    "DENIED: bounded read-only Node probe for propagated errors, decoded credential fields, deny matching, and middleware delegation. No result was recorded.",
+    "Read-tool final provenance confirmation: .git/HEAD and .git/refs/heads/master."
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-84c8ffd.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-84c8ffd.log"
+  ],
+  "test_strategy_violations": [
+    "RB2-01: The production CLI exposes provider credentials despite the task 7 error-redaction requirement.",
+    "RB2-02: Decoded provider fields bypass the task 7 credential exclusion before persistence.",
+    "RB2-04: The server reads candidate paths instead of the checked real paths required at test-strategy.md:354-356."
+  ],
+  "live_contract_violations": [
+    "RB2-01 and RB2-02: Provider text can expose credentials in logs or persisted review fields, contrary to contract.md:288-290.",
+    "RB2-03 and RB2-04: The server protections do not fully enforce the file boundary in contract.md:283-287."
+  ],
+  "prod_wiring_violations": [
+    "RB2-01: The CLI prints the original provider exception after runPaidCall sanitizes only the ledger copy.",
+    "RB2-03: The production Vite configuration removes credential deny defaults and leaves default static serving active."
+  ],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "handoff": "Route RB2-01 through RB2-04 to Green. Add regression tests for the uncovered paths. Preserve the closed protections and safe raw bytes. Request another security audit after remediation. Rerun the focused gate with a longer timeout through heavy-run.sh. No owner decision is required.",
+  "facts_changed": []
+}

@@ -1,0 +1,9 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 15
+book file requests refused: 0
+Line-art line width: 26 px (minimum 12 px).
+Line-art ink coverage: 6.24% (140443 of 2250000 pixels black).
+l2-w01-check-row-dog v1: rendered; stage d6f814b4f4fdff1524896eb7815b2d1fc8c390642ce4d7f1e86cfbffb104e323; file w01/rows/l2-w01-check-row-dog-v1.png; lineart w01/rows/l2-w01-check-row-dog-line-v1.png; size 1500 x 1500; render peak rss mb: 487

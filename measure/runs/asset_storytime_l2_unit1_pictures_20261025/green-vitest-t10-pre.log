@@ -1,0 +1,4988 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T111: the seam scans a 65,536-byte answer at depth 400 within 2000 ms
+decoded scan ms: 17048
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T115: the seam scans a wide answer with 1200 injected secrets within 2000 ms
+rule scan ms: 9905
+
+ ❯ tests/storytime-book-pictures.test.ts (98 tests | 11 failed) 192727ms
+       × T104: both providers refuse Review B case 1 with an extra string layer 1166ms
+       × T105: both providers refuse three string layers 1060ms
+       × T106: both providers refuse Review B case 3 with a root array 1053ms
+       × T107: both providers refuse Review B case 2 with a scalar array element 1078ms
+       × T108: both providers refuse a nonzero-status envelope with a string-layer array 1061ms
+       × T109: both providers refuse an escaped credential at object depth 4000 without a RangeError 12190ms
+       × T110: a safe object at depth 4000 keeps the parser result and the raw bytes 9880ms
+       × T111: the seam scans a 65,536-byte answer at depth 400 within 2000 ms 17310ms
+       × T113: the decodedReviewFindings export is gone 3ms
+       × T114: the decoded check runs before parseModelReview and the Kimi comment matches 2ms
+       × T115: the seam scans a wide answer with 1200 injected secrets within 2000 ms 10187ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 11 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/minimax: the answer is refused.: expected undefined to be an instance of Error
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2008:66
+    2006|     const run = await providerRun(provider, raw);
+    2007|     const context = `${label}/${provider}`;
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+       |                                                                  ^
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2319:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/minimax: the error names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2319:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/minimax: no result log is written.: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "w01-readalong-p01: PASS — The subject is visible.",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2015:68
+    2013|       expect.soft(text, `${context}: errors and logs contain no matche…
+    2014|     }
+    2015|     expect.soft(run.logs, `${context}: no result log is written.`).toE…
+       |                                                                    ^
+    2016|     const beforeCalls = run.entries.filter((entry) => entry.event === …
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2319:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "1529a619-c7bd-4070-a090-e09e0b6dd0b8",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2319:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "1529a619-c7bd-4070-a090-e09e0b6dd0b8",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2319:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2319:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/minimax: only the ledger can change.: expected [ [ 'jobs.json', …(1) ], …(3) ] to deeply equal [ [ 'jobs.json', …(1) ], [ …(2) ] ]
+
+- Expected
++ Received
+
+@@ -2,9 +2,17 @@
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
+    ],
+    [
++     "raw/w01-readalong-p01-v1-minimax-1529a619-c7bd-4070-a090-e09e0b6dd0b8.txt",
++     "cd5412c67fd12679c18b4ce91c566e382dd4125cf1eca84d1a27ea7c6b6c3b2e",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-minimax.json",
++     "1769d80562bfcd9f0069f7d762da131d35c8ebe18790dcc1647bf2134641bf51",
++   ],
++   [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+  ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2033:74
+    2031|       const beforeFiles = run.before.filter(([file]) => file !== 'cost…
+    2032|       const afterFiles = (await fileSnapshot(run.outputRoot)).filter((…
+    2033|       expect.soft(afterFiles, `${context}: only the ledger can change.…
+       |                                                                          ^
+    2034|     } else {
+    2035|       expect.soft(run.deps.runner, `${context}: Kimi starts no provide…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2319:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/minimax: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-ITQlVE/repo-lyA3xO/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-1529a619-c7bd-4070-a090-e09e0b6dd0b8.txt",
++   "/tmp/opencode/storytime-red-ITQlVE/repo-lyA3xO/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2045:52
+    2043|     expect.soft(files.length, `${context}: the file scan has input.`).…
+    2044|     expect.soft(files.filter((file) => /^(raw|reviews)\//.test(path.re…
+    2045|       `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                    ^
+    2046|     // Scan every output file. Only the deliberate external input lies…
+    2047|     await assertNoSyntheticValues([run.outputRoot], values);
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2319:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/kimi: the answer is refused.: expected undefined to be an instance of Error
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2008:66
+    2006|     const run = await providerRun(provider, raw);
+    2007|     const context = `${label}/${provider}`;
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+       |                                                                  ^
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2319:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/kimi: the error names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2319:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/kimi: no result log is written.: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "w01-readalong-p01: PASS — The subject is visible.",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2015:68
+    2013|       expect.soft(text, `${context}: errors and logs contain no matche…
+    2014|     }
+    2015|     expect.soft(run.logs, `${context}: no result log is written.`).toE…
+       |                                                                    ^
+    2016|     const beforeCalls = run.entries.filter((entry) => entry.event === …
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2319:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/kimi: no success entry.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "09690ad5-19b5-4f8d-abff-27409118d74f",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2319:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/kimi: no after-call is appended.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "09690ad5-19b5-4f8d-abff-27409118d74f",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2036:73
+    2034|     } else {
+    2035|       expect.soft(run.deps.runner, `${context}: Kimi starts no provide…
+    2036|       expect.soft(afterCalls, `${context}: no after-call is appended.`…
+       |                                                                         ^
+    2037|       expect.soft(await readFile(path.join(run.outputRoot, 'cost-ledge…
+    2038|         `${context}: the begin ledger stays byte-identical.`).toEqual(…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2319:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/kimi: the begin ledger stays byte-identical.: expected Buffer[ 123, 34, 111, 112, 101, …(863) ] to deeply equal Buffer[ 123, 34, 111, 112, 101, …(366) ]
+
+- Expected
++ Received
+
+@@ -477,8 +477,505 @@
+      48,
+      90,
+      34,
+      125,
+      10,
++     123,
++     34,
++     111,
++     112,
++     101,
++     114,
++     97,
++     116,
++     105,
++     111,
++     110,
++     34,
++     58,
++     34,
++     107,
++     105,
++     109,
++     105,
++     45,
++     110,
++     97,
++     116,
++     105,
++     118,
++     101,
++     45,
++     105,
++     109,
++     97,
++     103,
++     101,
++     34,
++     44,
++     34,
++     112,
++     114,
++     111,
++     118,
++     105,
++     100,
++     101,
++     114,
++     34,
++     58,
++     34,
++     107,
++     105,
++     109,
++     105,
++     34,
++     44,
++     34,
++     109,
++     111,
++     100,
++     101,
++     108,
++     34,
++     58,
++     34,
++     107,
++     105,
++     109,
++     105,
++     45,
++     107,
++     51,
++     46,
++     49,
++     45,
++     112,
++     114,
++     111,
++     34,
++     44,
++     34,
++     109,
++     111,
++     100,
++     101,
++     108,
++     83,
++     111,
++     117,
++     114,
++     99,
++     101,
++     34,
++     58,
++     34,
++     100,
++     101,
++     99,
++     108,
++     97,
++     114,
++     101,
++     100,
++     34,
++     44,
++     34,
++     112,
++     117,
++     114,
++     112,
++     111,
++     115,
++     101,
++     34,
++     58,
++     34,
++     75,
++     105,
++     109,
++     105,
++     32,
++     112,
++     114,
++     101,
++     45,
++     99,
++     104,
++     101,
++     99,
++     107,
++     32,
++     119,
++     48,
++     49,
++     45,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     45,
++     112,
++     48,
++     49,
++     32,
++     118,
++     49,
++     34,
++     44,
++     34,
++     106,
++     111,
++     98,
++     73,
++     100,
++     34,
++     58,
++     34,
++     119,
++     48,
++     49,
++     45,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     45,
++     112,
++     48,
++     49,
++     34,
++     44,
++     34,
++     118,
++     101,
++     114,
++     115,
++     105,
++     111,
++     110,
++     34,
++     58,
++     49,
++     44,
++     34,
++     112,
++     114,
++     105,
++     99,
++     101,
++     34,
++     58,
++     123,
++     34,
++     98,
++     97,
++     115,
++     105,
++     115,
++     34,
++     58,
++     34,
++     69,
++     120,
++     105,
++     115,
++     116,
++     105,
++     110,
++     103,
++     32,
++     79,
++     112,
++     101,
++     110,
++     67,
++     111,
++     100,
++     101,
++     32,
++     112,
++     108,
++     97,
++     110,
++     46,
++     34,
++     44,
++     34,
++     109,
++     97,
++     114,
++     103,
++     105,
++     110,
++     97,
++     108,
++     67,
++     97,
++     115,
++     104,
++     85,
++     115,
++     100,
++     34,
++     58,
++     48,
++     44,
++     34,
++     110,
++     111,
++     116,
++     101,
++     34,
++     58,
++     34,
++     84,
++     104,
++     101,
++     32,
++     112,
++     114,
++     111,
++     118,
++     105,
++     100,
++     101,
++     114,
++     32,
++     67,
++     76,
++     73,
++     32,
++     100,
++     111,
++     101,
++     115,
++     32,
++     110,
++     111,
++     116,
++     32,
++     114,
++     101,
++     112,
++     111,
++     114,
++     116,
++     32,
++     97,
++     32,
++     112,
++     101,
++     114,
++     45,
++     99,
++     97,
++     108,
++     108,
++     32,
++     99,
++     97,
++     115,
++     104,
++     32,
++     112,
++     114,
++     105,
++     99,
++     101,
++     46,
++     34,
++     125,
++     44,
++     34,
++     102,
++     105,
++     108,
++     101,
++     34,
++     58,
++     34,
++     119,
++     48,
++     49,
++     47,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     47,
++     108,
++     50,
++     45,
++     119,
++     48,
++     49,
++     45,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     45,
++     112,
++     97,
++     116,
++     45,
++     118,
++     49,
++     46,
++     112,
++     110,
++     103,
++     34,
++     44,
++     34,
++     101,
++     118,
++     101,
++     110,
++     116,
++     34,
++     58,
++     34,
++     97,
++     102,
++     116,
++     101,
++     114,
++     45,
++     99,
++     97,
++     108,
++     108,
++     34,
++     44,
++     34,
++     99,
++     97,
++     108,
++     108,
++     73,
++     100,
++     34,
++     58,
++     34,
++     48,
++     57,
++     54,
++     57,
++     48,
++     97,
++     100,
++     53,
++     45,
++     49,
++     57,
++     98,
++     53,
++     45,
++     52,
++     102,
++     56,
++     100,
++     45,
++     97,
++     98,
++     102,
++     102,
++     45,
++     50,
++     55,
++     52,
++     48,
++     57,
++     49,
++     49,
++     56,
++     100,
++     55,
++     52,
++     102,
++     34,
++     44,
++     34,
++     114,
++     101,
++     99,
++     111,
++     114,
++     100,
++     101,
++     100,
++     65,
++     116,
++     34,
++     58,
++     34,
++     50,
++     48,
++     50,
++     54,
++     45,
++     49,
++     48,
++     45,
++     50,
++     53,
++     84,
++     49,
++     50,
++     58,
++     48,
++     48,
++     58,
++     48,
++     48,
++     46,
++     48,
++     48,
++     48,
++     90,
++     34,
++     44,
++     34,
++     115,
++     116,
++     97,
++     116,
++     117,
++     115,
++     34,
++     58,
++     34,
++     115,
++     117,
++     99,
++     99,
++     101,
++     115,
++     115,
++     34,
++     125,
++     10,
+    ],
+    "type": "Buffer",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2038:63
+    2036|       expect.soft(afterCalls, `${context}: no after-call is appended.`…
+    2037|       expect.soft(await readFile(path.join(run.outputRoot, 'cost-ledge…
+    2038|         `${context}: the begin ledger stays byte-identical.`).toEqual(…
+       |                                                               ^
+    2039|       expect.soft(await fileSnapshot(run.outputRoot), `${context}: eve…
+    2040|       expect.soft(await readFile(run.input!), `${context}: the source …
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2319:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/kimi: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "3393d84a76c621345fd4990c1fba30516664bc00f965ebe7d90a14a215a9b13b",
++     "5f292925ced8d096ee3c51ec033c750a7b58ccff9c83bf494d50d0f43ebe854d",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-09690ad5-19b5-4f8d-abff-27409118d74f.txt",
++     "cd5412c67fd12679c18b4ce91c566e382dd4125cf1eca84d1a27ea7c6b6c3b2e",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "4bef1c43dbfc36b13b1b5b61836a01ef823f2353864f9294630b6a3021b4cf83",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2039:105
+    2037|       expect.soft(await readFile(path.join(run.outputRoot, 'cost-ledge…
+    2038|         `${context}: the begin ledger stays byte-identical.`).toEqual(…
+    2039|       expect.soft(await fileSnapshot(run.outputRoot), `${context}: eve…
+       |                                                                                                         ^
+    2040|       expect.soft(await readFile(run.input!), `${context}: the source …
+    2041|     }
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2319:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/kimi: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-ITQlVE/repo-DSbpHc/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-09690ad5-19b5-4f8d-abff-27409118d74f.txt",
++   "/tmp/opencode/storytime-red-ITQlVE/repo-DSbpHc/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2045:52
+    2043|     expect.soft(files.length, `${context}: the file scan has input.`).…
+    2044|     expect.soft(files.filter((file) => /^(raw|reviews)\//.test(path.re…
+    2045|       `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                    ^
+    2046|     // Scan every output file. Only the deliberate external input lies…
+    2047|     await assertNoSyntheticValues([run.outputRoot], values);
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2319:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/minimax: the answer is refused.: expected undefined to be an instance of Error
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2008:66
+    2006|     const run = await providerRun(provider, raw);
+    2007|     const context = `${label}/${provider}`;
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+       |                                                                  ^
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2327:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/minimax: the error names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2327:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/minimax: no result log is written.: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "w01-readalong-p01: PASS — The subject is visible.",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2015:68
+    2013|       expect.soft(text, `${context}: errors and logs contain no matche…
+    2014|     }
+    2015|     expect.soft(run.logs, `${context}: no result log is written.`).toE…
+       |                                                                    ^
+    2016|     const beforeCalls = run.entries.filter((entry) => entry.event === …
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2327:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "345540dc-eea6-4ba0-baaf-18dc6e5af611",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2327:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "345540dc-eea6-4ba0-baaf-18dc6e5af611",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2327:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2327:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/minimax: only the ledger can change.: expected [ [ 'jobs.json', …(1) ], …(3) ] to deeply equal [ [ 'jobs.json', …(1) ], [ …(2) ] ]
+
+- Expected
++ Received
+
+@@ -2,9 +2,17 @@
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
+    ],
+    [
++     "raw/w01-readalong-p01-v1-minimax-345540dc-eea6-4ba0-baaf-18dc6e5af611.txt",
++     "711f1f64a4f887760b0bf9f681876cf2c630a4e517bf90e941c27e4cf05061ca",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-minimax.json",
++     "7e72e9ee551204431706b52bf75a44953abd2cf77575c744ad3d09f00eef2e39",
++   ],
++   [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+  ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2033:74
+    2031|       const beforeFiles = run.before.filter(([file]) => file !== 'cost…
+    2032|       const afterFiles = (await fileSnapshot(run.outputRoot)).filter((…
+    2033|       expect.soft(afterFiles, `${context}: only the ledger can change.…
+       |                                                                          ^
+    2034|     } else {
+    2035|       expect.soft(run.deps.runner, `${context}: Kimi starts no provide…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2327:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/minimax: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-ITQlVE/repo-sUBCUo/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-345540dc-eea6-4ba0-baaf-18dc6e5af611.txt",
++   "/tmp/opencode/storytime-red-ITQlVE/repo-sUBCUo/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2045:52
+    2043|     expect.soft(files.length, `${context}: the file scan has input.`).…
+    2044|     expect.soft(files.filter((file) => /^(raw|reviews)\//.test(path.re…
+    2045|       `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                    ^
+    2046|     // Scan every output file. Only the deliberate external input lies…
+    2047|     await assertNoSyntheticValues([run.outputRoot], values);
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2327:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/kimi: the answer is refused.: expected undefined to be an instance of Error
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2008:66
+    2006|     const run = await providerRun(provider, raw);
+    2007|     const context = `${label}/${provider}`;
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+       |                                                                  ^
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2327:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/kimi: the error names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2327:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/kimi: no result log is written.: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "w01-readalong-p01: PASS — The subject is visible.",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2015:68
+    2013|       expect.soft(text, `${context}: errors and logs contain no matche…
+    2014|     }
+    2015|     expect.soft(run.logs, `${context}: no result log is written.`).toE…
+       |                                                                    ^
+    2016|     const beforeCalls = run.entries.filter((entry) => entry.event === …
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2327:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/kimi: no success entry.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "ef7809a0-81a7-4a58-9a71-a3cf4a86d2e9",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2327:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/kimi: no after-call is appended.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "ef7809a0-81a7-4a58-9a71-a3cf4a86d2e9",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2036:73
+    2034|     } else {
+    2035|       expect.soft(run.deps.runner, `${context}: Kimi starts no provide…
+    2036|       expect.soft(afterCalls, `${context}: no after-call is appended.`…
+       |                                                                         ^
+    2037|       expect.soft(await readFile(path.join(run.outputRoot, 'cost-ledge…
+    2038|         `${context}: the begin ledger stays byte-identical.`).toEqual(…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2327:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/kimi: the begin ledger stays byte-identical.: expected Buffer[ 123, 34, 111, 112, 101, …(863) ] to deeply equal Buffer[ 123, 34, 111, 112, 101, …(366) ]
+
+- Expected
++ Received
+
+@@ -477,8 +477,505 @@
+      48,
+      90,
+      34,
+      125,
+      10,
++     123,
++     34,
++     111,
++     112,
++     101,
++     114,
++     97,
++     116,
++     105,
++     111,
++     110,
++     34,
++     58,
++     34,
++     107,
++     105,
++     109,
++     105,
++     45,
++     110,
++     97,
++     116,
++     105,
++     118,
++     101,
++     45,
++     105,
++     109,
++     97,
++     103,
++     101,
++     34,
++     44,
++     34,
++     112,
++     114,
++     111,
++     118,
++     105,
++     100,
++     101,
++     114,
++     34,
++     58,
++     34,
++     107,
++     105,
++     109,
++     105,
++     34,
++     44,
++     34,
++     109,
++     111,
++     100,
++     101,
++     108,
++     34,
++     58,
++     34,
++     107,
++     105,
++     109,
++     105,
++     45,
++     107,
++     51,
++     46,
++     49,
++     45,
++     112,
++     114,
++     111,
++     34,
++     44,
++     34,
++     109,
++     111,
++     100,
++     101,
++     108,
++     83,
++     111,
++     117,
++     114,
++     99,
++     101,
++     34,
++     58,
++     34,
++     100,
++     101,
++     99,
++     108,
++     97,
++     114,
++     101,
++     100,
++     34,
++     44,
++     34,
++     112,
++     117,
++     114,
++     112,
++     111,
++     115,
++     101,
++     34,
++     58,
++     34,
++     75,
++     105,
++     109,
++     105,
++     32,
++     112,
++     114,
++     101,
++     45,
++     99,
++     104,
++     101,
++     99,
++     107,
++     32,
++     119,
++     48,
++     49,
++     45,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     45,
++     112,
++     48,
++     49,
++     32,
++     118,
++     49,
++     34,
++     44,
++     34,
++     106,
++     111,
++     98,
++     73,
++     100,
++     34,
++     58,
++     34,
++     119,
++     48,
++     49,
++     45,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     45,
++     112,
++     48,
++     49,
++     34,
++     44,
++     34,
++     118,
++     101,
++     114,
++     115,
++     105,
++     111,
++     110,
++     34,
++     58,
++     49,
++     44,
++     34,
++     112,
++     114,
++     105,
++     99,
++     101,
++     34,
++     58,
++     123,
++     34,
++     98,
++     97,
++     115,
++     105,
++     115,
++     34,
++     58,
++     34,
++     69,
++     120,
++     105,
++     115,
++     116,
++     105,
++     110,
++     103,
++     32,
++     79,
++     112,
++     101,
++     110,
++     67,
++     111,
++     100,
++     101,
++     32,
++     112,
++     108,
++     97,
++     110,
++     46,
++     34,
++     44,
++     34,
++     109,
++     97,
++     114,
++     103,
++     105,
++     110,
++     97,
++     108,
++     67,
++     97,
++     115,
++     104,
++     85,
++     115,
++     100,
++     34,
++     58,
++     48,
++     44,
++     34,
++     110,
++     111,
++     116,
++     101,
++     34,
++     58,
++     34,
++     84,
++     104,
++     101,
++     32,
++     112,
++     114,
++     111,
++     118,
++     105,
++     100,
++     101,
++     114,
++     32,
++     67,
++     76,
++     73,
++     32,
++     100,
++     111,
++     101,
++     115,
++     32,
++     110,
++     111,
++     116,
++     32,
++     114,
++     101,
++     112,
++     111,
++     114,
++     116,
++     32,
++     97,
++     32,
++     112,
++     101,
++     114,
++     45,
++     99,
++     97,
++     108,
++     108,
++     32,
++     99,
++     97,
++     115,
++     104,
++     32,
++     112,
++     114,
++     105,
++     99,
++     101,
++     46,
++     34,
++     125,
++     44,
++     34,
++     102,
++     105,
++     108,
++     101,
++     34,
++     58,
++     34,
++     119,
++     48,
++     49,
++     47,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     47,
++     108,
++     50,
++     45,
++     119,
++     48,
++     49,
++     45,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     45,
++     112,
++     97,
++     116,
++     45,
++     118,
++     49,
++     46,
++     112,
++     110,
++     103,
++     34,
++     44,
++     34,
++     101,
++     118,
++     101,
++     110,
++     116,
++     34,
++     58,
++     34,
++     97,
++     102,
++     116,
++     101,
++     114,
++     45,
++     99,
++     97,
++     108,
++     108,
++     34,
++     44,
++     34,
++     99,
++     97,
++     108,
++     108,
++     73,
++     100,
++     34,
++     58,
++     34,
++     101,
++     102,
++     55,
++     56,
++     48,
++     57,
++     97,
++     48,
++     45,
++     56,
++     49,
++     97,
++     55,
++     45,
++     52,
++     97,
++     53,
++     56,
++     45,
++     57,
++     97,
++     55,
++     49,
++     45,
++     97,
++     51,
++     99,
++     102,
++     52,
++     97,
++     56,
++     54,
++     100,
++     50,
++     101,
++     57,
++     34,
++     44,
++     34,
++     114,
++     101,
++     99,
++     111,
++     114,
++     100,
++     101,
++     100,
++     65,
++     116,
++     34,
++     58,
++     34,
++     50,
++     48,
++     50,
++     54,
++     45,
++     49,
++     48,
++     45,
++     50,
++     53,
++     84,
++     49,
++     50,
++     58,
++     48,
++     48,
++     58,
++     48,
++     48,
++     46,
++     48,
++     48,
++     48,
++     90,
++     34,
++     44,
++     34,
++     115,
++     116,
++     97,
++     116,
++     117,
++     115,
++     34,
++     58,
++     34,
++     115,
++     117,
++     99,
++     99,
++     101,
++     115,
++     115,
++     34,
++     125,
++     10,
+    ],
+    "type": "Buffer",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2038:63
+    2036|       expect.soft(afterCalls, `${context}: no after-call is appended.`…
+    2037|       expect.soft(await readFile(path.join(run.outputRoot, 'cost-ledge…
+    2038|         `${context}: the begin ledger stays byte-identical.`).toEqual(…
+       |                                                               ^
+    2039|       expect.soft(await fileSnapshot(run.outputRoot), `${context}: eve…
+    2040|       expect.soft(await readFile(run.input!), `${context}: the source …
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2327:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/kimi: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "cd2d60b1f3f7bd08c2c169e1080ed99a8f1d93f845ab20c0f50170937ecd4804",
++     "ca4934be124048bb4b8cd2521bc53a21362645bb19f9a04d71ed9d1e85bd89b6",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-ef7809a0-81a7-4a58-9a71-a3cf4a86d2e9.txt",
++     "711f1f64a4f887760b0bf9f681876cf2c630a4e517bf90e941c27e4cf05061ca",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "7b5f8c84bf1719e77ea972f20b93c78afbb0f29960d50f8c827e282f9c20a8fe",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2039:105
+    2037|       expect.soft(await readFile(path.join(run.outputRoot, 'cost-ledge…
+    2038|         `${context}: the begin ledger stays byte-identical.`).toEqual(…
+    2039|       expect.soft(await fileSnapshot(run.outputRoot), `${context}: eve…
+       |                                                                                                         ^
+    2040|       expect.soft(await readFile(run.input!), `${context}: the source …
+    2041|     }
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2327:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[31/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/kimi: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-ITQlVE/repo-jC92ds/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-ef7809a0-81a7-4a58-9a71-a3cf4a86d2e9.txt",
++   "/tmp/opencode/storytime-red-ITQlVE/repo-jC92ds/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2045:52
+    2043|     expect.soft(files.length, `${context}: the file scan has input.`).…
+    2044|     expect.soft(files.filter((file) => /^(raw|reviews)\//.test(path.re…
+    2045|       `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                    ^
+    2046|     // Scan every output file. Only the deliberate external input lies…
+    2047|     await assertNoSyntheticValues([run.outputRoot], values);
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2327:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[32/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/minimax: the answer is refused.: expected undefined to be an instance of Error
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2008:66
+    2006|     const run = await providerRun(provider, raw);
+    2007|     const context = `${label}/${provider}`;
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+       |                                                                  ^
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2334:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[33/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/minimax: the error names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2334:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[34/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/minimax: no result log is written.: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "w01-readalong-p01: PASS — The subject is visible.",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2015:68
+    2013|       expect.soft(text, `${context}: errors and logs contain no matche…
+    2014|     }
+    2015|     expect.soft(run.logs, `${context}: no result log is written.`).toE…
+       |                                                                    ^
+    2016|     const beforeCalls = run.entries.filter((entry) => entry.event === …
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2334:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[35/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "e4d04a4c-9f4e-4e68-98e9-575333cd543f",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2334:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[36/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "e4d04a4c-9f4e-4e68-98e9-575333cd543f",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2334:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[37/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2334:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[38/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/minimax: only the ledger can change.: expected [ [ 'jobs.json', …(1) ], …(3) ] to deeply equal [ [ 'jobs.json', …(1) ], [ …(2) ] ]
+
+- Expected
++ Received
+
+@@ -2,9 +2,17 @@
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
+    ],
+    [
++     "raw/w01-readalong-p01-v1-minimax-e4d04a4c-9f4e-4e68-98e9-575333cd543f.txt",
++     "5a1747f90d76d991e8ed8381bfcf1842b2155a2d1155fe40f2c76e0fd222458a",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-minimax.json",
++     "35d9108cd0b27609dd1375300219826e9c644390d36a8521669f3f19a95fbb91",
++   ],
++   [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+  ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2033:74
+    2031|       const beforeFiles = run.before.filter(([file]) => file !== 'cost…
+    2032|       const afterFiles = (await fileSnapshot(run.outputRoot)).filter((…
+    2033|       expect.soft(afterFiles, `${context}: only the ledger can change.…
+       |                                                                          ^
+    2034|     } else {
+    2035|       expect.soft(run.deps.runner, `${context}: Kimi starts no provide…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2334:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[39/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/minimax: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-ITQlVE/repo-JsYaOE/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-e4d04a4c-9f4e-4e68-98e9-575333cd543f.txt",
++   "/tmp/opencode/storytime-red-ITQlVE/repo-JsYaOE/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2045:52
+    2043|     expect.soft(files.length, `${context}: the file scan has input.`).…
+    2044|     expect.soft(files.filter((file) => /^(raw|reviews)\//.test(path.re…
+    2045|       `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                    ^
+    2046|     // Scan every output file. Only the deliberate external input lies…
+    2047|     await assertNoSyntheticValues([run.outputRoot], values);
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2334:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[40/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/kimi: the answer is refused.: expected undefined to be an instance of Error
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2008:66
+    2006|     const run = await providerRun(provider, raw);
+    2007|     const context = `${label}/${provider}`;
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+       |                                                                  ^
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2334:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[41/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/kimi: the error names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2334:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[42/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/kimi: no result log is written.: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "w01-readalong-p01: PASS — The subject is visible.",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2015:68
+    2013|       expect.soft(text, `${context}: errors and logs contain no matche…
+    2014|     }
+    2015|     expect.soft(run.logs, `${context}: no result log is written.`).toE…
+       |                                                                    ^
+    2016|     const beforeCalls = run.entries.filter((entry) => entry.event === …
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2334:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[43/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/kimi: no success entry.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "074ca1ed-72c3-4fdb-950e-56852560fc3c",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2334:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[44/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/kimi: no after-call is appended.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "074ca1ed-72c3-4fdb-950e-56852560fc3c",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2036:73
+    2034|     } else {
+    2035|       expect.soft(run.deps.runner, `${context}: Kimi starts no provide…
+    2036|       expect.soft(afterCalls, `${context}: no after-call is appended.`…
+       |                                                                         ^
+    2037|       expect.soft(await readFile(path.join(run.outputRoot, 'cost-ledge…
+    2038|         `${context}: the begin ledger stays byte-identical.`).toEqual(…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2334:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[45/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/kimi: the begin ledger stays byte-identical.: expected Buffer[ 123, 34, 111, 112, 101, …(863) ] to deeply equal Buffer[ 123, 34, 111, 112, 101, …(366) ]
+
+- Expected
++ Received
+
+@@ -477,8 +477,505 @@
+      48,
+      90,
+      34,
+      125,
+      10,
++     123,
++     34,
++     111,
++     112,
++     101,
++     114,
++     97,
++     116,
++     105,
++     111,
++     110,
++     34,
++     58,
++     34,
++     107,
++     105,
++     109,
++     105,
++     45,
++     110,
++     97,
++     116,
++     105,
++     118,
++     101,
++     45,
++     105,
++     109,
++     97,
++     103,
++     101,
++     34,
++     44,
++     34,
++     112,
++     114,
++     111,
++     118,
++     105,
++     100,
++     101,
++     114,
++     34,
++     58,
++     34,
++     107,
++     105,
++     109,
++     105,
++     34,
++     44,
++     34,
++     109,
++     111,
++     100,
++     101,
++     108,
++     34,
++     58,
++     34,
++     107,
++     105,
++     109,
++     105,
++     45,
++     107,
++     51,
++     46,
++     49,
++     45,
++     112,
++     114,
++     111,
++     34,
++     44,
++     34,
++     109,
++     111,
++     100,
++     101,
++     108,
++     83,
++     111,
++     117,
++     114,
++     99,
++     101,
++     34,
++     58,
++     34,
++     100,
++     101,
++     99,
++     108,
++     97,
++     114,
++     101,
++     100,
++     34,
++     44,
++     34,
++     112,
++     117,
++     114,
++     112,
++     111,
++     115,
++     101,
++     34,
++     58,
++     34,
++     75,
++     105,
++     109,
++     105,
++     32,
++     112,
++     114,
++     101,
++     45,
++     99,
++     104,
++     101,
++     99,
++     107,
++     32,
++     119,
++     48,
++     49,
++     45,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     45,
++     112,
++     48,
++     49,
++     32,
++     118,
++     49,
++     34,
++     44,
++     34,
++     106,
++     111,
++     98,
++     73,
++     100,
++     34,
++     58,
++     34,
++     119,
++     48,
++     49,
++     45,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     45,
++     112,
++     48,
++     49,
++     34,
++     44,
++     34,
++     118,
++     101,
++     114,
++     115,
++     105,
++     111,
++     110,
++     34,
++     58,
++     49,
++     44,
++     34,
++     112,
++     114,
++     105,
++     99,
++     101,
++     34,
++     58,
++     123,
++     34,
++     98,
++     97,
++     115,
++     105,
++     115,
++     34,
++     58,
++     34,
++     69,
++     120,
++     105,
++     115,
++     116,
++     105,
++     110,
++     103,
++     32,
++     79,
++     112,
++     101,
++     110,
++     67,
++     111,
++     100,
++     101,
++     32,
++     112,
++     108,
++     97,
++     110,
++     46,
++     34,
++     44,
++     34,
++     109,
++     97,
++     114,
++     103,
++     105,
++     110,
++     97,
++     108,
++     67,
++     97,
++     115,
++     104,
++     85,
++     115,
++     100,
++     34,
++     58,
++     48,
++     44,
++     34,
++     110,
++     111,
++     116,
++     101,
++     34,
++     58,
++     34,
++     84,
++     104,
++     101,
++     32,
++     112,
++     114,
++     111,
++     118,
++     105,
++     100,
++     101,
++     114,
++     32,
++     67,
++     76,
++     73,
++     32,
++     100,
++     111,
++     101,
++     115,
++     32,
++     110,
++     111,
++     116,
++     32,
++     114,
++     101,
++     112,
++     111,
++     114,
++     116,
++     32,
++     97,
++     32,
++     112,
++     101,
++     114,
++     45,
++     99,
++     97,
++     108,
++     108,
++     32,
++     99,
++     97,
++     115,
++     104,
++     32,
++     112,
++     114,
++     105,
++     99,
++     101,
++     46,
++     34,
++     125,
++     44,
++     34,
++     102,
++     105,
++     108,
++     101,
++     34,
++     58,
++     34,
++     119,
++     48,
++     49,
++     47,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     47,
++     108,
++     50,
++     45,
++     119,
++     48,
++     49,
++     45,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     45,
++     112,
++     97,
++     116,
++     45,
++     118,
++     49,
++     46,
++     112,
++     110,
++     103,
++     34,
++     44,
++     34,
++     101,
++     118,
++     101,
++     110,
++     116,
++     34,
++     58,
++     34,
++     97,
++     102,
++     116,
++     101,
++     114,
++     45,
++     99,
++     97,
++     108,
++     108,
++     34,
++     44,
++     34,
++     99,
++     97,
++     108,
++     108,
++     73,
++     100,
++     34,
++     58,
++     34,
++     48,
++     55,
++     52,
++     99,
++     97,
++     49,
++     101,
++     100,
++     45,
++     55,
++     50,
++     99,
++     51,
++     45,
++     52,
++     102,
++     100,
++     98,
++     45,
++     57,
++     53,
++     48,
++     101,
++     45,
++     53,
++     54,
++     56,
++     53,
++     50,
++     53,
++     54,
++     48,
++     102,
++     99,
++     51,
++     99,
++     34,
++     44,
++     34,
++     114,
++     101,
++     99,
++     111,
++     114,
++     100,
++     101,
++     100,
++     65,
++     116,
++     34,
++     58,
++     34,
++     50,
++     48,
++     50,
++     54,
++     45,
++     49,
++     48,
++     45,
++     50,
++     53,
++     84,
++     49,
++     50,
++     58,
++     48,
++     48,
++     58,
++     48,
++     48,
++     46,
++     48,
++     48,
++     48,
++     90,
++     34,
++     44,
++     34,
++     115,
++     116,
++     97,
++     116,
++     117,
++     115,
++     34,
++     58,
++     34,
++     115,
++     117,
++     99,
++     99,
++     101,
++     115,
++     115,
++     34,
++     125,
++     10,
+    ],
+    "type": "Buffer",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2038:63
+    2036|       expect.soft(afterCalls, `${context}: no after-call is appended.`…
+    2037|       expect.soft(await readFile(path.join(run.outputRoot, 'cost-ledge…
+    2038|         `${context}: the begin ledger stays byte-identical.`).toEqual(…
+       |                                                               ^
+    2039|       expect.soft(await fileSnapshot(run.outputRoot), `${context}: eve…
+    2040|       expect.soft(await readFile(run.input!), `${context}: the source …
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2334:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[46/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/kimi: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "c42ae22a48757011c2eda0d2a17c4ea5406c148bd7c1fe5c7f2814fa37d6461c",
++     "07a24274785681d6e1eb4b2132fe66b13528662c28653a859b1fc8d547e949c4",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-074ca1ed-72c3-4fdb-950e-56852560fc3c.txt",
++     "5a1747f90d76d991e8ed8381bfcf1842b2155a2d1155fe40f2c76e0fd222458a",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "01e9b823dc0c4bc6215427d0fa32d6182a2aea451e1d1e1b6890b26ee30f8848",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2039:105
+    2037|       expect.soft(await readFile(path.join(run.outputRoot, 'cost-ledge…
+    2038|         `${context}: the begin ledger stays byte-identical.`).toEqual(…
+    2039|       expect.soft(await fileSnapshot(run.outputRoot), `${context}: eve…
+       |                                                                                                         ^
+    2040|       expect.soft(await readFile(run.input!), `${context}: the source …
+    2041|     }
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2334:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[47/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/kimi: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-ITQlVE/repo-Q3Rzcm/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-074ca1ed-72c3-4fdb-950e-56852560fc3c.txt",
++   "/tmp/opencode/storytime-red-ITQlVE/repo-Q3Rzcm/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2045:52
+    2043|     expect.soft(files.length, `${context}: the file scan has input.`).…
+    2044|     expect.soft(files.filter((file) => /^(raw|reviews)\//.test(path.re…
+    2045|       `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                    ^
+    2046|     // Scan every output file. Only the deliberate external input lies…
+    2047|     await assertNoSyntheticValues([run.outputRoot], values);
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2334:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[48/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/minimax: the answer is refused.: expected undefined to be an instance of Error
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2008:66
+    2006|     const run = await providerRun(provider, raw);
+    2007|     const context = `${label}/${provider}`;
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+       |                                                                  ^
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2343:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[49/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/minimax: the error names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2343:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[50/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/minimax: no result log is written.: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "w01-readalong-p01: PASS — The subject is visible.",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2015:68
+    2013|       expect.soft(text, `${context}: errors and logs contain no matche…
+    2014|     }
+    2015|     expect.soft(run.logs, `${context}: no result log is written.`).toE…
+       |                                                                    ^
+    2016|     const beforeCalls = run.entries.filter((entry) => entry.event === …
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2343:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[51/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "1f7ca55b-9d2f-4b31-99f1-43a9390c581c",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2343:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[52/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "1f7ca55b-9d2f-4b31-99f1-43a9390c581c",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2343:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[53/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2343:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[54/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/minimax: only the ledger can change.: expected [ [ 'jobs.json', …(1) ], …(3) ] to deeply equal [ [ 'jobs.json', …(1) ], [ …(2) ] ]
+
+- Expected
++ Received
+
+@@ -2,9 +2,17 @@
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
+    ],
+    [
++     "raw/w01-readalong-p01-v1-minimax-1f7ca55b-9d2f-4b31-99f1-43a9390c581c.txt",
++     "91635ac5b14d5ef21c654eab5ac507abc2a319caa1c1f0f18be8801898594318",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-minimax.json",
++     "a7715a2cf70bc6b5ba863eceb9fd4a30d45367c8335c8aef89b78f33d65d37ed",
++   ],
++   [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+  ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2033:74
+    2031|       const beforeFiles = run.before.filter(([file]) => file !== 'cost…
+    2032|       const afterFiles = (await fileSnapshot(run.outputRoot)).filter((…
+    2033|       expect.soft(afterFiles, `${context}: only the ledger can change.…
+       |                                                                          ^
+    2034|     } else {
+    2035|       expect.soft(run.deps.runner, `${context}: Kimi starts no provide…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2343:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[55/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/minimax: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-ITQlVE/repo-FwO7xj/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-1f7ca55b-9d2f-4b31-99f1-43a9390c581c.txt",
++   "/tmp/opencode/storytime-red-ITQlVE/repo-FwO7xj/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2045:52
+    2043|     expect.soft(files.length, `${context}: the file scan has input.`).…
+    2044|     expect.soft(files.filter((file) => /^(raw|reviews)\//.test(path.re…
+    2045|       `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                    ^
+    2046|     // Scan every output file. Only the deliberate external input lies…
+    2047|     await assertNoSyntheticValues([run.outputRoot], values);
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2343:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[56/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/kimi: the answer is refused.: expected undefined to be an instance of Error
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2008:66
+    2006|     const run = await providerRun(provider, raw);
+    2007|     const context = `${label}/${provider}`;
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+       |                                                                  ^
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2343:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[57/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/kimi: the error names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2343:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[58/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/kimi: no result log is written.: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "w01-readalong-p01: PASS — The subject is visible.",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2015:68
+    2013|       expect.soft(text, `${context}: errors and logs contain no matche…
+    2014|     }
+    2015|     expect.soft(run.logs, `${context}: no result log is written.`).toE…
+       |                                                                    ^
+    2016|     const beforeCalls = run.entries.filter((entry) => entry.event === …
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2343:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[59/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/kimi: no success entry.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "1804c93b-1492-4d58-8ae2-6efd2f53cb9a",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2343:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[60/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/kimi: no after-call is appended.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "1804c93b-1492-4d58-8ae2-6efd2f53cb9a",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2036:73
+    2034|     } else {
+    2035|       expect.soft(run.deps.runner, `${context}: Kimi starts no provide…
+    2036|       expect.soft(afterCalls, `${context}: no after-call is appended.`…
+       |                                                                         ^
+    2037|       expect.soft(await readFile(path.join(run.outputRoot, 'cost-ledge…
+    2038|         `${context}: the begin ledger stays byte-identical.`).toEqual(…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2343:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[61/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/kimi: the begin ledger stays byte-identical.: expected Buffer[ 123, 34, 111, 112, 101, …(863) ] to deeply equal Buffer[ 123, 34, 111, 112, 101, …(366) ]
+
+- Expected
++ Received
+
+@@ -477,8 +477,505 @@
+      48,
+      90,
+      34,
+      125,
+      10,
++     123,
++     34,
++     111,
++     112,
++     101,
++     114,
++     97,
++     116,
++     105,
++     111,
++     110,
++     34,
++     58,
++     34,
++     107,
++     105,
++     109,
++     105,
++     45,
++     110,
++     97,
++     116,
++     105,
++     118,
++     101,
++     45,
++     105,
++     109,
++     97,
++     103,
++     101,
++     34,
++     44,
++     34,
++     112,
++     114,
++     111,
++     118,
++     105,
++     100,
++     101,
++     114,
++     34,
++     58,
++     34,
++     107,
++     105,
++     109,
++     105,
++     34,
++     44,
++     34,
++     109,
++     111,
++     100,
++     101,
++     108,
++     34,
++     58,
++     34,
++     107,
++     105,
++     109,
++     105,
++     45,
++     107,
++     51,
++     46,
++     49,
++     45,
++     112,
++     114,
++     111,
++     34,
++     44,
++     34,
++     109,
++     111,
++     100,
++     101,
++     108,
++     83,
++     111,
++     117,
++     114,
++     99,
++     101,
++     34,
++     58,
++     34,
++     100,
++     101,
++     99,
++     108,
++     97,
++     114,
++     101,
++     100,
++     34,
++     44,
++     34,
++     112,
++     117,
++     114,
++     112,
++     111,
++     115,
++     101,
++     34,
++     58,
++     34,
++     75,
++     105,
++     109,
++     105,
++     32,
++     112,
++     114,
++     101,
++     45,
++     99,
++     104,
++     101,
++     99,
++     107,
++     32,
++     119,
++     48,
++     49,
++     45,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     45,
++     112,
++     48,
++     49,
++     32,
++     118,
++     49,
++     34,
++     44,
++     34,
++     106,
++     111,
++     98,
++     73,
++     100,
++     34,
++     58,
++     34,
++     119,
++     48,
++     49,
++     45,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     45,
++     112,
++     48,
++     49,
++     34,
++     44,
++     34,
++     118,
++     101,
++     114,
++     115,
++     105,
++     111,
++     110,
++     34,
++     58,
++     49,
++     44,
++     34,
++     112,
++     114,
++     105,
++     99,
++     101,
++     34,
++     58,
++     123,
++     34,
++     98,
++     97,
++     115,
++     105,
++     115,
++     34,
++     58,
++     34,
++     69,
++     120,
++     105,
++     115,
++     116,
++     105,
++     110,
++     103,
++     32,
++     79,
++     112,
++     101,
++     110,
++     67,
++     111,
++     100,
++     101,
++     32,
++     112,
++     108,
++     97,
++     110,
++     46,
++     34,
++     44,
++     34,
++     109,
++     97,
++     114,
++     103,
++     105,
++     110,
++     97,
++     108,
++     67,
++     97,
++     115,
++     104,
++     85,
++     115,
++     100,
++     34,
++     58,
++     48,
++     44,
++     34,
++     110,
++     111,
++     116,
++     101,
++     34,
++     58,
++     34,
++     84,
++     104,
++     101,
++     32,
++     112,
++     114,
++     111,
++     118,
++     105,
++     100,
++     101,
++     114,
++     32,
++     67,
++     76,
++     73,
++     32,
++     100,
++     111,
++     101,
++     115,
++     32,
++     110,
++     111,
++     116,
++     32,
++     114,
++     101,
++     112,
++     111,
++     114,
++     116,
++     32,
++     97,
++     32,
++     112,
++     101,
++     114,
++     45,
++     99,
++     97,
++     108,
++     108,
++     32,
++     99,
++     97,
++     115,
++     104,
++     32,
++     112,
++     114,
++     105,
++     99,
++     101,
++     46,
++     34,
++     125,
++     44,
++     34,
++     102,
++     105,
++     108,
++     101,
++     34,
++     58,
++     34,
++     119,
++     48,
++     49,
++     47,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     47,
++     108,
++     50,
++     45,
++     119,
++     48,
++     49,
++     45,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     45,
++     112,
++     97,
++     116,
++     45,
++     118,
++     49,
++     46,
++     112,
++     110,
++     103,
++     34,
++     44,
++     34,
++     101,
++     118,
++     101,
++     110,
++     116,
++     34,
++     58,
++     34,
++     97,
++     102,
++     116,
++     101,
++     114,
++     45,
++     99,
++     97,
++     108,
++     108,
++     34,
++     44,
++     34,
++     99,
++     97,
++     108,
++     108,
++     73,
++     100,
++     34,
++     58,
++     34,
++     49,
++     56,
++     48,
++     52,
++     99,
++     57,
++     51,
++     98,
++     45,
++     49,
++     52,
++     57,
++     50,
++     45,
++     52,
++     100,
++     53,
++     56,
++     45,
++     56,
++     97,
++     101,
++     50,
++     45,
++     54,
++     101,
++     102,
++     100,
++     50,
++     102,
++     53,
++     51,
++     99,
++     98,
++     57,
++     97,
++     34,
++     44,
++     34,
++     114,
++     101,
++     99,
++     111,
++     114,
++     100,
++     101,
++     100,
++     65,
++     116,
++     34,
++     58,
++     34,
++     50,
++     48,
++     50,
++     54,
++     45,
++     49,
++     48,
++     45,
++     50,
++     53,
++     84,
++     49,
++     50,
++     58,
++     48,
++     48,
++     58,
++     48,
++     48,
++     46,
++     48,
++     48,
++     48,
++     90,
++     34,
++     44,
++     34,
++     115,
++     116,
++     97,
++     116,
++     117,
++     115,
++     34,
++     58,
++     34,
++     115,
++     117,
++     99,
++     99,
++     101,
++     115,
++     115,
++     34,
++     125,
++     10,
+    ],
+    "type": "Buffer",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2038:63
+    2036|       expect.soft(afterCalls, `${context}: no after-call is appended.`…
+    2037|       expect.soft(await readFile(path.join(run.outputRoot, 'cost-ledge…
+    2038|         `${context}: the begin ledger stays byte-identical.`).toEqual(…
+       |                                                               ^
+    2039|       expect.soft(await fileSnapshot(run.outputRoot), `${context}: eve…
+    2040|       expect.soft(await readFile(run.input!), `${context}: the source …
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2343:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[62/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/kimi: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "125854c16aa6cb58645508b5d830500b4e4cd23150802c9a84446cd73d76e068",
++     "bb3e1af73c0f79ae5c56cd8444d29af72a9e89c68427d2c81c6af9535f59de92",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-1804c93b-1492-4d58-8ae2-6efd2f53cb9a.txt",
++     "91635ac5b14d5ef21c654eab5ac507abc2a319caa1c1f0f18be8801898594318",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "8c6de48c749cfb4925b6743e40b20f53ef69407e659f232e8f5a6e00b9b7e8cf",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2039:105
+    2037|       expect.soft(await readFile(path.join(run.outputRoot, 'cost-ledge…
+    2038|         `${context}: the begin ledger stays byte-identical.`).toEqual(…
+    2039|       expect.soft(await fileSnapshot(run.outputRoot), `${context}: eve…
+       |                                                                                                         ^
+    2040|       expect.soft(await readFile(run.input!), `${context}: the source …
+    2041|     }
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2343:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[63/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/kimi: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-ITQlVE/repo-7AvU6i/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-1804c93b-1492-4d58-8ae2-6efd2f53cb9a.txt",
++   "/tmp/opencode/storytime-red-ITQlVE/repo-7AvU6i/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2045:52
+    2043|     expect.soft(files.length, `${context}: the file scan has input.`).…
+    2044|     expect.soft(files.filter((file) => /^(raw|reviews)\//.test(path.re…
+    2045|       `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                    ^
+    2046|     // Scan every output file. Only the deliberate external input lies…
+    2047|     await assertNoSyntheticValues([run.outputRoot], values);
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2343:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[64/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/minimax: the answer is refused.: expected undefined to be an instance of Error
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2008:66
+    2006|     const run = await providerRun(provider, raw);
+    2007|     const context = `${label}/${provider}`;
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+       |                                                                  ^
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2351:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[65/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/minimax: the error names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2351:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[66/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/minimax: no result log is written.: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "w01-readalong-p01: FAIL — The provider reported status 1000.",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2015:68
+    2013|       expect.soft(text, `${context}: errors and logs contain no matche…
+    2014|     }
+    2015|     expect.soft(run.logs, `${context}: no result log is written.`).toE…
+       |                                                                    ^
+    2016|     const beforeCalls = run.entries.filter((entry) => entry.event === …
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2351:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[67/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/minimax: no success entry.: expected [ { …(12) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "e72d0273-6e97-4eda-bbd6-c60438ea4656",
++     "event": "after-call",
++     "jobId": "w01-readalong-p01",
++     "model": "mmx-vision-default",
++     "modelSource": "declared",
++     "operation": "vision-describe",
++     "price": {
++       "basis": "Existing MiniMax shared quota.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "minimax",
++     "purpose": "MiniMax pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2351:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[68/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/minimax: the failure matches the call.: expected { operation: 'vision-describe', …(11) } to match object { status: 'failure', …(1) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "callId": "e72d0273-6e97-4eda-bbd6-c60438ea4656",
+-   "status": "failure",
++   "status": "success",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2024:79
+    2022|       expect.soft(run.entries, `${context}: exactly two ledger entries…
+    2023|       expect.soft(afterCalls, `${context}: exactly one failure after-c…
+    2024|       expect.soft(afterCalls[0], `${context}: the failure matches the …
+       |                                                                               ^
+    2025|         status: 'failure', callId: beforeCalls[0]?.callId,
+    2026|       });
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2351:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[69/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/minimax: the failure names the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2351:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[70/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/minimax: only the ledger can change.: expected [ [ 'jobs.json', …(1) ], …(3) ] to deeply equal [ [ 'jobs.json', …(1) ], [ …(2) ] ]
+
+- Expected
++ Received
+
+@@ -2,9 +2,17 @@
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
+    ],
+    [
++     "raw/w01-readalong-p01-v1-minimax-e72d0273-6e97-4eda-bbd6-c60438ea4656.txt",
++     "4e3ca47a774399b99b10a6fed53c450682a5b6adafee9315e3c275c69e0d3c00",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-minimax.json",
++     "a6b9f6e1e391b99ed77c9713d26f2e3c7496be8ecdcfa20b72f6b6c1d8cc3c30",
++   ],
++   [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+  ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2033:74
+    2031|       const beforeFiles = run.before.filter(([file]) => file !== 'cost…
+    2032|       const afterFiles = (await fileSnapshot(run.outputRoot)).filter((…
+    2033|       expect.soft(afterFiles, `${context}: only the ledger can change.…
+       |                                                                          ^
+    2034|     } else {
+    2035|       expect.soft(run.deps.runner, `${context}: Kimi starts no provide…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2351:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[71/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/minimax: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-ITQlVE/repo-5jaX01/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-minimax-e72d0273-6e97-4eda-bbd6-c60438ea4656.txt",
++   "/tmp/opencode/storytime-red-ITQlVE/repo-5jaX01/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2045:52
+    2043|     expect.soft(files.length, `${context}: the file scan has input.`).…
+    2044|     expect.soft(files.filter((file) => /^(raw|reviews)\//.test(path.re…
+    2045|       `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                    ^
+    2046|     // Scan every output file. Only the deliberate external input lies…
+    2047|     await assertNoSyntheticValues([run.outputRoot], values);
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2351:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[72/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/kimi: the answer is refused.: expected undefined to be an instance of Error
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2008:66
+    2006|     const run = await providerRun(provider, raw);
+    2007|     const context = `${label}/${provider}`;
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+       |                                                                  ^
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2351:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[73/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/kimi: the error names only the pattern.: expected '' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+""
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2351:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[74/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/kimi: no result log is written.: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "w01-readalong-p01: FAIL — The provider reported status 1000.",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2015:68
+    2013|       expect.soft(text, `${context}: errors and logs contain no matche…
+    2014|     }
+    2015|     expect.soft(run.logs, `${context}: no result log is written.`).toE…
+       |                                                                    ^
+    2016|     const beforeCalls = run.entries.filter((entry) => entry.event === …
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2351:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[75/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/kimi: no success entry.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "8c1897c2-1906-482e-a799-d6d1b2475a76",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2019:109
+    2017|     const afterCalls = run.entries.filter((entry) => entry.event === '…
+    2018|     expect.soft(beforeCalls, `${context}: exactly one before-call.`).t…
+    2019|     expect.soft(run.entries.filter((entry) => entry.status === 'succes…
+       |                                                                                                             ^
+    2020|     if (provider === 'minimax') {
+    2021|       expect.soft(run.deps.runner, `${context}: the fake runner runs o…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2351:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[76/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/kimi: no after-call is appended.: expected [ { …(13) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "callId": "8c1897c2-1906-482e-a799-d6d1b2475a76",
++     "event": "after-call",
++     "file": "w01/readalong/l2-w01-readalong-pat-v1.png",
++     "jobId": "w01-readalong-p01",
++     "model": "kimi-k3.1-pro",
++     "modelSource": "declared",
++     "operation": "kimi-native-image",
++     "price": {
++       "basis": "Existing OpenCode plan.",
++       "marginalCashUsd": 0,
++       "note": "The provider CLI does not report a per-call cash price.",
++     },
++     "provider": "kimi",
++     "purpose": "Kimi pre-check w01-readalong-p01 v1",
++     "recordedAt": "2026-10-25T12:00:00.000Z",
++     "status": "success",
++     "version": 1,
++   },
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2036:73
+    2034|     } else {
+    2035|       expect.soft(run.deps.runner, `${context}: Kimi starts no provide…
+    2036|       expect.soft(afterCalls, `${context}: no after-call is appended.`…
+       |                                                                         ^
+    2037|       expect.soft(await readFile(path.join(run.outputRoot, 'cost-ledge…
+    2038|         `${context}: the begin ledger stays byte-identical.`).toEqual(…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2351:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[77/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/kimi: the begin ledger stays byte-identical.: expected Buffer[ 123, 34, 111, 112, 101, …(863) ] to deeply equal Buffer[ 123, 34, 111, 112, 101, …(366) ]
+
+- Expected
++ Received
+
+@@ -477,8 +477,505 @@
+      48,
+      90,
+      34,
+      125,
+      10,
++     123,
++     34,
++     111,
++     112,
++     101,
++     114,
++     97,
++     116,
++     105,
++     111,
++     110,
++     34,
++     58,
++     34,
++     107,
++     105,
++     109,
++     105,
++     45,
++     110,
++     97,
++     116,
++     105,
++     118,
++     101,
++     45,
++     105,
++     109,
++     97,
++     103,
++     101,
++     34,
++     44,
++     34,
++     112,
++     114,
++     111,
++     118,
++     105,
++     100,
++     101,
++     114,
++     34,
++     58,
++     34,
++     107,
++     105,
++     109,
++     105,
++     34,
++     44,
++     34,
++     109,
++     111,
++     100,
++     101,
++     108,
++     34,
++     58,
++     34,
++     107,
++     105,
++     109,
++     105,
++     45,
++     107,
++     51,
++     46,
++     49,
++     45,
++     112,
++     114,
++     111,
++     34,
++     44,
++     34,
++     109,
++     111,
++     100,
++     101,
++     108,
++     83,
++     111,
++     117,
++     114,
++     99,
++     101,
++     34,
++     58,
++     34,
++     100,
++     101,
++     99,
++     108,
++     97,
++     114,
++     101,
++     100,
++     34,
++     44,
++     34,
++     112,
++     117,
++     114,
++     112,
++     111,
++     115,
++     101,
++     34,
++     58,
++     34,
++     75,
++     105,
++     109,
++     105,
++     32,
++     112,
++     114,
++     101,
++     45,
++     99,
++     104,
++     101,
++     99,
++     107,
++     32,
++     119,
++     48,
++     49,
++     45,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     45,
++     112,
++     48,
++     49,
++     32,
++     118,
++     49,
++     34,
++     44,
++     34,
++     106,
++     111,
++     98,
++     73,
++     100,
++     34,
++     58,
++     34,
++     119,
++     48,
++     49,
++     45,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     45,
++     112,
++     48,
++     49,
++     34,
++     44,
++     34,
++     118,
++     101,
++     114,
++     115,
++     105,
++     111,
++     110,
++     34,
++     58,
++     49,
++     44,
++     34,
++     112,
++     114,
++     105,
++     99,
++     101,
++     34,
++     58,
++     123,
++     34,
++     98,
++     97,
++     115,
++     105,
++     115,
++     34,
++     58,
++     34,
++     69,
++     120,
++     105,
++     115,
++     116,
++     105,
++     110,
++     103,
++     32,
++     79,
++     112,
++     101,
++     110,
++     67,
++     111,
++     100,
++     101,
++     32,
++     112,
++     108,
++     97,
++     110,
++     46,
++     34,
++     44,
++     34,
++     109,
++     97,
++     114,
++     103,
++     105,
++     110,
++     97,
++     108,
++     67,
++     97,
++     115,
++     104,
++     85,
++     115,
++     100,
++     34,
++     58,
++     48,
++     44,
++     34,
++     110,
++     111,
++     116,
++     101,
++     34,
++     58,
++     34,
++     84,
++     104,
++     101,
++     32,
++     112,
++     114,
++     111,
++     118,
++     105,
++     100,
++     101,
++     114,
++     32,
++     67,
++     76,
++     73,
++     32,
++     100,
++     111,
++     101,
++     115,
++     32,
++     110,
++     111,
++     116,
++     32,
++     114,
++     101,
++     112,
++     111,
++     114,
++     116,
++     32,
++     97,
++     32,
++     112,
++     101,
++     114,
++     45,
++     99,
++     97,
++     108,
++     108,
++     32,
++     99,
++     97,
++     115,
++     104,
++     32,
++     112,
++     114,
++     105,
++     99,
++     101,
++     46,
++     34,
++     125,
++     44,
++     34,
++     102,
++     105,
++     108,
++     101,
++     34,
++     58,
++     34,
++     119,
++     48,
++     49,
++     47,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     47,
++     108,
++     50,
++     45,
++     119,
++     48,
++     49,
++     45,
++     114,
++     101,
++     97,
++     100,
++     97,
++     108,
++     111,
++     110,
++     103,
++     45,
++     112,
++     97,
++     116,
++     45,
++     118,
++     49,
++     46,
++     112,
++     110,
++     103,
++     34,
++     44,
++     34,
++     101,
++     118,
++     101,
++     110,
++     116,
++     34,
++     58,
++     34,
++     97,
++     102,
++     116,
++     101,
++     114,
++     45,
++     99,
++     97,
++     108,
++     108,
++     34,
++     44,
++     34,
++     99,
++     97,
++     108,
++     108,
++     73,
++     100,
++     34,
++     58,
++     34,
++     56,
++     99,
++     49,
++     56,
++     57,
++     55,
++     99,
++     50,
++     45,
++     49,
++     57,
++     48,
++     54,
++     45,
++     52,
++     56,
++     50,
++     101,
++     45,
++     97,
++     55,
++     57,
++     57,
++     45,
++     100,
++     54,
++     100,
++     49,
++     98,
++     50,
++     52,
++     55,
++     53,
++     97,
++     55,
++     54,
++     34,
++     44,
++     34,
++     114,
++     101,
++     99,
++     111,
++     114,
++     100,
++     101,
++     100,
++     65,
++     116,
++     34,
++     58,
++     34,
++     50,
++     48,
++     50,
++     54,
++     45,
++     49,
++     48,
++     45,
++     50,
++     53,
++     84,
++     49,
++     50,
++     58,
++     48,
++     48,
++     58,
++     48,
++     48,
++     46,
++     48,
++     48,
++     48,
++     90,
++     34,
++     44,
++     34,
++     115,
++     116,
++     97,
++     116,
++     117,
++     115,
++     34,
++     58,
++     34,
++     115,
++     117,
++     99,
++     99,
++     101,
++     115,
++     115,
++     34,
++     125,
++     10,
+    ],
+    "type": "Buffer",
+  }
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2038:63
+    2036|       expect.soft(afterCalls, `${context}: no after-call is appended.`…
+    2037|       expect.soft(await readFile(path.join(run.outputRoot, 'cost-ledge…
+    2038|         `${context}: the begin ledger stays byte-identical.`).toEqual(…
+       |                                                               ^
+    2039|       expect.soft(await fileSnapshot(run.outputRoot), `${context}: eve…
+    2040|       expect.soft(await readFile(run.input!), `${context}: the source …
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2351:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[78/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/kimi: every output stays byte-identical.: expected [ [ …(2) ], …(5) ] to deeply equal [ [ …(2) ], …(3) ]
+
+- Expected
++ Received
+
+@@ -3,15 +3,23 @@
+      "candidates/reviews/w01-readalong-p01-v1-kimi-prompt.txt",
+      "35e5a273416d9c2d043abf5739a80aeb6be058ce1991ab302001e31616fecb79",
+    ],
+    [
+      "cost-ledger.jsonl",
+-     "d1fa84953f31bbd1c44ecc8cac8d424fb607ca912f75535d43b583b9e3ec8612",
++     "2d1dff091c958701420b370e49d8236b33c30a5aa5d69be339665d3bc3ab8237",
+    ],
+    [
+      "jobs.json",
+      "f836960f07222dc02ee211e59e153568819db441a1a77dae22720b7b6efa17aa",
++   ],
++   [
++     "raw/w01-readalong-p01-v1-kimi-8c1897c2-1906-482e-a799-d6d1b2475a76.txt",
++     "4e3ca47a774399b99b10a6fed53c450682a5b6adafee9315e3c275c69e0d3c00",
++   ],
++   [
++     "reviews/w01-readalong-p01-v1-kimi.json",
++     "531cd9be1b19eb7333dea2fa97d706128df0d99508a7b84503d43eef457b97d7",
+    ],
+    [
+      "w01/readalong/l2-w01-readalong-pat-v1.png",
+      "05a8bf232232af6c37375d9f23889b0f54004d35c143d1682e19250abee55aa6",
+    ],
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2039:105
+    2037|       expect.soft(await readFile(path.join(run.outputRoot, 'cost-ledge…
+    2038|         `${context}: the begin ledger stays byte-identical.`).toEqual(…
+    2039|       expect.soft(await fileSnapshot(run.outputRoot), `${context}: eve…
+       |                                                                                                         ^
+    2040|       expect.soft(await readFile(run.input!), `${context}: the source …
+    2041|     }
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2351:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[79/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/kimi: no review or raw copy exists.: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/tmp/opencode/storytime-red-ITQlVE/repo-qv2ZXt/out/storytime/l2/unit1/raw/w01-readalong-p01-v1-kimi-8c1897c2-1906-482e-a799-d6d1b2475a76.txt",
++   "/tmp/opencode/storytime-red-ITQlVE/repo-qv2ZXt/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-kimi.json",
++ ]
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2045:52
+    2043|     expect.soft(files.length, `${context}: the file scan has input.`).…
+    2044|     expect.soft(files.filter((file) => /^(raw|reviews)\//.test(path.re…
+    2045|       `${context}: no review or raw copy exists.`).toEqual([]);
+       |                                                    ^
+    2046|     // Scan every output file. Only the deliberate external input lies…
+    2047|     await assertNoSyntheticValues([run.outputRoot], values);
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2351:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[80/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/minimax: the error names only the pattern.: expected 'Maximum call stack size exceeded' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"Maximum call stack size exceeded"
+
+ ❯ tests/storytime-book-pictures.test.ts:2372:79
+    2370|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2371|           .not.toBe('RangeError');
+    2372|         expect.soft(message, `${context}: the error names only the pat…
+       |                                                                               ^
+    2373|         expect.soft(message.endsWith(suffix), `${context}: the message…
+    2374|         expect.soft(message, `${context}: the message names no stack o…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[81/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/minimax: the message has the task 9 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2373:97
+    2371|           .not.toBe('RangeError');
+    2372|         expect.soft(message, `${context}: the error names only the pat…
+    2373|         expect.soft(message.endsWith(suffix), `${context}: the message…
+       |                                                                                                 ^
+    2374|         expect.soft(message, `${context}: the message names no stack o…
+    2375|           .not.toMatch(/Maximum call stack size exceeded/);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[82/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/minimax: the message names no stack overflow.: expected 'Maximum call stack size exceeded' not to match /Maximum call stack size exceeded/
+
+- Expected:
+/Maximum call stack size exceeded/
+
++ Received:
+"Maximum call stack size exceeded"
+
+ ❯ tests/storytime-book-pictures.test.ts:2375:16
+    2373|         expect.soft(message.endsWith(suffix), `${context}: the message…
+    2374|         expect.soft(message, `${context}: the message names no stack o…
+    2375|           .not.toMatch(/Maximum call stack size exceeded/);
+       |                ^
+    2376|         const entries = await securityLedger(space.space.outputRoot);
+    2377|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[83/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/kimi: the refusal is not a RangeError.: expected 'RangeError' not to be 'RangeError' // Object.is equality
+ ❯ tests/storytime-book-pictures.test.ts:2371:16
+    2369|           .toBe(false);
+    2370|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2371|           .not.toBe('RangeError');
+       |                ^
+    2372|         expect.soft(message, `${context}: the error names only the pat…
+    2373|         expect.soft(message.endsWith(suffix), `${context}: the message…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[84/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/kimi: the error names only the pattern.: expected 'Maximum call stack size exceeded' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"Maximum call stack size exceeded"
+
+ ❯ tests/storytime-book-pictures.test.ts:2372:79
+    2370|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2371|           .not.toBe('RangeError');
+    2372|         expect.soft(message, `${context}: the error names only the pat…
+       |                                                                               ^
+    2373|         expect.soft(message.endsWith(suffix), `${context}: the message…
+    2374|         expect.soft(message, `${context}: the message names no stack o…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[85/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/kimi: the message has the task 9 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2373:97
+    2371|           .not.toBe('RangeError');
+    2372|         expect.soft(message, `${context}: the error names only the pat…
+    2373|         expect.soft(message.endsWith(suffix), `${context}: the message…
+       |                                                                                                 ^
+    2374|         expect.soft(message, `${context}: the message names no stack o…
+    2375|           .not.toMatch(/Maximum call stack size exceeded/);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[86/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/kimi: the message names no stack overflow.: expected 'Maximum call stack size exceeded' not to match /Maximum call stack size exceeded/
+
+- Expected:
+/Maximum call stack size exceeded/
+
++ Received:
+"Maximum call stack size exceeded"
+
+ ❯ tests/storytime-book-pictures.test.ts:2375:16
+    2373|         expect.soft(message.endsWith(suffix), `${context}: the message…
+    2374|         expect.soft(message, `${context}: the message names no stack o…
+    2375|           .not.toMatch(/Maximum call stack size exceeded/);
+       |                ^
+    2376|         const entries = await securityLedger(space.space.outputRoot);
+    2377|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[87/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T110: a safe object at depth 4000 keeps the parser result and the raw bytes
+AssertionError: safe deep answer/minimax: the safe deep answer is accepted.: expected { name: 'Error', …(1) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "message": "Maximum call stack size exceeded",
+  "name": "Error",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:2405:97
+    2403|         expect.soft(run.timedOut, `${context}: the call must finish wi…
+    2404|           .toBe(false);
+    2405|         expect.soft(run.report?.error ?? null, `${context}: the safe d…
+       |                                                                                                 ^
+    2406|         expect.soft(run.report?.error?.name ?? '', `${context}: the ca…
+    2407|           .not.toBe('RangeError');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[88/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T110: a safe object at depth 4000 keeps the parser result and the raw bytes
+AssertionError: safe deep answer/minimax: the review file exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2409:84
+    2407|           .not.toBe('RangeError');
+    2408|         const reviewFile = path.join(space.space.outputRoot, `reviews/…
+    2409|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+       |                                                                                    ^
+    2410|         if (!existsSync(reviewFile)) continue;
+    2411|         const review = JSON.parse(await readFile(reviewFile, 'utf8'));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[89/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T110: a safe object at depth 4000 keeps the parser result and the raw bytes
+AssertionError: safe deep answer/kimi: the safe deep answer is accepted.: expected { name: 'RangeError', …(1) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "message": "Maximum call stack size exceeded",
+  "name": "RangeError",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:2405:97
+    2403|         expect.soft(run.timedOut, `${context}: the call must finish wi…
+    2404|           .toBe(false);
+    2405|         expect.soft(run.report?.error ?? null, `${context}: the safe d…
+       |                                                                                                 ^
+    2406|         expect.soft(run.report?.error?.name ?? '', `${context}: the ca…
+    2407|           .not.toBe('RangeError');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[90/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T110: a safe object at depth 4000 keeps the parser result and the raw bytes
+AssertionError: safe deep answer/kimi: the call raises no RangeError.: expected 'RangeError' not to be 'RangeError' // Object.is equality
+ ❯ tests/storytime-book-pictures.test.ts:2407:16
+    2405|         expect.soft(run.report?.error ?? null, `${context}: the safe d…
+    2406|         expect.soft(run.report?.error?.name ?? '', `${context}: the ca…
+    2407|           .not.toBe('RangeError');
+       |                ^
+    2408|         const reviewFile = path.join(space.space.outputRoot, `reviews/…
+    2409|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[91/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T110: a safe object at depth 4000 keeps the parser result and the raw bytes
+AssertionError: safe deep answer/kimi: the review file exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2409:84
+    2407|           .not.toBe('RangeError');
+    2408|         const reviewFile = path.join(space.space.outputRoot, `reviews/…
+    2409|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+       |                                                                                    ^
+    2410|         if (!existsSync(reviewFile)) continue;
+    2411|         const review = JSON.parse(await readFile(reviewFile, 'utf8'));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[92/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T111: the seam scans a 65,536-byte answer at depth 400 within 2000 ms
+AssertionError: decoded scan ms: 17048: expected 17048 to be less than or equal to 2000
+ ❯ tests/storytime-book-pictures.test.ts:2437:61
+    2435|         .toBe(false);
+    2436|       expect.soft(run.report?.findings ?? [], 'A safe deep answer hold…
+    2437|       expect.soft(measured, `decoded scan ms: ${measured}`).toBeLessTh…
+       |                                                             ^
+    2438|     }, 120000);
+    2439|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[93/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T113: the decodedReviewFindings export is gone
+AssertionError: decodedReviewFindings is not exported.: expected [ 'PICTURE_RUBRIC_VERSION', …(61) ] to not include 'decodedReviewFindings'
+ ❯ tests/storytime-book-pictures.test.ts:2492:87
+    2490|
+    2491|     it('T113: the decodedReviewFindings export is gone', () => {
+    2492|       expect(Object.keys(pictureSeams), 'decodedReviewFindings is not …
+       |                                                                                       ^
+    2493|       expect('decodedReviewFindings' in pictureSeams, 'decodedReviewFi…
+    2494|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[94/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T114: the decoded check runs before parseModelReview and the Kimi comment matches
+AssertionError: precheckKimi: the decoded check runs before the schema parse.: expected 7636 to be less than 7317
+ ❯ tests/storytime-book-pictures.test.ts:2504:83
+    2502|         expect(check, `${name}: the decoded check exists.`).toBeGreate…
+    2503|         expect(parse, `${name}: the schema parse exists.`).toBeGreater…
+    2504|         expect(check, `${name}: the decoded check runs before the sche…
+       |                                                                                   ^
+    2505|       }
+    2506|       const comment = commentAbove(functionRegion(source, 'precheckKim…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[95/96]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T115: the seam scans a wide answer with 1200 injected secrets within 2000 ms
+AssertionError: rule scan ms: 9905: expected 9905 to be less than or equal to 2000
+ ❯ tests/storytime-book-pictures.test.ts:2538:60
+    2536|         expect.soft(new Set(run.report?.findings ?? []).size, 'Every i…
+    2537|           .toBe(1200);
+    2538|         expect.soft(measured, `rule scan ms: ${measured}`).toBeLessTha…
+       |                                                            ^
+    2539|       } finally {
+    2540|         for (const name of names) delete process.env[name];
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[96/96]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  11 failed | 114 passed (125)
+   Start at  10:55:34
+   Duration  197.86s (transform 1.87s, setup 0ms, import 3.34s, tests 192.97s, environment 1ms)
+

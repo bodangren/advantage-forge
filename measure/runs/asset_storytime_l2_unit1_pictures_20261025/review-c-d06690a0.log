@@ -1,0 +1,75 @@
+# Review C re-review · P3 · Muse week 1 delivery writer · d06690a0
+
+Session: Review C · P3 · storytime_l2_unit1_pictures · r2.
+Role: measure-review-c-ux-api. Audit only. No edit outside the two run artifacts.
+
+## Provenance and applicability
+
+- HEAD is d06690a0 (git rev-parse HEAD; git log --oneline -12). The audited head is current.
+- Phase base 15a7bf0b, Red 3509efd5, and Green 44c2ec84 exist as commits.
+- The phase work touches src/storytime/muse-delivery.ts, the deliver command in
+  src/storytime/book-pictures.ts, scripts/storytime-muse.mjs, and
+  tests/storytime-muse-delivery.test.ts.
+- The API and file contract applies to this phase.
+
+## F2 withdrawn: the color format check
+
+- The earlier item said the writer color check was weaker than the Workbooks checkColor.
+- Workbooks checkColor (dashboard/lib/storytime/print/picture-check.ts:238-250, read-only)
+  requires PNG format, no alpha, no 4 channels, exactly 3 channels, and space srgb or rgb.
+- The writer inspectColorPrint at d06690a0 refuses a palette PNG, a depth other than uchar,
+  a bitsPerSample other than 8, a space other than srgb, and a channel count other than 3. It
+  keeps the PNG format, pixel size, and no-alpha checks.
+- The writer covers every Workbooks rule and adds the palette refusal. It accepts only srgb.
+  sharp reports srgb for an 8-bit RGB PNG, so the Muse flow sees no false refusal.
+- Test T171 covers the palette, one-channel, 16-bit, and four-channel refusals.
+- F2 is closed. Withdrawn.
+
+## F3 withdrawn: the skip message
+
+- The earlier item said a row without an approval entry was skipped without a message.
+- writeMuseDelivery calls onSkip once for each such row. The reason names the row.
+- The deliver command wires the callback: log(`Skipped ${rowId}: ${reason}`) at
+  src/storytime/book-pictures.ts:4744. One line prints per skipped row.
+- Test T172 reports a row that has no approval entry.
+- F3 is closed. Withdrawn.
+
+## Contract checks
+
+- Manifest shape: StorytimeManifest at src/storytime/book-pictures.ts:238-243 stays
+  version 1, batchHashAlgorithm, jobs, batches. The diff 19359dd1..d06690a0 in
+  book-pictures.ts touches only the deliver block. muse-delivery.ts still builds the manifest
+  through assembleManifest and manifestJob. spec.md amendment 2026-11-01 decision 2 holds.
+- pictureListSha256: an optional approval-list field with a 64-hex regex. A mismatch message
+  names the measured hash and the pin. A pin with no measured hash names that case too.
+- out/ path rule: resolveMuseDeliveryPaths refuses a --muse or --delivery path outside
+  <repoRoot>/out. The message names the flag, the required folder, and the got path.
+- Operator messages: readMuseFile errors name the row, the file, and the reason (symlink,
+  outside the Muse folder, not a regular file). Copy refusals name the row, the file, and the
+  reason. Tests T162, T163, and T164 cover the pin and the path rule.
+- Exit codes: deliver returns 0 on success. A refusal throws; the RB2-01 boundary
+  (scripts/storytime-book-pictures.ts:48-56) redacts the message and returns 1. The
+  production entry sets process.exitCode from that return.
+
+## Gate
+
+- bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run
+  tests/storytime-muse-delivery.test.ts --maxWorkers=1' returned exit 0 with 21 passed (21).
+  No exit 75 retry was needed.
+
+## Findings
+
+- None. F2 and F3 are both withdrawn.
+
+MEASURE_AGENT_RESULT
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures
+role: measure-review-c-ux-api
+audited_head: d06690a0
+verdict: pass
+findings: none; F2 (color format) and F3 (skip message) both withdrawn as closed at d06690a0
+evidence: F2 withdrawn — inspectColorPrint at d06690a0 refuses palette, non-8-bit, non-srgb, and non-3-channel prints and matches Workbooks checkColor (picture-check.ts:238-250), T171 covers it; F3 withdrawn — writeMuseDelivery calls onSkip per row and the deliver command logs "Skipped <row id>: <reason>" (book-pictures.ts:4744), T172 covers it; manifest shape unchanged (StorytimeManifest version 1, batchHashAlgorithm, jobs, batches); pictureListSha256 and the out/ path rule refuse with row, file, and reason; exit 0 on success and 1 on refusal through the RB2-01 boundary; gate run 21 passed (21).
+retry_recommendation: none
+confidence: high
+END_MEASURE_AGENT_RESULT

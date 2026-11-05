@@ -1,0 +1,111 @@
+item-review-w06-elements
+Reviewer: opencode-go/mimo-v2.6-flash (independent, audit only)
+Track: asset_storytime_l2_unit1_pictures_20261025, Phase 4 (P4)
+Bar: Daniel 2026-11-01 14:15 ICT, verbatim.
+Scope: 9 current week 6 Muse input sheets (two sets and seven props). Sheets are inputs for later pages, not pages.
+
+Index read: out/storytime-review/w06-staging/index.md.
+Green log read: measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w06-staging.log.
+Element specs read: docs/storytime/l2-unit1/w06/muse-elements/ (9 files).
+Page refs grepped: docs/storytime/l2-unit1/w06/muse/*.json per sheet file name (30 reference instances).
+Page specs read: text, goal, colorPrompt of every page that references each sheet.
+
+PROVISIONAL PASS (first look, one open of each sheet)
+
+1. set-meadow-empty-m1-color.png
+   Used by: 9 pages (cat, dog, bird, fish, frog, duck, i-can-see-pip, horse, cover-i-can-see).
+   Shows: one sun upper right, two clouds, one low tree at the left with a low branch to the right, a short fence at the back left and middle, one pond at the right with stones and two lily pads, grass clumps at both lower corners, blue sky.
+   Input checks: no people, no animals, no text, one sun, two lily pads, fence stops before the right side.
+   Page fit: every meadow colorPrompt names the same elements in the same places. The sheet gives all of them.
+   Verdict: clean.
+
+2. set-book-corner-empty-m2-color.png
+   Used by: 9 pages (pat-sat, sam-sat, pip-sat, tap-tap-tap, tap-tap-tap-b, pat-can-see-a-map, sam-can-see-a-pan, he-can-see-pip, cover-tap-tap).
+   Shows: cream walls with dark timber beams, light floor, one big wicker basket of books at the left, one cream map with a river, a hill, and a red house on the wall, one toy kitchen with a red pan at the right, one plank-like shape on the floor.
+   Input checks: no people, no animals, no text or digits, one basket, one map, one kitchen with one red pan. All nine pages reference m2.
+   Builder doubt (basket close to the wall, narrow floor strip): the set renders correctly and nothing overlaps, so this is not a layout fault under the bar. The strip is a page question for three pages. Recorded under page risks.
+   Extra floor plank: not in any prompt and not forbidden by any prompt. Reads as a low wooden platform. Not a defect; watch that no page counts it as a mat.
+   Verdict: clean.
+
+3. prop-green-mats-sheet-m1-color.png
+   Used by: 5 pages (pat-sat, sam-sat, pip-sat, tap-tap-tap, cover-tap-tap).
+   Shows: two plain green floor mats side by side, thick rounded edges, one even green color.
+   Input checks: plain white background, no people, no text, exactly two mats, no third mat, no cushion cover.
+   Page fit: each colorPrompt says draw exactly these two plain green mats, the same size and the same color. The sheet gives that.
+   Builder doubt (thick, may read as cushions): thickness alone is not a defect under the bar. The prompts call them soft floor mats. A cushion would show a cover, seams, or a zip; the sheet shows none. A child at book size reads a green mat to sit on.
+   Verdict: clean.
+
+4. prop-gray-cat-sheet-m1-color.png
+   Used by: 2 pages (i-can-see-a-cat, cover-i-can-see).
+   Shows: one plain gray cat sitting upright, tail ringed around its feet, lighter chest, pink ear insides, big green eyes, white whiskers.
+   Input checks: plain white background, no people, no text, one cat, no stripes, no collar.
+   Page fit: both colorPrompts say plain gray cat with a lighter chest, pink ear insides, and big green eyes; draw ONE cat, exactly this cat. The sitting pose fits the fence top rail.
+   Verdict: clean.
+
+5. prop-black-white-dog-sheet-m1-color.png
+   Used by: 1 page (i-can-see-a-dog).
+   Shows: one black-and-white puppy with a raised tail, white face blaze, white chest, white paws, white tail tip, black ears, black eye patches, no collar.
+   Input checks: plain white background, no people, no text, one dog, no collar, no golden-brown fur.
+   Page fit: the colorPrompt names every marking the sheet shows and adds: draw ONE dog, exactly this dog (it is not golden-brown). The sheet gives the pattern; the prompt gives the running pose.
+   Verdict: clean.
+
+6. prop-blue-bird-sheet-m1-color.png
+   Used by: 1 page (i-can-see-a-bird).
+   Shows: one small sky-blue bird with a pale-blue belly and an orange beak on a short branch with two green leaves, both feet holding the branch.
+   Input checks: plain white background, no people, no text, one bird, one branch, two leaves, no second bird.
+   Page fit: the colorPrompt says small sky-blue bird on a short branch; draw ONE bird, exactly this bird, with its feet holding the branch. The sheet gives that.
+   Verdict: clean.
+
+7. prop-white-horse-sheet-m1-color.png
+   Used by: 1 page (i-can-see-a-horse).
+   Shows: one white horse in a three-quarter view, cream mane and tail, pink-gray muzzle, light-gray hooves, four legs, four visible hooves, no saddle, no horn.
+   Input checks: plain white background, no people, no text, one horse, no rider.
+   Page fit: the colorPrompt says white horse with a cream-white mane and tail, a pink-gray muzzle, and light-gray hooves; draw ONE horse, exactly this white horse. The sheet gives that.
+   Builder doubt (pale coat may lose its edge in the line art): not a sheet defect. The sheet is a color input, and the page places the horse against green grass and blue sky. The linePrompt demands one closed outline for each animal with thick lines. Recorded as a page check.
+   Verdict: clean.
+
+8. prop-tiger-sheet-m1-color.png
+   Used by: 1 page (check-row-tiger).
+   Shows: one chubby orange tiger cub sitting upright, white muzzle, white chest, round ears with white insides, a few thick black stripes, a long tail with black rings, big friendly dark eyes.
+   Input checks: plain white background, no people, no text or digits, one tiger, no second tiger.
+   Page fit: the check row prompt says exactly one tiger, sitting, three-quarter front view, plain white background, a few thick black stripes. The sheet gives that.
+   Verdict: clean.
+
+9. prop-ten-sheet-m1-color.png
+   Used by: 1 page (check-row-ten).
+   Shows: ten identical round red balls in two straight rows of five on a white background, no eyes, no face.
+   Input checks: plain white background, no people, no animals, no text, letters, or digits, no numeral anywhere. Count: five balls in the top row, five in the bottom row, ten in all.
+   Page fit: the check row prompt says EXACTLY TEN red balls in two rows of exactly five, count them five and five. The sheet gives ten balls and no numeral.
+   Content choice: the handoff says Daniel may want another object than balls. That is an owner choice, not a sheet defect.
+   Verdict: clean.
+
+Reference paths (provisional): all 30 reference instances name current sheet files. m1 for the meadow, mats, cat, dog, bird, horse, tiger, and ten sheets. m2 for the book-corner set on all nine of its pages. No page references the old book-corner m1.
+
+Provisional totals: 9 of 9 clean. All three builder doubts judge as not defects under the bar. No sheet at blocking risk.
+
+PAGE RISKS (builder handoff, judged from the page specs)
+
+- Three tail-tip pages (horse, tap-tap-tap, tap-tap-tap-b): all three colorPrompts carry a strong guard. The horse page says ONLY the fluffy golden-brown tip of a tail sticks up, lists no puppy body, no head, no ears, no legs, and ends with exactly one girl, one horse, and one tail tip. tap-tap-tap says ONLY the tip shows behind the big basket and ends with exactly two boys, two mats, and one tail tip. tap-tap-tap-b says ONLY the tip lies on the floor, bans the rest of the puppy and motion lines, and ends with exactly two boys and one tail tip. The prompts are clear. Each spec holds a Pip reference: out/storytime/l2/unit1/w04/muse/elements/pip-ref-render.png, so the model sees the real tail color and fluff. Advice: at page review, check one closed golden-brown fluffy tip and no other puppy part; if a whole puppy returns, re-run with the ONLY sentence first in the picture block.
+- Map page (pat-can-see-a-map): the colorPrompt is explicit: behind the lifted corner the wall is plain empty cream plaster, no hole, no door, no picture, and nothing hidden. The goal repeats: he looks at the empty wall behind it. The set wall carries dark timber beams, and the map hangs low, so the lifted lower-right corner sits close to a beam line. The prompt is clear. This spec holds no Pip reference, and none is needed, because nothing hides behind the corner; its references are Pat and the book-corner set. Advice: at page review, check that nothing shows behind the lifted corner and that the exposed wall reads as plain wall; a beam crossing that area is part of the set wall, not a hidden object; if the model draws a hidden picture or door, re-run with the ban sentence kept.
+- Narrow floor strip behind the basket (tap-tap-tap, tap-tap-tap-b, he-can-see-pip): the m2 set keeps the basket close to the wall. The two tap pages need only a small tail tip in the strip, which fits. he-can-see-pip needs a whole puppy in that strip, which is tight; its colorPrompt says Pip lies in the open strip of floor between the basket and the wall with his whole body in view. The wording is clear; the space is the risk. he-can-see-pip holds a Pip reference, so the model can copy the real puppy. Advice: at page review, check that the tip shows in the strip on both tap pages and that Pip fits whole on he-can-see-pip; if Pip cannot fit, ask for a set m3 with the basket moved away from the wall, or re-run with the sentence that Pip lies in front of and beside the basket.
+
+SECOND LOOK
+Every sheet was opened again through its print version after the first pass.
+
+- meadow m1: re-checked one sun, two lily pads, right-reaching branch, fence stops at the middle, grass at both lower corners, no text.
+- book corner m2: re-checked one basket with books, one map with a red house and no words, one toy kitchen with one red pan, narrow strip behind the basket, one floor plank.
+- green mats m1: re-checked two mats, one green, thick rounded edges, no pattern, no third mat.
+- gray cat m1: re-checked one sitting gray cat, tail ring at the feet, green eyes, pink ear insides, no stripes, no text.
+- black-white dog m1: re-checked one dog, white blaze, white chest, white paws, white tail tip, black ears, no collar, no text.
+- blue bird m1: re-checked one blue bird, pale belly, orange beak, one branch, two leaves, both feet on the branch, no text.
+- white horse m1: re-checked one white horse, cream mane and tail, pink-gray muzzle, gray hooves, four legs, no saddle, no text.
+- tiger m1: re-checked one orange tiger cub, thick stripes, black-ringed tail, white muzzle and chest, no text.
+- ten m1: re-counted five balls in the top row and five in the bottom row, ten in all, no digit, no face.
+
+All counts hold. All verdicts unchanged.
+Reference paths hold: m1 for eight sheets, m2 for the book-corner set on all nine of its pages.
+
+FINAL TOTALS
+9 of 9 clean. 0 not clean.
+Builder doubts: 3 of 3 judge as not defects under the bar. The narrow strip is a page-space question, the thick mats read as soft floor mats with no cushion cues, and the pale horse sits against grass and sky on the page.
+Page risk: no sheet at blocking risk. Three page risks stand for the page review: the three tail-tip pages must show only the tip, the map page must show nothing hidden behind the lifted corner, and the narrow strip behind the basket must hold what each page places there.

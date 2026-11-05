@@ -1,0 +1,62 @@
+Green round 21 final log — storytime-low-branch
+Role: measure-jr-green (build round 21, Storytime week 1 pictures)
+Model: xai/grok-4.7#high
+Red model (Phase 3): minimax-cn-coding-plan/MiniMax-M3
+Item reviewers: openai/gpt-6-luna#high (batches 1 to 2c), xai/grok-4.7#high (batch 3)
+Green coder model: none (no delegation)
+Track: asset_storytime_l2_unit1_pictures_20261025
+Phase: P3 (Week 1 pictures)
+phase_base_sha: 15a7bf0b (ancestor of HEAD: yes)
+role_base_sha: b53cab63 (ancestor of HEAD: yes)
+Phase 3 Red test commits inside phase_base_sha..HEAD: d7031d18, 6c55fac1
+Task: finish the low tree branch that holds the nest (assets/storytime-low-branch.ts)
+This round continues the uncommitted round 20 file. It does not start from zero.
+Round 20 (xai/grok-4.7) stopped after its second fast render. Restarts and lock waits stopped it. It made no commit.
+Box review (item-review-batch-3.json, xai/grok-4.7#high): 7.8, pass, no critical defect.
+Row notes, not changed here: the block pile is small for the box. The front view should show the full green cylinder.
+Commits:
+- implementation: 2b171c3c (assets/storytime-low-branch.ts only)
+- plan evidence: 3a79d229 (plan.md only)
+Final HEAD: 3a79d229
+Nest seat NEST_SEAT: x = 0.50 m, y = 0.70 m, z = 0.04 m. Nan's eyes are near y = 0.585 m.
+Renders (each one heavy-run.sh command, foreground, no lock wait over 600 s, no exit 75 or 137):
+- green-p3-r21-fast1.log: ./forge render storytime-low-branch --fast, exit 0, no warning lines
+- green-p3-r21-fast2.log: --fast, exit 0, no warning lines
+- green-p3-r21-fast3.log: --fast, exit 0, no warning lines
+- green-p3-r21-tex.log: ./forge render storytime-low-branch (textured), exit 0, no warning lines
+- green-p3-r21-inspect.log: ./forge inspect storytime-low-branch --fast, exit 0, warnings: none
+Review card: out/storytime-review/batch-3b/storytime-low-branch.png (2060 x 512: front,
+three-quarter, side, back), with brief.md (JSON key storytime-low-branch, bar 7.0, rated G,
+critical defects listed) and look-reference-nan-and-pip.png. The nest is not on the card.
+The item is not self-rated.
+New files: assets/storytime-low-branch.ts (committed). out/ and measure/runs/ files stay out
+of git. PNG files and run logs are not committed.
+Tasks flipped to [x]: none.
+Tasks flipped to [b]: none.
+Deviations: none. No tsc, vitest, or Next.js build ran. No tests/ change. No task marked [x]
+or [b]. Unrelated working-tree changes of other sessions were left alone. Both commits hold
+one explicit path each. Round 20 logs were not touched.
+Open note: the side view shows a short wood lip at the front of the seat. It is the cradle
+rim. It is not a hand.
+
+MEASURE_AGENT_RESULT
+status: done
+role: green
+round: 21
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3
+phase_base_sha: 15a7bf0b
+role_base_sha: b53cab63
+final_head: 3a79d229
+models: green=xai/grok-4.7#high red=minimax-cn-coding-plan/MiniMax-M3 reviewer=xai/grok-4.7#high coder=none
+commits: implementation=2b171c3c plan=3a79d229
+tasks_x: none
+tasks_b: none
+red_command: n/a (asset build role; Phase 3 Red test commits d7031d18 and 6c55fac1 are inside phase_base_sha..HEAD)
+render_exits: fast1=0 fast2=0 fast3=0 tex=0 inspect=0 warnings=0
+card: out/storytime-review/batch-3b/storytime-low-branch.png
+nest_seat: x=0.50 y=0.70 z=0.04
+new_files: assets/storytime-low-branch.ts; out/storytime-review/batch-3b/storytime-low-branch.png; out/storytime-review/batch-3b/brief.md; out/storytime-review/batch-3b/look-reference-nan-and-pip.png
+deviations: none
+handoff: Green round 21 continued the uncommitted round 20 file and built the low tree branch (2b171c3c). Plan evidence is 3a79d229. All forge exits are 0 with no warning lines. Nest seat is x=0.50 m, y=0.70 m, z=0.04 m. The review card and brief are in out/storytime-review/batch-3b/. The nest is a separate asset and is not on the card. The branch waits for the independent review. No task is marked [x].
+END_MEASURE_AGENT_RESULT

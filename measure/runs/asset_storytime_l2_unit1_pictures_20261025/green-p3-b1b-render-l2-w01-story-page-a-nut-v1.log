@@ -1,0 +1,13 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 16
+book file requests refused: 0
+Line-art line width: 25 px (minimum 12 px).
+Line-art ink coverage: 4.47% (536541 of 12000000 pixels black).
+l2-w01-story-page-a-nut v1: rendered; stage 388522e16c369de72156e34b674a38158333ac230e98c86de0a98e2a9648a62b; file w01/rows/l2-w01-story-page-a-nut-v1.png; lineart w01/rows/l2-w01-story-page-a-nut-line-v1.png; size 4000 x 3000; render peak rss mb: 450
+Line-art line width: 25 px (minimum 12 px).
+Line-art ink coverage: 4.47% (536541 of 12000000 pixels black).
+l2-w01-story-page-a-nut v1: passed
+Row verification passed for 1 row versions.

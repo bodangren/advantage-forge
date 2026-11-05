@@ -1,0 +1,89 @@
+Line-art line width: 25 px (minimum 12 px).
+Line-art ink coverage: 4.47% (536541 of 12000000 pixels black).
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 3.48% (417520 of 12000000 pixels black).
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 3.52% (422317 of 12000000 pixels black).
+Line-art line width: 25 px (minimum 12 px).
+Line-art ink coverage: 4.32% (518194 of 12000000 pixels black).
+Line-art line width: 25 px (minimum 12 px).
+Line-art ink coverage: 4.36% (523115 of 12000000 pixels black).
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 4.55% (545929 of 12000000 pixels black).
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 4.42% (530549 of 12000000 pixels black).
+l2-w01-story-page-a-nut v1: passed
+l2-w01-story-page-a-nut v2: passed
+l2-w01-story-page-a-nut v3: passed
+l2-w01-story-page-a-nut v4: passed
+l2-w01-story-page-a-nut v5: passed
+l2-w01-story-page-a-nut v6: passed
+l2-w01-story-page-a-nut v7: passed
+Row verification passed for 7 row versions.
+verify-nut-exit 0
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 4.74% (568214 of 12000000 pixels black).
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 4.24% (508700 of 12000000 pixels black).
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 4.26% (510805 of 12000000 pixels black).
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 4.41% (528882 of 12000000 pixels black).
+Line-art line width: 25 px (minimum 12 px).
+Line-art ink coverage: 4.63% (555162 of 12000000 pixels black).
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 4.61% (553474 of 12000000 pixels black).
+l2-w01-story-page-a-nose v1: passed
+l2-w01-story-page-a-nose v2: passed
+l2-w01-story-page-a-nose v3: passed
+l2-w01-story-page-a-nose v4: passed
+l2-w01-story-page-a-nose v5: passed
+l2-w01-story-page-a-nose v6: passed
+Row verification passed for 6 row versions.
+verify-nose-exit 0
+Some extensions were not registered for I/O, and will not be written.
+avatar-base: 23,352 triangles, 0.5 x 0.904 x 0.43 m, built in 45970 ms
+  skin                      9032 tris  (2436 ms)
+  hair                      7348 tris  (2039 ms)
+  undershirt                3026 tris  (525 ms)
+  pants                     1880 tris  (210 ms)
+  shoes                     2066 tris  (227 ms)
+texture  1024x1024 atlas: base color, normal, occlusion/roughness/metal (39975 ms)
+glb      out/avatar-base/avatar-base.glb  (2913 KB)
+render   out/avatar-base/render.png  (1244 ms)
+meshes: 5 of 5 bodies identical
+images (changed = a channel differs by more than 16; limit 0.5%):
+  render.png                   changed 0.000%  mean 0.000
+  views/back.png               changed 0.000%  mean 0.000
+  views/front.png              changed 0.000%  mean 0.000
+  views/side.png               changed 0.000%  mean 0.000
+  views/three-quarter.png      changed 0.000%  mean 0.000
+result PASS
+partcheck-exit 0
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  09:30:48
+   Duration  1.04s (transform 479ms, setup 0ms, import 741ms, tests 51ms, environment 0ms)
+
+vitest-exit 0
+Some extensions were not registered for I/O, and will not be written.
+sprout-pat: 29,820 triangles, 0.433 x 0.858 x 0.409 m, built in 55748 ms
+  skin                      8616 tris  (2193 ms)
+  mouth-open                 568 tris  (59 ms)
+  eyelid-skin                726 tris  (451 ms)
+  hair                      7020 tris  (1869 ms)
+  shirt                     2158 tris  (312 ms)
+  shorts                    1856 tris  (424 ms)
+  pockets                    532 tris  (56 ms)
+  sandals                   3604 tris  (230 ms)
+  teddy                     3238 tris  (338 ms)
+  teddy-muzzle               954 tris  (25 ms)
+  teddy-face                 548 tris  (8 ms)
+texture  1024x1024 atlas: base color, normal, occlusion/roughness/metal (38152 ms)
+glb      out/sprout-pat/sprout-pat.glb  (3427 KB)
+render   out/sprout-pat/render.png  (699 ms)
+pat-exit 0

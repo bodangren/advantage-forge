@@ -1,0 +1,142 @@
+Batch 54 review: Storytime week 6, batch 3 (9 check rows)
+Reviewer: minimax-cn-coding-plan/MiniMax-M3.1-Flash
+Bar: Daniel 2026-11-01 14:15 ICT
+Status: pass
+Summary: All 9 rows of batch 54 are clean at the bar of Daniel 2026-11-01 14:15 ICT. Two notes are recorded: the fish line art has no belly line and the tiger right eye is a narrow solid oval.
+
+Rows
+l2-w06-check-row-bag | rating 8.5 | clean | categories: none
+  note: One bag in color and one bag in line. The counts match.
+  note: The color file shows a red bag with a yellow label panel, a blue handle loop and a blue side strap. The line file shows the body, the label, the handle loop and the side strap as closed shapes.
+  note: The object reads as a bag at book size in color and in line. No text, no number and no second object.
+  goal: Met: one object on plain white that reads as the word bag in color and in line. The white background is plain.
+  line: 0 pixels that are neither 0 nor 255 in 1500 x 1500. 0.0000 percent. No gray or shading in the line art.
+
+l2-w06-check-row-cup | rating 8.5 | clean | categories: none
+  note: One cup in color and one cup in line. The counts match.
+  note: The color file shows a blue cup with a cream rim, an inner opening oval and one ring handle. The line file shows the rim ring, the opening oval, the handle ring and the inner oval.
+  note: No steam and no drink in either file. The object reads as a cup at book size in color and in line.
+  goal: Met: one object on plain white that reads as the word cup in color and in line.
+  line: 0 pixels that are neither 0 nor 255 in 1500 x 1500. 0.0000 percent. No gray or shading in the line art.
+
+l2-w06-check-row-dog | rating 8 | clean | categories: none
+  note: One dog in color and one dog in line. The counts match.
+  note: The color file shows a brown puppy with floppy ears, a red collar with a gold tag, a solid black nose and a tongue. The line file shows the same floppy ears, the collar and the round tag, the solid nose, the mouth and the tongue.
+  note: The eyes are rings with solid pupils in color and in line. The left eye ring of the line file is wide with a second thin inner ring. A small difference that changes no part of the dog.
+  note: Four legs in color and four legs in line. The object reads as a dog at book size in color and in line.
+  goal: Met: one object on plain white that reads as the word dog in color and in line.
+  line: 0 pixels that are neither 0 nor 255 in 1500 x 1500. 0.0000 percent. No gray or shading in the line art.
+
+l2-w06-check-row-fish | rating 8 | clean | categories: none
+  note: One fish in color and one fish in line. The counts match.
+  note: The color file shows a blue and yellow fish in side view with one round eye, one top fin, one tail fin and one belly fin. The line file shows the same four parts.
+  note: The line file has no line between the blue body and the yellow belly of the color file. A color and line difference that changes no character.
+  note: The eye is a ring with a solid pupil in both files. The fish reads as a fish at book size in color and in line.
+  goal: Met: one object on plain white that reads as the word fish in color and in line.
+  line: 0 pixels that are neither 0 nor 255 in 1500 x 1500. 0.0000 percent. No gray or shading in the line art.
+
+l2-w06-check-row-pen | rating 8.5 | clean | categories: none
+  note: One pen in color and one pen in line. The counts match.
+  note: The color file shows a blue ballpoint pen with a white clip, a round top cap and a silver tip at the lower right. The line file shows the body, the clip, the round top cap and the small tip.
+  note: The pen lies on the diagonal in both files and reads as a pen at book size in color and in line.
+  goal: Met: one object on plain white that reads as the word pen in color and in line.
+  line: 0 pixels that are neither 0 nor 255 in 1500 x 1500. 0.0000 percent. No gray or shading in the line art.
+
+l2-w06-check-row-sun | rating 9 | clean | categories: none
+  note: One sun in color and one sun in line. The counts match.
+  note: The disc has exactly eight pointed triangle rays in color and in line. The wide base of each ray sits on the disc and each point faces outward.
+  note: No ray floats. The black pixels of the line print form one connected group, so every ray touches the disc. The largest gap between a ray and the disc is 0 px.
+  note: The sun has no face. No text and no number show.
+  goal: Met: one object on plain white that reads as the word sun in color and in line, with one sun only and eight pointed rays.
+  line: 0 pixels that are neither 0 nor 255 in 1500 x 1500. 0.0000 percent. No gray or shading in the line art.
+
+l2-w06-check-row-table | rating 9 | clean | categories: none
+  note: One table in color and one table in line. The counts match.
+  note: The color file shows a low table with a pale wooden top and four red round legs in three-quarter view. The line file shows a flat top and four round legs.
+  note: No wood grain lines show. The table reads as a table at book size in color and in line.
+  goal: Met: one object on plain white that reads as the word table in color and in line, with four legs in both files.
+  line: 0 pixels that are neither 0 nor 255 in 1500 x 1500. 0.0000 percent. No gray or shading in the line art.
+
+l2-w06-check-row-ten | rating 9 | clean | categories: none
+  note: Exactly ten balls in color and exactly ten balls in line, in two rows of five. The count was measured: the color print has ten separate red shapes and the line print has ten closed circles.
+  note: The balls in the color print have clear gaps between all of them and a wide white margin at every side.
+  note: Each line circle has one open highlight arc inside. No number, no letter and no text show.
+  goal: Met: ten identical balls in two rows of five on plain white, with no number in the picture.
+  line: 0 pixels that are neither 0 nor 255 in 1500 x 1500. 0.0000 percent. No gray or shading in the line art.
+
+l2-w06-check-row-tiger | rating 8.5 | clean | categories: none
+  note: One tiger in color and one tiger in line. The counts match.
+  note: Every stripe in the line art is a single curved line. The measure of the black groups of the line print shows no solid black fill of a large area. The only solid black shapes are the two eye pupils.
+  note: The tail has two band lines and a white tip inside. The ears have an inner line. The face has two eyes, a muzzle, a nose and a smile.
+  note: The right eye of the line file is a narrow solid oval near the head edge, as in the color file.
+  note: The tiger reads as a tiger at book size in color and in line.
+  goal: Met: one object on plain white that reads as the word tiger in color and in line, with stripes as lines and no text.
+  line: 0 pixels that are neither 0 nor 255 in 1500 x 1500. 0.0000 percent. No gray or shading in the line art.
+
+Control rows
+K1 | rating 6 | defect | categories: wrong-or-missing-prop
+  defect: The line file shows no nose. The text names the nose and the color file shows one nose, but the line face has only eyes, eyebrows and a mouth. The finger in the line art rests on the mouth corner, so a child sees no nose to trace.
+  note: The color file shows one nose: a soft shaded bump that the fingertip touches.
+  note: Nan matches the reference look: two buns with red ties, orange shirt with a white star, red shorts.
+  note: The line face has a mouth, so it is not a blank face.
+  goal: The color file meets the goal: Nan touches her nose with one finger and laughs. The line file does not show the nose, so the goal fails in the line art.
+  line: 0 pixels that are neither 0 nor 255 in 4000 x 3000. No gray or shading. Solid black pupils only.
+  retry: line: draw one clear nose shape where the fingertip touches, under the eyes and above the mouth.
+
+K2 | rating 8.5 | clean | categories: none
+  note: The color file shows one nose in profile. The line file shows one nose in the profile outline. The count matches in both files.
+  note: The line eye is a solid pupil without the color eye ring. A color and line difference that changes no character.
+  note: The line hair is one large outline with a bun circle. The shape is simple and works as a tracing line.
+  goal: Met: the head of Nan is in profile, the nose is clear in both files, and the picture works as a tracing practice line.
+  line: 0 pixels that are neither 0 nor 255 in 1600 x 1600. No gray or shading.
+
+K3 | rating 8.5 | clean | categories: none
+  note: One nut in the color file and one nut in the line file. The count matches.
+  note: The nut is an acorn with a dark cap, a body and a stalk. It reads as a nut at book size.
+  note: The line face has one small nose curve, a smile and two ring eyes with two small highlight rings.
+  note: The open hand in the line art shows five fingers and a thumb. No wrong hand.
+  goal: Met: one big brown nut in the open hand of Nan, close up, in both files. No text in either file.
+  line: 0 pixels that are neither 0 nor 255 in 4000 x 3000. No gray or shading.
+
+Files opened
+l2-w06-check-row-bag:
+  /home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-54/pages/l2-w06-check-row-bag-m1-color-print.png
+  /home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-54/pages/l2-w06-check-row-bag-m1-line-print-despeckled.png
+l2-w06-check-row-cup:
+  /home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-54/pages/l2-w06-check-row-cup-m1-color-print.png
+  /home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-54/pages/l2-w06-check-row-cup-m1-line-print-despeckled.png
+l2-w06-check-row-dog:
+  /home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-54/pages/l2-w06-check-row-dog-m1-color-print.png
+  /home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-54/pages/l2-w06-check-row-dog-m1-line-print-despeckled.png
+l2-w06-check-row-fish:
+  /home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-54/pages/l2-w06-check-row-fish-m1-color-print.png
+  /home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-54/pages/l2-w06-check-row-fish-m1-line-print-despeckled.png
+l2-w06-check-row-pen:
+  /home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-54/pages/l2-w06-check-row-pen-m1-color-print.png
+  /home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-54/pages/l2-w06-check-row-pen-m1-line-print-2-despeckled.png
+l2-w06-check-row-sun:
+  /home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-54/pages/l2-w06-check-row-sun-m1-color-print.png
+  /home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-54/pages/l2-w06-check-row-sun-m1-line-print-2-despeckled.png
+l2-w06-check-row-table:
+  /home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-54/pages/l2-w06-check-row-table-m1-color-print.png
+  /home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-54/pages/l2-w06-check-row-table-m1-line-print-2-despeckled.png
+l2-w06-check-row-ten:
+  /home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-54/pages/l2-w06-check-row-ten-m2-color-print.png
+  /home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-54/pages/l2-w06-check-row-ten-m2-line-print-2-despeckled.png
+l2-w06-check-row-tiger:
+  /home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-54/pages/l2-w06-check-row-tiger-m1-color-print.png
+  /home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-54/pages/l2-w06-check-row-tiger-m1-line-print-6-despeckled.png
+K1:
+  /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png
+  /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png
+  /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png
+K2:
+  /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png
+  /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png
+  /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png
+K3:
+  /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png
+  /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png
+
+Line print check: 0 pixels that are neither 0 nor 255 in every line print of both sets and the three control line files.
+Sun check: one black group in the line print, so all eight rays touch the disc. Largest gap 0 px.

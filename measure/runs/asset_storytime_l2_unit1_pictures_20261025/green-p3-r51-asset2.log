@@ -1,0 +1,89 @@
+storytime-animal-pictures: 8,248 triangles, 1.89 x 0.45 x 0.038 m, built in 1933 ms
+  frame-1                    104 tris  (191 ms)
+  frame-2                    112 tris  (191 ms)
+  frame-3                    106 tris  (172 ms)
+  backdrop-1                 130 tris  (79 ms)
+  backdrop-2                 130 tris  (59 ms)
+  backdrop-3                 130 tris  (49 ms)
+  lion-mane                 1186 tris  (139 ms)
+  lion-face                  598 tris  (40 ms)
+  lion-muzzle                358 tris  (16 ms)
+  lion-eyes                  466 tris  (15 ms)
+  lion-nose                  280 tris  (36 ms)
+  elephant-ears              766 tris  (33 ms)
+  elephant-head             1118 tris  (84 ms)
+  elephant-tusks             350 tris  (34 ms)
+  elephant-eyes              492 tris  (14 ms)
+  frog-body                 1052 tris  (360 ms)
+  frog-belly                 380 tris  (36 ms)
+  frog-eyes                  490 tris  (14 ms)
+texture  none (vertex colors)
+glb      out/storytime-animal-pictures/storytime-animal-pictures.glb  (215 KB)
+render   out/storytime-animal-pictures/render.png  (484 ms)
+storytime-animal-pictures: 8,248 triangles, 1.89 x 0.45 x 0.038 m, built in 1897 ms
+  frame-1                    104 tris  (189 ms)
+  frame-2                    112 tris  (189 ms)
+  frame-3                    106 tris  (205 ms)
+  backdrop-1                 130 tris  (87 ms)
+  backdrop-2                 130 tris  (62 ms)
+  backdrop-3                 130 tris  (50 ms)
+  lion-mane                 1186 tris  (132 ms)
+  lion-face                  598 tris  (56 ms)
+  lion-muzzle                358 tris  (34 ms)
+  lion-eyes                  466 tris  (35 ms)
+  lion-nose                  280 tris  (37 ms)
+  elephant-ears              766 tris  (45 ms)
+  elephant-head             1118 tris  (80 ms)
+  elephant-tusks             350 tris  (52 ms)
+  elephant-eyes              492 tris  (14 ms)
+  frog-body                 1052 tris  (429 ms)
+  frog-belly                 380 tris  (19 ms)
+  frog-eyes                  490 tris  (16 ms)
+texture  none (vertex colors)
+glb      out/storytime-animal-pictures/storytime-animal-pictures.glb  (215 KB)
+# Inspection: storytime-animal-pictures
+
+Size 1.89 x 0.45 x 0.038 m (x y z); 8,248 triangles; lowest point y = 0 m.
+
+## Silhouette per view (fractions of the frame)
+
+| view | width | height | coverage |
+|---|---|---|---|
+| front | 0.859 | 0.203 | 0.151 |
+| three-quarter | 0.723 | 0.301 | 0.13 |
+| side | 0.023 | 0.301 | 0.007 |
+| back | 0.859 | 0.203 | 0.151 |
+| top | 0.809 | 0.418 | 0.089 |
+
+## Visible share of the silhouette per part
+
+| part | front | three-quarter | side | back | top |
+|---|---|---|---|---|---|
+| frame-1 | 8.4% | 7.5% | 2.7% | 33.3% | 11.5% |
+| frame-2 | 8.5% | 9.1% | 3.6% | 33.3% | 12.1% |
+| frame-3 | 8.4% | 11.4% | 93.7% | 33.4% | 12.9% |
+| backdrop-1 | 15.2% | 10.6% | 0 (hidden) | 0 (hidden) | 10.4% |
+| backdrop-2 | 15.1% | 14% | 0 (hidden) | 0 (hidden) | 11.8% |
+| backdrop-3 | 12.1% | 14.9% | 0 (hidden) | 0 (hidden) | 10.7% |
+| lion-mane | 4.2% | 3.2% | 0 (hidden) | 0 (hidden) | 3.8% |
+| lion-face | 2.6% | 1.9% | 0 (hidden) | 0 (hidden) | 1.9% |
+| lion-muzzle | 1.9% | 1.4% | 0 (hidden) | 0 (hidden) | 1.5% |
+| lion-eyes | 0.8% | 0.6% | 0 (hidden) | 0 (hidden) | 0.7% |
+| lion-nose | 0.2% | 0.2% | 0 (hidden) | 0 (hidden) | 0.2% |
+| elephant-ears | 2.8% | 2.7% | 0 (hidden) | 0 (hidden) | 2.8% |
+| elephant-head | 5.8% | 5.4% | 0 (hidden) | 0 (hidden) | 5.3% |
+| elephant-tusks | 0.3% | 0.4% | 0 (hidden) | 0 (hidden) | 0.3% |
+| elephant-eyes | 0.8% | 0.7% | 0 (hidden) | 0 (hidden) | 0.8% |
+| frog-body | 9.5% | 12% | 0 (hidden) | 0 (hidden) | 9.9% |
+| frog-belly | 2.5% | 3.1% | 0 (hidden) | 0 (hidden) | 2.4% |
+| frog-eyes | 0.8% | 1.1% | 0 (hidden) | 0 (hidden) | 1% |
+
+## Values and colors (shaded render)
+
+Values: dark 3%, mid 53%, light 44%.
+Dominant colors: #edae57 36%, #f1c2a3 20%, #76a3bf 12%, #b7d0e8 12%, #935320 11%, #7ab841 10%.
+
+## Warnings
+
+- Part 'lion-nose' is barely visible (under 0.3% of the silhouette in every view).
+- The side silhouette is very thin compared with the front: check that the side view still reads.

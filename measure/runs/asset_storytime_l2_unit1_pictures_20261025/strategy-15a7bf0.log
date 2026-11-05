@@ -1,0 +1,128 @@
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-strategy
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures
+phase_id: P3
+short_track_id: asset_storytime_l2_unit1_pictures
+role_base_sha: 455d2c1d60f6a7b2d88cda8391d1771831476d5f
+strategy_commit: 15a7bf0b2a59b8137a05805666df6736dc256167
+strategy_commit_short: 15a7bf0
+phase_base_sha: not captured here. The orchestrator runs `git rev-parse HEAD` immediately after commit 15a7bf0b and records that value as the immutable Phase 3 phase_base_sha. The strategy embeds no SHA for that base.
+phase_heading: "Phase 3: Week 1 pictures"
+repo: /home/daniebo/Desktop/advantage-forge
+
+files_changed:
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+files_not_changed:
+  - "production code, tests, and Phase 1 and Phase 2 evidence"
+  - "rows T1 to T141 and their green result"
+  - "measure/tracks/asset_storytime_l2_unit1_pictures_20261025/spec.md and contract.md"
+
+verified_facts:
+  - "picture list v3: /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json"
+  - "pictures.json sha256: c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b"
+  - "pictures.md sha256: e97d649f8de5597494730ee17c8785a1ebe36ee2f7f7c0897701d5422929f848"
+  - "Workbooks commit of list v3: 078917f1"
+  - "picture specification v1 arrived 2026-10-27 in Workbooks commit a9178413"
+  - "192 rows in total. Week 1 has 30 rows: 16 of class A, 2 of class B, 12 of class C."
+  - "week 1 uses: 16 story-page, 2 cover, 9 check-row, 3 practice-line"
+  - "weeks 2 to 7 have 27 rows each. That is 162 rows."
+  - "class A and class B render at 4000 x 3000 pixels. Class C renders at 1500 x 1500 pixels."
+  - "all 192 color names match the pattern ^l2-w\\d{2}-[a-z-]+-v\\d+\\.png$"
+  - "every lineArtFileName equals the color name with -line before the version"
+  - "week 1 output is 30 color and 30 line-art files. The date is 2026-11-02."
+  - "weeks 2 to 7 and the cover render are due 2026-11-16 and belong to Phase 4"
+  - "the two class B rows of week 1 are the reader covers l2-w01-cover-hello and l2-w01-cover-nan-can-nod"
+  - "Forge renders the B pictures. Workbooks keeps the layout and the text."
+  - "picture list v4 is pending before 2026-11-16. It adds a week 8 review and the Benchmark 1 rows for moon, mango, ostrich, and drum."
+  - "Phase 3 makes no picture for those words."
+  - "machine memory: 7316 MiB total, 4 cores. heavy-run.sh stops a job after 5400 s with exit 124. Exit 75 means hold."
+  - "heavy preflight thresholds: HEAVY_MIN_AVAIL_MB 1200, load at most 2 x cores"
+  - "the bookcase drift window: out/bookcase/stats.json read texture size 512 and reads 1024 now. The approved build is texture 1024 and detail 0.006."
+  - "the classroom map is the generated code scenes/maps/classroom.ts. The PNG files under out/chibi-sprouts/r1/week1/scenes are reference renders, not pipeline inputs."
+  - "the cost ledger holds 8 before-call and 8 after-call entries. No candidate exists yet."
+
+gate_commands:
+  RED_TEST_COMMAND: "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 3600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'"
+  GREEN_TEST_COMMAND: "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 3600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'"
+  TYPECHECK_COMMAND: "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'"
+  NAN_SAMPLE_COMMAND: "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 1800 node --import tsx scripts/storytime-book-pictures.ts render --job w01-readalong-p05 --version 2'"
+  FORGE_ASSET_COMMAND: "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 1800 ./forge all <name>'"
+  FORGE_CHECK_COMMAND: "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 ./forge check <name>'"
+  WEEK1_RENDER_COMMAND: "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 3600 node --import tsx scripts/storytime-book-pictures.ts render --week 1 --version 1'"
+  PHASE3_CLOSEOUT_COMMAND: "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 3600 node --import tsx scripts/storytime-book-pictures.ts verify --release --week 1'"
+  PHASE3_COLOR_FALLBACK_COMMAND: "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 3600 node --import tsx scripts/storytime-book-pictures.ts verify --release --week 1 --output color'"
+  QUOTA_CHECK_COMMAND: "/home/daniebo/.local/bin/ra-quota status; mmx quota show"
+  MEMORY_CHECK_COMMAND: "free -m | awk '$1==\"Mem:\" {print \"available MB: \" $7}'"
+  SHARED_ASSET_CHECK_COMMAND: "node -e 'const s=require(\"./out/bookcase/stats.json\");console.log(\"bookcase texture size:\",s.texture.size)'"
+  LIST_CHECK_COMMAND: "sha256sum /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.md"
+
+closeout_gate:
+  - "verify --release --week 1 exits 0 and prints: Verification passed for 30 jobs with release evidence."
+  - "a count other than 30 fails the gate"
+  - "verify --release --week 1 --output color exits 0 while the style look is pending, and the plan records the line-art gate as open"
+  - "an independent sha256sum matches each manifest file hash"
+  - "the ledger has equal before-call and after-call counts"
+  - "every week 1 row has a color file, a line-art file, a person log, and two model logs"
+  - "./measure/generate.sh runs after the plan status changes"
+
+review_applicability:
+  review_a_correctness: "Applies. The list loader, the size classes, the file names, and the twin rule change the output contract. A row can lose its twin or its size."
+  review_b_security: "Applies. The picture list is read only. The ledger, the raw model outputs, and the review logs must hold no credential. The batch asset records hold no path outside out/."
+  review_c_ux_api: "Applies. The CLI gains list-driven names, the -line-v1.png sibling name, and the new size classes. The error text names the failing row."
+  adversarial_testing: "Required. Change one byte of a list row, one line-art pixel to 128, one manifest hash, one shared-asset stat, and one line-art name. Each change must fail a named check."
+  ux_browser_review: "Does not apply. The output is picture files. The human review is the count review and the line-art look. The browser shows no new UI."
+
+risks:
+  - "machine limits: a 4000 x 3000 render holds the color frame, the line-art pass targets, the depth texture, and the decoded PNG at once. The color frame alone takes 48 MB. One run can push the browser under the 1200 MB headroom bound. The check is the labeled available MB value before each batch and the labeled render peak rss mb value after each job. The batch splits when a job passes 4200 MB."
+  - "heavy-run.sh stops a job after 5400 s with exit 124. A planned longer job sets HEAVY_RUN_TIMEOUT_S and gives the reason. Exit 75 means hold, and the executor retries the batch."
+  - "shared asset drift: another track changed assets/bookcase.ts and rebuilt out/bookcase/bookcase.glb while this phase started. The pre-render check records the source-build stats of every shared set piece in out/storytime/l2/unit1/batches/<batch>-assets.json. The bookcase stat must read texture size 1024."
+  - "the line-art look of Daniel is pending. Review A RA2-N2 stays a named risk because the adjacent bookcase books merged into one outline in smoke run 3."
+  - "the count review of Daniel or his named reviewer is pending. Both gates keep their [b] deferred markers."
+  - "the classroom map version: classroom-v2.png does not replace classroom.png until Daniel decides. A render proves its map version with the stage SHA-256, the SHA-256 of scenes/maps/classroom.ts, and the SHA-256 of each shared GLB."
+  - "picture list v4 is pending before 2026-11-16. Phase 3 makes no picture for moon, mango, ostrich, or drum."
+
+pipeline_gap_for_phase_3_red_and_green:
+  - "PICTURE_SIZES holds spec v0 sizes: story 3000 x 2250, cover 3600 x 2700, small 1500 x 1500"
+  - "the line-art file name is <directory>/lineart/<name>-lineart.png. Spec v1 wants the sibling name <color name>-line-v1.png"
+  - "only readalong and decodable jobs get a twin. Spec v1 wants one twin for every row."
+  - "plan builds 112 package jobs. It builds no cover, check-row, or practice-line job."
+  - "the line-art check has no 12 px line width rule"
+  - "contract.md still states the provisional format, 3000 x 2250 pages, 3600 x 2700 covers, and the -lineart.png name"
+  - "Red adds the failing rows T142 to T151. Green changes the pipeline and amends contract.md to spec v1."
+  - "owned paths for Green: src/storytime/book-pictures.ts, scripts/storytime-book-pictures.ts, measure/tracks/asset_storytime_l2_unit1_pictures_20261025/contract.md"
+  - "owned path for Red and Green: tests/storytime-book-pictures.test.ts"
+  - "the orchestrator reports the contract gap to the PM in the Phase 3 handoff"
+
+new_test_rows:
+  - T142
+  - T143
+  - T144
+  - T145
+  - T146
+  - T147
+  - T148
+  - T149
+  - T150
+  - T151
+anti_pattern_coverage:
+  - "A2 consent-blind publish gate: the release gate needs a person log with a named checkedBy and a person evidence class. Every week 1 row needs a color person log and a line-art person look."
+  - "A3 digit-only count: parse labeled integers only for the row counts, the pixel sizes, the two memory labels, the bookcase stat, the 30-job text, the ledger counts, and the vitest total."
+  - "A4 vacuous pass: every row has a color file and a line-art file, the list loader returns 30 rows, a 6 px line fails, and a batch with no asset record fails."
+  - "A5 false claim: plan notes quote the command, the exit code, and the labeled values. The closeout text must read 30 jobs."
+  - "A6 registry overstatement: the week 1 completion claim waits for the count review and the line-art look."
+  - "A7 over-broad filter: the owned-error grep matches path prefixes, the binary line-art check has no tolerance, and the size check compares exact pixel pairs."
+  - "A9 archived track paths: the new tests read no Measure path."
+  - "A10 generated-facts drift: run ./measure/generate.sh after each Phase 3 plan status change."
+  - "A1 and A8 stay retired in the canonical catalog."
+
+deviations:
+  - "The quota tool routed this role to minimax-cn-coding-plan/MiniMax-M3#high. The role table names Claude Opus."
+  - "measure/anti-patterns.md does not exist in this repository. The strategy uses the canonical catalog at ~/.agents/skills/measure-orchestrator/references/anti-pattern-catalog.md. A1 and A8 are retired there."
+  - "This role ran no heavy job, no render, no build, no paid call, no browser, and no network call. It ran three read-only node probes on the list file, the bookcase stat file, and the memory line."
+
+log_path: measure/runs/asset_storytime_l2_unit1_pictures_20261025/strategy-15a7bf0.log
+provisional_log_path: measure/runs/asset_storytime_l2_unit1_pictures_20261025/strategy-provisional.log
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,496 @@
+{
+  "group": "w04",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v4",
+  "cast": "cast.json 88cbc951",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w04-story-page-this-is-my-mom",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-mom-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: mom (1), the child who says my (1). Seen: a woman with wavy dark-brown hair, coral blouse, blue jeans, white sneakers; Lily in a purple dress points at her. Both match the cast and read clearly."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-my-mom",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-mom-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: mom (1), child (1). Seen: a woman with wavy hair, buttoned blouse, trousers; a girl with a bob and bangs points at her. Black lines on white, no gray, no gaps."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-my-dad",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-dad-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: dad (1), child (1). Seen: a man with short dark-brown hair, mustard polo, dark-blue jeans, brown shoes; Lily points at him. Both match the cast."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-my-dad",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-dad-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: dad (1), child (1). Seen: a man in a polo shirt and trousers; a girl points at him. Clean black lines on white. The side table is a plain rounded block, a small mark."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-my-brother",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-brother-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: brother (1), child (1). Seen: Tom with dark side-swept hair, dark-blue T-shirt, tan shorts, red shoes, one hand waving; Lily points at him. Both match the cast. Hands read as hands."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-my-brother",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-brother-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: brother (1), child (1). Seen: a boy with side-swept hair, T-shirt, shorts, waving; a girl with a bob points. Clean black lines on white."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-my-grandma",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-grandma-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: grandma (1), child (1). Seen: an older woman with curly silver-gray hair, rose-red cardigan, cream blouse, long navy skirt, brown shoes, holding a birthday cake; Lily points at her. Match the cast. The cake is an extra prop, a small mark."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-my-grandma",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-grandma-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: grandma (1), child (1). Seen: an older woman with curly hair, cardigan, long skirt, holding a cake with three candles; a girl points at her. Clean black lines on white."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-my-grandpa",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-grandpa-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: grandpa (1), child (1). Seen: an older man with short white hair and a white mustache, green cardigan over a white shirt, brown trousers and shoes, a folded newspaper under one arm; Lily points at him. Matches the cast. The cardigan has sleeves where the note says vest, a small mark."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-my-grandpa",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-grandpa-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: grandpa (1), child (1). Seen: an older man with a mustache, cardigan, trousers, a newspaper; a girl points at him. Clean black lines on white."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-my-house",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-house-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a house (1), child (1). Seen: a small white house with a gray roof, red door, two windows, a chimney; Lily points at it. The house is clear and reads as a house."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-my-house",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-house-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a house (1), child (1). Seen: a house with roof, door, two windows, chimney; a girl points at it. Clean black lines on white. The bushes are simplified, a small mark."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-my-family",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-family-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a family. Seen: six people in front of a house: mom, dad, grandma, grandpa, Tom, Lily. All match the cast. No dog is drawn, and the sentence does not name one."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-my-family",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-family-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a family. Seen: six people in front of a house, adults and two children, all with clear faces. Clean black lines on white."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-my-dog-pip",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-dog-pip-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a dog named Pip (1). Seen: a golden-brown and cream puppy with floppy ears and a red collar with a gold tag, jumping in front of the six family members. Pip matches the cast and is clear. The family is extra and matches the cast."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-my-dog-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-my-dog-pip-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a dog (1). Seen: a puppy with floppy ears, a collar with a tag, raised paws, in front of the family. Clean black lines on white. The dog reads as a dog."
+    },
+    {
+      "id": "l2-w04-cover-my-family",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-cover-my-family-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Cover title: My Family. Items: a family. Seen: six people in a living room: mom, dad, grandma, grandpa, Tom, and Lily waving in front. All match the cast. No text in the picture."
+    },
+    {
+      "id": "l2-w04-cover-my-family",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-cover-my-family-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a family. Seen: six people in a living room, Lily waving in front. Clean black lines on white. No text."
+    },
+    {
+      "id": "l2-w04-story-page-pam-can-nap",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-pam-can-nap-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pam the doll (1), the action nap. Seen: Nan kneels and lifts a blue blanket; a cloth doll with yellow pigtails and a red dress lies in an open box under the blanket. Pam is visible and reads as a doll in a bed. The doll eyes look open, a small mark."
+    },
+    {
+      "id": "l2-w04-story-page-pam-can-nap",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-pam-can-nap-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pam the doll (1), nap. Seen: a girl with two buns touches a blanket; a doll with pigtails lies in an open box under the blanket. Clean black lines on white."
+    },
+    {
+      "id": "l2-w04-story-page-pam-is-in-a-pan",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-pam-is-in-a-pan-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pam the doll (1), a pan (1), in. Seen: a cloth doll with yellow pigtails and a red dress sits inside a yellow round pan with a long handle on the right; Nan stands beside it. The pan is deep but the handle makes it read as a pan. Doll sits in it."
+    },
+    {
+      "id": "l2-w04-story-page-pam-is-in-a-pan",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-pam-is-in-a-pan-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pam (1), a pan (1). Seen: a doll with pigtails sits in a round pan; a handle shows behind the rim on the right. Nan stands at the left. Clean black lines on white. The handle is partly hidden, a small mark."
+    },
+    {
+      "id": "l2-w04-story-page-pam-is-on-a-map",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-pam-is-on-a-map-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pam (1), a map (1), on. Seen: the doll lies on an unfolded paper map with a blue river, a red house, a dotted path and an X; Nan kneels and points at it. The map reads as a map."
+    },
+    {
+      "id": "l2-w04-story-page-pam-is-on-a-map",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-pam-is-on-a-map-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pam (1), a map (1). Seen: a doll lies on a folded map with a river, a house, a dotted path and an X; Nan kneels and points. Clean black lines on white."
+    },
+    {
+      "id": "l2-w04-story-page-pam-is-on-a-man",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-pam-is-on-a-man-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pam (1), a man (1), on. Seen: a man with short black hair, blue T-shirt, gray shorts and black sandals sleeps on a sofa; the doll sits on his chest; Nan laughs at the left. The man matches Nan's dad. The doll is on the man."
+    },
+    {
+      "id": "l2-w04-story-page-pam-is-on-a-man",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-pam-is-on-a-man-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pam (1), a man (1). Seen: a man lies on a sofa with eyes closed; a doll sits on his chest; Nan stands at the left. Clean black lines on white."
+    },
+    {
+      "id": "l2-w04-story-page-is-this-pam",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-is-this-pam-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. The thing is under a cover on purpose. Seen: a large lump under a blue blanket on a sofa; a red cloth edge, yellow yarn and one small foot show at the right end; Nan points at it with a puzzled face. The cover is clear and the clues are clear. The exception applies."
+    },
+    {
+      "id": "l2-w04-story-page-is-this-pam",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-is-this-pam-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Seen: a large lump under a blanket on a sofa; yarn fringe and a small foot show at the right end; Nan points at it. Clean black lines on white. The cover and the clues are clear."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-the-man",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-the-man-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: the man (1). Seen: a laughing man with short black hair and a blue T-shirt under a blue blanket on the sofa; the doll sits on his head; Nan reaches out. The man is visible and matches Nan's dad. The doll is an extra."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-the-man",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-the-man-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: the man (1). Seen: a laughing man under a blanket on a sofa with a doll on his head; Nan reaches out. Clean black lines on white."
+    },
+    {
+      "id": "l2-w04-story-page-nan-and-pam-nap",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-nan-and-pam-nap-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), Pam (1), nap. Seen: Nan sleeps on a sofa with closed eyes under a blue blanket and holds the doll in her arm; the doll has yellow pigtails and a red dress. Both are visible. Nan matches the cast. Her head is large against her body, a small mark."
+    },
+    {
+      "id": "l2-w04-story-page-nan-and-pam-nap",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-nan-and-pam-nap-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), Pam (1), nap. Seen: a girl with buns sleeps on a sofa under a blanket; a doll lies in her arm. Clean black lines on white."
+    },
+    {
+      "id": "l2-w04-cover-pam",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-cover-pam-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Cover title: Pam. Items: Pam the doll (1). Seen: Nan stands and hugs the doll in front of her chest; the doll has a cream face, yellow pigtails, a red dress. The doll is clear. It covers Nan's mouth and chin, a small mark. No text."
+    },
+    {
+      "id": "l2-w04-cover-pam",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-cover-pam-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pam the doll (1). Seen: a girl with buns hugs a doll with pigtails. Clean black lines on white. No text."
+    },
+    {
+      "id": "l2-w04-check-row-monkey",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-monkey-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a monkey (1). Seen: a brown monkey sits with a curled tail, big ears, a tan face and belly. It reads as a monkey."
+    },
+    {
+      "id": "l2-w04-check-row-monkey",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-monkey-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a monkey (1). Seen: a sitting monkey with a curled tail. Clean black lines on white, closed shapes."
+    },
+    {
+      "id": "l2-w04-check-row-cat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-cat-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a cat (1). Seen: an orange cat with stripes, a white muzzle, green eyes, whiskers, pointed ears and a curled tail. It reads as a cat. The mouth is a flat small mark."
+    },
+    {
+      "id": "l2-w04-check-row-cat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-cat-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a cat (1). Seen: a cat with pointed ears, whiskers, a curled tail. Black lines on white. The leg lines are open at the top near the chest, but each area still holds a clear colorable shape."
+    },
+    {
+      "id": "l2-w04-check-row-sun",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-sun-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a sun (1). Seen: an orange round sun with eight triangle rays. It reads as a sun."
+    },
+    {
+      "id": "l2-w04-check-row-sun",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-sun-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a sun (1). Seen: a circle with eight triangle rays. Clean black lines on white."
+    },
+    {
+      "id": "l2-w04-check-row-dog",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-dog-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a dog (1). Seen: a brown and cream puppy with floppy ears, a red collar with a gold tag and a pink tongue. It reads as a dog."
+    },
+    {
+      "id": "l2-w04-check-row-dog",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-dog-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a dog (1). Seen: a puppy with floppy ears, a collar and a tag. Clean black lines on white, closed shapes."
+    },
+    {
+      "id": "l2-w04-check-row-mouse",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-mouse-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a mouse (1). Seen: a gray mouse with big round pink-inside ears, whiskers, a pink nose and a thin pink tail. It reads as a mouse."
+    },
+    {
+      "id": "l2-w04-check-row-mouse",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-mouse-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a mouse (1). Seen: a mouse with round ears, whiskers and a long tail. Black lines on white, no gray."
+    },
+    {
+      "id": "l2-w04-check-row-bus",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-bus-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a bus (1). Seen: a yellow school bus with windows, a door, headlights and four wheels. It reads as a bus."
+    },
+    {
+      "id": "l2-w04-check-row-bus",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-bus-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a bus (1). Seen: a bus with windows, a door and wheels. Clean black lines on white. It reads as a bus."
+    },
+    {
+      "id": "l2-w04-check-row-fish",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-fish-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a fish (1). Seen: a round blue and yellow fish with one big eye, yellow tail and top fins. It reads as a fish."
+    },
+    {
+      "id": "l2-w04-check-row-fish",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-fish-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a fish (1). Seen: a round fish with an eye, a tail and two fins. Clean black lines on white, closed shapes."
+    },
+    {
+      "id": "l2-w04-check-row-hat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-hat-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a hat (1). Seen: a yellow straw hat with a wide brim and a red band and bow. It reads as a hat."
+    },
+    {
+      "id": "l2-w04-check-row-hat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-hat-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a hat (1). Seen: a wide-brim hat with a band and a bow. Clean black lines on white."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-pam",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-pam-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pam the doll (1). Seen: Nan stands and holds a cloth doll in front of her; the doll has a cream face, yellow pigtails and a red dress. Doll is clear and matches the cast. Nan matches the cast."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-pam",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-story-page-this-is-pam-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pam the doll (1). Seen: a girl with buns holds a doll with pigtails. Clean black lines on white."
+    },
+    {
+      "id": "l2-w04-check-row-milk",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-milk-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: milk (1). Seen: a clear glass filled with white liquid. It reads as a glass of milk."
+    },
+    {
+      "id": "l2-w04-check-row-milk",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w04/l2-w04-check-row-milk-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: milk (1). Seen: a glass with a liquid level line inside. Clean black lines on white. A child will color the liquid white. It reads as a glass of liquid."
+    }
+  ],
+  "summary": { "files": 54, "pass": 54, "fail": 0 }
+}

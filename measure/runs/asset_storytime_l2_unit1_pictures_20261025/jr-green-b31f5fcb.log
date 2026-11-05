@@ -1,0 +1,53 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green (Green · P3 · storytime_l2_unit1_pictures · r57)
+status: complete (waiting for the independent review; no task marked [x])
+phase_base_sha: 15a7bf0b
+role_base_sha: a4308df1 (HEAD at start)
+final_head: b31f5fcb
+models: Green = claude-code/claude-sonnet-5-5#high. Red (Phase 3) = minimax-cn-coding-plan/MiniMax-M3. Image = meta/muse-image (OpenRouter Image API). Green coder model: none; no delegation.
+commits:
+  - b2700448 feat(storytime): add the Muse page specs for the week 1 character pages (11 spec files in docs/storytime/l2-unit1/w01/muse/)
+  - b31f5fcb docs(measure): record storytime green round 57 muse character pages (plan.md evidence block)
+tool: scripts/storytime-muse.mjs was not changed.
+summary: Muse production round 2 made 11 week 1 character pages from 3D elements. No model source, no src/, no tests/, no picture list, no round 56 output, and no existing stage file changed. The orchestrator follow-up (smooth ears, even clothing, closed line outlines, relaxed separate fingers, forehead crease, clean Ben reference) was applied to the calls made after it.
+room_shots: one heavy-runner command (bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c /tmp/opencode/muse-r57/shoot.sh), exit 0 at the first try, 31.8 s, no lock wait over 600 s. Files in out/storytime/l2/unit1/w01/muse/elements/: classroom-door.png, classroom-door-wide.png, classroom-rug.png (1600 x 1200). Elements made with sharp: cast-group-a.png, cast-group-b.png, ben-ref-clean.png.
+rows (final version; SHA-256 prefix of the final color and line file):
+  - l2-w01-story-page-hello-i-am-pat m2: color 04cd970d line 225abba6
+  - l2-w01-story-page-hello-i-am-mia m1: color 63f4304c line 7204b14a
+  - l2-w01-story-page-hello-i-am-may m1: color ab3b693c line 6202b2fa
+  - l2-w01-story-page-hello-i-am-sam m1: color 233ef9a8 line efd1ecba
+  - l2-w01-story-page-hello-i-am-your-teacher m1: color e640e0ab line e52eb086
+  - l2-w01-story-page-hello-i-am-pip m2: color da39cd2c line 0420c856
+  - l2-w01-story-page-a-nurse m1: color 4c2be61b line a920737d
+  - l2-w01-story-page-a-nest-and-a-nut m1: color b6a00b39 line 7a1de622
+  - l2-w01-story-page-nan-can-nod m2: color ef11f0ee line ae5b087d
+  - l2-w01-cover-hello m3: color 2f441ebf line 2bf85e0d
+  - l2-w01-cover-nan-can-nod m1: color f7c6d624 line a80fb45f
+
+retries:
+  - pat m1 -> m2: bag showed a red block with a yellow tab, not a round bump.
+  - pip m1 -> m2: pale skin flap beside Nan's right eye (m2 adds the clean Nan face crop as input 5).
+  - cover-hello m1 -> m2 -> m3: Pat's bag bump not seen (Pat faced the camera, then the bump stayed hidden); m3 turns Pat's back to the camera and the bump shows.
+  - nan-can-nod m1 -> m2: pale blotches at the shoulders and lump-like hands (follow-up items 2 and 6).
+  - line second tries (suffix -2): teacher (dotted rug fringe), nurse (open hill and cloud arcs), cover-nan-can-nod (clover details).
+known_issues_not_retried (facts, for the reviewer):
+  - teacher and pip: the rug is the rectangular set rug; the picture list says "round rug" for the teacher row.
+  - nurse line try 2: the right hand outline is open; large cloud and hill arcs run to the picture edge.
+  - cover-nan-can-nod: Nan reaches toward Pip and does not nod; line try 2 trunk lines wander and some stay open.
+  - a-nest-and-a-nut: the branch is high in the frame, not low.
+  - nan-can-nod m2: a faint pale patch remains at Nan's left shoulder.
+  - Eye-corner tick marks on Pat, May, Sam, Mia come from the 3D models. Ear rims were not checked at 100 percent.
+  - ben-ref-clean.png: the soft blur also softened the hair edge and brows; a faint streak left of the left brow remains. No call used it.
+tasks_flipped_x: none
+tasks_flipped_b_deferred: none
+new_files:
+  - docs/storytime/l2-unit1/w01/muse/ (11 new specs: hello-i-am-pat, -mia, -may, -sam, -your-teacher, -pip; a-nurse; cover-hello; a-nest-and-a-nut; nan-can-nod; cover-nan-can-nod)
+  - out/storytime/l2/unit1/w01/muse/elements/ (3 room shots, 2 cast group sheets, ben-ref-clean.png; not in git)
+  - out/storytime-review/batch-29/ (brief.md, pages/ 22 files, refs/ 24 files; not in git)
+calls (usage.cost USD): color 16 calls 0.16; line 15 calls 0.15; total 31 calls 0.31. No call failed. Running total 0.42 + 0.31 = 0.73 USD. Every call is in out/storytime/l2/unit1/w01/muse/costs.tsv.
+review_batch: out/storytime-review/batch-29/
+dispositions: none
+dispositions_note: the orchestrator follow-up items were applied as prompt additions; no finding id was routed
+targeted_red_command: not applicable (picture production round; the Muse tool printed "<row>-m<n> color ok 1920x1280 cost 0.01" for each call)
+handoff: Independent review of batch-29. Do not mark Phase 3 task [x] before the review. Round 58 can take the check rows and the practice lines.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,83 @@
+# Mid Red r2 log: Phase 4 Task 1 fixture fixes (T173, T177)
+
+- Role: measure-mid-red (`opencode-go/deepseek-v4.1-flash`).
+- Track: `asset_storytime_l2_unit1_pictures_20261025`.
+- Phase: "Phase 4: Remaining pictures and cover" (P4).
+- phase_base_sha: `fc76c27209402c54354447693e9b291d4411ff79`.
+- role_base_sha: `86f63533d09ded2b8f0f1823c486ef38cfd2c33d`.
+- Green production commit: `b6824b8ac961fb8992ff4b563cc45bfb26973bf5`.
+- Green model: `claude-code/claude-sonnet-5-5#high` (Anthropic family). Coder: none.
+
+## Defects fixed
+
+Green log `jr-green-p4-t1.log` records that T173 and T177 failed for fixture reasons.
+
+1. `putRowStage` wrote the row stage files under `docs/storytime/l2/unit1/`. The code
+   (`rowStageRelativePath`) and the repository use `docs/storytime/l2-unit1/`. T177 stopped with
+   ENOENT before any check.
+2. T173 ran the live `render --dry-run` with no row stage file. `readRowStage` stopped with
+   ENOENT before the list pin check.
+
+Both fixes write only under the temporary test root. Every labeled expectation of T173 and T177
+is unchanged: the v4 pin, the v3 negative control, `--week 8` = 4 rows, 0 and 9 refused, 196
+rows with no `--week`, and the 162-row helper. The test file writes no file under `docs/`.
+
+## GREEN-side proof on HEAD (`86f63533` with `b6824b8a`)
+
+```sh
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts tests/storytime-picture-rows.test.ts tests/storytime-muse-delivery.test.ts tests/storytime-stage-check.test.ts --maxWorkers=1'
+```
+
+- Exit code: `0`.
+- `Test Files  4 passed (4)`.
+- `Tests  172 passed (172)`.
+- Log: `mid-red-p4-r2-head.log`.
+
+## Old-code proof (`37fa3501`, the parent of `b6824b8a`)
+
+A worktree at `/tmp/opencode/red-r2-check` held `37fa3501` and the fixed test file. The worktree
+linked `node_modules` and the Workbooks checkout.
+
+```sh
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /tmp/opencode/red-r2-check && node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'
+```
+
+- Exit code: `1`.
+- `Test Files  1 failed (1)`.
+- `Tests  2 failed | 139 passed (141)`.
+- Failing rows: T173 and T177. The log holds no ENOENT line.
+- T173 labels: `PICTURE_LIST_SHA256` is undefined. `PICTURE_LIST_V3_SHA256` is still exported.
+  The live render refuses the live list with `The picture list changed: expected SHA-256
+  c3e23cfd...`. The version 3 bytes are accepted.
+- T177 labels: `Invalid week: 8`. A run with no `--week` stops at the version 3 pin. The weeks 2
+  to 7 helper is absent.
+- Log: `mid-red-p4-r2-oldcode.log`.
+- The worktree is removed, pruned, and the Workbooks link is deleted.
+
+## Commits
+
+- `c2ebc72d` `tests/storytime-book-pictures.test.ts` (two fixture fixes).
+- `5a9b9257` `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md` (Red r2 block).
+
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: done
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4
+task: Red r2 for Phase 4 Task 1 (T173 and T177 fixture defects)
+baseline_sha: fc76c27209402c54354447693e9b291d4411ff79
+role_base_sha: 86f63533d09ded2b8f0f1823c486ef38cfd2c33d
+head_sha: 5a9b9257571cb6ac1b2e23f5079a7940fc5a0b4b
+green_production_sha: b6824b8ac961fb8992ff4b563cc45bfb26973bf5
+commits: c2ebc72d tests/storytime-book-pictures.test.ts; 5a9b9257 measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+tests_run: HEAD command exit 0; Test Files 4 passed (4); Tests 172 passed (172). Old-code command in a 37fa3501 worktree exit 1; Test Files 1 failed (1); Tests 2 failed | 139 passed (141); failed T173 and T177 with labeled expectations and no ENOENT.
+files_changed: tests/storytime-book-pictures.test.ts (putRowStage path segment `l2-unit1`; T173 writes the live row stage under its temporary root); measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md (Red r2 block); this report (untracked evidence)
+plan_updates: A "Red r2 evidence" block sits under Phase 4 Task 1. It records the role base, the Green production commit, the test commit, the two defects, the HEAD totals, the old-code totals, and each failing label. Phase 4 Task 1 stays [ ]. No task is [x].
+handoff: Green reruns the Phase 4 gate on the fixed tests. No production change is expected. The 162-row helper stays `weeksTwoToSevenRows`. The week 8 rows stay out of the 162-row production scope until the PM assigns them.
+dispositions: none
+model: opencode-go/deepseek-v4.1-flash (Red, this role). Green for this phase runs on the Anthropic family. The families differ.
+model_deviation: none. The orchestrator supplied the Red route. This role ran no ra-quota call.
+facts_changed: none. The production code did not change in this round.
+dirty_path_classification: Relevant paths are clean after the commits. The untracked logs `mid-red-p4-r2.log`, `mid-red-p4-r2-head.log`, and `mid-red-p4-r2-oldcode.log` are evidence. The untracked `docs/hero-mockups/` and `docs/item-mockups/` files and the other modified paths belong to other sessions and are preserved. The tests write no file under `docs/`; both fixtures use temporary roots.
+anti_patterns: No vacuous pass. The HEAD run proves the fix, and the old-code run proves the tests still fail on the old production code. Every old-code failure names a labeled expectation, and the log holds no ENOENT. No digit-only count. No skip and no `-t` filter. The tests name no `measure/tracks/` path.
+END_MEASURE_AGENT_RESULT

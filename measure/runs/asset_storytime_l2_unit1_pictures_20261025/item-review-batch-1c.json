@@ -1,0 +1,15 @@
+{
+  "reviewer": "openai/gpt-6-luna#high",
+  "gesture-touch-nose": {
+    "overall": 7.0,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "Fixed: one finger extends, but it is short and blends into the fist.",
+      "Fixed: the head stays in three-quarter view, so the face and smile remain visible.",
+      "Fixed: the side row shows the profile, not the back of the head.",
+      "Partly fixed: the fingertip reaches the nose area, but contact with the tip is hard to read at strip size."
+    ],
+    "fix": "Make the index finger longer and clearer against the nose tip."
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "status": "inconclusive",
+  "reviewer": "opencode/glm-5.3-flash-free#high",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Provisional. Review in progress.",
+  "items": {
+    "l2-w05-story-page-i-have-two-ears": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["The line-art eye is a solid circle inside a thin ring with a small white gap. The ring is thin, not a thick black band, and the pupil is solid (allowed). Judged note, not defect.", "The line art draws more stripe lines on the T-shirt than the color; the color has exactly two white stripes. Stripes are not named in the text, so this is a note.", "One sun with pointed triangle rays in line; one sun in color."],
+      "goal_check": "Sam points at his two ears with both hands; both ears read in color and line; both hands show fingers in line; no letters or numbers anywhere.",
+      "line_check": "PASS (brief: 16 px line width, 6.63 percent ink, edge frame 97.63 percent white). Pixel count (sharp, raw): 4000 x 3000, 0 of 12000000 pixels outside 0 and 255.",
+      "retry_hint": null
+    },
+    "l2-w05-story-page-i-have-two-eyes": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["The hands are fist shapes with one pointing finger (builder note); the text names eyes, not fingers, so this is a note.", "Line-art stripes outnumber the two white stripes of the color; note.", "Both eyes are big solid pupils with a thin hugging outline; the finger stops at the outer corner of each eye."],
+      "goal_check": "Sam points at his two eyes with a big smile; two eyes whole in color and line; one sun; no letters or numbers anywhere.",
+      "line_check": "PASS (brief: 18 px line width, 6.54 percent ink, edge frame 97.55 percent white). Pixel count (sharp, raw): 4000 x 3000, 0 of 12000000 pixels outside 0 and 255.",
+      "retry_hint": null
+    },
+    "l2-w05-story-page-i-have-two-feet": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["Sam points downward by his tummy and knee, not straight at a foot (builder note). The pointing direction still reads as pointing at his feet; the text names feet, not the gesture target, and both feet show. Judged note, not defect.", "The line sun is one plain circle, matching the pale color sun.", "Sneakers are a closed pair beside him in color and line."],
+      "goal_check": "Sam sits on the grass with two bare feet (toes visible) and sneakers beside him in color and line; one sun; no letters or numbers anywhere.",
+      "line_check": "PASS (brief: 17 px line width, 6.16 percent ink, edge frame 96.83 percent white). Pixel count (sharp, raw): 4000 x 3000, 0 of 12000000 pixels outside 0 and 255.",
+      "retry_hint": null
+    },
+    "l2-w05-story-page-i-have-two-hands": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["Both eyes are a big solid circle inside a thin ring; thin ring, allowed.", "Line-art stripe lines outnumber the two white stripes of the color; note."],
+      "goal_check": "Sam holds up two open hands; five fingers on each hand in color and line; one sun with thin stick rays; no letters or numbers anywhere.",
+      "line_check": "PASS (brief: 23 px line width, 8.52 percent ink, edge frame 96.16 percent white). Pixel count (sharp, raw): 4000 x 3000, 0 of 12000000 pixels outside 0 and 255.",
+      "retry_hint": null
+    },
+    "l2-w05-story-page-i-have-two-legs": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["Eyes are solid pupils in thin rings in line; thin rings allowed."],
+      "goal_check": "Sam stands on the grass, shows two legs between shorts and shoes in color and line, and points one finger at his own leg; one sun with pointed triangle rays; no letters or numbers anywhere.",
+      "line_check": "PASS (brief: 19 px line width, 6.76 percent ink, edge frame 96.74 percent white). Pixel count (sharp, raw): 4000 x 3000, 0 of 12000000 pixels outside 0 and 255.",
+      "retry_hint": null
+    }
+  },
+  "extra": {
+    "K1": {
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "notes": ["Nan's face has eyes and a mouth in line; no blank face.", "The hand reads as an open palm at book size in both files."],
+      "goal_check": "One big brown nut (an acorn) rests in Nan's open hand, close up, in color and line."
+    },
+    "K2": {
+      "rating": null,
+      "line_check": "Pixel count (sharp, raw): 4000 x 3000, 0 of 12000000 pixels outside 0 and 255."
+    },
+    "K3": {
+      "rating": null,
+      "line_check": "Pixel count (sharp, raw): 1600 x 1600, 0 of 2560000 pixels outside 0 and 255."
+    }
+  }
+}

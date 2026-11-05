@@ -1,0 +1,19 @@
+{
+  "group": "prod-r7-line-nut3",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w01-story-page-a-nut",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nut-line-t3.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the nut in the middle of the picture, above Nan's open hand",
+      "notes": "Question page: no. Items: a nut (1), Nan (1), Nan's open hand (1). Action: none. Seen: two tall pod shapes side by side, both filled with a cross-hatch net. Each pod has its own closed outline, its own rounded top, its own waist, and its own rounded bottom. The right pod is drawn in front of the left pod. They sit on an open palm. Nan: round head, two-bun hair, big eyes, star on the T-shirt; matches the cast note. mustShow: (1) one nut only: absent; I counted 2 pod shapes, not 1 nut. (2) clearly a peanut: absent; a child at book size reads two pods or two peanuts, not one peanut with two lobes. (3) Nan's open hand: shown. (4) the nut is large in the middle: shown for the size and place. Line art is black on white. I saw no gray and no text. The dense hatch inside the pods is texture; it is a note for coloring. This is a close call because the color file of the same picture reads as one peanut; the fail is for the separate closed outlines here."
+    }
+  ],
+  "summary": { "files": 1, "pass": 0, "fail": 1 }
+}

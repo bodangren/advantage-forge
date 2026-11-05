@@ -1,0 +1,19 @@
+{
+  "group": "prod-r7-line-nut3-second",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w01-story-page-a-nut",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nut-line-t3.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the nut in the middle left, above Nan's open hand: two peanut shells side by side, so the count is two, not one",
+      "notes": "Question page: no. Items: a nut (1), Nan's open hand (1). Action: none. Seen: two upright, elongated, net-textured shapes that overlap side by side on the open palm. The left shape has its own narrow waist and two round ends. The right shape in front of it has its own waist and two round ends. Each outline is closed and complete. I count 2 nuts. mustShow 'one nut only': absent (two peanuts, not one). mustShow 'clearly a peanut': each shape reads as a peanut by itself, but as a pair they read as two peanuts or two pods, not one shell with two bumps. Shown for the texture and waist, absent for the one-shell form. mustShow 'Nan's open hand': shown, an open palm with four fingers and a thumb under the nut. mustShow 'the nut is large in the middle': shown, the nut is large and sits in the middle-left. Character: Nan has two round buns with ring bands, big eyes, and a star on her T-shirt; this matches the cast, and the frame cuts the top of her head (a small mark). Line art: black lines on white, no gray, no shading, no gap that makes coloring hard, no text. The fail is the wrong count: two nuts."
+    }
+  ],
+  "summary": { "files": 1, "pass": 0, "fail": 1 }
+}

@@ -1,0 +1,34 @@
+storytime-low-branch: 6,708 triangles, 1.161 x 1.66 x 0.56 m, built in 1532 ms
+  bark                      2840 tris  (591 ms)
+  leaves                    3868 tris  (571 ms)
+texture  none (vertex colors)
+glb      out/storytime-low-branch/storytime-low-branch.glb  (159 KB)
+# Inspection: storytime-low-branch
+
+Size 1.161 x 1.66 x 0.56 m (x y z); 6,708 triangles; lowest point y = 0 m.
+
+## Silhouette per view (fractions of the frame)
+
+| view | width | height | coverage |
+|---|---|---|---|
+| front | 0.609 | 0.859 | 0.15 |
+| three-quarter | 0.539 | 0.828 | 0.139 |
+| side | 0.281 | 0.82 | 0.109 |
+| back | 0.59 | 0.855 | 0.149 |
+| top | 0.594 | 0.578 | 0.138 |
+
+## Visible share of the silhouette per part
+
+| part | front | three-quarter | side | back | top |
+|---|---|---|---|---|---|
+| bark | 31% | 30.3% | 29.7% | 32.5% | 22% |
+| leaves | 69% | 69.7% | 70.3% | 67.5% | 78% |
+
+## Values and colors (shaded render)
+
+Values: dark 0%, mid 70%, light 30%.
+Dominant colors: #b26e42 30%, #87ee76 25%, #64c95b 17%, #419b3a 17%, #317525 12%.
+
+## Warnings
+
+- none

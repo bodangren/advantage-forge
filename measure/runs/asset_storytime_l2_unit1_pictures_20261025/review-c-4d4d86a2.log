@@ -1,0 +1,101 @@
+# Review C · P4 T1 · storytime list v4, week delivery, stage check · 4d4d86a2
+
+Session: Review C · P4 T1 · storytime_l2_unit1_pictures.
+Role: measure-review-c-ux-api. Audit only. Write scope: measure/runs/** only.
+Finish-only pass: no new check ran. This log states the verdict of the audit run.
+
+## Provenance and applicability
+
+- HEAD is 4d4d86a2 (git rev-parse HEAD). The audited head is current.
+- Phase base fc76c272 and role base 4d4d86a2 exist. The range fc76c272..4d4d86a2 holds
+  production commit b6824b8a, the Red commits, and the Red fix c2ebc72d.
+- The strategy Review C note (test-strategy.md:2277) covers the --week option, the stage
+  check labels and exit codes, the row-naming errors, the manifest shape, and the week 8
+  default. The phase diff touches src/storytime/book-pictures.ts,
+  scripts/storytime-stage-check.mjs, and their tests. The contract applies.
+
+## --week on the row commands and on deliver
+
+- parseWeek (src/storytime/book-pictures.ts:4618-4621) accepts integers 1 to 8. It throws
+  `Invalid week: <value>` for 0, 9, and a non-number. The flag is parsed once (line 4650),
+  so the row commands and deliver share the rule.
+- Live runs through the production entry: `deliver --week 0` exits 1 with `Invalid week: 0`.
+  `render --dry-run --row all --week 9` exits 1 with `Invalid week: 9`. `--week abc` exits 1
+  with `Invalid week: abc`. The RB2-01 boundary returns 1 and the entry sets the code.
+- Without --week the run covers all 196 rows (book-pictures.ts:4745 and :4764). T177 pins
+  196 rows with no --week, 4 rows with --week 8, and the 162-row weeksTwoToSevenRows helper
+  with 0 week 8 and 0 week 1 rows.
+- Help text: see finding RC5-1.
+
+## The Skipped line change
+
+- The deliver command logs `Skipped <id> (<reason>)` at book-pictures.ts:4752.
+- Readers checked: tests/storytime-muse-delivery.test.ts:1133 takes split(' ')[1], which
+  returns the row id with the paren form. T172 tests the callback, not the text.
+  test-strategy.md:2159 states the prefix `Skipped <row id>`, which still holds.
+  plan.md:1558 holds the old colon text as Phase 3 history; plan.md:1669 and 1680 record the
+  new format. The Workbooks print reader has no Skipped rule. No reader breaks.
+
+## Manifest shape for a week other than week 1
+
+- manifestJob (muse-delivery.ts:296-299) sets the directory from row.week, so week 2 gives
+  `w02`. assembleManifest (book-pictures.ts:2079-2130) returns version 1, batchHashAlgorithm,
+  jobs, batches, with batch ids `w02/color` and `w02/lineart`.
+- job.id is the row id (rowCaptureJob, book-pictures.ts:3611-3629). planPictureRow
+  (book-pictures.ts:1550-1566) returns the list file names, and the copy loop writes them.
+- This matches spec.md Amendment 2026-11-01 Decision 2 points 2 to 4 and the 11a06b9c shape
+  of StorytimeManifest (book-pictures.ts:236-243).
+- The Workbooks reader forgeManifestEntriesForRow (picture-check.ts:385-404, read-only)
+  reads manifest.jobs, matches the job by id, and never reads batches. It cannot break on
+  week-specific batch ids.
+- T181 and T182 pin the job directory, list file names, class sizes, 55 delivered files, a
+  byte-identical second run, the two batch ids, the week 3 refusal with no write, exit 0,
+  and week 2 only skip lines.
+
+## Stage check
+
+- Label names and order match 4.3 exactly (stage-check.mjs:218-231): list sha256, week,
+  rows, specs found, text mismatches, goal mismatches, outDir mismatches, rows with no
+  reference (class A and B), element paths checked, missing element paths, characters
+  without a reference, page candidates, stage check: pass.
+- Exit codes run live: pass run exit 0; wrong pin exit 2 with `stage check: fail (the
+  picture list changed)`; bad --week and missing --list exit 1 through main().catch.
+- Error text names the row: every problem line starts with the row id (stage-check.mjs:134,
+  157-186, 204, 226).
+- Live gate: `node scripts/storytime-stage-check.mjs --week 2 --list
+  /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --specs
+  docs/storytime/l2-unit1/w02/muse` printed rows 27, specs found 27, element paths checked
+  82, missing element paths 0, page candidates 0, stage check: pass, and exited 0.
+- git status --porcelain showed no drift for the script and src/storytime/book-pictures.ts.
+
+## Week 8 default and contract.md
+
+- weeksTwoToSevenRows (book-pictures.ts:3570-3573) keeps weeks 2 to 7 only, so the 4 week 8
+  rows stay out of the 162-row scope. The parser and the row selection accept week 8.
+- contract.md lines 8-11 hold version 4, the v4 SHA-256, 196 rows, the week split, and the
+  v3 history line.
+
+## Findings
+
+- RC5-1 (nonblocking, nit) src/storytime/book-pictures.ts:4631 and :4729: no help or usage
+  text names the --week flag. The unknown-command message lists only the nine commands. The
+  deliver message lists only --list, --approvals, --muse, and --delivery. The stage check
+  script documents its own --week usage, and the strategy pins the flag in G6, so no gate
+  breaks.
+
+## Gate
+
+- No vitest run in this finish-only pass. The live stage check for week 2 exited 0.
+
+MEASURE_AGENT_RESULT
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 4: Remaining pictures and cover
+role: measure-review-c-ux-api
+audited_head: 4d4d86a2
+verdict: pass
+findings: RC5-1 (nonblocking, nit) src/storytime/book-pictures.ts:4631 and :4729 — no help or usage text names --week on the row commands or on deliver
+evidence: audited HEAD 4d4d86a2 is current; production commit b6824b8a sits in fc76c272..4d4d86a2; --week accepts 1 to 8 and refuses 0, 9, and a non-number with "Invalid week: <value>" at exit 1 through the RB2-01 boundary; no --week covers 196 rows and --week 8 covers 4, while weeksTwoToSevenRows keeps 162 rows; "Skipped <id> (<reason>)" breaks no reader (test split token 1, strategy prefix, no Workbooks rule, plan.md:1558 is history); the week 2 manifest holds version 1, job ids as row ids, batch ids w02/color and w02/lineart, and list file names, matching Decision 2 and the 11a06b9c shape; the Workbooks reader reads jobs only; the live stage check on week 2 printed the 4.3 label order with rows 27 and specs 27 and exited 0, wrong pin exited 2, usage errors exited 1 with row names; contract.md lines 8-11 hold v4 facts
+retry_recommendation: none
+confidence: high
+END_MEASURE_AGENT_RESULT

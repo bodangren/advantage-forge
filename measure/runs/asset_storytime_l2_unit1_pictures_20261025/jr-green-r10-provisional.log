@@ -1,0 +1,6 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+round: 10 (provisional, superseded by jr-green-<sha>.log)
+models: Green claude-code/claude-sonnet-5-5#high; Red MiniMax-M3; coder none
+status: in-progress
+END_MEASURE_AGENT_RESULT

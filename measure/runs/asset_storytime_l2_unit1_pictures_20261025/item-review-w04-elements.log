@@ -1,0 +1,82 @@
+Week 4 Muse input sheet review (independent, audit only).
+Reviewer: opencode-go/mimo-v2.6-flash. Builder: claude-code/claude-sonnet-5-5#high.
+Track: asset_storytime_l2_unit1_pictures_20261025, Phase 4. Session: Coder - P4 T2 - storytime_l2_unit1_pictures - w04 element review.
+Bar: Daniel 2026-11-01 14:15 ICT (verbatim in force).
+
+Scope: 11 element sheets and 7 pending-look cast sheets in out/storytime/l2/unit1/w04/muse/elements/.
+These are Muse input sheets, not pages. No picture and no spec was edited. No commit.
+
+Sources read:
+- out/storytime-review/w04-staging/index.md
+- measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w04-staging.log
+- All 18 current sheet PNGs with the read tool (one by one).
+- Page specs: docs/storytime/l2-unit1/w04/muse/*.json (27 files; text and goal extracted per referencing spec).
+- Element and cast specs: docs/storytime/l2-unit1/w04/muse-elements/*.json (18 files).
+- Approved cast references: out/storytime/l2/unit1/w01/muse/elements/cast-group-a-2.png, cast-group-b-2.png (child chibi sprout style);
+  out/storytime-review/muse-cast/teacher-kim-sheet-2.png, nurse-sheet.png (adult style).
+
+Sheet-to-page map (sheet -> count of referencing page specs):
+- prop-cake-sheet -> 1 (this-is-my-grandma)
+- prop-doll-pam-sheet -> 9 (cover-pam, is-this-pam, nan-and-pam-nap, pam-can-nap, pam-is-in-a-pan, pam-is-on-a-man, pam-is-on-a-map, this-is-pam, this-is-the-man)
+- prop-milk-sheet -> 1 (check-row-milk)
+- prop-monkey-sheet -> 1 (check-row-monkey)
+- prop-mouse-sheet -> 1 (check-row-mouse)
+- prop-newspaper-sheet -> 1 (this-is-my-grandpa)
+- prop-paper-map-sheet -> 1 (pam-is-on-a-map)
+- prop-shoe-box-bed-sheet -> 1 (pam-can-nap)
+- set-house-exterior-empty -> 3 (this-is-my-dog-pip, this-is-my-family, this-is-my-house)
+- set-lily-living-room-empty -> 6 (cover-my-family, this-is-my-brother, this-is-my-dad, this-is-my-grandma, this-is-my-grandpa, this-is-my-mom)
+- set-nan-living-room-empty -> 9 (same nine as prop-doll-pam-sheet)
+- cast-lily-sheet -> 9 (cover-my-family, this-is-my-brother, this-is-my-dad, this-is-my-dog-pip, this-is-my-family, this-is-my-grandma, this-is-my-grandpa, this-is-my-house, this-is-my-mom)
+- cast-tom-sheet -> 4 (cover-my-family, this-is-my-brother, this-is-my-dog-pip, this-is-my-family)
+- cast-mom-sheet -> 4 (cover-my-family, this-is-my-dog-pip, this-is-my-family, this-is-my-mom)
+- cast-dad-sheet -> 4 (cover-my-family, this-is-my-dad, this-is-my-dog-pip, this-is-my-family)
+- cast-grandma-sheet -> 4 (cover-my-family, this-is-my-dog-pip, this-is-my-family, this-is-my-grandma)
+- cast-grandpa-sheet -> 4 (cover-my-family, this-is-my-dog-pip, this-is-my-family, this-is-my-grandpa)
+- cast-man-sheet -> 2 (pam-is-on-a-man, this-is-the-man)
+Eleven distinct page specs carry a pending cast sheet. This matches the run log.
+
+FINAL VERDICT: 17 of 18 sheets clean. 1 sheet not clean: cast-tom-sheet.
+
+Element sheets (11), under Daniel's bar:
+1. prop-cake-sheet-m1: clean. Two yellow layers, three cherries, three candles (red, blue, yellow), white plate. Matches the grandma page goal.
+2. prop-doll-pam-sheet-m1: clean. One rag doll in three views (front, three-quarter, lying flat). Yellow yarn hair, red dress, black button eyes. Matches all nine Pam pages.
+3. prop-milk-sheet-m1: clean. One glass of milk, one drop. Reads as milk.
+4. prop-monkey-sheet-m1: clean. One monkey, brown with tan face and belly, curled tail.
+5. prop-mouse-sheet-m1: clean. One gray mouse, cream belly, pink-inside ears, whiskers, thin tail.
+6. prop-newspaper-sheet-m1: clean (judged). The builder says it reads as folded cloth. I judge it reads as folded blank paper at book size: stacked flat layer edges read as paper, and the no-print rule makes blank cream paper the required look. The page text is only "This is my grandpa.", so no word names the prop. Low noted risk, not blocking.
+7. prop-paper-map-sheet-m1: clean. Cream map, fold lines, blue river, green hill with trees, red house, dotted path, red cross. No letters.
+8. prop-shoe-box-bed-sheet-m1: clean. Kraft shoe box, lid at the back, light-blue blanket, white pillow.
+9. set-house-exterior-empty-m1: clean. White house, gray roof, red door, two windows, chimney, stone path, flowered hedges, wide empty lawn, blue sky. No people, no text.
+10. set-lily-living-room-empty-m1: clean. Green sofa with two cushions, window with cream curtains at the right, side table with lamp at the left, plain round rug. No people, no text.
+11. set-nan-living-room-empty-m1: clean. Blue sofa with one cushion, folded blanket on the arm, round rug, toy box with ball and blocks (no doll), small window at the left. No people, no text.
+
+Cast sheets (7), pending look, checked against the approved cast:
+- cast-lily-sheet-m1: clean. Style match: chibi sprout, head about half the figure. Hair and clothes match the page description. Two views, same person, five-finger hands, no text, rated G. The builder's "Lily is rounder than Tom" note fits the approved child style and is not a defect.
+- cast-tom-sheet-m2: NOT CLEAN. Two defects. (1) Style mismatch: Tom's head is about 38 percent of his height, the approved children are about 50 percent. Long slim legs and a visible neck. He reads as a small adult-style boy beside Lily. (2) The second view is a full side profile, not the three-quarter view the cast spec and page prompts name. m2 does fix the m1 stripes. Remake before Daniel sees it: Tom and Lily share four pages, and the style split shows at book size.
+- cast-mom-sheet-m1: clean. Adult style match. Coral-pink blouse, blue jeans, white sneakers, wavy dark-brown hair. Matches the page description.
+- cast-dad-sheet-m1: clean. Adult style match. Mustard-yellow polo, dark-blue jeans, brown shoes. Matches.
+- cast-grandma-sheet-m2: clean. Adult style match. m2 removed the m1 wrinkle lines. Silver-gray curly hair, rose-red cardigan, cream blouse, long dark-blue skirt, brown flats. Matches.
+- cast-grandpa-sheet-m2: clean. Adult style match, same knitted cardigan fabric as Teacher Kim. White hair, small white mustache, green cardigan, brown trousers. m2 removed deep wrinkles and changed the vest to a cardigan, which the page description names. Faint eye-corner lines are small marks under the bar, not defects.
+- cast-man-sheet-m1: clean. Adult style match. Short straight black hair, blue T-shirt, gray shorts, black sandals. Matches the page description exactly. This is the seventh pending sheet beyond the six in the order.
+
+Checks passed on all 18 sheets: plain white background on every prop sheet; no people in the three sets; no text or letters anywhere (the newspaper and the map show no readable letters); counts and parts match the goals and page prompts; every object reads as its word at book size.
+Cast checks passed on all 7 sheets except Tom: two views show the same person; hands show five short fingers; no text; hair and clothes match the page descriptions only; rated G.
+
+Second pass: every sheet was opened again after the first pass, one by one, in this order:
+cake, newspaper, nan-room, tom (re-checked against cast-group-a-2), milk, monkey, mouse, map, shoe box, house, lily-room, doll-pam, lily, mom, dad, grandma, grandpa, man.
+Result of the second pass: all counts hold; all 18 verdicts unchanged.
+Re-checked findings: the cake has three candles, three cherries, two sponge layers. The newspaper layered edges read as folded paper; the cloth read stays a noted low risk. The nan toy box holds a ball, blocks, and one small flat item, and no doll. Tom's head is about 38 percent of his height against about 50 percent for the approved children; his second view is a profile.
+
+Open items carried from the run log: (1) 7 pending cast sheets still need Daniel's look approval; 11 page specs stay castLook pending. (2) The family dog page has 8 references; the Muse reference limit is unknown. (3) No week 4 page call before Daniel answers on week 1.
+
+Result files:
+- measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-w04-elements.json
+- measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-w04-elements.log
+
+Follow-up (Tom remake, m3):
+- New sheet: out/storytime/l2/unit1/w04/muse/elements/cast-tom-sheet-m3-color.png. The four Tom page specs now name m3.
+- Opened m3 and judged it against both m2 findings. Finding 1 fixed: chibi sprout build, head about half the figure, short body, no visible neck; matches Lily and the week 1 children. Finding 2 fixed: the second view is a true three-quarter view with both eyes visible, not a profile.
+- Shared checks pass: same person in both views, five-finger open hands, no text, hair and clothes only, rated G, white background. Clothes match the page description: plain navy tee, khaki shorts, red shoes.
+- pending-cast-sheets.jpg confirmed: the Tom panel shows the m3 chibi figure. The m2 figure is gone.
+- Verdict: cast-tom-sheet-m3 clean. The m2 key keeps its fail verdict as the record. JSON now counts 19 keys: 18 clean, 1 failed (m2, superseded).

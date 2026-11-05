@@ -1,0 +1,20 @@
+Batch 48v5 independent picture review. Reviewer: opencode/glm-5.3-flash-free#high.
+Bar: Daniel 2026-11-01 14:15 ICT.
+Status: PASS. All 10 batch rows are clean. Control row K1 has one defect on its own.
+
+Pixel counts (pixels not exactly 0 or 255): K1 line 0, K2 line 0, K3 line 0, nap line print 0, bus 0, cat 0, dog 0, fish 0, hat 0, milk 0, monkey 0, mouse 0, sun 0. No gray or shading in any counted line file.
+
+K1 l2-w01-story-page-a-nose: rating 6, DEFECT (wrong-or-missing-prop). The line file shows no nose. The text is 'A nose.' and the goal names the nose, so the nose must show in the line file too. The finger tip touches the mouth corner and no nose shape shows beside it. Color is clean. Retry hint, line: draw the nose tip beside the finger as a closed line shape; keep mouth and eyes as now.
+K2 l2-w01-practice-line-nose-m4: rating 9, clean. Profile line shows the nose clearly. Red bun ring shows in color only (note).
+K3 l2-w01-story-page-a-nut: rating 9, clean. One big nut in the open hand in both files; hair and feet crops at frame edges are notes per the bar.
+
+Row l2-w04-story-page-nan-and-pam-nap (color m1, line try 4): rating 9, clean. One blanket, no star anywhere, Pam keeps a yarn fringe and tuft, plain dress, toy box whole. Curtain in line only is a note.
+Row bus: rating 9, clean. Reads as a bus in color and line; closed shapes; nothing cut at an edge.
+Row cat: rating 9, clean. Reads as a cat in color and line. Stripes in color only is a note.
+Row dog: rating 9, clean. Reads as a dog in color and line; collar and bell present; allowed solid nose and pupils.
+Row fish: rating 9, clean. Reads as a fish in color and line; fins and eye closed shapes.
+Row hat: rating 9, clean. Reads as a hat in color and line; one brim outline; band and bow present.
+Row milk: rating 9, clean. The line art reads as a full glass of liquid; with the printed word it reads as milk. This is a note under the bar, not a defect: no sentence names a prop, the glass matches the color, and the difference changes no character.
+Row monkey: rating 9, clean. Reads as a monkey in color and line; tail, ears, and face mask present.
+Row mouse: rating 9, clean. Reads as a mouse in color and line; ears, whiskers, nose, tail present.
+Row sun: rating 10, clean. One disc, exactly eight pointed triangle rays with wide bases on the disc; one sun only.

@@ -1,0 +1,17 @@
+MEASURE_AGENT_RESULT
+role: item-review
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: "Phase 3: Week 1 pictures"
+audited_head: 2c1b23da
+status: complete
+result_json: measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-35.json
+summary: pages 10, pass 10, clean 5
+clean_keys: l2-w01-check-row-cat, l2-w01-check-row-bus, l2-w01-check-row-net, l2-w01-check-row-nose, l2-w01-story-page-a-net
+not_clean_keys: l2-w01-check-row-dog, l2-w01-practice-line-nose, l2-w01-story-page-a-neck, l2-w01-story-page-hello-i-am-ben, l2-w01-story-page-a-nest
+notes:
+- check-row-dog: line art lost the tongue the color shows; batch 31 eye and tail defects are gone.
+- practice-line-nose: eyelash stroke is back, but the eye outline is an open arc; the eye white must stay closed.
+- a-neck: hand specks are gone; both eyes now have an inner ring inside the outer ring.
+- hello-i-am-ben: right ear fixed and hanging hand has separate fingers; left ear keeps a dark squiggle; line art adds a nose ring the color does not show.
+- a-nest: rim speck gone, three eggs; the right eye still lacks the eyelash stroke.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,29 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 — Phase 3: Week 1 pictures (build round 11)
+role_base_sha: b0b7142c
+phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+models: Red minimax-cn-coding-plan/MiniMax-M3; Green claude-code/claude-sonnet-5-5#high; coder none; item reviewer openai/gpt-6-luna#high
+commits:
+- a3a50eaf feat(storytime): add nest and net week 1 row stages (six stage JSON files, no asset change)
+- 36c4b825 docs(measure): record storytime green round 11 row evidence (plan.md)
+final_green_head: 36c4b825
+red_change_range_check: phase_base_sha is an ancestor of HEAD; no Red test change in this round.
+targeted_red_command: not run this round (row render and row verify only; no tsc, no vitest by order)
+renders (all render and verify --row exits 0; each ran as one heavy-run.sh command; logs green-p3-r11-<row>-<step>.log):
+- check-row-nest v1 color 21f4d525718398c006872047ac15d1160117357c31a767288c3037932cd1e391 line 955c301a6bf45b3569d33e378c079607f44030a7b9c803654cfaf6ffa77a8998 (1500 px, 25 px line, ink 9.87%, peak 992 MB)
+- practice-line-nest v1 color c98349980cfe22643b8bfa4e78131c33293c7dc1b7ee1470d2e0dd3889334b1b line 4d7c3cf230a10ede15d0f8b3d767f1a64b74877b155064ea03fb4cdebf6213ef (24 px, ink 9.69%, peak 502 MB)
+- check-row-net v1 (superseded) color 899822fae82499f99598f926d715814b21bcc51e613b45667f42bcb08929db07 line e2af139b0a29696992e3618e4b6ee36e280834b3b897d136cd9e270d25183cbe
+- check-row-net v2 (kept) color 4cbd5a0a0e6aa0cddbfce8d46945f0cb028d47cc7533de5205787e759d990012 line 428ef8ebcce4842a47bd6fb53d35aa335a28a3f4e8c16f5c5886d92119af9761 (20 px, ink 3.79%, peak 489 MB)
+- story-page-a-net v1 (kept) color 40dd591bdf3dd283befb9a3725e5e57bacd07313ca4a7424b9fc2f9967ebe4cb line 316b79bedf946ddfedfc68a86e9e9e7014690d4e2ca8010569f07396bb62a712 (4000 x 3000, 23 px, ink 10.51%, peak 519 MB)
+- story-page-a-net v2 (rejected) color 2439d6434e17307fbdd14dbd7e4529bc9a04be0b92de9ed46752c7a0d8f1ce7f line d2d38f67fb580e1e65f2c1a816f6f929af441679658951ecaab1cf54736e9107
+what was seen: nest rows show three countable eggs in both files; net check row v2 reads as a butterfly net; story page v1 shows Nan's face clear and the net as a hoop on a stick with the bag hidden behind her head; v2 pose (point up) turned the net sideways and was rejected.
+new_files_added: docs/storytime/l2-unit1/w01/rows/l2-w01-{check-row-nest-v1,practice-line-nest-v1,check-row-net-v1,check-row-net-v2,story-page-a-net-v1,story-page-a-net-v2}.json (PNG files stay out of git under out/)
+rows_done: check-row-nest, practice-line-nest, check-row-net (3 of 4 this round); week 1 rendered 16 of 30
+rows_with_open_defects: story-page-a-net (net weak: bag hidden behind the head; two versions used)
+rows_blocked: story-page-a-nest, story-page-a-nest-and-a-nut (need low branch and sniff pose); touch-nose; batch 2; nose line; sun hat
+next_batch: a pose or held-net rotation fix for story-page-a-net (new version needs an owner or orchestrator decision on the version limit); then batch 2 items, nose line, sun hat, and the independent picture review of the rendered rows
+status: done_with_defects
+handoff: No task marked [x]. No asset, src, or test file changed. Doctor not run this round. Unrelated dirty files of other sessions were not staged.
+END_MEASURE_AGENT_RESULT

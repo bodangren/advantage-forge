@@ -1,0 +1,19 @@
+Batch 31 item review, Muse round 59 (Storytime L2 unit 1 week 1 item rows and Nan clean references).
+Role: independent report-only item reviewer. Files reviewed: the 10 row pairs in out/storytime-review/batch-31/pages/ and the four clean-refs comparisons plus the two clean copies.
+Vision check passed: the cat color page shows an orange tabby with white muzzle, chest and paws, green eyes, curled tail.
+Method: full view read of every color and line file; histogram check of every line file; 2x to 4x crops of the bus side, door, front and roof, the cat eyes, tail and stripes, the dog eyes and rear, the fish eye, the net hoop, the nut junction and the practice nest rim; zoom comparison of the Nan clean copies against their sources plus a pixel diff.
+Histogram result: all 10 line files contain only pixel values 0 and 255.
+Line width measurements: cat body outline 23 px, cat stripe slivers 8 to 10 px; net rim lines 10 to 11 px and mesh 11 to 14 px; fish fin lines 16 to 21 px; hat outline 26 px; nest rim 21 px.
+Egg counts: 3 eggs in the check-row nest (color and line) and 3 eggs in the practice-line nest (color and line).
+Text check: no letter, number, sign, plate or logo in any row; bus checked at 2x on side, door, front and roof; collar, hat bow and cup carry no text.
+Pixel diff of the clean look reference against its round 21 source: 89 pixels above threshold after downscale, all inside the two ear regions and one shoulder region. Face crop diff: changes only at the two ear slivers.
+Ratings: nest 8.5 pass clean; cat 7.0 pass not clean; fish 8.5 pass clean; dog 6.5 fail not clean (critical: line eyes are double rings); bus 8.5 pass not clean (line door gains a horizontal divider); hat 9.0 pass clean; cup 9.0 pass clean; net 7.5 pass not clean (line rim is double); practice-line-nest 8.0 pass not clean (rim steps); practice-line-nut 8.0 pass not clean (small step at the cap junction); nan-clean-refs 8.5 pass not clean (defects kept by design, small saturation rise in the side heads).
+MEASURE_AGENT_RESULT
+role: item-review
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures
+audited_head: cf189b5f
+status: complete
+result_json: measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-31.json
+summary: items 11, pass 10, clean 4; clean keys: l2-w01-check-row-nest, l2-w01-check-row-fish, l2-w01-check-row-hat, l2-w01-check-row-cup; not clean keys: l2-w01-check-row-cat, l2-w01-check-row-dog, l2-w01-check-row-bus, l2-w01-check-row-net, l2-w01-practice-line-nest, l2-w01-practice-line-nut, nan-clean-refs; 1 row fails the bar (l2-w01-check-row-dog).
+END_MEASURE_AGENT_RESULT

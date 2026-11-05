@@ -1,0 +1,318 @@
+{
+  "reviewer": "opencode-go/mimo-v2.6-flash",
+  "audited_head": "final",
+  "verdict": "final",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "line_art_rule": "brief line-art rule as amended by Daniel's bar 2026-11-01",
+  "seen": {
+    "out/storytime-review/batch-36/brief.md": "Batch 36 brief; the new bar from Daniel was added at the top as instructed.",
+    "out/storytime-review/batch-36/refs/elements_nan-ref-clean-look-reference.png": "Nan look reference: black hair in two bunches with red bands, large dark-brown eyes with a painted eyelash mark at each outer corner, orange T-shirt with white star, red shorts, white sneakers.",
+    "out/storytime-review/batch-36/refs/elements_ben-ref-clean-2.png": "Ben reference sheet: brown hair, blue T-shirt, blue trousers, gray shoes; ears smooth with a small light inner mark.",
+    "out/storytime-review/batch-36/refs/dog-three-quarter.png": "Reference dog: brown-and-white puppy, dark hanging ears, open dark mouth with pink tongue out, gold bell on red collar, white brow dots.",
+    "out/storytime-review/batch-36/pages/l2-w01-check-row-dog-m1-color.png": "One puppy large in the middle on plain white; open dark smiling mouth; pink tongue right of the bell; small rounded tail tip behind the left ear; red collar with round gold bell; no text.",
+    "out/storytime-review/batch-36/pages/l2-w01-check-row-dog-m1-line-8-despeckled.png": "1-bit line art; each eye one closed ring with solid pupil and highlight; tongue a closed shape under the mouth; bell a round circle; mouth one thick smile stroke; small closed quad at the tail-tip spot.",
+    "out/storytime-review/batch-36/pages/l2-w01-check-row-bus-m1-color.png": "Yellow school bus large in the middle on plain white; 4 roof lights (2 amber front, 2 red back); folding door with two glass panes; black side stripe; no text.",
+    "out/storytime-review/batch-36/pages/l2-w01-check-row-bus-m1-line-6-despeckled.png": "1-bit line art; 4 roof lights (2 closed circles front, 2 small bumps on the back roof line); door one outer and one inner rectangle; side stripe a closed band; 3 side windows and windshield; no text.",
+    "out/storytime-review/batch-36/pages/l2-w01-check-row-net-m1-color.png": "One green butterfly net large in the middle on plain white; one thick rim; mesh grid; striped grip; no text.",
+    "out/storytime-review/batch-36/pages/l2-w01-check-row-net-m1-line-6-despeckled.png": "1-bit line art; rim one thick line; mesh a bold grid; grip 3 wide segments; the wedge between rim and bag line at the right of the hoop converges from about 33 px to 80 px within 100 px.",
+    "out/storytime-review/batch-36/pages/l2-w01-check-row-nose-m3-color.png": "Pre-accepted clean by Daniel (color m3, line-12).",
+    "out/storytime-review/batch-36/pages/l2-w01-practice-line-nose-m4-color.png": "Nan head in profile facing right, nose clearly seen, red ring on the bun, eyelash mark at the outer eye corner, plain background, no text.",
+    "out/storytime-review/batch-36/pages/l2-w01-practice-line-nose-m4-line-13-despeckled.png": "1-bit line art; eye a closed oval with solid pupil; eyebrow one solid stroke; eyelash stroke at the outer corner; bun a closed ring of two concentric circles; ear an open C arc.",
+    "out/storytime-review/batch-36/pages/l2-w01-story-page-a-neck-m5-color.png": "Nan lifts her chin and touches her neck with both hands; close up; look matches the reference; plain background; no text.",
+    "out/storytime-review/batch-36/pages/l2-w01-story-page-a-neck-m5-line-10-despeckled.png": "1-bit line art; each eye one closed ring with solid pupil; lash strokes at both outer corners; both hands show a thumb and four fingers; hair bands closed loops on both bunches; shirt star a closed outline.",
+    "out/storytime-review/batch-36/pages/l2-w01-story-page-hello-i-am-ben-m10-color.png": "Pre-accepted clean by Daniel (color m10, line-4).",
+    "out/storytime-review/batch-36/pages/l2-w01-story-page-a-nest-m7-color.png": "Nan points at a bird nest with three light blue eggs on a low branch in a soft garden; look matches the reference; eyelash marks at both outer eye corners; no text.",
+    "out/storytime-review/batch-36/pages/l2-w01-story-page-a-nest-m7-line-14-despeckled.png": "1-bit line art; nest a smooth bowl with a rim band; exactly three eggs; branch and bushes simplified closed shapes; each eye one closed ring with solid pupil and a lash stroke; band strips on both bunches; pointing hand reads.",
+    "out/storytime-review/batch-36/pages/l2-w01-story-page-a-net-m2-color.png": "Pre-accepted clean by Daniel (color m2, line-23).",
+    "out/storytime-review/batch-31/pages/l2-w01-practice-line-nest-m1-color.png": "One woven bird nest with three light blue eggs on a plain white background; no text.",
+    "out/storytime-review/batch-31/pages/l2-w01-practice-line-nest-m1-line.png": "1-bit line art; nest with three closed egg shapes; twig stubs as closed shapes; rim and wrap bands closed; small angular steps visible only at 2x to 3x zoom.",
+    "out/storytime-review/batch-31/pages/l2-w01-practice-line-nut-m1-color.png": "One acorn nut on a plain white background; brown cap, tan body, small stem on top, small point at the bottom; no text.",
+    "out/storytime-review/batch-31/pages/l2-w01-practice-line-nut-m1-line.png": "1-bit line art; acorn cap, body, stem and point as closed outlines; small angular steps visible only at 2x to 3x zoom."
+  },
+  "l2-w01-check-row-dog": {
+    "files": [
+      "out/storytime-review/batch-36/pages/l2-w01-check-row-dog-m1-color.png",
+      "out/storytime-review/batch-36/pages/l2-w01-check-row-dog-m1-line-8-despeckled.png"
+    ],
+    "rating": 8.0,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "dog": "yes: one puppy, large in the middle",
+      "plain light background": "yes: plain white",
+      "no text/numbers/logos": "yes",
+      "line art no gray/shading": "yes: pure 1-bit, 0 mid-gray pixels",
+      "each eye one closed ring with solid pupil": "yes: one ring plus solid pupil and highlight oval in each eye",
+      "tongue drawn as a closed shape under the mouth": "yes: closed tongue right of the bell",
+      "collar tag a small round circle": "yes: round bell with a small top loop, no flared rim",
+      "tail": "yes: a small closed shape sits at the color tail-tip spot behind the left ear"
+    },
+    "defects_gone": {
+      "line art lost the tongue": "yes: gone, tongue drawn as a closed shape",
+      "double-ring eyes": "yes: gone",
+      "builder item: line art has no tail": "not confirmed: try 8 has a small closed tail-tip shape at the color tail position",
+      "old strict bar item: lost open mouth": "not a defect under the new bar: at book size the face reads as a smiling dog with its tongue out, which the color also shows"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-check-row-bus": {
+    "files": [
+      "out/storytime-review/batch-36/pages/l2-w01-check-row-bus-m1-color.png",
+      "out/storytime-review/batch-36/pages/l2-w01-check-row-bus-m1-line-6-despeckled.png"
+    ],
+    "rating": 8.0,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "school bus": "yes: one yellow school bus, large in the middle",
+      "plain light background": "yes: plain white",
+      "no text/numbers/logos": "yes",
+      "line art no gray/shading": "yes: pure 1-bit, 0 mid-gray pixels",
+      "roof lights": "yes: 4 in the color and 4 in the line art (2 closed circles at the front, 2 small bumps on the back roof line)",
+      "side stripe": "yes: a closed band along the side in the line art",
+      "windows": "yes: windshield and 3 side windows in both files",
+      "wheels": "yes: 3 wheels in both files"
+    },
+    "defects_gone": {
+      "5 roof lights instead of 4": "yes: gone, exactly 4",
+      "lost black side stripe": "yes: gone, stripe a closed band",
+      "builder item: line art lost the door two-pane split": "not a defect under the new bar: at book size the door reads as a bus door with a window; the split is a hairline detail inside a small part"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-check-row-net": {
+    "files": [
+      "out/storytime-review/batch-36/pages/l2-w01-check-row-net-m1-color.png",
+      "out/storytime-review/batch-36/pages/l2-w01-check-row-net-m1-line-6-despeckled.png"
+    ],
+    "rating": 8.0,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "net": "yes: one butterfly net, large in the middle",
+      "plain light background": "yes: plain white",
+      "no text/numbers/logos": "yes",
+      "line art no gray/shading": "yes: pure 1-bit, 0 mid-gray pixels",
+      "rim one thick line": "yes: single thick rim line in the line art",
+      "mesh": "yes: bold grid in the line art",
+      "grip": "yes: 3 wide colorable segments in the line art"
+    },
+    "defects_gone": {
+      "double-line rim": "yes: gone, one thick line",
+      "batch 35: bag outline above the hoop line making a thin strip": "yes: gone, the bag outline joins the rim at the top",
+      "builder item: narrow wedge between the rim and the bag line at the right of the hoop": "not a defect under the new bar: the wedge is a converging tip that widens from about 33 px to 80 px within 100 px; at book size it reads as a normal mesh cell edge and does not make coloring hard"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-check-row-nose": {
+    "files": [
+      "out/storytime-review/batch-36/pages/l2-w01-check-row-nose-m3-color.png",
+      "out/storytime-review/batch-36/pages/l2-w01-check-row-nose-m3-line-12-despeckled.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Nan head in profile": "yes: profile view, nose clearly seen",
+      "no text": "yes",
+      "pre-accepted by Daniel": "yes: Daniel accepts color m3 and line-12 as clean; not re-judged"
+    },
+    "defects_gone": {},
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-practice-line-nose": {
+    "files": [
+      "out/storytime-review/batch-36/pages/l2-w01-practice-line-nose-m4-color.png",
+      "out/storytime-review/batch-36/pages/l2-w01-practice-line-nose-m4-line-13-despeckled.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Nan head in profile facing the other way": "yes: profile facing right, nose clearly seen",
+      "plain light background": "yes: plain white",
+      "no text": "yes",
+      "line art no gray/shading": "yes: pure 1-bit, 0 mid-gray pixels",
+      "eye": "yes: closed oval with a solid pupil in the line art",
+      "eyelash stroke": "yes: present at the outer eye corner in color and line art",
+      "bun ring": "yes: closed ring of two concentric circles in the line art"
+    },
+    "defects_gone": {
+      "batch 35: eye outline an open arc": "yes: gone, the eye is a closed oval with a solid pupil",
+      "builder item: ear an open C arc": "not a defect under the new bar: an open C-shaped ear line is named as a non-defect"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-a-neck": {
+    "files": [
+      "out/storytime-review/batch-36/pages/l2-w01-story-page-a-neck-m5-color.png",
+      "out/storytime-review/batch-36/pages/l2-w01-story-page-a-neck-m5-line-10-despeckled.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Nan look": "yes: two bunches with red bands, orange star T-shirt, large dark-brown eyes",
+      "lifts chin and touches neck with both hands": "yes: both hands at the neck, chin lifted",
+      "close up head and neck": "yes",
+      "plain light background": "yes",
+      "no text": "yes",
+      "line art no gray/shading": "yes: pure 1-bit, 0 mid-gray pixels",
+      "hands": "yes: each hand shows a thumb and four fingers in color and line art",
+      "hair bands": "yes: closed band loops on both bunches in the line art",
+      "shirt star": "yes: closed star outline in the line art"
+    },
+    "defects_gone": {
+      "batch 35: both eyes had an inner ring inside the outer ring": "yes: gone, each eye is one ring with a solid pupil",
+      "eyelash strokes": "yes: present at both outer eye corners in color and line art"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-hello-i-am-ben": {
+    "files": [
+      "out/storytime-review/batch-36/pages/l2-w01-story-page-hello-i-am-ben-m10-color.png",
+      "out/storytime-review/batch-36/pages/l2-w01-story-page-hello-i-am-ben-m10-line-4-despeckled.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "pre-accepted by Daniel": "yes: Daniel accepts color m10 and line-4 as clean; not re-judged"
+    },
+    "defects_gone": {},
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-a-nest": {
+    "files": [
+      "out/storytime-review/batch-36/pages/l2-w01-story-page-a-nest-m7-color.png",
+      "out/storytime-review/batch-36/pages/l2-w01-story-page-a-nest-m7-line-14-despeckled.png"
+    ],
+    "rating": 8.0,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "nest with three light blue eggs": "yes: exactly three eggs in color and line art",
+      "low tree branch in a garden": "yes: branch present in both files",
+      "Nan points at it": "yes: pointing hand reads in the line art",
+      "Nan look": "yes: bunches with red bands, orange star T-shirt, red shorts",
+      "simple garden background with soft colors": "yes",
+      "no text": "yes",
+      "line art no gray/shading": "yes: pure 1-bit, 0 mid-gray pixels",
+      "eyelash strokes": "yes: present at both outer eye corners in color and line art",
+      "hair bands": "yes: band strips on both bunches in the line art"
+    },
+    "defects_gone": {
+      "batch 35: right eye had no eyelash mark in the line art": "yes: gone, both eyes have lash strokes",
+      "builder item: branch and bushes simplified": "not a defect under the new bar: a simplified branch or bush is named as a non-defect; the nest prop is present and reads as a nest with three eggs"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-a-net": {
+    "files": [
+      "out/storytime-review/batch-36/pages/l2-w01-story-page-a-net-m2-color.png",
+      "out/storytime-review/batch-36/pages/l2-w01-story-page-a-net-m2-line-23-despeckled.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "pre-accepted by Daniel": "yes: Daniel accepts color m2 and line-23 as clean; not re-judged"
+    },
+    "defects_gone": {},
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-practice-line-nest": {
+    "files": [
+      "out/storytime-review/batch-31/pages/l2-w01-practice-line-nest-m1-color.png",
+      "out/storytime-review/batch-31/pages/l2-w01-practice-line-nest-m1-line.png"
+    ],
+    "rating": 8.0,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "one plain object": "yes: one bird nest with three light blue eggs",
+      "plain white background": "yes",
+      "no text": "yes",
+      "line art no gray/shading": "yes: pure 1-bit, 0 mid-gray pixels",
+      "three eggs": "yes: exactly three closed egg shapes",
+      "outlines closed": "yes: nest, rim band, wrap bands and twig stubs are closed shapes"
+    },
+    "defects_gone": {
+      "earlier review: small angular steps in the outlines at 2x to 3x zoom": "not a defect under the new bar: at book size the steps are invisible; the picture reads as a nest with three eggs"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-practice-line-nut": {
+    "files": [
+      "out/storytime-review/batch-31/pages/l2-w01-practice-line-nut-m1-color.png",
+      "out/storytime-review/batch-31/pages/l2-w01-practice-line-nut-m1-line.png"
+    ],
+    "rating": 8.0,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "one plain object": "yes: one acorn nut",
+      "plain white background": "yes",
+      "no text": "yes",
+      "line art no gray/shading": "yes: pure 1-bit, 0 mid-gray pixels",
+      "outlines closed": "yes: cap, body, stem and point are closed shapes",
+      "shape matches the color": "yes: cap on top, nut body below, small stem and bottom point in both files"
+    },
+    "defects_gone": {
+      "earlier review: small angular steps in the outlines at 2x to 3x zoom": "not a defect under the new bar: at book size the steps are invisible; the picture reads as an acorn"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "summary": {
+    "pages": 11,
+    "pass": 11,
+    "clean": 11,
+    "clean_keys": [
+      "l2-w01-check-row-dog",
+      "l2-w01-check-row-bus",
+      "l2-w01-check-row-net",
+      "l2-w01-check-row-nose",
+      "l2-w01-practice-line-nose",
+      "l2-w01-story-page-a-neck",
+      "l2-w01-story-page-hello-i-am-ben",
+      "l2-w01-story-page-a-nest",
+      "l2-w01-story-page-a-net",
+      "l2-w01-practice-line-nest",
+      "l2-w01-practice-line-nut"
+    ],
+    "not_clean_keys": []
+  }
+}

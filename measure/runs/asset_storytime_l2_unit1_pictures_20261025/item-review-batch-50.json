@@ -1,0 +1,246 @@
+{
+  "status": "pass",
+  "reviewer": "opencode/glm-5.3-flash-free#high",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "All 9 batch-50 rows are clean. Three K rows: K1 clean, K2 clean, K3 defect (the line file has no nose, and the text names the nose). All 12 line files count 0 pixels that are neither 0 nor 255. Image opens: 22 of 28.",
+  "extra": {
+    "K1": { "rating": 9, "verdict": "clean" },
+    "K2": { "rating": 9, "verdict": "clean" },
+    "K3": { "rating": 5, "verdict": "defect" }
+  },
+  "items": {
+    "l2-w05-cover-sam-and-pam": {
+      "files": {
+        "color": "out/storytime-review/batch-50/pages/l2-w05-cover-sam-and-pam-m1-color-print.png",
+        "line": "out/storytime-review/batch-50/pages/l2-w05-cover-sam-and-pam-m1-line-print-despeckled.png"
+      },
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Sam sits on the rug and smiles at one doll on the toy box; pose matches the goal in both files.",
+        "Sam keeps two white shirt stripes (bands in the line). Pam keeps yarn hair with fringe and two pigtails; her dress is plain, no star.",
+        "No text, no sun, no gray pixels; no person or needed prop cut at a print edge."
+      ],
+      "goal_check": "Pass.",
+      "line_check": "0 gray pixels (4000x3000, pure black and white only)."
+    },
+    "l2-w05-story-page-pam-is-in-a-pan": {
+      "files": {
+        "color": "out/storytime-review/batch-50/pages/l2-w05-story-page-pam-is-in-a-pan-m1-color-print.png",
+        "line": "out/storytime-review/batch-50/pages/l2-w05-story-page-pam-is-in-a-pan-m1-line-print-2-despeckled.png"
+      },
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The pan reads in both files: one round toy pan with a rim and one handle. The color handle is shorter and partly hidden behind the rim at the right; the line shows it fuller. Same prop, no needed-prop fault.",
+        "One doll, one pan. Sam kneels and laughs (open mouth, shut eyes in color; a wide smile with open eyes in line; a face-state difference that changes no character).",
+        "Pam keeps a fringe and two pigtails, plain dress, in both files. Sam keeps two white shirt stripes drawn as bands (a zoom crop of the torso confirms the stripe bands read as the color's two stripes).",
+        "The toy box at the right edge is cut by the print edge (background, note). No text, no sun, no gray pixels."
+      ],
+      "goal_check": "Pass.",
+      "line_check": "0 gray pixels (4000x3000, pure black and white only)."
+    },
+    "l2-w05-story-page-pam-is-off-sam": {
+      "files": {
+        "color": "out/storytime-review/batch-50/pages/l2-w05-story-page-pam-is-off-sam-m1-color-print.png",
+        "line": "out/storytime-review/batch-50/pages/l2-w05-story-page-pam-is-off-sam-m1-line-print-despeckled.png"
+      },
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Nan's look holds in both files: black hair in two buns with ties, star shirt (star shows in line), red shorts, white sneakers, hands on hips, surprised open mouth.",
+        "One doll falls on the rug in both files: fringe, two pigtails, plain dress.",
+        "Sam sits up; two shirt stripes show in both files.",
+        "The toy box at the right edge is cut by the print edge (background, note). No text, no sun, no gray pixels."
+      ],
+      "goal_check": "Pass.",
+      "line_check": "0 gray pixels (4000x3000, pure black and white only)."
+    },
+    "l2-w05-story-page-pam-is-on-a-map": {
+      "files": {
+        "color": "out/storytime-review/batch-50/pages/l2-w05-story-page-pam-is-on-a-map-m1-color-print.png",
+        "line": "out/storytime-review/batch-50/pages/l2-w05-story-page-pam-is-on-a-map-m1-line-print-2-despeckled.png"
+      },
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "One map with a river, a house, a dotted path, and a cross mark in both files. The color cross is a plain X, not in a circle; a spec detail outside the defect categories.",
+        "One doll lies on the map in both files. In the color, only one pigtail shows (the other is under her head); the line shows both. A safe difference that hides no needed part.",
+        "Sam lies on his tummy and points; his left shoe stays whole near the left print edge. The toy box at the right edge is cut by the print edge (background, note).",
+        "No letters, words, or numbers in either file. No gray pixels."
+      ],
+      "goal_check": "Pass.",
+      "line_check": "0 gray pixels (4000x3000, pure black and white only)."
+    },
+    "l2-w05-story-page-pam-is-on-sam": {
+      "files": {
+        "color": "out/storytime-review/batch-50/pages/l2-w05-story-page-pam-is-on-sam-m1-color-print.png",
+        "line": "out/storytime-review/batch-50/pages/l2-w05-story-page-pam-is-on-sam-m1-line-print-despeckled.png"
+      },
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The row's judged question passes: the picture shows Pam on Sam in both files. The doll sits on Sam's body (on his lap between his knees), not beside him.",
+        "The pose difference (a purpose change, accepted at the PM) is not marked.",
+        "Sam's look note: the color file shows one wide white chest band, and the line shows two bands. The line art passes the asked two-stripe check. At book size Sam still reads as the same boy with a striped shirt, so this is a note outside the defect categories.",
+        "The white sneaker steps in at the open door and is cut by the print edge as designed (note).",
+        "Pam keeps a fringe and two pigtails in both files; plain dress, no star. One doll. No text, no gray pixels."
+      ],
+      "goal_check": "Pass for the judged question: the doll reads as on Sam in color and line.",
+      "line_check": "0 gray pixels (4000x3000, pure black and white only)."
+    },
+    "l2-w05-story-page-sam-can-get-pam": {
+      "files": {
+        "color": "out/storytime-review/batch-50/pages/l2-w05-story-page-sam-can-get-pam-m1-color-print.png",
+        "line": "out/storytime-review/batch-50/pages/l2-w05-story-page-sam-can-get-pam-m1-line-print-3-despeckled.png"
+      },
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Sam lifts one doll with both hands, toy box lid closed at the right, in both files.",
+        "Pam keeps a fringe and two pigtails, plain dress. Sam keeps two white shirt stripes (bands in the line).",
+        "Sam's feet are mid-step, not on his toes; a spec detail outside the defect categories.",
+        "No text, no sun, no gray pixels; nothing needed is cut at a print edge."
+      ],
+      "goal_check": "Pass.",
+      "line_check": "0 gray pixels (4000x3000, pure black and white only)."
+    },
+    "l2-w05-story-page-sam-is-with-pam": {
+      "files": {
+        "color": "out/storytime-review/batch-50/pages/l2-w05-story-page-sam-is-with-pam-m1-color-print.png",
+        "line": "out/storytime-review/batch-50/pages/l2-w05-story-page-sam-is-with-pam-m1-line-print-2-despeckled.png"
+      },
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Sam sits cross-legged and holds one doll on his lap with both hands, in both files.",
+        "Pam has a fringe and two pigtails (cloud bunches in the line), plain dress. Two stripe bands show on Sam's shirt in the line; the color shows one clear stripe (the second sits behind the doll and his hands, so no count fault).",
+        "No text, no sun, no gray pixels; nothing needed is cut at a print edge."
+      ],
+      "goal_check": "Pass.",
+      "line_check": "0 gray pixels (4000x3000, pure black and white only)."
+    },
+    "l2-w05-story-page-sam-nan-and-pam-nap": {
+      "files": {
+        "color": "out/storytime-review/batch-50/pages/l2-w05-story-page-sam-nan-and-pam-nap-m2-color-print.png",
+        "line": "out/storytime-review/batch-50/pages/l2-w05-story-page-sam-nan-and-pam-nap-m2-line-print-6-despeckled.png"
+      },
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Three sleepers with closed eyes in both files (Sam, Nan, doll), one blanket, one doll.",
+        "Pam's pigtails are hatched strands in the line: judged a note, not a defect. The strands match the yarn look of the color file and the head region stays colorable.",
+        "Nan's eyelash stroke: from the zoom view both sleep eyes read closed-curve with small lash ends; at most a one-eye detail, so a note.",
+        "No star shows (Nan's shirt is under the blanket; only an orange sleeve shows in color). No text, no sun, no gray pixels. The toy box at the right edge is cut by the print edge (background, note)."
+      ],
+      "goal_check": "Pass.",
+      "line_check": "0 gray pixels (4000x3000, pure black and white only)."
+    },
+    "l2-w05-story-page-sam-saw-pam": {
+      "files": {
+        "color": "out/storytime-review/batch-50/pages/l2-w05-story-page-sam-saw-pam-m1-color-print.png",
+        "line": "out/storytime-review/batch-50/pages/l2-w05-story-page-sam-saw-pam-m1-line-print-despeckled.png"
+      },
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Sam stands, points, and smiles at one doll on the toy box, in both files.",
+        "Pam keeps a fringe and two pigtails, plain dress. Sam keeps two white shirt stripes (bands in the line).",
+        "Sam's eyes in the line are two solid dots without an outline; they still read as dot eyes, and solid pupils are allowed, so a note.",
+        "No letters, words, or numbers; no sun (indoor page); no gray pixels; nothing needed cut at a print edge."
+      ],
+      "goal_check": "Pass.",
+      "line_check": "0 gray pixels (4000x3000, pure black and white only)."
+    },
+    "K1": {
+      "files": {
+        "color": "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "line": "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      },
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Color: profile head facing right; a red hair tie on the bun shows in color. The line shows the bun and tie edge as one circle without the ribbon band; a color-line difference that changes no character or prop.",
+        "The nose shows clearly in both color and line, as a small profile bump with a nostril notch.",
+        "Eye, eyebrow, ear, mouth, chin, neck, and shirt all end clean; good seams for a tracing line.",
+        "No text, no gray pixels."
+      ],
+      "goal_check": "Pass. Head of Nan in profile facing right, nose clearly seen in color and line.",
+      "line_check": "0 gray pixels (1600x1600, pure black and white only)."
+    },
+    "K2": {
+      "files": {
+        "color": "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "line": "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      },
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "One big brown nut in the open hand, close up, in both files.",
+        "Color: a faint pink smear near the left temple by the left eye. Small mark, so a note under the bar.",
+        "Close-up: feet crop at the bottom frame edge and one hair bun at the right edge. Subject stays whole, so a note.",
+        "Nan's look holds in both files: bun pigtails with ties, star shirt; the star shows in line as in color.",
+        "No text, no gray pixels."
+      ],
+      "goal_check": "Pass. One big brown nut in Nan's open hand, close up, color and line.",
+      "line_check": "0 gray pixels (4000x3000, pure black and white only)."
+    },
+    "K3": {
+      "files": {
+        "color": "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "line": "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      },
+      "rating": 5,
+      "verdict": "defect",
+      "defect_categories": ["broken-face"],
+      "defects": [
+        "The line file has no nose. The text names the nose, so it must show in both files. A zoom crop of the nose area shows only the finger and the open mouth; the color file shows the nose above the finger."
+      ],
+      "notes": [
+        "Color shows the goal: one finger touches the nose, open laughing mouth. Pose and character hold.",
+        "Star on the shirt shows in both files. Hair buns with ties show in both."
+      ],
+      "goal_check": "Color passes. Line fails the named-part rule: no nose in the line art.",
+      "line_check": "0 gray pixels (4000x3000, pure black and white only).",
+      "retry_hint": "line"
+    }
+  },
+  "line_check": {
+    "method": "node script /tmp/opencode/line-check.mjs (sharp), counts pixels whose value is not 0 and not 255; all files 3-channel sRGB",
+    "K1": { "file": "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png", "width": 1600, "height": 1600, "gray_pixels": 0, "black": 167096, "white": 2392904, "colorish": 0 },
+    "K2": { "file": "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png", "width": 4000, "height": 3000, "gray_pixels": 0, "black": 714600, "white": 11285400, "colorish": 0 },
+    "K3": { "file": "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png", "width": 4000, "height": 3000, "gray_pixels": 0, "black": 461529, "white": 11538471, "colorish": 0 },
+    "l2-w05-cover-sam-and-pam": { "gray_pixels": 0, "black": 768163, "white": 11231837, "colorish": 0 },
+    "l2-w05-story-page-pam-is-in-a-pan": { "gray_pixels": 0, "black": 1057062, "white": 10942938, "colorish": 0 },
+    "l2-w05-story-page-pam-is-off-sam": { "gray_pixels": 0, "black": 940731, "white": 11059269, "colorish": 0 },
+    "l2-w05-story-page-pam-is-on-a-map": { "gray_pixels": 0, "black": 1195569, "white": 10804431, "colorish": 0 },
+    "l2-w05-story-page-pam-is-on-sam": { "gray_pixels": 0, "black": 934267, "white": 11065733, "colorish": 0 },
+    "l2-w05-story-page-sam-can-get-pam": { "gray_pixels": 0, "black": 1182035, "white": 10817965, "colorish": 0 },
+    "l2-w05-story-page-sam-is-with-pam": { "gray_pixels": 0, "black": 831563, "white": 11168437, "colorish": 0 },
+    "l2-w05-story-page-sam-nan-and-pam-nap": { "gray_pixels": 0, "black": 895608, "white": 11104392, "colorish": 0 },
+    "l2-w05-story-page-sam-saw-pam": { "gray_pixels": 0, "black": 896572, "white": 11103428, "colorish": 0 },
+    "note": "All counts are exact for these pixel states. Pure black and pure white only; no gray or shading values in any of the 12 line files."
+  }
+}

@@ -1,0 +1,14 @@
+Green round 22 provisional log (Storytime week 1 pictures, P3)
+track: asset_storytime_l2_unit1_pictures_20261025
+role_base_sha: 3a79d229
+phase_base_sha: 15a7bf0b
+HEAD at start: 3a79d229
+Red commits inside phase_base_sha..HEAD: 6c55fac1, d7031d18
+models: Red minimax-cn-coding-plan/MiniMax-M3; Green xai/grok-4.7#high; coder none
+item reviews that unblock the rows: storytime-block-box 7.8 pass (xai/grok-4.7); storytime-low-branch 7.2 pass (bailian-token-plan/qwen3.8-max)
+rows: l2-w01-story-page-hello-i-am-mia v1; l2-w01-story-page-a-nest v1
+command form: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 1800 node --import tsx scripts/storytime-book-pictures.ts render --row <id> --version <n>'
+verify form: the same wrapper with verify --row <id> and no version flag
+classroom rug: scenes/maps/classroom.ts places rug at [0, 0, 3], scale 2. MAP_ORIGINS.classroom origin is that rug. Stage (0, 0) is the rug centre.
+nest seat: NEST_SEAT x 0.50, y 0.70, z 0.04. Branch yaw 0 and scale 1. Nest origin uses that seat with no extra turn.
+status: started; no render has run yet

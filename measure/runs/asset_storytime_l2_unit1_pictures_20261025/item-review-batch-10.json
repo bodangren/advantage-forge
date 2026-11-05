@@ -1,0 +1,46 @@
+{
+  "reviewer": "openai/gpt-6-luna#high",
+  "seen": {
+    "look-reference-nan-and-pip.png": "The reference shows bright, soft, rounded 3D characters on white.",
+    "storytime-nest-old-practice-line.png": "The old nest line art has many broken, short rim strokes.",
+    "storytime-nest-old-check-line.png": "The old check-row line art has many broken, short rim strokes.",
+    "storytime-nest.png": "The new prop shows a shallow brown nest with three blue eggs in four views.",
+    "l2-w01-practice-line-nest-v2.png": "The practice color row shows one brown nest and three eggs on white.",
+    "l2-w01-practice-line-nest-line-v2.png": "The practice line art has three eggs and a nest outline with uneven rim detail.",
+    "l2-w01-check-row-nest-v2.png": "The check color row shows one brown nest and three eggs on white.",
+    "l2-w01-check-row-nest-line-v2.png": "The check line art has three eggs and a nest outline with uneven rim detail."
+  },
+  "storytime-nest": {
+    "overall": 6.6,
+    "pass": false,
+    "critical": ["The line art still has broken and noisy marks on the rim and twig tips."],
+    "issues": ["The shallow round form can read as a bowl or basket before the eggs and twigs signal a nest."],
+    "fix": "Make the rim strokes continuous and add clearer long crossing twigs."
+  },
+  "l2-w01-practice-line-nest": {
+    "overall": 6.5,
+    "pass": false,
+    "critical": ["The line art still has broken and noisy marks on the rim and twig tips."],
+    "issues": ["The line art reads as eggs in a shallow bowl unless the child infers the nest."],
+    "fix": "Remove the short rim fragments and show clean, long woven strokes.",
+    "goals": {
+      "one nest alone on a white page, one nest on the page": "pass",
+      "a child of about 5 years must name it a nest in color and 1-bit line art": "partial",
+      "1500 x 1500": "pass",
+      "objectCounts nest 1, sizeClass C, 1500 x 1500": "pass"
+    }
+  },
+  "l2-w01-check-row-nest": {
+    "overall": 6.5,
+    "pass": false,
+    "critical": ["The line art still has broken and noisy marks on the rim and twig tips."],
+    "issues": ["The line art reads as eggs in a shallow bowl unless the child infers the nest."],
+    "fix": "Remove the short rim fragments and show clean, long woven strokes.",
+    "goals": {
+      "one nest alone on a white page, one nest on the page": "pass",
+      "a child of about 5 years must name it a nest in color and 1-bit line art": "partial",
+      "1500 x 1500": "pass",
+      "objectCounts nest 1, sizeClass C, 1500 x 1500": "pass"
+    }
+  }
+}

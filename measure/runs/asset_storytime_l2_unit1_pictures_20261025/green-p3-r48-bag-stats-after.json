@@ -1,0 +1,67 @@
+{
+  "name": "storytime-school-bag",
+  "triangles": 11404,
+  "bounds": {
+    "min": [
+      -0.126,
+      0,
+      -0.082
+    ],
+    "max": [
+      0.126,
+      0.291,
+      0.069
+    ],
+    "size": [
+      0.252,
+      0.291,
+      0.151
+    ]
+  },
+  "bodies": [
+    {
+      "name": "bag-body",
+      "gridPoints": 2536233,
+      "evaluatedPoints": 773510,
+      "rawTriangles": 143752,
+      "triangles": 4962,
+      "milliseconds": 1249
+    },
+    {
+      "name": "pocket",
+      "gridPoints": 302049,
+      "evaluatedPoints": 211563,
+      "rawTriangles": 44072,
+      "triangles": 1500,
+      "milliseconds": 262
+    },
+    {
+      "name": "strap.L",
+      "gridPoints": 512785,
+      "evaluatedPoints": 159612,
+      "rawTriangles": 31464,
+      "triangles": 1598,
+      "milliseconds": 217
+    },
+    {
+      "name": "strap.R",
+      "gridPoints": 512785,
+      "evaluatedPoints": 157706,
+      "rawTriangles": 31464,
+      "triangles": 1604,
+      "milliseconds": 207
+    },
+    {
+      "name": "grab-loop",
+      "gridPoints": 81225,
+      "evaluatedPoints": 62388,
+      "rawTriangles": 15168,
+      "triangles": 1740,
+      "milliseconds": 66
+    }
+  ],
+  "texture": null,
+  "bones": 0,
+  "animations": [],
+  "milliseconds": 2156
+}

@@ -1,0 +1,7 @@
+storytime-sun-hat: 14,082 triangles, 0.347 x 0.125 x 0.344 m, built in 3190 ms
+  hat                       7130 tris  (2173 ms)
+  ribbon                    3620 tris  (383 ms)
+  bow                       3332 tris  (393 ms)
+texture  none (vertex colors)
+glb      out/storytime-sun-hat/storytime-sun-hat.glb  (337 KB)
+render   out/storytime-sun-hat/render.png  (403 ms)

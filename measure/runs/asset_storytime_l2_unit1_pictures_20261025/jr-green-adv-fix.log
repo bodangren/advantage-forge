@@ -1,0 +1,25 @@
+Green adversarial remediation (ADV-P3-01, ADV-P3-NB1). role_base_sha: 8e7527b5; phase_base_sha: 15a7bf0b.
+Commits: e18baa25 (src/storytime/muse-delivery.ts); plan evidence commit follows it.
+vitest: exit 0; Test Files 5 passed (5); Tests 190 passed (190). tsc: exit 2; owned 0; total 38.
+Mutation (remove duplicate row id check): ADV9 failed; restored.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 (Phase 3: Week 1 pictures)
+task: adversarial remediation ADV-P3-01
+role_base_sha: 8e7527b5
+phase_base_sha: 15a7bf0b
+commits: e18baa25 (production); plan evidence commit (see git log)
+models: red=DeepSeek; green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+vitest: exit 0; Tests  190 passed (190)
+tsc: exit 2; owned errors 0; total errors 38
+mutation_proofs: remove duplicate row id check -> ADV9 failed; restored
+new_files: green-adv-fix-vitest.log, green-adv-fix-tsc.log, green-adv-fix-mutation.log, jr-green-adv-fix.log
+handoff: week 1 deliveries unchanged; no deliver run. Re-review ADV9 and the symlink delivery root check.
+finding_ids: F1=ADV-P3-01; F2=ADV-P3-NB1
+dispositions: F1=FIX; F2=FIX
+END_MEASURE_AGENT_RESULT

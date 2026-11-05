@@ -1,0 +1,63 @@
+MEASURE_AGENT_RESULT
+status: pass
+role: red
+track: asset_storytime_l2_unit1_pictures_20261025
+short_track_id: asset_storytime_l2_unit1_pictures
+phase: P3
+phase_heading: Phase 3: Week 1 pictures
+phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+role_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+red_pre_commit_head: 3419926fd2c54df1aa03234bba561dfe6fc5196e
+red_pre_commit_head_note: The commit 3419926f (fix(models): keep the full bookcase source build) belongs to the other track asset_filled_shelves_20261028. The Red work started on top of it.
+red_test_commit: 6c55fac19ef3932dd6650be77de0a3145258db11
+red_test_commit_short: 6c55fac1
+evidence_commit: 7cf91dff81a87cd46338e19be12dcff720b82931
+evidence_commit_short: 7cf91dff
+head_after_evidence_commit: 7cf91dff81a87cd46338e19be12dcff720b82931
+head7: 7cf91df
+files_changed:
+  - tests/storytime-book-pictures.test.ts (439 lines added, 0 removed; rows T1 to T141 unchanged)
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md (44 lines added; one new task marker)
+production_files_changed: none. No file under src/ or scripts/, no contract.md.
+vitest_command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 3600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'
+vitest_exit: 1
+vitest_summary: Tests  10 failed | 124 passed (134)
+vitest_duration: 406.48s
+vitest_log: measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-p3-vitest.log
+type_check_command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'
+type_check_exit: 2
+type_check_owned_errors: 0
+type_check_total_errors: 31
+type_check_baseline_total: 31
+type_check_log: measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-p3-tsc.log
+failing_rows:
+  - T142: the pipeline has no picture list loader. The loader must read pictures.json read-only, give 192 rows, give 30 week 1 rows with 16 of class A, 2 of class B, and 12 of class C, and record the SHA-256 of the list file.
+  - T143: the sizes are the specification v0 sizes, 3000 x 2250 for class A and 3600 x 2700 for class B. Specification v1 gives 4000 x 3000 for class A and class B, and 1500 x 1500 for class C.
+  - T144: the line-art file name is the specification v0 name lineart/<name>-lineart.png. Specification v1 gives <color name>-line-v1.png beside the color file.
+  - T145: the pipeline has no cover, check-row, or practice-line rows, and it gives a line-art twin to reader pages only. Every row of the list needs a color file and a line-art file.
+  - T146: the line-art check has no 12 px line rule. A 6 px line and an 11 px line pass today, and the check prints no measured width.
+  - T147: the pipeline has no list loader, so no run reads the list yet. The SHA-256 of pictures.json and of pictures.md must stay the same before and after a run.
+  - T148: the pipeline has no list loader. It refuses neither a broken file name nor a changed list file.
+  - T149: the pipeline checks no list row. A class B row runs the calm top 30 percent check and a class C row runs the white-corner check.
+  - T150: the pipeline has no week 1 selection of 30 rows, so the color batch hash and the line-art batch hash are one hash.
+  - T151: the render command prints no render peak rss mb: <n> label. The number must come from the capture process.
+passing_rows: T1 to T141 unchanged. 124 test cases pass.
+red_contract_declared_in_the_test_file:
+  - loadPictureList(options) reads <printRoot>/pictures.json read-only and returns { file, sha256, rows }. It refuses a row whose fileName breaks the list pattern and a file whose SHA-256 differs from expectedSha256.
+  - planPictureRow(row) returns { colorFile, lineArtFile, width, height } from the list row and its size class.
+  - inspectPictureRow(png, row) runs the size class checks of the row and returns { valid, errors }.
+  - The line-art check rejects a line thinner than 12 px and prints the measured width.
+  - The render command prints render peak rss mb: <n> from the capture process.
+read_only_workbooks_facts:
+  - pictures.json SHA-256 c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b
+  - pictures.md SHA-256 e97d649f8de5597494730ee17c8785a1ebe36ee2f7f7c0897701d5422929f848
+  - The test reads the two files read-only and writes nothing in the Workbooks tree. The fixtures for T146, T148, and T149 live in a temporary directory and the test removes it.
+deviations:
+  - The quota tool routed Red to minimax-cn-coding-plan/MiniMax-M3#high. The role table names openai/gpt-6.1-sol#high. Green runs on another family, so Red and Green stay apart.
+  - Two vitest runs ran through heavy-run.sh. The first run found broken assertion receivers in the new rows. The second run is the evidence. The first run changed no assertion of the earlier rows.
+  - The first type check found one owned error, TS2339 on the readStage property of the CLI dependency type. The fix wraps that type in NonNullable. It is a type-only fix. No assertion and no falsification condition changed. No vitest run followed the fix.
+  - The phase base commit 15a7bf0b and the Red start commit 3419926f differ. The second commit belongs to the other track asset_filled_shelves_20261028.
+next_role: green
+next_action: Implement the three list seams, the specification v1 sizes, the line-art names, the twin rule, the 12 px line rule, the row checks, and the render peak rss label. Change src/storytime/book-pictures.ts, scripts/storytime-book-pictures.ts, and contract.md. Then run the same vitest command and the same type check.
+log_path: measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-7cf91df.log
+END_MEASURE_AGENT_RESULT

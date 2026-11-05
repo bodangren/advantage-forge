@@ -1,0 +1,17 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green (round 8 session, resumed after a server restart on 2026-10-31)
+status: superseded
+phase_base_sha: 15a7bf0b
+final_head: b53cab63 (no new commit from this session)
+summary: The round 8 turn stopped during the a-nut v2 render on 2026-10-29 at 13:50.
+  Later Green rounds 8 to 19 finished every step of the round 8 plan:
+  - d6f1a332 adopted the touch-neck map and the a-neck, a-nut v1/v2, and practice-line-nut stages.
+  - 4b33108f fixed storytime-nest. 5514cfe9 and edabdff3 fixed storytime-butterfly-net.
+  - 9278188e mapped touch nose to gesture-touch-nose (round 13 evidence 6c0a9300).
+  - Rounds 14 to 19 added the bus, cup, sun hat, check rows, and block box (last plan commit b53cab63).
+  This session made no edit and no commit after the restart. It did not overwrite jr-green-b53cab63.log.
+tasks_flipped_x: none in this session
+tasks_flipped_b: none in this session
+new_files: this log only
+handoff: Take the next step from jr-green-b53cab63.log (round 19) and item-review-batch-3.json, not from this log.
+END_MEASURE_AGENT_RESULT

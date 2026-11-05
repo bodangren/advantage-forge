@@ -1,0 +1,246 @@
+{
+  "status": "fail",
+  "reviewer": "opencode-go/deepseek-v4.1-flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "All eleven story rows are clean. The family print fix holds. K2 lacks the named nose in the line file. K3 cuts the hair bun and the shoe soles at the frame edges.",
+  "set_status": "pass",
+  "extra_status": "fail",
+  "items": {
+    "l2-w04-story-page-this-is-my-family": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-line-4-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-my-family-m3-line-print-4-despeckled.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Dad wears a yellow polo shirt, long dark trousers, and brown shoes. His look sheet has a blue T-shirt, gray shorts, and black sandals. His face and hair match, and the sentence names no clothes. This is a note.",
+        "The red door is mostly hidden behind Grandma and Grandpa. A small red strip stays visible in the color. The house and the six people stay clear.",
+        "Grandma's faint cheek lines in the color are a note. The line has no such lines.",
+        "The line adds small buttons on the blouse of Mom and on the polo of Dad. These marks change no character and no needed prop.",
+        "The fix works: the color print and the line print show every person, both hands, and all hair whole."
+      ],
+      "goal_check": "Both files show six people in front of the house: Mom, Dad, Grandma, Grandpa, Tom, and Lily. Mom, Grandma, Grandpa, Tom, and Lily match their look sheets. Dad keeps his face and hair, but his shirt and trousers differ from his sheet. Both prints show all six people whole, with lawn and bushes at both sides. No text and no sun appear.",
+      "line_check": "Both line files have zero non-binary pixels. No thick black ring or band appears. Faces stay readable. No line gap blocks coloring."
+    },
+    "l2-w04-cover-pam": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-line-2-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-cover-pam-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The line adds a window curtain that the color does not show. This background difference is a note.",
+        "The line shows the star of the T-shirt of Nan at the arm of the doll. The color hides the star under the doll. The star belongs to Nan, so this difference is a note.",
+        "The line draws the eyes of Nan as small solid pupils. Her face stays readable."
+      ],
+      "goal_check": "Both files show Nan holding one doll Pam. Nan matches her look: two buns with red bands, an orange T-shirt, red shorts, and white shoes. Pam keeps yellow yarn hair with two pigtails, a plain red dress, and no star. One doll, one blue sofa, one rug, and one toy box. Nan, her hands, and the doll stay whole in the print. No text appears.",
+      "line_check": "Both line files have zero non-binary pixels. No thick black ring or band appears. Faces stay readable. No line gap blocks coloring."
+    },
+    "l2-w04-story-page-this-is-the-man": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-line-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-the-man-m1-line-print-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The line fills the eyes of Nan solid black. The stage-2 rule allows solid pupils, and the face stays readable. The other pages use outlined eyes, so this is a note.",
+        "The line simplifies the folds of the blanket. One blanket stays clear.",
+        "The pointing hand of Nan shows the same fingers as the color."
+      ],
+      "goal_check": "Both files show Dad wrapped in the blue blanket on the sofa, with one doll Pam on his head, and Nan laughing at the left with open arms. Dad matches his sheet: short black hair and a blue T-shirt. Pam keeps yellow yarn hair, two pigtails, and a plain red dress. One blanket and one doll. People, hands, and hair stay whole in both prints. No text appears.",
+      "line_check": "Both line files have zero non-binary pixels. No thick black ring or band appears. Faces stay readable. No line gap blocks coloring."
+    },
+    "l2-w04-story-page-is-this-pam": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-line-2-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-is-this-pam-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Pam shows as a fringe of yellow yarn, a frayed red dress corner, and one foot. The goal asks for the dress corner, and the text asks a question. This is a note, not a defect.",
+        "The line draws the frayed edge as a zigzag and the yarn as a small fan. A child still reads cloth and yarn beside the blanket.",
+        "The line draws the eyes of Nan as large black pupils with a lash tick. Her face stays readable."
+      ],
+      "goal_check": "Both files show Nan pointing at one big round bump under one blue blanket. The red doll dress corner and the yellow yarn show at the right edge of the blanket in color and in line. Nan matches her look. Nan, her hands, and the blanket stay whole in both prints. No text appears.",
+      "line_check": "Both line files have zero non-binary pixels. No thick black ring or band appears. Faces stay readable. No line gap blocks coloring."
+    },
+    "l2-w04-story-page-pam-can-nap": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-line-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-can-nap-m1-line-print-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The line draws the small blanket as one cloth shape over the front of the box. One blanket stays clear.",
+        "The line hides the second pigtail of the doll behind the blanket edge. The doll keeps one pigtail tuft and her yarn fringe.",
+        "The line adds small strokes on the box lid. They change no needed prop."
+      ],
+      "goal_check": "Both files show Nan tucking one doll Pam into one shoe box with a pillow and one small blanket; the lid stands at the back. Pam keeps yellow yarn hair, pigtails, and a plain red dress. Nan matches her look with the white star. Nan, the box, and the doll stay whole in both prints. No text appears.",
+      "line_check": "Both line files have zero non-binary pixels. No thick black ring or band appears. Faces stay readable. No line gap blocks coloring."
+    },
+    "l2-w04-story-page-pam-is-in-a-pan": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-line-2-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-in-a-pan-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The pan is a deep round pan with a rim and a short thick handle behind the bowl. At book size it reads as a pan, not a pot and not a mirror. This is a note.",
+        "The doll is large against the pan. She still fits inside the pan, and the sentence stays clear.",
+        "The prints cut the right side of the toy box. The toy box is background, and Nan, the doll, and the pan stay whole.",
+        "The line draws the pigtails of Pam as two small tufts. Her yarn fringe and her dress stay clear."
+      ],
+      "goal_check": "Both files show one doll Pam sitting in one big yellow toy pan on the rug, with Nan laughing at the left. Pam keeps yellow yarn hair, two pigtails, and a plain red dress. Nan matches her look with the white star. Nan, her hands, the doll, and the pan stay whole in both prints. No text appears.",
+      "line_check": "Both line files have zero non-binary pixels. No thick black ring or band appears. Faces stay readable. No line gap blocks coloring."
+    },
+    "l2-w04-story-page-pam-is-on-a-man": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-line-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-man-m1-line-print-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The line omits the blanket on the left sofa arm that the color shows. The goal names no blanket here, so this is a note.",
+        "The line draws the pigtails of Pam as two small tufts. Her yarn fringe, dress, and face stay clear.",
+        "The closed eyes and the small smile of Dad stay readable in the line."
+      ],
+      "goal_check": "Both files show Dad asleep on the blue sofa with one doll Pam on his tummy, and Nan laughing at the left. Dad matches his sheet: short black hair, blue T-shirt, gray shorts, and black sandals. Pam keeps her look. People, hands, feet, and hair stay whole in both prints. No text appears.",
+      "line_check": "Both line files have zero non-binary pixels. No thick black ring or band appears. Faces stay readable. No line gap blocks coloring."
+    },
+    "l2-w04-story-page-pam-is-on-a-map": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-line-2-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-pam-is-on-a-map-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The line simplifies the map marks. It keeps the river, the house shape, the dotted path, the lake, and the cross.",
+        "The line draws the pigtails of Pam as two tufts. Her yarn fringe and dress stay clear.",
+        "The pointing finger meets the head of the doll in both files, as the goal asks."
+      ],
+      "goal_check": "Both files show Nan kneeling and pointing at one doll Pam who lies on one big paper map. The map keeps its river, house, dotted path, and cross in both files. Pam keeps her look. Nan, her hands, the doll, and the map stay whole in both prints. No text appears.",
+      "line_check": "Both line files have zero non-binary pixels. No thick black ring or band appears. Faces stay readable. No line gap blocks coloring."
+    },
+    "l2-w04-story-page-this-is-pam": {
+      "files": [
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-color.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-color-print.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-line-despeckled.png",
+        "out/storytime-review/batch-47/pages/l2-w04-story-page-this-is-pam-m1-line-print-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The line shows the star of the T-shirt of Nan above the head of the doll. The color hides the star behind the doll. The star sits on the shirt of Nan and is allowed.",
+        "The line draws the pigtails of Pam as two tufts. Her yarn fringe, dot eyes, and plain red dress stay clear."
+      ],
+      "goal_check": "Both files show Nan holding up one doll Pam and smiling. Nan matches her look. Pam keeps yellow yarn hair, two pigtails, a plain red dress, and no star. One doll only. Nan, her hands, her hair, and the doll stay whole in both prints. No text appears.",
+      "line_check": "Both line files have zero non-binary pixels. No thick black ring or band appears. Faces stay readable. No line gap blocks coloring."
+    }
+  },
+  "extra": {
+    "K1": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The goal says the head faces the other way. The brief supplies no second image, and both files face right.",
+        "The line draws the hair bun as one thin circle. It is not a thick black band, and the earlier round does not reproduce.",
+        "The neck and the shirt cross the bottom edge of this head study. The head and the named nose stay whole."
+      ],
+      "goal_check": "One profile head shows the dark hair, the bun, an ear, one eye, and a clear nose of Nan. The nose projects from the face in color and in line. The head supports a tracing line. No extra person, animal, prop, or text appears.",
+      "line_check": "The line file has zero non-binary pixels. The nose, eye, mouth, and face contour stay readable. No thick black ring, band, or gap makes coloring hard."
+    },
+    "K2": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "rating": 6,
+      "verdict": "defect",
+      "defect_categories": [
+        "broken-face"
+      ],
+      "defects": [
+        "The line file does not draw the nose of Nan. Her fingertip stops on her cheek below the eye, so the face part that the text names is missing."
+      ],
+      "notes": [
+        "The color file shows a clear nose and the intended touch.",
+        "Both files keep Nan inside the frame.",
+        "The eyes and the mouth stay readable in the line."
+      ],
+      "goal_check": "The color shows Nan touching her nose with one finger while she laughs. The line fails the named face part: it shows no nose and no touch on the nose. A teacher or a child cannot read 'A nose.' from the line file.",
+      "line_check": "The line file has zero non-binary pixels. The eyes and the mouth stay readable. The missing nose breaks the face.",
+      "retry_hint": "Line: Draw the nose of Nan above the smile and set the fingertip against its side."
+    },
+    "K3": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": 7.5,
+      "verdict": "defect",
+      "defect_categories": [
+        "layout-fault"
+      ],
+      "defects": [
+        "The right hair bun runs off the right edge, and the shoe soles run off the bottom edge, in the color file and in the line file."
+      ],
+      "notes": [
+        "The goal asks for a close-up. The hand and the big nut stay whole in both files.",
+        "No open hand shows a clearly wrong finger count in either file.",
+        "The nut is one acorn with a cap and a stem in both files."
+      ],
+      "goal_check": "Both files show one large brown nut on the open hand of Nan, close up. Nan matches her look. The hand and the nut stay whole. The frame cuts the right hair bun and the shoe soles.",
+      "line_check": "The line file has zero non-binary pixels. The nut, the cap, the stem, and the fingers stay readable. No thick black band or gap makes coloring hard.",
+      "retry_hint": "Color and line: Keep the close-up of the hand and the nut; widen the frame so the hair bun and the shoes stay whole."
+    }
+  }
+}

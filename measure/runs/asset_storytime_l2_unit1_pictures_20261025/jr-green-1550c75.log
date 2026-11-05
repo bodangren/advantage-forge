@@ -1,0 +1,76 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green (parts 1 and 2 of Phase 2 task 6)
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 2: Tests and calibrated model pre-checks (P2), task 6
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e (phase_base_sha, immutable)
+role_base_sha: 1550c75119c283f0228c08af93e9197663fe5ad5
+head_sha: c23534333d4d40ee3740327a7505e02c4f76079f
+commits:
+  - af58470f "measure(plan): add task 5 commit SHA to the task line" (part 1 gate fix)
+  - 011dbbb9 "measure(plan): record task 6 Review A ledger and calibration evidence" (evidence lines and the [x] flip)
+  - c2353433 "measure(plan): add task 6 commit SHA to the task line" (first line cites 011dbbb9; two-commit order is necessary because a commit cannot contain its own SHA)
+tests_run: none — no vitest, tsc, Chrome, or render ran in either part. Task work: four precheck CLI operations, one tsx `assertCalibrationReady` import, read-only ledger and log reads; each exited 0.
+files_changed:
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md (committed, three commits above, plan.md staged by explicit path each time)
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-1550c75.log (final block, not committed)
+  - out/storytime/l2/unit1/cost-ledger.jsonl, calibration/good-nan-minimax.json, calibration/good-nan-kimi.json, raw/good-nan-v1-minimax-ae8f1ff1-*.txt, raw/good-nan-v1-kimi-7e33f6e2-*.txt, candidates/calibration/good-nan-kimi-prompt.txt (all uncommitted, per rules)
+plan_updates: task 5 first line cites Commit `f192bf48`; task 6 flipped to `[x]` with evidence lines and first-line Commit `011dbbb9`. No task is `[b]`. No track moved to archive; no closeout metadata touched.
+known_failures: none. One CLI note: every precheck-kimi invocation needs `--paid` or `--dry-run` (src/storytime/book-pictures.ts:3024); `--failed` makes no provider call.
+handoff:
+  t75_labels: `9d0bddf7 after-call: failure`; `before-call entries: 8`; `after-call entries: 8`; `open before-calls: 0`; `good-nan-minimax: pass`; `good-nan-kimi: pass` — all match T75.
+  log_checks: both new logs hold sourceText `Hello, I am Nan.`, modelSource declared, rubricVersion storytime-picture-v2, and a raw file with the callId in its name. Kimi before-call 2026-10-26T03:40:44.828Z is later than MiniMax after-call 2026-10-26T03:39:56.047Z; one paid call at a time held.
+  kimi_record: exit 0; the parser accepted the reviewer raw line unchanged; reviewer model kimi-code-plan-cn/k3.1-pro, session ses_e89b236c3ffe9J1m4HPPB9jLVM (deviation (a)); log calibration/good-nan-kimi.json, checkedAt 2026-10-26T03:44:05.862Z.
+  assertCalibrationReady: accepted `out/storytime/l2/unit1` (exit 0); the Phase 2 production render gate is open.
+  deviation_d: ledger matches plan lines 119-121 (`4192765b` before 20:15:31.415Z / after 20:17:24.145Z; `1086bc64` before 20:15:33.668Z / after 20:17:27.242Z); the overlap of the two 2026-10-25 Kimi calls is visible in the ledger; every later paid call ran one at a time.
+  late_raw_file: bad-one-sun-kimi-9d0bddf7.txt appeared at 08:06 ICT after the hung call; it stays unused, unchanged, and unattached; the failure reason in the ledger records it.
+  next_dispatch: Phase 2 closeout gate (per test-strategy.md) and the Phase 2 acceptance review. New files for the audit scope: the three plan commits only; the reviewer raw file and both calibration logs live under out/ and are not committed.
+dirty_path_classification: the shared index holds unrelated work from other agents; every commit staged plan.md only, by explicit path; no `git add -A` or `git add .`; nothing under out/ or measure/runs/ committed.
+model_deviation: executor GLM (volcengine-agent-plan/glm-5.3-flash); no coder delegation; no Red-family model used for this phase. The Kimi reviewer ran by orchestrator dispatch, deviation (a).
+facts_changed:
+  - Kimi good-nan verdict is pass (log written, checkedAt 2026-10-26T03:44:05.862Z); call 7e33f6e2 is closed.
+  - The ledger now holds 8 before-call and 8 after-call entries with 0 open before-calls.
+  - assertCalibrationReady accepts out/storytime/l2/unit1.
+  - plan.md task 6 is [x] with commit SHA evidence (011dbbb9); task 5 carries its SHA (af58470f).
+END_MEASURE_AGENT_RESULT
+
+Prose summary (kept below the end line, not part of the result block):
+
+Part 1 (same session, earlier):
+- Step 0 gate fix: appended Commit `f192bf48`. to the first sentence of the task 5 line in plan.md,
+  the same form as tasks 1-4. Committed plan.md only: af58470f.
+- Step 1 failure record: precheck-kimi --calibration bad-one-sun --record 9d0bddf7-d2ea-4bdb-a672-
+  56c308e3f6d0 --failed --reason <text> --paid; exit 0. The CLI guard (src/storytime/book-pictures.ts:3024)
+  requires --paid or --dry-run for every precheck-kimi call; a --failed record makes no provider call
+  and writes no log or raw file. Ledger after-call entry: status failure, recordedAt
+  2026-10-26T03:39:22.235Z. The late raw file bad-one-sun-kimi-9d0bddf7.txt was not read, changed, or attached.
+- Step 2 MiniMax good-nan (RA-N2): dry-run first, then paid; exit 0; verdict pass. Log
+  calibration/good-nan-minimax.json, callId ae8f1ff1, checkedAt 2026-10-26T03:39:56.057Z, model
+  mmx-vision-default, modelSource declared, sourceText Hello, I am Nan., fileSha256 matches the
+  source picture. Raw output raw/good-nan-v1-minimax-ae8f1ff1-*.txt.
+- Step 3 Kimi good-nan --begin: dry-run first, then paid, strictly after the MiniMax after-call
+  entry (03:39:56Z < 03:40:44Z). callId 7e33f6e2-022f-421d-8fbd-97536abbae77; prompt file
+  candidates/calibration/good-nan-kimi-prompt.txt; before-call recordedAt 2026-10-26T03:40:44.828Z.
+- Step 4: stopped; no --record in part 1.
+
+Part 2:
+- Step 1 record: the orchestrator dispatched the Kimi reviewer on model kimi-code-plan-cn/k3.1-pro,
+  session ses_e89b236c3ffe9J1m4HPPB9jLVM (deviation (a)); it wrote one raw line to
+  calibration/raw/good-nan-kimi-7e33f6e2.txt. precheck-kimi --calibration good-nan --record
+  7e33f6e2-... --raw <file> --paid; exit 0; the parser accepted the line unchanged; no raw file edit.
+  The CLI copied the raw text to raw/good-nan-v1-kimi-7e33f6e2-*.txt and wrote
+  calibration/good-nan-kimi.json (checkedAt 2026-10-26T03:44:05.862Z).
+- Step 2 T75 labels (read-only): 9d0bddf7 after-call: failure; before-call entries: 8; after-call
+  entries: 8; open before-calls: 0; good-nan-minimax: pass; good-nan-kimi: pass. All match. Both new
+  logs hold sourceText Hello, I am Nan., a modelSource, rubricVersion storytime-picture-v2, and a
+  raw file with the callId in its name. Kimi before-call 03:40:44.828Z is later than MiniMax
+  after-call 03:39:56.047Z. assertCalibrationReady('out/storytime/l2/unit1') accepted the root, exit 0.
+- Step 3 deviation (d): ledger matches plan lines 119-121 (4192765b before 20:15:31.415Z / after
+  20:17:24.145Z; 1086bc64 before 20:15:33.668Z / after 20:17:27.242Z); the ledger shows the two
+  2026-10-25 Kimi calls overlapped; every later paid call ran one at a time.
+- Step 4 plan evidence: commit 011dbbb9 carries the evidence lines and the [x] flip; commit c2353433
+  adds Commit `011dbbb9`. to the task 6 first line. The two-commit order is necessary because a
+  commit cannot truthfully contain its own SHA. Both commits stage plan.md only, by explicit path.
+
+No vitest, tsc, Chrome, or render ran in either part. Nothing committed under out/ or measure/runs/.
+The shared index holds unrelated work from other agents; no `git add -A` or `git add .` was used.

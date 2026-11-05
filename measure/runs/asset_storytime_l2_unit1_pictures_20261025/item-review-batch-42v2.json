@@ -1,0 +1,182 @@
+{
+  "status": "pass",
+  "reviewer": "openai/gpt-6-luna#high",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "All nine check rows are clean.",
+  "rows": {
+    "l2-w02-check-row-alligator": {
+      "files": [
+        "out/storytime-review/batch-42/pages/l2-w02-check-row-alligator-m1-color.png",
+        "out/storytime-review/batch-42/pages/l2-w02-check-row-alligator-m1-line-print-3-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "goal_check": "One alligator reads clearly in both files. No extra object or text appears. The line art has no gray pixels.",
+      "reviewer": "openai/gpt-6-luna#high",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "summary": "Reviewed. No visible defect."
+    },
+    "l2-w02-check-row-ant": {
+      "files": [
+        "out/storytime-review/batch-42/pages/l2-w02-check-row-ant-m1-color.png",
+        "out/storytime-review/batch-42/pages/l2-w02-check-row-ant-m1-line-print-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "goal_check": "One ant reads clearly. Its antennae and six legs show in both files. The line art has no gray pixels.",
+      "reviewer": "openai/gpt-6-luna#high",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "summary": "Reviewed. No visible defect."
+    },
+    "l2-w02-check-row-apple": {
+      "files": [
+        "out/storytime-review/batch-42/pages/l2-w02-check-row-apple-m1-color.png",
+        "out/storytime-review/batch-42/pages/l2-w02-check-row-apple-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "goal_check": "One apple reads clearly. The stem and leaf show in both files. The line art has no gray pixels.",
+      "reviewer": "openai/gpt-6-luna#high",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "summary": "Reviewed. No visible defect."
+    },
+    "l2-w02-check-row-bed": {
+      "files": [
+        "out/storytime-review/batch-42/pages/l2-w02-check-row-bed-m1-color.png",
+        "out/storytime-review/batch-42/pages/l2-w02-check-row-bed-m1-line-print-4-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "goal_check": "One bed reads clearly. The pillow, blanket, frame, and legs show. No extra object or text appears. The line art has no gray pixels.",
+      "reviewer": "openai/gpt-6-luna#high",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "summary": "Reviewed. No visible defect."
+    },
+    "l2-w02-check-row-bus": {
+      "files": [
+        "out/storytime-review/batch-42/pages/l2-w02-check-row-bus-m1-color.png",
+        "out/storytime-review/batch-42/pages/l2-w02-check-row-bus-m1-line-print-3-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "goal_check": "One school bus reads clearly. Windows, wheels, door, and bus body show in both files. The line art has no gray pixels.",
+      "reviewer": "openai/gpt-6-luna#high",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "summary": "Reviewed. No visible defect."
+    },
+    "l2-w02-check-row-dog": {
+      "files": [
+        "out/storytime-review/batch-42/pages/l2-w02-check-row-dog-m1-color.png",
+        "out/storytime-review/batch-42/pages/l2-w02-check-row-dog-m1-line-print-3-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "goal_check": "One dog reads clearly. The face, ears, body, legs, and tail show in both files. Its solid nose is allowed. The line art has no gray pixels.",
+      "reviewer": "openai/gpt-6-luna#high",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "summary": "Reviewed. No visible defect."
+    },
+    "l2-w02-check-row-fish": {
+      "files": [
+        "out/storytime-review/batch-42/pages/l2-w02-check-row-fish-m1-color.png",
+        "out/storytime-review/batch-42/pages/l2-w02-check-row-fish-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "goal_check": "One fish reads clearly. Its fins, tail, eye, and body show in both files. The line art has no gray pixels.",
+      "reviewer": "openai/gpt-6-luna#high",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "summary": "Reviewed. No visible defect."
+    },
+    "l2-w02-check-row-pig": {
+      "files": [
+        "out/storytime-review/batch-42/pages/l2-w02-check-row-pig-m1-color.png",
+        "out/storytime-review/batch-42/pages/l2-w02-check-row-pig-m1-line-print-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "goal_check": "One pig reads clearly. Its snout, ears, legs, and tail show in both files. The line art has no gray pixels.",
+      "reviewer": "openai/gpt-6-luna#high",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "summary": "Reviewed. No visible defect."
+    },
+    "l2-w02-check-row-sun": {
+      "files": [
+        "out/storytime-review/batch-42r2/pages/l2-w02-check-row-sun-m2-color.png",
+        "out/storytime-review/batch-42r2/pages/l2-w02-check-row-sun-m2-line-print-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "goal_check": "One sun reads clearly. Its round center and eight rays show in both files. The line art has no gray pixels.",
+      "reviewer": "openai/gpt-6-luna#high",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "summary": "Reviewed. No visible defect."
+    }
+  },
+  "extra": {
+    "K1": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "goal_check": "One large brown nut rests in Nan’s open hand. The nut, hand, and Nan read in both files. The line art has no gray pixels.",
+      "reviewer": "openai/gpt-6-luna#high",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "summary": "Reviewed. No visible defect."
+    },
+    "K2": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "goal_check": "Nan faces the other way in profile. Her nose is clearly visible in both files. The line art has no gray pixels.",
+      "reviewer": "openai/gpt-6-luna#high",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "summary": "Reviewed. No visible defect."
+    },
+    "K3": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "rating": 6,
+      "verdict": "defect",
+      "defect_categories": [
+        "broken-face"
+      ],
+      "defects": [
+        "The nose does not show in the line art."
+      ],
+      "goal_check": "Nan touches her face and laughs in both files. The color file shows a nose bump. The line file has no nose contour; the fingertip touches a smooth face above the mouth.",
+      "reviewer": "openai/gpt-6-luna#high",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "summary": "Reviewed. Defect found."
+    }
+  }
+}

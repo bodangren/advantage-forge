@@ -1,0 +1,108 @@
+# Batch 45 item review log
+
+Date: 2026-11-02. Reviewer: minimax-cn-coding-plan/MiniMax-M3.1-Flash. Audit only.
+Bar: Daniel 2026-11-01 14:15 ICT. A defect is only what a teacher or a child sees at book size.
+Twelve rows. Week 3 batch 3, Phase 4, plus three extra rows K1 to K3.
+
+Status: pass. The nine check rows are clean. The extra row K2 has a defect.
+
+| key | rating | verdict | categories |
+| --- | --- | --- | --- |
+| l2-w03-check-row-bus | 7.5 | clean | |
+| l2-w03-check-row-cat | 8 | clean | |
+| l2-w03-check-row-dog | 8 | clean | |
+| l2-w03-check-row-fish | 8 | clean | |
+| l2-w03-check-row-hat | 8.5 | clean | |
+| l2-w03-check-row-pear | 8.5 | clean | |
+| l2-w03-check-row-pen | 8 | clean | |
+| l2-w03-check-row-pencil | 8 | clean | |
+| l2-w03-check-row-sun | 8.5 | clean | |
+| extra.K1 | 8 | clean | |
+| extra.K2 | 6 | defect | broken-face |
+| extra.K3 | 8 | clean | |
+
+## What I checked
+
+I read the brief and applied Daniel's bar. I opened every file in `pages/`. I opened both files of
+each extra row and the Nan look reference. I opened the nine reference sheets in `refs/`.
+
+I counted every pixel that is not 0 and not 255 in all twenty-one line files. I measured the
+stroke depth in every line print with a distance transform. I measured the width of every
+enclosed white region. I measured the object box and the frame edges of every color print.
+
+## Line file count
+
+The count is 0 in all twenty-one line files. No gray, no specks, no shading.
+
+## Thick ring and band
+
+A stroke wider than 40 px would show in my depth scan. No such stroke exists in any line print.
+The solid black areas are the eye pupils, and one dog nose. The bar allows both.
+
+## Line gap
+
+No line print holds a white region too thin to color. The bus and K1 hold one hairline speck
+each. Both are a few pixels wide. Neither is a coloring problem.
+
+## The bus shadow
+
+The bus color print carries a hard gray cast shadow. It covers 4.72 percent of the frame.
+The line art has no shadow and no ground line. The shadow reads as a shadow at book size.
+The bar lists gray only in the line art, so I made this a note and lowered the rating.
+
+## The sun
+
+The eight rays are sharp triangles. The wide base of each triangle sits on the disc line.
+The point faces outward. At book size the line art reads as a sun and not as a flower.
+This fixes the week 2 flower failure.
+
+## The cat eyes
+
+The left eye is narrower than the right eye in the line art. The color file shows the same
+difference. The head turns to the left, so the far eye sits at an angle. The brief says
+that foreshortening is correct. A note, not a defect.
+
+## The fish
+
+The tail fin has a wavy outline in the line art. The color file draws the same scalloped fin.
+A small smile mark sits at the mouth. The color file shows no mouth line. The mark is small
+and the fish still reads as a fish. Notes, not defects.
+
+## The pen and the pencil
+
+The pen shows a clip and a rounded cap end. The pencil shows an eraser, a band, a wood cone
+and a lead point. The two do not look alike at book size. The spec asks for a rounded cap end.
+
+## K1 the practice line
+
+The head faces the right edge, the other way from the nose check row. The nose shows in the
+color file as a bump with a nostril line. The nose also shows in the line file as a bump in
+the profile contour. The ear is an open C arc and the eyebrow is a thick stroke. The bar
+lists both as marks that are not a defect.
+
+## K2 the nose page, defect
+
+The color file shows the nose. The line file draws no nose contour. The fingertip stands
+where the nose should be. The text names the nose, so the face part must show in both files.
+This row fails.
+
+The fixed line file already exists. It sits at
+`out/storytime/l2/unit1/w01/delivery-muse-v2/l2-w01-story-page-a-nose-line-v2.png`.
+It adds a closed round nose bump at the finger tip. The approved record names that file
+as the line print for this row.
+
+## K3 the nut page
+
+One big brown acorn rests on the open palm. The nut, the hand and Nan read in both files.
+Nan keeps her reference look in both files. No hand shows six digits.
+
+## Retry hint for K2
+
+Draw a closed round nose bump at the finger tip in the line art, as the color file shows,
+and keep the finger touching it.
+
+## Files I changed
+
+I wrote two files only. `measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-45.json`
+and `measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-45.log`.
+I changed no picture. I made no commit.

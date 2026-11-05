@@ -1,0 +1,111 @@
+{
+  "status": "fail",
+  "reviewer": "claude-code/claude-opus-5-5[1m]#high",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Cover m6 fails on one layout fault: Ben's raised hand is 11 px from the left print edge, and the group fills almost the full width. The top 30 percent is calm (C2: yes). The six children and Pip match the approved 3D look. Control rows: K1 defect (no nose in the line file), K2 clean, K3 clean.",
+  "items": {
+    "l2-cover-v1": {
+      "files": [
+        "out/storytime-review/cover-1/brief.md",
+        "docs/storytime/l2-unit1/cover/muse/l2-cover.json",
+        "out/storytime-review/cover-1/pages/l2-cover-v1-m6-color-print.png",
+        "out/storytime-review/cover-1/refs/ref2-cast-group-a-2.png",
+        "out/storytime-review/cover-1/refs/ref3-ben-ref-clean-2.png",
+        "out/storytime-review/cover-1/refs/ref5-pip-ref-render.png",
+        "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png (same image as out/storytime-review/cover-1/refs/ref4-nan-ref-clean-look-reference.png)",
+        "/tmp/opencode/cv-ben.png, cv-mia.png, cv-sam.png, cv-may.png, cv-pat.png, cv-nan.png (full-size face crops)",
+        "/tmp/opencode/cv-edge.png, cv-hands.png, cv-feet.png, cv-pip.png (crops)"
+      ],
+      "rating": 6.5,
+      "verdict": "defect",
+      "defect_categories": [
+        "layout-fault"
+      ],
+      "defects": [
+        "Ben's raised hand is 11 px from the left print edge (script /tmp/opencode/margin.mjs; first skin pixel at x = 11, row 1756). The spec asks for at least 16 percent of the width (640 px) free at each side. A book trim or bleed of a few millimeters cuts his fingertips, and at book size the hand touches the page edge.",
+        "The group spans from x = 11 to x = 3886 of 4000 px, so the children fill almost the full width, not the middle 68 percent that the spec asks for."
+      ],
+      "notes": [
+        "Six children stand in one row, from the left Ben, Mia, Sam, May, Pat, Nan. Each is in the 3D look of the approved sheets: big round head, glossy brown eyes with white highlights, cheek blush, clay-like hair, chubby arms.",
+        "Outfits match the sheets: Ben light-blue T-shirt, dark-blue trousers, grey sneakers, light-brown tufted hair; Mia pink T-shirt, denim overalls, pink bow, white shoes; Sam red T-shirt with two white stripes, blue shorts, blue shoes; May yellow T-shirt, blue pleated skirt, white socks and sneakers, yellow star clip, side ponytail; Pat green T-shirt, brown cargo shorts, brown sandals, no bag, no teddy bear; Nan orange T-shirt with a white star, red shorts, white sneakers, two buns with red ties.",
+        "Pip sits whole in the front center with floppy ears with darker tips, a cream forehead stripe, a cream muzzle, a black nose, a red collar with a gold tag, and a visible tail. His fur is more orange than the drawn reference but matches the 3D render sheet. Builder note 3 is a note, not a defect.",
+        "Raised hands (builder note 4): each child waves one open hand. Each hand shows four fingers, and the thumb sits against the cheek, so no hand shows more than five digits, a second palm, or two hands on one arm. The six raised hands are the same shape. The lowered hands are smooth mittens, as in the sheets.",
+        "Feet (builder note 2): the feet have no contact shadow, so the children look slightly raised above the floor. This is a note.",
+        "Eye corners (builder note 5): at full size, Ben, Mia, Sam, May, and Pat have clean rounded outer eye corners with the lash shape of the sheets. Nan has one small dark tick at each outer eye corner, as in her approved look sheet. No forehead streak, no face marks, and no text are visible."
+      ],
+      "goal_check": "Partial. Six sprouts and Pip wave and smile in a bright classroom under a calm cream wall, but the composition is too wide: Ben's hand nearly touches the left print edge.",
+      "line_check": "none: color only",
+      "calm_top": "yes",
+      "calm_top_reason": "The top 900 of 3000 rows is one plain cream wall: the largest channel difference from the median color is 7 of 255, and 0 percent of pixels differ by more than 24. The timber panels start at row 917. Every head, hand, and hair stays below that line. No character, no prop, no text.",
+      "retry_hint": "Move the camera back so the six children fill only the middle 68 percent of the width, with Ben's raised hand at least 640 px from the left edge."
+    }
+  },
+  "extra": {
+    "K1": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png",
+        "/tmp/opencode/k1-color-face.png (crop)",
+        "/tmp/opencode/k1-line-face.png (crop)"
+      ],
+      "rating": 5.5,
+      "verdict": "defect",
+      "defect_categories": [
+        "broken-face"
+      ],
+      "defects": [
+        "The text names the nose, but the line file has no nose. The face in the line file has two eyes, two eyebrows, and an open mouth. The fingertip sits at the left corner of the mouth, at the position of the nose. A child sees a finger at the mouth, not a finger on a nose."
+      ],
+      "notes": [
+        "The color file shows Nan in the approved 3D look: two buns with red ties, an orange T-shirt with a white star, red shorts, white sneakers.",
+        "In the color file the fingertip touches the lower left side of the nose. The nose shows above the fingertip. The open-mouth smile reads as a laugh.",
+        "The hand that touches the nose is a fist with one pointing finger. The other hand is a smooth mitten, as in the approved sheets.",
+        "The line-art eyes are plain rings with a small highlight ring and no pupil fill; the eyelash flicks of the color file are not drawn. This changes no character."
+      ],
+      "goal_check": "Color: pass. Nan touches her own nose with one finger and laughs. Line: fail. The nose is not drawn, so the finger seems to touch the mouth.",
+      "line_check": "Script /tmp/opencode/linecheck57.mjs: 0 pixels are not 0 or 255 (4000x3000, black 3.85 percent). Black and white only. By eye: no gray, no thick solid ring or band, no line gap that makes coloring hard. (Control line file.)",
+      "retry_hint": "Draw the nose in the line art as a small closed shape above the fingertip, with the fingertip on the nose and clear of the mouth."
+    },
+    "K2": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Nan shows in profile and faces to the right. The goal says \"facing the other way\"; no paired picture was in scope, so the reviewer records the direction only.",
+        "The nose shows clearly as a round bump at the front of the face in the color file and in the line file.",
+        "The color file keeps the approved look: dark hair with a bun and a red tie, the eyelash flick, the cheek blush, the orange T-shirt.",
+        "The line file draws the bun as a plain circle without the red tie ring. This changes no character.",
+        "The line-art ear is an open curve. This is a note, not a line gap: the ear area joins the face area, and a child can color it."
+      ],
+      "goal_check": "Pass. The head of Nan is in profile, and the nose is clearly seen in color and line.",
+      "line_check": "Script /tmp/opencode/linecheck57.mjs: 0 pixels are not 0 or 255 (1600x1600, black 6.53 percent). Black and white only. By eye: no gray, no thick solid ring or band, no line gap that makes coloring hard. (Control line file.)"
+    },
+    "K3": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png",
+        "/tmp/opencode/k3-color-hand.png (crop)",
+        "/tmp/opencode/k3-line-hand.png (crop)"
+      ],
+      "rating": 7.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The open hand has five digits in color and in line: one thumb at the back and four fingers. The palm faces up and holds one nut.",
+        "The nut is one brown acorn with a cap and a stem, in color and in line. It reads as a nut at book size.",
+        "The open hand is very large because it is near the camera. This is foreshortening, a note.",
+        "Nan keeps the approved look: two buns with red ties, the orange T-shirt with a white star, red shorts. The right bun and the feet are cut at the print edges in the close-up. This is a note.",
+        "The line-art face has eyes, eyebrows, a small nose curve, and a smile. The eyes are rings with highlight rings and no pupil fill; this changes no character."
+      ],
+      "goal_check": "Pass. One big brown nut sits in Nan's open hand, close up, in color and in line.",
+      "line_check": "Script /tmp/opencode/linecheck57.mjs: 0 pixels are not 0 or 255 (4000x3000, black 5.96 percent). Black and white only. By eye: no gray, no thick solid ring or band, no line gap that makes coloring hard. (Control line file.)"
+    }
+  }
+}

@@ -1,0 +1,285 @@
+{
+  "status": "inconclusive",
+  "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Provisional. Review in progress.",
+  "items": {
+    "l2-w04-story-page-pam-is-on-a-man": {
+      "rating": 9,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The line art adds a window curtain at the left and a table lamp at the right. The color has a plain window and a toy box. The change touches no character and no needed prop.",
+        "The curtain runs past the left print edge. It is background, and Nan, the man, and Pam stay whole inside the print.",
+        "The toy box lid and the blanket are cut a little at the right print edge. Both are background.",
+        "The nose of the man in the line art is one short hook stroke. The color nose is larger. The line art face still shows two closed eyes, a nose, and a smiling mouth, so the face does not read blank.",
+        "The line art gives the doll two yarn bunches with spiky strands and a zigzag fringe. The color shows the same yarn hair."
+      ],
+      "goal_check": "The color print shows Nan's dad on the blue sofa with his eyes closed, short black hair, a blue T-shirt, gray shorts, and black sandals. The doll Pam with yellow yarn hair and a red dress sits on his tummy. Nan stands at the left in an orange T-shirt with a white star, red shorts, and white sneakers, and laughs. The line print shows the same three figures. The man's line face shows two closed eyes, a nose, and a mouth. Pam keeps yarn hair with two pigtails and a plain dress. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line source and the line print. The eyes of the doll are a solid black pupil inside a thin ring, which the bar allows. No thick solid black band or ring. No gap makes coloring hard.",
+      "files": [
+        "out/storytime-review/batch-47r2/pages/l2-w04-story-page-pam-is-on-a-man-m1-color.png",
+        "out/storytime-review/batch-47r2/pages/l2-w04-story-page-pam-is-on-a-man-m1-color-print.png",
+        "out/storytime-review/batch-47r2/pages/l2-w04-story-page-pam-is-on-a-man-m1-line-6-despeckled.png",
+        "out/storytime-review/batch-47r2/pages/l2-w04-story-page-pam-is-on-a-man-m1-line-print-6-despeckled.png"
+      ]
+    },
+    "l2-w04-story-page-this-is-the-man": {
+      "rating": 9,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The hair band of the line art is a narrow crescent. The color shows a fuller black hair mass. The line art still shows a hairline across the forehead, so the man does not read bald.",
+        "The line art adds a window curtain at the left. The color has a plain window. The change touches no character and no needed prop.",
+        "The curtain runs past the left print edge and the toy box lid is cut a little at the right print edge. Both are background, and the man, Nan, and Pam stay whole inside the print.",
+        "The line art gives the man a small white spot in each solid pupil. Solid pupils are allowed by the bar, and the spot does not make a thick ring.",
+        "The line art shows the doll with two yarn bunches with spiky strands and a curly fringe. The color shows the same yarn hair."
+      ],
+      "goal_check": "The color print shows Nan's dad popping out from under the blanket on the blue sofa, laughing, with short black hair, and the doll Pam with yellow yarn hair and a red dress on his head. Nan stands at the left in an orange T-shirt with a white star, red shorts, and white sneakers, and laughs. The line print shows the same three figures. The man's line head has a hair shape with a hairline curve across the forehead, two eyebrows, two eyes with solid pupils, a nose, an open smiling mouth, and an ear. Pam keeps a yarn fringe and two yarn pigtails. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line source and the line print. No thick solid black ring or band. The eyes use a solid black pupil, which the bar allows. No gap makes coloring hard.",
+      "files": [
+        "out/storytime-review/batch-47r2/pages/l2-w04-story-page-this-is-the-man-m1-color.png",
+        "out/storytime-review/batch-47r2/pages/l2-w04-story-page-this-is-the-man-m1-color-print.png",
+        "out/storytime-review/batch-47r2/pages/l2-w04-story-page-this-is-the-man-m1-line-5-despeckled.png",
+        "out/storytime-review/batch-47r2/pages/l2-w04-story-page-this-is-the-man-m1-line-print-5-despeckled.png"
+      ]
+    },
+    "l2-w04-story-page-this-is-pam": {
+      "rating": 9,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "No star appears in the color file or in the line file. The doll covers the chest of the T-shirt in both, and the shirt carries only a collar.",
+        "The line art draws the doll hair as curls and loops. The color shows straight yellow yarn strands. The hair still reads as a yarn fringe with two yarn pigtails.",
+        "The legs of the doll end in three short toe lines each. The color shows round rag feet. These are small marks.",
+        "The line art adds a window curtain at the left. The color has a plain window. The change touches no character and no needed prop.",
+        "The curtain runs past the left print edge. It is background, and Nan and the doll stay whole inside the print.",
+        "The eyes of Nan use a large solid pupil inside a thin ring with an eyelash tick. Solid pupils are allowed by the bar."
+      ],
+      "goal_check": "The color print shows Nan holding up the doll Pam in front of her face, with black hair in two bunches, an orange T-shirt, red shorts, and white sneakers, in a living room with a blue sofa, a rug, and a toy box. Pam has yellow yarn hair with a fringe and two yarn pigtails, two button eyes, a smile, and a red dress. The line print shows the same scene. The line doll has a curly yarn fringe and two yarn pigtails, not round buns. No star shows anywhere. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line source and the line print. No thick solid black ring or band. No gap makes coloring hard.",
+      "files": [
+        "out/storytime-review/batch-47r2/pages/l2-w04-story-page-this-is-pam-m1-color.png",
+        "out/storytime-review/batch-47r2/pages/l2-w04-story-page-this-is-pam-m1-color-print.png",
+        "out/storytime-review/batch-47r2/pages/l2-w04-story-page-this-is-pam-m1-line-4-despeckled.png",
+        "out/storytime-review/batch-47r2/pages/l2-w04-story-page-this-is-pam-m1-line-print-4-despeckled.png"
+      ]
+    },
+    "l2-w04-story-page-is-this-pam": {
+      "rating": 8.5,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The dress corner in the line art is a frayed hem line between the blanket edge and the yarn hair. It is open toward the foot. At book size it reads as a torn cloth corner next to the yarn and the foot, so a child can still find Pam. This is a note, not a defect.",
+        "The line art draws no nose for Nan. The color shows a small nose. The text does not name the nose and the mouth is drawn, so the face does not read blank.",
+        "The line art adds a window at the upper left. The color has a plain window. The change touches no character and no needed prop.",
+        "The toy box and the floor line run past the right print edge. Both are background.",
+        "The line art shows the yarn hair as long loops. The color shows straight yellow yarn strands."
+      ],
+      "goal_check": "The color print shows Nan at the left in an orange T-shirt with a white star, red shorts, and white sneakers, pointing at a big round bump under a blue blanket on the blue sofa. Under the blanket edge the corner of a red doll dress with a frayed hem shows, with yellow yarn hair strands and one small round foot. The line print shows the same scene with the blanket edge, a frayed hem line, yarn strands, and a small foot. The yarn hair and the foot are clear at book size. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line source and the line print. The eyes of Nan use a large solid pupil inside a thin ring, which the bar allows. No thick solid black band. No gap makes coloring hard.",
+      "files": [
+        "out/storytime-review/batch-47r2/pages/l2-w04-story-page-is-this-pam-m1-color.png",
+        "out/storytime-review/batch-47r2/pages/l2-w04-story-page-is-this-pam-m1-color-print.png",
+        "out/storytime-review/batch-47r2/pages/l2-w04-story-page-is-this-pam-m1-line-7-despeckled.png",
+        "out/storytime-review/batch-47r2/pages/l2-w04-story-page-is-this-pam-m1-line-print-7-despeckled.png"
+      ]
+    },
+    "K1": {
+      "rating": 9,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The color crops the shoes at the bottom edge of the frame. The close-up keeps the nut and the whole hand, which the sentence needs.",
+        "The hand shows four finger shapes and the thumb behind the nut in the color. The line art draws the same four shapes.",
+        "The line art leaves the eye interiors white for coloring and shows a small nose line and a smile."
+      ],
+      "goal_check": "One big brown nut with a dark cap and a stem rests in the open hand of Nan. The color file shows Nan's black hair in two bunches with red bands, big dark-brown eyes, an orange T-shirt with a white star, red shorts, and white shoes. The line file shows the same close-up with the nut, the hand, the hair bunches, the star, the eyes, a nose, and a mouth. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line file. The pupils are thin outlined circles, not thick black rings. No gap makes coloring hard.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "extra": {
+        "K1": {
+          "rating": 9,
+          "verdict": "clean",
+          "defect_categories": [],
+          "defects": [],
+          "notes": [
+            "The color crops the shoes at the bottom edge of the frame. The close-up keeps the nut and the whole hand, which the sentence needs.",
+            "The hand shows four finger shapes and the thumb behind the nut in the color. The line art draws the same four shapes.",
+            "The line art leaves the eye interiors white for coloring and shows a small nose line and a smile."
+          ],
+          "goal_check": "One big brown nut with a dark cap and a stem rests in the open hand of Nan. The color file shows Nan's black hair in two bunches with red bands, big dark-brown eyes, an orange T-shirt with a white star, red shorts, and white shoes. The line file shows the same close-up with the nut, the hand, the hair bunches, the star, the eyes, a nose, and a mouth. No letters, words, or numbers show.",
+          "line_check": "Zero gray pixels in the line file. The pupils are thin outlined circles, not thick black rings. No gap makes coloring hard.",
+          "files": [
+            "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+            "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+          ]
+        },
+        "K2": {
+          "rating": 8.5,
+          "verdict": "clean",
+          "defect_categories": [],
+          "defects": [],
+          "notes": [
+            "The goal says the head faces the other way but names no other picture to compare. The color file and the line file both face right, so the pair agrees.",
+            "The line art draws the eyebrow as a thin closed sliver with white inside. The color shows a solid dark eyebrow. The eyebrow still reads.",
+            "The line art draws the hair bunch as a plain circle. The color shows a bunch with a red band."
+          ],
+          "goal_check": "The color file shows the head of Nan in profile with the nose projecting clearly from the face line, one dark-brown eye with lashes, an eyebrow, an ear, a mouth, black hair with a red band, and an orange shirt. The line file shows the same profile with the nose as a clear bump in the face line, a solid pupil with an eye outline and lash, an eyebrow, an ear, and a mouth. The nose shows in both files. No letters, words, or numbers show.",
+          "line_check": "Zero gray pixels in the line file. The pupil is a solid black shape, which the bar allows. No thick black ring or band. No gap makes coloring hard.",
+          "files": [
+            "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+            "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+          ]
+        },
+        "K3": {
+          "rating": 6,
+          "verdict": "defect",
+          "defect_categories": [
+            "wrong-or-missing-prop"
+          ],
+          "defects": [
+            "The line art does not draw a nose. The color face shows a rounded nose above the mouth, and the fingertip touches its side. The line art leaves that space empty, so the part the sentence names does not show in the line file."
+          ],
+          "notes": [
+            "The line art draws the mouth as one closed leaf shape. The color shows an open mouth with teeth and a tongue.",
+            "The line art draws the eyebrows as thin closed slivers. The color shows solid dark eyebrows.",
+            "The face is not blank. The line art shows two eyes, two eyebrows, and a mouth, so only the nose is missing."
+          ],
+          "goal_check": "The color file shows Nan touching her own nose with one finger and laughing, in an orange T-shirt with a white star, red shorts, white shoes, and black hair in two bunches with red bands. The line file shows the same pose with the finger at the face, an open laughing mouth, two eyes, two eyebrows, the star, the shorts, and the shoes. The nose shows in the color file and not in the line file. No letters, words, or numbers show.",
+          "line_check": "Zero gray pixels in the line file. The pupils are thin outlined circles with a small inner circle, not thick black rings. No gap makes coloring hard.",
+          "retry_hint": "line: draw the nose as a clear closed shape between the eyes and the mouth, and keep the fingertip at its side.",
+          "files": [
+            "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+            "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+          ]
+        }
+      }
+    },
+    "K2": {
+      "rating": 8.5,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The goal says the head faces the other way but names no other picture to compare. The color file and the line file both face right, so the pair agrees.",
+        "The line art draws the eyebrow as a thin closed sliver with white inside. The color shows a solid dark eyebrow. The eyebrow still reads.",
+        "The line art draws the hair bunch as a plain circle. The color shows a bunch with a red band."
+      ],
+      "goal_check": "The color file shows the head of Nan in profile with the nose projecting clearly from the face line, one dark-brown eye with lashes, an eyebrow, an ear, a mouth, black hair with a red band, and an orange shirt. The line file shows the same profile with the nose as a clear bump in the face line, a solid pupil with an eye outline and lash, an eyebrow, an ear, and a mouth. The nose shows in both files. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line file. The pupil is a solid black shape, which the bar allows. No thick black ring or band. No gap makes coloring hard.",
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ]
+    },
+    "K3": {
+      "rating": 6,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "defect",
+      "defect_categories": [
+        "wrong-or-missing-prop"
+      ],
+      "defects": [
+        "The line art does not draw a nose. The color face shows a rounded nose above the mouth, and the fingertip touches its side. The line art leaves that space empty, so the part the sentence names does not show in the line file."
+      ],
+      "notes": [
+        "The line art draws the mouth as one closed leaf shape. The color shows an open mouth with teeth and a tongue.",
+        "The line art draws the eyebrows as thin closed slivers. The color shows solid dark eyebrows.",
+        "The face is not blank. The line art shows two eyes, two eyebrows, and a mouth, so only the nose is missing."
+      ],
+      "goal_check": "The color file shows Nan touching her own nose with one finger and laughing, in an orange T-shirt with a white star, red shorts, white shoes, and black hair in two bunches with red bands. The line file shows the same pose with the finger at the face, an open laughing mouth, two eyes, two eyebrows, the star, the shorts, and the shoes. The nose shows in the color file and not in the line file. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line file. The pupils are thin outlined circles with a small inner circle, not thick black rings. No gap makes coloring hard.",
+      "retry_hint": "line: draw the nose as a clear closed shape between the eyes and the mouth, and keep the fingertip at its side.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ]
+    }
+  },
+  "extra": {
+    "K1": {
+      "rating": 9,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The color crops the shoes at the bottom edge of the frame. The close-up keeps the nut and the whole hand, which the sentence needs.",
+        "The hand shows four finger shapes and the thumb behind the nut in the color. The line art draws the same four shapes.",
+        "The line art leaves the eye interiors white for coloring and shows a small nose line and a smile."
+      ],
+      "goal_check": "One big brown nut with a dark cap and a stem rests in the open hand of Nan. The color file shows Nan's black hair in two bunches with red bands, big dark-brown eyes, an orange T-shirt with a white star, red shorts, and white shoes. The line file shows the same close-up with the nut, the hand, the hair bunches, the star, the eyes, a nose, and a mouth. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line file. The pupils are thin outlined circles, not thick black rings. No gap makes coloring hard.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ]
+    },
+    "K2": {
+      "rating": 8.5,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The goal says the head faces the other way but names no other picture to compare. The color file and the line file both face right, so the pair agrees.",
+        "The line art draws the eyebrow as a thin closed sliver with white inside. The color shows a solid dark eyebrow. The eyebrow still reads.",
+        "The line art draws the hair bunch as a plain circle. The color shows a bunch with a red band."
+      ],
+      "goal_check": "The color file shows the head of Nan in profile with the nose projecting clearly from the face line, one dark-brown eye with lashes, an eyebrow, an ear, a mouth, black hair with a red band, and an orange shirt. The line file shows the same profile with the nose as a clear bump in the face line, a solid pupil with an eye outline and lash, an eyebrow, an ear, and a mouth. The nose shows in both files. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line file. The pupil is a solid black shape, which the bar allows. No thick black ring or band. No gap makes coloring hard.",
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ]
+    },
+    "K3": {
+      "rating": 6,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "defect",
+      "defect_categories": [
+        "wrong-or-missing-prop"
+      ],
+      "defects": [
+        "The line art does not draw a nose. The color face shows a rounded nose above the mouth, and the fingertip touches its side. The line art leaves that space empty, so the part the sentence names does not show in the line file."
+      ],
+      "notes": [
+        "The line art draws the mouth as one closed leaf shape. The color shows an open mouth with teeth and a tongue.",
+        "The line art draws the eyebrows as thin closed slivers. The color shows solid dark eyebrows.",
+        "The face is not blank. The line art shows two eyes, two eyebrows, and a mouth, so only the nose is missing."
+      ],
+      "goal_check": "The color file shows Nan touching her own nose with one finger and laughing, in an orange T-shirt with a white star, red shorts, white shoes, and black hair in two bunches with red bands. The line file shows the same pose with the finger at the face, an open laughing mouth, two eyes, two eyebrows, the star, the shorts, and the shoes. The nose shows in the color file and not in the line file. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line file. The pupils are thin outlined circles with a small inner circle, not thick black rings. No gap makes coloring hard.",
+      "retry_hint": "line: draw the nose as a clear closed shape between the eyes and the mouth, and keep the fingertip at its side.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ]
+    }
+  }
+}

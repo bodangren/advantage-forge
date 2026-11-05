@@ -1,0 +1,68 @@
+Green P4 T2 w02 staging (provisional). role_base_sha fc76c272; phase_base_sha fc76c272.
+Step 1: read strategy 4.3.
+Step 2: read list rows (27 week 2 rows; 9 class C rows have prompt "" so goal must be "") and week 1 specs.
+Step 3: element survey: reuse cast-group-a-2, cast-group-b-2 (Pat/May/Sam/Mia; Ben/Nan/Kim/Pip), nan-ref-clean-*, ben-ref-clean-2, pond/beam/basket/school-bag/low-branch 3D views; Muse sheets planned for park set, playground set, kites, ducks, birds, balls, cupcakes, picnic blanket.
+Step 4: 11 Muse element specs written (docs/storytime/l2-unit1/w02/muse-elements/, sibling folder so the stage check sees only row ids).
+Step 5: 10/11 Muse element calls ok first run; alligator retried (see costs.tsv)
+Step 6: 27 specs written by /tmp/opencode/w02/mkspecs.mjs
+Step 7: self-check output (/tmp/opencode/w02/selfcheck.mjs):
+list sha256: 6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58 | rows: 27 | specs found: 27 | text mismatches: 0 | goal mismatches: 0 | outDir mismatches: 0 | rows with no reference (class A and B): 0 | element paths checked: 82 | missing element paths: 0 | characters without a reference: 0 | page candidates: 0 | self-check: pass
+Step 8: review folder out/storytime-review/w02-staging/ (index.md, sheets-1..3.png). Commit 1: 38ab28a9 (27 page specs + 11 element specs).
+Step 9: plan.md edit BLOCKED by measure-guard: Phase 3 heading has no [checkpoint: <sha>]. Not bypassed. Plan note saved in jr-green-w02-staging-plan-note.md for the orchestrator to apply (or /measure-off by the user).
+
+Result: 27 page specs committed; 11 Muse element sheets (11 billed calls, 0.11 USD; 1 failed call cost 0); running total 3.47 USD (3.36 before). 0 page candidates. plan.md not updated (guard).
+
+MEASURE_AGENT_RESULT
+status: superseded-see-follow-up
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Produce weeks 2 to 7 after the week 1 review (week 2 staging, inputs only)
+role_base_sha: fc76c272
+phase_base_sha: fc76c272
+commits: 38ab28a9 (27 page specs + 11 element specs)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+tasks_flipped_partial: Produce weeks 2 to 7 [~] NOT written (guard block)
+specs: 27 (docs/storytime/l2-unit1/w02/muse/) + 11 element specs (docs/storytime/l2-unit1/w02/muse-elements/)
+muse_element_calls: 12 (11 billed, 1 network failure at cost 0)
+muse_element_cost_usd: 0.11
+running_total_usd: 3.47
+page_candidates: 0
+self_check: pass (82 reference paths, 0 missing)
+review_folder: out/storytime-review/w02-staging/
+handoff: (1) measure-guard blocked the plan.md edit: the Phase 3 heading has no [checkpoint: <sha>]. I did not bypass it. Apply the saved note (measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w02-staging-plan-note.md) after the user runs /measure-off or Phase 3 gets its checkpoint; I can then make the plan commit. Default: the orchestrator applies it. (2) The 9 check rows have list prompt "" so their spec goal is "" (exact match required); the Red test for the stage check must allow an empty goal. (3) Element specs sit in docs/storytime/l2-unit1/w02/muse-elements/ so the stage check does not see non-row ids in muse/. (4) The 11 element sheets need an independent look (ant shows 4 legs). (5) No 3D shot or heavy-runner job was used; the park and playground sets are Muse sheets.
+dispositions: none
+END_MEASURE_AGENT_RESULT
+
+FOLLOW-UP (2026-11-02): plan note added under Task 2 with the marker unchanged ([ ]) -> commit 07f52f7a; the guard accepted it. Task 2 goes to [~] after the Phase 3 checkpoint.
+Remade sheets: prop-ant-sheet-m2 (six legs), set-playground-empty-m3 (jungle-gym frame, taller slide; beam is a round log), set-park-empty-m2 (large tree). Old versions kept. Page specs repointed (24 files, commit baf7c29c).
+3D views apple, pig, bed opened: clear object on plain gray background; no change; bed and pig line prompts extended.
+New calls: 5 (4 billed, 1 ECONNRESET at 0) = 0.04 USD; elements total 0.15 USD; running total 3.51 USD (3.47 before).
+Self-check: list sha256 6d05dfc5...2a58 | rows 27 | specs found 27 | text 0 | goal 0 | outDir 0 | no-reference rows 0 | element paths checked 82 | missing 0 | characters without a reference 0 | page candidates 0 | self-check: pass
+Review folder updated: out/storytime-review/w02-staging/ (index.md, sheets-1..3.png show the newest version of each sheet).
+Commits: 38ab28a9 (specs), 07f52f7a (plan note), baf7c29c (specs follow-up), bab064dd (plan follow-up).
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Produce weeks 2 to 7 after the week 1 review (week 2 staging, inputs only; marker stays [ ] until the Phase 3 checkpoint)
+role_base_sha: fc76c272
+phase_base_sha: fc76c272
+commits: 38ab28a9; 07f52f7a; baf7c29c; bab064dd
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+specs: 27 page specs + 11 element specs
+muse_element_calls_total: 17 (15 billed, 2 network failures at cost 0)
+muse_element_cost_usd: 0.15 (follow-up 0.04)
+running_total_usd: 3.51
+page_candidates: 0
+self_check: pass (82 reference paths, 0 missing)
+review_folder: out/storytime-review/w02-staging/
+handoff: Staging inputs are ready. Open: (1) the 11 element sheets need an independent look (ant m2 six legs; playground m3 beam is a round log, not the square 3D beam; park m2 branch leaf cluster has an odd arc). (2) Check rows have goal "" (list prompt is empty); the stage-check Red tests must allow it. (3) Task 2 goes to [~] after the Phase 3 checkpoint. (4) No week 2 page call before Daniel answers on week 1. Default: send the stage-check script follow-up when the Red tests are committed.
+dispositions: none
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,13 @@
+{
+  "reviewer": "openai/gpt-6-luna#high",
+  "storytime-sun-hat": {
+    "overall": 8.0,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "The brim reads as a thin, nearly flat plate.",
+      "The straw surface has little visible texture."
+    ],
+    "fix": "Give the brim a deeper, softer downturned edge."
+  }
+}

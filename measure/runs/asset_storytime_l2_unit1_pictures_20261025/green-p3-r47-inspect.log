@@ -1,0 +1,40 @@
+storytime-school-bag: 11,404 triangles, 0.252 x 0.291 x 0.151 m, built in 2869 ms
+  bag-body                  4962 tris  (1782 ms)
+  pocket                    1500 tris  (383 ms)
+  strap.L                   1598 tris  (317 ms)
+  strap.R                   1604 tris  (440 ms)
+  grab-loop                 1740 tris  (138 ms)
+texture  none (vertex colors)
+glb      out/storytime-school-bag/storytime-school-bag.glb  (272 KB)
+# Inspection: storytime-school-bag
+
+Size 0.252 x 0.291 x 0.151 m (x y z); 11,404 triangles; lowest point y = 0 m.
+
+## Silhouette per view (fractions of the frame)
+
+| view | width | height | coverage |
+|---|---|---|---|
+| front | 0.75 | 0.848 | 0.522 |
+| three-quarter | 0.715 | 0.895 | 0.486 |
+| side | 0.5 | 0.914 | 0.353 |
+| back | 0.734 | 0.84 | 0.514 |
+| top | 0.742 | 0.727 | 0.383 |
+
+## Visible share of the silhouette per part
+
+| part | front | three-quarter | side | back | top |
+|---|---|---|---|---|---|
+| bag-body | 67.3% | 70% | 77.6% | 68.7% | 76.5% |
+| pocket | 29.9% | 24.7% | 3.8% | 0 (hidden) | 16.3% |
+| strapL | 0 (hidden) | 3% | 18.2% | 14.1% | 1% |
+| strapR | 0.2% | 0 (hidden) | 0 (hidden) | 14.2% | 1.5% |
+| grab-loop | 2.6% | 2.3% | 0.3% | 3.1% | 4.6% |
+
+## Values and colors (shaded render)
+
+Values: dark 2%, mid 70%, light 28%.
+Dominant colors: #f7c952 29%, #f7705f 24%, #f05a45 21%, #e14c33 13%, #c54226 10%, #71424e 3%.
+
+## Warnings
+
+- none

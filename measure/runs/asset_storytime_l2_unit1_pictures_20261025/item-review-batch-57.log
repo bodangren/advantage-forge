@@ -1,0 +1,22 @@
+Item review, batch 57 (week 7, 9 check rows), 2026-11-03
+Reviewer: claude-code/claude-opus-5-5[1m]#high
+Bar: Daniel 2026-11-01 14:15 ICT
+Status: fail
+
+Set A (color print and line print of each row):
+l2-w07-check-row-bed      8.0  clean
+l2-w07-check-row-bus      8.0  clean
+l2-w07-check-row-cat      8.0  clean
+l2-w07-check-row-fish     8.0  clean
+l2-w07-check-row-octopus  6.0  defect  wrong-hand-or-limb: 7 tentacles in color and in line, not 8.
+l2-w07-check-row-olive    7.0  clean   Note: the line oval with one ring reads as an olive next to the word; alone it can read as an egg with a hole.
+l2-w07-check-row-ox       7.5  clean   The horns make it an ox.
+l2-w07-check-row-pen      8.0  clean
+l2-w07-check-row-sun      8.5  clean   1 disc, 8 pointed rays; disc and rays are one connected component (largest gap 0 px).
+
+Line check (script /tmp/opencode/linecheck57.mjs): all 9 set A line prints and the 3 control line files have 0 pixels that are not 0 or 255.
+
+Control rows K1 to K3 (also in item-review-cover-1):
+K1  5.5  defect  broken-face: the text names the nose; the line file has no nose, and the finger seems to touch the mouth.
+K2  8.0  clean
+K3  7.5  clean   The open hand has five digits in color and in line.

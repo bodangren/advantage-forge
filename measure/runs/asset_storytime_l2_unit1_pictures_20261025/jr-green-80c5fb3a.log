@@ -1,0 +1,123 @@
+Role: measure-jr-green
+Session: Green · P3 · storytime_l2_unit1_pictures · r49
+Model: deepseek/deepseek-flash#high (provider deepseek, model deepseek-flash)
+Red model for the phase: minimax-cn-coding-plan/MiniMax-M3
+Green coder model: none (no delegation used)
+Track: asset_storytime_l2_unit1_pictures_20261025
+Phase: Phase 3: Week 1 pictures (P3)
+role_base_sha: 71c09e10 (equals HEAD at the start)
+phase_base_sha: 15a7bf0b (ancestor of HEAD; the round 48 commits 3456c57f and cd79f899 sit inside
+15a7bf0b..HEAD)
+Final Green HEAD: 80c5fb3a
+Status: done
+
+What I built.
+
+Item A: `assets/storytime-animal-pictures.ts`, asset `storytime-animal-pictures`. Three framed
+picture-book pages in a row, 1.888 x 0.449 x 0.038 m, 8,168 triangles, GLB 215 KB, vertex colors
+only. Each picture is 0.55 x 0.45 m with a 0.03 m frame of `#c98a4b`, and the gap is 0.12 m. The
+frame backs sit on z = 0 and the bottom edge on y = 0, centered on x = 0, facing +Z. The animals are
+flat extruded shapes in four 0.010 m layers from z 0.022 to 0.038:
+- lion on light blue `#a5dcf7`: mane `#9c3f12`, face `#f8b04a`, muzzle `#fff0d0`, eyes and nose
+  `#2a1a10`;
+- elephant on light yellow `#ffd95c`: body `#a9bccd`, ears `#54708c`, tusks `#fbf3e0`, eyes
+  `#2a1a10`;
+- frog on pink `#ffb8d1`: body `#4e9e3a`, belly `#f4efb8`, eyes `#2a1a10`.
+No text, letter, number, word, logo, or human face. No rig, no animation.
+
+Item B: `docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-hello-i-am-ben-v3.json`, a copy of v2
+with a new placement. The group moves to the plain right wall (world x 5.94, the map wall at x = 6)
+at world z 3.4 to 4.4, where no furniture is within 1.3 m. Ben is at stage 5.05 / 0.64 with yaw -80,
+the rail at 5.94 / 0.96 with y 0.58, Ben's green bag on the middle peg at 5.858 / 0.96, and Pat's
+red bag on the floor at stage 5.28 / 1.22 with scale 1.25 and yaw -80. The camera is az -80, el 9,
+distance 2.4, target stage 5.40 / 0.46 / 0.60. Pat's bag pocket faces the camera (0.96 along the
+view direction, the straps at -0.96) and its bump faces stage +z, the screen-right outer side away
+from Ben. The crate and the basket leave the frame.
+
+Commits.
+- `0e953cab`: adds `assets/storytime-animal-pictures.ts` and
+  `docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-hello-i-am-ben-v3.json` (explicit paths only).
+- `80c5fb3a`: the plan evidence block (explicit path only).
+
+Render exits and warning lines.
+- The first `./forge render storytime-animal-pictures --fast` call failed to build with "box():
+  radius is larger than half a dimension" on the background slab; its radius fell from 0.004 to
+  0.002 m.
+- The second `--fast` render exited 0 but drew the frame color over every picture: the 0.006 m
+  background slab was thinner than the 0.008 m mesh cell, and `inspect` reported "backdrop-1 is not
+  visible from any view: it is buried inside another part". The background slab is now 0.020 m thick
+  with a 0.010 m cell, and the animal layers use plain unions, not smooth unions, which grew the
+  elephant head and the frog body 0.010 m past their shapes.
+- The third `./forge render storytime-animal-pictures --fast` exited 0.
+- `./forge inspect storytime-animal-pictures --fast` exited 0 with two notes only: "Part
+  'lion-nose' is barely visible (under 0.3% of the silhouette in every view)" and "The side
+  silhouette is very thin compared with the front".
+- `warning:` lines: 0 in every call. No exit 75, no exit 137, no `net::ERR_UNSAFE_PORT`, no lock
+  wait over 600 s.
+- Every forge command, row render, and verify ran inside
+  `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'`.
+
+Ben page versions.
+| Row | Version | Render | Verify | Line | Ink | Peak | Color SHA-256 | Line-art SHA-256 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `l2-w01-story-page-hello-i-am-ben` | v3 | 0 | 0 | 23 px | 7.54% | 933 MB | `b7cf60d92eb5b57a24ffc7b5d5e0080521810d1884ee0c59285d4adc4dc2f1e4` | `0dd5526ab7706a9b387c645771b19f283e627507bef10b7f8c7f8490400b61bb` |
+`verify --row` exits 0 with "Row verification passed for 3 row versions". One version only; v3 has no
+clear placement defect, so v4 was not made.
+
+What I see in v3, color: Ben is whole with clear margins and waves with his right hand. His green
+bag hangs by its loop on the middle peg. Pat's red bag stands whole on the floor behind Ben at his
+left hand side, with the yellow pocket toward the camera and a bulge on the top edge of its outer
+side. The crate, the basket, and every other prop are out of the frame.
+
+What I see in v3, line art: one closed stroke on Ben, on the rail and its pegs, on the green bag,
+and on the red bag. The red bag's top outline rises over the bump on the outer side, so the bump
+changes the silhouette. No merged black band, no floating dash above the hair outline, and no
+isolated angled dash at the right edge. The short hair strokes sit inside the hair outline.
+
+Shadow root: `/tmp/opencode/wb-shadow` exists. `sha256sum` of its
+`content/storytime/l2/print/pictures.json` is
+`c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b`, so no new copy was made. The live
+Workbooks list is not written to.
+
+Review folder: `out/storytime-review/batch-21/` holds `storytime-animal-pictures.png` (four views,
+2060 x 512), `l2-w01-story-page-hello-i-am-ben-v3.png`,
+`l2-w01-story-page-hello-i-am-ben-line-v3.png`, `sprout-ben-render.png`,
+`look-reference-nan-and-pip.png`, and `brief.md`. PNGs stay out of git.
+
+Week 1 count before this round: "23 of 30 rendered, 16 with no open defect; the Ben page passed at
+7.5 with open points". This round adds one item and re-renders the Ben page.
+
+Doctor: `bash measure/doctor.sh` reports 15 errors. Every error names another track (for example
+`asset_filled_shelves_20261028`, `asset_p2_npcs_20260928`, five game rebuild tracks), the registry
+links for those tracks, the `lessons-learned.md` line limit, or the stale generated facts
+`measure/generated/architecture.json`, `status.md`, and `asset-inventory.json` that other sessions
+changed. It names no file of this track. I did not run `./measure/generate.sh`, because it rewrites
+generated facts that other sessions own in this shared tree.
+
+No task is marked `[x]`. Waiting for the independent review of batch 21.
+
+MEASURE_AGENT_RESULT
+status: done
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3
+round: 49
+role: measure-jr-green
+models: green=deepseek/deepseek-flash#high; red=minimax-cn-coding-plan/MiniMax-M3; coder=none
+base_shas: role_base_sha=71c09e10; phase_base_sha=15a7bf0b
+head: 80c5fb3a
+commits:
+- 0e953cab: assets/storytime-animal-pictures.ts, docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-hello-i-am-ben-v3.json
+- 80c5fb3a: measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+new_files:
+- assets/storytime-animal-pictures.ts (asset storytime-animal-pictures, 8,168 triangles, 1.888 x 0.449 x 0.038 m)
+- docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-hello-i-am-ben-v3.json
+tasks_flipped_to_x: none
+tasks_flipped_to_b: none
+render_exits: animal-pictures render --fast 0 (third call); inspect --fast 0; Ben row v3 render --row 0; verify --row 0 ("Row verification passed for 3 row versions")
+warning_lines: 0
+rows:
+- l2-w01-story-page-hello-i-am-ben v3: line 23 px, ink 7.54%, peak 933 MB, color b7cf60d9..., line 0dd5526a...
+review_folder: out/storytime-review/batch-21
+shadow_root: /tmp/opencode/wb-shadow, pictures.json sha256 c3e23cfd...
+next: independent review of batch 21
+END_MEASURE_AGENT_RESULT

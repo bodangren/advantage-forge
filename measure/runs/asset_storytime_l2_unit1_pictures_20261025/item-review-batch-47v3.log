@@ -1,0 +1,49 @@
+item-review-batch-47v3.log
+Reviewer: opencode-go/mimo-v2.6-flash
+Bar: Daniel 2026-11-01 14:15 ICT
+Status: in progress
+
+Skip: nan-and-pam-nap (per task).
+
+Vision tool incident:
+After about 16 images the read tool in this session stopped returning the requested file and kept returning one stale line picture. A synthetic 64x64 red marker test image returned the same stale picture, so the failure is in the tool, not in the files. The reviewer used four helper sessions with their own image pipeline to view the pictures. Helper sessions report facts only. This reviewer applies the bar and writes the ratings.
+
+Numeric checks by the reviewer (scripts in /tmp/opencode/):
+- gray-check.mjs: every line file in both sets has 0 pixels that are not 0 or 255. No gray or shading in any line file.
+- setb-check.mjs: for all 9 rows, each print is the exact center crop of its own source (MAE 0.60 to 1.61). Each line art matches its own row color scene (own edge correlation 0.078 to 0.234, best other row 0.038 to 0.119).
+- File format: color files are RGB and saturated, line files are 8-bit grayscale, prints are 4000 x 3000.
+
+Row facts from helper sessions (facts only, bar applied by this reviewer):
+- this-is-my-family: six people whole in the color print and in the line print; no person, hand or hair cut at a print edge. Dad wears a yellow polo, dark blue jeans and brown shoes (approved look). No shirt has a star or badge. No sun. No text. Red door partly behind Grandma and Grandpa in color; the line shows only an arch where the door is. Bushes reach both side edges (background). Line has no flowers on the bushes; color has. Color has faint crow's-feet on Grandma; line has none. Pupils are small solid black dots (allowed).
+- cover-pam: one doll with yellow yarn pigtails and a red dress, no star. Nan's star is hidden behind the doll. Girl not cut at any edge. Window frame reaches the left edge and the toy box the right edge (background objects). Line shows a window curtain that the color does not (builder note). Line doll has ball pigtails, no yarn strands. Line has no nose line; the color has a nose. A thin unidentified line sits at the girl's shoulder in the line.
+- this-is-the-man: man under one blanket with one doll on his head; Nan with a star on her shirt only. No person cut at an edge; window frame at the left edge and toy box lid cut at the right edge (background objects). Line draws both eyes as large solid black ovals with no white part (solid black eyes, no ring or band, no gray). Line wraps the blanket around the man only; the color also drapes it over the sofa back.
+- is-this-pam: one blanket heap; at its right end the color shows red cloth, yellow yarn and a small cream round part; the line shows yarn strands, a frayed edge and a small hand. Girl not cut at an edge. Window frame and toy box reach the side edges (background). Builder note judged: the goal asks only for the corner of the red doll dress at the blanket edge, and that shows in both files.
+- pam-can-nap: one doll in one shoe box with one small blanket; one star on Nan's shirt only. Girl not cut at an edge. Color also has a blanket on the sofa arm; the line has none (builder note: small props differ between color and line). Line shorts and knee lines run together (small mark). Line has no nose line.
+- pam-is-in-a-pan: one pan, one doll, one star on Nan's shirt only. Color pan reads as a toy frying pan with a long handle to the right. Line pan is a deep round tub with a double rim and a handle to the right; the handle makes it read as a pan (builder note judged: note). The seated doll reads close to the girl's height in color (note). Line girl's eyes are solid black discs (solid black eyes, allowed). An unclear curved line runs from behind the girl's head toward the doll (small mark).
+- pam-is-on-a-man: man on the sofa with eyes closed, one doll on his tummy, Nan laughing. Girl not cut at an edge. Color blanket on the sofa arm reads as a cushion in the line (builder note). Nan's eyes are closed in color and open in line (note). Man's mouth in the line: follow-up pending.
+- pam-is-on-a-map: one map, one doll, Nan points, one star on Nan's shirt only. Map has a river, a house, a dotted path and an X (brief says a cross). Girl not cut at an edge. Line: the pointing fingertip touches the sofa blanket line; the curled fingers are a small cluster (small marks).
+- this-is-pam: one doll held by Nan. Star hidden behind the doll in color; one outlined star shows above the doll's head in line (note). Line doll hair reads as two round balls instead of yarn pigtails (note). Doll arm position differs between color and line (note). Overlapping hands and doll arms make small closed areas in the line (note, closed shapes).
+
+Extra K1 to K3: helper session facts received; follow-up on the nose line and top-edge marks is pending.
+
+FINAL RESULT (2026-11-02)
+Top status: fail. The only defect in this file is extra row K1.
+Row l2-w04-story-page-this-is-my-family: rating 8, clean.
+Row l2-w04-cover-pam: rating 8, clean.
+Row l2-w04-story-page-this-is-the-man: rating 8, clean.
+Row l2-w04-story-page-is-this-pam: rating 8, clean.
+Row l2-w04-story-page-pam-can-nap: rating 8, clean.
+Row l2-w04-story-page-pam-is-in-a-pan: rating 7.5, clean.
+Row l2-w04-story-page-pam-is-on-a-man: rating 7.5, clean.
+Row l2-w04-story-page-pam-is-on-a-map: rating 8, clean.
+Row l2-w04-story-page-this-is-pam: rating 7.5, clean.
+Extra K1: rating 5, defect, category broken-face (same result as in item-review-w03-fixes-r4.json).
+Extra K2: rating 8, clean (same result).
+Extra K3: rating 8, clean (same result).
+
+Follow-up facts used for the judgments:
+- The man's line face has no mouth mark and no nose mark; the color shows a nose and a small closed smile. Judged a note under the named-face-part rule.
+- The line pan of pam-is-in-a-pan reads as a pan because of the handle bar and does not read as a mirror or magnifying glass. Builder note judged a note.
+- The family red door: about one quarter visible in color, only an arch in line. Builder note judged a note.
+- is-this-pam: the goal asks only for the corner of the red doll dress at the blanket edge, and it shows in both files. Builder note judged a note.
+- Small props (curtains, sofa blankets) differ between color and line in several rows. Builder notes judged notes.

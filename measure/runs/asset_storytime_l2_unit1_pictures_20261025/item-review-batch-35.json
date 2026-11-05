@@ -1,0 +1,307 @@
+{
+  "reviewer": "kimi-code-plan-cn/kimi-for-coding",
+  "audited_head": "2c1b23da",
+  "verdict": "final",
+  "line_art_rule": "orchestrator default 2026-11-01",
+  "seen": {
+    "out/storytime-review/batch-35/brief.md": "Batch 35 Muse fix round 63, 10 rows; bar 7.0; fixes from batches 31 and 33 listed per row; line-art rule and critical defects stated.",
+    "out/storytime-review/batch-35/refs/cat-three-quarter.png": "Reference cat: orange tabby with forehead stripes, green eyes, pink nose; tabby stripes are part of the design.",
+    "out/storytime-review/batch-35/refs/dog-three-quarter.png": "Reference dog element view (not separately opened; color m1 used as its own reference).",
+    "out/storytime-review/batch-35/refs/elements_ben-ref-clean-2.png": "Ben reference sheet: brown hair, blue T-shirt, blue shorts, gray shoes; ears smooth with a small light inner mark.",
+    "out/storytime-review/batch-35/refs/elements_nan-ref-clean-look-reference.png": "Nan look reference: black hair in two bunches with red ties, orange T-shirt with white star, red shorts, white sneakers, large dark-brown eyes with a painted eyelash mark at the outer corner of each eye.",
+    "out/storytime-review/batch-35/pages/l2-w01-check-row-cat-m2-color.png": "Ginger tabby cat, one object large on plain white; no tick marks at the eyes, no cheek smudge; tail curls behind the body away from the head; whiskers as thin lines.",
+    "out/storytime-review/batch-35/pages/l2-w01-check-row-cat-m2-line-2-despeckled.png": "1-bit (0/255) line art; eyes one closed ring with solid pupil each; tail one closed curl behind the body not touching the head; no stripe slivers; closed outlines.",
+    "out/storytime-review/batch-35/pages/l2-w01-check-row-dog-m1-color.png": "Brown-and-white dog with red collar, gold bell, tongue lolling out below the muzzle; plain light background; no text.",
+    "out/storytime-review/batch-35/pages/l2-w01-check-row-dog-m1-line-4-despeckled.png": "1-bit line art; each eye one ring with solid pupil and white highlight oval; gaze the same way; tail drawn; bell drawn; tongue NOT drawn.",
+    "out/storytime-review/batch-35/pages/l2-w01-check-row-bus-m1-color.png": "Yellow school bus, no number, sign, or word; folding door with two glass panes side by side; amber/red roof bumps; black mirror.",
+    "out/storytime-review/batch-35/pages/l2-w01-check-row-bus-m1-line-3-despeckled.png": "1-bit line art; door and windows as in the color; no horizontal divider in the door.",
+    "out/storytime-review/batch-35/pages/l2-w01-check-row-net-m1-color.png": "Green butterfly net with mesh, handle with striped grip; one object on plain white.",
+    "out/storytime-review/batch-35/pages/l2-w01-check-row-net-m1-line-8-despeckled.png": "1-bit line art; rim ONE thick line; mesh a clean grid of large squares; grip rings drawn.",
+    "out/storytime-review/batch-35/pages/l2-w01-check-row-nose-m3-color.png": "Nan profile facing left, nose clearly seen, red-ringed bun, eyelash stroke at the outer corner of the visible eye; plain background; no text.",
+    "out/storytime-review/batch-35/pages/l2-w01-check-row-nose-m3-line-8-despeckled.png": "1-bit line art; closed eye ring with solid pupil; two short thick eyelash strokes at the outer corner; ear as open C arc.",
+    "out/storytime-review/batch-35/pages/l2-w01-practice-line-nose-m4-color.png": "Nan profile facing right, nose clearly seen, eyelash mark at the outer corner; plain background; no text.",
+    "out/storytime-review/batch-35/pages/l2-w01-practice-line-nose-m4-line-9-despeckled.png": "1-bit line art; eyelash stroke present at the outer corner; eye outline an OPEN arc over the pupil, the eye white not closed.",
+    "out/storytime-review/batch-35/pages/l2-w01-story-page-a-neck-m5-color.png": "Close up of Nan lifting her chin, both hands touching her neck; look matches reference; no forehead crease; no text.",
+    "out/storytime-review/batch-35/pages/l2-w01-story-page-a-neck-m5-line-8-despeckled.png": "1-bit line art; hands clean of specks; eyelash strokes at both outer eye corners; each eye has an inner ring inside the outer ring (double ring).",
+    "out/storytime-review/batch-35/pages/l2-w01-story-page-hello-i-am-ben-m7-color.png": "Ben waves (5-digit hand); green bag hangs on the hook rack; red bag sits on the floor behind him; left ear has a small dark squiggle; right ear light inner mark; nose a soft shadow with no ring.",
+    "out/storytime-review/batch-35/pages/l2-w01-story-page-hello-i-am-ben-m7-line-3-despeckled.png": "1-bit line art; hanging hand with separate fingers; an open ring drawn around the nose that the color picture does not show.",
+    "out/storytime-review/batch-35/pages/l2-w01-story-page-a-nest-m7-color.png": "Nan points at a nest with exactly three light blue eggs on a low branch in a soft garden; look matches reference; eyelash marks in the color at both outer eye corners.",
+    "out/storytime-review/batch-35/pages/l2-w01-story-page-a-nest-m7-line-11-despeckled.png": "1-bit line art; nest with three egg bumps; no rim speck; left eye has the eyelash stroke; right eye has NO eyelash stroke at the outer corner.",
+    "out/storytime-review/batch-35/pages/l2-w01-story-page-a-net-m2-color.png": "Nan holds up a green butterfly net in a soft garden; look matches reference; no text.",
+    "out/storytime-review/batch-35/pages/l2-w01-story-page-a-net-m2-line-15-despeckled.png": "1-bit line art; rim ONE thick line; mesh a few bold web lines; eyelash strokes at both outer eye corners."
+  },
+  "l2-w01-check-row-cat": {
+    "files": [
+      "out/storytime-review/batch-35/pages/l2-w01-check-row-cat-m2-color.png",
+      "out/storytime-review/batch-35/pages/l2-w01-check-row-cat-m2-line-2-despeckled.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "cat": "yes: one ginger tabby cat, large in the middle",
+      "plain light background": "yes: plain white background",
+      "no text/numbers/logos": "yes",
+      "no tick marks at eyes": "yes: no wedge tick marks around the eyes",
+      "no cheek smudge": "yes",
+      "tail behind body away from head": "yes: tail curls up behind the body, one closed shape, not touching the head",
+      "line art no stripes": "yes: no stripe slivers"
+    },
+    "defects_gone": {
+      "line tail ring beside head reading as a second ear": "yes: gone",
+      "thin stripe slivers in line art": "yes: gone",
+      "color wedge tick marks around eyes": "yes: gone",
+      "gray smudge on cheek": "yes: gone"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-check-row-dog": {
+    "files": [
+      "out/storytime-review/batch-35/pages/l2-w01-check-row-dog-m1-color.png",
+      "out/storytime-review/batch-35/pages/l2-w01-check-row-dog-m1-line-4-despeckled.png"
+    ],
+    "rating": 7.5,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "line art: the pink tongue that hangs out below the muzzle in the color picture is not drawn (lost region)"
+    ],
+    "goal_check": {
+      "dog": "yes: one dog, large in the middle",
+      "plain light background": "yes",
+      "no text/numbers/logos": "yes",
+      "each eye one closed ring with solid pupil": "yes: one ring plus solid pupil and white highlight oval matching the color",
+      "both eyes look the same way": "yes",
+      "tail drawn": "yes: curled tail behind the head drawn"
+    },
+    "defects_gone": {
+      "double-ring eyes": "yes: gone",
+      "gaze turned inward": "yes: gone, both eyes look the same way",
+      "missing tail": "yes: tail drawn"
+    },
+    "goal_shown": true,
+    "retry_hint": "Draw the tongue as a small closed shape below the muzzle, right of the bell, as the color shows."
+  },
+  "l2-w01-check-row-bus": {
+    "files": [
+      "out/storytime-review/batch-35/pages/l2-w01-check-row-bus-m1-color.png",
+      "out/storytime-review/batch-35/pages/l2-w01-check-row-bus-m1-line-3-despeckled.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "school bus": "yes: one yellow school bus, large in the middle",
+      "plain light background": "yes: plain white",
+      "no number/sign/word": "yes",
+      "door and windows as in the color": "yes: windshield, door panes, and three side windows match",
+      "no horizontal divider in the door": "yes: door has the vertical two-pane split only"
+    },
+    "defects_gone": {
+      "horizontal divider making four door panes": "yes: gone"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-check-row-net": {
+    "files": [
+      "out/storytime-review/batch-35/pages/l2-w01-check-row-net-m1-color.png",
+      "out/storytime-review/batch-35/pages/l2-w01-check-row-net-m1-line-8-despeckled.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "net": "yes: one butterfly net, large in the middle",
+      "plain light background": "yes: plain white",
+      "no text": "yes",
+      "rim one thick line": "yes: the rim is a single thick closed line"
+    },
+    "defects_gone": {
+      "double-line rim": "yes: gone, rim is one thick line"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-check-row-nose": {
+    "files": [
+      "out/storytime-review/batch-35/pages/l2-w01-check-row-nose-m3-color.png",
+      "out/storytime-review/batch-35/pages/l2-w01-check-row-nose-m3-line-8-despeckled.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Nan head in profile": "yes: profile facing left",
+      "nose clearly seen": "yes: clear nose bump",
+      "no text": "yes",
+      "eyelash stroke at outer corner of visible eye": "yes: two short thick strokes at the outer corner in line art; painted mark in color"
+    },
+    "defects_gone": {
+      "lost eyelash mark in line art": "yes: two short thick strokes present at the outer corner"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-practice-line-nose": {
+    "files": [
+      "out/storytime-review/batch-35/pages/l2-w01-practice-line-nose-m4-color.png",
+      "out/storytime-review/batch-35/pages/l2-w01-practice-line-nose-m4-line-9-despeckled.png"
+    ],
+    "rating": 7.0,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "line art: the eye outline is an open arc over the pupil; the eye white is a region that must stay closed"
+    ],
+    "goal_check": {
+      "Nan head in profile facing the other way": "yes: profile facing right",
+      "nose clearly seen": "yes: clear nose bump",
+      "no text": "yes",
+      "eyelash stroke at outer corner of visible eye": "yes: one thick stroke at the outer corner"
+    },
+    "defects_gone": {
+      "lost eyelash mark in line art": "yes: one thick stroke present at the outer corner"
+    },
+    "goal_shown": true,
+    "retry_hint": "Close the eye outline into a full ring around the eye white, keeping the pupil and the eyelash stroke."
+  },
+  "l2-w01-story-page-a-neck": {
+    "files": [
+      "out/storytime-review/batch-35/pages/l2-w01-story-page-a-neck-m5-color.png",
+      "out/storytime-review/batch-35/pages/l2-w01-story-page-a-neck-m5-line-8-despeckled.png"
+    ],
+    "rating": 7.5,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "line art: each eye has an inner ring inside the outer ring with a thin white strip between (double-ring eyes)"
+    ],
+    "goal_check": {
+      "Nan look": "yes: two bunches with red ties, orange star T-shirt, large dark-brown eyes",
+      "lifts chin and touches neck with both hands": "yes: both hands at the neck, chin lifted",
+      "close up head and neck": "yes",
+      "plain light background": "yes",
+      "no text": "yes",
+      "line art hands free of specks": "yes: no isolated specks on the hands",
+      "eyelash marks at outer corners": "yes: short strokes at both outer corners in color and line art"
+    },
+    "defects_gone": {
+      "three tiny dark specks on hands": "yes: gone"
+    },
+    "goal_shown": true,
+    "retry_hint": "Merge each eye into one outer ring with a solid pupil, as the fixed dog row now shows."
+  },
+  "l2-w01-story-page-hello-i-am-ben": {
+    "files": [
+      "out/storytime-review/batch-35/pages/l2-w01-story-page-hello-i-am-ben-m7-color.png",
+      "out/storytime-review/batch-35/pages/l2-w01-story-page-hello-i-am-ben-m7-line-3-despeckled.png"
+    ],
+    "rating": 7.0,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "color: the left ear keeps a small dark squiggle inside, darker than the reference small light inner mark",
+      "line art: an open ring is drawn around the nose; the color picture shows only a soft shadow with no nose outline"
+    ],
+    "goal_check": {
+      "Ben drawn young": "yes: about five years old",
+      "hangs his school bag on a hook and waves": "yes: green bag hangs on the hook rack, Ben waves with a 5-digit hand",
+      "Pat's school bag on the floor behind him": "yes: red bag sits on the floor at the right",
+      "no text": "yes",
+      "hanging hand with separate fingers": "yes: separate fingers, no mitten",
+      "ears smooth and light with only a small inner mark": "partially: right ear now light and small; left ear still has a dark squiggle"
+    },
+    "defects_gone": {
+      "right ear gray hollow darker and larger than reference": "yes: right ear now light with a small inner mark",
+      "hanging hand without separate fingers": "yes: fingers separate"
+    },
+    "goal_shown": true,
+    "retry_hint": "Lighten the left ear mark to the reference small inner mark, and drop the nose ring from the line art."
+  },
+  "l2-w01-story-page-a-nest": {
+    "files": [
+      "out/storytime-review/batch-35/pages/l2-w01-story-page-a-nest-m7-color.png",
+      "out/storytime-review/batch-35/pages/l2-w01-story-page-a-nest-m7-line-11-despeckled.png"
+    ],
+    "rating": 7.5,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "line art: the right eye has no eyelash stroke at the outer corner; the left eye has one"
+    ],
+    "goal_check": {
+      "nest with three light blue eggs": "yes: exactly three eggs in color and line art",
+      "low tree branch in a garden": "yes",
+      "Nan points at it": "yes: pointing with extended index",
+      "Nan look": "yes: bunches with red ties, orange star T-shirt, red shorts, white sneakers",
+      "simple garden background with soft colors": "yes",
+      "no text": "yes",
+      "no speck on nest rim": "yes: rim clean after despeckle"
+    },
+    "defects_gone": {
+      "speck on nest rim": "yes: gone",
+      "lost eyelash marks in line art": "no: left eye has the stroke, the right eye still lacks it"
+    },
+    "goal_shown": true,
+    "retry_hint": "Add one short thick eyelash stroke at the outer corner of the right eye in the line art."
+  },
+  "l2-w01-story-page-a-net": {
+    "files": [
+      "out/storytime-review/batch-35/pages/l2-w01-story-page-a-net-m2-color.png",
+      "out/storytime-review/batch-35/pages/l2-w01-story-page-a-net-m2-line-15-despeckled.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Nan holds up a green butterfly net": "yes: net raised in her right hand",
+      "garden background soft": "yes",
+      "Nan look": "yes: bunches with red ties, orange star T-shirt, red shorts, white sneakers",
+      "no text": "yes",
+      "net rim one thick line": "yes: single thick rim line in the line art",
+      "eyelash marks at both outer eye corners": "yes: short strokes at both outer corners in color and line art"
+    },
+    "defects_gone": {
+      "double-line net rim": "yes: gone, one thick line",
+      "lost eyelash marks in line art": "yes: both eyes have the strokes"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "summary": {
+    "pages": 10,
+    "pass": 10,
+    "clean": 5,
+    "clean_keys": [
+      "l2-w01-check-row-cat",
+      "l2-w01-check-row-bus",
+      "l2-w01-check-row-net",
+      "l2-w01-check-row-nose",
+      "l2-w01-story-page-a-net"
+    ],
+    "not_clean_keys": [
+      "l2-w01-check-row-dog",
+      "l2-w01-practice-line-nose",
+      "l2-w01-story-page-a-neck",
+      "l2-w01-story-page-hello-i-am-ben",
+      "l2-w01-story-page-a-nest"
+    ]
+  }
+}

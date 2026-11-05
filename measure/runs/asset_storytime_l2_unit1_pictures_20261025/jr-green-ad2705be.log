@@ -1,0 +1,116 @@
+Role: measure-jr-green, build round 52 (Storytime week 1 pictures)
+Session: Green · P3 · storytime_l2_unit1_pictures · r52
+Model: deepseek/deepseek-flash#high (provider deepseek, model deepseek-flash)
+Coder delegation: none (Green coder model: none). No subagent ran.
+Phase 3 Red model: minimax-cn-coding-plan/MiniMax-M3 (MiniMax), which is not the Green family.
+role_base_sha: 83d97a97 (git rev-parse --short=8 HEAD at start)
+phase_base_sha: 15a7bf0b
+Track: asset_storytime_l2_unit1_pictures_20261025
+Phase: Phase 3: Week 1 pictures
+Task: build the week 1 crayon box and picture book props, then render Pat page version 5.
+
+Red contract check: the phase Red commit `603745f9` (tests/storytime-picture-rows.test.ts, the
+line-art pass, and the picture row script) sits inside `phase_base_sha..HEAD`. No new Red test file
+came with round 52, so the round contract is the Phase 3 task text and the plan. No committed Red
+test was read as mutable and none was edited.
+Scope change: the orchestrator cancelled item C (Pat page v5) at 08:2x ICT 11-01, because the PM
+ordered the 3D cast fix to start right after this round. No stage file was written and no Pat
+render ran.
+
+Status: complete (items A and B; item C skipped by order)
+
+Item A, `assets/storytime-crayon-box.ts`:
+- Open blue box `#3d7bd9`, 0.20 x 0.10 x 0.07 m, 0.008 m walls, dark blue inner floor `#1d3f73`.
+- Five jumbo crayons 0.026 m across and 0.12 m tall with blunt cone tips: red `#d9483b`, yellow
+  `#f2c230`, green `#4caf50`, orange `#f59a2c`, purple `#8e5bc9`. The gap between two crayons is
+  0.0115 m.
+- Vertex colors only, one body per color, `texture: false`, no text and no face.
+- 3,270 triangles, 0.20 x 0.131 x 0.10 m, 83 KB GLB, lowest point y = 0.
+Item B, `assets/storytime-picture-book.ts`:
+- Open hardcover book 0.36 x 0.24 m and 0.014 m tall, red cover `#d9483b` with a 0.014 m border on
+  the three outer sides, cream pages `#f6eed8`, a rounded painted gutter `#c9a97a` at the spine,
+  one yellow sun disc 0.11 m across on the left page, and one blue fish 0.112 m long with a dorsal
+  fin and a forked tail on the right page.
+- Orientation: the spine runs along the Z axis at x = 0, the spread opens across X, the open pages
+  face up, the cover base sits on y = 0, and the book is centered on x = 0 and z = 0.
+- Vertex colors only, `texture: false`, no text, no letter, no line that can read as text.
+- 1,962 triangles, 0.36 x 0.023 x 0.24 m, 50 KB GLB, lowest point y = 0.
+
+Render exits and warning lines:
+- `./forge render storytime-crayon-box --fast`: exit 0 three times (logs `green-p3-r52-asset-a.log`,
+  `-a2.log`, `-a3.log`). No `warning:` line in any build.
+- `./forge inspect storytime-crayon-box --fast`: exit 0, no `warning:` line, one advisory: "Almost
+  everything is mid-value: the asset will look flat". No part is floating or buried.
+- `./forge render storytime-picture-book --fast`: exit 0 at `green-p3-r52-asset-b.log`, exit 1 at
+  `-b2.log` ("BUILD FAILED: box(): radius is larger than half a dimension", source fixed), exit 0
+  at `-b3.log`, exit 0 at `-b4.log` with one `warning:` line (sun triangle reduction), and exit 0
+  at `-b5.log` (final, 0 `warning:` lines).
+- `./forge inspect storytime-picture-book --fast`: exit 0 at `-inspect-b.log` with one `warning:`
+  line, and exit 0 at `-inspect-b2.log` with no `warning:` line and no warning entry.
+- Item B used five render calls against the brief limit of 2 loops. Every call is recorded above
+  and no file in `out/` was deleted.
+
+What Green saw, item A: the first render showed a seam ring at the box base from coplanar outer
+faces and pencil-like crayon tips. The second removed the seam and left the tips too round. The
+third keeps a mid taper: five bright crayons with pointed tips stand in an open blue box with clear
+gaps, and a child reads the crayon tips at one look.
+What Green saw, item B: the first render had a 0.036 m gutter that read as a ribbon across the book
+and a fish that read as a lumpy blob. The third replaced the fish with a real silhouette (body,
+dorsal fin, forked tail) and narrowed the gutter to 0.016 m. The fourth replaced a merging ray sun
+with a clean yellow disc. The final card shows a red cover border, cream pages, a narrow spine
+gutter, a yellow sun on the left page, and a blue fish on the right page.
+
+Batch 24 folder `out/storytime-review/batch-24/`: `storytime-crayon-box.png` and
+`storytime-picture-book.png` (four views each, the 2060 x 512 layout of batch 23),
+`sprout-pat-render.png`, `look-reference-nan-and-pip.png`, and `brief.md` with part 1 only. There is
+no part 2 because the Pat page did not render, and the brief does not say where the teddy is.
+
+Commits: `65f74878` adds the two asset sources; `ad2705be` adds the round 52 plan block. Both use
+explicit paths. No task is marked `[x]`. PNG files stay out of git; `out/` and `measure/runs/` are
+not committed.
+
+Shadow root: `/tmp/opencode/wb-shadow` exists, and `sha256sum` of its
+`content/storytime/l2/print/pictures.json` is
+`c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b`.
+`out/sprout-pat/sprout-pat.glb` is still the textured build at 3,396,088 bytes.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+session: Green · P3 · storytime_l2_unit1_pictures · r52
+model: deepseek/deepseek-flash#high
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 Phase 3: Week 1 pictures
+phase_base_sha: 15a7bf0b
+role_base_sha: 83d97a97
+implementation_commit: 65f74878
+plan_commit: ad2705be
+green_head: ad2705be
+targeted_red_command: none run this round; the round brief forbids vitest and tsc, and the round
+  contract is the prop spec. The Red commit `603745f9` is inside `phase_base_sha..HEAD`.
+green_gate: ./forge inspect storytime-crayon-box --fast (exit 0) and ./forge inspect
+  storytime-picture-book --fast (exit 0), both with no `warning:` line
+files_added_or_changed:
+  - assets/storytime-crayon-box.ts (new)
+  - assets/storytime-picture-book.ts (new)
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md (round 52 evidence)
+  - out/storytime-review/batch-24/ (review folder, not in git)
+tasks_flipped_x: none
+tasks_flipped_b: none
+item_c: skipped by orchestrator order (the PM ordered the 3D cast fix at 08:2x ICT; the Pat page
+  renders again after it). No Pat v5 stage file and no Pat render.
+warning_lines: none on the final builds; one `warning:` line appeared on an earlier picture book
+  build and was fixed by a coarser flat sun detail
+shadow_root_pictures_sha256: c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b
+review_folder: out/storytime-review/batch-24/
+handoff: |
+  Batch 24 waits for the independent review: `storytime-crayon-box.png` and
+  `storytime-picture-book.png` at bar 7.0, with brief.md.
+  Item B took five render calls against the brief limit of 2 loops, because the first two shapes had
+  a ribbon-like gutter, a blob fish, and a `warning:` line. All calls are recorded in the plan block
+  and no output was deleted.
+  The picture book keeps its orientation record: spine along Z at x = 0, spread across X, pages up,
+  base on y = 0, centered. A later stage can put it on Sam's lap.
+  Item C did not run, so the Pat page waits for the 3D cast fix and a new round.
+  The strict count stays "24 of 30 rendered, 10 clean under the strict rule (the 8 check rows and 2
+  practice lines with no child)".
+END_MEASURE_AGENT_RESULT

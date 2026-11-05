@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Pass at d06690a0. All round-2 findings (RB8-01 to RB8-07, review A F1, review C F2 and F3) are fixed and each fix is proven by a test: the Red run at 3509efd5 fails exactly T162-T168, T171, and T172 (9 failed | 12 passed, exit 1), the gate run passes 21 of 21 (exit 0), and three mutation batches each fail exactly the tests that cover the removed fixes. T152 to T161 keep their meaning (only one import line changed). The manifest.json shape and the PM contract are unchanged. Callers of changed exports work, and every refusal writes nothing. Two nits remain for Green: the deliver CLI skip log line has no test, and checkPictureListPin has no production caller.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F-A1 [Nit] review-a: The deliver CLI skip log line has no test. Evidence: src/storytime/book-pictures.ts:4744 logs one 'Skipped <row id>: <reason>' line per row without an approval entry (review C F3 recommendation), but no test reads that output; a mutation deleting the onSkip wiring line kept all 21 tests green. T172 covers only the writer-level onSkip callback. Owner: Green.",
+    "F-A2 [Nit] review-a: checkPictureListPin has no production caller. Evidence: src/storytime/muse-delivery.ts:142 exports it; only T162 reads it through a dynamic import, while the deliver path enforces the pin through the inline check in writeMuseDelivery. The export is a dead path with duplicated logic, mandated by the Red API text. Owner: Green."
+  ],
+  "evidence": [
+    "Provenance: git rev-parse HEAD returned d06690a046b67a5d08fa0ba2ac4f5034bbe2287e, which equals the audited head d06690a0. The working tree matched d06690a0 for src/storytime and tests/. Scope commits: 3509efd5 (Red T162-T172), 44c2ec84 (Green writer hardening), d06690a0 (plan evidence).",
+    "Gate: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts --maxWorkers=1' exited 0 with Test Files 1 passed (1) and Tests 21 passed (21). No exit 75.",
+    "Red claim (A5): the same gate command in a disposable worktree at 3509efd5 exited 1 with Test Files 1 failed (1) and Tests 9 failed | 12 passed (21). The failing tests were exactly T162, T163, T164, T165, T166, T167, T168, T171, T172, which matches the plan block exactly. T152 to T161, T169, and T170 passed, as the plan records.",
+    "Regression claim: the gate with tests/storytime-picture-rows.test.ts and tests/storytime-book-pictures.test.ts exited 1 with Tests 2 failed | 139 passed (141). The two failures are T142 and T147, the known picture list version 3 pin failures routed to Phase 4. This change added no failure.",
+    "Mutation batch A (removed the writer pin block, the resolver containment guards, the duplicate-name check, the degenerate-name checks, the Muse symlink and realpath guards, the MuseFileName refine, and the onSkip call): Tests 8 failed | 13 passed, failing exactly T162, T163, T164, T166, T167, T168, T169, T172. The worktree file was restored and the restore was asserted.",
+    "Mutation batch B (removed the delivery-target symlink refusal and the wx flag, and moved the manifest write before the copies): Tests 2 failed | 19 passed, failing exactly T165 and T170. Review A F1 is closed: T170 fails when the manifest moves before the copies. The worktree file was restored and the restore was asserted.",
+    "Mutation batch C (removed the palette, depth, space, and channel checks of inspectColorPrint): Tests 1 failed | 20 passed, failing exactly T171. Review C F2 is closed. The worktree file was restored and the restore was asserted.",
+    "Gap probes: deleting the deliver CLI onSkip wiring line kept 21 passed (F-A1); removing the absent-measurement pin branch kept 21 passed, and that branch is redundant because the mismatch check still refuses an absent hash, so the contract behavior survives (no finding).",
+    "T152 to T161 keep their meaning: the Red commit changed one import line (symlink added to node:fs/promises) and no test body. Green changed no test. The test file gained no new top-level import; the new exports are read through dynamic import helpers.",
+    "Contract: the manifest.json shape is unchanged. The 19359dd1..d06690a0 diff in src/storytime/book-pictures.ts touches only the deliver block, and assembleManifest and StorytimeManifest are untouched. The approval list schema gained only the optional pictureListSha256 field. spec.md Amendment 2026-11-01 decision 2 points 1 to 6 are unchanged, so no PM contract change and no escalation.",
+    "Callers and error paths: resolveMuseDeliveryPaths is called by the deliver CLI and covered by T163 and T164; writeMuseDelivery options are additive, so the older call shape in T152 to T161 still works; rowCaptureJob is unchanged. Every refusal writes nothing: pin refusal (T162), path refusal (T164), target symlink refusal (T165), duplicate names (T166), degenerate names (T167), Muse print refusals (T168), malformed list (T169), copy write failure (T170), and format refusals (T171) all assert no manifest and an empty folder; the rejection helper throws when no rejection occurs, so no test passes vacuously.",
+    "Anti-patterns: A3 clean, all count assertions read labeled typed values, no digit parsing of output text. A4 clean, each refusal test pairs with a safe acceptance case and the rejection helper blocks vacuous pass. A5 clean, the plan Red, Green, and regression claims match the live runs above. One extra probe: os.lstat on a missing parent with a 300-character name returned errno 2 (ENOENT), so the plan wording that T170 fails at the copy write with ENAMETOOLONG is correct.",
+    "tsc claim unverified: 'node_modules/.bin/tsc --noEmit' through the heavy lock crashed with a V8 heap out of memory and exit 134. The plan claim of total errors 38 and owned errors 0 was not independently confirmed in this audit. Every test-exit claim in the plan was verified.",
+    "Scope note: tsc and the two result files aside, no file was edited in the repository. All mutations ran in the disposable worktree /tmp/opencode/muse-r2-audit and were restored with asserted equality. Sibling reviews at this head pass: review-b-d06690a0 (RB9-01 to RB9-05 nonblocking) and review-c-d06690a0 (F2 and F3 withdrawn)."
+  ],
+  "commands": [
+    "git rev-parse HEAD: d06690a046b67a5d08fa0ba2ac4f5034bbe2287e; git diff --stat 15a7bf0b..d06690a0",
+    "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts --maxWorkers=1' -> exit 0; Tests 21 passed (21)",
+    "same gate in a worktree at 3509efd5 -> exit 1; Tests 9 failed | 12 passed (21)",
+    "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-picture-rows.test.ts tests/storytime-book-pictures.test.ts --maxWorkers=1' -> exit 1; Tests 2 failed | 139 passed (141)",
+    "python3 mutation harness (apply, run, restore) batches A, B, C in /tmp/opencode/muse-r2-audit -> 8, 2, and 1 expected failures; gap probe run -> 21 passed",
+    "python3 -c os.lstat probe: errno 2 on missing parent plus long name",
+    "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/tsc --noEmit' -> heap out of memory, exit 134, unverified"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-d06690a0.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-d06690a0.log"
+  ],
+  "track": "asset_storytime_l2_unit1_pictures_20261025",
+  "phase": "Phase 3: Week 1 pictures",
+  "role": "measure-review-a-correctness",
+  "audited_head": "d06690a0",
+  "audited_head_sha": "d06690a0",
+  "phase_base_sha": "15a7bf0b",
+  "retry_recommendation": "none",
+  "confidence": "high"
+}

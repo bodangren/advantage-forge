@@ -1,0 +1,26 @@
+Some extensions were not registered for I/O, and will not be written.
+sprout-nan: 24,130 triangles, 0.528 x 0.854 x 0.402 m, built in 52102 ms
+  skin                      8300 tris  (2330 ms)
+  mouth-open                 560 tris  (87 ms)
+  eyelid-skin                854 tris  (96 ms)
+  hair                      6128 tris  (1525 ms)
+  bands                     2880 tris  (105 ms)
+  shirt                     2104 tris  (403 ms)
+  shorts                    1878 tris  (227 ms)
+  shoes                     1426 tris  (253 ms)
+texture  1024x1024 atlas: base color, normal, occlusion/roughness/metal (33698 ms)
+glb      out/sprout-nan/sprout-nan.glb  (2859 KB)
+animate  out/sprout-nan/anim/gesture-touch-nose.png  + .gif  (2.00 s clip, 3086 ms)
+Some extensions were not registered for I/O, and will not be written.
+sprout-nan: 24,130 triangles, 0.528 x 0.854 x 0.402 m, built in 52375 ms
+  skin                      8300 tris  (2087 ms)
+  mouth-open                 560 tris  (70 ms)
+  eyelid-skin                854 tris  (85 ms)
+  hair                      6128 tris  (1096 ms)
+  bands                     2880 tris  (153 ms)
+  shirt                     2104 tris  (562 ms)
+  shorts                    1878 tris  (333 ms)
+  shoes                     1426 tris  (209 ms)
+texture  1024x1024 atlas: base color, normal, occlusion/roughness/metal (34187 ms)
+glb      out/sprout-nan/sprout-nan.glb  (2859 KB)
+animate  out/sprout-nan/anim/gesture-touch-neck.png  + .gif  (2.00 s clip, 2762 ms)

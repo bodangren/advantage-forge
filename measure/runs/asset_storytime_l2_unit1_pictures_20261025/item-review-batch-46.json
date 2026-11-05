@@ -1,0 +1,132 @@
+{
+  "status": "fail",
+  "reviewer": "openai/gpt-6.1-sol#high",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Eight of nine week 4 rows are clean. The family print crop has a layout fault. K1 and K2 are clean. K3 lacks the named nose in line.",
+  "items": {
+    "l2-w04-cover-my-family": {
+      "files": ["out/storytime-review/batch-46/pages/l2-w04-cover-my-family-m1-color.png", "out/storytime-review/batch-46/pages/l2-w04-cover-my-family-m1-color-print.png", "out/storytime-review/batch-46/pages/l2-w04-cover-my-family-m1-line-2-despeckled.png", "out/storytime-review/batch-46/pages/l2-w04-cover-my-family-m1-line-print-2-despeckled.png"],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["Grandma's small cheek curves do not break her face.", "The line file adds small shirt buttons and simplifies the side table. These details change no character or needed prop."],
+      "goal_check": "Both versions show the same six family members, the sofa, and the window. Lily stands in front and waves with five fingers. No animals, sun, shirt badges, or text appear.",
+      "line_check": "Both line files have zero nonbinary pixels. Faces remain readable. No thick black ring, band, or gap makes coloring hard."
+    },
+    "l2-w04-story-page-this-is-my-family": {
+      "files": ["out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-family-m1-color.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-family-m1-color-print.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-family-m1-line-despeckled.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-family-m1-line-print-despeckled.png"],
+      "rating": 7.5,
+      "verdict": "defect",
+      "defect_categories": ["layout-fault"],
+      "defects": ["The color print and line print cut off Lily's outer hand and the right edge of her hair."],
+      "notes": ["The partly hidden door is a note. The sentence names the family, and all six people remain clear.", "The touching hands and added buttons change no character or needed prop."],
+      "goal_check": "Both versions show the same six cast members in front of one house. The source files show five fingers on each open hand. No animals, sun, shirt badges, or text appear. The print crop cuts Lily's outer hand.",
+      "line_check": "Both line files have zero nonbinary pixels. Faces remain readable. No thick black ring, band, or gap makes coloring hard.",
+      "retry_hint": "Color and line: fit the complete family inside the print frame without cutting Lily's outer hand or hair."
+    },
+    "l2-w04-story-page-this-is-my-mom": {
+      "files": ["out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-mom-m1-color.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-mom-m1-color-print.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-mom-m1-line-3-despeckled.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-mom-m1-line-print-3-despeckled.png"],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["The pointed fringe strokes, added blouse buttons, and small lamp oval are notes. Lily and Mom keep their approved looks."],
+      "goal_check": "Both versions show exactly Lily and Mom. Lily smiles and points clearly at Mom. The sofa and window remain clear. No animals, sun, shirt badges, or text appear. The relaxed hands are not open palms.",
+      "line_check": "Both line files have zero nonbinary pixels. Thin eye outlines surround solid pupils, not thick black rings. Faces remain readable. No band or gap makes coloring hard."
+    },
+    "l2-w04-story-page-this-is-my-dad": {
+      "files": ["out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-dad-m1-color.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-dad-m1-color-print.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-dad-m1-line-2-despeckled.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-dad-m1-line-print-2-despeckled.png"],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["The line file simplifies Lily's fringe to a smooth edge. Her bob, bow, collar, and dress still identify Lily.", "The rounded lamp table and cushion shapes change no needed prop."],
+      "goal_check": "Both versions show exactly Lily and Dad. Lily clearly points at Dad. Their clothes and hair identify the same people. The sofa and window remain clear. No animals, sun, shirt badges, or text appear. No hand shows a clearly wrong finger count.",
+      "line_check": "Both line files have zero nonbinary pixels. Eye outlines use the normal stroke width around solid pupils. No thick black band, broken face, or gap makes coloring hard."
+    },
+    "l2-w04-story-page-this-is-my-brother": {
+      "files": ["out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-brother-m1-color.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-brother-m1-color-print.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-brother-m1-line-2-despeckled.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-brother-m1-line-print-2-despeckled.png"],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["The simplified table and sofa cushions do not change a needed prop."],
+      "goal_check": "Both versions show exactly Lily and Tom with their approved looks. Lily points at Tom. Tom waves with five fingers. The sofa and window remain clear. No animals, sun, shirt badges, or text appear.",
+      "line_check": "Both line files have zero nonbinary pixels. Thin eye outlines surround solid pupils. No thick black ring, band, broken face, or gap makes coloring hard."
+    },
+    "l2-w04-story-page-this-is-my-grandma": {
+      "files": ["out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-grandma-m1-color.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-grandma-m1-color-print.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-grandma-m1-line-4-despeckled.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-grandma-m1-line-print-4-despeckled.png"],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["Grandma's faint cheek and eye lines in color are notes. Her face remains clear and matches the same Grandma in line.", "The line file simplifies Lily's fringe. Her bob, bow, collar, and dress preserve her identity."],
+      "goal_check": "Both versions show exactly Lily and Grandma. Lily points toward Grandma, who holds one cake on one plate with three candles. The sofa and window remain clear. No animals, sun, shirt badges, or text appear. The holding hands are not open palms.",
+      "line_check": "Both line files have zero nonbinary pixels. Solid pupils are allowed. No thick black ring, band, broken face, or gap makes coloring hard."
+    },
+    "l2-w04-story-page-this-is-my-grandpa": {
+      "files": ["out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-grandpa-m1-color.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-grandpa-m1-color-print.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-grandpa-m1-line-3-despeckled.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-grandpa-m1-line-print-3-despeckled.png"],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["The two small dress buttons in line are notes. They change neither Lily nor a needed prop.", "Grandpa's short finger lines describe a relaxed hand, not an open palm with missing fingers."],
+      "goal_check": "Both versions show exactly Lily and Grandpa with their approved looks. Lily points at Grandpa, who holds one folded newspaper. The sofa and window remain clear. No animals, sun, shirt badges, or text appear.",
+      "line_check": "Both line files have zero nonbinary pixels. Grandpa's mustache has a white interior. No thick black ring, band, broken face, or gap makes coloring hard."
+    },
+    "l2-w04-story-page-this-is-my-dog-pip": {
+      "files": ["out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-dog-pip-m1-color.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-dog-pip-m1-color-print.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-dog-pip-m1-line-4-despeckled.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-dog-pip-m1-line-print-4-despeckled.png"],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["The wavy ground line below the feet is a note. It does not confuse the action or obstruct coloring.", "Pip's simplified fur markings and the small clothing differences change no character or needed prop.", "The line print places Mom's outer fingertips against the left edge. This small outline contact does not remove a readable finger."],
+      "goal_check": "Both versions show exactly six matching family members and one jumping Pip in front of one house. Pip has floppy ears, a collar, and one round tag. Everyone laughs. No sun, shirt badges, or text appear. The relaxed hands show no clearly wrong finger count.",
+      "line_check": "Both line files have zero nonbinary pixels. Faces remain readable, including the grandparents' closed laughing eyes. No thick black ring, band, or gap makes coloring hard."
+    },
+    "l2-w04-story-page-this-is-my-house": {
+      "files": ["out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-house-m1-color.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-house-m1-color-print.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-house-m1-line-despeckled.png", "out/storytime-review/batch-46/pages/l2-w04-story-page-this-is-my-house-m1-line-print-despeckled.png"],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["The path ovals and cloud-shaped bushes are readable simplifications. The small line across the upper path changes no needed prop."],
+      "goal_check": "Both versions show exactly one matching Lily pointing at one house with one door, two windows, and one chimney. The color shows a white house, red door, and green garden. No animals, sun, shirt badges, or text appear. No open palm requires a finger count.",
+      "line_check": "Both line files have zero nonbinary pixels. Thin eye outlines surround solid pupils. No thick black ring, band, broken face, or gap makes coloring hard."
+    }
+  },
+  "extra": {
+    "K1": {
+      "files": ["out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png", "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["The line file simplifies the red hair tie to a circular bun outline. Its stroke matches the other outlines, not a thick filled band.", "The supplied goal gives no comparison image for 'the other way'. Both supplied files face right."],
+      "goal_check": "One profile head matches Nan's dark hair and tied bun. The nose projects clearly from the face in both color and line. The tracing target is clear. No extra person, animal, prop, sun, or text appears.",
+      "line_check": "The line file has zero nonbinary pixels. The nose, eye, mouth, and face contour remain readable. No thick black ring, band, or gap makes coloring hard."
+    },
+    "K2": {
+      "files": ["out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png", "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": ["The close-up crops peripheral hair and legs but preserves the complete target hand and nut.", "The line file leaves eye interiors white for coloring. The face remains readable."],
+      "goal_check": "Both files show one large nut in Nan's open hand, with five fingers. The color nut is brown. Nan's buns and star shirt match her look. The star appears only on Nan. No extra person, animal, nut, sun, or text appears.",
+      "line_check": "The line file has zero nonbinary pixels. The hair ties have white interiors. No thick black ring, band, broken face, or gap makes coloring hard."
+    },
+    "K3": {
+      "files": ["out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png", "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"],
+      "rating": 6.5,
+      "verdict": "defect",
+      "defect_categories": ["broken-face"],
+      "defects": ["The line file omits the nose that the text and goal name. The fingertip meets the mouth contour without a visible nose."],
+      "notes": ["The white eye interiors and simplified closed hands do not independently change Nan's identity."],
+      "goal_check": "The color file shows Nan touching her visible nose with one finger and laughing. The line file shows Nan and the gesture but no visible nose. Both files preserve her buns and star shirt. No extra person, animal, prop, sun, or text appears.",
+      "line_check": "The line file has zero nonbinary pixels. No thick black ring, band, or gap makes coloring hard. The missing named nose fails the face check.",
+      "retry_hint": "Line: draw Nan's nose clearly beside the touching fingertip and separate it from the mouth contour."
+    }
+  }
+}

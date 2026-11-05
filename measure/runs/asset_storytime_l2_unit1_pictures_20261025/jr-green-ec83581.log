@@ -1,0 +1,97 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: success
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 2: Tests and calibrated model pre-checks (P2), task 7
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: ec835814b18e2bc8426363d6915a8e82eb81e990
+head_sha: 84c8ffdb8359939ef86d043f58443200cabfdbc5
+commits: |
+  597013bdabb0f52e51ffa7e13061c4aaf3fdc6db fix(storytime): close Review B security findings and empty sample list
+    (src/storytime/book-pictures.ts, scripts/storytime-book-pictures.ts; RB-01 to RB-05 and RA2-N1).
+  c9ae988b9b00d22c6cfbe5782bc3cba3a7832ed5 fix(storytime): print capture file-server refusal paths and served counts
+    (src/storytime/book-pictures.ts; the T86 server labels).
+  245f8c1ae97d660eb475b87f92fd9951306dbc93 docs(measure): record asset_storytime_l2_unit1_pictures_20261025 task 7 green evidence
+    (plan.md, metadata.json; estimated_tasks 19 to 20).
+  84c8ffdb8359939ef86d043f58443200cabfdbc5 docs(measure): close asset_storytime_l2_unit1_pictures_20261025 task 7 green gates
+    (plan.md only; smoke run 5 and type check labels; task 7 marked [x]).
+  Outside my commits, verified: Red test commit de097bc653e8d3616f5aec4ffaff736f6d15952f;
+  Red T77 cast amendment 844fb72677592b09a8c0219b0225ea777cd6090e; Red plan evidence
+  0196627e130a5b85a0c3cb4225040ead80265516. Every full SHA in this log and in plan.md was checked
+  with git rev-parse. No push. No archive move, no closeout metadata change.
+tests_run: |
+  Red rerun before implementation: heavy-run.sh vitest run tests/song-still-hook.test.ts
+  tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts
+  tests/song-timeline.test.ts --maxWorkers=1; exit 1; `Tests  9 failed | 90 passed (99)`;
+  T77 to T85 failed as expected.
+  Green unit gate after implementation: same command; exit 0; `Tests  99 passed (99)`; no skip.
+  Re-run after the label commit: exit 0; `Tests  99 passed (99)`; no skip. Red re-ran it on the
+  amended HEAD and reported `Tests  99 passed (99)` with `owned tsc errors: 0`.
+  Type check on final gate run (green-tsc-t7b.log, at HEAD 0196627e):
+  heavy-run.sh node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json;
+  `owned tsc errors: 0`; `baseline tsc errors: 31` (31 pre-existing errors, all outside owned paths).
+  Smoke run 4 (first authorized run): exit 0; all T74 labels in range; wrote 4 files; but the
+  `book files served` and `book file requests refused` labels were missing because the printing
+  was not implemented yet. Fixed in c9ae988b. No sixth run.
+  Smoke run 5 (second authorized run, T86): heavy-run.sh node --import tsx
+  scripts/storytime-book-pictures.ts lineart-smoke --job w01-readalong-p05; exit 0;
+  `hook before seek: absent`; `window.__song keys: load,portrait,ready,seek`;
+  `capture path: captureBookStill`; `camera drift source: live`; `camera state drift: 0`;
+  `color repeat identical: yes`; `stage ink share: 2.12%`; `book files served: 15`;
+  `book file requests refused: 0`; `fixture interior ink: 0.00%`; `fixture ring rays: 360/360`;
+  `fixture depth step rows: 159/159`; `lineart-smoke: wrote 4 files under
+  out/storytime/l2/unit1/smoke/lineart-2026-10-26T05-22-09-300Z; wrote no book version.`
+  All T74 labels in range; served 15 (2 or more); refused 0; four files written.
+  T87 gate row: argument probe printed the literal `$(printf RB_SUBSTITUTION_EXECUTED)`
+  (argument probe: literal); live scan printed `live files scanned: 15` and
+  `live credential findings: 0` over cost-ledger.jsonl and calibration/, raw/, candidates/,
+  reviews/; assertCalibrationReady accepted out/storytime/l2/unit1 (exit 0). No credential found.
+files_changed: |
+  src/storytime/book-pictures.ts and scripts/storytime-book-pictures.ts (code commits 597013bd,
+  c9ae988b); measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md and metadata.json
+  (evidence commits 245f8c1a, 84c8ffdb). No Red test, no src/song file, no rubric, and no
+  PICTURE_RUBRIC_VERSION change; src/song is unchanged since the role base.
+plan_updates: |
+  Task 7 is `[x]`. Its first line carries Commit `597013bd` (remediation) and `c9ae988b`
+  (file-server labels). Evidence lines under task 7 record: the Red rerun, the implementation
+  seams, the unit gate lines, both type-check label sets, smoke run 4 with its missing-label note,
+  the T87 results, the authorized Red amendment (844fb726), smoke run 5 labels and output path,
+  the PNG inspection, and the SHA comparison. metadata.json estimated_tasks 19 to 20 (the plan
+  holds 20 tasks). Evidence commits 245f8c1a and 84c8ffdb use explicit paths only.
+known_failures: none.
+  Type check note: tsc exits 2 because 31 pre-existing baseline errors remain outside the owned
+  paths; the gate labels are `owned tsc errors: 0` and total 31, both met.
+  Smoke run note: color.png SHA-256 37a3acc55ace6e70373c82194a19a7becdef395409007233f9141b3d3a0d307d
+  is byte-identical across smoke runs 3, 4, and 5. Green viewed the color and line-art PNGs of both
+  runs 4 and 5: the color picture shows Nan from behind in an orange shirt and red shorts, waving
+  beside two stools, a table, a full bookcase, a shuttered window, a fern, and a red-flower pot;
+  the line-art picture draws the same scene as a clean one-bit form-edge outline. Every scene model
+  is present (Nan, table, stools, bookcase, window, plant). A single changed color PNG would have
+  needed a Nan-and-pot check; the bytes are identical, so the comparison passes.
+  Early log correction: an earlier version of this log wrote head_sha 245f8c1a,
+  which does not exist; the real SHA is 245f8c1ae97d660eb475b87f92fd9951306dbc93. All SHAs are now
+  git rev-parse verified.
+handoff: |
+  Task 7 is complete on HEAD 84c8ffdb. Route to the next role:
+  - Reviews A, B, and C run again on the task 7 HEAD (0196627e code state; plan evidence 84c8ffdb).
+    Review B is applicable: wrapper, server, writer, credential, and release changes.
+    Review C is applicable: new refusals in verify --release, precheck-kimi --record, and the
+    wrapper invocation. Adversarial testing uses the task 7 mutation list in test-strategy.md
+    (15 mutations, T77 to T85).
+  - Phase 2 closeout runs the unit gate and the type check again on the final commit and checks
+    the task 3 to task 7 evidence.
+  - The closeout gate also handles the stale generated facts: ./measure/generate.sh --check
+    reported stale status.md and asset-inventory.json; Green did not run generate.sh per the brief.
+  - New implementation-owned files: none; only the two owned source paths changed.
+dirty_path_classification: |
+  relevant: none dirty; all task 7 changes are committed.
+  generated/ignorable: measure/generated/* and measure/runs/* stay dirty or untracked from before;
+  untouched and not committed (no generate.sh run, per the brief).
+  unrelated_user_work: skills, AGENTS.md, bench, docs mockups, reference images, other track plans,
+  measure/tracks.md, measure/workflow.md, assets/wizard-argon-trial.ts, and all other pre-existing
+  dirty paths are preserved untouched.
+model_deviation: none. Red model openai/gpt-6.1-sol (per handoff). Green model
+  volcengine-agent-plan/glm-5.3-flash#high (this session). No coder delegation; no Red-family
+  model used for the same phase.
+facts_changed: []
+END_MEASURE_AGENT_RESULT

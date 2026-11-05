@@ -1,0 +1,44 @@
+storytime-crayon-box: 3,270 triangles, 0.2 x 0.131 x 0.1 m, built in 2696 ms
+  box                        410 tris  (707 ms)
+  box-floor                   66 tris  (441 ms)
+  crayon-red                 574 tris  (339 ms)
+  crayon-yellow              564 tris  (268 ms)
+  crayon-green               564 tris  (222 ms)
+  crayon-orange              546 tris  (284 ms)
+  crayon-purple              546 tris  (208 ms)
+texture  none (vertex colors)
+glb      out/storytime-crayon-box/storytime-crayon-box.glb  (83 KB)
+# Inspection: storytime-crayon-box
+
+Size 0.2 x 0.131 x 0.1 m (x y z); 3,270 triangles; lowest point y = 0 m.
+
+## Silhouette per view (fractions of the frame)
+
+| view | width | height | coverage |
+|---|---|---|---|
+| front | 0.836 | 0.543 | 0.37 |
+| three-quarter | 0.832 | 0.641 | 0.376 |
+| side | 0.469 | 0.613 | 0.203 |
+| back | 0.836 | 0.543 | 0.37 |
+| top | 0.844 | 0.676 | 0.331 |
+
+## Visible share of the silhouette per part
+
+| part | front | three-quarter | side | back | top |
+|---|---|---|---|---|---|
+| box | 67.1% | 64.9% | 84.6% | 67.1% | 46.9% |
+| box-floor | 0 (hidden) | 0 (hidden) | 0 (hidden) | 0 (hidden) | 7.2% |
+| crayon-red | 6.6% | 6% | 0 (hidden) | 6.6% | 9.1% |
+| crayon-yellow | 6.5% | 6.4% | 0 (hidden) | 6.5% | 9% |
+| crayon-green | 6.6% | 7.1% | 0 (hidden) | 6.6% | 9.1% |
+| crayon-orange | 6.5% | 7.6% | 0 (hidden) | 6.5% | 9.2% |
+| crayon-purple | 6.6% | 8% | 15.4% | 6.6% | 9.5% |
+
+## Values and colors (shaded render)
+
+Values: dark 0%, mid 93%, light 7%.
+Dominant colors: #5490f5 35%, #5d93f6 25%, #f49c45 18%, #968f39 8%, #7d7dd8 7%, #4788ee 7%.
+
+## Warnings
+
+- Almost everything is mid-value: the asset will look flat. Add darker and lighter areas.

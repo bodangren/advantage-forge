@@ -101,7 +101,9 @@
       "small climbing frame": "the frame at the far left is cut by the page edge in both files; the writer check reports 95.51 percent white edge frame"
     },
     "goal_shown": true,
-    "retry_hint": ""
+    "retry_hint": "",
+    "verdict": "clean",
+    "defect_categories": []
   },
   "l2-w02-story-page-can-i": {
     "files": [
@@ -130,7 +132,9 @@
       "frame top": "the climbing frame runs past the top edge of the page in both files; the writer check reports 95.24 percent white edge frame"
     },
     "goal_shown": true,
-    "retry_hint": ""
+    "retry_hint": "",
+    "verdict": "clean",
+    "defect_categories": []
   },
   "l2-w02-story-page-can-i-b": {
     "files": [
@@ -158,7 +162,9 @@
       "background": "the color file shows the climbing frame at the left and the slide at the right; the line art shows a tree at the left and the slide at the right"
     },
     "goal_shown": true,
-    "retry_hint": ""
+    "retry_hint": "",
+    "verdict": "clean",
+    "defect_categories": []
   },
   "l2-w02-story-page-can-nan": {
     "files": [
@@ -186,7 +192,9 @@
       "hair": "the line art draws Ben's hair as a smooth cap; the color file shows spiky tufts"
     },
     "goal_shown": true,
-    "retry_hint": ""
+    "retry_hint": "",
+    "verdict": "clean",
+    "defect_categories": []
   },
   "l2-w02-story-page-i-can": {
     "files": [
@@ -211,7 +219,9 @@
       "tree": "the line art draws a tree at the right edge; the color file shows sky there"
     },
     "goal_shown": true,
-    "retry_hint": ""
+    "retry_hint": "",
+    "verdict": "clean",
+    "defect_categories": []
   },
   "l2-w02-story-page-i-can-b": {
     "files": [
@@ -240,7 +250,9 @@
       "line width": "this file carries the thickest lines of the batch at 31 px; every stroke keeps one even width"
     },
     "goal_shown": true,
-    "retry_hint": ""
+    "retry_hint": "",
+    "verdict": "clean",
+    "defect_categories": []
   },
   "l2-w02-story-page-nan-and-i-can": {
     "files": [
@@ -267,7 +279,9 @@
       "hair": "Ben's hair is a smooth swoosh in the color file and a smooth cap in the line art; this page matches the reference best in the batch"
     },
     "goal_shown": true,
-    "retry_hint": ""
+    "retry_hint": "",
+    "verdict": "clean",
+    "defect_categories": []
   },
   "l2-w02-story-page-nan-can": {
     "files": [
@@ -292,7 +306,9 @@
       "pupils": "this line art uses solid black pupils; the earlier tries used ring pupils; the solid pupil is the normal reading for a coloring page"
     },
     "goal_shown": true,
-    "retry_hint": ""
+    "retry_hint": "",
+    "verdict": "clean",
+    "defect_categories": []
   },
   "l2-w02-story-page-nan-can-b": {
     "files": [
@@ -319,7 +335,9 @@
       "hands": "each hand shows four fingers and one thumb in both files"
     },
     "goal_shown": true,
-    "retry_hint": ""
+    "retry_hint": "",
+    "verdict": "clean",
+    "defect_categories": []
   },
   "batch_notes": {
     "workbooks_stage_2_findings": {
@@ -365,6 +383,121 @@
       "l2-w02-story-page-nan-and-i-can": 9,
       "l2-w02-story-page-nan-can": 8,
       "l2-w02-story-page-nan-can-b": 8
+    },
+    "controls": {
+      "rows": 3,
+      "clean": 2,
+      "defect": 1,
+      "clean_keys": [
+        "C2",
+        "C3"
+      ],
+      "not_clean_keys": [
+        "C1"
+      ],
+      "note": "the control rows do not change the status of the nine rows",
+      "ratings": {
+        "C1": 4,
+        "C2": 8,
+        "C3": 8
+      }
+    }
+  },
+  "controls": {
+    "C1": {
+      "text": "A nose.",
+      "goal": "Nan touches her own nose with one finger and laughs.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "rating": 4,
+      "verdict": "defect",
+      "defect_categories": [
+        "broken-face"
+      ],
+      "defects": [
+        {
+          "file": "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png",
+          "category": "broken-face",
+          "finding": "The line art draws no nose. The page text names the nose and the goal names the nose. The fingertip rises to the place of the nose and then joins the mouth outline, so no nose shape shows.",
+          "evidence": "The color file shows a round nose bump between the eyes and the mouth at print x 1790 to 1936 and y 1206 to 1311, and the fingertip touches it. The line art has no closed shape in that area. Its fingertip at print x 1754 to 1845 and y 1265 to 1347 runs straight into the mouth outline.",
+          "seen_by_a_teacher_or_child": "yes: the page names the nose, and a child finds no nose to color",
+          "matches_workbooks_finding": "R13, the face has no nose on the page for the word nose"
+        }
+      ],
+      "goal_check": {
+        "Nan touches her own nose with one finger": "yes in the color file: the fingertip meets the nose bump; no in the line file: the nose does not show",
+        "and laughs": "yes: the mouth is open with a smile curve in both files",
+        "Nan's cast look": "yes in the color file: black hair in two bunches with red ties, an orange T-shirt with a white star, red shorts, white sneakers and large dark-brown eyes with a lash mark",
+        "line art no gray": "yes: 1-bit file, 0 of 12000000 pixels are not 0 or 255",
+        "no thick ring or band": "yes: the depth scan finds no stroke wider than 40 px",
+        "no text": "yes: no letter, word or number shows in either file"
+      },
+      "notes": [
+        "ring pupils: the line art draws a ring pupil in each eye and no lash mark; the color file shows a dark-brown pupil and a lash mark",
+        "the color file is clean; the defect sits in the line art alone"
+      ],
+      "clean": false,
+      "goal_shown": false,
+      "retry_hint": "Draw the nose in the line art as a small closed bump between the eyes and the mouth, and let the fingertip touch that bump."
+    },
+    "C2": {
+      "text": "A nut.",
+      "goal": "One big brown nut in Nan's open hand, close up.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "goal_check": {
+        "one big brown nut": "yes: one nut rests in the palm in both files; a dark brown cap, a tan body, a point at the bottom and a stem at the top match in both files",
+        "in Nan's open hand": "yes: the palm faces up and the nut sits on it in both files",
+        "close up": "yes: the nut and the hand fill the left of the picture in both files",
+        "Nan's cast look": "yes in the color file: black hair in two bunches with red ties, an orange T-shirt with a white star, red shorts, large dark-brown eyes with a lash mark",
+        "five digit hand": "yes: the open hand shows four fingers and one thumb in both files",
+        "line art no gray": "yes: 1-bit file, 0 of 12000000 pixels are not 0 or 255",
+        "no thick ring or band": "yes: the depth scan finds no stroke wider than 40 px",
+        "no text": "yes: no letter, word or number shows in either file"
+      },
+      "notes": [
+        "ring pupils: the line art draws a ring pupil and a small highlight in each eye; the color file shows a dark-brown pupil with two highlights"
+      ],
+      "clean": true,
+      "goal_shown": true,
+      "retry_hint": ""
+    },
+    "C3": {
+      "text": "nose",
+      "goal": "The head of Nan in profile facing the other way, the nose clearly seen, for a tracing practice line.",
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "goal_check": {
+        "the head of Nan in profile": "yes: the head fills the picture in profile in both files",
+        "facing the other way": "yes: the check row for the same word shows the head facing left, and this page faces right",
+        "the nose clearly seen": "yes: the profile outline shows the nose at print x 1215 to 1290 and y 990 to 1110 in the line file, and the color file shows the same bump",
+        "for a tracing practice line": "yes: the head outline is closed and the strokes keep one even width in the line file",
+        "Nan's cast look": "yes in the color file: black hair with a bunch and a red tie, a lash mark and an orange shoulder",
+        "line art no gray": "yes: 1-bit file, 0 of 2560000 pixels are not 0 or 255",
+        "no thick ring or band": "yes: the depth scan finds no stroke wider than 40 px apart from the eye pupil",
+        "no text": "yes: no letter, word or number shows in either file"
+      },
+      "notes": [
+        "hair bunch: the line art draws the bunch as a plain circle without the tie band; the color file carries the red tie",
+        "white speck: a white speck of 12 by 3 px sits inside the black hair mass at the top of the head; a mark of that size is not a defect under the bar"
+      ],
+      "clean": true,
+      "goal_shown": true,
+      "retry_hint": ""
     }
   }
 }

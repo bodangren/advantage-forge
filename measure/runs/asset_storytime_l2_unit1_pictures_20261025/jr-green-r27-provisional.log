@@ -1,0 +1,19 @@
+Green round 27 provisional log — Pip sniff clip
+Date: 2026-10-31
+Session: Green · P3 · storytime_l2_unit1_pictures · r27
+Track: asset_storytime_l2_unit1_pictures_20261025
+Phase: Phase 3: Week 1 pictures (P3)
+role_base_sha: da12adb2
+phase_base_sha: 15a7bf0b
+HEAD at start: da12adb2 (matches role_base_sha)
+Models: Green xai/grok-4.7#high, Red minimax-cn-coding-plan/MiniMax-M3, coder none.
+Red family has no quota. Green writes the focused test. Rounds 5 and 26 are the precedent.
+
+Range check: 15a7bf0b..HEAD contains the Phase 3 commits. No new Red test for the sniff clip is in that range. This round does not edit a committed Red test.
+
+Item: sniff clip for Pip (sprout-pip). Row l2-w01-story-page-a-nest-and-a-nut. Gap: sniff M.
+Scope: assets/sprout-pip.ts, assets/parts/wolf-kind.ts (smallest sniff option), src/song/timeline.ts (one DOG_GESTURES entry), tests/song-timeline.test.ts (one new test), plan.md evidence. No mesh, color, or other-clip change.
+
+Mechanism: wolf-kind pose() only adds to existing clips. sit is an opt-in clip. sniff will follow that pattern. Other dog-kind assets stay unchanged.
+
+Status: implementing.

@@ -1,0 +1,48 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025 (short id asset_storytime_l2_unit1_pictures)
+phase: P2 — Phase 2: Tests and calibrated model pre-checks
+task: T11 — Check every JSON string token of the provider answer before any evidence write
+phase_base_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e (immutable)
+role_base_sha: 167680a1ce976831b09fafcfd5166aca06b3c436
+head_sha: bb4e11f035266b9dbc53a47f1153c5f62b75cb8c
+commits:
+  - 820f35c4cb3cab1e30fb561d70833c03a8da593a — implementation; explicit path `src/storytime/book-pictures.ts`.
+  - 0b50710f3c049116383a5e012ebd2a059a33843b — preliminary plan evidence.
+  - bb4e11f035266b9dbc53a47f1153c5f62b75cb8c — final plan evidence; explicit path `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md`.
+tests_run:
+  - Pre-edit four-file gate: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`; exit `1`; `Tests  11 failed | 127 passed (138)`. Log: `green-vitest-t11-pre.log`.
+  - Four-file Green gate: same command; exit `0`; `Tests  138 passed (138)`; no skips. Log: `green-vitest-t11.log`.
+  - Typecheck: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'`; exit `2`; owned errors `0`; total baseline errors `31`. Log: `task11-tsc.log`.
+  - Final four-file gate on code HEAD: same four-file command; exit `0`; `Tests  138 passed (138)`; no skips. Log: `green-vitest-t11-final.log`.
+  - Sibling diff: `git diff --quiet cf5743b7 -- src/song src/storytime/line-art-pass.ts`; exit `0`.
+mutations:
+  command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`
+  all_runs_exit: `1`; all named tests below failed as required; every mutation was restored and the source-clean check passed.
+  rows:
+    - 1: T116 failed; 9 failed, 102 passed (111). Additional failures: T117-T120, T122, T124, T127, T128.
+    - 2: T117 failed; 6 failed, 105 passed (111). Additional failures: T116, T122, T127, T128.
+    - 3: T118 failed; 4 failed, 107 passed (111). Additional failures: T119, T127, T128.
+    - 4: T119 failed; 8 failed, 103 passed (111). T100 also failed because object keys were skipped.
+    - 5: T120 failed; 7 failed, 104 passed (111). Additional failures: T116, T117, T122, T127, T128.
+    - 6: T121 failed; 1 failed, 110 passed (111). `malformed scan ms: 2518` exceeded 2000 ms.
+    - 7: T124 failed; 1 failed, 110 passed (111).
+    - 8: T125 failed; 2 failed, 109 passed (111). T102 also failed.
+    - 9: T126 failed; 1 failed, 110 passed (111).
+    - 10: T123 failed; 9 failed, 102 passed (111). T101, T102, T106, and T112 also failed.
+    - 11: T127 failed; 24 failed, 87 passed (111). T116-T120, T122, T124, and T126 also failed.
+    - 12: T128 failed; 24 failed, 87 passed (111). T119, T120, T122, T124, and T126 also failed.
+  deviations: Mutation 1 used the earlier task 10 decoded walker. Mutations 2-5 used equivalent edits to the lexical scanner because this implementation has no JSON candidate walker. Mutation 11 moved both credential checks after the paid callback. Mutation 12 moved the decoded check after the review-file write.
+  test_gaps: none; every named test failed under its mutation.
+  lock_lines: none. Exit 75, 124, and 137: none.
+plan_tasks:
+  - Task 11 changed to `[x]` with `Commit `820f35c4`.` on its task line.
+  - No task changed to `[b]`.
+owner_decision: Daniel selected Design B: “Accept B” (Google Tasks, 15:52-15:53 ICT, 2026-10-27). The plan Communication log records the decision.
+new_files:
+  - `green-vitest-t11-pre.log`, `green-vitest-t11.log`, `green-vitest-t11-final.log`, `task11-tsc.log`.
+  - `green-mutation-t11-1.log` through `green-mutation-t11-12.log`.
+  - `jr-green-820f35c.log`, `jr-green-0b50710.log`, and this result log.
+handoff: Review task 11 implementation and plan evidence on HEAD `bb4e11f0`. No production changes were needed after implementation commit `820f35c4`.
+END_MEASURE_AGENT_RESULT

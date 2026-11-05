@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Review C audited HEAD 5ffdbf6e41a0c30ec4330f7f23137cc7a218d61e (range 1d39b8fd..5ffdbf6e, phase \"Phase 2: Tests and calibrated model pre-checks\"). HEAD matched the audited HEAD. All Review C scope items match contract.md and spec.md: the eight CLI commands and flags, exit code 2 on a pre-check fail, --dry-run on every paid and render command, the provisional line-art name and its collision rules, the window.__bookStill shape, and the manifest schema with output kinds that Workbooks reads. The mandated focused suite passed 76 of 76 tests. Calibration live proof holds four logs with verdicts fail, fail, pass, pass. Three nonblocking findings are recorded.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "medium — src/storytime/book-pictures.ts:2873 — precheck-kimi --record always writes the after-call entry with status 'success'; a call that returns no raw output (a hung reviewer) leaves an orphaned before-call, and the live ledger holds before-call 9d0bddf7-d2ea-4bdb-a672-56c308e3f6d0 (kimi, bad-one-sun, 2026-10-25T19:32:14.190Z) with no matching after-call; the contract states 'A failed call remains in the ledger' — add a failure-record path (for example precheck-kimi --record <callId> --error <text>) under a new task; the plan already documents this state as deviation (b).",
+    "low — src/storytime/book-pictures.ts:2651-2654 — a repeated precheck-minimax overwrites the review log and the raw text at a fixed path reviews/<job-id>-v<version>-minimax(.txt|.json) without a newOnly guard; the first live bad-one-sun MiniMax call ran before the parser fix and its log was replaced by the second call; the ledger keeps both calls, so the trail survives, but the first raw output is lost — keep one raw file per callId, or add a refusal when a log already exists for the same job, version, and provider, and record the decision in the plan.",
+    "low — src/storytime/book-pictures.ts:2443 — render without --version reuses the newest existing version (options.version ?? existingVersions.at(-1) ?? 1) and then reports status 'skipped'; when v1 exists, a rerun targets v1 and skips, so advancing a picture needs an explicit --version N+1; this matches T7 wording ('A retry writes v2 or refuses') but is a user-flow friction point — add a usage note in the Phase 3 task notes, or print a hint naming the next free version when a render skips."
+  ],
+  "evidence": [
+    "git rev-parse HEAD returned 5ffdbf6e41a0c30ec4330f7f23137cc7a218d61e, matching the audited HEAD; range 1d39b8fd..5ffdbf6e holds 18 commits.",
+    "parseCli (src/storytime/book-pictures.ts:2986-3029) accepts exactly plan, render, lineart-smoke, precheck-minimax, precheck-kimi, manifest, sheet, verify; unknown commands and flags throw; --output is restricted to color or lineart.",
+    "Exit code 2 on a pre-check fail: precheck-minimax returns 2 on a fail verdict (line 3185); precheck-kimi returns 2 on a fail verdict (line 3209); thrown errors exit 1 through the script wrapper.",
+    "--dry-run on every paid and render command: render (line 2482), lineart-smoke (line 3111), precheck-minimax through runPaidCall (line 891), precheck-kimi (lines 2772-2779). Dry runs make no call and write no ledger entry; render --dry-run prints both planned paths.",
+    "Line-art twin path is <directory>/lineart/l2-wNN-<use>-<slug>-vN-lineart.png (lineArtRelativePath, lines 705-711); color and line-art patterns are disjoint (T33); writes use flag wx and evidence/version refusal (lines 2466-2481, 2540-2546).",
+    "window.__bookStill holds scene, camera, renderer, optional three, and a value-copy cameraState (src/song/still-hook.ts:10-76); published at the end of seek after the frame render (src/song/main.ts:397), cleared in load (line 401); window.__song unchanged (T44 byte check).",
+    "Manifest batches carry outputKind color or lineart with ids such as w01/readalong/color and w01/readalong/lineart, files sorted by file, and a sha256 of the canonical JSON array; batchHashAlgorithm is recorded (lines 1415-1490, 205-219).",
+    "Wrapper wiring (scripts/storytime-book-pictures.ts:17-43) runs preflight, then lock, then pipeline; a render dry run bypasses both (T11).",
+    "Calibration logs on disk: bad-one-sun-minimax fail, bad-one-sun-kimi fail, good-nan-minimax pass, good-nan-kimi pass; all rubricVersion storytime-picture-v2; raw outputs 233-485 characters; each fileSha256 matched an independent sha256 computation.",
+    "Ledger on disk: 6 before-call and 5 after-call entries; the four final calibration calls pair with before-call times earlier than each log checkedAt; before-call 9d0bddf7-d2ea-4bdb-a672-56c308e3f6d0 has no after-call (documented plan deviation)."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git log --oneline 1d39b8fd..5ffdbf6e",
+    "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1' (pass: Tests  76 passed (76), 4 files)",
+    "node -e \"ledger line count and callId pairing check on out/storytime/l2/unit1/cost-ledger.jsonl\" (6 before-call, 5 after-call)",
+    "node -e \"calibration log verdict, rubricVersion, raw length, and fileSha256 verification against independent sha256\""
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-5ffdbf6.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-5ffdbf6.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ux_applicability": "not_applicable",
+  "webbridge_status": "not_run",
+  "webbridge_evidence": {
+    "screenshots": [],
+    "accessibility_snapshots": [],
+    "interactions": []
+  }
+}

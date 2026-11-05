@@ -1,0 +1,117 @@
+# Green round 33 — storytime-low-branch rework (final)
+
+- Role: measure-jr-green, Green phase, round 33
+- Session: Green · P3 · storytime_l2_unit1_pictures · r33
+- Track: asset_storytime_l2_unit1_pictures_20261025 (Phase 3: Week 1 pictures, P3)
+- Green model: deepseek/deepseek-flash#high. Coder: none (no delegation).
+- Phase 3 Red model: minimax-cn-coding-plan/MiniMax-M3 (MiniMax). A different family.
+  Daniel approved the DeepSeek route on 2026-10-31.
+- Earlier Phase 3 Green rounds: claude-opus-5-5 (r1-r7), gpt-6-luna (r8),
+  claude-sonnet-5-5 (r9-r18, r28, r29, r31, r32), muse-spark-1.3-contributor (r19),
+  grok-4.7 (r20-r27), k3.1-pro (r30).
+- role_base_sha: 347d2767
+- phase_base_sha: 15a7bf0b
+- Implementation commit: 9cfeb406 (assets/storytime-low-branch.ts only)
+- Plan-evidence commit: 595468c8
+
+## The two defects
+
+1. The fork read as an open hand that held the nest. Two short prongs, one on each side of the
+   nest, each with a round leaf cap. The caps looked like two mittens. The line art showed this
+   most clearly.
+2. The trunk base read as a pole on a stand. The root flare was a flat round disc on the ground.
+
+Where they show: `out/storytime/l2/unit1/w01/rows/l2-w01-story-page-a-nest-and-a-nut-v4.png`,
+`l2-w01-story-page-a-nest-and-a-nut-line-v4.png`, and `l2-w01-story-page-a-nest-v5.png`.
+
+## What changed (assets/storytime-low-branch.ts only)
+
+- The branch dips, then splits into a long outer twig and a short steeper back twig. The twigs
+  differ in length, angle, and thickness. Neither ends in a round cap.
+- The leaf caps are gone from the twigs by the seat. One joined arc of soft leaf clusters runs
+  from the back twig, over the fork, to the outer twig tip. Each cluster touches its neighbour
+  and a twig, so no leaf floats. The arc sits behind the nest (z at or below -0.14 m) and above
+  the rim.
+- The wide flat flare is gone. Four short roots of different sizes sink below the ground plane.
+- Kept: the round crown (about 0.77 m), the thick taper (0.16 m at the base), the warm bark, the
+  fresh green leaves, the Chibi Sprouts soft rounds, and the branch toward +X.
+- `NEST_SEAT` keeps its name and value: x 0.50 m, y 0.70 m, z 0.04 m. The branch tail and the
+  saddle top sit at y = 0.704 m, so the nest rests on wood. Every point of both twigs stays
+  outside the nest footprint. No text, letter, number, logo, face, or carved mark.
+- No single leaves. No flat disc or ring at the base.
+
+## Runs (each one `heavy-run.sh` command, foreground)
+
+| Step | Command | Exit | Log |
+| --- | --- | --- | --- |
+| loop 1 | `render storytime-low-branch --fast` | 0 | green-p3-r33-render1.log |
+| loop 2 | `render storytime-low-branch --fast` | 0 | green-p3-r33-render2.log |
+| loop 3 | `render storytime-low-branch --fast` | 0 | green-p3-r33-render3.log |
+| nest check | `render tmp-nest-check --fast --size 640 --views three-quarter --az 0 --el 28 --focus 0.5,0.75,0.02,0.42` | 0 | green-p3-r33-nestcheck.log |
+| textured | `render storytime-low-branch` | 0 | green-p3-r33-textured.log |
+| inspect | `inspect storytime-low-branch --fast` | 0 | green-p3-r33-inspect.log |
+
+- Textured build: 7,018 triangles, 1.213 x 1.66 x 0.597 m, atlas 1024, GLB 894 KB.
+- `warning:` lines: 0 in every log.
+- `inspect --fast`: "Warnings: - none". Lowest point y = 0 m. Bark 30.5% and leaves 69.5% of the
+  front silhouette. Values: dark 0%, mid 70%, light 30%.
+- No exit 75, no exit 137, no `lock wait over 600 s`.
+- No tsc, no vitest, no Next.js build. No test file changed.
+- The temporary asset source for the nest check (`assets/tmp-nest-check.ts`) is deleted and not
+  committed.
+
+## Review cards (out/storytime-review/batch-5/, not committed)
+
+- `storytime-low-branch.png`: front, three-quarter, side, back. Same layout as batch 3b.
+- `storytime-low-branch-nest-check.png`: `storytime-nest` at `NEST_SEAT`, front three-quarter
+  and front 28 degrees above. The nest sits on the fork, the three eggs show, and the branch does
+  not cross the bowl.
+- `brief.md`: item "low tree branch that holds a nest (rework)", the two use pages, children of
+  about 5, bar 7.0, the critical defect list, JSON key `storytime-low-branch`, and the section
+  "Why the rework".
+- `look-reference-nan-and-pip.png`: the approved Chibi Sprouts look.
+
+Green did not rate the item.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures (P3)
+round: 33
+status: done
+model: deepseek/deepseek-flash#high
+coder_model: none
+phase_base_sha: 15a7bf0b
+role_base_sha: 347d2767
+implementation_commit: 9cfeb406
+plan_evidence_commit: 595468c8
+final_head: 595468c8
+commits:
+- 9cfeb406 feat(storytime): rework the week 1 low branch fork and base (assets/storytime-low-branch.ts)
+- 595468c8 docs(measure): record storytime green round 33 low branch evidence (plan.md)
+red_change_in_phase_range: confirmed. 15a7bf0b..HEAD holds the Red work for this phase; no Red
+  test was edited or moved in this round.
+tasks_flipped_x: none
+tasks_flipped_b: none
+targeted_command: ./forge render storytime-low-branch --fast
+targeted_command_exit: 0
+review_command: ./forge inspect storytime-low-branch --fast
+review_command_exit: 0
+warning_lines: 0
+nest_seat: x 0.50 m, y 0.70 m, z 0.04 m (unchanged)
+new_files_committed: none
+untracked_and_not_committed:
+- assets/tmp-nest-check.ts (temporary nest check source, deleted)
+- out/storytime-review/batch-5/storytime-low-branch.png
+- out/storytime-review/batch-5/storytime-low-branch-nest-check.png
+- out/storytime-review/batch-5/brief.md
+- out/storytime-review/batch-5/look-reference-nan-and-pip.png
+- measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-p3-r33-*.log
+- measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-r33-*.log
+handoff: The item waits for the independent re-review on HEAD 595468c8. Read
+  out/storytime-review/batch-5/brief.md and the two cards there. The prop card has no nest; the
+  nest check card shows the seat. No task is marked [x]. The two class A rows
+  `story-page-a-nest` and `story-page-a-nest-and-a-nut` still need row renders to confirm the
+  hand and lamp-post reads are gone in color and in 1-bit line art. Row work belongs to the
+  orchestrator, not this round.
+END_MEASURE_AGENT_RESULT

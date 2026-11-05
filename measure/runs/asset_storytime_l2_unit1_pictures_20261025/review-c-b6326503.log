@@ -1,0 +1,46 @@
+Review C (UX and API end-to-end contract), Phase 4: Remaining pictures and cover
+Track: asset_storytime_l2_unit1_pictures_20261025
+Audited HEAD: b6326503e6582ca01b90f5dfc43a131a8d6b4cc3 (current; git rev-parse HEAD)
+phase_base_sha: fc76c27209402c54354447693e9b291d4411ff79
+role_base_sha: b6326503e6582ca01b90f5dfc43a131a8d6b4cc3
+contract_applicability: applicable (CLI commands deliver --week, deliver-cover, cover-calm-top; seven delivery manifests that Workbooks reads)
+Result JSON: measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-b6326503.json
+
+Verdict: pass. Blocking findings: none. Nonblocking findings: 5.
+
+Checks:
+- CLI: usage message, argument errors, output lines, and exit codes of deliver-cover and
+  cover-calm-top read at HEAD (src/storytime/book-pictures.ts:4650-4702 and the two command
+  blocks; scripts/storytime-book-pictures.ts:31-57). Errors write to stderr and exit 1.
+- contract.md documents deliver (lines 71-99) but not deliver-cover or cover-calm-top.
+- Week manifests w02 to w07: 27 jobs each, same row set as the list, names from the list,
+  each twin points at its color file, every file SHA-256 matches, size classes A 16, B 2, C 9.
+- Manifest SHA-256 values equal the person-review records and the plan table.
+- Cover manifest: one job l2-cover-v1, week 1, bookKind readalong, use cover, size cover,
+  directory cover, no lineArt, one batch cover/color. The fields are undocumented.
+- Person reviews: weeks 2 to 6 "Approved" (135 rows), week 7 and cover "Ok" (28). No manifest
+  holds a person review (A2 by design). The cover status text omits "delivered".
+- Contact sheets: 3 sheets each for w02 to w07 (file check only).
+- Not run: vitest (memory floor), live CLI probe, batch-hash recomputation (step limit).
+
+Findings:
+| Id | Severity | Evidence | Remediation |
+| --- | --- | --- | --- |
+| RC-P4-1 | Nit | contract.md:43-107 has no deliver-cover or cover-calm-top entry; CLI book-pictures.ts:4654-4657 | Add one contract entry for each command, in the form of the deliver entry. |
+| RC-P4-2 | Nit | cover job week 1, readalong, directory cover, no lineArt (muse-delivery.ts coverJob; cover manifest); contract.md:115-126, :318-333 silent | Document the placeholders and the missing twin in contract.md; do not deliver again. |
+| RC-P4-3 | Nit | contract.md:320-324 ready rule needs model and person logs; Muse jobs are ready with reviews {} (muse-delivery.ts:428, :437, :603; spec.md:193, :200-202) | Add the replaced line and the Muse-path meaning of ready. |
+| RC-P4-4 | Nit | cover-calm-top exits 1 for a busy top and for an input error (book-pictures.ts:~4758, ~1388-1393; scripts/storytime-book-pictures.ts:48-55) | Document it, or return 2 for an input error. |
+| RC-P4-5 | Nit | plan.md:4314-4315 cover "person review PASS" against weeks "delivered, person review PASS" (:4054-4055, :4079-4080; test-strategy.md:2260) | Use "delivered, person review PASS" for the cover in Phase 5 text. |
+
+MEASURE_AGENT_RESULT
+role: measure-review-c-ux-api
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 4: Remaining pictures and cover
+commits: none
+tests_run: none (vitest not run by the orchestrator order; the plan records 185 of 185 and 3 of 3 passed at the closeout)
+files_changed: measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-b6326503.json, measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-b6326503.log
+plan_updates: none
+known_failures: none
+handoff: Pass at b6326503 with five nonblocking nits RC-P4-1 to RC-P4-5, all for Green as [Nit] text fixes in contract.md or the Phase 5 status text. No new delivery is needed. No product decision is open. Default for RC-P4-2 is to document the cover placeholders; a change of the cover job fields needs a PM decision and a new delivery folder. retry_recommendation: none. test_strategy_violations, live_contract_violations, prod_wiring_violations, route_parity_violations: none. facts_changed: none.
+END_MEASURE_AGENT_RESULT

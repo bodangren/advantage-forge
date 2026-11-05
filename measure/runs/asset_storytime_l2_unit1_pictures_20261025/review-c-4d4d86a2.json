@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "track": "asset_storytime_l2_unit1_pictures_20261025",
+  "phase": "Phase 4: Remaining pictures and cover",
+  "role": "measure-review-c-ux-api",
+  "audited_head": "4d4d86a2",
+  "status": "pass",
+  "summary": "Pass at 4d4d86a2 (current HEAD). The audited HEAD matches HEAD, and the phase range fc76c272..4d4d86a2 holds production commit b6824b8a. The contract applies: the strategy Review C note (test-strategy.md:2277) names the --week option, the stage check labels and exit codes, the row-naming errors, the manifest shape, and the week 8 default. --week accepts 1 to 8 on the row commands and on deliver, and refuses 0, 9, and a non-number with 'Invalid week: <value>' at exit 1 through the RB2-01 boundary. Without --week the run covers all 196 rows; --week 8 selects the 4 week 8 rows, and weeksTwoToSevenRows keeps them out of the 162-row scope. The Skipped line format 'Skipped <id> (<reason>)' breaks no reader: the test splits on a space and takes the row id, the strategy text matches the prefix, the Workbooks print reader has no Skipped rule, and plan.md:1558 is a historical Phase 3 record. The week 2 manifest keeps the 11a06b9c and Decision 2 shape: version 1, job ids as row ids, batch ids w02/color and w02/lineart, and list file names. The live stage check on the staged week 2 specs exits 0 with every label of 4.3 in the exact order. One nonblocking finding: no help or usage text names --week on the row commands and on deliver.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "RC5-1 [nit] src/storytime/book-pictures.ts:4631, src/storytime/book-pictures.ts:4729: no help or usage text names the --week flag. The unknown-command message at line 4631 lists only the nine commands, and the deliver message at line 4729 lists only --list, --approvals, --muse, and --delivery. An operator who reads the CLI messages cannot learn that --week 1 to 8 exists or that deliver takes it. The stage check script documents its own --week usage (scripts/storytime-stage-check.mjs:4), and the strategy pins the flag in G6 (test-strategy.md:2199), so no gate breaks. Nonblocking."
+  ],
+  "evidence": [
+    "Provenance: audited HEAD 4d4d86a2 is the current HEAD (git rev-parse HEAD returned 4d4d86a2; git log --oneline -3 shows 4d4d86a2, 5a9b9257, c2ebc72d). The phase range fc76c272..4d4d86a2 lists 38ab28a9, 07f52f7a, baf7c29c, bab064dd, c0035c28, 37fa3501, b6824b8a, 86f63533, c2ebc72d, 5a9b9257, 4d4d86a2, so role_base_sha and phase_base_sha both exist and production commit b6824b8a is inside the range.",
+    "Applicability: the strategy Review C note (test-strategy.md:2277) covers the --week option, the stage check labels and exit codes 0, 1, 2, the error text that names a row, the manifest shape, and the week 8 default. The phase diff touches src/storytime/book-pictures.ts, scripts/storytime-stage-check.mjs, and their tests. The API and CLI contract applies.",
+    "--week parser: parseWeek at src/storytime/book-pictures.ts:4618-4621 accepts integers 1 to 8 and the w-prefixed form, and throws 'Invalid week: <value>' for 0, 9, and non-numbers. The flag is one shared value flag at line 4636 and one parse call at line 4650, so the row commands and deliver share it.",
+    "Live refusal runs through the production entry: 'deliver --week 0' printed 'Invalid week: 0' and exited 1; 'render --dry-run --row all --week 9' printed 'Invalid week: 9' and exited 1; '--week abc' printed 'Invalid week: abc' and exited 1. The RB2-01 boundary (scripts/storytime-book-pictures.ts:48-56) redacts, logs, and returns 1, and the entry sets process.exitCode.",
+    "Behavior without --week: options.week stays undefined, so deliver covers all 196 rows (src/storytime/book-pictures.ts:4745) and a row command covers all rows (line 4764). T177 (tests/storytime-book-pictures.test.ts:4683-4709) asserts 196 rows with no --week, 4 rows with --week 8, refusals of 0 and 9 matching /Invalid week/, and the weeksTwoToSevenRows helper returning 162 rows with 0 week 8 and 0 week 1 rows.",
+    "Week 8 default: weeksTwoToSevenRows at src/storytime/book-pictures.ts:3570-3573 filters week >= 2 and week <= 7, so the 4 week 8 rows stay out of the 162-row production scope. The parser and the row selection accept them. contract.md lines 8-11 hold version 4, the v4 SHA-256 6d05dfc5...a58, 196 rows (week 1: 30; weeks 2 to 7: 27 each; week 8: 4), and the v3 history line.",
+    "Skipped line readers: the writer callback is at src/storytime/book-pictures.ts:4752 as 'Skipped ${rowId} (${reason})'. The only machine reader is tests/storytime-muse-delivery.test.ts:1133, which takes line.split(' ')[1] and so returns the bare row id with the paren form. T172 (test:957-965) tests the writer callback arguments, not the text. test-strategy.md:2159 states the prefix 'Skipped <row id>' only, which still holds. plan.md:1558 holds the old colon text inside the historical Phase 3 Green evidence block for commit 44c2ec84, and plan.md:1669 and 1680 record the new format. Grep over /home/daniebo/Desktop/Workbooks/dashboard/lib/storytime/print found no Skipped reader, and grep over src, scripts, tests, docs, and measure found no other reader. No reader breaks.",
+    "Manifest shape for week 2: manifestJob (src/storytime/muse-delivery.ts:296-299) sets directory w02 from row.week; assembleManifest (src/storytime/book-pictures.ts:2079-2130) returns version 1, batchHashAlgorithm, jobs, batches, with batch ids `${directory}/color` and `${directory}/lineart`, so w02/color and w02/lineart. rowCaptureJob (book-pictures.ts:3611-3629) sets job.id to the row id. planPictureRow (book-pictures.ts:1550-1566) returns row.fileName and row.lineArtFileName, and the copy loop writes those list names; deliveredVersion (muse-delivery.ts:173-176) reads -v1 from the file name. This matches spec.md Amendment 2026-11-01 Decision 2 points 2 to 4 and the 11a06b9c shape of StorytimeManifest (book-pictures.ts:236-243).",
+    "Workbooks reader: forgeManifestEntriesForRow (dashboard/lib/storytime/print/picture-check.ts:385-404, read-only) reads manifest.jobs, finds the job by entry.id === rowId, and needs status ready, selectedVersion, candidates, structural, and lineArt. The week 2 writer emits all of them. The reader never reads batches, so week-specific batch ids cannot break it.",
+    "T181 and T182 (tests/storytime-muse-delivery.test.ts:1040-1143) pin the week 2 job directory ['w02'], list file names, class sizes, 55 delivered files, a byte-identical second run, batch ids ['w02/color', 'w02/lineart'], the refusal of a week 3 approval entry with no file written, exit 0, and skip lines that name only week 2 rows.",
+    "Stage check labels and order: scripts/storytime-stage-check.mjs:218-231 prints, in the order of 4.3, list sha256, week, rows, specs found, text mismatches, goal mismatches, outDir mismatches, rows with no reference (class A and B), element paths checked, missing element paths, characters without a reference, page candidates, stage check: pass.",
+    "Stage check exit codes, run live: the week 2 gate printed all 13 labels with rows 27, specs found 27, element paths checked 82, missing element paths 0, characters without a reference 0, page candidates 0, stage check: pass, and exit 0. A wrong pin printed list sha256, expected list sha256, stage check: fail (the picture list changed), and exit 2. A bad --week printed 'stage check: fail (--week needs a number from 1 to 8; got 9.)' and exit 1. A missing --list printed 'stage check: fail (--list <pictures.json> is required.)' and exit 1. Usage errors exit 1 through main().catch (line 236-239).",
+    "Stage check error text names the row: every problem line starts with the row id (stage-check.mjs:134, 157-186, 204, 226), and the spec file name problem names the row id plus .json. The usage text is the script header at lines 4-11, which documents the flags and the exit codes 0, 1, 2.",
+    "Live gate command from the strategy ran here without the heavy lock: node scripts/storytime-stage-check.mjs --week 2 --list /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --specs docs/storytime/l2-unit1/w02/muse exited 0. git status --porcelain showed no working-tree drift for scripts/storytime-stage-check.mjs and src/storytime/book-pictures.ts, so the run matched the audited HEAD.",
+    "No vitest run in this review: this finish-only pass ran no new check. The plan records the Phase 4 gate at the Green commit and the Red fix c2ebc72d for the T173 and T177 fixture paths (plan.md Green evidence for Phase 4 Task 1)."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git log --oneline -3",
+    "git log --oneline fc76c272..4d4d86a2",
+    "git show 4d4d86a2:src/storytime/book-pictures.ts | sed -n '4594,4700p'",
+    "git show 4d4d86a2:src/storytime/book-pictures.ts | sed -n '4700,4800p'",
+    "git show 4d4d86a2:src/storytime/muse-delivery.ts | sed -n '280,440p'",
+    "git show 4d4d86a2:scripts/storytime-stage-check.mjs",
+    "git show 4d4d86a2:scripts/storytime-book-pictures.ts",
+    "grep -rn \"Skipped\" src scripts tests docs",
+    "grep -rn \"Skipped\" measure --exclude-dir=runs",
+    "grep -rn \"Skipped|skipped\" /home/daniebo/Desktop/Workbooks/dashboard/lib/storytime",
+    "grep -rn \"manifest|batches|job.id\" /home/daniebo/Desktop/Workbooks/dashboard/lib/storytime/print (read-only)",
+    "node --import tsx scripts/storytime-book-pictures.ts deliver --week 0",
+    "node --import tsx scripts/storytime-book-pictures.ts render --dry-run --row all --week 9",
+    "node --import tsx scripts/storytime-book-pictures.ts render --dry-run --row all --week abc",
+    "node scripts/storytime-stage-check.mjs --week 2 --list /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --specs docs/storytime/l2-unit1/w02/muse",
+    "node scripts/storytime-stage-check.mjs --week 9 --list <v4 list> --specs docs/storytime/l2-unit1/w02/muse",
+    "node scripts/storytime-stage-check.mjs --week 2 --list <v4 list> --specs docs/storytime/l2-unit1/w02/muse --list-sha256 c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b",
+    "node scripts/storytime-stage-check.mjs --week 2",
+    "git status --porcelain scripts/storytime-stage-check.mjs src/storytime/book-pictures.ts"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-4d4d86a2.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-4d4d86a2.log"
+  ],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "test_summary": "No vitest run in this review. The live stage check for week 2 exited 0 with all 13 labels of 4.3 (rows 27, specs 27, element paths 82). The three --week refusals exited 1 with 'Invalid week: <value>'. The wrong pin exited 2. The plan records the Phase 4 vitest gate for T142, T147, and T173 to T182 at the Green commit and the Red fix c2ebc72d."
+}

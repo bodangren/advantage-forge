@@ -1,0 +1,304 @@
+{
+  "status": "inconclusive",
+  "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Provisional. Review in progress.",
+  "items": {
+    "l2-w05-cover-i-have-two": {
+      "rating": 9,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The sun is one plain closed circle in the line art and one soft disc with pale rays in the color. The brief lists the plain circle as an accepted style.",
+        "The tree branch in the color reaches toward the hand of Sam. The line art draws a short branch stub clear of the hand.",
+        "The eyes of Sam are two big solid black circles with no outline in the line art. Solid pupils are allowed by the bar."
+      ],
+      "goal_check": "The color print shows Sam standing in a sunny park with green grass, a low tree, and a pond, with both arms out wide and a big smile. The line print shows the same boy, both arms out wide, five fingers on each hand, a big smile, two eyes, a nose, and a mouth. The T-shirt shows two white stripes in the color and in the line art. One sun appears on the page. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line source and the line print. The eyes are solid black dots, which the bar allows. No thick solid black ring or band. No gap makes coloring hard.",
+      "files": [
+        "out/storytime-review/batch-49/pages/l2-w05-cover-i-have-two-m1-color.png",
+        "out/storytime-review/batch-49/pages/l2-w05-cover-i-have-two-m1-color-print.png",
+        "out/storytime-review/batch-49/pages/l2-w05-cover-i-have-two-m1-line-3-despeckled.png",
+        "out/storytime-review/batch-49/pages/l2-w05-cover-i-have-two-m1-line-print-3-despeckled.png"
+      ]
+    },
+    "l2-w05-story-page-i-have-four-legs": {
+      "rating": 9,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "One sun ray of the line art reaches the right print edge. The sun is background, and Pip, Sam, the shoe, and the hand stay whole inside the print.",
+        "The line art omits the cream forehead stripe and the cream fur patches of the color. The puppy still reads as Pip with the floppy ear, the black nose, the collar, and the tag.",
+        "The sun has thin stick rays in the line art and soft pale rays in the color. The brief lists the stick rays as an accepted style.",
+        "The paws of the line art end in short toe lines. These are small marks."
+      ],
+      "goal_check": "The color print shows Pip the puppy standing on all four legs in a sunny park with green grass and a low tree, with a happy face, an open mouth, floppy ears, a black nose, a red collar with a gold tag, and one fluffy tail. Sam kneels at the right, points at the legs of the puppy, and laughs, in a red T-shirt with two white stripes, blue shorts, and blue shoes. The line print shows the same scene with four legs and four paws on Pip, one tail, a floppy ear, one big eye with a solid pupil, a black nose, an open mouth, a collar with a round tag, and Sam pointing with one finger. The T-shirt shows two white stripes in both files. One sun appears on the page. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line source and the line print. The eyes use a solid black pupil, which the bar allows. No thick solid black band. No gap makes coloring hard.",
+      "files": [
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-four-legs-m1-color.png",
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-four-legs-m1-color-print.png",
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-four-legs-m1-line-despeckled.png",
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-four-legs-m1-line-print-despeckled.png"
+      ]
+    },
+    "l2-w05-story-page-i-have-one-nose": {
+      "rating": 9,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The hanging hand of Sam overlaps the tan pond stone in the color, and the hand outline touches the stone outline in the line art. The hand keeps its fingers and stays readable, and the stone is background. This is a note, not a defect.",
+        "The shoes in the color show white lace stripes and blue socks. The approved Sam look has the same shoes and socks, and the line art shows them too.",
+        "The sun is one plain closed circle in the line art and one soft disc with pale rays in the color. The brief lists the plain circle as an accepted style.",
+        "The tree in the line art has a branch stub at the left of the trunk. The color shows the tree without it."
+      ],
+      "goal_check": "The color print shows Sam pointing at his nose with one finger and laughing, in a sunny park with green grass, a low tree, and a pond. One nose shows as a clear shape on the face, and the fingertip touches its side. Behind the tree only the fluffy golden-brown tail of a puppy shows. The line print shows the same boy, one closed oval nose with white space around it, the fingertip at its side, an open laughing mouth, two white stripes on the T-shirt, and a closed fluffy tail shape behind the tree with no puppy body. One sun appears on the page. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line source and the line print. The eyes use solid black pupils, which the bar allows. No thick solid black ring or band. No gap makes coloring hard.",
+      "files": [
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-one-nose-m2-color.png",
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-one-nose-m2-color-print.png",
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-one-nose-m2-line-despeckled.png",
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-one-nose-m2-line-print-despeckled.png"
+      ]
+    },
+    "l2-w05-story-page-i-have-two-arms": {
+      "rating": 9,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The sun has thin stick rays in the line art and soft pale rays in the color. The brief lists the stick rays as an accepted style.",
+        "The line art shows a short branch stub at the right of the tree trunk. The color shows the tree without that stub. The change touches no character and no needed prop.",
+        "The eyes of Sam are big solid circles inside a thin outline. Solid pupils are allowed by the bar.",
+        "The line art shows the shoe tongues as small tags. The color shows plain shoes. These are small marks."
+      ],
+      "goal_check": "The color print shows Sam standing in a sunny park with green grass, a low tree, and a pond, holding both arms out wide. The line print shows the same boy with both arms out wide, five fingers on each hand, two big eyes, a nose, and an open smiling mouth. The T-shirt shows two white stripes in the color and in the line art. One sun appears on the page. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line source and the line print. No thick solid black ring or band. No gap makes coloring hard.",
+      "files": [
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-two-arms-m1-color.png",
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-two-arms-m1-color-print.png",
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-two-arms-m1-line-3-despeckled.png",
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-two-arms-m1-line-print-3-despeckled.png"
+      ]
+    },
+    "l2-w05-story-page-i-have-two-ears": {
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    },
+    "l2-w05-story-page-i-have-two-eyes": {
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    },
+    "l2-w05-story-page-i-have-two-feet": {
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    },
+    "l2-w05-story-page-i-have-two-hands": {
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    },
+    "l2-w05-story-page-i-have-two-legs": {
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    },
+    "K1": {
+      "rating": 9,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The color crops the shoes at the bottom edge of the frame. The close-up keeps the nut and the whole hand, which the sentence needs.",
+        "The hand shows four finger shapes and the thumb behind the nut in the color. The line art draws the same four shapes.",
+        "The line art leaves the eye interiors white for coloring and shows a small nose line and a smile."
+      ],
+      "goal_check": "One big brown nut with a dark cap and a stem rests in the open hand of Nan. The color file shows Nan's black hair in two bunches with red bands, big dark-brown eyes, an orange T-shirt with a white star, red shorts, and white shoes. The line file shows the same close-up with the nut, the hand, the hair bunches, the star, the eyes, a nose, and a mouth. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line file. The pupils are thin outlined circles, not thick black rings. No gap makes coloring hard.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "extra": {
+        "K1": {
+          "rating": 9,
+          "verdict": "clean",
+          "defect_categories": [],
+          "defects": [],
+          "notes": [
+            "The color crops the shoes at the bottom edge of the frame. The close-up keeps the nut and the whole hand, which the sentence needs.",
+            "The hand shows four finger shapes and the thumb behind the nut in the color. The line art draws the same four shapes.",
+            "The line art leaves the eye interiors white for coloring and shows a small nose line and a smile."
+          ],
+          "goal_check": "One big brown nut with a dark cap and a stem rests in the open hand of Nan. The color file shows Nan's black hair in two bunches with red bands, big dark-brown eyes, an orange T-shirt with a white star, red shorts, and white shoes. The line file shows the same close-up with the nut, the hand, the hair bunches, the star, the eyes, a nose, and a mouth. No letters, words, or numbers show.",
+          "line_check": "Zero gray pixels in the line file. The pupils are thin outlined circles, not thick black rings. No gap makes coloring hard.",
+          "files": [
+            "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+            "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+          ]
+        },
+        "K2": {
+          "rating": 8.5,
+          "verdict": "clean",
+          "defect_categories": [],
+          "defects": [],
+          "notes": [
+            "The goal says the head faces the other way but names no other picture to compare. The color file and the line file both face right, so the pair agrees.",
+            "The line art draws the eyebrow as a thin closed sliver with white inside. The color shows a solid dark eyebrow. The eyebrow still reads.",
+            "The line art draws the hair bunch as a plain circle. The color shows a bunch with a red band."
+          ],
+          "goal_check": "The color file shows the head of Nan in profile with the nose projecting clearly from the face line, one dark-brown eye with lashes, an eyebrow, an ear, a mouth, black hair with a red band, and an orange shirt. The line file shows the same profile with the nose as a clear bump in the face line, a solid pupil with an eye outline and lash, an eyebrow, an ear, and a mouth. The nose shows in both files. No letters, words, or numbers show.",
+          "line_check": "Zero gray pixels in the line file. The pupil is a solid black shape, which the bar allows. No thick black ring or band. No gap makes coloring hard.",
+          "files": [
+            "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+            "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+          ]
+        },
+        "K3": {
+          "rating": 6,
+          "verdict": "defect",
+          "defect_categories": [
+            "wrong-or-missing-prop"
+          ],
+          "defects": [
+            "The line art does not draw a nose. The color face shows a rounded nose above the mouth, and the fingertip touches its side. The line art leaves that space empty, so the part the sentence names does not show in the line file."
+          ],
+          "notes": [
+            "The line art draws the mouth as one closed leaf shape. The color shows an open mouth with teeth and a tongue.",
+            "The line art draws the eyebrows as thin closed slivers. The color shows solid dark eyebrows.",
+            "The face is not blank. The line art shows two eyes, two eyebrows, and a mouth, so only the nose is missing."
+          ],
+          "goal_check": "The color file shows Nan touching her own nose with one finger and laughing, in an orange T-shirt with a white star, red shorts, white shoes, and black hair in two bunches with red bands. The line file shows the same pose with the finger at the face, an open laughing mouth, two eyes, two eyebrows, the star, the shorts, and the shoes. The nose shows in the color file and not in the line file. No letters, words, or numbers show.",
+          "line_check": "Zero gray pixels in the line file. The pupils are thin outlined circles with a small inner circle, not thick black rings. No gap makes coloring hard.",
+          "retry_hint": "line: draw the nose as a clear closed shape between the eyes and the mouth, and keep the fingertip at its side.",
+          "files": [
+            "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+            "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+          ]
+        }
+      }
+    },
+    "K2": {
+      "rating": 8.5,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The goal says the head faces the other way but names no other picture to compare. The color file and the line file both face right, so the pair agrees.",
+        "The line art draws the eyebrow as a thin closed sliver with white inside. The color shows a solid dark eyebrow. The eyebrow still reads.",
+        "The line art draws the hair bunch as a plain circle. The color shows a bunch with a red band."
+      ],
+      "goal_check": "The color file shows the head of Nan in profile with the nose projecting clearly from the face line, one dark-brown eye with lashes, an eyebrow, an ear, a mouth, black hair with a red band, and an orange shirt. The line file shows the same profile with the nose as a clear bump in the face line, a solid pupil with an eye outline and lash, an eyebrow, an ear, and a mouth. The nose shows in both files. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line file. The pupil is a solid black shape, which the bar allows. No thick black ring or band. No gap makes coloring hard.",
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ]
+    },
+    "K3": {
+      "rating": 6,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "defect",
+      "defect_categories": [
+        "wrong-or-missing-prop"
+      ],
+      "defects": [
+        "The line art does not draw a nose. The color face shows a rounded nose above the mouth, and the fingertip touches its side. The line art leaves that space empty, so the part the sentence names does not show in the line file."
+      ],
+      "notes": [
+        "The line art draws the mouth as one closed leaf shape. The color shows an open mouth with teeth and a tongue.",
+        "The line art draws the eyebrows as thin closed slivers. The color shows solid dark eyebrows.",
+        "The face is not blank. The line art shows two eyes, two eyebrows, and a mouth, so only the nose is missing."
+      ],
+      "goal_check": "The color file shows Nan touching her own nose with one finger and laughing, in an orange T-shirt with a white star, red shorts, white shoes, and black hair in two bunches with red bands. The line file shows the same pose with the finger at the face, an open laughing mouth, two eyes, two eyebrows, the star, the shorts, and the shoes. The nose shows in the color file and not in the line file. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line file. The pupils are thin outlined circles with a small inner circle, not thick black rings. No gap makes coloring hard.",
+      "retry_hint": "line: draw the nose as a clear closed shape between the eyes and the mouth, and keep the fingertip at its side.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ]
+    }
+  },
+  "extra": {
+    "K1": {
+      "rating": 9,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The color crops the shoes at the bottom edge of the frame. The close-up keeps the nut and the whole hand, which the sentence needs.",
+        "The hand shows four finger shapes and the thumb behind the nut in the color. The line art draws the same four shapes.",
+        "The line art leaves the eye interiors white for coloring and shows a small nose line and a smile."
+      ],
+      "goal_check": "One big brown nut with a dark cap and a stem rests in the open hand of Nan. The color file shows Nan's black hair in two bunches with red bands, big dark-brown eyes, an orange T-shirt with a white star, red shorts, and white shoes. The line file shows the same close-up with the nut, the hand, the hair bunches, the star, the eyes, a nose, and a mouth. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line file. The pupils are thin outlined circles, not thick black rings. No gap makes coloring hard.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ]
+    },
+    "K2": {
+      "rating": 8.5,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The goal says the head faces the other way but names no other picture to compare. The color file and the line file both face right, so the pair agrees.",
+        "The line art draws the eyebrow as a thin closed sliver with white inside. The color shows a solid dark eyebrow. The eyebrow still reads.",
+        "The line art draws the hair bunch as a plain circle. The color shows a bunch with a red band."
+      ],
+      "goal_check": "The color file shows the head of Nan in profile with the nose projecting clearly from the face line, one dark-brown eye with lashes, an eyebrow, an ear, a mouth, black hair with a red band, and an orange shirt. The line file shows the same profile with the nose as a clear bump in the face line, a solid pupil with an eye outline and lash, an eyebrow, an ear, and a mouth. The nose shows in both files. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line file. The pupil is a solid black shape, which the bar allows. No thick black ring or band. No gap makes coloring hard.",
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ]
+    },
+    "K3": {
+      "rating": 6,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "verdict": "defect",
+      "defect_categories": [
+        "wrong-or-missing-prop"
+      ],
+      "defects": [
+        "The line art does not draw a nose. The color face shows a rounded nose above the mouth, and the fingertip touches its side. The line art leaves that space empty, so the part the sentence names does not show in the line file."
+      ],
+      "notes": [
+        "The line art draws the mouth as one closed leaf shape. The color shows an open mouth with teeth and a tongue.",
+        "The line art draws the eyebrows as thin closed slivers. The color shows solid dark eyebrows.",
+        "The face is not blank. The line art shows two eyes, two eyebrows, and a mouth, so only the nose is missing."
+      ],
+      "goal_check": "The color file shows Nan touching her own nose with one finger and laughing, in an orange T-shirt with a white star, red shorts, white shoes, and black hair in two bunches with red bands. The line file shows the same pose with the finger at the face, an open laughing mouth, two eyes, two eyebrows, the star, the shorts, and the shoes. The nose shows in the color file and not in the line file. No letters, words, or numbers show.",
+      "line_check": "Zero gray pixels in the line file. The pupils are thin outlined circles with a small inner circle, not thick black rings. No gap makes coloring hard.",
+      "retry_hint": "line: draw the nose as a clear closed shape between the eyes and the mouth, and keep the fingertip at its side.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ]
+    }
+  }
+}

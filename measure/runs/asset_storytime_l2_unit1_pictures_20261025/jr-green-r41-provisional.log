@@ -1,0 +1,12 @@
+Role: measure-jr-green
+Round: 41 (Storytime week 1 pictures, Phase 3)
+Session: Green · P3 · storytime_l2_unit1_pictures · r41
+Model: deepseek/deepseek-flash#high (provider deepseek, model ID deepseek-flash)
+Red model for this phase: minimax-cn-coding-plan/MiniMax-M3 (MiniMax). Not the same family.
+Green coder model: none. No delegation.
+role_base_sha: 710ff353
+phase_base_sha: 15a7bf0b
+Red change inside phase_base_sha..HEAD: yes (0893a5cf and earlier nest commits)
+Track: asset_storytime_l2_unit1_pictures_20261025
+Task: close the open line ends of storytime-nest and make the eggs clearly light blue.
+Status: started

@@ -1,0 +1,90 @@
+{
+  "status": "pass",
+  "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "The one row of batch 49r6 is clean. Each arm of Sam ends in 1 hand with the index finger at the ear, both ears are clear, and the line print is pure black on white. The K1 control shows the known defect of a missing nose in the line art.",
+  "items": {
+    "l2-w05-story-page-i-have-two-ears": {
+      "files": [
+        "out/storytime-review/batch-49r6/pages/l2-w05-story-page-i-have-two-ears-m3-color-print.png",
+        "out/storytime-review/batch-49r6/pages/l2-w05-story-page-i-have-two-ears-m3-line-print-2-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Each arm ends in 1 hand. The index finger of each hand touches its ear and the other fingers stay curled. No second palm and no spread fingers in the color file or in the line file.",
+        "Both ears are clear in the color file and in the line file. The face shows two eyes, a nose arc and an open mouth.",
+        "Sam is on model: red T-shirt with 2 white stripes, blue shorts, blue shoes, brown hair and brown eyes.",
+        "The line art draws the two white stripes of the shirt as two closed bands.",
+        "The side branch of the tree reads as a closed loop with a small oval in the line art. It is background, so it is a note.",
+        "The big tree is cut at the left print edge and the pond stones are cut at the right print edge. Both are background.",
+        "Sam has a smooth side-swept hair shape without the small tufts of the Sam render. It is a note.",
+        "No text, no gray and no solid black band in the line art."
+      ],
+      "goal_check": "Met. Sam points at both ears with one finger of each hand in a sunny park with green grass and one low tree. There is 1 sun and 2 clouds.",
+      "line_check": "Line print is 4000x3000 and pure black on white: 0 pixels are neither 0 nor 255. Ear count: 2 in the color file and 2 in the line file. Hand count: 1 hand on each arm in both files. Sun count: 1 in both files."
+    }
+  },
+  "extra": {
+    "K1": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "rating": 4,
+      "verdict": "defect",
+      "defect_categories": [
+        "broken-face"
+      ],
+      "defects": [
+        "The line file has no nose. The page text is \"A nose.\", so the nose must show in the color file and in the line file. The color file shows 1 nose. The line file shows 0."
+      ],
+      "notes": [
+        "The color file is good: Nan has one hand with one index finger on her nose and an open laughing mouth.",
+        "The line file shows eyebrows, two eyes and an open mouth but no nose, so the face reads without the part the text names.",
+        "The hanging hand in the line file is a closed blob with no fingers. That is a note only."
+      ],
+      "goal_check": "Partly met. The color file shows Nan touching her nose with one finger and laughing. The line file drops the nose.",
+      "line_check": "Line file is 4000x3000 and pure black on white: 0 pixels are neither 0 nor 255. Nose count: 1 in the color file, 0 in the line file.",
+      "retry_hint": "line: draw one small nose on the face between the eyes and the mouth so the named part shows in the line file."
+    },
+    "K2": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The color file shows one head of Nan in profile with one clear nose, one eye, one eyebrow, one ear and one mouth curve.",
+        "The line file shows the same head in profile with the nose as one bump of the face outline, one eye with a solid pupil and one eyebrow.",
+        "A small eyelash tick sits at the lower left of the eye in the line file. It is a small mark, so it is a note.",
+        "No text, no gray, no solid black band."
+      ],
+      "goal_check": "Met. The head of Nan is in profile facing away from the story page and the nose is clear for a tracing practice line.",
+      "line_check": "Line file is 1600x1600 and pure black on white: 0 pixels are neither 0 nor 255. Nose count: 1 in the color file and 1 in the line file."
+    },
+    "K3": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The color file shows 1 big brown nut with a cap and a stem on the open palm.",
+        "The open hand shows 5 digits in the color file and 5 digits in the line file: 4 fingers and 1 thumb.",
+        "The other hand is a closed mitten shape in both files. That is a note only.",
+        "The eyes in the line file are rings with two small circles. That is a small mark, so it is a note."
+      ],
+      "goal_check": "Met. One big brown nut rests in the open hand of Nan in a close up.",
+      "line_check": "Line file is 4000x3000 and pure black on white: 0 pixels are neither 0 nor 255. Nut count: 1 in the color file and 1 in the line file. Hand count: 5 fingers and 1 thumb in both files."
+    }
+  }
+}

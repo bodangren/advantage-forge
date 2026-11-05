@@ -1,0 +1,17 @@
+Green round 24 provisional log (Storytime week 1 pictures, P3)
+track: asset_storytime_l2_unit1_pictures_20261025
+role_base_sha: 71f66b9a
+phase_base_sha: 15a7bf0b
+HEAD at start: 71f66b9a
+Red model: minimax-cn-coding-plan/MiniMax-M3
+Green model: xai/grok-4.7#high
+coder: none
+task: one new version of l2-w01-story-page-a-nest. Camera, Nan mark, branch pose, and nest seat.
+v3 open defects from the orchestrator:
+1. The branch and its fork pass in front of Nan's face. The right leaf cap sits on her head. The line art cuts through her face.
+2. The close low angle makes the fork read as a hand that holds the nest.
+3. Nan's point still reads as a fist.
+Safer default: Nan stands to the right of the fork and farther from the camera than the nest. The branch scale is 0.82 and the branch sits 4 cm lower, so the nest is near her pointing hand. The camera looks down a little from the front. Grass, bush, and flowers stay at the v3 places.
+command form: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 1800 node --import tsx scripts/storytime-book-pictures.ts render --row l2-w01-story-page-a-nest --version <n>'
+verify form: the same wrapper with verify --row l2-w01-story-page-a-nest
+status: started; v5 file written; render not started

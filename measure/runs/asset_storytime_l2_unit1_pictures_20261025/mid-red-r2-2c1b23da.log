@@ -1,0 +1,114 @@
+# Mid Red report, round 2: Muse week 1 delivery hardening
+
+Track: `asset_storytime_l2_unit1_pictures_20261025`. Phase 3, "Phase 3: Week 1 pictures".
+Task: "Add failing tests for the Muse week 1 delivery manifest (Red)".
+Round: Red remediation round 2, 2026-11-01. Phase baseline `15a7bf0b`. Role base `2c1b23da`.
+
+## Inputs
+
+The three reviews of HEAD `19359dd1` name these findings for this round:
+
+- Review B: RB8-01 (no picture list pin), RB8-02 (no path containment), RB8-03 (non-exclusive
+  writes), RB8-04 (duplicate delivered names), RB8-05 (degenerate names), RB8-06 (symlink reads),
+  RB8-07 (no refusal tests).
+- Review A: F1 (no test observes the write order). F2, F3, and F4 are out of scope this round.
+- Review C: F2 (color print check is weaker than the Workbooks `checkColor` rule), F3 (a row
+  without an approval entry is skipped without a message).
+
+## Tests added
+
+The test file is `tests/storytime-muse-delivery.test.ts`. It now holds T152 to T172. T152 to T161
+keep their assertions and their meaning. The new tests T162 to T172 use real sharp PNG fixtures
+and real temporary folders. No test mocks the writer.
+
+| Test | Finding | Rule |
+| --- | --- | --- |
+| T162 | RB8-01 | `checkPictureListPin` refuses a pin mismatch. The deliver path refuses a pinned list whose measured hash differs. |
+| T163 | RB8-02 | `resolveMuseDeliveryPaths` accepts paths inside `<repo>/out/` and refuses absolute and `../` paths outside it. |
+| T164 | RB8-02 | The `deliver` command refuses an out-of-`out/` delivery path and an out-of-`out/` Muse path. A valid run still exits 0. |
+| T165 | RB8-03 | A dangling symlink at a delivery target is refused. The link target receives no byte. |
+| T166 | RB8-04 | Two rows with the same delivered color name or the same line-art name are refused before any write. |
+| T167 | RB8-05 | A line-art name of `.`, `..`, `manifest.json`, or the row color name is refused before any write. |
+| T168 | RB8-06 | A Muse print that is a symlink or a directory is refused. |
+| T169 | RB8-07 | A wrong list version, an unknown row id, and a traversal name are refused. This test passes at HEAD. |
+| T170 | Review A F1 | A copy write failure leaves no `manifest.json`. This test passes at HEAD and fails when the manifest moves before the copies. |
+| T171 | Review C F2 | A palette, one-channel, 16-bit, or four-channel color print is refused. |
+| T172 | Review C F3 | `onSkip(rowId, reason)` is called once for a row without an approval entry. |
+
+T169 and T170 pass at HEAD. They guard behavior that already holds. They are not Red failures.
+The task remarks record this fact.
+
+## Red evidence
+
+Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts --maxWorkers=1'`.
+
+- Exit code: `1`. No exit 75.
+- Summary: `Test Files  1 failed (1)` and `Tests  9 failed | 12 passed (21)`.
+- Passed: T152 to T161 (10), T169, and T170.
+- Failed for a missing export: T162 (`checkPictureListPin`), T163 (`resolveMuseDeliveryPaths`).
+- Failed because the writer accepts the input: T164, T165, T166, T167, T168, T171, T172.
+- Failed message of T167: `EISDIR: illegal operation on a directory`. The writer does not refuse
+  `.` with a clear error before the first write.
+- Baseline before the edit: exit code `0`, `Tests  10 passed (10)`.
+
+Type check command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=2560 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'`.
+
+- Exit code: `2`. Owned errors: `0`. Total errors: `38`.
+- The 38 errors sit in `assets/` and in other test files. They were present before this round.
+- No new test raises a compiler error. The new exports are read through a local shape type, so a
+  missing export fails at run time with a clear message.
+
+## The API that Green must add
+
+- `resolveMuseDeliveryPaths(options: { repoRoot, muse, delivery }): { museRoot, deliveryRoot }`.
+  Each path resolves against `repoRoot`. Each resolved path must equal `<repoRoot>/out` or sit
+  under it. A path outside it throws an error that names the flag and holds `out`.
+- `checkPictureListPin(listBytes: Buffer | string, approvals: MuseApprovalList): void`. It
+  compares the SHA-256 of the bytes with `approvals.pictureListSha256`. A mismatch throws. No pin
+  is a no-op.
+- `MuseDeliveryOptions.pictureListSha256?: string`: the measured list hash. The writer refuses a
+  pinned list when this field is absent. The writer refuses a pinned list when this field differs
+  from the pin.
+- The approval list schema gains optional `pictureListSha256` (64 lowercase hex characters).
+  `manifest.json` keeps its current shape. The PM contract does not change.
+- `MuseDeliveryOptions.onSkip?: (rowId: string, reason: string) => void`. The writer calls it
+  once for each row without an approval entry. The reason names the missing approval entry.
+- The writer refuses a delivery target that is a symlink (`lstat`, then `wx`). It refuses a
+  repeated delivered file name in one run. It refuses a line-art name of `.`, `..`,
+  `manifest.json`, or the row color name. It checks each Muse print with `lstat`, `realpath`, and
+  `stat`: no symlink, inside `museRoot`, a regular file.
+- The color print check also requires `depth === 'uchar'`, `bitsPerSample === 8`,
+  `space === 'srgb'`, `channels === 3`, and `isPalette === false`.
+- The `deliver` CLI command uses `resolveMuseDeliveryPaths` and passes `pictureListSha256:
+  list.sha256`.
+
+Green must keep the existing names and option keys. The tests call them directly.
+
+## State
+
+The task stays `[~]`. No task is `[x]`. The commit holds the test file and `plan.md` only. The
+writer keeps its temporary-folder use, so the containment rule lives in the resolver. The
+two-path convention of the writer therefore does not change for the tests.
+
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: done
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3
+task: Add failing tests for the Muse week 1 delivery manifest (Red), Red remediation round 2
+baseline_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+role_base_sha: 2c1b23da682adea3504d8eaa91e10a0e4cded87f
+head_sha: 3509efd5d44f4bd596e5fe4d86dee8bccc47f2dd
+commits: 3509efd5d44f4bd596e5fe4d86dee8bccc47f2dd tests/storytime-muse-delivery.test.ts (T162 to T172) and plan.md (Red remediation round 2 block)
+tests_run: command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts --maxWorkers=1'; exit code: 1; summary line: Test Files  1 failed (1) and Tests  9 failed | 12 passed (21); passed: T152 to T161, T169, T170; failed_missing_export: T162 (checkPictureListPin), T163 (resolveMuseDeliveryPaths); failed_no_refusal: T164, T165, T166, T167, T168, T171, T172; baseline_before_edit: exit 0 and Tests 10 passed (10); lock_wait_line: none; exit 75: none
+typecheck: command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=2560 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'; exit code: 2; owned_errors: 0; total_errors: 38; the 38 errors sit in assets/ and other test files and were present before this round
+files_changed: tests/storytime-muse-delivery.test.ts; measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md; this report (untracked evidence)
+plan_updates: A block "Red remediation round 2 (2026-11-01)" under the Red task records T162 to T172 with their findings, the Red command with exit code 1 and summary 9 failed | 12 passed (21), the type check counts, the out-of-scope findings (review A F2, F3, F4), and the full API note for Green. T169 and T170 are recorded as passing guards, not Red failures. No task is [x].
+handoff: Green adds to src/storytime/muse-delivery.ts (1) resolveMuseDeliveryPaths({repoRoot, muse, delivery}) that resolves both paths against repoRoot and refuses anything outside <repoRoot>/out with an error that names the flag and holds "out"; (2) checkPictureListPin(listBytes, approvals) that compares sha256(bytes) with approvals.pictureListSha256, throws on mismatch, and does nothing with no pin; (3) optional MuseDeliveryOptions.pictureListSha256 so the writer refuses a pinned list when the hash is absent or differs; (4) optional approval-list field pictureListSha256 (64 lowercase hex) while manifest.json keeps its shape; (5) optional MuseDeliveryOptions.onSkip(rowId, reason) called once per row with no approval entry, and the reason names the missing approval entry; (6) refusals before any write for a symlink at a delivery target (lstat then wx), a repeated delivered file name in one run, a line-art name of ".", "..", "manifest.json", or the row color name; (7) Muse print checks with lstat, realpath, and stat: no symlink, inside museRoot, a regular file; (8) a stricter color print check: depth uchar, bitsPerSample 8, space srgb, channels 3, isPalette false, no alpha; (9) CLI wiring in the deliver command of src/storytime/book-pictures.ts: use resolveMuseDeliveryPaths and pass pictureListSha256: list.sha256. Keep the existing exports and option keys; T152 to T161 must keep passing. The new Red command result must become exit 0 with Tests 21 passed (21).
+dispositions: none
+model: deepseek/deepseek-flash#high (Red, this role). Green for this round runs on the Anthropic family. The families differ.
+model_deviation: none. The orchestrator supplied the red route. This role ran no ra-quota call.
+facts_changed: none
+dirty_path_classification: Relevant paths are clean after the commit (tests/storytime-muse-delivery.test.ts and the track plan). The new run log is untracked evidence and is preserved. The other modified files (measure/generated/, measure/tracks.md, other track plans, bench files, .claude skill files, AGENTS.md, measure/workflow.md) and the untracked assets/ and bench/ files belong to other sessions and are preserved. No file under src/, assets/, scripts/, or another test file changed.
+anti_patterns: No digit-only count assertion. No over-broad rg filter. No archived-track path. No vacuous pass: T169 and T170 assert a rejection and an absent manifest, and T171 asserts the row id in the error. The Red failures come from a missing export or a missing refusal, not from a typo.
+END_MEASURE_AGENT_RESULT

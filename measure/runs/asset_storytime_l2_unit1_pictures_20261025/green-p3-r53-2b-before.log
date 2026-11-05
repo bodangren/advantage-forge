@@ -1,0 +1,25 @@
+Some extensions were not registered for I/O, and will not be written.
+sprout-nan: 24,130 triangles, 0.528 x 0.854 x 0.402 m, built in 51313 ms
+  skin                      8300 tris  (1996 ms)
+  mouth-open                 560 tris  (57 ms)
+  eyelid-skin                854 tris  (87 ms)
+  hair                      6128 tris  (1212 ms)
+  bands                     2880 tris  (99 ms)
+  shirt                     2104 tris  (450 ms)
+  shorts                    1878 tris  (280 ms)
+  shoes                     1426 tris  (177 ms)
+texture  1024x1024 atlas: base color, normal, occlusion/roughness/metal (32441 ms)
+glb      out/sprout-nan/sprout-nan.glb  (2859 KB)
+render   out/sprout-nan/render.png  (786 ms)
+Some extensions were not registered for I/O, and will not be written.
+sprout-ben: 25,090 triangles, 0.517 x 0.908 x 0.486 m, built in 56723 ms
+  skin                      8300 tris  (2301 ms)
+  mouth-open                 560 tris  (52 ms)
+  eyelid-skin                854 tris  (93 ms)
+  hair                      9338 tris  (2667 ms)
+  shirt                     2104 tris  (265 ms)
+  jeans                     2496 tris  (325 ms)
+  shoes                     1438 tris  (138 ms)
+texture  1024x1024 atlas: base color, normal, occlusion/roughness/metal (38918 ms)
+glb      out/sprout-ben/sprout-ben.glb  (3099 KB)
+render   out/sprout-ben/render.png  (785 ms)

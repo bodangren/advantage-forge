@@ -1,0 +1,9 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 19
+book file requests refused: 0
+Line-art line width: 18 px (minimum 12 px).
+Line-art ink coverage: 9.96% (1194900 of 12000000 pixels black).
+l2-w01-story-page-hello-i-am-pat v3: rendered; stage 7402418d7fa14831ecb31f2b0f52b2cf0d5b69da90ba5aacdfd21cead73a8754; file w01/rows/l2-w01-story-page-hello-i-am-pat-v3.png; lineart w01/rows/l2-w01-story-page-hello-i-am-pat-line-v3.png; size 4000 x 3000; render peak rss mb: 859

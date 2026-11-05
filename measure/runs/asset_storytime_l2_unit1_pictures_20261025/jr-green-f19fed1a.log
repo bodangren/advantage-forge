@@ -1,0 +1,31 @@
+Green round 58 (Storytime week 1 pictures): Muse fix round for batch 28.
+Session: Green · P3 · storytime_l2_unit1_pictures · r58
+Models: Red minimax-cn-coding-plan/MiniMax-M3; this role claude-code/claude-sonnet-5-5#high; image meta/muse-image; coder none.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: done (with open defects listed below)
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures (P3)
+phase_base_sha: 15a7bf0b
+role_base_sha: a4308df1
+final_green_head: f19fed1a
+commits: 86010452 (7 spec files), f19fed1a (plan.md evidence block "Green round 58")
+review_folder: out/storytime-review/batch-30/ (brief.md, pages/ 12 files, cast/ 1 file, refs/ 14 files)
+tasks_flipped_x: none
+tasks_flipped_b: none
+targeted_red_command: not applicable (Muse picture production; no code or test changed)
+new_files: elements/nan-side-left-head.png, elements/nan-side-right-head.png, elements/ben-ref-clean-2.png; new versions of the 6 rows and of cast-teacher-kim (m2); out/storytime-review/muse-cast/teacher-kim-sheet-2.png
+rows:
+- l2-w01-check-row-nose: color m2, line m2 (true profile from the sprite W crop). No retry.
+- l2-w01-practice-line-nose: color m3, line m3. 1 retry (m2: floating cut torso, hand, pale patches).
+- l2-w01-story-page-a-neck: color m4, line m4. 2 retries. OPEN defect: ragged ear with a dark hole (3D Nan ear copied by Muse).
+- l2-w01-story-page-hello-i-am-ben: color m6, line m6. Reference ben-ref-clean-2.png (narrow mask). m4 used round 57 file, m5 had a dark temple spot. One m6 call failed (timeout, cost 0). A tiny speck remains in the reference copy only.
+- l2-w01-story-page-a-nest: color m5, line m5 try 2 (-line-2). 2 color retries, 1 line retry. OPEN defects: ragged ear in color; branch outline open in line art (both tries).
+- l2-w01-story-page-a-net: color m2 unchanged, line m2 try 4 (-line-4). Single rim; mesh about 4 x 5; hanging hand small and lumpy (not fully clean).
+- cast-teacher-kim: m2 -> out/storytime-review/muse-cast/cast-teacher-kim-m2-color.png and teacher-kim-sheet-2.png. Fingers separate in the front, three-quarter, and side views. No retry.
+cost_usd: color 13 calls 0.13; line 8 calls 0.08; round 0.21; running total 0.42 + 0.31 (round 57) + 0.21 = 0.94
+anti_patterns: none triggered; no rating given by Green; no task marked [x]
+dispositions: none
+handoff: Waiting for the independent review of batch-30. Open defects the reviewer should expect: ragged ears (a-neck, a-nest), open branch outline in the a-nest line art, lumpy hanging hand in the a-net line art. The retry limit of 2 is used for the first two. If the owner wants these gone, a decision is needed: a fix of the 3D Nan ear is out of scope (assets/ stay as they are by Daniel's decision of 2026-11-01), or a local ear retouch of the final pictures.
+END_MEASURE_AGENT_RESULT

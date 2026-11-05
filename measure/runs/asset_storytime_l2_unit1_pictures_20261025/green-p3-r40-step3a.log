@@ -1,0 +1,9 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 15
+book file requests refused: 0
+Line-art line width: 23 px (minimum 12 px).
+Line-art ink coverage: 9.55% (214976 of 2250000 pixels black).
+l2-w01-practice-line-nest v7: rendered; stage c187fe0e652711038097579e22d3d1e7471965249d8fe9465dd35dbd55fe3c62; file w01/rows/l2-w01-practice-line-nest-v7.png; lineart w01/rows/l2-w01-practice-line-nest-line-v7.png; size 1500 x 1500; render peak rss mb: 912

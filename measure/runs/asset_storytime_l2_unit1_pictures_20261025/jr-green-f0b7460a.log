@@ -1,0 +1,27 @@
+Role: measure-jr-green (Green r53, cast fix round 1 of 3) — session Green · P3 · storytime_l2_unit1_pictures · r53
+Model: claude-code/claude-sonnet-5-5#high. Green coder model: none. Red model: minimax-cn-coding-plan/MiniMax-M3.
+role_base_sha: ad2705be   phase_base_sha: 15a7bf0b   final HEAD: f0b7460a
+Implementation commit: 571cbd9b. Plan-evidence commits: 4ddfd884 and f0b7460a (peak memory correction).
+
+MEASURE_AGENT_RESULT
+status: complete (round 1 of 3; no task marked [x]; waiting for the independent review)
+defect map:
+ 1 eye corners: sing eyelid-skin disc (3 cm behind face, flat) comes through the skin at the outer corner; humanoid-kind.ts sing block; FIXED round 1
+ 2 open hand: kind has only the closed fist (humanoid-kind.ts 510-527); add open hand under sproutFace; round 2
+ 3 index finger: sproutIndexFinger length 0.046 mostly hidden in the fist (sprout-gestures.ts 61, NOSE_PRESS 188-207); longer finger and nose pose; round 2
+ 4 mouth: mouth-open dark flat ellipsoid (humanoid-kind.ts 629-635), cause not yet confirmed by close-up; round 3
+ 5 forehead streak: cause NOT confirmed (candidates: baked shade of hair locks, hair shell contact); round 3
+ 6 ear marks: cause NOT confirmed (ear join smoothUnion 0.012 folds, humanoid-kind.ts 500); round 3
+fix: option sproutFace?: boolean in HumanoidKind (default off, old geometry). On: eyelid cut from the head surface, moved back SING_DEPTH, grown 4 mm. ON in sprout-nan, -pat, -ben, -mia, -may, -sam, -adventurer, -base (base has no sing; flag inert now). Not on: sprout-pip, heroes, NPCs, avatar-base, hunter-rival.
+glb sizes (textured, bytes): nan 2947996; pat 3509144; ben 3200236; mia 3259552; may 3182352; sam 2754144. No warning lines.
+hero check: avatar-base compare PASS, 0.000% changed on all images.
+vitest tests/sprout-base.test.ts: exit 0, 2 passed.
+nan row l2-w01-story-page-hello-i-am-nan v2: stage v2 already in git (a1ff1505), failed render exit 1 (edge 90% white check) with the v1 camera; only the camera changed (el 10->2, dist 4.2->3.4, ty 0.7->0.62). Render exit 0, verify exit 0 (2 row versions), line width 17 px, ink 20.33%, peak 501 MB. color sha256 97c32237e129c516f82fd79474763c0e9713ed75533eaf3149379282494b3c35; line sha256 cdb8e1af68a566a2760a0d013b1844dbe7d0fe7690db99747f8154f369dfb107.
+result: flaps gone in color. In line art the flap edge is gone, but a short thick dash remains at each outer eye corner: it is the painted lash wing (design kept). Ear dashes still present (round 3).
+exits: no 75, no 137, no ERR_UNSAFE_PORT, no lock-wait line.
+shadow root: /tmp/opencode/wb-shadow pictures.json sha256 starts c3e23cfd; live Workbooks not written.
+new files: none new in git (the Nan v2 stage existed; edited). Outputs (not in git): out/storytime/l2/unit1/w01/rows/l2-w01-story-page-hello-i-am-nan-{,line-}v2.png; out/storytime-review/batch-25/.
+batch-25: out/storytime-review/batch-25/ (before/after face close-ups Nan and Ben, Nan v2 color and line, look reference, brief.md).
+tasks flipped [x]: none. tasks flipped [b]: none.
+handoff: independent review of batch-25. Open for rounds 2 and 3: defects 2 to 6. Decision for the orchestrator: the lash-wing dash at the eye corner stays unless the PM wants lashes removed or thinned in line art. The tool budget ran out before the defect 4, 5, and 6 close-up checks; causes 4 to 6 are plans, not proof.
+END_MEASURE_AGENT_RESULT

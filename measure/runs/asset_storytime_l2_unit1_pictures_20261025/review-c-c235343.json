@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Review C (second pass) audited HEAD c23534333d4d40ee3740327a7505e02c4f76079f (range 5ffdbf6e..c2353433, phase \"Phase 2: Tests and calibrated model pre-checks\"). HEAD matched the audited HEAD via git rev-parse and .git/logs/HEAD. The phase diff touches only src/storytime/book-pictures.ts, src/storytime/line-art-pass.ts, and the two storytime test files; demo commits a8fdb560 and bbcdf085 touch assets/ only and are excluded. All three nonblocking findings from review-c-5ffdbf6 are fixed: the precheck-kimi --record <callId> --failed --reason mode (ledger now holds 8 before-call and 8 after-call entries, 0 open, callId 9d0bddf7 closed with status failure), one MiniMax raw file per callId written with flag wx, and the render skip hint \"next free version: vN\" (T72). The P2 contract scope holds: eight CLI commands, exit code 2 on a pre-check fail, --output restricted to color or lineart, the precheck-kimi --paid/--dry-run guard with its error text, all T74 smoke labels in range against the live smoke.json, T75 labels matching the ledger and both new good-nan logs, the manifest outputKind batches, and the big-endian unpackDepth seam. The plan and Green logs quote every caller-facing command.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "low — audit environment — live CLI dry-run commands (for example precheck-kimi error text and render --dry-run) were not executed because shell permission was intermittently denied during this audit; contract coverage rests on code inspection, committed tests T67/T72/T73-T76, the two live smoke runs, and six live calibration operations on disk; a future review may re-run one dry-run command to close this gap."
+  ],
+  "evidence": [
+    "git rev-parse HEAD returned c23534333d4d40ee3740327a7505e02c4f76079f, matching the audited HEAD; .git/logs/HEAD ends at the same commit; range 5ffdbf6e..c2353433 lists 16 commits, of which a8fdb560 and bbcdf085 touch assets/ only.",
+    "git diff --name-only 5ffdbf6e..c2353433 -- src tests scripts lists exactly src/storytime/book-pictures.ts, src/storytime/line-art-pass.ts, tests/storytime-book-pictures.test.ts, tests/storytime-line-art-pass.test.ts.",
+    "precheck-kimi failure record: src/storytime/book-pictures.ts:3024-3145 requires --paid or --dry-run ('Provider execution requires --paid. Use --dry-run to inspect the call.'), enforces exactly one of --begin/--record, refuses --failed with --raw or an empty --reason, refuses unknown callId, duplicate after-call, and mismatched --calibration/--job/--version before any write; the --failed path writes only an after-call entry with status failure.",
+    "Ledger out/storytime/l2/unit1/cost-ledger.jsonl holds 16 entries: 8 before-call and 8 after-call; 0 open before-calls; callId 9d0bddf7-d2ea-4bdb-a672-56c308e3f6d0 has an after-call entry with status failure recordedAt 2026-10-26T03:39:22.235Z; the Kimi before-call 7e33f6e2 (03:40:44.828Z) is later than the MiniMax after-call ae8f1ff1 (03:39:56.047Z); the two 2026-10-25 Kimi calls overlap (deviation (d)) and every later paid call ran one at a time.",
+    "MiniMax raw files keep one file per callId with flag wx (src/storytime/book-pictures.ts:2903-2909); the Kimi record path copies the raw answer to raw/<job>-v<N>-kimi-<callId>.txt with flag wx (line 3200); live files raw/good-nan-v1-minimax-ae8f1ff1-*.txt and raw/good-nan-v1-kimi-7e33f6e2-*.txt match.",
+    "Render skip hint: renderCandidates sets nextVersion on a skipped existing version (line 2715) and the CLI prints 'next free version: vN' (line 3429); contract.md lines 11-14 document the behavior; test T72 (tests/storytime-book-pictures.test.ts:1595-1624) asserts the hint, the no-write skip, and that an explicit v2 needs no v1.",
+    "Exit code 2 on a pre-check fail: precheck-minimax returns 2 on a non-pass verdict (line 3526); precheck-kimi returns 2 on a non-pass verdict (line 3553); a --failed record returns 0 because it is an operation success, not a verdict.",
+    "--output restricted to color or lineart (line 3358) and wired into verify through checkColor/checkLineArt (lines 1612-1613) and the CLI dispatch (line 3577).",
+    "T74 labels all exist in code and the plan quotes smoke run 3 values in range: hook before seek absent; window.__song keys load,portrait,ready,seek; capture path captureBookStill; camera drift source live; camera state drift 0; color repeat identical yes; stage ink share 2.12% (0.5-25); lineart technique song-page-form-edges-viewdepth-1bit-v2; fixture interior ink 0.00% (<= 1.00); fixture ring rays 360/360 (>= 342); fixture depth step rows 159/159 (>= 0.90). Live smoke.json fixture depthStep rows 88-246 (159 rows) at column 247 confirm 159/159.",
+    "T75 labels match: 9d0bddf7 after-call failure; before-call entries 8; after-call entries 8; open before-calls 0; good-nan-minimax pass; good-nan-kimi pass. Both new logs hold sourceText 'Hello, I am Nan.', modelSource declared, rubricVersion storytime-picture-v2, and a raw file with the callId in its name (calibration/good-nan-minimax.json, calibration/good-nan-kimi.json).",
+    "Manifest batches carry outputKind color or lineart with ids such as w01/readalong/color and w01/readalong/lineart (lines 1516-1530); Workbooks content/storytime/l2/w01.json holds prompts, characters, and captions only, so the manifest is the handoff surface.",
+    "unpackDepth in src/storytime/line-art-pass.ts:122-127 implements the documented three.js 0.185.1 big-endian formula b0/256 + b1/65536 + b2/16777216 + b3/255/16777216; DEPTH_EDGE_RELATIVE_GAP stays 0.02; LINEART_TECHNIQUE stays song-page-form-edges-viewdepth-1bit-v2.",
+    "Plan and Green logs quote every caller-facing command: smoke run 3 command (jr-green-bbcdf08.log lines 26-28), vitest gate commands (plan.md), and task 6 operations (jr-green-1550c75.log: precheck-kimi --record 9d0bddf7 --failed --reason <text> --paid; MiniMax --dry-run then --paid; Kimi --begin then --record --raw --paid).",
+    "measure/anti-patterns.md does not exist; anti-pattern coverage lives in test-strategy.md section 9. No violation; recorded for provenance."
+  ],
+  "commands": [
+    "git rev-parse HEAD (returned c23534333d4d40ee3740327a7505e02c4f76079f)",
+    "git diff --name-only 5ffdbf6e..c2353433 -- src tests scripts (four expected files only)",
+    "git log --oneline 5ffdbf6e..c2353433 (16 commits; a8fdb560 and bbcdf085 are assets-only demo work, excluded)",
+    "python3 ledger inspection of out/storytime/l2/unit1/cost-ledger.jsonl (8 before-call, 8 after-call, 0 open, 9d0bddf7 failure entry, paid-call ordering)",
+    "read-only inspection of out/storytime/l2/unit1/smoke/lineart-2026-10-26T03-28-07-662Z/smoke.json and calibration/*.json (T74 and T75 live values)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-c235343.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-c235343.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "audited_head": "c23534333d4d40ee3740327a7505e02c4f76079f"
+}

@@ -1,0 +1,21 @@
+Batch 49r4 review log
+Bar: Daniel 2026-11-01 14:15 ICT
+Reviewer: opencode/glm-5.3-flash-free#high
+
+Read count: 16 images used of the 24 allowed. No read-tool failure.
+
+Rows reviewed in order:
+- K1 (nut): pass, rating 8. Line check: 0 non-binary pixels.
+- K2 (nose profile): pass, rating 8. Line check: 0 non-binary pixels.
+- K3 (nose): fail, rating 5. Finger outline meets the nose outline. No white space separates them. Category: broken-face, line-gap-hard-to-color.
+- Ears: pass, rating 8. Line check: 0 non-binary pixels.
+- Eyes: pass, rating 7.5. Line check: 0 non-binary pixels.
+- Feet: pass, rating 7.5. Shin and foot outlines overlap tightly near the left foot. Line check: 0 non-binary pixels.
+- Hands: pass, rating 7.5. Line check: 0 non-binary pixels.
+- Legs: fail, rating 6.5. Only one hand points at a leg. Category: wrong-hand-or-limb.
+
+Overall status: fail. K3 and legs fail the bar.
+
+Pixel checks: all eight line prints show 0 non-binary pixels. No gray or shading found in line art.
+
+Limits: the legs pointing defect rests on the colour print. The line print gives no pixel-level proof of hand position. Ears and eyes ratings rest on the read notes, not on a second pass.

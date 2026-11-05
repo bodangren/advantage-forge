@@ -1,0 +1,27 @@
+item-review-cover-3
+reviewer: claude-code/claude-opus-5-5[1m]#high
+bar: Daniel 2026-11-01 14:15 ICT
+status: pass
+summary: Cover m13 is clean (8.0) and the top 30 percent is calm. Each waving hand has five digits at 4x. Margins: left 590 px, right 657 px.
+
+K rows (reviewed first, once):
+K1 (A nose.): 5.5 defect (wrong-or-missing-prop). The line art has no nose. The finger points at an empty part of the face. The color page is correct.
+K2 (nose, profile): 8.0 clean. Profile faces right, the nose is clear in color and line art. Line art is pure black and white.
+K3 (A nut.): 6.5 defect (layout-fault). Nan's right bun leaves the right edge (x = 3999) and her shoes leave the bottom edge. The hand has five digits and the nut is correct.
+
+Cover l2-cover-v1, candidate m13 (SHA-256 d32b5cc7...abf01, match):
+verdict: clean, rating 8.0, categories: none
+C2 calm_top: yes. Rows 0 to 899 are plain cream (largest channel difference 12.7, 0 pixels over 20). The beam starts at row 1070.
+left_margin_px: 590 (Ben's waving fingertip). right_margin_px: 657 (Nan's right bun, last column 3342).
+hands (waving, counted at 4x from the thumb):
+  Ben 5 - short thumb against his cheek, gap to the index finger
+  Mia 5 - short thumb against her cheek
+  Sam 5 - short thumb against his cheek
+  May 5 - short thumb against her cheek, ponytail lock crosses the palm
+  Pat 5 - short thumb against his cheek; two fingers lie on May's face with low contrast
+  Nan 5 - short thumb against her cheek
+  lowered hands: mittens as on the sheets; Sam's lowered hand is behind Pip's ear
+book size: a child counts five on Ben, Mia, Sam, May, and Nan. On Pat a fast count can give four.
+cast: six children match the approved sheets. Pip is whole, floppy ears, tufts as on the approved render.
+faces: eyes, nose, mouth on each child. No text anywhere.
+notes: no contact shadows (shoes seem to float); Pip stands, the goal says sits; Pat's ring fingertip lies on the edge of May's right eye.

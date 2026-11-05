@@ -1,0 +1,66 @@
+Review A (correctness and architecture), Phase 4 Task 1, audited head 4d4d86a2.
+
+Verdict: pass.
+
+Provenance: git rev-parse HEAD at review start returned 4d4d86a26def246195d7ad022c3dcbafd4ca965d,
+which equals the audited head 4d4d86a2. The audited diff is fc76c272..4d4d86a2. HEAD moved to
+72905d48 during the review, and git diff --stat 4d4d86a2..72905d48 -- src tests scripts printed
+nothing, so the later commits are docs only and the audited code and test state holds.
+
+Gate: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run
+tests/storytime-book-pictures.test.ts tests/storytime-picture-rows.test.ts
+tests/storytime-muse-delivery.test.ts tests/storytime-stage-check.test.ts --maxWorkers=1'
+exited 0 with Test Files 4 passed (4) and Tests 172 passed (172). The empty diff above binds this
+run to the audited head.
+
+Live stage gate: exit 0 with the exact label block of strategy 4.3, rows 27, specs found 27,
+element paths checked 82, stage check: pass. The plan quote matches.
+
+A4 probe: the same gate with an empty specs directory exited 1, printed 27 missing-spec problems
+and 'element paths checked is 0; the 18 class A and B rows need at least 18', and ended with
+stage check: fail. A missing deliverable does not pass.
+
+Old pin: the grep for PICTURE_LIST_V3_SHA256 and c3e23cfd over src, tests, and scripts returns
+four lines, all in tests/storytime-book-pictures.test.ts, which is the T173 negative control.
+
+Stage check rules match 4.3: exact text and goal compare, outDir equality, references under
+out/ or docs/, no '..' segment, no symbolic link, PNG signature, size above 0, element paths at
+least the class A and B row count with 0 failing, page candidates counted by row id, exit codes
+0, 1, and 2, the v4 pin, and the --list-sha256 seam used only by tests.
+
+Counts 196, 162, and 4 are labeled integers in T174 and T177. No bare-digit parse exists in the
+Phase 4 tests. No measure/tracks/ path appears in the four storytime test files. T152 to T172 are
+unchanged: the muse delivery test diff is 179 added and 0 deleted lines. Commit b6824b8a touched
+only contract.md, the stage check script, and book-pictures.ts.
+
+The Skipped line has one parser, tests/storytime-muse-delivery.test.ts:1133, so the format change
+to 'Skipped <id> (<reason>)' breaks no caller. Plan Red, Red r2, Green, and live gate claims all
+match their logs; mutation logs M4a and M5 show T177 and T182 failing as recorded.
+
+Three nits for Green: RA-P4-1 weeksTwoToSevenRows has no production caller
+(src/storytime/book-pictures.ts:3571); RA-P4-2 contract.md line 6 still names version 3 above the
+v4 bullets; RA-P4-3 T142 returns before any assertion when the loader returns nothing
+(tests/storytime-book-pictures.test.ts:4182), covered today by the T174 absent-loader label.
+
+Worktree attempt: /tmp/opencode/p4-a-4d4d86a2 stopped at a Workbooks path lookup after 31 tests
+passed in three files. The rerun was not run under the step budget, and the gate binding rests on
+the empty src, tests, and scripts diff.
+
+Cleanup: git worktree remove --force /tmp/opencode/p4-a-4d4d86a2 exited 0, git worktree prune
+exited 0, unlink /tmp/opencode/Workbooks exited 0, and rmdir -p removed /tmp/opencode/p4-a4 (it
+stopped at /tmp/opencode, which is not empty, exit 1). git worktree list shows:
+/home/daniebo/Desktop/advantage-forge            c4755d25 [master]
+/home/daniebo/Desktop/advantage-forge-release    e01ac17b (detached HEAD)
+/home/daniebo/Desktop/advantage-forge-shelf-sync 623e7b5d [shelf-sync-20261030]
+/tmp/opencode/paladin-audit-0e9af0f              0e9af0f7 (detached HEAD)
+
+Scope note: no production file, test file, plan file, or registry file was edited. Only the two
+result files of this review were written.
+
+MEASURE_AGENT_RESULT
+status: complete
+verdict: pass
+retry_recommendation: none
+dispositions: none
+worktrees: p4-a-4d4d86a2 removed (git worktree remove --force exited 0) and pruned (exit 0); git worktree list shows no p4-a entry; /tmp/opencode/Workbooks unlinked; /tmp/opencode/p4-a4 removed.
+END_MEASURE_AGENT_RESULT

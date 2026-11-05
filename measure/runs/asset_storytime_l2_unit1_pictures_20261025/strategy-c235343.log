@@ -1,0 +1,43 @@
+MEASURE_AGENT_RESULT
+role: measure-strategy
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 2: Tests and calibrated model pre-checks (P2)
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: c23534333d4d40ee3740327a7505e02c4f76079f
+head_sha: bf4fd8f8d2a6c164d3a92ffa102134b289d8b338
+commits:
+  - bf4fd8f8d2a6c164d3a92ffa102134b289d8b338 docs(measure): plan Storytime Phase 2 security remediation
+tests_run: none. This role ran no vitest, tsc, Chrome, vite, render, or paid call. Read-only checks: git diff --check on the three track files (clean); plan task count 20; one read-only `mmx quota show` (no paid call) to find the meaning of the quota values for RA2-N4.
+files_changed:
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/contract.md
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/strategy-c235343.log (not committed)
+plan_updates:
+  - Phase 2 task 7 (new, [ ]): Review B RB-01 to RB-05 and Review A RA2-N1. Risk class high. Red model openai/gpt-6.1-sol#high. Green model volcengine-agent-plan/glm-5.3-flash#high. Reviews A, B, and C run again on the task 7 HEAD.
+  - RA2-N3: task 6 gets a pre-remediation records note (bad-one-sun-minimax.json call c1706332, bad-one-sun-kimi.json call 4192765b, ledger entries 1 to 11).
+  - RA2-N4: plan line 23 now says 94% remaining and 89% remaining. The task 6 line now says 0% used (5h) and 2% used (week). Basis: `mmx quota show` reports only remaining-percent fields; on 2026-10-26 it showed 98% weekly remaining for the week that started 2026-10-26 00:00 local, which equals 2% used.
+  - RA2-N5: the smoke run 3 line names the `classroom` scene, not a tavern.
+  - RA2-N2: Phase 3 task 1 says the Nan sample report names the merged bookcase spines for Daniel's style look.
+  - No other evidence line changed.
+  - contract.md: verify --release runs the calibration gate; an empty or absent sampleFiles list makes the style look invalid; new "Security rules" section (wrapper argument form, served-file allowlist, real-path containment, credential refusal before persistence, raw input limits). The smoke writer rule did not change, because the existing contract already requires output isolation.
+known_failures:
+  - Baseline tsc errors: 31 outside the owned paths. Task 7 must keep the total at 31 or less.
+  - metadata.json still says estimated_tasks 19 and actual_tasks 6. The plan now has 20 tasks. This role does not own metadata.json. The orchestrator or Green must update it and run ./measure/generate.sh.
+  - The Phase 2 closeout adversarial mutations have not run (task 5 list and the new task 7 list).
+  - measure/anti-patterns.md does not exist (Review B RB-06, low). The strategy uses the starter catalog. S9 and S10 are new project candidates.
+  - RA2-N4 used/remaining labels rest on the mmx field names and one read-only quota check, not on the original quota output.
+handoff:
+  - phase_base_sha stays 1d39b8fda457e12d8e7332e7de65d2046ddda78e. The strategy commit is doc-only and in-phase. After it lands, the orchestrator captures its SHA as the task 7 Red base. No Red edit happens before that.
+  - New task text (plan.md Phase 2 task 7): "Correct the Review B security findings and Review A RA2-N1." RB-01 argument form of heavy-run.sh with no -c string; RB-02 allowlisted files after a realpath check, the Storytime output tree refused; RB-03 lineart-smoke through resolveOutputPath with exclusive creation; RB-04 credential refusal before any write, redacted provider errors, byte-identical safe raw answers, --raw size and type limit; RB-05 verify --release runs assertCalibrationReady; RA2-N1 empty or absent sampleFiles is invalid. Pass T77 to T85, then T87 and smoke run 4 (T86). No paid call. No src/song change. Rubric and PICTURE_RUBRIC_VERSION unchanged.
+  - Gate commands. Red and Green: ENGINE_HOOK_TEST_COMMAND = bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'. No new test file. Type check as in section 3. Smoke run 4: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node --import tsx scripts/storytime-book-pictures.ts lineart-smoke --job w01-readalong-p05'. ARGUMENT_PROBE_COMMAND (T87): bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh printf '%s\n' '$(printf RB_SUBSTITUTION_EXECUTED)'. Exit 75 is a hold, never a Red result.
+  - New test IDs (all in tests/storytime-book-pictures.test.ts): T77 RB-01 wrapper argument form (injected spawn); T78 RB-02 allowlist, realpath, and refusals (symlink file, symlink directory, ledger, raw, calibration, candidates, traversal, /@fs/, unnamed stage file); T79 RB-02 production wiring (vite config host 127.0.0.1, fs.strict, fs.deny out/storytime/**, one storytime-book-files plugin); T80 RB-03 writeOutputFile and lineart-smoke with directory and file symlinks; T81 RB-04 provider error redaction; T82 RB-04 raw answers (refusal, --raw limits, byte identity); T83 RB-04 failure reasons; T84 RB-05 missing, stale-rubric, and changed-source calibration on verify --release; T85 RA2-N1 empty and absent sampleFiles. Live rows: T86 smoke run 4; T87 gate row (argument probe, live credential scan of 15 or more files, calibration gate still accepts the root).
+  - Authorized Red fixture amendments, no assertion change: CLI verify --release tests (T37) get valid calibration logs, sources, and a workbooksRoot dependency; the vite mock may record its config before it throws (T79).
+  - Seams fixed by the strategy: StorytimeWrapperDependencies.spawn; bookFileAllowlist, resolveBookFile, serveBookFiles with stats(), bookServerConfig; writeOutputFile; secretFindings, redactSecrets, readRawAnswer; runStorytimeCli dependency workbooksRoot. Fixed limits: 500 characters for errors and reasons, 65,536 bytes for --raw.
+  - Smoke decision: smoke run 4 is necessary and bounded to one heavy-run.sh call, one Chrome launch, one stage still. Reason: RB-02 changes the only file server of the live capture, RB-03 changes the smoke writer, and a refused GLB makes the scene render without the asset and with no error. Labels: all T74 labels in range, book files served >= 2, book file requests refused: 0, lineart-smoke: wrote 4 files. A fifth run needs a new dispatch.
+  - Adversarial mutations for task 7 (each must make the named test fail): (1) restore JSON.stringify -c string (T77); (2) inner marker in the command, not env (T77); (3) lexical inside check only, no realpath (T78); (4) next() for a refused /out/ or /@fs/ request (T78); (5) remove the out/storytime exclusion (T78); (6) serve any stage-directory file (T78); (7) remove host, fs.strict, or fs.deny (T79); (8) path.join instead of resolveOutputPath in the smoke writer (T80); (9) remove the wx flag (T80); (10) secretFindings returns [] (T81 to T83); (11) write the provider error without redactSecrets (T81); (12) trim the raw answer or change line ends (T82); (13) remove the regular-file or size check in readRawAnswer (T82); (14) remove assertCalibrationReady from verify --release (T84); (15) return true for an empty sampleFiles list (T85).
+  - Review applicability on the task 7 HEAD: Review A applicable; Review B applicable; Review C applicable; adversarial testing required; browser review not applicable (no UI).
+  - If T87 finds a credential in a live file, Green stops, marks task 7 [b], and reports the path and pattern name to the PM. Deletion is a human gate.
+facts_changed: none
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,27 @@
+# Item review log: Storytime picture batch 33 (Muse fix round 61, 6 rows)
+
+Date: 2026-11-01. Reviewer: kimi-code-plan-cn/kimi-for-coding (independent, report-only).
+Track: asset_storytime_l2_unit1_pictures_20261025. Audited HEAD: 0bf8858a. Batch 33 files from round 61 (commit 7f2e7ba0).
+Method: read the brief, rated only what is visible, cropped every face, ear, and hand at 2-3x into /tmp/opencode/review-b33/, checked line-art pixel values with histograms (all six line files are 0 and 255 only).
+
+Line-art rule applied: orchestrator default 2026-11-01. An inner ear curve drawn as a C inside a closed outline is allowed, so the open C ears of the two profile pages are not defects. Batch 30 ear defects (ragged ears with dark holes) are gone on all Nan pages.
+
+Per-key results:
+- l2-w01-check-row-nose: 8.0, pass, clean. Exact left profile, nose tip most forward, one eye, smooth red ring band, single-circle bun, no loose strokes, values 0/255 only.
+- l2-w01-practice-line-nose: 8.0, pass, clean. Exact right profile, mirror quality of the row above.
+- l2-w01-story-page-a-neck: 7.5, pass, not clean. Goal fully shown (chin up, both hands on the neck, smooth ears, even shirt, two banded buns). Defects: two tiny dark specks on the back of the viewer-right hand and one on the viewer-left hand; the two neck column lines start with free ends inside the face region (strip still closed by the chin outline).
+- l2-w01-story-page-hello-i-am-ben: 7.5, pass, not clean. Goal fully shown (green bag on hook, waving, Pat's red bag on the floor, no eye tick marks, hanging hand fixed). Defect: the right ear has a gray hollow cavity, darker and larger than the reference inner mark (left ear to a lesser degree).
+- l2-w01-story-page-a-nest: 7.5, pass, not clean. Exactly 3 eggs, smooth ear, branch is one closed shape (hooked tip at 3x, edges reach the page edge), nest bowl closed. Defects: the line art drops Nan's painted eyelash marks on both eyes; one tiny dark speck on the nest rim.
+- l2-w01-story-page-a-net: 7.0, pass, not clean. Mesh fixed to about 3 lines each way with big diamonds. Defects: the rim is a double line (two concentric circles with a thin strip), failing the batch 30 rim check; the line art drops Nan's painted eyelash marks on both eyes.
+
+Summary: pages 6, pass 6, clean 2 (check-row-nose, practice-line-nose), not clean 4.
+
+BEGIN_MEASURE_AGENT_RESULT
+role: item-review
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures
+audited_head: 0bf8858a
+status: complete
+result_json: measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-33.json
+summary: pages 6; pass 6; clean 2; clean_keys l2-w01-check-row-nose, l2-w01-practice-line-nose; not_clean_keys l2-w01-story-page-a-neck, l2-w01-story-page-hello-i-am-ben, l2-w01-story-page-a-nest, l2-w01-story-page-a-net
+END_MEASURE_AGENT_RESULT

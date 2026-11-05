@@ -1,0 +1,34 @@
+storytime-child-cup: 8,732 triangles, 0.145 x 0.097 x 0.097 m, built in 2726 ms
+  cup                       6164 tris  (862 ms)
+  rim                       2568 tris  (121 ms)
+texture  none (vertex colors)
+glb      out/storytime-child-cup/storytime-child-cup.glb  (210 KB)
+# Inspection: storytime-child-cup
+
+Size 0.145 x 0.097 x 0.097 m (x y z); 8,732 triangles; lowest point y = -0.001 m.
+
+## Silhouette per view (fractions of the frame)
+
+| view | width | height | coverage |
+|---|---|---|---|
+| front | 0.715 | 0.5 | 0.244 |
+| three-quarter | 0.66 | 0.5 | 0.232 |
+| side | 0.453 | 0.469 | 0.172 |
+| back | 0.715 | 0.5 | 0.244 |
+| top | 0.711 | 0.57 | 0.256 |
+
+## Visible share of the silhouette per part
+
+| part | front | three-quarter | side | back | top |
+|---|---|---|---|---|---|
+| cup | 87.9% | 83.7% | 86.1% | 87.9% | 70.6% |
+| rim | 12.1% | 16.3% | 13.9% | 12.1% | 29.4% |
+
+## Values and colors (shaded render)
+
+Values: dark 0%, mid 83%, light 17%.
+Dominant colors: #5bb9f4 30%, #4db2ef 22%, #3fa5e1 14%, #e7e0c7 12%, #6ec0f7 11%, #3393cb 11%.
+
+## Warnings
+
+- none

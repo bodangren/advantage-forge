@@ -1,0 +1,47 @@
+Green round 23 final log (Storytime week 1 pictures, P3)
+role_base_sha: 17d169ab
+phase_base_sha: 15a7bf0b
+final HEAD: 71f66b9a
+models: Red minimax-cn-coding-plan/MiniMax-M3; Green xai/grok-4.7#high; coder none
+commits: b3e99b2b (stage files), 71f66b9a (plan evidence)
+kept: story-page-a-nest v3
+superseded: story-page-a-nest v4
+decision: v4 did not lift the right leaf cap off Nan's head, and it cut her feet. v3 is better.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: green
+task: Phase 3 Week 1 pictures, Green round 23, nest page camera and Nan mark
+phase_base_sha: 15a7bf0b
+role_base_sha: 17d169ab
+final_head: 71f66b9a
+tasks_marked_x: none
+tasks_marked_b: none
+files_added:
+  docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-v3.json
+  docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-v4.json
+files_changed: measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+implementation_commit: b3e99b2b
+plan_commit: 71f66b9a
+v2_open_defects:
+  The nest is about one tenth of the page width.
+  Nan is cut off at the right edge and at the bottom.
+  The point reads as a fist. The camera sees her from the side.
+runs:
+  nest v3 render: exit 0; line 22 px; ink 6.31%; peak 535 MB; log green-p3-r23-render-v3.log
+  nest v4 render: exit 0; line 22 px; ink 6.27%; peak 513 MB; log green-p3-r23-render-v4.log
+  verify --row l2-w01-story-page-a-nest: exit 0; Row verification passed for 4 row versions.
+sha256:
+  nest v3 color 6062f8268ef99e8a3fa5e0e307f7b015598eab76dfd10690a5eaab18370da62e
+  nest v3 line bc790f9aeb92bba8390b50ee9c77c39a234fe8e2337cae1217d1f920944c539d
+kept:
+  story-page-a-nest v3
+seen:
+  The nest is larger in the middle, and three eggs show. Nan is in frame from the head past the waist. Her face is a front three-quarter view. The index finger extends against the white page and points at the nest. The right leaf cap still sits on her head.
+open_defect:
+  The nest is still under one quarter of the page width. The right leaf cap covers her hair.
+counts:
+  after round 22 corrected: 17 rows with no open defect (round 22 wrote 18; nest v2 had open defects)
+  after round 23: 20 of 30 week 1 rows rendered; 17 with no open defect
+handoff: independent picture review of story-page-a-nest v3. The cutoff defect and the fist defect are closed. The size defect and the leaf-on-head overlap remain open.
+END_MEASURE_AGENT_RESULT

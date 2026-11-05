@@ -1,0 +1,19 @@
+{
+  "group": "prod-r9-line-nut5",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w01-story-page-a-nut",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nut-line-t5.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a nut (1). Action: none. Seen: one large peanut outline with two round bumps, a narrow waist, a center seam, and a net of crossed lines. It rests on an open hand. Nan stands at the right: two round buns with ring bands (the right bun is cut by the frame), big eyes, a T-shirt with a star. She matches the cast note. Nuts counted: 1. No other nut. mustShow: one nut only: shown (1 nut). Clearly a peanut: shown (two bumps, narrow waist, netted shell). Nan's open hand: shown (palm up, four rounded fingers and a thumb, the peanut on it). The nut is large in the middle: shown (the nut is the largest object, in the middle band; its center is a little left of the page center). Line art: black lines on white. No gray, no shading. The eyes are solid black fills, which are black and not gray. The outlines are closed, so coloring is possible. No text in the picture. Small marks: the peanut tip touches Nan's cheek line. The right edge cuts Nan's head."
+    }
+  ],
+  "summary": { "files": 1, "pass": 1, "fail": 0 }
+}

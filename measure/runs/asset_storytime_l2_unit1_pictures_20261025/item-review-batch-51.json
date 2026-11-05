@@ -1,0 +1,204 @@
+{
+  "status": "pass",
+  "reviewer": "opencode/glm-5.3-flash-free#high",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "All 9 batch-51 check rows read as their word in the color print and the line print, nothing cut at a print edge, pure black-and-white line art. Verdict pass. K rows: K1 defect (line art loses the nose and moves the finger to the mouth), K2 and K3 clean. Top rating of the 9 rows: 8.7 of 10.",
+  "extra": {
+    "K1": {
+      "files": {
+        "color": "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "line": "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      },
+      "rating": 5.5,
+      "verdict": "defect",
+      "defect_categories": ["wrong-or-missing-prop"],
+      "defects": [
+        "Line art: no nose is drawn between the eye and the finger; the fingertip meets the mouth curve. Color shows the nose under the fingertip. The text names the nose, so a face part the text names must show in both files."
+      ],
+      "notes": [
+        "Color correct: fingertip touches the nose underside, nose readable, laughing mouth present."
+      ],
+      "goal_check": "Color meets goal (touch own nose with one finger, laughs). Line does not: the finger touches the mouth and no nose shows.",
+      "line_check": "Pure black/white (0 non-0/255 of 12,000,000 px), no ink on any outer row or column.",
+      "retry_hint": "line: redraw so the fingertip touches the side of the nose and the nose bump shows above the fingertip."
+    },
+    "K2": {
+      "files": {
+        "color": "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "line": "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      },
+      "rating": 8.1,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Line-only frame crop: the right hair bun is clipped by the right frame edge (dark ink rows 522 to 901 at x=3999); the color bun stays whole inside the frame. Hair crop at frame edge while the subject is whole is a note.",
+        "Feet are cut at the bottom frame edge in color and line (close-up crop; note).",
+        "One big brown acorn on the open palm in both files; counts exact (1 nut)."
+      ],
+      "goal_check": "Pass: one big brown nut in Nan's open hand, close up, in both files.",
+      "line_check": "Pure black/white. Ink on outer bottom row (89 px at x 2017..3046, shorts/feet crop) and outer right column (49 px at y 522..901, bun clip)."
+    },
+    "K3": {
+      "files": {
+        "color": "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "line": "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      },
+      "rating": 8.6,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Profile facing right in both files (the two files agree); nose clearly seen in both, with nostril. Traceable even outline.",
+        "Neck and shirt run to the bottom frame edge (ink 474..1042); head subject whole. Close-up crop note.",
+        "Line pupils solid; solid nose tip allowed."
+      ],
+      "goal_check": "Pass for files as delivered: head of Nan in profile, nose clearly seen, tracing line. 'Facing the other way' cannot be checked against an orientation reference, but color and line agree.",
+      "line_check": "Pure black/white. Ink on outer bottom row only (40 px at x 474..1042)."
+    },
+    "rating": 8.7
+  },
+  "items": {
+    "l2-w05-check-row-bed": {
+      "files": {
+        "color": "out/storytime-review/batch-51/pages/l2-w05-check-row-bed-m1-color-print.png",
+        "line": "out/storytime-review/batch-51/pages/l2-w05-check-row-bed-m1-line-print-3-despeckled.png"
+      },
+      "rating": 8.4,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Reads as a bed in color and line at book size: headboard with inner panel, pillow, mattress, blanket, footboard, four posts with knobs.",
+        "Small double outline on the left foot-post knob (builder note; small mark, note). Blanket check pattern missing in the line (plain shapes; note)."
+      ],
+      "goal_check": "Pass: one bed, plain white background, reads as its word in color and line, nothing cut at a print edge (0 ink on all outer rows and columns).",
+      "line_check": "Pure black/white (0 non-0/255 of 2,250,000 px), no ink on any outer row or column."
+    },
+    "l2-w05-check-row-cat": {
+      "files": {
+        "color": "out/storytime-review/batch-51/pages/l2-w05-check-row-cat-m1-color-print.png",
+        "line": "out/storytime-review/batch-51/pages/l2-w05-check-row-cat-m1-line-print-8-despeckled.png"
+      },
+      "rating": 8.6,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Reads as a cat in color and line: exactly two pointed ears (no third-ear ring), muzzle, three whiskers on each side, tail as an open band joined to the back (not a closed ring), solid pupils.",
+        "Color has stripes and eyelash ticks; the line has none. The difference changes no character and no prop (note).",
+        "The rear-leg region of the line is slightly muddled but reads as legs and paws at book size."
+      ],
+      "goal_check": "Pass: one cat, plain white background, reads as its word in color and line, nothing cut at a print edge (0 ink on all outer rows and columns).",
+      "line_check": "Pure black/white, no ink on any outer row or column."
+    },
+    "l2-w05-check-row-cup": {
+      "files": {
+        "color": "out/storytime-review/batch-51/pages/l2-w05-check-row-cup-m1-color-print.png",
+        "line": "out/storytime-review/batch-51/pages/l2-w05-check-row-cup-m1-line-print-2-despeckled.png"
+      },
+      "rating": 9.0,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Reads as a cup in color and line: rim ring, inner opening oval, handle with inner oval. No steam and no drink in either file."
+      ],
+      "goal_check": "Pass: one cup, plain white background, reads as its word in color and line, nothing cut at a print edge (0 ink on all outer rows and columns).",
+      "line_check": "Pure black/white, no ink on any outer row or column."
+    },
+    "l2-w05-check-row-dog": {
+      "files": {
+        "color": "out/storytime-review/batch-51/pages/l2-w05-check-row-dog-m1-color-print.png",
+        "line": "out/storytime-review/batch-51/pages/l2-w05-check-row-dog-m1-line-print-despeckled.png"
+      },
+      "rating": 8.7,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Reads as a dog in color and line: floppy ears, brow patches, ring eyes with solid pupils, solid nose tip, smile, tongue, collar with tag.",
+        "The left eye in the line has a double ring (small mark, note); a small curved stroke near the belly (small mark, note)."
+      ],
+      "goal_check": "Pass: one dog, plain white background, reads as its word in color and line, nothing cut at a print edge (0 ink on all outer rows and columns).",
+      "line_check": "Pure black/white, no ink on any outer row or column."
+    },
+    "l2-w05-check-row-hat": {
+      "files": {
+        "color": "out/storytime-review/batch-51/pages/l2-w05-check-row-hat-m1-color-print.png",
+        "line": "out/storytime-review/batch-51/pages/l2-w05-check-row-hat-m1-line-print-2-despeckled.png"
+      },
+      "rating": 8.9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Reads as a hat in color and line: crown, band, bow of closed loops, single brim outline in the line."
+      ],
+      "goal_check": "Pass: one hat, plain white background, reads as its word in color and line, nothing cut at a print edge (0 ink on all outer rows and columns).",
+      "line_check": "Pure black/white, no ink on any outer row or column."
+    },
+    "l2-w05-check-row-pen": {
+      "files": {
+        "color": "out/storytime-review/batch-51/pages/l2-w05-check-row-pen-m1-color-print.png",
+        "line": "out/storytime-review/batch-51/pages/l2-w05-check-row-pen-m1-line-print-2-despeckled.png"
+      },
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Reads as a pen in color and line: diagonal body, clip, top knob or cap, tip at the bottom right.",
+        "The color's translucent top cap reads in the line as a plain round cap; no character or prop change (note)."
+      ],
+      "goal_check": "Pass: one pen, plain white background, reads as its word in color and line, nothing cut at a print edge (0 ink on all outer rows and columns).",
+      "line_check": "Pure black/white, no ink on any outer row or column."
+    },
+    "l2-w05-check-row-sock": {
+      "files": {
+        "color": "out/storytime-review/batch-51/pages/l2-w05-check-row-sock-m1-color-print.png",
+        "line": "out/storytime-review/batch-51/pages/l2-w05-check-row-sock-m1-line-print-2-despeckled.png"
+      },
+      "rating": 8.7,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Reads as a sock in color and line: cuff, heel patch, toe patch as closed shapes that end on the outline, wavy instep bump in both.",
+        "Closest object-to-edge distance is 52 px (builder measurement); no ink on the outer pixel rows."
+      ],
+      "goal_check": "Pass: one sock, plain white background, reads as its word in color and line, nothing cut at a print edge (0 ink on all outer rows and columns).",
+      "line_check": "Pure black/white, no ink on any outer row or column."
+    },
+    "l2-w05-check-row-sofa": {
+      "files": {
+        "color": "out/storytime-review/batch-51/pages/l2-w05-check-row-sofa-m1-color-print.png",
+        "line": "out/storytime-review/batch-51/pages/l2-w05-check-row-sofa-m1-line-print-despeckled.png"
+      },
+      "rating": 8.8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Reads as a sofa in color and line: two back cushions, two arms, seat cushion, base cushion, four feet; no stray seat line in the line print."
+      ],
+      "goal_check": "Pass: one sofa, plain white background, reads as its word in color and line, nothing cut at a print edge (0 ink on all outer rows and columns).",
+      "line_check": "Pure black/white, no ink on any outer row or column."
+    },
+    "l2-w05-check-row-sun": {
+      "files": {
+        "color": "out/storytime-review/batch-51/pages/l2-w05-check-row-sun-m1-color-print.png",
+        "line": "out/storytime-review/batch-51/pages/l2-w05-check-row-sun-m1-line-print-2-despeckled.png"
+      },
+      "rating": 9.0,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "One sun only. Exactly eight pointed triangle rays in color and line; each wide base sits on the disc, each point faces outward. Counts exact."
+      ],
+      "goal_check": "Pass: one sun, plain white background, reads as its word in color and line, nothing cut at a print edge (0 ink on all outer rows and columns).",
+      "line_check": "Pure black/white, no ink on any outer row or column."
+    }
+  }
+}

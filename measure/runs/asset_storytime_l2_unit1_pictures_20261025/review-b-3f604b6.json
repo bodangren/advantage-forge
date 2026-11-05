@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "summary": "All 98 focused tests pass. RB4-01 closes for its three recorded cases. New source cases still permit encoded credential writes. Malformed brace input also causes quadratic synchronous work.",
+  "phase_base_sha": "1d39b8fda457e12d8e7332e7de65d2046ddda78e",
+  "role_base_sha": "3f604b62a50099c383169e766aef6d737f59f504",
+  "audited_head_sha": "3f604b62a50099c383169e766aef6d737f59f504",
+  "audited_head": "3f604b62a50099c383169e766aef6d737f59f504",
+  "task_base_sha": "62c4ef6fee3aad167fe344df58f3dd4a4ed46b27",
+  "head_current": true,
+  "security_applicability": "applicable",
+  "blocking_findings": [
+    "RB5-01 high: src/storytime/book-pictures.ts:1172-1177 and 488-521 misses JSON arrays outside a parsed root or decoded string. A fenced root array keeps its object elements but loses scalar string elements. A safe review followed by an array has the same gap. Unicode escapes hide the credential from the raw scan. Both providers then write the raw answer and record call success. A safe review inside the mixed text can also retain PASS. Extend prose and fence extraction to every JSON value, including arrays and scalar roots.",
+    "RB5-02 high: src/storytime/book-pictures.ts:1173 and 1200-1202 walks only the object that JSON.parse returns. JSON.parse discards earlier duplicate keys and values. An escaped credential in an earlier duplicate value or key therefore receives no scan. The raw scan cannot see that credential. Both providers persist the original bytes and record success. Detect duplicate keys before evidence writes, or scan every syntactic key and value before object construction.",
+    "RB5-03 high: src/storytime/book-pictures.ts:1172-1177 and 513-517 converts parse errors into extraction fallback or silence. A malformed unknown field can hold an escaped credential without any decoded scan. The parser returns an unclear FAIL review, but both providers still write raw evidence and record call success. Parse errors must not bypass credential inspection. Preserve safe malformed-answer behavior only after a complete credential check.",
+    "RB5-04 medium: src/storytime/book-pictures.ts:488-521 performs quadratic work on unmatched opening braces. Each opening brace starts a scan to the end when no closing brace exists. A 65,536-byte string of opening braces causes about 2.15 billion loop iterations. The synchronous walker yields no event-loop turns during this work. Kimi permits that input size, and MiniMax has no answer-size limit by design. T111 uses valid nested JSON and does not exercise this path. Use one bounded scanning pass and add a malformed 65,536-byte time case."
+  ],
+  "nonblocking_findings": [
+    "RB5-05 low: Mutation 9 and mutation 17 pass against the required falsification rows. Neither gap adds a defect to the committed walker. Mutation 9 leaves re-extraction performance unfalsified. Mutation 17 leaves future blanket error handling unfalsified. RB5-04 independently confirms an availability gap. Keep both mutation gaps open for adversarial testing."
+  ],
+  "evidence": [
+    "Provenance: the supplied phase, role, task, and audited SHAs match this artifact. The audited HEAD matched at audit start and finish.",
+    "Applicability: the phase diff adds provider execution, decoded checks, and evidence persistence. The task diff changes the shared walker and Kimi call order. test-strategy.md:654-755 requires security review.",
+    "The owned source, test, and track paths match audited HEAD. The focused test file also matches Red commit 5a46415e. The one-off license commit is outside this audit.",
+    "RB4-01 closure: root JSON values, repeated string layers, arrays, scalar elements, keys, and unknown values now share one worklist. T104 to T108 pass for both providers. The three earlier source_derived_cases are covered.",
+    "Write order holds for detected credentials. MiniMax checks inside the paid callback before success. Kimi checks before schema parsing and before record writes. The new findings concern values that the walker never visits.",
+    "RB5-01 path: whole-answer parse failure invokes only jsonObjects. That extractor recognizes left braces only. It cannot return a root array or a standalone JSON string from prose or a fence.",
+    "RB5-02 path: JavaScript object construction keeps the last duplicate property. Object.entries cannot recover earlier properties. The original raw bytes still contain those properties.",
+    "RB5-03 path: both parse catch blocks omit a finding. parseModelReview returns an unclear result after extraction failure. A failed verdict does not prevent raw writes or a successful provider-call ledger entry.",
+    "RB5-04 path: jsonObjects has an outer loop over every character and an inner loop from each left brace. An unmatched brace prevents an inner break. No recursion limit causes this availability finding.",
+    "Refusals for detected findings retain pattern names and the shared suffix. runPaidCall redacts and truncates its propagated error. The CLI boundary applies the same 500-character limit. Existing T103 passes.",
+    "Safe controls pass T101 and T112. Safe raw bytes, reported models, declared models, and PASS parser verdicts remain unchanged for those cases. Deep safe object coverage passes T110.",
+    "Depth and rule construction improve in the committed walker. The explicit worklist avoids call-stack recursion. Credential rules are built once per call. T109, T110, T111, and T115 pass.",
+    "The work bound remains incomplete. Valid deep input and many environment rules have time rows. Malformed brace input has no time row. Mutation 9 also passes despite the required performance mutation.",
+    "Independent test result: exit 0; Test Files 1 passed (1); Tests 98 passed (98); duration 153.32 seconds. The command used the shared lock and the 900-second limit. No lock wait line appeared.",
+    "No custom production probe ran. The shell policy denied the proposed probe commands. RB5-01 to RB5-04 follow source inspection and bounded synthetic constructions. The focused test run did not include those constructions.",
+    "A2: no audited test changes a draft to a published artifact. Published camera evidence is a local capture mechanism. This task adds no public release or named-subject publication gate.",
+    "A6: audited measure/tracks.md contains no security-resolved claim for this track. Its phase diff is empty. The unrelated dirty registry remains outside scope.",
+    "This task adds no endpoint, authentication boundary, tenant scope, database migration, or secret store. It adds no executable evaluation of decoded text. The audited risk concerns untrusted provider text and local evidence persistence.",
+    "No paid provider call, render, build, server, browser, install, production edit, test edit, plan edit, registry edit, or commit ran. Only the two required result artifacts changed."
+  ],
+  "source_derived_cases": [
+    {
+      "name": "fenced root array with a safe review and an escaped scalar credential",
+      "construction": "const secret = 'sk-' + 'SYNTHETIC'.repeat(4); const escaped = Array.from(secret, c => String.fromCharCode(92) + 'u' + c.charCodeAt(0).toString(16).padStart(4, '0')).join(''); const safe = { verdict: 'PASS', reason: 'The subject is visible.', observedCounts: { subject: 1 }, issues: [] }; const raw = '```json\\n' + JSON.stringify([safe, secret]).replaceAll(secret, escaped) + '\\n```';",
+      "expected_after_remediation": "Both providers refuse before evidence writes. MiniMax may append its sanitized failure entry. Kimi leaves its begin ledger unchanged.",
+      "execution": "not_run; source inspection only"
+    },
+    {
+      "name": "safe review followed by an escaped root array",
+      "construction": "Use the same secret, escaped, and safe values. const raw = JSON.stringify(safe) + '\\n' + JSON.stringify([secret]).replaceAll(secret, escaped);",
+      "expected_after_remediation": "The mixed-text walker checks the array scalar before either provider writes evidence.",
+      "execution": "not_run; source inspection only"
+    },
+    {
+      "name": "escaped credential in an earlier duplicate value",
+      "construction": "Use the same secret and escaped values. const raw = '{\"verdict\":\"PASS\",\"reason\":\"The subject is visible.\",\"observedCounts\":{\"subject\":1},\"issues\":[],\"unknown\":\"' + escaped + '\",\"unknown\":\"safe\"}';",
+      "expected_after_remediation": "Both providers detect the earlier duplicate value and refuse before evidence writes.",
+      "execution": "not_run; source inspection only"
+    },
+    {
+      "name": "escaped credential in a duplicate key",
+      "construction": "Use the same secret and escaped values. const raw = '{\"verdict\":\"PASS\",\"reason\":\"The subject is visible.\",\"observedCounts\":{\"subject\":1},\"issues\":[],\"' + escaped + '\":1,\"' + escaped + '\":2}';",
+      "expected_after_remediation": "Both providers detect the duplicate credential key and refuse before evidence writes.",
+      "execution": "not_run; source inspection only"
+    },
+    {
+      "name": "escaped credential in a malformed unknown field",
+      "construction": "Use the same secret, escaped, and safe values. const text = JSON.stringify(safe); const raw = text.slice(0, -1) + ',\"unknown\":\"' + escaped + '\",}';",
+      "expected_after_remediation": "The parse error cannot bypass inspection. Both providers refuse before evidence writes and retain sanitized errors.",
+      "execution": "not_run; source inspection only"
+    },
+    {
+      "name": "unmatched opening braces at the Kimi byte limit",
+      "construction": "const raw = '{'.repeat(65536);",
+      "expected_after_remediation": "The shared scan finishes within the task time bound. It performs one bounded pass rather than one trailing scan per opening brace.",
+      "execution": "not_run; source inspection only"
+    }
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short",
+    "git diff --name-status 1d39b8fda457e12d8e7332e7de65d2046ddda78e..3f604b62a50099c383169e766aef6d737f59f504",
+    "git diff 62c4ef6fee3aad167fe344df58f3dd4a4ed46b27..3f604b62a50099c383169e766aef6d737f59f504 -- src/storytime/book-pictures.ts",
+    "git diff --quiet 3f604b62a50099c383169e766aef6d737f59f504 -- src/storytime/book-pictures.ts tests/storytime-book-pictures.test.ts measure/tracks/asset_storytime_l2_unit1_pictures_20261025; exit 0",
+    "git diff --quiet 5a46415eb0b25db2d4fb9e76b9224bcae7fb40fa..3f604b62a50099c383169e766aef6d737f59f504 -- tests/storytime-book-pictures.test.ts; exit 0",
+    "git show 3f604b62a50099c383169e766aef6d737f59f504:measure/tracks.md | grep -nEi 'storytime_l2_unit1_pictures|security|resolved|fully solved|completely fixed|all (checks |tests )?pass'",
+    "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'; exit 0; Tests 98 passed (98)",
+    "Custom node probe attempts: permission denied by the shell policy; no probe executed"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-3f604b6.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-3f604b6.log"
+  ],
+  "test_strategy_violations": [
+    "RB5-01: T104 to T108 omit fenced root arrays and mixed prose arrays. The required every-value check remains falsifiable.",
+    "RB5-02: T104 to T115 omit duplicate JSON keys and values. JSON.parse can discard an unchecked credential.",
+    "RB5-03: T104 to T115 omit malformed encoded values. Parse errors can bypass the decoded check.",
+    "RB5-04: T111 covers valid deep JSON only. The 65,536-byte hostile bound lacks malformed brace coverage.",
+    "RB5-05: Required mutations 9 and 17 pass. Their named tests do not falsify those mutations."
+  ],
+  "live_contract_violations": [
+    "RB5-01, RB5-02, and RB5-03: contract.md:291-298 forbids credential persistence and requires every decoded key and string before evidence writes.",
+    "RB5-04: plan.md:525 requires a 65,536-byte hostile answer to finish within the task time bound. The malformed brace path has quadratic work."
+  ],
+  "prod_wiring_violations": [
+    "RB5-01, RB5-02, and RB5-03: both production provider paths persist raw bytes after an incomplete decoded check. Both can record call success. A safe review can also retain PASS."
+  ],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "handoff": "Route RB5-01 to RB5-04 to Green. Cover every JSON value in prose and fences. Handle duplicate keys and malformed encoded values before writes. Replace quadratic brace extraction with bounded scanning. Add both-provider regressions and a malformed time row. Keep safe bytes, models, verdicts, refusal suffixes, and write boundaries. Keep mutations 9 and 17 open for adversarial testing. No owner decision is required.",
+  "facts_changed": []
+}

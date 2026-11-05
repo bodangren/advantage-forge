@@ -135,10 +135,6 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Chibi Sprouts, release 1 art**
   *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
 
-- [~] **Track: Storytime Level 2 unit 1 book pictures and cover render**
-  *Link: [./tracks/asset_storytime_l2_unit1_pictures_20261025/](./tracks/asset_storytime_l2_unit1_pictures_20261025/)*
-  *Status:* weeks 1 to 8 pictures delivered (independent model review, model evidence, not acceptance); the A-48 restart groups A, B, C, and D and the nut v3 pair delivered and handed over (a48-forge-pictures-a, -b, -c, -d, -drum, -nut3); no person review of the restart pictures yet (Daniel checks the 11-10 book proof); no Workbooks acceptance recorded.
-
 ## Games
 
 - [x] **Track: Player avatar system: base, equipment fit, pack, composer**
@@ -348,3 +344,8 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
 
 - [ ] **Track: Riven Lands effects geometry: 33 catalog rows outside the game set**
   *Link: [./tracks/riven_fx_geometry_20261009/](./tracks/riven_fx_geometry_20261009/)*
+
+## Archived Tracks
+
+- [x] Storytime Level 2 unit 1 book pictures and cover render, completed 2026-11-05; weeks 1 to 7 and the cover delivered and person-reviewed by Daniel; the 24 A-48 restart pictures (including week 8) delivered with Sonnet judge evidence (model evidence, not acceptance); restart spend 0.57 USD.
+  *Link: [./archive/asset_storytime_l2_unit1_pictures_20261025/](./archive/asset_storytime_l2_unit1_pictures_20261025/)*

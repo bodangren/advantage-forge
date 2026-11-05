@@ -1,0 +1,58 @@
+Green round 25 final log (Storytime week 1 pictures, P3)
+track: asset_storytime_l2_unit1_pictures_20261025
+role_base_sha: 6d276f52
+phase_base_sha: 15a7bf0b
+final Green HEAD: 388b42f0
+stage commit: b27e584d
+plan commit: 388b42f0
+Red model: minimax-cn-coding-plan/MiniMax-M3
+Green model: xai/grok-4.7#high
+coder: none
+task: one new class A story page, l2-w01-story-page-a-nose. Stage files only.
+
+Laugh method: the touch nose clip holds the index finger on the nose from 0.65 s to 1.35 s. One word from 0.25 s to 1.40 s opens the singing mouth. Still time 0.82 s is a mouth pulse peak, a laugh bounce, and open eyes for seed 1. No asset file changed. No src file changed.
+
+Commands, each one heavy-run.sh call:
+- render --row l2-w01-story-page-a-nose --version 1 exit 0. Log green-p3-r25-render-v1.log. Line width 24 px. Ink 4.74%. Peak 501 MB.
+- render --row l2-w01-story-page-a-nose --version 2 exit 0. Log green-p3-r25-render-v2.log. Line width 24 px. Ink 4.24%. Peak 498 MB.
+- verify --row l2-w01-story-page-a-nose exit 0. Log green-p3-r25-verify.log. Passed for 2 row versions.
+No exit 75. No exit 137. No lock wait over 600 s.
+
+v1 superseded. The waist is cut off. The hand reads as a fist on the cheek. The mouth is a thin closed line.
+Color 63897b2a9b94845b46f35aab9dd5f9bcf356c21911f5e5ed2feb12ac5e8f2a82
+Line art b0fc1da98e8c5cff375ada9606259875fce8522808cd1919bf8d6055278b9ab5
+
+v2 kept. Nan is in frame from the head to the feet. The eyes are open. No letters show. The white edge check passed. The hand still reads as a fist on the cheek, not one finger on the nose. The mouth is a thin closed smile. The open laugh does not show.
+Color 8a72b3030babafcac0b89735ed9565589d29307f53a9d628555bb912b59478fb
+Line art b6cddd26e55595d090ee155413ca8b0483462f484b194991b7c6449b4cddf842
+
+Block: the finger and the laugh do not read without an asset change or an src change. Camera, mark, and time changes did not show them. This round stops there.
+
+Tasks flipped to [x]: none.
+Tasks flipped to [b]: none.
+Week 1 rows rendered: 21 of 30. Rows with no open defect: 17.
+New files: docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nose-v1.json and l2-w01-story-page-a-nose-v2.json.
+
+MEASURE_AGENT_RESULT
+status: blocked
+phase_base_sha: 15a7bf0b
+role_base_sha: 6d276f52
+head: 388b42f0
+stage_commit: b27e584d
+plan_commit: 388b42f0
+kept: l2-w01-story-page-a-nose v2
+render_exit: 0
+verify_exit: 0
+line_width_px: 24
+ink_coverage: 4.24%
+peak_rss_mb: 498
+color_sha256: 8a72b3030babafcac0b89735ed9565589d29307f53a9d628555bb912b59478fb
+lineart_sha256: b6cddd26e55595d090ee155413ca8b0483462f484b194991b7c6449b4cddf842
+week1_rendered: 21 of 30
+week1_no_open_defect: 17
+tasks_x: none
+tasks_b: none
+new_files: docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nose-v1.json, docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nose-v2.json
+models: green xai/grok-4.7#high; red minimax-cn-coding-plan/MiniMax-M3; coder none
+handoff: The nose page is blocked. v2 is kept. Nan is in frame from the head to the feet. The eyes are open. No letters show. The hand reads as a fist on the cheek in the color file and in the line art. It does not read as one finger on the nose. The mouth is a thin closed smile. The open laugh does not show. Camera, mark, and still time did not fix this. An asset change or an src change is out of scope. Do not mark the task complete. Week 1 is 21 of 30 rendered and 17 with no open defect.
+END_MEASURE_AGENT_RESULT

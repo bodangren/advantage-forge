@@ -1,0 +1,24 @@
+Green week 1 version 2 delivery. role_base_sha: c4755d25; phase_base_sha: 15a7bf0b.
+Commits: f1e797cb (src/storytime/muse-delivery.ts); 4330cb42 (plan.md evidence).
+vitest: exit 0; Tests  178 passed (178). tsc: exit 2; owned 0; total 38. Mutation (ignore fileVersion): T184 failed, restored.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 (Phase 3: Week 1 pictures)
+task: week 1 version 2 delivery (T184 to T189)
+role_base_sha: c4755d25
+phase_base_sha: 15a7bf0b
+final_green_head: 4330cb42
+commits: f1e797cb (production); 4330cb42 (plan.md evidence)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+vitest: exit 0; Tests  178 passed (178)
+tsc: exit 2; owned errors 0; total errors 38
+mutation_proofs: ignore fileVersion -> T184 failed; restored
+new_files: none
+handoff: approved.json is unchanged. A later delivery role adds fileVersion: 2 to the four rows after the batch 39 picture review.
+dispositions: none
+END_MEASURE_AGENT_RESULT

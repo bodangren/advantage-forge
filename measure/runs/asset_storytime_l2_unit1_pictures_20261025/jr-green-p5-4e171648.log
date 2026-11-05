@@ -1,0 +1,26 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: partial
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+commits: 7c4f8b63f4d11edae5fae07ac28b0bedde5f2039; 7ddaca533e2a5fedcf6330cdd2a2f3ee821029a8; 69fdfcc7eb270d05ca13b3929716d7e6e8a827ff; 3a4f63b07706da0feea35002f12e05ed79aeac16
+tests_run: reconcile-p5.mjs exited 0; M1 exited 1; M2 exited 1; M3 exited 2; M4 exited 1. GREEN_TEST_COMMAND first attempt exited 1 because `/tmp/opencode/wb-shadow/content/storytime/l2/print/pictures.json` was absent. Restored exact v3 bytes from Workbooks commit 078917f1 to that temporary path. GREEN_TEST_COMMAND final attempt exited 0: `Test Files  3 passed (3)`; `Tests  186 passed (186)`. Command: `bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts tests/storytime-picture-rows.test.ts tests/storytime-muse-delivery.test.ts --maxWorkers=1'`.
+files_changed: C1 added `measure/runs/asset_storytime_l2_unit1_pictures_20261025/reconcile-p5.mjs`, `reconcile-p5.log`, and `release-files-p5.tsv`. C2 and C4 updated the track plan. C3 updated the track metadata, `measure/status.md`, `measure/tech-debt.md`, `measure/lessons-learned.md`, and this track's registry entry. The result log remains uncommitted.
+plan_updates: Task 1 and Task 2 are [x] with commit evidence. Task 3 remains [~] and records the PM assignment and stop order. C3 records 23 completed tasks in metadata; the count needs refresh after Task 2 completion.
+known_failures: Phase 5 Task 3 is incomplete. The PM stop order pauses week 8 pictures for a new judge plan. The structural doctor reports known errors from other tracks. It reports no error for this track or its owned files.
+handoff: phase_base_sha=4e171648d0101d9f7b34d0f486fc1494bc0a48e7; role_base_sha=4e171648d0101d9f7b34d0f486fc1494bc0a48e7; final Green HEAD=3a4f63b07706da0feea35002f12e05ed79aeac16. Generator output: `Generated 4 Measure facts.` Generated facts remain uncommitted because they include foreign changes. `./measure/doctor.sh` was not run under the PM small-change rule. The registry line was staged with `git update-index --cacheinfo`; only its line was committed. Other sessions' work stayed uncommitted. No week 8 specs were written. No attempt counter or test was written. No Muse calls were made: 0 calls, 0 attempts, 0.00 USD.
+
+Structural doctor output after C3:
+error: measure/tracks/asset_filled_shelves_20261028/plan.md: new track has started tasks
+error: measure/tracks/asset_p2_npcs_20260928/plan.md: new track has started tasks
+error: measure/tracks/game_archers_revenge_rebuild_20261029/plan.md: new track has started tasks
+error: measure/tracks/game_castle_defense_rebuild_20261029/plan.md: new track has started tasks
+error: measure/tracks/game_magic_defense_rebuild_20261029/plan.md: new track has started tasks
+error: measure/tracks/game_paladins_twin_soul_rebuild_20261029/plan.md: new track has started tasks
+error: measure/tracks.md: missing registry link for asset_filled_shelves_20261028
+error: measure/tracks.md: missing registry link for game_archers_revenge_rebuild_20261029
+error: measure/tracks.md: missing registry link for game_castle_defense_rebuild_20261029
+error: measure/tracks.md: missing registry link for game_magic_defense_rebuild_20261029
+error: measure/tracks.md: missing registry link for game_paladins_twin_soul_rebuild_20261029
+Exited with code 1
+END_MEASURE_AGENT_RESULT

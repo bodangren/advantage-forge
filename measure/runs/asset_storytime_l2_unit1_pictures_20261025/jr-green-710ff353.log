@@ -1,0 +1,98 @@
+Measure Green phase log (final)
+Role: measure-jr-green, build round 40 (Storytime week 1 pictures)
+Session: Green · P3 · storytime_l2_unit1_pictures · r40
+Model: deepseek/deepseek-flash#high (provider deepseek, model deepseek-flash)
+Red model for this phase: minimax-cn-coding-plan/MiniMax-M3 (MiniMax)
+Green coder model: none (no delegation)
+Track: asset_storytime_l2_unit1_pictures_20261025 (asset_storytime_l2_unit1_pictures)
+Phase: "Phase 3: Week 1 pictures" (P3)
+role_base_sha: 69f85933
+phase_base_sha: 15a7bf0b
+Red commit inside phase_base_sha..HEAD: dbb1ea0b (row stage files v6 practice-line, v5 check-row)
+Task: third try at the storytime-nest line art, plus the color defects B and C in the nest rows.
+
+Work done
+1. Read the brief, the plan, and the line-art pass. Viewed the round 39 rows and confirmed A, B, C.
+2. Rebuilt assets/storytime-nest.ts for the two rules that draw lines.
+   - Two bodies with two flat colors: dark cup #7c4a26 and light dry twigs #d6b184.
+     Largest channel gap 0.35, so the paint rule draws each twig outline.
+   - Eleven twigs: one rim ring, four climbers with round ends past the lip, three wall twigs,
+     two low braces, one twig across the cup floor.
+   - Vertex colors: texture false, paintWeight 1. No atlas, so no smeared texels and no seam.
+   - Eggs #8fd3f0 with a light top #aadff7, so they read light blue in the row light.
+   - Soft variation under 0.09 in every region, so no paint edge fires inside a region.
+3. Gates: three fast renders, one full render, one inspect. Rows: practice-line v7 then v8,
+   check-row v6. Verify exits 1 on the external picture list change.
+4. Built out/storytime-review/batch-12/ with eight files and a new brief.md.
+5. Committed the implementation first, then the plan evidence in a second commit.
+6. Marked no task [x] and no task [b]. The week 1 counts stay at 22 of 30 rendered and 14 with
+   no open defect.
+
+Result
+- A is gone in both rows: rim, verticals, and crossing twigs draw continuous strokes.
+- B is gone in both rows: clean cup floor, no black seam under the rim.
+- C is fixed: the eggs read light blue in both row color pictures.
+- Two small line fragments under 40 px remain at the right wall of the check row.
+
+Status: complete. Waiting for the independent re-review.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green (build round 40)
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 "Phase 3: Week 1 pictures"
+models:
+  green: deepseek/deepseek-flash#high
+  red: minimax-cn-coding-plan/MiniMax-M3
+  coder: none (no delegation)
+phase_base_sha: 15a7bf0b
+role_base_sha: 69f85933
+red_in_range: dbb1ea0b (v6 practice-line and v5 check-row stage files; committed Red change confirmed)
+final_head: 710ff353
+commits:
+  - 0893a5cf fix(storytime): give the week 1 nest a dark cup and light twigs for the paint line
+    (assets/storytime-nest.ts, rows v7, v8, check-row v6 stage files)
+  - 710ff353 docs(measure): record storytime green round 40 nest dark cup and light twigs (plan.md only)
+defects:
+  - A (dashed inner rim and crossing twigs): gone in both rows.
+  - B (smeared texels and black seam): gone in both rows (no atlas, vertex colors).
+  - C (pale green-grey eggs): fixed, the eggs read light blue in both row pictures.
+nest gates (one heavy-run.sh command each):
+  - render storytime-nest --fast x3: exit 0, 19,252 triangles each
+  - render storytime-nest: exit 0, 19,248 triangles, 0.19 x 0.076 x 0.198 m, GLB 452 KB
+  - inspect storytime-nest --fast: exit 0, "lowest point y = 0.001 m", "Warnings: none"
+  - "warning:" lines: 0
+rows (render exit / verify exit / kept version):
+  - l2-w01-practice-line-nest: 0 / 1 / v8 (v7 superseded)
+    line 23 px; ink 9.55%; peak 956 MB (v7 peak 912 MB)
+    color  dacc5acf1ff1ee9ead55896a33802698d7d206f064cb9390fa1c92acef6d1c77
+    line   605aa75e487d061bd73a0c12d3882dfeb16b9f4f8211e82733aa41bb61d54973
+  - l2-w01-check-row-nest: 0 / 1 / v6
+    line 25 px; ink 9.86%; peak 494 MB
+    color  9d65d57b300d1845993481d5696e431523010f46ced9a671544df4edde829397
+    line   5c0ab565dabac760c3408c184da2bba9bdaab8ebc73b89427c59862786aec6c
+verify block (external, out of scope):
+  "The picture list changed: expected SHA-256 c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b,
+   measured 6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58."
+  The changed file is content/storytime/l2/print/pictures.json in the Workbooks project, outside this
+  repository. The expected value is a constant in scripts/storytime-book-pictures.ts. Green did not
+  edit either file. The white-edge check therefore did not run this round.
+  Both rows reported "book files served: 15, book file requests refused: 0" and
+  "color repeat identical: yes".
+heavy lock: no exit 75, no exit 137, no "lock wait over 600 s", no net::ERR_UNSAFE_PORT.
+review folder: out/storytime-review/batch-12/ (storytime-nest.png 4 views, practice-line v8 color and
+  line, check-row v6 color and line, storytime-nest-batch-10-practice-line.png,
+  storytime-nest-batch-10-check-line.png, look-reference-nan-and-pip.png, brief.md with the egg color
+  check and "Why the rework"). Green rated no item. PNGs stay out of git.
+week 1 counts: rows rendered 22 of 30; rows with no open defect 14.
+tasks flipped: none [x]; none [b].
+new files: docs/storytime/l2-unit1/w01/rows/l2-w01-practice-line-nest-v7.json,
+  l2-w01-practice-line-nest-v8.json, l2-w01-check-row-nest-v6.json; out/storytime-review/batch-12/
+  (not in git); measure/runs/.../green-p3-r40-step*.log (not in git).
+out of scope, unchanged: src/, tests/, the picture list, every other asset and row.
+open items: the pages l2-w01-story-page-a-nest and l2-w01-story-page-a-nest-and-a-nut still show the
+  earlier nest. Two small line fragments at the right wall of the check row. The verify gate needs a
+  picture-list decision from the print track owner.
+handoff: independent item and row re-review of batch 12. Review batch-12 files only; batch 11 was
+  never reviewed. Confirm A, B, and C are gone and that the eggs read light blue.
+END_MEASURE_AGENT_RESULT

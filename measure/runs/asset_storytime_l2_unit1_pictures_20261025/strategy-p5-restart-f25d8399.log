@@ -1,0 +1,205 @@
+# measure-strategy: Phase 5 restart amendment (5.11)
+
+role_base_sha: f25d83994bdaae338787e6103e341ba0f17ed248
+phase_base_sha (Phase 5, recorded at the Phase 5 start): 4e171648d0101d9f7b34d0f486fc1494bc0a48e7
+Strategy commit: df2aa52e (test-strategy.md only, explicit path).
+Status: complete.
+
+## What the role wrote
+
+`test-strategy.md` section 7, Phase 5, subsection 5.11 "Restart amendment (2026-11-05): gates for
+Task 3, T3a, T4, T5, T6", after 5.10. The text of 5.1 to 5.10 did not change. 5.11.1 names the
+earlier gates that 5.11 replaces. The orchestrator addition of 08:44 ICT (the nut attempt 3) is in
+5.11.8 and in the restart check modes.
+
+## Read-only checks run at f25d8399
+
+- `git diff --name-only 4e171648..HEAD`: 55 commits, no merge, 69 own paths, 0 outside the allowed set.
+- Restart check (5.11.5, extracted from the committed file; SHA-256
+  `c3ecbeb73f75abc77f64bf04c9fd86110f414cd121ac460ce423b3474672f062`): exit 0. Labels: cost files
+  read 15; restart cost rows 52; restart spend (USD) 0.52; max tries 2; pairs above 3 tries 0;
+  calibration 388 / 381 / 7, gate controls 2 failed 2; production main fails 4; retries 4, after a
+  confirmed fail 4, by PM order 0; restart delivered files 49, byte-equal 49, with a pass verdict 49;
+  restart delivered pictures 24; handoff drum 2, c 4, a 25, b 14, d 4.
+- Control run (`--control`): exit 1 with the three named FAIL lines. `--pm-nut3` and `--nut3` exit 1
+  now (no nut try 3 yet), as expected.
+- Pins (28 lines): `sha256sum -c` exit 0.
+- Handoff check commands: drum 2, c 4, a 25, b 14, d 4 OK lines; each exit 0.
+- X12: phase 5 task lines 7; [x] 6; with a commit on the first line 4.
+- X13: 8 lines (3 w08 approval notes, qualified by the file-level rule; 5 plan lines, finding F3).
+  Seed control: matched.
+- X14: no match.
+- Structural doctor: 12 errors, none names this track.
+- No vitest, no tsc, no build, no render, no Muse call, no provider call ran.
+
+## Defaults taken
+
+1. Code-drift base: `P5BASE` 4e171648 with an explicit allowed set. Freezes after the strategy use
+   `P5R_BASE`, which the orchestrator captures right after df2aa52e.
+2. The reconcile is not run again. Its files stay as the record of 7c4f8b63. The 385-line ledger is
+   checked against the bytes on disk instead (X8).
+3. The checker logic is a read-only script inside the strategy, pinned by SHA-256, so no new repo
+   file is needed.
+4. `tests/storytime-book-pictures.test.ts` stays out of GREEN and PROJECT_TESTS. It runs whole and
+   alone in KNOWN_RED_COMMAND with exactly 8 failures, each body with a list pin name.
+5. The 20 owned tsc errors are fixed by a type file `scripts/storytime-muse-guards.d.mts` (maker M2).
+6. The nut try 3 is a "T4 step 9" block under T4; T4 stays [x]; Phase 5 keeps 7 tasks.
+7. Task 3 first-line SHA: `6fd626c6`. T5 and T6 first-line SHA: `f25d8399`.
+8. The w08 approval notes and the delivered handoff manifests are not edited; file-level wording
+   rules qualify them.
+9. The maker does not run `./measure/generate.sh`; closeout owns the facts commit.
+
+MEASURE_AGENT_RESULT
+role: measure-strategy
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+commits: df2aa52e
+tests_run: read-only only. Restart check exit 0 (49/49 delivered files pass); control exit 1; pins exit 0; five handoff check commands exit 0; structural doctor 12 errors, none of this track. No vitest, tsc, build, render, Muse call, or provider call.
+files_changed: measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md (5.11 added); this log (not committed)
+plan_updates: none (the strategy role does not edit the plan)
+known_failures: tests/storytime-book-pictures.test.ts has 8 failures that came before T4 (list v4 pin); tsc has 58 errors, 20 of them in the owned file tests/storytime-muse-attempts.test.ts (finding F2)
+handoff: Capture P5R_BASE with git rev-parse HEAD right after df2aa52e, before any maker edit. Blocking findings for the maker: F1 (T5 and T6 first lines have no SHA), F2 (20 owned tsc errors; add scripts/storytime-muse-guards.d.mts), F3 (5 plan lines with unqualified "approved"), F4 (metadata actual_tasks 23, plan has 28 [x] task lines), F5 (Task 3 [~]). No delivered file lacks a passing judge result. The checker is measure-phase-acceptance on coding-plan/glm-5.3-flash#high; escalate once to coding-plan/glm-latest#high only on fail or inconclusive.
+END_MEASURE_AGENT_RESULT
+
+# Amendment run: 5.11.14 PM exception, the nut line try 4
+
+role_base_sha: f51889cc32c4abf4b7a9f58df59608f448e2ed60
+Strategy commit: 6eeb1f38 (test-strategy.md only, explicit path; 557 lines added, 0 removed).
+
+## What the role wrote
+
+5.11.14 after 5.11.13. It holds the PM decision quote of 09:17 ICT, the three nut states and modes,
+the gate changes (X2, X3, X4, X5, X6, X7), the X2b guard commands, restart check v2 (SHA-256
+`30f68eafaa216bdd8947efa394aac08b8d11fbd98fed37c0c8988527807541a7`), a second pin block (7 lines),
+the M1 change, and anti-pattern notes. Earlier text did not change: the v1 block still extracts to
+`c3ecbeb7…`.
+
+## Read-only checks at f51889cc
+
+- v1 `--pm-nut3`: exit 1 (the batches say "one nut only", not "one nut, clearly a nut").
+- v2 `--pm-nut3`: exit 0. Rows 54, spend 0.54, pairs above their limit 0, 4th tries 0, nut 3/3,
+  main fails 5, retries 6/4/2, delivered 49/49/49, pictures 24. v2 `--pm-nut3 --control`: exit 1.
+  `--nut4-fail` and `--nut4`: exit 1 (no try 4 yet). `--nut3` and two modes: exit 2.
+- Pin block 1 (28): exit 0. Pin block 2 (7): exit 0.
+- X2b with `P5R_BASE=df2aa52e`: code files changed 0 (committed); `max tries: 3`; the working tree
+  already shows `try exceptions: 1` (the step 11 maker edit, not yet committed).
+- No vitest, tsc, build, render, Muse call, or provider call ran.
+
+## Defaults taken
+
+1. v1 is replaced by v2 for every later run, because v1 cannot pass any nut state now.
+2. `--nut3` is retired (exit 2), because the line try 3 failed.
+3. In `--nut4`, the line try 4 is both a retry after a confirmed fail and a PM-order try (the line
+   try 2 passed earlier); the "first pass is the delivery" check takes the PM order.
+4. The guard export contract is `TRY_EXCEPTIONS` with exactly one entry; another shape is read by hand.
+5. P5R_BASE: the X2b commands use the value that the orchestrator captured after df2aa52e.
+
+MEASURE_AGENT_RESULT
+role: measure-strategy
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+commits: 6eeb1f38
+tests_run: read-only only. Restart check v2 --pm-nut3 exit 0 (49/49 delivered files pass); --pm-nut3 --control exit 1; --nut4-fail and --nut4 exit 1 before the try 4; pin blocks 1 and 2 exit 0. No vitest, tsc, build, render, Muse call, or provider call.
+files_changed: measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md (5.11.14 added); this log (not committed)
+plan_updates: none
+known_failures: tests/storytime-book-pictures.test.ts 8 failures that came before T4 (list v4 pin); 20 owned tsc errors in tests/storytime-muse-attempts.test.ts until maker M2; findings F1 to F4 of 5.11.13 stay open
+handoff: Use restart check v2 (SHA 30f68eaf…) from now on. Mode by the nut state: --pm-nut3 before the line try 4, --nut4-fail if it fails (second judge must confirm; v2 stays; one line to the PM), --nut4 if it passes (v3 pair in w01/delivery-muse-v4/ and a48-forge-pictures-nut3/, 51 files). X2 allows only scripts/storytime-muse-guards.mjs, its .d.mts, and tests/storytime-muse-attempts.test.ts after P5R_BASE, with try exceptions: 1 and max tries: 3.
+END_MEASURE_AGENT_RESULT
+
+# Amendment run 3: 5.11.15 final nut state
+
+role_base_sha: a2675b2c55500be4d348fb4c09a039a4f72508e5
+Strategy commit: 91fa55b7 (test-strategy.md only, explicit path; 573 lines added, 0 removed).
+
+## What the role wrote
+
+5.11.15 after 5.11.14: the second PM decision quote (about 10:23 ICT), the final nut table, the gate
+changes (X2, X3, X4, X5, X6, X7, X10/X11 order), restart check v3 (SHA-256
+`6ae82ad4a305341a409be95cd007239ef069cac2e8c4ef6301467908bac78a9e`, mode `--final`, control
+`--final --control`; the v1 and v2 modes and no mode exit 2), pin block 3 (12 lines), the final
+maker and checker briefs, anti-pattern notes, and the findings table. v1 and v2 still extract to
+`c3ecbeb7…` and `30f68eaf…`.
+
+## Read-only checks at a2675b2c
+
+- v3 `--final`: exit 0. 57 rows, 0.57 USD, max 5 tries, pairs above their limit 0, pairs above 3
+  tries 2 (nut color, nut line), nut 4/5, production files 22, results 57, second 6, main fails 6,
+  retries 9/6/3, guard map 3 entries (limits 4 and 5, MAX_TRIES 3, other ids 0, unsourced 0),
+  11 folders, 51/51/51 files, 24 pictures, handoff drum 2, c 4, a 25, b 14, d 4, nut3 2.
+- v3 `--final --control`: exit 1 with the named FAIL lines. Retired modes and no mode: exit 2.
+- Pin blocks 1 (28), 2 (7), 3 (12): each exit 0. nut3 check command: 2 OK, exit 0.
+- X1: own files outside the allowed set 0; one foreign-subject commit d6867c52 (measure/tracks.md
+  only); foreign Storytime paths 0. X2 (P5R_BASE=df2aa52e): 0, 0, 0.
+- X12: 7 task lines, 7 [x], 7 with a commit; metadata actual_tasks 29 = grep 29, in_progress.
+- X13: only the 3 w08 approval notes (file-level rule). X14: no match.
+- Structural doctor: 12 errors, none names this track.
+- No vitest, tsc, build, render, Muse call, or provider call ran.
+
+## Defaults taken
+
+1. v3 needs `--final`; every earlier mode and no mode exit 2.
+2. v3 imports the guard module to read TRY_EXCEPTIONS and MAX_TRIES; it calls no function.
+3. A PM source is an entry `source` that starts with "PM, 2026-11-05 ".
+4. The checker runs TYPECHECK, then PROJECT_TESTS, then KNOWN_RED, after the maker's GREEN and
+   type check runs are in the plan.
+
+MEASURE_AGENT_RESULT
+role: measure-strategy
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+commits: 91fa55b7
+tests_run: read-only only. Restart check v3 --final exit 0 (51/51 delivered files pass); --final --control exit 1; pin blocks 1 to 3 exit 0; nut3 handoff check exit 0; X1, X2, X12, X13, X14 as expected; structural doctor 12 errors, none of this track. No vitest, tsc, build, render, Muse call, or provider call.
+files_changed: measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md (5.11.15 added); this log (not committed)
+plan_updates: none
+known_failures: tests/storytime-book-pictures.test.ts 8 failures that came before T4 (list v4 pin); interim tsc 63 total, 25 owned in tests/storytime-muse-attempts.test.ts (F2, maker M2)
+handoff: Use restart check v3 (SHA 6ae82ad4…) with --final and --final --control only. Open blocking items: F2 (25 owned tsc errors, annotation fix and type check wait for the heavy lock) and F6 (GREEN_TEST_COMMAND not run since the step 11 and 13 code changes). F1, F3, F4, F5 are fixed. The checker (glm-5.3-flash#high) starts after the maker's GREEN and type check results are in the plan.
+END_MEASURE_AGENT_RESULT
+
+# Amendment run 4: 5.11.16 known-red rule under list drift and the carry-over rule
+
+role_base_sha: b72f8b60aba82dd99c09eb2c60292016ae3d9b3f
+Strategy commit: 325b92a0 (test-strategy.md only, explicit path; 218 lines added, 0 removed).
+
+## Findings
+
+- The earlier 8 failure ids were not recorded in any log. Derived read-only from the test bodies and
+  the list bytes of Workbooks commit c618523e (SHA-256 327f805f…, 194 rows): T142, T145, T147,
+  T150, T173, T174, T176, T177.
+- Workbooks commit b80c374d (2026-11-05 10:19 ICT, list version 6) moved the live list to 89b2910c…
+  (196 rows; the two D4 rows added). T176 now passes: `Rows checked` is 196, the value that the
+  test wants; every row has its class size. The other 7 still fail. This equals the checker result.
+- Named pin-dependent set (pin-set.mjs, SHA-256 f67cfa8f…): 13 of 142 tests: T142, T143, T144,
+  T145, T147, T148, T149, T150, T173, T174, T175, T176, T177. Drift sentinels: T142, T147, T173, T174.
+
+## Read-only checks at 325b92a0
+
+- CARRY_OVER_CHECK: only test-strategy.md changed since b72f8b60; 0 lines removed; the six earlier
+  block SHA-256 values unchanged; pin blocks 1 to 3 exit 0; restart check v3 --final exit 0, pass.
+- KNOWN_RED_CHECK light part: pin set script SHA as stated; 142 tests; 13 pin-dependent; test file
+  unchanged; live list 89b2910c differs from the pin. The FAIL-line parser gives T142,T173 on a
+  two-line fixture. The vitest part did not run (role rule).
+
+## Defaults taken
+
+1. The known-red rule needs no exact count: a subset of the named set, all 4 sentinels failing, the
+   total 142, no skip, no filter, and an unchanged test file.
+2. A foreign commit in the carry-over range is allowed only outside the X1 allowed set and with no
+   Storytime path; the checker names it.
+3. The carry-over check reruns the pins and restart check v3 --final (light), because git does not
+   cover out/, the handoff folders, and measure/runs/.
+
+MEASURE_AGENT_RESULT
+role: measure-strategy
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+commits: 325b92a0
+tests_run: read-only only. CARRY_OVER_CHECK all conditions hold at 325b92a0; restart check v3 --final exit 0; pin blocks exit 0; pin-set.mjs prints the 13-test set; list probe against 327f805f and 89b2910c. No vitest, tsc, build, render, Muse call, or provider call.
+files_changed: measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md (5.11.16 added); this log (not committed)
+plan_updates: none
+known_failures: tests/storytime-book-pictures.test.ts fails 7 pin-dependent tests at the live list 89b2910c (T142, T145, T147, T150, T173, T174, T177); all are in the named set
+handoff: The checker reruns CARRY_OVER_CHECK, KNOWN_RED_CHECK (one heavy run), X13, X14, X15, G5, and the plan-quote comparison at 325b92a0, then writes acceptance-p5-restart-325b92a.json and .log. The b72f8b60 results carry over when CARRY_OVER_CHECK holds. The strategy commit is not an implementation commit.
+END_MEASURE_AGENT_RESULT

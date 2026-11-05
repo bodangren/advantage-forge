@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Phase 4 passes acceptance at 35f4a12c. All 3 Phase 4 tasks are [x] and each task first line carries a commit SHA in the phase range (Task 1 b6824b8a, Task 2 6466dd05, Task 3 569e62cc). The closeout gate items 1 to 9 hold with quoted evidence, the cover gates C1 to C5 pass, the 162-row count command printed the expected labeled line, and both person records carry person, time, rows, verdict, and note. Reviews A, B, and C pass at b6326503, adversarial testing passes at 35f4a12c, and the three routed findings RA-P4-1, RA-P4-4, and RA-P4-5 are fixed in the adversarial commit. The remediation table records a disposition for every finding. The registry claims no acceptance without a person record. The interphase checker lists only Phase 5 as incomplete.",
+  "phase_base_sha": "fc76c27209402c54354447693e9b291d4411ff79",
+  "role_base_sha": "376ae5dd13d823efc8d9a67fb0d9daee4dd8f647",
+  "audited_head_sha": "35f4a12c7a8f6206bb3e10d454eedfb6c792a0cf",
+  "audited_head": "35f4a12c7a8f6206bb3e10d454eedfb6c792a0cf",
+  "head_at_start": "35f4a12c7a8f6206bb3e10d454eedfb6c792a0cf",
+  "head_at_finish": "35f4a12c7a8f6206bb3e10d454eedfb6c792a0cf",
+  "head_current": true,
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "PA4-N1 (open review item): RB-P4-1 (Low) stays open. `cover-calm-top --print` reads a path with no out/ confinement, no realpath check, and no regular-file check. The remediation note defers it to Phase 5 as a tech-debt candidate. Phase 5 must record it in measure/tech-debt.md.",
+    "PA4-N2 (stale plan text, A5 class): plan.md line 4447 (review remediation note) says review-b-b6326503.json 'still says inconclusive'. The artifact on disk now has status 'pass' with no blocking finding. The plan sentence is stale. Phase 5 closeout should update that sentence.",
+    "PA4-N3 (prerequisite HEAD, informational): the adversarial-testing role gate quote names baseline 376ae5dd, but the audited HEAD is 35f4a12c. The only change between them is the adversarial test commit 35f4a12c itself (2 test files, 17 insertions). The adversarial result contains its own passing run of the two changed files at 35f4a12c (exit 0, 186 tests passed). The review A, B, and C results target b6326503; the only later code-or-test commit is 35f4a12c, which changes tests only. The review results stay valid for the implementation.",
+    "PA4-N4 (by design, carry): the Phase 4 heading has no checkpoint and metadata.json still says status 'in_progress'. The closeout note states that phase acceptance and Phase 5 own those facts. Phase 5 must run ./measure/generate.sh and ./measure/doctor.sh and update the registry and metadata at closure."
+  ],
+  "task_verification": [
+    "Task 1 'Reconcile the final Workbooks picture list and size specification' [x], first line holds commit b6824b8a. In range fc76c272..35f4a12c. Red c0035c28 and c2ebc72d, reviews at 4d4d86a2, all in range.",
+    "Task 2 'Produce weeks 2 to 7 after the week 1 review' [x], first line holds commit 6466dd05. In range. The task body lists approval lists d66d8f2a, d005f2e1, c19d6ef9, 700a7b83, cce84c6b, ddd2105e; delivery evidence 1772cf79, 997ffc31, 8f92948f, d854e613, 302835df, 6466dd05; person records 48c71d42 and 1ff8e1c1. All are in the phase range commit list.",
+    "Task 3 'Produce the Level 2 cover render under S19' [x], first line holds commit 569e62cc. In range. Cover code 8c9a4082 and 6f7c1444, Red f88af46a and 0f232b1e, approval 0629e1e2, all in range.",
+    "Phase 4 has 3 [x] tasks, no [~] task, no [b] task. The interphase checker reports incomplete_phases: 1, only Phase 5 (1/2 remaining). Phase 4 is complete in the checker.",
+    "Every [x] Phase 4 task first line carries a SHA: the grep of task lines shows SHAs on lines 1642, 1780, and 4086. The gate failure 'some completed [x] tasks lack commit SHA evidence' is fixed by 376ae5dd."
+  ],
+  "evidence": [
+    "HEAD: git rev-parse --short=8 HEAD returned 35f4a12c at start and at finish. git status for src, scripts, tests, and docs/storytime is clean. The working tree matches the audited revision.",
+    "Closeout gate item 1: the jr-green closeout log shows GREEN_TEST_COMMAND run 1 exit 1 with the single T171 timeout (5452 ms), run 2 exit 0 with Tests 185 passed (185), staging exit 0 with Tests 3 passed (3), and tsc exit 2 with owned tsc errors 0 and total 38. The plan quotes the same values (plan.md lines 4340 to 4359).",
+    "Closeout gate item 2: the plan quotes grep results for PICTURE_LIST_V3_SHA256 and c3e23cfd: 4 matches, all in the T173 negative control of tests/storytime-book-pictures.test.ts; src and scripts hold 0 matches. contract.md line 10 names the v4 SHA 6d05dfc5...62a58.",
+    "Closeout gate item 3: the plan lists one passing staging gate per week 2 to 7 with element paths checked 82, 94, 91, 63, 70, 90 and 'stage check: pass'.",
+    "Closeout gate item 4: the orchestrator ran the exact node count command and it printed 'weeks 2 to 7 delivered jobs: 162 files: 324 A: 96 B: 12 C: 54 missing: 0 extra: 0'. This is the labeled output of section 4.5, not a digit-only match (A3 holds).",
+    "Closeout gate item 5: the closeout table lists G3 batches with controls and G4 records for each of weeks 2 to 7. G7 records exist for all six weeks: 48c71d42 (weeks 2 to 6, 135 rows, Daniel 'Approved', 2026-11-03T08:43+07:00, Tasks item WVphdWJubHZXUkljd3VPOQ) and 1ff8e1c1 (week 7, 27 rows, Daniel 'Ok', 2026-11-03T10:29+07:00, Tasks item RERnblJqVDdnQTNYOGtOcg). No week is 'awaiting person review'.",
+    "Person records: person-review-w02-w06.json holds gate G7, person Daniel, evidenceClass owner-passed, time, Tasks answer and item, relayedBy PM, verdict pass, note 'Approved', per-week manifest SHA-256 values that match the closeout table (week 2 6e6b5145..., week 3 24213647...), and 27 row ids per week. person-review-w07-cover.json holds gate 'G7 and C5', the same record shape, the cover fileSha256 d32b5cc7..., and manifestSha256 27710b37... that matches the closeout note. No manifest holds a reviews.person field (both records say no approved.json changed and no delivery ran again).",
+    "Closeout gate item 6 (cover): the cover is delivered at out/storytime/l2/unit1/cover/delivery-muse-v1/ with l2-cover-v1.png 4000 x 3000 and manifest SHA 27710b3711757d99294b7e837377d325eb9a6094e1dad43e0f064d2581397b88. C1 printed 'top 30 percent differing share: 0' over 900 rows, C2 and C3 pass in the Task 3 notes, C4 delivered with commits 6f7c1444 and 0629e1e2, and C5 is the 1ff8e1c1 record.",
+    "Closeout gate item 7: the plan records the PM confirmation that the 4 week 8 rows are out of scope until the PM assigns them. The count command shows extra: 0, so no week 8 id was made (A4 holds).",
+    "Closeout gate item 8: the cost report gives usage.cost per part and the labeled totals 9.25 USD for weeks 2 to 7 and 12.93 USD for all 18 cost files. The closeout log shows the same line.",
+    "Closeout gate item 9: ./measure/generate.sh exit 0, 'Generated 4 Measure facts.' The three generated files stayed unstaged. measure/tracks.md did not change. The closeout log confirms.",
+    "Review artifacts: review-a-b6326503.json, review-b-b6326503.json, and review-c-b6326503.json all have status pass with empty blocking_findings. adversarial-376ae5dd.json has status pass at audited_head_sha 35f4a12c and resolves RA-P4-1 (30000 ms test and hook timeout; T171 then passed in 3759 ms), RA-P4-4 (T192 matches 'must be a PNG'), and RA-P4-5 (T183 asserts the exact share 100 / 900). The timeout is in the working tree at tests/storytime-muse-delivery.test.ts line 21 (vi.setConfig with testTimeout 30000).",
+    "Review remediation note: the disposition table covers RA-P4-1 to RA-P4-5, RB-P4-1, and RC-P4-1 to RC-P4-5, each with FIX, ROUTED, or DEFER. The routed items (RA-P4-1, RA-P4-4, RA-P4-5) are resolved by the adversarial result. RB-P4-1 is deferred with the owner route. Every finding has a disposition.",
+    "Contract fixes: contract.md holds the deliver-cover entry (line 101), the cover-calm-top entry (line 113, read-only), the Cover manifest section (line 365) with job l2-cover-v1 and the ready-with-empty-reviews amendment (line 349), and the v4 SHA (line 10).",
+    "Registry (A6): measure/tracks.md holds only the track link for this track; it holds no 'accepted' and no 'awaiting person review' text. metadata.json says status 'in_progress'. No registry line claims acceptance without a person record.",
+    "A3, A4, A6, A7 applicability: the phase diff touched src/storytime (list pin, week delivery, stage check, cover calm top, cover delivery) and test files. The count claims in the plan use labeled output, the count gate reports missing: 0 extra: 0, the registry makes no overstatement, and the exact-compare and line-pixel rules are guarded by T179 and the 254-pixel probes. No banned-term filter or tracks registry file changed in the phase range, so no over-broad filter finding applies.",
+    "UX browser review: not applicable. Phase 4 delivers picture files, CLI commands, and a cover. No browser UI changed in the owned paths."
+  ],
+  "commands": [
+    "git rev-parse --short=8 HEAD; 35f4a12c; git status --porcelain src scripts tests docs/storytime; clean",
+    "git log --oneline fc76c272..35f4a12c -- src scripts tests; 13 commits, last is 35f4a12c (tests only)",
+    "git log --oneline fc76c272..35f4a12c; 105 commits; all task and evidence SHAs appear in the list",
+    "grep -nE '^- \\[[x~ b]\\] Task' measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md; Phase 4 tasks at lines 1642 (b6824b8a), 1780 (6466dd05), 4086 (569e62cc)",
+    "python3 /home/daniebo/Desktop/measure/skills/measure-orchestrator/scripts/measure_interphase_checks.py status --repo . --track asset_storytime_l2_unit1_pictures_20261025; incomplete_phases: 1 (Phase 5, 1/2 remaining)",
+    "grep -n 'deliver-cover\\|cover-calm-top\\|Cover manifest\\|6d05dfc5\\|ready' contract.md; entries present at lines 10, 101, 113, 365, 378",
+    "grep -n 'setConfig\\|testTimeout' tests/storytime-muse-delivery.test.ts; line 21 vi.setConfig({ testTimeout: 30000, hookTimeout: 30000 })",
+    "Read of review-a/b/c-b6326503.json, adversarial-376ae5dd.json, person-review-w02-w06.json, person-review-w07-cover.json, jr-green-p4-closeout.log, jr-green-p4-review-fixes.log",
+    "Run by the orchestrator (quoted, not rerun): jr-green role gate on 376ae5dd 'PASS: jr-green gate passed' exit 0; review-a, review-b, review-c role gates PASS exit 0 each; adversarial-testing role gate 'PASS: adversarial-testing gate passed' exit 0; 162-row count command printed the expected labeled line"
+  ],
+  "closeout_carry": [
+    "PA4-N1: record RB-P4-1 as a tech-debt candidate in measure/tech-debt.md at Phase 5 closeout.",
+    "PA4-N2: fix the stale review-b sentence in the Phase 4 review remediation note.",
+    "PA4-N4: Phase 5 owns ./measure/generate.sh, ./measure/doctor.sh, the registry, the metadata, and the phase checkpoints.",
+    "The 4 week 1 v2 rows (a-net, check-row-net, a-nose, nan-can-nod) have their person look recorded (100826bb, plan line 7341). No carry from Phase 3 remains except the PA3 closeout corrections, which Phase 5 owns."
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/phase-acceptance-35f4a12c.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/phase-acceptance-35f4a12c.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "handoff": "Phase 4 passes acceptance at 35f4a12c. No blocker routes to another role. The orchestrator can record the phase checkpoint and move to Phase 5. Phase 5 carries PA4-N1 (RB-P4-1 tech-debt candidate), PA4-N2 (stale review-b sentence), and PA4-N4 (registry, metadata, generate.sh, doctor.sh). No owner decision is required.",
+  "facts_changed": [
+    "Storytime Phase 4 passed phase acceptance at 35f4a12c with 185 closeout tests, 162 delivered rows (324 files), and the Level 2 cover person-reviewed by Daniel."
+  ]
+}

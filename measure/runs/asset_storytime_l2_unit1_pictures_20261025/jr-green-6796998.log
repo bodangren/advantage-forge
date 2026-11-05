@@ -1,0 +1,75 @@
+# Jr Green log — P2 T3 (still engine hook + line-art pass)
+
+status: complete
+
+Track: asset_storytime_l2_unit1_pictures_20261025
+phase_base_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: 679699859e69a78216b509b5de02dc1cf903339a
+Red commits: 54889801 (tests), 67969985 (plan evidence)
+Red model: openai/gpt-6.1-sol#high. No coder on any openai/* model.
+
+Log started. Next: read strategy/contract, check git status, rerun Red command.
+
+## Red rerun (gate 1)
+Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`
+Result: exit 1; `Tests  9 failed | 60 passed (69)`. T42-T44 and T46-T51 fail on missing seams
+(`src/song/still-hook.js`, `src/storytime/line-art-pass.js`, `captureStillPair`, `checkLineArtSmoke`,
+the `lineart-smoke` command). The 41 earlier picture tests and the 19 timeline tests pass.
+Valid Red. Log file: /tmp/opencode/red-rerun-t3.log.
+
+## Technique choice
+Depth + normal discontinuity pass: render the scene twice into render targets with override
+materials (MeshNormalMaterial, MeshDepthMaterial RGBADepthPacking), threshold depth and normal
+discontinuities per pixel, output 1-bit bytes top row first. Both passes are depth-tested scene
+renders, so hidden edges stay hidden. No wireframe material, no WireframeGeometry, no line objects.
+The page's `three` namespace travels through the hook (`window.__bookStill.three`), and the page
+loads `src/storytime/line-art-pass.ts` through the vite dev server, so no bare `import('three')`.
+
+## Unit gate (gate 2)
+First run: exit 1; `Tests  3 failed | 66 passed (69)`. All three failures were one defect:
+`Matrix4.elements` is a plain array, so `.set()` does not exist. Fixed the projection restore to
+an indexed loop. Second run: exit 0; `Tests  69 passed (69)`; no skip.
+
+## Type check (gate 3)
+Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json > measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-tsc-t3.log 2>&1; echo "tsc exit: $?"'`
+`tsc exit: 2`; first count was `owned tsc errors: 2` (optional Buffer fields read through an alias
+after the guard; fixed by guarding the locals). Final: `owned tsc errors: 0`;
+`baseline tsc errors: 31` (all outside the owned paths; see known_failures).
+
+## T45 engine diff checks (gate 4, after the implementation commit fc2cc6a8)
+- `git diff --name-only 1d39b8fd -- src/song` prints exactly: `src/song/main.ts`, `src/song/still-hook.ts`.
+- `removed song lines: 0`
+- `git diff --quiet 1d39b8fd -- src/song/timeline.ts tests/song-timeline.test.ts` exit `0`.
+
+## Implementation commit
+`fc2cc6a8` feat(storytime): add still engine hook and form-edge line-art pass
+Paths: src/song/main.ts, src/song/still-hook.ts (new), src/storytime/line-art-pass.ts (new),
+src/storytime/book-pictures.ts. scripts/storytime-book-pictures.ts needed no change.
+
+## Smoke preparation
+- `plan` run: wrote 112 jobs to out/storytime/l2/unit1/jobs.json. Nan window job: `w01-readalong-p05`
+  ("Nan ... waves at the classroom window next to a small green plant in a pot").
+- Scene file docs/storytime/l2-unit1/w01/w01-readalong-p05-v1.json did not exist; wrote it once per
+  the orchestrator deviation, from existing approved pieces only: map `classroom` (has windows on
+  the back wall), actor `Nan` (CAST: sprout-nan, the approved cast look), pose clip `wave`
+  (GESTURES), prop `pot` (the approved flower pot with a leafy green plant and two red flowers),
+  and one camera key in the existing key schema. No new asset, no improvised pose.
+- Decodes and builds: `stage ok; at 0.5 sha f0c3cd39b41f actors [ 'Nan' ] props 1`.
+- Committed alone: `5e90526d` docs(storytime): add Nan window scene file.
+
+## Bounded smoke run T52 (gate 5, once)
+Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node --import tsx scripts/storytime-book-pictures.ts lineart-smoke --job w01-readalong-p05'`
+Exit `0`. Output: out/storytime/l2/unit1/smoke/lineart-2026-10-25T19-27-40-335Z/
+(color.png, lineart.png, fixture-lineart.png, smoke.json). No candidate, version, evidence,
+manifest entry, ledger line, or paid call. No smoke output committed.
+Labels: `hook before seek: absent`; `hook after seek: present`;
+`window.__song keys: load,portrait,ready,seek`; `camera state drift: 0`;
+`color repeat identical: yes`; `stage ink share: 2.05%`; `fixture interior ink: 0.00%`;
+`fixture ring rays: 360/360`. All in range.
+Pictures: the stage line art shows clean outlines and form edges (Nan waving at the window,
+window frame, stools, table, shelf, potted plant), not a mesh net. The fixture shows a complete
+smooth sphere ring with one box edge stopping behind the sphere; hidden edges stay hidden.
+
+## Plan evidence
+Task 3 flipped to [x] with commit fc2cc6a8. plan.md committed alone. ./measure/generate.sh run;
+generated files not committed. Task 4 (calibration) left [ ].

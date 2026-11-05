@@ -1,0 +1,40 @@
+{
+  "reviewer": "opencode-go/mimo-v2.6-flash",
+  "seen": {
+    "look-reference-nan-and-pip.png": "Approved style reference: the girl Nan and the dog Pip in the soft round chibi style.",
+    "sprout-pat-render.png": "Pat in four views: a chibi boy with black hair, green shirt and brown shorts, holding a small brown teddy bear at his chest.",
+    "storytime-animal-pictures.png": "Four views of three orange-framed wall pictures: lion on blue, elephant on yellow, frog on pink.",
+    "l2-w01-story-page-hello-i-am-pat-v4.png": "Color page: Pat stands in a classroom with a green door at left, three animal pictures on the wall, a low table and a wood floor.",
+    "l2-w01-story-page-hello-i-am-pat-line-v4.png": "The same page as 1-bit line art with thick stepped strokes."
+  },
+  "storytime-animal-pictures": {
+    "overall": 8.7,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "issues": [],
+    "fix": "",
+    "notes": "Each frame covers its picture flush on all four sides in all four views. The lion, the elephant and the frog are easy for a child to name. I see no text, no human face and no speck. I see no floating or buried part. The elephant tusks and the trunk tip are the smallest details. They stay separate shapes in the line art."
+  },
+  "l2-w01-story-page-hello-i-am-pat": {
+    "overall": 7.3,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "issues": [
+      "The room wall ends at the right edge. A white strip shows from the top to the floor at about 6 percent of page width.",
+      "At the far left edge, a small orange round object is cut by the page edge. It sits below the cut plant leaves. A child cannot name it. The plant leaves also end at the page edge with the stem off the page.",
+      "Pat's open waving hand sits right against the teddy's body at the left of his chest. The two read as one crowd.",
+      "The school bag shows only as a red sliver behind his right side. Its blue round bump reads weakly as something moving inside.",
+      "Known defect seen: a small skin flap at the outer eye corner of each eye.",
+      "Known defect seen: his low hand at the belly reads as a closed fist."
+    ],
+    "line_art": [
+      "Merged strokes at the left of Pat's chest, at about 31 to 47 percent across and 61 to 74 percent down. The open hand, the teddy's head and the shirt lines join into one crowded knot.",
+      "Open line ends at the two right table legs: the vertical strokes stop at the floor with no foot line, at about 81 and 85 percent across and 77 percent down.",
+      "Open line ends at the short red shape by Pat's left hip: two vertical strokes stop at about 58 percent across with no bottom line."
+    ],
+    "fix": "Separate the waving hand from the teddy, show more of the bag, and close the strokes that stop at the floor.",
+    "notes": "Pat's face is clear and front facing. The teddy sits at the left of his chest below his open hand. Its head, ear, eye and muzzle show. It reads as a teddy in color. It reads weakly in line art. The open hand points at the green door and reads as a wave. The red school bag shows behind his right side. A blue round patch sits on it. The door, the low table and the three pictures are clear. Each picture sits inside its frame. No letters or numbers show anywhere. I saw no speck and no forehead streak. I did not see the known dashes at the eye corners or by the ear at this resolution."
+  }
+}

@@ -1,0 +1,22 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 15
+book file requests refused: 0
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 7.29% (164010 of 2250000 pixels black).
+l2-w01-check-row-nest v4: rendered; stage d3b5c8e72e11421c467ea0c5a4fd331c2bfe976adacf9d86bc1bafddfcf935c7; file w01/rows/l2-w01-check-row-nest-v4.png; lineart w01/rows/l2-w01-check-row-nest-line-v4.png; size 1500 x 1500; render peak rss mb: 499
+Line-art line width: 25 px (minimum 12 px).
+Line-art ink coverage: 9.87% (221972 of 2250000 pixels black).
+Line-art line width: 26 px (minimum 12 px).
+Line-art ink coverage: 9.69% (218093 of 2250000 pixels black).
+Line-art line width: 23 px (minimum 12 px).
+Line-art ink coverage: 7.74% (174094 of 2250000 pixels black).
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 7.29% (164010 of 2250000 pixels black).
+l2-w01-check-row-nest v1: passed
+l2-w01-check-row-nest v2: passed
+l2-w01-check-row-nest v3: passed
+l2-w01-check-row-nest v4: passed
+Row verification passed for 4 row versions.

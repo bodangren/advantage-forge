@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "RB6-01, RB6-02, and RB6-03 close at e317dcae on both providers. The Green scan splits every text at every unescaped quote, decodes the head, each segment, and the tail with a tolerant decoder, and splits each decoded layer again. All 33 probe constructions behave as design B requires, except one probe that hits a word-boundary limit of the api-key-prefix pattern. That limit also applies to raw text and is outside the malformed-string class (RB7-01, low, nonblocking). The worst-case cost probe stays below 0.6 s. The focused rows and the full file pass.",
+  "phase_base_sha": "1d39b8fda457e12d8e7332e7de65d2046ddda78e",
+  "role_base_sha": "bb4e11f035266b9dbc53a47f1153c5f62b75cb8c",
+  "audited_head_sha": "e317dcae392d082c7e781569ff95dfad82bd5ebc",
+  "audited_head": "e317dcae392d082c7e781569ff95dfad82bd5ebc",
+  "task_base_sha": "e8d605ab0c4f211e380af3a7a3684d869cf5bc02",
+  "head_current": true,
+  "security_applicability": "applicable",
+  "prior_findings_status": {
+    "RB6-01": "closed. The split loop runs to index == text.length and emits the tail as a segment (src/storytime/book-pictures.ts:1183-1196). A lone trailing backslash stays literal (tolerantDecode, src/storytime/book-pictures.ts:1242-1246). T129 and T130 pass for both providers. Probes: unterminated token, trailing backslash, unterminated token after a stray quote, and unterminated tokens at layers 1 and 3 all yield api-key-prefix.",
+    "RB6-02": "closed. tolerantDecode (src/storytime/book-pictures.ts:1208-1263) resolves each valid escape and keeps each invalid escape, each lone backslash, and each raw control character as literal text. It never throws. JSON.parse no longer gates the scan. T131 and T132 pass for both providers, and T131 also covers the MiniMax envelope. Probes: raw LF, raw TAB, \\q, \\u00zz, a lone high surrogate, a high surrogate before an invalid low escape, the envelope with LF, and the envelope with \\q all yield a finding.",
+    "RB6-03": "closed. Every unescaped quote ends a segment, so the segments cover both quote parities. T133 passes for both providers. Probes: one stray quote, two stray quotes, a stray quote in the MiniMax envelope, a stray quote at layer 2, and a prose backslash before a quote all yield api-key-prefix."
+  },
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "RB7-01 low, class: other: src/storytime/book-pictures.ts:927 starts the api-key-prefix rule with \\b. A credential that directly follows a word character (for example `zz` + escaped `sk-...`) gives no api-key-prefix finding. The plain form `zzsk-...` in raw text gives no finding either, so this is a pattern limit from RB-04, not a decode gap. The env rules have no boundary and still find an env value in the same construction (probe: env:PROBE_ENV_SECRET_KEY). Fix hint: record a tech-debt candidate. Do not change task 12. A pattern change must balance false refusals of words such as `task-`."
+  ],
+  "evidence": [
+    "Provenance: git rev-parse HEAD returned e317dcae392d082c7e781569ff95dfad82bd5ebc at the audit start and after the last test run. git diff --quiet e317dcae on src/storytime, tests/storytime-book-pictures.test.ts, plan.md, and test-strategy.md returned exit 0.",
+    "Scope: the task 12 commits are 0cd4b024 (Red tests), e0a156af (Red evidence), 64073051 (Green code), and 42de3ecd (Green evidence). Since bb4e11f0, only src/storytime/book-pictures.ts and tests/storytime-book-pictures.test.ts changed in the owned paths. git diff --quiet bb4e11f0 e317dcae -- src/song src/storytime/line-art-pass.ts returned exit 0.",
+    "Out of scope, named and not audited: e4e5c593 (classroom scene), d2928bbc and 08682665 (filled-shelves track), f7f283b6 and e317dcae (settings doc).",
+    "Earlier phase deltas in the owned paths (1d39b8fd..bb4e11f0) were audited by the Review B rounds at 84c8ffd, cf5743b, 53cc3ad, c235343, 3f604b6, and bb4e11f. Task 12 changes only decodedAnswerFindings and adds tolerantDecode.",
+    "Split rule: the escape flag toggles once per backslash. The split loop and tolerantDecode use the same alignment from each segment start. A \\uXXXX escape has no quote, so no split point falls inside one escape. Each escape at layer 0 therefore lies in exactly one segment.",
+    "Next layers: a decoded segment that holds a quote goes onto the worklist, and the scan runs on it when it comes off the worklist. A decoded segment without a quote is scanned only. A changed decode is strictly shorter than its segment, so the worklist always ends. A text with no quote is one head segment and is decoded (probe: `no quote at all` yields a finding).",
+    "Rule builder: secretFindings (line 948) and decodedAnswerFindings (line 1165) both call credentialRules(env) at call time. redactSecrets still builds its own list from the same two sources. That path only redacts, as at bb4e11f.",
+    "Write order, MiniMax: secretFindings at line 3401 and decodedAnswerFindings at line 3409 run inside the paid callback. runPaidCall appends success only after the callback returns. The raw copy and the review are written at lines 3452-3453. Write order, Kimi: readRawAnswer at line 3722, secretFindings at line 3723, and decodedAnswerFindings at line 3732 run before parseModelReview at line 3739. The review write, the raw copy, and the success entry follow at lines 3770-3780. Task 12 did not change these lines.",
+    "No fail-closed and no waiver: the code refuses only on a finding. Safe malformed twins are accepted (T138: twin cases 245, twin findings 0; probes: a safe LF twin and a safe prose quote give no finding).",
+    "Probe method: tsx -e imports the real module src/storytime/book-pictures.ts and calls decodedAnswerFindings and secretFindings. No file was written. Result: 32 of 33 constructions matched the design B expectation. The one mismatch is RB7-01. A rerun with a space before the credential gave api-key-prefix, so the decoder handles the bad low surrogate.",
+    "Named residual risk confirmed as stated: a credential encoded twice inside one string token with no inner quote gives no finding. test-strategy.md:1169 and plan.md:818 list this case as out of class.",
+    "Cost probe, fold chain: L_k = quote + enc(L_k+1) + quote, where enc maps a backslash to \\u005c and a quote to \\u0022. The work-maximizing depth for 65,536 bytes is 66 levels, about 2.9 million scanned characters. The scan took 429 ms with the base rules and 550 ms with 1,200 env rules. An escaped credential in the deepest payload gave api-key-prefix, so the scan reaches the last level.",
+    "Cost probe, wide: 5,572 distinct string tokens that each hold one escape, so every segment is decoded and scanned. With 1,200 env rules the scan took 442 ms. T136 strings hold no backslash, so T136 does not exercise this per-segment scan. The probe covers it.",
+    "Cost probe, repeated layers: the split loop has no dedupe after task 12, but segments partition each layer, so repeated layers add no amplification. 65,528 bytes of identical next layers took 36 ms with 1,200 env rules. Private-key headers in every segment took 33 ms.",
+    "Cost labels in this audit: wide scan ms 339 (bound 60000), chain scan ms 277 (bound 20000). Green labels: wide 473, chain 351. The known deviations (9,543 strings, 14 levels, corpus mode, the Green route) are accepted as stated.",
+    "A2: no audited test changes a draft to a published state. Task 12 adds no publication or consent transition.",
+    "A6: measure/tracks.md at e317dcae lists the track as [~] with no security-resolved claim. The plan marks task 12 [x] at line 778. Review A owns the plan claim. This review B result does not block that claim.",
+    "The task adds no endpoint, authentication boundary, tenant scope, migration, or secret store. The tests build the synthetic credential at run time and remove the injected env names in a finally block."
+  ],
+  "source_derived_cases": [
+    {
+      "name": "credential after a word character",
+      "construction": "const raw = JSON.stringify(safe) + '\\n{\"note\":\"zz' + escaped + '\"}';",
+      "expected_after_remediation": "No change in task 12. The raw form `zzsk-...` gives the same result. Record a tech-debt candidate for the api-key-prefix boundary.",
+      "execution": "run; decodedAnswerFindings returned []; secretFindings returned []; an env-rule variant returned env:PROBE_ENV_SECRET_KEY"
+    }
+  ],
+  "commands": [
+    "git rev-parse HEAD (start and end): e317dcae392d082c7e781569ff95dfad82bd5ebc",
+    "git show 64073051 -- src/storytime/book-pictures.ts",
+    "git diff --name-only bb4e11f0..e317dcae; git diff --name-only 1d39b8fd..e317dcae -- src/storytime tests/storytime-*.test.ts tests/song-*.test.ts",
+    "git diff --quiet e317dcae -- src/storytime tests/storytime-book-pictures.test.ts plan.md test-strategy.md; exit 0",
+    "git diff --quiet bb4e11f0 e317dcae -- src/song src/storytime/line-art-pass.ts; exit 0",
+    "node_modules/.bin/tsx -e (closure probe, real module import, 33 constructions); exit 0; cases ok: 32/33",
+    "node_modules/.bin/tsx -e (cost probe and RB7-01 check, real module import); exit 0; fold chain 66 levels 550 ms with 1,200 env rules; wide escaped 442 ms; repeated layers 36 ms",
+    "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1 --reporter=verbose -t \"T1(29|3[0-8])\"'; exit 0; Tests 10 passed | 111 skipped (121); 51.44 s",
+    "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'; exit 0; Test Files 1 passed (1); Tests 121 passed (121); 260.59 s; one `heavy-run: lock wait over 600 s` line (another job held the lock); no exit 75"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-e317dca.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-e317dca.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "handoff": "Review B passes task 12 at e317dcae. RB6-01 to RB6-03 are closed. No new malformed-string item was found, so there is nothing new for the residual risk list. RB7-01 (low, class other) is a tech-debt candidate for the api-key-prefix word boundary. It needs no task 12 change. Adversarial testing can reuse the fold-chain probe (66 levels) and the escaped wide probe, because T136 and T137 do not reach those cases. No owner decision is required.",
+  "facts_changed": []
+}

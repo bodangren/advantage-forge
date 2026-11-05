@@ -1,0 +1,30 @@
+# Batch 38 item review log
+
+Date: 2026-11-01. Reviewer: opencode-go/mimo-v2.6-flash. Audit only.
+Bar: Daniel 2026-11-01 14:15 ICT. A defect is only what a teacher or a child sees at book size.
+Small marks are not defects. Two rows: nest color m1 and line try 3; cover color m6 and line try 5, padded.
+
+| key | rating | clean | reason if not clean |
+| --- | --- | --- | --- |
+| l2-w01-practice-line-nest | 9 | yes | |
+| l2-w01-cover-hello | 8 | yes | |
+
+Nest row: one woven nest with three light blue eggs on a plain white background. The line art
+shows thick outlines, three closed egg ovals, no face, eyes, or eyebrows. The twig ends and the
+right-rim knot read as twigs. No gray, no specks. The writer check passes at 30 px lines.
+
+Cover row: the padded prints show one white band at the top and one at the bottom. The color
+bands are equal (167 px top, 166 px bottom). The line bottom band is 266 px because the line
+art omits the wood floor texture. The bands read as white margins at book size. The scene is
+whole and centered. Nothing is cut at any side. Not a layout fault.
+
+Goal check, cover: six young children wave; Teacher Kim smiles behind a low table; green door
+with a round window; three animal pictures (lion, elephant, frog); no letters; Pat's red bag
+shows its round bump. Nan matches her reference. Each child eye is a closed ring with a solid
+pupil. All seven waving hands show four fingers and one thumb.
+
+Facts recorded, not defects: Pat stands with his back to the camera in the color picture;
+Daniel's answer stays open. Child 4 and Teacher Kim show a closed smile in color and an open
+smile in line art. Both read as happy smiles at book size. Kim's line eyes are small dots.
+
+Total: 2 rows, 2 clean, 2 pass. Ratings 9 and 8. No defect under the bar.

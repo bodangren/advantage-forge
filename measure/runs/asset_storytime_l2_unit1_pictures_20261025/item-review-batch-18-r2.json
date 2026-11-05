@@ -1,0 +1,46 @@
+{
+  "reviewer": "kimi-code-plan-cn/kimi-for-coding",
+  "seen": {
+    "look-reference-nan-and-pip.png": "Approved look: Nan with orange star shirt, red shorts, two black bunches, and golden-brown puppy Pip with a red collar.",
+    "l2-w01-story-page-a-nest-and-a-nut-v12.png": "Old color frame: Pip's lower feet touch the bottom edge and the tree canopy is cut by the top edge.",
+    "l2-w01-story-page-a-nest-and-a-nut-line-v12.png": "Old line art matches the old color frame with the same two crops.",
+    "l2-w01-story-page-a-nest-and-a-nut-v13.png": "New color frame: Pip stands whole on the grass with all four paws visible, sniffing a large acorn, nest with three blue eggs on the branch, main crown still cropped at the top-left.",
+    "l2-w01-story-page-a-nest-and-a-nut-line-v13.png": "New line art is clean; the nest, eggs, Pip, and acorn read; the crown is still cropped at the top-left and a small flower is cropped at the bottom-right.",
+    "l2-w01-story-page-a-nut-v3.png": "Old close-up: Nan's head is cut by the top edge and the acorn sits on a closed fist.",
+    "l2-w01-story-page-a-nut-v5.png": "New close-up: Nan's whole head is in frame, the acorn is much larger and rests on her left hand, which reads as a closed fist.",
+    "l2-w01-story-page-a-nut-line-v5.png": "New line art is clean; the acorn reads with cap, body, and stem; the eyes read with small flap marks at the outer corners only."
+  },
+  "l2-w01-story-page-a-nest-and-a-nut": {
+    "overall": 7.0,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "The main tree crown is cropped by the top edge and the left edge; about the lower half of the crown shows.",
+      "A background bush touches and is cut by the left frame edge.",
+      "A small orange flower is cut by the bottom-right corner and shows as small marks in the line art."
+    ],
+    "fix": "Frame the main crown inside the top and left edges or shift the camera right.",
+    "goals": {
+      "Pip sniffs a big brown nut in the grass": "pass",
+      "Nest with three light blue eggs on a low branch": "pass",
+      "Nest and nut both large and clear": "pass",
+      "Simple garden with soft colors": "pass"
+    }
+  },
+  "l2-w01-story-page-a-nut": {
+    "overall": 7.0,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "Nan's hand under the nut reads as a closed fist, not an open palm; this is the known open cast defect.",
+      "Small eye-corner skin flaps show at the outer eye corners; this is the known open cast defect.",
+      "Nan's feet are cut by the bottom frame edge.",
+      "The nut sits left of the middle of the frame."
+    ],
+    "fix": "Open the hand that holds the nut when the owner approves the cast change.",
+    "goals": {
+      "One big brown nut in Nan's open hand, close up": "partial",
+      "One clear picture with the main thing large in the middle": "pass"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+MEASURE_AGENT_RESULT
+status: red_complete_provisional
+role: red
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3
+phase_heading: Phase 3: Week 1 pictures
+phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+role_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+red_pre_commit_head: 3419926fd2c54df1aa03234bba561dfe6fc5196e
+red_test_commit: pending
+evidence_commit: pending
+vitest_command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 3600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'
+vitest_exit: 1
+vitest_summary: Tests  10 failed | 124 passed (134)
+type_check_command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'
+type_check_owned_errors: pending
+type_check_total_errors: pending
+failing_rows: T142, T143, T144, T145, T146, T147, T148, T149, T150, T151
+deviations: model route minimax-cn-coding-plan/MiniMax-M3#high instead of openai/gpt-6.1-sol#high; two vitest runs, the second is the evidence
+log_path: measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-provisional.log
+END_MEASURE_AGENT_RESULT

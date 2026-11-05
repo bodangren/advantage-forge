@@ -1,0 +1,48 @@
+Line-art line width: 15 px (minimum 12 px).
+Line-art ink coverage: 16.47% (1976064 of 12000000 pixels black).
+l2-w01-story-page-hello-i-am-nan v1: passed
+Row verification passed for 1 row versions.
+verify l2-w01-story-page-hello-i-am-nan exit: 0
+Line-art line width: 22 px (minimum 12 px).
+Line-art ink coverage: 3.40% (408216 of 12000000 pixels black).
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 3.88% (465855 of 12000000 pixels black).
+l2-w01-story-page-nan-can-nod v1: passed
+l2-w01-story-page-nan-can-nod v2: passed
+Row verification passed for 2 row versions.
+verify l2-w01-story-page-nan-can-nod exit: 0
+Line-art line width: 25 px (minimum 12 px).
+Line-art ink coverage: 8.35% (1002045 of 12000000 pixels black).
+l2-w01-cover-nan-can-nod v2: passed
+Row verification passed for 1 row versions.
+verify l2-w01-cover-nan-can-nod exit: 0
+Line-art line width: 29 px (minimum 12 px).
+Line-art ink coverage: 7.00% (157578 of 2250000 pixels black).
+l2-w01-check-row-cat v1: passed
+Row verification passed for 1 row versions.
+verify l2-w01-check-row-cat exit: 0
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 3.98% (89536 of 2250000 pixels black).
+l2-w01-check-row-fish v1: passed
+Row verification passed for 1 row versions.
+verify l2-w01-check-row-fish exit: 0
+Line-art line width: 26 px (minimum 12 px).
+Line-art ink coverage: 6.24% (140443 of 2250000 pixels black).
+l2-w01-check-row-dog v1: passed
+Row verification passed for 1 row versions.
+verify l2-w01-check-row-dog exit: 0
+Line-art line width: 22 px (minimum 12 px).
+Line-art ink coverage: 3.45% (77720 of 2250000 pixels black).
+l2-w01-check-row-hat v1: passed
+Row verification passed for 1 row versions.
+verify l2-w01-check-row-hat exit: 0
+Line-art line width: 25 px (minimum 12 px).
+Line-art ink coverage: 11.90% (267694 of 2250000 pixels black).
+l2-w01-check-row-nose v1: passed
+Row verification passed for 1 row versions.
+verify l2-w01-check-row-nose exit: 0
+Line-art line width: 25 px (minimum 12 px).
+Line-art ink coverage: 10.67% (240098 of 2250000 pixels black).
+l2-w01-practice-line-nose v1: passed
+Row verification passed for 1 row versions.
+verify l2-w01-practice-line-nose exit: 0

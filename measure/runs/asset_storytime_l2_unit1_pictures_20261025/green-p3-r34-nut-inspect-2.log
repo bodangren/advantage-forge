@@ -1,0 +1,36 @@
+storytime-nut: 6,076 triangles, 0.049 x 0.055 x 0.048 m, built in 2715 ms
+  shell                     2656 tris  (1352 ms)
+  cap                       2878 tris  (1626 ms)
+  stem                       542 tris  (90 ms)
+texture  none (vertex colors)
+glb      out/storytime-nut/storytime-nut.glb  (150 KB)
+# Inspection: storytime-nut
+
+Size 0.049 x 0.055 x 0.048 m (x y z); 6,076 triangles; lowest point y = 0 m.
+
+## Silhouette per view (fractions of the frame)
+
+| view | width | height | coverage |
+|---|---|---|---|
+| front | 0.613 | 0.672 | 0.254 |
+| three-quarter | 0.617 | 0.66 | 0.253 |
+| side | 0.617 | 0.672 | 0.255 |
+| back | 0.609 | 0.672 | 0.253 |
+| top | 0.641 | 0.574 | 0.283 |
+
+## Visible share of the silhouette per part
+
+| part | front | three-quarter | side | back | top |
+|---|---|---|---|---|---|
+| shell | 53.8% | 52% | 58.6% | 53.4% | 7% |
+| cap | 44% | 45.9% | 39.6% | 44.5% | 90.9% |
+| stem | 2.1% | 2% | 1.8% | 2.1% | 2.1% |
+
+## Values and colors (shaded render)
+
+Values: dark 6%, mid 91%, light 3%.
+Dominant colors: #834e2a 25%, #d59458 22%, #784723 18%, #9d6941 16%, #945e2a 10%, #5f3519 9%.
+
+## Warnings
+
+- Almost everything is mid-value: the asset will look flat. Add darker and lighter areas.

@@ -1,0 +1,114 @@
+# Batch 39 item review log
+
+Date: 2026-11-02. Reviewer: opencode-go/mimo-v2.6-flash. Audit only.
+Bar: Daniel 2026-11-01 14:15 ICT. A defect is only what a teacher or a child sees at book size.
+Four rows. The Workbooks two-model check refused each row once. I opened both files of every row.
+I also opened the two reference pictures in `refs/`.
+
+| key | rating | clean | finding gone | reason if not clean |
+| --- | --- | --- | --- | --- |
+| l2-w01-story-page-a-net | 8 | yes | yes | |
+| l2-w01-check-row-net | 9 | yes | yes | |
+| l2-w01-story-page-a-nose | 8 | yes | yes | |
+| l2-w01-story-page-nan-can-nod | 8 | yes | yes | |
+
+## Line file count
+
+I counted every pixel that is not 0 and not 255 in all eight line files. The count is 0 in
+every file. No gray, no specks, no shading. The four prints pass the writer check in the brief.
+
+## a-net row
+
+Finding R11 is gone. The hoop rim is an open ring of two thin parallel lines. The white strip
+between the two lines is one closed channel (bbox 170,25 to 424,299 at 1920 x 1280). The strip
+measures 7 px at the narrowest row, 9 px at the median and 15 px at the 90th percentile. The
+outline lines measure 7 to 17 px. On the 4000 px print the strip measures 14 to 36 px.
+
+Strip judgment: no line gap. Flood fill from the frame never reaches the strip. The strip width
+stays near the line width on every row. It never closes to black. A child can color the strip or
+leave it white, and no color can run out of it. Line crossings at shallow angles leave 1 to 4 px
+white wedges beside the strip; each wedge stays closed.
+
+Goal check: Nan holds up a green butterfly net in a garden. Both files show this. The raised hand
+grips the handle. The hoop, the bag and the net grid match the color file. Both eye rings are
+closed with solid pupils. Lash flicks show at both outer corners. The gripping hand shows three
+finger lobes, one thumb bump and one finger behind the handle. The hanging hand matches the
+color mitten. Face, shirt, shorts, shoes, hands, handle tube, hoop cells and bag cells are all
+closed regions.
+
+Facts recorded, not defects: the line file draws no nose line, the color file has a soft nose
+bump; the face reads whole. A solid area scan of the line file finds only the two pupils and one
+eyebrow band as solid black; no ring and no blob exists. One scan row at the hoop bottom returns
+a 51 px black run because the inner rim line runs near-horizontal there. The zoom shows two
+normal lines with the white channel between them. The line file draws three finger lobes where
+the color file draws one smooth finger mass; these are short inner detail lines.
+
+## check row net
+
+Finding R27 is gone. The rim is an open ring. Its two lines measure 15 to 18 px, the same weight
+as the handle outline. The white strip between them is one closed channel (bbox 461,124 to
+891,656 at 1600 x 1600). The strip measures 13 px at the 10th percentile and 14 px at the
+median. Three rows show a 2 to 3 px white wedge where a grid line or the bag line meets a rim
+line at a shallow angle.
+
+Strip judgment: no line gap. Flood fill from the frame never reaches the strip. The handle
+interior beside it measures 27 to 28 px, the same order of size. No color can leak across the
+strip. The channel stays closed at every row. A solid area scan of the line file finds no solid
+black area at all; no ring and no blob exists.
+
+Goal check: one net, one object, large in the middle, plain light background. Both files show
+this. The line file draws the net grid inside the hoop and inside the bag, as the color file
+does. The gray shadow of the color file is dropped in the line file.
+
+Facts recorded, not defects: the grip ribs of the color handle are dropped; texture lines are not
+allowed. The bag grid leaves two small closed cells of 976 and 1487 px at 1600 px; they read as
+net mesh.
+
+## a nose row
+
+Finding R13 is gone. The nose shows as one small closed round bump at the fingertip (closed
+region of 1437 px, bbox 884,522 to 927,565 at 1920 x 1280). The bump sits between the eyes and
+the mouth. The finger stays a separate shape. Both eye rings are closed and hold solid pupils.
+
+Goal check: Nan touches her nose with one finger and laughs. The index finger meets the nose
+bump in both files. The mouth is open in both files. The line mouth is one closed region of
+2860 px. The raised hand shows the index finger up and a folded fist. The hanging hand is a
+mitten in both files. Face, shirt, shorts, shoes, hands, nose and mouth are closed regions. The
+space between the legs stays background.
+
+Facts recorded, not defects: the color file draws one lash flick at each outer eye corner, the
+line file draws none; the face still reads as Nan at book size. One enclosed white speck of 22 px
+sits inside the line junction at the left mouth corner; it stays under 0.5 percent of the
+picture width.
+
+## nan can nod row
+
+Finding R17 is gone. In the color file the top of Pip's head is a smooth round curve. In the
+line file the same smooth curve runs between two floppy ear outlines. No spike, horn or pointed
+tuft shows in either file.
+
+Pip reference check: golden-brown fur, cream chest, cream muzzle, cream forehead stripe, dark
+eyes, black nose, red collar with one round gold tag and a fluffy tail show in the color file.
+The line file draws the floppy ears, the muzzle, the collar band, the round tag, the raised tail,
+the solid nose and the solid pupils.
+
+Nan reference check: two bunches with red ties, orange T-shirt with white star, red shorts, white
+sneakers and large eyes show in both files. The color file draws one lash flick at each outer eye
+corner like the reference. The line file draws none. The face still reads as Nan at book size.
+
+Goal check: Nan stands with a big open smile. Pip sits beside her with head up. The pair fills
+the middle of the picture. The background stays plain. Each hanging hand shows one thumb and
+three or four finger lobes, with one finger behind. No hand shows six digits. The line file is
+1-bit with 0 gray pixels.
+
+Facts recorded, not defects: the line file draws no boundary line for Pip's cream forehead
+stripe; the stripe is a color patch. The color file shows soft gray shadows under both figures;
+the line file draws two thin ground strokes in the same places. Six white specks of 1 to 136 px
+sit inside line junctions near Pip's muzzle, Pip's collar and Nan's right hand. Each speck stays
+under 1 percent of the picture width. Pip's toe lines create small closed cells of 45 to 1069 px;
+they read as toes.
+
+## Result
+
+Total: 4 rows, 4 clean, 4 pass. Ratings 8, 9, 8, 8. All four Workbooks findings are gone. No
+defect under the bar. No picture was edited.

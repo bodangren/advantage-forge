@@ -1,0 +1,19 @@
+{
+  "group": "prod-r5-color-retry",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w03-story-page-a-pan-in-a-pan",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w03-story-page-a-pan-in-a-pan-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a big pan (1), a small pan (1) inside it. Action: none. Seen: Nan (two buns with red bands, orange shirt with a white star, red shorts, white shoes) and Ben (messy light-brown hair, light-blue shirt, dark-blue shorts, grey sneakers) hold a large red frying pan between them. A small blue pan with a handle lies inside the red pan. Both characters match the cast notes. mustShow: one big pan shown (large red pan); a small pan shown (small blue pan with handle); the small pan sits inside the big pan shown (the blue pan rests in the red pan). Small marks: the white star on Nan's shirt is partly hidden by her hand. No text in the picture."
+    }
+  ],
+  "summary": { "files": 1, "pass": 1, "fail": 0 }
+}

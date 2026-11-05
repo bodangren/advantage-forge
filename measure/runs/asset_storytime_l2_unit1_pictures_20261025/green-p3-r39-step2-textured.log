@@ -1,0 +1,40 @@
+storytime-nest: 17,586 triangles, 0.179 x 0.076 x 0.187 m, built in 30571 ms
+  woven-twigs              13228 tris  (4499 ms)
+  three-blue-eggs           4358 tris  (582 ms)
+texture  1024x1024 atlas: base color, normal, occlusion/roughness/metal (25163 ms)
+glb      out/storytime-nest/storytime-nest.glb  (1961 KB)
+render   out/storytime-nest/render.png  (574 ms)
+storytime-nest: 17,586 triangles, 0.179 x 0.076 x 0.187 m, built in 6033 ms
+  woven-twigs              13228 tris  (4922 ms)
+  three-blue-eggs           4358 tris  (648 ms)
+texture  none (vertex colors)
+glb      out/storytime-nest/storytime-nest.glb  (414 KB)
+# Inspection: storytime-nest
+
+Size 0.179 x 0.076 x 0.187 m (x y z); 17,586 triangles; lowest point y = 0.001 m.
+
+## Silhouette per view (fractions of the frame)
+
+| view | width | height | coverage |
+|---|---|---|---|
+| front | 0.602 | 0.281 | 0.127 |
+| three-quarter | 0.613 | 0.305 | 0.133 |
+| side | 0.621 | 0.277 | 0.125 |
+| back | 0.598 | 0.289 | 0.126 |
+| top | 0.594 | 0.543 | 0.245 |
+
+## Visible share of the silhouette per part
+
+| part | front | three-quarter | side | back | top |
+|---|---|---|---|---|---|
+| woven-twigs | 72.6% | 76.3% | 76.5% | 72.9% | 81.8% |
+| three-blue-eggs | 27.4% | 23.7% | 23.5% | 27.1% | 18.2% |
+
+## Values and colors (shaded render)
+
+Values: dark 0%, mid 54%, light 46%.
+Dominant colors: #bee9f5 27%, #8a6231 23%, #cb965a 22%, #e6ac6b 16%, #edb271 12%, #cab795 1%.
+
+## Warnings
+
+- none

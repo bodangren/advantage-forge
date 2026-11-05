@@ -1,0 +1,223 @@
+{
+  "status": "fail",
+  "reviewer": "openai/gpt-6.1-sol#high",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Both week 3 rows are clean. All three extra rows have defects.",
+  "items": {
+    "l2-w03-story-page-it-is-blue": {
+      "files": [
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-color-print.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-color.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-line-6-despeckled.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-line-print-6-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The hair clip is not a shirt mark. The print cuts only background furniture.",
+        "The line omits small facial detail without changing May."
+      ],
+      "goal_check": "May matches the look sheet. Both shirts are plain. One blue sheet has one closed outline. The easel has three pots in both files. May and the needed sheet remain whole in both prints.",
+      "line_pixel_check": {
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-line-6-despeckled.png": {
+          "width": 1920,
+          "height": 1280,
+          "non_binary_pixels": 0,
+          "colored_pixels": 0
+        },
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-line-print-6-despeckled.png": {
+          "width": 4000,
+          "height": 3000,
+          "non_binary_pixels": 0,
+          "colored_pixels": 0
+        }
+      },
+      "line_visual_check": {
+        "thick_solid_black_ring_or_band": false,
+        "gray_or_shading": false,
+        "line_gap_hard_to_color": false,
+        "broken_face": false,
+        "detail": "No forbidden black ring, broken face, or hard coloring gap shows at book size."
+      },
+      "reviewer": "openai/gpt-6.1-sol#high",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "additional_checks": {
+        "text_in_picture": false,
+        "sun_count": 0,
+        "pip_present": false,
+        "shirt_mark_on_wrong_character": false
+      }
+    },
+    "l2-w03-story-page-nan-can-get-a-pan": {
+      "files": [
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-color-print.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-color.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-9-despeckled.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-print-9-despeckled.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The handle touches the counter corner. This contact does not hide the pan or prevent coloring.",
+        "The line grip holds the bowl edge and reverses the handle direction. This difference changes neither Nan nor the needed pan.",
+        "The small color seam beside the eye does not break the face."
+      ],
+      "goal_check": "Both files show Nan and exactly one toy frying pan. The shallow bowl, visible side wall, and straight handle read as a pan at book size. Three cups and three plates match. Nan, her hands, her hair, and the pan remain whole in both prints.",
+      "line_pixel_check": {
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-9-despeckled.png": {
+          "width": 1920,
+          "height": 1280,
+          "non_binary_pixels": 0,
+          "colored_pixels": 0
+        },
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-print-9-despeckled.png": {
+          "width": 4000,
+          "height": 3000,
+          "non_binary_pixels": 0,
+          "colored_pixels": 0
+        }
+      },
+      "line_visual_check": {
+        "thick_solid_black_ring_or_band": false,
+        "gray_or_shading": false,
+        "line_gap_hard_to_color": false,
+        "broken_face": false,
+        "detail": "No forbidden black ring, broken face, or hard coloring gap shows at book size."
+      },
+      "reviewer": "openai/gpt-6.1-sol#high",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "additional_checks": {
+        "text_in_picture": false,
+        "sun_count": 0,
+        "pip_present": false,
+        "shirt_mark_on_wrong_character": false
+      }
+    }
+  },
+  "extra": {
+    "K1": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": 7,
+      "verdict": "defect",
+      "defect_categories": [
+        "layout-fault"
+      ],
+      "defects": [
+        "Both delivery files cut Nan's hair at the top and right edges. Both files also cut her shoes at the bottom edge."
+      ],
+      "notes": [
+        "The enlarged hand has five digits. The nut is one readable acorn.",
+        "The close-up goal explains the enlarged hand, but the explicit edge rule still applies."
+      ],
+      "goal_check": "Both files show one large nut in Nan's open hand. Nan retains her reference look. The nut and hand remain whole. The 4:3 delivery edges cut Nan's hair and shoes.",
+      "line_pixel_check": {
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png": {
+          "width": 4000,
+          "height": 3000,
+          "non_binary_pixels": 0,
+          "colored_pixels": 0
+        }
+      },
+      "line_visual_check": {
+        "thick_solid_black_ring_or_band": false,
+        "gray_or_shading": false,
+        "line_gap_hard_to_color": false,
+        "broken_face": false,
+        "detail": "No forbidden black ring, broken face, or hard coloring gap shows at book size."
+      },
+      "reviewer": "openai/gpt-6.1-sol#high",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "retry_hint": "Color and line: Keep the close-up nut and hand; frame Nan so her hair and shoes do not cross the delivery edges."
+    },
+    "K2": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "rating": 6,
+      "verdict": "defect",
+      "defect_categories": [
+        "broken-face"
+      ],
+      "defects": [
+        "The line omits Nan's nose. Her fingertip meets the mouth outline, so the named nose is not visible."
+      ],
+      "notes": [
+        "The color shows a readable nose and the intended touch. Both delivery files keep Nan inside the page edges."
+      ],
+      "goal_check": "The color supports “A nose.” The line fails the required face-part check. A teacher or child cannot identify the nose in the line file.",
+      "line_pixel_check": {
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png": {
+          "width": 4000,
+          "height": 3000,
+          "non_binary_pixels": 0,
+          "colored_pixels": 0
+        }
+      },
+      "line_visual_check": {
+        "thick_solid_black_ring_or_band": false,
+        "gray_or_shading": false,
+        "line_gap_hard_to_color": false,
+        "broken_face": true,
+        "detail": "The named nose is absent. No forbidden black ring or hard coloring gap shows."
+      },
+      "reviewer": "openai/gpt-6.1-sol#high",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "retry_hint": "Line: Draw Nan's nose visibly above the smile and place one fingertip against its side."
+    },
+    "K3": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 7,
+      "verdict": "defect",
+      "defect_categories": [
+        "gray-or-shading-in-line-art"
+      ],
+      "defects": [
+        "The line draws the hair tie as a thick solid black ring around the bun. The line-art bar forbids this ring."
+      ],
+      "notes": [
+        "The profile nose shows clearly in both files.",
+        "The lower shirt crosses the source edge in this head study. The complete head, hair, and named nose remain inside the image.",
+        "The pixel check finds no gray. The solid black ring is a separate visual failure."
+      ],
+      "goal_check": "Both exact source files show Nan facing right in profile with a readable nose. The line supports nose tracing, but its heavy black hair ring fails the line-art bar.",
+      "line_pixel_check": {
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png": {
+          "width": 1600,
+          "height": 1600,
+          "non_binary_pixels": 0,
+          "colored_pixels": 0
+        }
+      },
+      "line_visual_check": {
+        "thick_solid_black_ring_or_band": true,
+        "gray_or_shading": false,
+        "line_gap_hard_to_color": false,
+        "broken_face": false,
+        "detail": "The hair tie forms a thick solid black ring. The nose remains readable."
+      },
+      "reviewer": "openai/gpt-6.1-sol#high",
+      "bar": "Daniel 2026-11-01 14:15 ICT",
+      "retry_hint": "Line: Replace the solid black hair ring with two thin outlines and a white band between them."
+    }
+  },
+  "set_status": "pass",
+  "extra_status": "fail",
+  "verification": {
+    "reviewed_rows": 5,
+    "checked_line_files": 7,
+    "non_binary_pixels": 0,
+    "print_check": "Reviewed all color and line prints in the set. Reviewed only the exact named files for K1 to K3.",
+    "scope": "Audit only. No picture changed. No commit."
+  }
+}

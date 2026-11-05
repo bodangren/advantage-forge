@@ -1,0 +1,36 @@
+storytime-nest: 19,252 triangles, 0.19 x 0.076 x 0.198 m, built in 5671 ms
+  dark-cup                  2890 tris  (599 ms)
+  light-twigs              12424 tris  (4791 ms)
+  three-blue-eggs           3938 tris  (450 ms)
+texture  none (vertex colors)
+glb      out/storytime-nest/storytime-nest.glb  (452 KB)
+# Inspection: storytime-nest
+
+Size 0.19 x 0.076 x 0.198 m (x y z); 19,252 triangles; lowest point y = 0.001 m.
+
+## Silhouette per view (fractions of the frame)
+
+| view | width | height | coverage |
+|---|---|---|---|
+| front | 0.582 | 0.266 | 0.116 |
+| three-quarter | 0.594 | 0.289 | 0.122 |
+| side | 0.602 | 0.262 | 0.115 |
+| back | 0.602 | 0.27 | 0.115 |
+| top | 0.594 | 0.535 | 0.222 |
+
+## Visible share of the silhouette per part
+
+| part | front | three-quarter | side | back | top |
+|---|---|---|---|---|---|
+| dark-cup | 20.8% | 24.5% | 30.6% | 24% | 44.5% |
+| light-twigs | 55.8% | 52.6% | 49.3% | 53% | 37.7% |
+| three-blue-eggs | 23.3% | 22.9% | 20.1% | 23% | 17.8% |
+
+## Values and colors (shaded render)
+
+Values: dark 7%, mid 32%, light 61%.
+Dominant colors: #f6c683 36%, #93622f 16%, #7bc8f2 14%, #d6a662 13%, #603511 13%, #9ed1e9 9%.
+
+## Warnings
+
+- none

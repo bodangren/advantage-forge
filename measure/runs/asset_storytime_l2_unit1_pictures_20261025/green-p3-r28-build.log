@@ -1,0 +1,21 @@
+Some extensions were not registered for I/O, and will not be written.
+sprout-pip: 34,312 triangles, 0.303 x 0.436 x 0.477 m, built in 82745 ms
+  fur                       9904 tris  (7056 ms)
+  jawFur                    1484 tris  (919 ms)
+  mouth                     1018 tris  (276 ms)
+  tongue                     534 tris  (99 ms)
+  jawCream                   878 tris  (301 ms)
+  cream                     2442 tris  (838 ms)
+  nose                       566 tris  (75 ms)
+  ears                      4020 tris  (2018 ms)
+  tufts                     1690 tris  (319 ms)
+  brows                     1048 tris  (132 ms)
+  mouth-open                 808 tris  (148 ms)
+  tongue-in                  716 tris  (105 ms)
+  eye-shine                  588 tris  (144 ms)
+  collar                    3418 tris  (1247 ms)
+  tag                        692 tris  (79 ms)
+  tail-fur                  4506 tris  (1034 ms)
+texture  1024x1024 atlas: base color, normal, occlusion/roughness/metal (68165 ms)
+glb      out/sprout-pip/sprout-pip.glb  (5320 KB)
+EXIT:0 secs:593

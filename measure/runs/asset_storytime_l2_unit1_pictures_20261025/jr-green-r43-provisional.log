@@ -1,0 +1,24 @@
+Green round 43 provisional log (Storytime week 1 pictures)
+
+Role: measure-jr-green (Green phase, Phase 3 "Week 1 pictures")
+Session: Green · P3 · storytime_l2_unit1_pictures · r43
+Green model: deepseek/deepseek-flash#high
+Red model: minimax-cn-coding-plan/MiniMax-M3 (MiniMax)
+Green coder model: none. No delegation.
+role_base_sha: 3ef5836b
+phase_base_sha: 15a7bf0b
+Base HEAD: 3ef5836b
+
+Task: give storytime-nut a crisp cap line in the 1-bit line art, then render two nut rows:
+l2-w01-practice-line-nut (v5, at most v6) and l2-w01-story-page-a-nest-and-a-nut (v8).
+Make the batch 15 review folder. Add the plan evidence block and the final log.
+
+Red change in range: the Red-owned row-render contract is committed inside
+15a7bf0b..HEAD. No new Red test file for round 43. The Red assertion for this round is
+the line-art read of the two committed nut rows.
+
+Picture-list blocker: render --row and verify --row exit 1 on the live Workbooks list.
+Use --workbooks /tmp/opencode/wb-shadow. Its content/storytime/l2/print/pictures.json
+SHA-256 starts with c3e23cfd, checked this round. The live list is never written.
+
+Status: started

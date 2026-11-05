@@ -1,0 +1,301 @@
+{
+  "reviewer": "kimi-code-plan-cn/kimi-for-coding",
+  "audited_head": "2b59ccaa",
+  "verdict": "final",
+  "line_art_rule": "orchestrator default 2026-11-01",
+  "seen": {
+    "brief": "out/storytime-review/batch-32/brief.md",
+    "pages_dir": "out/storytime-review/batch-32/pages",
+    "refs_dir": "out/storytime-review/batch-32/refs",
+    "notes": "Every open hand counted at 3x-4x under /tmp/opencode/review-b32k/. All 11 line files are pure 1-bit (values 0 and 255 only). No text or letters seen on any page."
+  },
+  "l2-w01-story-page-hello-i-am-pat": {
+    "files": ["l2-w01-story-page-hello-i-am-pat-m4-color.png", "l2-w01-story-page-hello-i-am-pat-m4-line.png"],
+    "rating": 7.0,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "color: teddy bear is not plain brown; it has a cream muzzle and white inner ears (batch-29 fix item not gone)"
+    ],
+    "goal_check": {
+      "pat_young_about_five": "yes: chibi boy, about five",
+      "holds_small_brown_teddy_bear": "yes: small brown bear held against his chest",
+      "waves": "yes: left hand raised in a wave",
+      "green_door": "yes: green door with window at right",
+      "bright_kindergarten_low_tables": "yes: one whole low table inside the frame at right",
+      "wall_big_colorful_animal_pictures": "yes: lion, elephant, frog pictures, no letters",
+      "bag_round_bump": "yes: small round bump at the top of the red bag",
+      "no_letters": "yes: no text anywhere"
+    },
+    "batch29_defects_gone": {
+      "waving_hand_5_digits": "yes: 4 fingers and a thumb at 3x",
+      "hand_on_bear_visible_fingers": "yes: four gripping fingers visible",
+      "no_white_round_lump_in_front_of_bear": "yes",
+      "bear_plain_brown": "NO: cream muzzle and white inner ears still present",
+      "whole_low_table_in_frame": "yes",
+      "line_hand_on_bear_finger_outlines": "yes",
+      "line_table_one_whole_shape": "yes"
+    },
+    "goal_shown": true,
+    "retry_hint": "Repaint the bear plain brown: remove the cream muzzle and the white inner ears. Everything else passes."
+  },
+  "l2-w01-story-page-hello-i-am-mia": {
+    "files": ["l2-w01-story-page-hello-i-am-mia-m2-color.png", "l2-w01-story-page-hello-i-am-mia-m2-line.png"],
+    "rating": 7.5,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "line art: Mia's open mouth (open smile with dark interior in color) is drawn as a closed smile with no inner shape"
+    ],
+    "goal_check": {
+      "mia_young_about_five": "yes: chibi girl, about five, matches sprout-mia (brown hair, pink clip, pink shirt, blue overalls)",
+      "waves": "yes: right hand raised",
+      "big_box_of_colored_blocks": "yes: large box full of colored blocks",
+      "classroom_rug": "yes: she stands on the rug"
+    },
+    "batch29_defects_gone": {
+      "waving_hand_5_digits": "yes: 4 fingers and a thumb at 3x",
+      "line_no_stray_dash_inside_palm": "yes: palm is clean",
+      "line_no_rug_fringe_or_ticks": "yes: rug edge is plain"
+    },
+    "goal_shown": true,
+    "retry_hint": "Line art only: add the inner shape of the open mouth."
+  },
+  "l2-w01-story-page-hello-i-am-may": {
+    "files": ["l2-w01-story-page-hello-i-am-may-m2-color.png", "l2-w01-story-page-hello-i-am-may-m2-line.png"],
+    "rating": 7.5,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "line art: May's open mouth (open smile in color) is drawn as a closed smile with no inner shape"
+    ],
+    "goal_check": {
+      "may_young_about_five": "yes: chibi girl, about five, matches sprout-may (side ponytail with star, yellow shirt, blue skirt)",
+      "waves_with_both_hands": "yes: both hands raised",
+      "low_table_with_box_of_crayons": "yes: blue box with 5 crayons on a low table",
+      "green_door": "yes",
+      "animal_pictures_no_letters": "yes: lion, elephant, frog; no letters",
+      "no_letters": "yes"
+    },
+    "batch29_defects_gone": {
+      "both_waving_hands_5_digits": "yes: 4 fingers and a thumb on each hand at 3x"
+    },
+    "goal_shown": true,
+    "retry_hint": "Line art only: add the inner shape of the open mouth."
+  },
+  "l2-w01-story-page-hello-i-am-sam": {
+    "files": ["l2-w01-story-page-hello-i-am-sam-m2-color.png", "l2-w01-story-page-hello-i-am-sam-m2-line.png"],
+    "rating": 8.0,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "sam_young_about_five": "yes: chibi boy, about five (brown hair, red striped shirt)",
+      "sits_in_reading_corner": "yes: shelves and books behind",
+      "picture_book_on_lap": "yes: open book with sun and whale pictures, no letters",
+      "waves": "yes: right hand raised"
+    },
+    "batch29_defects_gone": {
+      "waving_hand_5_digits": "yes: 4 fingers and a thumb at 3x",
+      "line_no_tassel_loops_on_rug": "yes: rug is plain"
+    },
+    "goal_shown": true,
+    "retry_hint": "None. Clean page."
+  },
+  "l2-w01-story-page-hello-i-am-your-teacher": {
+    "files": ["l2-w01-story-page-hello-i-am-your-teacher-m3-color.png", "l2-w01-story-page-hello-i-am-your-teacher-m3-line.png"],
+    "rating": 7.5,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "line art: the eyes of the children and Teacher Kim are solid dots without an outer ring, so the large white eye regions of the color picture have no outline to color"
+    ],
+    "goal_check": {
+      "teacher_kim_kneels_waves": "yes: kneels at eye level at left, waves",
+      "six_children_sit_on_round_rug_wave_back": "yes: Pat, May, Sam, Mia, Nan, Ben all sit on the round rug and wave",
+      "nan_spec": "yes: two bunches, orange T-shirt with white star, red shorts, white sneakers, large dark-brown eyes",
+      "exactly_seven_people": "yes: 6 children + Teacher Kim = 7"
+    },
+    "batch29_defects_gone": {
+      "rug_round": "yes",
+      "ben_forehead_no_zigzag_band": "yes: smooth forehead under curly hair",
+      "every_open_waving_hand_5_digits": "yes: teacher, Pat, May, Sam, Ben, Nan, Mia all show 4 fingers and a thumb at 3x",
+      "exactly_seven_people": "yes"
+    },
+    "goal_shown": true,
+    "retry_hint": "Line art only: draw each eye as one closed ring with a solid pupil, as on the other pages."
+  },
+  "l2-w01-story-page-hello-i-am-pip": {
+    "files": ["l2-w01-story-page-hello-i-am-pip-m4-color.png", "l2-w01-story-page-hello-i-am-pip-m4-line.png"],
+    "rating": 7.5,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "color: Nan's lower-left hand, a closed fist resting on her shoe, reads as 3 finger bumps and a thumb (closed hand, not an open wave)"
+    ],
+    "goal_check": {
+      "pip_head_out_of_open_bag_big_happy_face": "yes: puppy head and paws out of the open red bag, big happy face",
+      "all_laugh_in_surprise": "yes: open laughing mouths on the children and Teacher Kim",
+      "seven_people_plus_pip": "yes: Pat, May, Sam, Mia, Nan, Ben and Teacher Kim",
+      "nan_spec": "yes: two bunches, orange star shirt, red shorts, white sneakers",
+      "pip_spec": "yes: golden-brown fur, cream chest and muzzle, cream forehead stripe, floppy ears with darker tips, dark eyes, black nose, fluffy tail, red collar with gold tag"
+    },
+    "batch29_defects_gone": {
+      "ben_forehead_no_zigzag_band": "yes",
+      "every_open_raised_hand_5_digits": "yes: Pat, May, Ben raised hands each show 4 fingers and a thumb at 3x; Nan's two low hands are closed fists",
+      "nan_face_from_clean_crop": "yes: clean face, no band, even shirt"
+    },
+    "goal_shown": true,
+    "retry_hint": "Optional: open Nan's lower fist slightly or show four finger bumps. Not an open-hand defect."
+  },
+  "l2-w01-story-page-a-nurse": {
+    "files": ["l2-w01-story-page-a-nurse-m1-color.png", "l2-w01-story-page-a-nurse-m1-line.png"],
+    "rating": 8.0,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "woman_about_thirty": "yes: adult woman",
+      "short_black_hair": "yes",
+      "white_uniform_cap_shoes": "yes: white polo uniform, small white cap, white shoes",
+      "smiles_holds_first_aid_bag_no_symbol": "yes: small white bag, no symbol",
+      "one_clear_picture_main_large_plain_background": "yes"
+    },
+    "batch29_defects_gone": {
+      "line_traces_color_plain_background_one_ground_line": "yes: plain background, one short ground line",
+      "shirt_seams_closed_or_out": "yes: seams are closed strips",
+      "both_hands_closed_outlines": "yes",
+      "eyes_almond_outline_solid_pupil": "yes"
+    },
+    "goal_shown": true,
+    "retry_hint": "None. Clean page."
+  },
+  "l2-w01-cover-hello": {
+    "files": ["l2-w01-cover-hello-m5-color.png", "l2-w01-cover-hello-m5-line.png"],
+    "rating": 6.5,
+    "pass": false,
+    "clean": false,
+    "critical": [
+      "color: Pat's raised open hand (green sleeve, between Pat and Nan) shows 3 fingers and a thumb = 4 digits"
+    ],
+    "defects": [
+      "color: Pat's raised open hand shows 3 fingers and a thumb (critical hand defect)",
+      "line art: the children's open mouths (open smiles in color) are drawn as closed smiles with no inner shape"
+    ],
+    "goal_check": {
+      "five_children_and_nan_wave": "yes: Ben, Mia, Sam, May, Pat and Nan wave",
+      "teacher_kim_smiles_behind": "yes",
+      "green_door_animal_pictures_low_tables": "yes: green door, lion/elephant/frog pictures, one whole low table visible",
+      "pat_bag_round_bump": "yes: small round bump on the red bag",
+      "nan_spec": "yes: two bunches, orange star shirt, red shorts, white sneakers",
+      "no_letters": "yes"
+    },
+    "batch29_defects_gone": {
+      "whole_low_table_visible": "yes",
+      "ben_forehead_no_zigzag_band": "yes",
+      "every_child_open_waving_hand_5_digits": "NO: Pat's raised hand shows 3 fingers and a thumb; all other open hands show 5 digits",
+      "pat_bag_round_bump": "yes"
+    },
+    "goal_shown": true,
+    "retry_hint": "Retry the color page: give Pat's raised hand 4 fingers and a thumb. Line art: add inner mouth shapes."
+  },
+  "l2-w01-story-page-a-nest-and-a-nut": {
+    "files": ["l2-w01-story-page-a-nest-and-a-nut-m3-color.png", "l2-w01-story-page-a-nest-and-a-nut-m3-line.png"],
+    "rating": 7.0,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "line art: the branch under the nest is still a jagged open double stroke, open where it meets the leaves",
+      "line art: one long diagonal line crosses the right side and meets the bush outlines, leaving thin strips too small to color"
+    ],
+    "goal_check": {
+      "pip_sniffs_big_brown_nut_in_grass": "yes: puppy sniffing a large acorn, tongue out",
+      "low_tree": "yes",
+      "nest_with_three_light_blue_eggs_on_low_branch": "yes: exactly 3 blue eggs on a branch just above Pip's head",
+      "nest_and_nut_large_and_clear": "yes",
+      "simple_garden_soft_colors": "yes",
+      "pip_spec": "yes: golden-brown, cream chest/muzzle/stripe, floppy ears, dark eyes, black nose, fluffy tail, red collar with gold tag"
+    },
+    "batch29_defects_gone": {
+      "nest_exactly_3_eggs": "yes: counted 3 eggs",
+      "branch_low_above_pip_head": "yes",
+      "line_nest_has_3_egg_ovals": "yes: three egg ovals in the nest"
+    },
+    "goal_shown": true,
+    "retry_hint": "Line art only: close the branch outlines at the leaf ends and remove the long diagonal stroke crossing the right bush."
+  },
+  "l2-w01-story-page-nan-can-nod": {
+    "files": ["l2-w01-story-page-nan-can-nod-m3-color.png", "l2-w01-story-page-nan-can-nod-m3-line.png"],
+    "rating": 7.0,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "color: Nan's visible ear shows a fold (extra crease) at the top, unlike the smooth ear of the clean reference",
+      "line art: Nan's open mouth is drawn as a closed smile with no inner shape"
+    ],
+    "goal_check": {
+      "nan_spec": "yes: two bunches with red ties, orange T-shirt with white star, red shorts, white sneakers, large dark-brown eyes, eyelash mark at outer corners",
+      "nods_yes_big_smile": "yes: head dipped in a nod, big open smile",
+      "pip_sits_next_to_her_nods": "yes",
+      "one_clear_picture_plain_light_background": "yes",
+      "pip_spec": "yes"
+    },
+    "batch29_defects_gone": {
+      "line_keeps_nans_open_mouth": "NO: line try 2 draws a closed smile with no inner shape",
+      "line_no_floating_circle_in_background": "yes",
+      "line_each_eye_one_closed_ring": "yes",
+      "color_even_orange_tshirt_no_pale_patch": "yes: shirt is one even orange"
+    },
+    "goal_shown": true,
+    "retry_hint": "Fix the ear fold in color (smooth ear). Line art: restore the open mouth inner shape and keep the closed eye rings."
+  },
+  "l2-w01-cover-nan-can-nod": {
+    "files": ["l2-w01-cover-nan-can-nod-m2-color.png", "l2-w01-cover-nan-can-nod-m2-line.png"],
+    "rating": 7.5,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "line art: Nan's open mouth (open smile in color) is drawn as a closed smile with no inner shape"
+    ],
+    "goal_check": {
+      "nan_nods_big_smile_garden_low_tree": "yes: head tilted forward and down, big open smile, garden with a low tree",
+      "pip_sits_next_to_her": "yes",
+      "nan_spec": "yes: two bunches, orange star shirt, red shorts, white sneakers; ear is smooth here",
+      "pip_spec": "yes"
+    },
+    "batch29_defects_gone": {
+      "line_each_eye_one_closed_ring": "yes",
+      "nan_nods_not_reaching": "yes: arms at her sides, no reach",
+      "line_tree_trunk_closed_shapes": "yes"
+    },
+    "goal_shown": true,
+    "retry_hint": "Line art only: add the inner shape of Nan's open mouth."
+  },
+  "summary": {
+    "pages": 11,
+    "pass": 10,
+    "clean": 2,
+    "clean_keys": ["l2-w01-story-page-hello-i-am-sam", "l2-w01-story-page-a-nurse"],
+    "not_clean_keys": [
+      "l2-w01-story-page-hello-i-am-pat",
+      "l2-w01-story-page-hello-i-am-mia",
+      "l2-w01-story-page-hello-i-am-may",
+      "l2-w01-story-page-hello-i-am-your-teacher",
+      "l2-w01-story-page-hello-i-am-pip",
+      "l2-w01-cover-hello",
+      "l2-w01-story-page-a-nest-and-a-nut",
+      "l2-w01-story-page-nan-can-nod",
+      "l2-w01-cover-nan-can-nod"
+    ]
+  }
+}

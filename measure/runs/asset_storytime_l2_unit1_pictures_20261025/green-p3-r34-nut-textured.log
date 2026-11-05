@@ -1,0 +1,7 @@
+storytime-nut: 5,816 triangles, 0.049 x 0.055 x 0.048 m, built in 5897 ms
+  shell                     2376 tris  (1106 ms)
+  cap                       2900 tris  (1393 ms)
+  stem                       540 tris  (59 ms)
+texture  512x512 atlas: base color, normal, occlusion/roughness/metal (3022 ms)
+glb      out/storytime-nut/storytime-nut.glb  (478 KB)
+render   out/storytime-nut/render.png  (518 ms)

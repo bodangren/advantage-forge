@@ -1,0 +1,161 @@
+assets/airship.ts(90,31): error TS2345: Argument of type 'Sdf | undefined' is not assignable to parameter of type 'Sdf'.
+  Type 'undefined' is not assignable to type 'Sdf'.
+assets/airship.ts(106,33): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/airship.ts(106,47): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/airship.ts(106,63): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/airship.ts(110,33): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/airship.ts(110,47): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/airship.ts(110,63): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/longship.ts(70,22): error TS2345: Argument of type 'Rgb | undefined' is not assignable to parameter of type 'Rgb'.
+  Type 'undefined' is not assignable to type 'readonly [number, number, number]'.
+assets/merchant-cart.ts(205,32): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/mushroom-cap.ts(31,39): error TS2532: Object is possibly 'undefined'.
+assets/mushroom-cap.ts(31,60): error TS2532: Object is possibly 'undefined'.
+assets/mushroom-cap.ts(31,74): error TS2532: Object is possibly 'undefined'.
+assets/plank.ts(41,14): error TS18048: 'b' is possibly 'undefined'.
+assets/plank.ts(42,9): error TS18048: 'b' is possibly 'undefined'.
+assets/plank.ts(42,30): error TS18048: 'b' is possibly 'undefined'.
+assets/plank.ts(47,18): error TS18048: 'b' is possibly 'undefined'.
+assets/plank.ts(48,18): error TS18048: 'b' is possibly 'undefined'.
+assets/plank.ts(53,26): error TS18048: 'b' is possibly 'undefined'.
+assets/rowboat.ts(69,60): error TS2532: Object is possibly 'undefined'.
+assets/rowboat.ts(69,67): error TS2532: Object is possibly 'undefined'.
+assets/rowboat.ts(69,77): error TS2532: Object is possibly 'undefined'.
+assets/rowboat.ts(69,84): error TS2532: Object is possibly 'undefined'.
+assets/rowboat.ts(69,94): error TS2532: Object is possibly 'undefined'.
+assets/rowboat.ts(69,101): error TS2532: Object is possibly 'undefined'.
+assets/rowboat.ts(71,30): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/rowboat.ts(72,31): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/waterskin.ts(18,33): error TS2532: Object is possibly 'undefined'.
+assets/waterskin.ts(18,54): error TS2532: Object is possibly 'undefined'.
+assets/waterskin.ts(18,75): error TS2532: Object is possibly 'undefined'.
+assets/wool.ts(59,31): error TS18048: 'x' is possibly 'undefined'.
+tests/games/castle-defense/bot.test.ts(39,55): error TS2345: Argument of type '"waveStep"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "picked" | "waveAppeared" | "waveCleared" | "stepShown" | "attackerStrike" | "sentenceBuilt" | "towerBuilt" | "volley"'.
+tests/games/castle-defense/bot.test.ts(68,50): error TS2339: Property 'spots' does not exist on type 'CastleDefenseState'.
+tests/games/castle-defense/bot.test.ts(68,96): error TS2561: Object literal may only specify known properties, but 'spots' does not exist in type 'CastleDefenseState'. Did you mean to write 'posts'?
+tests/games/castle-defense/driver.test.ts(3,35): error TS2305: Module '"../../../src/games/castle-defense/core/index.js"' has no exported member 'Spot'.
+tests/games/castle-defense/driver.test.ts(37,5): error TS2561: Object literal may only specify known properties, but 'showSpots' does not exist in type 'Presentation'. Did you mean to write 'showPosts'?
+tests/games/castle-defense/driver.test.ts(37,17): error TS7006: Parameter 'spots' implicitly has an 'any' type.
+tests/games/castle-defense/driver.test.ts(37,24): error TS7006: Parameter 'build' implicitly has an 'any' type.
+tests/games/castle-defense/driver.test.ts(44,22): error TS7006: Parameter 'step' implicitly has an 'any' type.
+tests/games/castle-defense/driver.test.ts(44,28): error TS7006: Parameter '_attackers' implicitly has an 'any' type.
+tests/games/castle-defense/driver.test.ts(44,40): error TS7006: Parameter 'shots' implicitly has an 'any' type.
+tests/games/castle-defense/driver.test.ts(48,21): error TS7006: Parameter 'a' implicitly has an 'any' type.
+tests/games/castle-defense/driver.test.ts(48,24): error TS7006: Parameter 'hearts' implicitly has an 'any' type.
+tests/games/castle-defense/driver.test.ts(105,36): error TS2345: Argument of type '"waveStep"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "picked" | "waveAppeared" | "waveCleared" | "stepShown" | "attackerStrike" | "sentenceBuilt" | "towerBuilt" | "volley"'.
+tests/games/castle-defense/driver.test.ts(106,42): error TS2339: Property 'shots' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; sentenceId: string; attackers: Attacker[]; } | { type: "stepShown"; step: Step; built: string[]; } | { type: "picked"; choice: number; word: string; correct: boolean; index: number; streak: number; } | ... 8 more ... | { ...; }'.
+  Property 'shots' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; sentenceId: string; attackers: Attacker[]; }'.
+tests/games/castle-defense/driver.test.ts(107,39): error TS2345: Argument of type '"attackerThrough"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "picked" | "waveAppeared" | "waveCleared" | "stepShown" | "attackerStrike" | "sentenceBuilt" | "towerBuilt" | "volley"'.
+tests/games/castle-defense/driver.test.ts(113,100): error TS2339: Property 'enemyId' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; sentenceId: string; attackers: Attacker[]; } | { type: "stepShown"; step: Step; built: string[]; } | { type: "picked"; choice: number; word: string; correct: boolean; index: number; streak: number; } | ... 8 more ... | { ...; }'.
+  Property 'enemyId' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; sentenceId: string; attackers: Attacker[]; }'.
+tests/games/castle-defense/driver.test.ts(113,113): error TS2339: Property 'hearts' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; sentenceId: string; attackers: Attacker[]; } | { type: "stepShown"; step: Step; built: string[]; } | { type: "picked"; choice: number; word: string; correct: boolean; index: number; streak: number; } | ... 8 more ... | { ...; }'.
+  Property 'hearts' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; sentenceId: string; attackers: Attacker[]; }'.
+tests/games/castle-defense/driver.test.ts(129,43): error TS2551: Property 'spots' does not exist on type 'CastleDefenseState'. Did you mean 'posts'?
+tests/games/castle-defense/driver.test.ts(132,24): error TS2551: Property 'spots' does not exist on type 'CastleDefenseState'. Did you mean 'posts'?
+tests/games/castle-defense/driver.test.ts(132,36): error TS7006: Parameter 's' implicitly has an 'any' type.
+tests/games/castle-defense/helpers.ts(11,8): error TS2305: Module '"../../../src/games/castle-defense/core/index.js"' has no exported member 'Spot'.
+tests/games/castle-defense/helpers.ts(63,124): error TS2353: Object literal may only specify known properties, and 'spot' does not exist in type '{ type: "build"; post: number; }'.
+tests/games/castle-defense/helpers.ts(80,23): error TS2551: Property 'spots' does not exist on type 'CastleDefenseState'. Did you mean 'posts'?
+tests/games/castle-defense/helpers.ts(87,22): error TS2339: Property 'path' does not exist on type 'CastleDefenseState'.
+tests/games/castle-defense/replay.test.ts(41,29): error TS2345: Argument of type '"waveStep"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "picked" | "waveAppeared" | "waveCleared" | "stepShown" | "attackerStrike" | "sentenceBuilt" | "towerBuilt" | "volley"'.
+tests/games/castle-defense/replay.test.ts(64,29): error TS2345: Argument of type '"waveStep"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "picked" | "waveAppeared" | "waveCleared" | "stepShown" | "attackerStrike" | "sentenceBuilt" | "towerBuilt" | "volley"'.
+tests/games/castle-defense/replay.test.ts(65,29): error TS2345: Argument of type '"waveStep"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "picked" | "waveAppeared" | "waveCleared" | "stepShown" | "attackerStrike" | "sentenceBuilt" | "towerBuilt" | "volley"'.
+tests/games/castle-defense/rules.test.ts(30,8): error TS2305: Module '"../../../src/games/castle-defense/core/index.js"' has no exported member 'Spot'.
+tests/games/castle-defense/rules.test.ts(76,101): error TS2339: Property 'at' does not exist on type 'Attacker'.
+tests/games/castle-defense/rules.test.ts(79,9): error TS2367: This comparison appears to be unintentional because the types '"rest" | "scored" | "victory" | "rejected" | "picked" | "waveAppeared" | "waveCleared" | "stepShown" | "attackerStrike" | "sentenceBuilt" | "towerBuilt" | "volley"' and '"waveStep"' have no overlap.
+tests/games/castle-defense/rules.test.ts(81,25): error TS2339: Property 'moves' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(86,25): error TS2339: Property 'shots' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(92,16): error TS2367: This comparison appears to be unintentional because the types '"rest" | "scored" | "victory" | "rejected" | "picked" | "waveAppeared" | "waveCleared" | "stepShown" | "attackerStrike" | "sentenceBuilt" | "towerBuilt" | "volley"' and '"attackerThrough"' have no overlap.
+tests/games/castle-defense/rules.test.ts(93,44): error TS2339: Property 'enemyId' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(119,39): error TS2339: Property 'shots' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(134,25): error TS2345: Argument of type '"attackerThrough"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "picked" | "waveAppeared" | "waveCleared" | "stepShown" | "attackerStrike" | "sentenceBuilt" | "towerBuilt" | "volley"'.
+tests/games/castle-defense/rules.test.ts(314,18): error TS2551: Property 'spots' does not exist on type '{ type: "sentenceBuilt"; wave: number; posts: Post[]; }'. Did you mean 'posts'?
+tests/games/castle-defense/rules.test.ts(354,37): error TS2339: Property 'shots' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(369,32): error TS2339: Property 'shots' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(369,46): error TS7006: Parameter 's' implicitly has an 'any' type.
+tests/games/castle-defense/rules.test.ts(370,77): error TS2339: Property 'step' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(376,25): error TS2339: Property 'shots' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(376,36): error TS7006: Parameter 's' implicitly has an 'any' type.
+tests/games/castle-defense/rules.test.ts(376,74): error TS2339: Property 'shots' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(376,85): error TS7006: Parameter 's' implicitly has an 'any' type.
+tests/games/castle-defense/rules.test.ts(383,37): error TS2339: Property 'shots' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(399,37): error TS2339: Property 'shots' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(416,46): error TS2345: Argument of type '"waveStep"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "picked" | "waveAppeared" | "waveCleared" | "stepShown" | "attackerStrike" | "sentenceBuilt" | "towerBuilt" | "volley"'.
+tests/games/castle-defense/rules.test.ts(416,75): error TS2339: Property 'shots' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; sentenceId: string; attackers: Attacker[]; } | { type: "stepShown"; step: Step; built: string[]; } | { type: "picked"; choice: number; word: string; correct: boolean; index: number; streak: number; } | ... 8 more ... | { ...; }'.
+  Property 'shots' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; sentenceId: string; attackers: Attacker[]; }'.
+tests/games/castle-defense/rules.test.ts(426,37): error TS2339: Property 'shots' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(451,38): error TS2339: Property 'moves' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(468,13): error TS2367: This comparison appears to be unintentional because the types '"rest" | "scored" | "victory" | "rejected" | "picked" | "waveAppeared" | "waveCleared" | "stepShown" | "attackerStrike" | "sentenceBuilt" | "towerBuilt" | "volley"' and '"waveStep"' have no overlap.
+tests/games/castle-defense/rules.test.ts(469,29): error TS2339: Property 'moves' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(470,29): error TS2339: Property 'shots' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(471,30): error TS2339: Property 'moves' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(471,41): error TS7006: Parameter 'm' implicitly has an 'any' type.
+tests/games/castle-defense/rules.test.ts(472,20): error TS2367: This comparison appears to be unintentional because the types '"rest" | "scored" | "victory" | "rejected" | "picked" | "waveAppeared" | "waveCleared" | "stepShown" | "attackerStrike" | "sentenceBuilt" | "towerBuilt" | "volley"' and '"attackerThrough"' have no overlap.
+tests/games/castle-defense/rules.test.ts(474,20): error TS2339: Property 'hearts' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(475,31): error TS2339: Property 'enemyId' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(475,46): error TS2339: Property 'enemyId' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(476,22): error TS2339: Property 'hearts' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(477,22): error TS2339: Property 'enemyId' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(495,15): error TS2367: This comparison appears to be unintentional because the types '"rest" | "scored" | "victory" | "rejected" | "picked" | "waveAppeared" | "waveCleared" | "stepShown" | "attackerStrike" | "sentenceBuilt" | "towerBuilt" | "volley"' and '"attackerThrough"' have no overlap.
+tests/games/castle-defense/rules.test.ts(495,49): error TS2339: Property 'hearts' does not exist on type 'never'.
+tests/games/castle-defense/rules.test.ts(514,29): error TS2345: Argument of type '"attackerThrough"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "picked" | "waveAppeared" | "waveCleared" | "stepShown" | "attackerStrike" | "sentenceBuilt" | "towerBuilt" | "volley"'.
+tests/games/castle-defense/rules.test.ts(619,39): error TS2345: Argument of type '"attackerThrough"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "picked" | "waveAppeared" | "waveCleared" | "stepShown" | "attackerStrike" | "sentenceBuilt" | "towerBuilt" | "volley"'.
+tests/games/castle-defense/rules.test.ts(620,41): error TS2345: Argument of type '"attackerThrough"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "picked" | "waveAppeared" | "waveCleared" | "stepShown" | "attackerStrike" | "sentenceBuilt" | "towerBuilt" | "volley"'.
+tests/games/castle-defense/rules.test.ts(630,27): error TS2345: Argument of type '"attackerThrough"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "picked" | "waveAppeared" | "waveCleared" | "stepShown" | "attackerStrike" | "sentenceBuilt" | "towerBuilt" | "volley"'.
+tests/games/magic-defense/bot.test.ts(25,37): error TS2345: Argument of type '"missileThrown"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "waveAppeared" | "roundShown" | "waveCleared" | "cast" | "castleHit" | "stormCast"'.
+tests/games/magic-defense/bot.test.ts(25,67): error TS2339: Property 'missile' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; enemies: WaveEnemy[]; } | { type: "roundShown"; round: Round; } | { type: "cast"; choice: number; wordId: string; correct: boolean; castle: number; enemyId: string; correctText: string; streak: number; } | ... 6 more ... | { ...; }'.
+  Property 'missile' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; enemies: WaveEnemy[]; }'.
+tests/games/magic-defense/driver.test.ts(11,8): error TS2305: Module '"../../../src/games/magic-defense/core/index.js"' has no exported member 'HeldMissile'.
+tests/games/magic-defense/driver.test.ts(47,5): error TS2353: Object literal may only specify known properties, and 'throwMissile' does not exist in type 'Presentation'.
+tests/games/magic-defense/driver.test.ts(195,13): error TS2367: This comparison appears to be unintentional because the types '"rest" | "scored" | "victory" | "rejected" | "waveAppeared" | "roundShown" | "waveCleared" | "cast" | "castleHit" | "stormCast"' and '"missileThrown"' have no overlap.
+tests/games/magic-defense/driver.test.ts(195,63): error TS2339: Property 'missile' does not exist on type 'never'.
+tests/games/magic-defense/helpers.ts(12,8): error TS2305: Module '"../../../src/games/magic-defense/core/index.js"' has no exported member 'HeldMissile'.
+tests/games/magic-defense/helpers.ts(92,26): error TS2339: Property 'missiles' does not exist on type 'MagicDefenseState'.
+tests/games/magic-defense/helpers.ts(100,24): error TS2339: Property 'activeMissileId' does not exist on type 'MagicDefenseState'.
+tests/games/magic-defense/helpers.ts(133,14): error TS2339: Property 'activeMissileId' does not exist on type 'MagicDefenseState'.
+tests/games/magic-defense/helpers.ts(176,33): error TS2345: Argument of type '"missileThrown"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "waveAppeared" | "roundShown" | "waveCleared" | "cast" | "castleHit" | "stormCast"'.
+tests/games/magic-defense/helpers.ts(176,67): error TS2339: Property 'missile' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; enemies: WaveEnemy[]; } | { type: "roundShown"; round: Round; } | { type: "cast"; choice: number; wordId: string; correct: boolean; castle: number; enemyId: string; correctText: string; streak: number; } | ... 6 more ... | { ...; }'.
+  Property 'missile' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; enemies: WaveEnemy[]; }'.
+tests/games/magic-defense/replay.test.ts(52,29): error TS2345: Argument of type '"missileThrown"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "waveAppeared" | "roundShown" | "waveCleared" | "cast" | "castleHit" | "stormCast"'.
+tests/games/magic-defense/replay.test.ts(84,19): error TS2339: Property 'missiles' does not exist on type 'MagicDefenseState'.
+tests/games/magic-defense/replay.test.ts(84,33): error TS7006: Parameter 'm' implicitly has an 'any' type.
+tests/games/magic-defense/rules.test.ts(59,65): error TS2322: Type '"missileThrown"[]' is not assignable to type '("rest" | "scored" | "victory" | "rejected" | "waveAppeared" | "roundShown" | "waveCleared" | "cast" | "castleHit" | "stormCast")[]'.
+  Type '"missileThrown"' is not assignable to type '"rest" | "scored" | "victory" | "rejected" | "waveAppeared" | "roundShown" | "waveCleared" | "cast" | "castleHit" | "stormCast"'.
+tests/games/magic-defense/rules.test.ts(133,38): error TS2345: Argument of type '"missileThrown"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "waveAppeared" | "roundShown" | "waveCleared" | "cast" | "castleHit" | "stormCast"'.
+tests/games/magic-defense/rules.test.ts(133,68): error TS2339: Property 'missile' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; enemies: WaveEnemy[]; } | { type: "roundShown"; round: Round; } | { type: "cast"; choice: number; wordId: string; correct: boolean; castle: number; enemyId: string; correctText: string; streak: number; } | ... 6 more ... | { ...; }'.
+  Property 'missile' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; enemies: WaveEnemy[]; }'.
+tests/games/magic-defense/rules.test.ts(177,34): error TS2339: Property 'activeMissileId' does not exist on type 'MagicDefenseState'.
+tests/games/magic-defense/rules.test.ts(180,24): error TS2339: Property 'activeMissileId' does not exist on type 'MagicDefenseState'.
+tests/games/magic-defense/rules.test.ts(208,65): error TS2339: Property 'activeMissileId' does not exist on type 'MagicDefenseState'.
+tests/games/magic-defense/rules.test.ts(263,29): error TS2345: Argument of type '"missileThrown"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "waveAppeared" | "roundShown" | "waveCleared" | "cast" | "castleHit" | "stormCast"'.
+tests/games/magic-defense/rules.test.ts(263,59): error TS2339: Property 'missile' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; enemies: WaveEnemy[]; } | { type: "roundShown"; round: Round; } | { type: "cast"; choice: number; wordId: string; correct: boolean; castle: number; enemyId: string; correctText: string; streak: number; } | ... 6 more ... | { ...; }'.
+  Property 'missile' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; enemies: WaveEnemy[]; }'.
+tests/games/magic-defense/rules.test.ts(354,29): error TS2345: Argument of type '"missileThrown"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "waveAppeared" | "roundShown" | "waveCleared" | "cast" | "castleHit" | "stormCast"'.
+tests/games/magic-defense/rules.test.ts(354,60): error TS2339: Property 'missile' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; enemies: WaveEnemy[]; } | { type: "roundShown"; round: Round; } | { type: "cast"; choice: number; wordId: string; correct: boolean; castle: number; enemyId: string; correctText: string; streak: number; } | ... 6 more ... | { ...; }'.
+  Property 'missile' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; enemies: WaveEnemy[]; }'.
+tests/games/magic-defense/rules.test.ts(354,95): error TS2339: Property 'missile' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; enemies: WaveEnemy[]; } | { type: "roundShown"; round: Round; } | { type: "cast"; choice: number; wordId: string; correct: boolean; castle: number; enemyId: string; correctText: string; streak: number; } | ... 6 more ... | { ...; }'.
+  Property 'missile' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; enemies: WaveEnemy[]; }'.
+tests/games/magic-defense/rules.test.ts(394,32): error TS2339: Property 'activeMissileId' does not exist on type 'MagicDefenseState'.
+tests/games/magic-defense/rules.test.ts(402,22): error TS2339: Property 'activeMissileId' does not exist on type 'MagicDefenseState'.
+tests/games/magic-defense/rules.test.ts(417,34): error TS2339: Property 'activeMissileId' does not exist on type 'MagicDefenseState'.
+tests/games/magic-defense/rules.test.ts(424,24): error TS2339: Property 'activeMissileId' does not exist on type 'MagicDefenseState'.
+tests/games/magic-defense/rules.test.ts(426,29): error TS2345: Argument of type '"missileThrown"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "waveAppeared" | "roundShown" | "waveCleared" | "cast" | "castleHit" | "stormCast"'.
+tests/games/magic-defense/rules.test.ts(426,59): error TS2339: Property 'missile' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; enemies: WaveEnemy[]; } | { type: "roundShown"; round: Round; } | { type: "cast"; choice: number; wordId: string; correct: boolean; castle: number; enemyId: string; correctText: string; streak: number; } | ... 6 more ... | { ...; }'.
+  Property 'missile' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; enemies: WaveEnemy[]; }'.
+tests/games/magic-defense/rules.test.ts(454,34): error TS2345: Argument of type '"missileThrown"' is not assignable to parameter of type '"rest" | "scored" | "victory" | "rejected" | "waveAppeared" | "roundShown" | "waveCleared" | "cast" | "castleHit" | "stormCast"'.
+tests/games/magic-defense/rules.test.ts(454,64): error TS2339: Property 'missile' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; enemies: WaveEnemy[]; } | { type: "roundShown"; round: Round; } | { type: "cast"; choice: number; wordId: string; correct: boolean; castle: number; enemyId: string; correctText: string; streak: number; } | ... 6 more ... | { ...; }'.
+  Property 'missile' does not exist on type '{ type: "waveAppeared"; wave: number; waveCount: number; enemies: WaveEnemy[]; }'.
+tests/games/magic-defense/rules.test.ts(488,24): error TS2339: Property 'activeMissileId' does not exist on type 'MagicDefenseState'.
+tests/part.test.ts(19,18): error TS2379: Argument of type '{ name: string; bone: string | undefined; color: unknown; y: number; }' is not assignable to parameter of type '{ name: string; bone?: string; color?: unknown; y: number; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'bone' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.

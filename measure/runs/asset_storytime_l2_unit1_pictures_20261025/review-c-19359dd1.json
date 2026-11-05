@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "track": "asset_storytime_l2_unit1_pictures_20261025",
+  "phase": "Phase 3: Week 1 pictures",
+  "role": "measure-review-c-ux-api",
+  "audited_head": "19359dd1",
+  "status": "pass",
+  "summary": "Pass. The Muse week 1 delivery manifest matches the Workbooks reader field by field at HEAD 19359dd1: job.id = row id, list-named color and line files, ready statuses, selectedVersion/selectedFile/selectedSha256, SHA-256 from structural.sha256, class sizes 4000 x 3000 (A/B) and 1500 x 1500 (C), and the empty renderEvidenceFile and absent render/reviews fields are never read by the consumer. F1 (reader channel-count hazard) is withdrawn: the committed Workbooks test R-P4-7 passes a 1-channel sharp greyscale().png() line fixture through checkStorytimePicture, and writeGray1LinePng covers the 1-bit Forge shape. F2 (minor) and F3 (nit) are nonblocking Forge Green items.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F2 [Minor] review-c: The writer color-print check is weaker than the Workbooks color rules. Evidence: Forge src/storytime/muse-delivery.ts:124-151 (inspectColorPrint) checks PNG format, pixel size, and no alpha only; Workbooks dashboard/lib/storytime/print/picture-check.ts:238-250 (checkColor) also requires 8-bit uchar depth, the sRGB space, exactly 3 channels, and no palette, so a CMYK, palette, or 1-channel color print passes the writer and fails at the Workbooks stage 1 check. The failure is closed: the row fails at Workbooks and no wrong file is used. Owner: Forge Green. Recommendation: Extend inspectColorPrint to require a 3-channel 8-bit sRGB PNG, or record the gap in the delivery docs.",
+    "F3 [Nit] review-c: A row without an approval entry is silently skipped. Evidence: Forge src/storytime/muse-delivery.ts:253-254 continues without a message when a row has no approval entry, and the deliver CLI (src/storytime/book-pictures.ts:4739) exits 0 with only the delivered count as a signal; the Workbooks reader fails that row later (dashboard/lib/storytime/print/picture-check.ts:392, no job for the row). The writer must skip rows for subset delivery, so a refusal is wrong. Owner: Forge Green. Recommendation: Log one line per skipped row in the deliver command output."
+  ],
+  "evidence": [
+    "F1 withdrawn: checked Workbooks dashboard/__tests__/storytime-print-readers.test.ts:259-400 (test R-P4-7). The valid line fixture at line 267 is sharp(art).greyscale().png(), a 1-channel grayscale PNG, and line 399 expects checkStorytimePicture to pass it. measure() (picture-check.ts:184-216) can pass the grayscale test (grayValuePixels === pixels, line 270) only when sharp().raw() expands each gray pixel to equal red, green, and blue values. Lines 329-384 add writeGray1LinePng, a hand-packed 1-bit grayscale PNG, with the comment that the check must accept a 1-bit Forge file. The reader accepts the delivered 1-channel 0/255 line print shape, so F1 is not a defect. A live node -e probe was refused by the shell permission gate; the committed Workbooks test is the decisive evidence.",
+    "Contract map at 19359dd1: job.id = row.id (muse-delivery.ts:226-229 via rowCaptureJob book-pictures.ts:3606-3624); candidate.file = row.fileName and lineArt.file = row.lineArtFileName (muse-delivery.ts:277-294 via planPictureRow book-pictures.ts:1550-1566); selectedVersion/selectedFile/selectedSha256 set by assembleManifest (book-pictures.ts:2079-2131); statuses ready on job, candidate, and lineArt; sizes 4000 x 3000 for class A/B and 1500 x 1500 for class C match Workbooks STORYTIME_PICTURE_SPEC (dashboard/lib/storytime/print/pictures.ts:38-42); the reader matches the file name part only (picture-check.ts:126-131) and keeps paths inside the batch root (picture-check.ts:477-494); empty renderEvidenceFile and absent candidate.render are never read by the consumer.",
+    "User flow: success exit 0, failure exit 1 through the redacting RB2-01 boundary (scripts/storytime-book-pictures.ts:31-57). Error messages name the row, the file, and the reason for a wrong path, a wrong size, and a gray pixel."
+  ],
+  "commands": [
+    "git log --oneline -3",
+    "git diff --stat 19359dd1 -- src/storytime/ tests/storytime-muse-delivery.test.ts spec.md",
+    "ls out/storytime/l2/unit1/w01/muse/l2-w01-check-row-hat-m1-line-print-2.png",
+    "node -e 'const sharp=require(\"sharp\");...' (refused by the shell permission gate; the committed Workbooks test R-P4-7 was used instead)",
+    "grep -n \"Amendment 2026-11-01\" measure/tracks/asset_storytime_l2_unit1_pictures_20261025/spec.md"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-19359dd1.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-19359dd1.log"
+  ],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "test_summary": "tests/storytime-muse-delivery.test.ts (T152-T161) was not rerun in this session. Review A and Review B ran it at the same audited HEAD 19359dd1 with 10 passed. The heavy-runner vitest command was skipped for the step budget.",
+  "notes": "Audit-only review of the Muse week 1 delivery contract against the Workbooks consumer. F1 (reader channel-count hazard) was withdrawn with the Workbooks committed test as evidence. F2 and F3 are nonblocking. No edit outside the two run artifacts; no write in the Workbooks repository."
+}

@@ -1,0 +1,149 @@
+{
+  "status": "inconclusive",
+  "reviewer": "opencode/glm-5.3-flash-free#high",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Provisional. Review in progress.",
+  "items": {
+    "l2-w04-story-page-nan-and-pam-nap": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Window curtain shows in line art only (as in earlier rounds).",
+        "One pigtail clearly visible in line art; the second pigtail is hidden because the head rests on the arm (matches color).",
+        "No star anywhere in color or line; Pam keeps yarn fringe and tuft, plain dress; one blanket over both."
+      ],
+      "goal_check": "Nan and doll Pam sleep under one blanket; no star; Pam keeps yarn fringe (zigzag hairline, yarn tuft, pigtail) and plain dress.",
+      "line_check": "PASS (brief: 21 px line width, 6.94 percent ink, edge frame 97.79 percent white). Pixel count (sharp, raw): 4000 x 3000, 0 of 12000000 pixels outside 0 and 255.",
+      "retry_hint": null
+    },
+    "l2-w04-check-row-bus": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [],
+      "goal_check": "One yellow school bus on white, three-quarter view; body, front window, side windows, door, grille, wheels all present and closed in line.",
+      "line_check": "PASS (brief: 17 px line width, 9.35 percent ink, edge frame 100 percent white). Pixel count (sharp, raw): 1500 x 1500, 0 of 2250000 pixels outside 0 and 255.",
+      "retry_hint": null
+    },
+    "l2-w04-check-row-cat": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Line art has no stripes while the color has many (a color/line difference that changes no character: note).",
+        "Left eye narrower than the right eye, as in the 3D model."
+      ],
+      "goal_check": "One cat on white; pointed ears, whiskers, curled tail, four legs in color and line.",
+      "line_check": "PASS (brief: 20 px line width, 8.46 percent ink, edge frame 100 percent white). Pixel count (sharp, raw): 1500 x 1500, 0 of 2250000 pixels outside 0 and 255.",
+      "retry_hint": null
+    },
+    "l2-w04-check-row-dog": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Collar and tag present in line; solid nose tip and solid pupils (allowed)."
+      ],
+      "goal_check": "One puppy on white; floppy ears, red collar, gold tag in color and line.",
+      "line_check": "PASS (brief: 24 px line width, 9.40 percent ink, edge frame 100 percent white). Pixel count (sharp, raw): 1500 x 1500, 0 of 2250000 pixels outside 0 and 255.",
+      "retry_hint": null
+    },
+    "l2-w04-check-row-fish": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Solid pupil in a thin ring (allowed).",
+        "Wavy fin edges in line match round-edged fins in color."
+      ],
+      "goal_check": "One fish on white; two yellow fins and tail in color; top fin, tail fin, side fin present in line.",
+      "line_check": "PASS (brief: 19 px line width, 4.58 percent ink, edge frame 100 percent white). Pixel count (sharp, raw): 1500 x 1500, 0 of 2250000 pixels outside 0 and 255.",
+      "retry_hint": null
+    },
+    "l2-w04-check-row-hat": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Single brim outline in line (try 2), as the brief states."
+      ],
+      "goal_check": "One sun hat on white; crown, brim, red band and bow in color and line.",
+      "line_check": "PASS (brief: 16 px line width, 3.89 percent ink, edge frame 100 percent white). Pixel count (sharp, raw): 1500 x 1500, 0 of 2250000 pixels outside 0 and 255.",
+      "retry_hint": null
+    },
+    "l2-w04-check-row-milk": {
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Line art reads as a glass of liquid, not clearly as milk; the color is white milk. This is a color/line difference that changes no character and no needed prop, so it is a note under the bar, not a defect. A child colors it next to the printed word 'milk'.",
+        "One small drop shape beside the rim in line; no carton and no splash crown in either file (note)."
+      ],
+      "goal_check": "One glass of milk on white; rim oval, milk surface oval, glass walls closed in line.",
+      "line_check": "PASS (brief: 21 px line width, 8.06 percent ink, edge frame 100 percent white). Pixel count (sharp, raw): 1500 x 1500, 0 of 2250000 pixels outside 0 and 255.",
+      "retry_hint": null
+    },
+    "l2-w04-check-row-monkey": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Solid oval nose (allowed); wavy hand and foot edges in line match the color."
+      ],
+      "goal_check": "One monkey on white; tan face mask, round ears, long curled tail, tan belly in color and line; not a bear.",
+      "line_check": "PASS (brief: 14 px line width, 8.03 percent ink, edge frame 100 percent white). Pixel count (sharp, raw): 1500 x 1500, 0 of 2250000 pixels outside 0 and 255.",
+      "retry_hint": null
+    },
+    "l2-w04-check-row-mouse": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Left eye pupil has a light crescent sliver in line (as the builder notes for try 3); it reads fine at book size.",
+        "No rat snout and no cat ears; whiskers and inner ovals present."
+      ],
+      "goal_check": "One mouse on white; two big round ears with inner ovals, whiskers, thin curved tail, small oval nose in color and line.",
+      "line_check": "PASS (brief: 13 px line width, 6.79 percent ink, edge frame 100 percent white). Pixel count (sharp, raw): 1500 x 1500, 0 of 2250000 pixels outside 0 and 255.",
+      "retry_hint": null
+    },
+    "l2-w04-check-row-sun": {
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Exactly eight pointed triangle rays with wide bases on the disc, same in color and line; one sun only."
+      ],
+      "goal_check": "One sun; one round disc with eight pointed triangle rays, each wide base on the disc, points outward.",
+      "line_check": "PASS (brief: 20 px line width, 6.26 percent ink, edge frame 100 percent white). Pixel counts pending. Pixel count (sharp, raw): 1500 x 1500, 0 of 2250000 pixels outside 0 and 255.",
+      "retry_hint": null
+    }
+  },
+  "extra": {
+    "K1": {
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "notes": ["Nan's face has eyes and a mouth in line; no blank face.", "The hand reads as an open palm at book size in both files."],
+      "goal_check": "One big brown nut (an acorn) rests in Nan's open hand, close up, in color and line."
+    },
+    "K2": {
+      "rating": null,
+      "line_check": "Pixel count (sharp, raw): 4000 x 3000, 0 of 12000000 pixels outside 0 and 255."
+    },
+    "K3": {
+      "rating": null,
+      "line_check": "Pixel count (sharp, raw): 1600 x 1600, 0 of 2560000 pixels outside 0 and 255."
+    }
+  }
+}

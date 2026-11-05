@@ -1,0 +1,23 @@
+{
+  "status": "inconclusive",
+  "reviewer": "nvidia/minimaxai/minimax-m3.1-flash#thinking",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Provisional. Review in progress.",
+  "items": {
+    "l2-w04-story-page-nan-and-pam-nap": { "rating": null },
+    "l2-w04-check-row-bus": { "rating": null },
+    "l2-w04-check-row-cat": { "rating": null },
+    "l2-w04-check-row-dog": { "rating": null },
+    "l2-w04-check-row-fish": { "rating": null },
+    "l2-w04-check-row-hat": { "rating": null },
+    "l2-w04-check-row-milk": { "rating": null },
+    "l2-w04-check-row-monkey": { "rating": null },
+    "l2-w04-check-row-mouse": { "rating": null },
+    "l2-w04-check-row-sun": { "rating": null }
+  },
+  "extra": {
+    "K1": { "rating": null },
+    "K2": { "rating": null },
+    "K3": { "rating": null }
+  }
+}

@@ -1,0 +1,75 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 2: Tests and calibrated model pre-checks (P2), task 7
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: bf4fd8f8d2a6c164d3a92ffa102134b289d8b338
+head_sha: ec835814b18e2bc8426363d6915a8e82eb81e990
+commits:
+  - de097bc653e8d3616f5aec4ffaff736f6d15952f test(storytime): add failing security remediation tests
+  - ec835814b18e2bc8426363d6915a8e82eb81e990 docs(measure): record asset_storytime_l2_unit1_pictures_20261025 Red evidence
+tests_run:
+  command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'
+  runs: 2; both exited 1 with the same summary. The final run tested the committed file.
+  exit_code: 1
+  summary_line: Tests  9 failed | 90 passed (99)
+  new_failures: [T77, T78, T79, T80, T81, T82, T83, T84, T85]
+  earlier_test_exceptions: none; all 90 earlier tests passed.
+  lock_wait_line: none
+  invalid_red_causes: none; no syntax, transform, package, timeout, flock, or preflight error occurred.
+  output: measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t7.log
+  other_checks: git diff --check passed. ./measure/generate.sh --check exited 1 for stale status.md and asset-inventory.json.
+files_changed:
+  - tests/storytime-book-pictures.test.ts (committed)
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md (committed)
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-bf4fd8f.log (untracked result)
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t7.log (untracked output)
+plan_updates: Task 7 stays [~]. Its note records the test commit, command, exit, summary, failures, fixture amendments, and generated-fact check.
+known_failures:
+  - RB-01 to RB-05 and RA2-N1 await implementation.
+  - T77 fails because the wrapper ignores spawn and reaches the guarded spawnSync fallback.
+  - T78 lacks bookFileAllowlist. T79 lacks bookServerConfig. T80 lacks writeOutputFile.
+  - T81 and T82 lack secretFindings. The strategy also requires redactSecrets and readRawAnswer.
+  - T83 accepts a synthetic credential reason and returns 0 instead of refusing it.
+  - T84 accepts release after a calibration log disappears and returns 0 instead of refusing it.
+  - T85 returns [ready, ready, pending] for empty and absent sampleFiles. Both cases require [failed, failed, failed].
+  - The strategy reports 31 baseline compiler errors outside this role's paths. This role ran no compiler.
+  - ./measure/generate.sh --check reports stale status.md and asset-inventory.json. Existing generated changes remain unchanged.
+  - The local anti-pattern catalog is absent. This role reads the canonical fallback and finds no tests/_lib/ directory.
+  - The strategy reports stale metadata counts and outstanding closeout mutations. Green and closeout own these items.
+handoff:
+  model: volcengine-agent-plan/glm-5.3-flash#high
+  seams:
+    - StorytimeWrapperDependencies.spawn uses the spawnSync signature. The wrapper defaults to spawnSync.
+    - bookFileAllowlist({ repoRoot, stageDirectory, timeline }) returns an allowlist. The tests accept a direct value or a promise.
+    - resolveBookFile(allowlist, requestPath) returns a checked real path or undefined. The tests accept a direct value or a promise.
+    - serveBookFiles(allowlist) returns the storytime-book-files plugin. configureServer installs one middleware. stats() returns { served, refused }.
+    - bookServerConfig(input) returns the Vite configuration for the production capture. input uses BookCaptureInput.
+    - writeOutputFile(outputRoot, relativeFile, bytes) creates one exclusive file through resolveOutputPath.
+    - secretFindings(text, env = process.env) returns pattern names. redactSecrets(text, env = process.env) returns redacted text.
+    - readRawAnswer(file) returns unchanged UTF-8 text. The tests accept a direct value or a promise.
+    - runStorytimeCli dependencies gain workbooksRoot. Limits remain 500 characters and 65,536 bytes.
+  assertions_and_mutations:
+    - T77 requires bash, argument-form heavy-run.sh, separate unchanged argv, the inner env marker, no shell, and status 75. Mutations restore -c or move the marker into the command.
+    - T78 requires two served files, 404 refusals, no refused next call, no outside bytes, and exact counters. Mutations remove realpath, call next, remove the Storytime exclusion, or serve unnamed stage pictures.
+    - T79 checks the production Vite call. It requires loopback, strict file access, out/storytime/** denial, and the protected plugin. Mutations remove each setting or bypass the plugin.
+    - T80 requires exclusive file creation, unchanged existing bytes, unchanged outside files, and four clean smoke outputs. Mutations replace resolveOutputPath with path.join or remove wx.
+    - T81 requires pattern-only findings, redacted failure entries, a 500-character limit, and clean temporary trees. Mutations return no findings or write the original provider error.
+    - T82 requires secret refusal inside the MiniMax paid callback and before Kimi writes. Unsafe raw files fail. Boundary and safe bytes survive unchanged. Mutations remove findings, file checks, or the size check, or trim raw text.
+    - T83 refuses all credential reasons and 501-character reasons without writes. A plain reason records one failure. The mutation removes reason validation.
+    - T84 requires current calibration before release. Missing logs, a stale rubric, and changed source bytes fail. Plain verification still passes. The mutation removes assertCalibrationReady.
+    - T85 fails every twin for empty or absent sampleFiles. The mutation accepts an empty list.
+  live_rows: Green owns T87 and the authorized smoke run 4, T86. This role makes no live call.
+  generated_facts: The existing generated paths are dirty. The check reports stale status.md and asset-inventory.json. Refresh them during Green or closeout.
+  static_checks: The duplicate T54 fixture has 379 identical bytes. All 339 earlier assertion lines remain in order. Nine new test IDs exist. No test uses skip, todo, or only.
+  guard_note: T77 catches the guarded fallback because HEAD lacks the spawn dependency. The guard throws before any process starts. T79 records the Vite configuration before the guard throws.
+  branch_inventory: One master worktree and one local master branch exist. Remote origin/gh-pages remains outside scope. This role performs no push or deletion.
+  completion_scope: This result completes Red only. Task 7 remains incomplete. No new test passed against HEAD, so no already-satisfied exception applies.
+dirty_path_classification:
+  relevant: Existing measure/runs/ evidence is untracked. Preserve all existing files.
+  generated/ignorable: measure/generated/* contains existing changes. Preserve them.
+  unrelated_user_work: All other initial dirty paths, including skills, AGENTS.md, assets, bench, docs, reference, other track plans, measure/tracks.md, and measure/workflow.md. Preserve them.
+model_deviation: none
+facts_changed: []
+END_MEASURE_AGENT_RESULT

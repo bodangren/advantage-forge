@@ -1,0 +1,37 @@
+MEASURE_AGENT_RESULT
+role: strategy
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P2 "Phase 2: Tests and calibrated model pre-checks"
+commits:
+  - 00481c5d29439ca7edfb4b554fbc4f6428f3c125 docs(measure): add line-art and A3 print outputs to Storytime track
+tests_run: none. This role ran no vitest, tsc, browser, render, paid call, preflight, or lock. Checks run: plan task count 16, [x] count 2, metadata estimated_tasks 16 and actual_tasks 2, git diff --check clean.
+files_changed:
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/spec.md
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/contract.md
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/metadata.json
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/strategy-b63755b.log (not committed)
+plan_updates:
+  - Phase 2 task 1 text adds line-art twins. Phase 2 task 2 text adds color and line-art twins from one render run and keeps src/song/ unchanged.
+  - Phase 3 adds a first task: the Nan window sample in color and line art, reported to the PM, then [b] deferred:daniel-lineart-look while later tasks continue.
+  - Phase 3 render task is now 16 color and 16 line-art files. The check, review, and delivery tasks include line art and spec v1.
+  - Phase 4 has a line-art note and an A3 re-render note.
+  - Two Communication log entries (about 21:10 and 21:25 ICT) with Daniel's verbatim words and the facts changed.
+  - metadata.json: estimated_tasks 16, actual_tasks 2, updated description and deviation notes.
+known_failures:
+  - measure/anti-patterns.md does not exist. The strategy uses the starter catalog.
+  - The repository baseline tsc error count is unknown. Green records it as "baseline tsc errors: <n>".
+  - The untracked draft source has no line-art twin. Green must add it.
+  - The provisional line-art limits (90, 0.5, and 25 percent) are not checked on a real render yet. The Nan sample is the first check.
+handoff:
+  - role_base_sha: b63755bcd9e355ab92937f3669d0c0f8b68607c3 (verified). phase_base_sha stays 1d39b8fda457e12d8e7332e7de65d2046ddda78e. Commits b63755bc and 00481c5d are doc-only and in-phase.
+  - RED_TEST_COMMAND and GREEN_TEST_COMMAND are unchanged. No new test file. All new tests go in tests/storytime-book-pictures.test.ts.
+  - New test IDs for Red: T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41. T25 (precheck-kimi) is in scope because b63755bc applied the contract amendment.
+  - Decisions Red must not make itself: (1) the line-art technique and the capture return shape; Green picks them, and Red tests only the observable rules (one call per version, one camera, both images); (2) the provisional limits 90, 0.5, and 25 percent, the one-channel 8-bit grey format, and the "-lineart" name, which come from the contract; (3) any song-engine change; (4) the final print size and ratio, which wait for Workbooks spec v1.
+  - Green guard: git diff --quiet 1d39b8fd -- src/song must exit 0. If the line-art pass needs a song-engine edit, Green stops and reports. The orchestrator then adds a separate engine-hook task with tests/song-timeline.test.ts in its gate and a PM note.
+  - Deferrals: P3 task 1 (Nan sample) becomes [b] deferred:daniel-lineart-look after the report goes to the PM. P3 task 2 (assets) has no deferral: b63755bc records the PM approval. P3 task 5 becomes [b] deferred:daniel-or-named-reviewer when the count review and line-art look go to the PM. P4 task 1 becomes [b] deferred:workbooks-via-pm without the final list and spec v1 (due 2026-10-28).
+  - Kimi quota reset at 22:46 local on 2026-10-25. Check the quota before each Kimi call.
+  - Facts changed: each reader page gets a color and a line-art output; line-art format provisional until Workbooks spec v1 (due 2026-10-28); color renders are also an A3 teacher print deliverable; final print size waits for Workbooks spec v1.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,91 @@
+{
+  "group": "prod-r4-color",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w01-story-page-hello-i-am-pip",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-hello-i-am-pip-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1). Action: speaking and waving (note only). Seen: a golden-brown puppy with a cream chest, cream muzzle and forehead stripe, floppy ears, red collar with a round gold tag. It stands up in the middle and fills much of the picture. Its whole head and chest show. The cast children and Teacher Kim stand behind. mustShow: Pip shown; Pip large in the middle shown; whole head and chest shown. Small mark: a red box on the floor."
+    },
+    {
+      "id": "l2-w02-story-page-how-many-balls-five",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w02-story-page-how-many-balls-five-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no (the page answers its own question). Items: balls (5). Action: none. Seen: five round balls in a row on the grass: red, orange, yellow, green, blue. Each has two colored stripes as a pattern. All five show fully with their bottoms inside the frame. Nan stands behind them and matches the cast. mustShow: five balls shown; a pattern on each ball shown; all five inside the picture shown."
+    },
+    {
+      "id": "l2-w04-story-page-this-is-pam",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-story-page-this-is-pam-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: the doll Pam (1). Action: none. Seen: one rag doll that stands in the middle: yellow yarn fringe and two bunches, round cream face, two black button eyes, stitched smile, red dress with short puffed sleeves. It matches the cast. No other person or animal is in the picture. Room furniture and a toy box show in the background. mustShow: the doll Pam shown; the doll alone shown; the doll large in the middle shown."
+    },
+    {
+      "id": "l2-w05-story-page-i-have-four-legs",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-story-page-i-have-four-legs-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), four legs (4). Action: none. Seen: a golden-brown puppy with a cream chest and muzzle, red collar with a gold tag, standing in three-quarter view on grass. Four legs with four cream paws show: two at the back (one near, one far) and two at the front. Pip is alone. mustShow: Pip shown; four legs shown; Pip alone shown."
+    },
+    {
+      "id": "l2-w06-story-page-tap-tap-tap",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-story-page-tap-tap-tap-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a child's hand (1), a wall (1). Action: tapping (note only). Seen: a boy in a red shirt with two white stripes, brown hair, blue shorts. His right hand reaches out with open fingers and touches a wall at the right edge. The hand has a thumb and fingers and looks correct. The boy matches Sam. mustShow: a child's hand shown; the hand on the wall shown (touch drawn, motion is a note)."
+    },
+    {
+      "id": "l2-w06-story-page-tap-tap-tap-b",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-story-page-tap-tap-tap-b-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a child's hand (1), a wall (1). Action: tapping (note only). Seen: a boy in a red shirt with white stripes, brown hair, blue shorts. His small hand touches the wall with a pointing finger, and the wall shows a small dent there. The hand is small but reads as a hand with fingers. The boy matches Sam. mustShow: a child's hand shown; the hand on the wall shown. Small mark: the left side of the picture is soft."
+    },
+    {
+      "id": "l2-w06-story-page-he-can-see-pip",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-story-page-he-can-see-pip-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one boy (1), Pip (1). Action: seeing (note only). Seen: one boy in a red shirt with a white stripe, brown hair, blue shorts and blue shoes. He leans out from behind a basket of books and points toward the puppy. His head turns toward Pip. Pip lies on the floor: golden-brown, cream muzzle, red collar with a gold tag. mustShow: one boy shown; Pip shown; the boy looks at Pip shown (head turned and pointing toward Pip)."
+    },
+    {
+      "id": "l2-w05-d4-prompt-face",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-d4-prompt-face-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. D4 prompt: draw two eyes in the face. Items: hair, a nose, a mouth, two empty places for eyes. Seen: a black outline of a round face with a hair cap, a small oval nose, a smile line, and two empty oval eye shapes. The ears show at the sides. No words or fill. mustShow: hair shown; a nose shown; a mouth shown; two empty places for the eyes shown."
+    },
+    {
+      "id": "l2-w07-d4-prompt-ball",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-d4-prompt-ball-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. D4 prompt: color the ball. Items: one ball. Seen: one round ball in a thick black outline with seam lines that cut it into four large empty areas. No words, no fill. mustShow: one ball shown; a clear outline shown; large areas to color shown."
+    }
+  ],
+  "summary": { "files": 9, "pass": 9, "fail": 0 }
+}

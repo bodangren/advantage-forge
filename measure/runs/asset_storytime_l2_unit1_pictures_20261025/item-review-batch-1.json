@@ -1,0 +1,78 @@
+{
+  "storytime-nest": {
+    "overall": 6.8,
+    "pass": false,
+    "critical": [],
+    "issues": [
+      "The three eggs have pointed tips, so they read as buds and not as eggs.",
+      "The nest shows smooth bands and a smooth rim, so it reads as a basket and not as twigs.",
+      "The side view shows one egg. The other two eggs hide behind it."
+    ],
+    "fix": "Round the three egg tips into smooth ovals and break the rim into rough twigs."
+  },
+  "storytime-nut": {
+    "overall": 7.5,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "The cap edge is ragged, and the cap shows no scale texture.",
+      "The nut reads as one big brown acorn in all four views."
+    ],
+    "fix": ""
+  },
+  "storytime-butterfly-net": {
+    "overall": 6.5,
+    "pass": false,
+    "critical": [],
+    "issues": [
+      "The mesh shows as thin lines, and the background shows through it.",
+      "The mesh narrows to a point at the bottom, so the object reads as a racket.",
+      "The handle shows a seam and has no grip."
+    ],
+    "fix": "Hang a deep soft mesh bag under the hoop so it reads as a butterfly net."
+  },
+  "storytime-first-aid-box": {
+    "overall": 7.6,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "The back is one large plain panel.",
+      "No symbol appears on the front, the three-quarter, the side, or the back."
+    ],
+    "fix": ""
+  },
+  "storytime-nurse-cap": {
+    "overall": 7.2,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "The cap has no band and no strap at the back.",
+      "The green cross on the cap is not a defect for this page. The no-symbol rule covers the bag only."
+    ],
+    "fix": ""
+  },
+  "gesture-touch-nose": {
+    "overall": 5.5,
+    "pass": false,
+    "critical": [
+      "The extended finger is missing. The hand is a closed lump beside the nose."
+    ],
+    "issues": [
+      "The head turns nearly to profile for the hold, so the face and the laugh stay hidden.",
+      "The side row shows the back of the head for most of the clip.",
+      "The lump sits at the cheek and not at the nose tip."
+    ],
+    "fix": "Turn the head to the camera and extend one finger to the nose tip."
+  },
+  "gesture-touch-neck": {
+    "overall": 7.3,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "The chin lift reads well in the side view, but it stays mild in the front view.",
+      "The hands sit under the jaw on the sides of the neck, and not on the throat.",
+      "The side view shows one hand. The far hand hides behind the body."
+    ],
+    "fix": ""
+  }
+}

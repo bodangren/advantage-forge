@@ -1,0 +1,11 @@
+storytime-crayon-box: 3,270 triangles, 0.2 x 0.131 x 0.1 m, built in 4890 ms
+  box                        410 tris  (1050 ms)
+  box-floor                   66 tris  (636 ms)
+  crayon-red                 574 tris  (461 ms)
+  crayon-yellow              564 tris  (838 ms)
+  crayon-green               564 tris  (401 ms)
+  crayon-orange              546 tris  (486 ms)
+  crayon-purple              546 tris  (375 ms)
+texture  none (vertex colors)
+glb      out/storytime-crayon-box/storytime-crayon-box.glb  (83 KB)
+render   out/storytime-crayon-box/render.png  (777 ms)

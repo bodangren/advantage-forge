@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "track": "asset_storytime_l2_unit1_pictures_20261025",
+  "phase": "Phase 4: Remaining pictures and cover",
+  "role": "measure-review-b-security",
+  "audited_head": "b6326503e6582ca01b90f5dfc43a131a8d6b4cc3",
+  "audited_head_sha": "b6326503e6582ca01b90f5dfc43a131a8d6b4cc3",
+  "role_base_sha": "b6326503e6582ca01b90f5dfc43a131a8d6b4cc3",
+  "phase_base_sha": "fc76c27209402c54354447693e9b291d4411ff79",
+  "head_current": true,
+  "contract_applicability": "applicable",
+  "status": "pass",
+  "summary": "Pass at b6326503, the current HEAD. Review B found no blocking finding. The Muse and delivery paths stay inside out/. The cover print read in cover-calm-top has no symlink or regular-file check. This is one low nonblocking finding, RB-P4-1.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "RB-P4-1 (severity low): --print in cover-calm-top reads any path without out/ confinement, a realpath check, or a regular-file check. Evidence: src/storytime/book-pictures.ts:4753-4759 and coverCalmTopReport near line 1341. Remediation: confine --print to out/ with realpath and a regular-file check. Owner: Green."
+  ],
+  "evidence": [
+    "resolveMuseDeliveryPaths confinement (src/storytime/muse-delivery.ts:131): pass. The Muse root and the delivery root resolve under out/. Outside paths throw.",
+    "Muse file read (src/storytime/muse-delivery.ts:247, readMuseFile): pass. Symlinks are refused. The real path must sit inside the Muse root. The file must be regular.",
+    "Muse file name (src/storytime/muse-delivery.ts:33, MuseFileName): pass. Path separators, . and .. are rejected.",
+    "Delivery root symlink (src/storytime/muse-delivery.ts:161 and :577): pass. A symlink delivery root is refused.",
+    "Person review source (src/storytime/muse-delivery.ts:302-322): pass. The person review comes only from entry.reviews?.person. The notes field is not used as a review.",
+    "Closeout test evidence (measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md:4280 and :4351): pass. 185 passed (185) in closeout run 2. T152-T198 passing. T195 covers the out-folder refusal. T197 covers notes never becoming a person review. The full suite was not run in this audit.",
+    "Cover print read (src/storytime/book-pictures.ts coverCalmTopReport, near line 1341): finding RB-P4-1. No symlink or regular-file check on the read."
+  ],
+  "commands": [
+    "grep -n resolveMuseDeliveryPaths src/storytime/muse-delivery.ts",
+    "read src/storytime/muse-delivery.ts:33, :131, :161, :247, :302-322, :577",
+    "read src/storytime/book-pictures.ts:1341 (coverCalmTopReport) and :4753-4759 (cover-calm-top)",
+    "grep -n 'it(.T19[0-8]' tests/storytime-muse-delivery.test.ts",
+    "read measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md:4280 and :4351"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-b6326503.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-b6326503.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "medium",
+  "test_summary": "No vitest ran in this audit. The plan closeout records 185 of 185 tests passed on run 2 (plan.md:4280, :4351).",
+  "handoff": "Pass at b6326503. RB-P4-1 (low) is nonblocking. The orchestrator defers it to Phase 5 as a tech-debt candidate. No product decision is open.",
+  "facts_changed": []
+}

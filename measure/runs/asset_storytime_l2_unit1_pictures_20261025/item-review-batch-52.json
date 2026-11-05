@@ -1,0 +1,251 @@
+{
+  "status": "pass",
+  "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "All 9 rows of batch 52 are clean. Set B passes.",
+  "items": {
+    "l2-w06-cover-i-can-see": {
+      "files": [
+        "out/storytime-review/batch-52/pages/l2-w06-cover-i-can-see-m3-color-print.png",
+        "out/storytime-review/batch-52/pages/l2-w06-cover-i-can-see-m3-line-print-5-despeckled.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "One gray cat sits whole on the fence rail in the color print and in the line print. The cat is small at book size, so it is a note.",
+        "One white duck swims on the pond in both prints.",
+        "Mia holds one flat hand over her eyes in both prints.",
+        "Mia has a nose curve and a smile in the line print, so the face is not blank.",
+        "The eyes of Mia are two solid black circles with no eye outline. That is a note because the text names no eye.",
+        "One sun. The eight rays are pointed triangles. A white gap of 16 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note.",
+        "The tree crown and the grass clumps run past the frame edges. That is background only."
+      ],
+      "goal_check": "Met. Mia stands in a sunny meadow with one cat and one duck, and both prints show the same scene.",
+      "line_check": "0 gray pixels in 12000000. The line art is pure black and white. The eight sun ray strokes are separate and sit 16 pixels from the disc."
+    },
+    "l2-w06-story-page-i-can-see-a-cat": {
+      "files": [
+        "out/storytime-review/batch-52/pages/l2-w06-story-page-i-can-see-a-cat-m1-color-print.png",
+        "out/storytime-review/batch-52/pages/l2-w06-story-page-i-can-see-a-cat-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Exactly one cat sits on the fence rail in the color print and in the line print.",
+        "The cat has two pointed ears, whiskers, a nose and a mouth in the line print.",
+        "Mia points at the cat with one index finger in both prints.",
+        "Mia has a nose curve and an open smile, so the face is not blank.",
+        "One sun. The eight rays are pointed triangles. A white gap of 23 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note.",
+        "The tree runs past the left frame edge. That is background only."
+      ],
+      "goal_check": "Met. Mia points at one cat in a sunny meadow, and one cat shows in the color print and the line print.",
+      "line_check": "0 gray pixels in 12000000. The line art is pure black and white. The eight sun ray strokes are separate and sit 23 pixels from the disc."
+    },
+    "l2-w06-story-page-i-can-see-a-dog": {
+      "files": [
+        "out/storytime-review/batch-52/pages/l2-w06-story-page-i-can-see-a-dog-m1-color-print.png",
+        "out/storytime-review/batch-52/pages/l2-w06-story-page-i-can-see-a-dog-m1-line-print-6-despeckled.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Exactly one black and white puppy runs in the air in the color print and in the line print.",
+        "The black patches of the puppy are solid black fills in the line art, as they are in the color. That is a note because the fills match the color and they are areas, not rings or bands.",
+        "The puppy has floppy ears, a nose, an open mouth with a tongue and one tail in both prints.",
+        "Mia points at the puppy with one index finger in both prints.",
+        "Mia has a nose curve and an open smile, so the face is not blank.",
+        "One sun. The eight rays are pointed triangles and their wide bases sit on the disc. This page matches the sun rule.",
+        "The tree, the fence and the grass clumps run past the frame edges. That is background only."
+      ],
+      "goal_check": "Met. Mia points at one dog in a sunny meadow, and one dog shows in the color print and the line print.",
+      "line_check": "0 gray pixels in 12000000. The line art is pure black and white. The sun is one closed shape. The ray bases sit on the disc."
+    },
+    "l2-w06-story-page-i-can-see-a-horse": {
+      "files": [
+        "out/storytime-review/batch-52/pages/l2-w06-story-page-i-can-see-a-horse-m1-color-print.png",
+        "out/storytime-review/batch-52/pages/l2-w06-story-page-i-can-see-a-horse-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Exactly one white horse stands behind the fence at the right in the color print and in the line print.",
+        "The golden brown tail tip of Pip is one closed fluffy shape at the lower right in both prints. No body, head, ears or legs of Pip show. The shape runs to the bottom frame edge, so it is a note.",
+        "Mia points at the horse with one index finger in both prints.",
+        "The eyes of Mia are two solid black circles with no eye outline. That is a note because the text names no eye and the face has a nose and a mouth.",
+        "One sun. The eight rays are pointed triangles. A white gap of 20 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note.",
+        "The tree, the fence and the pond run past the frame edges. That is background only."
+      ],
+      "goal_check": "Met. Mia points at one horse in a sunny meadow, one horse shows in the color print and the line print, and only the tail tip of Pip shows.",
+      "line_check": "0 gray pixels in 12000000. The line art is pure black and white. The eight sun ray strokes are separate and sit 20 pixels from the disc."
+    },
+    "l2-w06-story-page-i-can-see-a-duck": {
+      "files": [
+        "out/storytime-review/batch-52/pages/l2-w06-story-page-i-can-see-a-duck-m1-color-print.png",
+        "out/storytime-review/batch-52/pages/l2-w06-story-page-i-can-see-a-duck-m1-line-print-5-despeckled.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Exactly one white duck swims on the pond in the color print and in the line print.",
+        "Mia waves with an open hand of five fingers in both prints.",
+        "Mia has a nose curve and an open smile, so the face is not blank.",
+        "Two buttons sit on the straps of the overalls in both prints.",
+        "One sun. The eight rays are pointed triangles. A white gap of 25 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note.",
+        "The tree, the fence and the grass clumps run past the frame edges. That is background only."
+      ],
+      "goal_check": "Met. Mia waves at one duck in a sunny meadow, and one duck shows in the color print and the line print.",
+      "line_check": "0 gray pixels in 12000000. The line art is pure black and white. The eight sun ray strokes are separate and sit 25 pixels from the disc."
+    },
+    "l2-w06-story-page-i-can-see-a-fish": {
+      "files": [
+        "out/storytime-review/batch-52/pages/l2-w06-story-page-i-can-see-a-fish-m1-color-print.png",
+        "out/storytime-review/batch-52/pages/l2-w06-story-page-i-can-see-a-fish-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Exactly one orange fish swims in the pond in the color print and in the line print.",
+        "The fish has one eye, a tail, a dorsal fin and a side fin in both prints.",
+        "Mia kneels and points at the fish with one index finger in both prints.",
+        "Mia has a nose curve and an open smile, so the face is not blank.",
+        "Two buttons sit on the bib of the overalls in the line print and on the straps in the color print.",
+        "One sun. The eight rays are pointed triangles. A white gap of 28 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note.",
+        "The tree, the fence and the pond run past the frame edges. That is background only."
+      ],
+      "goal_check": "Met. Mia kneels at the pond and points at one fish, and one fish shows in the color print and the line print.",
+      "line_check": "0 gray pixels in 12000000. The line art is pure black and white. The eight sun ray strokes are separate and sit 28 pixels from the disc."
+    },
+    "l2-w06-story-page-i-can-see-a-bird": {
+      "files": [
+        "out/storytime-review/batch-52/pages/l2-w06-story-page-i-can-see-a-bird-m1-color-print.png",
+        "out/storytime-review/batch-52/pages/l2-w06-story-page-i-can-see-a-bird-m1-line-print-despeckled.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Exactly one blue bird sits on a branch of the tree in the color print and in the line print.",
+        "The bird has two eyes, a beak, a wing, a tail and two feet on the branch in both prints.",
+        "Mia points up with one index finger in both prints. She faces the camera and does not look up, so that is a note.",
+        "Mia has a nose curve and an open smile, so the face is not blank.",
+        "One sun. The eight rays are pointed triangles. A white gap of 20 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note.",
+        "The tree crown, the fence, the pond and the grass clumps run past the frame edges. That is background only."
+      ],
+      "goal_check": "Met. Mia points at one bird in a sunny meadow, and one bird shows in the color print and the line print.",
+      "line_check": "0 gray pixels in 12000000. The line art is pure black and white. The eight sun ray strokes are separate and sit 20 pixels from the disc."
+    },
+    "l2-w06-story-page-i-can-see-a-frog": {
+      "files": [
+        "out/storytime-review/batch-52/pages/l2-w06-story-page-i-can-see-a-frog-m1-color-print.png",
+        "out/storytime-review/batch-52/pages/l2-w06-story-page-i-can-see-a-frog-m1-line-print-3-despeckled.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Exactly one green frog sits on a lily pad in the color print and in the line print.",
+        "The frog has two big eyes on top and a smile in both prints.",
+        "Mia kneels and points at the frog with one index finger in both prints.",
+        "Mia has a nose curve and an open smile, so the face is not blank.",
+        "One sun. The eight rays are pointed triangles. A white gap of 20 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note.",
+        "The tree, the fence and the grass clumps run past the frame edges. That is background only."
+      ],
+      "goal_check": "Met. Mia kneels at the pond and points at one frog, and one frog shows in the color print and the line print.",
+      "line_check": "0 gray pixels in 12000000. The line art is pure black and white. The eight sun ray strokes are separate and sit 20 pixels from the disc."
+    },
+    "l2-w06-story-page-i-can-see-pip": {
+      "files": [
+        "out/storytime-review/batch-52/pages/l2-w06-story-page-i-can-see-pip-m2-color-print.png",
+        "out/storytime-review/batch-52/pages/l2-w06-story-page-i-can-see-pip-m2-line-print-despeckled.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Exactly one puppy, Pip, jumps at the right in the color print and in the line print.",
+        "Pip has floppy ears only in both prints. He has a nose, an open mouth with a tongue, a collar with one round tag, four legs and one fluffy tail.",
+        "Mia opens both arms with an open hand of five fingers on each side in both prints.",
+        "Mia has a nose curve and an open smile, so the face is not blank.",
+        "One sun. The eight rays are pointed triangles. A white gap of 8 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note.",
+        "The tree, the pond and the grass clumps run past the frame edges. That is background only."
+      ],
+      "goal_check": "Met. Mia opens her arms to Pip in a sunny meadow, and one Pip shows in the color print and the line print.",
+      "line_check": "0 gray pixels in 12000000. The line art is pure black and white. The eight sun ray strokes are separate and sit 8 pixels from the disc."
+    }
+  },
+  "extra": {
+    "K1": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "rating": 5,
+      "verdict": "defect",
+      "defect_categories": [
+        "wrong-or-missing-prop"
+      ],
+      "defects": [
+        "The line print has no nose shape. The fingertip ends on the face at the nose place and the open mouth sits at its right, so the nose the text names appears in the color print only."
+      ],
+      "notes": [
+        "The color print shows one nose as a clear bump, and the fingertip touches its side.",
+        "The line print shows two eyes, two brows, an open mouth and one finger. There is no nose outline and no nostril.",
+        "The finger in the line print reads as touching the left corner of the mouth."
+      ],
+      "goal_check": "Color meets the goal. The line print does not show the nose that the text names.",
+      "line_check": "0 gray pixels in 12000000. The line art is pure black and white. The nose shape is missing.",
+      "retry_hint": "line: draw the nose of Nan as a closed shape beside the fingertip so the nose shows in the line art."
+    },
+    "K2": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The head is in profile and faces the other way from the nose page.",
+        "The nose is clear in the color print and is a closed profile bump with a nostril curve in the line print.",
+        "One eye, one brow, one ear curve, one mouth curve and one hair bun shape.",
+        "No cut part at a frame edge. No thick black ring."
+      ],
+      "goal_check": "Met. The head of Nan is in profile, the nose is clearly seen, and the picture works as a tracing practice line.",
+      "line_check": "0 gray pixels in 2560000. The line art is pure black and white."
+    },
+    "K3": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "One big brown nut sits in the open palm of Nan in both prints.",
+        "The hand is open with four fingers and the thumb hidden behind the nut.",
+        "The hair bun and the shorts run past the right and bottom frame edges. The nut stays whole.",
+        "The line print draws the eye as a big circle with two hollow circles. The face still has a mouth and a nose."
+      ],
+      "goal_check": "Met. One big brown nut rests in the open hand of Nan in a close up.",
+      "line_check": "0 gray pixels in 12000000. The line art is pure black and white."
+    }
+  }
+}

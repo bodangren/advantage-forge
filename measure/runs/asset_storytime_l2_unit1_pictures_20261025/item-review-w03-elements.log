@@ -1,0 +1,100 @@
+item-review-w03-elements
+Reviewer: opencode-go/mimo-v2.6-flash (independent, audit only)
+Track: asset_storytime_l2_unit1_pictures_20261025, Phase 4 (P4)
+Bar: Daniel 2026-11-01 14:15 ICT, verbatim.
+Scope: 10 current week 3 Muse input sheets. Sheets are inputs for later pages, not pages.
+
+Index read: out/storytime-review/w03-staging/index.md.
+Specs read: docs/storytime/l2-unit1/w03/muse-elements/ (10 files).
+Page refs grepped: docs/storytime/l2-unit1/w03/muse/*.json per sheet file name.
+
+PROVISIONAL PASS (first look, one open of each sheet)
+
+1. prop-easel-sheet-m1-color.png
+   Used by: cover-paint, it-is-blue, it-is-green, it-is-orange, it-is-pink, it-is-yellow (6 pages).
+   Shows: one wooden A-frame easel, blank white paper, two clips, three pots (red, blue, yellow) on the ledge.
+   Input checks: white bg, no people, no text, one easel. Reads as easel at book size.
+   Verdict: clean.
+
+2. prop-paint-pots-sheet-m1-color.png
+   Used by: cover-paint, it-is-pip (2 pages).
+   Shows: seven white pots in one row: red, blue, yellow, green, orange, pink, purple; one paintbrush in front.
+   Input checks: white bg, no people, no text. Count is seven; colors match the seven papers.
+   Verdict: clean.
+
+3. prop-pans-sheet-m1-color.png
+   Used by: cover-the-pan and 8 pan story pages (9 pages).
+   Shows: three toy pans, one handle each, handles right. Red middle size, tiny blue, big yellow.
+   Input checks: white bg, no people, no text. Count is three.
+   Verdict: clean.
+
+4. prop-paper-sheets-sheet-m2-color.png
+   Used by: 7 color pages (blue, green, orange, pink, purple, red, yellow).
+   Shows: seven thin flat sheets. Top: red, blue, yellow, green. Bottom: orange, pink, purple. Light paper edge at rim.
+   Input checks: white bg, no people, no text. Count is seven.
+   Builder gap (plain and flat): the spec asks for a thin flat sheet in one flat even color, no patterns. Plain and flat is the target. Not a defect. No page counts papers. Page risk: none.
+   Verdict: clean.
+
+5. prop-paw-prints-sheet-m2-color.png
+   Used by: cover-paint, it-is-pip, it-is-purple (3 pages).
+   Shows: left, one white sheet with 21 flat prints in three rows of seven, three of each of seven colors. Right, a honey-brown plank strip with one line of 8 small prints in many colors.
+   Input checks: white bg, no people, no animal, no text.
+   Builder gap (plank strip, not classroom floor): the element spec itself asks for a honey-brown plank strip. The week 3 classroom floor is wooden plank in a warm honey tone, so the strip blends at book size. Not a defect. Page risk: low, not blocking. Only the purple page sets a print line on the floor, and a child reads a line of prints, not a floor seam.
+   Verdict: clean.
+
+6. prop-pear-sheet-m1-color.png
+   Used by: check-row-pear.
+   Shows: one yellow-green pear with a brown stem and one green leaf. No face.
+   Input checks: white bg, no people, no text. Reads as pear at book size.
+   Verdict: clean.
+
+7. prop-pen-sheet-m1-color.png
+   Used by: check-row-pen.
+   Shows: one chubby blue ballpoint pen, white cap with clip, silver tip, clear round end. No face.
+   Input checks: white bg, no people, no text. Clip and tip read as pen at book size. The pencil sits on its own row.
+   Verdict: clean.
+
+8. prop-pencil-sheet-m1-color.png
+   Used by: check-row-pencil.
+   Shows: one chubby yellow six-sided pencil, pink eraser, silver band, wood tip with gray lead point. No face.
+   Input checks: white bg, no people, no text. Reads as pencil at book size. The pen sits on its own row.
+   Verdict: clean.
+
+9. set-art-corner-empty-m1-color.png
+   Used by: cover-paint and 8 art pages (blue, green, orange, pink, pip, purple, red, yellow) (9 pages).
+   Shows: cream walls with dark-brown beams, plank floor, two easels with blank paper, small window, one low table with about nine pots and two brushes. Open floor in the middle.
+   Builder gap (about nine pots): the spec asks for a few small pots in many colors and names no count. No week 3 page counts paint pots. The paint-pot sheet supplies the seven page colors. Not a defect.
+   Input checks: no people, no text, two easels, one table, one window.
+   Verdict: clean.
+
+10. set-play-corner-empty-m1-color.png
+    Used by: cover-the-pan and 8 pan story pages (9 pages).
+    Shows: cream walls with dark-brown beams, plank floor. Left, one low shelf with cups and plates. Right, one toy kitchen with four burners, a sink, two cupboard doors, one high empty top shelf. Open middle floor. No pans.
+    Input checks: no people, no text, no pans or pots.
+    Verdict: clean.
+
+Reference paths (provisional): all page refs name current files. m2 for paper sheets and paw prints; m1 for the other eight.
+
+Provisional totals: 10 of 10 clean. All three builder gaps judge as not defects under the bar. No page at blocking risk.
+
+SECOND LOOK
+Every sheet was opened again after the first pass.
+
+- paint pots: re-counted seven pots in order red, blue, yellow, green, orange, pink, purple, plus one brush.
+- pans: re-counted three pans, all handles right; yellow biggest, red middle, blue tiny.
+- paper sheets: re-counted seven sheets, four on top (red, blue, yellow, green), three below (orange, pink, purple).
+- paw prints: re-counted 21 prints on the paper, three of each of seven colors; 8 small prints on the strip.
+- art corner: re-counted two easels, one table, one window, about nine pots and two brushes. No people, no text.
+- play corner: re-counted one shelf with three cups and three plates, one kitchen with four burners and one high empty top shelf. No pans, no people, no text.
+- easel: re-checked one easel, blank paper, two clips, three pots on the ledge.
+- pear: re-checked one pear, stem, leaf, no face.
+- pen: re-checked one pen, clip, silver tip, no face.
+- pencil: re-checked one pencil, eraser band, lead point, no face.
+
+All counts hold. All verdicts unchanged.
+Reference paths hold: m2 for paper sheets and paw prints, m1 for the other eight.
+
+FINAL TOTALS
+10 of 10 clean. 0 not clean.
+Builder gaps: 3 of 3 judge as not defects under the bar.
+Page risk: no page at blocking risk. The purple page keeps one low noted risk.

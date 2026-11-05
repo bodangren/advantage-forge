@@ -1,0 +1,23 @@
+# Batch 37 item review log
+
+Date: 2026-11-01. Reviewer: opencode-go/mimo-v2.6-flash. Audit only.
+Bar: Daniel 2026-11-01 14:15 ICT. A defect is only what a teacher or a child sees at book size.
+Small marks are not defects. One row: hello-i-am-pat, color m14 and line try 3.
+
+| key | clean | reason if not clean |
+| --- | --- | --- |
+| l2-w01-story-page-hello-i-am-pat | yes | |
+
+Goal check: Pat young, holds the small brown bear, waves, green door, one low table,
+three animal pictures (lion, elephant, frog), no letters, red bag with a round dome. All shown
+in both files. Line art is pure 1-bit, 0 mid-gray pixels.
+
+Batch 34 defects: all three gone. The waving hand shows four fingers and one thumb in both
+files. The hand on the bear has peach skin (RGB about 252,218,190). The bag and its round
+dome are clearly visible in both files.
+
+Builder items: none are defects under the bar. The shorts patch reads as a pocket. The line
+bear reads as a small bear held by a rounded hand. The line bump matches the color dome. The
+room change keeps all goal items.
+
+Total: 1 row, 1 clean, 1 pass. Rating 8.5. No defect under the new bar.

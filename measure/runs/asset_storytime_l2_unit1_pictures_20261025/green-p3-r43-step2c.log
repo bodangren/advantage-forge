@@ -1,0 +1,32 @@
+storytime-nut: 20,000 triangles, 0.049 x 0.055 x 0.049 m, built in 3422 ms
+  nut                      20000 tris  (2956 ms)
+texture  none (vertex colors)
+glb      out/storytime-nut/storytime-nut.glb  (477 KB)
+# Inspection: storytime-nut
+
+Size 0.049 x 0.055 x 0.049 m (x y z); 20,000 triangles; lowest point y = -0.001 m.
+
+## Silhouette per view (fractions of the frame)
+
+| view | width | height | coverage |
+|---|---|---|---|
+| front | 0.617 | 0.672 | 0.263 |
+| three-quarter | 0.621 | 0.664 | 0.26 |
+| side | 0.617 | 0.68 | 0.263 |
+| back | 0.613 | 0.672 | 0.261 |
+| top | 0.645 | 0.582 | 0.289 |
+
+## Visible share of the silhouette per part
+
+| part | front | three-quarter | side | back | top |
+|---|---|---|---|---|---|
+| nut | 100% | 100% | 100% | 100% | 100% |
+
+## Values and colors (shaded render)
+
+Values: dark 7%, mid 93%, light 0%.
+Dominant colors: #7c4c29 29%, #6b3e18 21%, #99683f 13%, #b87d45 13%, #d79559 12%, #915c27 12%.
+
+## Warnings
+
+- Almost everything is mid-value: the asset will look flat. Add darker and lighter areas.

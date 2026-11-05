@@ -1,0 +1,84 @@
+MEASURE_AGENT_RESULT
+role: measure-review-a
+status: pass
+track: asset_storytime_l2_unit1_pictures_20261025 (short id asset_storytime_l2_unit1_pictures)
+phase: P2 — Phase 2: Tests and calibrated model pre-checks
+task: T10 — Check every decoded JSON value before provider evidence writes
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e (immutable, unchanged)
+role_base_sha: 3f604b62a50099c383169e766aef6d737f59f504
+audited_head_sha: 3f604b62a50099c383169e766aef6d737f59f504 (confirmed at start and at finish)
+code_state_sha: b2a02238a8f217b175b70fd38c737f0593eed16a
+
+verdict: pass — no blocking finding.
+
+Focus 1 — RB4-01 closure.
+decodedAnswerFindings (book-pictures.ts:1159-1206) uses one explicit worklist. It parses the
+whole answer once; on failure it keeps the task 9 jsonObjects prose and fence extraction. On
+each decoded string it parses JSON at any number of layers; a non-JSON string keeps the fence
+extraction. It walks root arrays, scalar array elements, object keys via scan(key), and object
+values, with no field allowlist and no depth ceiling. Findings carry pattern names only.
+Both provider paths check before any write. MiniMax calls the seam at line 3353 inside the paid
+callback, after the raw-byte secretFindings (3343) and before the raw copy (3396) and the
+review write (3397). runPaidCall records success only after the callback returns. Kimi calls
+the seam at 3677 before parseModelReview (3684) and before the review write (3715), the raw
+copy (3718), and the success entry. The raw-byte secretFindings (3667) runs first. Both call
+orders match the plan. Verified against the committed source.
+
+Focus 2 — RA5-02 and RA5-03.
+RA5-02 closed: no .ts file in src/, scripts/, or tests/ references decodedReviewFindings. Only
+measure documents and run logs name it. The export and function are removed. T113 passes.
+RA5-03 closed: precheckKimi calls decodedAnswerFindings before parseModelReview, and its
+comment (3673-3676) states the check reads the raw answer, not the schema result. T114 passes.
+
+Focus 3 — Worklist, termination, bounded work.
+The walker uses no recursion. JSON trees are acyclic, so the walker terminates. A JSON string
+layer always shortens the text, so the layer count is bounded. The visited set dedups objects
+defensively. The credential rules are built once per call (1161-1164). No quadratic or
+unbounded cost remains on hostile input. T111 (depth 400, 65,536 bytes) and T115 (1200 rules
+by 1200 keys) stay under 2 seconds.
+
+Focus 4 — Test meaning and mutation gaps.
+T104-T110, T112-T115 each have a falsifying mutation: T104 by mutation 1; T105 by 2; T106 by 3;
+T107 by 4; T108 by 5; T109 by 6, 7, and 8; T110 by 6; T112 by 14, 15, 16; T113 by 11; T114 by
+12 and 13; T115 by 10 (rule scan ms: 8330). T111 failed at Red with decoded scan ms: 20042.
+Two recorded gaps:
+- Mutation 9 (re-extraction): exit 0, T111 passed. Nonblocking. Re-extraction is a superset
+  scan, so no credential can be missed. Its 65,536-byte cost is 877 ms, under the 2000 ms
+  bound. The real quadratic driver is the per-string rule rebuild, which mutation 10 fails.
+- Mutation 17 (catch-all refuse): exit 0, T112 passed. Nonblocking. The worklist walker raises
+  no error on safe answers, so a catch cannot fire. The premise contradicts T110. T110 and T111
+  already verify the walker throws nothing on safe input.
+Both gaps are falsification gaps in the test strategy, not product defects. Neither is blocking.
+
+Focus 5 — Evidence truth.
+green-vitest-t10-final.log: exit 0, Tests 125 passed (125). green-vitest-t10-pre.log: Tests
+11 failed | 114 passed (125). green-vitest-t10.log: 125 passed. task10-tsc.log: 31 error TS
+lines, none in src/storytime or the owned test file. red-vitest-t10.log: decoded scan ms: 20042
+and rule scan ms: 15274. The plan counts match these logs. The mutation logs confirm the table.
+
+Focus 6 — Callers.
+decodedAnswerFindings has exactly two production callers: precheckMiniMax (3353) and
+precheckKimi (3677). The CLI dispatch at 4048 and 4069 routes to them. The only rawOutput
+writers are 3396 (MiniMax) and 3718 (Kimi), both after their checks. decodedReviewFindings has
+no remaining .ts reference.
+
+Independent gate: the one allowed run ended exit 0, Test Files 1 passed (1), Tests 98 passed
+(98), duration 151.77 s. No lock wait over 600 s line, no hold, no exit 124 or 137.
+
+blocking_findings: none.
+nonblocking_findings:
+- RA6-01 (low): mutation 9 re-extraction passes T111 (test gap, performance-only).
+- RA6-02 (low): mutation 17 catch-all passes T112 (test gap, unreachable trigger).
+- RA6-03 (low): MiniMax comment at 3350 still labels the finding RB3-01 instead of RB4-01.
+
+retry_recommendation: none.
+
+handoff: No implementation retry. RB4-01, RA5-02, RA5-03, RC5-1, RC5-2, and RC5-4 are closed.
+The two mutation test gaps (RA6-01, RA6-02) are falsification gaps, not product defects. The
+acceptance or closeout role may record them as known gaps. Do not treat mutations 9 and 17 as
+closed mutations. RC5-3 stays a tech-debt candidate. RA4-N1 and RA3-N1 stay closeout items. No
+question blocks this handoff. Default taken: accept the task because no credential can reach
+evidence, every check stays ahead of every write, and the walker is bounded and error-free.
+
+facts_changed: none.
+END_MEASURE_AGENT_RESULT

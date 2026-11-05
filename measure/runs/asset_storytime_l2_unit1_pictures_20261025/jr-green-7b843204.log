@@ -1,0 +1,61 @@
+# Jr Green report: Muse week 1 delivery manifest writer
+
+Track: `asset_storytime_l2_unit1_pictures_20261025`. Phase 3, "Phase 3: Week 1 pictures".
+Task: "Implement the Muse week 1 delivery manifest writer (Green)". The task is `[~]`.
+Session name: `Green · P3 · storytime_l2_unit1_pictures · delivery writer`.
+
+## What changed
+
+- `src/storytime/muse-delivery.ts` (new): `writeMuseDelivery(options): Promise<StorytimeManifest>`
+  and the types `MuseApprovalEntry`, `MuseApprovalList`, `MuseDeliveryOptions`.
+- `src/storytime/book-pictures.ts`: `rowCaptureJob` is exported (one word). The CLI has a new
+  `deliver` command.
+
+The writer reuses `assembleManifest` (it builds the batch hashes with `batchSha256` and
+`BATCH_HASH_ALGORITHM`), `planPictureRow`, `inspectLineArtPng`, `priceForProvider`,
+`PICTURE_RUBRIC_VERSION`, and `rowCaptureJob`. It runs every check before the first write, copies
+the print files byte for byte, writes `manifest.json` last, refuses a different manifest or a
+different file under a list name, and gives the same bytes on a second run. It maps only the Kimi
+review (`reviews.kimi`) and a named person review from the approval entry.
+
+CLI line:
+`node --import tsx scripts/storytime-book-pictures.ts deliver --list <pictures.json> --approvals <approved.json> --muse <muse folder> --delivery <delivery folder>`.
+It is read only, offline, and uses no key. A smoke run on the real row `l2-w01-check-row-bus`
+(output under `/tmp`) exited 0 with 1 job and 2 batches (`w01/color`, `w01/lineart`).
+
+## Commands
+
+- GREEN: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts tests/storytime-picture-rows.test.ts tests/storytime-book-pictures.test.ts --maxWorkers=1'`.
+  Exit code `1`. Summary: `Test Files  1 failed | 2 passed (3)` and `Tests  2 failed | 149 passed (151)`.
+  T152 to T161 pass (10 of 10; alone: exit code `0`, `Tests  10 passed (10)`).
+  The 2 failures: T142 and T147 of `tests/storytime-book-pictures.test.ts`. They pin the
+  Workbooks picture list SHA-256 `c3e23cfd...` (version 3). Workbooks commit `87ecc6aa`
+  (2026-11-01, picture list version 4) changed it to `6d05dfc5...`. My change does not touch the
+  list or these tests. A committed test cannot change in Green.
+- tsc: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=2560 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'`.
+  Exit code `2`. Total errors `38` (Red: `39`). Owned errors `0` (Red: `1`).
+- Mutations (only the delivery test file; each restored and the restore checked):
+  1. skip the line-art check: T156 and T157 fail.
+  2. drop the unapproved-row filter: all 10 fail, T153 among them.
+  3. skip the color size check: T156 fails.
+  4. write `manifest.json` before the copies: no test fails (no test covers the write order).
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: done
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3
+task: Implement the Muse week 1 delivery manifest writer (Green)
+baseline_sha: 15a7bf0b
+role_base_sha: 0bf8858a
+head_sha: 7b84320498d842a5f328abee4e0891986ce0c07b
+commits: f41fe1080feb3c6341e9d842464c3a55abcb283b src/storytime/muse-delivery.ts src/storytime/book-pictures.ts; 7b84320498d842a5f328abee4e0891986ce0c07b plan.md green evidence
+tests_run: command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts tests/storytime-picture-rows.test.ts tests/storytime-book-pictures.test.ts --maxWorkers=1'; exit code: 1; summary line: Tests  2 failed | 149 passed (151); T152 to T161: 10 passed; remaining failures: T142 and T147 (tests/storytime-book-pictures.test.ts), caused by the Workbooks picture list version 4 (87ecc6aa) against the pinned version 3 SHA-256; not caused by this change
+typecheck: command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=2560 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'; exit code: 2; owned_errors: 0; total_errors: 38
+plan_updates: The Green task is [~] with the files, the CLI line, the commands, the exit codes, the tsc counts, the mutation results, and the models. The Red task is unchanged. No task is [x].
+handoff: The gate command exits 1 only because T142 and T147 pin the version 3 picture list hash; Workbooks now holds version 4. Decide who updates the pinned hash in those two tests (a Mid Red retry or the Phase 4 list reconciliation task). PICTURE_LIST_V3_SHA256 also stops the row render and verify commands against the version 4 list; the deliver command pins no list hash and logs the list SHA-256 instead. Mutation 4 shows no test covers the manifest-last order. The lineArt.renderEvidenceFile field is the empty string; the Muse prints get the size, PNG, alpha, and line-art checks but no class B calm-top or class C white-corner check (the Red fixtures hold no white corners). The kimi review price record comes from priceForProvider('kimi') (existing OpenCode plan basis). The next task is the week 1 delivery run with a real approval list; that list does not exist yet.
+dispositions: none
+model: claude-code/claude-sonnet-5-5#high (Green, Anthropic). Red: deepseek/deepseek-flash#high. Green coder model: none; no delegation.
+facts_changed: none
+dirty_path_classification: Only src/storytime/muse-delivery.ts, src/storytime/book-pictures.ts, and plan.md were committed, by explicit paths. Other dirty and untracked paths belong to other sessions and are preserved. This log is untracked evidence.
+END_MEASURE_AGENT_RESULT

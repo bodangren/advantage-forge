@@ -1,0 +1,9 @@
+tmp-nest-check: 25,918 triangles, 1.213 x 1.66 x 0.597 m, built in 5145 ms
+  bark                      2674 tris  (690 ms)
+  leaves                    4344 tris  (756 ms)
+  nest-bowl                 3496 tris  (737 ms)
+  nest-woven-twigs         10996 tris  (2969 ms)
+  nest-three-blue-eggs      4408 tris  (532 ms)
+texture  none (vertex colors)
+glb      out/tmp-nest-check/tmp-nest-check.glb  (608 KB)
+render   out/tmp-nest-check/render.png  (369 ms)

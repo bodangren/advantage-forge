@@ -1,0 +1,74 @@
+{
+  "reviewer": "kimi-code-plan-cn/kimi-for-coding",
+  "seen": {
+    "/tmp/opencode/wb-shadow/content/storytime/l2/print/pictures.json": "Goals for the three pages; a-nut is a close-up of one big brown nut in Nan's open hand on a plain light background, hello-i-am-ben shows Ben hanging his bag on a hook and waving with Pat's bag on the floor behind him, a-nose shows Nan touching her own nose with one finger and laughing.",
+    "out/storytime-review/batch-21/look-reference-nan-and-pip.png": "Approved Nan and Pip reference: Nan has black hair in two buns with red ties, an orange T-shirt with a white star, red shorts, and white shoes; Pip is a golden-brown puppy with a red collar.",
+    "out/storytime-review/batch-21/sprout-ben-render.png": "Approved Ben reference: chibi boy with brown hair, a blue T-shirt, and dark blue shorts, shown in front, three-quarter, side, and back renders.",
+    "out/storytime-review/muse-test-2/l2-w01-story-page-a-nut-sheet.png": "Comparison sheet for a-nut with the four versions in the four corners.",
+    "out/storytime-review/muse-test-2/l2-w01-story-page-a-nut-muse2-color.png": "Full-size test 2 color for a-nut; Nan holds an open hand with one big brown acorn toward the camera on a plain light background.",
+    "out/storytime-review/muse-test-2/l2-w01-story-page-a-nut-muse2-line-1bit.png": "Full-size test 2 line art for a-nut; thick black closed lines on white, eyes read as eyes with pupils, mouth reads as a mouth.",
+    "out/storytime-review/muse-test-2/l2-w01-story-page-hello-i-am-ben-sheet.png": "Comparison sheet for hello-i-am-ben with the four versions in the four corners.",
+    "out/storytime-review/muse-test-2/l2-w01-story-page-hello-i-am-ben-muse2-color.png": "Full-size test 2 color for hello-i-am-ben; Ben waves with a full-body framing, a green bag hangs on a hook rack, and a red bag sits on the wooden floor.",
+    "out/storytime-review/muse-test-2/l2-w01-story-page-hello-i-am-ben-muse2-line-1bit.png": "Full-size test 2 line art for hello-i-am-ben; clean closed black lines, waving hand reads as a hand, eyes and mouth read clearly.",
+    "out/storytime-review/muse-test-2/l2-w01-story-page-a-nose-sheet.png": "Comparison sheet for a-nose with the four versions in the four corners.",
+    "out/storytime-review/muse-test-2/l2-w01-story-page-a-nose-muse2-color.png": "Full-size test 2 color for a-nose; Nan touches her nose tip with one index finger and laughs, plain light background.",
+    "out/storytime-review/muse-test-2/l2-w01-story-page-a-nose-muse2-line-1bit.png": "Full-size test 2 line art for a-nose; clean closed black lines, finger-to-nose pose reads, eyes and laughing mouth read clearly."
+  },
+  "l2-w01-story-page-a-nut": {
+    "color": {
+      "overall": 8.5,
+      "clean": true,
+      "defects": [],
+      "same_characters": true,
+      "look_kept": true,
+      "framing_right": true,
+      "goal_shown": true,
+      "notes": "Nan matches the cast reference: black hair in two buns with red ties, orange T-shirt with a white star, red shorts, white shoes. One big brown acorn sits in her open palm. The open hand looks large, but the close-up perspective explains the size, and the finger count reads complete. No hand, mouth, eye, or face-mark defect seen. Plain light background, no text, no logo, rated G."
+    },
+    "line": {
+      "overall": 8.5,
+      "clean": true,
+      "defects": [],
+      "print_usable": true,
+      "notes": "Thick even black lines on white, no gray, no speck, no text. Eyes are circles with pupil dots and read as eyes. The small nose mark and curved mouth read as a mouth. Shapes are large and closed, usable for a 5-year-old. Fingers are nested closed loops; one short palm line ends open but reads as a palm crease."
+    }
+  },
+  "l2-w01-story-page-hello-i-am-ben": {
+    "color": {
+      "overall": 8.5,
+      "clean": true,
+      "defects": [],
+      "same_characters": true,
+      "look_kept": true,
+      "framing_right": true,
+      "goal_shown": true,
+      "notes": "Ben matches the cast reference: brown hair, blue T-shirt, dark blue shorts, gray shoes. He waves with a hand that has a complete finger count. A green bag hangs on the hook rack and a red bag sits on the floor behind him. The hang action is shown as just finished rather than in the act; the goal elements are all present. Full body in frame, nothing important cut. No text, rated G."
+    },
+    "line": {
+      "overall": 8.5,
+      "clean": true,
+      "defects": [],
+      "print_usable": true,
+      "notes": "Thick even black lines on white, no gray, no speck, no text. Eyes are circles with pupils and read as eyes; the smile reads as a mouth. The waving hand and the hanging and floor bags read clearly. Shapes are large and closed, usable for a 5-year-old; shoe lace lines are the finest detail and stay bold."
+    }
+  },
+  "l2-w01-story-page-a-nose": {
+    "color": {
+      "overall": 9.0,
+      "clean": true,
+      "defects": [],
+      "same_characters": true,
+      "look_kept": true,
+      "framing_right": true,
+      "goal_shown": true,
+      "notes": "Nan matches the cast reference: black hair in two buns with red ties, orange star T-shirt, red shorts, white shoes. She touches her nose tip with one index finger and laughs with an open mouth; the pose is exactly the goal. Even eyes, no face marks. Full body fits the frame with a plain light background. No text, rated G."
+    },
+    "line": {
+      "overall": 8.5,
+      "clean": true,
+      "defects": [],
+      "print_usable": true,
+      "notes": "Thick even black lines on white, no gray, no speck, no text. Eyes are even circles with pupil dots and read as eyes. The open laughing mouth with the tongue shape reads as a mouth. The finger-to-nose hand is one closed shape. Large simple closed shapes, usable for a 5-year-old."
+    }
+  }
+}

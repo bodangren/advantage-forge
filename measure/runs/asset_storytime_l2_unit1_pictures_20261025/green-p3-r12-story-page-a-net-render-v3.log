@@ -1,0 +1,32 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 22
+book file requests refused: 0
+Line-art line width: 23 px (minimum 12 px).
+Line-art ink coverage: 10.55% (1266143 of 12000000 pixels black).
+l2-w01-story-page-a-net v3: rendered; stage 829c67148be8873ee34334f12593408103e64caf7b6e739dbb992f7fcc5175bc; file w01/rows/l2-w01-story-page-a-net-v3.png; lineart w01/rows/l2-w01-story-page-a-net-line-v3.png; size 4000 x 3000; render peak rss mb: 489
+	Command being timed: "bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c timeout -k 30 1800 node --import tsx scripts/storytime-book-pictures.ts render --row l2-w01-story-page-a-net --version 3"
+	User time (seconds): 12.57
+	System time (seconds): 1.86
+	Percent of CPU this job got: 40%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:35.37
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 581840
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1649
+	Minor (reclaiming a frame) page faults: 328617
+	Voluntary context switches: 12787
+	Involuntary context switches: 10970
+	Swaps: 0
+	File system inputs: 277864
+	File system outputs: 229200
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

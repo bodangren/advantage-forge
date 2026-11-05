@@ -1,0 +1,97 @@
+batch 41 review, reviewer opencode-go/mimo-v2.6-flash
+bar: Daniel 2026-11-01 14:15 ICT
+status: inconclusive
+summary: Provisional. Review in progress.
+
+row state:
+l2-w02-cover-how-many                 rating=null
+l2-w02-story-page-how-many-balls-five rating=null
+l2-w02-story-page-how-many-birds-four rating=null
+l2-w02-story-page-how-many-cakes-oh-no-pip rating=null
+l2-w02-story-page-how-many-cakes-seven rating=null
+l2-w02-story-page-how-many-ducks-three rating=null
+l2-w02-story-page-how-many-friends-six rating=null
+l2-w02-story-page-how-many-kites-two  rating=null
+l2-w02-story-page-how-many-suns-one   rating=null
+
+row l2-w02-cover-how-many: rating=8 pass=true clean=true
+  counts color: 6 children + Teacher Kim, 1 sun, 0 Pip, 1 bag with round bump
+  counts line:  6 children + Teacher Kim, 1 sun circle, 0 Pip, 1 bag with round bump
+  open item cover top band: Kim hair top 11.5 percent, sun 5.8 percent, tree about 8 percent; not a defect under the bar
+  no gray pixels (0), deep clusters are eye pupils only, no text, faces whole
+
+row l2-w02-story-page-how-many-balls-five: rating=8 pass=true clean=true
+  counts color: 5 balls, 1 sun, 1 child, raised hand 5 digits
+  counts line:  5 balls, 1 sun, 1 child, raised hand 5 digits
+  gray 0; deep clusters = Nan's two pupils only; no text; faces whole
+
+row l2-w02-story-page-how-many-birds-four: rating=8 pass=true clean=true
+  counts color: 4 birds, 1 sun, 1 child (Ben)
+  counts line:  4 birds, 1 sun, 1 child (Ben)
+  gray 0; deep clusters = Ben's two pupils + small bird pupils; no text; faces whole
+  note: Ben hair smooth cap in line, spiky tufts in color (not a defect under the bar)
+
+row l2-w02-story-page-how-many-cakes-oh-no-pip: rating=8 pass=true clean=true
+  counts color: 7 people + Pip, empty plate with 3 cream smudges, cream on Pip nose+muzzle, 1 sun
+  counts line:  7 people + Pip, empty plate with smudge shapes, 1 sun circle
+  workbooks: no thick ring (pupils only); no named face part; Pip line has smooth crown + 2 floppy ears, no spike
+  open items: line width 12 px = writer minimum, passes; cream not a separate line shape, sentence names no cream
+  note: Pip color crown shows two small fur tufts (29 px and 12 px on 4000 px); reference Pip has a crown tuft; under bar
+  hands: Kim open hand = 4 fingers + thumb in line; joined children hands read 5 digits at 4x zoom, none shows six
+
+row l2-w02-story-page-how-many-cakes-seven: rating=8 pass=true clean=true
+  counts color: 7 cupcakes (4 back, 3 front) on 1 plate, 1 sun, 3 people, Pip whole head in bag
+  counts line:  7 cupcakes (4 back, 3 front) on 1 plate, 1 sun, 3 people, Pip whole head in bag
+  counts verified by zoom crops of both plates; plate right edge checked, no eighth cupcake
+  open item: whole puppy head in the bag vs nose tip only = spec deviation, not a defect under the bar
+  Kim points with one finger in both files (hand zoom checked in line)
+
+row l2-w02-story-page-how-many-ducks-three: rating=8 pass=true clean=true
+  counts color: 3 ducks, 1 sun, 1 child (Mia pointing with one finger)
+  counts line:  3 ducks, 1 sun (circle + 8 petal loops), 1 child (Mia pointing)
+  open item: petal-loop sun can read flower-like = not a defect under the bar; note for builder
+  gray 0; deep clusters = Mia's two solid pupils; no text; face whole
+
+row l2-w02-story-page-how-many-friends-six: rating=8 pass=true clean=true
+  counts color: 6 children in a row, 1 sun, 1 school bag on the blanket
+  counts line:  6 children in a row, 1 sun circle, 1 school bag on the blanket
+  gray 0; deep clusters = eye pupils only; no text; no extra plate (try 1 chosen)
+
+row l2-w02-story-page-how-many-kites-two: rating=8 pass=true clean=true
+  counts color: 2 kites (red, yellow), 2 children, 1 sun
+  counts line:  2 kites with bow tails, 2 children, 1 sun circle
+  gray 0; deep clusters = 4 solid pupils only; fists hold the strings; no text
+
+row l2-w02-story-page-how-many-suns-one: rating=8 pass=true clean=true
+  counts color: 1 sun, 2 people, 1 basket, 1 bag with round bump
+  counts line:  1 sun circle, 2 people, 1 basket, 1 bag without separate bump
+  open items: Pat hair smooth cap in line = not a defect; finger points up not at sun = not a defect; bag bump color only = not a defect
+  gray 0; deep clusters = 4 pupils only; no text
+
+batch scans:
+  gray count: 18 of 18 line files hold 0 pixels that are not 0 or 255
+  thickness: deep clusters (>20 px) are round eye pupils only; largest 145 x 145 px, depth 83 px; no ring, no band
+  line gaps: closed gaps at most 15 px wide; sit between parallel strokes (fingers, straps, stones, hair slots); none inside a face
+  sun rule: each page shows exactly one sun in color and in line
+  counts: all exact in both files; cakes plates and hands checked at zoom
+
+final:
+  status: pass
+  summary: all nine rows pass under the bar; defects found 0; clean 9 of 9; ratings all 8; notes for the builder 9
+  workbooks week 1 findings gone: 3 of 3
+
+control follow-up (same bar: Daniel 2026-11-01 14:15 ICT):
+  provisional controls status written before any image was opened
+  C1 a-nose: rating=5 verdict=defect categories=[broken-face]
+    text "A nose."; goal Nan touches her own nose with one finger and laughs.
+    color: nose shows under the fingertip, open laugh, Nan look holds, 0 gray
+    line: 3x zoom shows eyes, brows, finger and open mouth; NO nose line; the sentence names the nose
+  C2 a-nut: rating=5 verdict=defect categories=[wrong-hand-or-limb]
+    text "A nut."; goal one big brown nut in Nan's open hand, close up.
+    line and color: 1x and 2x zoom show thumb + three long fingers (two finger notches + thumb web, two palm creases); four digits, one finger missing
+    nut, close-up framing, Nan look, 0 gray all hold in both files
+  C3 practice-line-nose: rating=8 verdict=clean categories=[]
+    profile head facing right in both files, nose bump clear on the outline, one even tracing outline, face whole, no text, 0 gray; red hair tie color only (small mark, under bar)
+  line scans: 21 line files now checked, 0 gray pixels each; no thick ring or band; control line files show no closed thin gap in a face or a hand
+  batch rows: all 9 keep verdict=clean and defect_categories=[]
+  notes for the builder: 11 (9 batch + 2 control defects)

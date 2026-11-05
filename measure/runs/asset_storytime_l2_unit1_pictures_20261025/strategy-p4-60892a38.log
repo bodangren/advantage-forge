@@ -1,0 +1,23 @@
+Strategy P4 (HEAD at start 60892a38; strategy commit fc76c272)
+Edited: measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md only (387 lines added; earlier text kept; replaced statements marked "Replaced by the amendment of 2026-11-01 (Muse path).").
+Facts checked: v4 list SHA 6d05dfc5... (196 rows: A 112, B 14, C 70; weeks 2-7 = 162: A 96, B 12, C 54; week 8 = 4 C rows); v3 shadow SHA c3e23cfd... (192 rows); v3 to v4 = 4 added rows, 0 changed rows; the four renamed ids are already in v3 (w02 nan-can-b, can-i-b, i-can-b; w06 tap-tap-tap-b); no old -a id found in src, tests, scripts, docs, jobs.json, Workbooks l2.
+Findings that change the work: (1) the --week parser (book-pictures.ts line 4615) refuses week 8; (2) deliver ignores --week and prints 169 Skipped lines for week 2; the writer is otherwise week-agnostic (batch ids w02/color, w02/lineart); (3) pictures.md has a new SHA-256 7cc4c201...ad56 that T147 must pin; (4) the PM-named phase_base_sha 60892a38 predates the strategy commit, so it is role_base_sha only.
+Commands run: sha256sum, node count checks on both lists; the 162-row count command was tested on week 1 (30 jobs, 60 files, missing 0, extra 0). No heavy job ran.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-strategy
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+commits: fc76c272 (test-strategy.md)
+role_base_sha: 60892a38
+phase_base_sha: capture with `git rev-parse HEAD` right after fc76c272 lands (the orchestrator value); not 60892a38
+red_test_command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts tests/storytime-picture-rows.test.ts tests/storytime-muse-delivery.test.ts --maxWorkers=1'  (expected f = 4: T142, T147, T173, T177; floor n >= 1; hold/exit 75 is not Red)
+green_test_command: same command, exit 0, "Tests  N passed (N)", then tsc --noEmit through heavy-run.sh (owned errors 0, total <= 38)
+staging_gate_command: node scripts/storytime-stage-check.mjs --week 2 --list /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --specs docs/storytime/l2-unit1/w02/muse
+staging_test_command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-stage-check.test.ts --maxWorkers=1'
+risk: Task 1, delivery --week, stage check = medium; weeks 2-7 production and cover = high
+review_applicability: Review A yes (code); Review B yes (code: read-only list, path escape, no key in logs); Review C yes (--week, stage-check labels and exit codes, manifest shape, week 8 default); adversarial required; UX browser not applicable
+handoff: (1) Week 8 scope. Default: the 4 week 8 rows (moon, mango, ostrich, drum) stay out of the 162-row scope until the PM assigns them; Task 1 only makes the loader, pin, and --week 8 accept them. (2) Cover: the list has no row for the Level 2 cover. Default: class B, 4000 x 3000, file l2-cover-v1.png, color only; PM please give the name, size, goal, and whether a line twin is wanted. (3) Missing week 2 set and props: assets/ has pond, beam, and basket but no park set, climbing frame, slide, kites, or cupcakes. Default: staging builds 3D shots where an asset exists and makes Muse prop sheets (logged in costs.tsv, input only) for the rest; tell me if Daniel wants 3D builds instead. (4) Cast sheets: allowed as staging input with status "pending look", routed to Daniel through the PM; week 2 needs none (all 8 characters have a look; Teacher Kim's look is in the open week 1 review); weeks 4-7 need Lily, Mom, Dad, Grandma, Grandpa, Tom. (5) Orchestrator: capture phase_base_sha after fc76c272, not 60892a38.
+dispositions: none
+END_MEASURE_AGENT_RESULT

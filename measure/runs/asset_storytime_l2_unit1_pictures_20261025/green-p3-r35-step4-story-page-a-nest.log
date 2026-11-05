@@ -1,0 +1,31 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 20
+book file requests refused: 0
+Line-art line width: 22 px (minimum 12 px).
+Line-art ink coverage: 6.37% (764420 of 12000000 pixels black).
+l2-w01-story-page-a-nest v7: rendered; stage 9f59c1ac3eaec993c7b6ed8826fd90a086a0d777af2a1273c5b623d0986617d8; file w01/rows/l2-w01-story-page-a-nest-v7.png; lineart w01/rows/l2-w01-story-page-a-nest-line-v7.png; size 4000 x 3000; render peak rss mb: 511
+Line-art line width: 23 px (minimum 12 px).
+Line-art ink coverage: 5.74% (688375 of 12000000 pixels black).
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 5.07% (607940 of 12000000 pixels black).
+Line-art line width: 22 px (minimum 12 px).
+Line-art ink coverage: 6.31% (757376 of 12000000 pixels black).
+Line-art line width: 22 px (minimum 12 px).
+Line-art ink coverage: 6.27% (752966 of 12000000 pixels black).
+Line-art line width: 23 px (minimum 12 px).
+Line-art ink coverage: 5.67% (680928 of 12000000 pixels black).
+Line-art line width: 22 px (minimum 12 px).
+Line-art ink coverage: 5.83% (699971 of 12000000 pixels black).
+Line-art line width: 22 px (minimum 12 px).
+Line-art ink coverage: 6.37% (764420 of 12000000 pixels black).
+l2-w01-story-page-a-nest v1: passed
+l2-w01-story-page-a-nest v2: passed
+l2-w01-story-page-a-nest v3: passed
+l2-w01-story-page-a-nest v4: passed
+l2-w01-story-page-a-nest v5: passed
+l2-w01-story-page-a-nest v6: passed
+l2-w01-story-page-a-nest v7: passed
+Row verification passed for 7 row versions.

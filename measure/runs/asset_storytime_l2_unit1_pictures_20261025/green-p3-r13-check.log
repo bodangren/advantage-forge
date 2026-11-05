@@ -1,0 +1,4 @@
+check  sprout-nan: held items none
+       head parts: skin, mouth-open, eyelid-skin, hair, bands; body parts: skin, shirt, shorts
+result  no held items to check
+ground  ok: no clip sinks more than 1.5 cm below the rest pose (rest lowest 0.0 cm)

@@ -1,0 +1,135 @@
+Green round 43 final log (Storytime week 1 pictures)
+
+Role: measure-jr-green (Green phase, Phase 3 "Week 1 pictures")
+Session: Green · P3 · storytime_l2_unit1_pictures · r43
+Models: Green deepseek/deepseek-flash#high (route from `ra-quota --fresh pick green
+  --not-family minimax --not-family openai`; Daniel approved the DeepSeek route). Red
+  minimax-cn-coding-plan/MiniMax-M3. Coder model: none. No delegation.
+role_base_sha: 3ef5836b
+phase_base_sha: 15a7bf0b
+Base HEAD: 3ef5836b
+Final HEAD: c449f854
+Implementation commit: 9ce89f41
+Plan commit: c449f854
+
+Task: give `storytime-nut` a crisp cap line in the 1-bit line art, then render the two nut rows.
+
+Red change in range: the Red-owned row contract is committed inside 15a7bf0b..HEAD. No new Red test
+file for this round. The Red assertion for this round is the line-art read of the two nut rows.
+
+Baseline (the Red failure): `out/storytime/l2/unit1/w01/rows/l2-w01-practice-line-nut-line-v4.png`
+held the outer outline only. `l2-w01-practice-line-nut-line-v3.png` (the older textured nut) held a
+wavy cap line and a closed stem outline. Green read both files before the change.
+
+Picture-list blocker: `render --row` and `verify --row` exit 1 on the live Workbooks list. Every row
+command used `--workbooks /tmp/opencode/wb-shadow`. `sha256sum` of its
+`content/storytime/l2/print/pictures.json` starts with `c3e23cfd`. No new copy was made. The live
+Workbooks list was not written to.
+
+Step 1: provisional log written.
+
+Step 2, first asset change: darker cap `#573014`, mid tan stem `#a06a3e`, paint blend 0.3 mm,
+`detail` 0.0005, `maxTriangles` 20000. Result: the color render read as an acorn, but the row line
+art still drew no cap line. Ink held at 1.51 percent.
+
+Step 2, second asset change: three bodies, one per color. The line-art paint pass reads the rendered
+color of each body, so the cap edge is a crisp step at every row scale. Each body paints only its
+own color. Measured limit of the first try: one vertex step at row scale 4 covers more than the 4 px
+paint step, so a vertex-color edge cannot fire the paint rule.
+
+Gates: `render storytime-nut --fast` exit 0 (21,249 triangles: shell 10,149, cap 9,422, stem 1,678;
+0.048 x 0.055 x 0.048 m; GLB 508 KB; vertex colors). `render storytime-nut` exit 0.
+`inspect storytime-nut --fast` exit 0 with "Warnings: none". `warning:` lines: 0. No exit 75, no
+exit 137, no lock wait over 600 s.
+
+Step 3: `l2-w01-practice-line-nut` v5 rendered with the first asset (no cap line, 25 px, 1.51
+percent, 892 MB). The renderer refuses to overwrite a version, so v6 rendered with the fixed nut
+(24 px, 2.03 percent, 927 MB). Both renders exit 0. `verify --row` exits 0 ("Row verification passed
+for 6 row versions"). Green read v6: one continuous wavy cap line that follows the five lobes and
+meets the outline on both sides, and the stem outline closes. The color picture reads as an acorn.
+
+Step 4: `l2-w01-story-page-a-nest-and-a-nut` v8 (copy of v7, version only). Render exit 0 (21 px,
+5.29 percent, 508 MB). `verify --row` exit 0 ("Row verification passed for 8 row versions"). The nut
+holds a closed cap line and a closed stem outline, and it reads as an acorn in color.
+
+Step 5: review folder `out/storytime-review/batch-15/` with 8 PNGs and `brief.md`. Green rated no
+item.
+
+Step 6: commit 9ce89f41 holds `assets/storytime-nut.ts` and the three new stage files. Commit
+c449f854 holds the plan evidence block. No task is marked `[x]`. The Phase 3 task stays `[~]`.
+
+Step 7: this log.
+
+MEASURE_AGENT_RESULT
+status: ok
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3
+round: 43
+models: green=deepseek/deepseek-flash#high red=minimax-cn-coding-plan/MiniMax-M3 coder=none
+phase_base_sha: 15a7bf0b
+role_base_sha: 3ef5836b
+green_head: c449f854
+implementation_commit: 9ce89f41
+plan_commit: c449f854
+tasks_flipped_x: none
+tasks_flipped_b: none
+red_tests_edited: none
+assets_changed:
+  - assets/storytime-nut.ts
+rows:
+  - id: l2-w01-practice-line-nut
+    version: v5
+    kept: false
+    render_exit: 0
+    verify_exit: 0
+    line_px: 25
+    ink: 1.51%
+    peak_mb: 892
+    sha_color: bef1abac9e6459ec13d34e9348a4a00e23558979e1707b65657f157311fb0b1e
+    sha_line: df812073ee8494300857b2b41d8f51043586ad6a7db573446fb95fa45df42c0c
+    note: first asset, one union body with vertex colors; outer outline only, no cap line
+  - id: l2-w01-practice-line-nut
+    version: v6
+    kept: true
+    render_exit: 0
+    verify_exit: 0
+    line_px: 24
+    ink: 2.03%
+    peak_mb: 927
+    sha_color: 640860ab83b5b4ef84aab9e29a507e5a2672330a26262ef09ec596ce3296f525
+    sha_line: 74d0f273395e9a142ec432a7bb17f388376dcd8e316e189fdfb7f2080159755f
+    note: three-body nut; one continuous wavy cap line on the five lobes, closed stem outline, reads as an acorn
+  - id: l2-w01-story-page-a-nest-and-a-nut
+    version: v8
+    kept: true
+    render_exit: 0
+    verify_exit: 0
+    line_px: 21
+    ink: 5.29%
+    peak_mb: 508
+    sha_color: 84eda1e233eedb07831c52a2860178bc6b77ec0cf7ed97cf8832497f7b09768a
+    sha_line: 2cac2fa39e8815ad28496d1b0ac6d05832d412b57e24431fb006a384672b82ec
+    note: round 42 camera kept; the nut holds a closed cap line and a closed stem outline, reads as an acorn at Pip's nose
+new_files:
+  - docs/storytime/l2-unit1/w01/rows/l2-w01-practice-line-nut-v5.json
+  - docs/storytime/l2-unit1/w01/rows/l2-w01-practice-line-nut-v6.json
+  - docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-and-a-nut-v8.json
+review_folder: out/storytime-review/batch-15
+week1_rendered: 22 of 30 (round brief; round 42 recorded 24 of 30, so a recount is due)
+week1_no_open_defect: 15
+open_rows:
+  - l2-w01-practice-line-nut (stays open until a row with the fixed nut passes the re-review)
+  - l2-w01-story-page-a-nut (open hand, head crop, face line noise)
+  - l2-w01-story-page-a-nest (re-stage with the new nest)
+handoff: |
+  The nut now holds a crisp cap line in the 1-bit line art. The fix puts the shell, the cap, and the
+  stem in three bodies, one per color, so the line-art paint pass reads a crisp material step at the
+  cap edge. One union body with vertex colors cannot do this: the row renders the nut at four times
+  its size, so one vertex step covers more than the 4 px paint step.
+  Batch 15 in out/storytime-review/batch-15/ holds the nut card, the two rows, the v4 and v3 line art
+  for comparison, and the brief. No item is rated.
+  The two rows render and verify exit 0 with the shadow root /tmp/opencode/wb-shadow. The live
+  Workbooks list is unchanged and unwritten.
+  No task is marked [x]. Waiting for the independent re-review of batch 15.
+END_MEASURE_AGENT_RESULT

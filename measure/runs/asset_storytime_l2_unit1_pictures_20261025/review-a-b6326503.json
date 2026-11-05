@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Review A of Phase 4 at b6326503 (phase base fc76c272) finds no blocking defect. coverCalmTopReport, cover-calm-top, deliverMuseCover, deliver-cover, and the commitDelivery refactor are correct. The week deliver path keeps its checks, its messages, and its write order. The plan closeout claims match the commits, the delivered files, and the person records. Five findings are nonblocking: the T171 timeout flake (P4-FLAKE-T171), the placeholder week and bookKind in the cover manifest, stale contract.md references, and two weak test assertions.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "RA-P4-1 [Major] review-a: P4-FLAKE-T171. tests/storytime-muse-delivery.test.ts has no vi.setConfig timeout. Only T181 (:1081) and T182 (:1145) set 240000 ms, and the other 38 tests use the 5000 ms default. T171 (:932) ran 5394 ms (orchestrator role-gate run, 10:33 ICT) and 5452 ms (closeout run 1), and it failed on timeout in both runs. The week-writer tests that decode 4000 x 3000 line prints (T161, T184 to T189) have no measured green duration, so they have the same risk. The cover tests T190 to T198 read only PNG metadata and have a lower risk. Remediation: add vi.setConfig({ testTimeout: 30000, hookTimeout: 30000 }) at the top of the file, as tests/storytime-book-pictures.test.ts:100 does.",
+    "RA-P4-2 [Major] review-a: the cover manifest has misleading placeholder fields. coverJob (src/storytime/muse-delivery.ts:548-565) sets week 1, bookKind 'readalong', page 0, and empty text, sourcePrompt, sourcePackage, and sourceSha256. assembleManifest (src/storytime/book-pictures.ts:2138-2139) copies week 1 and 'readalong' to the cover/color batch. The delivered out/storytime/l2/unit1/cover/delivery-muse-v1/manifest.json holds these values. The Level 2 cover is not a week 1 read-along page, and a consumer that groups by week or bookKind (for example Workbooks) will put the cover in week 1. contract.md does not document the cover manifest. size 'cover' and use 'cover' are correct (PICTURE_SIZES.cover is 4000 x 3000, class B). Remediation: document the cover manifest shape and the placeholder meaning of week and bookKind in contract.md, and tell Workbooks through the PM. Do not re-deliver only for this.",
+    "RA-P4-3 [Nit] review-a: contract.md is stale after 8c9a4082 and 6f7c1444. The Commands section (contract.md:43-107) does not name cover-calm-top or deliver-cover. The muse-delivery.ts line references at contract.md:74-99 point to old lines: for example ':444' is now :445, and ':456-459' and ':475-478' moved into commitDelivery (about :478-500). Remediation: add the two commands to contract.md and refresh the line references in the Phase 5 reconciliation task.",
+    "RA-P4-4 [Nit] review-a: the T192 'not a PNG' message check is vacuous. The pattern /png/i (tests/storytime-muse-delivery.test.ts:1584) always matches, because every refusal message names the print file l2-cover-v1-m13-color-print.png (src/storytime/muse-delivery.ts:587). The refusal itself stays pinned by rejection() and the 'writes no file' check. Remediation: match /must be a PNG/ instead of /png/i.",
+    "RA-P4-5 [Nit] review-a: T183 checks the band cases only against the 0.02 limit (tests/storytime-book-pictures.test.ts:4799-4800). A region that starts at row 1 instead of row 0 still gives 900 rows and the same four verdicts. The Red notes measured the exact shares (0.058988 and 0.111111). Remediation: assert the exact share of the band-inside case (400000 / 3600000) so that the test pins the start row."
+  ],
+  "evidence": [
+    "audited_head_sha b6326503 equals HEAD b6326503e6582ca01b90f5dfc43a131a8d6b4cc3; phase_base_sha fc76c272 resolves.",
+    "commitDelivery (6f7c1444): the moved block is the earlier write tail with the copy list built by the caller. The week writer passes the same color and line copies. The manifest check, the target checks, mkdir, the 'wx' writes, and the manifest-last order are unchanged. T152 to T189 pass in closeout run 2 (Tests 185 passed (185)).",
+    "deliverMuseCover: the schema refuses linePrint (.strict()), another rowId (z.literal), and zero or two entries. The symlink root check, readMuseFile, and inspectColorPrint with PICTURE_SIZES.cover run before commitDelivery, so every check comes before the first write. mapReviews adds no review that the entry lacks.",
+    "coverCalmTopReport (8c9a4082): calmTopStatsOnRaw keeps the old calmTopOnRaw rule; calmTopOnRaw still returns share <= 0.02. The command prints the two labeled lines and returns 1 above 0.02. T183 covers calm top, busy top, and the two bands on each side of row 900.",
+    "T190 to T198 match test-strategy C4: PNG, class size, alpha, one color batch, byte copy, no overwrite, out-folder confinement, symlink refusal, A2, and malformed lists. Each refusal case also checks that no file is written.",
+    "Task 2 [x] commits exist with matching subjects: approval lists d66d8f2a, d005f2e1, c19d6ef9, 700a7b83, cce84c6b, ddd2105e; delivery notes 1772cf79, 997ffc31, 8f92948f, d854e613, 302835df, 6466dd05; person records 48c71d42 and 1ff8e1c1.",
+    "Task 3 [x] commits exist with matching subjects: 8c9a4082, 09047f8e, 6f7c1444, 0629e1e2, 569e62cc, 1ff8e1c1.",
+    "The weeks 2 to 7 manifest SHA-256 values equal the closeout table (6e6b5145..., 24213647..., 4e74b730..., c3f009e6..., 11c5dc10..., 6a5724c4...). The list SHA-256 is 6d05dfc5..., the v4 pin.",
+    "162-row count: the six manifests hold 162 candidate entries with 162 unique selected files. Each delivery folder holds 54 PNG files (324 in total). The list holds 27 rows for each of weeks 2 to 7. jr-green-p4-closeout.log:8 quotes 'weeks 2 to 7 delivered jobs: 162 files: 324 A: 96 B: 12 C: 54 missing: 0 extra: 0'. Review A did not run the node count command (the shell refused node -e).",
+    "Cover delivery: l2-cover-v1.png SHA-256 d32b5cc7... and manifest.json SHA-256 27710b37... equal the plan values.",
+    "A2: no docs/storytime/l2-unit1/*/muse/approved.json holds a 'person' key. person-review-w02-w06.json (48c71d42) holds Daniel, 2026-11-03T08:43+07:00, verdict pass, note 'Approved', relayedBy PM, 135 row ids, and the five manifest hashes. person-review-w07-cover.json (1ff8e1c1) holds Daniel, 2026-11-03T10:29+07:00, note 'Ok', 27 week 7 rows, and the cover hashes.",
+    "A5: the closeout note reports run 1 (exit 1, T171 timeout) and run 2 (exit 0, 185 passed) honestly. The plan and the run log jr-green-p4-closeout.log agree.",
+    "Review A did not run the test suite, by the orchestrator order (the machine is over its memory floor). Test results come from the closeout evidence and the orchestrator role-gate run."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git log --oneline fc76c272..b6326503 (136 commits) and 4d4d86a2..b6326503",
+    "git diff 4d4d86a2..b6326503 -- src/storytime/",
+    "git show 6f7c1444 -- src/storytime/muse-delivery.ts",
+    "sha256sum out/storytime/l2/unit1/w0{2..7}/delivery-muse-v1/manifest.json out/storytime/l2/unit1/cover/delivery-muse-v1/*",
+    "grep -c '\"jobId\"' and grep '\"selectedFile\"' | sort -u | wc -l over the six week manifests (162 and 162)",
+    "git show --stat 48c71d42 1ff8e1c1"
+  ],
+  "changed_files": [
+    "src/storytime/book-pictures.ts",
+    "src/storytime/muse-delivery.ts",
+    "tests/storytime-book-pictures.test.ts",
+    "tests/storytime-muse-delivery.test.ts",
+    "tests/storytime-muse-delivery-adversarial.test.ts",
+    "tests/storytime-stage-check.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "medium"
+}

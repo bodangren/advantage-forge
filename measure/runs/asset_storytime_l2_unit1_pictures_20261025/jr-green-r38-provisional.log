@@ -1,0 +1,10 @@
+# Jr Green round 38 — storytime nest line-art rework
+
+- Role: measure-jr-green
+- Model: deepseek/deepseek-flash#high (DeepSeek). Red model for Phase 3: minimax-cn-coding-plan/MiniMax-M3. Coder model: none (no delegation).
+- Track: asset_storytime_l2_unit1_pictures_20261025
+- Phase: P3 (Week 1 pictures)
+- role_base_sha: 43d59360
+- phase_base_sha: 15a7bf0b
+- Task: make the `storytime-nest` 1-bit line art clean, then re-render the two nest-alone rows.
+- Status: started

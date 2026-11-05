@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "summary": "Two implementation defects block task 7. The file server does not read the checked real path. The Kimi reason limit counts bytes, not characters. One unresolved historical SHA also remains.",
+  "phase_base_sha": "1d39b8fda457e12d8e7332e7de65d2046ddda78e",
+  "role_base_sha": "c23534333d4d40ee3740327a7505e02c4f76079f",
+  "audited_head_sha": "84c8ffdb8359939ef86d043f58443200cabfdbc5",
+  "audited_head": "84c8ffdb8359939ef86d043f58443200cabfdbc5",
+  "head_at_start": "84c8ffdb8359939ef86d043f58443200cabfdbc5",
+  "head_at_finish": "84c8ffdb8359939ef86d043f58443200cabfdbc5",
+  "blocking_findings": [
+    "RA3-01 (high): checkedModelFile and the stage branch return candidate, not real (book-pictures.ts:2208,2253). serveBookFiles then reads that unchecked pathname. A path can change after realpathSync and expose another file. This violates contract.md:285-287 and test-strategy.md:354-356. T78 checks static symlinks only. Return the checked real path and add an in-root symlink regression.",
+    "RA3-02 (medium): precheckKimi rejects reasons over 500 UTF-8 bytes (book-pictures.ts:3457). Contract.md:292 and T83 set a 500-character limit. A reason with 300 non-ASCII characters can fail. T83 uses ASCII only. Enforce the character limit and add a multibyte boundary case.",
+    "RA3-03 (low, provenance): Green log line 71 still contains full SHA 245f8c1a5a94a96c88553a70a46684a53956b59e. git rev-parse returns 128 for it. Therefore not every full SHA in the required artifacts resolves. Shorten this historical quotation and keep the corrected full SHA on line 72."
+  ],
+  "nonblocking_findings": [
+    "RA3-N1 (low): metadata.json actual_tasks remains 6 while plan.md marks seven Phase 2 tasks complete. Green updated estimated_tasks only. Refresh the managed completion facts during closeout."
+  ],
+  "evidence": [
+    "Provenance: HEAD equaled 84c8ffdb8359939ef86d043f58443200cabfdbc5 at start and finish. The audited range was phase_base_sha..audited_head_sha. role_base_sha c23534333d4d40ee3740327a7505e02c4f76079f resolves.",
+    "Independent heavy gate: exit 0; Test Files 4 passed (4); Tests 99 passed (99). This matches plan.md:265-266 and jr-green-ec83581.log:27-29. No test was skipped.",
+    "T77 checks the production spawn seam, separate argv elements, no -c, no shell, the environment marker, and status 75. The wrapper implementation matches those checks.",
+    "T78 covers named files, realpath escapes, Storytime files, encoded traversal, fs requests, unnamed stage files, refusal counts, and next calls. RA3-01 remains because both resolver branches discard the checked real path.",
+    "T79 verifies the production Vite config and plugin. The config uses 127.0.0.1, fs.strict true, and the out/storytime/** deny entry.",
+    "T80 covers exclusive file writes, existing files, file symlinks, directory symlinks, and four clean smoke outputs. writeOutputFile uses resolveOutputPath and wx.",
+    "T81 and T82 cover every synthetic credential, bounded redacted errors, raw refusal, file type, size, UTF-8, NUL, and byte identity. The implementation preserves safe raw text.",
+    "T83 covers ASCII credentials and 501 ASCII characters. It does not cover the character-versus-byte difference in RA3-02.",
+    "T84 removes calibration, changes its rubric, and changes source bytes. Each release case fails while plain verify passes. T85 makes every twin failed for empty and absent sampleFiles.",
+    "The three smoke color.png files have SHA-256 37a3acc55ace6e70373c82194a19a7becdef395409007233f9141b3d3a0d307d. cmp confirmed run 3 and run 5 are byte-identical.",
+    "Smoke run 5 contains exactly color.png, lineart.png, fixture-lineart.png, and smoke.json. Visual inspection found Nan, the table, two stools, the bookcase, the window, and the plants in both pictures.",
+    "The live ledger has 8 before-call entries, 8 after-call entries, and no open call. The four calibration records retain their expected verdicts and current rubric.",
+    "git diff d05527ad..84c8ffdb -- src/song printed nothing. The task 7 source, test, and track files also match audited_head_sha.",
+    "All operative full commit SHAs in plan.md and jr-green-ec83581.log resolve. The intentionally quoted invalid SHA in RA3-03 does not resolve.",
+    "Caller inspection used repository grep. New exports have only internal and test callers. No graph.db existed, and the two-file write limit prevented a graph scan.",
+    "A3 review found labeled integer checks. A4 review found non-vacuous missing-file and empty-sample cases. A5 test claims match the independent exit and count.",
+    "The audit ran one heavy command. It made no paid call, render, browser launch, pnpm command, commit, or production edit. Unrelated dirty files stayed untouched."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short; git diff --stat and --name-status 1d39b8fda457e12d8e7332e7de65d2046ddda78e..84c8ffdb8359939ef86d043f58443200cabfdbc5",
+    "git log --oneline -20 84c8ffdb8359939ef86d043f58443200cabfdbc5; git diff c2353433..84c8ffdb on the task 7 source and tests",
+    "git diff --name-only d05527ade5f3705cc1f8f135b6f77eba88ee9e3a..84c8ffdb8359939ef86d043f58443200cabfdbc5 -- src/song -> empty",
+    "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1' -> exit 0; Tests 99 passed (99)",
+    "sha256sum on smoke runs 3, 4, and 5 color.png; cmp on run 3 and run 5 color.png -> identical",
+    "git rev-parse --verify on each operative full commit SHA -> resolved",
+    "git rev-parse --verify 245f8c1a5a94a96c88553a70a46684a53956b59e^{commit} -> exit 128",
+    "git diff --quiet 84c8ffdb8359939ef86d043f58443200cabfdbc5 -- src/storytime/book-pictures.ts scripts/storytime-book-pictures.ts tests/storytime-book-pictures.test.ts measure/tracks/asset_storytime_l2_unit1_pictures_20261025 -> exit 0"
+  ],
+  "changed_files": [
+    "docs/storytime/l2-unit1/w01/w01-readalong-p05-v1.json",
+    "measure/lessons-learned.md",
+    "measure/tracks/asset_storytime_l2_unit1_pictures_20261025/contract.md",
+    "measure/tracks/asset_storytime_l2_unit1_pictures_20261025/metadata.json",
+    "measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md",
+    "measure/tracks/asset_storytime_l2_unit1_pictures_20261025/spec.md",
+    "measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md",
+    "scripts/storytime-book-pictures.ts",
+    "src/song/main.ts",
+    "src/song/still-hook.ts",
+    "src/storytime/book-pictures.ts",
+    "src/storytime/line-art-pass.ts",
+    "tests/song-still-hook.test.ts",
+    "tests/storytime-book-pictures.test.ts",
+    "tests/storytime-line-art-pass.test.ts",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-84c8ffd.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-84c8ffd.log",
+    "Excluded demo asset changes: assets/parts/sprout-gestures.ts and the five new Storytime demo props."
+  ],
+  "test_strategy_violations": [
+    "RA3-01: test-strategy.md:354-356 requires the server to read the checked real path. The implementation reads the candidate path instead.",
+    "RA3-02: T83 specifies a character limit but tests only ASCII. The implementation enforces bytes instead."
+  ],
+  "live_contract_violations": [
+    "RA3-01: contract.md:285-287 requires a read of the checked real path. The middleware reads the unchecked candidate path.",
+    "RA3-02: contract.md:292 allows 500 characters. The implementation refuses some shorter Unicode reasons."
+  ],
+  "prod_wiring_violations": [
+    "RA3-01: production serveBookFiles calls readFileSync on the candidate returned by resolveBookFile. The checked real path is discarded."
+  ],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "model_deviation": "Review A ran as kimi-code-plan-cn/k3.1-pro because the table model had reached 80 percent of its Claude quota.",
+  "handoff": "Route RA3-01 and RA3-02 to Green. Correct the real-path read and character limit with regressions. Correct the historical SHA quotation in the Green evidence. Refresh metadata during closeout."
+}

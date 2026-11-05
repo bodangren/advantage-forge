@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Task 9 closes RA4-01 and RB3-01. Both providers refuse a decoded credential before an evidence write. T96 to T103 test that behavior, not only the function shape. The independent gate passed 113 tests. No blocking defect remains.",
+  "phase_base_sha": "1d39b8fda457e12d8e7332e7de65d2046ddda78e",
+  "role_base_sha": "53cc3ada842cffbf1a5bb7b1298f095f9bad3b06",
+  "audited_head_sha": "53cc3ada842cffbf1a5bb7b1298f095f9bad3b06",
+  "audited_head": "53cc3ada842cffbf1a5bb7b1298f095f9bad3b06",
+  "head_at_start": "53cc3ada842cffbf1a5bb7b1298f095f9bad3b06",
+  "head_at_finish": "53cc3ada842cffbf1a5bb7b1298f095f9bad3b06",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "RA5-01 (low): Mutation 4's first form did not skip nested unknown objects. jsonObjects returns those objects from the raw text. Object-value recursion adds no unique credential path. The restated form also limited the parse to one object and failed extra tests. That form is not an isolated falsification. T99 still checks depth 2 and depth 12 on both providers. The plan discloses the first-form pass.",
+    "RA5-02 (low): decodedReviewFindings has no caller. The plan says it stays exported for existing callers. That claim is false. The function still scans only reason, issues, and count keys. No production path calls it. It is dead code, not a current bypass.",
+    "RA5-03 (low): precheckKimi calls parseModelReview before decodedAnswerFindings. The comment says the schema runs after the check. That comment is false. The check reads rawOutput, so the schema result cannot drop a credential. MiniMax checks before parseModelReview."
+  ],
+  "evidence": [
+    "Provenance: HEAD equaled 53cc3ada842cffbf1a5bb7b1298f095f9bad3b06 at start and at finish. phase_base_sha is 1d39b8fda457e12d8e7332e7de65d2046ddda78e. role_base_sha equals audited_head_sha.",
+    "The task 9 range 2d789e48..53cc3ada changes plan.md, src/storytime/book-pictures.ts, and tests/storytime-book-pictures.test.ts. The code commit is e9d8132b. The later commits change only the plan.",
+    "RA4-01 and RB3-01 are closed. decodedAnswerFindings scans every jsonObjects result, every key, every string, every array item, and every embedded JSON object. It does not read the schema result.",
+    "Production callers are precheckMiniMax at book-pictures.ts:3341 and precheckKimi at book-pictures.ts:3665. The CLI calls those two functions at lines 4037 and 4058. No other production caller writes a provider answer.",
+    "MiniMax calls the seam inside the paid callback, before the success entry, the raw copy, the review write, and parseModelReview. A refusal keeps only the sanitized failure entry.",
+    "Kimi calls the seam before the review write, the raw copy, the success entry, and the result log. A refusal leaves the begin ledger and the source raw file unchanged. parseModelReview runs first, but its result is not the check input.",
+    "T96 to T100 and T102 call both provider CLIs and assert refusal, ledger state, absent review files, absent raw copies, and pattern names only. T101 asserts safe bytes, safe models, and parser results. T103 asserts the shared suffix at the thrown error and the final CLI boundary.",
+    "The red test diff only adds the new describe block after T95. git diff a1900194..53cc3ada on the test file is empty. T1 to T95 keep their text.",
+    "Independent gate: exit 0; Test Files 4 passed (4); Tests 113 passed (113); duration 140.35s. This matches plan.md lines 475-478. No skip line appeared.",
+    "Red log red-vitest-t9-r2.log line 14297 says Tests 8 failed | 105 passed (113). That matches the plan. The failures are T96 to T103.",
+    "green-tsc-t9.log has 31 error TS lines. None name src/storytime or the owned test file. The owned-zero and baseline-31 claims match that count.",
+    "git diff --quiet cf5743b7 -- src/song src/storytime/line-art-pass.ts exits 0. The task 9 code diff does not change PICTURE_RUBRIC_VERSION or the rubric prompt text. Earlier phase commits changed src/song before cf5743b7.",
+    "A3: the new tests use matchers, not bare digit scans. The plan counts are labeled vitest and tsc lines. A4: assertRefused requires an error, a non-empty file list, and no review or raw copy. A missing refusal fails. A5: the 113-pass claim matches this run.",
+    "No graph.db exists. Caller inspection used repository search. The phase diff does not change the supervisor, orchestration scripts, contract tests, or registry.",
+    "The audit made no paid call, no render, no production edit, and no commit. Unrelated dirty files stayed untouched."
+  ],
+  "commands": [
+    "git rev-parse HEAD -> 53cc3ada842cffbf1a5bb7b1298f095f9bad3b06 at start and at finish",
+    "git diff --name-status 2d789e48..53cc3ada and git diff e9d8132b -- src/storytime/book-pictures.ts",
+    "git diff --quiet cf5743b7 -- src/song src/storytime/line-art-pass.ts -> exit 0",
+    "git diff --stat a1900194..53cc3ada -- tests src/song src/storytime/line-art-pass.ts -> empty",
+    "rg -c 'error TS' green-tsc-t9.log -> 31",
+    "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1' -> exit 0; Tests 113 passed (113)"
+  ],
+  "changed_files": [
+    "measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md",
+    "src/storytime/book-pictures.ts",
+    "tests/storytime-book-pictures.test.ts",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-53cc3ad.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-53cc3ad.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "handoff": "No implementation retry. RA5-01 is a disclosed mutation-isolation note, not a bypass. Phase acceptance may re-run one isolated nested-object mutation. RA4-N1 and RA3-N1 stay closeout items. decodedReviewFindings can be removed later. It has no caller."
+}

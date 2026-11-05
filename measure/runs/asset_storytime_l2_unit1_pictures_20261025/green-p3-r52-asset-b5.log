@@ -1,0 +1,8 @@
+storytime-picture-book: 1,962 triangles, 0.36 x 0.023 x 0.24 m, built in 1811 ms
+  cover                      122 tris  (387 ms)
+  pages                      218 tris  (636 ms)
+  sun                        302 tris  (51 ms)
+  fish                      1320 tris  (552 ms)
+texture  none (vertex colors)
+glb      out/storytime-picture-book/storytime-picture-book.glb  (50 KB)
+render   out/storytime-picture-book/render.png  (279 ms)

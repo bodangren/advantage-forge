@@ -1,0 +1,40 @@
+{
+  "reviewer": "openai/gpt-6-luna#high",
+  "seen": {
+    "look-reference-nan-and-pip.png": "Nan and Pip appear as rounded chibi figures with large eyes and bright colors.",
+    "l2-w01-story-page-a-nest-and-a-nut-v8.png": "Pip is cut off at the lower frame, and the tree crown is outside the frame.",
+    "l2-w01-story-page-a-nest-and-a-nut-line-v8.png": "Pip and the tree are cut off, and the nest lines overlap densely.",
+    "l2-w01-story-page-a-nest-v7.png": "The nest is small, and Nan stands beside the tree while pointing toward it.",
+    "l2-w01-story-page-a-nest-line-v7.png": "The small nest and its contents have dense overlapping lines.",
+    "l2-w01-story-page-a-nest-and-a-nut-v10.png": "Pip and the tree fit inside the frame, and Pip lowers his nose toward a brown nut.",
+    "l2-w01-story-page-a-nest-and-a-nut-line-v10.png": "The tree and Pip fit inside the frame, but the nest area has dense overlapping strokes.",
+    "l2-w01-story-page-a-nest-v9.png": "Nan, the tree, and the nest fit inside the frame, while Nan's extended hand looks like a fist.",
+    "l2-w01-story-page-a-nest-line-v9.png": "The nest strokes overlap heavily, and Nan's pointing hand has a closed fist shape."
+  },
+  "l2-w01-story-page-a-nest-and-a-nut": {
+    "overall": 6.5,
+    "pass": false,
+    "critical": ["Nest detail merges into dense noise in the 1-bit line art."],
+    "issues": ["The nut and nest are smaller than Pip and the tree, so both read less clearly than the goal asks."],
+    "fix": "Simplify the nest line detail and enlarge the nest and nut.",
+    "goals": {
+      "Pip sniffs a big brown nut in the grass under a low tree; the nest with three light blue eggs sits on a low branch": "partial",
+      "The nest and the nut are both large and clear": "partial",
+      "A simple garden with soft colors": "pass",
+      "Pip matches the described puppy features": "partial"
+    }
+  },
+  "l2-w01-story-page-a-nest": {
+    "overall": 6.5,
+    "pass": false,
+    "critical": ["Nest detail merges into dense noise in the 1-bit line art."],
+    "issues": ["Nan's pointing hand reads as a fist, as noted in the known open defects.", "Skin flaps remain visible at the outer eye corners, as noted in the known open defects."],
+    "fix": "Simplify the nest line detail and clarify Nan's pointing hand.",
+    "goals": {
+      "A small bird's nest with three light blue eggs sits on a low tree branch in a garden": "partial",
+      "Nan matches the described appearance and points at the nest": "partial",
+      "One clear picture with the main thing large in the middle": "partial",
+      "A simple garden background with soft colors": "pass"
+    }
+  }
+}

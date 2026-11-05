@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Phase 2 passes acceptance at 061694f8. All 12 Phase 2 tasks are [x] with a commit SHA in the phase range. Reviews A, B, and C pass at e317dcae, and adversarial testing passes at 061694f8. The delta after the reviews adds only tests and plan evidence. An independent phase-gate run at 061694f8 exited 0 with Tests 151 passed (151), so the plan claim is true.",
+  "phase_base_sha": "1d39b8fda457e12d8e7332e7de65d2046ddda78e",
+  "role_base_sha": "061694f81f2711f99542323ce9b3469b33de182e",
+  "audited_head_sha": "061694f81f2711f99542323ce9b3469b33de182e",
+  "audited_head": "061694f81f2711f99542323ce9b3469b33de182e",
+  "head_at_start": "061694f81f2711f99542323ce9b3469b33de182e",
+  "head_at_finish": "e4e94d76c2846acb164421777191a4cfbb8a7464",
+  "head_current": true,
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "PA2-N1 (prerequisite HEAD): Reviews A, B, and C target e317dcae, not 061694f8. git diff --numstat e317dcae 061694f8 shows 189 added and 0 removed lines in tests/storytime-book-pictures.test.ts and 20 added lines in plan.md. No source file changed. The review results stay valid for the implementation at 061694f8.",
+    "PA2-N2 (closeout carry): RB7-01 (low, class other, api-key-prefix word boundary at src/storytime/book-pictures.ts:927) is recorded only in review-b-e317dca.json. The plan and test-strategy.md do not name it. Closeout must record it as a tech-debt candidate with RC5-3.",
+    "PA2-N3 (closeout carry): RA4-N1 (stale task 8 Green handoff) and RA3-N1 (metadata.json actual_tasks refresh) stay open as closeout items, as plan.md lines 429-430 and 544 state.",
+    "PA2-N4 (mutation strength): task 12 mutation 5 fails T137 only through the 60000 ms harness wall clock (chain scan ms 60057). The kill depends on machine speed. T139 now adds a 66-level fold chain, but no log shows whether T139 also kills mutation 5. Closeout can record this as a test-strength note."
+  ],
+  "task_verification": [
+    "Task 1 01c01bdf test(storytime): add failing picture pipeline tests",
+    "Task 2 fafa82dc feat(storytime): add Forge 3D book picture pipeline with line art",
+    "Task 3 fc2cc6a8 feat(storytime): add still engine hook and form-edge line-art pass",
+    "Task 4 bfa8126c fix(storytime): parse structured model reviews inside provider envelopes",
+    "Task 5 f192bf48 fix(storytime): decode three.js big-endian depth packing",
+    "Task 6 011dbbb9 measure(plan): record task 6 Review A ledger and calibration evidence",
+    "Task 7 597013bd fix(storytime): close Review B security findings and empty sample list",
+    "Task 8 c166c8e1 fix(storytime): close second Review B and third Review A findings",
+    "Task 9 e9d8132b fix(storytime): inspect every decoded key and string value before evidence writes",
+    "Task 10 b2a02238 fix(storytime): decode every JSON layer before provider evidence writes",
+    "Task 11 820f35c4 fix(storytime): scan raw JSON string tokens for credentials",
+    "Task 12 64073051 fix(storytime): scan every quote segment with a tolerant decoder",
+    "git rev-list 1d39b8fd..061694f8 holds all 12 SHAs (count 12)."
+  ],
+  "evidence": [
+    "HEAD: git rev-parse HEAD returned 061694f81f2711f99542323ce9b3469b33de182e before and after the test run. At the end of the audit, HEAD was e4e94d76 (test(games): add failing filled-shelves check, another track). git diff --quiet 061694f8 HEAD on the owned paths returned exit 0, so the audit of 061694f8 stays valid.",
+    "Phase headings: plan.md line 43 opens Phase 2. Lines 45 to 778 hold 12 tasks, all [x], each with a commit SHA. Phase 3 opens at line 933.",
+    "Green gate: green-vitest-t12.log shows Tests 148 passed (148) and gate-exit=0. green-tsc-t12.log shows tsc-exit=2. jr-green-42de3ec.log records 31 total and 0 owned errors.",
+    "Mutations: green-mutation-t12-1..5.log end with mutation<N>-exit=1. The named tests fail: T129 (1), T131 (2), T133 (3), T134 (4), T137 (5). The test counts match plan.md lines 891-904.",
+    "Reviews: review-a/b/c-e317dca.json have status pass and audited_head_sha e317dcae. Review B lists RB6-01 to RB6-03 as closed and RB7-01 as low and nonblocking. audit-result validation passed for all three files, exit 0.",
+    "Adversarial: adversarial-061694f.json has status pass at 061694f8. It adds T139, T140, and T141. audit-result validation passed, exit 0.",
+    "New rows: commit 4b14343d adds T139 to T141 only. Each row uses runHostile, a safe twin, synthetic credentials, and labeled integer parses such as /^fold chain scan ms:\\s*([0-9]+)$/. No .only, .skip, .todo, or .fails marker exists in the four phase test files.",
+    "A5: the plan claims Tests 151 passed (151) at plan.md line 921. The independent phase-gate run at 061694f8 exited 0 with Test Files 4 passed (4) and Tests 151 passed (151). The claim is true.",
+    "A1, A3, A4, A6, A7: the phase diff 1d39b8fd..061694f8 changes no supervisor logic, framework contract test, banned-term filter, or measure/tracks.md. These checks do not apply. The product tests use labeled integer parses.",
+    "UX browser review: not applicable. plan.md line 813 and test-strategy.md line 1828 state that Phase 2 changes no UI.",
+    "Residual risk: test-strategy.md lines 1161-1170 and plan.md line 818 name the out-of-class transforms, including a credential encoded twice inside one string token. PM limit at plan.md lines 814-817: task 12 is the last remediation round for the malformed-string class.",
+    "Out of scope and not audited: e4e5c593, d2928bbc, 08682665, f7f283b6, e317dcae (settings and other tracks). The phase diff also holds asset, LICENSE, and filled-shelves changes from other tracks.",
+    "Model deviation: this role ran claude-opus-5-5 (Anthropic). The quota tool routed acceptance to MiniMax, the task 12 Red family. Anthropic is not the Red family (MiniMax) or the Green family (GLM) of task 12."
+  ],
+  "commands": [
+    "git rev-parse HEAD (start and end): 061694f81f2711f99542323ce9b3469b33de182e",
+    "git diff --quiet 061694f8 HEAD -- src/storytime src/song tests/storytime-*.test.ts tests/song-*.test.ts measure/tracks/asset_storytime_l2_unit1_pictures_20261025/; exit 0",
+    "git rev-list 1d39b8fd..061694f8 | grep -cE '<12 task SHAs>'; 12",
+    "git diff --numstat e317dcae 061694f8; plan.md 20/0, tests/storytime-book-pictures.test.ts 189/0",
+    "python3 ~/Desktop/measure/skills/measure-orchestrator/scripts/measure_interphase_checks.py audit-result for review-a, review-b, review-c, adversarial-testing; all exit 0",
+    "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'; exit 0; Test Files 4 passed (4); Tests 151 passed (151); 250.31 s"
+  ],
+  "closeout_carry": [
+    "RA4-N1: correct the stale task 8 Green handoff.",
+    "RA3-N1: refresh metadata.json actual_tasks and generated facts.",
+    "RC5-3: record as a tech-debt candidate (raw-byte refusal text).",
+    "RB7-01: record as a tech-debt candidate (api-key-prefix word boundary).",
+    "Named residual risk: keep the out-of-class transform list, including a credential encoded twice inside one string token."
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/phase-acceptance-061694f.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/phase-acceptance-061694f.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "handoff": "Phase 2 passes acceptance at 061694f8. No blocker routes to another role. The orchestrator can run the role gate and then ask the PM for the Phase 2 checkpoint. Closeout must carry RA4-N1, RA3-N1, RC5-3, and RB7-01. No owner decision is required.",
+  "facts_changed": [
+    "Storytime Phase 2 passed phase acceptance at 061694f8 with 151 phase-gate tests."
+  ]
+}

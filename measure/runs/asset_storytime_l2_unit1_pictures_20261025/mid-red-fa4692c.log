@@ -1,0 +1,68 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P2
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: fa4692c38212bf32b60c9e43b1ea2da1be71e462
+head_sha: 679699859e69a78216b509b5de02dc1cf903339a
+task: 3
+commits:
+  - 54889801: test(storytime): add failing still hook and line-art pass tests
+  - 67969985: measure(plan): record Storytime still hook Red evidence
+tests_run:
+  - command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'
+    exit_code: 1
+    labeled_summary: "Tests  9 failed | 60 passed (69)"
+    file_summary: "Test Files  3 failed | 1 passed (4)"
+    earlier_picture_tests_passed: 41
+    timeline_tests_passed: 19
+    new_tests_passed: 0
+    new_tests_failed: 9
+    note: Valid Red. Missing named seams are permitted. No test syntax, transform, timeout, package, or lock error occurred.
+  - command: ./measure/generate.sh
+    exit_code: 0
+    labeled_summary: "Generated 4 Measure facts."
+  - command: git diff --quiet fa4692c38212bf32b60c9e43b1ea2da1be71e462 -- src scripts
+    exit_code: 0
+  - command: git diff --quiet 1d39b8fda457e12d8e7332e7de65d2046ddda78e -- src/song/timeline.ts tests/song-timeline.test.ts
+    exit_code: 0
+files_changed:
+  - tests/song-still-hook.test.ts: T42–T44
+  - tests/storytime-line-art-pass.test.ts: T46–T48
+  - tests/storytime-book-pictures.test.ts: T49–T51 and test adapters; the earlier 41 tests remain unchanged
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md: task 3 Red evidence
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-fa4692c.log: uncommitted role log
+  - measure/generated/architecture.json: regenerated; uncommitted
+  - measure/generated/asset-inventory.json: regenerated; uncommitted
+  - measure/generated/status.md: regenerated; uncommitted
+plan_updates:
+  - Task 3 is [~] with test commit 54889801, exit 1, and the labeled summary.
+  - Task 4 remains [ ].
+dirty_path_classification:
+  - Relevant: assigned test and plan paths were initially clean.
+  - Generated or ignorable: generated facts and role logs; excluded from commits.
+  - Unrelated user work: all other initial dirty paths; preserved.
+known_failures:
+  - T42 and T43: src/song/still-hook.js is missing. The publish, clear, and camera-state seams do not exist.
+  - T44: main.ts calls neither publishBookStill nor clearBookStill. Both song API baseline lines still match.
+  - T46, T47, and T48: src/storytime/line-art-pass.js is missing. The renderLineArtPass seam does not exist.
+  - T49: book-pictures.ts exports no captureStillPair function.
+  - T50: book-pictures.ts exports no checkLineArtSmoke function.
+  - T51: the CLI rejects lineart-smoke as an unknown command.
+passing_new_tests_and_mutations: []
+handoff:
+  - Green implements the named seams and task 3 engine changes within the strategy limits.
+  - T47 checks every render observation and each created material. A wireframe:true mutation must fail after implementation.
+  - The role made no source mutation. The adversarial role runs that mutation after Green.
+  - The test adapters isolate driver operations and unspecified return fields. They do not select a production driver interface.
+  - Route any adapter alignment to Red. Keep the capture order, failure checks, and falsification conditions unchanged.
+  - The fake renderer makes no WebGL context. It does not select the edge technique or prove real pixels.
+  - T50 uses the strategy limits: interior ink at most 1.00 percent and at least 342 of 360 ring rays.
+  - T45 remains a gate row. No test was added for T45, T52, or T53.
+  - No source, script, song timeline test, or older role log changed.
+  - No compiler, browser, render, provider call, or pnpm command ran.
+  - Assigned paths are clean. Generated facts remain uncommitted because they contain concurrent work.
+  - The only worktree uses master. Leave origin/gh-pages unchanged; it is outside this assignment.
+facts_changed: []
+END_MEASURE_AGENT_RESULT

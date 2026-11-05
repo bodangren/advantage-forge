@@ -1,0 +1,19 @@
+{
+  "group": "cover",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-cover-v1",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/cover/l2-cover-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover. The page text is empty, so the cover has no named subject; check the characters against the cast. Question page: no. Seen, left to right: Ben (messy light-brown hair, light-blue tee, dark-blue shorts, grey sneakers); Mia (light-brown hair, small pink bow, pink tee, blue overalls, white shoes); Sam (brown hair, red tee with white stripes, blue shorts, blue shoes); May (black hair, yellow star clip, yellow tee, blue skirt, white socks and sneakers); Pat (black messy hair with tufts, green tee, brown shorts, brown sandals); Nan (two round buns with red bands, orange tee with a white star, red shorts, white sneakers). Pip (golden-brown puppy, cream muzzle and chest, red collar) stands in front. All six children wave and all match the cast notes. No text, no cut figures. Note: the top third of the picture is an empty wall; this reads as room for a title, not a layout fault."
+    }
+  ],
+  "summary": { "files": 1, "pass": 1, "fail": 0 }
+}

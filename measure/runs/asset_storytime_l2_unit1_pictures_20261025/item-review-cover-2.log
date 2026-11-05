@@ -1,0 +1,15 @@
+item-review-cover-2 (gate C2, Level 2 cover, candidate m9)
+Reviewer: claude-code/claude-opus-5-5[1m]#high
+Bar: Daniel 2026-11-01 14:15 ICT
+Status: fail
+
+Cover l2-cover-v1 (m9, SHA-256 35de657d...261ff0, checked): rating 6.5, defect (wrong-hand-or-limb).
+- Defect: all six waving hands have four digits (one thumb and three fingers). Row scans of skin runs agree for Ben, Sam, and May.
+- calm_top: yes. Rows 0-899 are plain cream wall (largest deviation 9.4). The first non-wall row is 1074.
+- left_margin_px 590 (Ben fingertips), right_margin_px 653 (Nan right bun). Both are far larger than a 1 percent trim. Note only.
+- Notes: the flicks on Pat, May, and Mia also show on the approved sheet; Pip is whole with floppy ears but seems to stand, not sit; no contact shadows; no text.
+- Retry hint: five digits on each waving hand, checked on a full-size crop.
+
+K1 (A nose.): rating 5.5, defect (wrong-or-missing-prop). The line art has no nose; the fingertip touches the mouth corner. Color is good.
+K2 (nose, profile): rating 8.0, clean. Notes: open eye and ear curves, the hair band is not traced.
+K3 (A nut.): rating 8.0, clean. Notes: five digits, the thumb is on the far side of the palm; the bun touches the right edge (close up).

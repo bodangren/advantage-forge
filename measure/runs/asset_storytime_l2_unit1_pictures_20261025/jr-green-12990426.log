@@ -1,0 +1,25 @@
+Green round 31 final log - Storytime week 1 pictures (P3), sniff tongue bug
+Models: Green claude-code/claude-sonnet-5-5#high; Red minimax-cn-coding-plan/MiniMax-M3; coder none.
+Runs (heavy-run.sh, one command each): render-before 0; render-after 0; animate --fast 1 then 0;
+build 0 (113 s); cutout 0; animate (textured) 0; vitest 0. No exit 75, no exit 137, no lock wait over 600 s.
+GLB: out/sprout-pip/sprout-pip.glb 5449100 bytes (5321 KB), textured. warning: lines 0.
+Rest look: sprout-pip-rest-before.png and sprout-pip-rest-after.png are pixel-identical.
+Tests: 4 files, 164 passed (164), exit 0.
+
+MEASURE_AGENT_RESULT
+role: green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3
+status: done
+phase_base_sha: 15a7bf0b
+role_base_sha: db2430fb
+final_head: 12990426
+commits: 2527fc6a (assets/sprout-pip.ts: tongue-bone, sniff pose); 12990426 (plan.md evidence)
+tasks_flipped_x: none
+tasks_flipped_b: none
+new_files: none in git (card, strip, rest-before, rest-after, brief.md section in out/storytime-review/batch-4/)
+red_command: not applicable (bug fix filed by the re-review; no Red test changed)
+green_gate: vitest 4 files, 164 passed, exit 0; forge build exit 0, no warning: lines
+card: out/storytime-review/batch-4/sprout-pip-sniff.png
+handoff: Independent re-review of the sniff card is needed. The back view shows no pink shape. The side view still shows the dark mouth under the muzzle. The rest look, the mesh, the colors, and every other clip did not change.
+END_MEASURE_AGENT_RESULT

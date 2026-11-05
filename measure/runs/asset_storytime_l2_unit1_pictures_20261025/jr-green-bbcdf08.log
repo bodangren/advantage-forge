@@ -1,0 +1,85 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 2: Tests and calibrated model pre-checks (P2, task 5 depth decode step)
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: bbcdf085eb3dc7f47f9897185701ddba8861148c
+head_sha: 1550c75119c283f0228c08af93e9197663fe5ad5
+commits:
+- f192bf489cd2745103edbe644b71d6f6b9b939fb fix(storytime): decode three.js big-endian depth
+  packing (src/storytime/line-art-pass.ts)
+- f979f2e9 docs(measure): record depth decode green evidence for storytime task 5
+  (measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md)
+- 1550c751 docs(measure): lesson on three.js 0.185.1 big-endian depth packing
+  (measure/lessons-learned.md)
+tests_run:
+- Targeted Red rerun (before the change): bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c
+  'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts
+  tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1' -> exit 1;
+  "Tests  2 failed | 88 passed (90)" (T70 and T76 in tests/storytime-line-art-pass.test.ts).
+- Unit gate (after the change): same command -> exit 0; "Tests  90 passed (90)"; no skip.
+- Type check: L=measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-tsc-t5-depth.log;
+  bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node
+  node_modules/typescript/bin/tsc --noEmit -p tsconfig.json' -> "tsc exit: 2";
+  "owned tsc errors: 0"; "baseline tsc errors: 31".
+- Smoke run 3 (T74, the one authorized run): bash
+  ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node --import tsx
+  scripts/storytime-book-pictures.ts lineart-smoke --job w01-readalong-p05' -> exit 0.
+files_changed:
+- src/storytime/line-art-pass.ts (exported unpackDepth(bytes) with the three.js 0.185.1
+  big-endian formula b0/256 + b1/65536 + b2/16777216 + b3/255/16777216; the edgeData call sites
+  now pass the four bytes of one pixel through a depthAt(index) reader; the technique ID
+  song-page-form-edges-viewdepth-1bit-v2 and DEPTH_EDGE_RELATIVE_GAP = 0.02 are unchanged)
+- measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md (task 5 flipped to [x] with
+  the evidence lines)
+- measure/lessons-learned.md (one durable lesson on the big-endian depth packing)
+- measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-bbcdf08.log (this result log,
+  not committed)
+- src/storytime/book-pictures.ts and scripts/storytime-book-pictures.ts needed no change; no test
+  file was edited.
+plan_updates:
+- plan.md task 5 marked [x] in commit f979f2e9 with SHA evidence: implementation commit f192bf48,
+  unit gate exit 0 and "Tests  90 passed (90)", tsc labels ("tsc exit: 2", "owned tsc errors: 0",
+  "baseline tsc errors: 31"), and the smoke run 3 labels. Task 6 left [ ].
+- Tasks flipped to [x]: task 5 only. No task was flipped to [b]; no deferred owners.
+tests_detail:
+- Red rerun: exit 1, "Tests  2 failed | 88 passed (90)".
+- Unit gate: exit 0, "Test Files  4 passed (4)", "Tests  90 passed (90)", no skip line.
+- Smoke run 3 labels, all in range: `hook before seek: absent`;
+  `window.__song keys: load,portrait,ready,seek`; `capture path: captureBookStill`;
+  `camera drift source: live`; `camera state drift: 0`; `color repeat identical: yes`;
+  `stage ink share: 2.12%` (range 0.5 to 25); `lineart technique:
+  song-page-form-edges-viewdepth-1bit-v2`; `fixture interior ink: 0.00%` (limit 1.00 or less);
+  `fixture ring rays: 360/360` (limit 342 or more); `fixture depth step rows: 159/159`
+  (limit n/m 0.90 or more; it was 0/159 before the fix). Final line: `lineart-smoke: wrote 4 files
+  under /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/smoke/
+  lineart-2026-10-26T03-28-07-662Z; wrote no book version.`
+- Picture review: `color.png` shows the tavern stage with the chibi child, table, stools,
+  bookshelf, window, and potted flower in full color. `lineart.png` shows the same scene as a
+  clean 1-bit outline with form edges on every object and depth edges on the floor borders.
+known_failures:
+- "tsc exit: 2" with "baseline tsc errors: 31" (unchanged pre-existing repo errors, none owned by
+  this task; bound was 31 or less). No other known failures.
+- No heavy-run lock wait over 600 s and no exit 75 preflight hold occurred.
+handoff:
+- Task 5 is complete: unit gate exit 0 with "Tests  90 passed (90)", owned tsc errors 0, and smoke
+  run 3 passed every T74 label including the depth-step check (0/159 moved to 159/159).
+- New files for reviewer audit scope: none in src/ or tests/. Reviewers should scope on
+  src/storytime/line-art-pass.ts in commit f192bf48, plus the plan and lesson commits.
+- Immutable phase_base_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e. Final Green HEAD:
+  1550c75119c283f0228c08af93e9197663fe5ad5. Implementation commit: f192bf48. Plan-evidence
+  commit: f979f2e9 (plan evidence quotes f192bf48; the commits are separate by design).
+- Task 6 stays [ ] for the next dispatch: ledger record of the orphan before-call and the neutral
+  good-nan re-runs (paid, one call at a time).
+- Smoke output tree out/storytime/l2/unit1/smoke/lineart-2026-10-26T03-28-07-662Z/ is available
+  for review; the orchestrator decides retention per the owner cleanup rules.
+dirty_path_classification: 313 unrelated dirty or untracked paths in .claude/, bench/, assets/,
+  measure/generated/, and other track plans. None under src/, tests/, or
+  scripts/storytime-book-pictures.ts. All are preserved untouched. No unrelated path was staged.
+model_deviation: Red for this step was minimax-cn-coding-plan/MiniMax-M3 (orchestrator substitute
+  for the table model openai/gpt-6.1-sol, recorded deviation). Green is GLM
+  (volcengine-agent-plan/glm-5.3-flash). No coder was delegated; no Red-family model was used on
+  the Green side.
+facts_changed: []
+END_MEASURE_AGENT_RESULT

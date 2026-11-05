@@ -1,0 +1,10 @@
+Green · P3 · storytime_l2_unit1_pictures · r14 (provisional)
+role: measure-jr-green
+model: claude-code/claude-sonnet-5-5#high (route: ra-quota pick green --not-family minimax --not-family openai)
+Red model (Phase 3): minimax-cn-coding-plan/MiniMax-M3
+Green coder model: none (no delegation)
+role_base_sha: 6c0a9300
+phase_base_sha: 15a7bf0b
+Part A: map 'touch nose' to gesture-touch-nose in src/song/timeline.ts. Review item-review-batch-1c.json passed at 7.0.
+Part B: build assets/storytime-school-bus.ts (check row l2-w01-check-row-bus).
+Status: started

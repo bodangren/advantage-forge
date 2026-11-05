@@ -1,0 +1,845 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/storytime-book-pictures.test.ts (98 tests | 9 failed) 145558ms
+     × T97: both providers inspect plain and fenced content models 2163ms
+     × T101: safe controls preserve raw bytes, models, and malformed parser results 1548ms
+     × T102: the shared walker inspects every object before selection and status fallback 4309ms
+       × T104: both providers refuse Review B case 1 with an extra string layer 945ms
+       × T105: both providers refuse three string layers 1051ms
+       × T107: both providers refuse Review B case 2 with a scalar array element 976ms
+       × T108: both providers refuse a nonzero-status envelope with a string-layer array 1006ms
+       × T110: a safe object at depth 4000 keeps the parser result and the raw bytes 2362ms
+       × T112: both providers accept safe string layers, a safe root array, and safe encoded arrays 4183ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T97: both providers inspect plain and fenced content models
+AssertionError: plain content/minimax: the error names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2063:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T97: both providers inspect plain and fenced content models
+AssertionError: plain content/minimax: the failure names the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2063:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T97: both providers inspect plain and fenced content models
+AssertionError: plain content/kimi: the error names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2063:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T101: safe controls preserve raw bytes, models, and malformed parser results
+AssertionError: minimax: the safe answer is accepted.: expected Error: The decoded answer matched credent… to be undefined
+
+- Expected:
+undefined
+
++ Received:
+Error {
+  "message": "The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written.",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:2098:75
+    2096|       const run = await providerRun(provider, raw);
+    2097|       const expected = parseModelReview(raw);
+    2098|       expect.soft(run.error, `${provider}: the safe answer is accepted…
+       |                                                                           ^
+    2099|       expect.soft(run.code, `${provider}: the parser verdict determine…
+    2100|       const review = JSON.parse(await readFile(path.join(run.outputRoo…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T101: safe controls preserve raw bytes, models, and malformed parser results
+AssertionError: minimax: the parser verdict determines the exit.: expected undefined to be +0 // Object.is equality
+
+- Expected:
+0
+
++ Received:
+undefined
+
+ ❯ tests/storytime-book-pictures.test.ts:2099:85
+    2097|       const expected = parseModelReview(raw);
+    2098|       expect.soft(run.error, `${provider}: the safe answer is accepted…
+    2099|       expect.soft(run.code, `${provider}: the parser verdict determine…
+       |                                                                                     ^
+    2100|       const review = JSON.parse(await readFile(path.join(run.outputRoo…
+    2101|       expect.soft(review, `${provider}: decoded fields retain parser b…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T101: safe controls preserve raw bytes, models, and malformed parser results
+Error: ENOENT: no such file or directory, open '/tmp/opencode/storytime-red-d4qqnE/repo-SNkqoU/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json'
+ ❯ tests/storytime-book-pictures.test.ts:2100:33
+    2098|       expect.soft(run.error, `${provider}: the safe answer is accepted…
+    2099|       expect.soft(run.code, `${provider}: the parser verdict determine…
+    2100|       const review = JSON.parse(await readFile(path.join(run.outputRoo…
+       |                                 ^
+    2101|       expect.soft(review, `${provider}: decoded fields retain parser b…
+    2102|       expect.soft(review.model, `${provider}: the correct model surviv…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: nonzero status envelope/minimax: the error names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2130:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: nonzero status envelope/minimax: the failure names the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2130:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: nonzero status envelope/kimi: the error names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2130:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: embedded unknown JSON string/minimax: the error names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2130:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: embedded unknown JSON string/minimax: the failure names the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2130:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: embedded unknown JSON string/kimi: the error names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2130:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: Findings name only known patterns.: expected [ 'api-key-prefix', …(6) ] to include 'json-string'
+ ❯ tests/storytime-book-pictures.test.ts:2136:64
+    2134|       for (const finding of findings) {
+    2135|         const patterns = values.flatMap((value) => securitySeam('secre…
+    2136|         expect(patterns, 'Findings name only known patterns.').toConta…
+       |                                                                ^
+    2137|         for (const value of values) expect(finding).not.toContain(valu…
+    2138|       }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/minimax: the error names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2319:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/minimax: the failure names the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2319:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T104: both providers refuse Review B case 1 with an extra string layer
+AssertionError: Review B case 1/kimi: the error names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2319:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/minimax: the error names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2327:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/minimax: the failure names the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2327:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T105: both providers refuse three string layers
+AssertionError: Review B case 1 with a second string layer/kimi: the error names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2327:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/minimax: the error names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2343:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/minimax: the failure names the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2343:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T107: both providers refuse Review B case 2 with a scalar array element
+AssertionError: Review B case 2/kimi: the error names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2343:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/minimax: the error names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2351:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/minimax: the failure names the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2351:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T108: both providers refuse a nonzero-status envelope with a string-layer array
+AssertionError: nonzero status with a string-layer array/kimi: the error names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2351:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T110: a safe object at depth 4000 keeps the parser result and the raw bytes
+AssertionError: safe deep answer/minimax: the safe deep answer is accepted.: expected { name: 'Error', …(1) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "message": "The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written.",
+  "name": "Error",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:2405:97
+    2403|         expect.soft(run.timedOut, `${context}: the call must finish wi…
+    2404|           .toBe(false);
+    2405|         expect.soft(run.report?.error ?? null, `${context}: the safe d…
+       |                                                                                                 ^
+    2406|         expect.soft(run.report?.error?.name ?? '', `${context}: the ca…
+    2407|           .not.toBe('RangeError');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T110: a safe object at depth 4000 keeps the parser result and the raw bytes
+AssertionError: safe deep answer/minimax: the review file exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2409:84
+    2407|           .not.toBe('RangeError');
+    2408|         const reviewFile = path.join(space.space.outputRoot, `reviews/…
+    2409|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+       |                                                                                    ^
+    2410|         if (!existsSync(reviewFile)) continue;
+    2411|         const review = JSON.parse(await readFile(reviewFile, 'utf8'));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T110: a safe object at depth 4000 keeps the parser result and the raw bytes
+AssertionError: safe deep answer/kimi: the safe deep answer is accepted.: expected { name: 'Error', …(1) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "message": "The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written.",
+  "name": "Error",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:2405:97
+    2403|         expect.soft(run.timedOut, `${context}: the call must finish wi…
+    2404|           .toBe(false);
+    2405|         expect.soft(run.report?.error ?? null, `${context}: the safe d…
+       |                                                                                                 ^
+    2406|         expect.soft(run.report?.error?.name ?? '', `${context}: the ca…
+    2407|           .not.toBe('RangeError');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T110: a safe object at depth 4000 keeps the parser result and the raw bytes
+AssertionError: safe deep answer/kimi: the review file exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2409:84
+    2407|           .not.toBe('RangeError');
+    2408|         const reviewFile = path.join(space.space.outputRoot, `reviews/…
+    2409|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+       |                                                                                    ^
+    2410|         if (!existsSync(reviewFile)) continue;
+    2411|         const review = JSON.parse(await readFile(reviewFile, 'utf8'));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe string layer/minimax: the safe answer is accepted.: expected Error: The decoded answer matched credent… to be undefined
+
+- Expected:
+undefined
+
++ Received:
+Error {
+  "message": "The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written.",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:2468:76
+    2466|         const run = await providerRun(provider, control.raw);
+    2467|         const context = `${control.label}/${provider}`;
+    2468|         expect.soft(run.error, `${context}: the safe answer is accepte…
+       |                                                                            ^
+    2469|         expect.soft(run.code, `${context}: the parser verdict determin…
+    2470|           .toBe(parseModelReview(control.raw).verdict === 'pass' ? 0 :…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe string layer/minimax: the parser verdict determines the exit.: expected undefined to be +0 // Object.is equality
+
+- Expected:
+0
+
++ Received:
+undefined
+
+ ❯ tests/storytime-book-pictures.test.ts:2470:12
+    2468|         expect.soft(run.error, `${context}: the safe answer is accepte…
+    2469|         expect.soft(run.code, `${context}: the parser verdict determin…
+    2470|           .toBe(parseModelReview(control.raw).verdict === 'pass' ? 0 :…
+       |            ^
+    2471|         const reviewFile = path.join(run.outputRoot, `reviews/${job().…
+    2472|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[31/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe string layer/minimax: the review file exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2472:84
+    2470|           .toBe(parseModelReview(control.raw).verdict === 'pass' ? 0 :…
+    2471|         const reviewFile = path.join(run.outputRoot, `reviews/${job().…
+    2472|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+       |                                                                                    ^
+    2473|         if (!existsSync(reviewFile)) continue;
+    2474|         const review = JSON.parse(await readFile(reviewFile, 'utf8'));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[32/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe string layer/kimi: the safe answer is accepted.: expected Error: The decoded answer matched credent… to be undefined
+
+- Expected:
+undefined
+
++ Received:
+Error {
+  "message": "The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written.",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:2468:76
+    2466|         const run = await providerRun(provider, control.raw);
+    2467|         const context = `${control.label}/${provider}`;
+    2468|         expect.soft(run.error, `${context}: the safe answer is accepte…
+       |                                                                            ^
+    2469|         expect.soft(run.code, `${context}: the parser verdict determin…
+    2470|           .toBe(parseModelReview(control.raw).verdict === 'pass' ? 0 :…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[33/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe string layer/kimi: the parser verdict determines the exit.: expected undefined to be +0 // Object.is equality
+
+- Expected:
+0
+
++ Received:
+undefined
+
+ ❯ tests/storytime-book-pictures.test.ts:2470:12
+    2468|         expect.soft(run.error, `${context}: the safe answer is accepte…
+    2469|         expect.soft(run.code, `${context}: the parser verdict determin…
+    2470|           .toBe(parseModelReview(control.raw).verdict === 'pass' ? 0 :…
+       |            ^
+    2471|         const reviewFile = path.join(run.outputRoot, `reviews/${job().…
+    2472|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[34/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe string layer/kimi: the review file exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2472:84
+    2470|           .toBe(parseModelReview(control.raw).verdict === 'pass' ? 0 :…
+    2471|         const reviewFile = path.join(run.outputRoot, `reviews/${job().…
+    2472|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+       |                                                                                    ^
+    2473|         if (!existsSync(reviewFile)) continue;
+    2474|         const review = JSON.parse(await readFile(reviewFile, 'utf8'));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[35/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe encoded array/minimax: the safe answer is accepted.: expected Error: The decoded answer matched credent… to be undefined
+
+- Expected:
+undefined
+
++ Received:
+Error {
+  "message": "The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written.",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:2468:76
+    2466|         const run = await providerRun(provider, control.raw);
+    2467|         const context = `${control.label}/${provider}`;
+    2468|         expect.soft(run.error, `${context}: the safe answer is accepte…
+       |                                                                            ^
+    2469|         expect.soft(run.code, `${context}: the parser verdict determin…
+    2470|           .toBe(parseModelReview(control.raw).verdict === 'pass' ? 0 :…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[36/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe encoded array/minimax: the parser verdict determines the exit.: expected undefined to be +0 // Object.is equality
+
+- Expected:
+0
+
++ Received:
+undefined
+
+ ❯ tests/storytime-book-pictures.test.ts:2470:12
+    2468|         expect.soft(run.error, `${context}: the safe answer is accepte…
+    2469|         expect.soft(run.code, `${context}: the parser verdict determin…
+    2470|           .toBe(parseModelReview(control.raw).verdict === 'pass' ? 0 :…
+       |            ^
+    2471|         const reviewFile = path.join(run.outputRoot, `reviews/${job().…
+    2472|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[37/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe encoded array/minimax: the review file exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2472:84
+    2470|           .toBe(parseModelReview(control.raw).verdict === 'pass' ? 0 :…
+    2471|         const reviewFile = path.join(run.outputRoot, `reviews/${job().…
+    2472|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+       |                                                                                    ^
+    2473|         if (!existsSync(reviewFile)) continue;
+    2474|         const review = JSON.parse(await readFile(reviewFile, 'utf8'));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[38/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe encoded array/kimi: the safe answer is accepted.: expected Error: The decoded answer matched credent… to be undefined
+
+- Expected:
+undefined
+
++ Received:
+Error {
+  "message": "The decoded answer matched credential pattern json-string; the raw answer is refused; no review or raw copy is written.",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:2468:76
+    2466|         const run = await providerRun(provider, control.raw);
+    2467|         const context = `${control.label}/${provider}`;
+    2468|         expect.soft(run.error, `${context}: the safe answer is accepte…
+       |                                                                            ^
+    2469|         expect.soft(run.code, `${context}: the parser verdict determin…
+    2470|           .toBe(parseModelReview(control.raw).verdict === 'pass' ? 0 :…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[39/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe encoded array/kimi: the parser verdict determines the exit.: expected undefined to be +0 // Object.is equality
+
+- Expected:
+0
+
++ Received:
+undefined
+
+ ❯ tests/storytime-book-pictures.test.ts:2470:12
+    2468|         expect.soft(run.error, `${context}: the safe answer is accepte…
+    2469|         expect.soft(run.code, `${context}: the parser verdict determin…
+    2470|           .toBe(parseModelReview(control.raw).verdict === 'pass' ? 0 :…
+       |            ^
+    2471|         const reviewFile = path.join(run.outputRoot, `reviews/${job().…
+    2472|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[40/41]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe encoded array/kimi: the review file exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2472:84
+    2470|           .toBe(parseModelReview(control.raw).verdict === 'pass' ? 0 :…
+    2471|         const reviewFile = path.join(run.outputRoot, `reviews/${job().…
+    2472|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+       |                                                                                    ^
+    2473|         if (!existsSync(reviewFile)) continue;
+    2474|         const review = JSON.parse(await readFile(reviewFile, 'utf8'));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[41/41]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  9 failed | 89 passed (98)
+   Start at  13:14:38
+   Duration  147.40s (transform 1.11s, setup 0ms, import 1.49s, tests 145.56s, environment 0ms)
+

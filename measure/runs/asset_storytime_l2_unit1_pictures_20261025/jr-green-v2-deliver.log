@@ -1,0 +1,36 @@
+Green v2 deliver started 2026-11-02
+role_base_sha: 4330cb42
+phase_base_sha: 15a7bf0b
+status: provisional (step 1: inspecting)
+Step 1 done: 8 batch-39 page files (4 color, 4 line) and 8 print files equal the Muse files by bytes (cmp).
+Step 1 done: all 8 prints recompute byte-identical from the reviewed pages with the tool printColor/printLine logic (temp script /tmp/g2v2/check.mjs, local only).
+Step 2 done: approved.json edited (4 entries: fileVersion 2, new prints, notes; nose kimi review removed; nan-can-nod version 6). Step 3 running deliver.
+Step 3 done: deliver exit 0 (heavy-run). Delivered 30 rows and 2 batch hashes to out/storytime/l2/unit1/w01/delivery-muse-v2. Step 4 verifying.
+Step 4 done: 30 jobs; 26 at v1 same bytes as delivery-muse-v1; 4 at v2 (8 new names); 60 PNG + manifest.json; each file equals approved print; v1 manifest SHA unchanged 00ea0c5b...; v2 manifest SHA d3eec18ce7c94b94ed5b0751df164578558ad44f04bebe7b4b371a3ed213796a. Step 5: commits.
+
+Step 5 done: commits 687da2fd (approved.json) and a3741c90 (plan.md).
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 (Phase 3: Week 1 pictures)
+task: Deliver week 1 again with version 2 for 4 rows
+role_base_sha: 4330cb42
+phase_base_sha: 15a7bf0b
+commits: 687da2fd (approved.json); a3741c90 (plan.md evidence)
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+delivery_folder: out/storytime/l2/unit1/w01/delivery-muse-v2
+manifest_sha256: d3eec18ce7c94b94ed5b0751df164578558ad44f04bebe7b4b371a3ed213796a
+deliver_exit_code: 0
+job_count: 30 (26 at v1 with the same bytes as delivery-muse-v1; 4 at v2); 60 PNG files plus manifest.json
+new_files: l2-w01-story-page-a-net-v2.png, l2-w01-story-page-a-net-line-v2.png, l2-w01-check-row-net-v2.png, l2-w01-check-row-net-line-v2.png, l2-w01-story-page-a-nose-v2.png, l2-w01-story-page-a-nose-line-v2.png, l2-w01-story-page-nan-can-nod-v2.png, l2-w01-story-page-nan-can-nod-line-v2.png
+delivery_muse_v1_manifest_sha256: 00ea0c5b06d18e3f54cbceed9caa943100c0711bb515c44561eb46b7e03ed369 (unchanged)
+muse_calls: 0
+resolved_by_pm: RCV2-1 and RCV2-2 (decision A; Workbooks owns the stage 1 reader change)
+open_items: RCV2-3 (nit, contract.md) is not part of this change.
+handoff: Send the delivery-muse-v2 path and the manifest SHA-256 to the PM. Workbooks changes its stage 1 reader to match by row id.
+dispositions: none
+END_MEASURE_AGENT_RESULT

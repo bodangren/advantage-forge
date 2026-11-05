@@ -1,0 +1,9 @@
+
+BUILD FAILED: box(): radius is larger than half a dimension.
+    at Module.box (/home/daniebo/Desktop/advantage-forge/src/sdf/core.ts:876:17)
+    at Object.build (/home/daniebo/Desktop/advantage-forge/assets/storytime-school-bus.ts:131:7)
+    at collect (/home/daniebo/Desktop/advantage-forge/src/asset.ts:525:10)
+    at collectBodies (/home/daniebo/Desktop/advantage-forge/src/asset.ts:525:10)
+    at buildAsset (/home/daniebo/Desktop/advantage-forge/src/asset.ts:525:10)
+    at Module.buildToGlb (/home/daniebo/Desktop/advantage-forge/src/pipeline.ts:38:54)
+    at run (/home/daniebo/Desktop/advantage-forge/src/cli/forge.ts:265:32)

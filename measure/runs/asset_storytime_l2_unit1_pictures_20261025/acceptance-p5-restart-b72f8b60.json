@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "status": "inconclusive",
+  "summary": "Provisional artifact written before gate execution. Rerun of 5.11 gates X1 to X15 and G5 on audited HEAD b72f8b60aba82dd99c09eb2c60292016ae3d9b3f, with restart check v3 (--final) per 5.11.15.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "P1 provisional: artifacts created before first gate run; verdict not yet determined"
+  ],
+  "commands": [],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/acceptance-p5-restart-b72f8b60.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/acceptance-p5-restart-b72f8b60.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "infrastructure_retry",
+  "confidence": "low",
+  "audited_head": "b72f8b60aba82dd99c09eb2c60292016ae3d9b3f",
+  "verdict": "inconclusive",
+  "gates": {
+    "X1": "pass — merges 0; own files 76, outside allowed set 0; foreign commit d6867c52 named (touches only measure/tracks.md, no Storytime path); a48 specs in git 24",
+    "X2": "pass — after P5R_BASE: judge files 0, a48 specs (except nut) 0, judge kit after c132d866 0; X2b code files outside the allowed three 0; no src/ change",
+    "X2b diff read": "pass — guards diff = TRY_EXCEPTIONS (3 nut entries with PM sources), maxTriesFor, tryGuard limit use; countTries has no version/output filter, so the guard counts every restart row per picture and kind across color versions; tests confirm at final caps (nut line 5, nut color 4, others 3)",
+    "X3": "pass — pin blocks 28/7/12 lines, sha256sum -c exit 0 each",
+    "X4": "pass — restart check v3 SHA matches 6ae82ad4…; --final exit 0 with every label at the 5.11.15 value (rows 57, spend 0.57, folders 11, files 51/51/51, pictures 24, guard 3/3/4-5/0/0); --final --control exit 1 with the three named FAIL lines",
+    "X5": "pass (via X4) — spend 0.57 USD <= 1.00; pairs above limit 0; pairs above 3 tries only the nut color and nut line (2, named)",
+    "X6": "pass (via X4) — kit SHAs match; calibration 388/381/7, controls 2 failed 2; 51/51 delivered files with a pass verdict; retries 9/6/3; second-judge differences 0; nut verdicts pass/fail/fail/pass/pass with second fails on line 3 and 4",
+    "X7": "pass — handoff checks drum 2, c 4, a 25, b 14, d 4, nut3 2, each exit 0 with one OK line per file; evidence words yes",
+    "X8": "pass — ledger lines 385, sha256sum -c exit 0; nine pre-restart manifests verified in X4",
+    "X9": "pass — w08 delivery pngs 6; ostrich files in w07 v2 delivery 2; X4 ties them to pass verdicts",
+    "X10": "pass — tsc --noEmit exit 2 (pre-existing errors of other tracks only, no owned path); labeled counts: tsc errors total 38 (limit <= 38), owned tsc errors 0",
+    "X11": "pass — PROJECT_TESTS once: exit 0, Test Files 7 passed (7), Tests 105 passed (105); M=105 above the maker's N=84 (plan T4 step 15); no skip, no filter; known-red below",
+    "X12": "pass — task lines 7/7/7 (SHAs commit and hold evidence); metadata actual_tasks 29 = grep, status in_progress; interphase status lists no incomplete phase for this track (176 entries, all other tracks; [C19] is a closeout-candidate line)",
+    "X13": "pass — the diff grep prints exactly the 3 w08 approval notes, each qualified by notes[0] 'model evidence, not the person count'; the 5 F3 plan lines no longer match; seed control prints 1; handoff evidence words verified in X4",
+    "X14": "pass — the secret grep over docs, judge results, run logs, scripts, delivery manifests, and handoff MANIFEST.txt files prints nothing (exit 1)",
+    "X15": "pass — structural doctor prints 12 errors (6 new-track-started, 5 missing registry links, 1 stale generated fact); none names this track or an owned path; stale fact is the known state until closeout",
+  }
+}

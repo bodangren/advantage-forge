@@ -1,0 +1,168 @@
+{
+  "status": "pass",
+  "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "All 5 rows of batch 49r5 are clean. Set A passes.",
+  "items": {
+    "l2-w05-story-page-i-have-two-ears": {
+      "files": [
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-two-ears-m1-color-print.png",
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-two-ears-m1-line-print-4-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Two ears are clear on the sides of the head in the color print and are two closed outlines with one inner curve in the line print.",
+        "Each index finger touches the ear on its own side in both prints.",
+        "The face has two eyes, a nose curve and an open smile in the line print, so the face is not blank.",
+        "The eye is a solid black pupil inside a thin ring with a small white gap. The ring is thin, so it is not a thick black ring.",
+        "Two white stripes run across the chest in both prints.",
+        "One sun. The eight rays are pointed triangles. A white gap of 24 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note."
+      ],
+      "goal_check": "Met. Sam points at his two ears with both hands in a sunny park, and two ears show in the color print and the line print.",
+      "line_check": "0 gray pixels in 12000000. The line art is pure black and white. The eight sun ray strokes are separate and sit 24 pixels from the disc."
+    },
+    "l2-w05-story-page-i-have-two-eyes": {
+      "files": [
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-two-eyes-m1-color-print.png",
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-two-eyes-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Two eyes are whole and clear in the color print and in the line print. Each has a big solid black pupil with a thin outline that hugs it.",
+        "Each index finger stops at the outer corner of an eye and covers no part of it.",
+        "The face has a nose curve and an open mouth, so the face is not blank.",
+        "Two white stripes run across the chest in both prints.",
+        "One sun. The eight rays are pointed triangles. A white gap of 43 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note.",
+        "The tree runs past the left frame edge. That is background only."
+      ],
+      "goal_check": "Met. Sam points at his two eyes with one index finger each, and two eyes show in the color print and the line print.",
+      "line_check": "0 gray pixels in 12000000. The line art is pure black and white. The eight sun ray strokes are separate and sit 43 pixels from the disc."
+    },
+    "l2-w05-story-page-i-have-two-feet": {
+      "files": [
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-two-feet-m2-color-print.png",
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-two-feet-m2-line-print-despeckled.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Two bare feet show in the color print and in the line print. Each foot has a row of five small round toes.",
+        "One pair of blue sneakers stands next to Sam in both prints.",
+        "Sam points at the tummy and knee area and not at a foot. The two feet are still clear, so this is a note.",
+        "The tree runs past the left frame edge. That is background only.",
+        "One sun as a plain circle with no rays."
+      ],
+      "goal_check": "Met for the sentence. The two feet and the pair of sneakers show in the color print and the line print. The pointing hand misses the feet.",
+      "line_check": "0 gray pixels in 12000000. The line art is pure black and white. The sun is one plain circle with no rays."
+    },
+    "l2-w05-story-page-i-have-two-hands": {
+      "files": [
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-two-hands-m1-color-print.png",
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-two-hands-m1-line-print-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Two hands are up with the palms to the camera in both prints.",
+        "Each hand shows five digits in the color print and in the line print: four fingers and one thumb.",
+        "The face has a nose curve and an open mouth, so the face is not blank.",
+        "Two white stripes run across the chest in both prints.",
+        "One sun. The eight rays are thin sticks. A white gap of 32 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note. The brief of this batch accepts this sun style.",
+        "The tree runs past the left frame edge. That is background only."
+      ],
+      "goal_check": "Met. Sam holds up his two open hands in a sunny park, and two hands with five fingers each show in the color print and the line print.",
+      "line_check": "0 gray pixels in 12000000. The line art is pure black and white. The eight sun ray strokes are separate and sit 32 pixels from the disc."
+    },
+    "l2-w05-story-page-i-have-two-legs": {
+      "files": [
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-two-legs-m1-color-print.png",
+        "out/storytime-review/batch-49/pages/l2-w05-story-page-i-have-two-legs-m1-line-print-6-despeckled.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Two legs show side by side from the shorts to the shoes in the color print and in the line print. They do not overlap.",
+        "One index finger points down at a leg in both prints.",
+        "The line print has no nose on the face. The text names the legs, not the nose, so this is a note. The mouth is there, so the face is not blank.",
+        "The eye is a solid black pupil inside a thin outline with a small white gap. The outline is thin, so it is not a thick black ring.",
+        "Two white stripes run across the chest in both prints.",
+        "One sun. The eight rays are pointed triangles. A white gap of 30 pixels in the 4000 pixel print sits between each ray and the disc, so the ray bases do not sit on the disc. That is a note.",
+        "The tree runs past the top and left frame edges. That is background only."
+      ],
+      "goal_check": "Met. Sam stands on the grass and points at his two legs, and two legs show in the color print and the line print.",
+      "line_check": "0 gray pixels in 12000000. The line art is pure black and white. The eight sun ray strokes are separate and sit 30 pixels from the disc."
+    }
+  },
+  "extra": {
+    "K1": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "rating": 5,
+      "verdict": "defect",
+      "defect_categories": [
+        "wrong-or-missing-prop"
+      ],
+      "defects": [
+        "The line print has no nose shape. The fingertip ends on the face at the nose place and the open mouth sits at its right, so the nose the text names appears in the color print only."
+      ],
+      "notes": [
+        "The color print shows one nose as a clear bump, and the fingertip touches its side.",
+        "The line print shows two eyes, two brows, an open mouth and one finger. There is no nose outline and no nostril.",
+        "The finger in the line print reads as touching the left corner of the mouth."
+      ],
+      "goal_check": "Color meets the goal. The line print does not show the nose that the text names.",
+      "line_check": "0 gray pixels in 12000000. The line art is pure black and white. The nose shape is missing.",
+      "retry_hint": "line: draw the nose of Nan as a closed shape beside the fingertip so the nose shows in the line art."
+    },
+    "K2": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The head is in profile and faces the other way from the nose page.",
+        "The nose is clear in the color print and is a closed profile bump with a nostril curve in the line print.",
+        "One eye, one brow, one ear curve, one mouth curve and one hair bun shape.",
+        "No cut part at a frame edge. No thick black ring."
+      ],
+      "goal_check": "Met. The head of Nan is in profile, the nose is clearly seen, and the picture works as a tracing practice line.",
+      "line_check": "0 gray pixels in 2560000. The line art is pure black and white."
+    },
+    "K3": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "One big brown nut sits in the open palm of Nan in both prints.",
+        "The hand is open with four fingers and the thumb hidden behind the nut.",
+        "The hair bun and the shorts run past the right and bottom frame edges. The nut stays whole.",
+        "The line print draws the eye as a big circle with two hollow circles. The face still has a mouth and a nose."
+      ],
+      "goal_check": "Met. One big brown nut rests in the open hand of Nan in a close up.",
+      "line_check": "0 gray pixels in 12000000. The line art is pure black and white."
+    }
+  }
+}

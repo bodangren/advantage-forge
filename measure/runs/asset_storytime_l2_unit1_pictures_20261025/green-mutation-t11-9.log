@@ -1,0 +1,30 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/storytime-book-pictures.test.ts (111 tests | 1 failed) 208357ms
+         × T126: the decoded-check comments name the raw answer, the order, and the current finding 23ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T126: the decoded-check comments name the raw answer, the order, and the current finding
+AssertionError: The MiniMax decoded check has a comment.: expected '      // RB3-01: the decoded credenti…' not to contain 'RB3-01'
+
+Expected: "RB3-01"
+Received: "      // RB3-01: the decoded credential check reads every JSON string token in the raw answer before any write."
+
+ ❯ tests/storytime-book-pictures.test.ts:2861:78
+    2859|         const source = readFileSync(path.resolve(import.meta.dirname, …
+    2860|         const minimax = commentAbove(functionRegion(source, 'precheckM…
+    2861|         expect.soft(minimax, 'The MiniMax decoded check has a comment.…
+       |                                                                              ^
+    2862|         expect.soft(minimax, 'The MiniMax comment states that the chec…
+    2863|           .toMatch(/raw\s+(answer|output|bytes|text|response|provider)…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 110 passed (111)
+   Start at  22:59:16
+   Duration  210.13s (transform 1.09s, setup 0ms, import 1.43s, tests 208.36s, environment 0ms)
+

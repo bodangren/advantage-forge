@@ -1,0 +1,6 @@
+storytime-low-branch: 6,708 triangles, 1.161 x 1.66 x 0.56 m, built in 1546 ms
+  bark                      2840 tris  (587 ms)
+  leaves                    3868 tris  (559 ms)
+texture  none (vertex colors)
+glb      out/storytime-low-branch/storytime-low-branch.glb  (159 KB)
+render   out/storytime-low-branch/render.png  (328 ms)

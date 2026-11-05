@@ -1,0 +1,13 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 16
+book file requests refused: 0
+saved /tmp/opencode/mia-diag
+top: white 66.67% of 240000
+bottom: white 95.23% of 240000
+left: white 90.94% of 240000
+right: white 88.97% of 240000
+all: white 85.69% of 940800
+saved /tmp/opencode/mia-diag

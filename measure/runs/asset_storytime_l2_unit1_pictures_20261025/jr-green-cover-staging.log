@@ -1,0 +1,27 @@
+Green P4 T3 cover staging (provisional). role_base_sha 1414a3ea; phase_base_sha fc76c272. Step 1: HEAD 1414a3ea (expected). Next: contract.md edit, then read S19 and week page specs.
+Step 2: Task 1 done: contract.md lines 6-7 (v4 lead-in, v3 history), lines 22-29 (fileVersion rule, PM decision A). Next: cover spec.
+Step 3: read S19 (spec.md 53, FR-12), refs viewed (nan, ben, classroom set). Writing l2-cover.json next; no Muse call.
+Step 4: wrote docs/storytime/l2-unit1/cover/muse/l2-cover.json (5 refs). Next: approved-look check, commit spec, plan note, commit plan, final result.
+Step 5: commits: contract 08edc06a; cover spec e1753ca4; plan note 48714791 (marker unchanged).
+No Muse call. No candidate under out/storytime/l2/unit1/cover/.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Contract text fix; Produce the Level 2 cover render under S19 (staging, inputs only; marker stays [ ] until the Phase 3 checkpoint)
+role_base_sha: 1414a3ea
+phase_base_sha: fc76c272
+commits: 08edc06a; e1753ca4; 48714791
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+contract_lines: contract.md lines 6 to 8 (list v4 lead-in, v3 as history); lines 22 to 29 (fileVersion rule from f1e797cb; PM decision A, Workbooks stage 1 reader matches by row id)
+cover_spec: docs/storytime/l2-unit1/cover/muse/l2-cover.json (stage pending-pm; file l2-cover-v1.png; class B 4000 x 3000; color only)
+references: classroom-door-wide.png; cast-group-a-2.png; ben-ref-clean-2.png; nan-ref-clean-look-reference.png; w04 pip-ref-render.png (all approved looks; no pending sheet)
+muse_calls_total: 0
+page_candidates: 0
+handoff: Open: (1) The PM must answer the cover file name, size class, and line-art twin; the spec holds the default as data. (2) The week 1 classroom set has beams up to the top of its image; the prompt asks for a plain upper wall, but gate C1 may fail. A plain set sheet may be needed (one Muse call, about 0.01 USD). (3) No cover call before Daniel answers on week 1. (4) Teacher Kim is left out because S19 does not ask for her. Default: stage nothing further.
+dispositions: none
+END_MEASURE_AGENT_RESULT

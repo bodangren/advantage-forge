@@ -1,0 +1,14 @@
+Green round 25 provisional log (Storytime week 1 pictures, P3)
+track: asset_storytime_l2_unit1_pictures_20261025
+role_base_sha: 6d276f52
+phase_base_sha: 15a7bf0b
+HEAD at start: 6d276f52
+Red model: minimax-cn-coding-plan/MiniMax-M3
+Green model: xai/grok-4.7#high
+coder: none
+task: one new class A story page, l2-w01-story-page-a-nose v1. Stage file only. No asset or src change.
+laugh method: gesture touch nose holds the index finger on the nose from 0.65 s to 1.35 s. One long word from 0.25 s to 1.40 s opens the singing mouth. Still time 0.82 s is a mouth pulse peak, a laugh bounce, and open eyes for seed 1.
+safer default: Nan only, yaw 0, white page, no props. Camera az -10, el 8, dist 1.22, target y 0.50. The head turns toward the hand, so the camera sits on that side.
+command form: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 1800 node --import tsx scripts/storytime-book-pictures.ts render --row l2-w01-story-page-a-nose --version 1'
+verify form: the same wrapper with verify --row l2-w01-story-page-a-nose
+status: started; v1 file next; render not started

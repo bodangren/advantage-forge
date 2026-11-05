@@ -1,0 +1,9 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 16
+book file requests refused: 0
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 3.88% (465855 of 12000000 pixels black).
+l2-w01-story-page-nan-can-nod v2: rendered; stage 2c00ba41a338ca7b5d95fe622e27a93597160e24921c6b2ef7ebd96a47fed930; file w01/rows/l2-w01-story-page-nan-can-nod-v2.png; lineart w01/rows/l2-w01-story-page-nan-can-nod-line-v2.png; size 4000 x 3000; render peak rss mb: 493

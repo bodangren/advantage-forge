@@ -1,0 +1,249 @@
+{
+  "status": "fail",
+  "reviewer": "claude-code/claude-opus-5-5[1m]#high",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Batch 57 fails. 8 of 9 check rows are clean. The octopus row has a defect: 7 tentacles, not 8, in color and in line. All 9 line prints have 0 pixels that are not 0 or 255. Control rows: K1 defect (no nose in the line file), K2 clean, K3 clean.",
+  "items": {
+    "l2-w07-check-row-bed": {
+      "files": [
+        "out/storytime-review/batch-57/pages/l2-w07-check-row-bed-m1-color-print.png",
+        "out/storytime-review/batch-57/pages/l2-w07-check-row-bed-m1-line-print-6-despeckled.png",
+        "/tmp/opencode/bed-foot.png (crop)",
+        "/tmp/opencode/bed-head.png (crop)"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The bed reads as a bed at book size in color and in line: an arched headboard, posts with round knobs, a footboard panel, a mattress, a pillow, a blanket, and three visible legs. The fourth leg is hidden in both files.",
+        "The color blanket has a red check pattern. The line blanket is one plain shape. This changes no needed prop.",
+        "The line under the footboard is a merged double stroke, about two line widths thick. It is a small mark, not a large solid area.",
+        "The headboard arch and the left post join at one point; the areas stay closed. Nothing is cut at a print edge."
+      ],
+      "goal_check": "Pass. One bed on plain white reads as \"bed\" in color and in line.",
+      "line_check": "Script /tmp/opencode/linecheck57.mjs: 0 pixels are not 0 or 255 (1500x1500, black 6.52 percent). Black and white only. By eye: no gray, no thick solid ring or band, no line gap that makes coloring hard."
+    },
+    "l2-w07-check-row-bus": {
+      "files": [
+        "out/storytime-review/batch-57/pages/l2-w07-check-row-bus-m1-color-print.png",
+        "out/storytime-review/batch-57/pages/l2-w07-check-row-bus-m1-line-print-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The yellow school bus reads as a bus in color and in line: a windshield, four side windows, a door with a step, a grille, two headlights, a bumper, four wheels with hubs, and four roof lights.",
+        "The front right roof light shows as a small closed oval on the roof edge in the line file. It matches the orange light of the color file.",
+        "The color has a soft gray ground shadow at the right. The line file has no shadow. This is correct for line art.",
+        "The side stripe of the color file shows as one partial line in the line file. This changes no needed prop. Nothing is cut at a print edge."
+      ],
+      "goal_check": "Pass. One school bus on plain white reads as \"bus\" in color and in line.",
+      "line_check": "Script /tmp/opencode/linecheck57.mjs: 0 pixels are not 0 or 255 (1500x1500, black 7.62 percent). Black and white only. By eye: no gray, no thick solid ring or band, no line gap that makes coloring hard."
+    },
+    "l2-w07-check-row-cat": {
+      "files": [
+        "out/storytime-review/batch-57/pages/l2-w07-check-row-cat-m1-color-print.png",
+        "out/storytime-review/batch-57/pages/l2-w07-check-row-cat-m1-line-print-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The cat reads as a cat at book size in color and in line: two pointed ears, two big eyes (ring and solid pupil), a nose, three whiskers on each side, a curled tail, and paws.",
+        "The color has orange stripes and a white muzzle and chest. The line file draws plain shapes without stripes. This changes no needed prop.",
+        "The color shows a fourth paw as a small bump behind the front legs. The line file shows three paws. The text names no count, so this is a note.",
+        "Two short inner leg lines end open inside the body outline. The body areas stay closed for coloring. Nothing is cut at a print edge."
+      ],
+      "goal_check": "Pass. One cat on plain white reads as \"cat\" in color and in line.",
+      "line_check": "Script /tmp/opencode/linecheck57.mjs: 0 pixels are not 0 or 255 (1500x1500, black 7.32 percent). Black and white only. By eye: no gray, no thick solid ring or band, no line gap that makes coloring hard."
+    },
+    "l2-w07-check-row-fish": {
+      "files": [
+        "out/storytime-review/batch-57/pages/l2-w07-check-row-fish-m1-color-print.png",
+        "out/storytime-review/batch-57/pages/l2-w07-check-row-fish-m1-line-print-3-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The fish reads as a fish at book size in color and in line: a round body in side view, one eye (ring and solid pupil), one top fin, one tail fin, and one belly fin.",
+        "The color has a blue back and a yellow belly. The line file has no belly line. This changes no needed prop.",
+        "The fin outlines in the line file are wavy, as in the color fins. The pupil is a solid black disc of normal eye size; this is allowed.",
+        "The color has a soft gray ground shadow. Nothing is cut at a print edge."
+      ],
+      "goal_check": "Pass. One fish on plain white reads as \"fish\" in color and in line.",
+      "line_check": "Script /tmp/opencode/linecheck57.mjs: 0 pixels are not 0 or 255 (1500x1500, black 4.08 percent). Black and white only. By eye: no gray, no thick solid ring or band, no line gap that makes coloring hard."
+    },
+    "l2-w07-check-row-octopus": {
+      "files": [
+        "out/storytime-review/batch-57/pages/l2-w07-check-row-octopus-m1-color-print.png",
+        "out/storytime-review/batch-57/pages/l2-w07-check-row-octopus-m1-line-print-despeckled.png",
+        "/tmp/opencode/oct-c.png (crop)",
+        "/tmp/opencode/oct-c2.png (crop)",
+        "/tmp/opencode/oct-c3.png (crop)",
+        "/tmp/opencode/oct-l.png (crop)"
+      ],
+      "rating": 6,
+      "verdict": "defect",
+      "defect_categories": [
+        "wrong-hand-or-limb"
+      ],
+      "defects": [
+        "The octopus has 7 tentacles, not 8, in the line file. The reviewer counted 7 curled tips: three at the left, two at the center, two at the right.",
+        "The color file also shows 7 tentacles: three at the left (one is a short part behind the head), two at the center, and two at the right. The count is exact, so 7 is wrong in both files."
+      ],
+      "notes": [
+        "Apart from the count, the octopus reads as an octopus at book size: a round head, two eyes (ring and solid pupil), a small smile, and curled tentacles.",
+        "The color has a pink cheek blush. The line file has none. This changes no needed prop.",
+        "The left eye is smaller than the right eye in both files (three-quarter view). This is a note.",
+        "Short tentacle lines start open inside the body, where the tentacles leave the head. The areas stay closed for coloring. Nothing is cut at a print edge."
+      ],
+      "goal_check": "Fail on the count. One octopus on plain white reads as \"octopus\", but it has 7 tentacles in color and in line, not 8.",
+      "line_check": "Script /tmp/opencode/linecheck57.mjs: 0 pixels are not 0 or 255 (1500x1500, black 8.25 percent). Black and white only. By eye: no gray, no thick solid ring or band, no line gap that makes coloring hard.",
+      "retry_hint": "Draw exactly eight separate curled tentacles in color and in line, four at each side, every tip clearly visible."
+    },
+    "l2-w07-check-row-olive": {
+      "files": [
+        "out/storytime-review/batch-57/pages/l2-w07-check-row-olive-m1-color-print.png",
+        "out/storytime-review/batch-57/pages/l2-w07-check-row-olive-m1-line-print-despeckled.png"
+      ],
+      "rating": 7,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The color file reads clearly as one green olive with a red pimento in a round hole.",
+        "The line file is one large oval with one small ring (the hole) and one inner ring (the pimento) near the right end. This is the usual coloring-page sign for a stuffed olive. Next to the printed word \"olive\", it reads as an olive.",
+        "Risk: the oval is wide, so without the word a child can read it as an egg with a hole. The ring at the end is the only olive sign. The reviewer records this as a note, not a defect, because the object is not a different object (no grape, no pea, no stem, no leaf).",
+        "The color has a soft gray ground shadow. Nothing is cut at a print edge."
+      ],
+      "goal_check": "Pass, with a note. The color reads as an olive. The line reads as an olive next to the printed word; alone, it can also read as an egg with a hole.",
+      "line_check": "Script /tmp/opencode/linecheck57.mjs: 0 pixels are not 0 or 255 (1500x1500, black 3.48 percent). Black and white only. By eye: no gray, no thick solid ring or band, no line gap that makes coloring hard."
+    },
+    "l2-w07-check-row-ox": {
+      "files": [
+        "out/storytime-review/batch-57/pages/l2-w07-check-row-ox-m1-color-print.png",
+        "out/storytime-review/batch-57/pages/l2-w07-check-row-ox-m1-line-print-3-despeckled.png"
+      ],
+      "rating": 7.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The ox reads as an ox at book size in color and in line: two long curved horns, two ears, two big eyes (ring and solid pupil), a wide muzzle with two nostrils, four legs with hoof bands, and a short tail. The horns make it an ox, not a hornless cow.",
+        "The color has a beaded necklace and a gold bell. The line file draws neither; one short open stroke on the shoulder is left from the necklace. This changes no needed prop.",
+        "The left eye extends past the head outline in the three-quarter view, in both files. This is a note.",
+        "Two short inner lines (shoulder and back leg) end open inside the body outline. The areas stay closed for coloring. Nothing is cut at a print edge."
+      ],
+      "goal_check": "Pass. One ox on plain white reads as \"ox\" in color and in line.",
+      "line_check": "Script /tmp/opencode/linecheck57.mjs: 0 pixels are not 0 or 255 (1500x1500, black 7.05 percent). Black and white only. By eye: no gray, no thick solid ring or band, no line gap that makes coloring hard."
+    },
+    "l2-w07-check-row-pen": {
+      "files": [
+        "out/storytime-review/batch-57/pages/l2-w07-check-row-pen-m1-color-print.png",
+        "out/storytime-review/batch-57/pages/l2-w07-check-row-pen-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The pen reads as a ballpoint pen at book size in color and in line: a body on a diagonal, a cap with a clip, a round top button, and a pointed tip at the lower right.",
+        "The pen body is wide and round. It still reads as a pen because of the clip and the tip.",
+        "The color top button is clear plastic; the line file draws it as one circle. This changes no needed prop. Nothing is cut at a print edge."
+      ],
+      "goal_check": "Pass. One pen on plain white reads as \"pen\" in color and in line.",
+      "line_check": "Script /tmp/opencode/linecheck57.mjs: 0 pixels are not 0 or 255 (1500x1500, black 5.77 percent). Black and white only. By eye: no gray, no thick solid ring or band, no line gap that makes coloring hard."
+    },
+    "l2-w07-check-row-sun": {
+      "files": [
+        "out/storytime-review/batch-57/pages/l2-w07-check-row-sun-m1-color-print.png",
+        "out/storytime-review/batch-57/pages/l2-w07-check-row-sun-m1-line-print-despeckled.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "One sun with one disc and exactly 8 pointed triangle rays in color and in line. The reviewer counted 8 rays in each file.",
+        "Each ray has its wide base on the disc and its point outward. In the line print, the disc and all 8 rays are one connected black component, so the largest ray gap is 0 px.",
+        "The disc ring is 29 to 30 px wide on the horizontal and vertical axis, the same as the line weight. It is not a thick solid ring.",
+        "No face, no text. The lowest ray is near the lower print edge but is not cut."
+      ],
+      "goal_check": "Pass. One sun on plain white reads as \"sun\" in color and in line, with 8 rays whose bases touch the disc.",
+      "line_check": "Script /tmp/opencode/linecheck57.mjs: 0 pixels are not 0 or 255 (1500x1500, black 8.69 percent). Black and white only. By eye: no gray, no thick solid ring or band, no line gap that makes coloring hard. The disc and the 8 rays form one connected component (largest ray gap 0 px). Disc ring 29 to 30 px."
+    }
+  },
+  "extra": {
+    "K1": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png",
+        "/tmp/opencode/k1-color-face.png (crop)",
+        "/tmp/opencode/k1-line-face.png (crop)"
+      ],
+      "rating": 5.5,
+      "verdict": "defect",
+      "defect_categories": [
+        "broken-face"
+      ],
+      "defects": [
+        "The text names the nose, but the line file has no nose. The face in the line file has two eyes, two eyebrows, and an open mouth. The fingertip sits at the left corner of the mouth, at the position of the nose. A child sees a finger at the mouth, not a finger on a nose."
+      ],
+      "notes": [
+        "The color file shows Nan in the approved 3D look: two buns with red ties, an orange T-shirt with a white star, red shorts, white sneakers.",
+        "In the color file the fingertip touches the lower left side of the nose. The nose shows above the fingertip. The open-mouth smile reads as a laugh.",
+        "The hand that touches the nose is a fist with one pointing finger. The other hand is a smooth mitten, as in the approved sheets.",
+        "The line-art eyes are plain rings with a small highlight ring and no pupil fill; the eyelash flicks of the color file are not drawn. This changes no character."
+      ],
+      "goal_check": "Color: pass. Nan touches her own nose with one finger and laughs. Line: fail. The nose is not drawn, so the finger seems to touch the mouth.",
+      "line_check": "Script /tmp/opencode/linecheck57.mjs: 0 pixels are not 0 or 255 (4000x3000, black 3.85 percent). Black and white only. By eye: no gray, no thick solid ring or band, no line gap that makes coloring hard. (Control line file.)",
+      "retry_hint": "Draw the nose in the line art as a small closed shape above the fingertip, with the fingertip on the nose and clear of the mouth."
+    },
+    "K2": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Nan shows in profile and faces to the right. The goal says \"facing the other way\"; no paired picture was in scope, so the reviewer records the direction only.",
+        "The nose shows clearly as a round bump at the front of the face in the color file and in the line file.",
+        "The color file keeps the approved look: dark hair with a bun and a red tie, the eyelash flick, the cheek blush, the orange T-shirt.",
+        "The line file draws the bun as a plain circle without the red tie ring. This changes no character.",
+        "The line-art ear is an open curve. This is a note, not a line gap: the ear area joins the face area, and a child can color it."
+      ],
+      "goal_check": "Pass. The head of Nan is in profile, and the nose is clearly seen in color and line.",
+      "line_check": "Script /tmp/opencode/linecheck57.mjs: 0 pixels are not 0 or 255 (1600x1600, black 6.53 percent). Black and white only. By eye: no gray, no thick solid ring or band, no line gap that makes coloring hard. (Control line file.)"
+    },
+    "K3": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png",
+        "/tmp/opencode/k3-color-hand.png (crop)",
+        "/tmp/opencode/k3-line-hand.png (crop)"
+      ],
+      "rating": 7.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The open hand has five digits in color and in line: one thumb at the back and four fingers. The palm faces up and holds one nut.",
+        "The nut is one brown acorn with a cap and a stem, in color and in line. It reads as a nut at book size.",
+        "The open hand is very large because it is near the camera. This is foreshortening, a note.",
+        "Nan keeps the approved look: two buns with red ties, the orange T-shirt with a white star, red shorts. The right bun and the feet are cut at the print edges in the close-up. This is a note.",
+        "The line-art face has eyes, eyebrows, a small nose curve, and a smile. The eyes are rings with highlight rings and no pupil fill; this changes no character."
+      ],
+      "goal_check": "Pass. One big brown nut sits in Nan's open hand, close up, in color and in line.",
+      "line_check": "Script /tmp/opencode/linecheck57.mjs: 0 pixels are not 0 or 255 (4000x3000, black 5.96 percent). Black and white only. By eye: no gray, no thick solid ring or band, no line gap that makes coloring hard. (Control line file.)"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+MEASURE_AGENT_RESULT
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 (Phase 3: Week 1 pictures)
+role: jr-green (round 5: secure the round 4 work)
+status: done
+phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+role_base_sha: 9c0b400e
+final_green_head: 5e8582e0
+green_model: claude-code/claude-opus-5-5[1m]#high (no coder used)
+commits:
+- f876940d docs(measure): record the week 1 gap list for list v3 (plan.md)
+- 603745f9 feat(storytime): render and verify picture list rows, line-art pass v4 (src/storytime/book-pictures.ts, src/storytime/line-art-pass.ts, src/song/timeline.ts, src/song/main.ts, tests/storytime-picture-rows.test.ts)
+- a1ff1505 feat(storytime): stage the renderable week 1 list rows (docs/storytime/l2-unit1/w01/rows/*.json)
+- 5e8582e0 docs(measure): record the week 1 row render evidence (plan.md)
+test_results:
+- GREEN_TEST_COMMAND: exit 0; "Tests  134 passed (134)"; green-p3-r5-vitest.log
+- line-art pass + picture rows + song timeline + song still hook: exit 0; "Tests  32 passed (32)"; green-p3-r5-rows-vitest.log
+- picture rows after the type fix: exit 0; "Tests  5 passed (5)"; green-p3-r5-rows2-vitest.log
+- tsc: exit 2; owned errors 0 (after one fix: optional text and prompt on PictureListRow); total 134. The rise from 31 is in other sessions' paths (tests/games/castle-defense, tests/games/magic-defense, assets/rowboat.ts, assets/airship.ts). green-p3-r5-tsc.log
+verify: verify --row exit 0 on all 9 rows (10 row versions); green-p3-r5-verify.log
+rows (out/storytime/l2/unit1/w01/rows/; SHA-256 values in plan.md):
+- done, no open defect (6): story-page-hello-i-am-nan v1 (technique v3, 15 px), story-page-nan-can-nod v2 (v4, 24 px), cover-nan-can-nod v2 (v4, 25 px), check-row-cat v1 (29 px), check-row-fish v1 (24 px), check-row-dog v1 (26 px)
+- rendered with a defect (3): check-row-nose v1 and practice-line-nose v1 (no nose line in the line art); check-row-hat v1 (reads weakly as a dome)
+- superseded: story-page-nan-can-nod v1 (line art lost the smile)
+- failed, nothing written: cover-nan-can-nod v1 (calm top), story-page-hello-i-am-nan v2 under v4 (edge frame)
+- not rendered (21): the rows blocked on the missing items of the gap list
+deviations:
+- src/song/timeline.ts and src/song/main.ts changed: stage option "backdrop": "white" for class C white corners.
+- Technique mix: row hello-i-am-nan is v3 (the sample bytes); the other rows are v4. Default: show Daniel one v4 pair too.
+- tsc total rose from 31 to 134 from other sessions' new paths; owned errors 0.
+new_files: tests/storytime-picture-rows.test.ts; docs/storytime/l2-unit1/w01/rows/*.json (12 stage files); out/ row PNG files and renders/rows/*.json (not tracked)
+gap_list: plan.md under the cast and props task (f876940d). PM approved on 2026-10-29: 23 missing items, Storytime only, an independent review for each.
+questions_with_defaults:
+- Nose rows: default v2 renders in a side view where the nose silhouette gives a line; if the side view does not read, add a painted nose line in a Storytime-only Nan variant (needs PM approval).
+- Hat row: default v2 from a higher camera angle.
+- Cover: figures are small and the grass tile seams show as lines; default keep, and the PM decides.
+next: the PM build plan for the 23 missing items (next turn); the nose and hat corrections; the blocked rows after the builds. Dates: 11-02 for the renderable rows, 11-04 for all 30.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,26 @@
+Contact sheet for the week 1 pictures built on 2026-11-01.
+Page: out/storytime-review/w01-contact/index.html (30 cards, 60 previews in prev/, 3.7 MB).
+Color previews: 800 px JPEG. Line-art previews: 800 px PNG. Delivered files not changed.
+Checks: 120 src and href references, 0 missing; 30 cards, 30 OK boxes, 30 note fields; no external URL.
+Browser: the browser panel cannot open file:// and cannot drive a page here. The page loaded over a temporary local HTTP server (200). The server is stopped.
+Manifest SHA-256 (recomputed): 00ea0c5b06d18e3f54cbceed9caa943100c0711bb515c44561eb46b7e03ed369.
+Commit: 6c8d3173 (plan.md only). Nothing under out/ committed. No Muse call.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 (Phase 3: Week 1 pictures)
+task: Send the count review and the line-art look to the PM (contact sheet only; task stays [ ])
+commits: 6c8d3173 (plan.md note)
+models: green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+contact_sheet: out/storytime-review/w01-contact/index.html
+preview_count: 60
+manifest_sha256: 00ea0c5b06d18e3f54cbceed9caa943100c0711bb515c44561eb46b7e03ed369
+muse_calls: 0
+open_items: Daniel's person review is open. The page was not driven in a browser (panel limit).
+handoff: Send the page path to the PM for Daniel.
+dispositions: none
+END_MEASURE_AGENT_RESULT

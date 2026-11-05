@@ -1,0 +1,12 @@
+sprout-nan: 25,883 triangles, 0.528 x 0.854 x 0.402 m, built in 21024 ms
+  skin                      9217 tris  (5200 ms)
+  mouth-open                 554 tris  (139 ms)
+  eyelid-skin                854 tris  (258 ms)
+  hair                      6128 tris  (3361 ms)
+  bands                     2880 tris  (244 ms)
+  shirt                     2594 tris  (760 ms)
+  shorts                    1878 tris  (324 ms)
+  shoes                     1778 tris  (267 ms)
+texture  none (vertex colors)
+glb      out/sprout-nan/sprout-nan.glb  (1466 KB)
+animate  out/sprout-nan/anim/gesture-touch-nose.png  + .gif  (2.00 s clip, 3572 ms)

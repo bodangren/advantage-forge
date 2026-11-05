@@ -1,0 +1,77 @@
+# Green round 44 log, Storytime Level 2 unit 1 pictures, Phase 3 week 1
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+round: 44
+session: Green · P3 · storytime_l2_unit1_pictures · r44
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 "Phase 3: Week 1 pictures"
+models: green=deepseek/deepseek-flash#high (route from `ra-quota --fresh pick green --not-family minimax --not-family openai`; Daniel approved the DeepSeek route) red=minimax-cn-coding-plan/MiniMax-M3 coder=none
+delegation: none
+role_base_sha: c449f854
+phase_base_sha: 15a7bf0b
+red_change_check: no new Red test or source commit lies in phase_base_sha..HEAD for this round. The committed Red contract for the round is the row stage schema plus the batch 15 review failure. No committed Red test was edited.
+implementation_commit: 0aecdc91
+plan_commit: d739e066
+green_head: d739e066
+files_added:
+  - docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-and-a-nut-v9.json
+  - docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-and-a-nut-v10.json
+  - docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-v8.json
+  - docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-v9.json
+  - out/storytime-review/batch-16/ (9 PNG and brief.md, not in git)
+row_versions:
+  - row: l2-w01-story-page-a-nest-and-a-nut
+    version: v9 (framing attempt)
+    render_exit: 0
+    verify_exit: 0
+    line_width: 20 px
+    ink: 4.51 percent
+    peak_mb: 503
+    color_sha256: c4b57c1336e276ec (prefix)
+    line_sha256: 0f42742a834871cb (prefix)
+    seen: the camera target tz was set in world terms, so the frame pulled back to an overview and the scene filled less than half of the page.
+  - row: l2-w01-story-page-a-nest-and-a-nut
+    version: v10 (kept)
+    render_exit: 0
+    verify_exit: 0
+    line_width: 24 px
+    ink: 6.40 percent
+    peak_mb: 469
+    color_sha256: 08b4f4fe45acbdb0c35a4e7d0dfb022a027dba8b9f75dd400905e6b892a299b3
+    line_sha256: d2240de06b5cd890d2c69a5b1b5a9b0ad49ea1c7de3199647d0c6eddad832c4f
+    seen: the whole tree shows from the roots to the crown top, the crown holds the top tenth of the page, the nest sits on the fork at the vertical middle, Pip is whole with a clear margin below his paws, and the nut sits at his nose.
+  - row: l2-w01-story-page-a-nest
+    version: v8 (framing attempt)
+    render_exit: 0
+    verify_exit: 0
+    line_width: 20 px
+    ink: 4.74 percent
+    peak_mb: 498
+    color_sha256: 8dbee09d55d69b8e (prefix)
+    line_sha256: d2d2bae5f6317826 (prefix)
+    seen: the same target-offset defect put the tree and Nan in the middle of an overview frame.
+  - row: l2-w01-story-page-a-nest
+    version: v9 (kept)
+    render_exit: 0
+    verify_exit: 0
+    line_width: 22 px
+    ink: 5.47 percent
+    peak_mb: 504
+    color_sha256: 03b13dd138558dea4c623344a721bdcdac6af4a47486e2302be75d133298bcaf
+    line_sha256: fc3a5691ba979bc4afece5dbe964faac2d632e37fac76f4beed7668a8873fd2d
+    seen: the crown sits at the top, the nest sits on the low branch near the middle, and Nan is whole at the right with her arm out toward the nest.
+verification:
+  - "Row verification passed for 10 row versions" (l2-w01-story-page-a-nest-and-a-nut)
+  - "Row verification passed for 9 row versions" (l2-w01-story-page-a-nest)
+gates:
+  - every row render and every row verify ran inside `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'`
+  - no exit 75, no exit 137, no lock wait over 600 s, no net::ERR_UNSAFE_PORT
+  - picture list: `--workbooks /tmp/opencode/wb-shadow`, sha256 of content/storytime/l2/print/pictures.json starts with c3e23cfd; the live Workbooks list was not written to
+tasks_flipped_to_x: none
+tasks_flipped_to_b: none
+review_folder: out/storytime-review/batch-16/
+week_1_count: 22 of 30 rendered, 16 with no open defect (practice-line-nut v6 passed); the round 42 note of 24 rendered was a miscount, the orchestrator counted 22 distinct week 1 row ids in out/
+handoff: the two kept row versions wait for the independent re-review. The batch 16 brief holds the row goals copied from the picture list, the batch 15 critical item, the batch 7 part 2 critical defects, and the batch 7 known open defects (Nan's eye-corner flaps, the a-nest pointing hand that reads as a fist, the nose-page finger and mouth). Assets `storytime-nut`, `storytime-nest`, and `storytime-low-branch` were not changed.
+status: done
+END_MEASURE_AGENT_RESULT

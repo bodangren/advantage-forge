@@ -1,0 +1,235 @@
+{
+  "status": "pass",
+  "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "All 9 rows of batch 53 are clean at the bar of Daniel 2026-11-01 14:15 ICT. Four notes are recorded: solid black hair fill on the map page, a scribbly line hand on the pan handle, a hanger knob and a speck on the tap page, and a small bar on the oven door.",
+  "items": {
+    "l2-w06-cover-tap-tap": {
+      "files": [
+        "/home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-53/pages/l2-w06-cover-tap-tap-m1-color-print.png",
+        "/home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-53/pages/l2-w06-cover-tap-tap-m1-line-print-4-despeckled.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The color print shows two green mats, one basket of books, one map and one red pan. The counts match the goal.",
+        "Pat sits on the left mat with black hair and a green shirt. Sam sits on the right mat with brown hair and a red shirt with two white stripes. Both match the reference renders.",
+        "Each boy has one hand behind an ear. Both faces have eyes, eyebrows, a nose and a mouth.",
+        "The line art draws the hair of both boys as outlines, not solid black.",
+        "The line hair of Pat is a rounded cap instead of the spiky hair of the color file. A color and line difference that changes no character."
+      ],
+      "goal_check": "Met: Pat and Sam sit on two green mats in the book corner, each with one hand behind an ear. The basket, the map and the toy kitchen with the red pan stay in place. No text, no numbers and no sun.",
+      "line_check": "0 pixels that are neither 0 nor 255 in 4000 x 3000. 0.0000 percent. No gray or shading in the line art."
+    },
+    "l2-w06-story-page-pat-sat-on-a-mat": {
+      "files": [
+        "/home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-53/pages/l2-w06-story-page-pat-sat-on-a-mat-m1-color-print.png",
+        "/home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-53/pages/l2-w06-story-page-pat-sat-on-a-mat-m1-line-print-3-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The color print shows two green mats, one basket, one map and one red pan. Pat sits on the left mat and the right mat is empty.",
+        "Pat has black hair, a green shirt, brown shorts and brown sandals. He matches the reference render.",
+        "The line face has ring eyes with solid pupils, eyebrows and an open smile. It has no nose. The text does not name a nose, so this is a note.",
+        "The line hair of Pat is a rounded cap instead of the spiky hair of the color file. A color and line difference that changes no character."
+      ],
+      "goal_check": "Met: Pat sits on one of the two green mats and smiles. Both hands rest on his knees with fingers. The text does not name a nose, so the nose-less line face is a note and not a defect.",
+      "line_check": "0 pixels that are neither 0 nor 255 in 4000 x 3000. 0.0000 percent. No gray or shading in the line art."
+    },
+    "l2-w06-story-page-sam-sat-on-a-mat": {
+      "files": [
+        "/home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-53/pages/l2-w06-story-page-sam-sat-on-a-mat-m1-color-print.png",
+        "/home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-53/pages/l2-w06-story-page-sam-sat-on-a-mat-m1-line-print-3-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The color print shows two green mats, one basket, one map and one red pan. Pat sits on the left mat and Sam on the right mat.",
+        "Sam has brown hair, a red shirt with two white stripes, blue shorts and blue shoes. He matches the reference render.",
+        "Both faces have eyes, eyebrows, a nose and an open smiling mouth in color and in line.",
+        "The oven door of the toy kitchen in the line art has one extra small bar under the handle. A small mark.",
+        "The color print has one small round wall pin at the left. The line art has no pin. A color and line difference that changes no character."
+      ],
+      "goal_check": "Met: Sam sits down on the second green mat next to Pat. One boy on each mat and two mats in total.",
+      "line_check": "0 pixels that are neither 0 nor 255 in 4000 x 3000. 0.0000 percent. No gray or shading in the line art."
+    },
+    "l2-w06-story-page-tap-tap-tap": {
+      "files": [
+        "/home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-53/pages/l2-w06-story-page-tap-tap-tap-m2-color-print.png",
+        "/home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-53/pages/l2-w06-story-page-tap-tap-tap-m2-line-print-3-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Only the golden-brown tail tip of Pip shows at the right of the basket, in color and in line. No body, head, ear or leg of Pip shows.",
+        "Pat and Sam sit on their two mats and look up with small round open mouths. Both faces have eyes, eyebrows and a nose.",
+        "The line art has one small hanger knob above the map and one tiny speck at the right of the map. Small marks.",
+        "The brows of Pat in the color file tilt a little worried. A small expression change, not a defect."
+      ],
+      "goal_check": "Met: Pat and Sam sit on their mats in the book corner and look up with surprised faces. The tip of a golden-brown tail shows behind the basket.",
+      "line_check": "0 pixels that are neither 0 nor 255 in 4000 x 3000. 0.0000 percent. No gray or shading in the line art."
+    },
+    "l2-w06-story-page-tap-tap-tap-b": {
+      "files": [
+        "/home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-53/pages/l2-w06-story-page-tap-tap-tap-b-m2-color-print.png",
+        "/home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-53/pages/l2-w06-story-page-tap-tap-tap-b-m2-line-print-3-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Only the golden-brown tail tip of Pip shows at the right of the basket, in color and in line. No body, head, ear or leg of Pip shows.",
+        "Sam stands at the left behind the basket with one arm out. Pat stands at the wall and looks up at the map with a tilted head.",
+        "The line art has two small pins at the top corners of the map. The color file has no pins. A color and line difference that changes no character.",
+        "The line art draws one flat rounded shape on the floor under Pat. This is the floor strip of the color file."
+      ],
+      "goal_check": "Met: Sam turns around and looks at the basket of books while Pat looks at the map, and the tail tip taps on the floor behind the basket.",
+      "line_check": "0 pixels that are neither 0 nor 255 in 4000 x 3000. 0.0000 percent. No gray or shading in the line art."
+    },
+    "l2-w06-story-page-pat-can-see-a-map": {
+      "files": [
+        "/home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-53/pages/l2-w06-story-page-pat-can-see-a-map-m1-color-print.png",
+        "/home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-53/pages/l2-w06-story-page-pat-can-see-a-map-m1-line-print-2-despeckled.png"
+      ],
+      "rating": 7.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The line art draws the hair of Pat as one solid black shape with a few spikes. A solid black fill of a large area. Recorded as a note. The other line prints of this batch draw hair as an outline.",
+        "The wall behind the lifted corner of the map is plain in color and in line. No hole, door or picture shows.",
+        "Pat reaches up with one hand. The hand grips the corner with a thumb and fingers. The other hand hangs relaxed with fingers.",
+        "The color file shows Pat looking up at the lifted corner. The goal asks him to look at the empty wall behind it. This spec detail is not a defect category, so it is a note.",
+        "The face has ring eyes with solid pupils, eyebrows, a nose and a small open mouth."
+      ],
+      "goal_check": "Met in the main part: Pat lifts the lower right corner of the map with one hand and the wall behind the corner is plain. The map, the basket and the red pan are in place and no text shows.",
+      "line_check": "0 pixels that are neither 0 nor 255 in 4000 x 3000. 0.0000 percent. No gray or shading in the line art."
+    },
+    "l2-w06-story-page-sam-can-see-a-pan": {
+      "files": [
+        "/home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-53/pages/l2-w06-story-page-sam-can-see-a-pan-m1-color-print.png",
+        "/home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-53/pages/l2-w06-story-page-sam-can-see-a-pan-m1-line-print-6-despeckled.png"
+      ],
+      "rating": 6.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The hand on the pan handle in the line art is a small group of short strokes with one small loop. It reads as a small blob at book size. The color hand is a clear grip around the handle. Recorded as a note.",
+        "The pan in the line art is deeper and rounder than the shallow pan of the color file. It still reads as a pan with one handle.",
+        "The face has eyes with solid pupils, eyebrows, a nose and a smile. The inside of the pan is empty in color and in line.",
+        "The floor under Sam is plain. No mat is drawn in this page, and the color file has none."
+      ],
+      "goal_check": "Met: Sam leans toward the toy kitchen, holds the short handle of the red pan with one hand and looks into the empty pan. The pan, the basket and the map are in place.",
+      "line_check": "0 pixels that are neither 0 nor 255 in 4000 x 3000. 0.0000 percent. No gray or shading in the line art."
+    },
+    "l2-w06-story-page-he-can-see-pip": {
+      "files": [
+        "/home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-53/pages/l2-w06-story-page-he-can-see-pip-m1-color-print.png",
+        "/home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-53/pages/l2-w06-story-page-he-can-see-pip-m1-line-print-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Pip shows whole in color and in line: floppy ears with darker tips, a cream chest, a cream muzzle, a cream stripe on the forehead, large dark-brown eyes, a black nose, a red collar with a round gold tag and a raised tail. He matches the reference render and has floppy ears only.",
+        "Pip shows one body, two front paws and one closed curl tail behind his back.",
+        "The face of Pip in the line art has two eyes, a nose and an open mouth. The left eye is a solid pupil with a partly drawn ring.",
+        "Sam points with one index finger. The hand shows one extended finger and a fist. The face has ring eyes with solid pupils, a nose and a smile.",
+        "The color file and the line art each show one basket, one map and one red pan."
+      ],
+      "goal_check": "Met: Sam leans past the basket, smiles and points at Pip, and Pip lies whole on the floor with a wagging tail.",
+      "line_check": "0 pixels that are neither 0 nor 255 in 4000 x 3000. 0.0000 percent. No gray or shading in the line art."
+    },
+    "l2-w06-story-page-pip-sat-on-the-mat": {
+      "files": [
+        "/home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-53/pages/l2-w06-story-page-pip-sat-on-the-mat-m1-color-print.png",
+        "/home/daniebo/Desktop/advantage-forge/out/storytime-review/batch-53/pages/l2-w06-story-page-pip-sat-on-the-mat-m1-line-print-5-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "Pip sits on the seam where the two mats meet, between Pat and Sam, in color and in line. He has a red collar with a gold tag, floppy ears and a raised tail.",
+        "Pat and Sam laugh with closed eyes and wide open mouths in color and in line. Their faces have a nose and a mouth.",
+        "The eyes of Pip in the line art are two solid dots with no ring. Solid black pupils are allowed.",
+        "The line file shows one basket, one map, one red pan, two mats and one Pip. The counts match the color file."
+      ],
+      "goal_check": "Met: Pip the puppy sits on a green mat between Pat and Sam, his tail taps the mat and the two boys laugh.",
+      "line_check": "0 pixels that are neither 0 nor 255 in 4000 x 3000. 0.0000 percent. No gray or shading in the line art."
+    }
+  },
+  "extra": {
+    "K1": {
+      "files": [
+        "/home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "/home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png",
+        "/home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png"
+      ],
+      "rating": 6,
+      "verdict": "defect",
+      "defect_categories": [
+        "wrong-or-missing-prop"
+      ],
+      "defects": [
+        "The line file shows no nose. The text names the nose and the color file shows one nose, but the line face has only eyes, eyebrows and a mouth. The finger in the line art rests on the mouth corner, so a child sees no nose to trace."
+      ],
+      "notes": [
+        "The color file shows one nose: a soft shaded bump that the fingertip touches.",
+        "Nan matches the reference look: two buns with red ties, orange shirt with a white star, red shorts.",
+        "The line face has a mouth, so it is not a blank face."
+      ],
+      "goal_check": "The color file meets the goal: Nan touches her nose with one finger and laughs. The line file does not show the nose, so the goal fails in the line art.",
+      "line_check": "0 pixels that are neither 0 nor 255 in 4000 x 3000. No gray or shading. Solid black pupils only.",
+      "retry_hint": "line: draw one clear nose shape where the fingertip touches, under the eyes and above the mouth."
+    },
+    "K2": {
+      "files": [
+        "/home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "/home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png",
+        "/home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The color file shows one nose in profile. The line file shows one nose in the profile outline. The count matches in both files.",
+        "The line eye is a solid pupil without the color eye ring. A color and line difference that changes no character.",
+        "The line hair is one large outline with a bun circle. The shape is simple and works as a tracing line."
+      ],
+      "goal_check": "Met: the head of Nan is in profile, the nose is clear in both files, and the picture works as a tracing practice line.",
+      "line_check": "0 pixels that are neither 0 nor 255 in 1600 x 1600. No gray or shading."
+    },
+    "K3": {
+      "files": [
+        "/home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "/home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": 8.5,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "One nut in the color file and one nut in the line file. The count matches.",
+        "The nut is an acorn with a dark cap, a body and a stalk. It reads as a nut at book size.",
+        "The line face has one small nose curve, a smile and two ring eyes with two small highlight rings.",
+        "The open hand in the line art shows five fingers and a thumb. No wrong hand."
+      ],
+      "goal_check": "Met: one big brown nut in the open hand of Nan, close up, in both files. No text in either file.",
+      "line_check": "0 pixels that are neither 0 nor 255 in 4000 x 3000. No gray or shading."
+    }
+  }
+}

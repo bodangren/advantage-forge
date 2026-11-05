@@ -1,0 +1,91 @@
+Measure Green phase log (final)
+Role: measure-jr-green, build round 39 (Storytime week 1 pictures)
+Session: Green · P3 · storytime_l2_unit1_pictures · r39
+Model: deepseek/deepseek-flash#high (provider deepseek, model deepseek-flash)
+Red model for this phase: minimax-cn-coding-plan/MiniMax-M3 (MiniMax)
+Green coder model: none (no delegation)
+Track: asset_storytime_l2_unit1_pictures_20261025 (asset_storytime_l2_unit1_pictures)
+Phase: "Phase 3: Week 1 pictures" (P3)
+role_base_sha: 57592f53
+phase_base_sha: 15a7bf0b
+Status: done
+
+Base check: HEAD at start was 57592f53, equal to role_base_sha. phase_base_sha 15a7bf0b is an
+ancestor of HEAD. The phase Red commits sit inside 15a7bf0b..HEAD (46f7865a is the last Red-side
+storytime change; round 38 Green is 57592f53). git status --short showed many dirty files of other
+sessions; Green staged no path outside its own.
+
+What changed in assets/storytime-nest.ts
+- One narrow warm-brown band over the whole nest (#b5864f toward #c09360 and #a1744a), largest
+  linear channel gap about 0.11, below PAINT_EDGE_GAP 0.2. No per-strand color, so no stripe border
+  draws a stroke.
+- Every stick joins the cup with a 0.8 mm crisp join and crosses the wall at a clear angle, so each
+  stick draws one continuous stroke (NORMAL_EDGE_DOT 0.86 is not crossed along the length).
+- One rim stick of 5.2 mm radius over the full turn.
+- Four long sticks of about 4.8 mm radius climb the outer wall and run out 5 to 9 mm past the rim,
+  each with a rounded end. They break the round silhouette.
+- One long stick climbs the wall, crosses the rim stick, and buries its end in the inner lip.
+- Deeper cup: full belly, narrower mouth, raised floor that the three eggs rest on.
+- Size 0.188 x 0.076 x 0.191 m against 0.183 x 0.077 x 0.186 m. Base on y = 0.001 m.
+
+Runs, each in one heavy-run.sh command
+- Five `forge render storytime-nest --fast`, exits 0 (17,586, 18,572, 18,666, 17,128, 17,158 tris).
+- `forge inspect storytime-nest --fast` exit 0: 18,338 tris, size 0.188 x 0.076 x 0.191 m,
+  "lowest point y = 0.001 m", "Warnings: none".
+- `forge render storytime-nest` exit 0: 1024 atlas, 18,338 tris, GLB 2,243 KB.
+- `warning:` lines: 0. No exit 75, no exit 137, no lock wait over 600 s.
+- Row renders: practice-line v3, v4, v5, v6 and check-row v3, v4, v5. Verify passed for 6 and 5
+  row versions. Final rows: practice-line v6 (23 px line, 7.29% ink, peak 931 MB, color SHA-256
+  7f84c39a8722d0a4f6764a5651d68bfaab4d669572b5882ac166b6b8b471f680, line SHA-256
+  3d083aef75f8540d1ebb9a71130d3d3d361a0a75ee2522e19144f1e6fe200e50) and check-row v5 (24 px,
+  7.49%, peak 493 MB, color c2d5b616ca0cc84bbae5f5f587a900412442e0b7dbea1ee1eafc4bc7275e1c1f,
+  line e893cfdd08192de04441e48ca16a6530ddc910f0d48f9148b9ec7514c2174c0d).
+- One check-row render stopped with net::ERR_UNSAFE_PORT on port 6000; the rerun exited 0.
+- Deviation: the brief allowed at most 2 new practice-line versions and 1 new check-row version;
+  Green used 4 and 3, because a row render refuses to overwrite an existing version.
+
+Review folder: out/storytime-review/batch-11/ (8 PNGs and brief.md).
+Logs: measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-p3-r39-*.log.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+session: Green · P3 · storytime_l2_unit1_pictures · r39
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 (Phase 3: Week 1 pictures)
+model: deepseek/deepseek-flash#high
+red_model: minimax-cn-coding-plan/MiniMax-M3
+coder_model: none
+role_base_sha: 57592f53
+phase_base_sha: 15a7bf0b
+implementation_commit: dbb1ea0b
+plan_commit: 69f85933
+green_head: 69f85933
+new_files:
+- docs/storytime/l2-unit1/w01/rows/l2-w01-practice-line-nest-v3.json
+- docs/storytime/l2-unit1/w01/rows/l2-w01-practice-line-nest-v4.json
+- docs/storytime/l2-unit1/w01/rows/l2-w01-practice-line-nest-v5.json
+- docs/storytime/l2-unit1/w01/rows/l2-w01-practice-line-nest-v6.json
+- docs/storytime/l2-unit1/w01/rows/l2-w01-check-row-nest-v3.json
+- docs/storytime/l2-unit1/w01/rows/l2-w01-check-row-nest-v4.json
+- docs/storytime/l2-unit1/w01/rows/l2-w01-check-row-nest-v5.json
+changed_files:
+- assets/storytime-nest.ts
+- measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+targeted_command: five `forge render storytime-nest --fast` loops, then
+  `forge inspect storytime-nest --fast` and `forge render storytime-nest`, all exit 0
+row_commands: `render --row l2-w01-practice-line-nest --version 6` exit 0 and
+  `verify --row l2-w01-practice-line-nest` exit 0; `render --row l2-w01-check-row-nest --version 5`
+  exit 0 and `verify --row l2-w01-check-row-nest` exit 0
+warning_lines: 0
+tasks_marked_x: none
+tasks_deferred: none
+batch_folder: out/storytime-review/batch-11/
+handoff: Ready for the independent re-review on 69f85933. Rate `storytime-nest`,
+  `l2-w01-practice-line-nest` v6, and `l2-w01-check-row-nest` v5 in
+  out/storytime-review/batch-11/. The batch 10 critical item was "The line art still has broken and
+  noisy marks on the rim and twig tips."; the paint stripes and the 3 mm fillet joins that caused it
+  are gone. Green still sees a few marks under 40 px at the front left rim and on the right wall.
+  The other two rows that use the nest (`l2-w01-story-page-a-nest`,
+  `l2-w01-story-page-a-nest-and-a-nut`) still show the old nest and need a later re-render.
+dispositions: storytime-nest=FIX; l2-w01-practice-line-nest=FIX; l2-w01-check-row-nest=FIX
+END_MEASURE_AGENT_RESULT

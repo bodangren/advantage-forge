@@ -1,0 +1,21 @@
+{
+  "reviewer": "kimi-code-plan-cn/k3.1-pro#high",
+  "seen": {
+    "front": "Pip lowers his head between his front legs, keeps his paws planted, and holds his tail high.",
+    "three_quarter": "Pip points his nose down and forward, stands on four legs, and curls his tail upward.",
+    "side": "Pip lowers his nose toward the ground, keeps his rear raised, and holds his tail high.",
+    "back": "Pip dips his head between his shoulders, keeps his hind legs straight, and raises his tail.",
+    "strip": "The head bobs above the ground while the paws stay planted and the tail wags."
+  },
+  "sprout-pip-sniff": {
+    "overall": 7.2,
+    "pass": false,
+    "critical": [
+      "The cream chest reads as a floating paw in the side view."
+    ],
+    "issues": [
+      "The tongue slightly weakens the sniff read."
+    ],
+    "fix": "Join the cream chest visibly to the torso in the side view."
+  }
+}

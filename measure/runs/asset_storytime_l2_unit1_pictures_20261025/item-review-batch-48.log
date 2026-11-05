@@ -1,0 +1,17 @@
+batch-48 review log (reviewer opencode-go/mimo-v2.6-flash)
+bar: Daniel 2026-11-01 14:15 ICT
+
+[init] Provisional files written. Status inconclusive.
+[first picture] pages/l2-w04-check-row-bus-m1-color.png shows a yellow school bus with black wheels, blue windows and a black bumper on plain white. Reviewer can read images.
+[nap row] Read color, line try 4, color print, line print, plus 6 zoom crops. Read the Pam look sheet. Script check: line art has 0 pixels between 0 and 255. Script check: print edges.
+  No star in color or line. Pam plain red dress, yarn fringe, tuft, one pigtail. Nan closed eyes in both files. One blanket, one doll.
+  Prints cut the window/curtain at the left edge and the toy box at the right edge; both are background for the sentence "Nan and Pam nap." -> notes, not defects.
+  Result: clean, rating 8.
+[bus row] Read color, line, color print, line print. One bus, plain white, no text, no ground line, line reads as a bus, no gray, nothing cut. Result: clean, rating 9.
+[cat row, partial] Read color source and line source. The line art reads as a cat: pointed ears, 3 whiskers each side, curled tail, solid pupils, no gray.
+[FAILURE at image 21] Requested pages/l2-w04-check-row-cat-m1-color-print.png. The read tool returned the bus color print from the previous batch (an old picture).
+  Own pixel check of the file: meanRGB 225,207,187, 25.5 percent saturated pixels; the bus print has 19.8 percent saturated and orange 14.5 percent. The file is the cat; the tool showed the wrong picture.
+  Stopped at once under the orchestrator rule. No picture was guessed. Status: inconclusive, summary "Read tool failure after 21 images".
+  Images read with the read tool: 21 (14 review files, 7 crops).
+  Rows finished: l2-w04-story-page-nan-and-pam-nap (clean, 8), l2-w04-check-row-bus (clean, 9).
+  Rows not finished: cat (color print missing), dog, fish, hat, milk, monkey, mouse, sun, K1, K2, K3.

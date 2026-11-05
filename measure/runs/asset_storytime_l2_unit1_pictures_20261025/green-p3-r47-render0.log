@@ -1,0 +1,17 @@
+4:58:04 AM [vite] (ssr) Error when evaluating SSR module /home/daniebo/Desktop/advantage-forge/assets/storytime-school-bag.ts: box(): radius is larger than half a dimension.
+      at Module.box (/home/daniebo/Desktop/advantage-forge/src/sdf/core.ts:876:17)
+      at eval (/home/daniebo/Desktop/advantage-forge/assets/storytime-school-bag.ts:59:25)
+      at async ESModulesEvaluator.runInlinedModule (/home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/vite@8.1.4_@types+node@24.13.6_esbuild@0.28.2_tsx@4.23.13/node_modules/vite/dist/node/module-runner.js:1006:3)
+      at async SSRCompatModuleRunner.directRequest (/home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/vite@8.1.4_@types+node@24.13.6_esbuild@0.28.2_tsx@4.23.13/node_modules/vite/dist/node/module-runner.js:1259:59)
+      at async SSRCompatModuleRunner.directRequest (/home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/vite@8.1.4_@types+node@24.13.6_esbuild@0.28.2_tsx@4.23.13/node_modules/vite/dist/node/chunks/node.js:11605:20)
+      at async SSRCompatModuleRunner.cachedRequest (/home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/vite@8.1.4_@types+node@24.13.6_esbuild@0.28.2_tsx@4.23.13/node_modules/vite/dist/node/module-runner.js:1166:73)
+      at async SSRCompatModuleRunner.import (/home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/vite@8.1.4_@types+node@24.13.6_esbuild@0.28.2_tsx@4.23.13/node_modules/vite/dist/node/module-runner.js:1120:10)
+      at async instantiateModule (/home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/vite@8.1.4_@types+node@24.13.6_esbuild@0.28.2_tsx@4.23.13/node_modules/vite/dist/node/chunks/node.js:11577:10)
+      at async run (/home/daniebo/Desktop/advantage-forge/src/cli/forge.ts:250:21)
+      at async runSafely (/home/daniebo/Desktop/advantage-forge/src/cli/forge.ts:582:5)
+
+BUILD FAILED: box(): radius is larger than half a dimension.
+    at Module.box (/home/daniebo/Desktop/advantage-forge/src/sdf/core.ts:876:17)
+    at /home/daniebo/Desktop/advantage-forge/assets/storytime-school-bag.ts:50:36
+    at async run (/home/daniebo/Desktop/advantage-forge/src/cli/forge.ts:250:21)
+    at async runSafely (/home/daniebo/Desktop/advantage-forge/src/cli/forge.ts:582:5)

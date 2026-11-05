@@ -1,0 +1,69 @@
+# Jr Green round 47 — storytime-school-bag (item only)
+
+Role: measure-jr-green
+Session: Green · P3 · storytime_l2_unit1_pictures · r47
+Green model: deepseek/deepseek-flash#high (route from `ra-quota --fresh pick green --not-family minimax --not-family openai`; Daniel approved the DeepSeek route)
+Red model: minimax-cn-coding-plan/MiniMax-M3 (not the Green family)
+Coder model: none. No delegation.
+role_base_sha: f3288f8b
+phase_base_sha: 15a7bf0b
+
+Status: done
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green (round 47)
+status: done
+phase_base_sha: 15a7bf0b
+role_base_sha: f3288f8b
+final_head: cd79f899
+models: Green `deepseek/deepseek-flash#high` (route from `ra-quota --fresh pick green --not-family minimax --not-family openai`; Daniel approved the DeepSeek route); Red `minimax-cn-coding-plan/MiniMax-M3`; coder none, no delegation.
+summary: Item-only round. Green added one prop, `assets/storytime-school-bag.ts`, for the three
+  blocked week 1 rows that need Pat's school bag (pat, ben, cover-hello). No row, cast, source,
+  test, or picture-list file changed.
+  - Shape: one soft rounded main body with a domed top, one wide front pocket on +Z, two padded
+    shoulder straps on -Z, and one short top grab loop.
+  - The bump: one round bulge 0.084 m across at the upper edge, 0.05 m to +X. It rises 0.034 m above
+    the rounded top with a 0.018 m soft fillet. It changes the outline in the front view and in the
+    three-quarter view.
+  - Size: body 0.235 x 0.254 x 0.11 m. Full envelope from `out/storytime-school-bag/stats.json`:
+    0.252 x 0.291 x 0.151 m, lowest point y = 0. Pat is 0.858 m tall with a shoulder span of about
+    0.23 m, so the bag is as wide as his shoulders and covers his back from the shoulders to the
+    hips.
+  - Colors: main body red `#d9483b`, front pocket yellow `#f2c230`, straps and grab loop dark blue
+    `#2f4a7a`. Four bodies, one per color, vertex colors only (`texture: false`,
+    `paintWeight: 1`).
+  - No text, letter, number, logo, face, zipper teeth, stitches, or buckles.
+commits:
+  - a10d0193 feat(storytime): add Pat's school bag prop for the week 1 pages (`assets/storytime-school-bag.ts`)
+  - cd79f899 docs(measure): record storytime green round 47 school bag (plan evidence for a10d0193)
+render_exits:
+  - `./forge render storytime-school-bag --fast` call 1: exit 1, "box(): radius is larger than half a dimension" on the front pocket. Fixed: pocket corner radius 0.015 m.
+  - `--fast` calls 2, 3, 4: exit 0 (11,104 then 11,352 then 11,404 triangles).
+  - `./forge render storytime-school-bag` full: exit 0, 11,404 triangles, 0.252 x 0.291 x 0.151 m.
+  - `./forge inspect storytime-school-bag --fast`: exit 0, "Warnings: none".
+warning_lines: none. No `warning:` line appeared in any render or inspect log.
+peak_memory: the heavy runner reported no peak memory line for these forge commands.
+heavy_runner: every forge command ran inside `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'`. No exit 75, no exit 137, no lock wait over 600 s.
+logs: measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-p3-r47-render0.log,
+  green-p3-r47-render1.log, green-p3-r47-render2.log, green-p3-r47-render3.log,
+  green-p3-r47-render-full.log, green-p3-r47-inspect.log.
+batch18_result: two independent reviews. `openai/gpt-6-luna` failed
+  `l2-w01-story-page-a-nest-and-a-nut` v13 at 6.5 and `l2-w01-story-page-a-nut` v5 at 6.0, with
+  factual errors about Pip. `kimi-code-plan-cn/kimi-for-coding` passed both rows at 7.0. The
+  orchestrator holds both rows as not clean until the PM or Daniel decides.
+week1_count: "22 of 30 rendered, 16 with no open defect".
+tasks_flipped_x: none. The task is not complete until the independent item review passes.
+tasks_flipped_b: none.
+new_files:
+  - assets/storytime-school-bag.ts (committed in a10d0193)
+  - out/storytime-school-bag/ (glb, stats.json, render.png, views) — not committed
+  - out/storytime-review/batch-19/ (storytime-school-bag.png, sprout-pat-render.png,
+    look-reference-nan-and-pip.png, brief.md) — PNGs not committed
+batch19_path: out/storytime-review/batch-19/
+handoff: Batch 19 holds the brief for one item, `storytime-school-bag`, bar 7.0. Route it to two
+  independent item reviews. The critical defects are any text or face, a bump that reads as a face
+  or as a second pocket, a bump that does not change the outline, a bag that reads as an
+  adventurer's pack, a floating or buried part, and black specks. The three rows pat, ben, and
+  cover-hello stay blocked until this item passes. The closeout gate `./measure/doctor.sh` runs at
+  Phase 5; it did not run in this round.
+END_MEASURE_AGENT_RESULT

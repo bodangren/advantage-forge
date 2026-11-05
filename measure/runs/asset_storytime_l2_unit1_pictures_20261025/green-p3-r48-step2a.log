@@ -1,0 +1,8 @@
+storytime-wall-hook: 3,582 triangles, 0.6 x 0.08 x 0.073 m, built in 2543 ms
+  board                      944 tris  (512 ms)
+  peg-blue                   870 tris  (117 ms)
+  peg-yellow                 878 tris  (125 ms)
+  peg-green                  890 tris  (73 ms)
+texture  none (vertex colors)
+glb      out/storytime-wall-hook/storytime-wall-hook.glb  (88 KB)
+render   out/storytime-wall-hook/render.png  (887 ms)

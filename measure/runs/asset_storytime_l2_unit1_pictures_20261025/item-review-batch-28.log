@@ -1,0 +1,28 @@
+# Batch 28 item review log (Storytime L2 Unit 1 pictures, Muse production round 1)
+
+Reviewer: kimi-code-plan-cn/kimi-for-coding. Role: independent report-only item review.
+Audited HEAD: a4308df1. Date: 2026-11-01.
+
+## What was reviewed
+
+- 2 cast sheets (nurse, teacher-kim), 1 print test, 9 pages (color + 1-bit line each).
+- All 9 line files verified pure 1-bit (pixel values 0 and 255 only) with PIL histograms.
+- Print test line file verified 4000 x 3000, values 0 and 255 only, 6.43 percent black.
+- Cast prompts in docs/storytime/l2-unit1/w01/muse/ read in full; neither describes skin color, ethnicity, or race.
+- Face and hand crops made under /tmp/opencode/review-b28/ only.
+
+## Result
+
+- 12 keys, 12 pass, 10 clean.
+- Not clean: cast-sheet-teacher-kim (front-view fingers merge mitten-like), l2-w01-story-page-a-net (net mesh as thin slivers in line art).
+- No critical defects found. No text, letters, numbers, or logos on any page or cast sheet.
+
+BEGIN_MEASURE_AGENT_RESULT
+role: item-review
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures
+audited_head: a4308df1
+status: complete
+result_json: measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-28.json
+summary: pages=12 pass=12 clean=10 not_clean=2 (cast-sheet-teacher-kim, l2-w01-story-page-a-net); no critical defects
+END_MEASURE_AGENT_RESULT

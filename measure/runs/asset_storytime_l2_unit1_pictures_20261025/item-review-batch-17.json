@@ -1,0 +1,35 @@
+{
+  "reviewer": "openai/gpt-6-luna#high",
+  "seen": {
+    "brief.md": "The brief sets a 7.0 bar, exact page goals, and three known open defects.",
+    "look-reference-nan-and-pip.png": "Nan and Pip have the approved rounded chibi style.",
+    "l2-w01-story-page-a-nest-v9.png": "The old Nan page frames the nest and Nan at medium scale.",
+    "l2-w01-story-page-a-nest-line-v9.png": "The old line art shows crowded nest strokes and a fist-like pointing hand.",
+    "l2-w01-story-page-a-nest-and-a-nut-v10.png": "The old Pip page shows the puppy and nut near the lower edge.",
+    "l2-w01-story-page-a-nest-and-a-nut-line-v10.png": "The old line art has heavily merged nest strokes.",
+    "l2-w01-story-page-a-nest-v10.png": "The new Nan page has a large nest, three light-blue eggs, and a fist-like pointing hand.",
+    "l2-w01-story-page-a-nest-line-v10.png": "The new nest line art shows three eggs and separate nest strands with no dense merged blob.",
+    "l2-w01-story-page-a-nest-and-a-nut-v12.png": "The new Pip page shows a large nut and nest, but Pip's feet are cut by the lower frame edge.",
+    "l2-w01-story-page-a-nest-and-a-nut-line-v12.png": "The new nest and nut line art is distinct, and Pip's feet meet the lower frame edge."
+  },
+  "l2-w01-story-page-a-nest": {
+    "overall": 7.0,
+    "pass": true,
+    "critical": [],
+    "issues": ["Nan's known eye-corner skin flaps remain visible.", "Nan's known pointing hand reads as a fist.", "Nan's shoes touch or clip the lower frame edge."],
+    "fix": "Move Nan up in the frame and open her pointing hand.",
+    "goals": {
+      "A small bird's nest with three light blue eggs on a low tree branch in a garden. Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, points at it. One clear picture, the main thing large in the middle, a simple garden background with soft colors.": "partial"
+    }
+  },
+  "l2-w01-story-page-a-nest-and-a-nut": {
+    "overall": 6.0,
+    "pass": false,
+    "critical": [],
+    "issues": ["Pip's lower feet are clipped by the frame edge.", "The tree canopy is cropped by the top edge."],
+    "fix": "Reframe the page to show Pip's full body.",
+    "goals": {
+      "Pip the puppy sniffs a big brown nut in the grass under a low tree. Above him, the bird's nest with three light blue eggs sits on a low branch. The nest and the nut are both large and clear. A simple garden with soft colors. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag.": "partial"
+    }
+  }
+}

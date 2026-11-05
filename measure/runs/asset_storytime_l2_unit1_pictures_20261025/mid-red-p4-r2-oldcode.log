@@ -1,0 +1,227 @@
+
+ RUN  v4.1.10 /tmp/opencode/red-r2-check
+
+ ❯ tests/storytime-book-pictures.test.ts (141 tests | 2 failed) 243958ms
+     × T173: the pipeline pins picture list version 4 and refuses the version 3 bytes 53ms
+     × T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows 64ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T173: the pipeline pins picture list version 4 and refuses the version 3 bytes
+AssertionError: expected { PICTURE_LIST_SHA256: undefined } to deeply equal { Object (PICTURE_LIST_SHA256) }
+
+- Expected
++ Received
+
+  {
+-   "PICTURE_LIST_SHA256": "6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58",
++   "PICTURE_LIST_SHA256": undefined,
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4587:8
+    4585|     const exported = pictureSeams as unknown as Record<string, unknown…
+    4586|     expect.soft({ 'PICTURE_LIST_SHA256': exported.PICTURE_LIST_SHA256 …
+    4587|       .toEqual({ 'PICTURE_LIST_SHA256': V4_SHA256 });
+       |        ^
+    4588|     expect.soft({ 'PICTURE_LIST_V3_SHA256 exported': 'PICTURE_LIST_V3_…
+    4589|       .toEqual({ 'PICTURE_LIST_V3_SHA256 exported': false });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/11]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T173: the pipeline pins picture list version 4 and refuses the version 3 bytes
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "PICTURE_LIST_V3_SHA256 exported": false,
++   "PICTURE_LIST_V3_SHA256 exported": true,
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4589:8
+    4587|       .toEqual({ 'PICTURE_LIST_SHA256': V4_SHA256 });
+    4588|     expect.soft({ 'PICTURE_LIST_V3_SHA256 exported': 'PICTURE_LIST_V3_…
+    4589|       .toEqual({ 'PICTURE_LIST_V3_SHA256 exported': false });
+       |        ^
+    4590|     expect.soft({ 'Version 3 shadow SHA-256': digest(readFileSync(LIST…
+    4591|       .toEqual({ 'Version 3 shadow SHA-256': LIST_V3_SHA256 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/11]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T173: the pipeline pins picture list version 4 and refuses the version 3 bytes
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The render row command accepts the live list": "accepted",
++   "The render row command accepts the live list": "The picture list changed: expected SHA-256 c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b, measured 6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58.",
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4608:10
+    4606|       );
+    4607|       expect.soft({ 'The render row command accepts the live list': li…
+    4608|         .toEqual({ 'The render row command accepts the live list': 'ac…
+       |          ^
+    4609|       const liveVerify = await rowCommandError(
+    4610|         ['verify', '--row', rowId, '--workbooks', WORKBOOKS, '--out', …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/11]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T173: the pipeline pins picture list version 4 and refuses the version 3 bytes
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The verify row command reads the live list": true,
++   "The verify row command reads the live list": false,
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4616:10
+    4614|       // that the list check passed: the version 3 pin would stop the …
+    4615|       expect.soft({ 'The verify row command reads the live list': /Row…
+    4616|         .toEqual({ 'The verify row command reads the live list': true …
+       |          ^
+    4617|
+    4618|       for (const command of ['render', 'verify'] as const) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/11]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T173: the pipeline pins picture list version 4 and refuses the version 3 bytes
+AssertionError: The render row command refuses the version 3 bytes: expected 'accepted' to match /The picture list changed: expected SH…/
+
+- Expected:
+/The picture list changed: expected SHA-256 6d05dfc5/
+
++ Received:
+"accepted"
+
+ ❯ tests/storytime-book-pictures.test.ts:4623:12
+    4621|         const error = await rowCommandError(args, { repoRoot: director…
+    4622|         expect.soft(error ?? 'accepted', `The ${command} row command r…
+    4623|           .toMatch(/The picture list changed: expected SHA-256 6d05dfc…
+       |            ^
+    4624|       }
+    4625|     } finally {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/11]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T173: the pipeline pins picture list version 4 and refuses the version 3 bytes
+AssertionError: The verify row command refuses the version 3 bytes: expected 'Row verification failed for 1 row ver…' to match /The picture list changed: expected SH…/
+
+- Expected:
+/The picture list changed: expected SHA-256 6d05dfc5/
+
++ Received:
+"Row verification failed for 1 row versions."
+
+ ❯ tests/storytime-book-pictures.test.ts:4623:12
+    4621|         const error = await rowCommandError(args, { repoRoot: director…
+    4622|         expect.soft(error ?? 'accepted', `The ${command} row command r…
+    4623|           .toMatch(/The picture list changed: expected SHA-256 6d05dfc…
+       |            ^
+    4624|       }
+    4625|     } finally {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/11]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: The week parser accepts week 8.: expected 'Invalid week: 8' to deeply equal 'accepted'
+
+Expected: "accepted"
+Received: "Invalid week: 8"
+
+ ❯ tests/storytime-book-pictures.test.ts:4693:81
+    4691|
+    4692|       const week8 = await dryRun('8');
+    4693|       expect.soft(week8.error ?? 'accepted', 'The week parser accepts …
+       |                                                                                 ^
+    4694|       expect.soft({ 'Week 8 rows rendered in a dry run': week8.count })
+    4695|         .toEqual({ 'Week 8 rows rendered in a dry run': 4 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/11]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "Week 8 rows rendered in a dry run": 4,
++   "Week 8 rows rendered in a dry run": -1,
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4695:10
+    4693|       expect.soft(week8.error ?? 'accepted', 'The week parser accepts …
+    4694|       expect.soft({ 'Week 8 rows rendered in a dry run': week8.count })
+    4695|         .toEqual({ 'Week 8 rows rendered in a dry run': 4 });
+       |          ^
+    4696|       const allWeeks = await dryRun();
+    4697|       expect.soft(allWeeks.error ?? 'accepted', 'A run with no --week …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/11]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: A run with no --week reads the live list.: expected 'The picture list changed: expected SH…' to deeply equal 'accepted'
+
+Expected: "accepted"
+Received: "The picture list changed: expected SHA-256 c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b, measured 6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58."
+
+ ❯ tests/storytime-book-pictures.test.ts:4697:94
+    4695|         .toEqual({ 'Week 8 rows rendered in a dry run': 4 });
+    4696|       const allWeeks = await dryRun();
+    4697|       expect.soft(allWeeks.error ?? 'accepted', 'A run with no --week …
+       |                                                                                              ^
+    4698|       expect.soft({ 'Rows rendered in a dry run with no --week': allWe…
+    4699|         .toEqual({ 'Rows rendered in a dry run with no --week': 196 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/11]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "Rows rendered in a dry run with no --week": 196,
++   "Rows rendered in a dry run with no --week": -1,
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4699:10
+    4697|       expect.soft(allWeeks.error ?? 'accepted', 'A run with no --week …
+    4698|       expect.soft({ 'Rows rendered in a dry run with no --week': allWe…
+    4699|         .toEqual({ 'Rows rendered in a dry run with no --week': 196 });
+       |          ^
+    4700|
+    4701|       for (const value of ['0', '9']) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/11]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: The pipeline exposes the weeks 2 to 7 selection helper.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ tests/storytime-book-pictures.test.ts:4710:84
+    4708|
+    4709|       const seam = (pictureSeams as unknown as Record<string, unknown>…
+    4710|       expect.soft(seam, 'The pipeline exposes the weeks 2 to 7 selecti…
+       |                                                                                    ^
+    4711|       if (typeof seam === 'function') {
+    4712|         const middle = (seam as (list: PictureListRow[]) => PictureLis…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/11]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 139 passed (141)
+   Start at  01:49:25
+   Duration  246.66s (transform 999ms, setup 0ms, import 2.23s, tests 243.96s, environment 0ms)
+

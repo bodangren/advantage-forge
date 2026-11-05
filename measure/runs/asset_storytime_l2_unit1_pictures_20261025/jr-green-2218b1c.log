@@ -1,0 +1,34 @@
+MEASURE_AGENT_RESULT
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 (Phase 3: Week 1 pictures)
+role: jr-green (build plan batch 1)
+status: blocked
+block_reason: the Green session is a subagent, and the subagent depth limit (1) stops it from spawning the batch 1 reviewer (MiniMax-M3.1-Flash) and the builder (claude-sonnet-5-5). Green does not rate its own items.
+phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+role_base_sha: 5e8582e0
+final_green_head: 2218b1c1
+green_model: claude-code/claude-opus-5-5[1m]#high
+commits:
+- cc9c8704 feat(storytime): stage the nose and hat row corrections v2 (3 stage files)
+- 2218b1c1 docs(measure): record the nose and hat v2 evidence and the batch 1 review block (plan.md)
+batch_1_items (none rated):
+- storytime-nest, storytime-nut, storytime-butterfly-net, storytime-first-aid-box, storytime-nurse-cap: review cards ready (out/<name>/render.png copied)
+- gesture-touch-nose, gesture-touch-neck: fresh strips from ./forge animate sprout-nan (textured, no warning lines; GLB bytes unchanged)
+- cards: bench/sonnet/storytime/b1/ (7 cards + look-reference-nan-and-pip.png)
+- first-aid no-symbol version: not built (needs the builder)
+- GESTURES mapping: not done (needs a pass first)
+renders (verify --row exit 0 on each; SHA-256 in plan.md):
+- check-row-nose v2 (az 90), practice-line-nose v2 (az -90): content fail. The side view shows the ear; the cheek hides the nose; no nose line. v1 front views stay better.
+- check-row-hat v2 (el 40): content fail. It still reads as a dome; the explorer-hat shape causes it.
+rows_done_no_open_defect: 6 of 30 (story-page-hello-i-am-nan v1, story-page-nan-can-nod v2, cover-nan-can-nod v2, check-row-cat v1, check-row-fish v1, check-row-dog v1)
+rows_with_open_defect: check-row-nose, practice-line-nose, check-row-hat
+rows_blocked: 21
+handoff_for_orchestrator:
+- Dispatch the batch 1 reviewer as its own session (model minimax-cn-coding-plan/MiniMax-M3.1-Flash). Brief: rate the 7 cards in bench/sonnet/storytime/b1/ against their row uses, bar 7.0, critical defects (wrong object or count, a symbol on the first-aid bag, a finger through the head, not rated G); write bench/sonnet/storytime/b1/review.json, keyed by item.
+- Then dispatch the builder (claude-code/claude-sonnet-5-5#high) for each failed item and for the first-aid bag with no symbol, one at a time.
+- Or allow Green to build directly with the forge-assets skill. Default: Green does not build or rate until one of the two is decided.
+questions_with_defaults:
+- Nose rows: add a painted nose line to the Sprouts face (an approved-cast change), in batch 3 with its review. Default: yes, Storytime only.
+- Hat row: build a child's sun hat in batch 4 instead of explorer-hat. Default: yes (adds one missing item).
+next_batch: batch 1 review and fixes (after a reviewer and builder session exist), then batch 2 (green door, wall animal pictures, low tables, wall hook, bag with a bump, open bag)
+END_MEASURE_AGENT_RESULT

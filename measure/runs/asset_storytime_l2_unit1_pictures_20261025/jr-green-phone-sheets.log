@@ -1,0 +1,28 @@
+Phone contact sheets for the week 1 pictures, built on 2026-11-01.
+Files (out/storytime-review/w01-contact/):
+- w01-sheet-1-of-3.jpg: 2000 x 8540 px, 2.15 MB, rows 1 to 10 (Pat ... l2-w01-cover-hello).
+- w01-sheet-2-of-3.jpg: 2000 x 8540 px, 1.33 MB, rows 11 to 20.
+- w01-sheet-3-of-3.jpg: 2000 x 8540 px, 0.81 MB, rows 21 to 30 (fish ... nut).
+Layout: JPEG quality 85, each preview 950 x 712 px (4:3, aspect kept), light gray band between rows.
+Text: row id 30 px, page sentence 44 px bold, header 44 px with "sheet n of 3" and manifest 00ea0c5b.
+Order and sentences: first 30 rows of Workbooks pictures.json (read only).
+Checks: width 2000 px on all 3 sheets; each file under 3 MB; 10 rows on each sheet; sheets 1 and 3 viewed with the read tool.
+Script: /tmp/opencode/w01-sheets.cjs. Delivered files, plan.md, and approved.json not changed. No commit. No Muse call.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 (Phase 3: Week 1 pictures)
+task: Make 3 phone contact sheets for the person review (no task flip; no plan edit)
+commits: none
+models: green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+sheets: out/storytime-review/w01-contact/w01-sheet-1-of-3.jpg; w01-sheet-2-of-3.jpg; w01-sheet-3-of-3.jpg
+manifest_sha256: 00ea0c5b06d18e3f54cbceed9caa943100c0711bb515c44561eb46b7e03ed369
+muse_calls: 0
+open_items: Daniel's person review is open.
+handoff: Send the 3 sheet paths to the PM for Daniel.
+dispositions: none
+END_MEASURE_AGENT_RESULT

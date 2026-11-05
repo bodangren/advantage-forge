@@ -1,0 +1,268 @@
+heavy-run: lock wait over 600 s — holder PID 1485265: flock -w 600 -E 201 /home/daniebo/Desktop/primary-parity-progress/heavy.lock /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh --locked -c '/home/daniebo/.local/share/storytime-word-audio-venv/bin/python' '/home/daniebo/Desktop/asset-requests/2026-10-27/storytime-word-audio/tools/recognize.py' < '/home/daniebo/Desktop/asset-requests/2026-10-27/storytime-word-audio/round-clips.json' > '/home/daniebo/Desktop/asset-requests/2026-10-27/storytime-word-audio/round-recognized.json.tmp' 
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T111: the seam scans a 65,536-byte answer at depth 400 within 2000 ms
+decoded scan ms: 15984
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T115: the seam scans a wide answer with 1200 injected secrets within 2000 ms
+rule scan ms: 8083
+
+ ❯ tests/storytime-book-pictures.test.ts (98 tests | 4 failed | 94 skipped) 46692ms
+       × T109: both providers refuse an escaped credential at object depth 4000 without a RangeError 12057ms
+       × T110: a safe object at depth 4000 keeps the parser result and the raw bytes 9739ms
+       × T111: the seam scans a 65,536-byte answer at depth 400 within 2000 ms 16147ms
+       × T115: the seam scans a wide answer with 1200 injected secrets within 2000 ms 8262ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/minimax: the error names only the pattern.: expected 'Maximum call stack size exceeded' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"Maximum call stack size exceeded"
+
+ ❯ tests/storytime-book-pictures.test.ts:2372:79
+    2370|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2371|           .not.toBe('RangeError');
+    2372|         expect.soft(message, `${context}: the error names only the pat…
+       |                                                                               ^
+    2373|         expect.soft(message.endsWith(suffix), `${context}: the message…
+    2374|         expect.soft(message, `${context}: the message names no stack o…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/minimax: the message has the task 9 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2373:97
+    2371|           .not.toBe('RangeError');
+    2372|         expect.soft(message, `${context}: the error names only the pat…
+    2373|         expect.soft(message.endsWith(suffix), `${context}: the message…
+       |                                                                                                 ^
+    2374|         expect.soft(message, `${context}: the message names no stack o…
+    2375|           .not.toMatch(/Maximum call stack size exceeded/);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/minimax: the message names no stack overflow.: expected 'Maximum call stack size exceeded' not to match /Maximum call stack size exceeded/
+
+- Expected:
+/Maximum call stack size exceeded/
+
++ Received:
+"Maximum call stack size exceeded"
+
+ ❯ tests/storytime-book-pictures.test.ts:2375:16
+    2373|         expect.soft(message.endsWith(suffix), `${context}: the message…
+    2374|         expect.soft(message, `${context}: the message names no stack o…
+    2375|           .not.toMatch(/Maximum call stack size exceeded/);
+       |                ^
+    2376|         const entries = await securityLedger(space.space.outputRoot);
+    2377|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/kimi: the refusal is not a RangeError.: expected 'RangeError' not to be 'RangeError' // Object.is equality
+ ❯ tests/storytime-book-pictures.test.ts:2371:16
+    2369|           .toBe(false);
+    2370|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2371|           .not.toBe('RangeError');
+       |                ^
+    2372|         expect.soft(message, `${context}: the error names only the pat…
+    2373|         expect.soft(message.endsWith(suffix), `${context}: the message…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/kimi: the error names only the pattern.: expected 'Maximum call stack size exceeded' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"Maximum call stack size exceeded"
+
+ ❯ tests/storytime-book-pictures.test.ts:2372:79
+    2370|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2371|           .not.toBe('RangeError');
+    2372|         expect.soft(message, `${context}: the error names only the pat…
+       |                                                                               ^
+    2373|         expect.soft(message.endsWith(suffix), `${context}: the message…
+    2374|         expect.soft(message, `${context}: the message names no stack o…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/kimi: the message has the task 9 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2373:97
+    2371|           .not.toBe('RangeError');
+    2372|         expect.soft(message, `${context}: the error names only the pat…
+    2373|         expect.soft(message.endsWith(suffix), `${context}: the message…
+       |                                                                                                 ^
+    2374|         expect.soft(message, `${context}: the message names no stack o…
+    2375|           .not.toMatch(/Maximum call stack size exceeded/);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+AssertionError: deep credential/kimi: the message names no stack overflow.: expected 'Maximum call stack size exceeded' not to match /Maximum call stack size exceeded/
+
+- Expected:
+/Maximum call stack size exceeded/
+
++ Received:
+"Maximum call stack size exceeded"
+
+ ❯ tests/storytime-book-pictures.test.ts:2375:16
+    2373|         expect.soft(message.endsWith(suffix), `${context}: the message…
+    2374|         expect.soft(message, `${context}: the message names no stack o…
+    2375|           .not.toMatch(/Maximum call stack size exceeded/);
+       |                ^
+    2376|         const entries = await securityLedger(space.space.outputRoot);
+    2377|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T110: a safe object at depth 4000 keeps the parser result and the raw bytes
+AssertionError: safe deep answer/minimax: the safe deep answer is accepted.: expected { name: 'Error', …(1) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "message": "Maximum call stack size exceeded",
+  "name": "Error",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:2405:97
+    2403|         expect.soft(run.timedOut, `${context}: the call must finish wi…
+    2404|           .toBe(false);
+    2405|         expect.soft(run.report?.error ?? null, `${context}: the safe d…
+       |                                                                                                 ^
+    2406|         expect.soft(run.report?.error?.name ?? '', `${context}: the ca…
+    2407|           .not.toBe('RangeError');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T110: a safe object at depth 4000 keeps the parser result and the raw bytes
+AssertionError: safe deep answer/minimax: the review file exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2409:84
+    2407|           .not.toBe('RangeError');
+    2408|         const reviewFile = path.join(space.space.outputRoot, `reviews/…
+    2409|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+       |                                                                                    ^
+    2410|         if (!existsSync(reviewFile)) continue;
+    2411|         const review = JSON.parse(await readFile(reviewFile, 'utf8'));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T110: a safe object at depth 4000 keeps the parser result and the raw bytes
+AssertionError: safe deep answer/kimi: the safe deep answer is accepted.: expected { name: 'RangeError', …(1) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "message": "Maximum call stack size exceeded",
+  "name": "RangeError",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:2405:97
+    2403|         expect.soft(run.timedOut, `${context}: the call must finish wi…
+    2404|           .toBe(false);
+    2405|         expect.soft(run.report?.error ?? null, `${context}: the safe d…
+       |                                                                                                 ^
+    2406|         expect.soft(run.report?.error?.name ?? '', `${context}: the ca…
+    2407|           .not.toBe('RangeError');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T110: a safe object at depth 4000 keeps the parser result and the raw bytes
+AssertionError: safe deep answer/kimi: the call raises no RangeError.: expected 'RangeError' not to be 'RangeError' // Object.is equality
+ ❯ tests/storytime-book-pictures.test.ts:2407:16
+    2405|         expect.soft(run.report?.error ?? null, `${context}: the safe d…
+    2406|         expect.soft(run.report?.error?.name ?? '', `${context}: the ca…
+    2407|           .not.toBe('RangeError');
+       |                ^
+    2408|         const reviewFile = path.join(space.space.outputRoot, `reviews/…
+    2409|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T110: a safe object at depth 4000 keeps the parser result and the raw bytes
+AssertionError: safe deep answer/kimi: the review file exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2409:84
+    2407|           .not.toBe('RangeError');
+    2408|         const reviewFile = path.join(space.space.outputRoot, `reviews/…
+    2409|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+       |                                                                                    ^
+    2410|         if (!existsSync(reviewFile)) continue;
+    2411|         const review = JSON.parse(await readFile(reviewFile, 'utf8'));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T111: the seam scans a 65,536-byte answer at depth 400 within 2000 ms
+AssertionError: decoded scan ms: 15984: expected 15984 to be less than or equal to 2000
+ ❯ tests/storytime-book-pictures.test.ts:2437:61
+    2435|         .toBe(false);
+    2436|       expect.soft(run.report?.findings ?? [], 'A safe deep answer hold…
+    2437|       expect.soft(measured, `decoded scan ms: ${measured}`).toBeLessTh…
+       |                                                             ^
+    2438|     }, 120000);
+    2439|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T115: the seam scans a wide answer with 1200 injected secrets within 2000 ms
+AssertionError: rule scan ms: 8083: expected 8083 to be less than or equal to 2000
+ ❯ tests/storytime-book-pictures.test.ts:2538:60
+    2536|         expect.soft(new Set(run.report?.findings ?? []).size, 'Every i…
+    2537|           .toBe(1200);
+    2538|         expect.soft(measured, `rule scan ms: ${measured}`).toBeLessTha…
+       |                                                            ^
+    2539|       } finally {
+    2540|         for (const name of names) delete process.env[name];
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/14]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 94 skipped (98)
+   Start at  09:58:48
+   Duration  50.69s (transform 1.04s, setup 0ms, import 3.71s, tests 46.69s, environment 0ms)
+

@@ -1,0 +1,26 @@
+Batch 57r2 item review. Reviewer: claude-code/claude-opus-5-5[1m]#high.
+Bar: Daniel 2026-11-01 14:15 ICT. Builder: claude-code/claude-sonnet-5-5#high.
+Status: pass.
+
+Order: K1, K2, K3 first (once each), then the row.
+
+K1 "A nose." rating 4.0, defect, broken-face.
+  The text names the nose. The color file shows the nose. The line file has no nose.
+  Retry hint: draw the small round nose above the finger tip in a new line try.
+K2 "nose" practice line: rating 8.0, clean.
+  The profile nose shows in color and line. The goal says "the other way" with no reference, so the direction is not checked.
+K3 "A nut.": rating 8.0, clean.
+  One big brown nut is on the open palm. The hand has five digits in color and line.
+
+Row l2-w07-check-row-octopus: rating 8.0, clean.
+  Arm count, color print: left 3, center 1, right 4, total 8.
+  Arm count, line print: left 3, center 1, right 4, total 8.
+  One head, two eyes (line: ring with a solid pupil), a smile. No thick black band. Nothing cut at an edge.
+  Builder notes are correct: a stalk on the upper left arm, close right curls with their own closed outlines,
+  open line ends inside the body. The outer outline is closed. These are notes.
+
+Line check (/tmp/opencode/b57r2/gray-count.cjs, pixels not 0 or 255):
+  row  1500x1500: 0 (ink 7.23 percent)
+  K1   4000x3000: 0 (ink 3.85 percent)
+  K2   1600x1600: 0 (ink 6.53 percent)
+  K3   4000x3000: 0 (ink 5.96 percent)

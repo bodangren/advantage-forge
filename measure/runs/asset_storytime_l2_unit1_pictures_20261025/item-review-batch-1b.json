@@ -1,0 +1,26 @@
+{
+  "reviewer": "openai/gpt-6-luna#high",
+  "storytime-nest": {
+    "overall": 8.2,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "Earlier pointed tips: fixed; all eggs now have rounded oval tops.",
+      "Earlier basket-like rim: fixed; the rim now shows crossed, irregular twigs.",
+      "Earlier hidden side eggs: fixed; three eggs are separately visible in all four views."
+    ],
+    "fix": ""
+  },
+  "storytime-butterfly-net": {
+    "overall": 7.8,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "Earlier thin mesh and visible background: fixed; the bag now has a filled surface with a visible diamond weave.",
+      "Earlier pointed racket shape: fixed; the bag hangs deep from the hoop and has a rounded bottom.",
+      "Earlier handle seam and missing grip: fixed; the shaft has a distinct wrapped grip and hoop collar.",
+      "The back view reads as a closed rounded bag, but the front view clearly shows the hoop opening and net weave."
+    ],
+    "fix": ""
+  }
+}

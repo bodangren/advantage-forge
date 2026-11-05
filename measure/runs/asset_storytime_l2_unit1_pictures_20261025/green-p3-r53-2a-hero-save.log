@@ -1,0 +1,11 @@
+Some extensions were not registered for I/O, and will not be written.
+avatar-base: 23,352 triangles, 0.5 x 0.904 x 0.43 m, built in 43857 ms
+  skin                      9032 tris  (2135 ms)
+  hair                      7348 tris  (1733 ms)
+  undershirt                3026 tris  (562 ms)
+  pants                     1880 tris  (221 ms)
+  shoes                     2066 tris  (240 ms)
+texture  1024x1024 atlas: base color, normal, occlusion/roughness/metal (37611 ms)
+glb      out/avatar-base/avatar-base.glb  (2913 KB)
+render   out/avatar-base/render.png  (1530 ms)
+saved 6 files to out/_part-baseline/avatar-base

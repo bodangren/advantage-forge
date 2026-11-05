@@ -1,0 +1,115 @@
+# Jr Green round 38 — storytime nest line-art rework
+
+Role: measure-jr-green
+Model: deepseek/deepseek-flash#high (DeepSeek). Red model for Phase 3:
+minimax-cn-coding-plan/MiniMax-M3. Coder model: none, so no delegation.
+Session name: Green · P3 · storytime_l2_unit1_pictures · r38
+Track: asset_storytime_l2_unit1_pictures_20261025, phase "Phase 3: Week 1 pictures"
+role_base_sha: 43d59360
+phase_base_sha: 15a7bf0b
+Red commit inside `phase_base_sha..HEAD`: checked. The range holds the nut rounds 34 to 37 only.
+The Red change for this round is the batch 7 review finding, not a test file. No committed Red test
+changed.
+
+## Task
+
+Make the `storytime-nest` 1-bit line art clean, then render the two nest-alone rows again.
+
+## What changed
+
+`assets/storytime-nest.ts`:
+
+- Removed the 24 thin woven strands and the 34 short crossing rim twigs.
+- Added four coils, each one unbroken loop of 4.6 mm radius around the rim.
+- Added six long twigs that climb the outer wall over wide arcs at gentle angles.
+- Added two twigs that drape over the rim into the bowl.
+- Added two thick rounded twig ends that lean out of the rim.
+- Joined all strands with `smoothUnion` 0.0028 m, then into the bowl with 0.0030 m.
+- Moved the woven look to the paint: light, mid, and dark brown per strand plus a noise grain.
+- Narrowed the base of the bowl profile so it reads as a nest and not as a turned plate.
+
+Kept: the asset name, the shallow bowl, the three large light-blue eggs and their places, the warm
+brown colors, the texture size 1024, the ground contact on y = 0, and the +Z facing. Footprint
+0.183 m by 0.186 m against the earlier 0.189 m by 0.183 m.
+
+## Shape loop (four `render --fast` runs)
+
+| Run | Triangles | Fix |
+| --- | --- | --- |
+| 1 | 12,497 | first build; the bowl read as a shallow plate |
+| 2 | 12,665 | deeper bowl, stronger twig stripes, darker inside |
+| 3 | 13,306 | draped twigs added; the rim read as woven |
+| 4 | 12,958 | upright tips replaced by two rounded ends that lean out |
+
+Each run exited `0`. No `warning:` line.
+
+## Gates
+
+- Textured `render` exit `0`: 1024 atlas, 12,368 triangles, GLB 1,571 KB, size 0.183 x 0.077 x
+  0.186 m. `warning:` lines: 0.
+- `inspect --fast` exit `0`: "lowest point y = 0 m", "Warnings: none".
+- Row `l2-w01-practice-line-nest` v2: render exit `0`, verify exit `0`, line width 24 px, ink
+  9.48%, peak rss 949 MB.
+- Row `l2-w01-check-row-nest` v2: render exit `0`, verify exit `0`, line width 26 px, ink 9.69%,
+  peak rss 487 MB.
+- Verify passed for 2 row versions on each row. The white edge check passed.
+- No exit 75, no exit 137, no lock wait over 600 s. Each forge command ran in one
+  `heavy-run.sh` call. I never nested flock.
+
+## Row file SHAs
+
+| Row | Version | Color SHA-256 | Line-art SHA-256 |
+| --- | --- | --- | --- |
+| `l2-w01-practice-line-nest` | v2 | `57203811d439602802ea8dffe37afdf96c85ae97542d2895b99fe0cd6d0c22f9` | `ff4e87f784c66a3d2df53025267b3a8d5434886cb0b2c4bbc8c7fd62a30372d8` |
+| `l2-w01-check-row-nest` | v2 | `7d9ee77032f5fc3ad2d8d61ef14cd9c038c7f49a662a9cc9a1024572f3e04af4` | `c2cd81cb9cbc388b9d0a2c404d4fffde450a3d78c1b8c0381074201db98b4e26` |
+
+## Commits
+
+- `46f7865a`: `assets/storytime-nest.ts`, plus the two v2 stage files
+  `docs/storytime/l2-unit1/w01/rows/l2-w01-practice-line-nest-v2.json` and
+  `docs/storytime/l2-unit1/w01/rows/l2-w01-check-row-nest-v2.json`.
+- `57592f53`: this Phase 3 evidence block in `plan.md`.
+
+## Review folder
+
+`out/storytime-review/batch-10/`: `storytime-nest.png`, the two new color PNGs, the two new
+line-art PNGs, `storytime-nest-old-practice-line.png`, `storytime-nest-old-check-line.png`,
+`look-reference-nan-and-pip.png`, and `brief.md`. PNGs stay out of git.
+
+## Deferred
+
+The rows `l2-w01-story-page-a-nest` and `l2-w01-story-page-a-nest-and-a-nut` still show the old
+nest. They need a re-render with the new nest in a later round.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: done
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3
+round: 38
+model: deepseek/deepseek-flash#high
+phase_base_sha: 15a7bf0b
+role_base_sha: 43d59360
+green_head: 57592f53
+commits:
+  - 46f7865a feat(storytime): redraw the week 1 nest rim as a few long twigs
+  - 57592f53 docs(measure): record storytime green round 38 nest line-art rework
+tasks_flipped_x: none
+tasks_flipped_b: none
+new_files:
+  - docs/storytime/l2-unit1/w01/rows/l2-w01-practice-line-nest-v2.json
+  - docs/storytime/l2-unit1/w01/rows/l2-w01-check-row-nest-v2.json
+  - out/storytime-review/batch-10/ (PNGs and brief.md, not committed)
+targeted_red_command: none; the Red contract in this round is the batch 7 review finding "Nest detail breaks into noise in the line art." I confirmed it on l2-w01-practice-line-nest-line-v1.png and l2-w01-check-row-nest-line-v1.png before the change.
+green_gate:
+  - render --fast (4 runs) exit 0
+  - render (textured) exit 0, warning lines 0
+  - inspect --fast exit 0, warnings none, lowest point y = 0 m
+  - render --row l2-w01-practice-line-nest --version 2 exit 0; verify --row exit 0
+  - render --row l2-w01-check-row-nest --version 2 exit 0; verify --row exit 0
+handoff: |
+  The nest rim now draws long, closed strokes in the 1-bit line art. Two twig tips keep a few
+  short marks. The rows l2-w01-story-page-a-nest and l2-w01-story-page-a-nest-and-a-nut still use
+  the old nest and need a re-render later. Batch 10 is ready for the independent re-review. No
+  task is marked [x]; the week 1 counts stay at 22 of 30 rendered and 16 with no open defect.
+END_MEASURE_AGENT_RESULT

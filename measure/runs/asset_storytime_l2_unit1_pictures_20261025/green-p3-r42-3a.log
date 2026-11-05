@@ -1,0 +1,9 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 21
+book file requests refused: 0
+Line-art line width: 21 px (minimum 12 px).
+Line-art ink coverage: 5.62% (674191 of 12000000 pixels black).
+l2-w01-story-page-a-nest-and-a-nut v6: rendered; stage 5ac987e3e9e82b7b8dc5a23a9fbdea9d1bc9a3a2a55ec0c7dfc900f633d9641c; file w01/rows/l2-w01-story-page-a-nest-and-a-nut-v6.png; lineart w01/rows/l2-w01-story-page-a-nest-and-a-nut-line-v6.png; size 4000 x 3000; render peak rss mb: 512

@@ -1,0 +1,99 @@
+# Green round 37 final log - storytime nut black specks (item review batch 8)
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: success
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 (Week 1 pictures)
+session: Green · P3 · storytime_l2_unit1_pictures · r37
+models: green deepseek/deepseek-flash#high (DeepSeek V4.1 Flash 1017); red for this phase
+  minimax-cn-coding-plan/MiniMax-M3; coder none (no delegation)
+role_base_sha: d515d6b7
+phase_base_sha: 15a7bf0b
+red_inside_phase_base: yes. The committed Red work for this phase sits inside
+  `15a7bf0b..d515d6b7` (`47fa0f5c`, `2adf33ae`, `eaa12abb`, `d6d9f5b9` and the plan commits). No Red
+  test changed in this round, because this round answers a routed audit finding, not a new Red test.
+result: the nut keeps no black mark on the cap edge or the stem tip in the four views.
+
+## Task
+
+Remove the last black marks on `storytime-nut` (cap edge and stem tip). One item. No row renders.
+
+## Batch 8 review result that started this round
+
+`measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-8.json`: `storytime-nut`
+6.5 fail. Critical: "Black specks remain along the cap edge in all four views." Issues: "Black
+marks remain at the stem tip" and a small dotted black mark on the three-quarter cap edge.
+
+## Black-texel counts
+
+Method: read `out/storytime-nut/textures/baseColor.png`, take texels with maximum channel at or
+below 24, and keep those with at least five of eight painted neighbours, so the empty gutter does
+not count as a speck. Script kept outside the repository (`/tmp/opencode/blacktex.mjs`).
+
+| Build | Triangles | Black texels | Note |
+| --- | --- | --- | --- |
+| Batch 8, commit `d6d9f5b9` | 2,266 | 90 | dotted specks and a 4 mm dashed seam line |
+| Option 1: `maxError` 0.00004, `maxTriangles` 8000 | 5,698 | 111 | seam line left, one stroke appeared on the back |
+| Option 2: option 1 plus rounder tip and larger fillets | 5,374 | 91 | cap edge clean, three hairline strokes on the side cap top |
+| Option 3: `texture: false` (vertex colors) | 5,894 | not applicable | no atlas is written |
+
+## Option that worked
+
+Option 3, vertex colors. `texture: false`, `paintWeight: 1`, and a paint blend of 0.0015 m for the
+soft cap boundary. The body keeps the 0.0045 m union, the 0.005 m cap lobe fillet, and the thicker
+stem tip from option 2. `maxError` 0.00004 m and `maxTriangles` 8000 keep the crease and the stem.
+The texture atlas and the `bump` went away, because both need a bake.
+
+## src/ follow-up for routing (no src/ change made)
+
+`src/texture/bake.ts` lines 150 to 158 take one Newton step from the reduced-mesh point onto the
+surface. Far from the surface, or where the gradient is weak, the step lands off the surface. The
+paint blend cannot return pure black from the three palette colors, so a pure black texel means a
+failed sample. Evidence: 90 to 111 pure black texels inside the charts of three builds, each one
+surrounded by painted texels.
+
+## Verification
+
+Targeted check: the textured focus renders, not a vitest file. All forge runs used one
+`bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<command>'` call each.
+
+- `./forge render storytime-nut` exit 0 (`green-p3-r37-10-finalwide.log`), 0 `warning:` lines.
+- `./forge render storytime-nut --focus 0.002,0.05,0,0.008` exit 0
+  (`green-p3-r37-11-finalstem.log`), 0 `warning:` lines.
+- `./forge render storytime-nut --focus 0,0.034,0,0.014` exit 0
+  (`green-p3-r37-12-finalcap.log`), 0 `warning:` lines.
+- `./forge inspect storytime-nut --fast` exit 0 (`green-p3-r37-13-inspect.log`). The nut holds 100%
+  of the silhouette in all five views. One advisory stays: "Almost everything is mid-value". The
+  batch 8 build had the same advisory.
+- No exit 75, no exit 137, no lock wait over 600 s.
+- `bash measure/doctor.sh` exit 1 with 15 errors. None names this track. The errors belong to other
+  tracks of other sessions and to stale generated facts that this read-only round may not rebuild.
+
+## Files and commits
+
+- Implementation commit `8af590ef`: `assets/storytime-nut.ts` only.
+- Design-note commit `bcb83308`: `assets/storytime-nut.ts` only.
+- Plan-evidence commit `43d59360`: `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md`.
+- No `src/`, test, row, cast, or picture-list file changed.
+- New files: `out/storytime-review/batch-9/` with `storytime-nut.png`,
+  `storytime-nut-cap-close.png`, `storytime-nut-stem-close.png`, `storytime-nut-batch-8.png`,
+  `look-reference-nan-and-pip.png`, and `brief.md`. These are PNG and review files and stay out of
+  git.
+
+## Task markers
+
+- Flipped to `[x]`: none. The re-review has not answered.
+- Flipped to `[b]`: none.
+- Week 1 counts kept: 22 of 30 rows rendered, 16 with no open defect.
+
+## Handoff
+
+The batch 9 folder is ready for the independent re-review. The nut needs a new rating against the
+bar 7.0. The acorn shape, the pointed bottom, the five soft cap lobes, the stem that leans to +X,
+the colors, the size of 0.049 m by 0.055 m, the ground contact, the +Z facing, and the asset name
+did not change. The cap boundary is softer than in batch 8 because the paint blend grew to 1.5 mm.
+Green did not rate the item.
+
+dispositions: F1=FIX(8af590ef: the nut uses vertex colors, so no atlas gutter and no black texel can exist; the batch 9 cap-close and stem-close cards show no black mark)
+END_MEASURE_AGENT_RESULT

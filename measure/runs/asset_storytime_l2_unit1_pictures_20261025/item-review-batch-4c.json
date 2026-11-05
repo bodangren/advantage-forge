@@ -1,0 +1,21 @@
+{
+  "reviewer": "openai/gpt-6-luna#high",
+  "seen": {
+    "front": "Pip's head tips toward the ground, with a dark open mouth under the muzzle and straight front legs beneath him.",
+    "three_quarter": "Pip lowers his head and dark mouth toward the ground while all four legs support his raised body and tail.",
+    "side": "Pip points his muzzle and dark mouth down, keeps his legs planted, and holds his tail up.",
+    "back": "Pip's head faces away, his legs stand square, and his raised tail covers the center of his back with no pink shape under the belly.",
+    "strip": "Pip keeps his head low and tail raised through the loop, with small head bobs and planted-looking paws.",
+    "rest": "The before and after rest pictures look the same, with Pip's open pink-tongued smile and upright tail."
+  },
+  "sprout-pip-sniff": {
+    "overall": 7.4,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "The dark mouth opening reads clearly, but it looks less like a happy smile without the visible pink tongue.",
+      "No separate cream shape shows under the neck, and no odd shape shows under the muzzle."
+    ],
+    "fix": "Soften the dark mouth opening so it reads as a happy smile."
+  }
+}

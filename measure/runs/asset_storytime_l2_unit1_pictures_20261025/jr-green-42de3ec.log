@@ -1,0 +1,120 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P2 (Phase 2: Tests and calibrated model pre-checks)
+task: T12 — close the malformed-string class of the credential scan
+
+role_base_sha: e0a156afb5975b5d485a2832e38342a07032348f
+phase_base_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e (immutable, unchanged)
+head_sha: 42de3ecd3ed9768305459ac47a91382cd4b5d0ca
+red_commits: test 0cd4b024, plan e0a156af (both inside phase_base_sha..HEAD; confirmed)
+
+commits:
+  - 64073051 fix(storytime): scan every quote segment with a tolerant decoder
+    (only src/storytime/book-pictures.ts; +100/-30)
+  - 42de3ecd docs(measure): record Storytime task 12 Green evidence
+    (only measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md; task 12 flipped
+    [~] -> [x] with Commit 64073051 on the task line, Green evidence added)
+  other_tracks_between_role_base_and_head:
+    - e4e5c593 fix(scenes): put a full bookcase in the classroom centre (classroom scene, not this track)
+    - d2928bbc docs(measure): add filled shelves track (filled-shelves track, not this phase)
+    - 08682665 docs(measure): plan filled shelves test strategy (filled-shelves Red prep, not this phase)
+
+implementation_summary:
+  Rewrote decodedAnswerFindings in src/storytime/book-pictures.ts to design B (owner decision,
+  2026-10-27): each text splits at every unescaped double quote into head, every segment between
+  two consecutive unescaped quotes, and the tail (including a tail that ends in a lone backslash).
+  A tolerant decoder resolves each valid JSON escape, including \uXXXX and surrogate pairs; it
+  keeps each invalid escape, lone backslash, and raw control character as literal text; it never
+  drops a segment and never throws. Each decoded segment that holds a quote is split and decoded
+  again as the next layer; each layer is linear in its length. JSON.parse stays for the review
+  schema only. One rule builder serves the raw and decoded scans (RC6-2). The scan position for
+  both providers (MiniMax inside the paid callback before the success entry; Kimi before
+  parseModelReview and before any record write) is unchanged from task 11. The task 10 refusal
+  suffix and the task 9 raw-byte refusal text stay byte-identical. PICTURE_RUBRIC_VERSION, the
+  rubric text, and src/song/ are unchanged. No test file changed.
+
+tests_run:
+  1. Targeted Red command, rerun before implementation as focused rows:
+     bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1 -t "T129|T13[0-8]"'
+     after implementation: exit 0; Tests  10 passed | 111 skipped (121); 63.35 s.
+     Output: measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-vitest-t12-focused.log
+  2. Green gate:
+     bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'
+     exit 0; Tests  148 passed (148); no skip; no timeout; 285.81 s.
+     Output: measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-vitest-t12.log
+  3. Cost labels (documented labels command, one heavy-run.sh call):
+     bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1 --reporter=verbose -t "T136|T137"'
+     exit 0; Tests  2 passed | 119 skipped (121).
+     Labels: wide scan ms: 473 (Red 1442; bound 60000 ms); chain scan ms: 351 (Red 641; bound 20000 ms).
+     wide tokens: 9543; chain levels: 14. Both bounds hold.
+     Output: measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-vitest-t12-labels.log
+  4. Type check:
+     bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'
+     tsc exit: 2; owned tsc errors: 0; total tsc errors: 31.
+     The 31 errors sit in assets/*.ts and tests/part.test.ts. None sits in tests/storytime-book-pictures.test.ts or src/storytime/.
+     Output: measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-tsc-t12.log
+
+mutations (command each: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1';
+each exited 1; after each run src/storytime/book-pictures.ts was restored with
+git checkout -- and git diff --exit-code on the file confirmed a clean tree):
+  1. Drop the head and the tail segments -> T129 FAILED (named).
+     Tests  4 failed | 117 passed (121). Other failures: T130, T134, T135.
+     Output: green-mutation-t12-1.log
+  2. Decode a segment with JSON.parse and drop it when the parse throws -> T131 FAILED (named).
+     Tests  5 failed | 116 passed (121). Other failures: T130, T132, T134, T135.
+     Output: green-mutation-t12-2.log
+  3. Pair the quotes left to right in one parity -> T133 FAILED (named).
+     Tests  10 failed | 111 passed (121). Other failures: T97, T102, T104, T105, T107, T108, T131, T134, T135.
+     Output: green-mutation-t12-3.log
+  4. Do not split and decode a decoded layer that holds a quote -> T134 FAILED (named).
+     Tests  9 failed | 112 passed (121). Other failures: T97, T102, T104, T105, T107, T108, T131, T135.
+     Output: green-mutation-t12-4.log
+  5. Decode the whole layer text and use it as the next layer -> T137 FAILED (named;
+     chain scan ms: 60057 against the 60000 ms bound).
+     Tests  1 failed | 120 passed (121). No other failure.
+     Output: green-mutation-t12-5.log
+
+plan_evidence:
+  plan.md task 12 line: - [x] Task: Close the malformed-string class of the credential scan.
+  Commit 64073051. Risk class: high.  (the gate reads the SHA only on the task line)
+  Evidence commit: 42de3ecd.
+
+deviations:
+  - Model: the coding-plan 5-hour quota stopped the Green session once mid-run; the orchestrator
+    resumed it. The quota tool routed Green to minimax-cn-coding-plan/MiniMax-M3#high, which is the
+    task 12 Red family. To hold Red/Green model independence, the orchestrator kept the role on
+    volcengine-agent-plan/glm-5.3-flash#high. All work above ran on GLM. No MiniMax or DeepSeek
+    model ran any Green step. Red of this phase ran on MiniMax-M3 (Red-family independence held).
+  - Lock waits: at least one heavy-run: lock wait over 600 s line appeared during the gate wait,
+    during each mutation wait, and during the label run; other agents held the shared lock
+    (storytime word-audio recognize jobs, phase1 suites, and other tracks). Mutation and gate
+    durations include those waits. One first gate wait was killed by a tool timeout before the lock
+    opened; the run was repeated and completed.
+  - Mutation 2 attempt 1 returned exit 75 (hold: avail 1110 MB (min 1200), load 11.62 (max 8));
+    per the run rules it was retried and the retry ran to completion.
+  - No other gap. No mutation gap: every named test failed under its mutation. No test was edited.
+
+new_files:
+  None in the repository. Run logs only (measure/runs/asset_storytime_l2_unit1_pictures_20261025/):
+  green-vitest-t12.log, green-vitest-t12-focused.log, green-vitest-t12-labels.log, green-tsc-t12.log,
+  green-mutation-t12-1.log .. green-mutation-t12-5.log, and this jr-green-42de3ec.log.
+
+handoff:
+  To phase-acceptance / review roles for task 12:
+  - Audit scope: src/storytime/book-pictures.ts diff 64073051 (decodedAnswerFindings rewrite and
+    the new tolerantDecode helper) and plan.md evidence commit 42de3ecd. Tests are unchanged since
+    Red commit 0cd4b024.
+  - Reviews A, B, and C run again on the task 12 HEAD per the strategy. Review C may use a short
+    delta check (refusal text, 500-character cut, rule sharing, time bounds). Review B audits
+    against the named malformed-string class only; the named residual risks (base64, percent
+    encoding, HTML entities, split credentials, single-quoted strings, double encoding, other
+    transforms) stay out of class and untested.
+  - The committed Red tests were treated as immutable; no test file, script, rubric text, or
+    PICTURE_RUBRIC_VERSION changed. The contract and the raw copies are unchanged (design B).
+  - Cost labels improved against Red: wide 473 ms vs 1442 ms; chain 351 ms vs 641 ms.
+  - No paid call, no render, no smoke run, no push. No question to the user was needed; no handoff
+    question is open. Default assumption used: the lock-wait lines are environment contention
+    evidence, not failures; record them per the strategy lock note.
+END_MEASURE_AGENT_RESULT

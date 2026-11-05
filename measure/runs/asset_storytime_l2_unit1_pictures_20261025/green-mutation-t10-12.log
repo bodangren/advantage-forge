@@ -1,0 +1,26 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/storytime-book-pictures.test.ts (98 tests | 1 failed) 160483ms
+       × T114: the decoded check runs before parseModelReview and the Kimi comment matches 24ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T114: the decoded check runs before parseModelReview and the Kimi comment matches
+AssertionError: precheckKimi: the decoded check runs before the schema parse.: expected 7824 to be less than 7769
+ ❯ tests/storytime-book-pictures.test.ts:2504:83
+    2502|         expect(check, `${name}: the decoded check exists.`).toBeGreate…
+    2503|         expect(parse, `${name}: the schema parse exists.`).toBeGreater…
+    2504|         expect(check, `${name}: the decoded check runs before the sche…
+       |                                                                                   ^
+    2505|       }
+    2506|       const comment = commentAbove(functionRegion(source, 'precheckKim…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 97 passed (98)
+   Start at  12:55:03
+   Duration  162.38s (transform 997ms, setup 0ms, import 1.32s, tests 160.48s, environment 0ms)
+

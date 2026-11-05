@@ -1,0 +1,12 @@
+Green round 30 provisional log
+Track: asset_storytime_l2_unit1_pictures_20261025
+Phase: P3, Week 1 pictures
+Row: l2-w01-story-page-a-nest-and-a-nut
+Role base: 72012573
+Phase base: 15a7bf0b
+Green model: kimi-code-plan-cn/k3.1-pro#high
+Red model: minimax-cn-coding-plan/MiniMax-M3
+Coder model: none; no delegation
+Status: started 2026-10-31. The shared tree has unrelated changes. This round owns only the new row stage, its plan evidence, and its logs.
+Pip GLB: 5447352 bytes, modified 2026-10-31 19:09. The textured build is present.
+Plan: create v1 from the nest template. Keep the branch and nest positions. Add Pip with the sniff gesture and one large nut. Render and verify the row, then inspect both PNG files.

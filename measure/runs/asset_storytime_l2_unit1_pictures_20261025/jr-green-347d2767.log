@@ -1,0 +1,27 @@
+Green round 32 final log
+Track: asset_storytime_l2_unit1_pictures_20261025 | Phase: P3 | Row: l2-w01-story-page-a-nest-and-a-nut
+Models: Green claude-code/claude-sonnet-5-5#high; Red minimax-cn-coding-plan/MiniMax-M3; coder none.
+Commits: 45a0a191 (v3 and v4 stage files); 347d2767 (plan evidence).
+Runs: green-p3-r32-render-v3.log (exit 0, peak 991 MB), green-p3-r32-render-v4.log (exit 0, peak 516 MB), green-p3-r32-verify.log (exit 0, 4 versions passed).
+Kept: v4. Line 22 px, ink 5.34%.
+SHA-256 color: 402b4a4f9277fce77bf610c39915d91b73a5afdb8de9380e671fe0559c1661e5
+SHA-256 line:  82fb8a3f53b3a71a5ae9ee126d9930c58d3cc05a6090e51e93e3805e50fd13b9
+Nut scale 2.4 (about 10.3 cm wide).
+Goals v4: 1 pass; 2 pass; 3 partial (fork still reads as an open hand; asset change needed); 4 partial (nut reads as nut in color; as a jar in line art); 5 pass.
+Week 1: 22 of 30 rendered; 17 rows with no open defect (row not clean).
+
+MEASURE_AGENT_RESULT
+status: done
+role: green
+track: asset_storytime_l2_unit1_pictures
+phase: P3
+phase_base_sha: 15a7bf0b
+role_base_sha: 12990426
+head: 347d2767
+commits: 45a0a191, 347d2767
+tasks_flipped: none
+tasks_deferred: none
+new_files: docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-and-a-nut-v3.json; docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-and-a-nut-v4.json
+verification: render v3 exit 0; render v4 exit 0; verify --row exit 0 (4 row versions)
+handoff: v4 kept. Goals 1, 2, 5 pass. Goals 3 and 4 partial: the fork reads as a hand in the line art, and the nut reads as a jar in the line art. Fix of goal 3 needs a branch asset change (outside this round). Row not counted clean; week 1 count 22 of 30 rendered, 17 clean.
+END_MEASURE_AGENT_RESULT

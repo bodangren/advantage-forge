@@ -1,0 +1,7 @@
+item-review-batch-42r2: final review of row l2-w02-check-row-sun (batch 42r2 fix, finding B42-SUN).
+reviewer: kimi-code-plan-cn/kimi-for-coding. bar: Daniel 2026-11-01 14:15 ICT.
+files opened: pages/l2-w02-check-row-sun-m2-color-print.png, pages/l2-w02-check-row-sun-m2-line-print-despeckled.png, refs/old-m1-line-despeckled.png, refs/old-m1-color.png, refs prop sheet; brief.md.
+pixel check (node script /tmp/opencode/gray-check.mjs): line print 1500x1500 8-bit grayscale, 0 of 2250000 pixels not 0 or 255; 1600x1600 source also 0 of 2560000.
+verdict: pass. rating 9. clean: true. critical: none. defects: none.
+reason: the new rays are closed pointed triangles with wide bases on the disc, so the picture reads as a sun, not a flower; the old m1 art confirmed the flower reading (rounded blobs apart from the disc). exactly one object, whole, no face, no text, no ground line. no thick solid black ring or band; even 22 px lines. color print matches the line art.
+result written to item-review-batch-42r2.json.

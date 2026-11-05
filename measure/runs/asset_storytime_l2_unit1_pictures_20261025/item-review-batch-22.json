@@ -1,0 +1,50 @@
+{
+  "reviewer": "kimi-code-plan-cn/kimi-for-coding",
+  "seen": {
+    "brief.md": "The brief sets a 7.0 bar for two items and one page, with exact critical defect lists and known open defects.",
+    "look-reference-nan-and-pip.png": "The approved style: soft round chibi, big eyes, bright colors, clean surfaces.",
+    "sprout-pat-render.png": "Pat stands with a green T-shirt, brown shorts, sandals, and a small brown teddy bear in his left arm.",
+    "storytime-green-door.png": "Four views of a green door with a light frame, one round window, and one yellow round knob.",
+    "storytime-low-table.png": "Four views of a low table with a pale top, rounded corners, and four red round legs.",
+    "l2-w01-story-page-hello-i-am-pat-v2.png": "The color page: Pat stands with his back to the viewer at the green door; the room has tables, beams, and three animal pictures.",
+    "l2-w01-story-page-hello-i-am-pat-line-v2.png": "The 1-bit line-art page of the same scene; strokes are thick with the style square steps along their edges."
+  },
+  "storytime-green-door": {
+    "overall": 8.0,
+    "pass": true,
+    "critical": [],
+    "issues": [],
+    "fix": "",
+    "notes": "The door has no text, no face, no specks, and no floating part. The round window sits in the upper half, and the yellow knob sits at about mid height. The frame wraps the two sides and the top. The size reads right for a classroom of children of about 5 years."
+  },
+  "storytime-low-table": {
+    "overall": 7.5,
+    "pass": true,
+    "critical": [],
+    "issues": [
+      "The legs taper and splay slightly, but all four stand flat on the floor."
+    ],
+    "fix": "",
+    "notes": "The table has no text, no face, no specks, and no floating part. The top has rounded corners, and the height reads right for a classroom of children of about 5 years. The legs look a bit organic, but the outline stays clean in all four views."
+  },
+  "l2-w01-story-page-hello-i-am-pat": {
+    "overall": 5.0,
+    "pass": false,
+    "critical": [
+      "Pat's face is not visible: the page shows the back of his head, so a child cannot see who Pat is on the page that introduces him."
+    ],
+    "issues": [
+      "The small round bump on the school bag does not read as its own shape; the whole bag just looks puffy.",
+      "The wooden frame backing peeks out around each animal picture and reads as a separate offset shape, with a small wood tab below each picture.",
+      "A small pale speck sits on the horizontal wall beam above the left edge of the lion picture.",
+      "The teddy bear is seen from behind; it still reads as a brown teddy bear, but a child cannot see its face.",
+      "The wave reads: Pat's right arm extends with an open hand toward the door."
+    ],
+    "fix": "Turn Pat so a child can see his face on this introduction page.",
+    "notes": "The green door, the low tables, and the three animal pictures are clear, and their size reads right. Pat is large enough in the frame. The school bag sits on his back with no gap and no sinking. The wall and floor are clean except the one speck on the beam. The known open defects do not appear worse than the brief describes; the face is turned away, so the eye flap and forehead streak cannot be judged.",
+    "line_art": [
+      "Small blob of merged stroke on the horizontal wall beam, at the base of the mount line above the left edge of the lion picture.",
+      "Small notch at the top edge of the center wall post, where the post meets the page edge; it reads as a beam joint."
+    ]
+  }
+}

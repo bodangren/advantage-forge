@@ -1,0 +1,39 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/storytime-book-pictures.test.ts (111 tests | 2 failed) 203066ms
+     × T102: the shared walker inspects every object before selection and status fallback 4870ms
+         × T125: one rule builder serves the raw path and the decoded path 380ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: Every credential value yields a pattern.: expected 0 to be greater than 0
+ ❯ tests/storytime-book-pictures.test.ts:2151:75
+    2149|       const raw = JSON.stringify({ deep: { value } }).replace(JSON.str…
+    2150|       const findings = answerFindings(raw);
+    2151|       expect(findings.length, 'Every credential value yields a pattern…
+       |                                                                           ^
+    2152|       for (const finding of findings) for (const credential of values)…
+    2153|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T125: one rule builder serves the raw path and the decoded path
+AssertionError: The decoded path finds the escaped second value.: expected [] to include 'env:TASK11_SHARED_KEY'
+ ❯ tests/storytime-book-pictures.test.ts:2850:14
+    2848|           expect.soft(run.report?.plainSecond ?? [], 'The raw path fin…
+    2849|           expect.soft(run.report?.decodedSecond ?? [], 'The decoded pa…
+    2850|             .toContain(`env:${name}`);
+       |              ^
+    2851|         } finally {
+    2852|           delete process.env[name];
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 109 passed (111)
+   Start at  22:55:19
+   Duration  204.79s (transform 862ms, setup 0ms, import 1.18s, tests 203.07s, environment 0ms)
+

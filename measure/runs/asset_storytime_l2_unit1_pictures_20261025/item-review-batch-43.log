@@ -1,0 +1,27 @@
+batch 43 review log
+reviewer: kimi-code-plan-cn/kimi-for-coding
+bar: Daniel 2026-11-01 14:15 ICT
+state: pass. All nine rows clean.
+
+method:
+- read the brief and the batch-41 review shape.
+- read the Nan look reference, the Ben sheet, the cast group B sheet, the Pip render and the pan prop sheet.
+- opened each color file and each line file of the nine rows.
+- counted pans in every file and checked each pan place against its sentence.
+- zoomed the three flagged small pans (i-can-get-a-pan color and line, nan-can-get-a-pan line, a-pan-in-a-pan blue pan color and line) with crops from the 4000 x 3000 prints.
+- counted pixels that are not 0 or 255 in all eighteen line files: 0 gray pixels in each.
+- ran a connected black-component scan on each 4000 x 3000 line print: only round eye pupils are deep solid areas; no ring and no band.
+- measured the cover top band on the color print: beams 0 to 10 percent, plain wall 10 to 20.5 percent, heads start at about 20.5 percent.
+
+row results:
+- l2-w03-cover-the-pan: rating 8. pans 2 color, 2 line. clean. note: shelf holds cups and plates, not toy pans; no low table. heads reach to about 20.5 percent.
+- l2-w03-story-page-a-nap-in-the-pan: rating 8. pans 1 color, 1 line. clean. Pip asleep with floppy ears only, no spikes.
+- l2-w03-story-page-a-pan-in-a-pan: rating 8. pans 2 color, 2 line. clean. blue pan reads as a pan at zoom. note: Ben has one small lash flick in the color.
+- l2-w03-story-page-a-pan-on-a-pan: rating 8. pans 2 color, 2 line. clean. pan tower on the table.
+- l2-w03-story-page-a-pan-on-nan: rating 8. pans 1 color, 1 line. clean. notes: Ben's hair lumpy in the color; Nan's eyes closed in the color and open in the line; both read as a laugh.
+- l2-w03-story-page-can-i-get-the-pan: rating 8. pans 1 color, 1 line. clean. pan out of reach on the top shelf, tail over the edge.
+- l2-w03-story-page-i-can-get-a-pan: rating 8. pans 1 color, 1 line. clean. the pan reads as a pan at zoom: bowl interior and stubby handle in color, inner rim and handle in line.
+- l2-w03-story-page-i-can-get-the-pan: rating 8. pans 1 color, 1 line. clean. Ben on toes lifts the big pan, tail over the edge.
+- l2-w03-story-page-nan-can-get-a-pan: rating 8. pans 1 color, 1 line. clean. the pan reads as a pan at zoom.
+
+verdict: pass. 9 of 9 rows clean. 0 defects. 6 notes for the builder.

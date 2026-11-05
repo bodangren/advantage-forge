@@ -1,0 +1,203 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/zz-green-probe-m3.test.ts (141 tests | 4 failed | 136 skipped) 419ms
+     × T173: the pipeline pins picture list version 4 and refuses the version 3 bytes 69ms
+     × T174: the labeled counts of the live picture list match version 4 14ms
+     × T176: every row of the list holds the pixel size of its class 4ms
+     × T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows 100ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/zz-green-probe-m3.test.ts > Phase 4 picture list version 4 > T173: the pipeline pins picture list version 4 and refuses the version 3 bytes
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The render row command accepts the live list": "accepted",
++   "The render row command accepts the live list": "ENOENT: no such file or directory, open '/tmp/opencode/storytime-red-gsYrtp/list-v4-GQ6KUn/docs/storytime/l2-unit1/w02/rows/l2-w02-story-page-nan-can-b-v1.json'",
+  }
+
+ ❯ tests/zz-green-probe-m3.test.ts:4601:10
+    4599|       );
+    4600|       expect.soft({ 'The render row command accepts the live list': li…
+    4601|         .toEqual({ 'The render row command accepts the live list': 'ac…
+       |          ^
+    4602|       const liveVerify = await rowCommandError(
+    4603|         ['verify', '--row', rowId, '--workbooks', WORKBOOKS, '--out', …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  tests/zz-green-probe-m3.test.ts > Phase 4 picture list version 4 > T174: the labeled counts of the live picture list match version 4
+AssertionError: expected { 'List rows': 195, …(33) } to deeply equal { 'List rows': 196, …(33) }
+
+- Expected
++ Received
+
+@@ -1,15 +1,15 @@
+  {
+-   "List rows": 196,
++   "List rows": 195,
+    "Week 1 class A": 16,
+    "Week 1 class B": 2,
+    "Week 1 class C": 12,
+    "Week 1 rows": 30,
+-   "Week 2 class A": 16,
++   "Week 2 class A": 15,
+    "Week 2 class B": 2,
+    "Week 2 class C": 9,
+-   "Week 2 rows": 27,
++   "Week 2 rows": 26,
+    "Week 3 class A": 16,
+    "Week 3 class B": 2,
+    "Week 3 class C": 9,
+    "Week 3 rows": 27,
+    "Week 4 class A": 16,
+@@ -27,10 +27,10 @@
+    "Week 7 class A": 16,
+    "Week 7 class B": 2,
+    "Week 7 class C": 9,
+    "Week 7 rows": 27,
+    "Week 8 rows": 4,
+-   "Weeks 2 to 7 class A": 96,
++   "Weeks 2 to 7 class A": 95,
+    "Weeks 2 to 7 class B": 12,
+    "Weeks 2 to 7 class C": 54,
+-   "Weeks 2 to 7 rows": 162,
++   "Weeks 2 to 7 rows": 161,
+  }
+
+ ❯ tests/zz-green-probe-m3.test.ts:4625:34
+    4623|   it('T174: the labeled counts of the live picture list match version …
+    4624|     const rows = rawRows();
+    4625|     expect.soft(rowCounts(rows)).toEqual(expectedCounts());
+       |                                  ^
+    4626|     const list = await loadList({ printRoot: PRINT_ROOT, workbooksRoot…
+    4627|     expect.soft({ 'Loader rows': list?.rows.length ?? -1 }).toEqual({ …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  tests/zz-green-probe-m3.test.ts > Phase 4 picture list version 4 > T176: every row of the list holds the pixel size of its class
+AssertionError: expected { 'Rows checked': 195 } to deeply equal { 'Rows checked': 196 }
+
+- Expected
++ Received
+
+  {
+-   "Rows checked": 196,
++   "Rows checked": 195,
+  }
+
+ ❯ tests/zz-green-probe-m3.test.ts:4663:50
+    4661|       .map((row) => `${row.id} (${row.sizeClass}): ${row.width} x ${ro…
+    4662|     expect.soft({ 'Rows with a wrong pixel size': wrong }).toEqual({ '…
+    4663|     expect.soft({ 'Rows checked': rows.length }).toEqual({ 'Rows check…
+       |                                                  ^
+    4664|     expect.soft({ 'Size classes covered': [...new Set(rows.map((row) =…
+    4665|       .toEqual({ 'Size classes covered': ['A', 'B', 'C'] });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  tests/zz-green-probe-m3.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: The week parser accepts week 8.: expected 'ENOENT: no such file or directory, op…' to deeply equal 'accepted'
+
+Expected: "accepted"
+Received: "ENOENT: no such file or directory, open '/tmp/opencode/storytime-red-gsYrtp/week-8-10KDlD/docs/storytime/l2-unit1/w08/rows/l2-w08-check-row-moon-v1.json'"
+
+ ❯ tests/zz-green-probe-m3.test.ts:4686:81
+    4684|
+    4685|       const week8 = await dryRun('8');
+    4686|       expect.soft(week8.error ?? 'accepted', 'The week parser accepts …
+       |                                                                                 ^
+    4687|       expect.soft({ 'Week 8 rows rendered in a dry run': week8.count })
+    4688|         .toEqual({ 'Week 8 rows rendered in a dry run': 4 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  tests/zz-green-probe-m3.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "Week 8 rows rendered in a dry run": 4,
++   "Week 8 rows rendered in a dry run": -1,
+  }
+
+ ❯ tests/zz-green-probe-m3.test.ts:4688:10
+    4686|       expect.soft(week8.error ?? 'accepted', 'The week parser accepts …
+    4687|       expect.soft({ 'Week 8 rows rendered in a dry run': week8.count })
+    4688|         .toEqual({ 'Week 8 rows rendered in a dry run': 4 });
+       |          ^
+    4689|       const allWeeks = await dryRun();
+    4690|       expect.soft(allWeeks.error ?? 'accepted', 'A run with no --week …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  tests/zz-green-probe-m3.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: A run with no --week reads the live list.: expected 'ENOENT: no such file or directory, op…' to deeply equal 'accepted'
+
+Expected: "accepted"
+Received: "ENOENT: no such file or directory, open '/tmp/opencode/storytime-red-gsYrtp/week-8-10KDlD/docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-hello-i-am-pat-v1.json'"
+
+ ❯ tests/zz-green-probe-m3.test.ts:4690:94
+    4688|         .toEqual({ 'Week 8 rows rendered in a dry run': 4 });
+    4689|       const allWeeks = await dryRun();
+    4690|       expect.soft(allWeeks.error ?? 'accepted', 'A run with no --week …
+       |                                                                                              ^
+    4691|       expect.soft({ 'Rows rendered in a dry run with no --week': allWe…
+    4692|         .toEqual({ 'Rows rendered in a dry run with no --week': 196 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ FAIL  tests/zz-green-probe-m3.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "Rows rendered in a dry run with no --week": 196,
++   "Rows rendered in a dry run with no --week": -1,
+  }
+
+ ❯ tests/zz-green-probe-m3.test.ts:4692:10
+    4690|       expect.soft(allWeeks.error ?? 'accepted', 'A run with no --week …
+    4691|       expect.soft({ 'Rows rendered in a dry run with no --week': allWe…
+    4692|         .toEqual({ 'Rows rendered in a dry run with no --week': 196 });
+       |          ^
+    4693|
+    4694|       for (const value of ['0', '9']) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯
+
+ FAIL  tests/zz-green-probe-m3.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: expected { 'Weeks 2 to 7 helper rows': 161 } to deeply equal { 'Weeks 2 to 7 helper rows': 162 }
+
+- Expected
++ Received
+
+  {
+-   "Weeks 2 to 7 helper rows": 162,
++   "Weeks 2 to 7 helper rows": 161,
+  }
+
+ ❯ tests/zz-green-probe-m3.test.ts:4707:12
+    4705|         const middle = (seam as (list: PictureListRow[]) => PictureLis…
+    4706|         expect.soft({ 'Weeks 2 to 7 helper rows': middle.length })
+    4707|           .toEqual({ 'Weeks 2 to 7 helper rows': 162 });
+       |            ^
+    4708|         expect.soft({ 'Week 8 rows in the weeks 2 to 7 selection': mid…
+    4709|           .toEqual({ 'Week 8 rows in the weeks 2 to 7 selection': 0 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/8]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 1 passed | 136 skipped (141)
+   Start at  01:31:59
+   Duration  2.09s (transform 1.00s, setup 0ms, import 1.37s, tests 419ms, environment 0ms)
+

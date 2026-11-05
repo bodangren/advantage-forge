@@ -1,0 +1,89 @@
+Green round 46 log. Track `asset_storytime_l2_unit1_pictures_20261025`, phase P3 "Week 1 pictures".
+Row-only round. Session name: `Green · P3 · storytime_l2_unit1_pictures · r46`.
+
+Commits: implementation `f46b121b`, plan evidence `f3288f8b`. Final Green HEAD `f3288f8b`.
+Base SHAs: `role_base_sha` 67547a8b (HEAD at the start), `phase_base_sha` 15a7bf0b.
+
+Shadow picture list: `/tmp/opencode/wb-shadow`, `sha256sum` of
+`content/storytime/l2/print/pictures.json` = c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b.
+The live Workbooks tree was not written to.
+
+Run logs in `measure/runs/asset_storytime_l2_unit1_pictures_20261025/`:
+`green-p3-r46-render-nestnuv13.log`, `green-p3-r46-render-anutv4.log`,
+`green-p3-r46-render-anutv5.log`, `green-p3-r46-verify-nestnut.log`, `green-p3-r46-verify-anut.log`.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+session: Green · P3 · storytime_l2_unit1_pictures · r46
+track: asset_storytime_l2_unit1_pictures_20261025
+track_short_id: asset_storytime_l2_unit1_pictures
+phase: P3 "Week 1 pictures"
+round: 46
+status: ok
+models: green deepseek/deepseek-flash#high (route from `ra-quota --fresh pick green --not-family minimax --not-family openai`; Daniel approved the DeepSeek route); red minimax-cn-coding-plan/MiniMax-M3 (not the Green family); coder none; no delegation
+implementation_commit: f46b121b
+plan_evidence_commit: f3288f8b
+phase_base_sha: 15a7bf0b
+role_base_sha: 67547a8b
+final_head: f3288f8b
+tasks_flipped_to_x: none
+tasks_flipped_to_b: none
+new_files:
+  docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-and-a-nut-v13.json
+  docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nut-v4.json
+  docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nut-v5.json
+  out/storytime-review/batch-18/ (9 PNG files and brief.md, all outside git)
+targeted_red_command: `node --import tsx scripts/storytime-book-pictures.ts render --row <jobId> --version <n> --workbooks /tmp/opencode/wb-shadow` inside `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'`
+red_signal: batch 17 review. `l2-w01-story-page-a-nest` v10 passed at 7.0. `l2-w01-story-page-a-nest-and-a-nut` v12 failed at 6.0 with the issues "Pip's lower feet are clipped by the frame edge" and "The tree canopy is cropped by the top edge".
+green_gate: `verify --row` exits 0. "Row verification passed for 13 row versions." "Row verification passed for 5 row versions."
+rows:
+  - row: l2-w01-story-page-a-nest-and-a-nut
+    version: 13
+    kept: true
+    render_exit: 0
+    verify_exit: 0
+    line_px: 21
+    ink: 6.15%
+    peak_mb: 504
+    stage_sha256: 30bbd076ee35e07300d0e2fe33b28dc7a7c007c557e89027d40ebb818ef24fed
+    color_sha256: 9406f042be70aaa9adc31a172221244a3c8c915be638832faa47383e18682c35
+    line_sha256: f57871120aad927a8a8f79c46c301e29477cb423a384fd442abdea3c08f9eefb
+    camera: az 8, el 10, dist 2.18, target 0.20 / 0.562 / 0.05
+    measurements: nest 1090 px wide (27.3% of the frame width); Pip bottom margin 194 px (6.5%) read in the line art; nut base margin about 150 px
+    seen: the nest is large with three light blue eggs, the top canopy closes with white sky above it, Pip is whole with all four paws inside the frame and a grass strip below them, and the whole nut sits at his nose. The canopy at the top left still leaves the frame at the top edge.
+  - row: l2-w01-story-page-a-nut
+    version: 4
+    kept: false
+    render_exit: 0
+    verify_exit: 0
+    line_px: 25
+    ink: 4.32%
+    peak_mb: 491
+    stage_sha256: 5a63501052e386b7c9776922ad46a7ce3573ae2235c1ade5581452852741b2f6
+    color_sha256: 7c628ec87ac6ada70055ec34ff0cffb14c8fb19d341a053bec30a7aff2e4d730
+    line_sha256: 41478c8a60e89e52b5cbc15b66f887442aa1887e4181a3c98f0bb1c46adf62c6
+    camera: az -14, el 10, dist 1.55, target -0.16 / 0.556 / 0
+    dropped_reason: the nut at scale 5.6 reached Nan's jaw and covered the left side of her face
+  - row: l2-w01-story-page-a-nut
+    version: 5
+    kept: true
+    render_exit: 0
+    verify_exit: 0
+    line_px: 25
+    ink: 4.36%
+    peak_mb: 493
+    stage_sha256: 62f84387017f83b806ed3a698c4c1eca9de9cf38ccd60242d569f908d2581796
+    color_sha256: 827b752c8108a48aa44399d17f17303a4a9781b05a25f07fd7f02830517842e0
+    line_sha256: e36c37ae930b789b475dd7b1be430046ca0019226ff9644b5b8d570e8fa16a4c
+    camera: az -12, el 10, dist 1.58, target -0.14 / 0.552 / 0
+    nut: x -0.245, z 0.03, y 0.255, yaw 20, scale 4.8
+    measurements: nut 800 px wide by 867 px tall (20% by 29% of the frame); hair-top margin 478 px (15.9%); the nut centre sits at 41% of the frame width
+    seen: Nan's whole head is inside the frame with a margin above her hair, the background is plain white, and the big brown nut with a crisp cap line and one stem sits at her open palm. Her face keeps the known eye-corner flap mark. The nut sits left of the frame middle.
+week_1_count: 22 of 30 rows rendered, 16 with no open defect; a-nest v10 passed review but keeps two known cast defects
+review_folder: out/storytime-review/batch-18/
+handoff:
+  The two rows wait for the independent re-review. Batch 18 holds two rows: `l2-w01-story-page-a-nest-and-a-nut` v13 and `l2-w01-story-page-a-nut` v5. The comparison files are v12 and v3.
+  The row `l2-w01-story-page-a-nest-and-a-nut` v13 holds a 27.3 percent nest width and a 6.5 percent bottom margin below Pip. The tree crown still leaves the frame at the top-left edge. The numbers cannot both be full: a whole 1.56 m tree needs 1.68 m of frame height, and a 25 percent nest width caps the frame height at 1.37 m.
+  The row `l2-w01-story-page-a-nut` v5 shows the whole head with a margin. The nut sits left of the frame middle. A nut large enough to reach the frame middle would cover Nan's jaw, as v4 showed.
+  No task is marked `[x]`. No track archive or closeout metadata changed.
+END_MEASURE_AGENT_RESULT

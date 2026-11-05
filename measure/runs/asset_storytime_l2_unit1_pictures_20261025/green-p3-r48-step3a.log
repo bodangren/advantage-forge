@@ -1,0 +1,19 @@
+heavy-run: lock wait over 600 s — holder PID 2002679: flock -w 600 -E 201 /home/daniebo/Desktop/primary-parity-progress/heavy.lock /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh --locked -c cd /home/daniebo/Desktop/Workbooks/dashboard && npm ci 
+storytime-school-bag: 11,404 triangles, 0.252 x 0.291 x 0.151 m, built in 2597 ms
+  bag-body                  4962 tris  (1249 ms)
+  pocket                    1500 tris  (262 ms)
+  strap.L                   1598 tris  (217 ms)
+  strap.R                   1604 tris  (207 ms)
+  grab-loop                 1740 tris  (66 ms)
+texture  none (vertex colors)
+glb      out/storytime-school-bag/storytime-school-bag.glb  (272 KB)
+render   out/storytime-school-bag/render.png  (497 ms)
+storytime-school-bag-ben: 10,780 triangles, 0.252 x 0.291 x 0.151 m, built in 2071 ms
+  bag-body                  4344 tris  (983 ms)
+  pocket                    1494 tris  (274 ms)
+  strap.L                   1598 tris  (253 ms)
+  strap.R                   1604 tris  (237 ms)
+  grab-loop                 1740 tris  (74 ms)
+texture  none (vertex colors)
+glb      out/storytime-school-bag-ben/storytime-school-bag-ben.glb  (257 KB)
+render   out/storytime-school-bag-ben/render.png  (308 ms)

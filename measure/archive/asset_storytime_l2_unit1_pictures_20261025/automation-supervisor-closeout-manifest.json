@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "track": "asset_storytime_l2_unit1_pictures_20261025",
+  "archived_at": "2026-11-05T09:55:00Z",
+  "track_base_sha": "2fdce9d56a4af2240c1c76b3e866a2644c4a36db",
+  "track_final_sha": "2258bd60773e06ddb68b9326f0e5732720dcf47b",
+  "phase_acceptance_results": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/phase-acceptance-061694f.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/phase-acceptance-21de99f6.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/phase-acceptance-35f4a12c.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/acceptance-p5-restart-325b92a.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/acceptance-p5-restart-b72f8b60.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/final-acceptance-2258bd6.json"
+  ],
+  "completed_phases": [
+    {
+      "id": "Phase 1",
+      "title": "Contract and controls",
+      "checkpoint": "3ea5fca"
+    },
+    {
+      "id": "Phase 2",
+      "title": "Tests and calibrated model pre-checks",
+      "checkpoint": "061694f"
+    },
+    {
+      "id": "Phase 3",
+      "title": "Week 1 pictures",
+      "checkpoint": "21de99f6"
+    },
+    {
+      "id": "Phase 4",
+      "title": "Remaining pictures and cover",
+      "checkpoint": "35f4a12c"
+    },
+    {
+      "id": "Phase 5",
+      "title": "Documentation and verification",
+      "checkpoint": "325b92a0"
+    }
+  ],
+  "gates": {
+    "PROJECT_LINT": "pass — exit 0; final lint: pass; selftest cases: 31 failed expectations: 0; carry-over base is an ancestor of HEAD: yes; own commits since the base: 1; own-commit files other than the strategy: 0; foreign commits since the base: 0; foreign Storytime paths: 0; strategy lines removed since the base: 0; strategy uncommitted change: no; restart-pins lines: 28 check exit: 0; restart-pins-2 lines: 7 check exit: 0; restart-pins-3 lines: 12 check exit: 0; restart check exit: 0; restart control exit: 1; restart control missing FAIL texts: 0; doctor exit: 1; doctor errors: 12; errors naming this track or an owned path: 0; errors outside the known list of 12: 0; known errors now absent: 0",
+    "PROJECT_CHECKS": "pass — exit 0; final checks: pass; tsc exit: 2; tsc errors total: 38; tsc baseline total: 38; owned tsc errors: 0; tsc unparsed error lines: 0; tsc files outside the baseline: 0; tsc files above their baseline: 0; known red exit: 1; known red Tests line: 7 failed, 135 passed, 0 skipped, 0 todo, total 142; tests in the file: 142; pin-dependent tests: 13; test file changed since b72f8b60: 0; known red failing tests outside the pin set: 0; known red drift sentinels failing: 4 of 4; known red skipped or todo: 0",
+    "PROJECT_TESTS": "pass — first attempt exit 1 on T180 only, from a cleaned /tmp/opencode fixture; rerun exit 0; Test Files  7 passed (7); Tests  105 passed (105); project tests exit: 0",
+    "source": "measure/runs/asset_storytime_l2_unit1_pictures_20261025/final-acceptance-2258bd6.log"
+  },
+  "antipatterns_clean": [
+    "A2 consent-blind publish gate — the registry entry, the metadata, and this manifest name model evidence only; no text says that Daniel or Workbooks accepted a picture",
+    "A3 digit-only count — every gate reads a labeled value (tsc errors total, Tests 105 passed (105), known red drift sentinels failing, restart spend 0.57 USD)",
+    "A4 vacuous pass — the restart control exits 1 and the known-red set comes from the test bodies, not from the failures",
+    "A5 false claim — each pass below quotes its command, exit code, and label; the doctor count is quoted with its exit code",
+    "A6 registry overstatement — the archived registry entry keeps the words model evidence, not acceptance",
+    "A7 over-broad filter — the tsc baseline is by file and count; the known-red pin set is a named list",
+    "A9 archived track paths — every measure/*.md link now names ./archive/asset_storytime_l2_unit1_pictures_20261025/; no test file names a measure/tracks path",
+    "A10 generated-facts drift — generate.sh and doctor.sh run after the archive move; the facts commit waits for a tree without foreign state",
+    "A11 doc-to-code drift — the script SHA-256 values and the tsc baseline table match the pinned values in the strategy"
+  ],
+  "antipatterns_known_limitations": [
+    "38 pinned tsc errors of other tracks, by file and count: assets/airship.ts 7, assets/longship.ts 1, assets/merchant-cart.ts 1, assets/mushroom-cap.ts 3, assets/plank.ts 6, assets/rowboat.ts 8, assets/storytime-crayon-box.ts 1, assets/storytime-nut.ts 3, assets/storytime-picture-book.ts 1, assets/waterskin.ts 3, assets/wool.ts 1, tests/games/castle-defense/rules.adversarial.test.ts 2, tests/part.test.ts 1",
+    "known-red file tests/storytime-book-pictures.test.ts stays red by the 5.11.16 rule; live list SHA-256 89b2910c28f07dcda1bd6a93349a26f31a32e971b72a55ec68e1bc9e48d9b33d; pin set script SHA-256 f67cfa8f17d380cb7e6f7632612b8f56d5cba6793d642a90abf2b5c1fd4a3fe0",
+    "12 structural doctor errors of other tracks: measure/tracks/asset_filled_shelves_20261028/plan.md new track has started tasks; measure/tracks/asset_p2_npcs_20260928/plan.md new track has started tasks; measure/tracks/game_archers_revenge_rebuild_20261029/plan.md new track has started tasks; measure/tracks/game_castle_defense_rebuild_20261029/plan.md new track has started tasks; measure/tracks/game_magic_defense_rebuild_20261029/plan.md new track has started tasks; measure/tracks/game_paladins_twin_soul_rebuild_20261029/plan.md new track has started tasks; measure/tracks.md missing registry link for asset_filled_shelves_20261028; measure/tracks.md missing registry link for game_archers_revenge_rebuild_20261029; measure/tracks.md missing registry link for game_castle_defense_rebuild_20261029; measure/tracks.md missing registry link for game_magic_defense_rebuild_20261029; measure/tracks.md missing registry link for game_paladins_twin_soul_rebuild_20261029; measure/generated/status.md stale generated fact",
+    "T180 reads a /tmp/opencode/wb-shadow fixture; a /tmp cleanup made it fail once during final acceptance, and the fixture was restored from Workbooks 078917f1"
+  ],
+  "deferred": [
+    "Phase 2 task: build and independently review the PM-approved missing cast, props, and poses (deferred 2026-11-01, replaced by the Muse path)",
+    "Phase 2 task: render the 30 week 1 rows of picture list version 3 as color and line-art (deferred 2026-11-01, replaced by the Muse path)",
+    "Phase 2 task: run automated checks on every color and line-art file and both model pre-checks (deferred 2026-11-01, replaced by the Muse path)",
+    "Phase 2 task: deliver the week 1 manifest, contact sheet, review logs, and ledger (deferred 2026-11-01, replaced by the Muse path)",
+    "Nan window sample, human gate deferred:daniel-lineart-look (plan line 1072)"
+  ],
+  "deferred_note": "The week 8 rows moon, mango, ostrich, and drum are not deferred: they were delivered under Task 3 (commit 6fd626c6).",
+  "tech_debt": [
+    "TD-29 — RB-P4-1 and PA4-N1 — coverCalmTopReport in src/storytime/book-pictures.ts does not confine cover-calm-top --print output paths, resolve real paths, or require a regular file (Low, Open)",
+    "TD-30 — RB12-01 and RB12-03, PA3-N3 — a parent symlink under out/ can redirect mkdir, and lstat with mkdir is not atomic (Low, Open)"
+  ],
+  "generated_facts": "not committed: measure/generated and measure/tracks.md hold foreign uncommitted changes (T5)",
+  "evidence_classes": {
+    "person_reviewed": "Daniel reviewed the week 1 to 7 pictures and the cover; the person records name the rows, times, words, and materials.",
+    "model_evidence_not_acceptance": "The 24 A-48 restart pictures carry Sonnet judge results. This is model evidence, not acceptance. Daniel checks their look in the book proof.",
+    "workbooks_acceptance": "none recorded"
+  }
+}

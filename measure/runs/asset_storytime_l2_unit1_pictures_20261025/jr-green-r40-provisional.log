@@ -1,0 +1,17 @@
+Role: measure-jr-green (build round 40)
+Session: Green · P3 · storytime_l2_unit1_pictures · r40
+Model: deepseek/deepseek-flash#high (DeepSeek V4.1 Flash 1017, provider deepseek)
+Red model for this phase: minimax-cn-coding-plan/MiniMax-M3 (MiniMax)
+Coder subagent model: none (not delegated)
+Track: asset_storytime_l2_unit1_pictures_20261025
+Phase: P3 "Phase 3: Week 1 pictures"
+role_base_sha: 69f85933
+phase_base_sha: 15a7bf0b
+Red commit in range: dbb1ea0b (row definitions v6 practice-line and v5 check-row)
+
+Task: third try at the storytime-nest line art, plus two color defects in the nest rows.
+Defect A: broken, dashed strokes on the inner rim and short dashes on the lower crossing sticks.
+Defect B: smeared texels on the nest floor and a thin black seam under the left rim.
+Defect C: the eggs render pale green-grey, but the goal says three light blue eggs.
+
+Status: started

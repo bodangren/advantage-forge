@@ -1,0 +1,74 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: ## Phase 2: Tests and calibrated model pre-checks
+task: Task 10 - check every decoded JSON value before provider evidence writes
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: 62c4ef6fee3aad167fe344df58f3dd4a4ed46b27
+head_sha: 425f5a94f9b87875b08fe503199f34ded8b97e2d
+commits:
+  - 5a46415eb0b25db2d4fb9e76b9224bcae7fb40fa: test(storytime): add failing decoded-layer remediation tests
+  - 425f5a94f9b87875b08fe503199f34ded8b97e2d: docs(measure): record Storytime task 10 Red evidence
+tests_added:
+  - T104: both providers refuse Review B case 1 with an extra string layer
+  - T105: both providers refuse three string layers
+  - T106: both providers refuse Review B case 3 with a root array
+  - T107: both providers refuse Review B case 2 with a scalar array element
+  - T108: both providers refuse a nonzero-status envelope with a string-layer array
+  - T109: both providers refuse an escaped credential at object depth 4000 without a RangeError
+  - T110: a safe object at depth 4000 keeps the parser result and the raw bytes
+  - T111: the seam scans a 65,536-byte answer at depth 400 within 2000 ms
+  - T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+  - T113: the decodedReviewFindings export is gone
+  - T114: the decoded check runs before parseModelReview and the Kimi comment matches
+  - T115: the seam scans a wide answer with 1200 injected secrets within 2000 ms
+tests_run:
+  - command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1 -t "T109|T110|T111|T115"'
+    wrapper_exit_code: 1
+    labeled_summary: "Tests  4 failed | 94 skipped (98); Duration 50.69 s"
+    log: measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t10-hostile.log
+  - command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'
+    wrapper_exit_code: 1
+    labeled_summary: "Tests  11 failed | 114 passed (125); Duration 248.20 s"
+    log: measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t10.log
+  - command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'
+    wrapper_exit_code: 2
+    labeled_summary: "tsc exit: 2; owned tsc errors: 0; total tsc errors: 31"
+    log: measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-tsc-t10.log
+  - command: grep -c 'timed out' measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t10.log
+    count: 0
+  - command: grep -E 'scan ms' measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t10.log
+    labeled_summary: "decoded scan ms: 20042; rule scan ms: 15274"
+files_changed:
+  - tests/storytime-book-pictures.test.ts: one describe block with T104 to T115; T1 to T103 unchanged
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md: task 10 Red evidence
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t10.log: Red gate output
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t10-hostile.log: focused hostile output
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-tsc-t10.log: compiler output
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-425f5a9.log: this role log
+plan_updates:
+  - Task 10 is [~] with the Red base, the Red command, the exit code, the labeled summary, and each failure reason.
+  - The plan records the two test design deviations and the Red model deviation.
+  - Task 10 stays open for Green. No task status changed.
+dirty_path_classification:
+  - Relevant: the Storytime test file and the Storytime track plan; committed by this role.
+  - Generated or ignorable: the role logs and the gate logs under measure/runs; left uncommitted, as in task 9.
+  - Unrelated user work: the license commit 01f784a8 and every other dirty path; preserved and not staged.
+known_failures:
+  - T104 to T111, T113, T114, and T115 fail for the stated missing behavior. T112 passes at Red.
+  - All 113 earlier tests pass. No earlier-test exception.
+  - The compiler exit stays 2. The owned error count is 0. The total error count is 31, the baseline.
+  - No timeout failure. The gate stopped on its own time limit only in the first stopped run, which is not Red evidence.
+deviations:
+  - Red model: the strategy names volcengine-agent-plan/deepseek-v4-pro#high. This role ran minimax-cn-coding-plan/MiniMax-M3#high. The orchestrator keeps Red in this track on MiniMax-M3 and leaves DeepSeek free for acceptance.
+  - T115 env names: TASK10_SECRET_<n>_KEY. The env rule pattern needs a name that ends in KEY, TOKEN, SECRET, or PASSWORD. Without that suffix the 1200 rules do not exist and the row cannot fail at Red.
+  - T109, T110, T111, and T115 run their scan in a worker thread with a test-owned wall-clock limit. The current recursive walker blocks the event loop. The first full run held the heavy lock for 27 minutes and the orchestrator stopped it.
+handoff:
+  - Green runs ENGINE_HOOK_TEST_COMMAND with the same time limit, then TASK10_TYPECHECK_COMMAND.
+  - Green must make the walker use an explicit worklist, decode JSON string layers, walk root arrays and scalar array elements, build the credential rules once per call, keep the task 9 refusal suffix, remove the decodedReviewFindings export, and move the Kimi check before parseModelReview with a comment that states the check reads the raw answer.
+  - The worker harness stays. Each hostile row keeps its own limit. A Green run must finish T109, T110, T111, and T115 well inside their limits.
+  - The adversarial gate runs the focused command on tests/storytime-book-pictures.test.ts. Each mutation run needs a time limit and a background run, because a mutation that restores recursion can hold the lock for minutes.
+  - RC5-3 stays a tech-debt candidate. RA4-N1 and RA3-N1 stay closeout items.
+  - No paid call, no render, and no smoke run. facts_changed: none.
+END_MEASURE_AGENT_RESULT

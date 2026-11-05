@@ -1,0 +1,47 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: partial
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P2 task 9
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: 2d789e4897b4cb83c6e983fc45793292f0d34ff3
+head_sha: 2d789e4897b4cb83c6e983fc45793292f0d34ff3
+commits: none
+tests_run: command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'; exit code: 1; summary line: Tests  8 failed | 105 passed (113); new_failures: T96 to T103; earlier_test_exceptions: none; lock_wait_line: none
+files_changed: tests/storytime-book-pictures.test.ts; measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md; this report
+plan_updates: Task 9 is in progress before test edits.
+known_failures: RB3-01 and RA4-01 remain open. Prior evidence records 31 baseline compiler errors. The local anti-pattern catalog and tests/_lib are absent. The canonical catalog was read.
+handoff: The focused run confirms eight new failures and 105 earlier passes. The compiler check and commits are pending. Generated facts remain assigned to phase closeout.
+dirty_path_classification: Relevant assigned paths are clean. Existing measure/runs evidence is relevant and preserved. measure/generated files are generated and preserved. All other dirty paths are unrelated user work and preserved.
+model_deviation: none
+facts_changed: none
+END_MEASURE_AGENT_RESULT
+
+Restart reconciliation: 2026-10-31. The block above preserves the interrupted role record.
+The repository advanced during the interruption. Another Red run committed task 9, and Green completed it.
+This role preserves those commits and their evidence. It runs no duplicate gate and changes no task marker.
+
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: blocked
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P2 task 9
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: 2d789e4897b4cb83c6e983fc45793292f0d34ff3
+head_sha: b53cab6358f43150b34481225c3ca486c5c7e6b7
+commits: none by this resumed role
+existing_red_test_commit: a190019472ef25313e19e201f7fc574dacf2cfc0
+existing_red_plan_commit: d1d58dcd38d8d0d6105a3d33e75ac803b37fa428
+existing_green_commit: e9d8132b0fafc05dc817a4bb9cc1986e32a08b56
+tests: No new run. Saved Red evidence reports Tests  8 failed | 105 passed (113), covering T96 to T103.
+typecheck: The saved red-tsc-t9.log contains 0 owned test errors and 31 total compiler errors.
+files_changed: measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-2d789e4.log only
+plan_updates: none; task 9 already has [x], Red evidence, and Green evidence
+remaining_failures: No current test failures verified. Historical Red failures are T96 to T103. Saved compiler output contains 31 baseline errors.
+blocker: The assignment is stale. This resumed role cannot claim the replacement role's commits as its own.
+handoff: Orchestrator question: Should this resumed role stop as superseded, or receive a new bounded assignment? Options: A) Stop as superseded; preserve existing evidence. B) Supply a new assignment and fresh role_base_sha.
+dirty_path_classification: Assigned test and plan paths are clean. Run evidence is relevant and preserved. measure/generated files are generated and preserved. All other dirty paths are unrelated user work and preserved.
+worktrees: master remains unchanged. advantage-forge-release is detached at e01ac17b; preserve for its owner. shelf-sync-20261030 remains in advantage-forge-shelf-sync; preserve for its owner.
+branches: shelf-sync-20261030 and remote branches remain unchanged. Their owners retain merge and cleanup responsibility.
+facts_changed: none
+END_MEASURE_AGENT_RESULT

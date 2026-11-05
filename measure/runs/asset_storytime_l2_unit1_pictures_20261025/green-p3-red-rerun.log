@@ -1,0 +1,1762 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample case: 2 shape: invalid-escape provider: minimax
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample case: 5 shape: unterminated provider: minimax
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample case: 9 shape: array provider: minimax
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample case: 14 shape: key provider: minimax
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample case: 20 shape: object provider: minimax
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample case: 27 shape: duplicate-key provider: minimax
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample case: 35 shape: control provider: minimax
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample case: 44 shape: backslash provider: minimax
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample case: 54 shape: duplicate-key provider: minimax
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample case: 65 shape: duplicate-key provider: minimax
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample case: 77 shape: object provider: minimax
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+sample cases: 12
+sample refusals: 13
+
+stdout | tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T138: the safe twins yield no finding and both providers accept them
+twin cases: 245
+twin findings: 0
+
+stdout | tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T146: the line-art check rejects a line thinner than 12 px and prints the measured width
+Line-art ink coverage: 0.75% (1200 of 160000 pixels black).
+
+stdout | tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T146: the line-art check rejects a line thinner than 12 px and prints the measured width
+Line-art ink coverage: 1.38% (2200 of 160000 pixels black).
+
+ ❯ tests/storytime-book-pictures.test.ts (134 tests | 12 failed) 266125ms
+         × T135: both providers refuse the sampled generated cases 34561ms
+         × T138: the safe twins yield no finding and both providers accept them 22218ms
+     × T142: the picture list loader reads pictures.json read-only and records its SHA-256 4ms
+     × T143: the size class of a row gives the pixel size of specification v1 16ms
+     × T144: the color and the line-art file names of a row come from the list 7ms
+     × T145: every week 1 row of the list gets a color file and a line-art twin 5ms
+     × T146: the line-art check rejects a line thinner than 12 px and prints the measured width 62ms
+     × T147: the pipeline never writes to the Workbooks tree 44ms
+     × T148: the pipeline refuses a broken file name and a changed list file 29ms
+     × T149: a class B row runs the calm top check and a class C row runs the white-corner check 958ms
+     × T150: the week 1 selection holds 30 rows and the two batch hashes move apart 4ms
+     × T151: the render command prints the peak memory of the capture process 852ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 12 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 2 shape invalid-escape/minimax: the refusal names only the pattern.: expected 'w01-readalong-p01: Candidate must be …' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"w01-readalong-p01: Candidate must be 4000 x 3000 pixels."
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3131:81
+    3129|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3130|           .not.toBe('RangeError');
+    3131|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 2 shape invalid-escape/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3134:12
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3134|           .toBe(true);
+       |            ^
+    3135|         const entries = await securityLedger(space.space.outputRoot);
+    3136|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 5 shape unterminated/minimax: the refusal names only the pattern.: expected 'w01-readalong-p01: Candidate must be …' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"w01-readalong-p01: Candidate must be 4000 x 3000 pixels."
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3131:81
+    3129|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3130|           .not.toBe('RangeError');
+    3131|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 5 shape unterminated/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3134:12
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3134|           .toBe(true);
+       |            ^
+    3135|         const entries = await securityLedger(space.space.outputRoot);
+    3136|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 9 shape array/minimax: the refusal names only the pattern.: expected 'w01-readalong-p01: Candidate must be …' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"w01-readalong-p01: Candidate must be 4000 x 3000 pixels."
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3131:81
+    3129|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3130|           .not.toBe('RangeError');
+    3131|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 9 shape array/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3134:12
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3134|           .toBe(true);
+       |            ^
+    3135|         const entries = await securityLedger(space.space.outputRoot);
+    3136|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 14 shape key/minimax: the refusal names only the pattern.: expected 'w01-readalong-p01: Candidate must be …' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"w01-readalong-p01: Candidate must be 4000 x 3000 pixels."
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3131:81
+    3129|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3130|           .not.toBe('RangeError');
+    3131|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 14 shape key/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3134:12
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3134|           .toBe(true);
+       |            ^
+    3135|         const entries = await securityLedger(space.space.outputRoot);
+    3136|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 20 shape object/minimax: the refusal names only the pattern.: expected 'w01-readalong-p01: Candidate must be …' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"w01-readalong-p01: Candidate must be 4000 x 3000 pixels."
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3131:81
+    3129|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3130|           .not.toBe('RangeError');
+    3131|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 20 shape object/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3134:12
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3134|           .toBe(true);
+       |            ^
+    3135|         const entries = await securityLedger(space.space.outputRoot);
+    3136|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 27 shape duplicate-key/minimax: the refusal names only the pattern.: expected 'w01-readalong-p01: Candidate must be …' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"w01-readalong-p01: Candidate must be 4000 x 3000 pixels."
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3131:81
+    3129|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3130|           .not.toBe('RangeError');
+    3131|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 27 shape duplicate-key/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3134:12
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3134|           .toBe(true);
+       |            ^
+    3135|         const entries = await securityLedger(space.space.outputRoot);
+    3136|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 35 shape control/minimax: the refusal names only the pattern.: expected 'w01-readalong-p01: Candidate must be …' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"w01-readalong-p01: Candidate must be 4000 x 3000 pixels."
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3131:81
+    3129|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3130|           .not.toBe('RangeError');
+    3131|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 35 shape control/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3134:12
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3134|           .toBe(true);
+       |            ^
+    3135|         const entries = await securityLedger(space.space.outputRoot);
+    3136|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 44 shape backslash/minimax: the refusal names only the pattern.: expected 'w01-readalong-p01: Candidate must be …' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"w01-readalong-p01: Candidate must be 4000 x 3000 pixels."
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3131:81
+    3129|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3130|           .not.toBe('RangeError');
+    3131|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 44 shape backslash/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3134:12
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3134|           .toBe(true);
+       |            ^
+    3135|         const entries = await securityLedger(space.space.outputRoot);
+    3136|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 54 shape duplicate-key/minimax: the refusal names only the pattern.: expected 'w01-readalong-p01: Candidate must be …' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"w01-readalong-p01: Candidate must be 4000 x 3000 pixels."
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3131:81
+    3129|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3130|           .not.toBe('RangeError');
+    3131|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 54 shape duplicate-key/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3134:12
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3134|           .toBe(true);
+       |            ^
+    3135|         const entries = await securityLedger(space.space.outputRoot);
+    3136|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 65 shape duplicate-key/minimax: the refusal names only the pattern.: expected 'w01-readalong-p01: Candidate must be …' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"w01-readalong-p01: Candidate must be 4000 x 3000 pixels."
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3131:81
+    3129|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3130|           .not.toBe('RangeError');
+    3131|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 65 shape duplicate-key/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3134:12
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3134|           .toBe(true);
+       |            ^
+    3135|         const entries = await securityLedger(space.space.outputRoot);
+    3136|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 77 shape object/minimax: the refusal names only the pattern.: expected 'w01-readalong-p01: Candidate must be …' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"w01-readalong-p01: Candidate must be 4000 x 3000 pixels."
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3131:81
+    3129|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    3130|           .not.toBe('RangeError');
+    3131|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample case 77 shape object/minimax: the refusal has the task 10 suffix.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ expectMalformedRefusal tests/storytime-book-pictures.test.ts:3134:12
+    3132|         expect.soft(message, `${context}: the refusal holds no matched…
+    3133|         expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: t…
+    3134|           .toBe(true);
+       |            ^
+    3135|         const entries = await securityLedger(space.space.outputRoot);
+    3136|         expect.soft(entries.filter((entry) => entry.status === 'succes…
+ ❯ tests/storytime-book-pictures.test.ts:3226:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T135: both providers refuse the sampled generated cases
+AssertionError: sample refusals: 13: expected 13 to be 24 // Object.is equality
+
+- Expected
++ Received
+
+- 24
++ 13
+
+ ❯ tests/storytime-book-pictures.test.ts:3241:54
+    3239|         expect.soft(parsedRefusals, 'The labeled refusal count is an i…
+    3240|         expect.soft(parsedCases, casesPrinted).toBe(SAMPLE_INDEXES.len…
+    3241|         expect.soft(parsedRefusals, refusalsPrinted).toBe(SAMPLE_INDEX…
+       |                                                      ^
+    3242|       }, 300000);
+    3243|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T138: the safe twins yield no finding and both providers accept them
+AssertionError: twin 0 unterminated token/minimax: the twin is accepted.: expected { name: 'Error', …(1) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "message": "w01-readalong-p01: Candidate must be 4000 x 3000 pixels.",
+  "name": "Error",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:3334:16
+    3332|               `${context}: the call finishes inside ${MALFORMED_PROVID…
+    3333|             expect.soft(providerResult.report?.error ?? null, `${conte…
+    3334|               .toBeNull();
+       |                ^
+    3335|             const expected = parseModelReview(twin);
+    3336|             expect.soft(providerResult.report?.status ?? null, `${cont…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T138: the safe twins yield no finding and both providers accept them
+AssertionError: twin 0 unterminated token/minimax: the parser verdict is the status.: expected null to be 'pass' // Object.is equality
+
+- Expected:
+"pass"
+
++ Received:
+null
+
+ ❯ tests/storytime-book-pictures.test.ts:3337:16
+    3335|             const expected = parseModelReview(twin);
+    3336|             expect.soft(providerResult.report?.status ?? null, `${cont…
+    3337|               .toBe(expected.verdict);
+       |                ^
+    3338|             const reviewFile = path.join(space.space.outputRoot, `revi…
+    3339|             expect.soft(existsSync(reviewFile), `${context}: the revie…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T138: the safe twins yield no finding and both providers accept them
+AssertionError: twin 0 unterminated token/minimax: the review file exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:3339:88
+    3337|               .toBe(expected.verdict);
+    3338|             const reviewFile = path.join(space.space.outputRoot, `revi…
+    3339|             expect.soft(existsSync(reviewFile), `${context}: the revie…
+       |                                                                                        ^
+    3340|             if (!existsSync(reviewFile)) continue;
+    3341|             const written = JSON.parse(await readFile(reviewFile, 'utf…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T138: the safe twins yield no finding and both providers accept them
+AssertionError: twin 1 trailing backslash/minimax: the twin is accepted.: expected { name: 'Error', …(1) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "message": "w01-readalong-p01: Candidate must be 4000 x 3000 pixels.",
+  "name": "Error",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:3334:16
+    3332|               `${context}: the call finishes inside ${MALFORMED_PROVID…
+    3333|             expect.soft(providerResult.report?.error ?? null, `${conte…
+    3334|               .toBeNull();
+       |                ^
+    3335|             const expected = parseModelReview(twin);
+    3336|             expect.soft(providerResult.report?.status ?? null, `${cont…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T138: the safe twins yield no finding and both providers accept them
+AssertionError: twin 1 trailing backslash/minimax: the parser verdict is the status.: expected null to be 'pass' // Object.is equality
+
+- Expected:
+"pass"
+
++ Received:
+null
+
+ ❯ tests/storytime-book-pictures.test.ts:3337:16
+    3335|             const expected = parseModelReview(twin);
+    3336|             expect.soft(providerResult.report?.status ?? null, `${cont…
+    3337|               .toBe(expected.verdict);
+       |                ^
+    3338|             const reviewFile = path.join(space.space.outputRoot, `revi…
+    3339|             expect.soft(existsSync(reviewFile), `${context}: the revie…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T138: the safe twins yield no finding and both providers accept them
+AssertionError: twin 1 trailing backslash/minimax: the review file exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:3339:88
+    3337|               .toBe(expected.verdict);
+    3338|             const reviewFile = path.join(space.space.outputRoot, `revi…
+    3339|             expect.soft(existsSync(reviewFile), `${context}: the revie…
+       |                                                                                        ^
+    3340|             if (!existsSync(reviewFile)) continue;
+    3341|             const written = JSON.parse(await readFile(reviewFile, 'utf…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T138: the safe twins yield no finding and both providers accept them
+AssertionError: twin 2 raw control character/minimax: the twin is accepted.: expected { name: 'Error', …(1) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "message": "w01-readalong-p01: Candidate must be 4000 x 3000 pixels.",
+  "name": "Error",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:3334:16
+    3332|               `${context}: the call finishes inside ${MALFORMED_PROVID…
+    3333|             expect.soft(providerResult.report?.error ?? null, `${conte…
+    3334|               .toBeNull();
+       |                ^
+    3335|             const expected = parseModelReview(twin);
+    3336|             expect.soft(providerResult.report?.status ?? null, `${cont…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T138: the safe twins yield no finding and both providers accept them
+AssertionError: twin 2 raw control character/minimax: the parser verdict is the status.: expected null to be 'pass' // Object.is equality
+
+- Expected:
+"pass"
+
++ Received:
+null
+
+ ❯ tests/storytime-book-pictures.test.ts:3337:16
+    3335|             const expected = parseModelReview(twin);
+    3336|             expect.soft(providerResult.report?.status ?? null, `${cont…
+    3337|               .toBe(expected.verdict);
+       |                ^
+    3338|             const reviewFile = path.join(space.space.outputRoot, `revi…
+    3339|             expect.soft(existsSync(reviewFile), `${context}: the revie…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[31/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T138: the safe twins yield no finding and both providers accept them
+AssertionError: twin 2 raw control character/minimax: the review file exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:3339:88
+    3337|               .toBe(expected.verdict);
+    3338|             const reviewFile = path.join(space.space.outputRoot, `revi…
+    3339|             expect.soft(existsSync(reviewFile), `${context}: the revie…
+       |                                                                                        ^
+    3340|             if (!existsSync(reviewFile)) continue;
+    3341|             const written = JSON.parse(await readFile(reviewFile, 'utf…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[32/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T138: the safe twins yield no finding and both providers accept them
+AssertionError: twin 3 invalid escape/minimax: the twin is accepted.: expected { name: 'Error', …(1) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "message": "w01-readalong-p01: Candidate must be 4000 x 3000 pixels.",
+  "name": "Error",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:3334:16
+    3332|               `${context}: the call finishes inside ${MALFORMED_PROVID…
+    3333|             expect.soft(providerResult.report?.error ?? null, `${conte…
+    3334|               .toBeNull();
+       |                ^
+    3335|             const expected = parseModelReview(twin);
+    3336|             expect.soft(providerResult.report?.status ?? null, `${cont…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[33/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T138: the safe twins yield no finding and both providers accept them
+AssertionError: twin 3 invalid escape/minimax: the parser verdict is the status.: expected null to be 'pass' // Object.is equality
+
+- Expected:
+"pass"
+
++ Received:
+null
+
+ ❯ tests/storytime-book-pictures.test.ts:3337:16
+    3335|             const expected = parseModelReview(twin);
+    3336|             expect.soft(providerResult.report?.status ?? null, `${cont…
+    3337|               .toBe(expected.verdict);
+       |                ^
+    3338|             const reviewFile = path.join(space.space.outputRoot, `revi…
+    3339|             expect.soft(existsSync(reviewFile), `${context}: the revie…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[34/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T138: the safe twins yield no finding and both providers accept them
+AssertionError: twin 3 invalid escape/minimax: the review file exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:3339:88
+    3337|               .toBe(expected.verdict);
+    3338|             const reviewFile = path.join(space.space.outputRoot, `revi…
+    3339|             expect.soft(existsSync(reviewFile), `${context}: the revie…
+       |                                                                                        ^
+    3340|             if (!existsSync(reviewFile)) continue;
+    3341|             const written = JSON.parse(await readFile(reviewFile, 'utf…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[35/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T138: the safe twins yield no finding and both providers accept them
+AssertionError: twin 4 stray prose quote/minimax: the twin is accepted.: expected { name: 'Error', …(1) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "message": "w01-readalong-p01: Candidate must be 4000 x 3000 pixels.",
+  "name": "Error",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:3334:16
+    3332|               `${context}: the call finishes inside ${MALFORMED_PROVID…
+    3333|             expect.soft(providerResult.report?.error ?? null, `${conte…
+    3334|               .toBeNull();
+       |                ^
+    3335|             const expected = parseModelReview(twin);
+    3336|             expect.soft(providerResult.report?.status ?? null, `${cont…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[36/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T138: the safe twins yield no finding and both providers accept them
+AssertionError: twin 4 stray prose quote/minimax: the parser verdict is the status.: expected null to be 'pass' // Object.is equality
+
+- Expected:
+"pass"
+
++ Received:
+null
+
+ ❯ tests/storytime-book-pictures.test.ts:3337:16
+    3335|             const expected = parseModelReview(twin);
+    3336|             expect.soft(providerResult.report?.status ?? null, `${cont…
+    3337|               .toBe(expected.verdict);
+       |                ^
+    3338|             const reviewFile = path.join(space.space.outputRoot, `revi…
+    3339|             expect.soft(existsSync(reviewFile), `${context}: the revie…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[37/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > Malformed string remediation > T138: the safe twins yield no finding and both providers accept them
+AssertionError: twin 4 stray prose quote/minimax: the review file exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:3339:88
+    3337|               .toBe(expected.verdict);
+    3338|             const reviewFile = path.join(space.space.outputRoot, `revi…
+    3339|             expect.soft(existsSync(reviewFile), `${context}: the revie…
+       |                                                                                        ^
+    3340|             if (!existsSync(reviewFile)) continue;
+    3341|             const written = JSON.parse(await readFile(reviewFile, 'utf…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[38/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T142: the picture list loader reads pictures.json read-only and records its SHA-256
+AssertionError: The pipeline exposes the picture list loader.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ loadList tests/storytime-book-pictures.test.ts:4053:70
+    4051| async function loadList(options: PictureListOptions): Promise<PictureL…
+    4052|   const seam = listSeam('loadPictureList');
+    4053|   expect.soft(seam, 'The pipeline exposes the picture list loader.').t…
+       |                                                                      ^
+    4054|   if (!seam) return undefined;
+    4055|   return seam(options);
+ ❯ tests/storytime-book-pictures.test.ts:4130:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[39/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T143: the size class of a row gives the pixel size of specification v1
+AssertionError: expected { 'Class A pixels': { …(2) } } to deeply equal { 'Class A pixels': { …(2) } }
+
+- Expected
++ Received
+
+  {
+    "Class A pixels": {
+-     "height": 3000,
+-     "width": 4000,
++     "height": 2250,
++     "width": 3000,
+    },
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4147:8
+    4145|   it('T143: the size class of a row gives the pixel size of specificat…
+    4146|     expect.soft({ 'Class A pixels': pictureSeams.PICTURE_SIZES.story })
+    4147|       .toEqual({ 'Class A pixels': CLASS_PIXELS.A });
+       |        ^
+    4148|     expect.soft({ 'Class B pixels': pictureSeams.PICTURE_SIZES.cover })
+    4149|       .toEqual({ 'Class B pixels': CLASS_PIXELS.B });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[40/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T143: the size class of a row gives the pixel size of specification v1
+AssertionError: expected { 'Class B pixels': { …(2) } } to deeply equal { 'Class B pixels': { …(2) } }
+
+- Expected
++ Received
+
+  {
+    "Class B pixels": {
+-     "height": 3000,
+-     "width": 4000,
++     "height": 2700,
++     "width": 3600,
+    },
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4149:8
+    4147|       .toEqual({ 'Class A pixels': CLASS_PIXELS.A });
+    4148|     expect.soft({ 'Class B pixels': pictureSeams.PICTURE_SIZES.cover })
+    4149|       .toEqual({ 'Class B pixels': CLASS_PIXELS.B });
+       |        ^
+    4150|     expect.soft({ 'Class C pixels': pictureSeams.PICTURE_SIZES.small })
+    4151|       .toEqual({ 'Class C pixels': CLASS_PIXELS.C });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[41/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T143: the size class of a row gives the pixel size of specification v1
+AssertionError: expected { 'Class A row pixels': { …(2) } } to deeply equal { 'Class A row pixels': { …(2) } }
+
+- Expected
++ Received
+
+  {
+    "Class A row pixels": {
+-     "height": 3000,
+-     "width": 4000,
++     "height": 2250,
++     "width": 3000,
+    },
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4156:10
+    4154|       const plan = plannedRow(row);
+    4155|       expect.soft({ [`Class ${sizeClass} row pixels`]: { width: plan.w…
+    4156|         .toEqual({ [`Class ${sizeClass} row pixels`]: CLASS_PIXELS[siz…
+       |          ^
+    4157|       expect.soft({ [`Class ${sizeClass} list pixels`]: { width: row.w…
+    4158|         .toEqual({ [`Class ${sizeClass} list pixels`]: CLASS_PIXELS[si…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[42/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T143: the size class of a row gives the pixel size of specification v1
+AssertionError: expected { 'Class B row pixels': { …(2) } } to deeply equal { 'Class B row pixels': { …(2) } }
+
+- Expected
++ Received
+
+  {
+    "Class B row pixels": {
+-     "height": 3000,
+-     "width": 4000,
++     "height": 2700,
++     "width": 3600,
+    },
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4156:10
+    4154|       const plan = plannedRow(row);
+    4155|       expect.soft({ [`Class ${sizeClass} row pixels`]: { width: plan.w…
+    4156|         .toEqual({ [`Class ${sizeClass} row pixels`]: CLASS_PIXELS[siz…
+       |          ^
+    4157|       expect.soft({ [`Class ${sizeClass} list pixels`]: { width: row.w…
+    4158|         .toEqual({ [`Class ${sizeClass} list pixels`]: CLASS_PIXELS[si…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[43/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T144: the color and the line-art file names of a row come from the list
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "Rows with a line-art file that differs from the list": [],
++   "Rows with a line-art file that differs from the list": [
++     "l2-w01-story-page-hello-i-am-pat: lineart/l2-w01-story-page-hello-i-am-pat-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-may: lineart/l2-w01-story-page-hello-i-am-may-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-sam: lineart/l2-w01-story-page-hello-i-am-sam-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-mia: lineart/l2-w01-story-page-hello-i-am-mia-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-nan: lineart/l2-w01-story-page-hello-i-am-nan-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-ben: lineart/l2-w01-story-page-hello-i-am-ben-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-your-teacher: lineart/l2-w01-story-page-hello-i-am-your-teacher-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-pip: lineart/l2-w01-story-page-hello-i-am-pip-v1-lineart.png",
++     "l2-w01-cover-hello: ",
++     "l2-w01-story-page-a-nest: lineart/l2-w01-story-page-a-nest-v1-lineart.png",
++     "l2-w01-story-page-a-net: lineart/l2-w01-story-page-a-net-v1-lineart.png",
++     "l2-w01-story-page-a-nut: lineart/l2-w01-story-page-a-nut-v1-lineart.png",
++     "l2-w01-story-page-a-nose: lineart/l2-w01-story-page-a-nose-v1-lineart.png",
++     "l2-w01-story-page-a-neck: lineart/l2-w01-story-page-a-neck-v1-lineart.png",
++     "l2-w01-story-page-a-nurse: lineart/l2-w01-story-page-a-nurse-v1-lineart.png",
++     "l2-w01-story-page-a-nest-and-a-nut: lineart/l2-w01-story-page-a-nest-and-a-nut-v1-lineart.png",
++     "l2-w01-story-page-nan-can-nod: lineart/l2-w01-story-page-nan-can-nod-v1-lineart.png",
++     "l2-w01-cover-nan-can-nod: ",
++     "l2-w01-check-row-nest: ",
++     "l2-w01-check-row-cat: ",
++     "l2-w01-check-row-fish: ",
++     "l2-w01-check-row-dog: ",
++     "l2-w01-check-row-nose: ",
++     "l2-w01-check-row-bus: ",
++     "l2-w01-check-row-hat: ",
++     "l2-w01-check-row-cup: ",
++     "l2-w01-check-row-net: ",
++     "l2-w01-practice-line-nose: ",
++     "l2-w01-practice-line-nest: ",
++     "l2-w01-practice-line-nut: ",
++   ],
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4182:8
+    4180|       .toEqual({ 'Rows with a color file that differs from the list': …
+    4181|     expect.soft({ 'Rows with a line-art file that differs from the lis…
+    4182|       .toEqual({ 'Rows with a line-art file that differs from the list…
+       |        ^
+    4183|     expect.soft({ 'Rows whose line-art file does not end in -line-v1.p…
+    4184|       .toEqual({ 'Rows whose line-art file does not end in -line-v1.pn…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[44/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T144: the color and the line-art file names of a row come from the list
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "Rows whose line-art file does not end in -line-v1.png": [],
++   "Rows whose line-art file does not end in -line-v1.png": [
++     "l2-w01-story-page-hello-i-am-pat: lineart/l2-w01-story-page-hello-i-am-pat-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-may: lineart/l2-w01-story-page-hello-i-am-may-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-sam: lineart/l2-w01-story-page-hello-i-am-sam-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-mia: lineart/l2-w01-story-page-hello-i-am-mia-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-nan: lineart/l2-w01-story-page-hello-i-am-nan-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-ben: lineart/l2-w01-story-page-hello-i-am-ben-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-your-teacher: lineart/l2-w01-story-page-hello-i-am-your-teacher-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-pip: lineart/l2-w01-story-page-hello-i-am-pip-v1-lineart.png",
++     "l2-w01-cover-hello: ",
++     "l2-w01-story-page-a-nest: lineart/l2-w01-story-page-a-nest-v1-lineart.png",
++     "l2-w01-story-page-a-net: lineart/l2-w01-story-page-a-net-v1-lineart.png",
++     "l2-w01-story-page-a-nut: lineart/l2-w01-story-page-a-nut-v1-lineart.png",
++     "l2-w01-story-page-a-nose: lineart/l2-w01-story-page-a-nose-v1-lineart.png",
++     "l2-w01-story-page-a-neck: lineart/l2-w01-story-page-a-neck-v1-lineart.png",
++     "l2-w01-story-page-a-nurse: lineart/l2-w01-story-page-a-nurse-v1-lineart.png",
++     "l2-w01-story-page-a-nest-and-a-nut: lineart/l2-w01-story-page-a-nest-and-a-nut-v1-lineart.png",
++     "l2-w01-story-page-nan-can-nod: lineart/l2-w01-story-page-nan-can-nod-v1-lineart.png",
++     "l2-w01-cover-nan-can-nod: ",
++     "l2-w01-check-row-nest: ",
++     "l2-w01-check-row-cat: ",
++     "l2-w01-check-row-fish: ",
++     "l2-w01-check-row-dog: ",
++     "l2-w01-check-row-nose: ",
++     "l2-w01-check-row-bus: ",
++     "l2-w01-check-row-hat: ",
++     "l2-w01-check-row-cup: ",
++     "l2-w01-check-row-net: ",
++     "l2-w01-practice-line-nose: ",
++     "l2-w01-practice-line-nest: ",
++     "l2-w01-practice-line-nut: ",
++   ],
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4184:8
+    4182|       .toEqual({ 'Rows with a line-art file that differs from the list…
+    4183|     expect.soft({ 'Rows whose line-art file does not end in -line-v1.p…
+    4184|       .toEqual({ 'Rows whose line-art file does not end in -line-v1.pn…
+       |        ^
+    4185|     expect.soft({ 'Rows whose line-art file is not beside the color fi…
+    4186|       .toEqual({ 'Rows whose line-art file is not beside the color fil…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[45/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T144: the color and the line-art file names of a row come from the list
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "Rows whose line-art file is not beside the color file": [],
++   "Rows whose line-art file is not beside the color file": [
++     "l2-w01-story-page-hello-i-am-pat: lineart/l2-w01-story-page-hello-i-am-pat-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-may: lineart/l2-w01-story-page-hello-i-am-may-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-sam: lineart/l2-w01-story-page-hello-i-am-sam-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-mia: lineart/l2-w01-story-page-hello-i-am-mia-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-nan: lineart/l2-w01-story-page-hello-i-am-nan-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-ben: lineart/l2-w01-story-page-hello-i-am-ben-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-your-teacher: lineart/l2-w01-story-page-hello-i-am-your-teacher-v1-lineart.png",
++     "l2-w01-story-page-hello-i-am-pip: lineart/l2-w01-story-page-hello-i-am-pip-v1-lineart.png",
++     "l2-w01-story-page-a-nest: lineart/l2-w01-story-page-a-nest-v1-lineart.png",
++     "l2-w01-story-page-a-net: lineart/l2-w01-story-page-a-net-v1-lineart.png",
++     "l2-w01-story-page-a-nut: lineart/l2-w01-story-page-a-nut-v1-lineart.png",
++     "l2-w01-story-page-a-nose: lineart/l2-w01-story-page-a-nose-v1-lineart.png",
++     "l2-w01-story-page-a-neck: lineart/l2-w01-story-page-a-neck-v1-lineart.png",
++     "l2-w01-story-page-a-nurse: lineart/l2-w01-story-page-a-nurse-v1-lineart.png",
++     "l2-w01-story-page-a-nest-and-a-nut: lineart/l2-w01-story-page-a-nest-and-a-nut-v1-lineart.png",
++     "l2-w01-story-page-nan-can-nod: lineart/l2-w01-story-page-nan-can-nod-v1-lineart.png",
++   ],
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4186:8
+    4184|       .toEqual({ 'Rows whose line-art file does not end in -line-v1.pn…
+    4185|     expect.soft({ 'Rows whose line-art file is not beside the color fi…
+    4186|       .toEqual({ 'Rows whose line-art file is not beside the color fil…
+       |        ^
+    4187|     expect.soft({ 'Rows whose line-art file sits in a lineart director…
+    4188|       .toEqual({ 'Rows whose line-art file sits in a lineart directory…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[46/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T145: every week 1 row of the list gets a color file and a line-art twin
+AssertionError: The pipeline exposes the picture list loader.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ loadList tests/storytime-book-pictures.test.ts:4053:70
+    4051| async function loadList(options: PictureListOptions): Promise<PictureL…
+    4052|   const seam = listSeam('loadPictureList');
+    4053|   expect.soft(seam, 'The pipeline exposes the picture list loader.').t…
+       |                                                                      ^
+    4054|   if (!seam) return undefined;
+    4055|   return seam(options);
+ ❯ tests/storytime-book-pictures.test.ts:4192:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[47/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T145: every week 1 row of the list gets a color file and a line-art twin
+AssertionError: expected { 'Week 1 pipeline rows': +0 } to deeply equal { 'Week 1 pipeline rows': 30 }
+
+- Expected
++ Received
+
+  {
+-   "Week 1 pipeline rows": 30,
++   "Week 1 pipeline rows": 0,
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4194:66
+    4192|     const list = await loadList({ printRoot: PRINT_ROOT, workbooksRoot…
+    4193|     const pipelineRows = (list?.rows ?? []).filter((row) => row.week =…
+    4194|     expect.soft({ 'Week 1 pipeline rows': pipelineRows.length }).toEqu…
+       |                                                                  ^
+    4195|     expect.soft({ 'Week 1 use counts': useCounts(pipelineRows) }).toEq…
+    4196|       'Week 1 use counts': { 'story-page': 16, 'cover': 2, 'check-row'…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[48/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T145: every week 1 row of the list gets a color file and a line-art twin
+AssertionError: expected { 'Week 1 use counts': { …(4) } } to deeply equal { 'Week 1 use counts': { …(4) } }
+
+- Expected
++ Received
+
+  {
+    "Week 1 use counts": {
+-     "check-row": 9,
+-     "cover": 2,
+-     "practice-line": 3,
+-     "story-page": 16,
++     "check-row": 0,
++     "cover": 0,
++     "practice-line": 0,
++     "story-page": 0,
+    },
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4195:67
+    4193|     const pipelineRows = (list?.rows ?? []).filter((row) => row.week =…
+    4194|     expect.soft({ 'Week 1 pipeline rows': pipelineRows.length }).toEqu…
+    4195|     expect.soft({ 'Week 1 use counts': useCounts(pipelineRows) }).toEq…
+       |                                                                   ^
+    4196|       'Week 1 use counts': { 'story-page': 16, 'cover': 2, 'check-row'…
+    4197|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[49/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T145: every week 1 row of the list gets a color file and a line-art twin
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "Week 1 rows without a line-art twin": [],
++   "Week 1 rows without a line-art twin": [
++     "l2-w01-cover-hello",
++     "l2-w01-cover-nan-can-nod",
++     "l2-w01-check-row-nest",
++     "l2-w01-check-row-cat",
++     "l2-w01-check-row-fish",
++     "l2-w01-check-row-dog",
++     "l2-w01-check-row-nose",
++     "l2-w01-check-row-bus",
++     "l2-w01-check-row-hat",
++     "l2-w01-check-row-cup",
++     "l2-w01-check-row-net",
++     "l2-w01-practice-line-nose",
++     "l2-w01-practice-line-nest",
++     "l2-w01-practice-line-nut",
++   ],
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4208:8
+    4206|       .toEqual({ 'Week 1 rows without a color file': [] });
+    4207|     expect.soft({ 'Week 1 rows without a line-art twin': withoutTwin })
+    4208|       .toEqual({ 'Week 1 rows without a line-art twin': [] });
+       |        ^
+    4209|   }, 60000);
+    4210|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[50/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T146: the line-art check rejects a line thinner than 12 px and prints the measured width
+AssertionError: A 6 px line passes the line-art check.: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/storytime-book-pictures.test.ts:4230:78
+    4228|       });
+    4229|       const exactCheck = await pictureSeams.inspectLineArtPng(exact, e…
+    4230|       expect.soft(thinCheck.valid, 'A 6 px line passes the line-art ch…
+       |                                                                              ^
+    4231|       expect.soft(nearCheck.valid, 'An 11 px line passes the line-art …
+    4232|       expect.soft(exactCheck.valid, 'A 12 px line fails the line-art c…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[51/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T146: the line-art check rejects a line thinner than 12 px and prints the measured width
+AssertionError: An 11 px line passes the line-art check.: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/storytime-book-pictures.test.ts:4231:80
+    4229|       const exactCheck = await pictureSeams.inspectLineArtPng(exact, e…
+    4230|       expect.soft(thinCheck.valid, 'A 6 px line passes the line-art ch…
+    4231|       expect.soft(nearCheck.valid, 'An 11 px line passes the line-art …
+       |                                                                                ^
+    4232|       expect.soft(exactCheck.valid, 'A 12 px line fails the line-art c…
+    4233|       const measuredLine = printed.find((line) => /width/i.test(line) …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[52/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T146: the line-art check rejects a line thinner than 12 px and prints the measured width
+AssertionError: A 12 px line fails the line-art check.: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/storytime-book-pictures.test.ts:4232:79
+    4230|       expect.soft(thinCheck.valid, 'A 6 px line passes the line-art ch…
+    4231|       expect.soft(nearCheck.valid, 'An 11 px line passes the line-art …
+    4232|       expect.soft(exactCheck.valid, 'A 12 px line fails the line-art c…
+       |                                                                               ^
+    4233|       const measuredLine = printed.find((line) => /width/i.test(line) …
+    4234|       expect.soft(measuredLine, 'The check prints the measured width.'…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[53/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T146: the line-art check rejects a line thinner than 12 px and prints the measured width
+AssertionError: The check prints the measured width.: expected '' to match /width[^\n]*?([0-9]+)/i
+
+- Expected:
+/width[^\n]*?([0-9]+)/i
+
++ Received:
+""
+
+ ❯ tests/storytime-book-pictures.test.ts:4234:73
+    4232|       expect.soft(exactCheck.valid, 'A 12 px line fails the line-art c…
+    4233|       const measuredLine = printed.find((line) => /width/i.test(line) …
+    4234|       expect.soft(measuredLine, 'The check prints the measured width.'…
+       |                                                                         ^
+    4235|       const measured = Number(/width[^\n]*?([0-9]+)/i.exec(measuredLin…
+    4236|       expect.soft(measured, 'The measured width is the width of the fi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[54/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T146: the line-art check rejects a line thinner than 12 px and prints the measured width
+AssertionError: The measured width is the width of the fixture line.: expected +0 to be 12 // Object.is equality
+
+- Expected
++ Received
+
+- 12
++ 0
+
+ ❯ tests/storytime-book-pictures.test.ts:4236:85
+    4234|       expect.soft(measuredLine, 'The check prints the measured width.'…
+    4235|       const measured = Number(/width[^\n]*?([0-9]+)/i.exec(measuredLin…
+    4236|       expect.soft(measured, 'The measured width is the width of the fi…
+       |                                                                                     ^
+    4237|     } finally {
+    4238|       await rm(directory, { recursive: true, force: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[55/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T147: the pipeline never writes to the Workbooks tree
+AssertionError: The pipeline exposes the picture list loader.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ loadList tests/storytime-book-pictures.test.ts:4053:70
+    4051| async function loadList(options: PictureListOptions): Promise<PictureL…
+    4052|   const seam = listSeam('loadPictureList');
+    4053|   expect.soft(seam, 'The pipeline exposes the picture list loader.').t…
+       |                                                                      ^
+    4054|   if (!seam) return undefined;
+    4055|   return seam(options);
+ ❯ tests/storytime-book-pictures.test.ts:4247:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[56/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T147: the pipeline never writes to the Workbooks tree
+AssertionError: expected { 'The list SHA-256': undefined } to deeply equal { Object (The list SHA-256) }
+
+- Expected
++ Received
+
+  {
+-   "The list SHA-256": "c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b",
++   "The list SHA-256": undefined,
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4257:55
+    4255|     expect.soft({ 'The pictures.md digest': after.markdown })
+    4256|       .toEqual({ 'The pictures.md digest': before.markdown });
+    4257|     expect.soft({ 'The list SHA-256': list?.sha256 }).toEqual({ 'The l…
+       |                                                       ^
+    4258|     expect.soft({ 'The pictures.md SHA-256': digest(readFileSync(LIST_…
+    4259|       .toEqual({ 'The pictures.md SHA-256': LIST_MARKDOWN_SHA256 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[57/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T148: the pipeline refuses a broken file name and a changed list file
+AssertionError: The pipeline exposes the picture list loader.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ loadStatus tests/storytime-book-pictures.test.ts:4061:72
+    4059|   const seam = listSeam('loadPictureList');
+    4060|   if (!seam) {
+    4061|     expect.soft(seam, 'The pipeline exposes the picture list loader.')…
+       |                                                                        ^
+    4062|     return 'missing';
+    4063|   }
+ ❯ tests/storytime-book-pictures.test.ts:4276:25
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[58/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T148: the pipeline refuses a broken file name and a changed list file
+AssertionError: The pipeline accepts a list with a broken file name.: expected 'missing' to be 'refused' // Object.is equality
+
+Expected: "refused"
+Received: "missing"
+
+ ❯ tests/storytime-book-pictures.test.ts:4277:65
+    4275|       await writeFile(listFile, JSON.stringify(broken, null, 2));
+    4276|       expect.soft(await loadStatus({ printRoot, workbooksRoot: WORKBOO…
+    4277|         'The pipeline accepts a list with a broken file name.').toBe('…
+       |                                                                 ^
+    4278|       const brokenRow = { ...rawRows()[0]!, fileName: 'l2-w01-Broken_N…
+    4279|       const planSeam = listSeam('planPictureRow');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[59/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T148: the pipeline refuses a broken file name and a changed list file
+AssertionError: The pipeline plans a picture row of the list.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ tests/storytime-book-pictures.test.ts:4289:80
+    4287|         }
+    4288|       } else {
+    4289|         expect.soft(planSeam, 'The pipeline plans a picture row of the…
+       |                                                                                ^
+    4290|       }
+    4291|       expect.soft(planStatus, 'The pipeline plans a row with a broken …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[60/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T148: the pipeline refuses a broken file name and a changed list file
+AssertionError: The pipeline plans a row with a broken file name.: expected 'missing' to be 'refused' // Object.is equality
+
+Expected: "refused"
+Received: "missing"
+
+ ❯ tests/storytime-book-pictures.test.ts:4291:84
+    4289|         expect.soft(planSeam, 'The pipeline plans a picture row of the…
+    4290|       }
+    4291|       expect.soft(planStatus, 'The pipeline plans a row with a broken …
+       |                                                                                    ^
+    4292|       await writeFile(listFile, JSON.stringify(clean, null, 2));
+    4293|       expect.soft(await loadStatus({ printRoot, workbooksRoot: WORKBOO…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[61/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T148: the pipeline refuses a broken file name and a changed list file
+AssertionError: The pipeline exposes the picture list loader.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ loadStatus tests/storytime-book-pictures.test.ts:4061:72
+    4059|   const seam = listSeam('loadPictureList');
+    4060|   if (!seam) {
+    4061|     expect.soft(seam, 'The pipeline exposes the picture list loader.')…
+       |                                                                        ^
+    4062|     return 'missing';
+    4063|   }
+ ❯ tests/storytime-book-pictures.test.ts:4293:25
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[62/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T148: the pipeline refuses a broken file name and a changed list file
+AssertionError: The pipeline refuses the clean list.: expected 'missing' to be 'accepted' // Object.is equality
+
+Expected: "accepted"
+Received: "missing"
+
+ ❯ tests/storytime-book-pictures.test.ts:4294:49
+    4292|       await writeFile(listFile, JSON.stringify(clean, null, 2));
+    4293|       expect.soft(await loadStatus({ printRoot, workbooksRoot: WORKBOO…
+    4294|         'The pipeline refuses the clean list.').toBe('accepted');
+       |                                                 ^
+    4295|       const recorded = (await loadList({ printRoot, workbooksRoot: WOR…
+    4296|       await writeFile(listFile, `${JSON.stringify(clean, null, 2)}\n`);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[63/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T148: the pipeline refuses a broken file name and a changed list file
+AssertionError: The pipeline exposes the picture list loader.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ loadList tests/storytime-book-pictures.test.ts:4053:70
+    4051| async function loadList(options: PictureListOptions): Promise<PictureL…
+    4052|   const seam = listSeam('loadPictureList');
+    4053|   expect.soft(seam, 'The pipeline exposes the picture list loader.').t…
+       |                                                                      ^
+    4054|   if (!seam) return undefined;
+    4055|   return seam(options);
+ ❯ tests/storytime-book-pictures.test.ts:4295:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[64/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T148: the pipeline refuses a broken file name and a changed list file
+AssertionError: The pipeline exposes the picture list loader.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ loadStatus tests/storytime-book-pictures.test.ts:4061:72
+    4059|   const seam = listSeam('loadPictureList');
+    4060|   if (!seam) {
+    4061|     expect.soft(seam, 'The pipeline exposes the picture list loader.')…
+       |                                                                        ^
+    4062|     return 'missing';
+    4063|   }
+ ❯ tests/storytime-book-pictures.test.ts:4297:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[65/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T148: the pipeline refuses a broken file name and a changed list file
+AssertionError: The pipeline accepts a list file whose SHA-256 changed.: expected 'missing' to be 'refused' // Object.is equality
+
+Expected: "refused"
+Received: "missing"
+
+ ❯ tests/storytime-book-pictures.test.ts:4300:87
+    4298|         printRoot, workbooksRoot: WORKBOOKS, ...(recorded ? { expected…
+    4299|       });
+    4300|       expect.soft(changed, 'The pipeline accepts a list file whose SHA…
+       |                                                                                       ^
+    4301|     } finally {
+    4302|       await rm(directory, { recursive: true, force: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[66/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T149: a class B row runs the calm top check and a class C row runs the white-corner check
+AssertionError: The pipeline checks a picture row of the list.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ rowCheck tests/storytime-book-pictures.test.ts:4093:73
+    4091|   const seam = listSeam('inspectPictureRow');
+    4092|   if (!seam) {
+    4093|     expect.soft(seam, 'The pipeline checks a picture row of the list.'…
+       |                                                                         ^
+    4094|     return 'missing';
+    4095|   }
+ ❯ tests/storytime-book-pictures.test.ts:4320:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[67/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T149: a class B row runs the calm top check and a class C row runs the white-corner check
+AssertionError: The calm class B row fails its check.: expected 'missing' to be 'valid' // Object.is equality
+
+Expected: "valid"
+Received: "missing"
+
+ ❯ tests/storytime-book-pictures.test.ts:4320:102
+    4318|       await writeFile(white, await pictureAt(CLASS_PIXELS.C.width, CLA…
+    4319|       await writeFile(dark, await pictureAt(CLASS_PIXELS.C.width, CLAS…
+    4320|       expect.soft(rowCheck(coverRow, await readFile(calm)), 'The calm …
+       |                                                                                                      ^
+    4321|       expect.soft(rowCheck(coverRow, await readFile(busy)), 'The busy …
+    4322|       expect.soft(rowCheck(checkRow, await readFile(white)), 'The whit…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[68/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T149: a class B row runs the calm top check and a class C row runs the white-corner check
+AssertionError: The pipeline checks a picture row of the list.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ rowCheck tests/storytime-book-pictures.test.ts:4093:73
+    4091|   const seam = listSeam('inspectPictureRow');
+    4092|   if (!seam) {
+    4093|     expect.soft(seam, 'The pipeline checks a picture row of the list.'…
+       |                                                                         ^
+    4094|     return 'missing';
+    4095|   }
+ ❯ tests/storytime-book-pictures.test.ts:4321:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[69/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T149: a class B row runs the calm top check and a class C row runs the white-corner check
+AssertionError: The busy class B row passes its check.: expected 'missing' to be 'invalid' // Object.is equality
+
+Expected: "invalid"
+Received: "missing"
+
+ ❯ tests/storytime-book-pictures.test.ts:4321:103
+    4319|       await writeFile(dark, await pictureAt(CLASS_PIXELS.C.width, CLAS…
+    4320|       expect.soft(rowCheck(coverRow, await readFile(calm)), 'The calm …
+    4321|       expect.soft(rowCheck(coverRow, await readFile(busy)), 'The busy …
+       |                                                                                                       ^
+    4322|       expect.soft(rowCheck(checkRow, await readFile(white)), 'The whit…
+    4323|       expect.soft(rowCheck(checkRow, await readFile(dark)), 'The dark …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[70/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T149: a class B row runs the calm top check and a class C row runs the white-corner check
+AssertionError: The pipeline checks a picture row of the list.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ rowCheck tests/storytime-book-pictures.test.ts:4093:73
+    4091|   const seam = listSeam('inspectPictureRow');
+    4092|   if (!seam) {
+    4093|     expect.soft(seam, 'The pipeline checks a picture row of the list.'…
+       |                                                                         ^
+    4094|     return 'missing';
+    4095|   }
+ ❯ tests/storytime-book-pictures.test.ts:4322:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[71/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T149: a class B row runs the calm top check and a class C row runs the white-corner check
+AssertionError: The white class C row fails its check.: expected 'missing' to be 'valid' // Object.is equality
+
+Expected: "valid"
+Received: "missing"
+
+ ❯ tests/storytime-book-pictures.test.ts:4322:104
+    4320|       expect.soft(rowCheck(coverRow, await readFile(calm)), 'The calm …
+    4321|       expect.soft(rowCheck(coverRow, await readFile(busy)), 'The busy …
+    4322|       expect.soft(rowCheck(checkRow, await readFile(white)), 'The whit…
+       |                                                                                                        ^
+    4323|       expect.soft(rowCheck(checkRow, await readFile(dark)), 'The dark …
+    4324|         .toBe('invalid');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[72/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T149: a class B row runs the calm top check and a class C row runs the white-corner check
+AssertionError: The pipeline checks a picture row of the list.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ rowCheck tests/storytime-book-pictures.test.ts:4093:73
+    4091|   const seam = listSeam('inspectPictureRow');
+    4092|   if (!seam) {
+    4093|     expect.soft(seam, 'The pipeline checks a picture row of the list.'…
+       |                                                                         ^
+    4094|     return 'missing';
+    4095|   }
+ ❯ tests/storytime-book-pictures.test.ts:4323:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[73/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T149: a class B row runs the calm top check and a class C row runs the white-corner check
+AssertionError: The dark corner class C row passes its check.: expected 'missing' to be 'invalid' // Object.is equality
+
+Expected: "invalid"
+Received: "missing"
+
+ ❯ tests/storytime-book-pictures.test.ts:4324:10
+    4322|       expect.soft(rowCheck(checkRow, await readFile(white)), 'The whit…
+    4323|       expect.soft(rowCheck(checkRow, await readFile(dark)), 'The dark …
+    4324|         .toBe('invalid');
+       |          ^
+    4325|     } finally {
+    4326|       await rm(directory, { recursive: true, force: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[74/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T150: the week 1 selection holds 30 rows and the two batch hashes move apart
+AssertionError: The pipeline exposes the picture list loader.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ loadList tests/storytime-book-pictures.test.ts:4053:70
+    4051| async function loadList(options: PictureListOptions): Promise<PictureL…
+    4052|   const seam = listSeam('loadPictureList');
+    4053|   expect.soft(seam, 'The pipeline exposes the picture list loader.').t…
+       |                                                                      ^
+    4054|   if (!seam) return undefined;
+    4055|   return seam(options);
+ ❯ tests/storytime-book-pictures.test.ts:4331:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[75/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T150: the week 1 selection holds 30 rows and the two batch hashes move apart
+AssertionError: expected { 'Week 1 rows': +0 } to deeply equal { 'Week 1 rows': 30 }
+
+- Expected
++ Received
+
+  {
+-   "Week 1 rows": 30,
++   "Week 1 rows": 0,
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4333:49
+    4331|     const list = await loadList({ printRoot: PRINT_ROOT, workbooksRoot…
+    4332|     const rows = (list?.rows ?? []).filter((row) => row.week === 1);
+    4333|     expect.soft({ 'Week 1 rows': rows.length }).toEqual({ 'Week 1 rows…
+       |                                                 ^
+    4334|     const colorFiles = rows.map((row) => {
+    4335|       const plan = plannedRow(row);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[76/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T150: the week 1 selection holds 30 rows and the two batch hashes move apart
+AssertionError: expected { 'Week 1 color files': +0 } to deeply equal { 'Week 1 color files': 30 }
+
+- Expected
++ Received
+
+  {
+-   "Week 1 color files": 30,
++   "Week 1 color files": 0,
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4343:8
+    4341|     });
+    4342|     expect.soft({ 'Week 1 color files': new Set(colorFiles.map((file) …
+    4343|       .toEqual({ 'Week 1 color files': 30 });
+       |        ^
+    4344|     expect.soft({ 'Week 1 line-art files': new Set(lineFiles.map((file…
+    4345|       .toEqual({ 'Week 1 line-art files': 30 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[77/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T150: the week 1 selection holds 30 rows and the two batch hashes move apart
+AssertionError: expected { 'Week 1 line-art files': +0 } to deeply equal { 'Week 1 line-art files': 30 }
+
+- Expected
++ Received
+
+  {
+-   "Week 1 line-art files": 30,
++   "Week 1 line-art files": 0,
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4345:8
+    4343|       .toEqual({ 'Week 1 color files': 30 });
+    4344|     expect.soft({ 'Week 1 line-art files': new Set(lineFiles.map((file…
+    4345|       .toEqual({ 'Week 1 line-art files': 30 });
+       |        ^
+    4346|     const colorHash = batchSha256(colorFiles);
+    4347|     const lineHash = batchSha256(lineFiles);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[78/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T150: the week 1 selection holds 30 rows and the two batch hashes move apart
+AssertionError: The color batch hash equals the line-art batch hash.: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/storytime-book-pictures.test.ts:4348:97
+    4346|     const colorHash = batchSha256(colorFiles);
+    4347|     const lineHash = batchSha256(lineFiles);
+    4348|     expect.soft(colorHash === lineHash, 'The color batch hash equals t…
+       |                                                                                                 ^
+    4349|     const changed = colorFiles.map((file, index) => (index === 0 ? { .…
+    4350|     expect.soft(batchSha256(changed) === colorHash, 'A changed color f…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[79/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T150: the week 1 selection holds 30 rows and the two batch hashes move apart
+AssertionError: A changed color file keeps the color batch hash.: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/storytime-book-pictures.test.ts:4350:105
+    4348|     expect.soft(colorHash === lineHash, 'The color batch hash equals t…
+    4349|     const changed = colorFiles.map((file, index) => (index === 0 ? { .…
+    4350|     expect.soft(batchSha256(changed) === colorHash, 'A changed color f…
+       |                                                                                                         ^
+    4351|     expect.soft(batchSha256(lineFiles) !== lineHash, 'A changed color …
+    4352|   }, 60000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[80/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T151: the render command prints the peak memory of the capture process
+AssertionError: The render command prints the peak memory label.: expected 'no label' to match /render peak rss mb:\s*[0-9]+/i
+
+- Expected:
+/render peak rss mb:\s*[0-9]+/i
+
++ Received:
+"no label"
+
+ ❯ tests/storytime-book-pictures.test.ts:4412:8
+    4410|       .find(Boolean);
+    4411|     expect.soft(labelled?.[0] ?? 'no label', 'The render command print…
+    4412|       .toMatch(/render peak rss mb:\s*[0-9]+/i);
+       |        ^
+    4413|     expect.soft(Number(labelled?.[1] ?? Number.NaN), 'The reported pea…
+    4414|       .toBe(1234);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[81/82]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T151: the render command prints the peak memory of the capture process
+AssertionError: The reported peak memory comes from the capture process.: expected NaN to be 1234 // Object.is equality
+
+- Expected
++ Received
+
+- 1234
++ NaN
+
+ ❯ tests/storytime-book-pictures.test.ts:4414:8
+    4412|       .toMatch(/render peak rss mb:\s*[0-9]+/i);
+    4413|     expect.soft(Number(labelled?.[1] ?? Number.NaN), 'The reported pea…
+    4414|       .toBe(1234);
+       |        ^
+    4415|   }, 300000);
+    4416| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[82/82]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  12 failed | 122 passed (134)
+   Start at  17:45:39
+   Duration  268.15s (transform 1.09s, setup 0ms, import 1.76s, tests 266.13s, environment 0ms)
+

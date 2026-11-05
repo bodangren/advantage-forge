@@ -1,0 +1,49 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: blocked
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P2
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+head_sha: b63755bcd9e355ab92937f3669d0c0f8b68607c3
+commits:
+  - b63755bc: docs(measure): record Kimi pre-check owner and week 1 asset approval
+tests_run:
+  - command: sh /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-preflight.sh
+    exit_code: 1
+    labeled_summary: "heavy-preflight: hold — load 8.46 (max 4)"
+  - command: sh /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-preflight.sh
+    exit_code: 1
+    labeled_summary: "heavy-preflight: hold — avail 1006 MB (min 1200), load 10.92 (max 4)"
+  - command: flock /home/daniebo/Desktop/primary-parity-progress/heavy.lock node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1
+    exit_code: not_run
+    labeled_summary: "Both local preflight checks blocked vitest. No Red result exists."
+files_changed:
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/contract.md: committed
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md: committed
+  - tests/storytime-book-pictures.test.ts: untracked; T1–T25 assertions await execution
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-1d39b8f.log: uncommitted role log
+plan_updates:
+  - The communication log records the supplied approval verbatim.
+  - Phase 2 task 1 remains [~]. Task 2 and task 3 remain [ ].
+dirty_path_classification:
+  - Relevant: the owned test draft, this role log, and the Green-owned source drafts.
+  - Generated or ignorable: measure/generated/* and other measure/runs/ artifacts; preserved.
+  - Unrelated user work: all other initial dirty paths; preserved.
+known_failures:
+  - "heavy-preflight: hold — avail 1006 MB (min 1200), load 10.92 (max 4)"
+  - No test assertions ran. Exact assertion failures remain unknown.
+  - No test commit or Red evidence commit exists.
+handoff:
+  - Stop heavy work. Resume with a separate local preflight when machine capacity permits.
+  - Run the exact Red command after a successful local preflight.
+  - The passing-test list and source mutations remain unknown because vitest did not run.
+  - Commit the test alone after valid Red evidence. Then commit the Phase 2 plan evidence alone.
+  - Run the Measure generator after the phase status changes. Preserve unrelated generated changes.
+  - No paid call, render, browser, type check, or test suite ran.
+  - The only worktree uses master. Preserve the existing origin/gh-pages branch; this role did not change it.
+facts_changed:
+  - The contract assigns Kimi log writes to the task executor.
+  - The plan records approval of the week 1 asset list.
+  - This resumption changed no company-facing facts.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,20 @@
+MEASURE_AGENT_RESULT
+role: measure-review-c-ux-api (second pass)
+status: pass
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 2: Tests and calibrated model pre-checks (P2)
+audited_head: c23534333d4d40ee3740327a7505e02c4f76079f
+commits: none (audit-only role)
+tests_run: none (read-only audit; no vitest, tsc, Chrome, render, or provider call; two intended CLI dry-runs were not executed because shell permission was intermittently denied, recorded as nonblocking finding RC2-1)
+files_changed:
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-c235343.json (this result)
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-c235343.log (this result)
+plan_updates: none
+known_failures: none. One audit limitation: live CLI dry-run commands were not run (shell permission intermittently denied); contract coverage rests on code inspection, committed tests, and live on-disk evidence from the smoke runs and calibration operations.
+handoff:
+  verdict: pass. HEAD confirmed at c23534333d4d40ee3740327a7505e02c4f76079f. Range 5ffdbf6e..c2353433 touches only src/storytime/book-pictures.ts, src/storytime/line-art-pass.ts, and the two storytime test files; demo commits a8fdb560 and bbcdf085 (assets/ only) excluded.
+  prior_findings_fixed: all three nonblocking findings from review-c-5ffdbf6 are resolved. (1) precheck-kimi --record <callId> --failed --reason <text> is implemented with refusal guards and no-write behavior; the ledger closes callId 9d0bddf7 with status failure; counts are 8 before-call, 8 after-call, 0 open. (2) MiniMax and Kimi raw outputs keep one file per callId with flag wx. (3) the render skip prints 'next free version: vN' (T72), documented in contract.md and asserted by test T72.
+  contract_scope_verified: eight CLI commands; exit code 2 on a pre-check fail; --output restricted to color or lineart; the precheck-kimi --paid or --dry-run guard with its error text; T74 smoke labels in range against live smoke.json (ink 2.12%, rays 360/360, depth rows 159/159, technique song-page-form-edges-viewdepth-1bit-v2); T75 labels match the ledger and both new good-nan logs (neutral text, modelSource declared, rubric v2, callId-named raw files, one paid call at a time); manifest batches carry outputKind color and lineart; unpackDepth implements the three.js 0.185.1 big-endian formula. Plan and Green logs quote every caller-facing command.
+  nonblocking: RC2-1 (low): live CLI dry-runs not executed in this audit due to intermittent shell denial; a future review may re-run one dry-run command.
+  next_step: orchestrator persists the Phase 2 closeout gate and the acceptance review.
+END_MEASURE_AGENT_RESULT

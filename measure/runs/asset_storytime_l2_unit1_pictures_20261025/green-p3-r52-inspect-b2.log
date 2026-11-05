@@ -1,0 +1,38 @@
+storytime-picture-book: 1,962 triangles, 0.36 x 0.023 x 0.24 m, built in 1914 ms
+  cover                      122 tris  (409 ms)
+  pages                      218 tris  (648 ms)
+  sun                        302 tris  (54 ms)
+  fish                      1320 tris  (452 ms)
+texture  none (vertex colors)
+glb      out/storytime-picture-book/storytime-picture-book.glb  (50 KB)
+# Inspection: storytime-picture-book
+
+Size 0.36 x 0.023 x 0.24 m (x y z); 1,962 triangles; lowest point y = 0 m.
+
+## Silhouette per view (fractions of the frame)
+
+| view | width | height | coverage |
+|---|---|---|---|
+| front | 0.797 | 0.094 | 0.066 |
+| three-quarter | 0.84 | 0.195 | 0.088 |
+| side | 0.578 | 0.109 | 0.05 |
+| back | 0.805 | 0.094 | 0.066 |
+| top | 0.828 | 0.598 | 0.273 |
+
+## Visible share of the silhouette per part
+
+| part | front | three-quarter | side | back | top |
+|---|---|---|---|---|---|
+| cover | 25.1% | 21.7% | 21.5% | 25.2% | 16.9% |
+| pages | 56.9% | 61.1% | 60.3% | 56.9% | 66.3% |
+| sun | 10.6% | 9.4% | 8.6% | 10.4% | 10.5% |
+| fish | 7.4% | 7.8% | 9.6% | 7.5% | 6.3% |
+
+## Values and colors (shaded render)
+
+Values: dark 3%, mid 30%, light 67%.
+Dominant colors: #f9f2e0 26%, #faf2e0 26%, #f89b71 25%, #bb775c 11%, #a5c0e8 7%, #f3a284 4%.
+
+## Warnings
+
+- none

@@ -1,0 +1,44 @@
+storytime-school-bus: 19,486 triangles, 0.846 x 0.787 x 1.5 m, built in 4273 ms
+  bus-body                  6758 tris  (3114 ms)
+  windows                   1976 tris  (754 ms)
+  tires                     3000 tris  (517 ms)
+  hubs                      2500 tris  (707 ms)
+  trim                      2500 tris  (789 ms)
+  door-step                  252 tris  (52 ms)
+  lamps                     2500 tris  (452 ms)
+texture  none (vertex colors)
+glb      out/storytime-school-bus/storytime-school-bus.glb  (499 KB)
+# Inspection: storytime-school-bus
+
+Size 0.846 x 0.787 x 1.5 m (x y z); 19,486 triangles; lowest point y = 0 m.
+
+## Silhouette per view (fractions of the frame)
+
+| view | width | height | coverage |
+|---|---|---|---|
+| front | 0.461 | 0.465 | 0.166 |
+| three-quarter | 0.672 | 0.523 | 0.24 |
+| side | 0.793 | 0.426 | 0.241 |
+| back | 0.445 | 0.441 | 0.164 |
+| top | 0.598 | 0.789 | 0.295 |
+
+## Visible share of the silhouette per part
+
+| part | front | three-quarter | side | back | top |
+|---|---|---|---|---|---|
+| bus-body | 63.5% | 63.1% | 62.8% | 71.7% | 83.7% |
+| windows | 9.8% | 9.8% | 12.8% | 10.5% | 2.9% |
+| tires | 10.9% | 11.3% | 11.2% | 6.4% | 4.3% |
+| hubs | 0.4% | 2.2% | 4% | 0.2% | 0.4% |
+| trim | 10.6% | 10.1% | 7.4% | 8.7% | 6% |
+| door-step | 0.1% | 0.9% | 1% | 0 (hidden) | 0.9% |
+| lamps | 4.6% | 2.5% | 0.9% | 2.6% | 1.7% |
+
+## Values and colors (shaded render)
+
+Values: dark 16%, mid 14%, light 69%.
+Dominant colors: #faca74 32%, #f5b941 28%, #1f1f2d 17%, #8aaec9 10%, #79633f 8%, #f1ce87 5%.
+
+## Warnings
+
+- none

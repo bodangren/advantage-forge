@@ -1,0 +1,18 @@
+
+<--- Last few GCs --->
+
+[850769:0x28f96000]    68041 ms: Scavenge 1422.9 (1428.7) -> 1421.1 (1433.0) MB, pooled: 0 MB, 2.57 / 0.00 ms  (average mu = 0.349, current mu = 0.338) allocation failure; 
+[850769:0x28f96000]    68937 ms: Mark-Compact (reduce) 1425.0 (1433.2) -> 1421.3 (1426.2) MB, pooled: 0 MB, 438.60 / 0.00 ms  (+ 375.3 ms in 62 steps since start of marking, biggest step 10.9 ms, walltime since start of marking 896 ms) (average mu = 0.381
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+----- Native stack trace -----
+
+ 1: 0x75356c node::OOMErrorHandler(char const*, v8::OOMDetails const&) [node]
+ 2: 0xc52cd0  [node]
+ 3: 0xc52dbf  [node]
+ 4: 0xef6695  [node]
+ 5: 0xef66c2  [node]
+ 6: 0xef69ba  [node]
+ 7: 0xf076ba  [node]
+ 8: 0xf0ba60  [node]
+ 9: 0x199e0d1  [node]
+/home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh: line 236: 850766 Aborted                    (core dumped) setsid "${sd[@]}" bash -c "$cmd_str"

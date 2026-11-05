@@ -1,0 +1,53 @@
+{
+  "status": "inconclusive",
+  "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Provisional. Review in progress.",
+  "l2-w03-story-page-it-is-blue": {
+    "files": [
+      "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-color.png",
+      "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-line-6-despeckled.png"
+    ],
+    "rating": null,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT"
+  },
+  "l2-w03-story-page-nan-can-get-a-pan": {
+    "files": [
+      "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-color.png",
+      "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-9-despeckled.png"
+    ],
+    "rating": null,
+    "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "bar": "Daniel 2026-11-01 14:15 ICT"
+  },
+  "extra": {
+    "K1": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    },
+    "K2": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    },
+    "K3": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": null,
+      "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+      "bar": "Daniel 2026-11-01 14:15 ICT"
+    }
+  }
+}

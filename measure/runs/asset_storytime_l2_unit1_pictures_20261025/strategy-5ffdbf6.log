@@ -1,0 +1,48 @@
+MEASURE_AGENT_RESULT
+role: strategy
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P2 "Phase 2: Tests and calibrated model pre-checks"
+commits:
+  - 8148b706bf5a5cedac86aa50e87b245925f2149c docs(measure): plan Storytime Phase 2 review remediation
+tests_run: none. This role ran no vitest, tsc, browser, render, paid call, preflight, or lock. Checks run: plan task count 19, [x] count 6, metadata estimated_tasks 19 and actual_tasks 6, git diff --check clean, no plain flock command in test-strategy.md, read-only ledger listing (11 lines).
+files_changed:
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/contract.md
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/spec.md
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/metadata.json
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/strategy-5ffdbf6.log (not committed)
+plan_updates:
+  - Phase 2 task 5 (code): RA-B1, RA-B2, RA-N1, RA-N3, RA-N4 code, RA-N6, RA-N7, RA-N8, RA-N9, and the Review C --version hint. Gate T61 to T73. src/song, the rubric text, and PICTURE_RUBRIC_VERSION stay unchanged. No paid call.
+  - Decision: smoke run 2 (T74) is necessary. It runs once, through the production captureBookStill path, with --job w01-readalong-p05. It adds a depth-step fixture (two front-facing planes at 4.0 m and 4.3 m). It writes no book version.
+  - Phase 2 task 6 (operations): the failure record for 9d0bddf7, then good-nan on MiniMax, then on Kimi, one call at a time, with the neutral text. The orchestrator dispatches the Kimi reviewer. Gate T75.
+  - Deviation (d) is in the task 4 note, with the four ledger timestamps (RA-N5). Task 6 compares it with the ledger.
+  - Phase 3 task 1: write w01-readalong-p05-v2.json first (Nan yaw -30 to 30, window beside or behind her, fern prop, visible panes, existing items only). Keep v1. Render with --version 2. The sample report states that no existing item shows the plant in a pot.
+  - metadata.json: estimated_tasks 19, actual_tasks 6.
+known_failures:
+  - Baseline tsc errors: 31 outside the owned paths. Task 5 must keep the total at 31 or less.
+  - After task 5 Green, assertCalibrationReady rejects the real root, because the old good-nan logs have the old text. This is expected until task 6.
+  - The ledger has 6 before-call and 5 after-call entries now. After task 6 the expected counts are 8 and 8.
+  - The Phase 2 closeout adversarial mutations have not run. The closeout gate lists them, with six new task 5 mutations.
+  - The plant in the Workbooks p05 prompt is "in a pot". No existing item shows a green plant in a pot. The v2 stage uses fern without a pot and records the difference.
+  - measure/anti-patterns.md does not exist. The strategy uses the starter catalog. S7 (a smoke path that is not the production path) and S8 (an approval word in a calibration prompt) are new project candidates.
+handoff:
+  - role_base_sha: 5ffdbf6e41a0c30ec4330f7f23137cc7a218d61e (verified HEAD at start). phase_base_sha stays 1d39b8fda457e12d8e7332e7de65d2046ddda78e. 8148b706 is doc-only and in-phase. Task 5 Red diffs from 8148b706.
+  - Red starts after the Codex quota reset at 05:24 local time.
+  - Red and Green command (unchanged): ENGINE_HOOK_TEST_COMMAND = bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'. No new test file. Never use a plain flock.
+  - New test IDs and files for Red:
+    - T61, T62, T63 (fake page; RA-B1, RA-N1): tests/storytime-book-pictures.test.ts.
+    - T64 (RA-B2 style binding): tests/storytime-book-pictures.test.ts.
+    - T65 (RA-N3 gate), T66 (RA-N2 neutral text): tests/storytime-book-pictures.test.ts.
+    - T67 (RA-N4 failure record), T68 (RA-N6 modelSource), T69 (RA-N9 raw per callId): tests/storytime-book-pictures.test.ts.
+    - T70 (RA-N7 view distance and depth edge): tests/storytime-line-art-pass.test.ts.
+    - T71 (RA-N8 technique ID), T72 (Review C --version hint), T73 (depth-step smoke check): tests/storytime-book-pictures.test.ts.
+    - T74 (smoke run 2) and T75 (task 6 operations) are live rows. Red writes no test for them.
+  - Red amendments to earlier tests: T49 for the live reads (cameraState, then liveCameraState before and after the pass); the T35 and T36 style-look fixtures gain lineArtTechnique and lineArtFormatVersion; the T54 comment names the first call acd4f807, and the fixture bytes stay the same. No other earlier assertion changes. T22 text now points to T65.
+  - Valid Red: T61 to T73 fail or fail to load. The 76 earlier tests pass, or the Red log names each exception. Red commits only tests/storytime-book-pictures.test.ts and tests/storytime-line-art-pass.test.ts.
+  - Seams fixed by the strategy (section 4, task 5): captureBookStill(input, deps?) with deps.open returning { page, pageErrors, close } and deps.lineArt; loadBookTimeline(page, timeline); driver liveCameraState(); assertCalibrationReady(outputRoot, workbooksRoot, repoRoot = FORGE_ROOT); viewDistance(depth, near, far) and isDepthEdge(distanceA, distanceB) in src/storytime/line-art-pass.ts; LINEART_TECHNIQUE = 'song-page-form-edges-viewdepth-1bit-v2'; precheck-kimi --record <callId> --failed --reason <text>.
+  - Decisions Red must not make itself: (1) the exact relative depth limit, which Green sets between 0.5 and 7.5 percent; (2) any change to src/song, the rubric text, or PICTURE_RUBRIC_VERSION; (3) the technique ID string, which the strategy fixes; (4) the good-nan text, which the contract fixes; (5) the raw file name format beyond "contains the callId" under raw/; (6) the placement of the smoke depth-step planes, which Green records in smoke.json.
+  - Review format for the next reviews: blocking_findings and nonblocking_findings are arrays of non-empty strings. Each string starts with the finding ID, the severity, and the location (test-strategy.md section 10).
+  - Facts changed: none.
+END_MEASURE_AGENT_RESULT

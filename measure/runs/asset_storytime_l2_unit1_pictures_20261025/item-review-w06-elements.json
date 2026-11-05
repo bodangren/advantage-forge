@@ -1,0 +1,227 @@
+{
+  "reviewer": "opencode-go/mimo-v2.6-flash",
+  "verdict": "accept: 9 of 9 sheets clean under the bar",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "scope": "Week 6 Muse input sheets (two sets and seven props). Sheets feed later week 6 pages. The sheets are not pages.",
+  "index": "out/storytime-review/w06-staging/index.md",
+  "green_log": "measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-w06-staging.log",
+  "set-meadow-empty": {
+    "file": "out/storytime/l2/unit1/w06/muse/elements/set-meadow-empty-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w06/muse-elements/set-meadow-empty.json",
+    "spec_goal": "Empty sunny meadow with a wooden fence, a small pond, a low tree, and tall grass, no people, no animals.",
+    "used_by": [
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-i-can-see-a-cat.json", "text": "I can see a cat.", "goal": "Mia points at a gray cat that sits on the wooden fence.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-i-can-see-a-dog.json", "text": "I can see a dog.", "goal": "A black-and-white dog runs on the grass; Mia points at it.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-i-can-see-a-bird.json", "text": "I can see a bird.", "goal": "A small blue bird sits on a branch of the low tree; Mia looks up.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-i-can-see-a-fish.json", "text": "I can see a fish.", "goal": "An orange fish swims in the pond; Mia kneels at the edge.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-i-can-see-a-frog.json", "text": "I can see a frog.", "goal": "A green frog sits on a lily pad; Mia points at it.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-i-can-see-a-duck.json", "text": "I can see a duck.", "goal": "A white duck swims on the pond; Mia waves at it.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-i-can-see-pip.json", "text": "I can see Pip!", "goal": "Pip jumps out of the tall grass; Mia laughs.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-i-can-see-a-horse.json", "text": "I can see a horse.", "goal": "A white horse looks over the fence; a golden-brown tail tip sticks up in the grass.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-cover-i-can-see.json", "text": "I Can See", "goal": "Mia looks around in the meadow; a gray cat sits on the fence and a white duck swims.", "references_this_sheet": true }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One sun in the upper right, two small clouds, one low round green tree at the left with one low branch that reaches right, a short fence run at the back left and middle, one small pond at the right with stones and two lily pads, tall grass clumps at both lower corners, blue sky.",
+      "input_checks": "No people. No animals. No text, letters, or digits. One sun only. One pond with two lily pads. The fence stops before the right side.",
+      "page_fit": "The nine meadow pages need this exact layout. Their colorPrompts describe the same elements in the same places: one sun, two clouds, the right-reaching branch, the fence at left and middle, two lily pads, grass at both lower corners. The sheet gives every element the prompts name.",
+      "second_look": "re-checked the print version: one sun, two lily pads, right-reaching branch, fence stops at the middle, grass at both corners, no text. Verdict unchanged."
+    }
+  },
+  "set-book-corner-empty": {
+    "file": "out/storytime/l2/unit1/w06/muse/elements/set-book-corner-empty-m2-color.png",
+    "spec": "docs/storytime/l2-unit1/w06/muse-elements/set-book-corner-empty.json",
+    "spec_goal": "Empty book corner of a kindergarten classroom with a basket of books, a wall map, and a toy kitchen, no people.",
+    "used_by": [
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-pat-sat-on-a-mat.json", "text": "Pat sat on a mat.", "goal": "Pat sits on one of two soft green mats in the book corner.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-sam-sat-on-a-mat.json", "text": "Sam sat on a mat.", "goal": "Sam sits down on the second mat, next to Pat.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-pip-sat-on-the-mat.json", "text": "Pip sat on the mat!", "goal": "Pip sits on a mat between Pat and Sam; his tail taps the mat.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-tap-tap-tap.json", "text": "Tap, tap, tap!", "goal": "Pat and Sam sit on their mats and look up; a tail tip shows behind the basket.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-tap-tap-tap-b.json", "text": "Tap, tap, tap!", "goal": "Sam turns to the basket; a tail tip taps on the floor behind it.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-pat-can-see-a-map.json", "text": "Pat can see a map.", "goal": "Pat lifts one corner of the map and looks at the empty wall behind it.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-sam-can-see-a-pan.json", "text": "Sam can see a pan.", "goal": "Sam looks into the small red toy pan; it is empty.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-he-can-see-pip.json", "text": "He can see Pip!", "goal": "Sam looks behind the basket; Pip lies there and wags his tail.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-cover-tap-tap.json", "text": "Tap, Tap!", "goal": "Pat and Sam sit on two mats and listen, each with one hand behind an ear.", "references_this_sheet": true }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Cream plaster walls with dark-brown timber beams, a light wooden floor, one big round wicker basket of colorful books at the left, one big cream paper map with a blue river, a green hill, and a small red house on the wall, one wooden toy kitchen at the right with a small red pan, and a plank-like wooden shape on the floor between the basket and the kitchen.",
+      "input_checks": "No people. No animals. No text, letters, or digits. The map shows a river, a hill, a house, and a dotted path with no words. All pages reference m2; no page references the old m1.",
+      "page_fit": "The nine book-corner pages need this set. Their colorPrompts describe the same corner in the same words: cream walls, dark beams, light floor, one basket at left, one map, one toy kitchen with a red pan at right. The sheet gives each element the prompts name.",
+      "builder_doubt_basket_near_wall": "The basket stands close to the wall, so the floor strip behind it is narrow. Under the bar this is not a layout fault: the set renders correctly and nothing overlaps. The strip is a page question, because three pages must place a tail tip or a whole puppy there. Recorded under page risks.",
+      "extra_floor_plank": "A plank-like shape lies on the floor between the basket and the kitchen. It is not in any prompt and no prompt forbids it. It reads as a low wooden platform and no sentence needs it. Not a defect; watch that no page counts it as a mat.",
+      "second_look": "re-checked the print version: one basket with books, one map with a red house and no words, one toy kitchen with one red pan, narrow strip behind the basket, one floor plank. Verdict unchanged."
+    }
+  },
+  "prop-green-mats-sheet": {
+    "file": "out/storytime/l2/unit1/w06/muse/elements/prop-green-mats-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w06/muse-elements/prop-green-mats-sheet.json",
+    "spec_goal": "Two soft green mats.",
+    "used_by": [
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-pat-sat-on-a-mat.json", "text": "Pat sat on a mat.", "goal": "Pat sits on one of two soft green mats.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-sam-sat-on-a-mat.json", "text": "Sam sat on a mat.", "goal": "Sam sits down on the second mat, next to Pat.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-pip-sat-on-the-mat.json", "text": "Pip sat on the mat!", "goal": "Pip sits on a mat between Pat and Sam.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-tap-tap-tap.json", "text": "Tap, tap, tap!", "goal": "Pat and Sam sit on their mats.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-cover-tap-tap.json", "text": "Tap, Tap!", "goal": "Pat and Sam sit on two soft green mats.", "references_this_sheet": true }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Two plain green floor mats side by side, seen from a little above. Thick rounded edges. One even green color with no pattern.",
+      "input_checks": "Plain white background. No people. No animals. No text or letters. Exactly two mats. No third mat. No cushion cover, no buttons, no zip.",
+      "page_fit": "The five mat pages need two plain green mats of one color. Their colorPrompts say: draw exactly these two plain green mats, the same size and the same color. The sheet gives that.",
+      "builder_doubt_thick_mats": "The mats are thick and may read as cushions. Under the bar thickness alone is not a defect. A thick soft floor mat is a real kindergarten object, and the page prompts call the mats soft floor mats. A child at book size reads a green mat to sit on. A cushion would show a cover, seams, or a zip; the sheet shows none.",
+      "second_look": "re-checked the print version: two mats, one green, thick rounded edges, no pattern, no third mat. Verdict unchanged."
+    }
+  },
+  "prop-gray-cat-sheet": {
+    "file": "out/storytime/l2/unit1/w06/muse/elements/prop-gray-cat-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w06/muse-elements/prop-gray-cat-sheet.json",
+    "spec_goal": "One gray cat, sitting.",
+    "used_by": [
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-i-can-see-a-cat.json", "text": "I can see a cat.", "goal": "Mia points at a gray cat that sits on the wooden fence.", "references_this_sheet": true },
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-cover-i-can-see.json", "text": "I Can See", "goal": "A gray cat sits on the fence in the meadow.", "references_this_sheet": true }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One plain gray cat sitting upright, tail ringed around its feet, lighter chest, pink ear insides, big green eyes, white whiskers.",
+      "input_checks": "Plain white background. No people. No text or letters. One cat. No stripes. No collar. No second animal.",
+      "page_fit": "The cat page and the cover need one plain gray cat that sits on the fence top rail. Their colorPrompts say: plain gray cat with a lighter chest, pink ear insides, and big green eyes; draw ONE cat, exactly this cat. The sheet gives that. The sitting pose fits a fence rail.",
+      "second_look": "re-checked the print version: one sitting gray cat, tail ring at the feet, green eyes, pink ear insides, no stripes, no text. Verdict unchanged."
+    }
+  },
+  "prop-black-white-dog-sheet": {
+    "file": "out/storytime/l2/unit1/w06/muse/elements/prop-black-white-dog-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w06/muse-elements/prop-black-white-dog-sheet.json",
+    "spec_goal": "One black-and-white dog with a wagging tail.",
+    "used_by": [
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-i-can-see-a-dog.json", "text": "I can see a dog.", "goal": "A black-and-white dog with a wagging tail runs on the grass; Mia points at it.", "references_this_sheet": true }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One black-and-white puppy standing with a raised tail, a white face blaze, white chest, white paws, white tail tip, black ears, and black eye patches. No collar.",
+      "input_checks": "Plain white background. No people. No text or letters. One dog. No collar. No golden-brown fur.",
+      "page_fit": "The dog page needs this exact dog in a running pose. Its colorPrompt names every marking the sheet shows and adds: draw ONE dog, exactly this dog (it is not golden-brown). The sheet gives the pattern; the prompt gives the pose.",
+      "second_look": "re-checked the print version: one black-and-white dog, white blaze, white chest, white paws, white tail tip, black ears, no collar, no text. Verdict unchanged."
+    }
+  },
+  "prop-blue-bird-sheet": {
+    "file": "out/storytime/l2/unit1/w06/muse/elements/prop-blue-bird-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w06/muse-elements/prop-blue-bird-sheet.json",
+    "spec_goal": "One small blue bird on a branch.",
+    "used_by": [
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-i-can-see-a-bird.json", "text": "I can see a bird.", "goal": "A small blue bird sits on a branch of the low tree; Mia looks up and points.", "references_this_sheet": true }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One small sky-blue bird with a pale-blue belly and an orange beak, perched on a short brown branch with two green leaves. Both feet hold the branch.",
+      "input_checks": "Plain white background. No people. No text or letters. One bird. One branch. Two leaves. No second bird.",
+      "page_fit": "The bird page needs this bird on the low branch of the tree. Its colorPrompt says: small sky-blue bird with a pale-blue belly and an orange beak on a short branch; draw ONE bird, exactly this bird, with its feet holding the branch. The sheet gives that.",
+      "second_look": "re-checked the print version: one blue bird, pale belly, orange beak, one branch, two leaves, both feet on the branch, no text. Verdict unchanged."
+    }
+  },
+  "prop-white-horse-sheet": {
+    "file": "out/storytime/l2/unit1/w06/muse/elements/prop-white-horse-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w06/muse-elements/prop-white-horse-sheet.json",
+    "spec_goal": "One white horse.",
+    "used_by": [
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-i-can-see-a-horse.json", "text": "I can see a horse.", "goal": "A white horse looks over the wooden fence; Mia points at it; a golden-brown tail tip sticks up in the grass.", "references_this_sheet": true }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One white pony-style horse standing in a three-quarter view, with a cream mane and tail, a pink-gray muzzle, light-gray hooves, four legs, and four visible hooves.",
+      "input_checks": "Plain white background. No people. No text or letters. One horse. No saddle. No rider. No horn, so it is a horse and not a unicorn.",
+      "page_fit": "The horse page needs this horse over the fence. Its colorPrompt says: white horse with a cream-white mane and tail, a pink-gray muzzle, and light-gray hooves; draw ONE horse, exactly this white horse. The sheet gives that.",
+      "builder_doubt_pale_edge": "The coat is very pale and may lose its edge in the line art. Under the bar this is not a sheet defect: the sheet is a color input, and the horse page places it against green grass and blue sky, not against white. The linePrompt already demands one closed outline for each animal with thick lines. Recorded as a page check.",
+      "second_look": "re-checked the print version: one white horse, cream mane and tail, pink-gray muzzle, gray hooves, four legs, no saddle, no text. Verdict unchanged."
+    }
+  },
+  "prop-tiger-sheet": {
+    "file": "out/storytime/l2/unit1/w06/muse/elements/prop-tiger-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w06/muse-elements/prop-tiger-sheet.json",
+    "spec_goal": "One tiger cub, sitting.",
+    "used_by": [
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-check-row-tiger.json", "text": "tiger", "goal": "", "references_this_sheet": true }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "One small chubby orange tiger cub sitting upright, white muzzle, white chest, round ears with white insides, a few thick black stripes, a long tail with black rings, and big friendly dark eyes.",
+      "input_checks": "Plain white background. No people. No text or letters or digits. One tiger. No second tiger. No zoo cage.",
+      "page_fit": "The tiger check row needs one picture that reads as tiger at book size. Its prompt says exactly one tiger, sitting, three-quarter front view, plain white background. The sheet gives that. The few thick stripes match the prompt words a few thick black stripes.",
+      "second_look": "re-checked the print version: one orange tiger cub, thick stripes, black-ringed tail, white muzzle and chest, no text. Verdict unchanged."
+    }
+  },
+  "prop-ten-sheet": {
+    "file": "out/storytime/l2/unit1/w06/muse/elements/prop-ten-sheet-m1-color.png",
+    "spec": "docs/storytime/l2-unit1/w06/muse-elements/prop-ten-sheet.json",
+    "spec_goal": "Ten red balls.",
+    "used_by": [
+      { "spec": "docs/storytime/l2-unit1/w06/muse/l2-w06-check-row-ten.json", "text": "ten", "goal": "", "references_this_sheet": true }
+    ],
+    "clean": true,
+    "defects": [],
+    "notes": {
+      "what_it_shows": "Ten identical round red balls in two straight rows of five, evenly spaced on a white background. No eyes and no face on any ball.",
+      "input_checks": "Plain white background. No people. No animals. No text, letters, or digits. No numeral 10 anywhere. Count: five balls in the top row and five in the bottom row, ten in all.",
+      "page_fit": "The ten check row needs exactly ten red balls in two rows of five. Its prompt says: EXACTLY TEN identical round red balls in two straight rows of exactly five balls each, and count them: five and five. The sheet gives ten balls and no numeral, so the page must carry the counting job alone.",
+      "content_choice": "The handoff notes that Daniel may want another object than balls. That is a content choice for the owner, not a sheet defect. The sheet is clean for its current spec.",
+      "second_look": "re-counted the print version: top row five balls, bottom row five balls, ten in all, no digit, no face. Verdict unchanged."
+    }
+  },
+  "page_risks": [
+    {
+      "risk": "Three tail-tip pages (horse, tap-tap-tap, tap-tap-tap-b)",
+      "builder_said": "Three pages show only Pip's tail tip; the model may draw the whole puppy.",
+      "found": "All three colorPrompts carry a strong guard. The horse page says: ONLY the fluffy golden-brown tip of a tail sticks up, with no puppy body, no head, no ears, no legs, and ends with exactly one girl, one horse, and one tail tip. tap-tap-tap says: ONLY the fluffy golden-brown tip of a tail shows behind the big basket, and ends with exactly two boys, two mats, and one tail tip. tap-tap-tap-b says: ONLY the fluffy golden-brown tip of a tail lies on the floor, with no puppy part and no motion lines, and ends with exactly two boys and one tail tip.",
+      "spec_clarity": "Clear on all three pages. Each prompt states what shows, what must hide, and a final count of figures.",
+      "pip_reference": "All three specs hold a Pip reference: out/storytime/l2/unit1/w04/muse/elements/pip-ref-render.png. The model sees the real tail color and fluff.",
+      "advice": "At page review, check one closed golden-brown fluffy tip and no other puppy part on each page. If a page returns with a whole puppy, re-run that page and keep the ONLY sentence first in the picture block."
+    },
+    {
+      "risk": "Map page (pat-can-see-a-map)",
+      "builder_said": "The map page needs the wall behind the lifted corner to stay empty.",
+      "found": "The colorPrompt is explicit: behind the lifted corner the wall is plain empty cream plaster, with no hole, no door, no picture, and nothing hidden. The goal repeats: he looks at the empty wall behind it. The set wall carries dark timber beams, and the map hangs low, so the lifted lower-right corner sits close to a beam line.",
+      "spec_clarity": "Clear. The prompt names the empty result and bans each thing a model likes to hide there.",
+      "pip_reference": "This spec holds no Pip reference, and none is needed: nothing hides behind the corner, so no hidden element needs a picture. The references are Pat and the book-corner set, two paths.",
+      "advice": "At page review, check that nothing shows behind the lifted corner and that the exposed wall reads as plain wall. A timber beam crossing the exposed area is part of the set wall, not a hidden object. If the model draws a hidden picture or door, re-run with the ban sentence kept."
+    },
+    {
+      "risk": "Narrow floor strip behind the basket (tap-tap-tap, tap-tap-tap-b, he-can-see-pip)",
+      "builder_said": "The book corner basket stands close to the wall, so the strip of floor behind it is narrow.",
+      "found": "The m2 sheet keeps the basket close to the wall. Two pages need only a small tail tip in that strip, which fits. The he-can-see-pip page needs a whole puppy in that strip, which is tight. The colorPrompt for he-can-see-pip says Pip lies in the open strip of floor between the basket and the wall with his whole body in view.",
+      "spec_clarity": "Clear on what shows. The wording is fine; the space in the set is the risk.",
+      "pip_reference": "he-can-see-pip holds a Pip reference, so the model can copy the real puppy.",
+      "advice": "At page review, check that the tip shows in the strip on both tap pages and that Pip fits whole behind the basket on he-can-see-pip. If Pip cannot fit, ask for a set m3 with the basket moved away from the wall, or re-run with the sentence that Pip lies in front of and beside the basket."
+    }
+  ],
+  "summary": {
+    "sheets": 9,
+    "clean": 9,
+    "not_clean": 0,
+    "reference_instances": 30,
+    "reference_check": "A script recount matches every used_by list: meadow 9 pages, book corner m2 9 pages, book corner m1 0 pages, mats 5, cat 2, dog 1, bird 1, horse 1, tiger 1, ten 1. The three tail-tip pages each hold the w04 Pip reference and the ONLY sentence. The map page holds 2 references and no Pip reference.",
+    "clean_keys": [
+      "set-meadow-empty",
+      "set-book-corner-empty",
+      "prop-green-mats-sheet",
+      "prop-gray-cat-sheet",
+      "prop-black-white-dog-sheet",
+      "prop-blue-bird-sheet",
+      "prop-white-horse-sheet",
+      "prop-tiger-sheet",
+      "prop-ten-sheet"
+    ],
+    "not_clean_keys": [],
+    "builder_doubts_judged": "All three builder doubts judge as not defects under the bar. The narrow floor strip is a page-space question, not a set fault. The thick mats read as soft floor mats and show no cushion cover or seams. The pale horse sits against grass and sky on the page, and the linePrompt demands one closed outline.",
+    "page_risk": "No sheet is at blocking risk. Three page risks stand for the page review: the three tail-tip pages must show only the tip, the map page must show nothing hidden behind the lifted corner, and the narrow strip behind the basket must hold what each page places there.",
+    "second_look": "Every sheet was opened again through its print version after the first pass. All counts hold. All verdicts unchanged.",
+    "reference_paths": "All page references name the current sheet files: m1 for the meadow, mats, cat, dog, bird, horse, tiger, and ten sheets; m2 for the book-corner set on all nine of its pages. No page references the old book-corner m1."
+  }
+}

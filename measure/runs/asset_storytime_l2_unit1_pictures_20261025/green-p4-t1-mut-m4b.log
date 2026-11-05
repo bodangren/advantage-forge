@@ -1,0 +1,56 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/zz-green-probe-fix.test.ts (141 tests | 1 failed | 136 skipped) 581ms
+     × T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows 286ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/zz-green-probe-fix.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: expected { 'Weeks 2 to 7 helper rows': 166 } to deeply equal { 'Weeks 2 to 7 helper rows': 162 }
+
+- Expected
++ Received
+
+  {
+-   "Weeks 2 to 7 helper rows": 162,
++   "Weeks 2 to 7 helper rows": 166,
+  }
+
+ ❯ tests/zz-green-probe-fix.test.ts:4708:12
+    4706|         const middle = (seam as (list: PictureListRow[]) => PictureLis…
+    4707|         expect.soft({ 'Weeks 2 to 7 helper rows': middle.length })
+    4708|           .toEqual({ 'Weeks 2 to 7 helper rows': 162 });
+       |            ^
+    4709|         expect.soft({ 'Week 8 rows in the weeks 2 to 7 selection': mid…
+    4710|           .toEqual({ 'Week 8 rows in the weeks 2 to 7 selection': 0 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/zz-green-probe-fix.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "Week 8 rows in the weeks 2 to 7 selection": 0,
++   "Week 8 rows in the weeks 2 to 7 selection": 4,
+  }
+
+ ❯ tests/zz-green-probe-fix.test.ts:4710:12
+    4708|           .toEqual({ 'Weeks 2 to 7 helper rows': 162 });
+    4709|         expect.soft({ 'Week 8 rows in the weeks 2 to 7 selection': mid…
+    4710|           .toEqual({ 'Week 8 rows in the weeks 2 to 7 selection': 0 });
+       |            ^
+    4711|         expect.soft({ 'Week 1 rows in the weeks 2 to 7 selection': mid…
+    4712|           .toEqual({ 'Week 1 rows in the weeks 2 to 7 selection': 0 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed | 136 skipped (141)
+   Start at  01:32:19
+   Duration  2.03s (transform 904ms, setup 0ms, import 1.19s, tests 581ms, environment 0ms)
+

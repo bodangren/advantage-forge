@@ -1,0 +1,23 @@
+{
+  "group": "cover",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v4",
+  "cast": "cast.json 88cbc951",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-cover-v1",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/cover/l2-cover-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. No page text, so the sentence check is empty. Items: six children and Pip, all waving. Seen, left to right: Ben (light-brown tousled hair, light-blue T-shirt, blue trousers, gray shoes); Mia (shoulder-length light-brown hair, pink bow, pink top, blue overalls, white shoes); Sam (brown hair, red striped T-shirt, blue shorts, blue shoes); May (black hair, small yellow clip, yellow T-shirt, blue skirt, white socks and shoes); Pat (spiky black hair, green T-shirt, brown shorts, sandals); Nan (two buns with red bands, orange star T-shirt, red shorts). Pip (golden-brown, cream chest, red collar) stands in front of Sam. All match the cast; all faces are whole. Notes: May's side ponytail is not clearly visible from the front; Pip covers part of Sam's feet; the top third is a plain wall, space for a title. No text in the picture."
+    }
+  ],
+  "summary": {
+    "files": 1,
+    "pass": 1,
+    "fail": 0
+  }
+}

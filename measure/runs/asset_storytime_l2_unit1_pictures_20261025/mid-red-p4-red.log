@@ -1,0 +1,567 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/storytime-book-pictures.test.ts (141 tests | 2 failed) 245438ms
+     × T173: the pipeline pins picture list version 4 and refuses the version 3 bytes 78ms
+     × T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows 83ms
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 12.80% (288000 of 2250000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 12.80% (288000 of 2250000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 12.80% (288000 of 2250000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 12.80% (288000 of 2250000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 12.80% (288000 of 2250000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 12.80% (288000 of 2250000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 12.80% (288000 of 2250000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 12.80% (288000 of 2250000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 12.80% (288000 of 2250000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 12.80% (288000 of 2250000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 12.80% (288000 of 2250000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 12.80% (288000 of 2250000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 12.80% (288000 of 2250000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 12.80% (288000 of 2250000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 12.80% (288000 of 2250000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 12.80% (288000 of 2250000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 12.80% (288000 of 2250000 pixels black).
+
+ ❯ tests/storytime-muse-delivery.test.ts (23 tests | 1 failed) 35018ms
+     × T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows 9858ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T173: the pipeline pins picture list version 4 and refuses the version 3 bytes
+AssertionError: expected { PICTURE_LIST_SHA256: undefined } to deeply equal { Object (PICTURE_LIST_SHA256) }
+
+- Expected
++ Received
+
+  {
+-   "PICTURE_LIST_SHA256": "6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58",
++   "PICTURE_LIST_SHA256": undefined,
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4585:8
+    4583|     const exported = pictureSeams as unknown as Record<string, unknown…
+    4584|     expect.soft({ 'PICTURE_LIST_SHA256': exported.PICTURE_LIST_SHA256 …
+    4585|       .toEqual({ 'PICTURE_LIST_SHA256': V4_SHA256 });
+       |        ^
+    4586|     expect.soft({ 'PICTURE_LIST_V3_SHA256 exported': 'PICTURE_LIST_V3_…
+    4587|       .toEqual({ 'PICTURE_LIST_V3_SHA256 exported': false });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T173: the pipeline pins picture list version 4 and refuses the version 3 bytes
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "PICTURE_LIST_V3_SHA256 exported": false,
++   "PICTURE_LIST_V3_SHA256 exported": true,
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4587:8
+    4585|       .toEqual({ 'PICTURE_LIST_SHA256': V4_SHA256 });
+    4586|     expect.soft({ 'PICTURE_LIST_V3_SHA256 exported': 'PICTURE_LIST_V3_…
+    4587|       .toEqual({ 'PICTURE_LIST_V3_SHA256 exported': false });
+       |        ^
+    4588|     expect.soft({ 'Version 3 shadow SHA-256': digest(readFileSync(LIST…
+    4589|       .toEqual({ 'Version 3 shadow SHA-256': LIST_V3_SHA256 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T173: the pipeline pins picture list version 4 and refuses the version 3 bytes
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The render row command accepts the live list": "accepted",
++   "The render row command accepts the live list": "The picture list changed: expected SHA-256 c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b, measured 6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58.",
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4601:10
+    4599|       );
+    4600|       expect.soft({ 'The render row command accepts the live list': li…
+    4601|         .toEqual({ 'The render row command accepts the live list': 'ac…
+       |          ^
+    4602|       const liveVerify = await rowCommandError(
+    4603|         ['verify', '--row', rowId, '--workbooks', WORKBOOKS, '--out', …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T173: the pipeline pins picture list version 4 and refuses the version 3 bytes
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The verify row command reads the live list": true,
++   "The verify row command reads the live list": false,
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4609:10
+    4607|       // that the list check passed: the version 3 pin would stop the …
+    4608|       expect.soft({ 'The verify row command reads the live list': /Row…
+    4609|         .toEqual({ 'The verify row command reads the live list': true …
+       |          ^
+    4610|
+    4611|       for (const command of ['render', 'verify'] as const) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T173: the pipeline pins picture list version 4 and refuses the version 3 bytes
+AssertionError: The render row command refuses the version 3 bytes: expected 'ENOENT: no such file or directory, op…' to match /The picture list changed: expected SH…/
+
+- Expected:
+/The picture list changed: expected SHA-256 6d05dfc5/
+
++ Received:
+"ENOENT: no such file or directory, open '/tmp/opencode/storytime-red-SkNAfR/list-v4-3AFE7g/docs/storytime/l2-unit1/w02/rows/l2-w02-story-page-nan-can-b-v1.json'"
+
+ ❯ tests/storytime-book-pictures.test.ts:4616:12
+    4614|         const error = await rowCommandError(args, { repoRoot: director…
+    4615|         expect.soft(error ?? 'accepted', `The ${command} row command r…
+    4616|           .toMatch(/The picture list changed: expected SHA-256 6d05dfc…
+       |            ^
+    4617|       }
+    4618|     } finally {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T173: the pipeline pins picture list version 4 and refuses the version 3 bytes
+AssertionError: The verify row command refuses the version 3 bytes: expected 'Row verification failed for 1 row ver…' to match /The picture list changed: expected SH…/
+
+- Expected:
+/The picture list changed: expected SHA-256 6d05dfc5/
+
++ Received:
+"Row verification failed for 1 row versions."
+
+ ❯ tests/storytime-book-pictures.test.ts:4616:12
+    4614|         const error = await rowCommandError(args, { repoRoot: director…
+    4615|         expect.soft(error ?? 'accepted', `The ${command} row command r…
+    4616|           .toMatch(/The picture list changed: expected SHA-256 6d05dfc…
+       |            ^
+    4617|       }
+    4618|     } finally {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: The week parser accepts week 8.: expected 'Invalid week: 8' to deeply equal 'accepted'
+
+Expected: "accepted"
+Received: "Invalid week: 8"
+
+ ❯ tests/storytime-book-pictures.test.ts:4686:81
+    4684|
+    4685|       const week8 = await dryRun('8');
+    4686|       expect.soft(week8.error ?? 'accepted', 'The week parser accepts …
+       |                                                                                 ^
+    4687|       expect.soft({ 'Week 8 rows rendered in a dry run': week8.count })
+    4688|         .toEqual({ 'Week 8 rows rendered in a dry run': 4 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "Week 8 rows rendered in a dry run": 4,
++   "Week 8 rows rendered in a dry run": -1,
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4688:10
+    4686|       expect.soft(week8.error ?? 'accepted', 'The week parser accepts …
+    4687|       expect.soft({ 'Week 8 rows rendered in a dry run': week8.count })
+    4688|         .toEqual({ 'Week 8 rows rendered in a dry run': 4 });
+       |          ^
+    4689|       const allWeeks = await dryRun();
+    4690|       expect.soft(allWeeks.error ?? 'accepted', 'A run with no --week …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: A run with no --week reads the live list.: expected 'The picture list changed: expected SH…' to deeply equal 'accepted'
+
+Expected: "accepted"
+Received: "The picture list changed: expected SHA-256 c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b, measured 6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58."
+
+ ❯ tests/storytime-book-pictures.test.ts:4690:94
+    4688|         .toEqual({ 'Week 8 rows rendered in a dry run': 4 });
+    4689|       const allWeeks = await dryRun();
+    4690|       expect.soft(allWeeks.error ?? 'accepted', 'A run with no --week …
+       |                                                                                              ^
+    4691|       expect.soft({ 'Rows rendered in a dry run with no --week': allWe…
+    4692|         .toEqual({ 'Rows rendered in a dry run with no --week': 196 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "Rows rendered in a dry run with no --week": 196,
++   "Rows rendered in a dry run with no --week": -1,
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:4692:10
+    4690|       expect.soft(allWeeks.error ?? 'accepted', 'A run with no --week …
+    4691|       expect.soft({ 'Rows rendered in a dry run with no --week': allWe…
+    4692|         .toEqual({ 'Rows rendered in a dry run with no --week': 196 });
+       |          ^
+    4693|
+    4694|       for (const value of ['0', '9']) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/14]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 4 picture list version 4 > T177: the week parser accepts week 8 and the week 2 to 7 helper returns 162 rows
+AssertionError: The pipeline exposes the weeks 2 to 7 selection helper.: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ tests/storytime-book-pictures.test.ts:4703:84
+    4701|
+    4702|       const seam = (pictureSeams as unknown as Record<string, unknown>…
+    4703|       expect.soft(seam, 'The pipeline exposes the weeks 2 to 7 selecti…
+       |                                                                                    ^
+    4704|       if (typeof seam === 'function') {
+    4705|         const middle = (seam as (list: PictureListRow[]) => PictureLis…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/14]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+AssertionError: A week 3 entry in a week 2 run is refused: expected 'delivered' to match /week 3|l2-w03-/
+
+- Expected:
+/week 3|l2-w03-/
+
++ Received:
+"delivered"
+
+ ❯ tests/storytime-muse-delivery.test.ts:1111:8
+    1109|     }
+    1110|     expect.soft(refusal?.message ?? 'delivered', 'A week 3 entry in a …
+    1111|       .toMatch(/week 3|l2-w03-/);
+       |        ^
+    1112|     expect.soft({ 'A refused week 2 run writes no file': await walk(re…
+    1113|       .toEqual({ 'A refused week 2 run writes no file': [] });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/14]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "A refused week 2 run writes no file": [],
++   "A refused week 2 run writes no file": [
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-check-row-as-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-check-row-as-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-check-row-at-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-check-row-at-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-check-row-au-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-check-row-au-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-check-row-av-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-check-row-av-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-check-row-aw-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-check-row-aw-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-check-row-ax-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-check-row-ax-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-check-row-ay-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-check-row-ay-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-check-row-az-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-check-row-az-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-check-row-ba-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-check-row-ba-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-cover-aq-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-cover-aq-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-cover-ar-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-cover-ar-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-aa-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-aa-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ab-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ab-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ac-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ac-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ad-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ad-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ae-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ae-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-af-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-af-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ag-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ag-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ah-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ah-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ai-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ai-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-aj-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-aj-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ak-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ak-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-al-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-al-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-am-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-am-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-an-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-an-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ao-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ao-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ap-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w02-story-page-ap-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w03-story-page-aa-line-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/l2-w03-story-page-aa-v1.png",
++     "/tmp/muse-delivery-905wJK/cli-week/out/refused/manifest.json",
++   ],
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1113:8
+    1111|       .toMatch(/week 3|l2-w03-/);
+    1112|     expect.soft({ 'A refused week 2 run writes no file': await walk(re…
+    1113|       .toEqual({ 'A refused week 2 run writes no file': [] });
+       |        ^
+    1114|
+    1115|     // One week 2 row has no approval entry, so the run logs exactly o…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/14]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery of another week > T182 deliver --week 2 refuses a week 3 entry and skips only week 2 rows
+AssertionError: expected { 'Week 2 skipped rows': [ …(2) ] } to deeply equal { Object (Week 2 skipped rows) }
+
+- Expected
++ Received
+
+  {
+    "Week 2 skipped rows": [
+-     "l2-w02-check-row-ba",
++     "l2-w02-check-row-ba:",
++     "l2-w03-story-page-aa:",
+    ],
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1134:53
+    1132|       .toEqual({ 'The week 2 delivery exits with code 0': 0 });
+    1133|     const skipped = lines.filter((line) => line.startsWith('Skipped ')…
+    1134|     expect.soft({ 'Week 2 skipped rows': skipped }).toEqual({ 'Week 2 …
+       |                                                     ^
+    1135|     expect.soft({ 'Week 3 rows in the skipped lines': skipped.filter((…
+    1136|       .toEqual({ 'Week 3 rows in the skipped lines': [] });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/14]⎯
+
+
+ Test Files  2 failed | 1 passed (3)
+      Tests  3 failed | 166 passed (169)
+   Start at  00:59:15
+   Duration  286.42s (transform 1.24s, setup 0ms, import 2.15s, tests 283.49s, environment 1ms)
+

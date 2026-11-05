@@ -1,0 +1,10 @@
+heavy-run: lock wait over 600 s — holder PID 2383628: flock -w 600 -E 201 /home/daniebo/Desktop/primary-parity-progress/heavy.lock /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh --locked -c cd /home/daniebo/Desktop/advantage-mmorpg && GUILD_VALE_E2E_API_PORT=3120 CI=true pnpm test:e2e --workers=1 
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+
+ Test Files  3 passed (3)
+      Tests  27 passed (27)
+   Start at  14:20:34
+   Duration  7.85s (transform 1.14s, setup 0ms, import 2.89s, tests 3.88s, environment 1ms)
+

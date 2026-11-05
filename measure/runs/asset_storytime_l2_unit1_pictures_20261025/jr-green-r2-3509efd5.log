@@ -1,0 +1,42 @@
+# Jr Green report: Muse delivery writer, remediation round 2
+
+Track: `asset_storytime_l2_unit1_pictures_20261025`. Phase 3. Session: `Green · P3 · storytime_l2_unit1_pictures · r2`.
+Task: "Implement the Muse week 1 delivery manifest writer (Green)". The task stays `[~]`.
+
+## What changed (commit 44c2ec84)
+
+- `src/storytime/muse-delivery.ts`: new exports `resolveMuseDeliveryPaths`, `checkPictureListPin`;
+  new options `pictureListSha256`, `onSkip`; name checks first; Muse reads refuse a symlink, a path
+  outside `museRoot`, and a non-regular file; targets are checked with `lstat` and created with `wx`;
+  the color print must be 8-bit, srgb, 3 channels, no palette.
+- `src/storytime/book-pictures.ts` (`deliver` command): uses `resolveMuseDeliveryPaths`, passes
+  `pictureListSha256: list.sha256`, logs `Skipped <row id>: ...` for each row without an entry.
+- `manifest.json` shape: unchanged. No test file changed.
+
+## Commands
+
+- GREEN: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts --maxWorkers=1'`.
+  Exit `0`. `Test Files  1 passed (1)`, `Tests  21 passed (21)`.
+- Regression: picture-rows and book-pictures tests: `Tests  2 failed | 139 passed (141)`; the two failures are T142 and T147 (version 3 list pin, known, unrelated).
+- tsc: exit `2`; total errors `38`; owned errors `0`.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: done
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3
+task: Implement the Muse week 1 delivery manifest writer (Green), remediation round 2
+baseline_sha: 15a7bf0b
+role_base_sha: 3509efd5d44f4bd596e5fe4d86dee8bccc47f2dd
+head_sha: d06690a046b67a5d08fa0ba2ac4f5034bbe2287e
+commits: 44c2ec841314b6a3ff722c6250863bec0e2f80f0 src/storytime/muse-delivery.ts src/storytime/book-pictures.ts; d06690a046b67a5d08fa0ba2ac4f5034bbe2287e plan.md green round 2 evidence
+tests_run: command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts --maxWorkers=1'; exit code: 0; summary line: Tests  21 passed (21); T152 to T172 pass
+typecheck: command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=2560 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'; exit code: 2; owned_errors: 0; total_errors: 38
+plan_updates: Added "Green remediation round 2" block under the Green task with commands, exit codes, summary lines, and commits. The task stays [~]. No task is [x].
+handoff: T142 and T147 of tests/storytime-book-pictures.test.ts still fail (version 3 list pin); they are outside this round. Review A F2, F3, F4 are out of scope. The writer pins the picture list only when the approval list holds pictureListSha256; add that field to the real approved.json. resolveMuseDeliveryPaths checks paths lexically; a symlinked folder inside out/ is not resolved at the folder level, but each Muse print and each delivery target is checked with lstat.
+dispositions: none
+dispositions_note: no routed findings in the brief beyond the Red round 2 findings, all fixed by T162 to T172.
+model: claude-code/claude-sonnet-5-5#high (Green, Anthropic). Red: deepseek/deepseek-flash#high. Green coder model: none; no delegation.
+facts_changed: none
+dirty_path_classification: Only src/storytime/muse-delivery.ts, src/storytime/book-pictures.ts, and plan.md were committed, by explicit paths. Other dirty and untracked paths belong to other sessions and are preserved. This log is untracked evidence.
+END_MEASURE_AGENT_RESULT

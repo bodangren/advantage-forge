@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Pass at 4330cb42. The week 1 version 2 delivery change is correct. The approval entry gains an optional integer fileVersion (>= 1) in zod; with it the writer replaces only the -v<n>.png suffix of both list names, and without it the v1 names, version, and bytes stay. The no-suffix refusal throws inside the first name-check loop before any read or write. The candidate version, file, lineArt.file, lineArt.colorFile, and the review file fields all use the delivered names; the manifest and copy steps use the same names, so a v2 row gets no v1 file and one candidate per job. Every check (schema, duplicates, list pin, names, bytes, symlink, different manifest) still runs before the first write. T184 to T189 each failed at Red (6 failed, 23 passed of 29), T189 reuses the existing different-manifest rule, and T152 to T172, T181, and T182 did not change. The Green evidence block in plan.md matches jr-green-v2-delivery.log: vitest exit 0 with 178 passed, tsc owned 0 of 38, and the fileVersion-ignore mutation failing T184. The four gate files hold 29 + 141 + 5 + 3 = 178 it() rows, which corroborates the 178 claim. Two nits remain: the no-suffix refusal has no test, and the mutation proof exists only as a summary line.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "RA-P3V2-1 [Nit] review-a: the fileVersion no-suffix refusal has no test. Evidence: the throw at src/storytime/muse-delivery.ts:200 fires only when fileVersion is set and a list name lacks -v<n>.png. T184 to T189 (tests/storytime-muse-delivery.test.ts:1191-1437) never set fileVersion on a row whose name lacks the suffix, and T167 at tests/storytime-muse-delivery.test.ts:803 tests degenerate names without fileVersion. The color branch is unreachable because planPictureRow enforces PICTURE_ROW_FILE_NAME_PATTERN = /^l2-w\\d{2}-[a-z-]+-v\\d+\\.png$/ at src/storytime/book-pictures.ts:1457, but the line-art branch is reachable because planPictureRow checks lineArtFileName only as a non-empty string at src/storytime/book-pictures.ts:1557-1559. I verified by code reading that the throw happens in the first loop at src/storytime/muse-delivery.ts:366, before any read or write, so the behavior is safe today. Owner: Green.",
+    "RA-P3V2-2 [Nit] review-a: the mutation proof exists only as one summary line. Evidence: jr-green-v2-delivery.log records 'Mutation (ignore fileVersion): T184 failed, restored', and plan.md:4636 states the same with 'Tests 1 failed | 28 skipped (29)'. No dedicated green-mutation-v2 log file exists in measure/runs/, unlike the T10 to T12 mutations that each have green-mutation-*.log. The claim is consistent with the Red evidence and the code, but a reader cannot inspect the mutated run. Owner: Green."
+  ],
+  "evidence": [
+    "Provenance: git rev-parse HEAD returned 4330cb420dd9cc11576ab089c8046aa716889524, which equals the audited head 4330cb42. git status --porcelain on src/storytime/muse-delivery.ts, tests/storytime-muse-delivery.test.ts, and the track plan.md returned no line, so the working tree files I read are the audited versions. The uncommitted working-tree changes are unrelated .claude skill files.",
+    "Change scope: the change is 13896a21 (Red tests, +292 lines appended after line 1143 of tests/storytime-muse-delivery.test.ts), c4755d25 (red evidence docs), f1e797cb (production, src/storytime/muse-delivery.ts only, 47 added and 16 removed), and 4330cb42 (plan.md Green evidence only). git show --stat f1e797cb lists one file; git show --stat 4330cb42 lists plan.md only. docs/storytime/l2-unit1/w01/muse/approved.json did not change.",
+    "Name rewrite: deliveredNames at src/storytime/muse-delivery.ts:189-203. Without fileVersion it returns the plan names and deliveredVersion(row). With fileVersion it tests /-v\\d+\\.png$/ on both names and replaces only that suffix with `-v${fileVersion}.png`, so the row id and the -line- segment keep their exact bytes. Candidate fields use the new names: version, file, lineArt.file, and lineArt.colorFile at src/storytime/muse-delivery.ts:413-424; the review file fields for kimi and person reviews use colorFile at lines 280 and 310; the final copies use colorFile and lineFile at lines 455-456. For a v1 row the values equal row.fileName and row.lineArtFileName because planPictureRow returns those two at src/storytime/book-pictures.ts:1565, so the v1 path is byte-identical to the old code.",
+    "Refusal when the list name has no suffix: src/storytime/muse-delivery.ts:200 throws with the row id and the offending name. The call at line 366 sits in the first loop, before the read loop, the manifest compare, and the writes, so a refusal leaves the delivery folder unchanged. No test covers this branch (nonblocking finding RA-P3V2-1).",
+    "One candidate per job and no v1 file for a v2 row: the approval list refuses a repeated rowId at src/storytime/muse-delivery.ts:342-346, one DeliveryItem exists per row, and assembleManifest at src/storytime/book-pictures.ts:2079-2099 groups candidates by jobId and selects the newest ready version. The copies loop emits only the delivered names, so no v1 file is written for a v2 row. T185 at tests/storytime-muse-delivery.test.ts:1257 asserts one candidate, selectedVersion 2, the exact folder file list [v2Color, v2Line, manifest.json], an empty v1-name filter, and the v2 file names in the color and lineart batches. T187 at line 1332 asserts the mixed run writes the v2 row under the v2 name and no file under its v1 name.",
+    "Checks before the first write: schema parse at line 337, duplicate and unknown row checks at 340-349, list pin at 351-359, name checks including the suffix refusal at 362-382, structural problems collected before any write at 396-431, manifest compare at 443-450, per-copy lstat, symlink, and byte checks at 462-478, and the only writes at 483-486 with the wx flag. T188 at tests/storytime-muse-delivery.test.ts:1370 drives the CLI with fileVersion 0, -1, 2.5, and \"2\" and asserts exit 1, an empty delivery folder, and a refusal message that names fileVersion. T189 asserts the refused v2 run keeps the manifest bytes and writes no v2 file.",
+    "Unchanged rules: the f1e797cb diff shows the manifest lstat, symlink, different-manifest, and different-bytes blocks only as unchanged context; the copies changed names only. The --week filter lives in the deliver command of scripts/storytime-book-pictures.ts, and f1e797cb touched no other file, so the week rule and T182 are untouched. T181 and T182 sit at tests/storytime-muse-delivery.test.ts:1022 and 1083 unchanged.",
+    "Zod schema: fileVersion is z.number().int().min(1).optional() at src/storytime/muse-delivery.ts:69, inside the existing non-strict MuseApprovalEntrySchema. The schema refusal path is entries.0.fileVersion, which is the string T188 matches with /fileVersion/i.",
+    "Test meaning T184 to T189: each of the six rows failed at Red with a labeled expectation, per mid-red-v2-delivery-red2.log, which shows 'Test Files 1 failed (1)' and 'Tests 6 failed | 23 passed (29)' and names T184 to T189 exactly as plan.md:4603-4610 records. All assertions use labeled expect.soft objects, so A3 holds and no bare-digit parse exists. T189 reuses the pre-existing different-manifest rule and proves it still holds for a v2 run; it is not a new rule.",
+    "T152 to T172, T181, T182 unchanged: git show 13896a21 is a single hunk @@ -1143,3 +1144,294 @@ with only added lines, and f1e797cb touched no test file, so no earlier test row changed. The test file holds 29 it() rows, matching the Red count of 29.",
+    "Green evidence: jr-green-v2-delivery.log records vitest exit 0 with 'Tests 178 passed (178)', tsc exit 2 with owned 0 and total 38, and 'Mutation (ignore fileVersion): T184 failed, restored'. The Green block at plan.md:4618-4641 repeats those numbers exactly and adds 'Tests 1 failed | 28 skipped (29)' for the mutation run. The four gate files hold 29 + 141 + 5 + 3 = 178 it() rows, which corroborates the 178 total. No A5 conflict: no 'all checks pass' claim in the plan contradicts a measured exit, and the Red block matches its log.",
+    "Limitation and scope: I could not re-run vitest in this session; both heavy-run.sh and a direct vitest call were refused by shell permission, so the 178-pass claim rests on the green log, the red log, the exact it() counts, and code reading. This is audit only: no production file, test file, plan file, or registry file was edited, and the only writes are measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-4330cb42.json and review-a-4330cb42.log."
+  ],
+  "commands": [
+    "git rev-parse HEAD -> 4330cb420dd9cc11576ab089c8046aa716889524",
+    "git show --stat 13896a21 -> tests/storytime-muse-delivery.test.ts, 292 insertions",
+    "git show --stat f1e797cb -> src/storytime/muse-delivery.ts only, 47 insertions and 16 deletions",
+    "git show --stat 4330cb42 -> plan.md only, 21 insertions",
+    "git show f1e797cb -> full production diff reviewed",
+    "git show 13896a21 -> full Red test diff reviewed",
+    "git show 4330cb42:src/storytime/muse-delivery.ts -> read at the audited head, lines 1-500",
+    "git diff --numstat 15a7bf0b..4330cb42 -- src/storytime/muse-delivery.ts tests/storytime-muse-delivery.test.ts -> 480/0 and 1437/0 (both files created in the phase before this change)",
+    "grep -c '  it(' over the four gate files -> 29, 141, 5, 3 (sum 178)",
+    "grep -n 'it(\\'T18' tests/storytime-muse-delivery.test.ts -> T181 line 1022, T182 1083, T184 1191, T185 1257, T186 1288, T187 1332, T188 1370, T189 1407",
+    "grep 'Tests|Test Files' measure/runs/.../mid-red-v2-delivery-red2.log -> 'Test Files 1 failed (1)', 'Tests 6 failed | 23 passed (29)'",
+    "tail measure/runs/.../jr-green-v2-delivery.log -> vitest exit 0, Tests 178 passed (178), tsc owned 0 total 38, mutation T184 failed",
+    "sed -n '4585,4660p' measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md -> Red and Green blocks for the v2 delivery",
+    "grep PICTURE_ROW_FILE_NAME_PATTERN -> /^l2-w\\d{2}-[a-z-]+-v\\d+\\.png$/ at src/storytime/book-pictures.ts:1457; planPictureRow returns colorFile: row.fileName and lineArtFile: row.lineArtFileName at line 1565",
+    "grep runStorytimeBookPicturesEntry -> exported at scripts/storytime-book-pictures.ts:31, the seam T188 imports",
+    "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'vitest run tests/storytime-muse-delivery.test.ts' and a direct vitest call -> both refused by shell permission, so no re-run",
+    "git status --porcelain on the three audited files -> empty"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-4330cb42.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-4330cb42.log"
+  ],
+  "track": "asset_storytime_l2_unit1_pictures_20261025",
+  "phase": "Phase 3: Week 1 pictures",
+  "role": "measure-review-a-correctness",
+  "audited_head": "4330cb42",
+  "audited_head_sha": "4330cb42",
+  "phase_base_sha": "15a7bf0b",
+  "role_base_sha": "4330cb42",
+  "retry_recommendation": "none",
+  "confidence": "medium"
+}

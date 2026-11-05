@@ -1,0 +1,61 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 2: Tests and calibrated model pre-checks (P2, task 5)
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: c8287b06fa8039bf708383b21cf9896d24f95b6d
+head_sha: bb63ec87087cb9aae07d494a1ee8264639d1ff22
+commits:
+  - ba4f040178fd5a6686a732bffefd716376e1d57b: test(storytime): pin three.js depth packing order
+  - bb63ec87087cb9aae07d494a1ee8264639d1ff22: measure(plan): record Storytime depth decode Red evidence
+tests_run:
+  command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'
+  runs_total: 1
+  exit_code: 1
+  summary: "Tests  2 failed | 88 passed (90)"
+  file_summary: "Test Files  1 failed | 3 passed (4)"
+  new_failures: [T70, T76]
+  new_passes_and_required_mutations: []
+  earlier_tests_passed: 88
+  earlier_test_exceptions: []
+  invalid_red_errors: []
+  preflight_hold_lines: []
+  lock_wait_line: "heavy-run: lock wait over 600 s — holder PID 3347143: flock -w 600 -E 201 /home/daniebo/Desktop/primary-parity-progress/heavy.lock /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh --locked -c bash 'apps/storytime/__tests__/phase1-docker-smoke.sh' --locked"
+  lock_note: The run waited for another agent's lock holder and then ran. The exit code 1 is a test result, not a preflight hold.
+  failure_details:
+    - T70: "Depth border at 4/4.02, row 0: expected true to be false". The amended mock writes the three.js byte order. The current little-endian decode makes a false edge for the 4 m and 4.02 m pair.
+    - T76: "The unpackDepth seam exists.: expected undefined to be type of 'function'". The seam is not exported yet.
+files_changed:
+  - tests/storytime-line-art-pass.test.ts
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-c8287b0.log
+plan_updates:
+  - Phase 2 task 5 stays [~]. Eight lines were added after the existing evidence.
+  - The lines name the smoke run 2 failure label, the cause, the evidence values, the test commit, the exit code, the summary line, the model substitution, and the technique ID decision.
+known_failures:
+  - T70: the current decode reads the depth bytes in the wrong order. The false edge at 4 m and 4.02 m shows the defect.
+  - T76: the unpackDepth seam is missing. The module exports viewDistance and isDepthEdge only.
+  - Smoke run 2 (T74) stays failed: the label "fixture depth step rows: 0/159" is not fixed by any test in this step.
+handoff:
+  - Green exports unpackDepth(bytes) from src/storytime/line-art-pass.ts. The signature takes one RGBA tuple.
+  - The decode is the big-endian inverse: b0/256 + b1/65536 + b2/16777216 + b3/255/16777216.
+  - The call sites in edgeData must pass the four bytes of one pixel instead of a pixel array and an index.
+  - T76 checks the round trip of the three.js pack and the two real GPU byte sets from the smoke diagnostic.
+  - T70 keeps every assertion. Only the mock byte order changed. T70 passes with the fixed decode and fails with the current decode.
+  - The test reads no file under out/ or measure/. The needed values are constants in the test.
+  - Technique ID stays song-page-form-edges-viewdepth-1bit-v2 (orchestrator decision): no output carries v2 evidence.
+  - Task 5 stays [~]. Task 6 stays [ ].
+  - No compiler, browser, render, provider call, or pnpm command ran. One heavy vitest run ran.
+  - The heavy run waited for the shared lock first. The holder line is in this log.
+  - Green in this phase is volcengine-agent-plan/glm-5.3-flash.
+dirty_path_classification:
+  - Relevant: tests/storytime-line-art-pass.test.ts and the track plan were clean before the work.
+  - Generated or ignorable: measure/generated/* and measure/runs/; they stay uncommitted.
+  - Unrelated user work: 313 initial dirty paths in .claude/, bench/, assets/, AGENTS.md, measure/tracks.md, measure/workflow.md, and other track plans. Every one stays preserved.
+model_deviation:
+  - The table Red model openai/gpt-6.1-sol reached its 5-hour usage limit.
+  - The orchestrator substituted minimax-cn-coding-plan/MiniMax-M3 for this step only.
+  - Green in this phase is volcengine-agent-plan/glm-5.3-flash.
+facts_changed: []
+END_MEASURE_AGENT_RESULT

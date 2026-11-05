@@ -1,0 +1,52 @@
+Green round 30 final log
+Track: asset_storytime_l2_unit1_pictures_20261025
+Phase: P3, Week 1 pictures
+Row: l2-w01-story-page-a-nest-and-a-nut
+Green model: kimi-code-plan-cn/k3.1-pro#high
+Red model: minimax-cn-coding-plan/MiniMax-M3
+Coder model: none; no delegation
+
+The textured Pip GLB had 5447352 bytes before the render. No forge build or animate command ran.
+The first v1 render waited over 600 s for the heavy lock. It then exited 0.
+The required retry exited 1 because the v1 outputs already existed.
+The first v2 attempt omitted --version 2 and exited 1 for the same reason.
+The correct v2 render exited 0. Verification exited 0 for v1 and v2.
+V1 cut off the nut and showed two eggs. V2 shows the full nut and three eggs.
+V2 is kept. Pip's lowered nose sits just behind and above the nut.
+The fork reads as a branch. Both named objects are clear. No letters show.
+The nut scale is 2.0. The nut is about 9.4 cm wide and 9.8 cm tall.
+V2 line width: 24 px. Ink coverage: 5.78%. Peak memory: 494 MB.
+V2 color SHA-256: 28b1c1b87fc1740393cb3625dff78d1fb815635c5aea8e931e00aeb03f6f85d8
+V2 line-art SHA-256: a7d8a96bfd7d4edc46c3ea84bf90342ac75214c5d4d9c730b5c3915f98076f6e
+Implementation commit: 47fa0f5c
+Plan-evidence commit: db2430fb
+Week 1 before: 21 of 30 rendered; 17 with no open defect.
+Week 1 after: 22 of 30 rendered; 18 with no open defect.
+No task was marked [x]. No task was marked [b].
+
+MEASURE_AGENT_RESULT
+status: done
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3
+role_base_sha: 72012573
+phase_base_sha: 15a7bf0b
+green_head: db2430fb
+implementation_commit: 47fa0f5c
+plan_evidence_commit: db2430fb
+tasks_flipped_x: none
+tasks_flipped_b: none
+kept_version: v2
+render_command: node --import tsx scripts/storytime-book-pictures.ts render --row l2-w01-story-page-a-nest-and-a-nut --version 2
+render_output: l2-w01-story-page-a-nest-and-a-nut v2 rendered; exit 0; 4000 x 3000; peak rss 494 MB
+verify_command: node --import tsx scripts/storytime-book-pictures.ts verify --row l2-w01-story-page-a-nest-and-a-nut
+verify_output: v1 passed; v2 passed; Row verification passed for 2 row versions; exit 0
+line_width_px: 24
+ink_coverage_percent: 5.78
+color_sha256: 28b1c1b87fc1740393cb3625dff78d1fb815635c5aea8e931e00aeb03f6f85d8
+lineart_sha256: a7d8a96bfd7d4edc46c3ea84bf90342ac75214c5d4d9c730b5c3915f98076f6e
+nut_scale: 2.0
+week1_rendered: 22 of 30
+week1_no_open_defect: 18
+new_files: docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-and-a-nut-v1.json; docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-and-a-nut-v2.json
+handoff: Review v2 and its line-art twin. The sniff review passed at 7.4. The branch review passed at 7.2. No open Green defect remains. Independent picture review is pending.
+END_MEASURE_AGENT_RESULT

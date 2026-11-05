@@ -1,0 +1,196 @@
+{
+  "reviewer": "kimi-code-plan-cn/kimi-for-coding",
+  "audited_head": "0bf8858a",
+  "verdict": "final",
+  "line_art_rule": "orchestrator default 2026-11-01",
+  "seen": {
+    "brief": "out/storytime-review/batch-33/brief.md",
+    "pages": "out/storytime-review/batch-33/pages/ (6 color + 6 line files)",
+    "refs": "out/storytime-review/batch-33/refs/ (clean Nan copies left/right side heads and look reference, clean Ben copy, nest, branch, bags, hook, net, empty room)",
+    "crops": "/tmp/opencode/review-b33/ (faces, ears, hands, net, branch at 2-3x)",
+    "line_values": "all 6 line files are 0 and 255 only (histogram check)"
+  },
+  "l2-w01-check-row-nose": {
+    "files": ["l2-w01-check-row-nose-m3-color.png", "l2-w01-check-row-nose-m3-line-6.png"],
+    "rating": 8.0,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "no_text": "yes: no letter or logo",
+      "profile_view": "yes: exact side view facing the left edge",
+      "nose_tip_most_forward": "yes: the nose tip is the most forward point of the face outline",
+      "one_eye_shows": "yes: exactly one eye",
+      "nose_clearly_seen": "yes: the nose bump is clear",
+      "square_1to1": "yes: 1600 x 1600",
+      "two_side_buns": "yes: one bun shows on the near side; no bun on top of the head",
+      "smooth_red_ring_band": "yes: the band is a smooth red ring, not a scrunchie",
+      "ear_smooth_no_hole": "yes: smooth ear, soft inner cavity, no ragged edge, no hole",
+      "no_forehead_crease": "yes",
+      "pupil_present": "yes: filled pupil in color and line art",
+      "character_matches_reference": "yes: matches nan-ref-clean-side-left-head"
+    },
+    "batch30_defects_gone": {
+      "ruffled_scrunchie": "yes: smooth red ring band",
+      "extra_open_ear_arc": "yes: one inner ear C only, and an inner ear C inside the closed face outline is allowed under the orchestrator rule",
+      "loose_strokes_at_shirt_bottom": "yes: only collar and neck lines",
+      "bun_drawn_as_target_rings": "yes: the bun is a single circle outline"
+    },
+    "goal_shown": true,
+    "retry_hint": "No fix needed. Keep this page."
+  },
+  "l2-w01-practice-line-nose": {
+    "files": ["l2-w01-practice-line-nose-m4-color.png", "l2-w01-practice-line-nose-m4-line-6.png"],
+    "rating": 8.0,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "no_text": "yes: no letter or logo",
+      "profile_facing_other_way": "yes: exact side view facing the right edge, mirror of check-row-nose",
+      "nose_tip_most_forward": "yes",
+      "one_eye_shows": "yes",
+      "whole_face_profile": "yes: forehead, brow, eye, nose, lips, chin all in profile",
+      "two_side_buns_one_shows": "yes: one bun with a smooth red ring band; no bun on top",
+      "ear_smooth_no_hole": "yes: closed soft outline, inner cavity, no hole",
+      "no_forehead_crease": "yes",
+      "pupil_present": "yes",
+      "character_matches_reference": "yes: matches nan-ref-clean-side-right-head"
+    },
+    "batch30_defects_gone": {
+      "three_quarter_view_from_behind": "yes: pure side view now",
+      "tiny_nose_bump": "yes: the nose reads clearly",
+      "extra_bun_on_top": "yes: no bun on top",
+      "open_C_ear": "yes under the orchestrator rule: the C is an inner ear detail inside the closed face outline",
+      "nose_did_not_read": "yes: nose reads",
+      "loose_strokes_on_shirt": "yes: shirt is off-frame; no loose strokes"
+    },
+    "goal_shown": true,
+    "retry_hint": "No fix needed. Keep this page."
+  },
+  "l2-w01-story-page-a-neck": {
+    "files": ["l2-w01-story-page-a-neck-m5-color.png", "l2-w01-story-page-a-neck-m5-line-5.png"],
+    "rating": 7.5,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "color: two tiny dark specks on the back of the viewer-right hand and one on the viewer-left hand (knuckle area)",
+      "line: the two neck column lines start with free rounded ends inside the face region, above the chin outline; the neck strip is still closed by the chin outline, but the stubs are inner lines the color picture shows only as soft shadow"
+    ],
+    "goal_check": {
+      "nan_character": "yes: large dark-brown eyes, short black hair in two side buns with red bands, orange T-shirt with white star (star visible at bottom edge), red shorts not in frame, close up of head and neck",
+      "lifts_her_chin": "yes: the head tilts up and the neck is visible as a skin column between chin and collar",
+      "touches_her_neck_with_both_hands": "yes: the fingers of both hands rest on the two sides of the neck",
+      "ears_smooth": "yes: both ears smooth, no ragged edge, no dark hole (batch 30 defect gone)",
+      "even_orange_tshirt": "yes: one even orange, no pale patch",
+      "plain_light_background": "yes: white",
+      "main_thing_large_centered": "yes",
+      "no_text": "yes",
+      "hands_digits": "yes: each hand shows four fingers and a thumb (5 digits), fingers as closed loops in the line art",
+      "pupils_present": "yes in color and line art; the eye double ring traces the white highlight ring of the color eye"
+    },
+    "batch30_defects_gone": {
+      "both_ears_ragged_with_dark_jagged_holes": "yes: both ears smooth and closed",
+      "chin_up": "yes",
+      "neck_skin_column": "yes",
+      "fingers_on_both_sides_of_neck": "yes",
+      "one_even_orange_tshirt": "yes",
+      "two_side_buns_smooth_red_bands": "yes"
+    },
+    "goal_shown": true,
+    "retry_hint": "Remove the tiny dark specks on the backs of the hands. Start the two neck column lines at the chin outline instead of inside the face region."
+  },
+  "l2-w01-story-page-hello-i-am-ben": {
+    "files": ["l2-w01-story-page-hello-i-am-ben-m6-color.png", "l2-w01-story-page-hello-i-am-ben-m6-line-3.png"],
+    "rating": 7.5,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "color: Ben's right ear (viewer right) has a distinct gray hollow cavity, darker and larger than the small inner mark of the Ben reference; the left ear shows the same to a lesser degree",
+      "line: the two finger-divider strokes of the hanging hand end with free rounded caps inside the hand (allowed as lines between fingers, recorded per the strict reading)"
+    ],
+    "goal_check": {
+      "ben_young_five": "yes: matches elements_ben-ref-clean-2 (blue T-shirt, blue shorts, gray shoes, brown hair)",
+      "school_bag_on_hook": "yes: Ben's green bag with orange pocket and blue straps hangs on the right hook of the wall rack",
+      "waves": "yes: right hand raised with four fingers and a thumb, all separate and rounded",
+      "pats_bag_on_floor_behind": "yes: Pat's red bag with yellow pocket sits on the floor behind him",
+      "no_text": "yes",
+      "eye_outer_corners_no_tick_marks": "yes: checked at 3x, no small dark ticks",
+      "hanging_hand": "yes: separate rounded fingers, no lump with short loose lines (batch 30 defect gone)",
+      "pupils_present": "yes in color and line art; open smiling mouth traced as an open outline"
+    },
+    "batch30_defects_gone": {
+      "hanging_hand_lump_with_short_lines": "yes: the hand has an outer outline with separate rounded finger lobes; divider lines connect to the base curve",
+      "eye_tick_marks": "yes: none at 3x"
+    },
+    "goal_shown": true,
+    "retry_hint": "Soften the right ear cavity in the color picture to a small inner mark like the Ben reference, without the gray hollow."
+  },
+  "l2-w01-story-page-a-nest": {
+    "files": ["l2-w01-story-page-a-nest-m7-color.png", "l2-w01-story-page-a-nest-m7-line-8.png"],
+    "rating": 7.5,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "line: Nan's painted eyelash marks are missing on both eyes of the line art; the color picture shows them at the outer corner of each eye, and Daniel's rule keeps them in the line art",
+      "color: one tiny dark speck on the white rim of the nest"
+    ],
+    "goal_check": {
+      "nest_with_eggs": "yes: a small bird's nest with exactly three light blue eggs (counted: 3, one at the back, two at the front)",
+      "low_tree_branch": "yes: one thick smooth branch from the right edge, nest sitting on it",
+      "garden_background": "yes: simple garden with soft colors, sky, hill, bushes, tree leaves",
+      "nan_character": "yes: two side buns with red bands, orange star T-shirt, red shorts, white sneakers, points at the nest",
+      "points_at_it": "yes: extended index finger points at the nest; thumb plus three curled fingers visible (5 digits)",
+      "one_clear_picture_main_large": "yes",
+      "no_text": "yes",
+      "ear_smooth_no_hole": "yes: the visible ear is smooth with a soft cavity; batch 30 ragged ear gone"
+    },
+    "batch30_defects_gone": {
+      "ragged_ear_with_dark_hole": "yes: smooth ear",
+      "exactly_three_eggs": "yes: 3 eggs in color and in the line art",
+      "one_thick_smooth_branch_from_right": "yes in the color; in the line art the branch is a closed shape: the upper and lower edges join at a hooked left tip and both reach the page edge",
+      "branch_closed_shape_in_line_art": "yes: hooked tip confirmed at 3x; the nest bowl closes and the branch edge is occluded by it correctly"
+    },
+    "goal_shown": true,
+    "retry_hint": "Add Nan's painted eyelash marks to both eyes of the line art. Remove the tiny dark speck on the nest rim."
+  },
+  "l2-w01-story-page-a-net": {
+    "files": ["l2-w01-story-page-a-net-m2-color.png", "l2-w01-story-page-a-net-m2-line-9.png"],
+    "rating": 7.0,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "line: the net rim is a double line, two concentric circles with a thin strip between them; the batch 30 check requires one thick line, and a double line with a thin strip is a defect under the line-art rule",
+      "line: Nan's painted eyelash marks are missing on both eyes of the line art; the color shows them at the outer corner of each eye"
+    ],
+    "goal_check": {
+      "nan_character": "yes: two side buns with smooth red bands, no bun on top, orange star T-shirt, red shorts, white sneakers",
+      "holds_up_green_butterfly_net": "yes: green net with mesh held high on a pole, right hand grips the pole with thumb and fingers",
+      "garden_background_soft": "yes: soft hill, bushes with flowers, grass",
+      "one_clear_picture_main_large": "yes",
+      "no_text": "yes",
+      "ears_smooth_no_hole": "yes: both ears smooth, small soft cavities, no ragged edge, no hole",
+      "no_forehead_crease": "yes",
+      "pupils_present": "yes in color and line art"
+    },
+    "batch30_defects_gone": {
+      "mesh_fine_grid_6_to_11_lines_each_way": "yes: the mesh is now about 3 lines each way with big diamonds",
+      "rim_one_thick_line": "no: the rim is still a double line with a thin strip between the two circles"
+    },
+    "goal_shown": true,
+    "retry_hint": "Draw the net rim as one thick line, not two concentric circles. Add Nan's painted eyelash marks to both eyes of the line art."
+  },
+  "summary": {
+    "pages": 6,
+    "pass": 6,
+    "clean": 2,
+    "clean_keys": ["l2-w01-check-row-nose", "l2-w01-practice-line-nose"],
+    "not_clean_keys": ["l2-w01-story-page-a-neck", "l2-w01-story-page-hello-i-am-ben", "l2-w01-story-page-a-nest", "l2-w01-story-page-a-net"]
+  }
+}

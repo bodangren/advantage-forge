@@ -1,0 +1,23 @@
+item-review-batch-50 — final
+reviewer: opencode/glm-5.3-flash-free#high
+status: pass (the 9 batch rows are all clean)
+image opens: 22 of 28 used. Every picture opened with the read tool.
+
+Line check (node script /tmp/opencode/line-check.mjs with sharp; counts pixels whose value is not 0 and not 255):
+All 12 line files (3 control + 9 prints) count 0 gray pixels. Pure black and pure white only, no shading values.
+
+K rows (judged first):
+- K1 l2-w01-practice-line-nose-m4: 9, clean. Nan's head in profile facing right; the nose shows clearly in color and line.
+- K2 l2-w01-story-page-a-nut-v1: 9, clean. One big brown nut in the open hand, close up, in both files.
+- K3 l2-w01-story-page-a-nose-v1: 5, DEFECT (broken-face). The line file has no nose; the text names the nose, so it must show in both files. A zoom crop of the nose area shows only the finger and the open mouth. The color file passes. Retry: line.
+
+Batch 50 rows (all clean):
+- cover-sam-and-pam: 9. One doll on the toy box; Sam's two stripes show in both files.
+- pam-is-in-a-pan: 9. The pan reads as a pan in both files: round bowl, rim, one handle. One doll, one pan.
+- pam-is-off-sam: 9. Nan's look holds; one doll falls; the star shows where the shirt shows.
+- pam-is-on-a-map: 9. One map; river, house, dotted path, cross. Sam's shoe whole near the left print edge.
+- pam-is-on-sam: 8. The judged question passes: the doll sits on Sam's body, not beside him, in color and line. The pose difference is not marked. Note: the color shows one wide chest band; the line shows two bands (line passes the two-stripe ask).
+- sam-can-get-pam: 9. Both hands lift the doll; closed lid at the right.
+- sam-is-with-pam: 9. One doll on the lap with both hands.
+- sam-nan-and-pam-nap: 9. Three sleepers with closed eyes, one blanket, one doll. Pam's hatched-strand pigtails judged a note, not a defect: they match the yarn look and stay colorable.
+- sam-saw-pam: 9. Sam points at one doll on the toy box. Sam's solid-dot eyes judged a note: they read as dot eyes and solid pupils are allowed.

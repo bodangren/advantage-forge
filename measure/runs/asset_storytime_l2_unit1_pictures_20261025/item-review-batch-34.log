@@ -1,0 +1,31 @@
+Batch 34 item review (Muse fix round for batch 32, 10 character pages).
+Independent report-only reviewer. No picture, source, or plan changed. No commit.
+
+Method: read brief.md; read cast and prop references; viewed each color and
+line page full frame; cropped each face, ear, and open hand at 3x to 5x;
+counted digits on every open hand; counted eggs and people on group pages;
+checked for text; checked each line file is 1-bit (values 0 and 255 only);
+applied the line-art rule and Daniel's rules (clean only with no defect;
+foreshortening not a defect; Nan keeps her eyelash mark in color and line art).
+
+MEASURE_AGENT_RESULT
+role: item-review
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures
+audited_head: 19359dd1
+status: complete
+result_json: measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-34.json
+summary: pages 10; pass 8; clean 4; clean_keys hello-i-am-mia, hello-i-am-may, hello-i-am-sam, a-nest-and-a-nut; not_clean_keys hello-i-am-pat, hello-i-am-your-teacher, hello-i-am-pip, cover-hello, nan-can-nod, cover-nan-can-nod.
+
+Per key (rating / pass / clean / defects):
+- hello-i-am-pat: 5.0 / no / no / critical: hand holding the bear shows 4 digits; bear still plain brown; bag round bump not visible; wall pictures small not big.
+- hello-i-am-mia: 8.0 / yes / yes / none.
+- hello-i-am-may: 8.5 / yes / yes / none.
+- hello-i-am-sam: 8.5 / yes / yes / none.
+- hello-i-am-your-teacher: 7.5 / yes / no / line art drops Nan's eyelash mark at the outer eye corners.
+- hello-i-am-pip: 7.5 / yes / no / line art drops Nan's eyelash mark at the outer eye corners.
+- cover-hello: 7.0 / yes / no / raised hands overlap and touch neighbors' cheeks and eyes.
+- a-nest-and-a-nut: 8.5 / yes / yes / none.
+- nan-can-nod: 6.0 / no / no / Nan's head not tipped forward-down so the nod is not shown; line art drops Nan's eyelash mark.
+- cover-nan-can-nod: 7.5 / yes / no / line art drops Nan's eyelash mark at the outer eye corners.
+END_MEASURE_AGENT_RESULT

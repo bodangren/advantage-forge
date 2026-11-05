@@ -1,0 +1,41 @@
+Green P4 T2 w06 staging (provisional). role_base_sha 8e141040; phase_base_sha fc76c272.
+Step 1: git rev-parse = 8e141040 (expected).
+Step 2: read 27 week 6 rows (A 16, B 2, C 9): Mia, Pat, Sam, Pip; meadow (animals), book corner (mats, basket, map, toy kitchen + pan). Reading w01-w05 specs and w04 scripts next.
+Step 3: read w04/w05 method + scripts (/tmp/opencode/w05/*.mjs). Characters Mia, Pat, Sam, Pip all have approved looks -> no new cast sheet expected. Checking 3D assets (frog, horse, fence, table, tiger, bird, duck).
+Step 4: viewed 3D candidates + cast refs. Reuse: frog, fence?, fish, table, bag, cup (3D), Pip/Sam/Pat/Mia renders, w02 park+sun+ducks, w03 pen+pans, w05 sneakers none. New Muse sheets planned (10): meadow set, book-corner set, green mats, gray cat, black-white dog, blue bird, white horse, tiger, ten balls, (orange fish uses 3D). No new cast sheet.
+Step 5: 9 element specs written by /tmp/opencode/w06/mkelem.mjs (2 sets, mats, gray cat, black-white dog, blue bird, white horse, tiger, ten balls). mia-ref-render.png copied. Next: Muse calls (4 at a time).
+Step 6: 9 Muse element calls sent (4+4+1). Next: look at sheets.
+Step 7: looked at 9 sheets m1. All OK except set-book-corner m1: basket too small, in the corner with no room behind, toy kitchen tiny -> remake m2 (bigger basket well away from the wall).
+Step 8: book-corner m2 ok (bigger basket, kitchen with red pan, map); 10 Muse calls so far, 0.10 USD. Next: 27 page specs via /tmp/opencode/w06/mkspecs.mjs.
+Step 9: 27 page specs written by /tmp/opencode/w06/mkspecs.mjs (5 check rows reuse w04/w05 specs with new id; tiger, bag, table, ten new). Next: stage gate.
+Step 10: stage gate exit 0 (70 element paths, 0 missing, 0 candidates; max 5 refs/spec). Next: review folder, commit 1, commit 2.
+Step 11: commit 1 done (27 page specs + 9 element specs). Next: plan note (commit 2).
+Step 12: commit 1 = ff72b475 (27 page specs + 9 element specs); commit 2 = b5f0c971 (plan note under Phase 4 Task 2, marker unchanged; guard accepted).
+Stage gate (exit 0): list sha256 6d05dfc5...2a58 | week 6 | rows 27 | specs found 27 | text 0 | goal 0 | outDir 0 | no-reference rows 0 | element paths checked 70 | missing 0 | characters without a reference 0 | page candidates 0 | stage check: pass
+Muse: 10 calls, 10 billed, 0 failed, 0.10 USD; running total 4.09 + 0.10 = 4.19 USD. No page call; no file <row id>-m* in out/storytime/l2/unit1/w06/muse/.
+No new cast sheet (no new character), so no phone JPG. Review folder: out/storytime-review/w06-staging/ (index.md, sheets-1.png, sheets-2.png).
+Elements: reused (Pat batch-22 render, Sam w05, Pip w04, Mia copy mia-ref-render.png, w02 duck + sun, w03 pen, 3D fish/frog/dog/bag/table/cup); new Muse sheets (9): set-meadow-empty, set-book-corner-empty (m2), prop-green-mats-sheet, prop-gray-cat-sheet, prop-black-white-dog-sheet, prop-blue-bird-sheet, prop-white-horse-sheet, prop-tiger-sheet, prop-ten-sheet.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Produce weeks 2 to 7 after the week 1 review (week 6 staging, inputs only; marker stays [ ] until the Phase 3 checkpoint)
+role_base_sha: 8e141040
+phase_base_sha: fc76c272
+commits: ff72b475; b5f0c971
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+specs: 27 page specs + 9 element specs
+muse_calls_total: 10 (10 billed, 0 failed)
+muse_cost_usd: 0.10
+running_total_usd: 4.19 (4.09 before)
+page_candidates: 0
+stage_gate: exit 0 (70 reference paths, 0 missing)
+review_folder: out/storytime-review/w06-staging/
+cast_jpg: none (no new character)
+handoff: Week 6 inputs are ready. Open: (1) 9 new element sheets (two sets, mats, gray cat, black-and-white dog, blue bird, white horse, tiger, ten balls) need an independent look; the book corner basket stands close to the wall and the mats look like cushions. (2) Three pages (horse, tap-tap-tap, tap-tap-tap-b) show only the Pip tail tip; the model may draw the whole puppy. (3) The map page needs the wall behind the lifted corner to stay empty. (4) The ten check row shows ten red balls; Daniel may want another object. (5) No week 6 page call before Daniel answers on week 1. Default: stage week 7 the same way.
+dispositions: none
+END_MEASURE_AGENT_RESULT

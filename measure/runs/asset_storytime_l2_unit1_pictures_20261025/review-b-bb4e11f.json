@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "summary": "RB5-01 to RB5-04 close for their recorded constructions on both providers. All 111 focused tests pass. The token scan still skips three decodable token forms of the design B input class. Each form lets an escaped credential reach the raw copy, the review file, and a success entry, with a PASS verdict.",
+  "phase_base_sha": "1d39b8fda457e12d8e7332e7de65d2046ddda78e",
+  "role_base_sha": "bb4e11f035266b9dbc53a47f1153c5f62b75cb8c",
+  "audited_head_sha": "bb4e11f035266b9dbc53a47f1153c5f62b75cb8c",
+  "audited_head": "bb4e11f035266b9dbc53a47f1153c5f62b75cb8c",
+  "task_base_sha": "2ba7acec4b97c8b5e61c9b468efe7ab426748d0c",
+  "head_current": true,
+  "security_applicability": "applicable",
+  "blocking_findings": [
+    "RB6-01 high: src/storytime/book-pictures.ts:1173-1191 drops an unterminated token. When the loop ends with `quoted` true, the code decodes nothing. test-strategy.md:818-819 and plan.md:650 state: \"A delimiter that never closes ends the token at the end of the text.\" Construction: `JSON.stringify(safe) + '\\n{\"note\":\"' + escaped` (no closing quote). A backslash at the end of the text (`... + '\\n\"' + escaped + '\\\\'`) has the same result. secretFindings sees only `\\u0073\\u006b...`, and decodedAnswerFindings returns []. parseModelReview returns PASS from the first object. MiniMax returns from the paid callback, and runPaidCall records success; then lines 3382-3383 write the raw copy and the review. Kimi lines 3700-3709 write the review, the raw copy, and the success entry. Decode the unterminated tail as a token.",
+    "RB6-02 high: src/storytime/book-pictures.ts:1186-1189 decodes a token with JSON.parse and discards the whole token when JSON.parse throws. JSON.parse throws on a raw control character (LF, TAB) and on an invalid escape (`\\q`, `\\u00zz`). The design B input class is \"valid or malformed\", so a malformed token must still yield its decodable escapes. Construction: `JSON.stringify(safe) + '\\n{\"note\":\"' + escaped + '\\nmore\"}'` with a literal line feed, or `... + escaped + '\\\\q\"}'`. Both checks return []. parseModelReview returns PASS, because jsonObjects skips the unparsable second object. Both providers write the raw copy, the review, and a success entry. The MiniMax envelope has the same result at layer 1. Example: `JSON.stringify({ content: X, base_resp: { status_code: 0 } })`, where X is the first construction. At layer 1, each `\\n` is a literal line feed. Use a tolerant decoder: resolve each valid escape sequence and keep each invalid sequence and control character as literal text.",
+    "RB6-03 high: src/storytime/book-pictures.ts:1178-1191 pairs quotes from left to right in one parity only. A single stray quote in prose shifts every later pair, so the real string token becomes outside text. Construction: `JSON.stringify(safe) + '\\nThe pole is 5\" tall. ' + JSON.stringify({ note: secret }).replaceAll(secret, escaped)`. The tokens become `\" tall. {\"` and `\":\"`. The escaped credential sits between two tokens, and the last quote opens an unterminated token. A fix for RB6-01 alone does not decode it. Both checks return []. parseModelReview returns PASS from the first object. Both providers write the raw copy, the review, and a success entry. The design B class names prose explicitly. Decode every segment between two consecutive unescaped quotes, in both parities. Each layer stays linear, and each next layer still needs two encoded quotes, so the depth bound of the cost section does not change."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Provenance: git rev-parse HEAD returned bb4e11f035266b9dbc53a47f1153c5f62b75cb8c at audit start and at audit finish. The owned source, test, and track paths have no working-tree change against the audited HEAD.",
+    "Applicability: the phase diff 1d39b8fd..bb4e11f0 changes src/storytime/book-pictures.ts, the provider evidence writes, and tests/storytime-book-pictures.test.ts. test-strategy.md:924-925 requires security review for task 11.",
+    "Code change 820f35c4 changes only src/storytime/book-pictures.ts. It replaces the per-brace jsonObjects loop with one pass and replaces the decoded walker with a lexical token scan. It adds credentialRules and updates two comments.",
+    "RB5-01 closure: T116 and T117 pass for both providers. The token scan reads the scalar array element and the second document. These are the two recorded constructions.",
+    "RB5-02 closure: T118 and T119 pass for both providers. Each duplicate key and each duplicate value is a separate token. JSON.parse no longer selects the candidates.",
+    "RB5-03 closure: T120 and T122 pass for both providers. A complete token in a malformed object is decoded. RB6-01 to RB6-03 show three malformed forms that remain open.",
+    "RB5-04 closure: decodedAnswerFindings no longer calls jsonObjects. jsonObjects is now one pass with one JSON.parse for each balanced top-level object. T121 passes within its 2000 ms bound in the Green and final logs.",
+    "Check order, MiniMax: secretFindings at line 3331 and decodedAnswerFindings at line 3339 run inside the paid callback. runPaidCall appends success only after the callback returns. The raw copy and the review are written at lines 3382-3383. T127 passes.",
+    "Check order, Kimi: readRawAnswer at line 3652, secretFindings at line 3653, and decodedAnswerFindings at line 3662 run before parseModelReview at line 3669. The review write, the raw copy, and the success entry follow at lines 3700-3709. T128 passes.",
+    "Lexical cases: a lone \\uD800 surrogate and a surrogate pair inside a token are checked, because JSON.parse accepts both. An escaped quote that opens a next-layer token is checked at the next layer. A credential split across escape sequences is checked after the decode. A plain credential outside every string is checked by secretFindings and by the layer 0 scan.",
+    "Lexical cases with a skip: an unterminated token and a backslash at the end of the text are skipped (RB6-01). A token with an invalid escape or a raw control character is skipped (RB6-02). A token after a stray quote is skipped (RB6-03).",
+    "JSON.parse semantics check: `node -e` with no repository import printed throw for a literal LF, throw for \\q, throw for \\u00zz, and ok for \\uD800 inside a string token.",
+    "Out-of-class case: a \\u escape sequence with no quote anywhere in the text is not a JSON string token. It has no JSON meaning, so this review does not report it.",
+    "Write reachability: when secretFindings and decodedAnswerFindings both return [], both providers write evidence for every verdict. RB6-01 to RB6-03 also keep a PASS verdict. The tolerant parseModelReview reads the earlier safe object, and no FAIL word appears.",
+    "Cost, nested layers: each next layer is the decode of one token and needs two encoded quotes. The shortest m-fold quote encoding is `\\u005c` plus (m-2) times `u005c` plus `u0022`, which is 5m+1 characters. A 65,536-byte answer therefore holds about 113 layers. The scanned text is at most about 113 x 65,536 = 7.4 million characters, plus one rule pass for each layer.",
+    "Cost, distinct tokens: one layer is pushed for each distinct token. A 65,536-byte answer holds about 21,800 short distinct tokens. Rule work is tokens x rules. T115 measures 2,400 tokens with 1,206 rules inside 2000 ms. With the T115 rule count, about 21,800 tokens is about 9 times that work. No probe measured this case, so this review records it for adversarial testing, not as a finding.",
+    "Event loop: the scan is synchronous. The bounds above are polynomial and small. T121 and T115 pass. This review found no unbounded blocking path.",
+    "Remediation cost note: a tolerant decode of the whole layer text, with no token boundary, permits a `\\u005cu005c...u0022` chain of about 13,000 layers. That design is quadratic. The per-segment decode in RB6-03 keeps the depth bound above.",
+    "Refusal text: credentialRules cuts a name over 32 characters to 32 characters plus an ellipsis. The decoded refusal is about 141 characters at most and keeps the byte-identical suffix. Findings hold pattern names only. T103 and T124 pass.",
+    "Rule builder: secretFindings and decodedAnswerFindings both call credentialRules(env) at call time (RC6-2). T125 passes. redactSecrets still builds its list from the same two sources with uncut names. That path only redacts, and the 500-character cut still applies.",
+    "Safe answers: T123 passes for both providers. Raw bytes, the reported MiniMax model, the Kimi declared model, modelSource, PASS verdicts, the review file, and the raw copy stay unchanged.",
+    "Red deviation: T119 and T122 keep the strategy constructions and add one hidden form each. The strategy forms put the credential in the last duplicate key, which JSON.parse keeps. The added forms hide it. This deviation adds coverage and hides no gap.",
+    "Green mutation deviations: mutation 1 used the task 10 walker, and T116 failed. Mutations 2 to 5 used lexical equivalents, and each named test failed. Mutation 11 also moved the raw check. The T127 constructions hold no plain credential, so the decoded-check move alone caused the T127 failure. No deviation hides a security gap. No mutation and no test row covers RB6-01 to RB6-03.",
+    "Independent test result: exit 0; Test Files 1 passed (1); Tests 111 passed (111); duration 189.97 s. The command used the shared lock and the 900-second limit. No `lock wait over 600 s` line, exit 75, 124, or 137 appeared.",
+    "Probe limit: the shell policy denied each probe command that imports the repository module (a /tmp file write through a heredoc or printf, and `tsx -e`). RB6-01 to RB6-03 come from a line-by-line trace of lines 1156-1194, 488-512, and 1085-1141, and from the JSON.parse semantics check.",
+    "A2: no audited test changes a draft to a published state. The task adds no publication or consent transition.",
+    "A6: the audited measure/tracks.md lists this track as [~] with no security-resolved claim. The plan records task 11 as done with an open nested-layer risk. Review A owns the plan claim.",
+    "The task adds no endpoint, authentication boundary, tenant scope, migration, or secret store. The risk concerns untrusted provider text and local evidence persistence."
+  ],
+  "source_derived_cases": [
+    {
+      "name": "unterminated token after a safe review",
+      "construction": "const secret = 'sk-' + 'SYNTHETIC'.repeat(4); const escaped = Array.from(secret, c => String.fromCharCode(92) + 'u' + c.charCodeAt(0).toString(16).padStart(4, '0')).join(''); const safe = { verdict: 'PASS', reason: 'The subject is visible.', observedCounts: { subject: 1 }, issues: [] }; const raw = JSON.stringify(safe) + '\\n{\"note\":\"' + escaped;",
+      "expected_after_remediation": "Both providers refuse before evidence writes. MiniMax appends only its sanitized failure entry. Kimi leaves its begin ledger and source raw file unchanged.",
+      "execution": "not_run; source trace only; the shell policy denied the probe"
+    },
+    {
+      "name": "backslash at the end of the text",
+      "construction": "Use the same values. const raw = JSON.stringify(safe) + '\\n\"' + escaped + String.fromCharCode(92);",
+      "expected_after_remediation": "Both providers refuse before evidence writes.",
+      "execution": "not_run; source trace only"
+    },
+    {
+      "name": "raw line feed inside the credential token",
+      "construction": "Use the same values. const raw = JSON.stringify(safe) + '\\n{\"note\":\"' + escaped + '\\nmore\"}';",
+      "expected_after_remediation": "Both providers refuse before evidence writes. The MiniMax envelope form with the same text in `content` is also refused.",
+      "execution": "not_run; source trace only; node -e confirmed that JSON.parse throws on a raw line feed in a string"
+    },
+    {
+      "name": "invalid escape after the credential",
+      "construction": "Use the same values. const raw = JSON.stringify(safe) + '\\n{\"note\":\"' + escaped + String.fromCharCode(92) + 'q\"}';",
+      "expected_after_remediation": "Both providers refuse before evidence writes.",
+      "execution": "not_run; source trace only; node -e confirmed that JSON.parse throws on \\q"
+    },
+    {
+      "name": "stray prose quote before the credential object",
+      "construction": "Use the same values. const raw = JSON.stringify(safe) + '\\nThe pole is 5\" tall. ' + JSON.stringify({ note: secret }).replaceAll(secret, escaped);",
+      "expected_after_remediation": "Both providers refuse before evidence writes.",
+      "execution": "not_run; source trace only"
+    }
+  ],
+  "commands": [
+    "git rev-parse HEAD (start and finish): bb4e11f035266b9dbc53a47f1153c5f62b75cb8c",
+    "git diff --name-only 1d39b8fda457e12d8e7332e7de65d2046ddda78e..HEAD",
+    "git show 820f35c4",
+    "git diff --quiet bb4e11f035266b9dbc53a47f1153c5f62b75cb8c -- src/storytime/book-pictures.ts tests/storytime-book-pictures.test.ts measure/tracks/asset_storytime_l2_unit1_pictures_20261025; exit 0",
+    "git diff --quiet 496c6622 bb4e11f0 -- tests/storytime-book-pictures.test.ts; exit 0",
+    "git show bb4e11f0:measure/tracks.md | grep -nEi storytime_l2_unit1_pictures",
+    "node -e (JSON.parse semantics only, no repository import): throw, throw, throw, ok",
+    "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'; exit 0; Tests 111 passed (111); 189.97 s",
+    "Probe attempts through a heredoc, printf, and tsx -e: permission denied by the shell policy; no probe ran"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-bb4e11f.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-bb4e11f.log"
+  ],
+  "test_strategy_violations": [
+    "RB6-01: test-strategy.md:818-819 requires an unterminated token to end at the end of the text. The code drops it.",
+    "RB6-02 and RB6-03: test-strategy.md:826-827 requires a malformed text to yield the same tokens as a valid text. A token with an invalid escape, a raw control character, or a shifted quote parity yields no decoded text.",
+    "T116 to T128 hold no unterminated, control-character, invalid-escape, or stray-quote construction. No mutation falsifies those paths."
+  ],
+  "live_contract_violations": [
+    "RB6-01 to RB6-03: contract.md:291-292 states that no raw answer or review holds a credential. A raw answer with a credential is refused before evidence writes. The five source_derived_cases persist an escaped credential."
+  ],
+  "prod_wiring_violations": [
+    "RB6-01 to RB6-03: both production provider paths write the raw copy, the review, and a success entry after an incomplete decoded check. The review keeps PASS."
+  ],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "handoff": "Route RB6-01 to RB6-03 to Green under design B. Decode an unterminated token to the end of the text. Decode each token with a tolerant decoder: resolve each valid escape, and keep each invalid escape and raw control character as literal text. Decode every segment between two consecutive unescaped quotes, in both parities. Keep the scan linear per layer. Do not decode the whole layer without token boundaries, because the u005c chain then makes the cost quadratic. Add both-provider refusal rows and a mutation for each of the five source_derived_cases. Keep T1 to T128, the safe controls, the refusal suffix, and the write order. Give the distinct-token x 1,200-rule cost case to adversarial testing. No owner decision is required.",
+  "facts_changed": []
+}

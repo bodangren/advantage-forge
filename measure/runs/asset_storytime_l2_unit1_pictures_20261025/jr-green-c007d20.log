@@ -1,0 +1,60 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P2
+phase_base_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: c007d20bdb2a07fcaf056b614a80950240367b46
+head_sha: f271dce6
+commits:
+  - fafa82dc: feat(storytime): add Forge 3D book picture pipeline with line art
+  - f271dce6: measure(plan): record Storytime picture Green evidence
+tests_run:
+  - command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'
+    exit_code: 1
+    labeled_summary: "Tests  15 failed | 26 passed (41)"
+    note: First run of the resumed draft. Root cause of most failures was a decode bug (channels read from the wrong result field), fixed in the working tree.
+  - command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'
+    exit_code: 1
+    labeled_summary: "Tests  1 failed | 40 passed (41)"
+    note: T36 only. Missing line-art binding fields were classified as failed instead of pending. Fixed.
+  - command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'
+    exit_code: 0
+    labeled_summary: "Tests  41 passed (41)"
+    note: Green gate. This run covered the exact bytes later committed as fafa82dc. No failed or skipped tests.
+  - command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json > measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-tsc.log 2>&1; echo "tsc exit: $?"'
+    exit_code: 0
+    labeled_summary: "tsc exit: 2; owned tsc errors: 0; baseline tsc errors: 31"
+    note: The 31 baseline errors are outside the owned paths (assets/rowboat.ts 8, assets/airship.ts 7, assets/plank.ts 6, assets/waterskin.ts 3, assets/mushroom-cap.ts 3, tests/part.test.ts 1, assets/wool.ts 1, assets/merchant-cart.ts 1, assets/longship.ts 1). Not touched.
+  - command: git diff --quiet 1d39b8fda457e12d8e7332e7de65d2046ddda78e -- src/song
+    exit_code: 0
+    labeled_summary: "Song diff exit: 0"
+  - command: ./measure/generate.sh
+    exit_code: 0
+    labeled_summary: "Generated 4 Measure facts."
+    note: Generated files left uncommitted; they hold concurrent work.
+files_changed:
+  - src/storytime/book-pictures.ts: new file, committed in fafa82dc. The whole pipeline: jobs, stages, render twins, line-art checks, manifest, verification, CLI, calibration gate, Kimi begin/record, contact sheet.
+  - scripts/storytime-book-pictures.ts: new file, committed in fafa82dc. CLI wrapper. Real render runs delegate to the PM's one command (heavy-run.sh) through an inner-run marker; injected dependencies keep the testable preflight-then-lock-then-pipeline order.
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md: committed in f271dce6 (task 2 [x] evidence).
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-c007d20.log: uncommitted role log.
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-tsc.log: uncommitted tsc log.
+  - No other new files. No new HTML page: the capture reuses the existing song.html page through the song page module, so no root HTML entry was needed.
+plan_updates:
+  - Phase 2 task 2 is [x] with fafa82dc, exit 0, "Tests  41 passed (41)", owned tsc errors: 0, and the song diff exit 0.
+  - Phase 2 task 3 (calibration) remains [ ] for the orchestrator to dispatch.
+known_failures:
+  - "baseline tsc errors: 31 (all outside the owned paths; list above). Do not fix in this track."
+  - The real capture path cannot produce a live line-art twin yet: the song page exposes no scene hook (see handoff). No real render ran in this task, per the plan.
+  - The Red mutation list (mid-red-00481c5.log) has not run; the adversarial step belongs to the phase closeout.
+handoff:
+  - "Design: capture contract. captureBookStill returns { color, lineArt, camera, warnings? } from one page load: it starts a vite dev server (localhost, plugins serve only out/ and the stage directory), launches Chromium, loads song.html, waits for window.__song.ready, loads the book timeline with window.__song.load, asserts empty page notes, seeks to the stage still time with window.__song.seek, and screenshots the color twin. playwright and vite load lazily inside the capture function only. A plain Buffer return (the pre-line-art draft shape) is accepted for cover and small jobs and refused for reader pages, so a reader page can never get a lone color file."
+  - "Design: line-art pass. The line art is a render pass of the same three.js scene inside the page: a second render of the same scene and camera through a WebGLRenderTarget with a black wireframe override material on a white background, read back with readRenderTargetPixels, thresholded to 0/255, row-flipped, and packed to one grey channel. The technique is versioned as lineArtTechnique 'song-page-scene-render-pass-1bit-v1' with lineArtFormatVersion 'storytime-lineart-provisional-v1'. It is NOT a filter of the color PNG."
+  - "BLOCKER for the live pass (strategy section 8): src/song/main.ts exposes only window.__song with ready, portrait, load, seek. The scene, camera, and renderer are module-scoped and unreachable, so captureBookStill throws a precise error until an engine hook exists. The needed change is small: after seek, set window.__bookStill = { scene, camera, renderer, cameraState } (cameraState = position, target, fov after the seek). Per the contract that change gets its own task, tests/song-timeline.test.ts in its gate, and a PM note. The orchestrator should add that engine-hook task before Phase 3 task 1 (Nan window sample). git diff --quiet 1d39b8fda457e12d8e7332e7de65d2046ddda78e -- src/song still exits 0; src/song was not edited."
+  - "Design: twin binding and checks. One render run writes color file, line-art file (under <directory>/lineart/), and one evidence record with one stage hash, one still time, one camera, and both file hashes. Render-time validation covers the color PNG and the line-art format before any write, so a failure in either pass writes neither twin. Manifest line-art readiness needs: format checks valid, binding intact (competing per-twin fields in the evidence fail it), a ready color twin, a passing line-art person look, and the style look reviews/lineart-style-look.json with evidenceClass owner-passed. verify --release requires the ready twin for reader pages; --output color and --output lineart limit the selection and an empty selection fails."
+  - "Design: heavy rule. scripts/storytime-book-pictures.ts now delegates real render runs to the PM's one command (bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<inner run>') with an inner-run marker that prevents recursion. Injected dependencies keep the preflight, lock, pipeline order that T11 proves. Exit 75 from heavy-run means the preflight hold outlasted the wait; retry up to three times."
+  - "Residual risks. (1) The wireframe pass technique is unproven on a real render; the Nan sample is its first live proof, and the limits (90 percent edge whiteness, 0.5 to 25 percent ink) are provisional. A dense wireframe may exceed the ink limit; if Daniel rejects the look, introduce a new technique version. (2) The cover calm-region check compares the top 30 percent against its dominant colour bucket with a 2 percent focal share; a real cover with a graded sky should pass, but the first real cover render needs a look. (3) The render-time line-art validation makes an all-white or oversized line-art pass fail the whole run (atomic), which is correct but means the pass must be tuned before Phase 3 volume. (4) The Kimi review model name is declared ('kimi-k3.1-pro'), not provider-reported; the price note records that."
+  - "For the calibration executor (task 3). Run paid calls one at a time, after a quota check, with the ledger written by the CLI. MiniMax: node --import tsx scripts/storytime-book-pictures.ts precheck-minimax --calibration bad-one-sun --paid (run with --dry-run first). Kimi: node --import tsx scripts/storytime-book-pictures.ts precheck-kimi --calibration bad-one-sun --begin --paid, dispatch the bounded reviewer on the printed prompt file, save its raw output unchanged, then node --import tsx scripts/storytime-book-pictures.ts precheck-kimi --calibration bad-one-sun --record <callId> --raw <file> --paid. Repeat both for good-nan. Expected verdicts: bad-one-sun fails on both providers, good-nan passes on both. Outputs land in out/storytime/l2/unit1/calibration/ and the ledger at out/storytime/l2/unit1/cost-ledger.jsonl. The render gate assertCalibrationReady reads those four files, so calibration must land before any Phase 3 render. mmx vision describe argument shape can change; run mmx vision --help (no paid call) first."
+  - "Reviewers: audit scope is the two new files in fafa82dc plus the plan evidence in f271dce6. The committed Red test (5cbb3407) was not edited by this role."
+facts_changed: []
+END_MEASURE_AGENT_RESULT

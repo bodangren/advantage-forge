@@ -1,0 +1,66 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025 (short id asset_storytime_l2_unit1_pictures)
+phase: P2 — Phase 2: Tests and calibrated model pre-checks
+task: T12 — Close the malformed-string class of the credential scan
+phase_base_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e (immutable)
+role_base_sha: e8d605ab0c4f211e380af3a7a3684d869cf5bc02
+head_sha: e0a156afb5975b5d485a2832e38342a07032348f
+commits:
+  - 0cd4b024 test(storytime): add failing malformed-string credential tests. Explicit path tests/storytime-book-pictures.test.ts. T129 to T138 added. T1 to T128 unchanged.
+  - e0a156af docs(measure): record Storytime task 12 Red evidence. Explicit path measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md. Task marker set to [~].
+tests_run:
+  - command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1 -t "T129|T13[0-8]"'
+    exit_code: 1
+    summary: Tests  7 failed | 3 passed | 111 skipped (121); duration 54.58 s. No timeout failure.
+    log: measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t12-focused.log
+  - command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'
+    exit_code: 1
+    summary: Test Files  1 failed | 3 passed (4); Tests  7 failed | 141 passed (148); duration 506.35 s. No package, syntax, transform, timeout, or preflight error.
+    log: measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t12.log
+  - command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'
+    exit_code: 2
+    summary: owned tsc errors 0; total tsc errors 31. The 31 errors sit in assets/*.ts and tests/part.test.ts. None sits in tests/storytime-book-pictures.test.ts.
+    log: measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-tsc-t12.log
+  - command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1 --reporter=verbose -t "T136|T137"'
+    exit_code: 0
+    summary: Tests  2 passed | 119 skipped (121); duration 6.72 s. Labels: wide scan ms: 1442; wide tokens: 9543; chain levels: 14; chain scan ms: 641.
+    log: measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t12-labels.log
+red_rows:
+  - T129 — failed. The scan drops a token with no closing quote. The unterminated tail is never decoded. Both providers write the review, the raw copy, and a success entry. The refusal message stays empty.
+  - T130 — failed. The scan stops at the last complete token. The trailing lone backslash leaves the credential inside an unterminated tail. Both providers write the evidence.
+  - T131 — failed. JSON.parse throws on the raw line feed and the whole token is dropped. The MiniMax envelope form JSON.stringify({ content: raw, base_resp: { status_code: 0 } }) fails for the same reason.
+  - T132 — failed. JSON.parse throws on the invalid escape and the whole token is dropped. Both providers write the evidence.
+  - T133 — failed. One stray prose quote shifts the quote pairing. The escaped credential falls between two tokens, and the last quote opens an unterminated tail. Both providers write the evidence.
+  - T134 — failed. The generated corpus holds cases the current scan misses. Labels: generated cases: 240; generated findings: 98; generated twin findings: 0. The row prints the missed case index and the shape label.
+  - T135 — failed. The sampled generated cases are not refused. Labels: sample cases: 12; sample refusals: 6. Six of the 24 provider calls refuse at this HEAD, because the current scan reads the shapes with an even quote shift.
+  - T136 — passed at Red. Mutation 5 names this row. Label: wide scan ms: 1442. The bound is 60000.
+  - T137 — passed at Red. Mutation 5 names this row. Label: chain scan ms: 641. The bound is 20000.
+  - T138 — passed at Red. Mutation 3 names this row. Labels: twin cases: 245; twin findings: 0.
+gate_result:
+  - The Red gate exits 1 with the expected rows. T129 to T135 fail for their stated missing behavior. T136 to T138 pass, as the strategy allows.
+  - All 138 earlier tests pass. Earlier-test exceptions: none.
+  - No row timed out. The worker stack is 1 MB. A harness timeout is not Red evidence.
+harness_change:
+  - The worker gained one corpus mode for T134 and T138. The seam, rules, minimax, and kimi modes stay unchanged. T1 to T128 stay unchanged.
+test_design:
+  - Every credential is built at run time. No fixture file holds a decoded credential. The plain credential never appears in a raw text.
+  - Every hostile row runs in the existing worker harness. The test owns the wall-clock limit: 30000 ms for a provider row, 60000 ms for a generator or chain row, 120000 ms for the wide cost row.
+  - The seeded generator lives in the test file. It adds no dependency. The seed is 20261025 and the case count is 240. The step is a small linear congruential step.
+  - The generator shape counts: object 27, unterminated 31, backslash 28, control 32, invalid-escape 31, array 28, duplicate-key 30, key 33. The layer counts: 67, 62, 61, and 50 for 0 to 3 layers.
+  - Every generated case keeps the credential in one JSON string segment. No case uses base64, percent encoding, HTML entities, a split credential, single quotes, or a twice-encoded credential.
+  - The twin of a text keeps every byte but the credential bytes. The seam yields no finding for any of the 245 twins.
+deviations:
+  - Wide row. The strategy names about 21,800 distinct short strings. The 65,536-byte budget holds 9,543 distinct short strings, which give 19,086 quote segments. The row prints wide tokens: 9543. The bound stays 60000 ms.
+  - Chain row. The strategy names about 113 layers. The escaped nesting doubles the backslashes, so a 65,536-byte answer holds 14 layers. The row prints chain levels: 14. The bound stays 20000 ms.
+  - Harness. The worker gained one corpus mode. The existing modes and T1 to T128 stay unchanged.
+  - Red model. The strategy names volcengine-agent-plan/deepseek-v4-pro#high. This role ran minimax-cn-coding-plan/MiniMax-M3#high, because the orchestrator keeps Red in this track on MiniMax-M3 and leaves DeepSeek free for acceptance.
+  - Lock. Two heavy-run: lock wait over 600 s lines appeared. Another agent held the shared lock for about 40 minutes. The first gate attempt was stopped with its waiter, and the gate run was repeated on the final test state. No exit 75, exit 124, or exit 137 appeared.
+  - No new file. This role wrote the test block, the plan evidence, and this log. No production source changed.
+handoff:
+  - Green owns src/storytime/book-pictures.ts only. The source keeps the current scan shape; the fix is the tolerant decoder, the split at every unescaped quote, and the head and tail as candidates.
+  - Green reruns the four-file gate and the type check. The gate must exit 0 with Tests  148 passed (148) and no skip.
+  - Green runs the five task 12 mutations separately. Mutation 5 names T137, mutation 3 names T138.
+  - No owner decision is needed. The residual risk list stays unchanged.
+END_MEASURE_AGENT_RESULT

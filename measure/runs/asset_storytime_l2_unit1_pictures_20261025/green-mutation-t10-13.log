@@ -1,0 +1,33 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/storytime-book-pictures.test.ts (98 tests | 1 failed) 171714ms
+       × T114: the decoded check runs before parseModelReview and the Kimi comment matches 28ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T114: the decoded check runs before parseModelReview and the Kimi comment matches
+AssertionError: The Kimi comment states that the check reads the raw answer.: expected '  // Mutation 13: the decoded check r…' to match /raw\s+(answer|output|bytes|text|resp…/i
+
+- Expected:
+/raw\s+(answer|output|bytes|text|response|provider)/i
+
++ Received:
+"  // Mutation 13: the decoded check runs after the schema parse discards unknown fields."
+
+ ❯ tests/storytime-book-pictures.test.ts:2509:10
+    2507|       expect(comment.length, 'The Kimi decoded check has a comment.').…
+    2508|       expect(comment, 'The Kimi comment states that the check reads th…
+    2509|         .toMatch(/raw\s+(answer|output|bytes|text|response|provider)/i…
+       |          ^
+    2510|     });
+    2511|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 97 passed (98)
+   Start at  13:02:52
+   Duration  174.07s (transform 860ms, setup 0ms, import 1.61s, tests 171.71s, environment 0ms)
+

@@ -1,0 +1,17 @@
+Green round 20 provisional log — storytime-low-branch
+Role: measure-jr-green (build round 20, Storytime week 1 pictures)
+Session: Green · P3 · storytime_l2_unit1_pictures · r20
+Model: xai/grok-4.7#high
+Red model (Phase 3): minimax-cn-coding-plan/MiniMax-M3
+Earlier Phase 3 Green: claude-opus (r1-r7), gpt-6-luna (r8), claude-sonnet (r9-r18), muse-spark (r19)
+Item reviewers: openai/gpt-6-luna#high (batches 1 to 2c), xai/grok-4.7#high (batch 3)
+Green coder model: none (no delegation)
+Track: asset_storytime_l2_unit1_pictures_20261025
+Phase: P3 (Week 1 pictures)
+phase_base_sha: 15a7bf0b (ancestor of HEAD: yes)
+role_base_sha: b53cab63 (HEAD at start: yes)
+Phase 3 Red test commit inside phase_base_sha..HEAD: d7031d18
+Task: build assets/storytime-low-branch.ts (low tree branch that holds the nest)
+Box review (do not change the box): overall 7.8, pass true, no critical defect.
+Row notes: the block pile is small for the box; shift the green cylinder so the front view shows the full cylinder. The row camera handles these later.
+Status: started

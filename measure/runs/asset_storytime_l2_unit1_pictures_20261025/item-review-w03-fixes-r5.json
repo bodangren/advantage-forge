@@ -1,0 +1,114 @@
+{
+  "status": "fail",
+  "reviewer": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "summary": "Both week 3 fix rows keep the goal and the cast. Both line arts lose a nose. The toy pan reads as a frying pan in color and in line. K1 and K2 are clean. K3 has no nose in the line art.",
+  "items": {
+    "l2-w03-story-page-it-is-blue": {
+      "files": [
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-color.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-color-print.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-line-6-despeckled.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-line-print-6-despeckled.png"
+      ],
+      "rating": 7.5,
+      "verdict": "defect",
+      "defect_categories": [
+        "broken-face"
+      ],
+      "defects": [
+        "The line art face has no nose. The color face shows a small nose between the eyes and the mouth."
+      ],
+      "notes": [
+        "The small clip at the top of May's hair reads as a hair clip in color and in line. It is not a shirt mark.",
+        "The line print cuts the small paint table at the left frame edge. The table is a background prop. The sentence does not need it.",
+        "The line art shows brushes on the small table where the color shows brushes and pots."
+      ],
+      "goal_check": "May matches the cast sheet: yellow shirt, blue skirt, black ponytail, yellow hair clip. She holds one blue sheet at one easel. Her shirt is plain in color and in line. Counts match: one easel, three pots on the ledge, one sheet. No letters, words, or numbers appear. The print shows May whole.",
+      "line_check": "Zero nonbinary pixels in the line source and the line print. The eyes use a thin outline ring with a solid black pupil, which the bar allows. No gap makes coloring hard.",
+      "retry_hint": "Line: draw a small nose mark between the eyes and the mouth, as the color shows."
+    },
+    "l2-w03-story-page-nan-can-get-a-pan": {
+      "files": [
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-color.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-color-print.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-9-despeckled.png",
+        "out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-print-9-despeckled.png"
+      ],
+      "rating": 7.5,
+      "verdict": "defect",
+      "defect_categories": [
+        "broken-face"
+      ],
+      "defects": [
+        "The line art face has no nose. The color face shows a small round nose with a nostril."
+      ],
+      "notes": [
+        "In the line art the end of the pan handle touches the top-left corner of the toy kitchen counter line. The pan still reads as a pan at book size.",
+        "In the line art Nan's fist holds the side of the bowl and the handle points away. The color shows her holding the handle. One pan shows in both files, and both hands are whole.",
+        "The line pan shows a wide bowl with a rim and a long thick handle. It does not read as a mirror, a ring, or a magnifying glass.",
+        "A small pale seam shows at one eye corner of Nan in the color. It is a small mark.",
+        "The shelf at the left is cut at the frame edge in both prints. It is a background prop and the sentence does not need it."
+      ],
+      "goal_check": "Nan keeps her approved look: orange T-shirt with a white star, red shorts, white sneakers, black hair in two bunches with red bands, large dark-brown eyes, and the eyelash mark. Exactly one red toy pan is in her hand in color and in line. The shelf holds cups and plates only. The toy kitchen stands at the right. No letters, words, or numbers appear. Both prints show Nan whole.",
+      "line_check": "Zero nonbinary pixels in the line source and the line print. The eyes use a thin outline ring with a solid black pupil, which the bar allows. No gap makes coloring hard.",
+      "retry_hint": "Line: add a small nose mark between the eyes and the mouth, as the color shows."
+    }
+  },
+  "extra": {
+    "K1": {
+      "text": "nose",
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The hair band on the bun shows in the color but not in the line. The practice line needs only the nose."
+      ],
+      "goal_check": "Both files show the head of Nan in profile facing the right, with the nose in clear profile. One eye, one ear, the hair mass, and the neck show. The subject of the sentence stays whole in the close-up.",
+      "line_check": "Zero nonbinary pixels. The eye uses a thin outline ring with a solid black pupil, which the bar allows. The mouth and the nose profile show. No gap makes coloring hard."
+    },
+    "K2": {
+      "text": "A nut.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": 9,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "notes": [
+        "The line art draws the pupils as outline circles. The color uses solid dark pupils. The style changes no character and no needed prop.",
+        "The open hand shows a thumb and four fingers in the color. The line shows the same hand."
+      ],
+      "goal_check": "One big brown nut sits in the open hand of Nan in color and in line. Nan keeps her orange T-shirt with a white star, red shorts, black hair in two bunches with red bands, and her large dark-brown eyes. The close-up keeps the subject whole.",
+      "line_check": "Zero nonbinary pixels. The face shows eyes, a small nose mark, and a mouth. No thick black ring, band, or gap makes coloring hard."
+    },
+    "K3": {
+      "text": "A nose.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "rating": 6.5,
+      "verdict": "defect",
+      "defect_categories": [
+        "broken-face"
+      ],
+      "defects": [
+        "The line art face has no nose. The color shows a nose, and the finger touches the place where the nose should be."
+      ],
+      "notes": [
+        "The line art shows one finger raised to the face and an open laughing mouth."
+      ],
+      "goal_check": "Nan touches her own nose with one finger and laughs in color and in line. Her T-shirt shows one white star. The named part, the nose, shows in the color file but not in the line file.",
+      "line_check": "Zero nonbinary pixels. Both eyes and the mouth show. No thick black ring, band, or gap makes coloring hard.",
+      "retry_hint": "Line: draw the nose shape at the point the finger touches, as the color shows."
+    }
+  }
+}

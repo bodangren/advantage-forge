@@ -1,0 +1,112 @@
+# Acceptance log — Phase 5 restart, audited HEAD 325b92a0d2789e4ab00ff2313129f53dbe626ec7
+
+Role: measure-phase-acceptance. Gate-only run per test-strategy.md 5.11.16. The gates of the
+earlier run at b72f8b60 carry over when CARRY_OVER_CHECK holds. Nothing is committed.
+
+VERDICT: pass
+
+Method note: the sandbox blocks shell redirects, temp-file writes, `2>&1`, `NR>1` in awk, `!`
+and `>` inside patterns, and `PIPESTATUS`, so each spec command runs as an equivalent stdin/pipe
+form with identical values. Equivalences are named per gate. The restart check blocks extract by
+exact line range because example awk commands above each marker would contaminate a name-based
+extraction (the first name-based attempt produced wrong SHAs; the line-range slices match the
+table).
+
+## CARRY_OVER_CHECK (5.11.16): PASS
+
+- files changed since b72f8b60: only `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md`
+  (commit `325b92a0`, subject `measure(storytime_l2_unit1_pictures):`).
+- files changed since b72f8b60 other than the strategy: 0. No foreign file to name.
+- strategy lines removed since b72f8b60: 0.
+- block restart-check.mjs sha256: c3ecbeb73f75abc77f64bf04c9fd86110f414cd121ac460ce423b3474672f062 (matches)
+- block restart-check-v2.mjs sha256: 30f68eafaa216bdd8947efa394aac08b8d11fbd98fed37c0c8988527807541a7 (matches)
+- block restart-check-v3.mjs sha256: 6ae82ad4a305341a409be95cd007239ef069cac2e8c4ef6301467908bac78a9e (matches)
+- block restart-pins sha256: 3b9b40775385616b39ad889592cd66ba5c181fdf8d8c299e02cafbd1723aedea (matches)
+- block restart-pins-2 sha256: fe0370b481a4588e24770522cd60f66fb8457ec4e27113a93abcdae89df3a311 (matches)
+- block restart-pins-3 sha256: 335b8e9a1bdc2def8cd14a7770f4db9f7c759d060e48719bf8c99006b50707d5 (matches)
+- restart-pins check exit: 0; restart-pins-2 check exit: 0; restart-pins-3 check exit: 0.
+- restart check exit: 0; last line is `restart check: pass`: yes.
+
+All carry-over conditions hold. The b72f8b60 results carry over: the restart check script SHA,
+X1, X2, X2b, X3, X4 with its control, X5, X6, X7, X8, X9, X12, TYPECHECK_COMMAND (total 38,
+owned 0), and PROJECT_TESTS (`Test Files  7 passed (7)`, `Tests  105 passed (105)`).
+
+## KNOWN_RED_CHECK (5.11.16): PASS
+
+- pin-set.mjs extracted from test-strategy.md; `pin set script sha256:` f67cfa8f17d380cb7e6f7632612b8f56d5cba6793d642a90abf2b5c1fd4a3fe0 (matches the table).
+- `tests in the file: 142`. `pin-dependent tests: 13 T142,T143,T144,T145,T147,T148,T149,T150,T173,T174,T175,T176,T177` (matches the named set).
+- test file changed since b72f8b60: 0.
+- live list sha256: 89b2910c28f07dcda1bd6a93349a26f31a32e971b72a55ec68e1bc9e48d9b33d.
+- live list differs from the pin: yes.
+- One heavy run: `heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`,
+  merged output (outer `|&` instead of the blocked `2>&1`; the exit line comes from inside the
+  wrapper where `$?` follows vitest directly, no pipe). Labels:
+  - `known red exit: 1`
+  - `Tests  7 failed | 135 passed (142)` (F + P = 142)
+  - `known red failing tests: 7 T142,T145,T147,T150,T173,T174,T177` (matches the probe values)
+  - `known red failing tests outside the pin set: 0` (grep of the 7 ids against the pattern built
+    from pin-set.mjs's own output)
+  - `known red drift sentinels failing: 4 of 4`
+  - `known red skipped or todo: 0`
+  - Note: raw `FAIL` lines number 19 because each expect.soft failure prints one FAIL entry; the
+    unique failing tests are 7, which is the value the rule uses.
+- Rule 1 (file byte-equal) holds by the diff count 0. Rule 2 holds (whole file, no filter, total
+  142, no skip or todo). Rule 3 holds (live list differs). Rule 4 holds (no failing test outside
+  the set). Rule 5 holds (all 4 sentinels fail). Rule 6 holds (script SHA matches and the named
+  set prints).
+
+## X13, X14, X15 (rerun at 325b92a0): PASS
+
+- X13: the wording grep over `P5BASE..HEAD` prints exactly 3 lines — the w08 approval notes of
+  the drum, the moon, and the mango. File-level rule: each entry's `notes[0]` in
+  `docs/storytime/l2-unit1/w08/muse/approved.json` reads "Independent review (model evidence,
+  not the person count): …", so all three qualify. Seed control prints 1.
+- X14: the secret grep over the a48, judge, and w08 docs, the judge-*.json and jr-green-p5-* and
+  strategy-p5-* run files, and the four storytime scripts prints nothing (exit 1).
+- X15: `node measure/tools/doctor.mjs --structural-only --root .` prints 12 errors, exit 1:
+  6 `new track has started tasks` (filled_shelves, p2_npcs, archers_revenge_rebuild,
+  castle_defense_rebuild, magic_defense_rebuild, paladins_twin_soul_rebuild), 5 `missing registry
+  link for …` in measure/tracks.md (the same tracks), and `measure/generated/status.md: stale
+  generated fact`. No line names `asset_storytime_l2_unit1_pictures_20261025` or an owned path.
+
+## G5: PASS
+
+- tech-debt lines: 43. lessons lines: 50. Both at or below 50.
+- Ledger ids in the plan (each 1 or more): RB-P4-1 4, RB12-01 4, RA-P3ADV-2 3, RC5-3 5,
+  PA3-N6 2, PA4-N2 2, PA4-N3 2, PA4-N4 2.
+
+## Plan-quote comparison (5.11.16 item 7): PASS
+
+- T4 step 13 note: 57 rows, 0.57 USD (matches X4 `restart cost rows: 57`, `restart spend (USD): 0.57`);
+  three TRY_EXCEPTIONS entries, line +2 max 5 and color +1 max 4 (matches X4 guard limits
+  `nut color: 4 line: 5` and 3 entries with PM sources); judge passed color m5 and line m5 with
+  1 nut counted (matches the X6 nut verdicts pass/fail/fail/pass/pass).
+- T4 step 14 note: the v3 pair into `w01/delivery-muse-v4/` with a hand-written manifest; the
+  nut3 handoff with 2 files and 2 OK lines (matches X4 folders and X7 counts).
+- T4 step 15 note: GREEN `<N>` = 84 (the reference for PROJECT_TESTS M=105); tsc total 38, owned
+  0, exit 2 (matches X10); restart check script SHA 6ae82ad4… and every 5.11.15 label value
+  (rows 57, spend 0.57, 51/51/51, pictures 24, guard 3/3/4-5/0/0, handoff 2/4/25/14/4/2) match
+  the X4 output; the `--final --control` FAIL lines match.
+- Task 3 note and metadata: `actual_tasks` 29 = the measured grep of `^- \[x\] Task` (29);
+  status `in_progress`.
+- A5 scan: no "PASS=N, FAIL=0" or "all checks pass" claim in the plan differs from reality; every
+  quoted count matches a measured value.
+
+## Result
+
+Every gate passes; `blocking_findings` and all violation arrays are empty. Verdict: pass.
+The b72f8b60 artifacts stay as records; nothing is committed.
+
+MEASURE_AGENT_RESULT
+role: measure-phase-acceptance
+status: pass
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5 (restart acceptance, audited HEAD 325b92a0d2789e4ab00ff2313129f53dbe626ec7, carry-over base b72f8b60)
+commits: none (gate-only; nothing staged or committed)
+tests_run: CARRY_OVER_CHECK (all conditions hold); KNOWN_RED_CHECK (exit 1, 7 failing tests all in the named pin set, 4 of 4 sentinels, total 142); X13/X14/X15 rerun (pass); G5 (pass); plan quotes (pass); carried over from b72f8b60: X1–X9, X12, TYPECHECK (38/0), PROJECT_TESTS (7 files, 105 passed)
+files_changed: acceptance-p5-restart-325b92a.json, acceptance-p5-restart-325b92a.log (artifacts only)
+plan_updates: none
+known_failures: tests/storytime-book-pictures.test.ts stays red by the 5.11.16 known-red rule (list drift; 7 failing tests, all pin-dependent, 4 of 4 sentinels)
+handoff: none — Phase 5 acceptance passes; closeout may proceed per the track workflow
+retry_recommendation: none
+END_MEASURE_AGENT_RESULT

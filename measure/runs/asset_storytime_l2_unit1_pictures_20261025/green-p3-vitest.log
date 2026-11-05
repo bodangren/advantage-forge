@@ -1,0 +1,41 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+stdout | tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T146: the line-art check rejects a line thinner than 12 px and prints the measured width
+Line-art line width: 6 px (minimum 12 px).
+Line-art ink coverage: 0.75% (1200 of 160000 pixels black).
+
+stdout | tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T146: the line-art check rejects a line thinner than 12 px and prints the measured width
+Line-art line width: 11 px (minimum 12 px).
+Line-art ink coverage: 1.38% (2200 of 160000 pixels black).
+
+ ❯ tests/storytime-book-pictures.test.ts (134 tests | 1 failed) 250206ms
+     × T146: the line-art check rejects a line thinner than 12 px and prints the measured width 64ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Phase 3 picture specification v1 > T146: the line-art check rejects a line thinner than 12 px and prints the measured width
+AssertionError: A 12 px line fails the line-art check.: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/storytime-book-pictures.test.ts:4232:79
+    4230|       expect.soft(thinCheck.valid, 'A 6 px line passes the line-art ch…
+    4231|       expect.soft(nearCheck.valid, 'An 11 px line passes the line-art …
+    4232|       expect.soft(exactCheck.valid, 'A 12 px line fails the line-art c…
+       |                                                                               ^
+    4233|       const measuredLine = printed.find((line) => /width/i.test(line) …
+    4234|       expect.soft(measuredLine, 'The check prints the measured width.'…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 133 passed (134)
+   Start at  18:23:00
+   Duration  253.77s (transform 1.37s, setup 0ms, import 3.12s, tests 250.21s, environment 0ms)
+

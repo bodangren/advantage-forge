@@ -1,0 +1,88 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P2
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: 00481c5d29439ca7edfb4b554fbc4f6428f3c125
+head_sha: db79a725ee75e63cabe4a813599f274cbea2339b
+commits:
+  - 01c01bdf: test(storytime): add failing picture pipeline tests
+  - db79a725: measure(plan): record Storytime picture Red evidence
+tests_run:
+  - command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'
+    exit_code: 1
+    labeled_summary: "Tests  25 failed | 16 passed (41)"
+    note: T3 passed. T21 hit the default timeout. The test timeout was then increased to 30000 ms.
+  - command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'
+    exit_code: 75
+    labeled_summary: "heavy-run: hold — load 5.32 (max 4)"
+    note: This attempt ran no tests. It is not Red evidence.
+  - command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'
+    exit_code: 1
+    labeled_summary: "Tests  24 failed | 17 passed (41)"
+    note: Valid Red. T3 and T21 passed. No timeout, transform, syntax, package, or lock error occurred.
+  - command: ./measure/generate.sh
+    exit_code: 0
+    labeled_summary: "Generated 4 Measure facts."
+  - command: git diff --quiet 1d39b8fda457e12d8e7332e7de65d2046ddda78e -- src/song
+    exit_code: 0
+    labeled_summary: "Song diff exit: 0"
+files_changed:
+  - tests/storytime-book-pictures.test.ts: committed; T1–T41
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md: committed
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-00481c5.log: uncommitted role log
+  - measure/generated/architecture.json: regenerated; uncommitted
+  - measure/generated/asset-inventory.json: regenerated; uncommitted
+  - measure/generated/status.md: regenerated; uncommitted
+plan_updates:
+  - Phase 2 task 1 is [x] with 01c01bdf, exit 1, and the final labeled summary.
+  - Phase 2 task 2 is [~] for Green. Task 3 remains [ ].
+  - The Phase 2 evidence records the new heavy-run command and rule.
+dirty_path_classification:
+  - Relevant: the assigned test and plan. Green still owns the untracked source drafts.
+  - Generated or ignorable: generated facts and role logs. They remain outside both commits.
+  - Unrelated user work: all other initial dirty paths. Both commits exclude them.
+known_failures:
+  - T7, T26, T34, T40, and T41: the draft expects a color Buffer and cannot consume the twin capture packet.
+  - T8: the stage decoder accepts a nested song key.
+  - T10: the output resolver accepts out/a/../safe.
+  - T16: the cover check accepts the focal prop in the title region.
+  - T17: release verification accepts a forged ready record with an empty checkedBy.
+  - T18: buildManifest accepts zero jobs.
+  - T22: render reaches capture without successful calibration.
+  - T25: the CLI has no precheck-kimi command.
+  - T27–T32, T35, and T36: the manifest has no line-art twin record.
+  - T33 and T38: the dry-run output omits the line-art path.
+  - T37: release verification passes without the line-art person look.
+  - T39: the contact sheet omits the line-art image.
+handoff:
+  - Green implements Phase 2 task 2. Keep src/song unchanged. Stop and report if an engine change is necessary.
+  - Run every heavy job through heavy-run. Do not add an outer flock or use the superseded separate preflight sequence.
+  - The final run has 17 passing tests against the draft. The following mutations have not run.
+  - "T1: passes against the untracked draft. Mutation: stop buildStorytimeJobs after week 6."
+  - "T2: passes against the untracked draft. Mutation: include w08 in buildStorytimeJobs."
+  - "T3: passes against the untracked draft. Mutation: replace each planned package hash with digest('wrong')."
+  - "T4: passes against the untracked draft. Mutation: remove assertSourceHashes from renderCandidates."
+  - "T5: passes against the untracked draft. Mutation: make plan write only the selected week's jobs."
+  - "T6: passes against the untracked draft. Mutation: make slugForPage return wave."
+  - "T9: passes against the untracked draft. Mutation: remove the stage hash comparison from renderEvidenceErrors."
+  - "T11: passes against the untracked draft. Mutation: take the lock before the preflight in runHeavyCommand."
+  - "T12: passes against the untracked draft. Mutation: call spawn during the render dry run."
+  - "T13: passes against the untracked draft. Mutation: omit the after-call entry when the provider throws."
+  - "T14: passes against the untracked draft. Mutation: parse any PASS substring as a passing verdict."
+  - "T15: passes against the untracked draft. Mutation: remove the PNG dimension check."
+  - "T19: passes against the untracked draft. Mutation: select the oldest ready version."
+  - "T20: passes against the untracked draft. Mutation: hash batch files without sorting them."
+  - "T21: passes against the untracked draft. Mutation: overwrite a candidate with its sheet thumbnail."
+  - "T23: passes against the untracked draft. Mutation: retain singing tracks in buildBookStillTimeline."
+  - "T24: passes against the untracked draft. Mutation: send MiniMax a shell command instead of the native image argument array."
+  - Green may adapt capturePacket and the local type adapter to its capture shape. Keep the observable assertions.
+  - The fixture technique and format names are synthetic. They do not select a production technique or final print format.
+  - T27 injects competing per-twin fields as invalid evidence. These fields are not required output fields.
+  - No production source, song-engine file, real output, or old role log changed.
+  - No real capture, provider call, browser, type check, other test file, or pnpm command ran.
+  - Generated facts remain unstaged because they include concurrent work. The assigned test and plan paths are clean.
+  - The only worktree uses master. The existing origin/gh-pages branch remains unchanged.
+facts_changed: []
+END_MEASURE_AGENT_RESULT

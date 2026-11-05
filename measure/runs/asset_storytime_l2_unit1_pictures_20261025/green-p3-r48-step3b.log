@@ -1,0 +1,40 @@
+storytime-school-bag-ben: 10,780 triangles, 0.252 x 0.291 x 0.151 m, built in 2023 ms
+  bag-body                  4344 tris  (930 ms)
+  pocket                    1494 tris  (262 ms)
+  strap.L                   1598 tris  (234 ms)
+  strap.R                   1604 tris  (190 ms)
+  grab-loop                 1740 tris  (75 ms)
+texture  none (vertex colors)
+glb      out/storytime-school-bag-ben/storytime-school-bag-ben.glb  (257 KB)
+# Inspection: storytime-school-bag-ben
+
+Size 0.252 x 0.291 x 0.151 m (x y z); 10,780 triangles; lowest point y = 0 m.
+
+## Silhouette per view (fractions of the frame)
+
+| view | width | height | coverage |
+|---|---|---|---|
+| front | 0.75 | 0.848 | 0.508 |
+| three-quarter | 0.711 | 0.895 | 0.474 |
+| side | 0.5 | 0.914 | 0.335 |
+| back | 0.734 | 0.84 | 0.502 |
+| top | 0.742 | 0.727 | 0.381 |
+
+## Visible share of the silhouette per part
+
+| part | front | three-quarter | side | back | top |
+|---|---|---|---|---|---|
+| bag-body | 65.5% | 67.4% | 73.7% | 67.2% | 73.4% |
+| pocket | 30.7% | 25.3% | 4% | 0 (hidden) | 16.4% |
+| strapL | 0.2% | 3.8% | 20.1% | 14.5% | 2.9% |
+| strapR | 0.2% | 0 (hidden) | 0 (hidden) | 14.5% | 1.6% |
+| grab-loop | 3.4% | 3.5% | 2.2% | 3.9% | 5.7% |
+
+## Values and colors (shaded render)
+
+Values: dark 1%, mid 77%, light 22%.
+Dominant colors: #f8a452 30%, #59dd6d 22%, #46c059 22%, #36a94a 17%, #287a51 9%, #9ebd53 0%.
+
+## Warnings
+
+- none

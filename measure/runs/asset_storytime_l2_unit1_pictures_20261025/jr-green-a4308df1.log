@@ -1,0 +1,42 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green (Green · P3 · storytime_l2_unit1_pictures · r56)
+status: complete (waiting for the independent review; no task marked [x])
+phase_base_sha: 15a7bf0b
+role_base_sha: c48e69df (HEAD at start; the brief named bd42cb1a)
+final_head: a4308df1
+models: Green = claude-code/claude-sonnet-5-5#high. Red (Phase 3) = minimax-cn-coding-plan/MiniMax-M3. Image = meta/muse-image (OpenRouter Image API). Green coder model: none; no delegation.
+commits:
+  - 072c9dc6 feat(storytime): add the Muse page tool and the week 1 page specs (scripts/storytime-muse.mjs, docs/storytime/l2-unit1/w01/muse/*.json: 9 page specs + 2 cast specs)
+  - a4308df1 docs(measure): record storytime green round 56 muse production (plan.md evidence block)
+summary: Daniel's decision (verbatim, 09:34 ICT): "The Muse version is obviously better in all cases and your reading of the hand is wrong because it's a what is it called perspective problems of the hand is reaching out towards the towards the viewer so we'll keep Muse and then don't even bother with a cap because we have to pay what we have to pay here finally I think we can leave the 3D models as is". The round made the two cast sheets, the print-size test, the reusable Muse page tool, and nine week 1 pages. No model source, no src/, no tests/, no picture list, and no existing row output changed.
+cast_sheets:
+  - out/storytime-review/muse-cast/nurse-sheet.png: woman of about thirty, short black hair, white nurse uniform, small white nurse cap, white shoes, small plain white first-aid bag with no symbol (look from the picture list row). Four views.
+  - out/storytime-review/muse-cast/teacher-kim-sheet.png: PROPOSAL for Daniel (the picture list and the Workbooks week files give no look): medium-length dark-brown hair in a low ponytail, soft green cardigan over a cream blouse, navy trousers, brown flat shoes. Four views.
+  - No prompt names skin color, ethnicity, or race. Style inputs: Nan and Ben references (the nurse also got the first-aid box render).
+print_test: out/storytime-review/muse-print-test/ (README, 4000 x 3000 crop and pad files, 100 percent crops). Method: crop to 4:3 (107 px off each side) or pad, Lanczos3, light sharpen for color; line art Lanczos3, blur sigma 1.6, threshold 128 in a second stage. Line art values are only 0 and 255 (6.43 percent black), clean thick lines, no specks. Color is soft at 100 percent but usable. Local method judged good enough for the line art and acceptable for the color. No paid upscaler. The PNG holds 8-bit gray pixels with only the values 0 and 255 (not a 1-bit-depth file).
+tool: scripts/storytime-muse.mjs (node; fetch + sharp, no new dependency). Commands: color, line, print, import. 4 calls at a time. Key read at run time only; never printed or written. Outputs in out/storytime/l2/unit1/w01/muse/: <row>-m<n>-color.png, -line.png (1-bit), -color-print.png, -line-print.png (4000x3000, or spec printSize), <row>-m<n>.json (SHA-256 of each file, spec SHA-256, model, cost), costs.tsv. Never overwrites; a new try takes the next n; a second line try for one version takes the suffix -2. Note: the sidecar specSha256 is the spec SHA at the color call; line calls used the spec at the time of the line call (the committed spec is the final state).
+calls (usage.cost USD): total 0.22 for the round.
+  - Cast (out/storytime-review/muse-cast/costs.tsv): nurse color 0.01; Teacher Kim color HTTP 502 (not billed, cost 0) then sent again 0.01.
+  - Pages (out/storytime/l2/unit1/w01/muse/costs.tsv): 11 color calls 0.11 (ben m1, m2, m3; nan m1; neck m1; net m1, m2; nest m1, m2; check-row-nose m1; practice-line-nose m1) and 9 line calls 0.09 (nan m1, neck m1, check-row-nose m1, practice-line-nose m1, net m2 and m2-2, nest m2 and m2-2, ben m3) = 0.20.
+  - One nest line call failed with a network error before a response (cost 0). The tool did not log network errors at that time; it does now.
+  - Imported, no new call: a-nut m1 and a-nose m1 (test 2 calls 7, 10 and 8, 12; 0.01 per call, recorded as test 2 costs in the notes, not counted in the total).
+pages (final version; SHA-256 prefixes of the final files; full hashes in the <row>-m<n>.json files):
+  - l2-w01-story-page-a-nut m1: import of test 2; color b4961205 line 42ac9150
+  - l2-w01-story-page-a-nose m1: import of test 2; color ea9529ee line 74fc9a56
+  - l2-w01-story-page-hello-i-am-ben m3: color 09d8c75a line 3b0c436e. m1, m2 kept in the output folder. A faint forehead line is still visible in m3 (fainter than m1 and m2). Line art has pupils and the open mouth.
+  - l2-w01-story-page-hello-i-am-nan m1: color b1624e06 line b236d4e8. No empty-room shot was made (budget); the window and the wall come from the page description, the fern render is an input. This differs from the stage v2 (room shot).
+  - l2-w01-story-page-a-neck m1: color a15dd8f3 line a81cf389. Both hands sit near the base of the neck and on the collarbones.
+  - l2-w01-story-page-a-net m2: color 2e53e5c2 line (try 2) 656f2b79. m1 changed the character, so m2 was sent with a stronger face rule. Line try 1 had fine leaf detail; try 2 is simplified.
+  - l2-w01-story-page-a-nest m2: color c438159f line (try 2) 80dd439e. m1 changed the character. Line try 2: the branch outline is still partly open where it meets the hills.
+  - l2-w01-check-row-nose m1: color 78821c85 line 486406fd. Square 1:1, print 1500 x 1500. Nan's head turned about three quarters toward the left, not an exact profile.
+  - l2-w01-practice-line-nose m1: color 57a5ccae line 73d45446. Same, facing right.
+  Print-size files exist for every version (4000 x 3000; the two square rows 1500 x 1500).
+tasks_flipped_x: none
+tasks_flipped_b: none
+new_files: scripts/storytime-muse.mjs; docs/storytime/l2-unit1/w01/muse/ (11 spec files); this log. Untracked outputs: out/storytime/l2/unit1/w01/muse/, out/storytime-review/muse-cast/, muse-print-test/, batch-28/.
+review_batch: out/storytime-review/batch-28/ (batch-27 already held a file of an earlier round). brief.md keys: cast-sheet-nurse, cast-sheet-teacher-kim, print-test, one key per page (nine).
+gates: no tsc, vitest, or build was run (barred). No heavy runner command was needed (no Forge render, no map shot). Node syntax check of the tool: node --check ok. Line files verified pure 0/255.
+deviations: (1) no empty-room map shot for hello-i-am-nan; (2) Nan hello page and the nose rows were made without the stage camera exactly; (3) round 55 left no batch-28, so batch-28 was used because batch-27 exists.
+handoff: Independent review of batch-28 (brief.md). Send the two cast sheets to Daniel through the PM; Teacher Kim is a proposal. Known open points for the reviewer: forehead line on ben m3; nest line try 2 branch outline; the profile rows are three quarter views; a-neck hands. A plan amendment (the spec and plan still name the local Forge renderer) and a Red/Green manifest task for the Muse pictures follow. Not done: Nan-only pages of weeks 2 to 8, Teacher Kim and nurse pages.
+facts_changed: Muse composition is the picture path for Storytime; Teacher Kim look = proposal; nurse look = picture list look.
+END_MEASURE_AGENT_RESULT

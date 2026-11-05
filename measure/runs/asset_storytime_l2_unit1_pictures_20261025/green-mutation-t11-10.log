@@ -1,0 +1,593 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/storytime-book-pictures.test.ts (111 tests | 9 failed) 195047ms
+     × T82: raw answers reject credentials and unsafe files and preserve safe bytes 12162ms
+     × T97: both providers inspect plain and fenced content models 2374ms
+     × T101: safe controls preserve raw bytes, models, and malformed parser results 2814ms
+     × T102: the shared walker inspects every object before selection and status fallback 4478ms
+       × T106: both providers refuse Review B case 3 with a root array 1043ms
+       × T112: both providers accept safe string layers, a safe root array, and safe encoded arrays 4403ms
+         × T116: both providers refuse Review B case 1, the fenced root array 2394ms
+         × T122: both providers refuse the fence, the duplicate key, and the malformed tail 3882ms
+         × T123: both providers accept the safe answers and keep the bytes, the models, and the writes 7892ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Review B security remediation > T82: raw answers reject credentials and unsafe files and preserve safe bytes
+Error: The decoded answer matched credential pattern json-container; the raw answer is refused; no review or raw copy is written.
+ ❯ runPaidCall src/storytime/book-pictures.ts:1055:11
+    1053|     // provider credential never reaches a caller message or the final…
+    1054|     const sanitized = redactSecrets(errorText(error)).slice(0, REDACTE…
+    1055|     throw new Error(sanitized.length > 0 ? sanitized : 'The provider c…
+       |           ^
+    1056|   }
+    1057| }
+ ❯ Module.precheckMiniMax src/storytime/book-pictures.ts:3323:18
+ ❯ tests/storytime-book-pictures.test.ts:739:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T97: both providers inspect plain and fenced content models
+AssertionError: fenced content/minimax: the error names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-container; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2063:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T97: both providers inspect plain and fenced content models
+AssertionError: fenced content/minimax: the failure names the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-container; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2063:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T97: both providers inspect plain and fenced content models
+AssertionError: fenced content/kimi: the error names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-container; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2063:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T101: safe controls preserve raw bytes, models, and malformed parser results
+AssertionError: minimax: the safe answer is accepted.: expected Error: The decoded answer matched credent… to be undefined
+
+- Expected:
+undefined
+
++ Received:
+Error {
+  "message": "The decoded answer matched credential pattern json-container; the raw answer is refused; no review or raw copy is written.",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:2098:75
+    2096|       const run = await providerRun(provider, raw);
+    2097|       const expected = parseModelReview(raw);
+    2098|       expect.soft(run.error, `${provider}: the safe answer is accepted…
+       |                                                                           ^
+    2099|       expect.soft(run.code, `${provider}: the parser verdict determine…
+    2100|       const review = JSON.parse(await readFile(path.join(run.outputRoo…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T101: safe controls preserve raw bytes, models, and malformed parser results
+AssertionError: minimax: the parser verdict determines the exit.: expected undefined to be +0 // Object.is equality
+
+- Expected:
+0
+
++ Received:
+undefined
+
+ ❯ tests/storytime-book-pictures.test.ts:2099:85
+    2097|       const expected = parseModelReview(raw);
+    2098|       expect.soft(run.error, `${provider}: the safe answer is accepted…
+    2099|       expect.soft(run.code, `${provider}: the parser verdict determine…
+       |                                                                                     ^
+    2100|       const review = JSON.parse(await readFile(path.join(run.outputRoo…
+    2101|       expect.soft(review, `${provider}: decoded fields retain parser b…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T101: safe controls preserve raw bytes, models, and malformed parser results
+Error: ENOENT: no such file or directory, open '/tmp/opencode/storytime-red-yZEW3u/repo-FQQXyQ/out/storytime/l2/unit1/reviews/w01-readalong-p01-v1-minimax.json'
+ ❯ tests/storytime-book-pictures.test.ts:2100:33
+    2098|       expect.soft(run.error, `${provider}: the safe answer is accepted…
+    2099|       expect.soft(run.code, `${provider}: the parser verdict determine…
+    2100|       const review = JSON.parse(await readFile(path.join(run.outputRoo…
+       |                                 ^
+    2101|       expect.soft(review, `${provider}: decoded fields retain parser b…
+    2102|       expect.soft(review.model, `${provider}: the correct model surviv…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T102: the shared walker inspects every object before selection and status fallback
+AssertionError: A safe control holds no finding.: expected [ 'json-container' ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "json-container",
++ ]
+
+ ❯ tests/storytime-book-pictures.test.ts:2146:75
+    2144|     // The safe controls of T101 hold no finding in the shared walker …
+    2145|     for (const control of safeControls()) {
+    2146|       expect(answerFindings(control), 'A safe control holds no finding…
+       |                                                                           ^
+    2147|     }
+    2148|     for (const value of values) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/minimax: the error names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-container; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2346:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/minimax: the failure names the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-container; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2028:74
+    2026|       });
+    2027|       const failure = String(afterCalls[0]?.error ?? '');
+    2028|       expect.soft(failure, `${context}: the failure names the pattern.…
+       |                                                                          ^
+    2029|       expect.soft(failure.length, `${context}: the failure is bounded.…
+    2030|       // The ledger holds the failure entry. Every other file keeps it…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2346:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T106: both providers refuse Review B case 3 with a root array
+AssertionError: Review B case 3/kimi: the error names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-container; the raw answer is refused; no review or raw copy is written."
+
+ ❯ assertRefused tests/storytime-book-pictures.test.ts:2010:75
+    2008|     expect.soft(run.error, `${context}: the answer is refused.`).toBeI…
+    2009|     const message = run.error instanceof Error ? run.error.message : '…
+    2010|     expect.soft(message, `${context}: the error names only the pattern…
+       |                                                                           ^
+    2011|     expect.soft(message.length, `${context}: the error is bounded.`).t…
+    2012|     for (const text of [message, ...run.logs]) for (const value of val…
+ ❯ refuseBoth tests/storytime-book-pictures.test.ts:2051:39
+ ❯ tests/storytime-book-pictures.test.ts:2346:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe root array/minimax: the safe answer is accepted.: expected Error: The decoded answer matched credent… to be undefined
+
+- Expected:
+undefined
+
++ Received:
+Error {
+  "message": "The decoded answer matched credential pattern json-container; the raw answer is refused; no review or raw copy is written.",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:2480:76
+    2478|         const run = await providerRun(provider, control.raw);
+    2479|         const context = `${control.label}/${provider}`;
+    2480|         expect.soft(run.error, `${context}: the safe answer is accepte…
+       |                                                                            ^
+    2481|         expect.soft(run.code, `${context}: the parser verdict determin…
+    2482|           .toBe(parseModelReview(control.raw).verdict === 'pass' ? 0 :…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe root array/minimax: the parser verdict determines the exit.: expected undefined to be +0 // Object.is equality
+
+- Expected:
+0
+
++ Received:
+undefined
+
+ ❯ tests/storytime-book-pictures.test.ts:2482:12
+    2480|         expect.soft(run.error, `${context}: the safe answer is accepte…
+    2481|         expect.soft(run.code, `${context}: the parser verdict determin…
+    2482|           .toBe(parseModelReview(control.raw).verdict === 'pass' ? 0 :…
+       |            ^
+    2483|         const reviewFile = path.join(run.outputRoot, `reviews/${job().…
+    2484|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe root array/minimax: the review file exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2484:84
+    2482|           .toBe(parseModelReview(control.raw).verdict === 'pass' ? 0 :…
+    2483|         const reviewFile = path.join(run.outputRoot, `reviews/${job().…
+    2484|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+       |                                                                                    ^
+    2485|         if (!existsSync(reviewFile)) continue;
+    2486|         const review = JSON.parse(await readFile(reviewFile, 'utf8'));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe root array/kimi: the safe answer is accepted.: expected Error: The decoded answer matched credent… to be undefined
+
+- Expected:
+undefined
+
++ Received:
+Error {
+  "message": "The decoded answer matched credential pattern json-container; the raw answer is refused; no review or raw copy is written.",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:2480:76
+    2478|         const run = await providerRun(provider, control.raw);
+    2479|         const context = `${control.label}/${provider}`;
+    2480|         expect.soft(run.error, `${context}: the safe answer is accepte…
+       |                                                                            ^
+    2481|         expect.soft(run.code, `${context}: the parser verdict determin…
+    2482|           .toBe(parseModelReview(control.raw).verdict === 'pass' ? 0 :…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe root array/kimi: the parser verdict determines the exit.: expected undefined to be +0 // Object.is equality
+
+- Expected:
+0
+
++ Received:
+undefined
+
+ ❯ tests/storytime-book-pictures.test.ts:2482:12
+    2480|         expect.soft(run.error, `${context}: the safe answer is accepte…
+    2481|         expect.soft(run.code, `${context}: the parser verdict determin…
+    2482|           .toBe(parseModelReview(control.raw).verdict === 'pass' ? 0 :…
+       |            ^
+    2483|         const reviewFile = path.join(run.outputRoot, `reviews/${job().…
+    2484|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe root array/kimi: the review file exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2484:84
+    2482|           .toBe(parseModelReview(control.raw).verdict === 'pass' ? 0 :…
+    2483|         const reviewFile = path.join(run.outputRoot, `reviews/${job().…
+    2484|         expect.soft(existsSync(reviewFile), `${context}: the review fi…
+       |                                                                                    ^
+    2485|         if (!existsSync(reviewFile)) continue;
+    2486|         const review = JSON.parse(await readFile(reviewFile, 'utf8'));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T116: both providers refuse Review B case 1, the fenced root array
+AssertionError: fenced root array/minimax: the refusal names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-container; the raw answer is refused; no review or raw copy is written."
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2627:81
+    2625|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2626|           .not.toBe('RangeError');
+    2627|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    2628|         expect.soft(message, `${context}: the refusal holds no matched…
+    2629|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+ ❯ tests/storytime-book-pictures.test.ts:2648:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T116: both providers refuse Review B case 1, the fenced root array
+AssertionError: fenced root array/kimi: the refusal names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-container; the raw answer is refused; no review or raw copy is written."
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2627:81
+    2625|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2626|           .not.toBe('RangeError');
+    2627|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    2628|         expect.soft(message, `${context}: the refusal holds no matched…
+    2629|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+ ❯ tests/storytime-book-pictures.test.ts:2648:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T122: both providers refuse the fence, the duplicate key, and the malformed tail
+AssertionError: fence, duplicate key, and malformed tail/minimax: the refusal names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-container; the raw answer is refused; no review or raw copy is written."
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2627:81
+    2625|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2626|           .not.toBe('RangeError');
+    2627|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    2628|         expect.soft(message, `${context}: the refusal holds no matched…
+    2629|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+ ❯ tests/storytime-book-pictures.test.ts:2702:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T122: both providers refuse the fence, the duplicate key, and the malformed tail
+AssertionError: fence, duplicate key, and malformed tail/kimi: the refusal names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-container; the raw answer is refused; no review or raw copy is written."
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2627:81
+    2625|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2626|           .not.toBe('RangeError');
+    2627|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    2628|         expect.soft(message, `${context}: the refusal holds no matched…
+    2629|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+ ❯ tests/storytime-book-pictures.test.ts:2702:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T122: both providers refuse the fence, the duplicate key, and the malformed tail
+AssertionError: fence and malformed tail with the credential/minimax: the refusal names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-container; the raw answer is refused; no review or raw copy is written."
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2627:81
+    2625|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2626|           .not.toBe('RangeError');
+    2627|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    2628|         expect.soft(message, `${context}: the refusal holds no matched…
+    2629|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+ ❯ tests/storytime-book-pictures.test.ts:2702:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T122: both providers refuse the fence, the duplicate key, and the malformed tail
+AssertionError: fence and malformed tail with the credential/kimi: the refusal names only the pattern.: expected 'The decoded answer matched credential…' to match /api-key-prefix/
+
+- Expected:
+/api-key-prefix/
+
++ Received:
+"The decoded answer matched credential pattern json-container; the raw answer is refused; no review or raw copy is written."
+
+ ❯ expectTokenRefusal tests/storytime-book-pictures.test.ts:2627:81
+    2625|         expect.soft(run.report?.error?.name ?? '', `${context}: the re…
+    2626|           .not.toBe('RangeError');
+    2627|         expect.soft(message, `${context}: the refusal names only the p…
+       |                                                                                 ^
+    2628|         expect.soft(message, `${context}: the refusal holds no matched…
+    2629|         expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the r…
+ ❯ tests/storytime-book-pictures.test.ts:2702:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T123: both providers accept the safe answers and keep the bytes, the models, and the writes
+AssertionError: safe fenced array/minimax: the safe answer is accepted.: expected { name: 'Error', …(1) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "message": "The decoded answer matched credential pattern json-container; the raw answer is refused; no review or raw copy is written.",
+  "name": "Error",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:2738:94
+    2736|           expect.soft(run.timedOut, `${context}: the call finishes ins…
+    2737|             .toBe(false);
+    2738|           expect.soft(run.report?.error ?? null, `${context}: the safe…
+       |                                                                                              ^
+    2739|           expect.soft(run.report?.status ?? null, `${context}: the par…
+    2740|             .toBe(expected.verdict);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T123: both providers accept the safe answers and keep the bytes, the models, and the writes
+AssertionError: safe fenced array/minimax: the parser verdict is the status.: expected null to be 'pass' // Object.is equality
+
+- Expected:
+"pass"
+
++ Received:
+null
+
+ ❯ tests/storytime-book-pictures.test.ts:2740:14
+    2738|           expect.soft(run.report?.error ?? null, `${context}: the safe…
+    2739|           expect.soft(run.report?.status ?? null, `${context}: the par…
+    2740|             .toBe(expected.verdict);
+       |              ^
+    2741|           const reviewFile = path.join(space.space.outputRoot, `review…
+    2742|           expect.soft(existsSync(reviewFile), `${context}: the review …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T123: both providers accept the safe answers and keep the bytes, the models, and the writes
+AssertionError: safe fenced array/minimax: the review file exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2742:86
+    2740|             .toBe(expected.verdict);
+    2741|           const reviewFile = path.join(space.space.outputRoot, `review…
+    2742|           expect.soft(existsSync(reviewFile), `${context}: the review …
+       |                                                                                      ^
+    2743|           if (!existsSync(reviewFile)) continue;
+    2744|           const review = JSON.parse(await readFile(reviewFile, 'utf8')…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T123: both providers accept the safe answers and keep the bytes, the models, and the writes
+AssertionError: safe fenced array/kimi: the safe answer is accepted.: expected { name: 'Error', …(1) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "message": "The decoded answer matched credential pattern json-container; the raw answer is refused; no review or raw copy is written.",
+  "name": "Error",
+}
+
+ ❯ tests/storytime-book-pictures.test.ts:2738:94
+    2736|           expect.soft(run.timedOut, `${context}: the call finishes ins…
+    2737|             .toBe(false);
+    2738|           expect.soft(run.report?.error ?? null, `${context}: the safe…
+       |                                                                                              ^
+    2739|           expect.soft(run.report?.status ?? null, `${context}: the par…
+    2740|             .toBe(expected.verdict);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T123: both providers accept the safe answers and keep the bytes, the models, and the writes
+AssertionError: safe fenced array/kimi: the parser verdict is the status.: expected null to be 'pass' // Object.is equality
+
+- Expected:
+"pass"
+
++ Received:
+null
+
+ ❯ tests/storytime-book-pictures.test.ts:2740:14
+    2738|           expect.soft(run.report?.error ?? null, `${context}: the safe…
+    2739|           expect.soft(run.report?.status ?? null, `${context}: the par…
+    2740|             .toBe(expected.verdict);
+       |              ^
+    2741|           const reviewFile = path.join(space.space.outputRoot, `review…
+    2742|           expect.soft(existsSync(reviewFile), `${context}: the review …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/29]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > JSON string token remediation > T123: both providers accept the safe answers and keep the bytes, the models, and the writes
+AssertionError: safe fenced array/kimi: the review file exists.: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-book-pictures.test.ts:2742:86
+    2740|             .toBe(expected.verdict);
+    2741|           const reviewFile = path.join(space.space.outputRoot, `review…
+    2742|           expect.soft(existsSync(reviewFile), `${context}: the review …
+       |                                                                                      ^
+    2743|           if (!existsSync(reviewFile)) continue;
+    2744|           const review = JSON.parse(await readFile(reviewFile, 'utf8')…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/29]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  9 failed | 102 passed (111)
+   Start at  23:04:42
+   Duration  196.55s (transform 862ms, setup 0ms, import 1.24s, tests 195.05s, environment 0ms)
+

@@ -1,0 +1,11 @@
+heavy-run: lock wait over 600 s — holder PID 3575512: flock -w 600 -E 201 /home/daniebo/Desktop/primary-parity-progress/heavy.lock /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh --locked -c '/home/daniebo/.local/share/storytime-word-audio-venv/bin/python' '/home/daniebo/Desktop/asset-requests/2026-10-27/primary-word-clip-check/tools/recognize.py' < 'clips/origins-1.json' > 'recognized/origins-1.json.tmp' 
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+
+ Test Files  4 passed (4)
+      Tests  148 passed (148)
+   Start at  03:27:40
+   Duration  285.81s (transform 1.91s, setup 0ms, import 3.81s, tests 280.19s, environment 1ms)
+
+gate-exit=0

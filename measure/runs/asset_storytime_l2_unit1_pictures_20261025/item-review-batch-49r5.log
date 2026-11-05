@@ -1,0 +1,40 @@
+Item review, batch 49r5 (week 5, batch 49, rows of the "I have two ..." pages).
+Reviewer: minimax-cn-coding-plan/MiniMax-M3.1-Flash. Bar: Daniel 2026-11-01 14:15 ICT.
+Each row was judged on the color print and the line print in out/storytime-review/batch-49/pages/.
+
+l2-w05-story-page-i-have-two-ears: rating 9.0, clean.
+Two ears show in the color print and in the line print. Each index finger touches the ear on its own side.
+The face has a nose curve and an open smile, so the face is not blank. Two white stripes on the chest.
+The sun ray strokes sit 24 pixels from the disc. Note.
+
+l2-w05-story-page-i-have-two-eyes: rating 9.0, clean.
+Two eyes show in the color print and in the line print. Each finger stops at the outer corner of an eye.
+The face has a nose curve and an open mouth. Two white stripes on the chest.
+The sun ray strokes sit 43 pixels from the disc. Note.
+
+l2-w05-story-page-i-have-two-feet: rating 8.5, clean.
+Two bare feet with five toes each show in both prints, and one pair of sneakers stands next to Sam.
+Sam points at the tummy and knee area and not at a foot. Note.
+The sun is one plain circle with no rays.
+
+l2-w05-story-page-i-have-two-hands: rating 9.0, clean.
+Two open hands with five digits each show in the color print and in the line print.
+The face has a nose curve and an open mouth. Two white stripes on the chest.
+The sun ray strokes sit 32 pixels from the disc. Note.
+
+l2-w05-story-page-i-have-two-legs: rating 8.5, clean.
+Two legs show side by side from the shorts to the shoes in both prints. One finger points down at a leg.
+The line print has no nose. Note, because the text names the legs and the mouth is there.
+The sun ray strokes sit 30 pixels from the disc. Note.
+
+Control rows K1 to K3 (same results in this file and in item-review-batch-52.json):
+K1, "A nose.": rating 5.0, defect, category wrong-or-missing-prop.
+The color print shows one nose and the fingertip touches its side. The line print has no nose shape. The
+fingertip ends on the face at the nose place and the open mouth sits at its right.
+K2, "nose" practice line: rating 9.0, clean. The head is in profile and the nose is clear in both prints.
+K3, "A nut.": rating 9.0, clean. One big brown nut in the open hand of Nan in both prints.
+
+Line check: the 5 line prints of this set and the 3 control line files have 0 pixels that are not 0 or 255.
+No gray or shading in any line art.
+
+Set A status: pass. All 5 rows are clean.

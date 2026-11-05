@@ -1,0 +1,56 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P2
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: db79a725ee75e63cabe4a813599f274cbea2339b
+head_sha: c007d20bdb2a07fcaf056b614a80950240367b46
+commits:
+  - 5cbb3407: test(storytime): type the T13 runner mock
+  - c007d20b: measure(plan): record Storytime test type fix
+tests_run:
+  - command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json > /tmp/opencode/red-tsc-db79a72.log 2>&1; echo "tsc exit: $?"'
+    wrapper_exit_code: 0
+    labeled_summary: "tsc exit: 2"
+  - command: grep -c '^tests/storytime-book-pictures\.test\.ts' /tmp/opencode/red-tsc-db79a72.log
+    count: 0
+  - command: grep -c '^src/storytime/' /tmp/opencode/red-tsc-db79a72.log
+    count: 7
+  - command: grep -c 'error TS' /tmp/opencode/red-tsc-db79a72.log
+    count: 38
+  - command: ./measure/generate.sh
+    exit_code: 0
+    labeled_summary: "Generated 4 Measure facts."
+files_changed:
+  - tests/storytime-book-pictures.test.ts: one type-only change in T13; no other test changed
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md: type-fix evidence
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-db79a72.log: uncommitted role log
+  - measure/generated/architecture.json: regenerated; uncommitted
+  - measure/generated/asset-inventory.json: regenerated; uncommitted
+  - measure/generated/status.md: regenerated; uncommitted
+plan_updates:
+  - Task 1 is [x] with type-only fix 5cbb3407 and compiler counts.
+  - Task 2 remains [~]. Task 3 remains [ ].
+dirty_path_classification:
+  - Relevant: Green's untracked Storytime source drafts; preserved.
+  - Generated or ignorable: generated facts and role logs; excluded from commits.
+  - Unrelated user work: all other initial dirty paths; preserved.
+known_failures:
+  - Compiler exit 2 remains. The test file has 0 errors. Other files have 38 errors.
+  - src/storytime/book-pictures.ts:1317 TS2375; optional evidence fields do not match RenderEvidence.
+  - src/storytime/book-pictures.ts:1318 TS2345; RenderEvidence can be undefined.
+  - src/storytime/book-pictures.ts:2170 TS2741; RenderCandidateResult lacks status.
+  - src/storytime/book-pictures.ts:2547 TS2339 occurs three times; LedgerEntry lacks file.
+  - src/storytime/book-pictures.ts:2558 TS2339; LedgerEntry lacks file.
+  - The compiler reports 31 errors outside src/storytime and the owned test. The compiler log retains their details.
+handoff:
+  - Green owns the 7 Storytime source errors. The orchestrator runs the test gate.
+  - No vitest run occurred. The prior Red evidence remains unchanged.
+  - The T13 parameters match ProviderRunner: command is string; args is string[].
+  - No assertion or falsification condition changed. No other mock needed a fix.
+  - Production source and older role logs remain unchanged by this role.
+  - Both assigned paths are clean. Both commits contain only their assigned path.
+  - The sole worktree uses master. Leave origin/gh-pages unchanged; it is outside this assignment.
+facts_changed: []
+END_MEASURE_AGENT_RESULT

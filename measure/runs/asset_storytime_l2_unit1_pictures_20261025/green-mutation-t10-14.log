@@ -1,0 +1,176 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/storytime-book-pictures.test.ts (98 tests | 3 failed) 158884ms
+     × T101: safe controls preserve raw bytes, models, and malformed parser results 5878ms
+       × T112: both providers accept safe string layers, a safe root array, and safe encoded arrays 4437ms
+     × T68: provider logs label declared models and preserve a reported MiniMax model 1546ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T101: safe controls preserve raw bytes, models, and malformed parser results
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T101: safe controls preserve raw bytes, models, and malformed parser results
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T101: safe controls preserve raw bytes, models, and malformed parser results
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T101: safe controls preserve raw bytes, models, and malformed parser results
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T101: safe controls preserve raw bytes, models, and malformed parser results
+AssertionError: minimax: the correct model survives.: expected 'mmx-vision-default' to be 'SYNTHETIC-safe-reported-model' // Object.is equality
+
+Expected: "SYNTHETIC-safe-reported-model"
+Received: "mmx-vision-default"
+
+ ❯ tests/storytime-book-pictures.test.ts:2103:10
+    2101|       expect.soft(review, `${provider}: decoded fields retain parser b…
+    2102|       expect.soft(review.model, `${provider}: the correct model surviv…
+    2103|         .toBe(provider === 'minimax' ? safeModel : pictureSeams.KIMI_R…
+       |          ^
+    2104|       expect.soft(review.modelSource).toBe(provider === 'minimax' ? 'r…
+    2105|       expect.soft(Buffer.from(review.rawOutput), `${provider}: review …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/17]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T101: safe controls preserve raw bytes, models, and malformed parser results
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T101: safe controls preserve raw bytes, models, and malformed parser results
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T101: safe controls preserve raw bytes, models, and malformed parser results
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T101: safe controls preserve raw bytes, models, and malformed parser results
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > T101: safe controls preserve raw bytes, models, and malformed parser results
+AssertionError: expected 'declared' to be 'reported' // Object.is equality
+
+Expected: "reported"
+Received: "declared"
+
+ ❯ tests/storytime-book-pictures.test.ts:2104:39
+    2102|       expect.soft(review.model, `${provider}: the correct model surviv…
+    2103|         .toBe(provider === 'minimax' ? safeModel : pictureSeams.KIMI_R…
+    2104|       expect.soft(review.modelSource).toBe(provider === 'minimax' ? 'r…
+       |                                       ^
+    2105|       expect.soft(Buffer.from(review.rawOutput), `${provider}: review …
+    2106|       expect.soft(await readFile(path.join(run.outputRoot, review.rawF…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/17]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe string layer/minimax: the model stays unchanged.: expected 'mmx-vision-default' to be 'SYNTHETIC-safe-reported-model' // Object.is equality
+
+Expected: "SYNTHETIC-safe-reported-model"
+Received: "mmx-vision-default"
+
+ ❯ tests/storytime-book-pictures.test.ts:2478:12
+    2476|           .toMatchObject(parseModelReview(control.raw));
+    2477|         expect.soft(review.model, `${context}: the model stays unchang…
+    2478|           .toBe(provider === 'minimax' ? control.model : pictureSeams.…
+       |            ^
+    2479|         expect.soft(review.modelSource, `${context}: the model source …
+    2480|           .toBe(provider === 'minimax' ? control.source : 'declared');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/17]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe string layer/minimax: the model source stays unchanged.: expected 'declared' to be 'reported' // Object.is equality
+
+Expected: "reported"
+Received: "declared"
+
+ ❯ tests/storytime-book-pictures.test.ts:2480:12
+    2478|           .toBe(provider === 'minimax' ? control.model : pictureSeams.…
+    2479|         expect.soft(review.modelSource, `${context}: the model source …
+    2480|           .toBe(provider === 'minimax' ? control.source : 'declared');
+       |            ^
+    2481|         expect.soft(Buffer.from(review.rawOutput), `${context}: the re…
+    2482|           .toEqual(Buffer.from(control.raw));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/17]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe encoded array/minimax: the model stays unchanged.: expected 'mmx-vision-default' to be 'SYNTHETIC-safe-reported-model' // Object.is equality
+
+Expected: "SYNTHETIC-safe-reported-model"
+Received: "mmx-vision-default"
+
+ ❯ tests/storytime-book-pictures.test.ts:2478:12
+    2476|           .toMatchObject(parseModelReview(control.raw));
+    2477|         expect.soft(review.model, `${context}: the model stays unchang…
+    2478|           .toBe(provider === 'minimax' ? control.model : pictureSeams.…
+       |            ^
+    2479|         expect.soft(review.modelSource, `${context}: the model source …
+    2480|           .toBe(provider === 'minimax' ? control.source : 'declared');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/17]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: safe encoded array/minimax: the model source stays unchanged.: expected 'declared' to be 'reported' // Object.is equality
+
+Expected: "reported"
+Received: "declared"
+
+ ❯ tests/storytime-book-pictures.test.ts:2480:12
+    2478|           .toBe(provider === 'minimax' ? control.model : pictureSeams.…
+    2479|         expect.soft(review.modelSource, `${context}: the model source …
+    2480|           .toBe(provider === 'minimax' ? control.source : 'declared');
+       |            ^
+    2481|         expect.soft(Buffer.from(review.rawOutput), `${context}: the re…
+    2482|           .toEqual(Buffer.from(control.raw));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/17]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: escaped Unicode/minimax: the model stays unchanged.: expected 'mmx-vision-default' to be 'SYNTHETIC-safe-reported-model' // Object.is equality
+
+Expected: "SYNTHETIC-safe-reported-model"
+Received: "mmx-vision-default"
+
+ ❯ tests/storytime-book-pictures.test.ts:2478:12
+    2476|           .toMatchObject(parseModelReview(control.raw));
+    2477|         expect.soft(review.model, `${context}: the model stays unchang…
+    2478|           .toBe(provider === 'minimax' ? control.model : pictureSeams.…
+       |            ^
+    2479|         expect.soft(review.modelSource, `${context}: the model source …
+    2480|           .toBe(provider === 'minimax' ? control.source : 'declared');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/17]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Decoded answer security remediation > Decoded layer remediation > T112: both providers accept safe string layers, a safe root array, and safe encoded arrays
+AssertionError: escaped Unicode/minimax: the model source stays unchanged.: expected 'declared' to be 'reported' // Object.is equality
+
+Expected: "reported"
+Received: "declared"
+
+ ❯ tests/storytime-book-pictures.test.ts:2480:12
+    2478|           .toBe(provider === 'minimax' ? control.model : pictureSeams.…
+    2479|         expect.soft(review.modelSource, `${context}: the model source …
+    2480|           .toBe(provider === 'minimax' ? control.source : 'declared');
+       |            ^
+    2481|         expect.soft(Buffer.from(review.rawOutput), `${context}: the re…
+    2482|           .toEqual(Buffer.from(control.raw));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/17]⎯
+
+ FAIL  tests/storytime-book-pictures.test.ts > Review A remediation > T68: provider logs label declared models and preserve a reported MiniMax model
+AssertionError: expected { kind: 'model-pre-check', …(20) } to match object { modelSource: 'reported', …(1) }
+(23 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "model": "synthetic-reported-vision",
+-   "modelSource": "reported",
++   "model": "mmx-vision-default",
++   "modelSource": "declared",
+  }
+
+ ❯ tests/storytime-book-pictures.test.ts:2901:27
+    2899|       expect.soft(first).toMatchObject({ event: 'before-call', model: …
+    2900|       const review = JSON.parse(await readFile(path.join(space.outputR…
+    2901|       expect.soft(review).toMatchObject({ modelSource: reported ? 'rep…
+       |                           ^
+    2902|         model: reported ? 'synthetic-reported-vision' : first.model });
+    2903|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/17]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 95 passed (98)
+   Start at  13:10:08
+   Duration  160.76s (transform 909ms, setup 0ms, import 1.49s, tests 158.88s, environment 0ms)
+

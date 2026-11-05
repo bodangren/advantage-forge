@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "The Muse week 1 delivery writer passes the security review at 19359dd1 with seven nonblocking findings. Approval entries cannot steer paths: a zod schema refuses any file name that is not a plain name, and row ids are matched against the picture list before use and never form a path. All checks run before the first write, a different existing manifest and a different existing delivery file are refused for both color and line, SHA-256 values come from the delivered bytes, the writer invents no review, and the path holds no credential read, shell, or network. The findings are provenance, path containment, and write-boundary hardening items on operator-controlled inputs.",
+  "phase_base_sha": "15a7bf0b2a59b8137a05805666df6736dc256167",
+  "role_base_sha": "19359dd1d9f024a4ab7612f4e5fcf08c091ae029",
+  "audited_head_sha": "19359dd1d9f024a4ab7612f4e5fcf08c091ae029",
+  "audited_head": "19359dd1d9f024a4ab7612f4e5fcf08c091ae029",
+  "head_current": true,
+  "security_applicability": "applicable",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "RB8-01 Major data integrity: the deliver CLI pins no picture-list SHA-256, unlike render and verify which pin PICTURE_LIST_V3_SHA256; the manifest provenance rests on an unpinned list file. Rationale: Green recorded the gap as an open point (plan.md:1437 and 1467). (code reading; confirmed)",
+    "RB8-02 Major path containment: --delivery and --muse accept absolute or parent-relative paths, so a run can write outside out/ and outside the repository; the stricter reading of spec.md:54-55 and contract.md:353 forbids this; the writer performs no containment check and Green's own smoke used /tmp. (code reading; confirmed)",
+    "RB8-03 Nit write boundary: writes use existsSync plus writeFile, not exclusive creates; a dangling symlink at a delivery target would receive the delivered PNG bytes outside deliveryRoot; phase-2 RB-03 mandated flag wx for the smoke writer. (code reading; probe blocked by tool permission)",
+    "RB8-04 Nit duplicate picture-list names within one run can silently overwrite an earlier copy; both copies pass the pre-write existence check before any write, so the manifest then records a SHA-256 that no delivered file matches. (code reading; probe blocked by tool permission)",
+    "RB8-05 Nit degenerate list line-art names: dot and manifest.json pass the plain-name basename check; dot can break the refusal-leaves-the-folder-unchanged claim on a first run (partial copy, no manifest), and manifest.json as a line name would be clobbered by the final manifest write. (code reading; probe blocked by tool permission)",
+    "RB8-06 Nit Muse reads follow symlinks out of museRoot; there is no realpath or regular-file check, unlike the --raw rule at contract.md:346-347; impact is bounded by the PNG size and format checks. (code reading; probe blocked by tool permission)",
+    "RB8-07 Nit test gap: T152 to T161 cover no path or validation refusal (traversal name, symlink, duplicate list name, malformed list); a mutation dropping the MuseFileName refine would keep the suite green. (code reading; confirmed)"
+  ],
+  "evidence": [
+    "Provenance: git rev-parse HEAD returned 19359dd1d9f024a4ab7612f4e5fcf08c091ae029 at the audit start; git log 19359dd1..HEAD printed nothing, so the audited HEAD was current. The working tree matched the commit for src/storytime; all reads used git show 19359dd1:<path>.",
+    "Scope: phase_base_sha 15a7bf0b2a59b8137a05805666df6736dc256167 (plan.md:1418 and 1429). Green commits f41fe108 (code) and 7b843204 (evidence) with Green role base 0bf8858a. Red commits 66d0e57d and 0bf8858a with Red role base 2b59ccaa. Later commits 9888cd62 and 19359dd1 touch Muse batch 32 spec JSON and measure records only.",
+    "Tests: bash heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts --maxWorkers=1' exited 0 with Test Files 1 passed (1) and Tests 10 passed (10), Duration 10.82s. No exit 75.",
+    "Path handling (code reading; confirmed): MuseFileName refuses any approval file name whose basename differs from the name, and refuses dot and dot-dot. Approval row ids must equal a picture-list row id or the run stops; the writer never forms a path from a row id. Delivery copy targets come only from row.fileName and row.lineArtFileName, and fileName is pinned by the pattern ^l2-w\\d{2}-[a-z-]+-v\\d+\\.png$ in the list loader and planPictureRow; the writer also requires the line-art name to be a plain name.",
+    "Overwrite and deletion (code reading; confirmed): the writer deletes nothing. A different existing manifest.json is refused; an existing delivery file with different bytes is refused; the refusal loop covers both the color and the line copies. A second run with the same inputs writes the same bytes (T161).",
+    "Input validation (code reading; confirmed): MuseApprovalListSchema parses the list before use; a malformed list, a missing version, or a missing checkedBy stops the run with the failing path in the message. Unknown entry fields are stripped by zod defaults, not injected.",
+    "Secrets (code reading; confirmed): muse-delivery.ts imports only node:crypto, node:fs, node:fs/promises, node:path, sharp, zod, and book-pictures.js. It reads local files only, with no fetch, no child process, no env read, and no credential. The deliver CLI errors pass the redactSecrets 500-character boundary in scripts/storytime-book-pictures.ts. The Muse key lives only in scripts/storytime-muse.mjs at run time and is not reached from this path.",
+    "Evidence integrity (code reading; confirmed): colorSha256 and lineSha256 are computed from the same byte buffers the writer copies, and the manifest records them on the candidate and lineArt entries. mapReviews refuses a non-pass verdict, maps only a Kimi review and a named person review, and the person schema requires a non-empty checkedBy with evidenceClass owner-passed or person-checked, so a model class cannot stand in for a person.",
+    "A2: not triggered. The delivery hands fictional-character pictures to Workbooks; no named real person or school is published and no bucket upload or public release exists. A residual note, not a finding: a row with zero review artifacts is delivered with status ready and reviews empty, which Red T153 and T159 codify; a stricter gate needs a PM contract change because decision 2 sends contract changes through the PM.",
+    "A6: measure/tracks.md at 19359dd1 lists this track as [~] with no security-resolved claim, so the registry does not overstate the state.",
+    "Probe status: the sandbox denied probe scripts (writes under /tmp, heredocs, and tsx -e programs containing dynamic import were refused by tool permission). RB8-03, RB8-04, and RB8-05 rest on code reading only; RB8-01, RB8-02, RB8-06, and RB8-07 were confirmed by code or test reading. The working probe pattern for a later session is a short static-import tsx -e program that imports /home/daniebo/Desktop/advantage-forge/src/storytime/muse-delivery.ts.",
+    "The task adds no endpoint, authentication boundary, tenant scope, migration, or secret store."
+  ],
+  "commands": [
+    "git rev-parse HEAD: 19359dd1d9f024a4ab7612f4e5fcf08c091ae029; git log 19359dd1..HEAD: empty",
+    "git show 19359dd1:src/storytime/muse-delivery.ts; git show 19359dd1:src/storytime/book-pictures.ts; git show 19359dd1:tests/storytime-muse-delivery.test.ts",
+    "git show 19359dd1:scripts/storytime-book-pictures.ts; git show 19359dd1:measure/tracks.md",
+    "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts --maxWorkers=1'; exit 0; Tests 10 passed (10); Duration 10.82s"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-19359dd1.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-19359dd1.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "medium",
+  "handoff": "Verdict is pass with seven nonblocking findings: RB8-01 (Major, no list SHA pin), RB8-02 (Major, no delivery path containment), RB8-03 (Nit, non-exclusive writes), RB8-04 (Nit, duplicate list names overwrite in-run), RB8-05 (Nit, degenerate line-art names), RB8-06 (Nit, symlink reads out of museRoot), RB8-07 (Nit, no refusal tests). Probes P1 to P13 were blocked by tool permission; RB8-03 to RB8-05 rest on code reading. Route the findings to Green. RB8-01 and RB8-02 may need a PM note because a fix touches the decision-2 contract. No product decision is required from this review.",
+  "facts_changed": []
+}

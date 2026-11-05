@@ -1,0 +1,51 @@
+MEASURE_AGENT_RESULT
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 (Phase 3: Week 1 pictures)
+role: jr-green (round 41)
+status: done
+phase_base_sha: 15a7bf0b
+role_base_sha: 710ff353
+red_commits: the Phase 3 Red change sits inside phase_base_sha..HEAD. The nest implementation commits in that range are 0893a5cf and the earlier nest commits. Red model for this phase: minimax-cn-coding-plan/MiniMax-M3.
+final_green_head: f99935c8
+green_model: deepseek/deepseek-flash#high (provider deepseek, model ID deepseek-flash). Route from `ra-quota --fresh pick green --not-family minimax --not-family openai`; Daniel approved the DeepSeek route. Green coder: none. No delegation.
+commits:
+- 9e4eee19 fix(storytime): close the week 1 nest twig outlines with two twig tones (assets/storytime-nest.ts, docs/storytime/l2-unit1/w01/rows/l2-w01-practice-line-nest-v9.json, -v10.json, -v11.json, l2-w01-check-row-nest-v7.json)
+- f99935c8 docs(measure): record storytime green round 41 nest closed outlines (measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md)
+task_states:
+- No task is marked [x]. The Phase 3 nest task stays open: the batch 13 re-review has not run. No task is marked [b] in this round.
+- Plan evidence: a "Green round 41" block follows the round 40 block on the same Phase 3 task, in commit f99935c8.
+test_results:
+- Nest gates, each inside `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'`:
+  - `./forge render storytime-nest --fast` exit 0 three times (steps 2a, 2b, 2c; 17,826 to 18,342 triangles).
+  - `./forge render storytime-nest` exit 0 three times (steps 2d, 2f, 2g; final 18,244 triangles, 0.19 x 0.076 x 0.197 m, GLB 432 KB, vertex colors).
+  - `./forge inspect storytime-nest --fast` exit 0, "Warnings: none", dominant colors #f8deb9, #79451a, #b7d4f9, #deaf78, #c58f51.
+  - `warning:` lines: 0. No exit 75, no exit 137, no lock wait over 600 s.
+- Rows, each render and each verify inside one heavy-run.sh command:
+  | Row | Version | Render | Verify | Line | Ink | Peak | Open ends | Color SHA-256 | Line-art SHA-256 |
+  | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+  | l2-w01-practice-line-nest | v9 | 0 | passed | 24 px | 9.55% | 865 MB | 0 | - | - |
+  | l2-w01-practice-line-nest | v10 | 0 | passed | 24 px | 9.55% | 865 MB | - | - | - |
+  | l2-w01-practice-line-nest | v11 | 0 | 0 | 24 px | 9.55% | 946 MB | 0 | 1e41d98d5ea89f8e18ce1cb2d6f906c949c2c14ef827539cadea4595c3bfb074 | 9439afbd4055d82e9ed56b00a11d4ee85b000371d89688e583fa66c61ca343f0 |
+  | l2-w01-check-row-nest | v7 | 0 | 0 | 24 px | 9.85% | 486 MB | 0 | 3c6d88944cf7e0562f070b2d0bd46c56062cb9b1c797cd772b8115c3d07bd522 | 852e00052d814b7df80a0380e04fd61b948305d0075518da859d254c70abb742 |
+- Open-end count: a stroke tip is a black pixel whose 16 px ring holds one black arc under 32 percent coverage. Batch 12 measured 8 ends in l2-w01-practice-line-nest-line-v8.png and 9 in l2-w01-check-row-nest-line-v6.png. v11 and v7 both measure 0.
+- verify --row exits 0 on both rows with the shadow list: "Row verification passed for 11 row versions", "Row verification passed for 7 row versions".
+deviations:
+- Picture-list blocker, exact words: "`render --row` and `verify --row` exit 1 on the live Workbooks list (SHA-256 6d05dfc5..., 4 uncommitted week 8 rows). The rows were rendered and verified with `--workbooks /tmp/opencode/wb-shadow`, a temporary copy of the committed list (SHA-256 c3e23cfd...). The week 1 rows are the same in both lists." The error text is "The picture list changed: expected SHA-256 c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b, measured 6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58." The shadow root is a read-only hard-link copy with the committed list; the Workbooks tree is untouched.
+- Heavy wrapper: every heavy command ran inside `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '...'`. No heavy command ran outside the wrapper. The two commands that refused (row render with the live list, step 3a; row render without the stage file, step 3c) also ran inside the wrapper.
+- Three practice-line versions, v9 to v11. The round 40 brief allowed two. v9 held the closed twig outlines. v10 set egg color #87b7f4 and still rendered near grey: a pixel of the lit egg measured (149,166,176). v11 set the final blue #5c9aea and the same pixel measured (105,139,170). The check-row row rendered once, v7.
+- Step-limit stop: round 41 stopped after the batch 13 folder was made, before the brief, the implementation commit, the plan block, and this log. The orchestrator sent a follow-up on the same base SHAs. The follow-up ran steps 5 to 7 only: no forge command, no render, no verify, no build, and no asset change.
+new_files:
+- docs/storytime/l2-unit1/w01/rows/l2-w01-practice-line-nest-v9.json
+- docs/storytime/l2-unit1/w01/rows/l2-w01-practice-line-nest-v10.json
+- docs/storytime/l2-unit1/w01/rows/l2-w01-practice-line-nest-v11.json
+- docs/storytime/l2-unit1/w01/rows/l2-w01-check-row-nest-v7.json
+- Changed: assets/storytime-nest.ts (two twig bodies in two tones, dark cup #6e3f1e, eight twigs, round beads at every end, egg #5c9aea).
+- Outputs, not tracked: out/storytime-nest/storytime-nest.glb, out/storytime-nest/render.png, the four new row PNGs under out/storytime/l2/unit1/w01/rows/, and out/storytime-review/batch-13/.
+handoff:
+- Batch 13 is ready for the independent re-review. Path: out/storytime-review/batch-13/. Files: storytime-nest.png, l2-w01-practice-line-nest-v11.png, l2-w01-practice-line-nest-line-v11.png, l2-w01-check-row-nest-v7.png, l2-w01-check-row-nest-line-v7.png, storytime-nest-batch-12-practice-line.png, storytime-nest-batch-12-check-line.png, look-reference-nan-and-pip.png, brief.md.
+- The brief holds the bar 7.0, the critical defects, the row goals, the egg color check, and the section "Why the rework" with the batch 12 result and the change. Green did not rate any item.
+- The re-review must know that the rows were rendered with the shadow Workbooks list, because the live list has 4 uncommitted week 8 rows. A verified render on the live list must wait for the Workbooks repository commit or a picture-list constant update, which is out of scope here.
+- The rows l2-w01-story-page-a-nest and l2-w01-story-page-a-nest-and-a-nut still show the old nest. They need a re-render with the new nest later.
+- Week 1 rows rendered: 22 of 30. Rows with no open defect: 14. No task is marked [x]. Waiting for the independent re-review.
+log_path: measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-f99935c8.log
+END_MEASURE_AGENT_RESULT

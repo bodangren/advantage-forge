@@ -1,0 +1,63 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green (build round 50, session `Green · P3 · storytime_l2_unit1_pictures · r50`)
+status: done
+track: asset_storytime_l2_unit1_pictures_20261025, phase "Phase 3: Week 1 pictures" (P3)
+models: Green `deepseek/deepseek-flash#high` (Daniel approved the DeepSeek route; not the Red
+  family); Red `minimax-cn-coding-plan/MiniMax-M3`; coder none, no delegation
+phase_base_sha: 15a7bf0b
+role_base_sha: 80c5fb3a (equals HEAD at the start; it is an ancestor chain inside 15a7bf0b..HEAD)
+final_head: 47c0c6a4
+summary: This is an item round. No Red test file changed. The Red signal is batch 21 of the item
+  review, the plan picture list, and the week 1 rows that ask for a classroom door and a low table.
+  Green built two class A props and rendered the Pat page.
+  - `assets/storytime-green-door.ts`: green leaf `#3e9e4f` 0.95 x 2.0 x 0.05 m in a cream `#f3e6c4`
+    frame 0.07 m wide on the two sides and the top; yellow `#f2c230` knob 0.08 m across at 0.9 m;
+    one round window 0.34 m across with pale blue `#cfe8f5` glass and a cream rim. Frame back on
+    z = 0, bottom on y = 0, centered on x = 0, faces +Z. Size 1.09 x 2.07 x 0.122 m, 77,876
+    triangles, GLB 1829 KB, vertex colors only.
+  - `assets/storytime-low-table.ts`: light wood `#e8c48a` top 1.0 x 0.6 x 0.04 m with a surface at
+    0.48 m and 0.018 m rounded edges; four red `#d9483b` legs 0.05 m across. Size 1 x 0.48 x 0.6 m,
+    22,676 triangles, GLB 536 KB, vertex colors only.
+  - Pat page v1 and v2 in `docs/storytime/l2-unit1/w01/rows/`. The kept version is v2.
+red_command: none for this round (no new Red test). The last Green gate in this track is
+  `node --import tsx scripts/storytime-book-pictures.ts verify --row ... --workbooks
+  /tmp/opencode/wb-shadow`; it exited 0 with "Row verification passed for 2 row versions".
+render_exits: door render call 1 exit 0, call 2 exit 0; table render call 1 exit 1
+  ("box(): radius is larger than half a dimension"), call 2 exit 0; both inspect calls exit 0 with
+  empty "Warnings" sections; Pat v1 render 0 and verify 0; Pat v2 render 0 and verify 0
+warning_lines: none in any forge, render, or verify log; no `lock wait`, no exit 75, no exit 137,
+  no `net::ERR_UNSAFE_PORT`
+row_records:
+  - v1: line 18 px, ink 10.45%, peak 977 MB, color `779d5e89e534e5368f30b1f63706fadbd6fae0511df388a77fd812ebb52c59c0`,
+    line `0c9bbc4f4b731af881d8b1f7a6926ae56d014f82f0daa8e25a67dc07770d3791`
+  - v2: line 18 px, ink 10.54%, peak 515 MB, color `ebb929adf1b12038686da719bb04d12ff7897d5fc17fb1b4f0eddb518dc6f76f`,
+    line `c4948dc140d1286accaf5139d9631886cd39ab51defa3407bf6e46b76e8e9051`
+  - v1 defect: the bag stood at Pat's knee and off his back, and the two tables were cut by the
+    frame edges. v2 moves the bag to offset [0, -0.03, -0.115] on the chest bone, turns Pat to yaw
+    45, and puts both tables inside the frame.
+  - v2 open points: the bump does not change the bag's top outline, so the "moves a little" cue
+    stays weak; one thin diagonal stroke crosses Pat's shorts and his leg; one thin horizontal
+    stroke crosses the wall behind his raised hand.
+shadow_root: `/tmp/opencode/wb-shadow` exists; `sha256sum` of its
+  `content/storytime/l2/print/pictures.json` is
+  `c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b`; no new copy was made; the
+  live Workbooks list was not written to
+tasks_flipped_x: none. The item review has not rated the door, the table, or the Pat page yet.
+tasks_flipped_b: none. No task needs a human action in this round.
+new_files:
+  - assets/storytime-green-door.ts
+  - assets/storytime-low-table.ts
+  - docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-hello-i-am-pat-v1.json
+  - docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-hello-i-am-pat-v2.json
+  - out/storytime-review/batch-22/ (PNGs and brief.md; not in git)
+commits: `9b05234b` adds the two assets and the two stage files. `47c0c6a4` adds the round 50
+  plan evidence. No commit holds its own SHA.
+handoff: Send `out/storytime-review/batch-22/` to the independent item review. The folder holds
+  `storytime-green-door.png` and `storytime-low-table.png` (four views each),
+  `l2-w01-story-page-hello-i-am-pat-v2.png` and `-line-v2.png` at 4000 x 3000,
+  `sprout-pat-render.png`, `look-reference-nan-and-pip.png`, and `brief.md`. Week 1 count before
+  this round: 23 of 30 rendered, 17 with no open defect except the known cast defects. The door and
+  the table are new items. The Pat page waits for review. Pat v1 stays in the set as a rejected
+  version. Next round 51 should read the batch 22 result and should not change committed Red
+  tests.
+END_MEASURE_AGENT_RESULT

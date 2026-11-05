@@ -1,0 +1,21 @@
+# Batch 36 item review log
+
+Date: 2026-11-01. Reviewer: opencode-go/mimo-v2.6-flash. Audit only.
+Bar: Daniel 2026-11-01 14:15 ICT. A defect is only what a teacher or a child sees at book size.
+Small marks are not defects. Daniel pre-accepted 3 rows as clean: hello-i-am-ben, a-net, check-row-nose.
+
+| key | clean | reason if not clean |
+| --- | --- | --- |
+| l2-w01-check-row-dog | yes | |
+| l2-w01-check-row-bus | yes | |
+| l2-w01-check-row-net | yes | |
+| l2-w01-check-row-nose | yes | pre-accepted by Daniel, not re-judged |
+| l2-w01-practice-line-nose | yes | |
+| l2-w01-story-page-a-neck | yes | |
+| l2-w01-story-page-hello-i-am-ben | yes | pre-accepted by Daniel, not re-judged |
+| l2-w01-story-page-a-nest | yes | |
+| l2-w01-story-page-a-net | yes | pre-accepted by Daniel, not re-judged |
+| l2-w01-practice-line-nest | yes | |
+| l2-w01-practice-line-nut | yes | |
+
+Total: 11 rows, 11 clean, 11 pass. No row has a defect under the new bar.

@@ -1,0 +1,16 @@
+{
+  "reviewer": "openai/gpt-6-luna#high",
+  "seen": {
+    "look-reference-nan-and-pip.png": "The reference shows soft, rounded, bright chibi forms.",
+    "storytime-nut-batch-7.png": "The failed card shows black specks along the cap edge.",
+    "storytime-nut.png": "The new four-view card still shows black specks along each cap edge and stem tip.",
+    "storytime-nut-cap-close.png": "The close card shows a small dotted black mark on the three-quarter cap edge."
+  },
+  "storytime-nut": {
+    "overall": 6.5,
+    "pass": false,
+    "critical": ["Black specks remain along the cap edge in all four views."],
+    "issues": ["The edge specks remain visible at card size; the three-quarter close view shows a small black mark.", "Black marks remain at the stem tip.", "The cap edge stays clear, and the nut reads as an acorn without a lid or pot base.", "line art not in this batch."],
+    "fix": "Remove the black marks from the cap edge and stem tip."
+  }
+}

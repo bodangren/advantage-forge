@@ -1,0 +1,108 @@
+# Mid Red log: Phase 3 week 1 version 2 delivery
+
+- Role: measure-mid-red (`opencode-go/deepseek-v4.1-flash`).
+- Track: `asset_storytime_l2_unit1_pictures_20261025`.
+- Phase: "Phase 3: Week 1 pictures" (P3).
+- phase_base_sha: `15a7bf0b2a59b8137a05805666df6736dc256167`.
+- role_base_sha: `69412be6a3dfb123af717e65da034ab7ab10f1ba`.
+- Green model for this change: `claude-code/claude-sonnet-5-5#high` (Anthropic). Coder: none.
+- Status: done.
+
+## Scope
+
+The PM order (02:1x ICT 2026-11-02) says the Workbooks two-model check refused four week 1 rows.
+Forge redoes them as new versions (-v2) and sends new file names and a new manifest hash. The
+writer (`writeMuseDelivery`) took both delivered names from the list row, so it could not write a
+version 2. The new tests T184 to T189 pin the `fileVersion` contract. T152 to T172, T181, and
+T182 did not change. T183 stays reserved for the cover calm-top test.
+
+## Red command and result
+
+```sh
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-delivery.test.ts --maxWorkers=1'
+```
+
+- Exit code: `1`.
+- `Test Files  1 failed (1)`.
+- `Tests  6 failed | 23 passed (29)`.
+- Failing tests:
+  - T184 delivers the v2 names and candidate version when the entry sets fileVersion 2.
+  - T185 gives one candidate per job and writes no v1 file for a v2 row.
+  - T186 accepts the v1 color bytes under the v2 name for a line-only row.
+  - T187 repeats the same manifest bytes for a mixed v1 and v2 run.
+  - T188 refuses fileVersion 0, a negative, a non-integer, and a string with exit 1.
+  - T189 refuses a v2 run into a folder that holds a different manifest.json.
+- The 23 passing tests include T152 to T172, T181, and T182.
+- Every failure names a labeled expectation. The log holds no syntax error, no import error, and
+  no ENOENT. Log: `mid-red-v2-delivery-red2.log`.
+- The first run (`mid-red-v2-delivery-red.log`) had the same 6 failures. Two rows read a missing
+  v2 file and threw ENOENT. The retry replaced those reads with a labeled existence check. The
+  six failures stayed the same.
+
+## Type check
+
+- The full-project command stopped at the heavy-run heap limit: exit code `134`.
+- A targeted check of `tests/storytime-muse-delivery.test.ts` found no error in the test file.
+  It found only the four known `__song` errors in `src/storytime/book-pictures.ts`.
+- Log: `mid-red-v2-delivery-tsc.log`.
+
+## Contract that Green implements
+
+- The approval entry takes an optional integer `fileVersion` (>= 1).
+- With `fileVersion: 2`, the delivered names are `<row id>-v2.png` and
+  `<row id>-line-v2.png`: the list names with `-v1` replaced by `-v2`.
+- The candidate `version` is 2. `file` and `lineArt.file` are the v2 names.
+- Without the field, the v1 names and bytes stay. An explicit `fileVersion: 1` is the same as no
+  field.
+- A row has one candidate, so the v2 candidate replaces the v1 candidate. The folder holds no v1
+  file for that row.
+- A color print with the v1 color bytes is allowed under the v2 name (the line-only rows).
+- A mixed v1 and v2 run gives the same manifest bytes on a second run.
+- `fileVersion` 0, a negative, a non-integer, or a string makes the approval list invalid. The CLI
+  exits 1 and writes no file.
+- A run into an existing folder with a different `manifest.json` still refuses.
+
+## Commits
+
+- `13896a21` `tests/storytime-muse-delivery.test.ts` (T184 to T189).
+- `c4755d25` `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md` (Red block in
+  the Communication log).
+
+## Dirty path classification
+
+- Relevant paths are clean after the two commits. `git status` shows no change under
+  `tests/storytime-muse-delivery.test.ts` or the track `plan.md`.
+- The untracked `measure/runs/asset_storytime_l2_unit1_pictures_20261025/` folder holds evidence
+  logs. It is generated evidence, not source.
+- Other modified and untracked paths belong to other sessions. They are preserved. No `git add -A`
+  and no `git add .` ran.
+
+## Anti-patterns
+
+- No vacuous pass: the six new tests fail at the role base with labeled expectations.
+- No digit-only count. No skip and no `-t` filter.
+- The tests write only under `mkdtemp` roots. They name no `measure/tracks/` path.
+- T161 keeps the manifest refusal rule. T189 repeats that rule on the v2 path.
+
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: done
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3
+task: Red for the week 1 version 2 Muse delivery (fileVersion field, T184 to T189)
+baseline_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+role_base_sha: 69412be6a3dfb123af717e65da034ab7ab10f1ba
+head_sha: c4755d256a3a9a6f7a3c480a8d7cf1d958462356
+green_production_sha: none (Green implements after this Red)
+commits: 13896a21 tests/storytime-muse-delivery.test.ts; c4755d25 measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+tests_run: exit 1; Test Files 1 failed (1); Tests 6 failed | 23 passed (29); failed T184, T185, T186, T187, T188, and T189. Each failure names a labeled expectation. No syntax error, no import error, and no ENOENT.
+files_changed: tests/storytime-muse-delivery.test.ts (T184 to T189 and the fileVersion helpers; the import of runStorytimeBookPicturesEntry for the exit-1 check); measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md (Red block in the Communication log); this report (untracked evidence)
+plan_updates: A "Red: week 1 version 2 delivery" bullet sits in the Communication log, not inside a task. It records both base SHAs, the test commit, the command, the exit code, the labeled totals, each failing row, and the Green contract. No task marker changed.
+handoff: Green implements the optional integer `fileVersion` (>= 1) in the approval schema and the writer. It derives the v2 names from the list names and keeps one candidate per job. It keeps the different-manifest refusal. Question for the orchestrator, with default: does the v2 candidate review `file` field use the v2 name? Default: yes, the delivered v2 name, for consistency; the tests do not pin it.
+dispositions: none
+model: opencode-go/deepseek-v4.1-flash (Red, this role). Green for this change runs on the Anthropic family. The families differ.
+model_deviation: none. The orchestrator supplied the Red route. This role ran no ra-quota call.
+facts_changed: none. No production file changed in this round.
+dirty_path_classification: Relevant paths are clean after the commits. The untracked `measure/runs/asset_storytime_l2_unit1_pictures_20261025/` folder is generated evidence. Other modified and untracked paths belong to other sessions and are preserved. The tests write only under temporary roots and name no `measure/tracks/` path.
+anti_patterns: No vacuous pass. The six new tests fail at the role base with labeled expectations. No digit-only count. No skip and no `-t` filter. T189 repeats the manifest refusal rule on the v2 path.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,18 @@
+Role: measure-jr-green, build round 52 (Storytime week 1 pictures)
+Session: Green · P3 · storytime_l2_unit1_pictures · r52
+Model: deepseek/deepseek-flash#high (provider deepseek, model deepseek-flash)
+Coder delegation: none (Green coder model: none)
+Phase 3 Red model: minimax-cn-coding-plan/MiniMax-M3 (MiniMax)
+role_base_sha: 83d97a97 (git rev-parse --short=8 HEAD at start)
+phase_base_sha: 15a7bf0b
+Track: asset_storytime_l2_unit1_pictures_20261025
+Phase: Phase 3: Week 1 pictures
+Task: build the crayon box and the picture book props, then render Pat page version 5 with
+stage-only fixes.
+
+Red contract check: the phase Red commit `603745f9` (tests/storytime-picture-rows.test.ts and the
+line-art pass) sits inside `phase_base_sha..HEAD`. No new Red test file was added for round 52, so
+the round contract is the Phase 3 task text in this brief and the plan. No committed Red test is
+edited by this round.
+
+Status: started

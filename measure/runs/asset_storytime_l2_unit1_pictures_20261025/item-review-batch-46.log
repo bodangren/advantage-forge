@@ -1,0 +1,65 @@
+Reviewer: openai/gpt-6.1-sol#high
+Bar: Daniel 2026-11-01 14:15 ICT
+Status: fail
+Eight of nine week 4 rows are clean. The family print crop has a layout fault.
+K1 and K2 are clean. K3 lacks the named nose in line.
+The reviewer created both review files before opening any image.
+The reviewer preserves unrelated work.
+Pixel command: node /tmp/opencode/batch-46-pixels.cjs
+All 21 line files have zero pixels with a channel value other than 0 or 255.
+Row 1: l2-w04-cover-my-family | 9 | clean | no defect categories.
+The reviewer read all four files. Six cast members match the look sheets. Lily's waving hand has five fingers.
+Grandma's cheek curves, added buttons, and the simplified table are notes under the bar.
+Row 2: l2-w04-story-page-this-is-my-family | 7.5 | defect | layout-fault.
+The reviewer read all four files. Both print files cut off Lily's outer hand and the right edge of her hair.
+The partly hidden door is a note. The sentence needs the family, not a clear door.
+Retry hint, color and line: fit the complete family inside the print frame.
+Row 3: l2-w04-story-page-this-is-my-mom | 9 | clean | no defect categories.
+The reviewer read all four files. Lily clearly points at Mom. Both cast members match their look sheets.
+The thin eye outlines are not thick black rings. The fringe strokes and lamp oval are notes.
+Row 4: l2-w04-story-page-this-is-my-dad | 8.5 | clean | no defect categories.
+The reviewer read all four files. Lily clearly points at Dad. Their approved looks remain identifiable.
+The smooth fringe edge and rounded table are notes. Eye outlines use the normal stroke width.
+Row 5: l2-w04-story-page-this-is-my-brother | 9 | clean | no defect categories.
+The reviewer read all four files. Lily points at Tom. Tom's waving hand has five fingers in color and line.
+Both children match their look sheets. The line art has no thick black ring, band, broken face, or difficult gap.
+Row 6: l2-w04-story-page-this-is-my-grandma | 8.5 | clean | no defect categories.
+The reviewer read all four files. Both versions show Lily, Grandma, one cake, one plate, and three candles.
+Grandma's faint cheek lines in color are notes. They do not break her face or change her identity.
+Row 7: l2-w04-story-page-this-is-my-grandpa | 9 | clean | no defect categories.
+The reviewer read all four files. Grandpa holds one folded newspaper. Lily clearly points at him.
+Lily's two dress buttons in line are notes. Grandpa's relaxed hand is not an open palm with missing fingers.
+Row 8: l2-w04-story-page-this-is-my-dog-pip | 8.5 | clean | no defect categories.
+The reviewer read all four files. Each version has six people and one Pip with floppy ears, a collar, and a tag.
+The line print places Mom's outer fingertips against the left edge. This small outline contact does not remove a readable finger.
+The separate wavy ground line is a note. It changes no character, action, or needed prop and does not obstruct coloring.
+Row 9: l2-w04-story-page-this-is-my-house | 9 | clean | no defect categories.
+The reviewer read all four files. Lily points at one house with one door, two windows, and one chimney.
+The path and bushes remain readable. Their simplified details are notes.
+Extra K1: nose | 9 | clean | no defect categories.
+The reviewer read exactly the named color and line files. Nan faces right, and the nose is clear in both.
+The bun outline uses the normal stroke width. It is not a thick filled band.
+The goal gives no comparison image for 'the other way'. Both supplied files face right.
+Extra K2: A nut. | 9 | clean | no defect categories.
+The reviewer read exactly the named color and line files. Each shows one nut and five fingers on Nan's open hand.
+The close-up keeps the complete target hand and nut. Peripheral hair and leg crops are notes.
+The line file leaves eye interiors white for coloring. The face remains readable.
+Extra K3: A nose. | 6.5 | defect | broken-face.
+The reviewer read exactly the named color and line files. Color shows the nose beside Nan's touching finger.
+Line omits the named nose. The fingertip meets the mouth contour without a visible nose.
+Retry hint, line: draw the nose clearly beside the fingertip and separate it from the mouth contour.
+The reviewer read all 36 files in pages, all 11 reference sheets, Nan's reference, and all six named extra files.
+All 21 line files contain only 0 and 255 channel values. The reviewer also checked each line file visually.
+The four requested builder notes are notes, not defects: the wavy ground line, faint cheek lines, dress buttons, and partly hidden door.
+This review changes no picture and creates no commit. The parent session owns plan updates and any correction work.
+The reviewer checked edge pixels to distinguish the family crop from the minor edge contact on the Pip page.
+The family line print has several cut finger contours and a cut hair contour at its right edge.
+The Pip line print has no right-edge hand pixels. Mom's left-edge outline contact remains a note under the small-mark rule.
+Worktree check: git worktree list; git branch -a.
+Existing items remain unchanged: advantage-forge-release, shelf-sync-20261030, and /tmp/opencode/paladin-audit-0e9af0f.
+The parent session owns their existing plans. This audit creates no branch or worktree.
+Structural verification passed: 12 complete rows, 36 listed page files, existing named files, allowed categories, and a consistent final status.
+The JSON has no provisional ratings. Both defect rows have retry hints.
+git diff --check passed for the two assigned review paths.
+Residual limit: this audit views digital images at book-scale readability. It does not inspect a physical print.
+Facts changed: batch 46 review status is fail; eight week 4 rows are clean; K1 and K2 are clean; K3 has a defect.

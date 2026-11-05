@@ -1,0 +1,321 @@
+{
+  "status": "pass",
+  "reviewer": "kimi-code-plan-cn/kimi-for-coding",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "audited_head": "nine color prints and nine line prints of batch 43 (week 3 batch 1, the pan), the four cast reference sheets (Nan look reference, Ben sheet, cast group B with Teacher Kim and Pip, Pip render), the pan prop sheet, the play-corner set sheet, zoom crops of the small pans in i-can-get-a-pan, nan-can-get-a-pan and a-pan-in-a-pan, and the writer checks quoted in the brief",
+  "verdict": "all nine rows pass under the bar; every pan count and pan place matches its sentence in color and in line art; every pan reads as a pan at book size",
+  "line_file_gray_count": {
+    "method": "every pixel of every line file counted; a pixel counts as gray when it is not 0 and not 255",
+    "files_checked": 18,
+    "result": "0 gray pixels in each of the nine 1920 x 1280 line files and each of the nine 4000 x 3000 line prints; no gray and no shading stands in any line file of this batch"
+  },
+  "line_art_solid_black_scan": {
+    "method": "connected black components on each 4000 x 3000 line print at quarter scale; components larger than 3200 print pixels reported with box and fill ratio",
+    "result": "the largest component in each print is the joined background linework; the largest solid components are round eye pupils with fill near 0.8 and boxes of about 90 to 180 px; hair masses fill 0.3 to 0.5 and are outlines, not solid; no component is a long thin band or a wide ring",
+    "judgement": "no thick solid black ring and no thick solid black band stands in any line print; the writer reports line widths of 16 to 22 px, all above the 12 px minimum"
+  },
+  "line_gap_check": {
+    "method": "visual pass over every line print at full page and at zoom on hands and faces",
+    "result": "no closed gap sits inside a face or across a palm; the small gaps between parallel strokes (finger gaps, shelf boards, pan rims) stay open and wide enough for coloring"
+  },
+  "l2-w03-cover-the-pan": {
+    "files": [
+      "out/storytime-review/batch-43/pages/l2-w03-cover-the-pan-m1-color-print.png",
+      "out/storytime-review/batch-43/pages/l2-w03-cover-the-pan-m1-line-print-6-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Ben and Nan hold up a small red toy pan and a tiny blue toy pan": "yes: Nan holds the red pan with both hands and Ben holds the blue pan; both pans show a bowl and a handle in the color file and a rim with a handle in the line file; both read as pans",
+      "Ben drawn young about five years old": "yes: large head, short limbs, smooth brown hair swoosh, blue shirt, dark-blue shorts and gray shoes in both files",
+      "Nan cast look": "yes: black hair in two bunches with red ties, orange T-shirt with a white star, red shorts, white sneakers and large dark-brown eyes; the eyelash mark shows in the color file and as lash flicks in the line file",
+      "play corner of a bright kindergarten classroom": "yes: toy kitchen with sink and stove at the right and a low shelf at the left in both files; wooden floor and plain wall",
+      "No letters, words, or numbers anywhere": "yes: no text shows in either file"
+    },
+    "open_items_judged": {
+      "the low shelf holds cups and plates, not toy pans, and no low table shows": "not a defect under the bar: the cover sentence names only the title, both held pans read correct, the kitchen and shelf read as a play corner, and a child sees the two pans first; recorded as a spec deviation for the builder",
+      "cover top band": "measured on the color print: beams fill 0 to 10 percent, plain wall fills 10 to 20.5 percent, the heads start at about 20.5 percent of the height; the band above the heads is calm for the title; the brief note that the top 30 percent has no head is not exact, the heads reach to about 20.5 percent"
+    },
+    "pans": { "color": 2, "line": 2, "note": "red pan in Nan's hands and blue pan in Ben's hands; each shows its handle in both files" },
+    "counts": {
+      "color": { "people": 2, "pans": 2, "sun": 0 },
+      "line": { "people": 2, "pans": 2, "sun": 0 }
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w03-story-page-a-nap-in-the-pan": {
+    "files": [
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-a-nap-in-the-pan-m2-color-print.png",
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-a-nap-in-the-pan-m2-line-print-2-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Pip is asleep, curled up inside the big yellow toy pan on the floor": "yes: Pip lies curled with closed eyes inside the big yellow pan, handle to the right, in both files; the line file draws closed eye curves",
+      "Ben and Nan look in and smile": "yes: Ben kneels at the left and Nan kneels at the right, both lean in with smiles in both files",
+      "Pip look": "yes in the color file: golden-brown fur, cream muzzle, cream forehead stripe, cream chest, floppy ears with darker tips, black nose, red collar, fluffy tail; the line file draws the floppy ears, forehead stripe, collar and curled tail",
+      "no extra pan on the shelf": "yes: the shelf holds cups and plates only in both files",
+      "No letters, words, or numbers anywhere": "yes: no text shows in either file"
+    },
+    "open_items_judged": {
+      "Ben's hair in the color": "smooth swoosh, matches the spec note",
+      "Pip spikes check": "gone: both files show two floppy ears and a smooth head top with no spike; the cream forehead stripe is not a spike"
+    },
+    "pans": { "color": 1, "line": 1, "note": "the big yellow pan with Pip inside; handle to the right in both files" },
+    "counts": {
+      "color": { "people": 2, "pans": 1, "pip": 1, "sun": 0 },
+      "line": { "people": 2, "pans": 1, "pip": 1, "sun": 0 }
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w03-story-page-a-pan-in-a-pan": {
+    "files": [
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-a-pan-in-a-pan-m2-color-print.png",
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-a-pan-in-a-pan-m2-line-print-3-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Ben puts the tiny blue toy pan inside the small red toy pan": "yes: Nan holds the red pan and Ben holds the blue pan tilted over it, its bowl above the red pan rim, in both files; the action reads as putting the blue pan into the red pan",
+      "Nan holds the red pan and smiles": "yes: Nan grips the red pan with both hands and smiles in both files",
+      "blue pan reads as a pan": "yes: the zoomed color shows a small bowl with a visible interior and a short handle; the line draws a ring with an inner rim and a handle to the left; both read as the tiny blue pan, not a magnifying glass",
+      "No letters, words, or numbers anywhere": "yes: no text shows in either file"
+    },
+    "open_items_judged": {
+      "Ben's small lash flick at one eye in the color": "not a defect under the bar: one tiny lash flick at one eye is a mark of that size, the bar forgives small marks, and the boy still reads as Ben; recorded as a note for the builder because the spec note asks for no lash marks",
+      "Ben's hand on the blue pan drawn with a few small finger lines": "not a defect: the hand shows three small finger bumps and no sixth digit",
+      "Ben's sneakers show toe lines": "not a defect: normal shoe detail"
+    },
+    "pans": { "color": 2, "line": 2, "note": "red pan in Nan's hands with handle to the right; tiny blue pan in Ben's hand with handle to the left" },
+    "counts": {
+      "color": { "people": 2, "pans": 2, "sun": 0 },
+      "line": { "people": 2, "pans": 2, "sun": 0 }
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w03-story-page-a-pan-on-a-pan": {
+    "files": [
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-a-pan-on-a-pan-m1-color-print.png",
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-a-pan-on-a-pan-m1-line-print-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "On a low table, the small red toy pan sits upside down and the tiny blue toy pan sits on top of it, like a tower": "yes: the red pan lies upside down on the low table with its handle to the right and the blue pan stands on it with its handle to the right in both files; both pans read as pans",
+      "Nan and Ben look at it": "yes: both children stand at the table and look at the pan tower with open smiles in both files",
+      "Nan cast look": "yes: bunches with red ties, orange star shirt, red shorts, white sneakers and lash marks in the color file; the line file draws the bunches, ties, star and lash flicks",
+      "Ben's hair is a smooth swoosh in the color": "yes: smooth hair in the color file and a swoosh line in the line file",
+      "No letters, words, or numbers anywhere": "yes: no text shows in either file"
+    },
+    "pans": { "color": 2, "line": 2, "note": "blue pan on top of the upside-down red pan on the table; handles show in both files" },
+    "counts": {
+      "color": { "people": 2, "pans": 2, "table": 1, "sun": 0 },
+      "line": { "people": 2, "pans": 2, "table": 1, "sun": 0 }
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w03-story-page-a-pan-on-nan": {
+    "files": [
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-a-pan-on-nan-m3-color-print.png",
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-a-pan-on-nan-m3-line-print-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Ben puts the small red toy pan on the head of Nan, like a hat": "yes: the red pan sits upside down on Nan's head with its handle to the right and Ben's hand holds it in both files; the pan reads as a pan",
+      "Nan laughs": "yes: Nan laughs with an open mouth in both files; the color file draws her eyes closed in the laugh and the line file draws open eyes with pupils; both read as a laugh",
+      "Nan cast look": "yes: bunches with red ties, orange star shirt, red shorts and white sneakers in both files; the lash marks show in the color file",
+      "No letters, words, or numbers anywhere": "yes: no text shows in either file"
+    },
+    "open_items_judged": {
+      "Ben's hair is still lumpy in the color": "not a defect under the bar: the lumpy tufts match his model look in the Ben reference sheet, the boy reads as Ben in the same blue clothes, and the hair size is a style note, not a changed character; recorded as a note for the builder because the spec note asks for one smooth swoosh",
+      "Nan's eyes closed in the color and open in the line": "not a defect under the bar: both faces read whole and laughing, and no sentence names a face part; recorded as a note for the builder",
+      "Ben's fingers on the pan": "met: the color shows fingers on the pan and the line draws finger lines; no sixth digit shows"
+    },
+    "pans": { "color": 1, "line": 1, "note": "the small red pan upside down on Nan's head; handle to the right in both files" },
+    "counts": {
+      "color": { "people": 2, "pans": 1, "sun": 0 },
+      "line": { "people": 2, "pans": 1, "sun": 0 }
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w03-story-page-can-i-get-the-pan": {
+    "files": [
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-can-i-get-the-pan-m2-color-print.png",
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-can-i-get-the-pan-m2-line-print-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Ben points up at a big yellow toy pan on the top shelf of the toy kitchen": "yes: Ben stands small at the lower left and points up with one index finger; the big yellow pan with its handle sits on the top shelf in both files; the pan reads as a pan",
+      "the tip of a fluffy golden-brown tail hangs over the edge of the pan": "yes: a fluffy light-tipped tail hangs over the pan edge in the color file and the line file draws the tail tuft above the pan",
+      "no other pan": "yes: the low shelf holds cups and plates only in both files",
+      "No letters, words, or numbers anywhere": "yes: no text shows in either file"
+    },
+    "pans": { "color": 1, "line": 1, "note": "the big yellow pan on the top shelf; handle to the right in both files" },
+    "counts": {
+      "color": { "people": 1, "pans": 1, "sun": 0 },
+      "line": { "people": 1, "pans": 1, "sun": 0 }
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w03-story-page-i-can-get-a-pan": {
+    "files": [
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-i-can-get-a-pan-m3-color-print.png",
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-i-can-get-a-pan-m3-line-print-2-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Ben takes a tiny blue toy pan from the low shelf of the toy kitchen": "yes: Ben holds the tiny blue pan at the low shelf in both files; the pan is out of the shelf and in his hand",
+      "the pan reads as a pan": "yes: the zoomed color shows a small bowl with a visible interior and a short stubby handle in his fist; the line draws a ring with an inner rim and a short handle; the shape matches the blue pan on the prop sheet and reads as a pan, not a magnifying glass",
+      "no other pan": "yes: the shelf holds cups and plates only in both files",
+      "Ben's look": "yes: smooth hair swoosh, blue shirt, dark-blue shorts and gray shoes in the color file; the line file draws the same boy",
+      "No letters, words, or numbers anywhere": "yes: no text shows in either file"
+    },
+    "open_items_judged": {
+      "the orchestrator saw the pan as a magnifying glass": "checked at 2x zoom on the print: the color shows a bowl interior and a stubby handle, and the line shows an inner rim plus handle, so a teacher reads a small pan; the sentence names the pan and the picture shows it in hand at the shelf; kept clean with this note"
+    },
+    "pans": { "color": 1, "line": 1, "note": "the tiny blue pan in Ben's hand; bowl with interior in color, ring with inner rim and handle in line" },
+    "counts": {
+      "color": { "people": 1, "pans": 1, "sun": 0 },
+      "line": { "people": 1, "pans": 1, "sun": 0 }
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w03-story-page-i-can-get-the-pan": {
+    "files": [
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-i-can-get-the-pan-m2-color-print.png",
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-i-can-get-the-pan-m2-line-print-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Ben stands on his toes and lifts the big yellow toy pan down from the top shelf; it looks heavy": "yes: Ben stands on tiptoe with arms up and holds the big yellow pan above his head in both files; his squeezed eyes and frown read as strain in the color file and the line file keeps the whole face",
+      "the fluffy golden-brown tail hangs over the edge of the pan": "yes: the fluffy tail shows over the pan rim in the color file and the line file draws the tail tuft above the pan",
+      "no other pan": "yes: the low shelf holds cups and plates only in both files",
+      "the pan reads as a pan": "yes: big yellow pan with a bowl interior and a handle in the color file; rim and handle in the line file",
+      "No letters, words, or numbers anywhere": "yes: no text shows in either file"
+    },
+    "pans": { "color": 1, "line": 1, "note": "the big yellow pan in Ben's raised hands; handle to the right in both files" },
+    "counts": {
+      "color": { "people": 1, "pans": 1, "sun": 0 },
+      "line": { "people": 1, "pans": 1, "sun": 0 }
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w03-story-page-nan-can-get-a-pan": {
+    "files": [
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-nan-can-get-a-pan-m3-color-print.png",
+      "out/storytime-review/batch-43/pages/l2-w03-story-page-nan-can-get-a-pan-m3-line-print-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Nan takes a small red toy pan from the low shelf in the play corner": "yes: Nan holds the small red pan at the low shelf in both files; the pan is in her hand and clear of the shelf",
+      "the pan reads as a pan": "yes: the color shows a red bowl with a visible interior and a short handle in her fist; the line draws a tilted ring with an inner rim and a handle; both read as the small red pan",
+      "Nan cast look": "yes: bunches with red ties, orange star shirt, red shorts, white sneakers and lash marks in the color file; the line file draws the bunches, ties, star and lash flicks",
+      "no other pan": "yes: the shelf holds cups and plates only in both files",
+      "No letters, words, or numbers anywhere": "yes: no text shows in either file"
+    },
+    "open_items_judged": {
+      "the builder notes the line pan can read like a magnifying glass": "checked at zoom: the inner rim gives the bowl depth and the handle is short and stubby, so it reads as a pan in context; kept clean with this note"
+    },
+    "pans": { "color": 1, "line": 1, "note": "the small red pan in Nan's hand; bowl with interior in color, ring with inner rim and handle in line" },
+    "counts": {
+      "color": { "people": 1, "pans": 1, "sun": 0 },
+      "line": { "people": 1, "pans": 1, "sun": 0 }
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "batch_notes": {
+    "workbooks_stage_2_findings": {
+      "thick solid black ring or band in the line art": "gone: the solid-black component scan finds only round eye pupils as deep solid areas in all nine line prints; no ring and no band stands; writer line widths are 16 to 22 px",
+      "a face part that the sentence names must show": "met: no sentence of this batch names a face part; every drawn face reads whole at book size",
+      "extra parts on Pip: floppy ears only, no spikes": "met: Pip appears only in a-nap-in-the-pan; both files show two floppy ears and a smooth head top with no spike"
+    },
+    "pans_rule": "every pan count and pan place matches its sentence in color and in line art: cover 2 held pans; a-nap-in-the-pan 1 big pan with Pip inside; a-pan-in-a-pan 2 pans with the blue pan at the red pan rim; a-pan-on-a-pan 2 pans as a tower on the table; a-pan-on-nan 1 pan on Nan's head; can-i-get-the-pan 1 pan out of reach on the top shelf; i-can-get-a-pan 1 pan in Ben's hand; i-can-get-the-pan 1 pan in Ben's raised hands; nan-can-get-a-pan 1 pan in Nan's hand; every pan shows a handle or an inner rim and reads as a pan at book size",
+    "no_sun_rule": "every page is indoors and shows no sun",
+    "five_digit_hands": "no hand shows six digits: the pointing hand, the pan-holding hands and the resting hands all show four fingers and one thumb or a simplified clump at zoom",
+    "gray_or_shading_in_the_line_art": "none: all eighteen line files hold 0 pixels that are not 0 or 255",
+    "text_in_the_picture": "none: no page shows a letter, a word or a number",
+    "cover_top_band": "measured on the color print: beams fill 0 to 10 percent, plain wall fills 10 to 20.5 percent, the heads start at about 20.5 percent of the height; the area above the heads is calm for the title",
+    "prop_sheet_match": "the red, blue and yellow pans match the pan prop sheet in shape and handle; the toy kitchen and the low shelf match the play-corner set sheet",
+    "notes_for_the_builder": [
+      "cover: the low shelf holds cups and plates, not toy pans, and no low table shows, while the cover goal names a low shelf of toy pans and low tables",
+      "cover: the heads reach to about 20.5 percent of the height, so the top 30 percent is not fully clear of heads as the file note says",
+      "a-pan-in-a-pan: Ben has a small lash flick at one eye in the color while the spec note asks for no lash marks",
+      "a-pan-on-nan: Ben's hair is still lumpy in the color while the spec note asks for one smooth swoosh",
+      "a-pan-on-nan: Nan's eyes are closed in the color and open in the line art; both read as a laugh",
+      "i-can-get-a-pan and nan-can-get-a-pan: the tiny held pans are small and ring-like in the line art; they read as pans at zoom and in context, and a larger bowl would make them safer at book size"
+    ]
+  },
+  "summary": {
+    "pages": 9,
+    "pass": 9,
+    "clean": 9,
+    "clean_keys": [
+      "l2-w03-cover-the-pan",
+      "l2-w03-story-page-a-nap-in-the-pan",
+      "l2-w03-story-page-a-pan-in-a-pan",
+      "l2-w03-story-page-a-pan-on-a-pan",
+      "l2-w03-story-page-a-pan-on-nan",
+      "l2-w03-story-page-can-i-get-the-pan",
+      "l2-w03-story-page-i-can-get-a-pan",
+      "l2-w03-story-page-i-can-get-the-pan",
+      "l2-w03-story-page-nan-can-get-a-pan"
+    ],
+    "not_clean_keys": [],
+    "workbooks_findings_gone_count": "3 of 3",
+    "defects_found": 0,
+    "notes_for_the_builder": 6,
+    "ratings": {
+      "l2-w03-cover-the-pan": 8,
+      "l2-w03-story-page-a-nap-in-the-pan": 8,
+      "l2-w03-story-page-a-pan-in-a-pan": 8,
+      "l2-w03-story-page-a-pan-on-a-pan": 8,
+      "l2-w03-story-page-a-pan-on-nan": 8,
+      "l2-w03-story-page-can-i-get-the-pan": 8,
+      "l2-w03-story-page-i-can-get-a-pan": 8,
+      "l2-w03-story-page-i-can-get-the-pan": 8,
+      "l2-w03-story-page-nan-can-get-a-pan": 8
+    },
+    "text": "All nine rows pass under Daniel's bar of 2026-11-01 14:15 ICT. Every pan count and pan place matches its sentence in color and in line art. Every pan reads as a pan at book size, including the three tiny held pans that were flagged as magnifying-glass risks: each shows a bowl interior or an inner rim plus a short handle. The week 1 findings stay gone: no thick black ring or band, no missing named face part, and Pip shows floppy ears only. No gray pixel, no text, no six-digit hand and no layout fault stand in any file. Six notes go to the builder, none is a defect under the bar."
+  }
+}

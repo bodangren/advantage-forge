@@ -1,0 +1,79 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green (round 45)
+session: Green · P3 · storytime_l2_unit1_pictures · r45
+status: done
+track: asset_storytime_l2_unit1_pictures_20261025 (short id asset_storytime_l2_unit1_pictures)
+phase: P3 "Phase 3: Week 1 pictures"
+models: Green deepseek/deepseek-flash#high (route from `ra-quota --fresh pick green --not-family
+  minimax --not-family openai`; Daniel approved the DeepSeek route). Red
+  minimax-cn-coding-plan/MiniMax-M3. Coder model: none. No delegation.
+role_base_sha: d739e066
+phase_base_sha: 15a7bf0b
+commits: 56e83f5a (stage files), 67547a8b (plan evidence)
+final_head: 67547a8b
+summary: A row-only round. The batch 16 review failed both week 1 tree pages at 6.5 with the
+  critical item "Nest detail merges into dense noise in the 1-bit line art". The nest was about
+  400 px wide, or 10 percent of the frame width, so the fixed 21 px twig stroke merged. The nest now
+  uses scale 2.4 on both pages, the low branch sits 0.10 m lower, and the camera sits closer. The
+  nest is 1290 px (32.3 percent) on the a-nest page and 1265 px (31.6 percent) on the
+  a-nest-and-a-nut page. No asset, cast, source, test, or picture-list file changed.
+tasks_flipped_x: none. No task is marked `[x]`. The rows wait for the independent re-review.
+tasks_flipped_b: none.
+routed_findings: none in this brief. No dispositions line.
+stage_files_commit_56e83f5a:
+  docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-v10.json (kept)
+  docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-and-a-nut-v11.json (not kept)
+  docs/storytime/l2-unit1/w01/rows/l2-w01-story-page-a-nest-and-a-nut-v12.json (kept)
+  Nest scale 2.4 on both pages. Branch y -0.10 (a-nest at -0.311 / 0.011, yaw -50, scale 1; a-nest
+  and a-nut at -0.3 / 0, yaw 0, scale 1). Nest origin y 0.60 on both pages.
+  a-nest v10: Nan mark 0.5 / 0.15, yaw -60, gesture `point forward`; camera azimuth 5, elevation 6,
+  distance 1.70, target 0.06 / 0.55 / 0.42.
+  a-nest-and-a-nut v12: Pip mark 0.2 / -0.02, yaw 72, gesture `sniff`; nut 0.42 / 0.10, yaw 30,
+  scale 3.8; camera azimuth 8, elevation 10, distance 1.75, target 0.20 / 0.48 / 0.05.
+  v11 put Pip at 0.2 / 0.30 and crowded his paws at the lower frame edge. v12 moves him deeper.
+red_command: The Red artifact for this round is the batch 16 review, not a test command. The live
+  gate is the row verify. `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node --import
+  tsx scripts/storytime-book-pictures.ts verify --row <jobId> --workbooks /tmp/opencode/wb-shadow'`
+  exits 0 on both rows: "Row verification passed for 10 row versions" (a-nest) and "Row verification
+  passed for 12 row versions" (a-nest-and-a-nut).
+records:
+  row l2-w01-story-page-a-nest v10: render exit 0, verify exit 0, line width 22 px, ink 7.43%,
+    peak 500 MB, nest width 1290 px (32.3% of the 4000 px width), color SHA-256
+    f7747a018d43751d9286bfff397d646c5079310392d690235234c364502764e1, line-art SHA-256
+    f39aeeff49ee4afcdd3edda12b8db7985da8b9ae77b465eadad4cef980790abf. What Green saw: the nest is
+    large at the upper middle with three light blue eggs above the rim, the fork under it and leaves
+    above and behind it; Nan is whole at the right with her arm toward the nest.
+  row l2-w01-story-page-a-nest-and-a-nut v12: render exit 0, verify exit 0, line width 21 px, ink
+    6.73%, peak 510 MB, nest width 1265 px (31.6%), color SHA-256
+    87b87e218409e45cca6df9678f13f3b07977189f23c4630b6e7e10c00f5d05f6, line-art SHA-256
+    8e85ea2e281c67e8f7b6bae03e2e7b3efa1fa13eae4ff3a0e05ea28370c9a696. What Green saw: the nest is
+    large at the upper middle with three clear eggs and the crown above it; Pip is whole in the
+    lower middle with his nose at the big nut; the trunk stands on the grass at the left.
+  row l2-w01-story-page-a-nest-and-a-nut v11 (not kept): render exit 0, verify exit 0, line width
+    21 px, ink 6.80%, peak 499 MB.
+  Line art, both kept rows: the nest draws as long closed sticks with three egg arcs and no merged
+  blob. Nan's face, star, and shoes stay closed. Pip keeps one eye, a closed muzzle, and the nut
+  keeps one cap band and one stem.
+heavy_runs: 5 commands, all inside heavy-run.sh. No exit 75, no exit 137, no lock wait over 600 s, no
+  net::ERR_UNSAFE_PORT. Logs: green-p3-r45-1.log (a-nest v10 render), -2.log (v11 render), -3.log
+  (v12 render), -4.log (a-nest verify), -5.log (a-nest-and-a-nut verify).
+shadow_workbooks: /tmp/opencode/wb-shadow. sha256sum of content/storytime/l2/print/pictures.json is
+  c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b (starts c3e23cfd). No new copy
+  was made. /home/daniebo/Desktop/Workbooks was not written.
+review_folder: out/storytime-review/batch-17/ holds the color and line art of a-nest v10 and
+  a-nest-and-a-nut v12 (row file names kept), the batch 16 comparison files a-nest v9 and
+  a-nest-and-a-nut v10 (color and line), look-reference-nan-and-pip.png, and brief.md. brief.md
+  carries the bar 7.0, the two row keys, the goals copied from the picture list, the line "the batch
+  16 critical item was: Nest detail merges into dense noise in the 1-bit line art", the critical
+  defect list, and the known open defects. Green rated no item.
+week1_count: 22 of 30 rendered, 16 with no open defect
+new_files: 3 stage JSON files in commit 56e83f5a, the plan block in commit 67547a8b, this log, and
+  the PNGs and brief.md under out/storytime-review/batch-17/ (PNGs stay out of git).
+out_of_scope_respected: no asset file, cast file, other row, src/, test, or picture list changed. No
+  `git add -A`, no `git add .`, no commit of measure/runs/ or out/.
+handoff: Send batch-17 to the independent re-review. The re-review covers two rows:
+  l2-w01-story-page-a-nest v10 and l2-w01-story-page-a-nest-and-a-nut v12, against the bar 7.0. The
+  batch 16 critical item is addressed; the nest holds 31 to 32 percent of the frame width on both
+  pages, so the twig strokes no longer merge. The three known open defects still wait for an owner
+  decision about a cast change. No task is marked `[x]`; the phase waits for the re-review result.
+END_MEASURE_AGENT_RESULT

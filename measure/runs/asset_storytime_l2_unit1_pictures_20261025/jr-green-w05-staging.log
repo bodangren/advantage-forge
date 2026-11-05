@@ -1,0 +1,40 @@
+Green P4 T2 w05 staging (provisional). role_base_sha 4af2b605; phase_base_sha fc76c272.
+Step 1: git rev-parse = 4af2b605 (expected).
+Step 2: read 27 week 5 rows (A 16, B 2, C 9): Sam, Pip, Nan, doll Pam; park (8 pages), living room (Pam pages). Read w04 mkelem/mkspecs. Next: find Sam refs, then elements.
+Step 3: 4 element specs written (sock, sofa, nap blanket, blue sneakers) by /tmp/opencode/w05/mkelem.mjs. Reuse: w02 park + sun, w03 pans + pen, w04 living room + doll + map + Pip render, 3D cat/dog/bed/hat/mug, out/sprout-sam/render.png. No new character -> no new cast sheet.
+Step 4: 4 Muse element calls ok (0.04 USD). Next: look at sheets.
+Step 5: looked at 4 sheets m1. Sofa, blanket, sneakers OK. Sock m1 reads as a Christmas stocking (red/white fur cuff, knit texture) -> remake m2 (smooth sky-blue ankle sock, yellow heel/toe, no knit lines).
+Step 6: sock m2 ok (smooth blue sock; still chunky, open item), total 5 element calls 0.05 USD. Sam ref = out/sprout-sam/render.png; park set = w02 set-park-empty-m2. Next: write 27 page specs.
+Step 7: 27 page specs written by /tmp/opencode/w05/mkspecs.mjs (check rows: 7 reused from w01-w04 with new id/outDir; sock and sofa new). Next: stage gate.
+Step 8: stage gate exit 0 (63 element paths, 0 missing, 0 candidates). Sam ref copied as elements/sam-ref-render.png (the check needs a path name that shows Sam). Next: review folder, commit 1, commit 2.
+Step 9: review folder out/storytime-review/w05-staging/ (index.md, sheets-1.png). Commit 1 done.
+Step 10: commit 1 = eb58914e (27 page specs + 4 element specs); commit 2 = 8e141040 (plan note under Phase 4 Task 2, marker unchanged; guard accepted).
+Stage gate (exit 0): list sha256 6d05dfc5...2a58 | week 5 | rows 27 | specs found 27 | text 0 | goal 0 | outDir 0 | no-reference rows 0 | element paths checked 63 | missing 0 | characters without a reference 0 | page candidates 0 | stage check: pass
+Muse: 5 calls, 5 billed, 0 failed, 0.05 USD; running total 4.04 + 0.05 = 4.09 USD. No page call; no file <row id>-m* in out/storytime/l2/unit1/w05/muse/.
+Elements: reused (Sam copy sam-ref-render.png, Nan refs, w02 park + sun, w03 pans + pen, w04 living room + doll + map + Pip render, 3D cat/dog/bed/cup/sun-hat); new Muse sheets (4): prop-sock-sheet m2 (m1 replaced), prop-sofa-sheet, prop-nap-blanket-sheet, prop-blue-sneakers-sheet.
+No new cast sheet (no new character), so no phone JPG. Review folder: out/storytime-review/w05-staging/ (index.md, sheets-1.png).
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P4 (Phase 4: Remaining pictures and cover)
+task: Produce weeks 2 to 7 after the week 1 review (week 5 staging, inputs only; marker stays [ ] until the Phase 3 checkpoint)
+role_base_sha: 4af2b605
+phase_base_sha: fc76c272
+commits: eb58914e; 8e141040
+models: red=opencode-go/deepseek-v4.1-flash; green=claude-code/claude-sonnet-5-5#high; coder=none
+tasks_flipped_x: none
+tasks_flipped_b: none
+specs: 27 page specs + 4 element specs
+muse_calls_total: 5 (5 billed, 0 failed)
+muse_cost_usd: 0.05
+running_total_usd: 4.09 (4.04 before)
+page_candidates: 0
+stage_gate: exit 0 (63 reference paths, 0 missing)
+review_folder: out/storytime-review/w05-staging/
+cast_jpg: none (no new character)
+handoff: Week 5 inputs are ready. Open: (1) 4 new element sheets (sock, sofa, nap blanket, blue sneakers) need an independent look; the sock is chunky and may read as a small boot. (2) Three pages show a girl at an open door (Nan, or only her sneaker and leg), and the living room set has no door; the model must draw the door, and the leg-only page may show the whole girl. (3) The nose page shows only the puppy tail behind the tree; the model may draw the whole puppy. (4) No week 5 page call before Daniel answers on week 1. Default: stage week 6 the same way.
+dispositions: none
+END_MEASURE_AGENT_RESULT
+Follow-up (nose page): Pip ref added to l2-w05-story-page-i-have-one-nose (commit 80731830); gate exit 0 (64 paths); plan line commit 97996093. No Muse call.

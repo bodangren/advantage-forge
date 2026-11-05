@@ -1,0 +1,23 @@
+MEASURE_AGENT_RESULT
+status: complete
+role: jr-green
+round: 14
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: 3 (Week 1 pictures)
+phase_base_sha: 15a7bf0b
+role_base_sha: 6c0a9300
+final_head: f57d7ea1
+models: green=claude-code/claude-sonnet-5-5#high; red=minimax-cn-coding-plan/MiniMax-M3; coder=none
+commits:
+  - 9278188e feat(storytime): map touch nose to the gesture-touch-nose clip (src/song/timeline.ts)
+  - bdb542f7 feat(storytime): add the school bus prop for the week 1 check row (assets/storytime-school-bus.ts)
+  - f57d7ea1 docs(measure): record storytime green round 14 school bus evidence (plan.md)
+test: tests/song-timeline.test.ts exit 0, 19 of 19 passed (green-p3-r14-test.log)
+renders: fast1b exit 0; fast2 exit 0; fast3 exit 0; textured render exit 0; inspect --fast exit 0; 0 warning lines in each
+notes: first --fast run ended with "lock wait over 600 s"; rerun passed
+card: out/storytime-review/batch-2/storytime-school-bus.png (+ brief.md, look-reference-nan-and-pip.png)
+new_files: assets/storytime-school-bus.ts
+tasks_flipped_x: none
+tasks_flipped_b: none
+handoff: Independent review must rate storytime-school-bus from the card with brief.md (any text or number = critical). Door shows at a shallow angle in back-three-quarter (open risk). Out of scope items untouched.
+END_MEASURE_AGENT_RESULT

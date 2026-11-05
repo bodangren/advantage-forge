@@ -1,0 +1,472 @@
+{
+  "status": "pass",
+  "reviewer": "opencode-go/mimo-v2.6-flash",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "audited_head": "nine color prints and nine line prints of batch 41, the three control rows (a-nose, a-nut, practice-line-nose) with six files, the four cast reference sheets (cast group A, cast group B, the Nan look reference, the Ben sheet), the six prop reference sheets (balls, birds, cupcakes, ducks, kites, school bag), zoom crops of Pip's head, joined hands, Teacher Kim's open hand, both cakes plates, the cover top band, the a-nose face in both files, the a-nut open hand in both files, and the writer checks quoted in the brief",
+  "verdict": "all nine batch rows pass under the bar; of the three control rows, C3 passes and C1 and C2 fail",
+  "line_file_gray_count": {
+    "method": "every pixel of every line file counted with sharp greyscale raw output; a pixel counts as gray when it is not 0 and not 255",
+    "files_checked": 21,
+    "result": "0 gray pixels in all nine 1920x1280 line files, all nine 4000x3000 line prints, and the three 4000x3000 or 1600x1600 control line files"
+  },
+  "line_art_thickness_scan": {
+    "method": "a chamfer distance map from every black pixel to the nearest white pixel on each line print, then a flood scan of the pixels deeper than 20 px",
+    "result": "in the nine batch prints every deep cluster is a round eye pupil, the largest 145 x 145 px with depth 83 px; in the control line files the a-nose print holds 13 deep pixels in one 6 x 4 px mark, the a-nut print holds none, and the practice-line nose holds one 28 x 88 px solid eye oval with depth 35 px; no deep cluster is long or thin",
+    "judgement": "no thick solid black ring and no thick solid black band stands in any line file of this review; the writer reports batch line widths of 12 to 27 px, all above the 12 px minimum"
+  },
+  "line_gap_scan": {
+    "method": "a chamfer distance map from every white pixel to the nearest black pixel, then a flood from every white area wider than 15 px; the white pixels the flood cannot reach form closed gaps thinner than 15 px",
+    "result": "in the nine batch prints the closed gaps measure at most 15 px wide; they sit between parallel strokes: finger gaps, sandal straps, stone joints, hair slots and clothing folds; no gap sits inside a face or across a palm; the three control line files were read at full size and show open, even strokes with no closed thin gap in a face or a hand",
+    "judgement": "no line gap makes the coloring hard"
+  },
+  "l2-w02-cover-how-many": {
+    "files": [
+      "out/storytime-review/batch-41/pages/l2-w02-cover-how-many-m2-color-print.png",
+      "out/storytime-review/batch-41/pages/l2-w02-cover-how-many-m2-line-print-2-despeckled.png"
+    ],
+    "rating": 8,
+    "verdict": "clean",
+    "defect_categories": [],
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Pat, May, Sam, Mia, Ben, Nan count on their fingers": "yes: six children sit in a row on the blanket and hold up their hands in both files; Pat shows two fingers, the other five show open hands with four fingers and one thumb",
+      "picnic blanket": "yes: the red blanket fills the lower half of the color file and the same blanket fills the lower half of the line file",
+      "sunny park with green grass": "yes: green grass and a blue sky with clouds in the color file; grass and clouds in the line file",
+      "small pond": "yes: the pond with stones and lily pads stands at the right in the color file; the stone arc of the pond edge stands at the right in the line file",
+      "low tree": "yes: a low tree stands at the left in both files",
+      "Teacher Kim smiles behind them": "yes: Teacher Kim kneels behind the row and smiles in both files; her look matches the reference (dark hair, green cardigan, cream shirt)",
+      "Pat's school bag has a small round bump": "yes: the red bag lies at the front with a round bump on top in the color file; the line file draws the same bag with the same round bump",
+      "Nan cast look": "yes: black hair in two bunches with red ties, orange T-shirt with a white star, red shorts, white sneakers and large dark-brown eyes with the eyelash mark; the lash mark shows in the color file and in the line file",
+      "five children drawn young about five years old": "yes: all six children have large heads and short limbs in both files",
+      "no letters, words, or numbers": "yes: no text shows in either file; the bag pocket stays blank",
+      "cover top 30 percent calm for the title": "measured on the color print: Teacher Kim's hair top reaches 11.5 percent of the height, the sun reaches 5.8 percent, the tree at the left reaches about 8 percent; the centre top 0 to 11 percent stays plain sky for the title"
+    },
+    "open_items_judged": {
+      "the cover top band: Teacher Kim's head reaches about 11 percent": "not a defect under the bar: plain sky sits above her head from 0 to 11.5 percent, the title fits in that clear centre strip, and the sun, tree and clouds read as normal cover art; recorded as a note for the builder because the spec note asks for plain sky over the whole top 30 percent"
+    },
+    "minor_differences": {
+      "Ben's hair": "the color file shows spiky tufts and the line file draws a messy wavy shape; both read as the same boy",
+      "Pat's hair": "the color file shows black spiky tufts and the line file draws a smooth cap",
+      "pond": "the color file shows blue water with lily pads and the line file draws the stone edge with two wave lines",
+      "line width": "the writer check reports 16 px line width, above the 12 px minimum"
+    },
+    "counts": {
+      "color": { "people": 7, "children": 6, "adult": 1, "sun": 1, "pip": 0, "bag": 1 },
+      "line": { "people": 7, "children": 6, "adult": 1, "sun": 1, "pip": 0, "bag": 1 }
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w02-story-page-how-many-balls-five": {
+    "files": [
+      "out/storytime-review/batch-41/pages/l2-w02-story-page-how-many-balls-five-m1-color-print.png",
+      "out/storytime-review/batch-41/pages/l2-w02-story-page-how-many-balls-five-m1-line-print-despeckled.png"
+    ],
+    "rating": 8,
+    "verdict": "clean",
+    "defect_categories": [],
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "five colorful balls in a row on the green grass": "yes: red, orange, yellow, green and blue balls lie in one row on the grass in the color file; five circles lie in one row in the line file",
+      "Nan holds up one hand with five fingers": "yes: Nan raises her right hand with four fingers and one thumb in both files",
+      "Nan cast look": "yes: black hair in two bunches with red ties, orange T-shirt with a white star, red shorts, white sneakers and large dark-brown eyes; the eyelash mark shows in the color file and a lash flick shows at the outer corner of her left eye in the line file",
+      "park with green grass": "yes: grass, tree, bushes and a pond in the color file; grass line, tree and pond stones in the line file",
+      "one sun": "yes: exactly one sun sits in the top right of the color file and exactly one sun with short rays sits in the top right of the line file",
+      "no letters, words, or numbers": "yes: no text shows in either file"
+    },
+    "minor_differences": {
+      "Nan's nose": "the line file draws no nose; no sentence of this batch names the nose",
+      "feet": "the yellow ball covers Nan's feet in both files; her white shoes show at both sides of the ball",
+      "pupils": "the line file draws two solid black pupils inside thin eye rings; the writer depth scan finds only these two pupils deeper than 20 px"
+    },
+    "counts": {
+      "color": { "balls": 5, "sun": 1, "children": 1, "raised_hand_digits": 5 },
+      "line": { "balls": 5, "sun": 1, "children": 1, "raised_hand_digits": 5 }
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w02-story-page-how-many-birds-four": {
+    "files": [
+      "out/storytime-review/batch-41/pages/l2-w02-story-page-how-many-birds-four-m1-color-print.png",
+      "out/storytime-review/batch-41/pages/l2-w02-story-page-how-many-birds-four-m1-line-print-2-despeckled.png"
+    ],
+    "rating": 8,
+    "verdict": "clean",
+    "defect_categories": [],
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "four small blue birds in a row on a branch of the low tree": "yes: four blue birds with orange beaks sit in one row on one branch in the color file; four birds sit in one row on the same branch in the line file",
+      "branch of the low tree": "yes: the branch joins the tree foliage at the right edge and a second low tree stands at the left in both files",
+      "Ben looks up at them": "yes: Ben stands at the lower left, his head tilts up, his eyes point up and his mouth is open in both files",
+      "Ben drawn young about five years old": "yes: large head, short legs and small body in both files; his blue shirt, blue shorts and gray shoes match the reference",
+      "park with green grass": "yes: grass, bushes, pond and sky in the color file; grass line, pond stones and sky in the line file",
+      "one sun": "yes: exactly one sun in the top right of the color file and exactly one sun circle in the top right of the line file",
+      "no letters, words, or numbers": "yes: no text shows in either file"
+    },
+    "minor_differences": {
+      "Ben's hair": "the color file shows spiky tufts and the line file draws a smooth wavy cap; both files read as the same boy, so this stays a note for the builder",
+      "Ben's nose": "the line file draws no nose; no sentence of this batch names the nose",
+      "pupils": "the writer depth scan finds only Ben's two solid pupils deeper than 20 px plus the small bird eye pupils; no ring and no band stands"
+    },
+    "counts": {
+      "color": { "birds": 4, "sun": 1, "children": 1 },
+      "line": { "birds": 4, "sun": 1, "children": 1 }
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w02-story-page-how-many-cakes-oh-no-pip": {
+    "files": [
+      "out/storytime-review/batch-41/pages/l2-w02-story-page-how-many-cakes-oh-no-pip-m2-color-print.png",
+      "out/storytime-review/batch-41/pages/l2-w02-story-page-how-many-cakes-oh-no-pip-m2-line-print-2-despeckled.png"
+    ],
+    "rating": 8,
+    "verdict": "clean",
+    "defect_categories": [],
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "the plate is empty": "yes: the plate holds only three cream smudges in the color file and three smudge shapes in the line file; no cupcake stands on it",
+      "Pip sits next to the plate": "yes: Pip sits to the right of the plate in both files",
+      "white cream on his nose": "yes in the color file: a white dab sits on the black nose and a smear sits on the muzzle; the line file draws one outlined nose oval and no cream shape",
+      "a happy face": "yes: Pip has open eyes, raised brows and an open smile with tongue in both files",
+      "Pip reference look": "yes in the color file: golden-brown fur, cream forehead stripe, cream muzzle, cream chest, black nose, floppy ears, fluffy tail, red collar with round gold tag; the line file draws two floppy ears, collar with round tag, tail, forehead stripe and smiling face",
+      "Pat, May, Sam, Mia, Ben, Nan and Teacher Kim laugh in surprise": "yes: six children and Teacher Kim all stand with wide open laughing mouths in both files",
+      "Nan cast look": "yes: black hair in two bunches with red ties, orange T-shirt with a white star, red shorts, white sneakers, large dark-brown eyes with the eyelash mark in the color file",
+      "one sun": "yes: exactly one sun in the top right of the color file and exactly one sun circle in the top right of the line file",
+      "no letters, words, or numbers": "yes: no text shows in either file"
+    },
+    "workbooks_week1_checks": {
+      "thick solid black ring or band": "gone: the depth scan finds only round eye pupils deeper than 20 px; no ring and no band stands",
+      "face part the sentence names": "met: no sentence of this batch names a face part",
+      "extra parts on Pip: floppy ears only, no spikes": "gone in the line file: the line art shows a smooth round head top with two floppy ears and no spike; the color file shows two small pointed fur tufts at the crown, 29 px and 12 px tall on the 4000 px print (about 1 percent of the height), and the reference Pip also shows a crown tuft; a mark of that size is not a defect under Daniel's bar"
+    },
+    "open_items_judged": {
+      "line width is 12 px, the writer minimum": "not a defect: the writer check passes at 12 px and every stroke keeps one even width; recorded as the thinnest line art of the batch",
+      "Pip's cream mark is not a separate shape in the line art": "not a defect under the bar: the page sentence names no cream, the color file shows the cream on Pip's nose and muzzle, and the empty plate with smudges draws in both files"
+    },
+    "minor_differences": {
+      "cream": "the line file draws no cream shape on Pip's nose; the color file shows cream on the nose and muzzle",
+      "children's hands": "the children stand with relaxed hands in the color file; the line file joins some hands in pairs, and each hand reads as four fingers and one thumb at 4x zoom; no hand shows six digits",
+      "line width": "the writer check reports 12 px, equal to the minimum"
+    },
+    "counts": {
+      "color": { "people": 7, "children": 6, "adult": 1, "pip": 1, "cakes_on_plate": 0, "sun": 1 },
+      "line": { "people": 7, "children": 6, "adult": 1, "pip": 1, "cakes_on_plate": 0, "sun": 1 }
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w02-story-page-how-many-cakes-seven": {
+    "files": [
+      "out/storytime-review/batch-41/pages/l2-w02-story-page-how-many-cakes-seven-m1-color-print.png",
+      "out/storytime-review/batch-41/pages/l2-w02-story-page-how-many-cakes-seven-m1-line-print-3-despeckled.png"
+    ],
+    "rating": 8,
+    "verdict": "clean",
+    "defect_categories": [],
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "seven small cupcakes with white cream on a plate": "yes: counted 7 cupcakes on the plate in the color file (4 at the back, 3 at the front) and 7 in the line file (4 at the back, 3 at the front), each with a cream swirl",
+      "two rows: four at the back and three at the front": "yes: the 4 plus 3 arrangement holds in both files",
+      "on the picnic blanket": "yes: the plate lies on the red blanket in both files",
+      "Teacher Kim counts them with one finger": "yes: Teacher Kim kneels at the plate and points at the cupcakes with one extended finger in the color file and in the line file",
+      "puppy nose peeks out of the open school bag next to the plate": "yes in part: the open red bag stands next to the plate and Pip's head shows above the rim in both files; see open item",
+      "one sun": "yes: exactly one sun in the top right of the color file and exactly one sun with rays in the top right of the line file",
+      "no letters, words, or numbers": "yes: no text shows in either file; the bag label panel stays blank"
+    },
+    "open_items_judged": {
+      "the color shows the whole puppy head in the bag, the spec asks only for the nose tip": "not a defect under the bar: Pip wears his correct look, the bag stands next to the plate in both files, the sentence needs only the seven cakes, and a teacher at book size sees a puppy peeking from the bag; recorded as a spec deviation for the builder",
+      "the line file also shows the whole puppy head": "same judgement: the line Pip head reads correct and whole"
+    },
+    "minor_differences": {
+      "extra characters": "the goal names only Teacher Kim; Ben and Nan also stand at the plate and watch in both files; two extra children read as normal park company",
+      "Ben's hair": "messy tufts in both files on this row, matching his reference",
+      "bag": "the color bag is red with a yellow label panel and the line bag draws the same open bag with the same panel"
+    },
+    "counts": {
+      "color": { "cupcakes": 7, "back_row": 4, "front_row": 3, "plate": 1, "sun": 1, "people": 3, "pip_in_bag": "whole head" },
+      "line": { "cupcakes": 7, "back_row": 4, "front_row": 3, "plate": 1, "sun": 1, "people": 3, "pip_in_bag": "whole head" }
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w02-story-page-how-many-ducks-three": {
+    "files": [
+      "out/storytime-review/batch-41/pages/l2-w02-story-page-how-many-ducks-three-m1-color-print.png",
+      "out/storytime-review/batch-41/pages/l2-w02-story-page-how-many-ducks-three-m1-line-print-2-despeckled.png"
+    ],
+    "rating": 8,
+    "verdict": "clean",
+    "defect_categories": [],
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "three white ducks with orange beaks": "yes: 3 white ducks with orange beaks swim on the pond in the color file and 3 ducks with beaks sit on the pond in the line file",
+      "swim on the small pond": "yes: the pond with a stone ring and lily pads holds the ducks in both files",
+      "Mia kneels at the edge": "yes: Mia kneels on the grass at the pond edge in both files",
+      "Mia points at them": "yes: her right arm reaches out with one extended index finger in both files",
+      "Mia cast look": "yes: light brown hair with pink clip, pink shirt, blue overalls with a plain front pocket and white shoes; drawn young with a large head",
+      "one sun": "yes: exactly one sun in the top right of the color file and exactly one sun in the top right of the line file",
+      "no letters, words, or numbers": "yes: no text shows in either file"
+    },
+    "open_items_judged": {
+      "the line sun is a circle with eight petal loops and can look like a flower": "not a defect under the bar: one sun stands in the top right sky, the rounded loops read as sun rays at book size, the sentence needs only the three ducks, and the bar lists no sun-shape defect; recorded as a note for the builder"
+    },
+    "minor_differences": {
+      "pupils": "the line file draws two large solid black pupils inside thin eye rings; the writer depth scan finds only these two pupils deeper than 20 px plus small marks",
+      "water": "the color file shows blue water with ripples and lily pads and the line file draws the stone ring with the pond edge; no water lines close a face or a hand",
+      "nose": "the line file draws no nose for Mia; no sentence of this batch names the nose"
+    },
+    "counts": {
+      "color": { "ducks": 3, "sun": 1, "children": 1 },
+      "line": { "ducks": 3, "sun": 1, "sun_petals": 8, "children": 1 }
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w02-story-page-how-many-friends-six": {
+    "files": [
+      "out/storytime-review/batch-41/pages/l2-w02-story-page-how-many-friends-six-m1-color-print.png",
+      "out/storytime-review/batch-41/pages/l2-w02-story-page-how-many-friends-six-m1-line-print-despeckled.png"
+    ],
+    "rating": 8,
+    "verdict": "clean",
+    "defect_categories": [],
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Pat, May, Sam, Mia, Ben and Nan sit in a row": "yes: 6 children sit side by side in one row on the blanket in the color file and 6 in the line file",
+      "on a big picnic blanket": "yes: the red blanket fills the lower half of the color file and the same blanket fills the lower half of the line file",
+      "in the park": "yes: tree, grass, bushes and pond edge in the color file; tree, grass line and pond in the line file",
+      "and smile": "yes: all six mouths curve up or open in a smile in both files",
+      "Nan cast look": "yes: black hair in two bunches with red ties, orange T-shirt with a white star, red shorts, white shoes and large dark-brown eyes with the eyelash mark in the color file; the line file draws the bunches, ties, star and lash flicks",
+      "Pat's school bag lies on the blanket": "yes: the bag with its label panel lies on the blanket at the front left in both files",
+      "one sun": "yes: exactly one sun in the top right of the color file and exactly one sun circle in the top right of the line file",
+      "no letters, words, or numbers": "yes: no text shows in either file; the bag panel stays blank"
+    },
+    "minor_differences": {
+      "hair": "Pat and Sam draw smooth caps in both files, Ben keeps his messy tufts in both files, and May and Mia keep their clips",
+      "pond": "the color file shows the pond edge at the far right and the line file draws a full pond with lily pads behind the row; the sentence names no pond",
+      "hands": "the small hands rest on the blanket and show four fingers and one thumb or a relaxed clump; no hand shows six digits",
+      "pupils": "the writer depth scan finds only the round eye pupils deeper than 20 px; no ring and no band stands"
+    },
+    "counts": {
+      "color": { "children": 6, "sun": 1, "bag": 1 },
+      "line": { "children": 6, "sun": 1, "bag": 1 }
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w02-story-page-how-many-kites-two": {
+    "files": [
+      "out/storytime-review/batch-41/pages/l2-w02-story-page-how-many-kites-two-m1-color-print.png",
+      "out/storytime-review/batch-41/pages/l2-w02-story-page-how-many-kites-two-m1-line-print-3-despeckled.png"
+    ],
+    "rating": 8,
+    "verdict": "clean",
+    "defect_categories": [],
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "two kites, one red and one yellow": "yes: 2 kites fly in the sky, red at the left and yellow at the right, in the color file; 2 kites with the same bow tails fly at the same places in the line file",
+      "kites with tails": "yes: both kites carry a tail with small bows in both files",
+      "fly high over a sunny park": "yes: both kites sit high in the blue sky above the grass in both files",
+      "green grass": "yes: green grass fills the lower half of the color file and the grass line fills the lower half of the line file",
+      "small pond": "yes: the pond with stones and lily pads stands at the right in the color file and the stone pond stands at the right in the line file",
+      "low tree": "yes: a low tree stands at the left in both files",
+      "May and Sam hold the strings": "yes: each child grips the string in the raised fist and in the second hand at chest level in both files",
+      "May and Sam look up": "yes: both heads tilt up toward the kites and both smiles open in both files",
+      "May cast look": "yes: black hair with the yellow clip and side ponytail, yellow shirt, blue skirt and white shoes",
+      "Sam cast look": "yes: brown hair, red and white striped shirt, blue shorts and blue shoes",
+      "one sun": "yes: exactly one sun in the top right of the color file and exactly one sun circle in the top right of the line file",
+      "no letters, words, or numbers": "yes: no text shows in either file"
+    },
+    "minor_differences": {
+      "hands": "both children hold the string in closed fists in both files, so no open hand needs a digit count",
+      "pupils": "the writer depth scan finds only the four round solid pupils deeper than 20 px; no ring and no band stands",
+      "kite tails": "the bow count on each tail differs slightly between the color file and the line file; the sentence counts only the kites"
+    },
+    "counts": {
+      "color": { "kites": 2, "kite_colors": ["red", "yellow"], "children": 2, "sun": 1 },
+      "line": { "kites": 2, "children": 2, "sun": 1 }
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w02-story-page-how-many-suns-one": {
+    "files": [
+      "out/storytime-review/batch-41/pages/l2-w02-story-page-how-many-suns-one-m1-color-print.png",
+      "out/storytime-review/batch-41/pages/l2-w02-story-page-how-many-suns-one-m1-line-print-despeckled.png"
+    ],
+    "rating": 8,
+    "verdict": "clean",
+    "defect_categories": [],
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Pat points up at the one bright sun": "yes: Pat raises his right hand with one index finger up and the one sun shines in the top right of both files; the finger points straight up and not along the line to the sun",
+      "one bright sun in a blue sky": "yes: exactly one sun in the color file and exactly one sun circle in the line file",
+      "Teacher Kim and Pat carry a picnic basket": "yes: Teacher Kim grips the handle and Pat holds the basket rim; both carry the basket in both files",
+      "into a sunny park with green grass": "yes: grass, clouds and sky in both files",
+      "small pond": "yes: the pond with stones and lily pads stands at the right in both files",
+      "low tree": "yes: a low tree stands at the left in both files",
+      "Pat's school bag has a small round bump": "yes in the color file: the red backpack on Pat's back carries a round bump at the top; the line file draws the same backpack with strap and panel but no separate round bump",
+      "Pat cast look": "yes: black hair (tufts in the color file, a smooth cap in the line file), green T-shirt, brown shorts and sandals; drawn young with a large head",
+      "no letters, words, or numbers": "yes: no text shows in either file; the bag panel stays blank"
+    },
+    "open_items_judged": {
+      "Pat's hair is a smooth cap in the line art": "not a defect under the bar: the color file keeps the black tufts, both files read as the same boy in the same clothes with the same bag, and a hair style of that size is a mark the bar forgives; recorded as a note for the builder",
+      "the finger points up and not exactly at the sun": "not a defect under the bar: the action reads as pointing, one sun stands in the sky, and no child reads the page wrong",
+      "the line bag has no separate round bump": "not a defect under the bar: the sentence names only the sun, the backpack reads whole in the line file, and the bump shows in the color file; recorded as a note for the builder"
+    },
+    "minor_differences": {
+      "hair": "black tufts in the color file and a smooth cap in the line file",
+      "bag bump": "round bump on the bag in the color file only",
+      "pupils": "the writer depth scan finds only the four round solid pupils deeper than 20 px; no ring and no band stands"
+    },
+    "counts": {
+      "color": { "sun": 1, "people": 2, "basket": 1, "bag": 1, "bag_bump": 1 },
+      "line": { "sun": 1, "people": 2, "basket": 1, "bag": 1, "bag_bump": 0 }
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "controls": {
+    "status": "complete",
+    "C1": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "text": "A nose.",
+      "goal": "Nan touches her own nose with one finger and laughs.",
+      "rating": 5,
+      "verdict": "defect",
+      "defect_categories": ["broken-face"],
+      "defects": [
+        "the line file draws no nose; the sentence names the nose, the color file shows the nose beside the fingertip, and at 3x zoom the line face shows eyes, brows, the finger and the open mouth with blank skin where the nose belongs"
+      ],
+      "note": "checked at 3x zoom: the color file shows a round nose under the fingertip and an open laughing mouth; the line file shows the same finger and mouth but no nose line, so the named face part does not show; Nan's look, the laugh, the five-digit pointing hand and the 0 gray pixels hold in both files"
+    },
+    "C2": {
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "text": "A nut.",
+      "goal": "One big brown nut in Nan's open hand, close up.",
+      "rating": 5,
+      "verdict": "defect",
+      "defect_categories": ["wrong-hand-or-limb"],
+      "defects": [
+        "the open hand draws three fingers and one thumb (four digits) in the line file and in the color file; the close-up hand fills half the page and a hand needs four fingers and one thumb"
+      ],
+      "note": "checked at 1x and 2x zoom: the silhouette shows a thumb at the top and three long lobes with two finger notches plus the thumb web, and the palm shows two finger creases, so one finger is missing; one big brown acorn rests on the palm, the close-up framing, Nan's look and the 0 gray pixels hold in both files"
+    },
+    "C3": {
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "text": "nose",
+      "goal": "The head of Nan in profile facing the other way, the nose clearly seen, for a tracing practice line.",
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "note": "both files show Nan's head in profile facing right with a clear nose bump on the profile outline; the line file gives one even closed outline for tracing, the face reads whole (eye with lash flick, brow, ear, mouth, chin), no letter shows, 0 gray pixels, and the one deep cluster is the solid eye oval (28 x 88 px); the red hair tie shows in the color file only, which is a small mark under the bar"
+    }
+  },
+  "batch_notes": {
+    "workbooks_stage_2_findings": {
+      "thick solid black ring or band in the line art": "gone: the depth scan finds only round eye pupils deeper than 20 px in all nine line prints; no ring and no band stands",
+      "a face part that the sentence names must show": "met for the nine batch rows (no sentence of that batch names a face part); failed by control C1, whose sentence is A nose and whose line file draws no nose",
+      "extra parts on Pip: floppy ears only, no spikes": "gone in the line file: the line Pip shows a smooth round head top with two floppy ears and no spike; the color Pip shows two small pointed fur tufts at the crown, 29 px and 12 px tall on the 4000 px print, and the reference Pip also shows a crown tuft, so a mark of that size is not a defect under the bar"
+    },
+    "five_digit_hands": "the nine batch rows show no hand with six digits: Teacher Kim's open hand shows four fingers and one thumb at 4x zoom, the joined children hands read four fingers and one thumb at 4x zoom, the balls and ducks pages show open five-digit hands, and the kites children hold closed fists; control C2 fails this check with a four-digit open hand",
+    "gray_or_shading_in_the_line_art": "none: all 21 line files hold 0 pixels that are not 0 or 255",
+    "text_in_the_picture": "none: no page shows a letter, a word or a number; every bag label panel stays blank",
+    "one_sun_rule": "every batch page shows exactly one sun in the color file and exactly one sun in the line file; the suns-one page shows exactly one sun",
+    "counts_exact": "all count rows are exact in color and in line: 5 balls, 4 birds, 7 cupcakes in 4 plus 3 rows with 0 cakes on the oh-no-pip plate, 3 ducks, 6 friends, 2 kites, 1 sun per page; the cover shows 6 children and Teacher Kim and no Pip; both cakes plates were counted at zoom, plate edge included",
+    "cover_top_band": "measured on the color print: Teacher Kim's hair top reaches 11.5 percent of the height, the sun reaches 5.8 percent, the tree at the left reaches about 8 percent; the centre top 0 to 11 percent stays plain sky for the title",
+    "prop_sheets_match": "the five balls, the four blue birds, the seven cupcakes in 4 plus 3 rows, the three white ducks, the two kites with three-bow tails and the red school bag all match their reference sheets in the color files",
+    "controls": "C1 fails with broken-face (the line file draws no nose while the sentence names the nose), C2 fails with wrong-hand-or-limb (the open close-up hand draws three fingers and one thumb in both files), C3 passes clean; both defect files were confirmed at zoom",
+    "notes_for_the_builder": [
+      "cover: Teacher Kim's head reaches 11.5 percent into the top band while the spec note asks for plain sky over the whole top 30 percent",
+      "birds-four: Ben's hair is a smooth cap in the line file and spiky tufts in the color file",
+      "oh-no-pip: the line width is 12 px, equal to the writer minimum",
+      "oh-no-pip: the cream mark on Pip's nose is not a separate shape in the line file",
+      "oh-no-pip: the color file shows two small crown tufts on Pip (29 px and 12 px) while the page spec says floppy ears only",
+      "cakes-seven: both files show the whole puppy head in the bag while the spec asks only for the nose tip",
+      "ducks-three: the line sun draws a circle with eight petal loops and can read flower-like",
+      "suns-one: Pat's hair is a smooth cap in the line file and the bag round bump shows in the color file only",
+      "kites-two: the bow count on the kite tails differs between the color file and the line file",
+      "control C1: the line file of a-nose draws no nose while the sentence names the nose",
+      "control C2: the open close-up hand of a-nut draws three fingers and one thumb in both files"
+    ]
+  },
+  "summary": {
+    "pages": 9,
+    "pass": 9,
+    "clean": 9,
+    "clean_keys": [
+      "l2-w02-cover-how-many",
+      "l2-w02-story-page-how-many-balls-five",
+      "l2-w02-story-page-how-many-birds-four",
+      "l2-w02-story-page-how-many-cakes-oh-no-pip",
+      "l2-w02-story-page-how-many-cakes-seven",
+      "l2-w02-story-page-how-many-ducks-three",
+      "l2-w02-story-page-how-many-friends-six",
+      "l2-w02-story-page-how-many-kites-two",
+      "l2-w02-story-page-how-many-suns-one"
+    ],
+    "not_clean_keys": [],
+    "workbooks_findings_gone_count": "3 of 3",
+    "defects_found": 0,
+    "controls": {
+      "rows": 3,
+      "clean": 1,
+      "defect": 2,
+      "defect_categories": ["broken-face", "wrong-hand-or-limb"]
+    },
+    "notes_for_the_builder": 11,
+    "ratings": {
+      "l2-w02-cover-how-many": 8,
+      "l2-w02-story-page-how-many-balls-five": 8,
+      "l2-w02-story-page-how-many-birds-four": 8,
+      "l2-w02-story-page-how-many-cakes-oh-no-pip": 8,
+      "l2-w02-story-page-how-many-cakes-seven": 8,
+      "l2-w02-story-page-how-many-ducks-three": 8,
+      "l2-w02-story-page-how-many-friends-six": 8,
+      "l2-w02-story-page-how-many-kites-two": 8,
+      "l2-w02-story-page-how-many-suns-one": 8,
+      "C1": 5,
+      "C2": 5,
+      "C3": 8
+    }
+  }
+}

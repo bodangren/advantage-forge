@@ -1,0 +1,25 @@
+# Role log: measure-jr-green, Phase 5 Task T3a (step 1)
+
+Track: asset_storytime_l2_unit1_pictures_20261025 (storytime_l2_unit1_pictures)
+Phase: Phase 5: Documentation and verification (phase id P5), new task T3a.
+phase_base_sha: 4e171648
+role_base_sha: 3a4f63b07706da0feea35002f12e05ed79aeac16
+Red model: none (light lane). Green model: coding-plan/deepseek-v4-flash#high (substitution for openai/gpt-6-luna; Codex week quota 84 percent). Deviation recorded in the plan.
+
+Daniel's word (Tasks, 2026-11-04 14:54 ICT): "Beautiful samples. Approved. Also redo the incorrect pictures."
+Restart rules (Daniel, 11-03, PM relay): one Sonnet judge with native image input; calibrate before any new picture; judge at printed size with Daniel's bar word for word; stop rule 3 tries color and 3 tries line; 1.00 USD cap; 0.50 USD report point; line art stays a Muse call (no local filter, FR-14).
+
+Step 1 work: (A) spec.md amendment and plan.md Phase 5 tasks (commit C5); (B) attempt counter and spend guard in scripts/storytime-muse.mjs with a test (commit C6); (C) judge kit: judge prompt, set builder script, calibration set, batch files, cast sheets (commit C7). No Muse call and no provider call in this step. Spend so far: 0.00 USD.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: partial
+commits:
+tests_run: []
+files_changed: []
+plan_updates: []
+known_failures: []
+handoff: Step in progress. Provisional status.
+END_MEASURE_AGENT_RESULT

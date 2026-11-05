@@ -1,0 +1,27 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 2: Tests and calibrated model pre-checks (P2), task 7
+baseline_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+role_base_sha: 245f8c1ae97d660eb475b87f92fd9951306dbc93
+head_sha: 0196627e130a5b85a0c3cb4225040ead80265516
+commits: [844fb72677592b09a8c0219b0225ea777cd6090e, 0196627e130a5b85a0c3cb4225040ead80265516]
+tests_run:
+  - bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'; tsc exit: 2; owned tsc errors: 0; baseline tsc errors: 31.
+  - bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'; unit exit: 0; Tests  99 passed (99).
+  - The first unit attempt exceeded the 120-second command timeout. The retry passed with a longer command timeout.
+files_changed:
+  - tests/storytime-book-pictures.test.ts
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-245f8c1.log
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-tsc-t7.log
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-vitest-245f8c1.log
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-vitest-245f8c1-retry.log
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/mid-red-diff-245f8c1.log
+plan_updates: Added one evidence line under task 7. Task 7 remains [~]. No assertion change. The test diff changes one cast line only; mid-red-diff-245f8c1.log records the full diff.
+known_failures: No owned compiler errors or focused test failures remain. The compiler reports 31 baseline errors outside the owned paths. Errors remain in assets/{airship,longship,merchant-cart,mushroom-cap,plank,rowboat,waterskin,wool}.ts and tests/part.test.ts.
+handoff: The orchestrator corrected role_base_sha from invalid 245f8c1a to 245f8c1ae97d660eb475b87f92fd9951306dbc93 through option A. Both corrected baselines resolve. Task 7 still needs its authorized live label proof and reviews. Relevant assigned paths were initially clean. Generated measure/generated/* files are ignorable and preserved. All other initial dirty paths are unrelated user work and preserved. Only the master worktree and local branch exist. The unrelated origin/gh-pages branch remains unchanged. No push occurred.
+model_deviation: none
+facts_changed: []
+END_MEASURE_AGENT_RESULT

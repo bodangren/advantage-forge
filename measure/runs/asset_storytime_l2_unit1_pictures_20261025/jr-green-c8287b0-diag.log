@@ -1,0 +1,116 @@
+# Jr Green diagnosis — Storytime Phase 2 task 5, smoke run 2 failure (T74 depth-step rows 0/159)
+
+Dispatch: diagnosis only. No source commit, no test edit, no plan edit, no smoke run 3, no paid call.
+One diagnostic browser run (heavy-run.sh, exit 0). All writes under
+`out/storytime/l2/unit1/smoke/diag-2026-10-25T23-00-20-478Z/` (diag.json, 8 PNG files).
+Two earlier attempts of the same diagnostic command failed before any browser launch
+(a CJS transform error, then a tsx `__name` serialization error); neither produced browser data.
+
+## Cause (found and proven)
+
+`unpackDepth` in `src/storytime/line-art-pass.ts:97-105` decodes the classic little-endian RGBA
+depth packing (r = low byte, a = high byte). The page's three.js is **0.185.1**, whose
+`packDepthToRGBA` (`node_modules/three/src/renderers/shaders/ShaderChunk/packing.glsl.js:21-33`)
+writes **big-endian**: r = trunc(v*256) (high byte), g, b middle bytes, a = fract(v*256^3) (low
+rest). With the wrong decode every geometry pixel decodes to about 0.0006 to 0.0035, and
+`viewDistance` collapses every sample onto the camera near value: the stage decoded distances span
+0.2000 to 0.2008 m (a 0.4 percent span, below the 2 percent relative limit), so the depth term
+adds no ink anywhere. All live lines come from the normal pass. This also explains Review A
+finding RA-N7: the v1 packed-depth threshold was inert for the same reason.
+
+Evidence (raw GPU bytes and both decodes, from `diag.json`):
+
+- Fixture near-plane probe [230,128]: raw [250,25,167,0] — true decode 0.976954 → 4.0000 m;
+  current decode 0.00255 → 0.1003 m.
+- Fixture far-plane probe [252,128]: raw [250,140,49,0] — true 0.978702 → 4.3000 m;
+  current 0.00076 → 0.1001 m.
+- Fixture sphere [128,128]: true 3.0003 m; box [60,40]: true 5.8000 m; background [5,250]
+  raw [0,0,0,255]: true 0.0 → 0.1 m. All exact.
+- Stage probe [128,128]: raw [242,173,135,0] — true 0.947960 → 3.7300 m; current 0.2004 m.
+- Stage decoded distance range: current 0.2000-0.2008 (0.00 percent depth-edge ink); true
+  3.14-7.89 m (6.22 percent depth-edge ink). Fixture: current 1.30 percent (background
+  silhouettes only), true 4.01 percent (silhouettes plus the plane border).
+- Pictures: `stage-depth-edges-mine.png` is blank; `stage-depth-edges-true.png` and
+  `fixture-depth-edges-true.png` show the depth edges, including the two vertical plane lines
+  with the 4.0/4.3 border at the declared columns 246/247. `fixture-viewdistance-true.png` shows
+  the two plane strips with the visible 4.0/4.3 step. The fixture geometry and the declared
+  depth-step metadata are correct; only the decode is wrong.
+
+## Proposed fix (exact)
+
+Replace the body of `unpackDepth` in `src/storytime/line-art-pass.ts` with the big-endian inverse:
+
+```ts
+function unpackDepth(pixels: Uint8Array, index: number): number {
+  const base = index * 4;
+  return (
+    pixels[base]! / 256 +
+    pixels[base + 1]! / 65536 +
+    pixels[base + 2]! / 16777216 +
+    pixels[base + 3]! / 255 / 16777216
+  );
+}
+```
+
+This is the inverse of three 0.185 `unpackRGBAToDepth` (dot with UnpackFactors4) and reproduced
+4.0000/4.3000/3.0003/5.8000 m at the probes in the live page. The alpha term is below 1.5e-8 but
+kept for exactness. No other change is needed: the fixture planes, the declared border column and
+rows, the 2 percent relative limit, and the smoke wiring all behaved as designed.
+
+## Unit test without a browser (for Mid Red)
+
+Yes, the cause reproduces without a browser. Two options:
+
+1. New test (preferred addition): export `unpackDepth` from `src/storytime/line-art-pass.ts` and
+   assert the real three 0.185 byte order: `viewDistance(unpackDepth(new Uint8Array([250, 25, 167, 0])), 0.1, 50)`
+   must be about 4.0 (tolerance 0.001). The current code returns 0.1003, so the test fails at Red.
+2. Required amendment of committed T70 (`tests/storytime-line-art-pass.test.ts`, the `packed`
+   helper): the helper writes little-endian digits of floor(v*2^32), which is self-consistent with
+   the current wrong unpack. After the fix, T70's `[4, 4.02, false]` case fails (byte reversal
+   turns tiny packed gaps into huge decoded gaps) and the viewDistance tolerance checks fail. The
+   helper must pack the real big-endian digits — for v, m = round(v*16777216), bytes
+   [m>>16 & 255, (m>>8) & 255, m & 255, round(fract(v*16777216)*255)] — observed GPU ground truth:
+   v = 0.976954 packs to [250, 25, 167, 0]. The T70 assertions and falsification conditions stay
+   unchanged; only the byte order of the mock changes. T70 is immutable for Green, so this needs a
+   Mid Red amendment before the next Green.
+
+## Notes for the orchestrator
+
+- The technique ID: v2 has no surviving evidence (no candidate renders exist; the failed smoke
+  wrote nothing), so keeping `song-page-form-edges-viewdepth-1bit-v2` for the fixed pass is
+  defensible. A new ID (v3) is the stricter reading of the contract. Decision needed before the
+  next Green commit.
+- After the fix, the smoke depth-step check should pass: the border is at the declared columns and
+  rows with a 7.5 percent relative gap.
+- The diagnostic folder is disposable; the diag PNG files and diag.json hold the evidence values.
+
+MEASURE_AGENT_RESULT
+role: jr-green (diagnosis dispatch)
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 2: Tests and calibrated model pre-checks (P2, task 5 diagnosis)
+phase_base_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+head_sha: c8287b06fa8039bf708383b21cf9896d24f95b6d
+commits: []
+tests_run:
+- Diagnostic browser run: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node --import tsx /tmp/opencode/storytime-depth-diag.mts' -> exit 0
+- No vitest, tsc, smoke, or paid call run.
+files_changed: []
+plan_updates: []
+known_failures: []
+handoff:
+- Cause: unpackDepth (src/storytime/line-art-pass.ts:97-105) decodes little-endian; three 0.185.1
+  packDepthToRGBA writes big-endian. Geometry decodes to 0.0006-0.0035, viewDistance collapses all
+  samples to the near value (stage span 0.2000-0.2008 m, 0.4 percent < 2 percent limit), so the
+  depth term adds no ink; all lines are normal edges. Ground truth: fixture plane probes raw
+  [250,25,167,0] and [250,140,49,0] decode to exactly 4.0000 m and 4.3000 m with the big-endian
+  inverse; the declared smoke border columns 246/247 and rows are correct.
+- Fix: unpackDepth = b0/256 + b1/65536 + b2/16777216 + b3/255/16777216 (see the block above).
+- Browser-free reproduction: yes. Add an unpackDepth seam test asserting viewDistance over
+  [250,25,167,0] equals about 4.0; and Mid Red must amend the committed T70 packed helper from
+  little-endian to the real big-endian digit order (assertions unchanged) — the fix breaks T70 as
+  committed.
+- Decision needed: keep technique ID v2 (no surviving v2 evidence) or bump to v3 for the fixed pass.
+- Diagnostic folder: out/storytime/l2/unit1/smoke/diag-2026-10-25T23-00-20-478Z (diag.json plus
+  view-distance and edge-mask PNGs for the fixture and the stage).
+END_MEASURE_AGENT_RESULT

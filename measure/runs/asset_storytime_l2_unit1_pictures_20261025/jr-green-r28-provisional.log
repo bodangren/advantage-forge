@@ -1,0 +1,9 @@
+role: measure-jr-green (Green · P3 · storytime_l2_unit1_pictures · r28)
+model: claude-code/claude-sonnet-5-5#high (no coder, no delegation)
+track: asset_storytime_l2_unit1_pictures_20261025
+role_base_sha: da12adb2
+phase_base_sha: 15a7bf0b
+Red family: minimax (no quota). Earlier Green: xai/grok-4.7 r27 stopped at 18:17 ICT (credits out), no commit.
+This round continues the uncommitted round 27 files: assets/parts/wolf-kind.ts, assets/sprout-pip.ts, src/song/timeline.ts, tests/song-timeline.test.ts.
+Item: Pip sniff clip.
+Status: started

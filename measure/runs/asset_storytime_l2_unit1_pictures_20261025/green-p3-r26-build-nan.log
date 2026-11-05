@@ -1,0 +1,11 @@
+sprout-nan: 24,130 triangles, 0.528 x 0.854 x 0.402 m, built in 53206 ms
+  skin                      8300 tris  (2242 ms)
+  mouth-open                 560 tris  (79 ms)
+  eyelid-skin                854 tris  (83 ms)
+  hair                      6128 tris  (1299 ms)
+  bands                     2880 tris  (111 ms)
+  shirt                     2104 tris  (544 ms)
+  shorts                    1878 tris  (369 ms)
+  shoes                     1426 tris  (310 ms)
+texture  1024x1024 atlas: base color, normal, occlusion/roughness/metal (34020 ms)
+glb      out/sprout-nan/sprout-nan.glb  (2859 KB)

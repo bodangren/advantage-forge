@@ -1,0 +1,749 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/advantage-forge
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T184 delivers the v2 names and candidate version when the entry sets fileVersion 2
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.56% (787200 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T184 delivers the v2 names and candidate version when the entry sets fileVersion 2
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.56% (787200 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T184 delivers the v2 names and candidate version when the entry sets fileVersion 2
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.56% (787200 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T185 gives one candidate per job and writes no v1 file for a v2 row
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.56% (787200 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T186 accepts the v1 color bytes under the v2 name for a line-only row
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.56% (787200 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T186 accepts the v1 color bytes under the v2 name for a line-only row
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.08% (729600 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T187 repeats the same manifest bytes for a mixed v1 and v2 run
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.56% (787200 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T187 repeats the same manifest bytes for a mixed v1 and v2 run
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T187 repeats the same manifest bytes for a mixed v1 and v2 run
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 11.95% (268800 of 2250000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T187 repeats the same manifest bytes for a mixed v1 and v2 run
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.56% (787200 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T187 repeats the same manifest bytes for a mixed v1 and v2 run
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T187 repeats the same manifest bytes for a mixed v1 and v2 run
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 11.95% (268800 of 2250000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T188 refuses fileVersion 0, a negative, a non-integer, and a string with exit 1
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T188 refuses fileVersion 0, a negative, a non-integer, and a string with exit 1
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T188 refuses fileVersion 0, a negative, a non-integer, and a string with exit 1
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T188 refuses fileVersion 0, a negative, a non-integer, and a string with exit 1
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.40% (768000 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T189 refuses a v2 run into a folder that holds a different manifest.json
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.56% (787200 of 12000000 pixels black).
+
+stdout | tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T189 refuses a v2 run into a folder that holds a different manifest.json
+Line-art line width: 60 px (minimum 12 px).
+Line-art ink coverage: 6.56% (787200 of 12000000 pixels black).
+
+ ❯ tests/storytime-muse-delivery.test.ts (29 tests | 6 failed) 33246ms
+     × T184 delivers the v2 names and candidate version when the entry sets fileVersion 2 750ms
+     × T185 gives one candidate per job and writes no v1 file for a v2 row 290ms
+     × T186 accepts the v1 color bytes under the v2 name for a line-only row 565ms
+     × T187 repeats the same manifest bytes for a mixed v1 and v2 run 1065ms
+     × T188 refuses fileVersion 0, a negative, a non-integer, and a string with exit 1 1004ms
+     × T189 refuses a v2 run into a folder that holds a different manifest.json 513ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T184 delivers the v2 names and candidate version when the entry sets fileVersion 2
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The fileVersion 2 candidate version": 2,
++   "The fileVersion 2 candidate version": 1,
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1206:8
+    1204|     const candidate = candidateOf(jobFor(manifest, NUT));
+    1205|     expect.soft({ 'The fileVersion 2 candidate version': candidate.ver…
+    1206|       .toEqual({ 'The fileVersion 2 candidate version': 2 });
+       |        ^
+    1207|     expect.soft({ 'The fileVersion 2 color file name': path.basename(c…
+    1208|       .toEqual({ 'The fileVersion 2 color file name': v2Color });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T184 delivers the v2 names and candidate version when the entry sets fileVersion 2
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The fileVersion 2 color file name": "l2-w01-story-page-a-nut-v2.png",
++   "The fileVersion 2 color file name": "l2-w01-story-page-a-nut-v1.png",
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1208:8
+    1206|       .toEqual({ 'The fileVersion 2 candidate version': 2 });
+    1207|     expect.soft({ 'The fileVersion 2 color file name': path.basename(c…
+    1208|       .toEqual({ 'The fileVersion 2 color file name': v2Color });
+       |        ^
+    1209|     expect.soft({ 'The fileVersion 2 line file name': path.basename(ca…
+    1210|       .toEqual({ 'The fileVersion 2 line file name': v2Line });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T184 delivers the v2 names and candidate version when the entry sets fileVersion 2
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The fileVersion 2 line file name": "l2-w01-story-page-a-nut-line-v2.png",
++   "The fileVersion 2 line file name": "l2-w01-story-page-a-nut-line-v1.png",
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1210:8
+    1208|       .toEqual({ 'The fileVersion 2 color file name': v2Color });
+    1209|     expect.soft({ 'The fileVersion 2 line file name': path.basename(ca…
+    1210|       .toEqual({ 'The fileVersion 2 line file name': v2Line });
+       |        ^
+    1211|     expect.soft({ 'The fileVersion 2 color file exists': existsSync(pa…
+    1212|       .toEqual({ 'The fileVersion 2 color file exists': true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T184 delivers the v2 names and candidate version when the entry sets fileVersion 2
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The fileVersion 2 color file exists": true,
++   "The fileVersion 2 color file exists": false,
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1212:8
+    1210|       .toEqual({ 'The fileVersion 2 line file name': v2Line });
+    1211|     expect.soft({ 'The fileVersion 2 color file exists': existsSync(pa…
+    1212|       .toEqual({ 'The fileVersion 2 color file exists': true });
+       |        ^
+    1213|     expect.soft({ 'The fileVersion 2 line file exists': existsSync(pat…
+    1214|       .toEqual({ 'The fileVersion 2 line file exists': true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T184 delivers the v2 names and candidate version when the entry sets fileVersion 2
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The fileVersion 2 line file exists": true,
++   "The fileVersion 2 line file exists": false,
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1214:8
+    1212|       .toEqual({ 'The fileVersion 2 color file exists': true });
+    1213|     expect.soft({ 'The fileVersion 2 line file exists': existsSync(pat…
+    1214|       .toEqual({ 'The fileVersion 2 line file exists': true });
+       |        ^
+    1215|     expect.soft({ 'The fileVersion 2 color bytes are the approved prin…
+    1216|       .toEqual({ 'The fileVersion 2 color bytes are the approved print…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T184 delivers the v2 names and candidate version when the entry sets fileVersion 2
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The fileVersion 2 color bytes are the approved print bytes": "c342a757fab232347290d8be770b0c6557a4d24ee70f95b936dbe75831c5824b",
++   "The fileVersion 2 color bytes are the approved print bytes": "missing",
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1216:8
+    1214|       .toEqual({ 'The fileVersion 2 line file exists': true });
+    1215|     expect.soft({ 'The fileVersion 2 color bytes are the approved prin…
+    1216|       .toEqual({ 'The fileVersion 2 color bytes are the approved print…
+       |        ^
+    1217|     expect.soft({ 'The fileVersion 2 line bytes are the approved print…
+    1218|       .toEqual({ 'The fileVersion 2 line bytes are the approved print …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T184 delivers the v2 names and candidate version when the entry sets fileVersion 2
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The fileVersion 2 line bytes are the approved print bytes": "63772e2237706217d0a38e1bb6b23dbb782e5b4553129809a018567db7df0d23",
++   "The fileVersion 2 line bytes are the approved print bytes": "missing",
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1218:8
+    1216|       .toEqual({ 'The fileVersion 2 color bytes are the approved print…
+    1217|     expect.soft({ 'The fileVersion 2 line bytes are the approved print…
+    1218|       .toEqual({ 'The fileVersion 2 line bytes are the approved print …
+       |        ^
+    1219|
+    1220|     // A run with no field keeps the list names and bytes.
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T185 gives one candidate per job and writes no v1 file for a v2 row
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+    "The v2 job candidate versions": [
+-     2,
++     1,
+    ],
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1270:8
+    1268|       .toEqual({ 'The v2 job holds one candidate': 1 });
+    1269|     expect.soft({ 'The v2 job candidate versions': job.candidates.map(…
+    1270|       .toEqual({ 'The v2 job candidate versions': [2] });
+       |        ^
+    1271|     expect.soft({ 'The v2 job selects version 2': job.selectedVersion …
+    1272|       .toEqual({ 'The v2 job selects version 2': 2 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T185 gives one candidate per job and writes no v1 file for a v2 row
+AssertionError: expected { 'The v2 job selects version 2': 1 } to deeply equal { 'The v2 job selects version 2': 2 }
+
+- Expected
++ Received
+
+  {
+-   "The v2 job selects version 2": 2,
++   "The v2 job selects version 2": 1,
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1272:8
+    1270|       .toEqual({ 'The v2 job candidate versions': [2] });
+    1271|     expect.soft({ 'The v2 job selects version 2': job.selectedVersion …
+    1272|       .toEqual({ 'The v2 job selects version 2': 2 });
+       |        ^
+    1273|     const files = (await walk(target)).map((file) => path.basename(fil…
+    1274|     expect.soft({ 'The v2 folder file names': files })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T185 gives one candidate per job and writes no v1 file for a v2 row
+AssertionError: expected { Object (The v2 folder file names) } to deeply equal { Object (The v2 folder file names) }
+
+- Expected
++ Received
+
+  {
+    "The v2 folder file names": [
+-     "l2-w01-story-page-a-nut-line-v2.png",
+-     "l2-w01-story-page-a-nut-v2.png",
++     "l2-w01-story-page-a-nut-line-v1.png",
++     "l2-w01-story-page-a-nut-v1.png",
+      "manifest.json",
+    ],
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1275:8
+    1273|     const files = (await walk(target)).map((file) => path.basename(fil…
+    1274|     expect.soft({ 'The v2 folder file names': files })
+    1275|       .toEqual({ 'The v2 folder file names': [v2Color, v2Line, 'manife…
+       |        ^
+    1276|     expect.soft({ 'The v2 folder holds no v1 file for the row': files.…
+    1277|       .toEqual({ 'The v2 folder holds no v1 file for the row': [] });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T185 gives one candidate per job and writes no v1 file for a v2 row
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The v2 folder holds no v1 file for the row": [],
++   "The v2 folder holds no v1 file for the row": [
++     "l2-w01-story-page-a-nut-line-v1.png",
++     "l2-w01-story-page-a-nut-v1.png",
++   ],
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1277:8
+    1275|       .toEqual({ 'The v2 folder file names': [v2Color, v2Line, 'manife…
+    1276|     expect.soft({ 'The v2 folder holds no v1 file for the row': files.…
+    1277|       .toEqual({ 'The v2 folder holds no v1 file for the row': [] });
+       |        ^
+    1278|     const colorBatch = manifest.batches.find((batch) => batch.outputKi…
+    1279|     expect.soft({ 'The color batch names the v2 file': colorBatch?.fil…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T185 gives one candidate per job and writes no v1 file for a v2 row
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+    "The color batch names the v2 file": [
+-     "l2-w01-story-page-a-nut-v2.png",
++     "l2-w01-story-page-a-nut-v1.png",
+    ],
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1280:8
+    1278|     const colorBatch = manifest.batches.find((batch) => batch.outputKi…
+    1279|     expect.soft({ 'The color batch names the v2 file': colorBatch?.fil…
+    1280|       .toEqual({ 'The color batch names the v2 file': [v2Color] });
+       |        ^
+    1281|     const lineBatch = manifest.batches.find((batch) => batch.outputKin…
+    1282|     expect.soft({ 'The line batch names the v2 file': lineBatch?.files…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T185 gives one candidate per job and writes no v1 file for a v2 row
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+    "The line batch names the v2 file": [
+-     "l2-w01-story-page-a-nut-line-v2.png",
++     "l2-w01-story-page-a-nut-line-v1.png",
+    ],
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1283:8
+    1281|     const lineBatch = manifest.batches.find((batch) => batch.outputKin…
+    1282|     expect.soft({ 'The line batch names the v2 file': lineBatch?.files…
+    1283|       .toEqual({ 'The line batch names the v2 file': [v2Line] });
+       |        ^
+    1284|   });
+    1285|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T186 accepts the v1 color bytes under the v2 name for a line-only row
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The v2 color file holds the v1 color bytes": "c342a757fab232347290d8be770b0c6557a4d24ee70f95b936dbe75831c5824b",
++   "The v2 color file holds the v1 color bytes": "missing",
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1322:8
+    1320|     const v2Line = versionedName(row.lineArtFileName, 2);
+    1321|     expect.soft({ 'The v2 color file holds the v1 color bytes': await …
+    1322|       .toEqual({ 'The v2 color file holds the v1 color bytes': v1Color…
+       |        ^
+    1323|     expect.soft({ 'The v2 candidate color hash equals the v1 hash': v2…
+    1324|       .toEqual({ 'The v2 candidate color hash equals the v1 hash': v1C…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T187 repeats the same manifest bytes for a mixed v1 and v2 run
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The mixed run delivers the v2 row under the v2 name": true,
++   "The mixed run delivers the v2 row under the v2 name": false,
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1359:8
+    1357|       .toEqual({ 'The mixed run delivers the v1 row under the v1 name'…
+    1358|     expect.soft({ 'The mixed run delivers the v2 row under the v2 name…
+    1359|       .toEqual({ 'The mixed run delivers the v2 row under the v2 name'…
+       |        ^
+    1360|     expect.soft({ 'The mixed run holds no v1 file for the v2 row': exi…
+    1361|       .toEqual({ 'The mixed run holds no v1 file for the v2 row': fals…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T187 repeats the same manifest bytes for a mixed v1 and v2 run
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The mixed run holds no v1 file for the v2 row": false,
++   "The mixed run holds no v1 file for the v2 row": true,
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1361:8
+    1359|       .toEqual({ 'The mixed run delivers the v2 row under the v2 name'…
+    1360|     expect.soft({ 'The mixed run holds no v1 file for the v2 row': exi…
+    1361|       .toEqual({ 'The mixed run holds no v1 file for the v2 row': fals…
+       |        ^
+    1362|     expect.soft({ 'The mixed manifest holds the v2 candidate version':…
+    1363|       .toEqual({ 'The mixed manifest holds the v2 candidate version': …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T187 repeats the same manifest bytes for a mixed v1 and v2 run
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The mixed manifest holds the v2 candidate version": 2,
++   "The mixed manifest holds the v2 candidate version": 1,
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1363:8
+    1361|       .toEqual({ 'The mixed run holds no v1 file for the v2 row': fals…
+    1362|     expect.soft({ 'The mixed manifest holds the v2 candidate version':…
+    1363|       .toEqual({ 'The mixed manifest holds the v2 candidate version': …
+       |        ^
+    1364|     expect.soft({ 'The mixed manifest holds the v1 candidate version':…
+    1365|       .toEqual({ 'The mixed manifest holds the v1 candidate version': …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T188 refuses fileVersion 0, a negative, a non-integer, and a string with exit 1
+AssertionError: expected { 'The 0 fileVersion exit code': +0 } to deeply equal { 'The 0 fileVersion exit code': 1 }
+
+- Expected
++ Received
+
+  {
+-   "The 0 fileVersion exit code": 1,
++   "The 0 fileVersion exit code": 0,
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1398:40
+    1396|       const filesKey = `The ${item.label} fileVersion writes no file`;
+    1397|       const fieldKey = `The ${item.label} fileVersion refusal names th…
+    1398|       expect.soft({ [codeKey]: code }).toEqual({ [codeKey]: 1 });
+       |                                        ^
+    1399|       expect.soft({ [filesKey]: await walk(deliveryDir) }).toEqual({ […
+    1400|       expect.soft({ [fieldKey]: /fileVersion/i.test(logs.join('\n')) })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T188 refuses fileVersion 0, a negative, a non-integer, and a string with exit 1
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The 0 fileVersion writes no file": [],
++   "The 0 fileVersion writes no file": [
++     "/tmp/muse-delivery-bget2x/cli-file-version-0/out/delivery/l2-w01-story-page-a-nut-line-v1.png",
++     "/tmp/muse-delivery-bget2x/cli-file-version-0/out/delivery/l2-w01-story-page-a-nut-v1.png",
++     "/tmp/muse-delivery-bget2x/cli-file-version-0/out/delivery/manifest.json",
++   ],
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1399:60
+    1397|       const fieldKey = `The ${item.label} fileVersion refusal names th…
+    1398|       expect.soft({ [codeKey]: code }).toEqual({ [codeKey]: 1 });
+    1399|       expect.soft({ [filesKey]: await walk(deliveryDir) }).toEqual({ […
+       |                                                            ^
+    1400|       expect.soft({ [fieldKey]: /fileVersion/i.test(logs.join('\n')) })
+    1401|         .toEqual({ [fieldKey]: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T188 refuses fileVersion 0, a negative, a non-integer, and a string with exit 1
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The 0 fileVersion refusal names the field": true,
++   "The 0 fileVersion refusal names the field": false,
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1401:10
+    1399|       expect.soft({ [filesKey]: await walk(deliveryDir) }).toEqual({ […
+    1400|       expect.soft({ [fieldKey]: /fileVersion/i.test(logs.join('\n')) })
+    1401|         .toEqual({ [fieldKey]: true });
+       |          ^
+    1402|     }
+    1403|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T188 refuses fileVersion 0, a negative, a non-integer, and a string with exit 1
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The a negative (-1) fileVersion exit code": 1,
++   "The a negative (-1) fileVersion exit code": 0,
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1398:40
+    1396|       const filesKey = `The ${item.label} fileVersion writes no file`;
+    1397|       const fieldKey = `The ${item.label} fileVersion refusal names th…
+    1398|       expect.soft({ [codeKey]: code }).toEqual({ [codeKey]: 1 });
+       |                                        ^
+    1399|       expect.soft({ [filesKey]: await walk(deliveryDir) }).toEqual({ […
+    1400|       expect.soft({ [fieldKey]: /fileVersion/i.test(logs.join('\n')) })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T188 refuses fileVersion 0, a negative, a non-integer, and a string with exit 1
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The a negative (-1) fileVersion writes no file": [],
++   "The a negative (-1) fileVersion writes no file": [
++     "/tmp/muse-delivery-bget2x/cli-file-version-1/out/delivery/l2-w01-story-page-a-nut-line-v1.png",
++     "/tmp/muse-delivery-bget2x/cli-file-version-1/out/delivery/l2-w01-story-page-a-nut-v1.png",
++     "/tmp/muse-delivery-bget2x/cli-file-version-1/out/delivery/manifest.json",
++   ],
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1399:60
+    1397|       const fieldKey = `The ${item.label} fileVersion refusal names th…
+    1398|       expect.soft({ [codeKey]: code }).toEqual({ [codeKey]: 1 });
+    1399|       expect.soft({ [filesKey]: await walk(deliveryDir) }).toEqual({ […
+       |                                                            ^
+    1400|       expect.soft({ [fieldKey]: /fileVersion/i.test(logs.join('\n')) })
+    1401|         .toEqual({ [fieldKey]: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T188 refuses fileVersion 0, a negative, a non-integer, and a string with exit 1
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The a negative (-1) fileVersion refusal names the field": true,
++   "The a negative (-1) fileVersion refusal names the field": false,
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1401:10
+    1399|       expect.soft({ [filesKey]: await walk(deliveryDir) }).toEqual({ […
+    1400|       expect.soft({ [fieldKey]: /fileVersion/i.test(logs.join('\n')) })
+    1401|         .toEqual({ [fieldKey]: true });
+       |          ^
+    1402|     }
+    1403|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T188 refuses fileVersion 0, a negative, a non-integer, and a string with exit 1
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The a non-integer (2.5) fileVersion exit code": 1,
++   "The a non-integer (2.5) fileVersion exit code": 0,
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1398:40
+    1396|       const filesKey = `The ${item.label} fileVersion writes no file`;
+    1397|       const fieldKey = `The ${item.label} fileVersion refusal names th…
+    1398|       expect.soft({ [codeKey]: code }).toEqual({ [codeKey]: 1 });
+       |                                        ^
+    1399|       expect.soft({ [filesKey]: await walk(deliveryDir) }).toEqual({ […
+    1400|       expect.soft({ [fieldKey]: /fileVersion/i.test(logs.join('\n')) })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T188 refuses fileVersion 0, a negative, a non-integer, and a string with exit 1
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The a non-integer (2.5) fileVersion writes no file": [],
++   "The a non-integer (2.5) fileVersion writes no file": [
++     "/tmp/muse-delivery-bget2x/cli-file-version-2/out/delivery/l2-w01-story-page-a-nut-line-v1.png",
++     "/tmp/muse-delivery-bget2x/cli-file-version-2/out/delivery/l2-w01-story-page-a-nut-v1.png",
++     "/tmp/muse-delivery-bget2x/cli-file-version-2/out/delivery/manifest.json",
++   ],
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1399:60
+    1397|       const fieldKey = `The ${item.label} fileVersion refusal names th…
+    1398|       expect.soft({ [codeKey]: code }).toEqual({ [codeKey]: 1 });
+    1399|       expect.soft({ [filesKey]: await walk(deliveryDir) }).toEqual({ […
+       |                                                            ^
+    1400|       expect.soft({ [fieldKey]: /fileVersion/i.test(logs.join('\n')) })
+    1401|         .toEqual({ [fieldKey]: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T188 refuses fileVersion 0, a negative, a non-integer, and a string with exit 1
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The a non-integer (2.5) fileVersion refusal names the field": true,
++   "The a non-integer (2.5) fileVersion refusal names the field": false,
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1401:10
+    1399|       expect.soft({ [filesKey]: await walk(deliveryDir) }).toEqual({ […
+    1400|       expect.soft({ [fieldKey]: /fileVersion/i.test(logs.join('\n')) })
+    1401|         .toEqual({ [fieldKey]: true });
+       |          ^
+    1402|     }
+    1403|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T188 refuses fileVersion 0, a negative, a non-integer, and a string with exit 1
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The a string (\"2\") fileVersion exit code": 1,
++   "The a string (\"2\") fileVersion exit code": 0,
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1398:40
+    1396|       const filesKey = `The ${item.label} fileVersion writes no file`;
+    1397|       const fieldKey = `The ${item.label} fileVersion refusal names th…
+    1398|       expect.soft({ [codeKey]: code }).toEqual({ [codeKey]: 1 });
+       |                                        ^
+    1399|       expect.soft({ [filesKey]: await walk(deliveryDir) }).toEqual({ […
+    1400|       expect.soft({ [fieldKey]: /fileVersion/i.test(logs.join('\n')) })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T188 refuses fileVersion 0, a negative, a non-integer, and a string with exit 1
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The a string (\"2\") fileVersion writes no file": [],
++   "The a string (\"2\") fileVersion writes no file": [
++     "/tmp/muse-delivery-bget2x/cli-file-version-3/out/delivery/l2-w01-story-page-a-nut-line-v1.png",
++     "/tmp/muse-delivery-bget2x/cli-file-version-3/out/delivery/l2-w01-story-page-a-nut-v1.png",
++     "/tmp/muse-delivery-bget2x/cli-file-version-3/out/delivery/manifest.json",
++   ],
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1399:60
+    1397|       const fieldKey = `The ${item.label} fileVersion refusal names th…
+    1398|       expect.soft({ [codeKey]: code }).toEqual({ [codeKey]: 1 });
+    1399|       expect.soft({ [filesKey]: await walk(deliveryDir) }).toEqual({ […
+       |                                                            ^
+    1400|       expect.soft({ [fieldKey]: /fileVersion/i.test(logs.join('\n')) })
+    1401|         .toEqual({ [fieldKey]: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T188 refuses fileVersion 0, a negative, a non-integer, and a string with exit 1
+AssertionError: expected { …(1) } to deeply equal { …(1) }
+
+- Expected
++ Received
+
+  {
+-   "The a string (\"2\") fileVersion refusal names the field": true,
++   "The a string (\"2\") fileVersion refusal names the field": false,
+  }
+
+ ❯ tests/storytime-muse-delivery.test.ts:1401:10
+    1399|       expect.soft({ [filesKey]: await walk(deliveryDir) }).toEqual({ […
+    1400|       expect.soft({ [fieldKey]: /fileVersion/i.test(logs.join('\n')) })
+    1401|         .toEqual({ [fieldKey]: true });
+       |          ^
+    1402|     }
+    1403|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/30]⎯
+
+ FAIL  tests/storytime-muse-delivery.test.ts > Muse delivery file versions > T189 refuses a v2 run into a folder that holds a different manifest.json
+AssertionError: A v2 run into a folder with a different manifest.json is refused: expected 'delivered' to match /manifest|overwrite|differ|exist/i
+
+- Expected:
+/manifest|overwrite|differ|exist/i
+
++ Received:
+"delivered"
+
+ ❯ tests/storytime-muse-delivery.test.ts:1427:8
+    1425|     }
+    1426|     expect.soft(refusal?.message ?? 'delivered', 'A v2 run into a fold…
+    1427|       .toMatch(/manifest|overwrite|differ|exist/i);
+       |        ^
+    1428|     expect.soft({ 'The refused v2 run keeps the manifest bytes': await…
+    1429|       .toEqual({ 'The refused v2 run keeps the manifest bytes': manife…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/30]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed | 23 passed (29)
+   Start at  02:27:10
+   Duration  34.46s (transform 526ms, setup 0ms, import 856ms, tests 33.25s, environment 0ms)
+

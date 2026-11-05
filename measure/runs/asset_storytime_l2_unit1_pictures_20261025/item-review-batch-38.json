@@ -1,0 +1,95 @@
+{
+  "reviewer": "opencode-go/mimo-v2.6-flash",
+  "audited_head": "nest line-3-despeckled and cover line-print-5-despeckled-pad",
+  "verdict": "fix-round review",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "line_art_rule": "brief line-art rule as amended by Daniel's bar 2026-11-01",
+  "seen": {
+    "out/storytime-review/batch-38/brief.md": "Batch 38 brief; two rows; Muse fix round; Daniel's bar at the top.",
+    "out/storytime-review/batch-38/refs/out_storytime-review_batch-21_look-reference-nan-and-pip.png": "Nan reference: black hair in two bunches with red ties, orange T-shirt with white star, red shorts, white shoes, big dark-brown eyes.",
+    "out/storytime-review/batch-38/pages/l2-w01-practice-line-nest-m1-color.png": "One woven bird nest with three light blue eggs on a plain white background; tan twig bands, brown bowl interior, one small twig knot at the right rim.",
+    "out/storytime-review/batch-38/pages/l2-w01-practice-line-nest-m1-line-3-despeckled.png": "Thick 1-bit line art of the same nest; three closed egg ovals; twig ends and the right-rim knot drawn as small shapes; no face, no eyes, no eyebrows; no gray.",
+    "out/storytime-review/batch-38/pages/l2-w01-cover-hello-m6-color-print-pad.png": "Padded 4000x3000 color cover: six young children wave in a bright classroom; Teacher Kim smiles behind a low table; green door with round window; three animal pictures (lion, elephant, frog); no letters; white bands top and bottom.",
+    "out/storytime-review/batch-38/pages/l2-w01-cover-hello-m6-line-print-5-despeckled-pad.png": "Padded 4000x3000 line art of the same cover; pure black on white; each child eye is a closed ring with a solid pupil; every waving hand shows four fingers and one thumb; the bag shows its round bump; white bands top and bottom."
+  },
+  "l2-w01-practice-line-nest": {
+    "files": [
+      "out/storytime-review/batch-38/pages/l2-w01-practice-line-nest-m1-color.png",
+      "out/storytime-review/batch-38/pages/l2-w01-practice-line-nest-m1-line-3-despeckled.png"
+    ],
+    "rating": 9,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "one bird nest, one object": "yes: one nest in both files",
+      "large in the middle": "yes: the nest fills the picture middle in both files",
+      "plain light background": "yes: plain white background in both files",
+      "thick outlines": "yes: line width 30 px at 1500 x 1500, above the 12 px minimum",
+      "three light blue eggs": "yes: three blue eggs in color; three closed egg ovals in line art",
+      "no face, eyes, or eyebrows on the nest": "yes: the line art draws no face; twig ends read as twigs",
+      "line art no gray or specks": "yes: 1-bit file, no gray, no hatching, no texture lines",
+      "line art matches the color file": "yes: twig ends, rim knot, bowl, and eggs match the color file",
+      "closed shapes color well": "yes: nest, rim band, bowl, and every egg are closed regions"
+    },
+    "builder_items": {
+      "try 1 drew two eyes with pupils and eyebrows on the nest": "gone: try 3 draws no face; the two lower eggs read as eggs, not eyes",
+      "small circle at the right rim could read as an eye": "not a defect under the bar: it is one small twig knot from the color file; one small mark makes no face"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-cover-hello": {
+    "files": [
+      "out/storytime-review/batch-38/pages/l2-w01-cover-hello-m6-color-print-pad.png",
+      "out/storytime-review/batch-38/pages/l2-w01-cover-hello-m6-line-print-5-despeckled-pad.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "pad_layout_check": {
+      "white bands top and bottom": "yes: both files show one white band at the top and one at the bottom",
+      "band sizes equal": "color: 167 px top, 166 px bottom. Line: 167 px top, 266 px bottom; the line file omits the wood floor texture, so its ink ends higher",
+      "layout fault at book size": "no: the bands read as equal white margins; the scene is whole and centered; nothing is cut at any side; the bands pass the writer check",
+      "fact": "the line bottom margin is 100 px larger than the color bottom margin; separate pages hide the difference; record only"
+    },
+    "goal_check": {
+      "Pat, May, Sam, Mia, Ben, Nan wave hello": "yes: six children stand in a row; five faces front and wave; Pat waves with his raised hand",
+      "drawn young, about five years old": "yes: all six are small chibi children with big heads",
+      "the green door": "yes: green door with a round window and a knob at the right in both files",
+      "bright kindergarten classroom": "yes: cream wall, timber beams, wood floor in color; the line art keeps the same structure",
+      "low tables": "yes: one low table stands behind the children in both files",
+      "wall with big colorful animal pictures": "yes: three framed pictures (lion, elephant, frog) on the left wall in both files",
+      "no letters or words anywhere": "yes: no text in either file",
+      "Teacher Kim smiles behind them": "yes: Kim stands behind the table and smiles in both files",
+      "Pat's school bag with a small round bump": "yes: the red bag shows a round dome at its top in both files",
+      "Nan look matches the reference": "yes: two bunches with ties, orange T-shirt with white star, red shorts, white shoes, big dark-brown eyes",
+      "eye rings with pupils in the line art": "yes: each child eye is a closed ring with a solid pupil and a white catchlight",
+      "five-digit hands": "yes: all seven waving hands show four fingers and one thumb in the line art",
+      "line art no gray": "yes: pure black on white; writer check passes with 13 px lines and 11.71 percent ink"
+    },
+    "open_facts": {
+      "Pat stands with his back to the camera in the color picture": "recorded, not counted; Daniel's answer is still open"
+    },
+    "minor_differences": {
+      "child 4 mouth": "color shows a closed smile; line art shows an open smile; both read as a happy smile at book size; not a defect under the bar",
+      "Teacher Kim mouth and eyes": "color shows a closed smile and detailed eyes; line art shows an open smile and small dot eyes; both read as a smiling teacher; not a defect under the bar",
+      "floor texture": "color draws wood planks; line art leaves the floor plain; texture lines are not allowed in line art; not a defect"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "summary": {
+    "pages": 2,
+    "pass": 2,
+    "clean": 2,
+    "clean_keys": [
+      "l2-w01-practice-line-nest",
+      "l2-w01-cover-hello"
+    ],
+    "not_clean_keys": []
+  }
+}

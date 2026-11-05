@@ -1,0 +1,19 @@
+{
+  "group": "prod-r2-line-a1-second",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w01-story-page-a-nest",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nest-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the nest at the top right: a smooth bowl with three eggs and no twigs, on a curved branch that looks like a spoon handle; the tree is only a trunk line at the right edge",
+      "notes": "Question page: no. Items: Nan (1), a bird's nest with twigs (1), the nest in a tree. Action: pointing (note only). Seen: a girl with two round buns, a star shirt, and a pointing hand. At the top right a smooth round bowl holds three eggs. It sits on one curved line that ends in a leaf cloud. This looks like a spoon or ladle with a bowl of eggs. No twig lines show on the bowl. The tree is one big curve at the right edge, and a young child does not read it as a tree. mustShow: Nan shown; a bird's nest with twigs ABSENT (smooth bowl, no twigs); the nest in a tree ABSENT (no clear tree). Line art itself is black on white with no gray and no gap."
+    }
+  ],
+  "summary": { "files": 1, "pass": 0, "fail": 1 }
+}

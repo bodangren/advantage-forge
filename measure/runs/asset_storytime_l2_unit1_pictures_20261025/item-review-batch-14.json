@@ -1,0 +1,20 @@
+{
+  "reviewer": "openai/gpt-6-luna#high",
+  "scope": "l2-w01-check-row-nest only",
+  "seen": {
+    "look-reference-nan-and-pip.png": "The reference shows the approved soft, round chibi style.",
+    "l2-w01-check-row-nest-line-v7.png": "The old line art has detached dash-like marks near the right edge.",
+    "l2-w01-check-row-nest-v8.png": "The color picture shows one clear brown nest with three blue eggs inside.",
+    "l2-w01-check-row-nest-line-v8.png": "The line art shows one recognizable nest with three eggs and no detached dashes or specks."
+  },
+  "l2-w01-check-row-nest": {
+    "overall": 8.0,
+    "pass": true,
+    "critical": [],
+    "issues": [],
+    "fix": "",
+    "goals": {
+      "One nest alone on a white page; a child of about 5 years names it a nest in color and 1-bit line art at 1500 x 1500.": "pass"
+    }
+  }
+}

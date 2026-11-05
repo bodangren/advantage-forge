@@ -1,0 +1,428 @@
+{
+  "status": "fail",
+  "reviewer": "kimi-code-plan-cn/kimi-for-coding",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "audited_head": "nine color prints and nine line prints of batch 42, and the nine reference pictures in refs/",
+  "verdict": "eight of nine rows pass under the bar; the sun row fails because the line art reads as a flower",
+  "seen": {
+    "out/storytime-review/batch-42/brief.md": "Batch 42 brief; nine check rows; Daniel's bar at the top; the builder listed open items per row.",
+    "out/storytime-review/batch-42/refs/out_storytime_l2_unit1_w02_muse_elements_prop-alligator-sheet-m1-color.png": "Alligator prop sheet: a baby green alligator with a cream belly, a long rounded snout with a smile and small white teeth, two big round eyes, facing left; the prints face right.",
+    "out/storytime-review/batch-42/refs/out_storytime_l2_unit1_w02_muse_elements_prop-ant-sheet-m2-color.png": "Ant prop sheet m2: a dark red-brown ant with three round body parts, six legs, two short curved antennae, two big eyes and a small smile.",
+    "out/storytime-review/batch-42/refs/out_apple_views_three-quarter.png": "Apple asset: a round red apple with a short brown stem and one green leaf.",
+    "out/storytime-review/batch-42/refs/out_bed_views_three-quarter.png": "Bed asset: a wooden bed with a red check blanket, one white pillow, an arched headboard and four posts.",
+    "out/storytime-review/batch-42/refs/out_storytime-school-bus_views_three-quarter.png": "School bus asset: a yellow bus with blue windows, a dark door, round headlights, a front grille, roof lights and a dark side stripe.",
+    "out/storytime-review/batch-42/refs/out_dog_views_three-quarter.png": "Dog asset: a small brown puppy with dark floppy ears, a white muzzle and chest, a red collar with a gold tag and the tongue out.",
+    "out/storytime-review/batch-42/refs/out_fish_views_side.png": "Fish asset: a round fish in side view, blue on top and yellow below, one big round eye with a yellow ring, a scalloped yellow top fin and tail and one small side fin.",
+    "out/storytime-review/batch-42/refs/out_storytime_l2_unit1_w02_muse_elements_prop-sun-sheet-m1-color.png": "Sun prop sheet: a round orange-yellow disc with eight short rounded rays that do not touch the disc; each ray is wider at its outer end; a soft glow sits behind the disc.",
+    "out/storytime-review/batch-42/pages/l2-w02-check-row-alligator-m1-color-print.png": "One baby green alligator, cream belly, big round eyes, smile with small white teeth, three-quarter view, on white with a soft shadow; no text.",
+    "out/storytime-review/batch-42/pages/l2-w02-check-row-alligator-m1-line-print-3-despeckled.png": "Line art of the same alligator: even 19 px lines, teeth as small closed shapes, two eyes as rings with solid black pupils, short open crease strokes at the legs and chest.",
+    "out/storytime-review/batch-42/pages/l2-w02-check-row-ant-m1-color-print.png": "One dark red-brown ant, three round body parts, six legs, two curved antennae, one big eye and a small smile, on white with a soft shadow; a sliver of the second eye shows at the head edge; no text.",
+    "out/storytime-review/batch-42/pages/l2-w02-check-row-ant-m1-line-print-despeckled.png": "Line art of the same ant: even 16 px lines, closed rounded legs, closed curled antennae, one full eye ring with a solid pupil and a second eye as a thin ring with a pupil at the edge of the head.",
+    "out/storytime-review/batch-42/pages/l2-w02-check-row-apple-m1-color-print.png": "One whole red apple with a short brown stem and one green leaf, on white with a soft shadow; no text.",
+    "out/storytime-review/batch-42/pages/l2-w02-check-row-apple-m1-line-print-2-despeckled.png": "Line art of the same apple: one closed round outline, a closed stem, a closed leaf and one small open dimple curve at the stem base.",
+    "out/storytime-review/batch-42/pages/l2-w02-check-row-bed-m1-color-print.png": "One wooden bed with a red check blanket, one white pillow, an arched headboard and four posts, on white with a soft shadow; no text.",
+    "out/storytime-review/batch-42/pages/l2-w02-check-row-bed-m1-line-print-4-despeckled.png": "Line art of the same bed: bold even 16 px lines, one pillow as a closed oval, a plain blanket, a headboard with one arched opening drawn as a double line, posts and legs; the check pattern is not drawn.",
+    "out/storytime-review/batch-42/pages/l2-w02-check-row-bus-m1-color-print.png": "One yellow school bus in a front three-quarter view, blue windows, dark door, round headlights, front grille, roof lights, dark side stripe, two wheels and a hint of the far front wheel, on white with a soft shadow; no text.",
+    "out/storytime-review/batch-42/pages/l2-w02-check-row-bus-m1-line-print-3-despeckled.png": "Line art of the same bus: even 14 px lines, closed windows and door, headlight rings, open horizontal grille lines, small roof-light rings, wheel rings with hubcap rings and one stripe line along the side.",
+    "out/storytime-review/batch-42/pages/l2-w02-check-row-dog-m1-color-print.png": "One small brown puppy, dark floppy ears, white muzzle chest and paws, red collar with a gold tag, tongue out, two big round eyes and white eyebrow dots, on white with a soft shadow; no text.",
+    "out/storytime-review/batch-42/pages/l2-w02-check-row-dog-m1-line-print-3-despeckled.png": "Line art of the same puppy: even 17 px lines, closed ears, two eye rings with solid pupils, two small outlined eyebrow rings, one solid black nose, closed tongue, collar with a tag ring and leg lines with small paw marks.",
+    "out/storytime-review/batch-42/pages/l2-w02-check-row-fish-m1-color-print.png": "One round fish in side view, blue on top and yellow below, one big round eye with a yellow ring, scalloped yellow top fin and tail, one small side fin, on white with a soft shadow; no text.",
+    "out/storytime-review/batch-42/pages/l2-w02-check-row-fish-m1-line-print-2-despeckled.png": "Line art of the same fish: even 22 px lines, one closed body outline, closed top fin and tail, one eye ring with a solid pupil, one closed side-fin oval and one small closed nub at the lower left of the body.",
+    "out/storytime-review/batch-42/pages/l2-w02-check-row-pig-m1-color-print.png": "One pink pig, big head, two floppy ears, two big dark eyes, snout with two nostrils, curly tail, four dark hooves, fuzzy skin texture and two small marks above the eyes, on white with a soft shadow; no text.",
+    "out/storytime-review/batch-42/pages/l2-w02-check-row-pig-m1-line-print-despeckled.png": "Line art of the same pig: even 22 px lines, two ears with inner shapes, two eye rings with solid pupils (the far eye clipped by the head edge), a snout with two open oval nostrils, a curly closed tail and four legs with hoof marks.",
+    "out/storytime-review/batch-42/pages/l2-w02-check-row-sun-m1-color-print.png": "One round orange-yellow disc with eight short rounded rays that do not touch the disc, on white with a soft glow; no text; each ray is wider at its outer end.",
+    "out/storytime-review/batch-42/pages/l2-w02-check-row-sun-m1-line-print-despeckled.png": "Line art: one circle with eight closed rounded-triangle rays around it; the rays do not touch the circle; each ray is wider at its outer end than at its inner end; no face and no ground line."
+  },
+  "line_file_gray_count": {
+    "l2-w02-check-row-alligator-m1-line-print-3-despeckled.png": "0 of 2250000 pixels are not 0 or 255",
+    "l2-w02-check-row-ant-m1-line-print-despeckled.png": "0 of 2250000 pixels are not 0 or 255",
+    "l2-w02-check-row-apple-m1-line-print-2-despeckled.png": "0 of 2250000 pixels are not 0 or 255",
+    "l2-w02-check-row-bed-m1-line-print-4-despeckled.png": "0 of 2250000 pixels are not 0 or 255",
+    "l2-w02-check-row-bus-m1-line-print-3-despeckled.png": "0 of 2250000 pixels are not 0 or 255",
+    "l2-w02-check-row-dog-m1-line-print-3-despeckled.png": "0 of 2250000 pixels are not 0 or 255",
+    "l2-w02-check-row-fish-m1-line-print-2-despeckled.png": "0 of 2250000 pixels are not 0 or 255",
+    "l2-w02-check-row-pig-m1-line-print-despeckled.png": "0 of 2250000 pixels are not 0 or 255",
+    "l2-w02-check-row-sun-m1-line-print-despeckled.png": "0 of 2250000 pixels are not 0 or 255"
+  },
+  "line_art_solid_black_scan": {
+    "method": "visual inspection of each line print at full size and enlarged crops; the week 1 refusal was for thick solid black rings or bands, so every solid black area was located and classified",
+    "result": "every solid black area is an allowed fill: eye pupils on alligator, ant, dog, fish and pig, plus the dog nose, which is a standard solid fill in coloring pages; no thick solid black ring and no thick solid black band stands in any line print; every outline keeps one normal width"
+  },
+  "l2-w02-check-row-alligator": {
+    "files": [
+      "out/storytime-review/batch-42/pages/l2-w02-check-row-alligator-m1-color-print.png",
+      "out/storytime-review/batch-42/pages/l2-w02-check-row-alligator-m1-line-print-3-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "exactly one alligator": "yes: one alligator in both files",
+      "whole object in view": "yes: tail, feet and snout all sit inside the frame in both files",
+      "nothing else, no ground line, no background, no text": "yes: white background with at most a soft shadow in both files",
+      "reads as alligator at book size, in the line art too": "yes: the long snout, smile, teeth and tail read as an alligator in both files",
+      "face shows where the object has a face": "yes: two eyes show in both files"
+    },
+    "open_items_judged": {
+      "teeth must be small closed shapes and each eye one ring with one solid pupil": "met and not a defect: the teeth are small closed shapes and both eyes are rings with solid pupils"
+    },
+    "minor_differences": {
+      "far eye": "the far eye ring is clipped where the head outline crosses it; the pupil and most of the ring show, so the eye reads",
+      "leg crease strokes": "short open strokes run inside the chest and above the front feet; they read as leg creases and sit under the bar for small marks"
+    },
+    "goal_shown": true,
+    "retry_hint": "",
+    "verdict": "clean",
+    "defect_categories": []
+  },
+  "l2-w02-check-row-ant": {
+    "files": [
+      "out/storytime-review/batch-42/pages/l2-w02-check-row-ant-m1-color-print.png",
+      "out/storytime-review/batch-42/pages/l2-w02-check-row-ant-m1-line-print-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "exactly one ant": "yes: one ant in both files",
+      "whole object in view": "yes: antennae, legs and body all sit inside the frame in both files",
+      "nothing else, no ground line, no background, no text": "yes: white background with at most a soft shadow in both files",
+      "reads as ant at book size, in the line art too": "yes: three body parts, antennae and legs read as an ant in both files",
+      "face shows where the object has a face": "yes: the big eye and the second eye at the head edge show in both files"
+    },
+    "open_items_judged": {
+      "the second eye shows as a thin ring at the edge of the head": "not a defect under the bar: the ring keeps the normal line width, carries a solid pupil and reads as an eye; the color file shows the same second eye as a sliver at the head edge",
+      "the legs are closed rounded shapes at the lower body": "not a defect: the near legs are closed rounded shapes and small far-side leg stubs show between them; the ant reads with about six legs, matching the m2 reference"
+    },
+    "minor_differences": {
+      "leg stubs": "three small far-side leg stubs sit between the five full legs; they read as far-side legs at book size"
+    },
+    "goal_shown": true,
+    "retry_hint": "",
+    "verdict": "clean",
+    "defect_categories": []
+  },
+  "l2-w02-check-row-apple": {
+    "files": [
+      "out/storytime-review/batch-42/pages/l2-w02-check-row-apple-m1-color-print.png",
+      "out/storytime-review/batch-42/pages/l2-w02-check-row-apple-m1-line-print-2-despeckled.png"
+    ],
+    "rating": 9,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "exactly one apple": "yes: one apple in both files",
+      "whole object in view": "yes: the full round body, stem and leaf sit inside the frame in both files",
+      "nothing else, no ground line, no background, no text": "yes: white background with at most a soft shadow in both files",
+      "reads as apple at book size, in the line art too": "yes: the round body with a short stem and one leaf reads as an apple in both files"
+    },
+    "open_items_judged": {
+      "the stem and the leaf are closed shapes": "met and not a defect: both are closed shapes"
+    },
+    "minor_differences": {
+      "dimple": "one small open curve marks the stem dimple; it matches the color file and sits under the bar for small marks"
+    },
+    "goal_shown": true,
+    "retry_hint": "",
+    "verdict": "clean",
+    "defect_categories": []
+  },
+  "l2-w02-check-row-bed": {
+    "files": [
+      "out/storytime-review/batch-42/pages/l2-w02-check-row-bed-m1-color-print.png",
+      "out/storytime-review/batch-42/pages/l2-w02-check-row-bed-m1-line-print-4-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "exactly one bed": "yes: one bed in both files",
+      "whole object in view": "yes: headboard, posts, legs and blanket all sit inside the frame in both files",
+      "nothing else, no ground line, no background, no text": "yes: white background with at most a soft shadow in both files",
+      "reads as bed at book size, in the line art too": "yes: the headboard arch, pillow, blanket and legs read as a bed in both files"
+    },
+    "open_items_judged": {
+      "every line the same bold thick line, no thin or double lines": "met at book size: the print keeps one bold 16 px width; the headboard arch reads as the edge of one arched opening, not as a fault"
+    },
+    "minor_differences": {
+      "blanket pattern": "the color file shows a red check pattern and the line art draws the blanket plain; the check is not needed for the word and the plain blanket is easier to color"
+    },
+    "goal_shown": true,
+    "retry_hint": "",
+    "verdict": "clean",
+    "defect_categories": []
+  },
+  "l2-w02-check-row-bus": {
+    "files": [
+      "out/storytime-review/batch-42/pages/l2-w02-check-row-bus-m1-color-print.png",
+      "out/storytime-review/batch-42/pages/l2-w02-check-row-bus-m1-line-print-3-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "exactly one bus": "yes: one bus in both files",
+      "whole object in view": "yes: bumper, wheels, roof lights and rear all sit inside the frame in both files",
+      "nothing else, no ground line, no background, no text": "yes: white background with at most a soft shadow in both files",
+      "reads as bus at book size, in the line art too": "yes: the hood, windshield, windows, door and wheels read as a school bus in both files"
+    },
+    "open_items_judged": {
+      "the bus grille lines are open": "not a defect under the bar: open grille lines are the normal coloring-page convention, the color file shows the grille as slats, and the open ends do not make any region hard to color"
+    },
+    "minor_differences": {
+      "mid roof light": "one small ring sits on the side panel below the roofline, drawn slightly lower than the middle roof dome in the color file; it reads as a roof light",
+      "stripe": "the side stripe runs as one line from the front to the rear and matches the dark stripe in the color file"
+    },
+    "goal_shown": true,
+    "retry_hint": "",
+    "verdict": "clean",
+    "defect_categories": []
+  },
+  "l2-w02-check-row-dog": {
+    "files": [
+      "out/storytime-review/batch-42/pages/l2-w02-check-row-dog-m1-color-print.png",
+      "out/storytime-review/batch-42/pages/l2-w02-check-row-dog-m1-line-print-3-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "exactly one dog": "yes: one puppy in both files",
+      "whole object in view": "yes: ears, paws and tail area all sit inside the frame in both files",
+      "nothing else, no ground line, no background, no text": "yes: white background with at most a soft shadow in both files",
+      "reads as dog at book size, in the line art too": "yes: the floppy ears, muzzle, collar and tongue read as a puppy in both files",
+      "face shows where the object has a face": "yes: two eyes, a nose, a smile and the tongue show in both files"
+    },
+    "open_items_judged": {
+      "two outlined eyebrow bands": "not a defect under the bar: Daniel's bar names outlined eyebrow bands as accepted marks, and the color file shows white eyebrow dots in the same place",
+      "one solid black nose": "not a defect: a solid black nose is a standard fill in coloring pages, like the allowed solid pupils, and it is a fill, not a ring or a band"
+    },
+    "minor_differences": {
+      "paw marks": "small paw marks show on the legs in the line art; they match the white paws in the color file"
+    },
+    "goal_shown": true,
+    "retry_hint": "",
+    "verdict": "clean",
+    "defect_categories": []
+  },
+  "l2-w02-check-row-fish": {
+    "files": [
+      "out/storytime-review/batch-42/pages/l2-w02-check-row-fish-m1-color-print.png",
+      "out/storytime-review/batch-42/pages/l2-w02-check-row-fish-m1-line-print-2-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "exactly one fish": "yes: one fish in both files",
+      "whole object in view": "yes: snout, tail and fins all sit inside the frame in both files",
+      "nothing else, no ground line, no background, no text": "yes: white background with at most a soft shadow in both files",
+      "reads as fish at book size, in the line art too": "yes: the round body, tail, top fin and big eye read as a fish in both files",
+      "face shows where the object has a face": "yes: the big eye shows as a ring with a solid pupil in the line art"
+    },
+    "open_items_judged": {
+      "one small closed nub at the lower left of the body": "not a defect under the bar: the nub is a small closed shape, about the size of the allowed small marks, and it reads as a small pelvic fin; it does not change the word reading"
+    },
+    "minor_differences": {
+      "belly band": "the color file shows a blue-to-yellow belly band and this line print does not draw it; the simpler body is easier to color and still reads as the same fish"
+    },
+    "goal_shown": true,
+    "retry_hint": "",
+    "verdict": "clean",
+    "defect_categories": []
+  },
+  "l2-w02-check-row-pig": {
+    "files": [
+      "out/storytime-review/batch-42/pages/l2-w02-check-row-pig-m1-color-print.png",
+      "out/storytime-review/batch-42/pages/l2-w02-check-row-pig-m1-line-print-despeckled.png"
+    ],
+    "rating": 8,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "exactly one pig": "yes: one pig in both files",
+      "whole object in view": "yes: ears, tail and hooves all sit inside the frame in both files",
+      "nothing else, no ground line, no background, no text": "yes: white background with at most a soft shadow in both files",
+      "reads as pig at book size, in the line art too": "yes: the snout, floppy ears, curly tail and hooves read as a pig in both files",
+      "face shows where the object has a face": "yes: two eyes show in both files"
+    },
+    "open_items_judged": {
+      "no cheek blush and no skin texture in the line art": "not a defect: the word needs no texture and the plain body is easier to color"
+    },
+    "minor_differences": {
+      "far eye": "the far eye ring is clipped where the head outline crosses it; the pupil and most of the ring show, so the eye reads",
+      "brow marks": "the color file has two small marks above the eyes; the line art draws none; the face reads whole without them"
+    },
+    "goal_shown": true,
+    "retry_hint": "",
+    "verdict": "clean",
+    "defect_categories": []
+  },
+  "l2-w02-check-row-sun": {
+    "files": [
+      "out/storytime-review/batch-42/pages/l2-w02-check-row-sun-m1-color-print.png",
+      "out/storytime-review/batch-42/pages/l2-w02-check-row-sun-m1-line-print-despeckled.png"
+    ],
+    "rating": 5,
+    "pass": false,
+    "clean": false,
+    "critical": [
+      "the sun line art reads as a flower: each of the eight rays is a closed rounded shape that is wider at its outer end than at its inner end, and no ray touches the disc, so the picture is a center with petals around it; a teacher can read it as a flower"
+    ],
+    "defects": [
+      "line art rays shaped like petals: wider at the outer end, detached from the disc, so the line art fails the check that the picture reads as the word sun"
+    ],
+    "goal_check": {
+      "exactly one sun": "no for the line art: the line art can read as one flower; the color print does read as one sun",
+      "whole object in view": "yes: disc and all rays sit inside the frame in both files",
+      "nothing else, no ground line, no background, no text": "yes: white background with at most a soft glow in both files",
+      "reads as sun at book size, in the line art too": "no: the color print reads as a sun through its warm yellow-orange colors and glow, but the line art is a circle with eight detached petal-shaped rays, and a teacher can read it as a flower",
+      "one sun, plain, no face": "yes in both files: no face shows"
+    },
+    "open_items_judged": {
+      "the sun rays do not touch the disc (color and line)": "held against the flower test, the gap is not the defect on its own; the defect is the ray shape, and the gap strengthens the petal reading",
+      "rays are closed shapes, not a flower": "not met: the rays are closed shapes, but each ray is wider at its outer end, which is the petal convention; a child or teacher can read the line art as a flower"
+    },
+    "minor_differences": {
+      "color support": "the color print keeps a sun reading through warm colors and the glow, so the color file alone would pass; the check row fails on the line art"
+    },
+    "goal_shown": false,
+    "retry_hint": "make each ray narrower at its outer end or pointed, and let the rays touch or nearly touch the disc, so the line art cannot read as petals around a center",
+    "verdict": "defect",
+    "defect_categories": [
+      "wrong-or-missing-prop"
+    ]
+  },
+  "batch_notes": {
+    "workbooks_stage_2_findings": {
+      "thick solid black ring or band in the line art": "gone: every solid black area is an eye pupil or the dog nose; no ring and no band stands in any line print",
+      "gray or shading in the line art": "none: all nine line prints hold 0 pixels that are not 0 or 255",
+      "a face part that the word names must show": "met for the objects with eyes: alligator, ant, dog, fish and pig show their eyes in both files",
+      "each row shows exactly one object, whole, with nothing else": "met on all nine rows: one object per file, whole in view, white background, no ground line, no second object, no text"
+    },
+    "builder_open_items_judged": "fish nub: not a defect; bus open grille lines: not a defect; sun rays detached from the disc: feeds the flower reading but is not the defect alone; ant second eye as a thin ring at the head edge: not a defect",
+    "orchestrator_flower_concern": "confirmed for the line art: the rays are wider at the outer end, so the sun line art reads as a flower; the sun row is not clean",
+    "notes_for_the_builder": [
+      "alligator, ant and pig carry the same far-eye convention: a ring with a solid pupil clipped by the head edge; it reads as an eye in all three",
+      "the ant line art shows five full legs plus small far-side stubs; it matches the six-leg reference at book size",
+      "the bed line art draws the blanket plain while the color file shows a red check; keep the plain blanket"
+    ]
+  },
+  "summary": {
+    "pages": 9,
+    "pass": 8,
+    "clean": 8,
+    "clean_keys": [
+      "l2-w02-check-row-alligator",
+      "l2-w02-check-row-ant",
+      "l2-w02-check-row-apple",
+      "l2-w02-check-row-bed",
+      "l2-w02-check-row-bus",
+      "l2-w02-check-row-dog",
+      "l2-w02-check-row-fish",
+      "l2-w02-check-row-pig"
+    ],
+    "not_clean_keys": [
+      "l2-w02-check-row-sun"
+    ],
+    "workbooks_findings_gone_count": "all checks pass on eight rows; the sun row fails the word reading, not a workbooks stage 2 finding",
+    "defects_found": 1,
+    "notes_for_the_builder": 3,
+    "ratings": {
+      "l2-w02-check-row-alligator": 8,
+      "l2-w02-check-row-ant": 8,
+      "l2-w02-check-row-apple": 9,
+      "l2-w02-check-row-bed": 8,
+      "l2-w02-check-row-bus": 8,
+      "l2-w02-check-row-dog": 8,
+      "l2-w02-check-row-fish": 8,
+      "l2-w02-check-row-pig": 8,
+      "l2-w02-check-row-sun": 5
+    },
+    "controls": {
+      "pages": 3,
+      "pass": 3,
+      "clean": 3,
+      "ratings": {
+        "C1": 8,
+        "C2": 8,
+        "C3": 8
+      }
+    }
+  },
+  "controls": {
+    "C1": {
+      "text": "A nose.",
+      "goal": "Nan touches her own nose with one finger and laughs.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "goal_check": {
+        "Nan touches her own nose with one finger": "yes: one index finger touches the nose in both files",
+        "and laughs": "yes: the mouth is open in a laugh in both files",
+        "Nan cast look": "yes: black hair in two bunches with red ties, an orange T-shirt with a white star, red shorts and white shoes in the color file; the line art keeps the bunches, the star and the shorts line, and the lash flicks show",
+        "no text": "yes: no text shows in either file"
+      },
+      "notes": "Line art holds 0 gray pixels; every solid black area is a thin ring pupil at normal width; the hand at the nose reads with one pointing finger."
+    },
+    "C2": {
+      "text": "A nut.",
+      "goal": "One big brown nut in Nan's open hand, close up.",
+      "files": [
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png",
+        "out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "goal_check": {
+        "one big brown nut": "yes: one big brown acorn with a cap and a small stem sits in the open hand in both files",
+        "in Nan open hand, close up": "yes: the hand is open toward the viewer and the nut fills the palm in both files",
+        "Nan cast look": "yes: black hair in two bunches with red ties, an orange T-shirt with a white star, red shorts and white shoes in the color file; the line art keeps the bunches, the star and the shorts line, and the lash flicks show",
+        "no text": "yes: no text shows in either file"
+      },
+      "notes": "Line art holds 0 gray pixels; the open hand reads four fingers and one thumb in both files; the eyes use thin ring pupils with highlight dots at normal width."
+    },
+    "C3": {
+      "text": "nose",
+      "goal": "The head of Nan in profile facing the other way, the nose clearly seen, for a tracing practice line.",
+      "files": [
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png",
+        "out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png"
+      ],
+      "rating": 8,
+      "verdict": "clean",
+      "defect_categories": [],
+      "defects": [],
+      "goal_check": {
+        "the head of Nan in profile": "yes: the head shows in right profile in both files",
+        "the nose clearly seen": "yes: the nose bump is the clear high point of the profile in both files",
+        "Nan cast look": "yes: black hair with a red-tied bun and the orange shirt shoulder show in the color file; the line art keeps the bun and the shoulder line",
+        "no text": "yes: no text shows in either file"
+      },
+      "notes": "Line art holds 0 gray pixels; the ear is an open C-shaped line, which Daniel names as an accepted mark; the eye shows one ring with a solid pupil and a lash flick; the neck line exits at the bottom edge, which fits a head practice picture."
+    }
+  }
+}

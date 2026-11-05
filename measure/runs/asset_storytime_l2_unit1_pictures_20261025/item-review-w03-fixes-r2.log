@@ -1,0 +1,44 @@
+Provisional. Review in progress.
+Reviewer: openai/gpt-6.1-sol#high
+Bar: Daniel 2026-11-01 14:15 ICT
+l2-w03-story-page-it-is-blue: 9/10; clean; categories: none.
+Files: out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-color-print.png; out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-color.png; out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-line-6-despeckled.png; out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-line-print-6-despeckled.png
+Goal: May matches the look sheet. Both shirts are plain. One blue sheet has one closed outline. The easel has three pots in both files. May and the needed sheet remain whole in both prints.
+Defects: None.
+Notes: The hair clip is not a shirt mark. The print cuts only background furniture. The line omits small facial detail without changing May.
+Line pixels: {"out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-line-6-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0,"colored_pixels":0},"out/storytime-review/w03-fixes/pages/l2-w03-story-page-it-is-blue-m1-line-print-6-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0,"colored_pixels":0}}
+l2-w03-story-page-nan-can-get-a-pan: 8.5/10; clean; categories: none.
+Files: out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-color-print.png; out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-color.png; out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-9-despeckled.png; out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-print-9-despeckled.png
+Goal: Both files show Nan and exactly one toy frying pan. The shallow bowl, visible side wall, and straight handle read as a pan at book size. Three cups and three plates match. Nan, her hands, her hair, and the pan remain whole in both prints.
+Defects: None.
+Notes: The handle touches the counter corner. This contact does not hide the pan or prevent coloring. The line grip holds the bowl edge and reverses the handle direction. This difference changes neither Nan nor the needed pan. The small color seam beside the eye does not break the face.
+Line pixels: {"out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-9-despeckled.png":{"width":1920,"height":1280,"non_binary_pixels":0,"colored_pixels":0},"out/storytime-review/w03-fixes/pages/l2-w03-story-page-nan-can-get-a-pan-m4-line-print-9-despeckled.png":{"width":4000,"height":3000,"non_binary_pixels":0,"colored_pixels":0}}
+K1: 7/10; defect; categories: layout-fault.
+Files: out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-v1.png; out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png
+Goal: Both files show one large nut in Nan's open hand. Nan retains her reference look. The nut and hand remain whole. The 4:3 delivery edges cut Nan's hair and shoes.
+Defects: Both delivery files cut Nan's hair at the top and right edges. Both files also cut her shoes at the bottom edge.
+Notes: The enlarged hand has five digits. The nut is one readable acorn. The close-up goal explains the enlarged hand, but the explicit edge rule still applies.
+Line pixels: {"out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nut-line-v1.png":{"width":4000,"height":3000,"non_binary_pixels":0,"colored_pixels":0}}
+Retry: Color and line: Keep the close-up nut and hand; frame Nan so her hair and shoes do not cross the delivery edges.
+K2: 6/10; defect; categories: broken-face.
+Files: out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-v1.png; out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png
+Goal: The color supports “A nose.” The line fails the required face-part check. A teacher or child cannot identify the nose in the line file.
+Defects: The line omits Nan's nose. Her fingertip meets the mouth outline, so the named nose is not visible.
+Notes: The color shows a readable nose and the intended touch. Both delivery files keep Nan inside the page edges.
+Line pixels: {"out/storytime/l2/unit1/w01/delivery-muse-v1/l2-w01-story-page-a-nose-line-v1.png":{"width":4000,"height":3000,"non_binary_pixels":0,"colored_pixels":0}}
+Retry: Line: Draw Nan's nose visibly above the smile and place one fingertip against its side.
+K3: 7/10; defect; categories: gray-or-shading-in-line-art.
+Files: out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png; out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png
+Goal: Both exact source files show Nan facing right in profile with a readable nose. The line supports nose tracing, but its heavy black hair ring fails the line-art bar.
+Defects: The line draws the hair tie as a thick solid black ring around the bun. The line-art bar forbids this ring.
+Notes: The profile nose shows clearly in both files. The lower shirt crosses the source edge in this head study. The complete head, hair, and named nose remain inside the image. The pixel check finds no gray. The solid black ring is a separate visual failure.
+Line pixels: {"out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-color.png":{"width":1600,"height":1600,"non_binary_pixels":1397607,"colored_pixels":1371713},"out/storytime/l2/unit1/w01/muse/l2-w01-practice-line-nose-m4-line-7-despeckled.png":{"width":1600,"height":1600,"non_binary_pixels":0,"colored_pixels":0}}
+Retry: Line: Replace the solid black hair ring with two thin outlines and a white band between them.
+Final status: fail. Set status: pass. Extra status: fail.
+Both week 3 rows are clean. All three extra rows have defects.
+Verification: 5 rows; 7 line files; 0 non-binary pixels.
+The K3 color source is not a line file. Its pixels are excluded from the final line totals.
+All line files have zero gray pixels. K3 fails the separate black-ring check.
+Audit only. No picture changed. No commit.
+Existing checkout inventory: advantage-forge-release (detached), advantage-forge-shelf-sync (shelf-sync-20261030), and /tmp/opencode/paladin-audit-0e9af0f (detached). Plan: Preserve each checkout for its existing owner. Existing remote origin/gh-pages remains unchanged for its publishing owner. This audit creates no branch or worktree.
+Facts changed: Two week 3 rows are clean. Nine batch 47 rows are clean. The nap row and K1 to K3 have defects.

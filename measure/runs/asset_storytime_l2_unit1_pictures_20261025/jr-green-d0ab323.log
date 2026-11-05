@@ -1,0 +1,56 @@
+MEASURE_AGENT_RESULT
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: P3 (Phase 3: Week 1 pictures)
+role: jr-green
+status: blocked
+phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+role_base_sha: 7cf91dff81a87cd46338e19be12dcff720b82931
+red_test_commit: 6c55fac1
+red_evidence_commit: 7cf91dff
+green_model: volcengine-agent-plan/glm-5.3-flash#high
+final_green_head: d0ab3232
+commits:
+- 70cb6e37 feat(storytime): pin picture specification v1 and list v3 (src/storytime/book-pictures.ts, contract.md)
+- d7e5f48e docs(measure): record the Phase 3 pin Green evidence and the T146 Red defect (plan.md)
+- 3a5ef00d fix(storytime): flatten the line-art capture to one opaque grey channel (src/storytime/book-pictures.ts)
+- 4c7d217f feat(storytime): stage the Nan window sample v2 (docs/storytime/l2-unit1/w01/w01-readalong-p05-v2.json)
+- d0ab3232 docs(measure): record the Nan window sample evidence and defer the line-art look (plan.md)
+task_states:
+- pin task (T142-T151): stays [~], NOT [x]. The gate cannot exit 0 because of one Red test defect (below). Evidence recorded on the task; implementation commit 70cb6e37.
+- sample task 1: [b] deferred:daniel-lineart-look, sample commit 4c7d217f on its first line. Both files rendered, verified, viewed, and reported below.
+test_results:
+- command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 3600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'
+- final result: exit code 1; "Tests  1 failed | 133 passed (134)"; log green-p3-vitest.log
+- all T1-T141 pass. T142-T145 and T147-T151 pass. Only T146 fails, on one assertion.
+- T146 defect: expect.soft(exactCheck.valid, 'A 12 px line fails the line-art check.').toBe(false) demands that a 12 px line be REJECTED. The test strategy row T146 says "A fixture with a 12 px line passes" and its falsification condition says the test fails if "a 12 px line fails". The row contradicts the strategy, its own label, and specification v1 (outlines of 12 px or more). The implementation keeps the spec rule: 6 px and 11 px fail, 12 px passes, measured width printed. Green may not edit a committed Red test -> Mid Red retry requested.
+type_check:
+- command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'
+- tsc exit: 2; owned tsc errors: 0; total tsc errors: 31 (baseline, outside owned paths); log green-p3-tsc.log
+sample:
+- color: out/storytime/l2/unit1/w01/readalong/l2-w01-readalong-nan-v2.png
+- color sha256: ee46aa71e8a0691ba4acad9b61ee8e8e1206406f66b144b26bc11329f0a1825b
+- lineart: out/storytime/l2/unit1/w01/readalong/lineart/l2-w01-readalong-nan-v2-lineart.png
+- lineart sha256: 0b5e37a7a9b072eb982c83f60f83cd0e76fe47f1a16e7c3fb4b9ba2b209888bf
+- both 4000 x 3000; one twin pair from one render run; render exit 0; verify exit 0
+- render peak rss mb: 484; line-art measured width: 261 px; ink coverage 2.06%
+- T53 labels present (capture path, camera drift source live, drift 0, color repeat identical); book files served 15, refused 0
+- shows: Nan from the front (face, eyes, smile, white star) waving; window panes as four white panes in the line art (no black areas); fern present; no pot
+- line-art notes for the look: no painted face features and no shirt star (form edges only); RA2-N2: adjacent bookcase books merge into one outline
+deviations:
+- Green model: the quota tool routed Green to MiniMax (the Red family of this phase); the orchestrator kept this role on volcengine-agent-plan/glm-5.3-flash#high to hold Red/Green independence.
+- The background Red rerun from the interrupted turn was killed before it took the lock; it was not evidence (the orchestrator's Red gate at 7cf91dff is the baseline).
+- Legacy v0 sizes stay accepted by the structural checks (forced by immutable rows T15, T26, T41); new renders use specification v1 sizes. Documented in contract.md.
+- Commit 3a5ef00d: the live capture produced a 2-channel grey+alpha line-art PNG (canvas alpha kept); flattened over white to meet the one-opaque-grey-channel contract. Found by the sample render; one extra render run.
+- Part B proceeded under the stated default while the T146 retry is pending: the sample is independent of the defective row and unblocks Daniel's look gate.
+new_files:
+- docs/storytime/l2/unit1/w01/w01-readalong-p05-v2.json (stage file)
+- no new source files; one source file modified (src/storytime/book-pictures.ts) and contract.md amended
+question_for_orchestrator:
+- Request a Mid Red retry of row T146 in tests/storytime-book-pictures.test.ts: the third assertion must assert that a 12 px line PASSES (exactCheck.valid toBe(true), or !exactCheck.valid toBe(false)). The first two assertions (6 px and 11 px rejected) and the measured-width assertions are correct and stay. After the retry commit, a Green dispatch reruns GREEN_TEST_COMMAND, expects exit 0 with 134 passed, and flips the pin task to [x].
+pm_report:
+- Color picture: out/storytime/l2/unit1/w01/readalong/l2-w01-readalong-nan-v2.png (SHA-256 ee46aa71e8a0691ba4acad9b61ee8e8e1206406f66b144b26bc11329f0a1825b)
+- Line-art picture: out/storytime/l2/unit1/w01/readalong/lineart/l2-w01-readalong-nan-v2-lineart.png (SHA-256 0b5e37a7a9b072eb982c83f60f83cd0e76fe47f1a16e7c3fb4b9ba2b209888bf)
+- Both 4000 x 3000, one twin pair from one render run of the Nan window sample v2.
+- RA2-N2 note for Daniel's line-art look: in the sample line art the adjacent bookcase books still merge into one outline with few spine lines, so a page that counts books can fail the person look. The line art also has no painted face features and no shirt star; the form-edge pass draws geometry edges only.
+log_path: measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-d0ab323.log
+END_MEASURE_AGENT_RESULT

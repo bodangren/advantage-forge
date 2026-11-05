@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "summary": "The focused gate passes (76/76, exit 0) and the calibration evidence matches the plan. Two blocking defects remain. The production render capture never loads the timeline, so every live render throws. The line-art style look binds only the sample file, so every other reader-page twin becomes failed after Daniel passes the look. Seven non-blocking findings cover a vacuous live camera-drift check, a leading good-nan calibration text, a calibration gate that ignores the rubric version, a missing Kimi failure record path, an undisclosed parallel Kimi run, a placeholder MiniMax model name, and a coarse depth threshold. The Nan stage file shows Nan from behind; that is a Phase 3 finding and does not block Phase 2.",
+  "role": "review-a",
+  "track": "asset_storytime_l2_unit1_pictures_20261025",
+  "phase": "Phase 2: Tests and calibrated model pre-checks",
+  "phase_base_sha": "1d39b8fda457e12d8e7332e7de65d2046ddda78e",
+  "role_base_sha": "1d39b8fda457e12d8e7332e7de65d2046ddda78e",
+  "audited_head_sha": "5ffdbf6e41a0c30ec4330f7f23137cc7a218d61e",
+  "head_at_start": "5ffdbf6e41a0c30ec4330f7f23137cc7a218d61e",
+  "head_at_finish": "5ffdbf6e41a0c30ec4330f7f23137cc7a218d61e",
+  "audited_range": "1d39b8fd..5ffdbf6e",
+  "blocking_findings": [
+    {
+      "id": "RA-B1",
+      "severity": "high",
+      "title": "The production render capture never loads the timeline",
+      "location": "src/storytime/book-pictures.ts:2338-2350",
+      "evidence": "captureBookStill calls openBookPage and then captureStillPair. It never calls window.__song.load(input.timeline) and never calls assertPageNotes. Commit fc2cc6a8 removed the load and seek lines from captureBookStill and put them only in captureBookStillSmoke (book-pictures.ts:2366-2368). In src/song/main.ts:379, seek returns at `if (!timeline) return;`, so no frame renders and publishBookStill never runs. captureStillPair then reads cameraState null and throws BOOK_STILL_HOOK_ERROR. renderCandidates uses captureBookStill by default (book-pictures.ts:2434), and scripts/storytime-book-pictures.ts injects no capture. Every live `render`, including the Phase 3 task 1 Nan sample, fails. No unit test covers this wiring, because every test injects the capture and playwright is mocked to throw. The T52 smoke used captureBookStillSmoke, which loads the timeline, so the smoke did not exercise this path. The failure is safe: it writes nothing.",
+      "remediation": "In captureBookStill, after openBookPage, evaluate window.__song.load(input.timeline), call assertPageNotes(notes), and then call captureStillPair. Put the load-and-notes step in one shared function that both captureBookStill and captureBookStillSmoke call. Add one unit test with a fake page that records the call order and fails when seek comes before load.",
+      "route": "green"
+    },
+    {
+      "id": "RA-B2",
+      "severity": "medium",
+      "title": "The line-art style look binds only the sample twin, so other twins fail",
+      "location": "src/storytime/book-pictures.ts:1833-1838 and 1882-1884",
+      "evidence": "buildManifest reads one global record, reviews/lineart-style-look.json, for every job version. evaluateLineArtTwin then requires the twin's own file and SHA-256 in style.sampleFiles. If it is absent, the code adds a style error, and the twin status becomes failed. The contract (contract.md lines 152-156) defines one style look for the Nan window sample, and a twin is ready when 'the style look passes'. With this code, after Daniel passes the look, 15 of 16 week 1 reader twins become failed, and `verify --release --week 1` fails. The T36 fixture (tests/storytime-book-pictures.test.ts:286-290) and the T35 fixture (line 886) list the same twin in sampleFiles, so no test covers a non-sample twin.",
+      "remediation": "Bind the style look to the approved line-art technique and format version, not to each twin file. Check the sampleFiles SHA-256 values against the sample files only. Accept a twin when its render evidence has the same lineArtTechnique and lineArtFormatVersion as the sample evidence. Add a test: a non-sample twin with a passing style look and the same technique becomes ready, and a twin with another technique does not.",
+      "route": "green"
+    }
+  ],
+  "nonblocking_findings": [
+    {
+      "id": "RA-N1",
+      "severity": "medium",
+      "title": "The live camera-drift check cannot detect drift",
+      "location": "src/storytime/book-pictures.ts:2145 and 2062-2070; src/song/still-hook.ts:70",
+      "evidence": "pageDriver.cameraState reads window.__bookStill.cameraState. publishBookStill stores a value copy at the end of seek (T43 requires this). The line-art pass does not publish again, so the first read and the second read return the same stored values. The label `camera state drift: 0` in the smoke run (plan.md:89) is true by construction. T49 uses a fake driver that changes fov on the second read, so it tests the comparison logic but not the page wiring. The re-seek pixel check still detects a renderer target, override material, or background that the pass does not restore.",
+      "remediation": "Make the second read compute the state from the live hook.camera (position, fov, aspect, near, far, and projection matrix elements) and compare it with the published copy. Do this before the Phase 3 T53 sample render. Amend the T49 and T52 text to name the live read."
+    },
+    {
+      "id": "RA-N2",
+      "severity": "medium",
+      "title": "The good-nan calibration text tells the reviewer that the picture is approved",
+      "location": "src/storytime/book-pictures.ts:833-841",
+      "evidence": "sourceText is 'Owner-approved Nan character picture.' and sourcePrompt starts 'The owner-approved Forge 3D Nan cutout'. The contract (contract.md:207) requires a pass 'against its character contract'. The text gives no character description, so the models cannot fail it on content. The MiniMax reason repeats the label: 'The image successfully displays the owner-approved Nan character cutout ... matching the source text'. The pass therefore shows that a model accepts a label. It does not show that the rubric passes a correct picture against a real page text. The cutout visibly matches the Workbooks Nan description (star, dark-brown eyes, two bunches, red shorts, white sneakers), so a neutral pass is likely.",
+      "remediation": "Replace the good-nan sourceText and sourcePrompt with the Workbooks Nan description from w01.json (the line 258 description), with no approval words. Run good-nan again on both providers (two calls, one at a time) before Phase 3 task 3. Record the new logs in the plan."
+    },
+    {
+      "id": "RA-N3",
+      "severity": "medium",
+      "title": "The calibration gate before render ignores the rubric version and the file hash",
+      "location": "src/storytime/book-pictures.ts:858-877",
+      "evidence": "assertCalibrationReady checks only verdict and a non-empty rawOutput. It does not compare rubricVersion with PICTURE_RUBRIC_VERSION or fileSha256 with the source picture. test-strategy.md section 8 says 'A rubricVersion change makes earlier calibration invalid.' After a rubric change, stale calibration logs still open the render gate. T22 (test line 630) tests only verdicts. The four current logs use storytime-picture-v2 and have correct hashes, so there is no present bypass.",
+      "remediation": "Make assertCalibrationReady also require rubricVersion equal to PICTURE_RUBRIC_VERSION and fileSha256 equal to the SHA-256 of the calibration source file. Add one T22 case with a stale rubricVersion."
+    },
+    {
+      "id": "RA-N4",
+      "severity": "medium",
+      "title": "precheck-kimi cannot record a failed call, and the ledger has an orphan before-call",
+      "location": "src/storytime/book-pictures.ts:2809-2840",
+      "evidence": "The contract (contract.md:163-164) requires an after-call entry for success or failure. `--record` needs `--raw` and always writes status success. Before-call 9d0bddf7-d2ea-4bdb-a672-56c308e3f6d0 has no after-call (ledger: 6 before-call, 5 after-call). The Phase 3 closeout gate requires equal before-call and after-call counts, so it cannot pass while this entry stays open. `--record` also does not refuse a second after-call for the same callId, and does not compare --calibration with begin.jobId.",
+      "remediation": "Add a failure record mode (for example `precheck-kimi --record <callId> --failed --reason <text>`) that appends an after-call entry with status failure and writes no log. Use it once for 9d0bddf7. Refuse a duplicate after-call and a target that differs from the begin entry."
+    },
+    {
+      "id": "RA-N5",
+      "severity": "low",
+      "title": "The two Kimi calibration calls ran at the same time; the plan does not record it",
+      "location": "out/storytime/l2/unit1/cost-ledger.jsonl; measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md:113-118",
+      "evidence": "Before-call 4192765b at 20:15:31.415Z and before-call 1086bc64 at 20:15:33.668Z; after-calls at 20:17:24.145Z and 20:17:27.242Z. plan.md:18 says 'Use one paid pre-check call at a time', and test-strategy task 4 says 'one at a time'. The three recorded deviations do not include this one (A5 omission).",
+      "remediation": "Add deviation (d) to the plan task 4 note with the four timestamps. Run later paid calls one at a time."
+    },
+    {
+      "id": "RA-N6",
+      "severity": "low",
+      "title": "MiniMax logs record a placeholder model name without a declared label",
+      "location": "src/storytime/book-pictures.ts:24",
+      "evidence": "MINIMAX_VISION_MODEL is 'mmx-vision-default', and both MiniMax calibration logs record it as model. test-strategy.md section 2 requires the model that the provider reports, or a label that marks the value as declared.",
+      "remediation": "Record the model that `mmx` reports, or add a field such as modelSource: \"declared\" to the log and the ledger entry."
+    },
+    {
+      "id": "RA-N7",
+      "severity": "low",
+      "title": "The depth edge threshold is almost inert on packed perspective depth",
+      "location": "src/storytime/line-art-pass.ts:34 and 124",
+      "evidence": "DEPTH_EDGE_DELTA 0.02 applies to non-linear depth. With near 0.2 and far 120 (src/song/main.ts:46), depth at 4.0 m is about 0.9516 and at 4.3 m about 0.9551, a gap of 0.0035. A depth edge fires only for gaps of about 3 m at 4 m. Lines then come almost only from normal changes. In the smoke lineart.png, the book spines in the bookcase merge into one outline. The fixture checks pass (interior ink 0.00%, ring rays 360/360).",
+      "remediation": "Convert packed depth to view-space distance before the threshold, and use a relative gap. Change LINEART_TECHNIQUE to a new version with this change, before Daniel's style look."
+    },
+    {
+      "id": "RA-N8",
+      "severity": "low",
+      "title": "The technique ID did not change when the technique changed",
+      "location": "src/storytime/book-pictures.ts:16",
+      "evidence": "LINEART_TECHNIQUE stayed 'song-page-scene-render-pass-1bit-v1' from fafa82dc (wireframe) to fc2cc6a8 (form edges). No candidate render exists yet, so no evidence mixes the two techniques.",
+      "remediation": "Change the ID at the next technique change (see RA-N7), and keep one ID per technique."
+    },
+    {
+      "id": "RA-N9",
+      "severity": "low",
+      "title": "A calibration re-run overwrote the first paid raw output",
+      "location": "src/storytime/book-pictures.ts:2651-2654; tests/storytime-book-pictures.test.ts:1164",
+      "evidence": "precheckMiniMax writes the raw text and the log without the wx flag. The first bad-one-sun raw output (379 bytes) now exists only in the T54 fixture. The file calibration/bad-one-sun-minimax.txt now holds the 430-byte second output, so the T54 comment 'Exact bytes from calibration/bad-one-sun-minimax.txt' is stale. The plan records the replacement as deviation (c).",
+      "remediation": "Write each provider raw output under a callId file name, as the Kimi raw files do. Correct the T54 comment to name the first call acd4f807."
+    },
+    {
+      "id": "RA-P3-1",
+      "severity": "medium",
+      "phase": "Phase 3",
+      "title": "The Nan window stage shows Nan from behind and has no green plant",
+      "location": "docs/storytime/l2-unit1/w01/w01-readalong-p05-v1.json:17",
+      "evidence": "The stage sets Nan yaw 180. src/song/timeline.ts:7 says yaw 0 faces the camera, and the camera key has az 0. The smoke color.png shows the back of Nan's head: no eyes, no face, and no white star. The Workbooks p05 prompt (Workbooks/content/storytime/l2/w01.json:258) asks for large dark-brown eyes, an orange T-shirt with a white star, and 'a small green plant in a pot'. The pot prop shows red flowers. The window panes render black under `sun: high`.",
+      "blocks_phase_2": false,
+      "reason_not_blocking": "Phase 2 uses the file only as the T52 smoke input. The smoke checks the pass mechanics, not the page content, and writes no book version.",
+      "remediation": "Before Phase 3 task 1, write w01-readalong-p05-v2.json (keep v1 unchanged). Turn Nan toward the camera with the window beside or behind her, use a green-plant prop, and check the window panes. Then render the sample from v2."
+    }
+  ],
+  "evidence": [
+    "HEAD at start and at finish: 5ffdbf6e41a0c30ec4330f7f23137cc7a218d61e (equal to audited_head_sha).",
+    "Focused gate: exit 0; 'Test Files  4 passed (4)'; 'Tests  76 passed (76)'. This matches the plan claim at plan.md:105.",
+    "git diff --stat 1d39b8fd..5ffdbf6e: src/song changes only main.ts (+3, 0 removed) and still-hook.ts (new). timeline.ts and tests/song-timeline.test.ts are unchanged.",
+    "src/song/main.ts:397 calls publishBookStill after renderer.render at the end of seek; main.ts:401 calls clearBookStill at the start of load. The `window.__song` line (main.ts:430) and the `__song?:` type line are unchanged. The song engine change is additive and changes no song timing.",
+    "line-art-pass.ts restores the projection elements, aspect, override material, background, clear color and alpha, size, and render target in finally, and disposes two targets and two materials. It uses depth-tested renders and no wireframe material, no WireframeGeometry, and no line objects. Hidden edges stay hidden by construction.",
+    "runPageLineArtPass and runFixturePass import '/src/storytime/line-art-pass.ts' through a URL string served by the vite dev server, not a bare module name. The `three` namespace comes from window.__bookStill.three.",
+    "parseModelReview (book-pictures.ts:949-1005): structured objects first, last object first; a FAIL keeps its reason, counts, and issues; a PASS needs a reason, integer counts, and a string issues array, and fails if the word FAIL appears anywhere; an envelope with content and base_resp is unwrapped; a non-zero status_code gives fail; plain text gives fail. T54-T60 cover these rules.",
+    "Calibration logs: bad-one-sun-minimax fail {sun:0}; bad-one-sun-kimi fail {suns:0, characters:1}; good-nan-minimax pass {Nan character:1}; good-nan-kimi pass {Nan:1}. All four have rubricVersion storytime-picture-v2 and non-empty rawOutput.",
+    "sha256sum point-up.jpg = 5aafbc99f74234833c7c25bc499af2869366cfcf20e12df11b68ccec31c31b48; sha256sum sprout-nan/front.png = 5e8bed932d50d7675b17baffbcf5245bc014750437fc2bdb728428f31b97234a. Both equal the log fileSha256 values.",
+    "Ledger: before-call entries: 6; after-call entries: 5. Orphan before-call 9d0bddf7. Each of the four final logs has an earlier before-call (c1706332, f917b130, 4192765b, 1086bc64).",
+    "The T54 fixture string is 379 bytes (Buffer.byteLength), which matches the plan claim.",
+    "Render path: version selection, wx writes, the existing-version guard (book-pictures.ts:2476-2481), and validation before writes keep the no-overwrite and twin-atomicity rules. Output paths pass resolveOutputRoot and resolveOutputPath with a realpath check.",
+    "Render evidence holds one stageSha256, one at, and one camera per job version. evaluateLineArtTwin fails competing lineArtStageSha256, lineArtAt, or lineArtCamera values."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git log --oneline 1d39b8fd..5ffdbf6e; git diff --stat 1d39b8fd..5ffdbf6e",
+    "git diff 1d39b8fd..5ffdbf6e -- src/song/main.ts scripts/storytime-book-pictures.ts docs/",
+    "git diff fafa82dc fc2cc6a8 -- src/storytime/book-pictures.ts (load call removal)",
+    "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1' -> exit 0, Tests 76 passed (76)",
+    "read-only ledger and calibration log parse with node; sha256sum of both calibration sources",
+    "git status --short on the owned source, test, and stage paths -> empty"
+  ],
+  "changed_files": [
+    "docs/storytime/l2-unit1/w01/w01-readalong-p05-v1.json",
+    "measure/tracks/asset_storytime_l2_unit1_pictures_20261025/contract.md",
+    "measure/tracks/asset_storytime_l2_unit1_pictures_20261025/metadata.json",
+    "measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md",
+    "measure/tracks/asset_storytime_l2_unit1_pictures_20261025/spec.md",
+    "measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md",
+    "scripts/storytime-book-pictures.ts",
+    "src/song/main.ts",
+    "src/song/still-hook.ts",
+    "src/storytime/book-pictures.ts",
+    "src/storytime/line-art-pass.ts",
+    "tests/song-still-hook.test.ts",
+    "tests/storytime-book-pictures.test.ts",
+    "tests/storytime-line-art-pass.test.ts"
+  ],
+  "test_strategy_violations": [
+    "test-strategy.md section 2: the MiniMax review logs record the placeholder model 'mmx-vision-default' without a declared label (RA-N6).",
+    "test-strategy.md task 4: the two Kimi calibration calls ran at the same time, against 'Four paid calls, one at a time' (RA-N5)."
+  ],
+  "live_contract_violations": [
+    "contract.md 'Line-art review and release': one style look for the Nan sample must let every bound twin become ready; the code requires each twin file in sampleFiles (RA-B2).",
+    "contract.md 'Paid-call ledger': a failed Kimi call has no after-call entry, and the CLI cannot write one (RA-N4)."
+  ],
+  "prod_wiring_violations": [
+    "captureBookStill, the default render capture, does not load the timeline into the song page, so every live render throws before the color still (RA-B1)."
+  ],
+  "route_parity_violations": [],
+  "test_meaning_notes": [
+    "No test covers captureBookStill or pageDriver wiring; the Red and Green tests inject the capture (RA-B1).",
+    "T49 drift mode uses a fake driver whose second read differs; the live driver reads a stored copy (RA-N1).",
+    "T22 tests verdicts only (RA-N3).",
+    "T35 and T36 use a style look that lists the same twin (RA-B2).",
+    "T47 checks depthTest on added line objects; the pass adds none, so that part passes with no subject. The wireframe part is meaningful.",
+    "T56-T60 passed against the old parser at Red. They are regression guards, as the Red log states, not Red evidence.",
+    "T44, T46 (non-default projection elements and a render throw), T48 (row flip), T54 (real 379-byte envelope), and T55/T57 (envelope and status) fail for their stated falsification conditions."
+  ],
+  "open_gate_items": [
+    "The Phase 2 closeout adversarial mutations from the Red logs have not run (mid-red-00481c5.log, mid-red-fa4692c.log, mid-red-835d9c0.log)."
+  ],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high"
+}

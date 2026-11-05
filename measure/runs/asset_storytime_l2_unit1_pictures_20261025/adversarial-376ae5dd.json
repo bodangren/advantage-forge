@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "track": "asset_storytime_l2_unit1_pictures_20261025",
+  "phase": "Phase 4: Remaining pictures and cover",
+  "role": "measure-adversarial-testing",
+  "audited_head_sha": "35f4a12c",
+  "role_base_sha": "376ae5dd13d823efc8d9a67fb0d9daee4dd8f647",
+  "phase_base_sha": "fc76c27209402c54354447693e9b291d4411ff79",
+  "status": "pass",
+  "summary": "Pass at 35f4a12c. The three routed findings RA-P4-1, RA-P4-4, and RA-P4-5 are fixed in test files. No blocking finding remains.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "resolved_findings": [
+    "RA-P4-1: tests/storytime-muse-delivery.test.ts sets a 30000 ms test and hook timeout. T171 ran in 3759 ms.",
+    "RA-P4-4: tests/storytime-muse-delivery.test.ts T192 matches the message 'must be a PNG', as in src/storytime/muse-delivery.ts.",
+    "RA-P4-5: tests/storytime-book-pictures.test.ts asserts the exact share 100 / 900 for the busy band to row 899 case."
+  ],
+  "evidence": [
+    "Commit 35f4a12c changes two test files only: tests/storytime-muse-delivery.test.ts and tests/storytime-book-pictures.test.ts.",
+    "New probe T199 calls coverApprovals with a color print that is not a cover file. It asserts that the error names the file and that the delivery folder stays empty. The probe passes.",
+    "The test run of the two files exited 0 with 186 tests passed."
+  ],
+  "changed_files": [
+    "tests/storytime-muse-delivery.test.ts",
+    "tests/storytime-book-pictures.test.ts"
+  ],
+  "commands": [
+    "git show --stat 35f4a12c",
+    "vitest run tests/storytime-muse-delivery.test.ts tests/storytime-book-pictures.test.ts (exit 0, 186 passed)"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "medium",
+  "test_summary": "186 tests passed on the two adversarial test files at 35f4a12c.",
+  "handoff": "Pass at 35f4a12c. No open finding. No product decision is open.",
+  "facts_changed": []
+}

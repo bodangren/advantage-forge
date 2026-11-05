@@ -1,0 +1,9 @@
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 15
+book file requests refused: 0
+Line-art line width: 15 px (minimum 12 px).
+Line-art ink coverage: 16.82% (2018590 of 12000000 pixels black).
+w01-readalong-p05 v3: rendered; stage 44887f32d667a2626d37045c503c14bf609f0e86d195e4b380c3873610c14a02; file w01/readalong/l2-w01-readalong-nan-v3.png; lineart w01/readalong/lineart/l2-w01-readalong-nan-v3-lineart.png; render peak rss mb: 933

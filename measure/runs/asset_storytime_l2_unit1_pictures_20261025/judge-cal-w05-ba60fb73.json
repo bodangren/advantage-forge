@@ -1,0 +1,496 @@
+{
+  "group": "w05",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v4",
+  "cast": "cast.json 88cbc951",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "results": [
+    {
+      "id": "l2-w05-story-page-i-have-two-eyes",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-i-have-two-eyes-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: two eyes (2). Seen: Sam with brown hair, red striped T-shirt, blue shorts and blue shoes points an index finger at each eye; two brown eyes are open and clear. Sam matches the cast."
+    },
+    {
+      "id": "l2-w05-story-page-i-have-two-eyes",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-i-have-two-eyes-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: two eyes (2). Seen: a boy points a finger at each of his two big eyes. Clean black lines on white. A small hook shape on the tree branch is a small mark."
+    },
+    {
+      "id": "l2-w05-story-page-i-have-two-ears",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-i-have-two-ears-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: two ears (2). Seen: Sam touches one finger to each ear; both ears are visible. Sam matches the cast."
+    },
+    {
+      "id": "l2-w05-story-page-i-have-two-ears",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-i-have-two-ears-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: two ears (2). Seen: a boy touches each ear with a finger; both ears show. Clean black lines on white. The tree branch has a few odd small shapes, a small mark."
+    },
+    {
+      "id": "l2-w05-story-page-i-have-two-hands",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-i-have-two-hands-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: two hands (2). Seen: Sam holds both arms up and shows two open hands with five fingers each. Both hands are clear."
+    },
+    {
+      "id": "l2-w05-story-page-i-have-two-hands",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-i-have-two-hands-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: two hands (2). Seen: a boy raises two open hands with five fingers each. Clean black lines on white."
+    },
+    {
+      "id": "l2-w05-story-page-i-have-two-arms",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-i-have-two-arms-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: two arms (2). Seen: Sam holds both arms wide out to the sides; both arms and both hands are visible. Clear."
+    },
+    {
+      "id": "l2-w05-story-page-i-have-two-arms",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-i-have-two-arms-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: two arms (2). Seen: a boy with both arms wide out. Clean black lines on white."
+    },
+    {
+      "id": "l2-w05-story-page-i-have-two-legs",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-i-have-two-legs-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: two legs (2). Seen: Sam stands with both legs visible from the shorts to the blue shoes; one finger points down at a leg. The legs are short but both are clear."
+    },
+    {
+      "id": "l2-w05-story-page-i-have-two-legs",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-i-have-two-legs-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: two legs (2). Seen: a boy stands with two legs and shoes; one finger points down at the shorts. Clean black lines on white. The pointing finger overlaps the shorts line, a small mark."
+    },
+    {
+      "id": "l2-w05-story-page-i-have-two-feet",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-i-have-two-feet-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: two feet (2). Seen: Sam sits on the grass with two bare feet, soles toward the viewer, and points at them; a pair of blue shoes lies beside him. Both feet are clear."
+    },
+    {
+      "id": "l2-w05-story-page-i-have-two-feet",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-i-have-two-feet-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: two feet (2). Seen: a boy sits with two bare feet and points at them; two shoes lie beside him. Clean black lines on white."
+    },
+    {
+      "id": "l2-w05-story-page-i-have-one-nose",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-i-have-one-nose-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one nose (1). Seen: Sam touches his nose with one finger from the left. The pink nose tip stays visible beside the finger. An orange fox-like tail shows behind the tree trunk; the sentence does not name it, so it is a small mark."
+    },
+    {
+      "id": "l2-w05-story-page-i-have-one-nose",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-i-have-one-nose-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one nose (1). Seen: a boy points one finger at his nose; the nose shows as a small oval, open to view. A bushy tail shows behind the tree trunk, a small mark. Clean black lines on white."
+    },
+    {
+      "id": "l2-w05-cover-i-have-two",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-cover-i-have-two-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Cover title: I Have Two. Items: Sam. Seen: Sam stands with both arms wide, smiling, in a park with a tree, a pond and a sun. Sam matches the cast. No text in the picture."
+    },
+    {
+      "id": "l2-w05-cover-i-have-two",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-cover-i-have-two-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam. Seen: a boy with both arms wide in a park. Clean black lines on white. No text."
+    },
+    {
+      "id": "l2-w05-story-page-sam-saw-pam",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-sam-saw-pam-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), Pam the doll (1), saw. Seen: Sam points at a cloth doll with yellow pigtails and a red dress that sits on a wooden toy box. Both are clear and match the cast."
+    },
+    {
+      "id": "l2-w05-story-page-sam-saw-pam",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-sam-saw-pam-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), Pam (1). Seen: a boy points at a doll with pigtails that sits on a box. Clean black lines on white."
+    },
+    {
+      "id": "l2-w05-story-page-sam-can-get-pam",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-sam-can-get-pam-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), Pam (1), get. Seen: Sam reaches up with both hands and lifts the doll, whose legs dangle; a wooden box stands on the floor. The action reads as getting the doll."
+    },
+    {
+      "id": "l2-w05-story-page-sam-can-get-pam",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-sam-can-get-pam-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), Pam (1). Seen: a boy reaches up and takes a doll with pigtails; a box stands on the floor. Clean black lines on white."
+    },
+    {
+      "id": "l2-w05-story-page-sam-is-with-pam",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-sam-is-with-pam-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), Pam the doll (1), with. Seen: Sam sits cross-legged and holds the doll on his lap; both smile. Both are clear and match the cast."
+    },
+    {
+      "id": "l2-w05-story-page-sam-is-with-pam",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-sam-is-with-pam-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), Pam (1). Seen: a boy sits cross-legged and holds a doll with pigtails. Clean black lines on white."
+    },
+    {
+      "id": "l2-w05-story-page-pam-is-in-a-pan",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-pam-is-in-a-pan-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pam (1), a pan (1), in. Seen: the doll sits inside a big yellow pan with a long handle on the right; Sam kneels beside it and laughs. The handle makes it read as a pan."
+    },
+    {
+      "id": "l2-w05-story-page-pam-is-in-a-pan",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-pam-is-in-a-pan-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pam (1), a pan (1). Seen: a doll with pigtails sits in a round pan; the handle shows behind the pan on the right. Sam kneels at the left. Clean black lines on white."
+    },
+    {
+      "id": "l2-w05-story-page-pam-is-on-a-map",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-pam-is-on-a-map-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pam (1), a map (1), on. Seen: the doll lies on an unfolded paper map with a blue river, a red house, a dotted path and an X; Sam lies on the floor and points at it. The map reads as a map."
+    },
+    {
+      "id": "l2-w05-story-page-pam-is-on-a-map",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-pam-is-on-a-map-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pam (1), a map (1). Seen: a doll lies on a map with a river, a house, a dotted path and an X; a boy lies beside it and points. Clean black lines on white."
+    },
+    {
+      "id": "l2-w05-story-page-pam-is-on-sam",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-pam-is-on-sam-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pam (1), Sam (1), on. Seen: Sam kneels and laughs; the doll sits on his lap with its legs on his thighs. A white shoe shows at the right edge by the door, a small mark. The doll is on Sam."
+    },
+    {
+      "id": "l2-w05-story-page-pam-is-on-sam",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-pam-is-on-sam-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pam (1), Sam (1). Seen: a boy kneels and laughs; a doll sits on his lap. A shoe shows at the right edge, a small mark. Clean black lines on white."
+    },
+    {
+      "id": "l2-w05-story-page-pam-is-off-sam",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-pam-is-off-sam-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pam (1), Sam (1), off. Seen: Sam sits on the rug at the left; the doll tumbles on the rug a short way from him; Nan looks in from the open door. The doll is clearly away from Sam. Nan is an extra and matches the cast."
+    },
+    {
+      "id": "l2-w05-story-page-pam-is-off-sam",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-pam-is-off-sam-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pam (1), Sam (1). Seen: a boy sits on the rug; a doll lies tilted on the rug apart from him; a girl with buns stands at the door. Clean black lines on white."
+    },
+    {
+      "id": "l2-w05-story-page-sam-nan-and-pam-nap",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-sam-nan-and-pam-nap-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), Nan (1), Pam (1), nap; count 3. Seen: a brown-haired boy at the left, the doll in the middle, a girl with two buns at the right; all sleep with closed eyes under one green blanket. Three are visible and match the cast."
+    },
+    {
+      "id": "l2-w05-story-page-sam-nan-and-pam-nap",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-sam-nan-and-pam-nap-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam, Nan, Pam; count 3. Seen: a boy, a doll and a girl sleep side by side under one blanket. Clean black lines on white. A square pillow shape sits behind the girl's head, a small mark."
+    },
+    {
+      "id": "l2-w05-cover-sam-and-pam",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-cover-sam-and-pam-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Cover title: Sam and Pam. Items: Sam (1), Pam (1). Seen: Sam sits on the rug and smiles; the doll sits on a wooden box at the right. Both match the cast. No text in the picture."
+    },
+    {
+      "id": "l2-w05-cover-sam-and-pam",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-cover-sam-and-pam-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), Pam (1). Seen: a boy sits on the rug; a doll sits on a box. Clean black lines on white. No text."
+    },
+    {
+      "id": "l2-w05-check-row-sun",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-check-row-sun-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a sun (1). Seen: an orange sun with eight triangle rays. It reads as a sun."
+    },
+    {
+      "id": "l2-w05-check-row-sun",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-check-row-sun-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a sun (1). Seen: a circle with eight triangle rays. Clean black lines on white."
+    },
+    {
+      "id": "l2-w05-check-row-cat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-check-row-cat-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a cat (1). Seen: an orange striped cat with green eyes, a white muzzle, whiskers and a curled tail. It reads as a cat. The mouth is a flat small mark."
+    },
+    {
+      "id": "l2-w05-check-row-cat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-check-row-cat-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a cat (1). Seen: a cat with pointed ears, whiskers, a curled tail. Clean black lines on white, closed shapes."
+    },
+    {
+      "id": "l2-w05-check-row-dog",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-check-row-dog-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a dog (1). Seen: a brown and cream puppy with floppy ears, a red collar with a gold tag and a pink tongue. It reads as a dog."
+    },
+    {
+      "id": "l2-w05-check-row-dog",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-check-row-dog-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a dog (1). Seen: a puppy with floppy ears, a collar and a tag. Clean black lines on white."
+    },
+    {
+      "id": "l2-w05-check-row-pen",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-check-row-pen-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a pen (1). Seen: a blue click pen with a white clip, a white top knob with a small loop, and a metal tip. The clip and the tip read as a pen. The body is chubby and the small loop is odd, both small marks."
+    },
+    {
+      "id": "l2-w05-check-row-pen",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-check-row-pen-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a pen (1). Seen: a click pen with a clip, a top knob and a pointed tip. Clean black lines on white, closed shapes. It reads as a pen."
+    },
+    {
+      "id": "l2-w05-check-row-sock",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-check-row-sock-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a sock (1). Seen: a blue sock with a white cuff, a yellow heel and a yellow toe. The cuff, heel and toe read as a sock. The shape is chunky, a small mark."
+    },
+    {
+      "id": "l2-w05-check-row-sock",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-check-row-sock-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a sock (1). Seen: a sock with a cuff, a heel patch and a toe patch. Clean black lines on white, closed shapes."
+    },
+    {
+      "id": "l2-w05-check-row-bed",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-check-row-bed-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a bed (1). Seen: a wooden bed with a headboard, a red checked blanket and a white pillow. It reads as a bed."
+    },
+    {
+      "id": "l2-w05-check-row-bed",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-check-row-bed-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a bed (1). Seen: a bed with a headboard, a blanket and a pillow. Clean black lines on white, closed shapes."
+    },
+    {
+      "id": "l2-w05-check-row-cup",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-check-row-cup-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a cup (1). Seen: a blue cup with a cream rim and a ring handle. It reads as a cup."
+    },
+    {
+      "id": "l2-w05-check-row-cup",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-check-row-cup-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a cup (1). Seen: a cup with a thick rim and a ring handle. Clean black lines on white, closed shapes."
+    },
+    {
+      "id": "l2-w05-check-row-hat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-check-row-hat-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a hat (1). Seen: a yellow straw hat with a wide brim and a red band and bow. It reads as a hat."
+    },
+    {
+      "id": "l2-w05-check-row-hat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-check-row-hat-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a hat (1). Seen: a wide-brim hat with a band and a bow. Clean black lines on white. The bow is lumpy, a small mark."
+    },
+    {
+      "id": "l2-w05-check-row-sofa",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-check-row-sofa-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a sofa (1). Seen: a blue two-seat sofa with two cream cushions and round wooden feet. It reads as a sofa."
+    },
+    {
+      "id": "l2-w05-check-row-sofa",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-check-row-sofa-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a sofa (1). Seen: a sofa with two cushions and feet. Clean black lines on white, closed shapes."
+    },
+    {
+      "id": "l2-w05-story-page-i-have-four-legs",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-i-have-four-legs-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: four legs (4) on the speaker, a dog. Seen: Pip, a golden-brown puppy with a cream chest, floppy ears and a red collar with a gold tag, stands in profile with four paws on the grass; Sam kneels and points at it. Four legs are visible and Pip matches the cast."
+    },
+    {
+      "id": "l2-w05-story-page-i-have-four-legs",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w05/l2-w05-story-page-i-have-four-legs-line-v1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: four legs (4) on a dog. Seen: a puppy with a collar and tag stands with four paws visible; a boy kneels and points at it. Clean black lines on white."
+    }
+  ],
+  "summary": { "files": 54, "pass": 54, "fail": 0 }
+}

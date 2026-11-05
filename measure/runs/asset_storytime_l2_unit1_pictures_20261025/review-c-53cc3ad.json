@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Task 9 passes the CLI and API contract delta at HEAD 53cc3ada. The new shared seam decodedAnswerFindings closes RB3-01 and RA4-01 for the caller. Both providers refuse before any review file, raw copy, success entry, or result log. Both decoded refusals end with the exact contract suffix. Safe answers keep the reported model, the model source, and the raw bytes. The exit codes and the manifest and evidence shapes are unchanged from cf5743b7. RC4-1 is closed. Four nonblocking findings remain: an unbounded recursive walker, a quadratic cost on the record path, asymmetric raw-byte refusal text, and a dead export of the weaker check.",
+  "phase_base_sha": "1d39b8fda457e12d8e7332e7de65d2046ddda78e",
+  "role_base_sha": "53cc3ada842cffbf1a5bb7b1298f095f9bad3b06",
+  "audited_head_sha": "53cc3ada842cffbf1a5bb7b1298f095f9bad3b06",
+  "audited_head": "53cc3ada842cffbf1a5bb7b1298f095f9bad3b06",
+  "code_state_sha": "e9d8132b0fafc05dc817a4bb9cc1986e32a08b56",
+  "contract_applicability": "applicable. The strategy names the task 9 CLI and API surface, and the phase diff changes the two provider refusal paths and the caller-visible refusal text in src/storytime/book-pictures.ts. contract.md:291-304 states the refusal, suffix, redaction, model, and byte rules that the diff must hold.",
+  "rc4_1_status": "closed. Both decoded refusals now end with the exact suffix 'the raw answer is refused; no review or raw copy is written.' The MiniMax message is at book-pictures.ts:3344-3345 and the Kimi message is at book-pictures.ts:3668-3669.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "RC5-1 (nonblocking, medium): the shared walker decodedAnswerFindings recurses without a depth bound (src/storytime/book-pictures.ts:1174-1191). The walk function calls itself at line 1189 for every nested value. A deeply nested answer raises RangeError: Maximum call stack size exceeded inside the walk. The answer is still refused before any write, so no credential reaches evidence. The caller receives 'Maximum call stack size exceeded' with no pattern name and no contract suffix. contract.md:293-295 asks the walker to traverse every depth, and test-strategy.md:625 forbids a depth limit. A follow-up task should replace the recursion with an explicit worklist.",
+    "RC5-2 (nonblocking, medium): the new check raises the cost of the provider record path. jsonObjects re-extracts every nested object from the raw text, and the walker visits each copy again. secretFindings rebuilds the environment credential rules on every key. One decodedAnswerFindings call on a nested answer took 264 ms at depth 50, 935 ms at depth 100, 3.6 s at depth 200, 14.3 s at depth 400, and 60.5 s at depth 800 on a 4.8 KB answer. The Kimi --raw file allows 65,536 bytes. The operator waits with no output. A follow-up task should build the credential rules once per call and visit each extracted object once.",
+    "RC5-3 (nonblocking, low): the raw-byte refusal messages keep the asymmetry that RC4-1 reported for the decoded messages. MiniMax says 'The provider output matched credential pattern X; the raw answer is refused and nothing is written.' (book-pictures.ts:3334-3336). Kimi says 'The raw answer matched credential pattern X; nothing is written.' (book-pictures.ts:3657-3659). The MiniMax path appends a sanitized failure ledger entry through runPaidCall (book-pictures.ts:1046-1054), so 'nothing is written' overstates the outcome there. The text is unchanged from cf5743b7, and contract.md:299 fixes the decoded-refusal suffix only. A caller that matches on message text still sees two shapes.",
+    "RC5-4 (nonblocking, low): decodedReviewFindings (book-pictures.ts:1151) now has no caller in src, scripts, or tests. The plan requires only that production acceptance does not depend on it, and the diff confirms that. The dead export is the weaker named-field check, so a future caller could use it by mistake. A follow-up task should delete it or mark it as not for production use."
+  ],
+  "evidence": [
+    "audited HEAD 53cc3ada842cffbf1a5bb7b1298f095f9bad3b06 confirmed current by git rev-parse HEAD. It equals the given role base SHA and the code state e9d8132b0fafc05dc817a4bb9cc1986e32a08b56 is its parent.",
+    "The task 9 code delta is three hunks in src/storytime/book-pictures.ts: the new seam at lines 1171-1194, the MiniMax call site at lines 3338-3347, and the Kimi call site at lines 3662-3671. git diff cf5743b7 e9d8132b -- scripts/ is empty. scripts/storytime-book-pictures.ts needed no change.",
+    "Focus 1, MiniMax: decodedAnswerFindings runs inside the paid callback at line 3341. It runs before the success ledger entry (runPaidCall, lines 1037-1043), before the raw copy (line 3384), before the review JSON (line 3385), and before the result log (line 4053). runPaidCall writes one before-call entry (lines 1029-1034) and one sanitized failure entry (lines 1046-1054). The failure entry holds the pattern name only.",
+    "Focus 1, Kimi: the check at line 3665 runs before the review JSON (lines 3700-3702), before the raw copy (lines 3703-3705), before the success ledger entry (lines 3706-3712), and before the result log (line 3713). readRawAnswer only reads the source file. The begin ledger and the source raw file stay unchanged.",
+    "Focus 2: both decoded refusals carry the exact suffix 'the raw answer is refused; no review or raw copy is written.' (MiniMax lines 3344-3345; Kimi lines 3668-3669). The CLI entry redacts and cuts to 500 characters (scripts/storytime-book-pictures.ts:49-54). The message is 121 characters with the longest fixed pattern name, so the suffix survives the cut. redactSecrets does not match the pattern names, so the text survives the redaction.",
+    "Focus 3: safe answers keep the reported MiniMax model and modelSource (lines 3362-3363), the raw bytes (line 3384), and the Kimi declared model and modelSource (lines 3683-3684). decodedAnswerFindings only reads the raw text and never changes it. T101 asserts the same and passes.",
+    "Focus 4: the diff touches no exit-code line and no evidence shape. precheck-minimax returns 0 or 2 (line 4054) and precheck-kimi returns 0 or 2 (line 4081). A refusal exits 1 through the CLI entry (scripts/storytime-book-pictures.ts:55). buildManifest reads review JSON files only (lines 2077-2088) and does not read the ledger, so the MiniMax failure entry does not change the manifest.",
+    "Focus 5: RC4-1 is closed. The two decoded refusal messages are now identical in their suffix and prefix shape.",
+    "RB3-01 and RA4-01 are closed for the caller contract. The MiniMax path calls the check at line 3341 before parseModelReview at line 3353. The Kimi path scans the raw output at line 3665, so the schema, the field selection, and the status fallback cannot discard data before the check. parseModelReview is pure and cannot throw before the check.",
+    "The check is a superset of the old named-field check. parseModelReview selects its review from the same jsonObjects extraction (line 1100), and decodedAnswerFindings walks that same extraction (line 1192). Every persisted decoded field, the reason, the issues, the count keys, and the reported model, comes from an object the walker visits.",
+    "Focused test command: bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'; exit 0; Test Files 1 passed (1); Tests 86 passed (86); duration 133.73 s.",
+    "The type-check log green-tsc-t9.log holds 31 errors, all in assets/ and tests/part.test.ts. No error sits in src/storytime/ or tests/storytime-book-pictures.test.ts.",
+    "Production wiring reaches the provider paths only through scripts/storytime-book-pictures.ts. No other script or module calls precheckMiniMax or precheckKimi. src/song/ holds no provider path, and src/song is unchanged.",
+    "Measured walker behavior on a nested answer: depth 50 = 264 ms, depth 100 = 935 ms, depth 200 = 3.6 s, depth 400 = 14.3 s, depth 800 = 60.5 s on a 4.8 KB answer. A depth-4000 answer of 24 KB raises RangeError: Maximum call stack size exceeded with the stack trace at escapeRegExp, envCredentialPatterns, secretFindings, and the recursive walk at book-pictures.ts:1188-1189. JSON.parse accepts the same input.",
+    "The scratch probe file was removed after the measurement. git status shows no change in src/, scripts/, tests/, or the track documents. The only files this role wrote are the two result artifacts."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --porcelain; git log --oneline -8",
+    "git diff --stat 2d789e48 e9d8132b; git diff 2d789e48 e9d8132b -- src/storytime/book-pictures.ts",
+    "git diff --stat cf5743b7 e9d8132b; git diff cf5743b7 e9d8132b -- scripts/; git diff cf5743b7 e9d8132b -- src/storytime/book-pictures.ts | grep -E '^@@'",
+    "git show cf5743b7:src/storytime/book-pictures.ts | grep -n 'nothing is written'; git show e9d8132b:src/storytime/book-pictures.ts | grep -n 'nothing is written'",
+    "grep -rn 'decodedReviewFindings' --include=*.ts src/ scripts/ tests/; grep -rn 'precheckMiniMax|precheckKimi' --include=*.ts . | grep -v node_modules",
+    "grep -rn 'minimax|kimi|secretFindings|runPaidCall' --include=*.ts src/song/",
+    "bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'; exit 0; 86 passed (86)",
+    "node --import tsx <scratch depth and cost probe over decodedAnswerFindings>; the probe wrote no file and was removed after the run"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-53cc3ad.json",
+    "measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-c-53cc3ad.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "medium",
+  "handoff": "The phase 2 task 9 CLI and API contract holds at HEAD 53cc3ada. No blocking finding. The owner or the orchestrator decides whether to open a follow-up task for RC5-1 and RC5-2 (the unbounded recursive walker and the quadratic record-path cost) and for RC5-3 and RC5-4 (the raw-byte refusal text and the dead export of decodedReviewFindings). No question blocks this handoff. Default taken: the four findings stay nonblocking because no credential can reach evidence, the refusal stays ahead of every write, and the trigger depth sits far above any provider answer, while the strategy forbids a depth limit and asks the walker to traverse every depth. The raw-byte refusal text stays as is because it is unchanged from cf5743b7 and contract.md:299 fixes the decoded-refusal suffix only. UX browser review does not apply because the task changes no UI. No paid model call, no render, no server, and no browser were used. The closeout role keeps RA4-N1 and RA3-N1 open and reruns the phase gate. facts_changed: none.",
+  "facts_changed": []
+}

@@ -1,0 +1,84 @@
+Review B security audit (audit only; no production file changed).
+Track: asset_storytime_l2_unit1_pictures_20261025
+Phase: Phase 3: Week 1 pictures
+audited_head_sha: 4330cb420dd9cc11576ab089c8046aa716889524 (current at the audit)
+role_base_sha: 4330cb420dd9cc11576ab089c8046aa716889524
+phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+Change: production f1e797cb (src/storytime/muse-delivery.ts), Red tests 13896a21 (T184 to T189), plan evidence 4330cb42.
+Result file: measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-4330cb42.json
+
+Scope
+The approval entry takes an optional integer fileVersion of 1 or more. With the field, the writer
+delivers <row id>-v2.png and <row id>-line-v2.png. I audited input validation, name escape,
+duplicate names, refusal order, partial writes, symlinks, secret handling, and the A2 and A6 rules.
+
+Name escape
+deliveredNames requires the suffix /-v\d+\.png$/ on both list names and replaces only that suffix.
+The color name also passes planPictureRow, which enforces ^l2-w\d{2}-[a-z-]+-v\d+\.png$. A
+JavaScript number string holds no '/' and no '..', so no fileVersion value adds a folder part.
+
+Duplicate names
+One map holds both delivered names of every row and refuses a name that another row delivers.
+A v2 row cannot take another row's list name in the same run.
+
+Validation
+fileVersion is z.number().int().min(1). A string, a fraction, 0, and a negative value are refused
+with no coercion. The refusal names entries.0.fileVersion and happens in parseApprovals, before
+the first read.
+
+Refusal order and partial writes
+The order is: schema, row ids, list pin, names and duplicates, print reads and structural checks,
+manifest compare, target file compare, then mkdir and the wx writes. A refusal leaves no file.
+
+Symlinks and bytes
+The writer still refuses a symlink at a target, a different manifest.json, and a file with
+different bytes, all before mkdir.
+
+Secrets
+The change adds no network call, no credential, and no environment read. The new messages hold a
+row id and a list file name only. I opened no .env.local file.
+
+A2: not triggered. No draft to published transition. The approval entry is the gate, and
+fileVersion does not bypass it.
+A6: measure/tracks.md lists the track as [~] with no security-resolved claim. The plan evidence
+claims 178 passing tests, and the Green log matches. contract.md line 20 is stale (RB11-03).
+
+Findings (all nonblocking)
+RB11-01 Low: fileVersion is not bounded to a safe integer (src/storytime/muse-delivery.ts:69).
+  1e21 passes .int().min(1) and gives the name l2-w01-nut-v1e+21.png, which leaves the list
+  pattern (src/storytime/book-pictures.ts:1457). No escape and no collision. assertVersion
+  (src/storytime/book-pictures.ts:477) already holds the bound.
+RB11-02 Nit: the writer checks the line name for a plain name and for manifest.json, and it never
+  checks the color name (src/storytime/muse-delivery.ts:366-369). The color name is safe through
+  planPictureRow and the prefix-preserving replace. The check is implied, not asserted.
+RB11-03 Nit: contract.md line 20 still says the delivered names come from the list and the
+  pipeline derives no slug (contract.md:20-23). f1e797cb updates no contract bullet.
+RB11-04 Nit: a v2 run into a folder that holds v1 files and no manifest.json leaves the v1 files
+  beside the new v2 files. The manifest names only the v2 files.
+
+Test evidence and probe limit
+jr-green-v2-delivery.log records vitest exit 0 with 178 passed (178) across the four files, tsc
+exit 2 with 0 owned errors, and a mutation proof. This review tried the heavy-run command and a
+direct vitest run, and the shell tool refused both with "Permission denied: shell". The verdict
+rests on code reading and the Green log. No probe wrote a file.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-review-b-security
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures
+audited_head_sha: 4330cb420dd9cc11576ab089c8046aa716889524
+role_base_sha: 4330cb420dd9cc11576ab089c8046aa716889524
+phase_base_sha: 15a7bf0b2a59b8137a05805666df6736dc256167
+head_current: true
+security_applicability: applicable
+verdict: pass
+retry_recommendation: none
+blocking_findings: 0
+nonblocking_findings: 4
+confidence: high
+result_json: measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-4330cb42.json
+changed_files: measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-4330cb42.json, measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-4330cb42.log
+facts_changed: none
+handoff: Verdict is pass. fileVersion cannot escape the delivery folder. It cannot take another row's file. It cannot pass a string, a fraction, 0, or a negative value. All checks run before the first write. A refused run writes nothing. Four nonblocking findings go to Green: RB11-01 (Low, no safe-integer bound), RB11-02 (Nit, implicit color-name check), RB11-03 (Nit, stale contract.md line 20), RB11-04 (Nit, stale v1 files without a manifest). No product decision is required. No CONTEST items were routed to this run.
+END_MEASURE_AGENT_RESULT

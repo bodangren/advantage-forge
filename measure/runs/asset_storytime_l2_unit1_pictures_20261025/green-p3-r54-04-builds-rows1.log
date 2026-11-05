@@ -1,0 +1,93 @@
+Some extensions were not registered for I/O, and will not be written.
+sprout-pat: 29,820 triangles, 0.433 x 0.858 x 0.409 m, built in 55336 ms
+  skin                      8616 tris  (2238 ms)
+  mouth-open                 568 tris  (60 ms)
+  eyelid-skin                726 tris  (450 ms)
+  hair                      7020 tris  (1917 ms)
+  shirt                     2158 tris  (349 ms)
+  shorts                    1856 tris  (409 ms)
+  pockets                    532 tris  (39 ms)
+  sandals                   3604 tris  (191 ms)
+  teddy                     3238 tris  (266 ms)
+  teddy-muzzle               954 tris  (32 ms)
+  teddy-face                 548 tris  (11 ms)
+texture  1024x1024 atlas: base color, normal, occlusion/roughness/metal (37369 ms)
+glb      out/sprout-pat/sprout-pat.glb  (3427 KB)
+Some extensions were not registered for I/O, and will not be written.
+sprout-ben: 28,704 triangles, 0.517 x 0.908 x 0.486 m, built in 57217 ms
+  skin                      7850 tris  (3408 ms)
+  hands                     4170 tris  (787 ms)
+  mouth-open                 560 tris  (55 ms)
+  eyelid-skin                748 tris  (910 ms)
+  hair                      9338 tris  (3848 ms)
+  shirt                     2104 tris  (403 ms)
+  jeans                     2496 tris  (522 ms)
+  shoes                     1438 tris  (170 ms)
+texture  1024x1024 atlas: base color, normal, occlusion/roughness/metal (37641 ms)
+glb      out/sprout-ben/sprout-ben.glb  (3419 KB)
+Some extensions were not registered for I/O, and will not be written.
+sprout-mia: 27,184 triangles, 0.465 x 0.854 x 0.47 m, built in 54784 ms
+  skin                      7850 tris  (2452 ms)
+  hands                     4170 tris  (341 ms)
+  mouth-open                 560 tris  (40 ms)
+  eyelid-skin                748 tris  (432 ms)
+  hair                      3732 tris  (574 ms)
+  bow                       1262 tris  (53 ms)
+  shirt                     2104 tris  (283 ms)
+  overalls                  2876 tris  (800 ms)
+  cuffs                     2140 tris  (65 ms)
+  buttons                    316 tris  (8 ms)
+  shoes                     1426 tris  (165 ms)
+texture  1024x1024 atlas: base color, normal, occlusion/roughness/metal (34096 ms)
+glb      out/sprout-mia/sprout-mia.glb  (3470 KB)
+Some extensions were not registered for I/O, and will not be written.
+sprout-may: 27,634 triangles, 0.503 x 0.872 x 0.439 m, built in 48981 ms
+  skin                      7850 tris  (1771 ms)
+  hands                     4170 tris  (310 ms)
+  mouth-open                 560 tris  (27 ms)
+  eyelid-skin                748 tris  (354 ms)
+  hair                      7442 tris  (1726 ms)
+  clip                       826 tris  (124 ms)
+  shirt                     2042 tris  (253 ms)
+  skirt                      156 tris  (155 ms)
+  socks                     2192 tris  (88 ms)
+  shoes                     1648 tris  (125 ms)
+texture  1024x1024 atlas: base color, normal, occlusion/roughness/metal (31125 ms)
+glb      out/sprout-may/sprout-may.glb  (3394 KB)
+Some extensions were not registered for I/O, and will not be written.
+sprout-sam: 24,240 triangles, 0.452 x 0.855 x 0.42 m, built in 60132 ms
+  skin                      7850 tris  (2832 ms)
+  hands                     4170 tris  (490 ms)
+  mouth-open                 560 tris  (60 ms)
+  eyelid-skin                748 tris  (452 ms)
+  hair                      5298 tris  (1230 ms)
+  shirt                     2104 tris  (455 ms)
+  shorts                    1836 tris  (272 ms)
+  pockets                    248 tris  (32 ms)
+  shoes                     1426 tris  (165 ms)
+texture  1024x1024 atlas: base color, normal, occlusion/roughness/metal (43296 ms)
+glb      out/sprout-sam/sprout-sam.glb  (3005 KB)
+-rw-rw-r-- 1 daniebo daniebo 3500816 Nov  1 09:15 out/sprout-ben/sprout-ben.glb
+-rw-rw-r-- 1 daniebo daniebo 3475900 Nov  1 09:17 out/sprout-may/sprout-may.glb
+-rw-rw-r-- 1 daniebo daniebo 3553548 Nov  1 09:16 out/sprout-mia/sprout-mia.glb
+-rw-rw-r-- 1 daniebo daniebo 3274752 Nov  1 09:12 out/sprout-nan/sprout-nan.glb
+-rw-rw-r-- 1 daniebo daniebo 3509144 Nov  1 09:14 out/sprout-pat/sprout-pat.glb
+-rw-rw-r-- 1 daniebo daniebo 3077344 Nov  1 09:18 out/sprout-sam/sprout-sam.glb
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 16
+book file requests refused: 0
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 4.55% (545929 of 12000000 pixels black).
+l2-w01-story-page-a-nut v6: rendered; stage 3808b9c7c01feae5bff09bcabe9ecfaa63baf1b546aa11a182e0665ff7d5f8a6; file w01/rows/l2-w01-story-page-a-nut-v6.png; lineart w01/rows/l2-w01-story-page-a-nut-line-v6.png; size 4000 x 3000; render peak rss mb: 920
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 15
+book file requests refused: 0
+Line-art line width: 25 px (minimum 12 px).
+Line-art ink coverage: 4.63% (555162 of 12000000 pixels black).
+l2-w01-story-page-a-nose v5: rendered; stage 297992fd6b731c513d6e620faa5bdf9aaabe7751f34f0212a4057b01644da82b; file w01/rows/l2-w01-story-page-a-nose-v5.png; lineart w01/rows/l2-w01-story-page-a-nose-line-v5.png; size 4000 x 3000; render peak rss mb: 508

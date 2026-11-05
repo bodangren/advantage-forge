@@ -1,0 +1,14 @@
+# Jr Green round 47 — storytime-school-bag (item only)
+
+Role: measure-jr-green
+Session: Green · P3 · storytime_l2_unit1_pictures · r47
+Green model: deepseek/deepseek-flash#high (route from `ra-quota --fresh pick green --not-family minimax --not-family openai`; Daniel approved the DeepSeek route)
+Red model: minimax-cn-coding-plan/MiniMax-M3 (not the Green family)
+Coder model: none. No delegation.
+role_base_sha: f3288f8b
+phase_base_sha: 15a7bf0b
+
+Task: write `assets/storytime-school-bag.ts`, an item-only round. Render no row.
+Bar: the independent item review uses 7.0 for this prop.
+
+Status: started

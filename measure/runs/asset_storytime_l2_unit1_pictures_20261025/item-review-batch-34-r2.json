@@ -1,0 +1,302 @@
+{
+  "reviewer": "opencode-go/mimo-v2.6-flash",
+  "audited_head": "d81c59be",
+  "verdict": "final",
+  "bar": "Daniel 2026-11-01 14:15 ICT",
+  "line_art_rule": "brief 2026-11-01 plus Daniel's bar",
+  "seen": {
+    "out/storytime-review/batch-34/brief.md": "Batch 34 brief: 10 rows, bar 7.0, goal per row, line-art rule, batch 32 defects to recheck. Daniel's new bar section added on top.",
+    "out/storytime-review/batch-34/refs/out_storytime_l2_unit1_w01_muse_elements_nan-ref-clean-look-reference.png": "Nan look reference: black hair in two bunches with red bands, orange T-shirt with white star, red shorts, cream sneakers, large dark-brown eyes with a small eyelash mark at each outer corner.",
+    "out/storytime-review/batch-34/refs/out_storytime_l2_unit1_w01_muse_elements_cast-group-a-2.png": "Cast group A: Pat (black spiky hair, green shirt, brown shorts, holds brown bear), May (black ponytail, yellow star clip, yellow shirt, blue skirt), Sam (brown hair, red-white striped shirt, blue shorts), Mia (light hair, pink clip, pink shirt, blue overalls).",
+    "out/storytime-review/batch-34/refs/out_storytime_l2_unit1_w01_muse_elements_cast-group-b-2.png": "Cast group B: Ben (tan curly hair, blue shirt and shorts), Nan, Teacher Kim (dark hair in low ponytail, sage cardigan, cream shirt, navy trousers), Pip (golden-brown puppy, cream muzzle and forehead stripe, red collar with gold tag).",
+    "out/storytime-review/muse-cast/teacher-kim-sheet-2.png": "Teacher Kim sheet: adult woman, dark brown hair in a low ponytail, sage green cardigan over cream collared shirt, navy trousers, brown shoes, no glasses."
+  },
+  "l2-w01-story-page-hello-i-am-pat": {
+    "files": [
+      "out/storytime-review/batch-34/pages/l2-w01-story-page-hello-i-am-pat-m6-color.png",
+      "out/storytime-review/batch-34/pages/l2-w01-story-page-hello-i-am-pat-m6-line-4.png"
+    ],
+    "rating": 5.5,
+    "pass": false,
+    "clean": false,
+    "critical": [
+      "a clearly wrong hand: the raised waving hand shows six digits (five fingers plus one thumb) in the color and in the line art",
+      "a wrong or missing prop the sentence needs: the school bag shows no small round bump"
+    ],
+    "defects": [
+      "a clearly wrong hand: the raised waving hand shows six digits (five fingers plus one thumb); counted at 8x zoom in the color and in the line art",
+      "a clearly wrong hand: the hand that holds the bear is white like a glove; Pat's other hand and his model are skin color",
+      "a wrong or missing prop the sentence needs: the school bag has no small round bump, so 'as if something moves inside' is not shown"
+    ],
+    "goal_check": {
+      "Pat drawn young about five": "yes: matches the Pat model look",
+      "holds small brown teddy bear and waves": "yes: bear in the right arm, left hand raised and waving",
+      "green door": "yes: green door with round window and yellow knob",
+      "bright classroom, low tables, wall with big colorful animal pictures, no letters": "yes: three framed animal pictures, one low table at the wall, no letters",
+      "school bag with a small round bump": "no: the visible part of the red bag is smooth; no bump",
+      "no letters or words anywhere": "yes"
+    },
+    "defects_gone": {
+      "color bear plain brown, no cream muzzle": "yes under the new bar: the bear is a brown teddy with a darker muzzle patch; marks of that size are not defects",
+      "color waving hand wrong digit count": "no: six digits now, one more than a hand should show",
+      "one whole low table inside the frame": "yes: one table at the back wall, whole and clear of the frame edge",
+      "line art eyes and mouth": "yes: each eye one closed ring with a solid pupil; mouth one closed smile as in the color",
+      "line art hair one closed empty shape": "yes: closed hair shape with a fringe line"
+    },
+    "goal_shown": false,
+    "retry_hint": "Give the waving hand four fingers plus one thumb. Make the bear-holding hand skin color. Show the round bump on the bag."
+  },
+  "l2-w01-story-page-hello-i-am-mia": {
+    "files": [
+      "out/storytime-review/batch-34/pages/l2-w01-story-page-hello-i-am-mia-m2-color.png",
+      "out/storytime-review/batch-34/pages/l2-w01-story-page-hello-i-am-mia-m2-line-3.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Mia drawn young about five": "yes: matches the Mia model look with the pink hair clip",
+      "waves next to a big box of colored blocks on the rug": "yes: waving hand up, block box at her side on the rug",
+      "character matches the cast": "yes: light hair, pink clip, pink T-shirt, blue overalls, white shoes",
+      "no text/letters/numbers/logos": "yes",
+      "open hand shows five digits": "yes: four fingers plus one thumb in color and line art",
+      "open mouth": "yes: open with a teeth strip and tongue; the line art keeps one closed outline with an inner mouth shape"
+    },
+    "defects_gone": {
+      "line art lost the open mouth": "no: kept as one closed outline with an inner mouth shape"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-hello-i-am-may": {
+    "files": [
+      "out/storytime-review/batch-34/pages/l2-w01-story-page-hello-i-am-may-m2-color.png",
+      "out/storytime-review/batch-34/pages/l2-w01-story-page-hello-i-am-may-m2-line-2.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "May drawn young about five": "yes: matches the May model look with the yellow star clip",
+      "waves with both hands": "yes: both arms raised, both palms open; each hand shows five digits in color and line art",
+      "low table with a box of crayons": "yes: low table with a blue box holding five crayons",
+      "green door": "yes: green door with round window and yellow knob",
+      "bright classroom, low tables, wall with big colorful animal pictures, no letters": "yes: lion, elephant, frog pictures; no letters",
+      "no letters or words anywhere": "yes",
+      "mouth open": "yes: open with a small tongue; the line art keeps one closed outline with an inner mouth shape"
+    },
+    "defects_gone": {
+      "line art lost the open mouth": "no: kept as one closed outline with an inner mouth shape",
+      "line try 3 floor stripe lines": "yes: no floor lines in this line file",
+      "line try 4 double eye ring": "yes: each eye is one closed ring with a solid pupil"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-hello-i-am-sam": {
+    "files": [
+      "out/storytime-review/batch-34/pages/l2-w01-story-page-hello-i-am-sam-m2-color.png",
+      "out/storytime-review/batch-34/pages/l2-w01-story-page-hello-i-am-sam-m2-line-3.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Sam drawn young about five": "yes: matches the Sam model look",
+      "sits in the reading corner with a picture book on his lap and waves": "yes: sits on the rug, open book on the lap, one hand raised; the book shows a whale and a yellow circle, no letters",
+      "character matches the cast": "yes: brown hair, red-white striped shirt, blue shorts",
+      "no text/letters/numbers/logos": "yes",
+      "waving hand shows five digits": "yes: four fingers plus one thumb in color and line art",
+      "open mouth": "yes: open with a teeth strip and tongue; the line art keeps it"
+    },
+    "defects_gone": {
+      "line art rug as rectangle": "yes: the line rug is a rectangle, the same shape as the color rug",
+      "line art shoe rib lines": "yes: the shoes have no rib lines; only the sole line is drawn"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-hello-i-am-your-teacher": {
+    "files": [
+      "out/storytime-review/batch-34/pages/l2-w01-story-page-hello-i-am-your-teacher-m3-color.png",
+      "out/storytime-review/batch-34/pages/l2-w01-story-page-hello-i-am-your-teacher-m3-line-3.png"
+    ],
+    "rating": 8.7,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Teacher Kim kneels at the children's eye level and waves": "yes: Kim kneels at the rug edge and waves with a five-digit hand",
+      "Teacher Kim matches the sheet": "yes: dark hair in a low ponytail, sage cardigan, cream shirt, navy trousers, no glasses",
+      "Pat, May, Sam, Mia, Nan, Ben sit on the round rug and wave back": "yes: all six children sit on the round rug, each waves one hand",
+      "Nan look": "yes: two bunches with red bands, orange star T-shirt, red shorts, white sneakers, eyelash marks at both outer eye corners in the color",
+      "no text/letters/numbers/logos": "yes",
+      "line-art eyes a closed outer ring with a solid pupil": "yes: each child has one closed ring with a solid pupil"
+    },
+    "defects_gone": {
+      "line-art eyes solid dot alone": "yes: each eye is a closed outer ring with a solid pupil inside"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-hello-i-am-pip": {
+    "files": [
+      "out/storytime-review/batch-34/pages/l2-w01-story-page-hello-i-am-pip-m6-color.png",
+      "out/storytime-review/batch-34/pages/l2-w01-story-page-hello-i-am-pip-m6-line.png"
+    ],
+    "rating": 8.7,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Pip pops his head out of the open bag with a big happy face": "yes: Pip's head and front paws out of the open red bag, tongue out",
+      "Pip look": "yes: golden-brown fur, cream muzzle and forehead stripe, floppy ears with darker tips, dark-brown eyes, black nose, red collar with round gold tag",
+      "Pat, May, Sam, Mia, Nan, Ben, Teacher Kim laugh in surprise": "yes: all seven present and laughing",
+      "Nan look": "yes: two bunches with red bands, orange star T-shirt; her two resting hands lie on her knees with visible fingers",
+      "no text/letters/numbers/logos": "yes",
+      "every raised hand shows five digits": "yes: Pat, May, Sam, Ben each show four fingers plus one thumb at zoom",
+      "no dog tail outside the bag": "yes",
+      "no tassel on the bag straps": "yes"
+    },
+    "defects_gone": {
+      "Nan closed fist with finger bumps": "yes: her resting hands show separate fingers",
+      "dog tail outside the bag": "yes: gone",
+      "tassels on the bag straps": "yes: gone",
+      "raised hands with wrong digit count": "yes: every raised hand shows five digits"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-cover-hello": {
+    "files": [
+      "out/storytime-review/batch-34/pages/l2-w01-cover-hello-m6-color.png",
+      "out/storytime-review/batch-34/pages/l2-w01-cover-hello-m6-line-2.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Pat, May, Sam, Mia, Ben, Nan wave hello": "yes: all six stand in a row and wave; Pat faces away from the camera and waves with his raised hand",
+      "green door of a bright classroom with low tables and animal pictures, no letters": "yes: green door with round window, one low table, lion/elephant/frog pictures, no letters",
+      "Teacher Kim smiles behind them": "yes: Kim stands behind the row and waves with a smile; matches the sheet, no glasses",
+      "Pat's school bag has a small round bump": "yes: the red bag on Pat's back shows a clear round yellow bump in the color and in the line art",
+      "Nan look": "yes: two bunches with red bands, orange star T-shirt, red shorts, white sneakers, eyelash marks at the outer eye corners",
+      "no letters or words anywhere": "yes",
+      "every open hand shows five digits": "yes: checked Ben, Mia, Sam, May, Pat, Nan at zoom; each shows four fingers plus one thumb"
+    },
+    "defects_gone": {
+      "open hands with wrong digit count": "yes: every open hand shows five digits",
+      "Pat bag without round bump": "yes: the round bump is shown in the color and in the line art",
+      "line art eyes solid dot alone": "yes: each eye is a closed outer ring with a solid pupil",
+      "line art Teacher Kim glasses": "yes: no glasses in this line file"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-a-nest-and-a-nut": {
+    "files": [
+      "out/storytime-review/batch-34/pages/l2-w01-story-page-a-nest-and-a-nut-m3-color.png",
+      "out/storytime-review/batch-34/pages/l2-w01-story-page-a-nest-and-a-nut-m3-line-4.png"
+    ],
+    "rating": 8.6,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Pip sniffs a big brown nut in the grass under a low tree": "yes: Pip leans his nose to a big acorn on the grass under the branch",
+      "nest with three light blue eggs on a low branch": "yes: exactly three eggs in the color and in the line art",
+      "nest and nut both large and clear": "yes",
+      "simple garden with soft colors": "yes",
+      "Pip look": "yes: golden-brown fur, cream muzzle and forehead stripe, floppy ears with darker tips, dark-brown eyes, black nose, fluffy tail, red collar with round gold tag",
+      "no text/letters/numbers/logos": "yes"
+    },
+    "defects_gone": {
+      "nest egg count": "yes: exactly three eggs",
+      "line art branch not one closed limb": "yes: the branch is one thick closed limb shape",
+      "line art bush not one closed cloud": "yes: the bushes are closed cloud shapes",
+      "line crossing another object": "yes: no line crosses another object"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-story-page-nan-can-nod": {
+    "files": [
+      "out/storytime-review/batch-34/pages/l2-w01-story-page-nan-can-nod-m5-color.png",
+      "out/storytime-review/batch-34/pages/l2-w01-story-page-nan-can-nod-m5-line-2.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Nan look": "yes: two bunches with red bands, orange star T-shirt, red shorts, white sneakers, large dark-brown eyes with eyelash marks in the color",
+      "nods yes with a big smile": "yes: head slightly tipped toward Pip, open smile with front teeth",
+      "Pip sits next to her and nods too": "yes: Pip sits at her side, head tilted up at her, tongue out",
+      "one clear picture, main thing large in the middle, plain light background": "yes",
+      "no text/letters/numbers/logos": "yes",
+      "color ears smooth with one clean rim": "yes",
+      "color and line art both show an open mouth": "yes: the line art keeps one closed outline with an inner teeth shape and tongue"
+    },
+    "defects_gone": {
+      "color closed smile": "yes: the mouth is open in the color and in the line art",
+      "line art lost the open mouth": "no: the line art keeps the open mouth with an inner shape"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-cover-nan-can-nod": {
+    "files": [
+      "out/storytime-review/batch-34/pages/l2-w01-cover-nan-can-nod-m2-color.png",
+      "out/storytime-review/batch-34/pages/l2-w01-cover-nan-can-nod-m2-line-4.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "Nan look": "yes: two bunches with red bands, orange star T-shirt, red shorts, white sneakers, eyelash marks at the outer eye corners in the color",
+      "nods with a big smile": "yes: head tipped toward Pip, open smile",
+      "garden with a low tree": "yes: tree at the right with a trunk and cloud-shaped foliage, bushes, grass",
+      "Pip sits next to her": "yes: Pip sits at her side, red collar with gold tag, fluffy tail",
+      "no text/letters/numbers/logos": "yes"
+    },
+    "defects_gone": {
+      "line art lost the open mouth": "no: the line art keeps one closed outline with an inner mouth shape",
+      "line try 2 double eyebrow outline": "yes: each eyebrow is one solid stroke"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "summary": {
+    "pages": 10,
+    "pass": 9,
+    "clean": 9,
+    "clean_keys": [
+      "l2-w01-story-page-hello-i-am-mia",
+      "l2-w01-story-page-hello-i-am-may",
+      "l2-w01-story-page-hello-i-am-sam",
+      "l2-w01-story-page-hello-i-am-your-teacher",
+      "l2-w01-story-page-hello-i-am-pip",
+      "l2-w01-cover-hello",
+      "l2-w01-story-page-a-nest-and-a-nut",
+      "l2-w01-story-page-nan-can-nod",
+      "l2-w01-cover-nan-can-nod"
+    ],
+    "not_clean_keys": [
+      "l2-w01-story-page-hello-i-am-pat"
+    ]
+  }
+}

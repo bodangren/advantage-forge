@@ -1,0 +1,9 @@
+  warning: sun: triangle reduction failed its surface check; keeping the full-resolution mesh.
+storytime-picture-book: 31,648 triangles, 0.36 x 0.023 x 0.24 m, built in 2610 ms
+  cover                      122 tris  (501 ms)
+  pages                      218 tris  (797 ms)
+  sun                      29988 tris  (330 ms)
+  fish                      1320 tris  (545 ms)
+texture  none (vertex colors)
+glb      out/storytime-picture-book/storytime-picture-book.glb  (746 KB)
+render   out/storytime-picture-book/render.png  (367 ms)

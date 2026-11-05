@@ -1,0 +1,1 @@
+heavy-run: lock wait over 600 s — holder PID 1134985: flock -w 600 -E 201 /home/daniebo/Desktop/primary-parity-progress/heavy.lock /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh --locked -c cd /home/daniebo/Desktop/rama-worktrees/forge-filled-shelves/apps/primary-advantage && timeout 5400 pnpm exec next dev -p 3011 

@@ -1,0 +1,36 @@
+Batch 32 review (Storytime L2 Unit 1 week 1, Muse fix round 60, 11 character pages).
+Independent report-only reviewer: kimi-code-plan-cn/kimi-for-coding. Audited HEAD: 2b59ccaa.
+Rate only what is seen. Bar 7.0 per page. Daniel rule applied: a page is clean only with no defect of any kind.
+Line-art rule: orchestrator default 2026-11-01.
+
+Method notes:
+- Read brief.md and all 22 page files (11 color + 11 line) from out/storytime-review/batch-32/pages/.
+- Cropped each face, ear, and open hand at 3x-4x to /tmp/opencode/review-b32k/ and counted digits.
+- Checked every page goal item by item; counted eggs (3), people (7 on group pages), eyes, ears, clothes.
+- Verified all 11 line files are pure 1-bit (only values 0 and 255).
+- Compared each child against refs/ (sprout renders, group sheets, Nan clean face crop).
+
+Findings per key:
+- l2-w01-story-page-hello-i-am-pat: 7.0, pass, not clean. Bear still has cream muzzle and white inner ears (batch-29 item not gone). Hand 5 digits, table whole, bag bump present.
+- l2-w01-story-page-hello-i-am-mia: 7.5, pass, not clean. Line art draws the open mouth as a closed smile with no inner shape. Hand 5 digits, rug plain.
+- l2-w01-story-page-hello-i-am-may: 7.5, pass, not clean. Line art mouth closed, no inner shape. Both hands 5 digits.
+- l2-w01-story-page-hello-i-am-sam: 8.0, pass, clean. Hand 5 digits, no rug tassels, book pictures without letters, line mouth has inner shape.
+- l2-w01-story-page-hello-i-am-your-teacher: 7.5, pass, not clean. Line-art eyes are solid dots without an outer ring. Round rug, 7 people, Ben forehead clean, all hands 5 digits.
+- l2-w01-story-page-hello-i-am-pip: 7.5, pass, not clean. Nan lower-left closed fist reads 3 finger bumps and a thumb (not an open hand). Ben forehead clean, all raised hands 5 digits, Nan face clean.
+- l2-w01-story-page-a-nurse: 8.0, pass, clean. Plain background, one ground line, closed hands, almond eyes with solid pupils.
+- l2-w01-cover-hello: 6.5, FAIL, not clean. CRITICAL: Pat's raised open hand shows 3 fingers and a thumb. Line mouths lack inner shapes. Table whole, bag bump present, other hands 5 digits.
+- l2-w01-story-page-a-nest-and-a-nut: 7.0, pass, not clean. Color clean, 3 eggs, low branch, 3 egg ovals in line. Line art keeps jagged open branch strokes and a long diagonal line crossing the right bush (thin strips).
+- l2-w01-story-page-nan-can-nod: 7.0, pass, not clean. Color: Nan's ear shows a fold. Line art: open mouth lost (closed smile, no inner shape) - batch-29 item not gone. Eye rings closed, shirt even.
+- l2-w01-cover-nan-can-nod: 7.5, pass, not clean. Line art mouth closed, no inner shape. Nan nods, does not reach, eye rings closed, trunk closed.
+
+Summary: 11 pages, 10 pass, 2 clean (sam, a-nurse). 1 page fails (cover-hello, critical hand defect).
+
+BEGIN_MEASURE_AGENT_RESULT
+role: item-review
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 3: Week 1 pictures
+audited_head: 2b59ccaa
+status: complete
+result_json: measure/runs/asset_storytime_l2_unit1_pictures_20261025/item-review-batch-32.json
+summary: pages=11 pass=10 clean=2 clean_keys=[l2-w01-story-page-hello-i-am-sam, l2-w01-story-page-a-nurse] not_clean=9 fail=1 (l2-w01-cover-hello, critical: Pat's raised open hand shows 3 fingers and a thumb)
+END_MEASURE_AGENT_RESULT

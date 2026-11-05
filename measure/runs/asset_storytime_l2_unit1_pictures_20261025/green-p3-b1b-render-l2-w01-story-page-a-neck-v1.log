@@ -1,0 +1,14 @@
+heavy-run: lock wait over 600 s — holder PID 2526430: flock -w 600 -E 201 /home/daniebo/Desktop/primary-parity-progress/heavy.lock /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh --locked -c cd /home/daniebo/Desktop/advantage-mmorpg && GUILD_VALE_E2E_API_PORT=3120 CI=true pnpm test:e2e e2e/zz-l3-typing-probe.spec.ts e2e/language-acts.spec.ts --workers=1 
+capture path: captureBookStill
+camera drift source: live
+camera state drift: 0
+color repeat identical: yes
+book files served: 15
+book file requests refused: 0
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 3.79% (454247 of 12000000 pixels black).
+l2-w01-story-page-a-neck v1: rendered; stage 0789359d21b1dcae3e72de0dcdb4a0a187c073012439fd26dba352f01fa4c063; file w01/rows/l2-w01-story-page-a-neck-v1.png; lineart w01/rows/l2-w01-story-page-a-neck-line-v1.png; size 4000 x 3000; render peak rss mb: 869
+Line-art line width: 24 px (minimum 12 px).
+Line-art ink coverage: 3.79% (454247 of 12000000 pixels black).
+l2-w01-story-page-a-neck v1: passed
+Row verification passed for 1 row versions.

@@ -1,0 +1,20 @@
+# Review A log: asset_storytime_l2_unit1_pictures Phase 2
+
+phase_base_sha: 1d39b8fda457e12d8e7332e7de65d2046ddda78e
+audited_head_sha: 5ffdbf6e41a0c30ec4330f7f23137cc7a218d61e
+HEAD at start: 5ffdbf6e41a0c30ec4330f7f23137cc7a218d61e
+HEAD at finish: 5ffdbf6e41a0c30ec4330f7f23137cc7a218d61e
+Result JSON: measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-5ffdbf6.json
+
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 2: Tests and calibrated model pre-checks
+commits: none
+tests_run: heavy-run.sh vitest (tests/song-still-hook.test.ts, tests/storytime-line-art-pass.test.ts, tests/storytime-book-pictures.test.ts, tests/song-timeline.test.ts, --maxWorkers=1) -> exit 0; "Tests  76 passed (76)"
+files_changed: measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-5ffdbf6.json, measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-5ffdbf6.log
+plan_updates: none (audit only)
+known_failures: audit verdict fail with 2 blocking findings. RA-B1 (high): captureBookStill (src/storytime/book-pictures.ts:2338-2350) never calls window.__song.load(timeline), so every live render throws before the color still; fc2cc6a8 moved the load into the smoke path only. RA-B2 (medium): evaluateLineArtTwin (book-pictures.ts:1833-1838) requires each twin file in the one style look sampleFiles, so all non-sample reader twins become failed after the style look passes.
+handoff: Route RA-B1 and RA-B2 to Green (retry_implementation). Each fix needs one new unit test (load before seek with a fake page; a non-sample twin with a passing style look and the same technique becomes ready). Non-blocking, fix before Phase 3 renders: RA-N1 live camera-drift read is a stored copy, so drift cannot show; RA-N2 good-nan calibration text says "Owner-approved" and the MiniMax reason repeats it, so run good-nan again with the Workbooks Nan description; RA-N3 calibration gate ignores rubricVersion and fileSha256; RA-N4 no Kimi failure record path, orphan before-call 9d0bddf7 will block the Phase 3 equal-count gate; RA-N5 the two Kimi calls ran at the same time and the plan does not record it; RA-N6 placeholder model mmx-vision-default without a declared label; RA-N7 depth threshold 0.02 on packed depth is almost inert (book spines merge in the smoke line art). Phase 3 finding RA-P3-1: the Nan stage sets yaw 180, so Nan faces away (no eyes, no star), and the pot has red flowers, not a green plant; this does not block Phase 2; write a v2 stage before the Phase 3 sample. The song engine change is additive and window.__song is unchanged. The parser fix meets the structured-first, envelope, status, and conservative rules. The plan claims (76 passed, 6/5 ledger, four verdicts, file hashes, 379-byte fixture) match the evidence. The Phase 2 closeout adversarial mutations have not run.
+END_MEASURE_AGENT_RESULT

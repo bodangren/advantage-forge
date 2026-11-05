@@ -1,0 +1,337 @@
+{
+  "reviewer": "opencode-go/mimo-v2.6-flash",
+  "audited_head": "cf189b5f",
+  "verdict": "final",
+  "seen": {
+    "out/storytime-review/batch-31/brief.md": "Batch 31 brief: 10 item rows plus nan-clean-refs, bar 7.0, Muse round 59, elements are approved 3D renders; builder notes list known open points.",
+    "out/storytime-review/batch-31/pages/l2-w01-check-row-cat-m1-color.png": "Orange tabby cat with white muzzle, chest and paws, big green eyes with black pupils, curled ring tail, standing three-quarter view on plain white.",
+    "out/storytime-review/batch-31/pages/l2-w01-check-row-cat-m1-line.png": "1-bit line cat; tail drawn as a closed ring behind the head that reads as a second ear; forehead and leg stripes drawn as thin outlined slivers; eyes as one ring with solid pupil; no eyelash ticks although the color has them.",
+    "out/storytime-review/batch-31/pages/l2-w01-check-row-nest-m1-color.png": "One bird nest, three blue eggs, plain white background, no eyes and no text.",
+    "out/storytime-review/batch-31/pages/l2-w01-check-row-nest-m1-line.png": "1-bit line nest, three closed egg ovals, bold closed twig and rim lines, no eyes, no specks.",
+    "out/storytime-review/batch-31/pages/l2-w01-check-row-fish-m1-color.png": "One blue and yellow fish, side view, one big eye with pupil and highlight, dorsal, tail and side fins, plain white background.",
+    "out/storytime-review/batch-31/pages/l2-w01-check-row-fish-m1-line.png": "1-bit line fish, one closed body outline, eye as one ring with solid pupil, fin fan lines measured 16 to 21 px, no scales and no specks.",
+    "out/storytime-review/batch-31/pages/l2-w01-check-row-dog-m1-color.png": "One brown and white puppy, red collar with gold bell, tongue out, four legs, both pupils look the same way, no text on the collar.",
+    "out/storytime-review/batch-31/pages/l2-w01-check-row-dog-m1-line.png": "1-bit line puppy; each eye drawn as an outer ring plus an inner iris ring around the pupil (double rings); pupils converge inward; no tail although the color shows a raised tail.",
+    "out/storytime-review/batch-31/pages/l2-w01-check-row-bus-m1-color.png": "One yellow school bus, three-quarter view, blue windows, black door frame and bumper, marker lights; zoom crops at 2x of the side, door, front and roof show no letter, number, sign, plate or logo.",
+    "out/storytime-review/batch-31/pages/l2-w01-check-row-bus-m1-line.png": "1-bit line bus, bold closed outlines, no text; the door carries a horizontal divider line that the color door does not have.",
+    "out/storytime-review/batch-31/pages/l2-w01-check-row-hat-m1-color.png": "One pale yellow sun hat with red band and red bow, plain white background, no eyes and no text.",
+    "out/storytime-review/batch-31/pages/l2-w01-check-row-hat-m1-line.png": "1-bit line hat, closed crown, brim and band, bow drawn as five closed petals with no eyes, outline measured 26 px, clean.",
+    "out/storytime-review/batch-31/pages/l2-w01-check-row-cup-m1-color.png": "One blue cup with cream rim and right-side handle, plain white background, no face and no text.",
+    "out/storytime-review/batch-31/pages/l2-w01-check-row-cup-m1-line.png": "1-bit line cup, outer and inner rim ellipses plus closed handle, bold closed lines, no eyes and no specks.",
+    "out/storytime-review/batch-31/pages/l2-w01-check-row-net-m1-color.png": "One green butterfly net, hoop, mesh bag and tan handle with green grip, plain white background, no eyes and no text.",
+    "out/storytime-review/batch-31/pages/l2-w01-check-row-net-m1-line.png": "1-bit line net; hoop rim drawn as two concentric lines; mesh lines measured 11 to 14 px with big squares; no eyes and no specks.",
+    "out/storytime-review/batch-31/pages/l2-w01-practice-line-nest-m1-color.png": "One bird nest, three blue eggs, same element and view as the check-row nest, plain white background.",
+    "out/storytime-review/batch-31/pages/l2-w01-practice-line-nest-m1-line.png": "1-bit line nest, three closed eggs, bold closed lines; the rim lines carry small angular steps along the top edge at 2x zoom.",
+    "out/storytime-review/batch-31/pages/l2-w01-practice-line-nut-m1-color.png": "One acorn, brown cap and tan body with stem, plain white background, no eyes and no text.",
+    "out/storytime-review/batch-31/pages/l2-w01-practice-line-nut-m1-line.png": "1-bit line acorn, closed outline; at 3x zoom the body outline meets the cap line on the right with a small step and the cap edge is slightly wavy.",
+    "out/storytime-review/batch-31/clean-refs/look-reference-source-left-clean-right.png": "Side by side of the round 21 Nan and Pip reference and the clean copy; at zoom both ear rims are smooth with no hole in the clean copy; the shoulder pale blotch is gone; the eye-corner skin flaps and dark ticks remain.",
+    "out/storytime-review/batch-31/clean-refs/face-crop-source-left-clean-right.png": "Side by side of the muse-test-2 Nan face crop and its clean copy; both ragged ear slivers at the crop edges are smoothed in the clean copy; eyes, brows, hair edge and eye-corner flaps unchanged.",
+    "out/storytime-review/batch-31/clean-refs/side-left-head-source-left-clean-right.png": "Side view head sprite, source left and clean right; ear is a smooth blob in both; the shirt strip at the lower edge is slightly more saturated orange in the clean copy.",
+    "out/storytime-review/batch-31/clean-refs/side-right-head-source-left-clean-right.png": "Other side view head sprite, source left and clean right; ear unchanged and smooth in both; the shirt strip at the lower edge is slightly more saturated orange in the clean copy.",
+    "out/storytime-review/batch-31/clean-refs/nan-ref-clean-look-reference.png": "Clean full reference at 4000 x 3000; pixel diff against the round 21 source finds changes at 89 pixels above threshold after downscale, all inside the two ear regions and one shoulder region; nothing else changed.",
+    "out/storytime-review/batch-31/clean-refs/nan-ref-clean-face-crop.png": "Clean face crop at 1024 x 1024; pixel diff against the muse-test-2 source finds changes only at the two ear slivers on the crop edges; nothing else changed."
+  },
+  "l2-w01-check-row-nest": {
+    "files": [
+      "out/storytime-review/batch-31/pages/l2-w01-check-row-nest-m1-color.png",
+      "out/storytime-review/batch-31/pages/l2-w01-check-row-nest-m1-line.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "one object": "yes: one nest with three eggs; the eggs are part of the nest",
+      "large in the middle": "yes",
+      "plain light background": "yes: plain white",
+      "reads as the word at once": "yes: a bird nest with eggs",
+      "no text letter number or logo": "yes: checked color and line",
+      "count": "yes: 3 eggs in color and 3 eggs in line",
+      "line art 0 and 255 only": "yes: histogram shows only 0 and 255",
+      "line art bold and closed": "yes: rim measured 21 px, no thin lines, no eyes drawn on the nest"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-check-row-cat": {
+    "files": [
+      "out/storytime-review/batch-31/pages/l2-w01-check-row-cat-m1-color.png",
+      "out/storytime-review/batch-31/pages/l2-w01-check-row-cat-m1-line.png"
+    ],
+    "rating": 7.0,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "line art: the tail is a closed ring beside the head that can read as a second ear or a handle, and its outline fuses with the head outline where they cross",
+      "line art: the forehead and leg tabby stripes are drawn as thin outlined slivers measured 8 to 10 px against a 23 px body outline; they are texture lines in thin form",
+      "color: two small black wedge ticks float above the left eye and two beside the right eye; they read as specks rather than eyelashes",
+      "color: the white cheek right of the muzzle carries a gray speckled smudge that reads as dirt",
+      "line art drops the eyelash ticks that the color picture shows, so the two files differ"
+    ],
+    "goal_check": {
+      "one object": "yes: one cat",
+      "large in the middle": "yes",
+      "plain light background": "yes: plain white",
+      "reads as the word at once": "yes: a cat, with the tail ring risk beside the head",
+      "no text letter number or logo": "yes",
+      "count": "yes: one cat, four legs, two ears, one ring tail",
+      "line art 0 and 255 only": "yes",
+      "line art bold and closed": "partly: body outline 23 px and closed, but the stripe slivers are thin texture lines"
+    },
+    "goal_shown": true,
+    "retry_hint": "Draw the tail low behind the body as a simple curved shape, not a ring beside the head, and fill the tabby stripes as bold marks or drop them."
+  },
+  "l2-w01-check-row-fish": {
+    "files": [
+      "out/storytime-review/batch-31/pages/l2-w01-check-row-fish-m1-color.png",
+      "out/storytime-review/batch-31/pages/l2-w01-check-row-fish-m1-line.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "one object": "yes: one fish",
+      "large in the middle": "yes",
+      "plain light background": "yes: plain white",
+      "reads as the word at once": "yes: a fish in side view",
+      "no text letter number or logo": "yes",
+      "count": "yes: one fish, one eye, dorsal fin, tail fan, side fin",
+      "animal eyes correct": "yes: one closed ring with a solid pupil and a highlight",
+      "line art 0 and 255 only": "yes",
+      "line art bold and closed": "yes: fin fan lines 16 to 21 px, no scales, no specks"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-check-row-dog": {
+    "files": [
+      "out/storytime-review/batch-31/pages/l2-w01-check-row-dog-m1-color.png",
+      "out/storytime-review/batch-31/pages/l2-w01-check-row-dog-m1-line.png"
+    ],
+    "rating": 6.5,
+    "pass": false,
+    "clean": false,
+    "critical": [
+      "line art: both eyes are double rings, an outer ring plus an inner iris ring around the pupil, instead of one closed ring with a solid pupil; this is an eye defect on an animal"
+    ],
+    "defects": [
+      "line art: the raised tail that shows behind the rear in the color picture is missing",
+      "line art: the gaze changed; the left pupil sits down-right and the right pupil sits down-left, so the eyes converge inward, while both color pupils look the same way",
+      "line art: each pupil carries its own outlined white highlight, which adds a third ring inside the eye"
+    ],
+    "goal_check": {
+      "one object": "yes: one puppy",
+      "large in the middle": "yes",
+      "plain light background": "yes: plain white",
+      "reads as the word at once": "yes in color; the line still reads as a dog",
+      "no text letter number or logo": "yes: collar has no letter, number or plate in color and line",
+      "count": "yes in color: four legs, two ears, one tail; the line shows four legs and two ears but no tail",
+      "animal eyes correct": "no in line: double rings plus an outlined highlight in each eye",
+      "line art 0 and 255 only": "yes",
+      "line art bold and closed": "yes: outlines bold and closed; the fault is the eye structure"
+    },
+    "goal_shown": true,
+    "retry_hint": "Redraw each line eye as one closed ring with a solid pupil and one plain white highlight spot, keep both pupils looking the same way, and add the raised tail behind the rear."
+  },
+  "l2-w01-check-row-bus": {
+    "files": [
+      "out/storytime-review/batch-31/pages/l2-w01-check-row-bus-m1-color.png",
+      "out/storytime-review/batch-31/pages/l2-w01-check-row-bus-m1-line.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "line art: the door gains a horizontal divider line that the color door does not have, so the door reads as four panes instead of two"
+    ],
+    "goal_check": {
+      "one object": "yes: one bus",
+      "large in the middle": "yes",
+      "plain light background": "yes: plain white",
+      "reads as the word at once": "yes: a school bus",
+      "no text letter number or logo": "yes: 2x crops of the side panel, door, front and roof show no route number, sign, plate, word or logo; the grille is plain bars",
+      "count": "yes: one bus, four wheels in view as the angle allows",
+      "line art 0 and 255 only": "yes",
+      "line art bold and closed": "yes: outlines bold, grille bars bold, no specks"
+    },
+    "goal_shown": true,
+    "retry_hint": "Remove the horizontal divider in the line door so it matches the two-pane color door."
+  },
+  "l2-w01-check-row-hat": {
+    "files": [
+      "out/storytime-review/batch-31/pages/l2-w01-check-row-hat-m1-color.png",
+      "out/storytime-review/batch-31/pages/l2-w01-check-row-hat-m1-line.png"
+    ],
+    "rating": 9.0,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "one object": "yes: one hat",
+      "large in the middle": "yes",
+      "plain light background": "yes: plain white",
+      "reads as the word at once": "yes: a sun hat with a band and a bow",
+      "no text letter number or logo": "yes",
+      "count": "yes: one hat, one band, one bow",
+      "no eyes on the object": "yes: the line bow has no eyes; try 2 removed them",
+      "line art 0 and 255 only": "yes",
+      "line art bold and closed": "yes: outline 26 px, all shapes closed"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-check-row-cup": {
+    "files": [
+      "out/storytime-review/batch-31/pages/l2-w01-check-row-cup-m1-color.png",
+      "out/storytime-review/batch-31/pages/l2-w01-check-row-cup-m1-line.png"
+    ],
+    "rating": 9.0,
+    "pass": true,
+    "clean": true,
+    "critical": [],
+    "defects": [],
+    "goal_check": {
+      "one object": "yes: one cup",
+      "large in the middle": "yes",
+      "plain light background": "yes: plain white",
+      "reads as the word at once": "yes: a cup with a handle",
+      "no text letter number or logo": "yes",
+      "count": "yes: one cup",
+      "no eyes on the object": "yes",
+      "line art 0 and 255 only": "yes",
+      "line art bold and closed": "yes: rim ellipses and handle closed, no specks"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "l2-w01-check-row-net": {
+    "files": [
+      "out/storytime-review/batch-31/pages/l2-w01-check-row-net-m1-color.png",
+      "out/storytime-review/batch-31/pages/l2-w01-check-row-net-m1-line.png"
+    ],
+    "rating": 7.5,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "line art: the hoop rim is drawn as two concentric lines; the checklist asks for one thick rim line"
+    ],
+    "goal_check": {
+      "one object": "yes: one net",
+      "large in the middle": "yes",
+      "plain light background": "yes: plain white",
+      "reads as the word at once": "yes: a butterfly net",
+      "no text letter number or logo": "yes",
+      "count": "yes: one net",
+      "no eyes on the object": "yes",
+      "line art 0 and 255 only": "yes",
+      "line art bold and closed": "partly: mesh lines 11 to 14 px with big squares and no thin lines, but the rim is double"
+    },
+    "goal_shown": true,
+    "retry_hint": "Merge the two hoop lines into one thick rim line and keep the mesh grid as it is."
+  },
+  "l2-w01-practice-line-nest": {
+    "files": [
+      "out/storytime-review/batch-31/pages/l2-w01-practice-line-nest-m1-color.png",
+      "out/storytime-review/batch-31/pages/l2-w01-practice-line-nest-m1-line.png"
+    ],
+    "rating": 8.0,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "line art: the rim lines carry small angular steps and wobbles along the top edge, visible at 2x zoom"
+    ],
+    "goal_check": {
+      "one object": "yes: one nest with three eggs",
+      "large in the middle": "yes",
+      "plain light background": "yes: plain white",
+      "reads as the word at once": "yes: a bird nest with eggs",
+      "no text letter number or logo": "yes",
+      "count": "yes: 3 eggs in color and 3 eggs in line",
+      "line art 0 and 255 only": "yes",
+      "line art bold and closed": "partly: bold and closed, but the top rim has small angular steps"
+    },
+    "goal_shown": true,
+    "retry_hint": "Smooth the top rim lines into single clean curves without the small steps."
+  },
+  "l2-w01-practice-line-nut": {
+    "files": [
+      "out/storytime-review/batch-31/pages/l2-w01-practice-line-nut-m1-color.png",
+      "out/storytime-review/batch-31/pages/l2-w01-practice-line-nut-m1-line.png"
+    ],
+    "rating": 8.0,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "line art: at the right side the body outline meets the cap line with a small step and notch, visible at 3x zoom",
+      "line art: the cap outline is slightly wavy along its lower edge"
+    ],
+    "goal_check": {
+      "one object": "yes: one acorn",
+      "large in the middle": "yes",
+      "plain light background": "yes: plain white",
+      "reads as the word at once": "yes: an acorn with cap and stem",
+      "no text letter number or logo": "yes",
+      "count": "yes: one nut",
+      "no eyes on the object": "yes",
+      "line art 0 and 255 only": "yes",
+      "line art bold and closed": "partly: closed and bold, but the right cap junction has a small step"
+    },
+    "goal_shown": true,
+    "retry_hint": "Join the body outline to the cap line on the right in one clean corner without the step."
+  },
+  "nan-clean-refs": {
+    "files": [
+      "out/storytime-review/batch-31/clean-refs/look-reference-source-left-clean-right.png",
+      "out/storytime-review/batch-31/clean-refs/face-crop-source-left-clean-right.png",
+      "out/storytime-review/batch-31/clean-refs/side-left-head-source-left-clean-right.png",
+      "out/storytime-review/batch-31/clean-refs/side-right-head-source-left-clean-right.png",
+      "out/storytime-review/batch-31/clean-refs/nan-ref-clean-look-reference.png",
+      "out/storytime-review/batch-31/clean-refs/nan-ref-clean-face-crop.png"
+    ],
+    "rating": 8.5,
+    "pass": true,
+    "clean": false,
+    "critical": [],
+    "defects": [
+      "defects kept in the copies by design: the pale skin flaps at the outer eye corners and the jagged pale marks at the shirt neckline remain in the look reference and the face crop",
+      "the two side-head copies show a small rise in orange saturation on the shirt strip along the lower edge; there was no pale patch there before, so this is a change outside the ear scope"
+    ],
+    "goal_check": {
+      "ear rims fixed": "yes: at 4x zoom both ear rims in the look reference are smooth with no hole; the face-crop ear slivers are smoothed; the side-head ears were already smooth and stay smooth",
+      "shirt fixed": "yes at the shoulders: the pale blotch beside the collar is gone in the clean look reference; the jagged marks at the neckline itself remain",
+      "nothing else changed": "yes: a pixel diff of the 4000 x 3000 look reference finds changes only inside the two ear regions and one shoulder region; the 1024 face crop changes only at the two ear slivers; eyes, brows, eyelash marks, hair edge and outline are identical",
+      "eyes brows eyelash mark hair edge outline unchanged": "yes: verified at zoom and by pixel diff"
+    },
+    "goal_shown": true,
+    "retry_hint": ""
+  },
+  "summary": {
+    "items": 11,
+    "pass": 10,
+    "clean": 4,
+    "clean_keys": [
+      "l2-w01-check-row-nest",
+      "l2-w01-check-row-fish",
+      "l2-w01-check-row-hat",
+      "l2-w01-check-row-cup"
+    ],
+    "not_clean_keys": [
+      "l2-w01-check-row-cat",
+      "l2-w01-check-row-dog",
+      "l2-w01-check-row-bus",
+      "l2-w01-check-row-net",
+      "l2-w01-practice-line-nest",
+      "l2-w01-practice-line-nut",
+      "nan-clean-refs"
+    ]
+  }
+}
