@@ -33,10 +33,11 @@ export const SPEND_MARGIN_USD = 0.01;
 export const REPORT_AT_USD = 0.5;
 
 /**
- * Owner-granted extra tries per picture and kind (T4 step 11, 2026-11-05). The orchestrator
- * authorized this change under the PM decision of 09:17 ICT, and the strategy role amended the
- * 5.11 X2/X5 freeze for it. Exactly one entry; every other id and kind keeps the max of
- * MAX_TRIES, and the two-id group rule of PICTURE_IDS stays untouched.
+ * Owner-granted extra tries per picture and kind (T4 steps 11 and 13, 2026-11-05). The
+ * orchestrator authorized these changes under the PM decisions quoted in each `source`, and the
+ * strategy role amended the 5.11 X2/X5 freeze for them. Every entry grants its tries to one id
+ * and kind; `maxTriesFor` sums the extras, so every id and kind without an entry keeps the max
+ * of MAX_TRIES, and the two-id group rule of PICTURE_IDS stays untouched.
  */
 export const TRY_EXCEPTIONS = [
   {
@@ -45,13 +46,26 @@ export const TRY_EXCEPTIONS = [
     extraTries: 1,
     source: 'PM, 2026-11-05 09:17 ICT: "Yes to ONE extra line-art try (the 4th) for the nut, as you described: a Muse line call from the passing color m4, one single shell outline, the lengthwise seam as a short inner line, the same Sonnet judge with the "one nut only" check. This is my decision, not Daniel\'s ... The 3-try stop rule stays for every other picture."',
   },
+  {
+    id: 'l2-w01-story-page-a-nut',
+    kind: 'color',
+    extraTries: 1,
+    source: 'PM, 2026-11-05 ~10:23 ICT: "Yes: one more color try (ONE peanut lying on its side, plain one-pod profile, alone and large on Nan\'s palm) and one line try from it, 0.02 USD, same judge with the one-nut check. ... No further tries after this without my word."',
+  },
+  {
+    id: 'l2-w01-story-page-a-nut',
+    kind: 'line',
+    extraTries: 1,
+    source: 'PM, 2026-11-05 ~10:23 ICT: "Yes: one more color try (ONE peanut lying on its side, plain one-pod profile, alone and large on Nan\'s palm) and one line try from it, 0.02 USD, same judge with the one-nut check. ... No further tries after this without my word."',
+  },
 ];
 
-/** The try cap of one id and kind: MAX_TRIES plus the extra tries of its exception, if any. */
+/** The try cap of one id and kind: MAX_TRIES plus the extra tries of its exceptions, if any. */
 export const maxTriesFor = (id, kind, maxTries = MAX_TRIES) => {
   const key = pictureKey(id);
-  const hit = TRY_EXCEPTIONS.find((e) => pictureKey(e.id) === key && e.kind === kind);
-  return maxTries + (hit ? hit.extraTries : 0);
+  const extra = TRY_EXCEPTIONS.filter((e) => pictureKey(e.id) === key && e.kind === kind)
+    .reduce((s, e) => s + e.extraTries, 0);
+  return maxTries + extra;
 };
 
 /** Two-id pictures: the value is the group of ids of one picture. The first id is the key. */

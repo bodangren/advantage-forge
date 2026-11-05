@@ -141,57 +141,62 @@ describe('tryGuard', () => {
   });
 });
 
-describe('TRY_EXCEPTIONS (the nut line try 4, PM 2026-11-05 09:17 ICT)', () => {
+describe('TRY_EXCEPTIONS (the nut tries, PM 2026-11-05 09:17 and ~10:23 ICT)', () => {
   const nut = 'l2-w01-story-page-a-nut';
-  const nutLineRows = (n) => rowsOf(
-    Array.from({ length: n }, (_, i) => row(`2026-11-04T08:${String(10 + i * 10).padStart(2, '0')}:00`, nut, 'line', 0.01, 'ok', `${nut}-m${i + 1}-line.png`)),
+  const nutRows = (n, kind) => rowsOf(
+    Array.from({ length: n }, (_, i) => row(`2026-11-04T08:${String(10 + i * 10).padStart(2, '0')}:00`, nut, kind, 0.01, 'ok', `${nut}-m${i + 1}-${kind}.png`)),
   );
 
-  it('holds exactly one entry, the nut line, with 1 extra try and the PM source', () => {
-    expect(TRY_EXCEPTIONS).toHaveLength(1);
-    expect(TRY_EXCEPTIONS[0]).toMatchObject({ id: nut, kind: 'line', extraTries: 1 });
-    expect(TRY_EXCEPTIONS[0].source).toContain('2026-11-05 09:17 ICT');
+  it('holds three entries, each quoting the PM decision that granted it', () => {
+    expect(TRY_EXCEPTIONS).toHaveLength(3);
+    const line = TRY_EXCEPTIONS.filter((e) => e.kind === 'line');
+    const color = TRY_EXCEPTIONS.filter((e) => e.kind === 'color');
+    expect(line.reduce((s, e) => s + e.extraTries, 0)).toBe(2);
+    expect(color.reduce((s, e) => s + e.extraTries, 0)).toBe(1);
+    expect(TRY_EXCEPTIONS[0].source).toContain('09:17 ICT');
+    expect(TRY_EXCEPTIONS[1].source).toContain('10:23');
+    expect(TRY_EXCEPTIONS[2].source).toContain('10:23');
   });
 
-  it('allows the nut line with 3 restart rows 1 more try', () => {
-    const g = tryGuard(nutLineRows(3), nut, 'line');
+  it('allows the nut line with 3 restart rows 1 more try (cap 5)', () => {
+    const g = tryGuard(nutRows(3, 'line'), nut, 'line');
     expect(g.ok).toBe(true);
-    expect(g.max).toBe(4);
+    expect(g.max).toBe(5);
   });
 
-  it('refuses the nut line with 4 rows', () => {
-    const g = tryGuard(nutLineRows(4), nut, 'line');
+  it('allows the nut line with 4 rows 1 more try, and refuses it with 5 rows', () => {
+    expect(tryGuard(nutRows(4, 'line'), nut, 'line').ok).toBe(true);
+    const g = tryGuard(nutRows(5, 'line'), nut, 'line');
+    expect(g.ok).toBe(false);
+    expect(g.count).toBe(5);
+    expect(g.max).toBe(5);
+  });
+
+  it('allows the nut color with 3 rows 1 more try, and refuses it with 4 rows', () => {
+    expect(tryGuard(nutRows(3, 'color'), nut, 'color').ok).toBe(true);
+    const g = tryGuard(nutRows(4, 'color'), nut, 'color');
     expect(g.ok).toBe(false);
     expect(g.count).toBe(4);
     expect(g.max).toBe(4);
   });
 
-  it('still refuses the nut color with 3 rows', () => {
-    const rows = rowsOf([
-      row('2026-11-04T07:54:01', nut, 'color'),
-      row('2026-11-04T07:55:00', nut, 'color'),
-      row('2026-11-04T07:56:00', nut, 'color'),
-    ]);
-    const g = tryGuard(rows, nut, 'color');
-    expect(g.ok).toBe(false);
-    expect(g.max).toBe(3);
-  });
-
-  it('still refuses another id with 3 line rows', () => {
+  it('still refuses another id with 3 rows, in both kinds', () => {
     const other = 'l2-w01-story-page-a-nest';
-    const rows = rowsOf([
-      row('2026-11-04T07:54:01', other, 'line', 0.01, 'ok', `${other}-m1-line.png`),
-      row('2026-11-04T07:55:00', other, 'line', 0.01, 'ok', `${other}-m2-line.png`),
-      row('2026-11-04T07:56:00', other, 'line', 0.01, 'ok', `${other}-m3-line.png`),
+    const rows = (kind) => rowsOf([
+      row('2026-11-04T08:10:00', other, kind, 0.01, 'ok', `${other}-m1-${kind}.png`),
+      row('2026-11-04T08:20:00', other, kind, 0.01, 'ok', `${other}-m2-${kind}.png`),
+      row('2026-11-04T08:30:00', other, kind, 0.01, 'ok', `${other}-m3-${kind}.png`),
     ]);
-    const g = tryGuard(rows, other, 'line');
-    expect(g.ok).toBe(false);
-    expect(g.max).toBe(3);
+    expect(tryGuard(rows('line'), other, 'line').ok).toBe(false);
+    expect(tryGuard(rows('color'), other, 'color').ok).toBe(false);
+    expect(maxTriesFor(other, 'line')).toBe(MAX_TRIES);
+    expect(maxTriesFor(other, 'color')).toBe(MAX_TRIES);
   });
 
   it('keeps every other cap at MAX_TRIES', () => {
     expect(maxTriesFor('l2-w01-story-page-a-nest', 'color')).toBe(MAX_TRIES);
-    expect(maxTriesFor(nut, 'color')).toBe(MAX_TRIES);
+    expect(maxTriesFor(nut, 'color')).toBe(4);
+    expect(maxTriesFor(nut, 'line')).toBe(5);
   });
 });
 
