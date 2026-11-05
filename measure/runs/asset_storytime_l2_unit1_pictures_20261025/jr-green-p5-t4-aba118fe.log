@@ -1360,3 +1360,87 @@ plan_updates:
   - The T4 step 13 block now records both judge passes; the T4 step 14 block records the v3 delivery, the handoff folder, and the checked spend of 0.57 USD (57 rows)
 handoff: The nut v3 pair is delivered to out/storytime/l2/unit1/w01/delivery-muse-v4/ and handed over at /home/daniebo/Desktop/handoff/a48-forge-pictures-nut3/ (check exit 0). Workbooks is told with this handoff. Step 12 resumes on this HEAD (M2 needs the owned tsc errors at 0; the .d.mts is uncommitted until then). Restart spend 0.57 of 1.00. role_base_sha: 81ebac1c284eead124db29d92406f2f80f0583e6; Green HEAD: this commit.
 END_MEASURE_AGENT_RESULT
+
+# Step 12 of T4 (maker brief M2 to M7 of 5.11.9 with 5.11.14, 2026-11-05)
+
+role_base_sha: 81ebac1c284eead124db29d92406f2f80f0583e6
+Red model: none (light lane). Green model: kimi-code-plan-cn/kimi-for-coding.
+
+The nut delivery (step 14) ran first on the PM order of 10:47 ICT; this block records the step 12
+items after it. No Muse call ran in step 12.
+
+## M2 (commit `0206a566`, type check pending)
+
+`scripts/storytime-muse-guards.d.mts` was added in the form of `scripts/storytime-judge-batch.d.mts`
+with types for every export the tests import (RESTART_START, MAX_TRIES, TRY_EXCEPTIONS, maxTriesFor,
+PICTURE_IDS, pictureKey, parseCostsTsv, isFailedZeroCost, countTries, spendTotal, tryGuard,
+spendGuard, scanCostFiles, runGuards). No runtime change. An interim TYPECHECK_COMMAND pass (the
+heavy lock fell free once before the PM hold) showed `tsc errors total: 63` and
+`owned tsc errors: 25`; without the type file the same tree showed 67 total and 29 owned. The 25
+owned errors sit in `tests/storytime-muse-attempts.test.ts` helper annotations (implicit-any
+params, the `root` variable, and 3 possibly-undefined index reads under noUncheckedIndexedAccess
+from the step 11/13 test additions). The fix of those annotations and the verification run are
+pending: the heavy lock is held for Workbooks v14 until about 13:00 ICT (PM order, orchestrator
+11:2x ICT), so no TYPECHECK_COMMAND and no vitest ran to a gate after the .d.mts.
+
+## M3
+
+The 5 plan lines of finding F3 now say "judge-passed" where the text means a judge pass (the T3a
+calibration reading, the T4 step 1 dry-run line, the T4 step 2 finding 2, and the T5 and T6
+progress lines). No number and no path changed.
+
+## M4
+
+Task 3 (the week 8 check-row pictures) is `[x]` with `6fd626c6` on its first line, plus the note
+of 5.11.9 M4: list C is in `w08/delivery-muse-v1/` and the ostrich is in `w07/delivery-muse-v2/`,
+with the handoff folders `a48-forge-pictures-drum`, `-c`, and `-a`.
+
+## M5
+
+`f25d8399` (the commit that holds the T5 and T6 delivery record) is on the first lines of T5 and
+T6.
+
+## M6
+
+`metadata.json`: `actual_tasks` is 29 (the X12 grep `grep -cE '^- \[x\] Task'` on the plan),
+`updated_at` is 2026-11-05T04:28:34Z, the evidence list gained the restart delivery manifests
+(w01/delivery-muse-v3, w01/delivery-muse-v4, w02/w03/w04/w05/w06/w07 delivery-muse-v2,
+w05/w07 delivery-a48-d, w08/delivery-muse-v1), the handoff folders (a, b, c, d, drum, nut3), and
+the role log; `status` stays `in_progress`. The track line of `measure/tracks.md` stays `[~]` in
+the 5.6 wording (only this track's line was staged).
+
+## M7 (pending)
+
+GREEN_TEST_COMMAND did not run: the heavy lock is held for Workbooks v14 until about 13:00 ICT
+(PM order). The orchestrator sends the type check and the GREEN run after 13:00.
+
+## Commits (explicit paths)
+
+| Commit | Paths |
+| --- | --- |
+| `8eb7e8c4` | the T4 step 14 plan and log (the nut v3 delivery) |
+| `0206a566` | `scripts/storytime-muse-guards.d.mts` |
+| (this commit) | `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md`, `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/metadata.json`, `measure/tracks.md` (this track's line only), `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p5-t4-aba118fe.log` |
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: partial
+commits:
+  - 8eb7e8c4
+  - 0206a566
+tests_run: []
+files_changed:
+  - scripts/storytime-muse-guards.d.mts
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/metadata.json
+  - measure/tracks.md
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p5-t4-aba118fe.log
+plan_updates:
+  - The T4 step 12 block records M2 (with the type-check pending note), M3, M4, M5, M6, and M7 (pending)
+known_failures:
+  - M2 gate not yet at owned tsc errors 0: 25 owned annotations remain in tests/storytime-muse-attempts.test.ts; the verification run waits for the heavy lock (Workbooks v14, until about 13:00 ICT, PM order)
+  - M7 GREEN_TEST_COMMAND pending for the same hold
+handoff: Step 12 light work is done (M2 file, M3, M4, M5, M6; the nut v3 delivery of step 14 is committed at 8eb7e8c4 and handed over). Pending after 13:00 ICT when the heavy lock frees: the type check and GREEN_TEST_COMMAND, and the annotation fix of the 25 owned test errors (20 pre-existing, 5 from the step 11/13 test additions; no runtime change). Restart spend 0.57 of 1.00; no Muse call ran in step 12. role_base_sha: 81ebac1c284eead124db29d92406f2f80f0583e6; Green HEAD: this commit.
+END_MEASURE_AGENT_RESULT

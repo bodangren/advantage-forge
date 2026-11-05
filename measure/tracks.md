@@ -2,6 +2,13 @@
 
 This registry gives each historical, current, and planned work item one Measure owner.
 
+## Contents
+
+- [Foundation and history](#foundation-and-history)
+- [Asset production](#asset-production)
+- [Games](#games)
+- [Riven Lands pack](#riven-lands-pack)
+
 ## Foundation and history
 
 - [x] **Track: History: Add rigging, animation, and clearance checks**
@@ -137,7 +144,7 @@ This registry gives each historical, current, and planned work item one Measure 
 
 - [~] **Track: Storytime Level 2 unit 1 book pictures and cover render**
   *Link: [./tracks/asset_storytime_l2_unit1_pictures_20261025/](./tracks/asset_storytime_l2_unit1_pictures_20261025/)*
-  *Status:* delivered; person-reviewed by Daniel (owner-passed); week 8 deferred to PM assignment; no Workbooks acceptance recorded.
+  *Status:* weeks 1 to 8 pictures delivered (independent model review, model evidence, not acceptance); the A-48 restart groups A, B, C, and D and the nut v3 pair delivered and handed over (a48-forge-pictures-a, -b, -c, -d, -drum, -nut3); no person review of the restart pictures yet (Daniel checks the 11-10 book proof); no Workbooks acceptance recorded.
 
 ## Games
 
