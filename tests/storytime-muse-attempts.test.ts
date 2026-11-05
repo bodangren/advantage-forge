@@ -19,6 +19,8 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import {
   RESTART_START,
   MAX_TRIES,
+  TRY_EXCEPTIONS,
+  maxTriesFor,
   countTries,
   spendTotal,
   tryGuard,
@@ -136,6 +138,60 @@ describe('tryGuard', () => {
       row('2026-11-04T07:55:00', 'l2-w01-story-page-a-nest', 'color'),
     ]);
     expect(tryGuard(rows, 'l2-w01-story-page-a-nest', 'color').ok).toBe(true); // only 1 counts
+  });
+});
+
+describe('TRY_EXCEPTIONS (the nut line try 4, PM 2026-11-05 09:17 ICT)', () => {
+  const nut = 'l2-w01-story-page-a-nut';
+  const nutLineRows = (n) => rowsOf(
+    Array.from({ length: n }, (_, i) => row(`2026-11-04T08:${String(10 + i * 10).padStart(2, '0')}:00`, nut, 'line', 0.01, 'ok', `${nut}-m${i + 1}-line.png`)),
+  );
+
+  it('holds exactly one entry, the nut line, with 1 extra try and the PM source', () => {
+    expect(TRY_EXCEPTIONS).toHaveLength(1);
+    expect(TRY_EXCEPTIONS[0]).toMatchObject({ id: nut, kind: 'line', extraTries: 1 });
+    expect(TRY_EXCEPTIONS[0].source).toContain('2026-11-05 09:17 ICT');
+  });
+
+  it('allows the nut line with 3 restart rows 1 more try', () => {
+    const g = tryGuard(nutLineRows(3), nut, 'line');
+    expect(g.ok).toBe(true);
+    expect(g.max).toBe(4);
+  });
+
+  it('refuses the nut line with 4 rows', () => {
+    const g = tryGuard(nutLineRows(4), nut, 'line');
+    expect(g.ok).toBe(false);
+    expect(g.count).toBe(4);
+    expect(g.max).toBe(4);
+  });
+
+  it('still refuses the nut color with 3 rows', () => {
+    const rows = rowsOf([
+      row('2026-11-04T07:54:01', nut, 'color'),
+      row('2026-11-04T07:55:00', nut, 'color'),
+      row('2026-11-04T07:56:00', nut, 'color'),
+    ]);
+    const g = tryGuard(rows, nut, 'color');
+    expect(g.ok).toBe(false);
+    expect(g.max).toBe(3);
+  });
+
+  it('still refuses another id with 3 line rows', () => {
+    const other = 'l2-w01-story-page-a-nest';
+    const rows = rowsOf([
+      row('2026-11-04T07:54:01', other, 'line', 0.01, 'ok', `${other}-m1-line.png`),
+      row('2026-11-04T07:55:00', other, 'line', 0.01, 'ok', `${other}-m2-line.png`),
+      row('2026-11-04T07:56:00', other, 'line', 0.01, 'ok', `${other}-m3-line.png`),
+    ]);
+    const g = tryGuard(rows, other, 'line');
+    expect(g.ok).toBe(false);
+    expect(g.max).toBe(3);
+  });
+
+  it('keeps every other cap at MAX_TRIES', () => {
+    expect(maxTriesFor('l2-w01-story-page-a-nest', 'color')).toBe(MAX_TRIES);
+    expect(maxTriesFor(nut, 'color')).toBe(MAX_TRIES);
   });
 });
 

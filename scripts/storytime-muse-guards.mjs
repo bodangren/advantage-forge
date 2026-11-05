@@ -32,6 +32,28 @@ export const SPEND_CAP_USD = 1.0;
 export const SPEND_MARGIN_USD = 0.01;
 export const REPORT_AT_USD = 0.5;
 
+/**
+ * Owner-granted extra tries per picture and kind (T4 step 11, 2026-11-05). The orchestrator
+ * authorized this change under the PM decision of 09:17 ICT, and the strategy role amended the
+ * 5.11 X2/X5 freeze for it. Exactly one entry; every other id and kind keeps the max of
+ * MAX_TRIES, and the two-id group rule of PICTURE_IDS stays untouched.
+ */
+export const TRY_EXCEPTIONS = [
+  {
+    id: 'l2-w01-story-page-a-nut',
+    kind: 'line',
+    extraTries: 1,
+    source: 'PM, 2026-11-05 09:17 ICT: "Yes to ONE extra line-art try (the 4th) for the nut, as you described: a Muse line call from the passing color m4, one single shell outline, the lengthwise seam as a short inner line, the same Sonnet judge with the "one nut only" check. This is my decision, not Daniel\'s ... The 3-try stop rule stays for every other picture."',
+  },
+];
+
+/** The try cap of one id and kind: MAX_TRIES plus the extra tries of its exception, if any. */
+export const maxTriesFor = (id, kind, maxTries = MAX_TRIES) => {
+  const key = pictureKey(id);
+  const hit = TRY_EXCEPTIONS.find((e) => pictureKey(e.id) === key && e.kind === kind);
+  return maxTries + (hit ? hit.extraTries : 0);
+};
+
 /** Two-id pictures: the value is the group of ids of one picture. The first id is the key. */
 export const PICTURE_IDS = {
   'l2-w01-practice-line-nose': ['l2-w01-practice-line-nose', 'l2-w01-check-row-nose'],
@@ -86,12 +108,13 @@ export const countTries = (rows, id, kind, startTime = RESTART_START) => {
 /** Spend: the usage_cost of every row since the restart start, in all cost files. */
 export const spendTotal = (rows, startTime = RESTART_START) => rows.filter((r) => sinceStart(r.time, startTime)).reduce((s, r) => s + r.cost, 0);
 
-/** Try guard: refuses when the next call would be the 4th try of the picture and kind. */
+/** Try guard: refuses when the next call would pass the try cap of the picture and kind. */
 export const tryGuard = (rows, id, kind, requested = 1, startTime = RESTART_START, maxTries = MAX_TRIES) => {
+  const limit = maxTriesFor(id, kind, maxTries);
   const count = countTries(rows, id, kind, startTime);
-  if (count >= maxTries) return { ok: false, count, reason: `count ${count} at max ${maxTries}` };
-  if (count + requested > maxTries) return { ok: false, count, reason: `count ${count} plus requested ${requested} over max ${maxTries}` };
-  return { ok: true, count };
+  if (count >= limit) return { ok: false, count, max: limit, reason: `count ${count} at max ${limit}` };
+  if (count + requested > limit) return { ok: false, count, max: limit, reason: `count ${count} plus requested ${requested} over max ${limit}` };
+  return { ok: true, count, max: limit };
 };
 
 /** Spend guard: refuses when the sum plus the margin is over the cap. Gives the notice state. */
@@ -139,7 +162,7 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
   for (const ctx of ctxs) {
     const g = tryGuard(pictureRows, ctx.spec.id, kind, requested);
     if (!g.ok) {
-      return { refused: true, code: 3, spend, notice: s.notice, message: `refused: ${ctx.spec.id} ${kind} count ${g.count} (max ${MAX_TRIES})` };
+      return { refused: true, code: 3, spend, notice: s.notice, message: `refused: ${ctx.spec.id} ${kind} count ${g.count} (max ${g.max})` };
     }
   }
   return { refused: false, code: 0, spend, notice: s.notice, message: '' };
