@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "pictureListSha256": "327f805f2f44aeed2b29477e83921ed03cf5fd7ab6600910ca8e21fced5b2cc7",
+  "entries": [
+    {
+      "rowId": "l2-w08-check-row-drum",
+      "version": 1,
+      "fileVersion": 1,
+      "colorPrint": "l2-w08-check-row-drum-m1-color-print.png",
+      "linePrint": "l2-w08-check-row-drum-m1-line-print.png",
+      "notes": [
+        "Independent review (model evidence, not the person count): judge claude-code/claude-sonnet-5-5#high with the fixed prompt docs/storytime/l2-unit1/judge/judge-prompt.md version 6. Bar: Daniel 2026-11-01 14:15 ICT.",
+        "Color try 1: artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r1-color-f15bff60.json, verdict pass.",
+        "Line try 1: artifact measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r2-line-186d78ba.json, verdict pass.",
+        "The approved color print is l2-w08-check-row-drum-m1-color-print.png (1500 x 1500) and the approved line print is l2-w08-check-row-drum-m1-line-print.png (1500 x 1500, 8-bit gray, only the values 0 and 255). The line art is the Muse call of try 1; no despeckle step and no other local filter ran for this picture.",
+        "No person review yet. Daniel checks the look of the picture in the book proof."
+      ]
+    }
+  ]
+}
