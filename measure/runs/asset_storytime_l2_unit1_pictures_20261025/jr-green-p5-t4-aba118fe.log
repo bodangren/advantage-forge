@@ -305,3 +305,113 @@ known_failures:
   - The type check exits 2 with 58 errors; none names a file of this step
 handoff: Round 1 of T4 is done. The four color tries of the drum, the nest page, the nut page, and the nest-and-nut page are ready, and the judge batch is at docs/storytime/l2-unit1/judge/prod/batch-r1-color.json. The judge has not run yet. The next step is the judge on that batch, then the tries of the picture that fails. phase_base_sha: aba118fe5c96902b0a7ddf31b3414693d13d7f21; Green HEAD: f58e1f42.
 END_MEASURE_AGENT_RESULT
+
+# Step 3 of T4 (round 2, 2026-11-05)
+
+role_base_sha: f15bff60e578a6a508dfa8c934f404cadc4a26a2
+Red model: none (light lane). Green model: minimax-cn-coding-plan/MiniMax-M3.1-Flash.
+
+Rule change of 2026-11-05 07:21 ICT: a Muse call is a light role. Every Muse call and the judge
+batch script ran with `node` and without the heavy runner. The heavy runner stays for vitest.
+
+The first drum line call of this step waited on the heavy lock behind a Workbooks build and was
+stopped before any provider call. It was not a try: the w08 costs.tsv holds no line row for the
+drum, and the drum line try count stayed at 0 before the call was run again.
+
+15 Muse calls ran (14 from the brief and the A2 color try 2). No line art came from a local
+filter. The judge has not run on the round 2 batches yet.
+
+## The round 1 judge result
+
+The judge of round 1 (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r1-color-f15bff60.json`)
+passed the drum m1, the nest page m8, and the nest-and-nut page m4. It failed the A2 nut page m2
+with the defect class `layout-fault`: "the nut is large in the middle" was absent, and the peanut
+was about one eighth of the picture width, at the left edge, in Nan's hand. The second judge
+(`judge-prod-r1-color-a2-second-f15bff60.json`) confirmed the fail.
+
+## Commits (explicit paths)
+
+| Commit | Paths |
+| --- | --- |
+| `34d1c2b2` | `docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json` |
+| `d3e1da96` | `docs/storytime/l2-unit1/judge/prod/batch-r2-line.json`, `docs/storytime/l2-unit1/judge/prod/batch-r2-color.json`, `docs/storytime/l2-unit1/judge/prod/batch-r2-color-a2.json` |
+| `fc1c4fc2` | `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md` |
+
+## The calls
+
+| Id | Kind | Muse version | Cost (USD) | File | Result |
+| --- | --- | --- | --- | --- | --- |
+| `l2-w08-check-row-drum` | line | m1 | 0.01 | `out/storytime/l2/unit1/w08/muse/l2-w08-check-row-drum-m1-line.png` | ok |
+| `l2-w01-story-page-a-nest` | line | m8 | 0.01 | `out/storytime/l2/unit1/w01/muse/l2-w01-story-page-a-nest-m8-line.png` | ok |
+| `l2-w01-story-page-a-nest-and-a-nut` | line | m4 | 0.01 | `out/storytime/l2/unit1/w01/muse/l2-w01-story-page-a-nest-and-a-nut-m4-line.png` | ok |
+| `l2-w01-check-row-nose` | color | m4 | 0.01 | `out/storytime/l2/unit1/w01/muse/l2-w01-check-row-nose-m4-color.png` | ok |
+| `l2-w04-check-row-milk` | color | m2 | 0.01 | `out/storytime/l2/unit1/w04/muse/l2-w04-check-row-milk-m2-color.png` | ok |
+| `l2-w02-check-row-axe` | color | m1 | 0.01 | `out/storytime/l2/unit1/w02/muse/l2-w02-check-row-axe-m1-color.png` | ok |
+| `l2-w07-check-row-ostrich` | color | m1 | 0.01 | `out/storytime/l2/unit1/w07/muse/l2-w07-check-row-ostrich-m1-color.png` | ok |
+| `l2-w06-check-row-ten` | color | m3 | 0.01 | `out/storytime/l2/unit1/w06/muse/l2-w06-check-row-ten-m3-color.png` | ok |
+| `l2-w07-story-page-the-top-on-a-pot` | color | m4 | 0.01 | `out/storytime/l2/unit1/w07/muse/l2-w07-story-page-the-top-on-a-pot-m4-color.png` | ok |
+| `l2-w03-story-page-a-pan-on-a-pan` | color | m2 | 0.01 | `out/storytime/l2/unit1/w03/muse/l2-w03-story-page-a-pan-on-a-pan-m2-color.png` | ok |
+| `l2-w03-story-page-a-pan-in-a-pan` | color | m6 | 0.01 | `out/storytime/l2/unit1/w03/muse/l2-w03-story-page-a-pan-in-a-pan-m6-color.png` | ok |
+| `l2-w01-story-page-a-neck` | color | m6 | 0.01 | `out/storytime/l2/unit1/w01/muse/l2-w01-story-page-a-neck-m6-color.png` | ok |
+| `l2-w08-check-row-moon` | color | m1 | 0.01 | `out/storytime/l2/unit1/w08/muse/l2-w08-check-row-moon-m1-color.png` | ok |
+| `l2-w08-check-row-mango` | color | m1 | 0.01 | `out/storytime/l2/unit1/w08/muse/l2-w08-check-row-mango-m1-color.png` | ok |
+| `l2-w01-story-page-a-nut` | color | m3 | 0.01 | `out/storytime/l2/unit1/w01/muse/l2-w01-story-page-a-nut-m3-color.png` | ok |
+
+Restart spend so far: 0.19 USD of the 1.00 USD cap. The A2 nut page has 2 color tries of the 3
+that it may have; every other picture has 1 color try; the three line pictures have 1 line try
+each.
+
+## The A2 spec fix
+
+The color prompt of `docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json` now asks for one
+peanut in its shell, large, about one third of the picture width, in the middle of the picture,
+held up in Nan's open hand toward the reader. Nan stands behind the hand at the right side,
+smaller, and her face stays clear. The mustShow phrases stay as they are.
+
+## The judge batches
+
+| Batch | Path | Files |
+| --- | --- | --- |
+| round 2 line | `docs/storytime/l2-unit1/judge/prod/batch-r2-line.json` | 3 |
+| round 2 color | `docs/storytime/l2-unit1/judge/prod/batch-r2-color.json` | 11 |
+| round 2 color A2 | `docs/storytime/l2-unit1/judge/prod/batch-r2-color-a2.json` | 1 |
+
+Every judge file points at the file of this round: the line files m1, m8, and m4; the color files
+m4, m2, m1, m1, m3, m4, m2, m6, m6, m1, and m1; and the A2 try 2 at m3, not at m2.
+
+## Tests
+
+No code changed in this step, so no vitest run was needed. The last gate run was the step 2 run
+of `tests/storytime-judge-batch.test.ts`: `Test Files  1 passed (1)`; `Tests  8 passed (8)`;
+exit `0`.
+
+## Defaults taken
+
+- The A2 try 2 went to m3, because the version counter of the week folder continues from the old
+  m1 and m2 files. The judge batch maps the try number to the costs rows, so try 2 is m3.
+- The drum line call ran again with the same command after the stopped call. The stopped call
+  wrote no costs row and no file, so the line try count of the drum was 1 after the rerun.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: partial
+commits:
+  - 34d1c2b2
+  - d3e1da96
+  - fc1c4fc2
+tests_run: []
+files_changed:
+  - docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json
+  - docs/storytime/l2-unit1/judge/prod/batch-r2-line.json
+  - docs/storytime/l2-unit1/judge/prod/batch-r2-color.json
+  - docs/storytime/l2-unit1/judge/prod/batch-r2-color-a2.json
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+plan_updates:
+  - The T4 step 3 block records the round 1 judge result, the A2 fail and its second judge, the rule change, the 15 calls, the spend of 0.19 USD, the A2 spec fix, and the three round 2 batches
+known_failures:
+  - tests/storytime-book-pictures.test.ts has 8 failures that came before this step: it pins the picture list SHA-256 6d05dfc and the Workbooks list has moved on to 327f805f
+  - The type check exits 2 with 58 errors; none names a file of this step
+handoff: Round 2 of T4 is done. The line art of the three round 1 color passes, the first color try of the eleven pictures of A4 to A12, the moon, and the mango, and the second color try of the A2 nut page are ready. The restart spend is 0.19 USD of the 1.00 USD cap. The three batches are at docs/storytime/l2-unit1/judge/prod/batch-r2-line.json, batch-r2-color.json, and batch-r2-color-a2.json. The judge has not run on them yet. The next step is the judge on those batches, then the tries of the pictures that fail. phase_base_sha: aba118fe5c96902b0a7ddf31b3414693d13d7f21; Green HEAD: fc1c4fc2.
+END_MEASURE_AGENT_RESULT
