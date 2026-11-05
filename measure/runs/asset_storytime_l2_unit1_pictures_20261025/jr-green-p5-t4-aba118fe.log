@@ -1187,3 +1187,116 @@ known_failures:
   - tests/storytime-book-pictures.test.ts has 8 failures that came before step 8: it pins the picture list SHA-256 6d05dfc and the Workbooks list has moved on to 327f805f
 handoff: The PM exception is carried out and the nut line try 4 ran (m4-line-2, 0.01 USD; restart spend 0.55 of 1.00). The round 8 batch is at docs/storytime/l2-unit1/judge/prod/batch-r8-line-nut4.json (commit c3d31c2a) and points at the new file. The judge has not run on it yet. If it passes, the next step delivers the m4 nut prints to a48-forge-pictures-nut3/ per the PM decision; if it fails, v2 stays and the PM gets one line. role_base_sha: f51889cc32c4abf4b7a9f58df59608f448e2ed60; Green HEAD: this commit.
 END_MEASURE_AGENT_RESULT
+
+# Step 13 of T4 (the nut color try 4 and line try 5, PM decision ~10:23 ICT, 2026-11-05)
+
+role_base_sha: 81ebac1c284eead124db29d92406f2f80f0583e6 (paused step 12 to run this first, per the orchestrator 10:24 ICT)
+Red model: none (light lane). Green model: kimi-code-plan-cn/kimi-for-coding.
+
+Deviation carried: this maker replaced the earlier MiniMax maker (session ses_e5769d3feffe8eIjC22MWAmzDO).
+
+## The nut outcome of step 11 (recorded in the plan step 11 block)
+
+Line try 4 (m4 line-2) failed with two judges: `judge-prod-r8-line-nut4-c3d31c2a.json` and
+`judge-prod-r8-line-nut4-second-c3d31c2a.json` (2 pods counted). Per the PM decision, v2 stays in
+`w01/delivery-muse-v3/` and `a48-forge-pictures-a/`; nothing new was delivered; no v4 folder and
+no `nut3` folder exist. The orchestrator sent the PM one line at 10:21 ICT.
+
+## The PM decision of ~10:23 ICT (quoted in the plan)
+
+"Yes: one more color try (ONE peanut lying on its side, plain one-pod profile, alone and large
+on Nan's palm) and one line try from it, 0.02 USD, same judge with the one-nut check. Keep the
+nut look the same as the other new nut pictures of the week, as far as the side view allows. If
+either try fails, stop: v2 stays, and the nut goes on Daniel's v14 look list as a known item
+with two options (peanut on its side, or one cashew). No further tries after this without my
+word. Deliver a pass to a48-forge-pictures-nut3/ with a MANIFEST and tell Workbooks."
+
+Cause of the earlier fails (orchestrator's look): the color m4 shows the peanut standing
+upright, seen from its seam side, with a deep center groove facing the viewer. Every line try
+from m4 traced two pods.
+
+## 1. The guard (commit `0c331833`)
+
+`TRY_EXCEPTIONS` now holds three entries for the nut, each quoting the PM decision that
+granted it: line +1 (09:17 ICT), color +1 (~10:23 ICT), line +1 (~10:23 ICT). `maxTriesFor`
+sums the extras, so the nut line cap is 5 and the nut color cap is 4; every other id and kind
+keeps 3. Test command: `HEAVY_MIN_AVAIL_MB=1500 bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-attempts.test.ts --maxWorkers=1'`;
+`Test Files  1 passed (1)`; `Tests  30 passed (30)`; exit `0`. The new cases: nut color at 3
+rows passes for 1 more and at 4 is refused; nut line at 4 passes for 1 more and at 5 is
+refused; another id at 3 is refused in both kinds. No `storytime-muse-guards.d.mts` existed at
+this point (M2 of step 12 ran after this step).
+
+## 2. The spec (commit `5c5e0a4a`)
+
+`colorPrompt` now asks for exactly ONE peanut in its shell, LYING ON ITS SIDE (long axis
+level), seen from the side: the plain one-pod profile, one long shell with two round bumps and
+a narrow waist, one closed outline, no seam side facing the viewer, no deep center groove,
+alone and large (about one third of the picture width) on Nan's open palm, in the middle, same
+tan color and netted shell texture as the peanut of the passing nest-and-nut m4 color (added as
+Picture 4, nut look only). The m4 color print stays as Picture 3 for Nan, the hand, the pose,
+and the background only, and the prompt says its upright nut is wrong. `linePrompt` keeps the
+step 10 text (one closed outline, the seam as one short inner line, netted texture inside).
+`mustShow` is unchanged.
+
+## 3. The calls (one after the other, no despeckle, no local filter)
+
+| Kind | Result | Version | Cost (USD) |
+| --- | --- | --- | --- |
+| color try 4 | `l2-w01-story-page-a-nut-m5 color ok 1920x1280` | m5 | 0.01 |
+| line try 5 | `l2-w01-story-page-a-nut-m5 line try 1 ok 1920x1280` (`--from 5`) | m5 | 0.01 |
+
+The guard did not refuse either call.
+
+## 4. The batches (commit `3ef35157`, at once)
+
+| Batch | Path | Judge copy | Points at |
+| --- | --- | --- | --- |
+| color try 4 | `docs/storytime/l2-unit1/judge/prod/batch-r9-color-nut5.json` | `...-nut-color-t4.png` | the m5 color row |
+| line try 5 | `docs/storytime/l2-unit1/judge/prod/batch-r9-line-nut5.json` | `...-nut-line-t5.png` | the m5 line row |
+
+The batch script did not refuse the tries above 3 or 4. Both batches carry the mustShow item
+"one nut only: one peanut in its shell, and no other nut in the picture". The judge has not run
+on them yet.
+
+## Spend
+
+Restart spend total: 0.57 USD (57 rows, counted from the cost files with the restart start of
+2026-11-04T07:54:00Z). The nut color has 4 tries and the nut line has 5; every other picture
+and kind has 3 or less.
+
+## Commits (explicit paths)
+
+| Commit | Paths |
+| --- | --- |
+| `0c331833` | `scripts/storytime-muse-guards.mjs`, `tests/storytime-muse-attempts.test.ts` |
+| `5c5e0a4a` | `docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json` |
+| `3ef35157` | `docs/storytime/l2-unit1/judge/prod/batch-r9-color-nut5.json`, `docs/storytime/l2-unit1/judge/prod/batch-r9-line-nut5.json` |
+| (this commit) | `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md`, `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p5-t4-aba118fe.log` |
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: partial
+commits:
+  - 0c331833
+  - 5c5e0a4a
+  - 3ef35157
+tests_run:
+  - command: HEAVY_MIN_AVAIL_MB=1500 bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-muse-attempts.test.ts --maxWorkers=1'
+    result: Test Files  1 passed (1); Tests  30 passed (30); exit 0
+files_changed:
+  - scripts/storytime-muse-guards.mjs
+  - tests/storytime-muse-attempts.test.ts
+  - docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json
+  - docs/storytime/l2-unit1/judge/prod/batch-r9-color-nut5.json
+  - docs/storytime/l2-unit1/judge/prod/batch-r9-line-nut5.json
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p5-t4-aba118fe.log
+plan_updates:
+  - The T4 step 11 block now records the nut outcome (line try 4 failed with two judges, v2 stays)
+  - The T4 step 13 block records the PM quote, the guard change with its test totals, the calls, and the batches
+known_failures:
+  - tests/storytime-book-pictures.test.ts has 8 failures that came before step 8: it pins the picture list SHA-256 6d05dfc and the Workbooks list has moved on to 327f805f
+handoff: The nut color try 4 (m5) and line try 5 (m5) ran (0.02 USD; restart spend 0.57 of 1.00; 57 rows) and the round 9 batches are committed at 3ef35157. The judge has not run on them yet. Per the PM decision: if either fails, v2 stays and the nut goes on Daniel's v14 look list; if both pass, the next step delivers the m5 pair to a48-forge-pictures-nut3/ with a MANIFEST and tells Workbooks. Step 12 (M2 to M7) resumes next on this HEAD. role_base_sha: 81ebac1c284eead124db29d92406f2f80f0583e6; Green HEAD: this commit.
+END_MEASURE_AGENT_RESULT
