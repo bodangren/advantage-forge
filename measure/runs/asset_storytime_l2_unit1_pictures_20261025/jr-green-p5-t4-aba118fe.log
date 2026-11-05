@@ -1021,3 +1021,86 @@ known_failures:
   - tests/storytime-book-pictures.test.ts has 8 failures that came before step 8: it pins the picture list SHA-256 6d05dfc and the Workbooks list has moved on to 327f805f
 handoff: The nut attempt 3 is ready for the judge. The color m4 and the line m4 ran (0.02 USD this step; restart spend 0.54 of 1.00), and the two batches are at docs/storytime/l2-unit1/judge/prod/batch-r7-color-nut3.json and batch-r7-line-nut3.json. No delivery ran. If the judge passes both, the nut m4 prints replace the v2 nut files in a later delivery step; if either fails, the picture is out of tries and the PM decides. role_base_sha: df2aa52e3863dd59641351b60c3950a81358a84e; Green HEAD: this commit.
 END_MEASURE_AGENT_RESULT
+
+# Step 10 of T4 (the nut line try 4, PM exception, 2026-11-05)
+
+role_base_sha: 0d72e9cfe922f7000c5c4aa53301f72bb538fc27
+Red model: none (light lane). Green model: kimi-code-plan-cn/kimi-for-coding.
+
+Deviation carried: this maker replaced the earlier MiniMax maker (session ses_e5769d3feffe8eIjC22MWAmzDO).
+
+## The judge results of step 9 (Sonnet, prompt v6)
+
+- Color try 3, m4: pass (`judge-prod-r7-color-nut3-0d72e9cf.json`): one nut, clearly a peanut.
+- Line try 3, from m4: fail with two judges (`judge-prod-r7-line-nut3-0d72e9cf.json`,
+  `judge-prod-r7-line-nut3-second-0d72e9cf.json`): two pods side by side, each with its own
+  closed outline, so the count is 2.
+
+## The PM decision (2026-11-05 09:17 ICT, quoted in the plan)
+
+"Yes to ONE extra line-art try (the 4th) for the nut, as you described: a Muse line call from
+the passing color m4, one single shell outline, the lengthwise seam as a short inner line, the
+same Sonnet judge with the "one nut only" check. This is my decision, not Daniel's: on 11-05 he
+gave the PM all speed, quality, and cost choices, and 0.01 USD stays inside the 1.00 USD cap.
+The 3-try stop rule stays for every other picture. If the 4th try fails, v2 stays, deliver
+nothing new, and send me one line. If it passes, deliver to a48-forge-pictures-nut3/ with a
+MANIFEST and tell Workbooks. No other extra tries without my word."
+
+## Part 1: the line prompt (commit `49f3679d`)
+
+Only `linePrompt` of `docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json` changed: trace
+exactly ONE closed outline for the peanut shell (one shell, two round bumps, one narrow waist);
+the lengthwise seam is one short thin inner line inside that outline and never a second outline
+or a second pod; the netted texture stays as short crossing lines inside the one outline; every
+other line rule stays.
+
+## Part 2: the call, refused
+
+Command: `node scripts/storytime-muse.mjs line docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json --from 4`
+Guard output: `refused: l2-w01-story-page-a-nut line count 3 (max 3)`. The guard counts this
+picture at 3 line tries of 3 (the m3 line, the m3 line-2, and the m4 line of step 9), so the
+4th line try is refused. The tool documents no owner-exception override for the try cap: its
+`--tries <k>` flag runs k parallel tries but passes the same `count + requested > maxTries`
+check, so it would be refused the same way. The scripts stay frozen (test-strategy 5.11 X2
+freezes scripts/), so the guard code was not changed and no way around it was used. No Muse
+call ran. No line file, no judge copy, and no batch of this step exist.
+
+## Part 3: the batch
+
+Not made: there is no 4th line file to batch. The batch command of the brief was not run,
+because `storytime-judge-batch.mjs --try 4` would find no 4th line row and exit with an error;
+nothing was committed for it.
+
+## State and spend
+
+The v2 nut files in `w01/delivery-muse-v3/` stay as they are (delivered in step 8, the color
+m3 and the line try 2 prints); the step-9 color m4 passed but is not delivered. Restart spend
+stays 0.54 USD of the 1.00 USD cap. Per the PM decision, the PM now gets one line: the 4th try
+was refused by the frozen guard and did not run.
+
+## Commits (explicit paths)
+
+| Commit | Paths |
+| --- | --- |
+| `49f3679d` | `docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json` |
+| (this commit) | `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md`, `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p5-t4-aba118fe.log` |
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: blocked
+commits:
+  - 49f3679d
+tests_run: []
+files_changed:
+  - docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p5-t4-aba118fe.log
+plan_updates:
+  - The T4 step 10 block records the PM quote, the spec change, the guard refusal, and the unchanged spend of 0.54 USD
+  - The T4 step 9 block now records the step 9 judge results (color pass, line fail with two judges)
+known_failures:
+  - The guard refused the 4th line try: `refused: l2-w01-story-page-a-nut line count 3 (max 3)`; no owner-exception override exists in the tool and scripts/ is frozen
+handoff: The PM-granted 4th line try did not run. The guard printed `refused: l2-w01-story-page-a-nut line count 3 (max 3)` and the tool documents no owner-exception override for the try cap (its --tries flag passes the same cap check), so nothing was worked around and no Muse cost ran (restart spend stays 0.54 of 1.00). The PM line to send: the frozen guard refused the 4th line try of the nut, so v2 stays and nothing new is delivered; the PM can lift the cap in scripts/storytime-muse-guards.mjs (MAX_TRIES) in a write-capable step or accept v2. role_base_sha: 0d72e9cfe922f7000c5c4aa53301f72bb538fc27; Green HEAD: this commit.
+END_MEASURE_AGENT_RESULT
