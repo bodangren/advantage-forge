@@ -1,0 +1,38 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w08-check-row-drum-line-t1.png",
+    "id": "l2-w08-check-row-drum",
+    "kind": "line",
+    "pageText": "drum",
+    "use": "check-row",
+    "mustShow": [
+      "one drum",
+      "a round drum with a rim and a drum skin",
+      "two drumsticks"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nest-line-t1.png",
+    "id": "l2-w01-story-page-a-nest",
+    "kind": "line",
+    "pageText": "A nest.",
+    "use": "story-page",
+    "mustShow": [
+      "Nan",
+      "a bird's nest with twigs",
+      "the nest in a tree"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nest-and-a-nut-line-t1.png",
+    "id": "l2-w01-story-page-a-nest-and-a-nut",
+    "kind": "line",
+    "pageText": "A nest and a nut.",
+    "use": "story-page",
+    "mustShow": [
+      "a bird's nest in a tree",
+      "a peanut in its shell",
+      "Pip the puppy"
+    ]
+  }
+]
