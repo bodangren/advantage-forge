@@ -1,0 +1,109 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-hello-i-am-pip-line-t1.png",
+    "id": "l2-w01-story-page-hello-i-am-pip",
+    "kind": "line",
+    "pageText": "Hello, I am Pip!",
+    "use": "story-page",
+    "mustShow": [
+      "Pip",
+      "Pip is large in the middle of the picture",
+      "Pip's whole head and chest show"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w02-story-page-how-many-balls-five-line-t1.png",
+    "id": "l2-w02-story-page-how-many-balls-five",
+    "kind": "line",
+    "pageText": "How many balls? Five!",
+    "use": "story-page",
+    "mustShow": [
+      "five balls",
+      "a pattern on each ball",
+      "all five balls are inside the picture"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w04-story-page-this-is-pam-line-t1.png",
+    "id": "l2-w04-story-page-this-is-pam",
+    "kind": "line",
+    "pageText": "This is Pam.",
+    "use": "story-page",
+    "mustShow": [
+      "the doll Pam",
+      "the doll alone in the picture",
+      "the doll is large in the middle"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w05-story-page-i-have-four-legs-line-t1.png",
+    "id": "l2-w05-story-page-i-have-four-legs",
+    "kind": "line",
+    "pageText": "I have four legs!",
+    "use": "story-page",
+    "mustShow": [
+      "Pip",
+      "four legs",
+      "Pip alone in the picture"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w06-story-page-tap-tap-tap-line-t1.png",
+    "id": "l2-w06-story-page-tap-tap-tap",
+    "kind": "line",
+    "pageText": "Tap, tap, tap!",
+    "use": "story-page",
+    "mustShow": [
+      "a child's hand",
+      "the hand taps on the wall"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w06-story-page-tap-tap-tap-b-line-t1.png",
+    "id": "l2-w06-story-page-tap-tap-tap-b",
+    "kind": "line",
+    "pageText": "Tap, tap, tap!",
+    "use": "story-page",
+    "mustShow": [
+      "a child's hand",
+      "the hand taps on the wall"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w06-story-page-he-can-see-pip-line-t1.png",
+    "id": "l2-w06-story-page-he-can-see-pip",
+    "kind": "line",
+    "pageText": "He can see Pip!",
+    "use": "story-page",
+    "mustShow": [
+      "one boy",
+      "Pip",
+      "the boy looks at Pip"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w05-d4-prompt-face-line-t1.png",
+    "id": "l2-w05-d4-prompt-face",
+    "kind": "line",
+    "pageText": "Draw your two eyes in the face.",
+    "use": "d4-prompt",
+    "mustShow": [
+      "hair",
+      "a nose",
+      "a mouth",
+      "two empty places for the eyes"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w07-d4-prompt-ball-line-t1.png",
+    "id": "l2-w07-d4-prompt-ball",
+    "kind": "line",
+    "pageText": "Color the ball.",
+    "use": "d4-prompt",
+    "mustShow": [
+      "one ball",
+      "a clear outline",
+      "large areas to color"
+    ]
+  }
+]
