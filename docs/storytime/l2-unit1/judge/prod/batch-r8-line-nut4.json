@@ -1,0 +1,15 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-story-page-a-nut-line-t4.png",
+    "id": "l2-w01-story-page-a-nut",
+    "kind": "line",
+    "pageText": "A nut.",
+    "use": "story-page",
+    "mustShow": [
+      "one nut only: one peanut in its shell, and no other nut in the picture",
+      "clearly a peanut: one shell with two round bumps, a narrow waist, and a netted shell texture",
+      "Nan's open hand",
+      "the nut is large in the middle"
+    ]
+  }
+]
