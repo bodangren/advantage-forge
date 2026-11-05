@@ -4084,6 +4084,579 @@ Findings at `f51889cc`: F1 to F4 of 5.11.13 stay open. Restart check v1 fails `-
 `f51889cc` (the mustShow phrase), so v2 replaces it. No delivered file lacks a passing judge result:
 v2 `--pm-nut3` gives 49 of 49.
 
+###### 5.11.15 Final nut state (2026-11-05 11:45, role base `a2675b2c`)
+
+This addition sets the gates for the final nut state. The text of 5.11.1 to 5.11.14 stays. Where
+this addition and an earlier part of 5.11 differ, this addition applies.
+
+What happened after `6eeb1f38`:
+
+- T4 step 11 (`4ce37661` guard entry, `c3d31c2a` batch, `81ebac1c` plan): the nut line try 4 (from
+  m4) failed, and a second judge confirmed the fail (`judge-prod-r8-line-nut4-c3d31c2a.json`,
+  `judge-prod-r8-line-nut4-second-c3d31c2a.json`).
+- Second PM decision, about 10:23 ICT (quote): "Yes: one more color try (ONE peanut lying on its
+  side, plain one-pod profile, alone and large on Nan's palm) and one line try from it, 0.02 USD,
+  same judge with the one-nut check. Keep the nut look the same as the other new nut pictures of
+  the week, as far as the side view allows. If either try fails, stop: v2 stays, and the nut goes on
+  Daniel's v14 look list as a known item with two options (peanut on its side, or one cashew). No
+  further tries after this without my word. Deliver a pass to a48-forge-pictures-nut3/ with a
+  MANIFEST and tell Workbooks."
+- T4 step 13 (`0c331833` guard entries, `5c5e0a4a` spec, `3ef35157` batches, `5251c126` plan): the
+  nut color try 4 (m5) and the nut line try 5 (from m5) passed
+  (`judge-prod-r9-color-nut5-5251c126.json`, `judge-prod-r9-line-nut5-5251c126.json`).
+- T4 step 14 (`8eb7e8c4`): the v3 pair is in `w01/delivery-muse-v4/` and
+  `a48-forge-pictures-nut3/`. Spend 0.57 USD, 57 rows.
+- T4 step 12 (`0206a566` guard types, `b320e514` M3 to M6, `d6867c52` and `a2675b2c` the
+  `tracks.md` hunk fix). Interim type check: total 63, owned 25 (all in
+  `tests/storytime-muse-attempts.test.ts`). The type check and GREEN_TEST_COMMAND wait for the
+  heavy lock (PM order; Workbooks holds it until about 13:00 ICT).
+
+**The final nut state.**
+
+| Item | Value |
+| --- | --- |
+| Nut tries | Color 4 (m2, m3, m4, m5). Line 5 (m3, m3 try 2, m4, m4 try 2, m5). |
+| Judge results of the nut | Color try 1 fail (second fail), try 2 pass, try 3 pass, try 4 pass. Line try 1 fail (second fail), try 2 pass, try 3 fail (second fail), try 4 fail (second fail), try 5 pass. |
+| Final delivery | v3 pair: `l2-w01-story-page-a-nut-v3.png` (bytes of `l2-w01-story-page-a-nut-m5-color-print.png`, color try 4) and `l2-w01-story-page-a-nut-line-v3.png` (bytes of `l2-w01-story-page-a-nut-m5-line-print.png`, line try 5 from m5). Folders: `w01/delivery-muse-v4/` (copy way, `manifest.json` SHA-256 `2f46efcb…`) and `a48-forge-pictures-nut3/` (2 files and `MANIFEST.txt`; its check command gives 2 `OK` lines). |
+| Superseded delivery | The v2 pair (color try 2, line try 2) stays in `w01/delivery-muse-v3/` and `a48-forge-pictures-a/`, unchanged. Nobody deletes it. |
+| Not delivered | Color try 3 (m4, pass). The line tries 3 and 4 (fail). Their judge results and judge copies stay. |
+| Totals | 11 restart folders, 51 delivered files, 24 pictures. Handoff folders: drum 2, c 4, a 25, b 14, d 4, nut3 2. |
+| Spend | 0.57 USD, 57 restart rows, 0 failed calls. |
+| Guard map | `TRY_EXCEPTIONS` holds 3 entries, all for `l2-w01-story-page-a-nut`: line +1 (PM 09:17 ICT), color +1 (PM about 10:23 ICT), line +1 (PM about 10:23 ICT). Limits: color 4, line 5. `MAX_TRIES` stays 3. |
+
+**Gate changes.**
+
+| Gate | Change | Falsification condition |
+| --- | --- | --- |
+| X2 Freeze | After `P5R_BASE`, the allowed code files are `scripts/storytime-muse-guards.mjs`, `scripts/storytime-muse-guards.d.mts`, and `tests/storytime-muse-attempts.test.ts` (the coming annotation fix of the 25 owned errors goes there). No file under `src/` changes. Restart check v3 imports the guard module and reads the map. The X2b `git diff` of 5.11.14 stays: the checker reads it. Each changed runtime line of the guard module belongs to the exception map or its use in the try count. | `code files changed after P5R_BASE:` is above 0, `guard try exceptions:` is not 3, `guard limit nut color: 4 line: 5` differs, `guard exceptions for other ids or kinds:` or `guard exceptions without a PM source:` is above 0, or `guard max tries:` is not 3. |
+| X3 Pins | Pin block 3 below (12 lines) also passes. Pin blocks 1 (28) and 2 (7) still pass. | A pinned file changed. |
+| X4 Restart check | Use restart check v3 with `--final`, and `--final --control`. Every label has the value of the table below. | A label differs, `--final` exits non-zero, or the control exits `0`. |
+| X5 Spend and tries | Nut color 4 tries, nut line 5 tries, every other pair 3 or less. Spend 1.00 USD or less (0.57 USD, 57 rows). | `picture and kind pairs above their limit:` is above 0, or `picture and kind pairs above 3 tries:` names a pair other than the nut color and the nut line. |
+| X6 Judge | The judge results of the nut table hold. Each nut fail that led to a retry has a second-judge fail. The delivered v3 pair maps to color try 4 and line try 5, each with a main `pass`. Each nut try 3, 4, and 5 batch names the "one nut only" check. | A delivered file has no pass, a nut verdict differs, or a nut fail has no second-judge fail. |
+| X7 Deliveries | 51 files, 11 folders, 24 pictures, and the six handoff counts. Each of the six handoff check commands exits `0` with one `OK` line for each file. The v2 pair stays byte-equal in its two places. | A count differs, the v2 pair changed, or a handoff file differs from its delivery file. |
+| X10 and X11 | Unchanged commands. The order changes (see the briefs). | As in 5.11.7. |
+
+The earlier modes are retired for the checker: v3 exits `2` on `--nut3`, `--pm-nut3`,
+`--nut4-fail`, or `--nut4`, and without `--final`. Restart check v1 and v2 stay in this file as
+records. Nobody runs them for acceptance.
+
+**Restart check v3.** Extract and run it:
+
+```sh
+awk '/^<!-- restart-check-v3.mjs end -->$/{f=0} f; /^<!-- restart-check-v3.mjs begin -->$/{f=1}' "$T/test-strategy.md" | sed '1d;$d' > "$D/restart-check.mjs"
+echo "restart check script sha256: $(sha256sum < "$D/restart-check.mjs" | cut -c1-64)"
+nice -n 19 node "$D/restart-check.mjs" --final > "$D/restart-check.log"; echo "restart check exit: $?"
+nice -n 19 node "$D/restart-check.mjs" --final --control > "$D/restart-control.log"; echo "restart control exit: $?"
+```
+
+Expected script SHA-256: `6ae82ad4a305341a409be95cd007239ef069cac2e8c4ef6301467908bac78a9e`. Expected:
+`restart check exit: 0` and `restart control exit: 1`. The control output holds FAIL lines with
+`pre-restart manifest changed: w01/delivery-muse-v1`, `above the cap 0.51`, and `header or status`.
+
+Changes from v2: one mode (`--final`); the limits color 4 and line 5 for the nut; the PM order set
+(color try 3 and 4, line try 3, 4, and 5); the nut checks of all five PM-era tries; the guard map
+check; the v4 manifest pin; and the pins of the nut judge copies of tries 1 to 5. The v4 folder
+holds only the color try 4 and line try 5 pair.
+
+Labels and values of `--final` (checked at `a2675b2c`):
+
+| Label | Value |
+| --- | --- |
+| `cost files read:` | 15 |
+| `cost rows with an unreadable time:` | 0 |
+| `restart cost rows:` | 57 |
+| `restart spend (USD):` | 0.57 |
+| `restart failed calls (cost 0 or output none):` | 0 |
+| `max tries for one picture and kind:` | 5 |
+| `picture and kind pairs above their limit:` | 0 |
+| `picture and kind pairs above 3 tries:` | 2 (`l2-w01-story-page-a-nut\|color`, `l2-w01-story-page-a-nut\|line`) |
+| `nut tries color: <c> line: <l>` | 4, 5 |
+| `judge prompt sha256:` / `judge cast sha256:` | `db5b443a…` / `2eb4a6a1…` |
+| `calibration files judged: <f> pass: <p> fail: <x>` | 388, 381, 7 |
+| `calibration gate controls: 2 failed:` | 2 |
+| `calibration expected-pass files that did not pass:` | 0 |
+| `production result files: <f> results: <r> second-judge results: <s>` | 22, 57, 6 |
+| `production main fails:` | 6 |
+| `retries: <r> after a confirmed fail: <c> by PM order: <p>` | 9, 6, 3 |
+| `second-judge results that differ from the main verdict:` | 0 |
+| `nut judge copies of tries 1 to 5 changed:` | 0 |
+| `nut color try 3 verdict:` | pass, second none |
+| `nut line try 3 verdict:` | fail, second fail |
+| `nut line try 4 verdict:` | fail, second fail |
+| `nut color try 4 verdict:` | pass, second none |
+| `nut line try 5 verdict:` | pass, second none |
+| `guard max tries:` | 3 |
+| `guard try exceptions:` | 3 |
+| `guard limit nut color: <c> line: <l>` | 4, 5 |
+| `guard exceptions for other ids or kinds:` | 0 |
+| `guard exceptions without a PM source:` | 0 |
+| `restart delivery folders:` | 11 |
+| `restart delivered files: <d> byte-equal to a source print: <b> with a pass verdict: <v>` | 51, 51, 51 |
+| `restart delivered pictures:` | 24 |
+| `line files not made from the delivered color:` | 0 |
+| `restart delivered files with a wrong size or line format:` | 0 |
+| `handoff <h>: files: <n> …` | drum 2, c 4, a 25, b 14, d 4, nut3 2; each `evidence words: yes` |
+| `restart check:` | `pass` |
+
+<!-- restart-check-v3.mjs begin -->
+```js
+// restart-check.mjs version 3: the read-only checker of test-strategy.md 5.11, 5.11.14, and 5.11.15.
+// Run from the repo root: node <this file> --final [--control].
+// It reads files only and imports the guard module (no call). It writes stdout only.
+// Exit 0: every check holds. Exit 1: a check failed (a FAIL line names it). Exit 2: a usage error.
+// --final: the final nut state of 2026-11-05 11:45 ICT. The nut has 4 color tries and 5 line tries.
+//   The v3 pair (color try 4 m5, line try 5 from m5) is in w01/delivery-muse-v4 and the nut3
+//   handoff folder. The v2 pair stays in w01/delivery-muse-v3 and a48-forge-pictures-a as the
+//   superseded delivery. The modes of version 1 and 2 are retired.
+// --control changes three expected values in memory (a pre-restart manifest pin, the cap, the judge
+// model). A control run must exit 1 with the three FAIL lines; else the checks are vacuous (A4).
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+
+for (const m of ['--nut3', '--pm-nut3', '--nut4-fail', '--nut4']) if (process.argv.includes(m)) { console.log(`usage: ${m} is retired (5.11.15); use --final`); process.exit(2); }
+if (!process.argv.includes('--final')) { console.log('usage: give --final'); process.exit(2); }
+const NUT3 = true; // the v3 pair is delivered
+const CONTROL = process.argv.includes('--control');
+const U = 'out/storytime/l2/unit1';
+const RUNS = 'measure/runs/asset_storytime_l2_unit1_pictures_20261025';
+const PROD = 'docs/storytime/l2-unit1/judge/prod';
+const JC = 'out/storytime-review/judge/prod';
+const HANDOFF = '/home/daniebo/Desktop/handoff';
+const START = Date.parse('2026-11-04T07:54:00Z');
+const MODEL = CONTROL ? 'control/no-such-model' : 'claude-code/claude-sonnet-5-5#high';
+const CAP = CONTROL ? 510000n : 1000000n; // 1.00 USD in micro-USD; the control sets 0.51
+const GROUP = { 'l2-w01-practice-line-nose': 'l2-w01-check-row-nose' };
+const NUT = 'l2-w01-story-page-a-nut';
+// Tries that a PM order caused: the nut tries 3 (08:44 ICT), the nut line try 4 (09:17 ICT), and
+// the nut color try 4 and line try 5 (about 10:23 ICT), all on 2026-11-05.
+const PM_ORDER = new Set([`${NUT}|color|3`, `${NUT}|line|3`, `${NUT}|line|4`, `${NUT}|color|4`, `${NUT}|line|5`]);
+// The try limit of each picture and kind: 3, the nut color 4, and the nut line 5.
+const LIMITS = { [`${NUT}|color`]: 4, [`${NUT}|line`]: 5 };
+const limitOf = (k) => LIMITS[k] ?? 3;
+const PRE = {
+  'w01/delivery-muse-v1': '00ea0c5b06d18e3f54cbceed9caa943100c0711bb515c44561eb46b7e03ed369',
+  'w01/delivery-muse-v2': 'd3eec18ce7c94b94ed5b0751df164578558ad44f04bebe7b4b371a3ed213796a',
+  'w02/delivery-muse-v1': '6e6b51450d406bfdac47e01f484925b270bd0b1647bbfc0550d7529809cfeaf4',
+  'w03/delivery-muse-v1': '24213647b0f1b92cdb891746cdf6181ff7f20f306c51d256fec150c38d5c273b',
+  'w04/delivery-muse-v1': '4e74b7302a851e0261099925a23c0b9246a533911374af01d9748b905320d310',
+  'w05/delivery-muse-v1': 'c3f009e6bfcb3037ae24b495c6e68527bfbf86162deb3a40a9bbd28a416ffbaf',
+  'w06/delivery-muse-v1': '11c5dc10198c9d446afc8ffd80aff46c747d2dec34b77293327907d729163292',
+  'w07/delivery-muse-v1': '6a5724c42a83134d80fc1cd1ccecdafe1a76dd25961e040caffaafccc81ea3c2',
+  'cover/delivery-muse-v1': '27710b3711757d99294b7e837377d325eb9a6094e1dad43e0f064d2581397b88',
+};
+if (CONTROL) PRE['w01/delivery-muse-v1'] = '0'.repeat(64);
+const RESTART = {
+  'w01/delivery-muse-v3': '38a16765a061a8f71fba1fe5744c1b2aa3b48b35b87352c12302ce519e44dce0',
+  'w02/delivery-muse-v2': 'c59a75bb30def25168bd90effbf44931e2d6a0a4844b1b961ce8105b61146ae5',
+  'w03/delivery-muse-v2': 'bb7a27525fcd8da28a9cf8148a2f39bcc2e0609ef86a0648425b66c8ecafa30a',
+  'w04/delivery-muse-v2': '82d467e6ecedd7caea7331dd9088c35d000db16d67c1a80f8818f68dfd2fe52c',
+  'w05/delivery-muse-v2': '0e2fde98f4610afbe49637241f3887e1378dd6f293a69d763df8362d453885ca',
+  'w06/delivery-muse-v2': '66bb2f62b46a8dcc2e0497ab9b637929ec0d93b2de56a27b84eccb5b6d33ee60',
+  'w07/delivery-muse-v2': '352b2dabe598f80ed4d9ef10977c86f9a988c9d6e8a59cfea52fa59ced1f32b4',
+  'w05/delivery-a48-d': '0fa7b23268449a9f83365eb4ea03057a1a6453b291bcdf697251fd0421f39fea',
+  'w07/delivery-a48-d': '36b4febcdcdc80d10c789866e1d468b88708389cc7af28bfd79778cf299b8eb8',
+  'w08/delivery-muse-v1': '2dc0812b3a90be19bd288d622d1c9fdd4d682bd013c2c99242441f09a71b9f92',
+  'w01/delivery-muse-v4': '2f46efcb11f490fc9a03e28e18eac874cdb0f3197273a722d7852a8c11d15330',
+};
+const NUT3_DIR = 'w01/delivery-muse-v4';
+const HANDOFFS = { drum: 2, c: 4, a: 25, b: 14, d: 4, ...(NUT3 ? { nut3: 2 } : {}) };
+
+let failures = 0;
+const fail = (m) => { failures += 1; console.log(`FAIL ${m}`); };
+const sha = (f) => crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
+const json = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
+const group = (id) => GROUP[id] ?? id;
+const micro = (v) => {
+  if (!/^\d+(\.\d{1,6})?$/.test(v)) return null;
+  const [i, d = ''] = v.split('.');
+  return BigInt(i) * 1000000n + BigInt((d + '000000').slice(0, 6));
+};
+const usd = (m) => `${m / 1000000n}.${String((m % 1000000n) / 10000n).padStart(2, '0')}`;
+
+// 1. Restart rows of every Muse cost file (week folders and element folders).
+const costFiles = [];
+for (const w of fs.readdirSync(U).sort()) {
+  for (const s of ['muse/costs.tsv', 'muse/elements/costs.tsv']) {
+    const f = path.join(U, w, s);
+    if (fs.existsSync(f)) costFiles.push(f);
+  }
+}
+const rows = [];
+let spend = 0n;
+let badTime = 0;
+for (const f of costFiles) {
+  const [head, ...lines] = fs.readFileSync(f, 'utf8').split('\n').filter((l) => l.trim());
+  const H = head.split('\t');
+  const col = Object.fromEntries(['time', 'row', 'version', 'kind', 'inputs', 'output', 'usage_cost'].map((n) => [n, H.indexOf(n)]));
+  if (col.time < 0 || col.usage_cost < 0 || col.row < 0 || col.kind < 0 || col.output < 0) { fail(`header without a needed column: ${f}`); continue; }
+  for (const l of lines) {
+    const c = l.split('\t');
+    const t = Date.parse(c[col.time]);
+    if (Number.isNaN(t)) { badTime += 1; continue; }
+    if (t < START) continue;
+    const m = micro((c[col.usage_cost] ?? '').trim());
+    if (m === null) { fail(`usage_cost is not a decimal: ${f}: ${l}`); continue; }
+    spend += m;
+    rows.push({ f, dir: path.dirname(f), t, row: c[col.row], kind: c[col.kind], out: c[col.output], inp: c[col.inputs] ?? '', m });
+  }
+}
+console.log(`cost files read: ${costFiles.length}`);
+console.log(`cost rows with an unreadable time: ${badTime}`);
+console.log(`restart cost rows: ${rows.length}`);
+console.log(`restart spend (USD): ${usd(spend)}`);
+if (badTime !== 0) fail(`cost rows with an unreadable time: ${badTime}`);
+if (spend > CAP) fail(`restart spend ${usd(spend)} is above the cap ${usd(CAP)}`);
+
+// Tries: rows with a cost above 0 and an output, kind color or line, counted per picture group.
+const tryRows = rows.filter((r) => (r.kind === 'color' || r.kind === 'line') && r.m > 0n && r.out !== 'none');
+console.log(`restart failed calls (cost 0 or output none): ${rows.length - tryRows.length}`);
+const perGroup = new Map();
+for (const r of tryRows) { const k = `${group(r.row)}|${r.kind}`; perGroup.set(k, (perGroup.get(k) ?? 0) + 1); }
+const maxTries = Math.max(0, ...perGroup.values());
+const over = [...perGroup].filter(([k, n]) => n > limitOf(k));
+const fourth = [...perGroup].filter(([, n]) => n > 3).map(([k]) => k).sort();
+console.log(`picture and kind pairs with a try: ${perGroup.size}`);
+console.log(`max tries for one picture and kind: ${maxTries}`);
+console.log(`picture and kind pairs above their limit: ${over.length}`);
+console.log(`picture and kind pairs above 3 tries: ${fourth.length}${fourth.length ? ` (${fourth.join(', ')})` : ''}`);
+console.log(`nut tries color: ${perGroup.get(`${NUT}|color`) ?? 0} line: ${perGroup.get(`${NUT}|line`) ?? 0}`);
+for (const [k, n] of over) fail(`${k} has ${n} tries (limit ${limitOf(k)})`);
+// Judge copy number n of one id and kind: the n-th restart row of that id and kind in its cost
+// file, in time order, failed rows included (restartTries of scripts/storytime-judge-batch.mjs).
+const rowsOf = (r) => rows.filter((x) => x.f === r.f && x.row === r.row && x.kind === r.kind && (x.kind === 'color' || x.kind === 'line')).sort((a, b) => a.t - b.t);
+const tryOf = (r) => rowsOf(r).indexOf(r) + 1;
+const prevTryOf = (r) => { const all = rowsOf(r); const before = all.slice(0, all.indexOf(r)).filter((x) => tryRows.includes(x)); return before.length ? all.indexOf(before[before.length - 1]) + 1 : 0; };
+
+// 2. Judge kit and calibration.
+const PROMPT_SHA = 'db5b443a6ea7740f435fedb7f13d0fd12971332c08b6e71d09e4a468da02ffd8';
+const CAST_SHA = '2eb4a6a14d2ba6e49223e27d9ad390aad7ba1d247b272f6a467742b931046e76';
+const ps = sha('docs/storytime/l2-unit1/judge/judge-prompt.md');
+const cs = sha('docs/storytime/l2-unit1/judge/cast.json');
+console.log(`judge prompt sha256: ${ps}`);
+console.log(`judge cast sha256: ${cs}`);
+if (ps !== PROMPT_SHA) fail('judge prompt SHA-256 differs from the calibration value');
+if (cs !== CAST_SHA) fail('judge cast SHA-256 differs from the calibration value');
+const headerOk = (j) => j.status === 'complete' && j.model === MODEL && /judge-prompt\.md v6$/.test(j.judgePrompt ?? '') && /2eb4a6a1/.test(j.cast ?? '');
+const calSet = json('docs/storytime/l2-unit1/judge/calibration-set.json').entries;
+const calExpected = new Map(calSet.map((e) => [e.judgeFile, e.expected]));
+let calPass = 0, calFail = 0, calFiles = 0, calCtrl = 0, calCtrlFail = 0, calPassBroken = 0;
+const calSeen = new Set();
+for (const g of ['w01', 'w02', 'w03', 'w04', 'w05', 'w06', 'w07', 'cover']) {
+  const f = `${RUNS}/judge-cal-${g}-aba118fe.json`;
+  if (!fs.existsSync(f)) { fail(`missing ${f}`); continue; }
+  const j = json(f);
+  if (!headerOk(j)) fail(`calibration header or status: ${f}`);
+  let p = 0, x = 0;
+  for (const r of j.results) {
+    calFiles += 1; calSeen.add(r.judgeFile);
+    if (r.verdict === 'pass') p += 1; else if (r.verdict === 'fail') x += 1; else fail(`verdict ${r.verdict} in ${f}`);
+    const e = calExpected.get(r.judgeFile);
+    if (e === undefined) fail(`calibration result for a file outside the set: ${r.judgeFile}`);
+    if (e === 'fail') { calCtrl += 1; if (r.verdict === 'fail') calCtrlFail += 1; }
+    if (e === 'pass' && r.verdict !== 'pass') calPassBroken += 1;
+  }
+  if (j.summary?.pass !== p || j.summary?.fail !== x || j.summary?.files !== j.results.length) fail(`summary of ${f} differs from its results`);
+  calPass += p; calFail += x;
+}
+console.log(`calibration files judged: ${calFiles} pass: ${calPass} fail: ${calFail}`);
+console.log(`calibration set entries without a result: ${calSet.filter((e) => !calSeen.has(e.judgeFile)).length}`);
+console.log(`calibration gate controls: ${calCtrl} failed: ${calCtrlFail}`);
+console.log(`calibration expected-pass files that did not pass: ${calPassBroken}`);
+if (calFiles !== 388 || calPass !== 381 || calFail !== 7) fail('calibration counts differ from 388 / 381 / 7');
+if (calCtrl !== 2 || calCtrlFail !== 2) fail('a gate control did not fail');
+if (calPassBroken !== 0) fail('an expected-pass calibration file did not pass');
+if (calSet.length !== 388 || calSeen.size !== 388) fail('calibration set and results differ');
+
+// 3. Production judge results, tied to their batch files.
+const prod = [];
+for (const f of fs.readdirSync(RUNS).filter((n) => /^judge-prod-.*\.json$/.test(n)).sort()) {
+  const j = json(`${RUNS}/${f}`);
+  const second = f.includes('-second-');
+  if (!headerOk(j)) { fail(`production header or status: ${f}`); continue; }
+  const batch = `${PROD}/batch-${String(j.group).replace(/^prod-/, '')}.json`;
+  const entries = second ? null : (fs.existsSync(batch) ? json(batch) : null);
+  if (!second && !entries) { fail(`no batch file ${batch} for ${f}`); continue; }
+  for (const r of j.results) {
+    if (!second && !entries.some((e) => e.judgeFile === r.judgeFile && e.id === r.id && e.kind === r.kind)) fail(`${f}: ${r.judgeFile} is not in ${batch}`);
+    if (!fs.existsSync(r.judgeFile)) fail(`${f}: judge copy missing ${r.judgeFile}`);
+    prod.push({ f, second, ...r });
+  }
+}
+const main = prod.filter((r) => !r.second);
+console.log(`production result files: ${new Set(prod.map((r) => r.f)).size} results: ${main.length} second-judge results: ${prod.length - main.length}`);
+console.log(`production main fails: ${main.filter((r) => r.verdict === 'fail').length}`);
+
+// 4. Retry rule: each later try follows a fail of the try before it that a second judge confirms,
+// or a PM order.
+const jf = (id, kind, n) => `${JC}/${id}-${kind}-t${n}.png`;
+let retries = 0, retriesConfirmed = 0, retriesPm = 0;
+for (const r of tryRows) {
+  const n = tryOf(r);
+  const p = prevTryOf(r);
+  if (p === 0) continue;
+  retries += 1;
+  const prev = jf(r.row, r.kind, p);
+  const m1 = main.find((x) => x.judgeFile === prev && x.verdict === 'fail');
+  const s1 = prod.find((x) => x.second && x.judgeFile === prev && x.verdict === 'fail');
+  const s1pass = prod.find((x) => x.second && x.judgeFile === prev && x.verdict === 'pass');
+  if (m1 && s1 && !s1pass) retriesConfirmed += 1;
+  else if (PM_ORDER.has(`${r.row}|${r.kind}|${n}`)) retriesPm += 1;
+  else fail(`try ${n} of ${r.row} ${r.kind} has no confirmed fail of try ${p} and no PM order`);
+}
+console.log(`retries: ${retries} after a confirmed fail: ${retriesConfirmed} by PM order: ${retriesPm}`);
+const disagree = prod.filter((y) => y.second && main.some((x) => x.judgeFile === y.judgeFile && x.verdict !== y.verdict));
+console.log(`second-judge results that differ from the main verdict: ${disagree.length}`);
+// The judge copies of the nut tries 1 and 2 keep their bytes; a try 3 batch names the new mustShow.
+const NUT_COPIES = {
+  'color-t1': '8f62fb3871c1dbc9f7c481a575cccbadf6a84fa872aeb8c248c4704c7b339041',
+  'color-t2': '8ed540398c94554e5239440fd9d98300a4033c5bd8b35f55b8fb27ada4d14c52',
+  'line-t1': 'd9b784e2b7920a6a4d7d9f82b4e07bb3b10c0811c9e9f11258c2ef1a71826d38',
+  'line-t2': '6ba147242f5f2b19a44146789546b39b34424400e27d6dc976ff9d1b3e8e5360',
+  'color-t3': '11afe42b6d5c149fc0b49c6862e9ad6c989d85133947a05022d3d0e17aaf18e0',
+  'line-t3': 'a5749b6eb7b98028cf66131389970533c0686e5237ffff9a0ecce688449d66c9',
+  'color-t4': '2e1c6b810866dbfee8b8c28fc89720eed91f477f609e1944c6f67c0900c03cd4',
+  'line-t4': '01b2d1cd0979115fccc6a52835a402224650ffd6989e8d5628b24b652e00babf',
+  'line-t5': 'bbc0ffccb1aada33a1f3bfc2587068fd8c7c1d3f8a799bb49a9bf03319c4da43',
+};
+let nutCopyBad = 0;
+for (const [k, v] of Object.entries(NUT_COPIES)) if (sha(`${JC}/${NUT}-${k}.png`) !== v) { nutCopyBad += 1; fail(`judge copy ${NUT}-${k}.png changed`); }
+console.log(`nut judge copies of tries 1 to 5 changed: ${nutCopyBad}`);
+// The nut PM tries: each one has a main result, and its batch names the "one nut only" check.
+const nutTry = (kind, n, want) => {
+  const r = main.find((x) => x.judgeFile === jf(NUT, kind, n));
+  const b = r && json(`${PROD}/batch-${JSON.parse(fs.readFileSync(`${RUNS}/${r.f}`, 'utf8')).group.replace(/^prod-/, '')}.json`).find((e) => e.judgeFile === r.judgeFile);
+  const second = prod.filter((x) => x.second && x.judgeFile === jf(NUT, kind, n));
+  console.log(`nut ${kind} try ${n} verdict: ${r ? r.verdict : 'none'} second-judge verdicts: ${second.map((x) => x.verdict).join(',') || 'none'}`);
+  if (!r) { fail(`no judge result for the nut ${kind} try ${n}`); return; }
+  if (!(b?.mustShow ?? []).some((m) => m.startsWith('one nut only'))) fail(`the nut ${kind} try ${n} batch has no mustShow "one nut only"`);
+  if (r.verdict !== want) fail(`the nut ${kind} try ${n} verdict is ${r.verdict}, ${want} wanted in this mode`);
+  if (want === 'fail' && (second.length === 0 || second.some((x) => x.verdict !== 'fail'))) fail(`the nut ${kind} try ${n} fail has no second-judge fail`);
+};
+nutTry('color', 3, 'pass'); nutTry('line', 3, 'fail'); nutTry('line', 4, 'fail');
+nutTry('color', 4, 'pass'); nutTry('line', 5, 'pass');
+const nutC = perGroup.get(`${NUT}|color`) ?? 0;
+const nutL = perGroup.get(`${NUT}|line`) ?? 0;
+if (nutC !== 4 || nutL !== 5) fail(`nut tries color ${nutC} line ${nutL}: the final state needs color 4 and line 5`);
+if (JSON.stringify(fourth) !== JSON.stringify([`${NUT}|color`, `${NUT}|line`])) fail('the pairs above 3 tries are not exactly the nut color and the nut line');
+// The guard module holds the same exceptions: 3 nut entries (color +1, line +2), MAX_TRIES 3.
+const guards = await import(path.resolve('scripts/storytime-muse-guards.mjs'));
+const exc = Array.isArray(guards.TRY_EXCEPTIONS) ? guards.TRY_EXCEPTIONS : [];
+const extra = (kind) => exc.filter((e) => e.id === NUT && e.kind === kind).reduce((a, e) => a + Number(e.extraTries), 0);
+const others = exc.filter((e) => e.id !== NUT || (e.kind !== 'color' && e.kind !== 'line'));
+const unsourced = exc.filter((e) => !/^PM, 2026-11-05 /.test(String(e.source ?? '')));
+console.log(`guard max tries: ${guards.MAX_TRIES}`);
+console.log(`guard try exceptions: ${exc.length}`);
+console.log(`guard limit nut color: ${guards.MAX_TRIES + extra('color')} line: ${guards.MAX_TRIES + extra('line')}`);
+console.log(`guard exceptions for other ids or kinds: ${others.length}`);
+console.log(`guard exceptions without a PM source: ${unsourced.length}`);
+if (guards.MAX_TRIES !== 3) fail('guard MAX_TRIES is not 3');
+if (exc.length !== 3) fail(`guard TRY_EXCEPTIONS has ${exc.length} entries, 3 wanted`);
+if (guards.MAX_TRIES + extra('color') !== 4 || guards.MAX_TRIES + extra('line') !== 5) fail('guard nut limits are not color 4 and line 5');
+if (others.length !== 0 || unsourced.length !== 0) fail('a guard exception names another id or kind, or has no PM source');
+
+// 5. Delivered files of the restart: each one is byte-equal to the print of a passing try.
+for (const [d, want] of Object.entries(PRE)) {
+  const got = sha(`${U}/${d}/manifest.json`);
+  console.log(`manifest sha256 ${d}: ${got}`);
+  if (got !== want) fail(`pre-restart manifest changed: ${d}`);
+}
+const restartDirs = { ...RESTART };
+for (const w of fs.readdirSync(U)) {
+  const p = path.join(U, w);
+  if (!fs.statSync(p).isDirectory()) continue;
+  for (const d of fs.readdirSync(p).filter((n) => n.startsWith('delivery-'))) {
+    const k = `${w}/${d}`;
+    if (!(k in PRE) && !(k in restartDirs)) fail(`unknown delivery folder ${k}`);
+  }
+}
+if (!NUT3 && fs.existsSync(`${U}/${NUT3_DIR}`)) fail(`${NUT3_DIR} exists, but the run has no --nut4`);
+const delivered = [];
+const approvalsW08 = json('docs/storytime/l2-unit1/w08/muse/approved.json').entries;
+for (const [d, want] of Object.entries(restartDirs)) {
+  const dir = `${U}/${d}`;
+  if (!fs.existsSync(`${dir}/manifest.json`)) { fail(`no manifest in ${d}`); continue; }
+  const got = sha(`${dir}/manifest.json`);
+  console.log(`manifest sha256 ${d}: ${got}`);
+  if (want && got !== want) fail(`restart manifest changed: ${d}`);
+  const man = json(`${dir}/manifest.json`);
+  let entries;
+  if (Array.isArray(man.files)) {
+    entries = man.files.map((e) => ({ id: e.pictureId, kind: e.kind, file: e.file, sha256: e.sha256, source: e.source }));
+  } else {
+    entries = [];
+    for (const job of man.jobs) {
+      const a = approvalsW08.find((e) => e.rowId === job.id);
+      if (!a) { fail(`${d}: no approval entry for ${job.id}`); continue; }
+      for (const c of job.candidates) {
+        const kind = /-line-v\d+\.png$/.test(c.file) ? 'line' : 'color';
+        entries.push({ id: job.id, kind, file: c.file, sha256: c.fileSha256, source: `${U}/w08/muse/${kind === 'line' ? a.linePrint : a.colorPrint}` });
+        if (c.lineArt?.file) entries.push({ id: job.id, kind: 'line', file: c.lineArt.file, sha256: c.lineArt.fileSha256, source: `${U}/w08/muse/${a.linePrint}` });
+      }
+    }
+  }
+  const pngs = fs.readdirSync(dir).filter((n) => n.endsWith('.png')).sort();
+  const named = [...new Set(entries.map((e) => e.file))].sort();
+  if (JSON.stringify(pngs) !== JSON.stringify(named)) fail(`${d}: PNG set and manifest set differ (${pngs.length} / ${named.length})`);
+  for (const e of entries) delivered.push({ dir: d, ...e });
+}
+let byteOk = 0, passOk = 0, formatBad = 0;
+const pictures = new Set();
+const colorOut = new Map();
+for (const e of delivered) {
+  const file = `${U}/${e.dir}/${e.file}`;
+  if (!fs.existsSync(file) || !fs.existsSync(e.source)) { fail(`${e.dir}/${e.file}: file or source missing`); continue; }
+  const s = sha(file);
+  if (s !== e.sha256 || s !== sha(e.source)) { fail(`${e.dir}/${e.file}: bytes differ from the manifest or the source print`); continue; }
+  byteOk += 1;
+  const ihdr = fs.readFileSync(file).subarray(16, 26);
+  const [w, h, depth, type] = [ihdr.readUInt32BE(0), ihdr.readUInt32BE(4), ihdr[8], ihdr[9]];
+  const [ww, wh] = e.id.includes('-story-page-') ? [4000, 3000] : [1500, 1500];
+  if (w !== ww || h !== wh) { formatBad += 1; fail(`${e.dir}/${e.file}: ${w}x${h}, ${ww}x${wh} wanted`); }
+  if (e.kind === 'line' && (depth !== 8 || type !== 0)) { formatBad += 1; fail(`${e.dir}/${e.file}: line file is not 8-bit gray (depth ${depth}, type ${type})`); }
+  const outName = path.basename(e.source).replace('-print', '');
+  const r = tryRows.find((x) => x.dir === path.dirname(e.source) && x.out === outName && x.kind === e.kind);
+  if (!r) { fail(`${e.dir}/${e.file}: no restart try has the output ${outName}`); continue; }
+  if (group(r.row) !== group(e.id)) fail(`${e.dir}/${e.file}: try row ${r.row} is not picture ${e.id}`);
+  const n = tryOf(r);
+  const j = jf(r.row, r.kind, n);
+  const pass = main.find((x) => x.judgeFile === j && x.verdict === 'pass');
+  if (!pass) { fail(`${e.dir}/${e.file}: try ${n} (${j}) has no pass verdict`); continue; }
+  passOk += 1;
+  for (let k = 1; k < n; k += 1) {
+    if (main.some((x) => x.judgeFile === jf(r.row, r.kind, k) && x.verdict === 'pass') && !PM_ORDER.has(`${r.row}|${r.kind}|${n}`)) fail(`${e.dir}/${e.file}: try ${n} is delivered, but try ${k} passed first`);
+  }
+  if (e.dir === NUT3_DIR && (group(e.id) !== NUT || n !== (e.kind === 'color' ? 4 : 5))) fail(`${e.dir}/${e.file}: the folder holds only the nut color try 4 and line try 5 pair`);
+  pictures.add(group(e.id));
+  if (e.kind === 'color') colorOut.set(`${e.dir}|${group(e.id)}`, r.out);
+  else e.lineInput = path.basename(r.inp);
+  e.pass = `${pass.f} try ${n}`;
+}
+// The line try of a delivered pair starts from the delivered color try.
+let twinBad = 0;
+for (const e of delivered.filter((x) => x.kind === 'line' && x.lineInput)) {
+  const c = colorOut.get(`${e.dir}|${group(e.id)}`);
+  if (c && c !== e.lineInput) { twinBad += 1; fail(`${e.dir}/${e.file}: line input ${e.lineInput} is not the delivered color ${c}`); }
+}
+console.log(`restart delivery folders: ${Object.keys(restartDirs).length}`);
+console.log(`restart delivered files: ${delivered.length} byte-equal to a source print: ${byteOk} with a pass verdict: ${passOk}`);
+console.log(`restart delivered pictures: ${pictures.size}`);
+console.log(`line files not made from the delivered color: ${twinBad}`);
+console.log(`restart delivered files with a wrong size or line format: ${formatBad}`);
+const wantFiles = 49 + (NUT3 ? 2 : 0);
+if (delivered.length !== wantFiles || byteOk !== wantFiles || passOk !== wantFiles) fail(`restart delivered files are not ${wantFiles}`);
+if (pictures.size !== 24) fail('restart delivered pictures are not 24');
+
+// 6. Handoff folders.
+const byName = new Map();
+for (const e of delivered) { const k = e.file; if (!byName.has(k)) byName.set(k, new Set()); byName.get(k).add(e.sha256); }
+for (const [h, n] of Object.entries(HANDOFFS)) {
+  const dir = `${HANDOFF}/a48-forge-pictures-${h}`;
+  if (!fs.existsSync(`${dir}/MANIFEST.txt`)) { fail(`no MANIFEST.txt in ${dir}`); continue; }
+  const pngs = fs.readdirSync(dir).filter((x) => x.endsWith('.png')).sort();
+  const text = fs.readFileSync(`${dir}/MANIFEST.txt`, 'utf8');
+  const lines = [...text.matchAll(/^([0-9a-f]{64})  ([^\s/]+\.png)$/gm)];
+  const listed = [...new Set(lines.map((m) => m[2]))].sort();
+  let eq = 0;
+  for (const p of pngs) {
+    const s = sha(`${dir}/${p}`);
+    if (byName.get(p)?.has(s)) eq += 1; else fail(`handoff ${h}/${p} is not byte-equal to a restart delivery file`);
+    if (lines.some((m) => m[2] === p && m[1] !== s)) fail(`handoff ${h}/${p}: MANIFEST line differs from the file`);
+  }
+  console.log(`handoff ${h}: files: ${pngs.length} manifest lines: ${listed.length} byte-equal to delivery: ${eq} evidence words: ${text.includes('model evidence, not acceptance') ? 'yes' : 'no'}`);
+  if (pngs.length !== n) fail(`handoff ${h}: ${pngs.length} files, ${n} wanted`);
+  if (JSON.stringify(pngs) !== JSON.stringify(listed)) fail(`handoff ${h}: MANIFEST lines and files differ`);
+  if (!text.includes('model evidence, not acceptance')) fail(`handoff ${h}: no "model evidence, not acceptance"`);
+}
+if (!NUT3 && fs.existsSync(`${HANDOFF}/a48-forge-pictures-nut3`)) fail('a48-forge-pictures-nut3 exists, but the run has no --nut4');
+
+console.log(`restart check: ${failures === 0 ? 'pass' : `fail (${failures})`}`);
+process.exit(failures === 0 ? 0 : 1);
+```
+<!-- restart-check-v3.mjs end -->
+
+**Pin block 3 (X3).** It holds the r8 and r9 judge results, the nut judge copies of tries 4 and 5,
+the m4 line try 4 print, the m5 prints, the v4 manifest, and the `nut3` handoff manifest.
+
+```sh
+awk '/^<!-- restart-pins-3 end -->$/{f=0} f; /^<!-- restart-pins-3 begin -->$/{f=1}' "$T/test-strategy.md" | sed '1d;$d' > "$D/pins-3.sha256"
+echo "pin 3 lines: $(wc -l < "$D/pins-3.sha256")"
+sha256sum -c --quiet "$D/pins-3.sha256"; echo "pin 3 check exit: $?"
+```
+
+Expected: `pin 3 lines: 12` and `pin 3 check exit: 0`.
+
+<!-- restart-pins-3 begin -->
+```text
+19404008f03af3d90183370d1b2e69ff0fef21409e2374477de3ce5e9b212e94  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r8-line-nut4-c3d31c2a.json
+bec7fcda01776250205657d429204e243ebd6622d6225acd0e86798ac0528e0d  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r8-line-nut4-second-c3d31c2a.json
+19e523d74d72a862354ad34033d373a499dcab70a0a01472610eab23a1c7620e  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r9-color-nut5-5251c126.json
+461dc11aaf06d6232cae834c6c02efcec3300ef8988511d8702a966535beefa4  measure/runs/asset_storytime_l2_unit1_pictures_20261025/judge-prod-r9-line-nut5-5251c126.json
+2e1c6b810866dbfee8b8c28fc89720eed91f477f609e1944c6f67c0900c03cd4  out/storytime-review/judge/prod/l2-w01-story-page-a-nut-color-t4.png
+01b2d1cd0979115fccc6a52835a402224650ffd6989e8d5628b24b652e00babf  out/storytime-review/judge/prod/l2-w01-story-page-a-nut-line-t4.png
+bbc0ffccb1aada33a1f3bfc2587068fd8c7c1d3f8a799bb49a9bf03319c4da43  out/storytime-review/judge/prod/l2-w01-story-page-a-nut-line-t5.png
+47d61a00db245aca7e0f9f9d0f61609c6b49c14048090772fedb0af5d1902031  out/storytime/l2/unit1/w01/muse/l2-w01-story-page-a-nut-m4-line-print-2.png
+f16c547ae0d8489be4737096a2bd0bd3d429fc3d7ea13fe6ad5f40ce2dc32157  out/storytime/l2/unit1/w01/muse/l2-w01-story-page-a-nut-m5-color-print.png
+e155d846429da010fd88cbb81522689ab2989d534567311d3a33b5d605b9ee04  out/storytime/l2/unit1/w01/muse/l2-w01-story-page-a-nut-m5-line-print.png
+2f46efcb11f490fc9a03e28e18eac874cdb0f3197273a722d7852a8c11d15330  out/storytime/l2/unit1/w01/delivery-muse-v4/manifest.json
+7c8ec3f3ec1bc891e27218f0bf7cbd6484b31d48cdbbd8124af65804d278afd3  /home/daniebo/Desktop/handoff/a48-forge-pictures-nut3/MANIFEST.txt
+```
+<!-- restart-pins-3 end -->
+
+**Maker brief (final).** M1 and M3 to M6 are done (T4 steps 9 to 14 and 12). These steps stay:
+
+1. M2 Fix the 25 owned type errors in `tests/storytime-muse-attempts.test.ts` with type
+   annotations only. Change no runtime code and no test assertion. Commit with an explicit path.
+2. When the heavy lock is free, run TYPECHECK_COMMAND once. Record `tsc errors total:` (38 or
+   less) and `owned tsc errors:` (0).
+3. M7 Run GREEN_TEST_COMMAND once, after M2. Quote the labeled totals in the plan.
+4. M8 Run restart check v3 with `--final` and with `--final --control`. Quote the labeled lines in
+   the plan. Write the role log in `$R`. Do not commit `$R`. Do not run `./measure/generate.sh`.
+
+No Muse call and no judge call run in the maker's last step. No further nut try runs without a new
+PM word.
+
+**Checker brief (final).** The checker is `measure-phase-acceptance` on
+`coding-plan/glm-5.3-flash#high`. On `fail` or `inconclusive`, the orchestrator runs it once more
+on `coding-plan/glm-latest#high`. The checker starts after the maker's GREEN_TEST_COMMAND run and
+its TYPECHECK_COMMAND run are in the plan.
+
+1. Rerun X1 to X15 and G5 on the final HEAD, with read-only commands and the temp folder `$D`.
+2. Run restart check v3 with `--final` and with `--final --control`. Run pin blocks 1, 2, and 3.
+   Run the six handoff check commands.
+3. Run TYPECHECK_COMMAND once, then PROJECT_TESTS once, then KNOWN_RED_COMMAND once. Run one heavy
+   command at a time. Wait for a held lock. Never run `pnpm`.
+4. Compare each plan quote with your own output. Read every X13 match and give a reason.
+5. Write `$R/acceptance-p5-restart-<HEAD7>.json` and `.log` (the audit result JSON of
+   `contracts.md`). Do not commit them.
+
+**Anti-pattern notes for this addition.**
+
+| Class | Defense | Falsification condition |
+| --- | --- | --- |
+| A3 | The guard check and the limits read labels (`guard try exceptions:`, `guard limit nut color: … line: …`, `pairs above 3 tries:`). | A bare count satisfies X2 or X5. |
+| A4 | One mode only. Retired modes and no mode exit `2`. The control must exit `1`. The script wants exactly 51 delivered files. | The control exits `0`, or a retired mode exits `0`. |
+| A5 | The plan step 13 and 14 notes must equal the v3 output (57 rows, 0.57 USD, the verdicts). Pin block 3 holds the untracked results. | A plan number differs, or a pin fails. |
+| A7 | The limits apply to the nut color and the nut line only. A 4th try of any other pair fails. The map check counts entries for other ids or kinds. | Another pair has a 4th try, or the map has an entry for another id. |
+| A11 | The guard map (code), the v3 limits (checker), and this text name the same three PM grants. | The code limit differs from 4 and 5, or the text names a grant that the map does not hold. |
+
+**Findings at `a2675b2c`** (read-only checks: restart check v3 `--final`, X1, X2, X12, X13, X14,
+the structural doctor, and the `nut3` check command).
+
+| Id | Class | Finding | Owner |
+| --- | --- | --- | --- |
+| F1 | Fixed | T5 and T6 hold a commit SHA on the first line. All 7 Phase 5 tasks are `[x]` with a commit SHA. | none |
+| F2 | Blocks X11 | Interim type check: 25 owned errors in `tests/storytime-muse-attempts.test.ts` (total 63). The fix and the run wait for the heavy lock. Not checked by this role. | Maker M2 |
+| F3 | Fixed | X13 prints only the 3 w08 approval notes, which the file-level rule qualifies. | none |
+| F4 | Fixed | `metadata.json` `actual_tasks` is 29, equal to the grep. `status` is `in_progress`. | none |
+| F5 | Fixed | Task 3 is `[x]`. | none |
+| F6 | Blocks X10 | GREEN_TEST_COMMAND has not run since the step 11 and 13 code changes. | Maker M7 |
+| N4 | Informational | `d6867c52` has the subject `measure(tracks):`, so X1 lists it as a foreign commit. It touches only `measure/tracks.md` and no Storytime path. The checker names it and gives this reason. | none |
+| N5 | Informational | The working tree holds an uncommitted `measure/tracks.md` hunk of another session. X15 and Q3 apply: nobody stages it. | none |
+| N6 | Informational | The structural doctor prints 12 errors. None names this track or an owned file. | Closeout |
+
+No delivered file lacks a passing judge result: v3 `--final` gives 51 of 51.
+
 ## 8. Architecture guardrails and changed-contract risks
 
 Guardrails:
