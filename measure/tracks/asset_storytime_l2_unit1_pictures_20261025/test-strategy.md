@@ -4875,6 +4875,913 @@ carries over, and the checker reruns every gate of 5.11.15 at the new HEAD.
 | A10 | The carry-over needs an unchanged audited tree and unchanged untracked evidence. | Results carry over after a code, plan, or evidence change. |
 | A11 | The block SHA-256 values in this text equal the extracted blocks. | An extracted block SHA differs from the table. |
 
+### Track final acceptance (2026-11-05)
+
+Revision: written at `325b92a0`. The Phase 5 acceptance passed there
+(`measure/runs/asset_storytime_l2_unit1_pictures_20261025/acceptance-p5-restart-325b92a.json`,
+mechanical gate exit 0). The text before this section stays as written. Where this section and an
+earlier part differ for final acceptance or closeout, this section applies. It makes the sentence of
+5.2 concrete: "Final acceptance reads PROJECT_TESTS and the type check".
+
+PM decisions of 2026-11-05 (from the orchestrator brief):
+
+- Final acceptance runs on `coding-plan/ark-code-latest#high` (ByteDance family; it did no work in
+  this track). The fallback is a DeepSeek model on the Ark Coding Plan. The fallback runs only if the
+  first model fails its start test or its run (F.7).
+- "For the 38 tsc errors outside the track: pin them as a known-red baseline by file and count in the
+  amendment; any new error fails the gate."
+- Closeout runs on `minimax-cn-coding-plan/MiniMax-M3.1-Flash`.
+
+Risk class: **medium**. The three gates only read. The risk sits in the closeout: it moves the track
+folder, commits about 1,000 run files, and edits shared registry files while other sessions hold
+uncommitted edits (A10, A6). Review applicability:
+
+| Review | Applies | Reason |
+| --- | --- | --- |
+| Security review | No | No code, no trust boundary. A secret scan covers the run folder (CG2). |
+| UX and API review | No | No UI, no API change. |
+| Adversarial testing | No | The selftest (31 cases), the restart check control, and the lint falsification rows stand in. |
+| Browser review | No (`UX_REQUIRED=never`) | No UI. |
+| Different-family rule | Met | Makers: MiniMax, Kimi. Phase 5 checker: GLM. Judge: Anthropic. Final acceptance: ByteDance, then DeepSeek. |
+
+Artifact tests and live behavior: PROJECT_LINT checks artifacts (files, hashes, records, the doctor).
+PROJECT_CHECKS and PROJECT_TESTS check code. The live behavior proof of the pictures is the Muse calls
+and the Sonnet judge runs of the earlier phases, recorded in the cost rows and the judge results.
+Final acceptance makes no Muse call and no judge call.
+
+#### F.1 Facts (checked 2026-11-05 at `325b92a0`; read-only commands and one heavy `tsc` run)
+
+| Fact | Value |
+| --- | --- |
+| HEAD | `325b92a0d2789e4ab00ff2313129f53dbe626ec7` on `master`. The strategy commit of this section follows it. |
+| Plan | 33 task lines: 29 `[x]`, 4 deferred (the Muse path markers), 0 non-deferred incomplete. `measure_interphase_checks.py status` prints `incomplete_phases: 0` and `closeout_candidates: 1`. |
+| Plan finding FA-N1 | Two `[x]` lines have the commit SHA on the continuation line: line 30 (`2fdce9d`) and line 32 (`c52e495`). Both are commits. The closeout checker reads the first line only, so it reports "completed plan task lacks commit SHA" for both. The final-acceptance gate does not read this. CG3 fixes it. |
+| Linter | None. `package.json` has `test` (`vitest run`), `typecheck` (`tsc --noEmit`), `check`, and `format` (`prettier --write`, a writer). No eslint or biome file exists. |
+| Type check | One `heavy-run.sh` run: exit `2`, 38 errors, 0 owned, 88 s. The per-file counts equal the T4 step 15 log. None of the files is under the owned prefixes of 5.11.4. Three baseline files are Storytime asset sources of earlier commits (`assets/storytime-*.ts`, commits `65f74878`, `9ce89f41`); the track did not change them. |
+| Doctor | `node measure/tools/doctor.mjs --structural-only --root .` prints the 12 errors of F.4 and exits `1`. None names this track. It takes 1.5 s. |
+| Known red | `tests/storytime-book-pictures.test.ts` stays red by the 5.11.16 rule (live list `89b2910c…`, pin `6d05dfc5…`). The rule needs no exact failure count. |
+| PROJECT_TESTS | The seven files of 5.11.4 exist. The accepted run at `b72f8b60` gave `Test Files  7 passed (7)` and `Tests  105 passed (105)`. The Phase 5 acceptance at `325b92a0` carried that result. |
+| RB-P4-1 | `measure/tech-debt.md` already holds it as `TD-29` (Low, Open) and holds RB12-01 and RB12-03 as `TD-30`. The file has 43 lines (limit 50). Closeout adds no row. It retargets the links (CG6). |
+| Archive | `measure/archive/` does not exist yet. `active_registry_contains` reads the text before the heading `## Archived Tracks`. That heading is absent now, so the whole of `measure/tracks.md` counts as the active part. The doctor demands the form `**Track:` plus a `./tracks/<id>/` link for every line that holds `**Track:`. So the archived entry must not hold `**Track:` (CG5). |
+| Links into the track | `measure/tracks.md` (1), `measure/status.md` (1), `measure/tech-debt.md` (TD-29, TD-30). `measure/tracks/asset_filled_shelves_20261028/test-strategy.md` also names the path; it belongs to another track and stays. |
+| Foreign state | Uncommitted: one hunk in `measure/tracks.md` (7 lines in the Contents part), six other `plan.md` files, and `measure/generated/{architecture.json,asset-inventory.json,status.md}`. `./measure/generate.sh` would write that state into the facts (T5). |
+| Run folder | `measure/runs/asset_storytime_l2_unit1_pictures_20261025/`: 12 MB, 67 tracked files, 2 modified, 946 untracked. Closeout commits all of them (CG1). |
+| Tmp folder | `/tmp/opencode/` is shared. Other sessions delete old files there. Each gate command makes its own `mktemp -d` folder and uses it at once. |
+
+#### F.2 PROJECT_TESTS
+
+One shell command, run from the repo root. It holds one `heavy-run.sh` wrapper with
+`HEAVY_MIN_AVAIL_MB=1500` and `--maxWorkers=1`. It runs the seven files of 5.11.4 and never uses
+`pnpm`. `vitest` exits `0` for a skipped test, so the command also reads the two labeled totals. It
+exits `0` only when `vitest` exits `0`, `Test Files  7 passed (7)` is present, and
+`Tests  105 passed (105)` is present. The value holds no single quote, so it can go inside single
+quotes in a shell or in a process environment as it is.
+
+```text
+mkdir -p /tmp/opencode && O=$(mktemp /tmp/opencode/final-tests.XXXXXX) && HEAVY_MIN_AVAIL_MB=1500 bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c "node_modules/.bin/vitest run tests/storytime-muse-attempts.test.ts tests/storytime-judge-batch.test.ts tests/storytime-muse-delivery.test.ts tests/storytime-picture-rows.test.ts tests/storytime-stage-check.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-muse-delivery-adversarial.test.ts --maxWorkers=1" > "$O" 2>&1; E=$?; tail -n 25 "$O"; echo "project tests exit: $E"; [ "$E" -eq 0 ] && grep -Eq "^ *Test Files +7 passed [(]7[)] *$" "$O" && grep -Eq "^ *Tests +105 passed [(]105[)] *$" "$O"
+```
+
+Expected labels: `project tests exit: 0`, `Test Files  7 passed (7)`, `Tests  105 passed (105)`. The total 105 is
+the value of the accepted run. A test file change after `325b92a0` is a code change. Then the carry-over
+fails (F.4) and the value is checked again from the new run. A `heavy-preflight` hold gives exit
+`75`. The gate then fails. This is not a test failure. The orchestrator runs the gate again. Falsification: a failed test, a skipped test, a changed total, or `Test Files` other than
+7. A filter (`-t`) is not in the command.
+
+#### F.3 PROJECT_CHECKS (type check against a pinned baseline, and the known-red rule)
+
+PROJECT_CHECKS holds two heavy runs, one after the other, inside one command. The script
+`final-gates.mjs` (F.5) runs them through `heavy-run.sh` with `HEAVY_MIN_AVAIL_MB=1500`. The first run
+is `NODE_OPTIONS=--max-old-space-size=6144 node_modules/.bin/tsc --noEmit` (the heap setting of
+TYPECHECK_COMMAND). The second run is `node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1`
+(the KNOWN_RED_COMMAND of 5.11.4). The command exits `0` only when both parts hold.
+
+```text
+mkdir -p /tmp/opencode && D=$(mktemp -d /tmp/opencode/final-checks.XXXXXX) && awk "/^<!-- final-gates.mjs end -->\$/{f=0} f; /^<!-- final-gates.mjs begin -->\$/{f=1}" measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md | sed "1d;\$d" > "$D/final-gates.mjs" && [ "$(sha256sum < "$D/final-gates.mjs" | cut -c1-64)" = "83b22adc2ca57d3b0bbd306a0b3308ef336e62980abc28030c592b8c61ac3aef" ] && node "$D/final-gates.mjs" checks "$D"
+```
+
+**Part 1: the tsc baseline.** The script parses each line that starts with a path and holds
+`error TS<n>`. It counts the errors for each file. The baseline below is the state at `325b92a0`
+(88 s run, exit `2`, 38 errors, 0 owned errors).
+
+| File | Errors | Origin |
+| --- | --- | --- |
+| `assets/airship.ts` | 7 | earlier asset tracks |
+| `assets/longship.ts` | 1 | earlier asset tracks |
+| `assets/merchant-cart.ts` | 1 | earlier asset tracks |
+| `assets/mushroom-cap.ts` | 3 | earlier asset tracks |
+| `assets/plank.ts` | 6 | earlier asset tracks |
+| `assets/rowboat.ts` | 8 | earlier asset tracks |
+| `assets/storytime-crayon-box.ts` | 1 | earlier Storytime asset commit `65f74878` |
+| `assets/storytime-nut.ts` | 3 | earlier Storytime asset commit `9ce89f41` |
+| `assets/storytime-picture-book.ts` | 1 | earlier Storytime asset commit `65f74878` |
+| `assets/waterskin.ts` | 3 | earlier asset tracks |
+| `assets/wool.ts` | 1 | earlier asset tracks |
+| `tests/games/castle-defense/rules.adversarial.test.ts` | 2 | game tracks |
+| `tests/part.test.ts` | 1 | earlier asset tracks |
+| **Total** | **38** | 13 files, 0 under `src/storytime/`, `scripts/storytime-`, `tests/storytime-` |
+
+Part 1 passes when all of these hold:
+
+1. `tsc` exits `0` or `2`. Exit `2` needs at least one parsed error line. Exit `0` needs none.
+2. Every line with `error TS` ties to a file (`tsc unparsed error lines: 0`).
+3. `owned tsc errors: 0` (the prefixes of 5.11.4).
+4. `tsc files outside the baseline: 0`. A new file with an error fails.
+5. `tsc files above their baseline: 0`. A count above its row fails.
+6. `tsc errors total:` is 38 or less. A lower count passes (a fix by another track). The lines
+   `tsc file <path>: <n> (baseline <b>)` show each file.
+
+A `heavy-run.sh` exit of `75`, `124`, or `201` prints a `HOLD` line and the command exits `3`. That is
+not a pass. The orchestrator runs the gate again.
+
+**Part 2: the known-red rule.** The script applies the six conditions of 5.11.16 to the second run. It
+extracts `pin-set.mjs` from this file (SHA-256 `f67cfa8f…`), runs it, and reads the live list SHA-256.
+It passes when all of these hold:
+
+1. The test file has no change since `b72f8b60` and no uncommitted change.
+2. The `Tests` line sums to 142, with no skipped and no todo test.
+3. The pin-set output lists 142 tests and the 13 named tests
+   (`T142,T143,T144,T145,T147,T148,T149,T150,T173,T174,T175,T176,T177`).
+4. While the live list SHA-256 differs from `6d05dfc5…`: the exit is `1`, all 4 drift sentinels
+   (`T142`, `T147`, `T173`, `T174`) fail, and the number of failed tests equals the number of unique
+   failing ids (observed: 7 and 7 at `325b92a0`). If the live list equals the pin, the exit is `0`
+   with 0 failures.
+5. No failing test is outside the named set. A `FAIL` line without a test id fails the part.
+
+Expected labels at the live list `89b2910c…`: `known red exit: 1`, `tests in the file: 142`,
+`known red failing tests: 7 T142,T145,T147,T150,T173,T174,T177` (another subset of the named set also
+passes), `known red failing tests outside the pin set: 0`, `known red drift sentinels failing: 4 of 4`,
+`known red skipped or todo: 0`, and the last line `final checks: pass`.
+
+This part replaces the exact "8 failures" of 5.11.4. The test file stays out of PROJECT_TESTS because
+it must stay red while Workbooks holds a newer list. The count follows the list. Workbooks owns the
+list.
+
+Falsification (each one fails the command): a new tsc error in any file, an owned error, a count above
+a baseline row, a failing test outside the named set, a drift sentinel that passes on a changed list, a
+`Tests` total other than 142, a changed test file, or a script SHA-256 that differs. The script runs its
+own selftest first (F.5), so a parser that always passes is caught.
+
+#### F.4 PROJECT_LINT (a stand-in: no linter exists)
+
+The repo has no linter, and `prettier --write` changes files. So PROJECT_LINT is a read-only
+consistency lint of the artifacts that the track leaves. It stands in for a lint for three reasons.
+First, it finds the same class of fault: a stale or inconsistent static artifact (a Measure document,
+a pinned hash, a script block) that no test reads. Second, it fails on a seeded fault (the selftest and
+the restart check control). Third, it proves that the audited tree equals the tree that the Phase 5
+acceptance measured (the carry-over rule). It runs in about 25 s and takes no heavy lock.
+
+```text
+mkdir -p /tmp/opencode && D=$(mktemp -d /tmp/opencode/final-lint.XXXXXX) && awk "/^<!-- final-gates.mjs end -->\$/{f=0} f; /^<!-- final-gates.mjs begin -->\$/{f=1}" measure/tracks/asset_storytime_l2_unit1_pictures_20261025/test-strategy.md | sed "1d;\$d" > "$D/final-gates.mjs" && [ "$(sha256sum < "$D/final-gates.mjs" | cut -c1-64)" = "83b22adc2ca57d3b0bbd306a0b3308ef336e62980abc28030c592b8c61ac3aef" ] && nice -n 19 node "$D/final-gates.mjs" lint "$D"
+```
+
+The lint checks, in this order:
+
+| Check | Pass condition | Falsification condition |
+| --- | --- | --- |
+| L0 selftest | `selftest cases: 31 failed expectations: 0` | A seeded bad input passes a parser (A4). |
+| L1 carry-over (5.11.16 conditions 1 and 2) | `325b92a0` is an ancestor of HEAD. `merge commits since the base: 0`. `own-commit files other than the strategy: 0`. `foreign Storytime paths: 0`. `strategy lines removed since the base: 0`. `strategy uncommitted change: no`. An own commit has a subject that starts with `storytime:` or `measure(storytime_l2_unit1_pictures):`. The script names each foreign commit. A foreign commit may touch `measure/tracks.md`, `measure/generated/`, and other tracks. | An own commit changes a file other than this file, a foreign commit touches a Storytime path, a merge commit exists, a strategy line is removed, or this file has an uncommitted change. Then nothing carries over. |
+| L2 block SHA-256 values | The seven blocks (`restart-check.mjs`, `restart-check-v2.mjs`, `restart-check-v3.mjs`, `restart-pins`, `restart-pins-2`, `restart-pins-3`, `pin-set.mjs`) extract to the values of 5.11.16. | A block differs from its value (A11). |
+| L3 pin blocks | `restart-pins lines: 28`, `restart-pins-2 lines: 7`, `restart-pins-3 lines: 12`, and each `check exit: 0`. | A pinned judge result, handoff `MANIFEST.txt`, or run file changed, or a block is empty (A4). |
+| L4 restart check v3 | `restart check exit: 0`, last line `restart check: pass`; `restart control exit: 1` with the three FAIL texts of 5.11.15. | The check fails, or the control exits `0` (A4). |
+| L5 doctor | `doctor errors that name this track or an owned path: 0` and `doctor errors outside the known list of 12: 0`. | A doctor error names this track, an owned path, or a new text. |
+
+The 12 known doctor errors are errors of other tracks. They are fixed by other sessions. The lint
+accepts a lower count, and it rejects a new text:
+
+```text
+error: measure/tracks/asset_filled_shelves_20261028/plan.md: new track has started tasks
+error: measure/tracks/asset_p2_npcs_20260928/plan.md: new track has started tasks
+error: measure/tracks/game_archers_revenge_rebuild_20261029/plan.md: new track has started tasks
+error: measure/tracks/game_castle_defense_rebuild_20261029/plan.md: new track has started tasks
+error: measure/tracks/game_magic_defense_rebuild_20261029/plan.md: new track has started tasks
+error: measure/tracks/game_paladins_twin_soul_rebuild_20261029/plan.md: new track has started tasks
+error: measure/tracks.md: missing registry link for asset_filled_shelves_20261028
+error: measure/tracks.md: missing registry link for game_archers_revenge_rebuild_20261029
+error: measure/tracks.md: missing registry link for game_castle_defense_rebuild_20261029
+error: measure/tracks.md: missing registry link for game_magic_defense_rebuild_20261029
+error: measure/tracks.md: missing registry link for game_paladins_twin_soul_rebuild_20261029
+error: measure/generated/status.md: stale generated fact
+```
+
+An "owned path" is `measure/tracks/asset_storytime_l2_unit1_pictures_20261025`, `src/storytime`,
+`scripts/storytime-`, `tests/storytime-`, `docs/storytime/l2-unit1`, or `out/storytime`. The lint
+does not claim that `doctor` exits `0`. It reports the doctor exit code as a label.
+
+#### F.5 The script `final-gates.mjs` (one block, pinned)
+
+The script is read-only. `lint` and `checks` write only inside the `mktemp` folder that the command
+passes. The script also has the modes `selftest`, `eval-tsc <log> <exit>`, and
+`eval-known-red <log> <exit> <live-sha> <pin-set-output>`. A checker can use them to evaluate a saved
+log. The extraction method is the method of 5.11.5. The commands of F.3 and F.4 do it, and a person can
+do it by hand:
+
+```sh
+T=measure/tracks/asset_storytime_l2_unit1_pictures_20261025
+mkdir -p /tmp/opencode && D=$(mktemp -d /tmp/opencode/final-gates.XXXXXX)
+awk '/^<!-- final-gates.mjs end -->$/{f=0} f; /^<!-- final-gates.mjs begin -->$/{f=1}' "$T/test-strategy.md" | sed '1d;$d' > "$D/final-gates.mjs"
+echo "final gates script sha256: $(sha256sum < "$D/final-gates.mjs" | cut -c1-64)"
+node "$D/final-gates.mjs" selftest
+```
+
+Expected script SHA-256: `83b22adc2ca57d3b0bbd306a0b3308ef336e62980abc28030c592b8c61ac3aef`. Expected selftest output: `selftest cases: 31 failed expectations: 0`.
+The `PROJECT_LINT` and `PROJECT_CHECKS` strings check this SHA-256 before they run the script. A change
+of one byte of the block changes the SHA-256, so a later edit of the block needs a new strategy role.
+
+<!-- final-gates.mjs begin -->
+```js
+// final-gates.mjs: the read-only final-acceptance gates of test-strategy.md, "Track final acceptance".
+// Run from the repo root: node <this file> lint|checks <workdir> | selftest | eval-tsc <log> <exit>
+//   | eval-known-red <log> <exit> <live-list-sha256> <pin-set-output>.
+// lint and checks write only inside <workdir>, a folder under /tmp/opencode/. They change no repo file.
+// Output: labeled lines. Exit 0: every gate holds. Exit 1: a FAIL line names the gate. Exit 3: a HOLD line
+// (heavy-run hold or time limit) means the run is inconclusive. Exit 2: a usage error.
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import { spawnSync } from 'node:child_process';
+import { pathToFileURL } from 'node:url';
+
+const TRACK = 'asset_storytime_l2_unit1_pictures_20261025';
+const STRATEGY = `measure/tracks/${TRACK}/test-strategy.md`;
+const CARRY_BASE = '325b92a0d2789e4ab00ff2313129f53dbe626ec7';
+const KR_BASE = 'b72f8b60';
+const KR_FILE = 'tests/storytime-book-pictures.test.ts';
+const LIST_PIN = '6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58';
+const LIST_FILE = '/home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json';
+const HEAVY = `${process.env.HOME}/Desktop/advantage-pr/scripts/jobs/heavy-run.sh`;
+const OWNED_RE = /^(src\/storytime\/|scripts\/storytime-|tests\/storytime-)/;
+const TSC_BASELINE = {
+  'assets/airship.ts': 7,
+  'assets/longship.ts': 1,
+  'assets/merchant-cart.ts': 1,
+  'assets/mushroom-cap.ts': 3,
+  'assets/plank.ts': 6,
+  'assets/rowboat.ts': 8,
+  'assets/storytime-crayon-box.ts': 1,
+  'assets/storytime-nut.ts': 3,
+  'assets/storytime-picture-book.ts': 1,
+  'assets/waterskin.ts': 3,
+  'assets/wool.ts': 1,
+  'tests/games/castle-defense/rules.adversarial.test.ts': 2,
+  'tests/part.test.ts': 1,
+};
+const NAMED_SET = ['T142', 'T143', 'T144', 'T145', 'T147', 'T148', 'T149', 'T150', 'T173', 'T174', 'T175', 'T176', 'T177'];
+const SENTINELS = ['T142', 'T147', 'T173', 'T174'];
+const DOCTOR_KNOWN = [
+  'error: measure/tracks/asset_filled_shelves_20261028/plan.md: new track has started tasks',
+  'error: measure/tracks/asset_p2_npcs_20260928/plan.md: new track has started tasks',
+  'error: measure/tracks/game_archers_revenge_rebuild_20261029/plan.md: new track has started tasks',
+  'error: measure/tracks/game_castle_defense_rebuild_20261029/plan.md: new track has started tasks',
+  'error: measure/tracks/game_magic_defense_rebuild_20261029/plan.md: new track has started tasks',
+  'error: measure/tracks/game_paladins_twin_soul_rebuild_20261029/plan.md: new track has started tasks',
+  'error: measure/tracks.md: missing registry link for asset_filled_shelves_20261028',
+  'error: measure/tracks.md: missing registry link for game_archers_revenge_rebuild_20261029',
+  'error: measure/tracks.md: missing registry link for game_castle_defense_rebuild_20261029',
+  'error: measure/tracks.md: missing registry link for game_magic_defense_rebuild_20261029',
+  'error: measure/tracks.md: missing registry link for game_paladins_twin_soul_rebuild_20261029',
+  'error: measure/generated/status.md: stale generated fact',
+];
+const OWNED_DOC_RE = new RegExp(`${TRACK}|src/storytime|scripts/storytime-|tests/storytime-|docs/storytime/l2-unit1|out/storytime`);
+const BLOCK_SHA = {
+  'restart-check.mjs': 'c3ecbeb73f75abc77f64bf04c9fd86110f414cd121ac460ce423b3474672f062',
+  'restart-check-v2.mjs': '30f68eafaa216bdd8947efa394aac08b8d11fbd98fed37c0c8988527807541a7',
+  'restart-check-v3.mjs': '6ae82ad4a305341a409be95cd007239ef069cac2e8c4ef6301467908bac78a9e',
+  'restart-pins': '3b9b40775385616b39ad889592cd66ba5c181fdf8d8c299e02cafbd1723aedea',
+  'restart-pins-2': 'fe0370b481a4588e24770522cd60f66fb8457ec4e27113a93abcdae89df3a311',
+  'restart-pins-3': '335b8e9a1bdc2def8cd14a7770f4db9f7c759d060e48719bf8c99006b50707d5',
+  'pin-set.mjs': 'f67cfa8f17d380cb7e6f7632612b8f56d5cba6793d642a90abf2b5c1fd4a3fe0',
+};
+const PIN_LINES = { 'restart-pins': 28, 'restart-pins-2': 7, 'restart-pins-3': 12 };
+
+const sha = (buf) => crypto.createHash('sha256').update(buf).digest('hex');
+const clean = (s) => s.replace(/\x1b\[[0-9;]*m/g, '');
+const git = (...args) => spawnSync('git', args, { encoding: 'utf8', maxBuffer: 1 << 27 });
+const idNum = (a, b) => Number(a.replace(/\D/g, '')) - Number(b.replace(/\D/g, '')) || a.localeCompare(b);
+const HOLD_EXITS = [75, 124, 201];
+
+// ---------- tsc ----------
+export function parseTsc(text) {
+  const errors = [];
+  let unparsed = 0;
+  for (const raw of clean(text).split('\n')) {
+    if (!/error TS\d+/.test(raw)) continue;
+    const m = raw.match(/^(\S.*?)\((\d+),(\d+)\): error (TS\d+):/);
+    if (m) errors.push({ file: m[1], code: m[4] });
+    else unparsed += 1;
+  }
+  return { errors, unparsed };
+}
+
+export function evalTsc(exitCode, text, baseline = TSC_BASELINE) {
+  const lines = [];
+  const problems = [];
+  const { errors, unparsed } = parseTsc(text);
+  const perFile = new Map();
+  for (const e of errors) perFile.set(e.file, (perFile.get(e.file) ?? 0) + 1);
+  const baseTotal = Object.values(baseline).reduce((a, b) => a + b, 0);
+  const owned = errors.filter((e) => OWNED_RE.test(e.file)).length;
+  const outside = [...perFile.keys()].filter((f) => !(f in baseline));
+  const above = [...perFile].filter(([f, n]) => f in baseline && n > baseline[f]);
+  const hold = HOLD_EXITS.includes(exitCode);
+  lines.push(`tsc exit: ${exitCode}`, `tsc errors total: ${errors.length}`, `tsc baseline total: ${baseTotal}`);
+  lines.push(`owned tsc errors: ${owned}`, `tsc unparsed error lines: ${unparsed}`);
+  lines.push(`tsc files outside the baseline: ${outside.length}${outside.length ? ` (${outside.join(', ')})` : ''}`);
+  lines.push(`tsc files above their baseline: ${above.length}${above.length ? ` (${above.map(([f, n]) => `${f} ${n}>${baseline[f]}`).join(', ')})` : ''}`);
+  for (const f of [...new Set([...Object.keys(baseline), ...perFile.keys()])].sort()) lines.push(`tsc file ${f}: ${perFile.get(f) ?? 0} (baseline ${baseline[f] ?? 0})`);
+  if (hold) return { lines, problems, hold: `tsc exit ${exitCode} is a heavy-run hold or time limit` };
+  if (exitCode !== 0 && exitCode !== 2) problems.push(`tsc exit ${exitCode} is neither 0 nor 2`);
+  if (exitCode === 2 && errors.length === 0) problems.push('tsc exit 2 with no parsed error line');
+  if (exitCode === 0 && errors.length > 0) problems.push('tsc exit 0 with error lines');
+  if (unparsed > 0) problems.push(`${unparsed} error line(s) cannot be tied to a file`);
+  if (owned > 0) problems.push(`${owned} owned tsc error(s)`);
+  if (outside.length > 0) problems.push(`tsc error(s) in a file outside the baseline: ${outside.join(', ')}`);
+  if (above.length > 0) problems.push(`tsc error count above the baseline: ${above.map(([f, n]) => `${f} ${n}>${baseline[f]}`).join(', ')}`);
+  if (errors.length > baseTotal) problems.push(`tsc total ${errors.length} is above ${baseTotal}`);
+  return { lines, problems, hold: null };
+}
+
+// ---------- the known-red rule (5.11.16) ----------
+export function parseVitest(text) {
+  const rows = clean(text).split('\n');
+  const counts = { failed: 0, passed: 0, skipped: 0, todo: 0, total: null };
+  const tl = rows.filter((l) => /^\s*Tests\s+\d/.test(l)).pop();
+  if (tl) {
+    for (const m of tl.matchAll(/(\d+) (failed|passed|skipped|todo)/g)) counts[m[2]] = Number(m[1]);
+    const tot = tl.match(/\((\d+)\)\s*$/);
+    counts.total = tot ? Number(tot[1]) : null;
+  }
+  const failing = new Set();
+  let unparsed = 0;
+  for (const l of rows) {
+    const m = l.match(/^\s*FAIL\s+tests\/storytime-book-pictures\.test\.ts(.*)$/);
+    if (!m) continue;
+    const id = m[1].match(/> (T\d+[a-z]?):/);
+    if (id) failing.add(id[1]);
+    else unparsed += 1;
+  }
+  return { hasTestsLine: Boolean(tl), counts, failing: [...failing].sort(idNum), unparsed };
+}
+
+export function evalKnownRed({ exitCode, text, pinSetText, liveSha, changedFiles, dirty }) {
+  const lines = [];
+  const problems = [];
+  if (HOLD_EXITS.includes(exitCode)) return { lines: [`known red exit: ${exitCode}`], problems, hold: `known red exit ${exitCode} is a heavy-run hold or time limit` };
+  const v = parseVitest(text);
+  const inFile = Number((pinSetText.match(/^tests in the file: (\d+)/m) ?? [])[1]);
+  const pm = pinSetText.match(/^pin-dependent tests: (\d+) (\S*)/m);
+  const pinSet = pm ? pm[2].split(',').filter(Boolean).sort(idNum) : [];
+  const differs = liveSha !== LIST_PIN;
+  const outside = v.failing.filter((id) => !pinSet.includes(id));
+  const sentinelsFailing = SENTINELS.filter((id) => v.failing.includes(id));
+  lines.push(`known red exit: ${exitCode}`);
+  lines.push(`known red Tests line: ${v.hasTestsLine ? `${v.counts.failed} failed, ${v.counts.passed} passed, ${v.counts.skipped} skipped, ${v.counts.todo} todo, total ${v.counts.total}` : 'absent'}`);
+  lines.push(`tests in the file: ${inFile}`, `pin-dependent tests: ${pinSet.length} ${pinSet.join(',')}`);
+  lines.push(`test file changed since ${KR_BASE}: ${changedFiles}`, `test file uncommitted change: ${dirty ? 'yes' : 'no'}`);
+  lines.push(`live list differs from the pin: ${differs ? 'yes' : 'no'}`);
+  lines.push(`known red failing tests: ${v.failing.length} ${v.failing.join(',')}`);
+  lines.push(`known red unparsed FAIL lines: ${v.unparsed}`);
+  lines.push(`known red failing tests outside the pin set: ${outside.length}`);
+  lines.push(`known red drift sentinels failing: ${sentinelsFailing.length} of ${SENTINELS.length}`);
+  lines.push(`known red skipped or todo: ${v.counts.skipped + v.counts.todo}`);
+  if (!v.hasTestsLine) problems.push('no Tests line in the vitest output');
+  if (v.counts.total !== 142 || v.counts.failed + v.counts.passed !== 142) problems.push(`Tests total is not 142 (failed ${v.counts.failed}, passed ${v.counts.passed}, total ${v.counts.total})`);
+  if (inFile !== 142) problems.push(`pin-set script counts ${inFile} tests, not 142`);
+  if (pinSet.join(',') !== NAMED_SET.join(',')) problems.push(`pin set differs from the named set: ${pinSet.join(',')}`);
+  if (changedFiles !== 0 || dirty) problems.push('the test file changed');
+  if (v.counts.skipped + v.counts.todo > 0) problems.push('a skipped or todo test exists');
+  if (v.unparsed > 0) problems.push('a FAIL line has no test id');
+  if (v.failing.length !== v.counts.failed) problems.push(`failing ids ${v.failing.length} differ from the failed count ${v.counts.failed}`);
+  if (outside.length > 0) problems.push(`new failure outside the named set: ${outside.join(', ')}`);
+  if (differs) {
+    if (exitCode !== 1) problems.push(`exit ${exitCode}, expected 1 while the live list differs from the pin`);
+    if (sentinelsFailing.length !== SENTINELS.length) problems.push('a drift sentinel passes while the list differs (the pin check did not run)');
+  } else {
+    if (exitCode !== 0 || v.counts.failed !== 0) problems.push('the live list equals the pin, so the file must pass with 0 failures');
+  }
+  return { lines, problems, hold: null };
+}
+
+// ---------- doctor ----------
+export function evalDoctor(exitCode, text) {
+  const errs = clean(text).split('\n').filter((l) => /^error: /.test(l));
+  const named = errs.filter((l) => OWNED_DOC_RE.test(l));
+  const unknown = errs.filter((l) => !DOCTOR_KNOWN.includes(l));
+  const absent = DOCTOR_KNOWN.filter((l) => !errs.includes(l));
+  const lines = [`doctor exit: ${exitCode}`, `doctor errors: ${errs.length}`, `doctor errors that name this track or an owned path: ${named.length}`, `doctor errors outside the known list of ${DOCTOR_KNOWN.length}: ${unknown.length}`, `doctor known errors now absent: ${absent.length}`];
+  const problems = [];
+  if (named.length) problems.push(`doctor error names this track or an owned path: ${named.join(' | ')}`);
+  if (unknown.length) problems.push(`doctor error outside the known list: ${unknown.join(' | ')}`);
+  if (exitCode !== 0 && exitCode !== 1) problems.push(`doctor exit ${exitCode}`);
+  if (exitCode === 1 && errs.length === 0) problems.push('doctor exit 1 with no error line');
+  if (exitCode === 0 && errs.length > 0) problems.push('doctor exit 0 with error lines');
+  return { lines, problems, hold: null };
+}
+
+// ---------- selftest (a gate that cannot fail is a vacuous pass, A4) ----------
+export function selftest() {
+  let cases = 0;
+  const bad = [];
+  const expect = (name, got, want) => {
+    cases += 1;
+    if (got !== want) bad.push(`${name}: got ${got}, wanted ${want}`);
+  };
+  const ok = (r) => (r.hold ? 'hold' : r.problems.length === 0 ? 'pass' : 'fail');
+  const synth = (extra = [], dropFrom = null) => {
+    const out = [];
+    for (const [f, n] of Object.entries(TSC_BASELINE)) for (let i = 0; i < n; i += 1) if (f !== dropFrom || i < n - 1) out.push(`${f}(${i + 1},1): error TS2345: seeded`, "  Type 'undefined' is not assignable to type 'number'.");
+    return out.concat(extra).join('\n');
+  };
+  expect('tsc baseline', ok(evalTsc(2, synth())), 'pass');
+  expect('tsc new file', ok(evalTsc(2, synth(['assets/new-thing.ts(1,1): error TS2322: x']))), 'fail');
+  expect('tsc file above baseline', ok(evalTsc(2, synth(['assets/rowboat.ts(99,1): error TS2322: x']))), 'fail');
+  expect('tsc owned error', ok(evalTsc(2, synth(['src/storytime/book-pictures.ts(1,1): error TS2322: x']))), 'fail');
+  expect('tsc owned test error', ok(evalTsc(2, synth(['tests/storytime-muse-attempts.test.ts(1,1): error TS7016: x']))), 'fail');
+  expect('tsc exit 2 with no error', ok(evalTsc(2, '')), 'fail');
+  expect('tsc exit 1', ok(evalTsc(1, synth())), 'fail');
+  expect('tsc exit 75', ok(evalTsc(75, '')), 'hold');
+  expect('tsc one fewer error', ok(evalTsc(2, synth([], 'assets/plank.ts'))), 'pass');
+  expect('tsc unparsed error', ok(evalTsc(2, synth(['error TS5083: Cannot read file']))), 'fail');
+  expect('tsc exit 0 clean', ok(evalTsc(0, '')), 'pass');
+  const ids = ['T142', 'T145', 'T147', 'T150', 'T173', 'T174', 'T177'];
+  const vt = (failIds, tests = '7 failed | 135 passed (142)') => `${failIds.map((i) => ` FAIL  ${KR_FILE} > Storytime > ${i}: a name\n FAIL  ${KR_FILE} > Storytime > ${i}: a name`).join('\n')}\n Test Files  1 failed (1)\n      Tests  ${tests}\n`;
+  const pinText = `tests in the file: 142\npin-dependent tests: 13 ${NAMED_SET.join(',')}\n`;
+  const kr = (o = {}) => ok(evalKnownRed({ exitCode: 1, text: vt(ids), pinSetText: pinText, liveSha: 'f'.repeat(64), changedFiles: 0, dirty: false, ...o }));
+  expect('known red baseline', kr(), 'pass');
+  expect('known red subset of the set', kr({ text: vt(['T142', 'T147', 'T173', 'T174'], '4 failed | 138 passed (142)') }), 'pass');
+  expect('known red new failure', kr({ text: vt([...ids, 'T999'], '8 failed | 134 passed (142)') }), 'fail');
+  expect('known red sentinel passes', kr({ text: vt(ids.filter((i) => i !== 'T142'), '6 failed | 136 passed (142)') }), 'fail');
+  expect('known red total 141', kr({ text: vt(ids, '7 failed | 134 passed (141)') }), 'fail');
+  expect('known red skipped', kr({ text: vt(ids, '7 failed | 1 skipped | 134 passed (142)') }), 'fail');
+  expect('known red failed count above ids', kr({ text: vt(ids, '8 failed | 134 passed (142)') }), 'fail');
+  expect('known red exit 0 on a drifted list', kr({ exitCode: 0, text: vt([], '142 passed (142)') }), 'fail');
+  expect('known red list equals the pin and 7 fail', kr({ liveSha: LIST_PIN }), 'fail');
+  expect('known red list equals the pin and passes', kr({ exitCode: 0, liveSha: LIST_PIN, text: vt([], '142 passed (142)') }), 'pass');
+  expect('known red no Tests line', kr({ text: '' }), 'fail');
+  expect('known red file changed', kr({ changedFiles: 1 }), 'fail');
+  expect('known red pin set drift', kr({ pinSetText: `tests in the file: 142\npin-dependent tests: 12 ${NAMED_SET.slice(1).join(',')}\n` }), 'fail');
+  expect('known red hold', kr({ exitCode: 75, text: '' }), 'hold');
+  const dtext = (extra = []) => DOCTOR_KNOWN.concat(extra).join('\n');
+  expect('doctor known 12', ok(evalDoctor(1, dtext())), 'pass');
+  expect('doctor names the track', ok(evalDoctor(1, dtext([`error: measure/tracks/${TRACK}/plan.md: bad`]))), 'fail');
+  expect('doctor names an owned path', ok(evalDoctor(1, dtext(['error: scripts/storytime-muse.mjs: bad']))), 'fail');
+  expect('doctor new foreign error', ok(evalDoctor(1, dtext(['error: measure/tracks/other_20261101/plan.md: bad']))), 'fail');
+  expect('doctor clean', ok(evalDoctor(0, '')), 'pass');
+  expect('doctor exit 1 with no error', ok(evalDoctor(1, '')), 'fail');
+  return { cases, bad };
+}
+
+// ---------- helpers for lint and checks ----------
+function extractBlock(name) {
+  const rows = fs.readFileSync(STRATEGY, 'utf8').split('\n');
+  const b = rows.indexOf(`<!-- ${name} begin -->`);
+  const e = rows.indexOf(`<!-- ${name} end -->`);
+  if (b < 0 || e < b) return null;
+  return rows.slice(b + 2, e - 1).join('\n') + '\n';
+}
+
+function runHeavy(cmd, log) {
+  const r = spawnSync('bash', ['-c', 'bash "$1" -c "$2" > "$3" 2>&1', 'x', HEAVY, cmd, log], { env: { ...process.env, HEAVY_MIN_AVAIL_MB: '1500' }, encoding: 'utf8' });
+  return r.status ?? 1;
+}
+
+function reportResult(label, r, sink) {
+  for (const l of r.lines) console.log(l);
+  for (const p of r.problems) {
+    console.log(`FAIL ${label}: ${p}`);
+    sink.fails += 1;
+  }
+  if (r.hold) {
+    console.log(`HOLD ${label}: ${r.hold}`);
+    sink.holds += 1;
+  }
+}
+
+function usage(msg) {
+  console.log(`usage: ${msg}`);
+  process.exit(2);
+}
+
+function checkWorkdir(wd) {
+  if (!wd || !wd.startsWith('/tmp/opencode/') || !fs.existsSync(wd) || !fs.statSync(wd).isDirectory()) usage('give an existing <workdir> under /tmp/opencode/');
+  if (!fs.existsSync(STRATEGY) || !fs.existsSync('package.json')) usage('run from the repo root');
+}
+
+function finish(label, sink) {
+  console.log(`${label}: ${sink.fails === 0 && sink.holds === 0 ? 'pass' : sink.fails > 0 ? 'fail' : 'inconclusive'}`);
+  process.exit(sink.fails > 0 ? 1 : sink.holds > 0 ? 3 : 0);
+}
+
+function runSelftest(sink) {
+  const s = selftest();
+  console.log(`selftest cases: ${s.cases} failed expectations: ${s.bad.length}`);
+  for (const b of s.bad) {
+    console.log(`FAIL selftest: ${b}`);
+    sink.fails += 1;
+  }
+}
+
+// ---------- lint ----------
+function lint(wd) {
+  const sink = { fails: 0, holds: 0 };
+  console.log(`final gates script sha256: ${sha(fs.readFileSync(process.argv[1]))}`);
+  console.log(`HEAD: ${git('rev-parse', 'HEAD').stdout.trim()}`);
+  runSelftest(sink);
+  // L1 carry-over conditions 1 and 2 (5.11.16)
+  const anc = git('merge-base', '--is-ancestor', CARRY_BASE, 'HEAD').status;
+  console.log(`carry-over base is an ancestor of HEAD: ${anc === 0 ? 'yes' : 'no'}`);
+  if (anc !== 0) {
+    console.log('FAIL carry-over: the base is not an ancestor of HEAD');
+    sink.fails += 1;
+  } else {
+    const commits = git('rev-list', '--no-merges', `${CARRY_BASE}..HEAD`).stdout.split('\n').filter(Boolean);
+    const merges = git('rev-list', '--merges', `${CARRY_BASE}..HEAD`).stdout.split('\n').filter(Boolean).length;
+    let own = 0;
+    let ownOther = 0;
+    let foreign = 0;
+    let foreignStory = 0;
+    for (const c of commits) {
+      const subject = git('log', '-1', '--format=%s', c).stdout.trim();
+      const files = git('diff-tree', '--no-commit-id', '--name-only', '-r', c).stdout.split('\n').filter(Boolean);
+      if (subject.startsWith('storytime:') || subject.startsWith(`measure(storytime_l2_unit1_pictures):`)) {
+        own += 1;
+        for (const f of files.filter((x) => x !== STRATEGY)) {
+          ownOther += 1;
+          console.log(`FAIL carry-over: own commit ${c.slice(0, 8)} changes ${f}`);
+        }
+      } else {
+        foreign += 1;
+        console.log(`foreign commit ${c.slice(0, 8)}: ${subject.slice(0, 80)}`);
+        for (const f of files.filter((x) => /storytime|asset_storytime_l2_unit1/.test(x))) {
+          foreignStory += 1;
+          console.log(`FAIL carry-over: foreign commit ${c.slice(0, 8)} touches ${f}`);
+        }
+      }
+    }
+    const removed = git('diff', `${CARRY_BASE}..HEAD`, '--', STRATEGY).stdout.split('\n').filter((l) => /^-[^-]/.test(l)).length;
+    const dirty = git('status', '--porcelain', '--', STRATEGY).stdout.trim() !== '';
+    console.log(`merge commits since the base: ${merges}`);
+    console.log(`own commits since the base: ${own}`);
+    console.log(`own-commit files other than the strategy: ${ownOther}`);
+    console.log(`foreign commits since the base: ${foreign}`);
+    console.log(`foreign Storytime paths: ${foreignStory}`);
+    console.log(`strategy lines removed since the base: ${removed}`);
+    console.log(`strategy uncommitted change: ${dirty ? 'yes' : 'no'}`);
+    if (ownOther + foreignStory > 0) sink.fails += 1;
+    for (const [bad, msg] of [[merges > 0, 'a merge commit is in the range'], [removed > 0, 'the strategy lost a line'], [dirty, 'the strategy has an uncommitted change']]) {
+      if (bad) {
+        console.log(`FAIL carry-over: ${msg}`);
+        sink.fails += 1;
+      }
+    }
+  }
+  // L2 block SHA-256 values (the carry-over table of 5.11.16)
+  for (const [name, want] of Object.entries(BLOCK_SHA)) {
+    const b = extractBlock(name);
+    const got = b === null ? 'absent' : sha(b);
+    console.log(`block ${name} sha256: ${got}`);
+    if (got !== want) {
+      console.log(`FAIL block ${name}: expected ${want}`);
+      sink.fails += 1;
+    }
+  }
+  // L3 pin blocks
+  for (const [name, want] of Object.entries(PIN_LINES)) {
+    const b = extractBlock(name);
+    if (b === null) continue;
+    const file = `${wd}/${name}.sha256`;
+    fs.writeFileSync(file, b);
+    const n = b.split('\n').filter(Boolean).length;
+    const r = spawnSync('sha256sum', ['-c', '--quiet', file], { encoding: 'utf8' });
+    console.log(`${name} lines: ${n}`);
+    console.log(`${name} check exit: ${r.status}`);
+    if (n !== want || r.status !== 0) {
+      console.log(`FAIL ${name}: lines ${n} (want ${want}), check exit ${r.status} ${(r.stdout + r.stderr).split('\n')[0]}`);
+      sink.fails += 1;
+    }
+  }
+  // L4 restart check v3, its control (A4), then the doctor
+  const rc = extractBlock('restart-check-v3.mjs');
+  if (rc !== null) {
+    const file = `${wd}/restart-check.mjs`;
+    fs.writeFileSync(file, rc);
+    const run = (args) => spawnSync('nice', ['-n', '19', 'node', file, ...args], { encoding: 'utf8', maxBuffer: 1 << 26 });
+    const a = run(['--final']);
+    const lastLine = a.stdout.trim().split('\n').pop();
+    console.log(`restart check exit: ${a.status}`);
+    console.log(`restart check last line: ${lastLine}`);
+    if (a.status !== 0 || lastLine !== 'restart check: pass') {
+      console.log('FAIL restart check v3 --final');
+      sink.fails += 1;
+    }
+    const c = run(['--final', '--control']);
+    const want = ['pre-restart manifest changed: w01/delivery-muse-v1', 'above the cap 0.51', 'header or status'];
+    const missing = want.filter((w) => !c.stdout.split('\n').some((l) => l.startsWith('FAIL') && l.includes(w)));
+    console.log(`restart control exit: ${c.status}`);
+    console.log(`restart control missing FAIL texts: ${missing.length}`);
+    if (c.status !== 1 || missing.length > 0) {
+      console.log(`FAIL restart check control: ${missing.join(' | ')}`);
+      sink.fails += 1;
+    }
+  }
+  const d = spawnSync('node', ['measure/tools/doctor.mjs', '--structural-only', '--root', '.'], { encoding: 'utf8', maxBuffer: 1 << 26 });
+  reportResult('doctor', evalDoctor(d.status ?? 99, d.stdout + d.stderr), sink);
+  finish('final lint', sink);
+}
+
+// ---------- checks ----------
+function checks(wd) {
+  const sink = { fails: 0, holds: 0 };
+  console.log(`final gates script sha256: ${sha(fs.readFileSync(process.argv[1]))}`);
+  console.log(`HEAD: ${git('rev-parse', 'HEAD').stdout.trim()}`);
+  runSelftest(sink);
+  // C1 the type check against the pinned baseline
+  const tscLog = `${wd}/tsc.log`;
+  const tscExit = runHeavy('NODE_OPTIONS=--max-old-space-size=6144 node_modules/.bin/tsc --noEmit', tscLog);
+  reportResult('tsc', evalTsc(tscExit, fs.readFileSync(tscLog, 'utf8')), sink);
+  // C2 the known-red rule of 5.11.16
+  const ps = extractBlock('pin-set.mjs');
+  const psSha = ps === null ? 'absent' : sha(ps);
+  console.log(`pin set script sha256: ${psSha}`);
+  if (psSha !== BLOCK_SHA['pin-set.mjs']) {
+    console.log('FAIL pin-set.mjs block differs');
+    sink.fails += 1;
+  } else {
+    fs.writeFileSync(`${wd}/pin-set.mjs`, ps);
+    const p = spawnSync('node', [`${wd}/pin-set.mjs`, KR_FILE], { encoding: 'utf8' });
+    const liveSha = fs.existsSync(LIST_FILE) ? sha(fs.readFileSync(LIST_FILE)) : 'absent';
+    console.log(`live list sha256: ${liveSha}`);
+    const krLog = `${wd}/known-red.log`;
+    const krExit = runHeavy(`node_modules/.bin/vitest run ${KR_FILE} --maxWorkers=1`, krLog);
+    const changed = git('diff', '--name-only', `${KR_BASE}..HEAD`, '--', KR_FILE).stdout.split('\n').filter(Boolean).length;
+    const dirty = git('status', '--porcelain', '--', KR_FILE).stdout.trim() !== '';
+    reportResult('known red', evalKnownRed({ exitCode: krExit, text: fs.readFileSync(krLog, 'utf8'), pinSetText: p.stdout, liveSha, changedFiles: changed, dirty }), sink);
+  }
+  finish('final checks', sink);
+}
+
+function main() {
+  const [mode, a, b, c, d] = process.argv.slice(2);
+  if (mode === 'lint') {
+    checkWorkdir(a);
+    lint(a);
+  } else if (mode === 'checks') {
+    checkWorkdir(a);
+    checks(a);
+  } else if (mode === 'selftest') {
+    const sink = { fails: 0, holds: 0 };
+    runSelftest(sink);
+    finish('selftest', sink);
+  } else if (mode === 'eval-tsc' && a && b) {
+    const sink = { fails: 0, holds: 0 };
+    reportResult('tsc', evalTsc(Number(b), fs.readFileSync(a, 'utf8')), sink);
+    finish('eval tsc', sink);
+  } else if (mode === 'eval-known-red' && a && b && c && d) {
+    const sink = { fails: 0, holds: 0 };
+    reportResult('known red', evalKnownRed({ exitCode: Number(b), text: fs.readFileSync(a, 'utf8'), pinSetText: fs.readFileSync(d, 'utf8'), liveSha: c, changedFiles: git('diff', '--name-only', `${KR_BASE}..HEAD`, '--', KR_FILE).stdout.split('\n').filter(Boolean).length, dirty: git('status', '--porcelain', '--', KR_FILE).stdout.trim() !== '' }), sink);
+    finish('eval known red', sink);
+  } else usage('lint <workdir> | checks <workdir> | selftest | eval-tsc <log> <exit> | eval-known-red <log> <exit> <live-sha> <pin-set-output>');
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
+```
+<!-- final-gates.mjs end -->
+
+#### F.6 Run rules for the three gates
+
+- The gate command is `python3 ~/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py role-gate --role final-acceptance --track asset_storytime_l2_unit1_pictures_20261025 --result-file <result.json> --log-file <role log>`.
+  It runs the three strings in this order: PROJECT_LINT, PROJECT_CHECKS, PROJECT_TESTS. It runs them with
+  `shell=True` (so `/bin/sh`, not bash) from the repo root. Each string holds POSIX shell only.
+- Set `PROJECT_GATE_TIMEOUT_SECONDS=7200` for the gate. The default is 3600 s. PROJECT_CHECKS holds two
+  heavy runs and can wait in the lock queue.
+- Run one heavy command at a time. The final-acceptance agent must not run `tsc` or `vitest` while the
+  gate runs. The agent runs each gate string once for its own evidence. The orchestrator runs the gate
+  after that. Both runs must exit `0`.
+- Never run `pnpm`. A `heavy-preflight` hold or exit `75` is neither pass nor failure: wait and run
+  again.
+- Intentionally red aggregate suites: `tests/storytime-book-pictures.test.ts` (the known-red rule of
+  5.11.16, handled inside PROJECT_CHECKS). The full `vitest run` and `pnpm test` stay outside this
+  track (section 11). The 38 tsc errors of F.3 are a pinned known-red baseline, not a pass.
+- The audit stops at `status: "inconclusive"` (not `fail`) for a hold, a heavy-run time limit, or a
+  tool failure. It never writes `pass` for those.
+
+#### F.7 Final-acceptance brief (role `final-acceptance`)
+
+Model: `coding-plan/ark-code-latest#high`. Start test: the first reply holds the line
+`final acceptance start: HEAD <40 hex>` and the value equals `git rev-parse HEAD`, and the agent reads
+`measure/index.md` first. A reply that is empty, has another value, or comes after 10 minutes fails the
+start test. If the start test fails, or the run ends with no valid result file, the orchestrator runs
+the whole role once on the DeepSeek fallback. It makes no other escalation. If the fallback also
+fails, the orchestrator returns `blocked` to the PM.
+
+Scope: the whole track. That means Phases 1 to 5 and the 5.11 restart (the 24 pictures, the 51
+delivered files, the nut v3 pair, the judge kit, and the handoff folders). The agent audits the track
+at HEAD. It does not judge a picture. No text says that Workbooks or Daniel accepted a picture (5.6).
+
+Read first, before any command: `measure/index.md`, `measure/tracks.md` (this track's entry),
+`spec.md`, `plan.md` (the Phase 2, 3, and 4 acceptance notes and the Phase 5 notes), `contract.md`, this
+file (sections 3 and 7, 5.11 to 5.11.16, and this section), `acceptance-p5-restart-325b92a.json` and
+its log, `measure/tech-debt.md` (TD-29, TD-30), and
+`~/.agents/skills/measure-orchestrator/references/contracts.md`.
+
+Steps, in this order. Set `T`, `R` (`measure/runs/asset_storytime_l2_unit1_pictures_20261025`), and
+`D` (a new `mktemp -d` folder under `/tmp/opencode/`).
+
+1. Record `git rev-parse HEAD`, `git status --short` (name the foreign state; edit nothing), and a
+   hash of `git status --porcelain` for step 10.
+2. Run PROJECT_LINT once (F.4). Quote every label. If L1 fails, nothing carries over from
+   `325b92a0`: also rerun every gate of 5.11.15 and 5.11.16 at HEAD (X1 to X15, G5, KNOWN_RED_CHECK,
+   the plan-quote comparison).
+3. Run PROJECT_CHECKS once (F.3), then PROJECT_TESTS once (F.2). Quote the labeled lines.
+4. Rerun the light gates that carry over only by assumption: X13 with its seed control, X14, and G5
+   (the commands of 5.11.7 and 5.11.16). Expected: X13 prints the 3 w08 approval notes, X14 prints
+   nothing, both memory files have 50 lines or less, and each ledger id count is 1 or more.
+5. Plan state (FA6): count the task lines, the `[x]` lines, the non-deferred incomplete lines, and the
+   deferred lines. Run `measure_interphase_checks.py status --track …`. Count the `[x]` lines with no
+   hex SHA of 7 to 40 characters on the first line (expected: 2, lines 30 and 32, finding FA-N1).
+6. Phase records (FA7): name the acceptance record of each of the Phases 1 to 5 (the plan notes for
+   Phases 2, 3, and 4, and `acceptance-p5-restart-325b92a.json` for Phase 5). Check each phase checkpoint
+   SHA in the plan headings (`3ea5fca`, `061694f`, `21de99f6`, `35f4a12c`) with `git cat-file -t`. The
+   Phase 5 heading has no checkpoint: report it as a nonblocking nit (the closeout manifest uses
+   `325b92a0`).
+7. Compare the plan and `metadata.json` quotes with the gate output: `actual_tasks` 29, the restart
+   spend 0.57 USD (57 rows), 51 delivered files, 24 pictures, the TD-29 and TD-30 rows. Name each
+   difference.
+8. Check the wording rule of 5.6 on the two result files you write (FA10) and the secret rule (FA11).
+9. Write the result files (F.9 FA12).
+10. Compare the hash of `git status --porcelain` with step 1. The only new paths are the two result
+    files in `$R`.
+
+Result files: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/final-acceptance-<HEAD7>.json`
+(the audit JSON of `contracts.md`, plus the fields `audited_head`, `carry_over_base`, `verdict`, and
+`gates`) and `final-acceptance-<HEAD7>.log` (each command, its exit code, and its labeled lines).
+`<HEAD7>` is `git rev-parse --short=7 HEAD`. Write `status: "pass"` only when `blocking_findings` and
+every `*_violations` array are empty. FA-N1 and the Phase 5 checkpoint nit go in
+`nonblocking_findings`. Do not commit the files; closeout commits them.
+
+Read-only rules: edit no product file, no test, no script, no plan, and no Measure document. Write only
+inside `$D` and the two result files. Stage nothing. Do not run `./measure/generate.sh` (it writes).
+Do not run Muse, the judge, or `pnpm`. Run one heavy command at a time and wait for a held lock.
+
+Carry-over rule for a strategy-only commit (as in 5.11.16): the strategy commit of this section changes
+only this file, so it is not an implementation commit. The measured results of the Phase 5 acceptance
+at `325b92a0` carry over to HEAD (X1, X2, X2b, X3, X4 with its control, X5 to X9, X12, and the Phase 5
+type check and tests as evidence) when L1 to L4 hold. The three project gates and the light gates of
+step 4 are not carried over. The agent runs them at HEAD.
+
+#### F.8 Closeout brief (role `closeout`)
+
+Model: `minimax-cn-coding-plan/MiniMax-M3.1-Flash`. Closeout starts only when
+`measure_interphase_checks.py audit-result --role final-acceptance --file <final-acceptance json>`
+prints `PASS` and the `audited_head` of that file equals `git rev-parse HEAD`. Another own commit
+since then means a new final acceptance first. Closeout edits no product file. Use explicit paths in
+every `git add` and every `git commit`. Other agents share the git index.
+
+Steps, in this order:
+
+1. CG0 Foreign state. Run `git status --short measure/tracks.md measure/tracks measure/generated measure/status.md measure/tech-debt.md measure/lessons-learned.md`.
+   Name each path that is not this track's. `measure/status.md`, `measure/tech-debt.md`, and
+   `measure/lessons-learned.md` must have no uncommitted change now. If one has, return `blocked`.
+2. CG2 Secret scan of the run folder. Run the grep of X14 over `$R`:
+   `grep -rEnI 'sk-[A-Za-z0-9]{16,}|Bearer [A-Za-z0-9._-]{16,}|api[_-]?key.{0,20}[:=]|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY' "$R"`.
+   It must print nothing. A match: name the file, do not commit, return `blocked`.
+3. CG1 and the move. `mkdir -p measure/archive && git mv measure/tracks/asset_storytime_l2_unit1_pictures_20261025 measure/archive/asset_storytime_l2_unit1_pictures_20261025`.
+   Use `git mv` in the same command line as the commit (step 9), not earlier.
+4. CG3 Plan first-line SHA (FA-N1). In `measure/archive/<id>/plan.md`, append the text
+   ` (commit 2fdce9d)` to the first line of the task at line 30, and ` (commit c52e495)` to the first
+   line of the task at line 32. Change nothing else. Check
+   `grep -E '^\s*- \[x\] ' measure/archive/<id>/plan.md | grep -vcE '\b[0-9a-f]{7,40}\b'` prints `0`.
+5. CG4 Metadata. In `measure/archive/<id>/metadata.json` set `"status": "done"`, add
+   `"completed": "<date +%F>"` (the closeout day), and set `updated_at` to the closeout time (UTC).
+   Keep the JSON valid (`python3 -m json.tool`).
+6. CG6 Links. In `measure/tech-debt.md` (TD-29 and TD-30) and `measure/status.md`, change
+   `./tracks/asset_storytime_l2_unit1_pictures_20261025/` to `./archive/asset_storytime_l2_unit1_pictures_20261025/`.
+   Change no other text. RB-P4-1 stays `TD-29` (Low, Open). Add no debt row. Then
+   `grep -n 'tracks/asset_storytime_l2_unit1_pictures_20261025' measure/*.md` must print nothing.
+7. CG5 Registry (Q3: stage only this track's lines). The working copy of `measure/tracks.md` holds a
+   foreign hunk. So do this:
+   1. `git show HEAD:measure/tracks.md > "$W/tracks.head.md"` (`W` is a new `mktemp -d` folder).
+   2. In that copy, delete the active entry of this track (the `- [~] **Track: Storytime Level 2 unit 1…`
+      line and its indented lines up to the next entry). Add, at the end of the file, the heading
+      `## Archived Tracks` and one entry. The entry has no text `**Track:`. Example text:
+      `- [x] Storytime Level 2 unit 1 book pictures and cover render, completed <date>; weeks 1 to 7 and the cover delivered (independent model review, model evidence, not acceptance); week 8 deferred to PM assignment.`
+      Add a markdown link to the folder `./archive/<id>/` in the bracket-and-parenthesis form of the
+      active entries (the link text and the link target are both that folder path). The link must resolve
+      after the move. Do not write that link form in this strategy file: the doctor reads it here.
+   3. `BLOB=$(git hash-object -w "$W/tracks.head.md")` and
+      `git update-index --cacheinfo 100644,$BLOB,measure/tracks.md`.
+   4. Apply the same two edits to the working file `measure/tracks.md` with exact-text edits. Leave the
+      foreign hunk as it is.
+   After the commit, `git diff HEAD -- measure/tracks.md` shows only the foreign hunk.
+8. CG7 Manifest. Write `measure/archive/<id>/automation-supervisor-closeout-manifest.json` (valid JSON,
+   shape of `86efee18`): `schema_version` 1; `track`; `archived_at` (UTC); `track_base_sha`
+   `2fdce9d56a4af2240c1c76b3e866a2644c4a36db`; `track_final_sha` (HEAD at closeout start);
+   `phase_acceptance_results` (the paths of `acceptance-p5-restart-325b92a.json`,
+   `final-acceptance-<HEAD7>.json`, and the earlier acceptance files that exist in `$R`);
+   `completed_phases` (id, title, checkpoint: `3ea5fca`, `061694f`, `21de99f6`, `35f4a12c`, and Phase 5
+   `325b92a0`); `gates` (the labeled results of PROJECT_LINT, PROJECT_CHECKS, and PROJECT_TESTS from the
+   final-acceptance log); `antipatterns_clean` (the classes of section 9 and 5.11.10 that the gates
+   cover); `antipatterns_known_limitations` (the 38 pinned tsc errors by file and count, the known-red
+   file with the live list SHA-256, the 12 doctor errors of other tracks); `deferred` (week 8 rows
+   `moon`, `mango`, `ostrich`, `drum`; the four Muse-path deferred tasks; the Nan window sample);
+   `tech_debt` (`TD-29` for RB-P4-1 and PA4-N1, `TD-30`); `generated_facts` (committed, or the reason
+   from step 10). The manifest never says that Workbooks or Daniel accepted a picture.
+9. CG1 Commit. In one shell command line: `git add -- measure/runs/asset_storytime_l2_unit1_pictures_20261025 measure/archive/asset_storytime_l2_unit1_pictures_20261025 measure/tech-debt.md measure/status.md`,
+   then check that `git diff --cached --name-only` has no path outside `measure/runs/<id>/`,
+   `measure/archive/<id>/`, `measure/tracks/<id>/` (the deletions), `measure/tech-debt.md`,
+   `measure/status.md`, and `measure/tracks.md`; check that `git diff --cached -U0 measure/tracks.md`
+   holds no line of the foreign Contents hunk; then `git commit -m "measure(storytime_l2_unit1_pictures): archive the track and commit the run records"`.
+   If another agent has staged a path, stop and return `blocked`. Do not commit their path.
+10. CG9 Facts and doctor after the move (A10). Run `./measure/generate.sh` (expect exit `0`,
+    `Generated 4 Measure facts.`). Run `bash $HOME/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh'`
+    once (it runs `vitest`), then `node measure/tools/doctor.mjs --structural-only --root .`. Quote the
+    error count and every error line. No error may name this track or an owned path. Commit
+    `measure/generated/` only if `git status --short measure/tracks measure/tracks.md measure/generated`
+    shows no change that another session owns (T5). Else commit nothing there, restore nothing, and
+    write the reason in the manifest and the reply (the changed foreign paths). If `generate.sh` wrote
+    files that stay uncommitted, name them. The words "doctor exits 0" appear only with exit code 0.
+11. CG8 Gate. Run `measure_interphase_checks.py role-gate --role closeout --track asset_storytime_l2_unit1_pictures_20261025 --log-file <closeout log>`.
+    It must exit `0`.
+12. Report: `git worktree list`, `git branch -a`, and the list "facts changed" (the track status `done`,
+    the registry entry, the TD links, the tracks that other sessions must know). Do not delete any
+    branch, worktree, or file of the run folder (owner rule: the owner deletes).
+
+Return `blocked` if a step cannot hold its condition. Return `partial` with the exact output if only
+the doctor errors of other tracks remain (T7).
+
+#### F.9 Gates
+
+| Gate | Check | Falsification condition |
+| --- | --- | --- |
+| FA1 Mechanical gate | `role-gate --role final-acceptance` exits `0` (plan has 0 non-deferred incomplete tasks, PROJECT_LINT, PROJECT_CHECKS, PROJECT_TESTS each exit `0`). | Any part exits non-zero. |
+| FA2 Lint labels | The agent's PROJECT_LINT output holds `selftest cases: 31 failed expectations: 0`, the L1 labels at their expected values, every block SHA-256, three `check exit: 0`, `restart check exit: 0`, `restart control exit: 1`, both doctor labels `0`, and `final lint: pass`. | A label is missing or differs. |
+| FA3 Type check | `tsc errors total:` 38 or less, `owned tsc errors: 0`, `tsc files outside the baseline: 0`, `tsc files above their baseline: 0`, `tsc unparsed error lines: 0`. | A new error file, an owned error, or a count above a row. |
+| FA4 Known red | `known red failing tests outside the pin set: 0`, `known red drift sentinels failing: 4 of 4` (or exit `0` and 0 failures if the list equals the pin), `known red skipped or todo: 0`, and `final checks: pass`. | A new failure, a passing sentinel, or a changed test file. |
+| FA5 Tests | `Test Files  7 passed (7)`, `Tests  105 passed (105)`, `project tests exit: 0`. | A failure, a skip, or another total. |
+| FA6 Plan | 33 task lines, 29 `[x]`, 0 non-deferred incomplete, 4 deferred, `incomplete_phases: 0`. Two `[x]` lines have no SHA on the first line (FA-N1, nonblocking). | A task is open, or a third line has no SHA. |
+| FA7 Phase records | Each of Phases 1 to 5 has a named acceptance record and a checkpoint that `git cat-file -t` shows as `commit`. | A phase has no record. |
+| FA8 Light gates | X13 prints the 3 w08 notes only (seed control prints 1). X14 prints nothing. Both memory files have 50 lines or less. Each ledger id count is 1 or more. | An unqualified match, a secret, or a missing id. |
+| FA9 Plan quotes | Each quote of F.7 step 7 equals the gate output. | A number differs. |
+| FA10 Wording | The grep `grep -Ein '\b(accepted\|approved\|production-ready)\b'` over the two result files prints only lines that name a process acceptance (`Final acceptance`, `Phase 5 acceptance`, `model evidence, not acceptance`) or Daniel's quoted word with the person record. | A picture is called accepted or approved without a person record. |
+| FA11 No secret | The X14 grep over the two result files prints nothing. | A key-like string. |
+| FA12 Result files | `audit-result --role final-acceptance --file <json>` prints `PASS: audit result is valid`. `status` is `pass`. The `.log` quotes each command with its exit code. | The JSON is invalid, or the log has no exit code for a command. |
+| FA13 Read only | The hash of `git status --porcelain` before and after differs only by the two result files. | Any other path changed. |
+
+Closeout gates: CG0 to CG9 as listed in F.8. Each one has the check in its step and fails when its
+condition does not hold. The closeout role-gate (step 11) is the mechanical proof.
+
+Anti-pattern coverage for this section:
+
+| Class | Defense | Falsification condition |
+| --- | --- | --- |
+| A2 consent-blind publish gate | FA10 and the manifest rule: no text says that Workbooks or Daniel accepted a picture. The word "acceptance" names a process step only. | A result file or a manifest calls a picture accepted without a person record. |
+| A3 digit-only count | Every gate reads a label (`tsc errors total:`, `Tests  105 passed (105)`, `known red drift sentinels failing:`). The tsc count is by file, not one number. | A bare digit satisfies a gate. The selftest case "tsc one fewer error" passes only for a real drop, and "tsc file above baseline" fails with an equal total. |
+| A4 vacuous pass | The selftest runs first in both scripts. The restart check control must exit `1`. `tsc` exit `2` with no parsed error fails. A pin block with 0 lines fails. | A parser passes seeded bad input, or a run over 0 files passes. |
+| A5 false claim | The agent quotes each command, exit code, and label. FA9 compares the plan quotes. "Doctor exits 0" appears only with exit `0`. | A quote differs from the output. |
+| A6 registry overstatement | The registry entry and the manifest use the 5.6 wording. The archived entry keeps "model evidence, not acceptance". | A line says "accepted" for a picture. |
+| A7 over-broad filter | The baseline is by file and count, so an equal total with a moved error fails. The known-red set comes from the test bodies (`pin-set.mjs`), not from the failures. | A new failure hides in a known-red total, or an error moves to another file at the same total. |
+| A9 archived track paths | CG6 retargets every link in `measure/*.md`. The scripts in this section read `measure/tracks/<id>/test-strategy.md` before the move only. After the move the file lives in `measure/archive/<id>/`, and the three gate strings stop working. That is by design: they gate final acceptance, not the archive. | A `measure/*.md` link still names `tracks/<id>`, or a test file names `measure/tracks/`. |
+| A10 generated-facts drift | CG9 runs `generate.sh` and `doctor.sh` after the move. The facts commit waits for a tree without foreign state. | The facts are committed with foreign state, or before the move. |
+| A11 doc-to-code drift | The script SHA-256 is pinned in the three strings and in F.5. The baseline table equals the `TSC_BASELINE` object of the script (the checker compares them). | The extracted block SHA-256 differs from the value, or the table and the object differ. |
+
+#### F.10 Base capture point, defaults, and findings
+
+Base capture point:
+
+1. `325b92a0` is the `role_base_sha` of this strategy role only. It is also the carry-over base
+   (`CARRY_BASE` in the script).
+2. Immediately after the strategy commit of this section, the orchestrator runs `git rev-parse HEAD`.
+   That committed value is the immutable `phase_base_sha` of the final-acceptance role. The
+   orchestrator records it before any other commit.
+3. This section embeds no SHA for that base.
+
+Defaults taken by this role (no question tool; the orchestrator can change each one):
+
+1. D1 The new section sits after 5.11.16 and before section 8, as an H3 under section 7.
+2. D2 The type check passes when each file count is at or below its baseline row. A fix by another
+   track lowers a count and does not fail the gate.
+3. D3 `tests/storytime-book-pictures.test.ts` runs inside PROJECT_CHECKS (not PROJECT_TESTS), because
+   PROJECT_TESTS must exit `0`.
+4. D4 PROJECT_LINT rejects a doctor error that is not in the known list of 12, even when it belongs to
+   another track. A new foreign error makes the audit `inconclusive`; the orchestrator asks the PM.
+5. D5 Foreign commits since `325b92a0` may touch `measure/tracks.md`, `measure/generated/`, and other
+   tracks. They may not touch a Storytime path.
+6. D6 The Phase 5 plan heading gets no checkpoint. The manifest records `325b92a0`.
+7. D7 Closeout uses two edits for the registry: a temporary blob for the index and the same edit in the
+   working file. The foreign hunk stays uncommitted.
+8. D8 The heading `## Archived Tracks` is new. The July archive used `## Completed Tracks`, but the
+   closeout checker reads only the text before `## Archived Tracks`, and the doctor rejects a
+   `**Track:` line with an archive link.
+9. D9 `prettier --check` is not a lint here: it reports the whole repo and does not read the track.
+
+Findings at `325b92a0` that matter to the next roles:
+
+| Id | Class | Finding | Owner |
+| --- | --- | --- | --- |
+| FA-N1 | Blocks closeout CG3, not final acceptance | Plan lines 30 and 32 have the commit SHA on the continuation line. | Closeout step 4 |
+| FA-N2 | Informational | The 38 tsc errors and the 12 doctor errors belong to other tracks. They are pinned, not fixed. | Other tracks |
+| FA-N3 | Informational | `measure/generated/` holds foreign state. Closeout may not be able to commit the facts (step 10). | Closeout, other sessions |
+| FA-N4 | Risk | The known-red check assumes `failed` equals the number of unique failing ids. An old 89-test log (no longer on disk) showed 14 failed and 13 unique ids. If it recurs at 142 tests, the gate fails safe and the audit is `inconclusive`. | Orchestrator |
+| FA-N5 | Not tested by this role | PROJECT_CHECKS and PROJECT_TESTS were not run end to end. This role ran `tsc` once and checked the parsers with synthetic input only (no second heavy run). The `vitest` output parser is checked with synthetic text in the selftest. | Final-acceptance agent |
+
 ## 8. Architecture guardrails and changed-contract risks
 
 Guardrails:
