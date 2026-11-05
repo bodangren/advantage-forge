@@ -934,3 +934,90 @@ known_failures:
   - The type check exits 2 with 58 errors; none names a file of this step
 handoff: Step 8 is done. One Muse call ran (the pan in a pan line m7, 0.01 USD, restart spend 0.52 of 1.00). The round 6 line batch passed the judge, and the groups A, B, and D are delivered and handed over at /home/daniebo/Desktop/handoff/a48-forge-pictures-a/ (25 files), a48-forge-pictures-b/ (14 files), and a48-forge-pictures-d/ (4 files); every check command exits 0. Every existing delivery manifest of the weeks 1 to 7 holds the same SHA-256 as before. Tasks T4, T5, and T6 are [x]. phase_base_sha: aba118fe5c96902b0a7ddf31b3414693d13d7f21; role_base_sha: 1e43b8b8dd091402a85b4f30b783e1dc8032e797; Green HEAD: this commit.
 END_MEASURE_AGENT_RESULT
+
+# Step 9 of T4 (the nut attempt 3, 2026-11-05, PM order 08:43 ICT)
+
+role_base_sha: df2aa52e3863dd59641351b60c3950a81358a84e (the strategy commit; also P5R_BASE, test-strategy.md 5.11)
+Red model: none (light lane). Green model: kimi-code-plan-cn/kimi-for-coding.
+
+Deviation carried from step 8: this maker replaced the earlier MiniMax maker (session
+ses_e5769d3feffe8eIjC22MWAmzDO) at 08:16 ICT.
+
+Why: Workbooks' look at the nut v2 (`l2-w01-story-page-a-nut`, reader "Nan Can Nod" page 5,
+sentence "A nut.") found two peanut pods side by side in the color and sparse hatching in the
+line art, so a child reads "two nuts" or no nut. The PM wants one peanut in its shell, alone
+and large on Nan's palm, a clear shell texture in the line art, and the rest of the page as v2.
+
+## The spec change (commit `6a64a214`)
+
+`docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json`:
+- The references now hold the m3 color print as Picture 3. The color prompt uses it for Nan,
+  the raised open hand, the pose, the clothes, and the plain white background only, and says
+  its nut is wrong (two pods side by side) and must not be copied.
+- The color prompt asks for exactly ONE peanut in its shell, alone on the open palm, large
+  (about one third of the picture width), in the middle: one single shell, one pod with two
+  round bumps joined by one narrow waist, light tan, with a clear netted texture of small
+  crossing lines over the whole shell. Not two pods, not two nuts side by side, no other nut,
+  no loose kernels.
+- The line prompt asks for one single shell with a clear outline of two round bumps and a
+  narrow waist, and a dense netted texture of short crossing lines over the whole shell, so it
+  reads as a peanut at book size. The other line rules stay.
+- `mustShow` is now the four PM phrases.
+
+## The 2 calls (one after the other, no despeckle, no local filter)
+
+| Kind | Command result | Version | Cost (USD) |
+| --- | --- | --- | --- |
+| color try 3 | `l2-w01-story-page-a-nut-m4 color ok 1920x1280` | m4 | 0.01 |
+| line try 3 | `l2-w01-story-page-a-nut-m4 line try 1 ok 1920x1280` (from `--from 4`) | m4 | 0.01 |
+
+The guard did not refuse either call. The tool prints "line try 1" because its counter keys on
+the color version; by the costs.tsv rows this is line try 3 (the m3 line, the m3 line-2, and
+the m4 line). Restart spend so far: 0.54 USD of the 1.00 USD cap. These were the LAST color
+try and the LAST line try of this picture.
+
+## The two round 7 judge batches
+
+| Batch | Path | Try mapping |
+| --- | --- | --- |
+| color | `docs/storytime/l2-unit1/judge/prod/batch-r7-color-nut3.json` | try 3 -> the m4 color row of 2026-11-05 |
+| line | `docs/storytime/l2-unit1/judge/prod/batch-r7-line-nut3.json` | try 3 -> the m4 line row of 2026-11-05 |
+
+Both batches carry the new four-phrase mustShow. Each judge copy was checked against the
+costs.tsv rows of the week folder: the color copy maps to `l2-w01-story-page-a-nut-m4-color.png`
+and the line copy maps to `l2-w01-story-page-a-nut-m4-line.png`, both of this step. The judge
+has not run on them yet.
+
+## Commits (explicit paths)
+
+| Commit | Paths |
+| --- | --- |
+| `6a64a214` | `docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json`, `docs/storytime/l2-unit1/judge/prod/batch-r7-color-nut3.json`, `docs/storytime/l2-unit1/judge/prod/batch-r7-line-nut3.json` |
+| (this commit) | `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md`, `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p5-t4-aba118fe.log` |
+
+## Defaults taken
+
+- No delivery ran in this step and no other plan fix was made, per the PM order.
+- Task T4 keeps its step-8 `[x]` marker; the step-9 block records the nut rework that the
+  Workbooks look started. The reopen decision belongs to the PM.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: partial
+commits:
+  - 6a64a214
+tests_run: []
+files_changed:
+  - docs/storytime/l2-unit1/a48/l2-w01-story-page-a-nut.json
+  - docs/storytime/l2-unit1/judge/prod/batch-r7-color-nut3.json
+  - docs/storytime/l2-unit1/judge/prod/batch-r7-line-nut3.json
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p5-t4-aba118fe.log
+plan_updates:
+  - The T4 step 9 block records the Workbooks finding, the spec change, the two calls, the two round 7 batches, and the spend of 0.54 USD
+known_failures:
+  - tests/storytime-book-pictures.test.ts has 8 failures that came before step 8: it pins the picture list SHA-256 6d05dfc and the Workbooks list has moved on to 327f805f
+handoff: The nut attempt 3 is ready for the judge. The color m4 and the line m4 ran (0.02 USD this step; restart spend 0.54 of 1.00), and the two batches are at docs/storytime/l2-unit1/judge/prod/batch-r7-color-nut3.json and batch-r7-line-nut3.json. No delivery ran. If the judge passes both, the nut m4 prints replace the v2 nut files in a later delivery step; if either fails, the picture is out of tries and the PM decides. role_base_sha: df2aa52e3863dd59641351b60c3950a81358a84e; Green HEAD: this commit.
+END_MEASURE_AGENT_RESULT
