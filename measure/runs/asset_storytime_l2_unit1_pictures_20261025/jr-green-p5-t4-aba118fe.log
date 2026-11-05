@@ -1452,3 +1452,92 @@ The step 12 commit `b320e514` swept an unrelated uncommitted hunk of `measure/tr
 into the commit, against the Q3 rule. The fix: commit `d6867c52` drops the hunk from the
 committed file, and the hunk was restored to the working tree uncommitted, byte-equal to the
 other session's version. The committed tracks.md now holds only this track's line.
+
+# Step 15 of T4 (F2 and the final gates of 5.11.15, 2026-11-05 13:02 ICT)
+
+role_base_sha: 91fa55b7cc19662da46480913fdd786c24e3313d
+Red model: none (light lane). Green model: kimi-code-plan-cn/kimi-for-coding.
+
+No Muse call ran in this step. The heavy lock hold for Workbooks v14 ended at about 13:00 ICT
+(PM), so the heavy commands ran one at a time through heavy-run.sh.
+
+## 1. F2 (commit `7eee2b60`)
+
+The 25 owned type errors of `tests/storytime-muse-attempts.test.ts` were fixed with type
+annotations only, in 11 spots: the helper parameters of `ts`, `row`, `writeCosts`, `specOf`,
+`rowsOf`, the step 13 `nutRows` and the "another id" `rows` callbacks, the `root` variable, and
+three non-null assertions on the `TRY_EXCEPTIONS[0..2]` index reads. No test logic changed and
+no runtime code changed. `scripts/storytime-muse-guards.d.mts` did not need a change.
+
+## 2. TYPECHECK_COMMAND (5.11.4)
+
+`tsc exit: 2`; `tsc errors total: 38`; `owned tsc errors: 0`. The gate holds: owned 0 and
+total 38 (the expected 58 minus the 20 owned; the 38 remaining errors are of files outside this
+track, for example `assets/airship.ts`). The exit stays `2` while other tracks have errors.
+
+## 3. GREEN_TEST_COMMAND (5.11.4)
+
+`Test Files  4 passed (4)`; `Tests  84 passed (84)`; exit `0`. The four files are
+`tests/storytime-muse-attempts.test.ts`, `tests/storytime-judge-batch.test.ts`,
+`tests/storytime-muse-delivery.test.ts`, and `tests/storytime-picture-rows.test.ts`. 84 is above
+the 72 of T4 step 1, as the strategy expects after the new test cases.
+
+## 4. The restart check v3 (5.11.15)
+
+Extraction: `restart check script sha256: 6ae82ad4a305341a409be95cd007239ef069cac2e8c4ef6301467908bac78a9e`
+(matches the pin). `--final`: `restart check exit: 0`; the log ends with `restart check: pass`
+and every label holds the 5.11.15 value, including `restart cost rows: 57`,
+`restart spend (USD): 0.57`, `restart failed calls (cost 0 or output none): 0`,
+`max tries for one picture and kind: 5`, `picture and kind pairs above their limit: 0`,
+`picture and kind pairs above 3 tries: 2 (l2-w01-story-page-a-nut|color, l2-w01-story-page-a-nut|line)`,
+`nut tries color: 4 line: 5`, `production result files: 22 results: 57 second-judge results: 6`,
+`production main fails: 6`, `retries: 9 after a confirmed fail: 6 by PM order: 3`,
+`second-judge results that differ from the main verdict: 0`,
+`nut judge copies of tries 1 to 5 changed: 0`,
+`nut color try 3 verdict: pass second-judge verdicts: none`,
+`nut line try 3 verdict: fail second-judge verdicts: fail`,
+`nut line try 4 verdict: fail second-judge verdicts: fail`,
+`nut color try 4 verdict: pass second-judge verdicts: none`,
+`nut line try 5 verdict: pass second-judge verdicts: none`,
+`guard max tries: 3`, `guard try exceptions: 3`, `guard limit nut color: 4 line: 5`,
+`guard exceptions for other ids or kinds: 0`, `guard exceptions without a PM source: 0`,
+`restart delivery folders: 11`,
+`restart delivered files: 51 byte-equal to a source print: 51 with a pass verdict: 51`,
+`restart delivered pictures: 24`, `line files not made from the delivered color: 0`,
+`restart delivered files with a wrong size or line format: 0`,
+and the six handoff lines 2/4/25/14/4/2, each `evidence words: yes`.
+`--final --control`: `restart control exit: 1`; the FAIL lines name `restart spend 0.57 is
+above the cap 0.51`, the `calibration header or status` and `production header or status`
+lines, and `pre-restart manifest changed: w01/delivery-muse-v1`.
+
+## Commits (explicit paths)
+
+| Commit | Paths |
+| --- | --- |
+| `7eee2b60` | `tests/storytime-muse-attempts.test.ts` |
+| (this commit) | `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md`, `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p5-t4-aba118fe.log` |
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_storytime_l2_unit1_pictures_20261025
+phase: Phase 5: Documentation and verification
+status: complete
+commits:
+  - 7eee2b60
+tests_run:
+  - command: TYPECHECK_COMMAND of 5.11.4 through heavy-run.sh
+    result: tsc errors total: 38; owned tsc errors: 0; exit 2 (other tracks)
+  - command: GREEN_TEST_COMMAND of 5.11.4 through heavy-run.sh
+    result: Test Files  4 passed (4); Tests  84 passed (84); exit 0
+  - command: restart check v3 --final (script sha256 6ae82ad4...)
+    result: restart check exit: 0; restart check: pass
+  - command: restart check v3 --final --control
+    result: restart control exit: 1; control FAIL lines present
+files_changed:
+  - tests/storytime-muse-attempts.test.ts
+  - measure/tracks/asset_storytime_l2_unit1_pictures_20261025/plan.md
+  - measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-p5-t4-aba118fe.log
+plan_updates:
+  - The T4 step 15 block records F2, the type check lines, the GREEN totals, and the restart check results
+handoff: All step 15 gates hold: owned tsc errors 0 (total 38, outside this track), GREEN 84 of 84 exit 0, restart check v3 --final pass (exit 0) with the control exit 1. No Muse call ran; restart spend stays 0.57 USD (57 rows) of the 1.00 cap. role_base_sha: 91fa55b7cc19662da46480913fdd786c24e3313d; Green HEAD: this commit.
+END_MEASURE_AGENT_RESULT
