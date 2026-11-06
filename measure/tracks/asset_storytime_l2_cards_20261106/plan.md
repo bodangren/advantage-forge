@@ -183,7 +183,7 @@ the plan keeps an open item for the doctor.
   at an immutable HEAD. Evidence:
   `measure/runs/asset_storytime_l2_cards_20261106/phase-acceptance-cf6fb8d.json`.
 
-## Phase 2: Card pictures and delivery
+## Phase 2: Card pictures and delivery [checkpoint: bda95d83]
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`).
 
@@ -310,11 +310,14 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   - Evidence: `measure/runs/asset_storytime_l2_cards_20261106/pm-report.md`. It names the handoff
     path, the Drive backup, the spend of 0.74 USD in 74 calls, the 29 delivered rows, the 2 failed
     rows with their best tries, the defaults for the PM, and the small marks for Workbooks.
-- [b] Phase 2 gate: phase acceptance by the checker at an immutable HEAD. — deferred:phase-1-acceptance
+- [x] Phase 2 gate (bda95d83): phase acceptance by the checker at an immutable HEAD. Evidence:
+  `measure/runs/asset_storytime_l2_cards_20261106/acceptance-p2-bda95d8.json`. The first round,
+  `measure/runs/asset_storytime_l2_cards_20261106/acceptance-p2-15031cb.json`, failed on the
+  white-corner rule of the class C rows. Finding F1 became a report item by `a7d68714`.
 
 ## Track-level roles
 
-- [b] Final acceptance at an immutable HEAD after all phase gates. — deferred:phase-2-acceptance
+- [~] Final acceptance at an immutable HEAD after all phase gates.
 - [b] Closeout: archive the track, update the registry, run the generator and the doctor, and
   commit the run records in `measure/runs/asset_storytime_l2_cards_20261106/`. Foreign generated
   facts stay out of the closeout commit unless their owner has committed them. — deferred:final-acceptance
