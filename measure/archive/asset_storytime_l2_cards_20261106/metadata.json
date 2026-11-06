@@ -1,0 +1,23 @@
+{
+  "track_id": "asset_storytime_l2_cards_20261106",
+  "type": "feature",
+  "status": "done",
+  "created_at": "2026-11-06T00:30:00Z",
+  "updated_at": "2026-11-06T13:16:33Z",
+  "completed": "2026-11-06",
+  "description": "Storytime Level 2 card pictures: 31 card rows of picture list v7, color and line art (62 files), Muse path with the Sonnet judge, delivery with manifest and contact sheet, Drive backup",
+  "estimated_tasks": 9,
+  "actual_tasks": 10,
+  "deviation_notes": "Created from the PM relay of 2026-11-06 (Daniel: 'Go'; limit 1.60 USD). The track also carries the T180 fixture move (PM 2026-11-05, knowledge todo 7050174a) as Task 1. Phase 1 is the standard lane. Phase 2 is the light lane of 2026-11-03. The delivery is model evidence, not acceptance. Workbooks checks the cards after delivery. The registry entry is staged through a blob because measure/tracks.md holds a foreign uncommitted hunk. The generator is not run because measure/generated/ holds foreign changes. 29 of 31 card rows delivered (58 of 62 files). Failed rows, reported and not delivered: l2-w04-card-ham (3 line tries, each failed by two judges) and l2-w04-card-family (3 line tries at 4, 8, and 7 px; the delivery gate is 12 px). 22 color files have a corner below 250 (class C white-corner rule; report item, Workbooks decides). Spend 0.74 USD in 74 Muse calls (cap 1.60 USD). Route substitutions are in the role logs of measure/runs/asset_storytime_l2_cards_20261106/.",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [
+    "/home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json",
+    "docs/storytime/l2-unit1/cards/",
+    "out/storytime/l2/unit1/cards/delivery-muse-v1/manifest.json",
+    "/home/daniebo/Desktop/handoff/storytime-l2-card-pictures/MANIFEST.txt",
+    "out/storytime/l2/unit1/drive-backup-2026-11-06-cards.tsv",
+    "measure/runs/asset_storytime_l2_cards_20261106/"
+  ],
+  "dependencies": []
+}

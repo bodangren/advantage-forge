@@ -1,0 +1,27 @@
+Review B round 2, track asset_storytime_l2_cards_20261106, audited HEAD 787e846d3afbc5e945b7d51eac28406a87833f15.
+Verdict: pass (no Blocker). Nonblocking: one Major RB2-1 for Green; Nits RB2-2 to RB2-5, RB-4 to RB-6.
+
+RB-1 closed: scanCostFiles skips the child "cards" (guards:213). CG12 pins it.
+RB-2 closed: classifyOutDir resolves paths; probes show invalid for muse2, elements below cards, dot-dot escapes, unit root.
+RB-3 partly closed: batch projection and per-call re-check exist (CG14). Open part is RB2-1:
+  the re-check reads logged spend only; up to 4 workers (3 parallel line tries each) pass together.
+RA2-1 closed: only the exact card folder is valid below "cards" (guards:89, CG15).
+Secret scan of git diff 562c5800..787e846d: clean (exit 1, no match).
+Key handling: readKey after the guard; key only in the Authorization header; never printed, logged, or written.
+A2 not applicable. A6: no overstatement in measure/tracks.md.
+vitest not run by Review B: heavy lock held by other projects. Green gate evidence: jr-green-5bdf307.log (6 files, 71 tests passed).
+Probes that the shell rejected: mock-fetch pool run (RB2-1 is a static finding), cost-cell parse probes (RB-4 rests on the code read).
+role-gate: not run by Review B; tools were disabled after the maximum agent steps. The orchestrator runs it.
+
+MEASURE_AGENT_RESULT
+role: measure-review-b-security
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 1: Card guard, card specs, and fixture
+commits: none
+tests_run: vitest not run by Review B (heavy lock held by other projects; the one permitted run timed out at 600 s); pure-function node probes on scratch copy /tmp/opencode/rb2/repo: classifyOutDir cases pass; secret scan clean
+files_changed: measure/runs/asset_storytime_l2_cards_20261106/review-b-787e846.json, measure/runs/asset_storytime_l2_cards_20261106/review-b-787e846.log
+plan_updates: none
+known_failures: RB2-1 [Major] concurrent pool re-check cannot see in-flight calls; Nits RB2-2, RB2-3, RB2-4, RB2-5, RB-4, RB-5, RB-6
+handoff: Route RB2-1 to Green (reserve margin per in-flight call, or lower concurrency near the cap). RB-1, RB-2, RA2-1 are closed; RB-3 is closed for the projection and open for concurrency. Orchestrator: run the role-gate command; Review B could not run it.
+END_MEASURE_AGENT_RESULT

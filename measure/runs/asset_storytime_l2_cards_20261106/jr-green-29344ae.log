@@ -1,0 +1,135 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: partial
+track: asset_storytime_l2_cards_20261106
+phase: Phase 2: Card pictures and delivery
+phase_base_sha: cf6fb8dbaff9231aacf87aa6adffe3c0ab727b79
+role_base_sha: 29344ae439f2d9034def37cf657d53712049804a
+resulting_head: ac2502f3c64894da44a2144dadab0024cbd3cee9
+commits: |
+  ac2502f3 (measure(storytime_l2_cards): Phase 2 round 8, delivery of 29 cards (58 files)). The
+  plan file alone is in the commit.
+dispositions: none
+judge_results_read: |
+  judge-cards-cards-r4-line-t2.json: 7 files, 7 pass, 0 fail. The line try 2 of the astronaut, the
+  goodbye, the boy, the teacher, the mom, the sister, and the grandpa passed. The maker did not
+  rate any picture and did not run a judge.
+delivered_set: |
+  29 rows, 58 PNG files. The color is the m1 print for every row. The line is the try 1 print for
+  21 rows, the try 2 print for the tomato, and the try 2 print for the 7 rows of the
+  cards-r4-line-t2 batch.
+  The goodbye line try 1 passed the judge, but its print measured 10 px, so the goodbye delivers
+  its line try 2 print.
+  The 2 rows that stay out: l2-w04-card-ham and l2-w04-card-family.
+approval_list: |
+  file: out/storytime/l2/unit1/cards/muse/approved.json
+  entries: 29, no ham row and no family row
+  every entry names colorPrint <id>-m1-color-print.png and the print of the passing line try
+  no entry names a despeckled file
+  every entry names the judge result file of its color and its line, and says "model evidence,
+  not acceptance"
+  print check: every named print file exists, and every named line print measures at least 12 px
+  of stroke width. The width check ran with inspectLineArtPng of src/storytime/book-pictures.ts.
+pool: |
+  no Muse call ran in this round.
+costs: |
+  file: out/storytime/l2/unit1/cards/muse/costs.tsv
+  header: time row version kind inputs output size usage_cost note
+  rows: 74
+  spend usd: 0.74
+  highest row cost: 0.01
+  the file did not change in this round
+spend_record: |
+  measure/runs/asset_storytime_l2_cards_20261106/spend-record.txt
+  calls: 74
+  spend usd: 0.74
+  report point 0.80 reached: no
+delivery: |
+  command: node --import tsx scripts/storytime-book-pictures.ts deliver --list
+  /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --approvals
+  out/storytime/l2/unit1/cards/muse/approved.json --muse out/storytime/l2/unit1/cards/muse
+  --delivery out/storytime/l2/unit1/cards/delivery-muse-v1
+  exit: 0
+  skipped lines: 198
+  delivered lines: 1
+  the delivered line: Delivered 29 rows and 14 batch hashes to
+  /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/cards/delivery-muse-v1.
+  log: measure/runs/asset_storytime_l2_cards_20261106/deliver-cards-r2.log
+files_check: |
+  files checked: 58
+  problems: 0
+  every PNG is 1500 x 1500 px, 8-bit, with no alpha channel
+handoff: |
+  folder: /home/daniebo/Desktop/handoff/storytime-l2-card-pictures/
+  files: 58 PNG files, manifest.json, MANIFEST.txt, and the contact sheet
+  the PNG files and manifest.json are copies of the delivery folder, byte for byte
+  sha256sum -c check in the handoff folder:
+  grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c -
+  OK lines: 58
+  FAILED lines: 0
+  the sha256sum lists of the delivery folder and the handoff folder are equal, 59 names each
+  MANIFEST.txt holds the header fields of the a48 form, the 29 picture ids, the picture list row
+  with list v7 and the SHA-256 ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf, the
+  judge result files, the contact sheet name, the date and time in ICT, and the sender. It holds
+  one line per file with the SHA-256 and the name, the two failed rows with their reasons, and
+  the spend line "spend: 0.74 USD, 74 Muse calls, cap 1.60 USD". It says "model evidence, not
+  acceptance" and "Workbooks checks the cards". A scan of the file for "accepted" and "approved"
+  found nothing.
+  One difference from the a48 form: the file lines hold the SHA-256 and the name only, and the
+  heading states that every file is 1500 x 1500 px. The a48 manifest puts the pixel size in each
+  line, and its check command filters on the file name. The check command of this round reads
+  every line that starts with a SHA-256, so the size column would break it. The maker chose the
+  form that the given check command can read.
+contact_sheet: |
+  file: /home/daniebo/Desktop/handoff/storytime-l2-card-pictures/storytime-l2-card-pictures-contact-sheet.png
+  pixel size: 1848 x 2384
+  labels: 31
+  tiles: 58
+  the sheet has 31 cells in list order, 4 cells per row. Each delivered cell shows the delivered
+  color file and the delivered line file side by side at 220 px, with the word under them. The
+  ham cell and the family cell show the word and "not delivered: line art failed 3 tries", with
+  no picture. The maker opened the sheet once and each label sits under its own card.
+delivery_record: |
+  file: measure/runs/asset_storytime_l2_cards_20261106/delivery-record.txt
+  delivered files: 58
+  failed rows: l2-w04-card-ham (best try: color m1 pass; line try 1), l2-w04-card-family (best
+  try: color m1 pass; line try 1, judge pass at 4 px)
+  manifest.json sha256: 65699fb55d7e106194b6aca9c49fa30afaa2271472a592e84f25ecb9587c1fe2
+  MANIFEST.txt sha256: 809d204a75d998773b1ac87416e4a23b05dc4b4b6c0d1c7146a5049149075639
+  contact sheet sha256: 989343a5a10a69796db695040c4a890ef891255c5250c97f2611ac66f29e4cf8
+operating_rules: |
+  a: no pool ran in this round, so no concurrency flag was used.
+  b: no pool ran, so no new row was read. The cost file holds 74 rows and 0.74 USD.
+  c: no pool ran, so no refusal line was read. The delivery writer output was read and no refusal
+  line shows.
+  d: no line call ran in this round, so no --tries value was used.
+  e: nobody edited costs.tsv. Its header holds a time column and the usage_cost column.
+  f: the spend is 0.74 USD, below the report point of 0.80 USD. The maker stops only at the cap
+  of 1.60 USD.
+plan_updates: |
+  Task 7 is [x] with (29344ae4) on its first line. The note holds the evidence of the delivery, the
+  handoff, the sha256sum -c result, the contact sheet, and the 2 failed rows. Task 8 is [~] and
+  its deferred field is gone. No other plan item changed.
+files_changed: |
+  Committed in ac2502f3: measure/tracks/asset_storytime_l2_cards_20261106/plan.md only.
+  Written in the run folder and not committed: spend-record.txt, delivery-record.txt,
+  deliver-cards-r2.log, and this log.
+  Written under out/ and not committed: out/storytime/l2/unit1/cards/muse/approved.json and the
+  delivery folder out/storytime/l2/unit1/cards/delivery-muse-v1/.
+  Written in the handoff folder: 58 PNG files, manifest.json, MANIFEST.txt, and the contact sheet.
+  The throwaway scripts sit in /tmp/opencode/storytime-cards-prep/ and
+  /tmp/opencode/storytime-cards-sheet/ and stay out of the repository. No PNG file, no code file,
+  no test file, and no judge kit file changed.
+tasks: |
+  Flipped to [x]: Task 7, with the delivery folder, the handoff folder, the manifest, the contact
+  sheet, and the 2 failed rows.
+  Flipped to [b]: none.
+  Still [~]: Task 8. The Drive backup has not run.
+handoff: |
+  The delivery of 29 cards is done and checked. The hand-off path is
+  /home/daniebo/Desktop/handoff/storytime-l2-card-pictures/. The spend is 0.74 USD with 74 Muse
+  calls. The 2 rows that failed are the ham and the family; the record names both with the best
+  try.
+  The next round holds Task 8, the Drive backup, and Task 9, the report record for the PM.
+  The delivery is model evidence, not acceptance. Workbooks checks the cards.
+END_MEASURE_AGENT_RESULT

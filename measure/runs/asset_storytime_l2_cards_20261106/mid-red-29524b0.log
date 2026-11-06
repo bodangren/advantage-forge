@@ -5,8 +5,8 @@ track: asset_storytime_l2_cards_20261106
 phase: Phase 1: Card guard, card specs, and fixture; bounded Red amendment round 2
 baseline_sha: 562c58007d21de4979a198d2c6dff79a84ac6ebc
 role_base_sha: 29524b07c3e1fe69ffa4748db8131200ca8073ae
-resulting_head: pending commit
-commits: pending commit
+resulting_head: ad9cc588 (current HEAD)
+commits: ad9cc588 (Red amendment, tests, and plan)
 tests_run: |
   Typecheck exited 2 with 38 total diagnostics and `owned tsc errors: 0`. The remaining diagnostics
   are outside owned Storytime paths: assets/rowboat.ts (8), assets/airship.ts (7), assets/plank.ts

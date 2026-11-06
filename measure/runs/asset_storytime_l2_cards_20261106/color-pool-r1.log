@@ -1,0 +1,33 @@
+card run: cap 1.6 USD
+l2-w01-card-hello-m1 color ok 1600x1600 cost 0.01
+l2-w01-card-girl-m1 color ok 1600x1600 cost 0.01
+l2-w01-card-boy-m1 color ok 1600x1600 cost 0.01
+l2-w01-card-goodbye-m1 color ok 1600x1600 cost 0.01
+l2-w01-card-teacher-m1 color ok 1600x1600 cost 0.01
+l2-w02-card-astronaut-m1 color ok 1600x1600 cost 0.01
+l2-w03-card-cap-m1 color ok 1600x1600 cost 0.01
+l2-w02-card-fan-m1 color ok 1600x1600 cost 0.01
+l2-w03-card-pineapple-m1 color ok 1600x1600 cost 0.01
+l2-w03-card-sheep-m1 color ok 1600x1600 cost 0.01
+l2-w04-card-brother-m1 color ok 1600x1600 cost 0.01
+l2-w04-card-dad-m1 color ok 1600x1600 cost 0.01
+l2-w04-card-grandma-m1 color ok 1600x1600 cost 0.01
+l2-w04-card-grandpa-m1 color ok 1600x1600 cost 0.01
+l2-w04-card-jam-m1 color ok 1600x1600 cost 0.01
+l2-w04-card-mom-m1 color ok 1600x1600 cost 0.01
+l2-w04-card-ham-m1 color ok 1600x1600 cost 0.01
+l2-w04-card-sister-m1 color ok 1600x1600 cost 0.01
+l2-w05-card-dress-m1 color ok 1600x1600 cost 0.01
+l2-w04-card-family-m1 color ok 1600x1600 cost 0.01
+l2-w05-card-sandwich-m1 color ok 1600x1600 cost 0.01
+l2-w06-card-boat-m1 color ok 1600x1600 cost 0.01
+l2-w05-card-sad-m1 color ok 1600x1600 cost 0.01
+l2-w06-card-tomato-m1 color ok 1600x1600 cost 0.01
+l2-w07-card-car-m1 color ok 1600x1600 cost 0.01
+l2-w07-card-mop-m1 color ok 1600x1600 cost 0.01
+l2-w07-card-doll-m1 color ok 1600x1600 cost 0.01
+l2-w07-card-pot-m1 color ok 1600x1600 cost 0.01
+l2-w07-card-teddy-m1 color ok 1600x1600 cost 0.01
+l2-w07-card-otter-m1 color ok 1600x1600 cost 0.01
+l2-w07-card-train-m1 color ok 1600x1600 cost 0.01
+running total muse: 0.3100 USD

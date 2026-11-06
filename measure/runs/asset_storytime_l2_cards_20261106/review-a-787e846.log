@@ -1,0 +1,66 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 1: Card guard, card specs, and fixture
+phase_base_sha: 562c58007d21de4979a198d2c6dff79a84ac6ebc
+role_base_sha: 787e846d3afbc5e945b7d51eac28406a87833f15
+audited_head_sha: 787e846d3afbc5e945b7d51eac28406a87833f15
+resulting_head: 787e846d3afbc5e945b7d51eac28406a87833f15
+commits: |
+  Audit range a12329d9..787e846d: 11ed8c05 (spec), 3206662f (Red CG15),
+  5bdf3075 (Red plan evidence), 91b2a1ca (Green classifyOutDir),
+  787e846d (Green plan evidence).
+dispositions: none
+tests_run: |
+  vitest not run by Review A round 3: heavy lock held by other projects.
+  Evidence used: jr-green-5bdf307.log at 787e846d gives exit 0,
+  `Test Files  6 passed (6)`, `Tests  71 passed (71)`, `owned tsc errors: 0`,
+  MF4 `1 failed | 14 passed (15)`, restored 15 of 15. mid-red-11ed8c0.log gives
+  the Red run of CG15: exit 1, `1 failed | 14 passed (15)`, 6 assertion failures,
+  no load error. Strict it( counts at HEAD: 15, 10, 5, 30, 8, 3 (N_new 30,
+  N_old 41, total 71), which matches the plan claim and Green's log.
+files_changed: |
+  Audit only. No file changed by this role. The result JSON and this log are the
+  only writes, both under measure/runs/asset_storytime_l2_cards_20261106/.
+fixes: |
+  RA2-1 fixed: classifyOutDir returns invalid for every path below the child
+  folder cards except the exact card folder (probe: cards/muse/elements,
+  cards/other/muse, cards/muse2 and a dot-dot escape all invalid; cards/muse and
+  cards/muse/ both card). runGuards refuses a 5.00 USD elements row with exit 3,
+  run invalid, message names the raw outDir, before any cost scan (restart scan
+  reads 0 rows). CG15 pins the rule and fails without the fix.
+  RA2-2 fixed: spec.md Guard interaction states that scanCostFiles skips the
+  cards child and that card spend never counts the restart cap.
+  Kept behaviors: week, cover and elements of other children classify restart;
+  a spec without outDir and an undefined spec classify restart (w01 default);
+  the trailing-slash card path classifies card.
+plan_updates: | None. This role writes no plan file.
+known_open: |
+  RA3-1 (Nit): spec.md:214-215 still calls the RA2-1 fix pending; confirms
+  Review B RB2-5. RA3-2 (Nit): CG15's not-contains-no-key assertion cannot fail
+  with an empty HOME. RA2-5 and RA2-6 carry from round 2; RA2-6 is worse because
+  test-strategy.md still ends at CG11 and M7.
+handoff: |
+  No blocker. Phase head 787e846d passes review A round 3 with 8 nonblocking
+  findings and 2 withdrawals. The orchestrator routes kept and ESCALATE items to
+  the user per its own rule; this result sets retry_recommendation none.
+END_MEASURE_AGENT_RESULT
+
+commands:
+- git rev-parse HEAD -> 787e846d3afbc5e945b7d51eac28406a87833f15 (equals audited_head_sha)
+- git status --porcelain -> pre-existing dirty paths, none in the audited range
+- git log --oneline a12329d9..787e846d -> 11ed8c05, 3206662f, 5bdf3075, 91b2a1ca, 787e846d
+- git diff a12329d9..787e846d -> plan.md, spec.md, scripts/storytime-muse-guards.mjs, tests/storytime-card-guards.test.ts (98 insertions, 12 deletions)
+- git diff --stat 562c5800..787e846d -> 46 files for the whole phase
+- git show --stat 11ed8c05 3206662f 5bdf3075 91b2a1ca 787e846d -> allowed-set files only
+- sed -n '60,130p' scripts/storytime-muse-guards.mjs -> classifyOutDir with the new cards guard line
+- node --input-type=module -e classifyOutDir probe -> invalid (cards/muse/elements, cards/other/muse, cards/muse2, dot-dot escape), card (cards/muse, cards/muse/), restart (w01/muse, cover/muse, w03/muse/elements, no outDir, undefined spec)
+- node --input-type=module -e runGuards probe with a 5.00 USD elements row -> refused true, code 3, run invalid, spend 0, message names the outDir; restart scan 0 rows
+- HOME=/tmp/ra3-empty-home node -e homedir and readFileSync probe -> ENOENT message, no `no key`
+- grep -cE '^[[:space:]]*it(' on the six test files -> 15, 10, 5, 30, 8, 3
+- grep -rhoE '"outDir": "[^"]*"' docs/storytime | sort | uniq -c -> 17 distinct values, only the exact card folder below cards/
+- grep -n 'no key|HOME|homedir' tests/storytime-card-guards.test.ts -> 156/161, 256/262, 340/346
+- grep -n 'CG1[0-9]|MF[0-9]|M7' test-strategy.md -> table ends at CG11 and M7; section 4.6 names CG1 to CG9 and CG11
+- read measure/runs/asset_storytime_l2_cards_20261106/review-a-a12329d.json, review-b-787e846.json, jr-green-5bdf307.log, mid-red-11ed8c0.log
+- vitest not run by Review A round 3: heavy lock held by other projects

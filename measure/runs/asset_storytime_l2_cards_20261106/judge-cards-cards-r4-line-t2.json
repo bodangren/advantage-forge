@@ -1,0 +1,74 @@
+{
+  "group": "cards-r4-line-t2",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-06T11:06:00Z",
+  "results": [
+    {
+      "id": "l2-w02-card-astronaut",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w02-card-astronaut-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one astronaut (1), a white space suit, an open helmet visor, a friendly smiling face. Action: none. Seen: one child-like figure in a one-piece suit with a chest patch, a helmet ring with the face fully visible inside and no glass in front, a backpack behind, round smiling face. All drawn and clear to a child. Open visor reads as the face shows with no cover. Line art is black on white, no gray, no gaps. No text. Small mark: suit is uncolored line art, so white is not checkable."
+    },
+    {
+      "id": "l2-w01-card-goodbye",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-goodbye-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), her raised open hand, a big smile, a school bag on her back. Action: wave (note only). Seen: a girl with two side buns and a star on her shirt; one arm raised with an open hand with fingers; a closed curved smile; two shoulder straps and bag edges at both sides of the torso. Nan matches the cast (two buns, star shirt, shorts, sneakers). Raised hand, smile, and bag straps with bag edges are drawn and read as a backpack. Small marks: the smile is small, not wide; the bag is mostly behind the body. Line art is black on white, no gray, no gaps. No text."
+    },
+    {
+      "id": "l2-w01-card-boy",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-boy-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1), a five-year-old boy, he stands and smiles. Action: stand and smile (note only). Seen: a chibi boy with short messy tufted hair, round eyes, open smile, T-shirt, cargo shorts with a pocket, sandals, open hands at his sides. Matches Pat in the cast (messy hair, T-shirt, cargo shorts, sandals). Line art is black on white, no gray, no gaps. No text."
+    },
+    {
+      "id": "l2-w01-card-teacher",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-teacher-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Teacher Kim (1), a grown woman, she stands and smiles. Action: stand and smile (note only). Seen: a woman with a low ponytail at the back, an open cardigan over a blouse with a collar, trousers, flat shoes, round eyes, a gentle smile, open hands. Matches Teacher Kim in the cast. Line art is black on white, no gray, no gaps. No text. Small mark: her head is a little large for an adult, but she reads as a grown woman."
+    },
+    {
+      "id": "l2-w04-card-mom",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-mom-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mom (1), a woman of about thirty-five, she stands and smiles. Action: stand and smile (note only). Seen: a woman with wavy shoulder-length hair, a long-sleeved collared top, trousers, sneakers, a smile, open hands. Matches Mom in the cast (wavy hair, collared blouse, jeans, sneakers). Line art is black on white, no gray, no gaps. No text. Small mark: the side parting is not clear."
+    },
+    {
+      "id": "l2-w04-card-sister",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-sister-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Lily (1), a girl of five, she stands and smiles. Action: stand and smile (note only). Seen: a girl with a short bob and straight fringe, a small bow at the side, a short-sleeved dress with a round collar, socks, shoes, a smile, open hands. Matches Lily in the cast. Line art is black on white, no gray, no gaps. No text."
+    },
+    {
+      "id": "l2-w04-card-grandpa",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-grandpa-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Grandpa (1), an older man with white hair and a small white mustache, he stands and smiles. Action: stand and smile (note only). Seen: an older man with short hair outlined at the top and sides, a mustache over the mouth, an open cardigan over a collared shirt, trousers, shoes, open hands. Matches Grandpa in the cast. Hair and mustache are drawn and read as such. Line art is black on white, no gray, no gaps. No text. Small marks: the smile is mostly hidden under the mustache; the white color is not checkable in line art."
+    }
+  ],
+  "summary": { "files": 7, "pass": 7, "fail": 0 }
+}

@@ -1,0 +1,78 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: blocked
+track: asset_storytime_l2_cards_20261106
+phase: Phase 1: Card guard, card specs, and fixture
+phase_base_sha: 562c58007d21de4979a198d2c6dff79a84ac6ebc
+role_base_sha: 7d1cbdd5bf8c514d2e8bd3278cbead8ed33ef484
+resulting_head: 29524b07c3e1fe69ffa4748db8131200ca8073ae
+commits: 5f344886 (implementation: 5 script files and 31 card specs), 29524b07 (plan evidence for 5f344886)
+tests_run: |
+  Targeted Red first: `HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-card-guards.test.ts tests/storytime-card-specs.test.ts tests/storytime-card-fixtures.test.ts --maxWorkers=1'`
+  gave exit 1, `Test Files  2 failed | 1 passed (3)`, `Tests  11 failed | 15 passed (26)`. Red failed on
+  assertions: CG1, CG3, CG4, CG8, CG10, CG11, CS3, CS4, CS5, CS6, CS7. No load or module error.
+
+  GREEN_TEST_COMMAND (same six files) after the implementation:
+  `Test Files  1 failed | 5 passed (6)`, `Tests  2 failed | 65 passed (67)`, exit 1.
+  Failing ids: CS4 and CS6, both only for `l2-w07-card-train`. The card guards file passed 11 of 11.
+  The three new files alone: `Test Files  1 failed | 2 passed (3)`, `Tests  2 failed | 24 passed (26)` (N_new 26).
+  The three old files alone: `Test Files  3 passed (3)`, `Tests  41 passed (41)` (N_old 41). 67 = 26 + 41.
+
+  TYPECHECK_COMMAND: tsc exit 2, `tsc errors total: 46`, `owned tsc errors: 8`.
+  All 8 sit in the three committed Red test files: fixtures 36:27, guards 177:17, 184:18, 195:49,
+  196:14, 197:42, specs 135:49, 154:38.
+
+  Static gates: `git diff --name-only 7d1cbdd5..HEAD -- tests` printed nothing;
+  `git diff --name-only 7af682db..HEAD -- tests/storytime-muse-attempts.test.ts tests/storytime-judge-batch.test.ts`
+  printed nothing; `grep -rn 'wb-shadow' tests scripts src` printed nothing (exit 1);
+  `grep -rnF '2026-11-06T00:00:00Z' scripts tests` listed only `scripts/storytime-muse-guards.mjs`
+  and `tests/storytime-card-guards.test.ts`.
+
+  Mutation self-check (test-strategy 4.5), scratch copy of HEAD at `/tmp/opencode/mut-5f344886`,
+  guards file alone through heavy-run: M1 `CARD_RUN.capUsd` 1.0 -> CG1, CG4; M2 no mixed refusal ->
+  CG10; M3 card spend scans every folder -> CG8; M4 `--cards` keeps `RESTART_START` -> CG11;
+  M5 `--cards` keeps the A-48 folder -> CG11; M6 card report point 0.5 -> CG1, CG5; M7 `>` start
+  compare -> CG7 (also CG4, CG5, CG6, CG8). The restored copy passed 11 of 11.
+files_changed: |
+  Commit 5f344886: `scripts/storytime-muse-guards.mjs`, `scripts/storytime-muse-guards.d.mts`,
+  `scripts/storytime-muse.mjs`, `scripts/storytime-judge-batch.mjs`,
+  `scripts/storytime-judge-batch.d.mts`, and the 31 files `docs/storytime/l2-unit1/cards/<id>.json`.
+  Commit 29524b07: `measure/tracks/asset_storytime_l2_cards_20261106/plan.md`.
+  No file under `tests/` changed. `out/` was not written. Spend stayed 0.00 USD; no provider call ran.
+plan_updates: |
+  Task 1 `[x]` with Red SHA 7d1cbdd5 (fixtures file 5 of 5, stage-check 3 of 3, no `wb-shadow` hit).
+  Task 2 `[x]` with implementation SHA 5f344886 (guards file 11 of 11, old files 41 of 41, M1 to M7).
+  Task 3 `[~]`: the 31 specs are committed at 5f344886, but the committed Red test blocks two checks,
+  so the task is not marked complete. The Phase 1 gates item stays `[b]`.
+known_failures: |
+  CS4 and CS6 on `l2-w07-card-train`. The committed Red test names
+  `out/storytime/l2/unit1/w04/muse/elements/prop-toys-sheet-m1-color.png`. That file does not exist.
+  `spec.md` line 117 and the only file on disk `out/storytime/l2/unit1/w07/muse/elements/prop-toys-sheet-m1-color.png`
+  are in `w07`. No spec file can satisfy both CS4/CS6 set equality and the CS6 existence check.
+  Green is forbidden to edit a committed Red test, so the round is blocked.
+handoff: |
+  Request a bounded Mid Red retry. Question for the orchestrator: route the retry now?
+  Options: (a) yes, Mid Red amends `tests/storytime-card-specs.test.ts` and the Red type errors, commits,
+  and a Green round 2 starts from the new red_head with commit 5f344886 kept as-is;
+  (b) the user chooses another owner for those test edits.
+
+  Item 1 (contract, required): in `tests/storytime-card-specs.test.ts` the refs map entry for
+  `l2-w07-card-train` must name
+  'out/storytime/l2/unit1/w07/muse/elements/prop-toys-sheet-m1-color.png'. Today it is
+  `${REF}prop-toys-sheet-m1-color.png` with REF = 'out/storytime/l2/unit1/w04/muse/elements/'.
+
+  Item 2 (typecheck, required for `owned tsc errors: 0`): the Red test files must satisfy
+  tsconfig `strict` and `noUncheckedIndexedAccess`:
+  - fixtures 36:27: `file` from the tuple array is `string | undefined`; type the array
+    `as Array<[string, string]>`.
+  - guards 177:17 and 184:18: cast `BatchCommandOptions` with `as unknown as Record<string, unknown>`.
+  - guards 195:49 and 197:42: cast the spread object to the batch options type.
+  - guards 196:14: `built[0]` is possibly undefined; use `built[0]!`.
+  - specs 135:49: `loadPictureList({ printRoot, expectedSha256 })` must match `PictureListOptions`
+    in `src/storytime/book-pictures.ts`.
+  - specs 154:38: `original.references` is `string[] | undefined`; use `(original.references ?? [])`.
+
+  Green-side items already done and not in question: `CARD_RUN` and the card scan, the mixed-call
+  refusal at exit 3 before `readKey`, the judge `--cards` flag, the unchanged restart config, and the
+  31 spec files with the recorded prompt differences.
+END_MEASURE_AGENT_RESULT

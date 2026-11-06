@@ -1,0 +1,32 @@
+# Strategy run log: asset_storytime_l2_cards_20261106
+
+Role: measure-strategy (claude-code/claude-sonnet-5-5#high)
+Baseline SHA: 7af682db1d2b572d8cf46ed5cc58ec3aa244b6a4
+Strategy commit: 562c58007d21de4979a198d2c6dff79a84ac6ebc
+Date: 2026-11-06
+
+MEASURE_AGENT_RESULT
+role: strategy
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 1: Card guard, card specs, and fixture
+commits: 562c5800
+tests_run: none (the strategy role runs no heavy job; read-only checks only: pin-set.mjs SHA-256 f67cfa8f… matches the archive block, the section 6 allowed-set regex matches the intended paths, l2-w04-card-mom exists in list v7, unshare -rm is denied on this machine)
+files_changed: measure/tracks/asset_storytime_l2_cards_20261106/test-strategy.md (new, 418 lines); measure/tracks/asset_storytime_l2_cards_20261106/plan.md (Gate S marked [x] with evidence measure/runs/asset_storytime_l2_cards_20261106/spec-review-7af682d.json and SHA 7af682db; Phase 0 note and Evidence section updated; Tasks 1 to 9 unchanged)
+plan_updates: Gate S [x]; the Phase 0 marker note says Red marks Tasks 1 to 3 [~]; Evidence names the spec review result and the test strategy
+known_failures: tests/storytime-book-pictures.test.ts stays known-red under the rule of strategy section 4.4 (live list ba3956fc differs from the v4 pin 6d05dfc5; 142 tests; failing set must be inside the 13 named pin-dependent tests; 4 sentinels fail); 11 other-track doctor errors at baseline
+handoff: >
+  PHASE_BASE_SHA: capture with git rev-parse HEAD after this strategy commit passes the role-gate and before Red starts (the value is 562c5800 or a later Measure-only commit, never 7af682db).
+  RED_TEST_COMMAND: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-card-guards.test.ts tests/storytime-card-specs.test.ts tests/storytime-card-fixtures.test.ts --maxWorkers=1'
+  (expected exit 1, Test Files 2 failed | 1 passed (3), no load error).
+  GREEN_TEST_COMMAND: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-card-guards.test.ts tests/storytime-card-specs.test.ts tests/storytime-card-fixtures.test.ts tests/storytime-muse-attempts.test.ts tests/storytime-judge-batch.test.ts tests/storytime-stage-check.test.ts --maxWorkers=1'
+  (expected exit 0, Test Files 6 passed (6), Tests N passed (N) with N = N_new + N_old).
+  PROJECT_TESTS: the six GREEN files plus tests/storytime-muse-delivery.test.ts, tests/storytime-picture-rows.test.ts, tests/storytime-line-art-pass.test.ts, tests/storytime-muse-delivery-adversarial.test.ts, in one heavy-run.sh wrapper with --maxWorkers=1 (expected Test Files 10 passed (10), Tests M passed (M), M = 105 + N_new).
+  TYPECHECK: heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=6144 ./node_modules/.bin/tsc --noEmit'; gate is owned tsc errors: 0 (prefixes src/storytime/, scripts/storytime-, tests/storytime-); the total is informational.
+  KNOWN_RED_COMMAND: vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1 through heavy-run.sh; rule in strategy section 4.4 (diff limit of 6 lines on the one constant, 142 tests, failing set inside the 13 named tests, 4 of 4 sentinels fail, exit 1 while the live list differs from the pin).
+  FIXTURES: both fixture JSON files under tests/fixtures/storytime/ are Red (test data under tests/); the two constant edits in tests/storytime-book-pictures.test.ts and tests/storytime-stage-check.test.ts are Red; the guard code, the d.mts files, and the 31 spec JSON files in docs/ are Green. Green edits no file under tests/. Task 1 finishes at Red; Green marks it [x] with the Red SHA.
+  PHASE 1 REVIEW GATES: Review A yes (new guard logic and wiring); Review B yes (the spend guard controls paid calls; mixed-call bypass, cap arithmetic, --ids used as a file name); Review C no (no UI; one flag and one constant covered by tests); adversarial testing yes, one bounded round (silent overspend surfaces); UX browser review no (no UI, UX_REQUIRED=never). Risk class: Phase 1 high (Task 2 high, Task 3 medium, Task 1 low); Phase 2 medium; final acceptance and closeout low.
+  F5 SETTLED: record files in measure/runs/asset_storytime_l2_cards_20261106/ are calibration-record.json, pm-report.md, precondition-workbooks-list.txt, judge-cards-<round>.json (+ -second.json), spend-record.txt, delivery-record.txt, drive-record.txt, acceptance-p2-<HEAD7>.json and .log (strategy section 5).
+  DEVIATIONS FOR THE ORCHESTRATOR (default yes): (1) scripts/storytime-judge-batch.d.mts is a Green types-only file and docs/storytime/l2-unit1/judge/prod/cards-*.json is a Phase 2 batch path; the spec owned-path list omits both. (2) Phase 2 approval list goes to out/storytime/l2/unit1/cards/muse/approved.json, not into docs/.../cards/, so the spec test keeps exactly 31 files. (3) Float sums can refuse the 160th call at 1.59 USD; the test pins 158 and 160 rows only. (4) CS6 (reference files exist) is an artifact test of untracked out/ files and fails on a fresh clone by design.
+  QUESTIONS: none blocking.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,6 @@
+delivered files: 58
+failed rows: l2-w04-card-ham (best try: color m1 pass; line try 1), l2-w04-card-family (best try: color m1 pass; line try 1, judge pass at 4 px)
+corner note: 22 color files below 250 (report item, orchestrator decision 2026-11-06)
+manifest.json sha256: 65699fb55d7e106194b6aca9c49fa30afaa2271472a592e84f25ecb9587c1fe2
+MANIFEST.txt sha256: 7fab69d81b47189861bef6930a928c7dc4446ecdb7973694caf5bfa75cf05d31
+contact sheet sha256: 989343a5a10a69796db695040c4a890ef891255c5250c97f2611ac66f29e4cf8

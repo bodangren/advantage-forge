@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Phase 2 acceptance round 2 at bda95d83. F1 of round 1 is withdrawn: under the amended P2-7 (test-strategy a7d68714) the gate holds (58 files, gate problems: 0) and the white-corner result is a report item. My corner list (22 color files, values 242 to 249) equals the lists in pm-report.md and the handoff MANIFEST.txt, file for file and value for value. P2-6, P2-10, P2-11, P2-13 and the new MANIFEST.txt SHA-256 were rerun and pass. PROJECT_TESTS and the other checks carry over from round 1 (the diff 15031cbe..bda95d83 holds only plan.md and test-strategy.md). The class C corner question stays with Workbooks.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F2 [Nit] phase-acceptance: plan task SHAs (Task 6 a0969f77, Task 7 29344ae4) do not name the commits that close those tasks; the MANIFEST.txt source-commit also cites 29344ae4. Rationale: a task SHA should name the commit that holds the task evidence. Not changed by bda95d83.",
+    "F3 [Nit] phase-acceptance: the P2-13 text scan hits the provider name 'OpenRouter' in the spec-review logs and the literal scan pattern in my round 1 artifacts (acceptance-p2-15031cb.*). Each hit is prose, with no key or token. Rationale: reported so the scan result is traceable.",
+    "F4 [Nit] phase-acceptance: the Workbooks tree now shows 1290 changed paths in git status (other sessions: for example dashboard/scripts/storytime/check-storytime-pictures.ts), where round 1 showed none. None lies under content/storytime/l2/print/, and pictures.json still has SHA-256 ba3956fc...8ddf. Rationale: P2-11 only requires no new change under content/storytime/l2/print/."
+  ],
+  "evidence": [
+    "audited_head_sha bda95d8359b5b9596d3145c2bc0716eef47865f9; git rev-parse HEAD unchanged at the end of the run",
+    "F1 withdrawn: the orchestrator decision and the amended P2-7 (test-strategy.md line 391 and section 8 row at line 489, commit a7d68714) make the white-corner result a report item; precedent 28 of 80 class C week-delivery color files below 250, person-reviewed; the checker re-measured the facts of F1 and they stand, but the amended contract does not gate them",
+    "carry-over: git diff --name-only 15031cbe..bda95d83 lists only measure/tracks/asset_storytime_l2_cards_20261106/plan.md and test-strategy.md; PROJECT_TESTS (11 files, 155 tests) carries over from round 1; P2-1, P2-2, P2-3, P2-4, P2-5, P2-8, P2-9, P2-12 and operating rules a to f carry over from round 1 (no run output, cost file, judge file, or delivery PNG changed; delivery manifest.json sha256 65699fb5...1e2 and contact sheet sha256 989343a5...f8 unchanged)",
+    "P2-7 (amended) pass: acceptance-p2-bda95d8-corners.mts gave files checked: 58, gate problems: 0 (size 1500 x 1500, 8-bit, no alpha, 3 channels for 29 color files; inspectLineArtPng valid for 29 line files); labeled line color files below 250: 22",
+    "P2-7 corner list (file, lowest corner channel): l2-w04-card-mom 242; dad 244; grandma 245; l2-w06-card-boat 245; l2-w04-card-grandpa 246; l2-w06-card-tomato 246; l2-w07-card-doll 246; l2-w01-card-teacher 247; l2-w07-card-car 247; mop 247; otter 247; train 247; l2-w02-card-fan 248; l2-w03-card-sheep 248; l2-w04-card-jam 248; sister 248; l2-w05-card-dress 248; sad 248; l2-w01-card-boy 249; hello 249; l2-w03-card-pineapple 249; l2-w04-card-brother 249",
+    "P2-7 report match pass: pm-report.md 'Corner note for Workbooks' table (22 rows) and handoff MANIFEST.txt lines 123 to 131 name the same 22 files with the same 22 values as the checker list; no file missing, no value differs; both texts state the question and the default (Workbooks decides at its check)",
+    "P2-6 pass: grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c - in the handoff folder: 58 file lines, 0 lines that are not OK; manifest.json sha256 equals the delivery folder value 65699fb5...1e2",
+    "new MANIFEST.txt sha256 pass: 7fab69d81b47189861bef6930a928c7dc4446ecdb7973694caf5bfa75cf05d31 equals delivery-record.txt line 5; delivery-record.txt line 3 names 'corner note: 22 color files below 250'; manifest.json and contact sheet sha256 equal delivery-record.txt",
+    "P2-10 pass: no 'accepted' or 'approved' in MANIFEST.txt, pm-report.md, delivery-record.txt; the diff 15031cbe..bda95d83 adds no such word; remaining hits of round 1 are unchanged (Muse path, approved.json, a negation, 'Accepted Nit'); jr-green-15031cb.log line 39 only states that no line says accepted or approved",
+    "P2-11 pass: git diff --name-only 7af682db..HEAD filtered through the section 6 allowed-set regex gives 0 files; git -C Workbooks status --short -- content/storytime/l2/print gives 0 lines; pictures.json sha256 ba3956fc...8ddf unchanged (see F4)",
+    "P2-13 pass: case-sensitive-style scan for sk- keys, OPENROUTER tokens, and Bearer tokens in the run folder and the handoff folder finds no secret (see F3)"
+  ],
+  "commands": [
+    "git diff --name-only 15031cbe..bda95d83",
+    "node --import tsx measure/runs/asset_storytime_l2_cards_20261106/acceptance-p2-bda95d8-corners.mts => files checked: 58 gate problems: 0; color files below 250: 22",
+    "sha256sum MANIFEST.txt manifest.json (handoff folder)",
+    "grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c - (handoff folder)",
+    "git diff --name-only 7af682db..HEAD | grep -vcE <section 6 regex> (0)",
+    "git -C /home/daniebo/Desktop/Workbooks status --short -- content/storytime/l2/print (0 lines); sha256sum pictures.json",
+    "grep -rnoEi secret patterns over the run folder and the handoff folder",
+    "grep -niE 'accepted|approved' over MANIFEST.txt, pm-report.md, delivery-record.txt, jr-green-15031cb.log, plan.md"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_cards_20261106/acceptance-p2-bda95d8.json",
+    "measure/runs/asset_storytime_l2_cards_20261106/acceptance-p2-bda95d8.log",
+    "measure/runs/asset_storytime_l2_cards_20261106/acceptance-p2-bda95d8-corners.mts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high"
+}

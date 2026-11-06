@@ -1,0 +1,281 @@
+{
+  "group": "cards-r1-line",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-06T10:32:50Z",
+  "results": [
+    {
+      "id": "l2-w01-card-hello",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-hello-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), raised open hand (1), smile. Action: wave (note only). Seen: a girl with two round side buns with bands, star T-shirt, shorts, shoes; one arm raised with an open hand; a smile. All drawn and clear. Smile is small but present."
+    },
+    {
+      "id": "l2-w01-card-girl",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-girl-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), a girl of five, smile. Action: stands (note only). Seen: a chibi girl with two round buns, star T-shirt, shorts, shoes, standing, smiling. Matches cast. Clear."
+    },
+    {
+      "id": "l2-w01-card-boy",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-boy-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1), a boy of five, smile. Action: stands (note only). Seen: a boy with short messy hair and fringe with tufts, T-shirt, cargo shorts with pockets, sandals, smiling. Matches cast. Clear."
+    },
+    {
+      "id": "l2-w01-card-teacher",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-teacher-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Teacher Kim (1), a grown woman, smile. Action: stands (note only). Seen: a tall woman with a low ponytail, open cardigan over a blouse, trousers, flat shoes, smiling. Matches cast. Clear."
+    },
+    {
+      "id": "l2-w02-card-astronaut",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w02-card-astronaut-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one astronaut (1), space suit, open visor, friendly face. Seen: a figure in a helmet with a face showing through an open frame, chest patch, backpack, gloves, boots, a smile. Reads as an astronaut. All drawn and clear."
+    },
+    {
+      "id": "l2-w03-card-cap",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w03-card-cap-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one cap (1), curved brim, large in the middle. Seen: a baseball cap with a domed crown, button on top, and a curved brim, drawn large in the frame. Reads as a cap. Lines closed."
+    },
+    {
+      "id": "l2-w02-card-fan",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w02-card-fan-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one hand fan (1), round folded face, handle. Seen: a round fan with a scalloped edge and radiating fold lines, a collar and a short handle at the bottom. Reads as a hand fan. Clear."
+    },
+    {
+      "id": "l2-w03-card-pineapple",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w03-card-pineapple-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one pineapple (1), spiky crown, skin. Seen: an oval fruit with diamond marks on the skin and a crown of pointed leaves on top. Reads as a pineapple. Clear."
+    },
+    {
+      "id": "l2-w03-card-sheep",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w03-card-sheep-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one sheep (1), woolly round body, four legs. Seen: a sheep with a curly wool body and head tuft, a face with an eye and smile, an ear, a tail, and four short legs with closed feet. All drawn and clear."
+    },
+    {
+      "id": "l2-w04-card-brother",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-brother-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), a boy of eight, smile. Action: stands (note only). Seen: a chibi boy with a big head, hair swept to the side, plain T-shirt, shorts, round shoes, smiling. Matches cast. Clear."
+    },
+    {
+      "id": "l2-w04-card-dad",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-dad-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), a grown man, smile. Action: stands (note only). Seen: a man with short hair and parting, polo shirt with collar, long trousers, shoes, smiling. Matches cast. Clear."
+    },
+    {
+      "id": "l2-w04-card-grandma",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-grandma-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Grandma (1), an older woman with curly hair, smile. Action: stands (note only). Seen: a woman with short curly hair, cardigan with pockets over a blouse, long skirt, flat shoes, smiling. Matches cast. Clear."
+    },
+    {
+      "id": "l2-w04-card-grandpa",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-grandpa-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Grandpa (1), an older man with a small mustache. Action: stands (note only). Seen: a man with short hair, a mustache, cardigan over a shirt, trousers, shoes. Matches cast. Clear."
+    },
+    {
+      "id": "l2-w04-card-jam",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-jam-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one jar of jam (1), glass jar with jam, plain lid, small spoon beside it (1). Seen: a jar with a plain lid, a wavy jam surface with fruit pieces inside, and a spoon lying at the bottom right beside the jar. All drawn and clear."
+    },
+    {
+      "id": "l2-w04-card-mom",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-mom-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mom (1), a grown woman, smile. Action: stands (note only). Seen: a woman with wavy shoulder-length hair, a collared long-sleeved blouse, trousers with turned cuffs, shoes, smiling. Matches cast. Small mark: the eye rings could read as glasses."
+    },
+    {
+      "id": "l2-w04-card-ham",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-ham-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole picture: a smooth wavy oval inside a plate rim, with no marks of meat",
+      "notes": "Question page: no. Items: one slice of ham (1), a small plate (1). Seen: a plate with rings and a plain wavy-edged oval in the middle. Plate drawn. The oval has no fat edge, fold, or texture, so at book size it reads as a plate, a lid, or a button, not ham. A child would not know it as ham."
+    },
+    {
+      "id": "l2-w04-card-sister",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-sister-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Lily (1), a girl of five, smile. Action: stands (note only). Seen: a chibi girl with a bob and straight fringe, a small bow at the side, a short-sleeved dress with a collar, socks, shoes, smiling. Matches cast. Clear."
+    },
+    {
+      "id": "l2-w05-card-dress",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-dress-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one dress (1), a little girl's dress, bow at the waist (1). Seen: a puff-sleeved dress with a flared skirt on a hanger, and a bow at the waist. Reads as a girl's dress. All drawn and clear. The hanger is a small extra mark."
+    },
+    {
+      "id": "l2-w04-card-family",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-family-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: six people (6) in one row. Seen: six people, left to right: a woman with wavy hair, a man, a woman with curly hair, a man with a mustache, a small boy with swept hair, a small girl with a bow. All six drawn, whole, in one row, and they match the cast roles and sizes."
+    },
+    {
+      "id": "l2-w05-card-sandwich",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-sandwich-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one sandwich (1), two bread slices, lettuce, a tomato slice, a plate. Seen: a top bread slice, a bottom bread slice, wavy lettuce, a smooth oval tomato slice, and a plate under it. Reads as a sandwich. Small mark: the tomato slice is a plain oval."
+    },
+    {
+      "id": "l2-w06-card-boat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-boat-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one toy boat (1), sail, a patch of water. Seen: a small boat with a hull, a seat, a mast and a large triangle sail, on a wavy patch of water. Reads as a boat. All drawn and clear."
+    },
+    {
+      "id": "l2-w05-card-sad",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-sad-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Ben (1), a sad face, head down. Seen: a chibi boy with messy hair and fringe, a T-shirt, shorts, shoes, a frown, worried eyebrows, eyes looking down, and the head tilted down. Matches cast. Reads as sad."
+    },
+    {
+      "id": "l2-w06-card-tomato",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-tomato-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole fruit: a round body with a long thin stem and one leaf",
+      "notes": "Question page: no. Items: one tomato (1), round body, small stem on top. Seen: a round fruit with a long thin stem and a single leaf at the stem. There is no star-shaped calyx or leafy cap. At book size it reads as an apple, not a tomato."
+    },
+    {
+      "id": "l2-w07-card-car",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-car-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the wheels: only three show (two near, a half-hidden one at the right); the fourth wheel is not drawn",
+      "notes": "Question page: no. Items: one toy car (1), four wheels (4). Seen: a small round car with two windows, two clear wheels on the near side, and a partly hidden wheel at the bottom right. The car reads as a car. The sentence is the word car, but mustShow needs four wheels visible and only three show. May be foreshortening; flagged by the strict mustShow rule."
+    },
+    {
+      "id": "l2-w07-card-mop",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-mop-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one mop (1), long handle, cotton mop head. Seen: a long diagonal handle with a ferrule and a head of many hanging strands. Reads as a mop. All drawn and clear."
+    },
+    {
+      "id": "l2-w07-card-doll",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-doll-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one rag doll (1), yarn hair, dress, two button eyes (2). Seen: a seated doll with a headband and fringe, two side bunches, a short-sleeved dress, two solid black dot eyes, and a smile. Reads as a doll. Small mark: the bunches look a little like bows."
+    },
+    {
+      "id": "l2-w07-card-pot",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-pot-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one cooking pot (1), two handles (2), a lid with a knob (1). Seen: a round pot with a loop handle on each side and a domed lid with a round knob. Reads as a cooking pot. All drawn and clear."
+    },
+    {
+      "id": "l2-w07-card-teddy",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-teddy-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one teddy bear (1), two round ears (2), two button eyes (2). Seen: a seated bear with two round ears, two small round eyes, a nose, a stitched mouth, arms, and foot pads. Reads as a teddy bear. All drawn and clear."
+    },
+    {
+      "id": "l2-w07-card-otter",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-otter-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one otter (1), round face, floats on its back, a patch of water. Seen: a round-faced animal with whiskers lying on its back with paws on its chest, feet, a small tail, and a wavy blob around it. Action: floating (note only). Small marks: the face could read as a hamster; the water is a plain wavy blob."
+    },
+    {
+      "id": "l2-w07-card-train",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-train-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one toy train (1), an engine, a wagon (1), four wheels (4). Seen: an engine with a chimney, a cab, and a round front window, a wagon at the left, two wheels under the engine and two under the wagon, and a part of a fifth wheel at the right. Reads as a toy train. All drawn and clear."
+    }
+  ],
+  "summary": { "files": 30, "pass": 27, "fail": 3 }
+}

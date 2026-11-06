@@ -1,0 +1,3 @@
+card run: cap 1.6 USD
+l2-w04-card-family-m1 line try 3 ok 1600x1600 cost 0.01
+running total muse: 0.7400 USD

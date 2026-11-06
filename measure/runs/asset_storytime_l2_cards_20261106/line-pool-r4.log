@@ -1,0 +1,10 @@
+card run: cap 1.6 USD
+l2-w02-card-astronaut-m1 line try 2 ok 1600x1600 cost 0.01
+l2-w01-card-teacher-m1 line try 2 ok 1600x1600 cost 0.01
+l2-w01-card-goodbye-m1 line try 2 ok 1600x1600 cost 0.01
+l2-w01-card-boy-m1 line try 2 ok 1600x1600 cost 0.01
+l2-w04-card-mom-m1 line try 2 ok 1600x1600 cost 0.01
+l2-w04-card-sister-m1 line try 2 ok 1600x1600 cost 0.01
+l2-w04-card-grandpa-m1 line try 2 ok 1600x1600 cost 0.01
+l2-w04-card-family-m1 line try 2 ok 1600x1600 cost 0.01
+running total muse: 0.7300 USD

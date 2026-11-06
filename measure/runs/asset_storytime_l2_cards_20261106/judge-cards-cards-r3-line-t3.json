@@ -1,0 +1,20 @@
+{
+  "group": "cards-r3-line-t3",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-06T10:47:32Z",
+  "results": [
+    {
+      "id": "l2-w04-card-ham",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-ham-line-t3.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the center of the plate: the inner oval is filled edge to edge with wavy lines, and no separate slice of ham shows",
+      "notes": "Question page: no. Card, no characters. Items: one slice of ham (1), a slice of pink ham (1), a small white plate (1). Action: none. Seen: a round plate with a wide flat rim in three-quarter view; the whole inside of the plate is one oval filled with a few wavy squiggle lines, like a lumpy pie, a bowl of soup, or a map. No slice shape with its own outline, edge, or fat rim sits on the plate. Plate: drawn, visible, reads as a plate. Ham slice: not drawn as a distinct slice, and it reads as a different object (a filled dish or a map) to a young child at book size. Pink color is not applicable in line art (note only). No text, no gray, no line gap. Notes and verdict agree: the slice of ham is missing or reads as a wrong prop."
+    }
+  ],
+  "summary": { "files": 1, "pass": 0, "fail": 1 }
+}

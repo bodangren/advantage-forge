@@ -1,0 +1,96 @@
+measure-adversarial-testing, one bounded round
+track: asset_storytime_l2_cards_20261106
+phase: Phase 1: Card guard, card specs, and fixture
+phase_base_sha: 562c58007d21de4979a198d2c6dff79a84ac6ebc
+role_base_sha: 787e846d3afbc5e945b7d51eac28406a87833f15
+reviewed HEAD at start: 787e846d3afbc5e945b7d51eac28406a87833f15
+resulting_head: 6d80fba03c445f52c1b397ac5438b860efdd0fea
+role model: opencode-go/mimo-v2.6-flash. The role table model (Kimi k3) was skipped, because
+the Kimi weekly window is at 80.08 percent.
+
+Read first: track spec.md, plan.md, test-strategy.md sections 1, 3, 4.4, the row at line 221
+and the row at line 418, scripts/storytime-muse-guards.mjs, scripts/storytime-muse.mjs,
+scripts/storytime-judge-batch.mjs, tests/storytime-card-guards.test.ts. Reviews read:
+review-a-787e846.json and review-b-787e846.json. Their probes were not repeated.
+
+Attack surfaces, from test-strategy line 32: the cap boundary and the batch projection, the
+time formats of cost rows, the outDir match, the mixed call, the cost-row parse, and the pool
+re-check before each call.
+
+Read-only probes before the test file:
+
+- adv-probe.mjs. spendGuard at 1.59 gives ok, at 1.60 and 1.61 gives refused. At spend 1.59 a
+  color call projects 1.6100 and is refused, one line call projects 1.6000 and is allowed. At
+  1.60 and 1.61 both commands are refused by the spend check. Float sums: 158 rows give
+  1.5800000000000012, 159 rows give 1.5900000000000012, 160 rows give 1.6000000000000012.
+  Cost-row parse: a negative cell is kept, a blank cell reads 0, extra columns do not move the
+  cost, a header-only file holds no rows, a row with a blank first cell is dropped. Time
+  formats: not-a-time, an empty cell, a lowercase z and a trailing space each give 0 tries; a
+  date-only time and a space-separated time count. classifyOutDir: the card folder, a trailing
+  slash, a trailing /. , ./, and three .. spellings that resolve to the card folder give card;
+  cards, cards/muse/elements, cards/MUSE, an absolute outside path and an empty outDir give
+  invalid; Cards/muse and a week folder give restart; no outDir gives restart.
+- adv-probe2.mjs, temporary repository with both scripts copied and an empty HOME. A card call
+  at spend 1.60 exits 3 with refused: spend 1.6000 USD plus 0.01 over cap 1.6. At spend 1.50 it
+  prints card run: cap 1.6 USD and the notice at 0.8, then exits 1 with ENOENT, so no provider
+  call can start. A mixed call exits 3 with the mix message. A restart scan over a unit root
+  that holds Cards, cards and w01 gives restart spend 1.2, so the Cards folder is counted by the
+  restart scan and a Cards spelling is a restart call. A header without a time column parses a
+  0.9 cost row yet spendTotal reads 0 and countTries reads 0. runGuards on an empty ctx list
+  gives run restart. --tries 2.5, abc and -5 are not refused, and 2.5 is not refused at spend
+  1.57.
+- adv-probe5.mjs. A folder symlink named cards to an outside folder that holds 0.90 gives card
+  spend 0.90, so the card scan follows the link. A file symlink on the real card costs file
+  also gives 0.90. A folder symlink named w10 gives restart spend 0, which is RB2-2. A unit root
+  that holds w01, Cards, CARDS, cards2, card and cards gives restart children CARDS, Cards,
+  card, cards2, w01 and card scan child cards.
+- adv-probe4.mjs. With an empty env file present, an over-cap card call exits 3 and prints no
+  no-key line, so the no-key assertion of a refusal test can fail.
+
+Test file: tests/storytime-card-adversarial.test.ts, 20 tests, ids ADVC1 to ADVC20. Temp roots
+only, under os.tmpdir(). A CLI probe copies scripts/storytime-muse.mjs and
+scripts/storytime-muse-guards.mjs into a temporary repository, symlinks node_modules, and sets
+HOME to a temporary folder that holds one empty env file. No provider call, no network, no read
+of the real Workbooks env file, no write to a real out/ path.
+
+Runs:
+
+- Targeted run, first attempt: heavy-run printed heavy-run: lock wait over 600 s with holder
+  PID 2752411, then ran. Test Files 1 failed (1), Tests 2 failed | 18 passed (20). Both failures
+  were test bugs: ADVC2 asserted spend at or below 1.60 for a seed that starts at 1.61, and
+  ADVC9 expected invalid for Cards/muse/elements, which classifies restart because the restart
+  scan reads the elements folder of every child except cards. Both expectations were corrected.
+- Targeted run, second attempt: Test Files  1 passed (1), Tests  20 passed (20), exit 0.
+- TYPECHECK_COMMAND: tsc exit: 2, tsc errors total: 38, owned tsc errors: 0. The log holds no
+  line for tests/storytime-card-adversarial.test.ts.
+- PROJECT_TESTS, 11 files: Test Files  11 passed (11), Tests  155 passed (155), exit 0.
+  155 = 135 + 20.
+- Commit: git add -- tests/storytime-card-adversarial.test.ts, then git commit -m
+  'test(storytime_l2_cards): adversarial round' -- tests/storytime-card-adversarial.test.ts.
+  git show --stat lists one file with 689 insertions. git diff --name-only 787e846d..HEAD lists
+  the same one file.
+
+Findings, ADV-N1 to ADV-N6, all non-blocking. ADV-N1 is Major: the section 6 allowed set of
+test-strategy.md names only the guards, specs and fixtures test files, so commit 6d80fba0 sits
+outside the set and the phase-acceptance allowed-set check counts one own file outside it. The
+owner is the strategy, not Green. The five Nits are: section 4.3 still claims exact string
+equality for the outDir match; the CostRow declaration names three fields the parser does not
+fill; --tries is not validated as an integer; the CG3 single-owner scan uses an equals-only
+pattern on two files; and a header without a time column fails open, which extends RB-4.
+
+Known items pinned by test and not reported as new findings: RB2-1 (ADVC18), RB2-2 (ADVC12),
+RB2-4 (ADVC10), RB-4 (ADVC15, ADVC16).
+
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 1: Card guard, card specs, and fixture
+commits: 6d80fba0
+tests_run: 'HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c ''./node_modules/.bin/vitest run tests/storytime-card-adversarial.test.ts --maxWorkers=1'' -> Test Files  1 passed (1), Tests  20 passed (20), exit 0'; 'TYPECHECK_COMMAND -> tsc exit: 2, tsc errors total: 38, owned tsc errors: 0'; 'PROJECT_TESTS 11 files -> Test Files  11 passed (11), Tests  155 passed (155), exit 0'
+files_changed: tests/storytime-card-adversarial.test.ts; measure/runs/asset_storytime_l2_cards_20261106/adversarial-testing-787e846.json; measure/runs/asset_storytime_l2_cards_20261106/adversarial-testing-787e846.log
+plan_updates: none. plan.md stays untouched by this role.
+known_failures: none. ADV-N1 to ADV-N6 are non-blocking findings in the audit JSON.
+handoff: No Blocker. The cap boundary, the time formats, the outDir match, the mixed call, the cost-row parse, and the pool re-check all hold. Before phase acceptance, widen the section 6 allowed set to tests/storytime-card-[a-z-]+\.test\.ts, or add a residual-risk row, so commit 6d80fba0 counts as allowed. The five Nits route to their owners as listed in the audit JSON.
+dispositions: none
+END_MEASURE_AGENT_RESULT

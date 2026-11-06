@@ -1,0 +1,24 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 1 remediation round 4 (review-a RA2-1)
+baseline_sha: 562c58007d21de4979a198d2c6dff79a84ac6ebc
+role_base_sha: 11ed8c051d43c91789ec4441cd7efb0dcab4f4ab
+resulting_head: 5bdf3075a24a275a8bc96584222b5c72cbf59691
+commits: |
+  3206662f959ecef24848dc97b67483b4710d75ba — requested Red test commit.
+  5bdf3075a24a275a8bc96584222b5c72cbf59691 — plan evidence commit.
+tests_run: |
+  RED command exited 1: `Test Files  1 failed (1)`, `Tests  1 failed | 14 passed (15)`. Only CG15
+  failed, with no load error. Its six assertion failures show that `cards/muse/elements` classifies
+  as `restart`; a 5.00 USD elements row is allowed with code 0 and no refusal message; the CLI then
+  reaches key reading, exits 1, and does not name the invalid outDir.
+  Typecheck exited 2 with `owned tsc errors: 0` and 38 total project diagnostics. The diagnostics
+  remain outside the owned Storytime paths.
+files_changed: `tests/storytime-card-guards.test.ts` and the track plan. This requested run log remains uncommitted.
+plan_updates: Added the round 4 note with Red commit SHA, CG15 result, and additive strategy counts. No task markers changed.
+known_failures: CG15 still fails against the current implementation for the card elements path and CLI refusal. All 14 earlier guard tests pass. The full typecheck retains 38 non-owned errors.
+handoff: Green should update classification so only the exact resolved card folder below `cards/` remains valid. Restart week paths must stay restart calls. No production code changed in this Red role.
+dirty_path_classification: `measure/generated/` paths are generated and ignorable. Other pre-existing dirty paths are unrelated user work and remain untouched.
+END_MEASURE_AGENT_RESULT

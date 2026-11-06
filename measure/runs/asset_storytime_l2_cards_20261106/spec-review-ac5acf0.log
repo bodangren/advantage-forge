@@ -1,0 +1,105 @@
+# Spec review role log
+
+Track: asset_storytime_l2_cards_20261106
+Phase: track setup (Gate S)
+Audited head: ac5acf0b92637f02c8cbd9481b6b067f9d92a589
+Reviewer: measure-spec-review on opencode-go/deepseek-v4.1-flash
+Author model: claude-code/claude-sonnet-5-5#high
+Round: 1
+Verdict: fail (one Blocker)
+
+Inputs read: measure/tracks/asset_storytime_l2_cards_20261106/spec.md, plan.md,
+metadata.json, index.md, spec-review.md; the standard at
+~/.agents/skills/measure/references/spec-review.md; the orchestrator contract at
+~/.agents/skills/measure-orchestrator/references/contracts.md; the Workbooks card sources
+(read only); the referenced scripts and tests.
+
+## What this track proposes
+
+The track draws the 31 card rows that list v7 adds to the Storytime Level 2 print list. Each
+card needs a color picture and a line-art picture, so the track delivers 62 files at 1500 x 1500.
+It reuses the approved Storytime Muse path, the frozen Sonnet judge kit, and the week delivery
+form, and it adds no new kit. It also moves the T180 version 3 list fixture from
+/tmp/opencode/wb-shadow into the repository. The spend cap is 1.60 USD, the delivery is model
+evidence only, and Workbooks checks the cards after delivery.
+
+## How the current system works, per this spec
+
+The closed unit 1 track holds the Muse path: scripts/storytime-muse.mjs calls meta/muse-image
+through OpenRouter and writes the print file to the spec outDir. scripts/storytime-muse-guards.mjs
+reads every costs.tsv below out/storytime/l2/unit1/ and enforces 3 tries per id and kind, a
+1.00 USD cap since 2026-11-04T07:54:00Z, and a 0.50 USD report point.
+scripts/storytime-judge-batch.mjs builds judge batches for the A-48 specs at a 360 px long side for
+a card. The A-48 delivery form is the StorytimeManifest object in src/storytime/book-pictures.ts,
+with the MANIFEST.txt form of the week handoff. Two tests read the version 3 list from
+/tmp/opencode/wb-shadow, and that path is not in git.
+
+## Checks run
+
+Zoom-out. The scope matches the owner order, with no speculative feature and no premature
+optimization. The spec reuses the Muse path, the guard module, the judge kit, and the delivery
+form, and it cites each of them by file and symbol. New logic sits in the card spec folder, the
+guard module, and the card tests. The specification stays at the requirement level.
+
+Zero-decision. The card count, the file names, the size, the aspect, the prompt sources, the try
+limits, the cap, the report point, the delivery paths, the manifest form, and the Drive folder are
+all named. The judge-batch card input shape stays open (F1), and the owner of the card start time
+is unnamed (F2). The absent Workbooks checkout edge case is undefined (F3).
+
+Fact checks. 227 list rows, 31 card rows, and the first 196 rows are non-card. All 13 reference
+paths exist. The spec-file form matches docs/storytime/l2-unit1/a48/l2-w08-check-row-drum.json.
+The gate controls in calibration-set.json carry expected fail. The guard constants and the
+scanCostFiles scope match the spec, so cards/muse/ falls inside the restart scan as the risk
+section states. longSideOf returns 360 for a card. SPEC_DIR and RESTART_START are fixed, and
+parseArgs has no flag for a spec folder or a start time. The orchestrator confirmed the four input
+SHA-256 values with sha256sum on 2026-11-06; the reviewer could not run sha256sum because the
+shell tool is denied in this role.
+
+Note. measure/anti-patterns.md does not exist in this repository, and no file of that name
+exists. The reviewer ran the standard's checks without it, per the orchestrator ruling of
+2026-11-06.
+
+## Findings
+
+- F1 [Blocker] plan.md Task 2: The plan says the judge batch reads the card specs and counts card
+  tries from the card start time, but it names no input shape for that.
+  scripts/storytime-judge-batch.mjs:36 fixes SPEC_DIR to the A-48 folder, line 43 fixes
+  RESTART_START, and parseArgs (lines 183-198) has no flag for a spec folder or a start time.
+  Rationale: The implementer must choose between a new flag, an environment variable, or an added
+  default folder. That is an API and CLI shape choice, so Red and Green can pick differently.
+- F2 [Major] spec.md Tries and spend: The spec says the card run start time is a constant that
+  Task 2 sets, but it names no single owner for the value. Plan Task 2 also says the judge batch
+  counts card tries from the card start time. Rationale: A second copy of the constant in
+  scripts/storytime-judge-batch.mjs (RESTART_START, line 43) can drift from the guard value, and
+  the try count then reads the wrong rows. Name one exported constant and the module that imports
+  it.
+- F3 [Major] spec.md FR-3 and plan.md Task 3: The card spec test reads
+  /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json, and the plan defines a
+  SHA mismatch as a hard failure. The plan does not define the case where the Workbooks checkout
+  is absent. Rationale: No test in tests/ reads that absolute path today, so the new test fails a
+  full suite run on every checkout without Workbooks. Define the absent-file edge case.
+- F4 [Nit] plan.md Task markers: Every work task uses [b], and the doctor counts only [ ], [~],
+  and [x]. Rationale: A role that reads the marker list sees no open work task for this track.
+
+## Recommendations
+
+1. Name the judge-batch card input in plan.md Task 2: the flag or config that points at
+   docs/storytime/l2-unit1/cards, and the flag or config that sets the card start time.
+2. Name one owner for the card start time constant in spec.md Tries and spend, and name the
+   module that imports it.
+3. Define the absent Workbooks checkout case in plan.md Task 3. A missing file and a SHA mismatch
+   need not take the same path.
+4. Do not change the [b] markers unless another role reads them as a task list.
+
+MEASURE_AGENT_RESULT
+role: spec-review
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: track setup
+commits: none
+tests_run: none (the shell tool is denied in this role; no test command ran)
+files_changed: measure/runs/asset_storytime_l2_cards_20261106/spec-review-ac5acf0.json, measure/runs/asset_storytime_l2_cards_20261106/spec-review-ac5acf0.log
+plan_updates: none (report-only role)
+known_failures: F1 Blocker (judge-batch card input shape), F2 Major (single owner of the card start time), F3 Major (absent Workbooks checkout edge case), F4 Nit ([b] markers)
+handoff: Verdict fail with retry_recommendation escalate_human. F1 is a Blocker: plan.md Task 2 leaves the judge-batch card input shape (spec folder and card start time) to the implementer, and scripts/storytime-judge-batch.mjs:36 and :43 are fixed while parseArgs has no such flag. The author can clear it with a small plan FIX that names the flag and the constant owner. F2 to F4 are Major and Nit findings. The scope, the 31 card rows, the 62 files, the delivery and handoff form, the Drive backup, the spend stop, the PM report, and the T180 fixture move all match the owner order. The four input SHA-256 values are orchestrator evidence of 2026-11-06 and match the spec. measure/anti-patterns.md is absent in this repository and the review ran without it. No commit was made and no file outside measure/runs/asset_storytime_l2_cards_20261106/ was edited.
+END_MEASURE_AGENT_RESULT

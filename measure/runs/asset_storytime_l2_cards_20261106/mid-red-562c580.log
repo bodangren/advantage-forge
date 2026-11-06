@@ -1,0 +1,15 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 1: Card guard, card specs, and fixture
+baseline_sha: 562c58007d21de4979a198d2c6dff79a84ac6ebc
+role_base_sha: 562c58007d21de4979a198d2c6dff79a84ac6ebc
+resulting_head: 7d1cbdd5bf8c514d2e8bd3278cbead8ed33ef484
+commits: 7d1cbdd5bf8c514d2e8bd3278cbead8ed33ef484 (Red tests, fixtures, constants, and plan)
+tests_run: RED_TEST_COMMAND exited 1; `Test Files  2 failed | 1 passed (3)`; `Tests  11 failed | 15 passed (26)`. The fixtures test passed all 5 checks. Before the move, the fixture test had 4 failures and 1 pass (exit 1); after the move it passed 5 (exit 0). Stage-check passed 3 tests through `heavy-run.sh`. The static path scan found 0 hits. Both fixture hashes matched their pins.
+files_changed: `tests/storytime-card-guards.test.ts`, `tests/storytime-card-specs.test.ts`, `tests/storytime-card-fixtures.test.ts`, `tests/fixtures/storytime/pictures-v3.json`, `tests/fixtures/storytime/pictures-v7.json`, `tests/storytime-book-pictures.test.ts`, `tests/storytime-stage-check.test.ts`, and the track plan. This log is uncommitted role evidence.
+plan_updates: Marked Tasks 1 to 3 [~]. Recorded fixture before/after evidence, SHA values, stage-check result, static path scan, Red command totals, and expected Green fixes.
+known_failures: CG1 (CARD_RUN export); CG3 (constant ownership and caller imports); CG4 (card cap selection); CG8 (card-only cost scope); CG10 (mixed-call refusal before key read); CG11 (--cards parsing and batch behavior); CS3 (31 spec file set); CS4 (spec fields); CS5 (prompt rules); CS6 (reference map and paths); CS7 (Nan, teddy, and car differences). Green owns all 11 failures. No load, syntax, or module-resolution errors occurred.
+handoff: Task 1 fixture copies are complete and pass. Green adds the card guard, its caller wiring and judge flag, plus the 31 card specs. Existing unrelated dirty work remains untouched.
+END_MEASURE_AGENT_RESULT

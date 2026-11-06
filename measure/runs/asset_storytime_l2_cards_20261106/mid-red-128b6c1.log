@@ -1,0 +1,22 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 1 remediation round 3 (review-b F1 to F3)
+baseline_sha: 562c58007d21de4979a198d2c6dff79a84ac6ebc
+role_base_sha: 128b6c125b625a5920d5baedbe524fb1b37fc02c
+resulting_head: 8a567fb9a47134527e076855f2b891e37b312d2b
+commits: |
+  96a581a001a990243f5015e71a384e26a518ecf9 — requested Red commit for CG12 to CG14.
+  8a567fb9a47134527e076855f2b891e37b312d2b — plan evidence commit.
+tests_run: |
+  RED command exited 1: `Test Files  1 failed (1)`, `Tests  3 failed | 11 passed (14)`. Only CG12,
+  CG13, and CG14 failed. The failures were assertions, not load errors. The heavy runner printed a
+  lock-wait notice while the test process completed; the command result was 1, not 75.
+  Typecheck exited 2 with `owned tsc errors: 0` and 38 total project diagnostics. The 38 diagnostics
+  remain outside the owned Storytime paths.
+files_changed: `tests/storytime-card-guards.test.ts` and the track plan. This requested run log remains uncommitted.
+plan_updates: Task 2 stays [~]. Added the remediation note with Red test commit SHA, failing ids, totals, and additive strategy counts. No task was marked [x].
+known_failures: CG12 proves card rows leak into restart spend; CG13 proves unsupported outDirs pass and trailing-slash card paths classify as restart; CG14 proves batch margin is not projected across calls. Existing non-owned typecheck diagnostics remain.
+handoff: Green should fix only review-b F1 to F3. No production code changed in this Red role. Generated `measure/generated/` changes were classified as generated; other pre-existing dirty paths remain unrelated user work and untouched.
+END_MEASURE_AGENT_RESULT

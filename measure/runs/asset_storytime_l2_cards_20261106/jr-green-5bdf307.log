@@ -1,0 +1,46 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 1: Card guard, card specs, and fixture
+phase_base_sha: 562c58007d21de4979a198d2c6dff79a84ac6ebc
+role_base_sha: 5bdf3075a24a275a8bc96584222b5c72cbf59691
+resulting_head: 787e846d3afbc5e945b7d51eac28406a87833f15
+commits: |
+  91b2a1ca (fix: guards, only the exact card folder is valid below `cards/`),
+  787e846d (plan evidence, Task 2 SHA 91b2a1ca).
+dispositions: F6=FIX
+tests_run: |
+  GREEN_TEST_COMMAND after the fix:
+  `HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-card-guards.test.ts tests/storytime-card-specs.test.ts tests/storytime-card-fixtures.test.ts tests/storytime-muse-attempts.test.ts tests/storytime-judge-batch.test.ts tests/storytime-stage-check.test.ts --maxWorkers=1'`
+  exit 0, `Test Files  6 passed (6)`, `Tests  71 passed (71)`, no FAIL line, no skip.
+  The guards file alone passed 15 of 15, so CG15 passes and CG1 to CG14 stay green.
+  TYPECHECK_COMMAND: tsc exit 2, `tsc errors total: 38`, `owned tsc errors: 0`.
+
+  Mutation check on the scratch copy `/tmp/opencode/mut-r4`, guards file alone: MF4 (classify
+  `cards/muse/elements` as restart again by removing the `cards` guard) failed `CG15` with
+  `Tests  1 failed | 14 passed (15)`. The unmutated copy passed 15 of 15, and the restored copy
+  passed 15 of 15.
+
+  Contract checks: no file under `tests/` changed since `5bdf3075`
+  (`git diff --name-only 5bdf3075..HEAD -- tests` printed nothing); the restart and judge-batch
+  tests still pass unchanged; no `wb-shadow` hit; the start-time literal still has one owner.
+files_changed: |
+  `scripts/storytime-muse-guards.mjs` (classifyOutDir only; the `.d.mts` type is unchanged) and the
+  track `plan.md`. No file under `tests/`. No `out/` write. Spend 0.00 USD. No Muse or provider call.
+fixes: |
+  F6: `classifyOutDir` returns `invalid` for every resolved path below the child folder `cards`
+  except the exact resolved card folder `out/storytime/l2/unit1/cards/muse` (a trailing slash still
+  resolves to the card folder). `runGuards` refuses such a spec with exit 3 before `readKey` and
+  before any cost scan, and the message names the raw outDir. A week, cover, or `elements` path of
+  another child stays `restart`.
+plan_updates: |
+  Task 2 is `[x]` with `91b2a1ca` on its first line, plus the round 4 evidence and the round 4
+  gate. Tasks 1 and 3 keep their `[x]` markers and first-line SHAs. The "Phase 1 gates" item stays
+  `[b]` with `deferred:measure-spec-review`.
+handoff: |
+  F6 is fixed at `787e846d`. Re-review should read the `classifyOutDir` rule: below `cards` only the
+  exact card folder is valid, so no card subfolder can reach an unscanned cost file. The adversarial
+  surface is a card subfolder that names the element file, plus a trailing slash on the card folder.
+  The measured results carry over to `787e846d`: the only file after `91b2a1ca` is the track plan.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,290 @@
+{
+  "group": "cards-r1-color",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-06T10:23:14Z",
+  "results": [
+    {
+      "id": "l2-w01-card-hello",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-hello-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), raised open hand (1), smile. Action: wave (note only). Seen: Nan with two buns and red bands, orange star shirt, red shorts, white shoes; her left-side hand raised open; a gentle closed smile. All drawn and clear. The smile is small, not big: note only."
+    },
+    {
+      "id": "l2-w01-card-girl",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-girl-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), a five-year-old girl, standing, smiling. Seen: Nan standing front view with a gentle smile. Matches cast and clear."
+    },
+    {
+      "id": "l2-w01-card-boy",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-boy-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1), a boy, standing, smiling. Seen: boy with messy black hair and tufts, green T-shirt, brown cargo shorts, brown sandals, smiling. Matches cast."
+    },
+    {
+      "id": "l2-w01-card-goodbye",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-goodbye-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the school bag on Nan's back: only faint orange slivers show at both sides of the torso, same color as the shirt",
+      "notes": "Question page: no. Items: Nan (1), raised open hand (1), big smile, school bag on her back (1). Action: wave (note only). Seen: Nan waving with a gentle smile; behind her torso only faint orange shapes at the sides. No strap, no clear bag shape. The bag does not read as a school bag to a child. Nan matches the cast."
+    },
+    {
+      "id": "l2-w01-card-teacher",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-teacher-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Teacher Kim (1), a grown woman, standing, smiling. Seen: woman with dark-brown hair in a low ponytail, green cardigan, cream blouse, navy trousers, brown flats, gentle smile. Matches cast."
+    },
+    {
+      "id": "l2-w02-card-astronaut",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w02-card-astronaut-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: astronaut (1), white space suit, open visor, friendly smiling face. Seen: one figure in a white suit and helmet, the visor raised above the face, a smiling face visible. All clear."
+    },
+    {
+      "id": "l2-w03-card-cap",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w03-card-cap-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: cap (1), red, curved brim, large in the middle. Seen: one red cap with a curved brim and a top button, filling the picture. Reads as a cap."
+    },
+    {
+      "id": "l2-w02-card-fan",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w02-card-fan-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: hand fan (1), round folded paper face, blue handle. Seen: one round pleated pale-blue fan with a blue handle. Reads as a hand fan."
+    },
+    {
+      "id": "l2-w03-card-pineapple",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w03-card-pineapple-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: pineapple (1), spiky green crown, golden-yellow skin. Seen: one pineapple with a green crown and yellow diamond-pattern skin. Clear."
+    },
+    {
+      "id": "l2-w03-card-sheep",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w03-card-sheep-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: sheep (1), round woolly body, four short legs. Seen: one white woolly sheep; four legs show (two front, two back). Clear."
+    },
+    {
+      "id": "l2-w04-card-brother",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-brother-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), a boy of eight, standing, smiling. Seen: chibi boy with dark-brown side-swept hair, plain navy T-shirt, khaki shorts, red shoes, small smile. Matches cast."
+    },
+    {
+      "id": "l2-w04-card-dad",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-dad-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), a man, standing, smiling. Seen: man with short dark-brown side-parted hair, mustard polo, dark-blue jeans, brown shoes, small smile. Matches cast."
+    },
+    {
+      "id": "l2-w04-card-grandma",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-grandma-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Grandma (1), older woman with silver-gray hair, standing, smiling. Seen: curly silver-gray hair, rose-red cardigan, cream blouse, long dark-blue skirt, brown flats, smile. Matches cast."
+    },
+    {
+      "id": "l2-w04-card-grandpa",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-grandpa-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Grandpa (1), older man, white hair, small white mustache, standing, smiling. Seen: white hair, white mustache, green cardigan over white shirt, brown trousers and shoes, smile. Matches cast."
+    },
+    {
+      "id": "l2-w04-card-jam",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-jam-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: jar of jam (1), glass jar, red strawberry jam, plain lid, small spoon beside. Seen: one clear glass jar full of red jam with fruit pieces, a plain silver lid, a small spoon lying at the front right. All drawn and clear."
+    },
+    {
+      "id": "l2-w04-card-mom",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-mom-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mom (1), a woman, standing, smiling. Seen: wavy shoulder-length dark-brown hair, coral-pink collared blouse, blue jeans, white sneakers, smile. Matches cast."
+    },
+    {
+      "id": "l2-w04-card-ham",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-ham-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: slice of ham (1), pink, small white plate (1). Seen: one thick round pink slice with a pale rim on a white plate. Reads as a slice of ham on a plate. Note: the slice is thick and glossy, so it is a little simple, not a fail."
+    },
+    {
+      "id": "l2-w04-card-sister",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-sister-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Lily (1), a girl of five, standing, smiling. Seen: dark-brown bob with fringe, lilac bow at the side, lilac dress with white collar, white socks, pink shoes, small smile. Matches cast."
+    },
+    {
+      "id": "l2-w05-card-dress",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-dress-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: dress (1), yellow, red bow at the waist. Seen: one yellow short-sleeved dress on a white hanger with a red bow at the waist. Clear."
+    },
+    {
+      "id": "l2-w04-card-family",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-family-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: six people: Mom, Dad, Grandma, Grandpa, Tom, Lily, in one row. Seen: six figures in one row from left: Mom, Dad, Grandma, Grandpa, Tom, Lily. Each matches the cast; none cut by the frame. The two children are small and a little in front: note only."
+    },
+    {
+      "id": "l2-w05-card-sandwich",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-sandwich-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: sandwich (1), two bread slices, green lettuce, tomato slice, small white plate. Seen: two bread slices with green lettuce and a red tomato slice between them, on a white plate. All clear."
+    },
+    {
+      "id": "l2-w06-card-boat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-boat-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: toy boat (1), small wooden boat, white sail, patch of calm blue water. Seen: one wooden boat with a white sail on a patch of blue water. Clear."
+    },
+    {
+      "id": "l2-w05-card-sad",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-sad-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Ben (1), a sad face, head down. Seen: chibi boy with messy light-brown hair, light-blue T-shirt, dark-blue shorts, grey shoes; drooping eyebrows, eyes cast down, a downturned mouth. Reads as sad. The head is only a little lowered: note only. Matches cast apart from the sad face."
+    },
+    {
+      "id": "l2-w06-card-tomato",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-tomato-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: tomato (1), round red, small green stem on top. Seen: one round red tomato with a green stem and a small leaf. Clear."
+    },
+    {
+      "id": "l2-w07-card-car",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-car-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: toy car (1), small red car, four black wheels. Seen: one red toy car; two wheels on the near side, one front wheel on the far side, and a rear far wheel partly seen. Four black wheels show. Reads as a car."
+    },
+    {
+      "id": "l2-w07-card-mop",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-mop-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: mop (1), long wooden handle, white cotton mop head. Seen: one long wooden handle with a white string mop head. Clear."
+    },
+    {
+      "id": "l2-w07-card-doll",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-doll-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: rag doll (1), yellow yarn hair, red dress, two black button eyes. Seen: one sitting doll with yellow yarn fringe and two bunches, cream face, two black eyes, a stitched smile, red dress. Matches the Pam doll cast."
+    },
+    {
+      "id": "l2-w07-card-pot",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-pot-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: cooking pot (1), two handles, lid with a knob. Seen: one mint-green pot with a handle at each side and a lid with a round knob. Clear."
+    },
+    {
+      "id": "l2-w07-card-teddy",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-teddy-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: teddy bear (1), brown, two round ears, two small button eyes. Seen: one brown sitting bear with two round ears, two small dark eyes, a nose, a stitched mouth. Clear."
+    },
+    {
+      "id": "l2-w07-card-otter",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-otter-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: otter (1), small brown otter, round face, floats on its back, patch of calm blue water. Action: floating (note only). Seen: one brown otter lying on its back with its paws up, on a patch of blue water. Clear."
+    },
+    {
+      "id": "l2-w07-card-train",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-train-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: toy train (1), green, red wagon (1), four small wheels. Seen: one green toy engine with a yellow front light and a chimney, pulling one open red wagon. Four wheels show on the near side (two each) and one far wheel. Reads as a toy train."
+    }
+  ],
+  "summary": { "files": 31, "pass": 30, "fail": 1 }
+}

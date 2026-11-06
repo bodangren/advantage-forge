@@ -1,0 +1,119 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: partial
+track: asset_storytime_l2_cards_20261106
+phase: Phase 2: Card pictures and delivery
+phase_base_sha: cf6fb8dbaff9231aacf87aa6adffe3c0ab727b79
+role_base_sha: e872a8aae8a158c53c4b1da4c959bb4025e3b9ab
+resulting_head: a0969f77c149042fb6fe140508f85b675e9c72be
+commits: |
+  a0969f77 (measure(storytime_l2_cards): Phase 2 round 2, line try 1 and judge batch).
+dispositions: none
+judge_results_read: |
+  calibration: measure/runs/asset_storytime_l2_cards_20261106/calibration-record.json.
+  Both controls fail (2 files, 0 pass, 2 fail), class wrong-or-missing-prop each.
+  Time 2026-11-06T10:20:40Z, before the first card result. Task 4 is complete.
+  color try 1: measure/runs/asset_storytime_l2_cards_20261106/judge-cards-cards-r1-color.json.
+  31 files, 30 pass, 1 fail. Time 2026-11-06T10:23:14Z.
+  The fail is l2-w01-card-goodbye, class wrong-or-missing-prop, where: the school bag on Nan's
+  back shows only faint orange slivers at both sides of the torso, the same color as the shirt.
+  A second judge runs on that file. This round did not touch the goodbye card.
+pool: |
+  spend before pool: 0.31
+  command: node scripts/storytime-muse.mjs line docs/storytime/l2-unit1/cards/l2-w01-card-hello.json
+  docs/storytime/l2-unit1/cards/l2-w01-card-girl.json
+  docs/storytime/l2-unit1/cards/l2-w01-card-boy.json
+  docs/storytime/l2-unit1/cards/l2-w01-card-teacher.json
+  docs/storytime/l2-unit1/cards/l2-w02-card-astronaut.json
+  docs/storytime/l2-unit1/cards/l2-w03-card-cap.json
+  docs/storytime/l2-unit1/cards/l2-w02-card-fan.json
+  docs/storytime/l2-unit1/cards/l2-w03-card-pineapple.json
+  docs/storytime/l2-unit1/cards/l2-w03-card-sheep.json
+  docs/storytime/l2-unit1/cards/l2-w04-card-brother.json
+  docs/storytime/l2-unit1/cards/l2-w04-card-dad.json
+  docs/storytime/l2-unit1/cards/l2-w04-card-grandma.json
+  docs/storytime/l2-unit1/cards/l2-w04-card-grandpa.json
+  docs/storytime/l2-unit1/cards/l2-w04-card-jam.json
+  docs/storytime/l2-unit1/cards/l2-w04-card-mom.json
+  docs/storytime/l2-unit1/cards/l2-w04-card-ham.json
+  docs/storytime/l2-unit1/cards/l2-w04-card-sister.json
+  docs/storytime/l2-unit1/cards/l2-w05-card-dress.json
+  docs/storytime/l2-unit1/cards/l2-w04-card-family.json
+  docs/storytime/l2-unit1/cards/l2-w05-card-sandwich.json
+  docs/storytime/l2-unit1/cards/l2-w06-card-boat.json
+  docs/storytime/l2-unit1/cards/l2-w05-card-sad.json
+  docs/storytime/l2-unit1/cards/l2-w06-card-tomato.json
+  docs/storytime/l2-unit1/cards/l2-w07-card-car.json
+  docs/storytime/l2-unit1/cards/l2-w07-card-mop.json
+  docs/storytime/l2-unit1/cards/l2-w07-card-doll.json
+  docs/storytime/l2-unit1/cards/l2-w07-card-pot.json
+  docs/storytime/l2-unit1/cards/l2-w07-card-teddy.json
+  docs/storytime/l2-unit1/cards/l2-w07-card-otter.json
+  docs/storytime/l2-unit1/cards/l2-w07-card-train.json --from 1 --tries 1 --concurrency 4
+  flags: --from 1 --tries 1 --concurrency 4
+  exit: 0
+  ok lines: 30
+  failed lines: 0
+  error lines: 0
+  refused lines: 0
+  log: measure/runs/asset_storytime_l2_cards_20261106/line-pool-r1.log
+costs: |
+  file: out/storytime/l2/unit1/cards/muse/costs.tsv
+  header: time row version kind inputs output size usage_cost note
+  rows: 61
+  spend usd: 0.61
+  highest row cost: 0.01
+  rows above 0.03 USD: 0
+  new rows in this round: 30 line rows, each with note ok
+  color rows: 31, line rows: 30
+  ids without an ok line row: none
+  line rows with a note other than ok or a cost other than 0.01: 0
+spend_record: |
+  measure/runs/asset_storytime_l2_cards_20261106/spend-record.txt
+  calls: 61
+  spend usd: 0.61
+  report point 0.80 reached: no
+batches: |
+  color try 1: docs/storytime/l2-unit1/judge/prod/cards-r1-color.json (31 entries, from round 1)
+  line try 1: docs/storytime/l2-unit1/judge/prod/cards-r1-line.json
+  line try 1 entries: 30, all kind line, all use card
+  judge copies: out/storytime-review/judge/prod/<id>-line-t1.png, 30 files at 360 x 360 px
+  judge batch log: measure/runs/asset_storytime_l2_cards_20261106/judge-batch-r1-line.log
+operating_rules: |
+  a: the recorded card spend was 0.31 USD, below 1.20 USD, so the pool ran with --concurrency 4.
+  The log names the spend before the pool and the flags of the pool.
+  b: after the pool every new row of out/storytime/l2/unit1/cards/muse/costs.tsv was read.
+  highest row cost: 0.01. No row is above 0.03 USD, so the maker did not stop.
+  c: the output of the run was read for a refusal line. refused lines: 0.
+  d: the line pool used --tries 1. The value is 1, so it is inside the set 1, 2, 3.
+  e: nobody edited costs.tsv. Its header holds a time column and the usage_cost column.
+  f: the spend is 0.61 USD, below the report point of 0.80 USD. The run continued. The maker
+  stops only at the cap of 1.60 USD.
+plan_updates: |
+  Task 4 is [x] with (e872a8aa) on its first line and the evidence path
+  measure/runs/asset_storytime_l2_cards_20261106/calibration-record.json. Both controls fail.
+  Task 6 is [~] and its deferred field is gone. No other plan item changed.
+files_changed: |
+  Committed in a0969f77: measure/tracks/asset_storytime_l2_cards_20261106/plan.md and
+  docs/storytime/l2-unit1/judge/prod/cards-r1-line.json.
+  Written in the run folder and not committed: spend-record.txt, line-pool-r1.log,
+  judge-batch-r1-line.log, and this log.
+  No PNG file, no file under out/, and no code file changed. The judge kit is unchanged.
+tasks: |
+  Flipped to [x]: Task 4, with the calibration record of the two failing controls.
+  Flipped to [b]: none.
+  Still [~]: Task 5 and Task 6. Task 5 has no judged color picture for the goodbye card, and
+  Task 6 has no judged line picture yet, so no card is delivered.
+handoff: |
+  The orchestrator runs the line judge batch
+  docs/storytime/l2-unit1/judge/prod/cards-r1-line.json with its 30 files. The maker did not rate
+  any picture and did not run a judge.
+  The card spend is 0.61 USD, so the next pool still runs with --concurrency 4 below 1.20 USD.
+  The cap is 1.60 USD and the report point is 0.80 USD. At the report point the maker records the
+  spend and the projection and continues.
+  The second judge on the goodbye color file runs outside this round. If that fail stands, the
+  next round makes a second color try for l2-w01-card-goodbye and a line call from the passing
+  color. Rule d limits --tries to 1, 2, or 3.
+  The 30 line pictures are at out/storytime/l2/unit1/cards/muse/<id>-m1-line.png. The judge
+  copies are at out/storytime-review/judge/prod/<id>-line-t1.png.
+END_MEASURE_AGENT_RESULT

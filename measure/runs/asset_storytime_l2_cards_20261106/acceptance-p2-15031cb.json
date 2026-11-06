@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "summary": "Phase 2 acceptance at 15031cbe: P2-1 to P2-6 and P2-8 to P2-13 pass, PROJECT_TESTS pass (11 files, 155 tests), operating rules a to f pass. P2-7 fails: inspectPictureRow reports 22 of 29 delivered color PNGs with a non-white corner (class C rule, all four corners 250 or higher; the bottom-left corner measures 244 to 249). The maker claim 'files checked: 58, problems: 0' came from a narrower check. The delivery writer did not enforce the corner rule for these files.",
+  "blocking_findings": [
+    "F1 [Blocker] phase-acceptance: P2-7 problems: 22. inspectPictureRow (class C white-corner rule, src/storytime/book-pictures.ts:1748, needs each of the four corner pixels at 250 or higher in all channels) fails 22 of 29 delivered color PNGs. The bottom-left corner pixel is 244 to 249 (examples: l2-w04-card-dad-v1.png 244,246,246; l2-w06-card-boat-v1.png 245,245,245; l2-w04-card-mom-v1.png 245,245,242). Only 7 color files pass (girl, goodbye, astronaut, cap, sandwich, pot, teddy). The maker log jr-green-29344ae.log and plan Task 7 report 'files checked: 58, problems: 0', but that count came from a check of size, 8-bit depth, and alpha only, so it is not the P2-7 check (A5). Rationale: test-strategy P2-7 requires inspectPictureRow and 'problems: 0'. All 29 line art files pass inspectLineArtPng (widths 12 to 28 px). A fix is a decision: re-run color and line for the 22 rows, or an owner record that the card color files may keep a near-white corner."
+  ],
+  "nonblocking_findings": [
+    "F2 [Nit] phase-acceptance: plan Task 7 cites SHA 29344ae4 and MANIFEST.txt source-commit cites 29344ae4, but the commit message of 29344ae4 is 'family line try 3' and the delivery commit is ac2502f3 (the Task 7 evidence is in jr-green-29344ae.log). Task 6 cites a0969f77 but the row closed at 4c307cce. Rationale: a task SHA should name the commit that holds the task evidence; the Phase 1 convention (128b6c12) was not re-checked in this run.",
+    "F3 [Nit] phase-acceptance: P2-13 text scan found the provider name 'OpenRouter' in spec-review-7af682d and spec-review-ac5acf0 logs and JSON. Each hit is a name in prose, with no key or token. Rationale: reported so the scan result is traceable; the case-sensitive patterns sk-, OPENROUTER, and Bearer give no secret."
+  ],
+  "evidence": [
+    "audited_head_sha 15031cbefd3fe706169910df898fe09697959c7c; git rev-parse HEAD is unchanged at the end of the run",
+    "family: checker Sonnet 5.5 equals the judge family (claude-code/claude-sonnet-5-5#high); the checker audited the maker, the records, and the contact sheet",
+    "PROJECT_TESTS via heavy-run.sh: Test Files  11 passed (11); Tests  155 passed (155)",
+    "P2-1 pass: fresh sha256 of Workbooks pictures.json = ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf equals expected; record time 2026-11-06T10:14:27Z is before the first costs.tsv row 2026-11-06T10:15:28Z",
+    "P2-2 pass: calibration-record.json both controls verdict fail, time 10:20:40Z before the first card judge result 10:23:14Z; git diff 7af682db..HEAD on judge-prompt.md, cast.json, calibration-set.json prints nothing",
+    "P2-3 pass: 29 delivered rows. Color: m1 pass for all 29 (the goodbye main fail was not confirmed by judge-cards-cards-r1-color-goodbye-second.json). Line: 21 rows try 1 with width 12 px or more (delivery-line-widths.txt); car try 1 main fail not confirmed (r1-line-car-second pass); tomato try 2 pass after a confirmed try 1 fail (r1-line-tomato-second); 7 person rows try 2 pass in judge-cards-cards-r4-line-t2.json with width 12 px or more (delivery-line-widths-t2.txt) after try 1 below 12 px (9 to 11 px); goodbye line try 1 pass in r2-line-t1 but 10 px, so try 2 delivers. My own run of inspectLineArtPng on the 29 delivered line files: widths 12 to 28, none below 12",
+    "P2-3 failed rows: ham line tries 1, 2, 3 each failed by a main judge and a second judge (r1-line, r1-line-ham-second, r2-line-t2, r2-line-t2-ham-second, r3-line-t3, r3-line-t3-ham-second); family line tries 4, 8, 7 px (delivery-line-widths*.txt)",
+    "P2-4 pass: max tries per id and kind: 3 (ham line, family line); every line row names its m1 color input; no line row for an id without a color pass; 31 color rows plus 43 line rows = 74",
+    "P2-5 pass: costs.tsv has 74 rows at or after 2026-11-06T00:00:00Z, every usage_cost 0.01, sum 0.74 = spend-record.txt (calls: 74, spend usd: 0.74, report point 0.80 reached: no); no cost-0 row; header has time and usage_cost columns",
+    "P2-6 pass: grep -E MANIFEST file lines | sha256sum -c in the handoff folder: 58 OK, 0 FAILED; sha256 lists of the delivery folder and the handoff folder are SAME; delivery folder holds 59 files (58 PNG and manifest.json); manifest.json sha256 65699fb5...1e2, MANIFEST.txt sha256 809d204a...639, contact sheet sha256 989343a5...f8 equal delivery-record.txt",
+    "P2-7 fail: files checked: 58, problems: 22 (22 color corner problems, 0 line problems); inspectCandidatePng(small) passes 7 of 29 color files",
+    "P2-8 pass: contact sheet viewed: 31 labels, 29 card tiles (58 pictures), ham and family labeled 'not delivered: line art failed 3 tries'; no letter or number visible on a picture; the persons match the cast (Nan with two buns and a star shirt, Pat, Ben, family members); no wrong person seen",
+    "P2-9 pass: Drive TSV has 59 rows (58 PNG and manifest.json), local_md5 equals drive_md5 on every row (read each row); md5sum of 6 delivery files (boy-line, sheep, mom, tomato-line, manifest.json, train) equals the TSV; drive-listing-cards.json holds 59 names, 0 duplicate names, 0 'untitled' names; drive-record.txt md5 mismatches: 0",
+    "P2-10 pass: grep -rniE 'accepted|approved' of the track folder, the run folder records and maker logs, and the handoff folder: every hit names the approved Storytime Muse path, the file approved.json, a negation (spec.md:88, FR-12), or the status 'Accepted Nit' of a Phase 1 reviewer finding in test-strategy.md. No line says a picture, a card, or a delivery is accepted or approved. MANIFEST.txt and pm-report.md give 0 hits and hold 'model evidence, not acceptance'",
+    "P2-11 pass: git diff --name-only 7af682db..HEAD filtered through the section 6 allowed-set regex prints 0 files; git -C Workbooks status --short prints nothing",
+    "P2-12 pass: the 10 pinned restart manifest.json SHA-256 prefixes of the archive 5.11.2 table equal the measured values (38a16765, c59a75bb, bb7a2752, 82d467e6, 0e2fde98, 66bb2f62, 352b2dab, 0fa7b232, 36b4febc, 2dc0812b)",
+    "P2-13 pass: case-sensitive scan for sk- keys, OPENROUTER, and Bearer tokens in the run folder and the handoff folder: no secret (only the provider name OpenRouter in spec-review logs, see F3)",
+    "plan check: Tasks 4 to 9 are [x] with SHAs; the Phase 2 gate line is [b] by design until this acceptance; plan claims (74 calls, 0.74 USD, 29 rows, 58 files, 2 failed rows) equal spend-record.txt, delivery-record.txt, and drive-record.txt (A5 pass for the spend, delivery, and Drive claims; the 'problems 0' claim is covered by F1)",
+    "operating rules a to f: pass. a: every pool began below 1.20 USD (0.31, 0.61, 0.64, 0.65, 0.65, 0.73 recorded before each pool) with --concurrency 4 or the default 4 and --tries 1. b: highest row cost 0.01 after every pool, highest in costs.tsv 0.01. c: each maker log quotes 'refused lines: 0'. d: --tries 1 in every line run. e: header has time and usage_cost; the sum 0.74 equals spend-record.txt. f: the 0.80 report point was never reached, no stop before the cap",
+    "A3, A4, A6, A7 not applicable: the phase diff changed no contract test, filter, or tracks registry (allowed-set check prints 0 files outside the set; only measure/ run and track files and guard code of Phase 1 differ)"
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'vitest run <11 files> --maxWorkers=1' => 11 passed, 155 passed",
+    "sha256sum Workbooks/content/storytime/l2/print/pictures.json",
+    "git diff 7af682db..HEAD --stat -- judge-prompt.md cast.json calibration-set.json (empty)",
+    "grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c - (handoff folder)",
+    "diff of sha256sum lists, delivery folder vs handoff folder: SAME",
+    "node --import tsx measure/runs/asset_storytime_l2_cards_20261106/acceptance-p2-15031cb-sizes.mts => files checked: 58, problems: 22",
+    "node --import tsx measure/runs/asset_storytime_l2_cards_20261106/acceptance-p2-15031cb-corners.mts => 29 color files, inspectCandidatePng(small) valid 7",
+    "git diff --name-only 7af682db..HEAD | grep -vE <section 6 regex> (0 files)",
+    "git -C /home/daniebo/Desktop/Workbooks status --short (empty)",
+    "md5sum of 6 delivery files against the Drive TSV (all equal)",
+    "grep -rniE 'accepted|approved' track, run records, maker logs, handoff",
+    "grep -rnoEi secret scan of the run folder and the handoff folder",
+    "sha256sum of the 10 restart manifest.json files against the archive 5.11.2 table (all equal)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_cards_20261106/acceptance-p2-15031cb.json",
+    "measure/runs/asset_storytime_l2_cards_20261106/acceptance-p2-15031cb.log",
+    "measure/runs/asset_storytime_l2_cards_20261106/acceptance-p2-15031cb-sizes.mts",
+    "measure/runs/asset_storytime_l2_cards_20261106/acceptance-p2-15031cb-corners.mts"
+  ],
+  "test_strategy_violations": [
+    "P2-7: 22 delivered color files fail inspectPictureRow (class C white corners); the pass condition is problems: 0"
+  ],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high"
+}

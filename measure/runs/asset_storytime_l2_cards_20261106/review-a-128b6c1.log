@@ -1,0 +1,48 @@
+Review A (correctness and architecture) — Phase 1: Card guard, card specs, and fixture
+Track: asset_storytime_l2_cards_20261106
+phase_base_sha: 562c58007d21de4979a198d2c6dff79a84ac6ebc
+role_base_sha / audited_head_sha: 128b6c125b625a5920d5baedbe524fb1b37fc02c
+Role model substitution: opencode-go/mimo-v2.6-flash (MiMo) in place of the role-table Opus model.
+
+Scope: git diff 562c5800..128b6c12 (Red 7d1cbdd5, Green 5f344886, Red amend ad9cc588,
+evidence 29524b07 and e7ad7baa, plan 128b6c12). Read spec.md, plan.md, test-strategy.md,
+the 31 files in docs/storytime/l2-unit1/cards/, the three new test files, the guard module,
+the muse CLI, the judge batch script, and both Green logs.
+
+Verified:
+- HEAD equals 128b6c125b625a5920d5baedbe524fb1b37fc02c.
+- GREEN_TEST_COMMAND at HEAD: exit 0, Test Files 6 passed (6), Tests 67 passed (67).
+  Labeled split: N_new 26 (11 + 10 + 5 it lines), N_old 41 (30 + 8 + 3), 26 + 41 = 67.
+- Gate 3, gate 4 and gate 5 of test-strategy 4.2 all pass.
+- Every file of every commit since 7af682db is inside the section 6 allowed set.
+- Fixture SHAs equal the pins, the live Workbooks file, and Workbooks commits 95043edc and 078917f1.
+- The two old test constants each changed one line, inside the known-red rule.
+- A4 falsification in a scratch copy: removing l2-w04-card-mom.json fails CS3, CS4, CS5 and CS6
+  on assertion lines. Missing reference files fail CS6 with `missing reference ...`.
+- runGuards is the one decision point; the mixed refusal returns before any scan; a card call reads
+  only cards/muse/costs.tsv and cards/muse/elements/costs.tsv; the CLI calls runGuards before
+  readKey; the notice line prints the card report point; the restart contract is additive only;
+  the judge batch without --cards keeps SPEC_DIR and RESTART_START.
+- All 31 specs match the reference table, the list row fields, and the eight recorded prompt
+  differences. No colorPrompt holds a background other than white and none holds
+  `plain light background`.
+
+Not measured: the outDir-variant fail-safe is reasoned from the code (a variant takes the stricter
+restart path, and an exact card spec mixed with a variant is refused as mixed). The adversarial
+round tests that edge next.
+
+Findings: RA-1 to RA-6, all Nit, all in the result JSON. None blocks the phase.
+Result JSON: measure/runs/asset_storytime_l2_cards_20261106/review-a-128b6c1.json
+
+MEASURE_AGENT_RESULT
+role: measure-review-a-correctness
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 1: Card guard, card specs, and fixture
+commits: 128b6c125b625a5920d5baedbe524fb1b37fc02c (audited head; no commit by this role)
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-card-guards.test.ts tests/storytime-card-specs.test.ts tests/storytime-card-fixtures.test.ts tests/storytime-muse-attempts.test.ts tests/storytime-judge-batch.test.ts tests/storytime-stage-check.test.ts --maxWorkers=1' -> exit 0, Test Files 6 passed (6), Tests 67 passed (67); scratch-copy A4 run (one card spec removed) -> exit 1, CS3 CS4 CS5 CS6 failed on assertions
+files_changed: none (audit only; this role wrote only review-a-128b6c1.json and review-a-128b6c1.log)
+plan_updates: none
+known_failures: none blocking; six Nit findings RA-1 to RA-6 in the result JSON
+handoff: Phase 1 passes Review A at 128b6c12. The guard, the CLI order, the notice line, the judge --cards path, the restart contract, the fixtures and the 31 specs are correct as written. The outDir-variant fail-safe is reasoned, not empirically confirmed; the adversarial round must test it (trailing slash, .., another folder, and an exact-plus-variant mix). Typecheck `owned tsc errors: 0` was not re-run by this role. The run folder has an uncommitted edit to mid-red-29524b0.log and several untracked logs; their owner should commit them.
+END_MEASURE_AGENT_RESULT

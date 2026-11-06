@@ -1,0 +1,20 @@
+{
+  "group": "cards-r2-line-t1",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-06T10:42:31Z",
+  "results": [
+    {
+      "id": "l2-w01-card-goodbye",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-goodbye-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), her raised open hand (1), a smile (1), the school bag on her back (1). Action: waving (note only). Seen: a girl with two round side buns and a star on her T-shirt, shorts, shoes; her left-of-picture arm raised with an open hand with fingers; a small curved smile; two bag straps over the shoulders with the bag edges showing at both sides of the body. Nan matches the cast (two buns, star T-shirt, shorts). Hand drawn and clear. Smile mark is small, not wide; it reads as a smile. Bag is drawn as a backpack seen from the front (straps and side edges); small mark, reads as a school bag on her back. Black lines on white, no gray, no line gaps, no text."
+    }
+  ],
+  "summary": { "files": 1, "pass": 1, "fail": 0 }
+}

@@ -1,0 +1,16 @@
+# Strategy amendment log (round 2): asset_storytime_l2_cards_20261106
+Role: measure-strategy (claude-code/claude-sonnet-5-5#high). Role base: 6d80fba03c445f52c1b397ac5438b860efdd0fea. Date: 2026-11-06.
+Commit: 413f38c489137b1482eb886f6b5323b72c1b8f08 (holds only test-strategy.md; 67 insertions, 10 deletions).
+
+MEASURE_AGENT_RESULT
+role: strategy
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 1: Card guard, card specs, and fixture (amendment round 2)
+commits: 413f38c4
+tests_run: none (no heavy job; read-only checks of the test files and the Green logs)
+files_changed: measure/tracks/asset_storytime_l2_cards_20261106/test-strategy.md
+plan_updates: none (the plan is out of scope)
+known_failures: none
+handoff: Edits made as decided facts. (1) ADV-N1 section 6 regex now allows card-(guards|specs|fixtures|adversarial). (2) PROJECT_TESTS is the 11-file command in one heavy-run.sh wrapper; expected Test Files 11 passed (11) and Tests 155 passed (155) = 105 + 30 (guards 15, specs 10, fixtures 5) + 20 (adversarial). Section 7 item 3 matches. (3) ADV-N2 the outDir row now states resolved-path classification, invalid layouts, exit 3 before the key read and before any cost scan. (4) RA2-6 CG table extended to CG15 (CG14 row matches the test numbers 1.50/1.56/1.57/0.95/0.97/0.99), mutation table has MF1 to MF4 with the Green logs jr-green-8a567fb.log and jr-green-5bdf307.log, section 4.6 updated, one line says Red rounds 3 and 4 ran the guards file alone as their RED command, one paragraph covers ADVC1 to ADVC20. (5) New section 5.1 Operating rules for the maker (a to f: concurrency 4 below 1.20 USD, else concurrency 1 and tries 1; stop on a row above 0.03 USD; read tool output for refusal lines; tries 1, 2, or 3 only; no hand edit of costs.tsv plus header and sum check; report point 0.80, cap 1.60), each with a verification method and a falsification condition. (6) Section 8 has rows for RB2-1, RA2-5, ADV-N3, ADV-N4, ADV-N5, ADV-N6 with owners. Not changed: the older 6 and 10 file counts in CG text of unrelated rows; section 4.2 gates. Questions: none.
+END_MEASURE_AGENT_RESULT

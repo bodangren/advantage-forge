@@ -1,0 +1,46 @@
+# Final acceptance log e58c5f7
+
+HEAD: git rev-parse HEAD printed e58c5f7e0e00f98a15040b245d90ba03b0478146 at run start.
+Ancestry (git rev-list HEAD grep counts, each 1): 7af682db1d2b572d8cf46ed5cc58ec3aa244b6a4; cf6fb8dbaff9231aacf87aa6adffe3c0ab727b79; bda95d8359b5b9596d3145c2bc0716eef47865f9. git merge-base was not used (the word merge trips the shell filter); rev-list membership proves the same.
+Diff bda95d83..HEAD: measure/tracks/asset_storytime_l2_cards_20261106/plan.md only.
+Phase gates: Phase 1 one pass (phase-acceptance-cf6fb8d.json) after one fail (phase-acceptance-895c65c.json, record-keeping F1 closed). Phase 2 one pass (acceptance-p2-bda95d8.json) after one fail (acceptance-p2-15031cb.json, corner F1 amended to report item).
+
+PROJECT_LINT (all pass):
+- doctor structural-only output names no asset_storytime_l2_cards_20261106 line (other-track errors only).
+- grep -rn wb-shadow tests scripts src: exit 1, no output.
+- CARD_START scope: scripts/storytime-muse-guards.mjs,tests/storytime-card-adversarial.test.ts,tests/storytime-card-guards.test.ts (exact).
+- git diff 7af682db..HEAD -- assets/fireball.ts out/fireball: empty.
+- Allowed set: 36 commits in 7af682db..HEAD; filter with the section 6 regex gives 0 files outside the set.
+
+PROJECT_CHECKS:
+- TYPECHECK: tsc total 38, owned 0. Gate pass (owned errors 0).
+- KNOWN_RED: Tests 8 failed | 134 passed (142). Failing ids T142, T145, T147, T150, T173, T174, T176, T177, all inside the 13-name pin set. Sentinels T142, T147, T173, T174 fail. Diff limit: 2 changed lines, both on LIST_V3_SHADOW_FILE. Pin-set script SHA-256 cited from phase-acceptance-895c65c evidence: f67cfa8f17d380cb7e6f7632612b8f56d5cba6793d642a90abf2b5c1fd4a3fe0. T173 text is the list-changed refusal, with no shadow-missing text.
+
+PROJECT_TESTS: carried over from 15031cbe (Test Files 11 passed 11, Tests 155 passed 155). git diff --name-only 15031cbe..HEAD lists only plan.md and test-strategy.md, so the 4.4 carry-over rule applies. No code, test, fixture, spec, or delivery file changed.
+
+Record compare (A5): pm-report.md (74 calls, 0.74 USD, 29 rows, 58 files, ham and family with best tries, corner note 22 files with values, handoff path, Drive backup) equals spend-record.txt (calls 74, spend 0.74, report point not reached), delivery-record.txt (58 files, failed rows ham and family, corner note, manifest/contact shas), and drive-record.txt (59 files, 0 md5 mismatch). No difference to name.
+Spec criteria: ham 3 line tries each failed by two judges; family line widths 4/8/7 px vs 12 px gate; goodbye second judge passed; white-corner report item (22 files, values 242-249) present in pm-report.md and MANIFEST note; 12 px rule enforced by the delivery writer; calibration 2 of 2 fail recorded. No text claims Daniel or Workbooks accepted a picture.
+A6: tracks.md holds this track as [~] with no acceptance or adversarial claim. A9: tests/*.sh glob finds no files.
+
+P2 reruns at HEAD:
+- P2-1 pass: live pictures.json sha256 ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf; record match yes, time 2026-11-06T10:14:27Z before first cost row.
+- P2-5 pass: costs.tsv rows 74, sum 0.74, max 0.01.
+- P2-6 pass: MANIFEST.txt 58 OK, 0 FAILED.
+- P2-10 pass: every accepted/approved hit names the Muse path, approved.json, a negation, Accepted Nit, or review prose; MANIFEST.txt has no hit; no picture, card, or delivery acceptance claim.
+
+Closeout readiness: Tasks 1-9 are [x] with SHAs; Final acceptance [~] deferred:closeout and Closeout [b] deferred:final-acceptance are the only open markers; doctor adds no error for this track; plan numbers match the records.
+No Muse, judge, provider, or Drive call. No token file opened. Only this run folder written. No commit. HEAD unchanged during the run (rev-parse at start; no writes outside the run folder).
+
+MEASURE_AGENT_RESULT
+role: final-acceptance
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: track
+commits: none
+tests_run: PROJECT_LINT pass; TYPECHECK total 38 owned 0 pass; KNOWN_RED 8 failed 134 passed of 142 pass per rule; PROJECT_TESTS carried over 11 passed 155 passed per 4.4; P2-1 P2-5 P2-6 P2-10 rerun pass
+files_changed: measure/runs/asset_storytime_l2_cards_20261106/final-acceptance-e58c5f7.json, measure/runs/asset_storytime_l2_cards_20261106/final-acceptance-e58c5f7.log
+plan_updates: none
+known_failures: none
+handoff: final acceptance passes at e58c5f7e; route to measure-closeout for the archive move; closeout owns the generator, doctor, registry words delivered awaiting Workbooks check, and knowledge todo 7050174a
+dispositions: none
+END_MEASURE_AGENT_RESULT

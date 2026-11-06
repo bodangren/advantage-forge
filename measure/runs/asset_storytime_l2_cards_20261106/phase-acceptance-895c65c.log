@@ -1,0 +1,44 @@
+phase-acceptance run for Phase 1: Card guard, card specs, and fixture
+track: asset_storytime_l2_cards_20261106
+audited_head_sha: 895c65c8d96755f64608f97acd8b07a24681daf0 (role_base_sha equal; HEAD did not move)
+phase_base_sha: 562c58007d21de4979a198d2c6dff79a84ac6ebc
+model: claude-code/claude-sonnet-5-5#high (Anthropic; Red is OpenAI, so the families differ)
+
+Gate results
+- PROJECT_TESTS: Test Files 11 passed (11); Tests 155 passed (155) = 105 + 30 + 20. PASS.
+- TYPECHECK_COMMAND: tsc exit 2; owned tsc errors: 0; tsc errors total: 37 (informational). PASS.
+- KNOWN_RED_COMMAND (rule 4.4): tests in the file: 142; Tests 8 failed | 134 passed (142);
+  known red failing tests: 8; known red failing tests outside the pin set: 0;
+  known red drift sentinels failing: 4 of 4; T173 shadow-missing text: 0; changed lines: 2; PASS.
+- Gate 1 (six-file aggregate inside PROJECT_TESTS): PASS.
+- Gate 2 (Green edits no test): PASS. Gate 3: PASS (empty). Gate 4: PASS (no hit). Gate 5: PASS.
+- Gate 6: PASS. Gate 7: FAIL in part (RA-6 wheels phrase not in the plan note; see F1).
+- Gate 8: Green logs quote M1 to M7 and MF1 to MF4; the checker rerun was not done (F6).
+- Allowed set (section 6): own files outside the set: 0. Fireball paths unchanged.
+- Reviews A and B and adversarial: no open blocker.
+- Plan Tasks 1 to 3: [x] with SHAs 7d1cbdd5, 91b2a1ca, 5f344886.
+- Accepted Nits recorded in section 8: FAIL (F1).
+
+Findings
+F1 [Blocker] phase-acceptance: accepted Nits RA-2, RA-3, RA-4, RA-6, RA3-2, RB-4, RB-5, RB-6, RB2-2, RB2-3, RB2-4 have no row in test-strategy.md section 8. RA-6 (train mustShow 'four small wheels') is also absent from the plan note of Task 3.
+F2 [Nit] phase-acceptance: RB2-1 (Major) has no code fix; strategy 5.1 operating rules close it; Phase 2 checker must verify rules a to f.
+F3 [Nit] phase-acceptance: doctor reports 'in_progress track has no unchecked task' for this plan; it clears when Task 4 becomes [~].
+F4 [Nit] phase-acceptance: plan quotes 38 total tsc errors; measured 37.
+F5 [Nit] phase-acceptance: mid-red-29524b0.log has an uncommitted edit; run records are untracked; closeout must add them.
+F6 [Nit] phase-acceptance: mutation rerun not done by this role (shell policy denied a scratch script).
+
+Verdict: fail (one blocker). Retry after a Measure-only commit that records the Nits; the carry-over rule of 4.4 applies to a Measure-only commit.
+
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 1: Card guard, card specs, and fixture
+commits: none
+tests_run: PROJECT_TESTS 11 files pass (Test Files 11 passed (11), Tests 155 passed (155)); tsc exit 2 with owned tsc errors: 0 (total 37); known-red command met rule 4.4 (8 failed | 134 passed (142), 0 outside pin set, sentinels 4 of 4); static gates 2 to 5 pass; allowed set 0 outside
+files_changed: measure/runs/asset_storytime_l2_cards_20261106/phase-acceptance-895c65c.json, measure/runs/asset_storytime_l2_cards_20261106/phase-acceptance-895c65c.log
+plan_updates: none
+known_failures: F1 blocker (accepted Nits and the RA-6 prompt difference not recorded in section 8 and the plan note)
+handoff: Verdict fail on one record-keeping blocker (F1); all executable gates pass at 895c65c8. Add a section 8 row for each accepted Nit (RA-2, RA-3, RA-4, RA-6, RA3-2, RB-4, RB-5, RB-6, RB2-2, RB2-3, RB2-4) and record the train wheels phrase as a prompt difference in the plan note, in one Measure-only commit. Then rerun acceptance on the new HEAD; the heavy results carry over under the 4.4 rule when the diff lists only measure/ files. Also: the doctor error F3 clears when Task 4 is marked [~]; the Phase 2 checker must verify operating rules 5.1 a to f (F2); closeout must commit the untracked run records (F5). Question for the orchestrator (default: record all as accepted Nits): does the user want RA-4 (misleading A-48 label in card-mode errors) fixed before Phase 2?
+dispositions: none
+END_MEASURE_AGENT_RESULT

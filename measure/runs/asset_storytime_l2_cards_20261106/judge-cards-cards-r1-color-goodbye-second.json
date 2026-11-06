@@ -1,0 +1,20 @@
+{
+  "group": "cards-r1-color-goodbye-second",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-06T10:25:34Z",
+  "results": [
+    {
+      "id": "l2-w01-card-goodbye",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-goodbye-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Page text 'goodbye' is a card word. Items from mustShow: Nan (1), her raised open hand in a wave, a big smile, the school bag on her back. Action: waving (note only). Seen: a girl with black-brown hair in two round buns with red ring bands, big brown eyes, an orange T-shirt with a white star, red shorts, white sneakers; matches the Nan cast sheet. Her left arm (picture left) is raised with an open hand and spread fingers, clear as a wave. Her mouth is a small closed smile with rosy cheeks, the same smile as the cast sheet; it reads as happy (small mark: not a wide grin). An orange-tan rounded bag shape shows behind her torso on both sides, with shoulder straps; it is low contrast against the shirt but reads as a backpack on her back. No text, no extra people. Decision: all four items drawn and visible, and the character matches the cast."
+    }
+  ],
+  "summary": { "files": 1, "pass": 1, "fail": 0 }
+}

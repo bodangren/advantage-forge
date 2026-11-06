@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "summary": "The track scope matches the owner order: 31 card rows of list v7, 62 files, delivery folder, handoff folder with MANIFEST.txt and a contact sheet, Drive backup, spend log with a 1.60 USD stop, PM report, and the T180 fixture move. The input facts check out: 227 rows, 31 card rows, the first 196 rows are non-card, all 13 reference paths exist, and the guard and judge scripts behave as the spec states. The spec and the plan leave the judge-batch card input shape to the implementer (F1, Blocker). Three smaller findings stay open (F2 to F4). Note: measure/anti-patterns.md does not exist in this repository; the reviewer ran the standard's checks without it (orchestrator ruling, 2026-11-06).",
+  "blocking_findings": [
+    "F1 [Blocker] plan.md Task 2: The plan says the judge batch reads the card specs and counts card tries from the card start time, but it names no input shape for that. scripts/storytime-judge-batch.mjs:36 fixes SPEC_DIR to the A-48 folder, line 43 fixes RESTART_START, and parseArgs (lines 183-198) has no flag for a spec folder or a start time. Rationale: The implementer must choose between a new flag, an environment variable, or an added default folder. That is an API and CLI shape choice, so Red and Green can pick differently."
+  ],
+  "nonblocking_findings": [
+    "F2 [Major] spec.md Tries and spend: The spec says the card run start time is a constant that Task 2 sets, but it names no single owner for the value. Plan Task 2 also says the judge batch counts card tries from the card start time. Rationale: A second copy of the constant in scripts/storytime-judge-batch.mjs (RESTART_START, line 43) can drift from the guard value, and the try count then reads the wrong rows. Name one exported constant and the module that imports it.",
+    "F3 [Major] spec.md FR-3 and plan.md Task 3: The card spec test reads /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json, and the plan defines a SHA mismatch as a hard failure. The plan does not define the case where the Workbooks checkout is absent. Rationale: No test in tests/ reads that absolute path today, so the new test fails a full suite run on every checkout without Workbooks. Define the absent-file edge case.",
+    "F4 [Nit] plan.md Task markers: Every work task uses [b], and the doctor counts only [ ], [~], and [x]. Rationale: A role that reads the marker list sees no open work task for this track."
+  ],
+  "evidence": [
+    "HEAD equals the audited head ac5acf0b92637f02c8cbd9481b6b067f9d92a589.",
+    "pictures.json holds 227 id rows. 31 rows carry use: card. The last non-card row is l2-w08-check-row-drum (line 2984) and the card rows start at line 3000, so the first 196 rows stay untouched.",
+    "The 31 card ids and weeks match spec.md: week 1 has 5, week 2 has 2, week 3 has 3, week 4 has 9, week 5 has 3, week 6 has 2, week 7 has 7.",
+    "Every card row has sizeClass C, width 1500, height 1500, fileName <id>-v1.png, lineArtFileName <id>-line-v1.png, and objectCounts with the card word only.",
+    "pictures.md records 1500 x 1500 and size class C for each card row.",
+    "All 13 reference paths exist: nan-ref-clean-look-reference.png, nan-ref-clean-face-crop.png, ben-ref-clean-2.png, cast-group-b-2.png (w01 elements), the six cast sheets in w04 elements, prop-doll-pam-sheet-m1-color.png, prop-toys-sheet-m1-color.png (w07 elements), and out/storytime-review/batch-22/sprout-pat-render.png.",
+    "The reference split matches the spec: 13 person cards, 3 prop cards with references, 15 cards without references.",
+    "The hello card prompt in pictures.json names Nan, so the Nan references for hello and goodbye have a source.",
+    "The spec-file form matches docs/storytime/l2-unit1/a48/l2-w08-check-row-drum.json: id, text, pageText, use, goal, mustShow, deliverAs, references, colorPrompt, linePrompt, print, aspect, printSize, outDir.",
+    "tests/storytime-book-pictures.test.ts:4081 holds LIST_V3_SHA256, line 4082 holds LIST_V3_SHADOW_FILE, and tests/storytime-stage-check.test.ts:41 holds V3_SHADOW_FILE, all as the spec states.",
+    "docs/storytime/l2-unit1/judge/calibration-set.json:527 holds gate control 1 (a-nose v1 line art) with expected fail, and line 2243 holds gate control 2 (nan-can-get-a-pan m3 line art) with expected fail.",
+    "scripts/storytime-muse-guards.mjs matches the spec: RESTART_START 2026-11-04T07:54:00Z (line 29), SPEND_CAP_USD 1.0 (line 31), SPEND_MARGIN_USD 0.01 (line 32), and scanCostFiles (lines 146-161) reads <unitRoot>/<folder>/muse/costs.tsv, so cards/muse/ falls inside the scan.",
+    "scripts/storytime-muse.mjs writes to spec.outDir (line 54) and calls runGuards with the global REPORT_AT_USD and cap.",
+    "scripts/storytime-judge-batch.mjs:40 sets LONG_SIDE_CARD 360 and longSideOf (line 46) returns 360 for use card. SPEC_DIR (line 36) and RESTART_START (line 43) are fixed, and parseArgs accepts only --ids, --kind, --try, and --out.",
+    "src/storytime/book-pictures.ts:238 exports the StorytimeManifest interface, and /home/daniebo/Desktop/handoff/a48-forge-pictures-a/MANIFEST.txt holds the header, the SHA-256, pixel size, and name lines, and the spend note, so the manifest form has a source.",
+    "Orchestrator evidence, 2026-11-06: sha256sum gives ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf for pictures.json, 50df23ae690ce143578e301c2930c931f8b53a0c85805139b72fe6fbf79fa0ca for card-pictures.json, and 3232a33bbc6a49aa651f7eeb544caef6b4ba8430ebdd1295dbb3e66e5cc2c8be for pictures.md. git show 078917f1:content/storytime/l2/print/pictures.json gives c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b. All four match the spec.",
+    "The reviewer did not run sha256sum: the shell tool is denied in this role. The hash check above is orchestrator evidence.",
+    "measure/anti-patterns.md does not exist, and no file of that name exists in this repository. The reviewer proceeded without it on the orchestrator ruling of 2026-11-06.",
+    "The delivered scope matches the owner order: 31 rows with use card, the approved Storytime Muse path, character sheets for the ten people, the six-person family card, the doll, teddy, and train from the book objects, the calibrated Sonnet judge at card size, 3 tries for line art, the spend log with a 1.60 USD stop, the delivery and handoff folders, the Drive backup, the PM report, and the T180 fixture move."
+  ],
+  "commands": [],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_cards_20261106/spec-review-ac5acf0.json",
+    "measure/runs/asset_storytime_l2_cards_20261106/spec-review-ac5acf0.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "paraphrase": {
+    "proposes": "The track draws the 31 card rows that list v7 adds to the Storytime Level 2 print list. Each card needs a color picture and a line-art picture, so the track delivers 62 files at 1500 x 1500. It reuses the approved Storytime Muse path, the frozen Sonnet judge kit, and the week delivery form, and it adds no new kit. It also moves the T180 version 3 list fixture from /tmp/opencode/wb-shadow into the repository. The spend cap is 1.60 USD, the delivery is model evidence only, and Workbooks checks the cards after delivery.",
+    "current_system": "The closed unit 1 track already holds the Muse path: scripts/storytime-muse.mjs calls meta/muse-image through OpenRouter and writes the print file to the spec outDir. scripts/storytime-muse-guards.mjs reads every costs.tsv below out/storytime/l2/unit1/ and enforces 3 tries per id and kind, a 1.00 USD cap since 2026-11-04T07:54:00Z, and a 0.50 USD report point. scripts/storytime-judge-batch.mjs builds judge batches for the A-48 specs at a 360 px long side for a card. The A-48 delivery form is the StorytimeManifest object in src/storytime/book-pictures.ts, with the MANIFEST.txt form of the week handoff. Two tests read the version 3 list from /tmp/opencode/wb-shadow, and that path is not in git."
+  }
+}

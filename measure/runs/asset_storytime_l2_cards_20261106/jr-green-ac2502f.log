@@ -1,0 +1,104 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 2: Card pictures and delivery
+phase_base_sha: cf6fb8dbaff9231aacf87aa6adffe3c0ab727b79
+role_base_sha: ac2502f3c64894da44a2144dadab0024cbd3cee9
+resulting_head: c3e1c77f855429fa6a90658561f538c9500bcf9f
+commits: |
+  c3e1c77f (measure(storytime_l2_cards): Phase 2 round 9, Drive backup and PM report record).
+  The plan file alone is in the commit.
+dispositions: none
+drive_backup: |
+  The gws help was read first: gws --help, gws drive --help, gws drive files --help,
+  gws drive files create --help, gws drive files list --help, gws drive files get --help, and
+  gws drive +upload --help. No token and no credential file was opened or printed.
+  The private folder 1AWdjGVJrJcc35oY7cIAt_jPqyaLtyK9B held 9 subfolders and no folder named
+  cards, so the maker created the two folders:
+  gws drive files create --json '{"name": "cards", "mimeType": "application/vnd.google-apps.folder",
+  "parents": ["1AWdjGVJrJcc35oY7cIAt_jPqyaLtyK9B"]}' --params '{"fields": "id,name,mimeType,parents"}'
+  -> 1KJzrGsQJ4JQpRXXAvc9toiQIRk2yI6kA
+  gws drive files create --json '{"name": "delivery-muse-v1",
+  "mimeType": "application/vnd.google-apps.folder", "parents": ["1KJzrGsQJ4JQpRXXAvc9toiQIRk2yI6kA"]}'
+  --params '{"fields": "id,name,mimeType,parents"}' -> 1gzQ-pFeWMze0tflecKSgWMj59qJf1D0m
+  The upload of the 59 files of out/storytime/l2/unit1/cards/delivery-muse-v1/ ran with:
+  gws drive +upload <file> --parent 1gzQ-pFeWMze0tflecKSgWMj59qJf1D0m --format json
+  The first create call put the fields in the query, and Drive made an empty file named Untitled
+  in My Drive. The maker deleted that file and created the folders with the fields in the request
+  body. The maker also uploaded manifest.json once by hand before the loop, so the loop made a
+  second copy of that name. The maker deleted the second copy, id
+  1ArPtFAY6bxznw6cI9LBZ8qf7rjIxQo_r, and kept the first, id 1v0R2B921Zwqq8O9I1KfSnxIKRU6ojHi5.
+  The folder then held 59 files and no name twice.
+  files uploaded: 59
+  rows: 59
+  md5 mismatches: 0
+  tsv: out/storytime/l2/unit1/drive-backup-2026-11-06-cards.tsv, with the header
+  path size_bytes local_md5 drive_file_id drive_md5 and the path relative to
+  out/storytime/l2/unit1/, for example cards/delivery-muse-v1/l2-w02-card-fan-v1.png
+  The md5Checksum of every file came from the Drive listing of the folder. The listing is in
+  measure/runs/asset_storytime_l2_cards_20261106/drive-listing-cards.json.
+  record: measure/runs/asset_storytime_l2_cards_20261106/drive-record.txt
+pm_report: |
+  file: measure/runs/asset_storytime_l2_cards_20261106/pm-report.md
+  It names the handoff path, the Drive backup, the spend of 0.74 USD in 74 Muse calls, the 29
+  delivered rows, the 2 failed rows with their best tries, the defaults for the PM, and the small
+  marks for Workbooks. It says "model evidence, not acceptance" and "Workbooks checks the cards".
+  A scan of the file for "accepted" and "approved" found nothing.
+pool: |
+  no Muse call ran in this round.
+costs: |
+  file: out/storytime/l2/unit1/cards/muse/costs.tsv
+  header: time row version kind inputs output size usage_cost note
+  rows: 74
+  spend usd: 0.74
+  highest row cost: 0.01
+  the file did not change in this round
+spend_record: |
+  measure/runs/asset_storytime_l2_cards_20261106/spend-record.txt
+  calls: 74
+  spend usd: 0.74
+  report point 0.80 reached: no
+operating_rules: |
+  a: no pool ran in this round, so no concurrency flag was used.
+  b: no pool ran, so no new row was read. The cost file holds 74 rows and 0.74 USD.
+  c: no pool ran, so no refusal line was read.
+  d: no line call ran in this round, so no --tries value was used.
+  e: nobody edited costs.tsv. Its header holds a time column and the usage_cost column.
+  f: the spend is 0.74 USD, below the report point of 0.80 USD. The maker stops only at the cap
+  of 1.60 USD.
+plan_updates: |
+  Task 8 is [x] with (ac2502f3) on its first line. The note holds the two folder ids, the count of
+  59 files, the TSV path, the mismatch count of 0, and the record path. Task 9 is [x] with
+  (ac2502f3) on its first line. The note holds the path of the report. The Phase 2 gate item stays
+  as it is, with its deferred field. No other plan item changed.
+files_changed: |
+  Committed in c3e1c77f: measure/tracks/asset_storytime_l2_cards_20261106/plan.md only.
+  Written in the run folder and not committed: drive-record.txt, pm-report.md,
+  drive-listing-cards.json, and this log.
+  Written under out/ and not committed: out/storytime/l2/unit1/drive-backup-2026-11-06-cards.tsv.
+  The TSV stays out of git, as the brief requires.
+  The throwaway scripts sit in /tmp/opencode/storytime-cards-prep/ and stay out of the repository.
+  No PNG file, no code file, no test file, and no judge kit file changed.
+tasks: |
+  Flipped to [x]: Task 8 and Task 9.
+  Flipped to [b]: none.
+  Still open: the Phase 2 gate, the final acceptance, and the closeout. Those are the roles of the
+  checker, the final acceptance, and the closeout.
+doctor: |
+  The structural doctor prints one line for this track: "measure/tracks/asset_storytime_l2_cards_20261106/plan.md:
+  in_progress track has no unchecked task". Every maker task of Phase 2 is now [x] and the rest of
+  the plan holds [b] items. This is the same finding as F3 of the Phase 1 acceptance. The maker
+  left the Phase 2 gate item as the brief asks, so the line stays until the orchestrator marks that
+  item [~] for the checker.
+handoff: |
+  The maker work of Phase 2 is done. The delivery of 29 cards is at
+  /home/daniebo/Desktop/handoff/storytime-l2-card-pictures/ with 58 PNG files, manifest.json,
+  MANIFEST.txt, and the contact sheet. The Drive backup is in cards/delivery-muse-v1 with 59 files
+  and 0 MD5 mismatches. The spend is 0.74 USD in 74 Muse calls, below the cap of 1.60 USD. The
+  2 rows that failed are the ham and the family, and the report record names both with the best
+  try. The report record also holds the defaults for the PM and the small marks for Workbooks.
+  The next role is the phase acceptance checker on an immutable HEAD. The doctor line named above
+  clears when the orchestrator marks the Phase 2 gate item [~].
+  The delivery is model evidence, not acceptance. Workbooks checks the cards.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,20 @@
+{
+  "group": "cards-r1-line-tomato-second",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-06T10:34:34Z",
+  "results": [
+    {
+      "id": "l2-w06-card-tomato",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-tomato-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole fruit: a smooth round body with one long curved stem and one single leaf at the top reads as an apple",
+      "notes": "Question page: no. Items: a tomato (1), a small green stem on top (1). Action: none. Seen: a round fruit with a small dip at the top, one long thin curved stem, and one single leaf beside the stem. No star-shaped leaf cap (calyx) of a tomato. This is the common apple form, so a young child would read it as an apple. Stem: drawn. Tomato: reads as a different object at book size. Line art: black lines on white, no gray, no text, no line gap."
+    }
+  ],
+  "summary": { "files": 1, "pass": 0, "fail": 1 }
+}

@@ -135,9 +135,6 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Chibi Sprouts, release 1 art**
   *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
 
-- [~] **Track: Storytime Level 2 card pictures (31 cards)**
-  *Link: [./tracks/asset_storytime_l2_cards_20261106/](./tracks/asset_storytime_l2_cards_20261106/)*
-
 ## Games
 
 - [x] **Track: Player avatar system: base, equipment fit, pack, composer**
@@ -349,6 +346,9 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
   *Link: [./tracks/riven_fx_geometry_20261009/](./tracks/riven_fx_geometry_20261009/)*
 
 ## Archived Tracks
+
+- [x] Storytime Level 2 card pictures (31 cards), completed 2026-11-06; 29 of 31 cards delivered (58 files) with Sonnet judge evidence (model evidence, not acceptance); delivered, awaiting Workbooks check; the ham and family line art failed after 3 tries; spend 0.74 USD.
+  *Link: [./archive/asset_storytime_l2_cards_20261106/](./archive/asset_storytime_l2_cards_20261106/)*
 
 - [x] Storytime Level 2 unit 1 book pictures and cover render, completed 2026-11-05; weeks 1 to 7 and the cover delivered and person-reviewed by Daniel; the 24 A-48 restart pictures (including week 8) delivered with Sonnet judge evidence (model evidence, not acceptance); restart spend 0.57 USD.
   *Link: [./archive/asset_storytime_l2_unit1_pictures_20261025/](./archive/asset_storytime_l2_unit1_pictures_20261025/)*

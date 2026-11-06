@@ -1,0 +1,45 @@
+Phase Accept P2 storytime_l2_cards
+audited_head: 15031cbefd3fe706169910df898fe09697959c7c (unchanged at the end of the run)
+family: checker Sonnet 5.5 equals the judge family; the checker audited the maker, the records, and the contact sheet.
+
+PROJECT_TESTS: Test Files  11 passed (11); Tests  155 passed (155)
+P2-1: pass (fresh sha256 ba3956fc...8ddf equals expected; record time 10:14:27Z before first cost row 10:15:28Z)
+P2-2: pass (both controls fail; time 10:20:40Z before first judge result 10:23:14Z; kit diff empty)
+P2-3: pass (29 delivered rows each with a judge pass and a width of 12 px or more; every earlier try has a confirmed fail or a width record)
+P2-4: pass (max tries per id and kind: 3)
+P2-5: pass (74 rows, sum 0.74, equals spend-record.txt; report point not reached)
+P2-6: pass (58 OK, 0 FAILED; delivery and handoff lists equal; 59 files; hashes equal delivery-record.txt)
+P2-7: FAIL (files checked: 58, problems: 22; all 22 are color files with a corner pixel below 250 under inspectPictureRow; 0 line art problems; line widths 12 to 28 px)
+P2-8: pass (31 labels, 29 tiles of 58 pictures, ham and family marked not delivered, no text on a picture, no wrong person seen)
+P2-9: pass (md5 mismatches: 0; 59 rows; 59 Drive names, no duplicate, no Untitled)
+P2-10: pass (every hit names the Muse path, approved.json, a negation, or 'Accepted Nit')
+P2-11: pass (0 files outside the allowed set; Workbooks status empty)
+P2-12: pass (10 of 10 pinned manifest prefixes equal)
+P2-13: pass (no secret; provider name OpenRouter appears in spec-review logs, see F3)
+operating rules a to f: pass
+  a: pass - every pool began below 1.20 USD (0.31 to 0.73) with concurrency 4 and --tries 1
+  b: pass - highest row cost 0.01 after each pool and in costs.tsv
+  c: pass - each maker log quotes refused lines: 0
+  d: pass - --tries 1 in every line run
+  e: pass - header has time and usage_cost; sum 0.74 equals spend-record.txt
+  f: pass - report point 0.80 never reached; no stop before the cap
+
+F1 [Blocker] phase-acceptance: P2-7 problems: 22 (class C white corners of the delivered color PNGs; bottom-left corner 244 to 249 against the 250 limit).
+F2 [Nit] phase-acceptance: plan task SHAs (Task 6 a0969f77, Task 7 29344ae4) do not name the commits that close those tasks.
+F3 [Nit] phase-acceptance: the provider name OpenRouter appears in spec-review logs; not a secret.
+
+dispositions: none
+
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: blocked
+track: asset_storytime_l2_cards_20261106
+phase: Phase 2: Card pictures and delivery
+commits: none
+tests_run: PROJECT_TESTS via heavy-run.sh pass (11 files, 155 tests); P2-1 to P2-6 and P2-8 to P2-13 pass; P2-7 fail (problems: 22); operating rules a to f pass
+files_changed: measure/runs/asset_storytime_l2_cards_20261106/acceptance-p2-15031cb.json, acceptance-p2-15031cb.log, and the scratch scripts acceptance-p2-15031cb-sizes.mts and acceptance-p2-15031cb-corners.mts (run folder only)
+plan_updates: none
+known_failures: F1 P2-7: 22 of 29 delivered color PNGs fail the class C white-corner rule of inspectPictureRow
+handoff: Decision needed. Question: do the 22 color files need a re-run or a record? Option A (default): ask Workbooks through the PM whether the class C corner rule (all four corners at 250 or higher) applies to card color files. The delivery writer did not enforce it for these files, and the corner values (244 to 249) are a faint shadow. If Workbooks says no, amend P2-7 and the plan text for the color corner and rerun acceptance on the new HEAD. Option B: the maker re-runs color and line for the 22 rows; the budget left is 0.86 USD against about 0.44 USD for 22 colors plus about 0.22 to 0.66 USD for the lines, and a new color needs a new judge pass. Option C: deliver as is and state the corner gap in pm-report.md. Acceptance must rerun on the new HEAD after any change. Nits F2 and F3 need no action.
+dispositions: none
+END_MEASURE_AGENT_RESULT

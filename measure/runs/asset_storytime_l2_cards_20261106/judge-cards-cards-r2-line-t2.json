@@ -1,0 +1,29 @@
+{
+  "group": "cards-r2-line-t2",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-06T10:42:31Z",
+  "results": [
+    {
+      "id": "l2-w04-card-ham",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-ham-line-t2.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole object in the center of the plate: a round wavy-edged disc with small dots reads as a pizza, pie, or cookie, not a slice of ham",
+      "notes": "Question page: no. Items: one slice of ham (1), a small white plate (1). Action: none. Seen: a wide round plate with a rim; on it one round wavy-edged flat disc with an inner outline and about ten small round dots. The plate is drawn and clear. The disc has no ham cue (no slice edge, no fat rim, no folded or cut look); at book size a young child would read it as a pizza, pie, or cookie. Color words (pink, white) cannot show in line art: note only. Black lines on white, no gray, no gaps, no text."
+    },
+    {
+      "id": "l2-w06-card-tomato",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-tomato-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: one tomato (1), a small green stem on top (1). Action: none. Seen: one round, slightly flat-topped fruit with two curved shade lines, a star-shaped calyx on top, a curved stem and one small leaf. One tomato, drawn, visible, reads as a tomato. Stem is long but clear. Color words (red, green) cannot show in line art: note only. Black lines on white, no gray, no gaps, no text."
+    }
+  ],
+  "summary": { "files": 2, "pass": 1, "fail": 1 }
+}

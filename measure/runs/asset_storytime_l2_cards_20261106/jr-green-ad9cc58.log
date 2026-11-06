@@ -1,0 +1,64 @@
+Plan evidence for this round: plan commit 128b6c125b625a5920d5baedbe524fb1b37fc02c.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 1: Card guard, card specs, and fixture
+phase_base_sha: 562c58007d21de4979a198d2c6dff79a84ac6ebc
+role_base_sha: ad9cc5887540e6254860329effe29ddb47d6a3f7
+resulting_head: 128b6c125b625a5920d5baedbe524fb1b37fc02c
+commits: |
+  5f344886 (round 1 implementation: 5 script files and 31 card specs),
+  29524b07 (round 1 plan evidence),
+  e7ad7baa (round 2 plan evidence, Task 3 done),
+  128b6c12 (SHA on the first line of the three Phase 1 tasks).
+tests_run: |
+  GREEN_TEST_COMMAND at `ad9cc588`:
+  `HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-card-guards.test.ts tests/storytime-card-specs.test.ts tests/storytime-card-fixtures.test.ts tests/storytime-muse-attempts.test.ts tests/storytime-judge-batch.test.ts tests/storytime-stage-check.test.ts --maxWorkers=1'`
+  exit 0, `Test Files  6 passed (6)`, `Tests  67 passed (67)`, no FAIL line, no skip.
+  Labeled split from round 1, unchanged since: N_new 26 (the three card files) and N_old 41 (the
+  three old files). 67 = 26 + 41.
+  Typecheck at round 1: `owned tsc errors: 8`, all inside the Red test files. Red round 2
+  `ad9cc588` fixed them and reported `owned tsc errors: 0` with 38 non-owned errors.
+static_gates: |
+  `git diff --name-only ad9cc588..HEAD -- tests` printed nothing, and neither Green commit
+  (`5f344886`, `29524b07`) holds a path under `tests/`.
+  `git diff --name-only 7af682db..HEAD -- tests/storytime-muse-attempts.test.ts tests/storytime-judge-batch.test.ts`
+  printed nothing.
+  `grep -rn 'wb-shadow' tests scripts src` printed nothing (exit 1).
+  `grep -rnF '2026-11-06T00:00:00Z' scripts tests` listed only `scripts/storytime-muse-guards.mjs`
+  line 42 and `tests/storytime-card-guards.test.ts` lines 12 and 113.
+  `git status --short` shows no change under `tests/`.
+mutation_check: |
+  Quoted from `jr-green-7d1cbdd.log`, measured at `5f344886` on the scratch copy
+  `/tmp/opencode/mut-5f344886` with the guards file alone: M1 `CARD_RUN.capUsd` 1.0 -> CG1, CG4;
+  M2 no mixed refusal -> CG10; M3 card spend scans every folder -> CG8; M4 `--cards` keeps
+  `RESTART_START` -> CG11; M5 `--cards` keeps the A-48 folder -> CG11; M6 card report point 0.5 ->
+  CG1, CG5; M7 `>` start compare -> CG7 (also CG4, CG5, CG6, CG8). The restored copy passed 11 of
+  11. The guard code did not change after that run, so the result carries over.
+files_changed: |
+  Round 1 `5f344886`: `scripts/storytime-muse-guards.mjs`, `scripts/storytime-muse-guards.d.mts`,
+  `scripts/storytime-muse.mjs`, `scripts/storytime-judge-batch.mjs`,
+  `scripts/storytime-judge-batch.d.mts`, and the 31 `docs/storytime/l2-unit1/cards/<id>.json`.
+  Round 1 `29524b07` and round 2 `e7ad7baa`: the track `plan.md` only.
+  No `out/` write. Spend 0.00 USD. No Muse or provider call.
+plan_updates: |
+  Task 1 `[x]` with Red SHA `7d1cbdd5`. Task 2 `[x]` with implementation `5f344886`. Task 3 `[x]`
+  with implementation `5f344886` and the round 2 note that Red `ad9cc588` fixed the train reference
+  and the test types. The eight prompt differences are recorded. The "Phase 1 gates" item stays
+  `[b]` with `deferred:measure-spec-review`.
+targeted_gate_output: |
+  `Test Files  6 passed (6)`
+  `Tests  67 passed (67)`
+  exit 0.
+handoff: |
+  Phase 1 code and specs are ready for the review roles. Review A and Review B should read
+  `scripts/storytime-muse-guards.mjs` (`CARD_RUN`, `isCardCall`, `isMixedCardCall`,
+  `scanCardCostFiles`, and the one decision point in `runGuards`), the notice line of
+  `scripts/storytime-muse.mjs`, and the `--cards` path of `scripts/storytime-judge-batch.mjs`. The
+  adversarial round has these surfaces: the `outDir` variant, the cap boundary, the time formats,
+  the mixed call, and the cost-row parse. The 31 spec files are new; Review A should check the
+  prompt differences recorded in Task 3. Task 1 to Task 3 are complete at `e7ad7baa`; the phase
+  gate is open for the review roles and phase acceptance.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,16 @@
+# Strategy amendment log (Phase 2, round 2): asset_storytime_l2_cards_20261106
+Role base: 15031cbefd3fe706169910df898fe09697959c7c. Date: 2026-11-06.
+Commit: a7d68714f0d3fd23c3dc7cb2123944911cefb397 (test-strategy.md only; 2 insertions, 1 deletion).
+
+MEASURE_AGENT_RESULT
+role: strategy
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 2: Card pictures and delivery (amendment round 2)
+commits: a7d68714
+tests_run: none (no heavy job; read-only)
+files_changed: measure/tracks/asset_storytime_l2_cards_20261106/test-strategy.md
+plan_updates: none (out of scope)
+known_failures: none
+handoff: P2-7 gate now holds size 1500 x 1500, 8-bit, no alpha, and the inspectLineArtPng checks (values 0 and 255, white edge frame, ink share, line width at least 12 px, no gray fill). The class C white-corner result of inspectPictureRow is a report item: the checker lists each color file below 250 with its lowest corner value and checks that pm-report.md and MANIFEST.txt name the same files and values; pass and falsification conditions adjusted. Section 8 has one row with the precedent evidence (28 of 80 earlier class C color files below 250, for example l2-w01-check-row-hat-v1.png at 246, person-reviewed by Daniel), the PM question, and the owner (orchestrator; Workbooks decides). Nothing else changed. Note for the checker: pm-report.md and MANIFEST.txt must name the 22 files with values, or P2-7 still fails on the report match. Questions: none.
+END_MEASURE_AGENT_RESULT

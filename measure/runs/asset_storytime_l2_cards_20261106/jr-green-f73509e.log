@@ -1,0 +1,130 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: partial
+track: asset_storytime_l2_cards_20261106
+phase: Phase 2: Card pictures and delivery
+phase_base_sha: cf6fb8dbaff9231aacf87aa6adffe3c0ab727b79
+role_base_sha: f73509e6e0bdab32f7064e56337c997da4123046
+resulting_head: 4c307cce48b79a9ee7a51c01c1ad465ade2faea0
+commits: |
+  4c307cce (measure(storytime_l2_cards): Phase 2 round 5, Task 6 closed, delivery blocked by
+  thin line art). The plan file alone is in the commit.
+dispositions: none
+judge_results_read: |
+  judge-cards-cards-r3-line-t3.json: 1 file, 0 pass, 1 fail. The ham line try 3 fails, class
+  wrong-or-missing-prop: the inner oval is filled edge to edge with wavy lines and no separate
+  slice of ham shows.
+  judge-cards-cards-r3-line-t3-ham-second.json: 1 file, 0 pass, 1 fail. The second judge fails the
+  ham line try 3 too, so the fail stands.
+  The ham row used its 3 line tries. Two judges failed each try. The row is reported, not
+  delivered. The other 30 rows hold a passing color (try 1) and a passing line: line try 1 for
+  28 rows, line try 2 for the tomato, and line try 1 for the goodbye.
+  Task 6 is complete.
+approval_list: |
+  file: out/storytime/l2/unit1/cards/muse/approved.json
+  entries: 30, one per delivered row, no ham row
+  every entry names colorPrint <id>-m1-color-print.png and linePrint <id>-m1-line-print.png
+  (the tomato names <id>-m1-line-print-2.png, the print of its line try 2)
+  no entry names a despeckled file
+  each entry names the judge result file that holds the pass of its color and its line
+  the picture list pin is ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf
+  print check: every named print file exists. Each line print was compared with a fresh resize of
+  the judged line file of the same try. The overlap is 0.966 to 0.997 for the 30 rows. The tomato
+  try 1 print scores 0.614 against the judged try 2 file, so the try numbers do not mix.
+pool: |
+  no Muse call ran in this round. No pool started, so no spend before a pool is quoted.
+costs: |
+  file: out/storytime/l2/unit1/cards/muse/costs.tsv
+  header: time row version kind inputs output size usage_cost note
+  rows: 65
+  spend usd: 0.65
+  highest row cost: 0.01
+  the file did not change in this round
+spend_record: |
+  measure/runs/asset_storytime_l2_cards_20261106/spend-record.txt
+  calls: 65
+  spend usd: 0.65
+  report point 0.80 reached: no
+delivery: |
+  command: node --import tsx scripts/storytime-book-pictures.ts deliver --list
+  /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json --approvals
+  out/storytime/l2/unit1/cards/muse/approved.json --muse out/storytime/l2/unit1/cards/muse
+  --delivery out/storytime/l2/unit1/cards/delivery-muse-v1
+  exit: 1
+  skipped lines: 197
+  delivered lines: 0
+  the writer refused before it wrote a file. The quote:
+  The Muse delivery stopped; nothing was written:
+  l2-w02-card-astronaut: line print l2-w02-card-astronaut-m1-line-print.png: Line-art twin lines
+  must be at least 12 px thick; measured 11 px.
+  The CLI cuts the message at 500 characters. The full list comes from the writer's own check:
+  rows checked: 30, rows below the 12 px minimum: 8
+  l2-w02-card-astronaut 11 px, l2-w01-card-goodbye 10 px, l2-w01-card-boy 11 px,
+  l2-w01-card-teacher 10 px, l2-w04-card-mom 9 px, l2-w04-card-sister 10 px,
+  l2-w04-card-grandpa 10 px, l2-w04-card-family 4 px
+  the other 22 rows pass the check
+  log: measure/runs/asset_storytime_l2_cards_20261106/deliver-cards-r1.log
+  widths: measure/runs/asset_storytime_l2_cards_20261106/delivery-line-widths.txt
+  The delivery folder out/storytime/l2/unit1/cards/delivery-muse-v1/ does not exist. The writer
+  refuses a different manifest.json, so a partial delivery would block the full delivery later.
+  The maker wrote no partial delivery.
+not_done: |
+  The handoff folder /home/daniebo/Desktop/handoff/storytime-l2-card-pictures/ does not exist.
+  MANIFEST.txt, the contact sheet, and delivery-record.txt were not written, because they need
+  the delivered files.
+operating_rules: |
+  a: no pool ran in this round, so no concurrency flag was used.
+  b: no pool ran, so no new row was read. The cost file holds 65 rows and 0.65 USD.
+  c: no pool ran, so no refusal line was read. The delivery writer output was read and its
+  refusal was recorded.
+  d: no line call ran in this round, so no --tries value was used.
+  e: nobody edited costs.tsv. Its header holds a time column and the usage_cost column.
+  f: the spend is 0.65 USD, below the report point of 0.80 USD. The maker stops only at the cap
+  of 1.60 USD.
+plan_updates: |
+  Task 6 is [x] with (a0969f77) on its first line. The note names the passing line try of each
+  delivered row and the fail of the ham row after its 3 tries. Task 7 is [~] and its deferred
+  field is gone. The Task 7 note records the refusal of the writer and the 8 rows with a stroke
+  width below 12 px, with the two evidence paths. No other plan item changed.
+deviations: |
+  The commit message names the blocker, not the delivery. The message of the brief said
+  "delivery of 30 cards (60 files)", but no delivery ran, so that message would be false.
+  The handoff folder, MANIFEST.txt, the contact sheet, and delivery-record.txt were not written,
+  because the delivery writer refused.
+files_changed: |
+  Committed in 4c307cce: measure/tracks/asset_storytime_l2_cards_20261106/plan.md only.
+  Written in the run folder and not committed: deliver-cards-r1.log,
+  delivery-line-widths.txt, and this log.
+  Written under out/ and not committed: out/storytime/l2/unit1/cards/muse/approved.json.
+  The throwaway scripts sit in /tmp/opencode/storytime-cards-prep/ and stay out of the
+  repository. No PNG file, no file under out/, no code file, no test file, and no judge kit file
+  changed.
+tasks: |
+  Flipped to [x]: Task 6, with the line tries of all 31 rows and the fail of the ham row.
+  Flipped to [b]: none.
+  Still [~]: Task 7. The delivery writer refused, so no file was delivered.
+handoff: |
+  The delivery is blocked. The writer refuses 8 line prints whose stroke width is 4 to 11 px.
+  The Workbooks picture specification and the delivery writer both ask for at least 12 px. The
+  maker cannot fix this with a local filter, because the delivered line art must be the judged
+  file and no local filter may make line art.
+  Question for the orchestrator, with the default of the maker: do the 8 rows get a new Muse
+  line try before the delivery, or does the delivery hold the 22 rows that pass? The maker
+  default is a new line try for the 8 rows, then one delivery of the whole set. A partial
+  delivery would change the manifest when the 8 rows are redone, and the writer refuses a
+  different manifest.json.
+  The fix path for the 8 rows, if the orchestrator agrees: one line try per row, 8 calls, about
+  0.08 USD, so the spend reaches about 0.73 USD. That stays below the report point of 0.80 USD
+  and below the cap of 1.60 USD. Each row used 1 line try, so 2 tries remain. A line prompt that
+  names a thick stroke is a spec change, so the orchestrator decides it. Each new try needs a
+  judge pass, and its print must measure at least 12 px.
+  The remaining steps of Task 7, in order, for the next round:
+  1. Make the agreed line tries and run the judge batch for them.
+  2. Write the approval list again, with the passing try of each row.
+  3. Run the delivery writer. The delivery folder is absent, so the writer writes the whole set.
+  4. Copy the delivered PNG files and manifest.json to the handoff folder.
+  5. Write MANIFEST.txt in the form of the a48 manifest, with the failed rows and the spend.
+  6. Write the contact sheet with 31 cells, 4 cells per row.
+  7. Write delivery-record.txt.
+  8. Mark Task 7 [x] with the commit SHA and the evidence.
+END_MEASURE_AGENT_RESULT

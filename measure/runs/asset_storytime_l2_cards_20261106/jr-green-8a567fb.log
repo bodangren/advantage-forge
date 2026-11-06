@@ -1,0 +1,69 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 1: Card guard, card specs, and fixture
+phase_base_sha: 562c58007d21de4979a198d2c6dff79a84ac6ebc
+role_base_sha: 8a567fb9a47134527e076855f2b891e37b312d2b
+resulting_head: a12329d972ff2649bc0d34d71e56c18f4e357153
+commits: |
+  e68b4b4f (fix: guards, guards types, muse CLI, fan spec),
+  a12329d9 (plan evidence, Task 2 SHA e68b4b4f).
+dispositions: F1=FIX; F2=FIX; F3=FIX; F4=FIX; F5=FIX
+tests_run: |
+  Green did not repeat the pre-fix state this round; the fix is pinned by the three mutations MF1
+  to MF3 below and by the passing gate.
+
+  GREEN_TEST_COMMAND after the fix:
+  `HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-card-guards.test.ts tests/storytime-card-specs.test.ts tests/storytime-card-fixtures.test.ts tests/storytime-muse-attempts.test.ts tests/storytime-judge-batch.test.ts tests/storytime-stage-check.test.ts --maxWorkers=1'`
+  exit 0, `Test Files  6 passed (6)`, `Tests  70 passed (70)`, no FAIL line, no skip.
+  Split: the guards file passed 14 of 14 (11 old + CG12, CG13, CG14). The other five files passed
+  56 of 56.
+
+  TYPECHECK_COMMAND: tsc exit 2, `tsc errors total: 38`, `owned tsc errors: 0`.
+
+  Old-contract gates: `git diff --name-only 7af682db..HEAD -- tests/storytime-muse-attempts.test.ts
+  tests/storytime-judge-batch.test.ts` printed nothing, and both files passed unchanged.
+  `git diff --name-only 8a567fb9..HEAD -- tests` printed nothing (Green changed no test).
+  `grep -rn 'wb-shadow' tests scripts src` printed nothing. `grep -rnF '2026-11-06T00:00:00Z'
+  scripts tests` listed only `scripts/storytime-muse-guards.mjs` line 45 and
+  `tests/storytime-card-guards.test.ts` lines 12 and 113.
+
+  Mutation self-check on the scratch copy `/tmp/opencode/mut-r3`, guards file alone (14 tests):
+  M1 `CARD_RUN.capUsd` 1.0 -> CG1, CG4, CG14; M2 no mixed refusal -> CG10; M3 card spend scans
+  every folder -> CG8, CG12, CG14; M4 `--cards` keeps `RESTART_START` -> CG11; M5 `--cards` keeps
+  the A-48 folder -> CG11; M6 card report point 0.5 -> CG1, CG5; M7 `>` start compare -> CG4, CG5,
+  CG6, CG7, CG8, CG12, CG14. New mutations: MF1 remove the `cards` skip -> CG12, CG14; MF2 restore
+  the exact string card match -> CG13; MF3 drop the projection -> CG14. The restored copy passed
+  14 of 14.
+files_changed: |
+  `scripts/storytime-muse-guards.mjs`, `scripts/storytime-muse-guards.d.mts`,
+  `scripts/storytime-muse.mjs`, `docs/storytime/l2-unit1/cards/l2-w02-card-fan.json`, and the track
+  `plan.md`. No file under `tests/`. No `out/` write. Spend 0.00 USD. No Muse or provider call.
+fixes: |
+  F1: `scanCostFiles` skips the direct child folder `cards`, so the restart cap never counts card
+  spend and the card cap never counts restart spend.
+  F2: `classifyOutDir` resolves each spec `outDir` against the repository root and returns `card`,
+  `restart`, or `invalid`. A card call is the resolved card folder. A restart call is
+  `<unit root>/<child>/muse` or its `elements` folder, and a spec without `outDir` uses the w01
+  default. Every other path, including `..` escapes and mutated names, is refused with exit 3,
+  before `readKey` and before any cost scan, and the message names the raw outDir.
+  F3: `runGuards` refuses a projected sum over the cap: `spend + (calls + cushion) * margin`, with
+  `calls` = specs for color and specs x tries for line, and `cushion` 1 for a color pool (the line
+  picture that follows each passing color) and 0 for a line pool. `scripts/storytime-muse.mjs` runs
+  the guard again before each call in the pool and stops starting calls after a refusal.
+  F4: the fan spec and its mustShow now say "a blue handle", like the list row.
+  F5: the notice line prints `guards.reportAt`; the CLI no longer recomputes the report point.
+    `CARD_RUN` stays imported and prints the card cap in the `card run:` line.
+plan_updates: |
+  Task 2 is `[x]` again, with `e68b4b4f` on its first line, plus the round 3 evidence and the
+  round 3 gate. Tasks 1 and 3 keep their `[x]` markers and first-line SHAs. The "Phase 1 gates"
+  item stays `[b]` with `deferred:measure-spec-review`.
+handoff: |
+  The three routed fixes and the two Nits are done at `a12329d9`. Re-review should read the new
+  `classifyOutDir` (contract: exact card folder, `<unit root>/<child>/muse` or `elements`, invalid
+  refused before any scan) and the projection formula in `runGuards` (color pool adds one margin).
+  The adversarial surfaces are now: the `..` escape, a mutated child name, a trailing slash, the
+  projected cap boundary at color 10 calls and line 4 calls, and the per-call re-check in the pool.
+  The measured results carry over to `a12329d9`: the only file after `e68b4b4f` is the track plan.
+END_MEASURE_AGENT_RESULT

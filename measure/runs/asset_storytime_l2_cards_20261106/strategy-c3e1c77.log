@@ -1,0 +1,16 @@
+# Strategy amendment log (Phase 2): asset_storytime_l2_cards_20261106
+Role base: c3e1c77f855429fa6a90658561f538c9500bcf9f. Date: 2026-11-06.
+Commits: 15ce05991b70ef27f5db122a4ed38176fccd6f37 (the amendment) and 15031cbefd3fe706169910df898fe09697959c7c (removes one clause that I added without evidence). Each holds only test-strategy.md.
+
+MEASURE_AGENT_RESULT
+role: strategy
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 2: Card pictures and delivery (amendment)
+commits: 15ce0599, 15031cbe
+tests_run: none (no heavy job; read-only)
+files_changed: measure/tracks/asset_storytime_l2_cards_20261106/test-strategy.md
+plan_updates: none (out of scope)
+known_failures: none
+handoff: P2-3 now defines a delivered try as the first try with a judge pass (main pass, or a main fail that the second judge does not confirm) and a line print of at least 12 px by inspectLineArtPng; each earlier try is a confirmed judge fail or a print below 12 px recorded in delivery-line-widths*.txt; pass and falsification conditions adjusted. P2-4 allows a line try after a width fail inside the 3-try cap. P2-6 expects 58 files (62 - 2 x 2 failed rows, l2-w04-card-ham and l2-w04-card-family; a failed row drops both files). P2-9 expects 59 rows (58 PNG files and manifest.json). Section 8 has one row for the width rule (orchestrator decision 2026-11-06; owner orchestrator). Nothing else changed. Questions: none.
+END_MEASURE_AGENT_RESULT

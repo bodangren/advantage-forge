@@ -1,0 +1,107 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: partial
+track: asset_storytime_l2_cards_20261106
+phase: Phase 2: Card pictures and delivery
+phase_base_sha: cf6fb8dbaff9231aacf87aa6adffe3c0ab727b79
+role_base_sha: 30318176c9576d3997a375289640a6ad08fed5a0
+resulting_head: f73509e6e0bdab32f7064e56337c997da4123046
+commits: |
+  f73509e6 (measure(storytime_l2_cards): Phase 2 round 4, ham line try 3).
+dispositions: none
+judge_results_read: |
+  judge-cards-cards-r2-line-t1.json: 1 file, 1 pass. The goodbye line try 1 passes.
+  judge-cards-cards-r2-line-t2.json: 2 files, 1 pass, 1 fail. The tomato line try 2 passes. The
+  ham line try 2 fails, class wrong-or-missing-prop: the round 3 picture shows a round
+  wavy-edged disc with small dots that reads as a pizza, a pie, or a cookie.
+  judge-cards-cards-r2-line-t2-ham-second.json: 1 file, 0 pass, 1 fail. The second judge fails the
+  ham line try 2 too, so the fail stands.
+  30 cards hold a passing color and a passing line. Only the ham is open, and the ham line try 3
+  is the last line try.
+spec_changes: |
+  Only the linePrompt changed in docs/storytime/l2-unit1/cards/l2-w04-card-ham.json. The four
+  sentences of round 3 left the prompt. The ordered sentences of the orchestrator decision of
+  2026-11-06 entered: the slice as the main shape that fills most of the plate, the top face, the
+  thick side band, the wide pale fat rim band, three or four long curved grain lines that end on
+  the fat rim, the rule that no dots and no small circles show, and the plate as one thin ring.
+  The thick-line rule, the "pure white" rule, the "no gray" rule, and the no-text rule stay in
+  the prompt. The global ban sentence "No fine detail, no shading, no gray, no texture lines, no
+  text." stays, as in the house style of the a48 specs, and the specific later sentences govern.
+  The card spec test passed after the change: Test Files 1 passed (1), Tests 10 passed (10), exit
+  0. The command was:
+  HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c
+  './node_modules/.bin/vitest run tests/storytime-card-specs.test.ts --maxWorkers=1'
+pool: |
+  spend before pool: 0.64
+  command: node scripts/storytime-muse.mjs line docs/storytime/l2-unit1/cards/l2-w04-card-ham.json --from 1 --tries 1
+  flags: --from 1 --tries 1
+  the command names no --concurrency flag, so the tool used its default of 4 workers. One spec
+  means one call, so one worker ran it.
+  exit: 0
+  ok lines: 1
+  failed lines: 0
+  error lines: 0
+  refused lines: 0
+  the pool made the ham line try 3
+  log: measure/runs/asset_storytime_l2_cards_20261106/line-pool-r3.log
+costs: |
+  file: out/storytime/l2/unit1/cards/muse/costs.tsv
+  header: time row version kind inputs output size usage_cost note
+  rows: 65
+  spend usd: 0.65
+  highest row cost: 0.01
+  rows above 0.03 USD: 0
+  new row in this round: 1 line row, cost 0.01, note redo 3,
+  output l2-w04-card-ham-m1-line-3.png
+  ham line rows: 3, the last line try of that card
+  line rows: 34, color rows: 31
+spend_record: |
+  measure/runs/asset_storytime_l2_cards_20261106/spend-record.txt
+  calls: 65
+  spend usd: 0.65
+  report point 0.80 reached: no
+batches: |
+  ham line try 3: docs/storytime/l2-unit1/judge/prod/cards-r3-line-t3.json
+  judge copy: out/storytime-review/judge/prod/l2-w04-card-ham-line-t3.png, 360 x 360 px
+  the copy was compared with a fresh resize of the three candidate sources. It matches
+  l2-w04-card-ham-m1-line-3.png and matches neither the try 1 file nor the try 2 file.
+  judge batch log: measure/runs/asset_storytime_l2_cards_20261106/judge-batch-r3-line-t3.log
+operating_rules: |
+  a: the recorded card spend was 0.64 USD, below 1.20 USD, so the pool ran with the tool default
+  of 4 workers and one spec. The log names the spend before the pool and the flags of the pool.
+  b: after the pool every new row of out/storytime/l2/unit1/cards/muse/costs.tsv was read.
+  highest row cost: 0.01. No row is above 0.03 USD, so the maker did not stop.
+  c: the output of the run was read for a refusal line. refused lines: 0.
+  d: the line pool used --tries 1. The value is 1, so it is inside the set 1, 2, 3.
+  e: nobody edited costs.tsv. Its header holds a time column and the usage_cost column.
+  f: the spend is 0.65 USD, below the report point of 0.80 USD. The run continued. The maker stops
+  only at the cap of 1.60 USD.
+plan_updates: |
+  Task 6 holds a new note on the ham line prompt change. The note names the orchestrator decision
+  of 2026-11-06, the fail of the ham line try 2 by two judges, the sentences that left the
+  prompt, and the sentences that entered it. Task 6 keeps its [~] marker. No other plan item
+  changed.
+files_changed: |
+  Committed in f73509e6: docs/storytime/l2-unit1/cards/l2-w04-card-ham.json,
+  docs/storytime/l2-unit1/judge/prod/cards-r3-line-t3.json, and
+  measure/tracks/asset_storytime_l2_cards_20261106/plan.md.
+  Written in the run folder and not committed: spend-record.txt, line-pool-r3.log,
+  judge-batch-r3-line-t3.log, and this log.
+  No PNG file, no file under out/, no code file, and no test file changed. The judge kit is
+  unchanged.
+tasks: |
+  Flipped to [x]: none.
+  Flipped to [b]: none.
+  Still [~]: Task 6. The ham line try 3 has no judged result yet, so no card is delivered.
+handoff: |
+  The orchestrator runs the judge batch
+  docs/storytime/l2-unit1/judge/prod/cards-r3-line-t3.json with its one file. The maker did not
+  rate any picture and did not run a judge.
+  The ham line try 3 is the last line try of that card. A fail means the ham row fails after its
+  tries, and the report names the ham row with its best try. The report then names the delivery
+  without the ham line file.
+  The card spend is 0.65 USD, below the report point of 0.80 USD and below the cap of 1.60 USD.
+  The next round holds Task 7, the delivery folder, the handoff folder, the manifest, and the
+  contact sheet.
+  The ham line try 3 file is at out/storytime/l2/unit1/cards/muse/l2-w04-card-ham-m1-line-3.png.
+END_MEASURE_AGENT_RESULT

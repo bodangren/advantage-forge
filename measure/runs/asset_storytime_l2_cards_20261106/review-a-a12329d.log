@@ -1,0 +1,58 @@
+Review A round 2 (correctness and architecture), track asset_storytime_l2_cards_20261106
+Phase: Phase 1: Card guard, card specs, and fixture
+phase_base_sha: 562c58007d21de4979a198d2c6dff79a84ac6ebc
+audited_head_sha / role_base_sha: a12329d972ff2649bc0d34d71e56c18f4e357153
+Scope: 128b6c12..a12329d9 (remediation for review-b F1 to F3 and F4, F5).
+Round 1: measure/runs/asset_storytime_l2_cards_20261106/review-a-128b6c1.json (pass, RA-1 to RA-6).
+
+Work log:
+- git rev-parse HEAD = a12329d9, equal to audited_head_sha. The audit is current.
+- git diff 128b6c12..a12329d9 lists 6 files: the fan spec, plan.md, the guards module and its
+  types, the muse CLI, and the guards test.
+- Read the guards module, the muse CLI, the guards test, spec.md, test-strategy.md and plan.md.
+- Probed the live classifyOutDir and runGuards modules with node. No provider call. No key read.
+- Ran GREEN_TEST_COMMAND once. Result: exit 0, Test Files 6 passed (6), Tests 70 passed (70).
+- Counted strict it( lines: 14, 10, 5, 30, 8, 3. N_new 29, N_old 41, sum 70. Matches the gate.
+
+Fix checks:
+- F1: scanCostFiles skips the direct child cards (guards:209). CG12 proves both directions.
+- F2: classifyOutDir resolves outDir against the module root and refuses unknown folders before
+  readKey. CG13 proves the refusal, the CLI exit 3, the default outDir and the trailing slash.
+- F3: runGuards projects spend + (calls + cushion) x margin. CG14 pins the color and line
+  boundaries. The CLI re-checks before each pool item (muse.mjs:414).
+- F4: the fan spec says a blue handle, the list row says the same. RA-5 fixed.
+- F5: the notice line prints guards.reportAt (muse.mjs:410). RA-1 fixed.
+
+Restart path:
+- All 17 distinct outDir values in docs/storytime classify as card or restart.
+- Week, cover and elements outDirs classify restart. A spec without outDir uses the w01 default
+  in both modules (guards:63, muse.mjs:27). The restart scan still reads their cost files.
+
+Pool re-check:
+- It runs before each pool item and returns without a call on refusal. It reads costs.tsv from
+  disk each time, so spend cannot double count.
+- For cmd line one re-check precedes up to tries concurrent calls (muse.mjs:256-290).
+- A mid-pool refusal prints and returns. The process then exits 0 (muse.mjs:433-436).
+
+Color cushion vs the routed F3 rule:
+- Line pools match spend + calls x margin > cap exactly.
+- Color pools add one margin. They refuse a superset of the rule and never allow more.
+- CG4 spendGuard boundaries 1.30, 1.58, 1.595 and 1.60 are unchanged and pass.
+- The comment reason (one line picture after each passing color) does not match one margin for
+  N colors. The line invocation gates itself, so no gap results.
+
+New findings: RA2-1 to RA2-6. Carried round-1 Nits: RA-2, RA-3, RA-4, RA-6. RA-1 and RA-5 fixed.
+Status: pass. Blocking findings: none.
+
+MEASURE_AGENT_RESULT
+role: measure-review-a-correctness
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 1: Card guard, card specs, and fixture
+commits: 96a581a0, e68b4b4f, 8a567fb9, a12329d9
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-card-guards.test.ts tests/storytime-card-specs.test.ts tests/storytime-card-fixtures.test.ts tests/storytime-muse-attempts.test.ts tests/storytime-judge-batch.test.ts tests/storytime-stage-check.test.ts --maxWorkers=1' -> exit 0, Test Files 6 passed (6), Tests 70 passed (70)
+files_changed: none (report only); audit reads scripts/storytime-muse-guards.mjs, scripts/storytime-muse.mjs, tests/storytime-card-guards.test.ts, spec.md, test-strategy.md, plan.md
+plan_updates: none; result written to measure/runs/asset_storytime_l2_cards_20261106/review-a-a12329d.json
+known_failures: none; the gate is green at 70 of 70. Two Major findings (RA2-1, RA2-2) and eight Nits are listed for routing.
+handoff: RA2-1 is a spend hole: an outDir of <unit>/cards/muse/elements classifies as restart, but no scan reads it after the cards skip (probe: 5.00 USD row, refused false, spend 0). RA2-2 is a stale spec.md section Guard interaction. The color cushion is sound and fail-closed; it never allows what the routed rule forbids. RA-1 and RA-5 are fixed. RA-2, RA-3, RA-4 and RA-6 carry over unchanged.
+END_MEASURE_AGENT_RESULT

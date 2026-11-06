@@ -1,0 +1,88 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: partial
+track: asset_storytime_l2_cards_20261106
+phase: Phase 2: Card pictures and delivery
+phase_base_sha: cf6fb8dbaff9231aacf87aa6adffe3c0ab727b79
+role_base_sha: cf6fb8dbaff9231aacf87aa6adffe3c0ab727b79
+resulting_head: e872a8aae8a158c53c4b1da4c959bb4025e3b9ab
+commits: |
+  e872a8aa (measure(storytime_l2_cards): Phase 2 round 1, color try 1 and judge batches).
+dispositions: none
+precondition: |
+  workbooks list sha256: ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf
+  expected sha256: ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf
+  match: yes
+  time: 2026-11-06T10:14:27Z
+  command: sha256sum /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json
+  record: measure/runs/asset_storytime_l2_cards_20261106/precondition-workbooks-list.txt
+pool: |
+  spend before pool: 0.00
+  command: node scripts/storytime-muse.mjs color docs/storytime/l2-unit1/cards/*.json --concurrency 4
+  flags: --concurrency 4
+  exit: 0
+  ok lines: 31
+  failed lines: 0
+  error lines: 0
+  refused lines: 0
+  log: measure/runs/asset_storytime_l2_cards_20261106/color-pool-r1.log
+costs: |
+  file: out/storytime/l2/unit1/cards/muse/costs.tsv
+  header: time row version kind inputs output size usage_cost note
+  rows: 31
+  spend usd: 0.31
+  highest row cost: 0.01
+  rows above 0.03 USD: 0
+  ids without an ok color row: none
+spend_record: |
+  measure/runs/asset_storytime_l2_cards_20261106/spend-record.txt
+  calls: 31
+  spend usd: 0.31
+  report point 0.80 reached: no
+batches: |
+  calibration: docs/storytime/l2-unit1/judge/prod/cards-calibration.json
+  calibration entries: 2 (l2-w01-story-page-a-nose line, l2-w03-story-page-nan-can-get-a-pan line)
+  color try 1: docs/storytime/l2-unit1/judge/prod/cards-r1-color.json
+  color try 1 entries: 31, all kind color, all use card
+  judge copies: out/storytime-review/judge/prod/<id>-color-t1.png, 31 files at 360 x 360 px
+  judge batch log: measure/runs/asset_storytime_l2_cards_20261106/judge-batch-r1-color.log
+operating_rules: |
+  a: the recorded card spend was 0.00 USD, below 1.20 USD, so the pool ran with --concurrency 4.
+  The log names the spend before the pool and the flags of the pool.
+  b: after the pool every new row of out/storytime/l2/unit1/cards/muse/costs.tsv was read.
+  highest row cost: 0.01. No row is above 0.03 USD, so the maker did not stop.
+  c: the output of the run was read for a refusal line. refused lines: 0.
+  d: no line call ran in this round, so no --tries value was used.
+  e: nobody edited costs.tsv. Its header holds a time column and the usage_cost column.
+  f: the spend is 0.31 USD, below the report point of 0.80 USD. The run continued. The maker
+  stops only at the cap of 1.60 USD.
+plan_updates: |
+  The "Phase 1 gates" item is [x] with (cf6fb8db) on its first line and the evidence path
+  measure/runs/asset_storytime_l2_cards_20261106/phase-acceptance-cf6fb8d.json.
+  Task 4 and Task 5 are [~] and their deferred fields are gone. No other plan item changed.
+  The Phase 1 heading now holds [checkpoint: cf6fb8db]. The measure guard denied the Phase 2
+  marker without it. The value is the HEAD of the Phase 1 acceptance record.
+files_changed: |
+  Committed in e872a8aa: measure/tracks/asset_storytime_l2_cards_20261106/plan.md,
+  docs/storytime/l2-unit1/judge/prod/cards-calibration.json, and
+  docs/storytime/l2-unit1/judge/prod/cards-r1-color.json.
+  Written in the run folder and not committed: precondition-workbooks-list.txt,
+  spend-record.txt, color-pool-r1.log, judge-batch-r1-color.log, and this log.
+  No PNG file, no file under out/, and no code file changed.
+tasks: |
+  Flipped to [x]: the Phase 1 gates item, with the Phase 1 acceptance record at cf6fb8db.
+  Flipped to [b]: none.
+  Still [~]: Task 4 and Task 5. The orchestrator runs the judge, so Task 4 has no verdict yet.
+  Task 5 has no judged color picture yet, so no card is delivered.
+handoff: |
+  The orchestrator runs two judge batches. First the calibration batch
+  docs/storytime/l2-unit1/judge/prod/cards-calibration.json. Both controls must fail. A control
+  that passes stops the track and the maker reports to the PM. Second the color batch
+  docs/storytime/l2-unit1/judge/prod/cards-r1-color.json with its 31 files. The maker did not
+  rate any picture and did not run a judge.
+  After the judge result, the next round makes the line calls for each passing color. The card
+  spend is 0.31 USD, so the next line pool runs with --concurrency 4 below 1.20 USD. Rule d
+  limits --tries to 1, 2, or 3.
+  The 31 color pictures are at out/storytime/l2/unit1/cards/muse/<id>-m1-color.png. The judge
+  copies are at out/storytime-review/judge/prod/<id>-color-t1.png.
+END_MEASURE_AGENT_RESULT

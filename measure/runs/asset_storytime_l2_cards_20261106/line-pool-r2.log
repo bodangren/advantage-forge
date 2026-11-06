@@ -1,0 +1,5 @@
+card run: cap 1.6 USD
+l2-w01-card-goodbye-m1 line try 1 ok 1600x1600 cost 0.01
+l2-w04-card-ham-m1 line try 2 ok 1600x1600 cost 0.01
+l2-w06-card-tomato-m1 line try 2 ok 1600x1600 cost 0.01
+running total muse: 0.6400 USD

@@ -1,0 +1,20 @@
+{
+  "group": "cards-r2-line-t2-ham-second",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-06T10:43:34Z",
+  "results": [
+    {
+      "id": "l2-w04-card-ham",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-ham-line-t2.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole center of the plate: the single wavy-edged round blob with small circles inside reads as a pizza, pie, or cookie, not a slice of ham",
+      "notes": "Question page: no. Items: one slice of ham (1), a slice of pink ham (1), a small white plate (1). Action: none. Seen: a wide oval plate with a double rim; on it one round blob with a wavy outline, a second inner outline, and about ten small empty circles scattered inside. The plate is drawn and reads as a plate. The blob has no ham cue: no marbled fat rim, no folded or flat deli-slice shape, no tied or cut edge. At book size it reads as a pizza, a pie, or a cookie with chips. A young child would not know it as the word ham. Cast: no characters on this card. Line art: black lines on white, no gray, no shading, no line gaps, no text. Color of the ham (pink) cannot be judged in line art and is not part of the fail. The fail is the ham slice reading as a different food."
+    }
+  ],
+  "summary": { "files": 1, "pass": 0, "fail": 1 }
+}

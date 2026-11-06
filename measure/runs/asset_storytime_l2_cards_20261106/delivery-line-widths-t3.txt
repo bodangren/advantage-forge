@@ -1,0 +1,6 @@
+measured with inspectLineArtPng of src/storytime/book-pictures.ts on the line try 3 print
+rows checked: 1
+rows below the 12 px minimum: 1
+rows that pass the width check: (none)
+
+l2-w04-card-family l2-w04-card-family-m1-line-print-3.png width px: 7 result: fail

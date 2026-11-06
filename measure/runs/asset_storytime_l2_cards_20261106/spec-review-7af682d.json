@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Round 2 review at 7af682db. F1, F2, and F3 are fixed, and F4 is withdrawn after a re-read. Task 2 now names the judge-batch input shape (a new --cards flag, the folder docs/storytime/l2-unit1/cards, and the try count from CARD_RUN), so F1 is withdrawn. The card run values have one owner, the exported constant CARD_RUN in scripts/storytime-muse-guards.mjs, and the muse tool and the judge batch script import it, so F2 is withdrawn. The card spec test reads tests/fixtures/storytime/pictures-v7.json and the live Workbooks SHA-256 check moved to a Task 5 shell precondition, so F3 is withdrawn. The whole plan holds no open schema, CLI, dependency, edge-case, or file-location choice that a Blocker covers. One new Nit (F5) covers the two record artifacts that have no named path; it does not change what the implementer builds. Round 1 facts that the revision did not touch stand from spec-review-ac5acf0.json. measure/anti-patterns.md does not exist in this repository; the reviewer ran the standard's checks without it.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F5 [Nit] spec.md Judge and plan.md Task 4 and Task 9: The calibration record and the PM report record have no named file path; the spec says the maker 'records the result' and Task 4 says 'record the result file'. Rationale: The run folder measure/runs/asset_storytime_l2_cards_20261106/ owns these records, so the maker picks only a file name inside a named folder; the choice changes no delivered picture, test, or script."
+  ],
+  "evidence": [
+    "HEAD equals the audited head 7af682db1d2b572d8cf46ed5cc58ec3aa244b6a4.",
+    "F1 withdrawn: spec.md FR-4 and plan.md Task 2 name the CLI shape of the judge batch card input: one new flag --cards, the spec folder docs/storytime/l2-unit1/cards, the try count from CARD_RUN, and the unchanged path without the flag (SPEC_DIR of the A-48 folder and RESTART_START).",
+    "F2 withdrawn: spec.md 'Card run constant' defines one exported constant CARD_RUN (startTime, capUsd, reportAtUsd, marginUsd, maxTries, outDir) in scripts/storytime-muse-guards.mjs, with types in scripts/storytime-muse-guards.d.mts. Both files exist. The spec names scripts/storytime-muse.mjs and scripts/storytime-judge-batch.mjs as the only importers and names an acceptance search for a second copy.",
+    "F2 evidence on the start time: CARD_RUN.startTime 2026-11-06T00:00:00Z is later than the newest restart cost row 2026-11-05T03:32:05.918Z in out/storytime/l2/unit1/w01/muse/costs.tsv (orchestrator evidence, 2026-11-06), so card tries do not read restart rows.",
+    "F3 withdrawn: spec.md FR-3 and plan.md Task 3 fix the fixture file name tests/fixtures/storytime/pictures-v7.json with SHA-256 pin ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf, state that a mismatch is a hard failure, and state that no test reads a path outside the repository. The live Workbooks check moved to a Task 5 shell step, which defines the absent-file case (stop and report to the PM).",
+    "F3 fixture state: tests/fixtures/storytime/ does not exist yet at this head, so pictures-v3.json and pictures-v7.json are created by Task 1 and Task 3 as the plan states.",
+    "F4 withdrawn: plan.md lines 25-31 and 51-53 state the [b] meaning, the owner that clears each blocker (Gate S for Tasks 1 to 3, Phase 1 acceptance for Tasks 4 to 9), and the reason the doctor still passes; the reviewer accepts the documented convention.",
+    "The v3 fixture source SHA-256 c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b matches the orchestrator evidence and the spec.",
+    "Zero-decision re-check over the whole plan: schema (the spec JSON form and the CARD_RUN shape with a types file), CLI shape (--cards, exit code 3 for a mixed call), dependency (no new dependency; the Muse path, the frozen judge kit, and the gws CLI are reused), edge cases (mixed call exit 3, rows before startTime not counted, a fourth try refused, a cost-0 call not a try, absent /tmp/opencode path, SHA mismatch, absent live Workbooks file, report point continues), and file locations (tests/storytime-card-guards.test.ts, tests/storytime-card-specs.test.ts, both fixtures, docs/storytime/l2-unit1/cards/<id>.json, the delivery folder, the handoff folder, the Drive TSV).",
+    "The judge batch behavior for an empty or absent card spec folder in Task 2 is covered by the existing SPEC_DIR handling, so the plan leaves no new choice there.",
+    "Round 1 facts that the revision did not touch stand from measure/runs/asset_storytime_l2_cards_20261106/spec-review-ac5acf0.json: 227 list rows, 31 card rows with the week counts, the 13 reference paths, the guard and judge script behavior, the MANIFEST form, and the two gate controls.",
+    "measure/anti-patterns.md does not exist in this repository; the reviewer proceeded without it on the orchestrator ruling of 2026-11-06."
+  ],
+  "commands": [
+    "python3 /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py role-gate --repo /home/daniebo/Desktop/advantage-forge --role spec-review --track asset_storytime_l2_cards_20261106 --phase 'track setup' --baseline 7af682db1d2b572d8cf46ed5cc58ec3aa244b6a4 --result-file measure/runs/asset_storytime_l2_cards_20261106/spec-review-7af682d.json --log-file measure/runs/asset_storytime_l2_cards_20261106/spec-review-7af682d.log (PASS, exit 0)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_cards_20261106/spec-review-7af682d.json",
+    "measure/runs/asset_storytime_l2_cards_20261106/spec-review-7af682d.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "paraphrase": {
+    "proposes": "The track draws the 31 card rows that list v7 adds to the Storytime Level 2 print list. Each card needs a color picture and a line-art picture, so the track delivers 62 files at 1500 x 1500 px. It reuses the approved Storytime Muse path, the frozen Sonnet judge kit, and the week delivery form, and it adds one card run constant CARD_RUN to the guard module. It also moves the T180 version 3 list fixture into tests/fixtures/storytime/pictures-v3.json and pins list v7 as tests/fixtures/storytime/pictures-v7.json. The spend cap is 1.60 USD, the delivery is model evidence only, and Workbooks checks the cards after delivery.",
+    "current_system": "The closed unit 1 track holds the Muse path: scripts/storytime-muse.mjs calls meta/muse-image through OpenRouter and writes the print file to the spec outDir. scripts/storytime-muse-guards.mjs scans every costs.tsv below out/storytime/l2/unit1/, and it enforces 3 tries per id and kind against a 1.00 USD restart cap that counts rows since 2026-11-04T07:54:00Z. scripts/storytime-judge-batch.mjs builds judge batches for the A-48 specs with a fixed SPEC_DIR and a 360 px long side for a card, and its parseArgs takes only --ids, --kind, --try, and --out. The delivery form is the StorytimeManifest object in src/storytime/book-pictures.ts with the MANIFEST.txt form of the week handoff. Two tests read the version 3 list from /tmp/opencode/wb-shadow, and that path is not in git."
+  }
+}

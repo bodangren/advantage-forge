@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "summary": "All executable gates pass at 895c65c8 (HEAD unchanged during the run): PROJECT_TESTS 11 files and 155 tests, owned tsc errors 0, known-red rule met, static gates 2 to 5 clean, own files outside the allowed set 0, Reviews A and B and the adversarial round have no open blocker, and no code or test file changed after the reviewed code at 91b2a1ca. The phase fails on one record-keeping blocker: the accepted Nits of Reviews A and B, and one prompt difference of the train card (RA-6), are not recorded in test-strategy.md section 8 or in the plan note of Task 3. The fix is a Measure-only commit; the carry-over rule of section 4.4 then allows a cheap rerun.",
+  "blocking_findings": [
+    "F1 [Blocker] phase-acceptance: Accepted Nits RA-2, RA-3, RA-4, RA-6, RA3-2, RB-4, RB-5, RB-6, RB2-2, RB2-3, and RB2-4 have no row in test-strategy.md section 8, and RA-6 has no entry in the plan note of Task 3. Rationale: the Phase 1 contract requires that every accepted Nit is recorded in section 8, and gate 7 requires that the plan note records any other prompt difference. Section 8 holds only ADV-N3 to ADV-N6, RA2-5, RB2-1, and the spec omissions (grep of the track folder for each id). The train spec l2-w07-card-train.json:11 adds the mustShow phrase 'four small wheels'. The list row and plan.md hold no such phrase. Fix: add one section 8 row for each accepted Nit with its default and owner, and add the wheels phrase as a ninth prompt difference in the plan note (or remove the phrase). Owner: the orchestrator for the strategy, and the user or a build session for plan.md. Both are Measure-only edits."
+  ],
+  "nonblocking_findings": [
+    "F2 [Nit] phase-acceptance: RB2-1 (Review B, Major) has no code fix. Rationale: the in-flight cost of a paid pool is not visible to the per-call re-check. Strategy section 5.1 rule a and section 8 close it with operating rules (concurrency 1 and --tries 1 at or above 1.20 USD), and ADVC18 pins the file-only read. I accept this as non-blocking because the strategy records the decision. The Phase 2 checker must verify rules a to f, because they are the only control of this gap.",
+    "F3 [Nit] phase-acceptance: ./measure/doctor.sh (structural-only) reports 'asset_storytime_l2_cards_20261106/plan.md: in_progress track has no unchecked task'. Rationale: Tasks 1 to 3 are [x] and every remaining task is [b], and the doctor does not count [b]. The plan section 'Task markers' says the orchestrator changes [b] to [~] when a blocker clears. The error clears when the orchestrator marks the first Phase 2 task [~]. The spec acceptance criterion 'the doctor adds no error for this track' applies at closeout. The other doctor errors name other tracks.",
+    "F4 [Nit] phase-acceptance: The plan quotes '38 total' tsc errors (Task 3 amendment, Task 2 round 3 and 4 notes). Acceptance measured 37 total errors at 895c65c8 with 0 owned. Rationale: the total is informational in section 3, and the difference comes from errors outside the owned prefixes in a shared working tree. No gate reads the total. Record the measured value at closeout.",
+    "F5 [Nit] phase-acceptance: measure/runs/asset_storytime_l2_cards_20261106/mid-red-29524b0.log has an uncommitted edit (resulting_head and commits lines changed from 'pending commit' to ad9cc588), and 26 run records are untracked. Rationale: these are evidence files in the allowed run folder. The closeout commit must add them with explicit paths. No owned code, test, fixture, or spec path is dirty.",
+    "F6 [Nit] phase-acceptance: Section 4.5 says the checker reruns M1 to M7 and MF1 to MF4. This run did not rerun them. Rationale: the shell policy of this run denied the creation of a scratch mutation script. Gate 8 of section 4.2 asks only that the Green log quotes the result. The Green logs jr-green-ad9cc58.log, jr-green-8a567fb.log, and jr-green-5bdf307.log quote each mutation with the failing ids that section 4.5 requires, and the unmutated copy passed after each set. A closeout or a later acceptance can rerun them."
+  ],
+  "evidence": [
+    "HEAD check: git rev-parse HEAD printed 895c65c8d96755f64608f97acd8b07a24681daf0 at the start, in the middle, and at the end of the run. HEAD did not move.",
+    "PROJECT_TESTS (heavy-run.sh, 11 files, --maxWorkers=1): Test Files 11 passed (11); Tests 155 passed (155). This equals 105 old (7 files) + 30 new (guards 15, specs 10, fixtures 5) + 20 adversarial. The plan claim of 71 for the six-file aggregate equals 41 + 30.",
+    "TYPECHECK_COMMAND: tsc exit 2; owned tsc errors: 0 (no line under src/storytime/, scripts/storytime-, or tests/storytime-); tsc errors total: 37 (informational; the plan quotes 38).",
+    "KNOWN_RED_COMMAND and rule 4.4: pin set script sha256 f67cfa8f17d380cb7e6f7632612b8f56d5cba6793d642a90abf2b5c1fd4a3fe0 (lines 4764 to 4782 of the archive strategy); tests in the file: 142; pin-dependent tests: 13 T142,T143,T144,T145,T147,T148,T149,T150,T173,T174,T175,T176,T177; Tests 8 failed | 134 passed (142); known red failing tests: 8 (T142,T145,T147,T150,T173,T174,T176,T177), all inside the named set; known red failing tests outside the pin set: 0; FAIL lines without a test id: 0; drift sentinels T142,T147,T173,T174 failing: 4 of 4; T173 shadow-missing text: 0; skipped or todo: 0; book-pictures changed lines: 2 (one - and one +), both match LIST_V3_SHADOW_FILE or fixtures/storytime or dirname, no it( line changed; live list sha256 ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf differs from the v4 pin 6d05dfc5.",
+    "Gate 2: no Green commit touched tests/. Green commits 5f344886, e68b4b4f, and 91b2a1ca list no tests/ path (git diff-tree). The only change under tests/ after 3206662f is 6d80fba0, the adversarial Red-class commit.",
+    "Gate 3: git diff --name-only 7af682db..HEAD -- tests/storytime-muse-attempts.test.ts tests/storytime-judge-batch.test.ts printed nothing.",
+    "Gate 4: grep -rn 'wb-shadow' tests scripts src printed nothing (exit 1).",
+    "Gate 5: grep -rnF '2026-11-06T00:00:00Z' scripts tests lists scripts/storytime-muse-guards.mjs (1), tests/storytime-card-guards.test.ts (2), and tests/storytime-card-adversarial.test.ts (2). Search for cap and report assignments of 1.6 and 0.8 finds the guard module and card test files only.",
+    "Gate 6: owned tsc errors: 0 (see above).",
+    "Gate 7: the plan note of Task 3 records eight prompt differences (Nan buns, teddy, car, doll, train, goodbye, sad, background phrase). The RA-6 wheels phrase is missing (see F1).",
+    "Gate 8: Green logs quote M1 to M7 (jr-green-ad9cc58.log, jr-green-8a567fb.log) and MF1 to MF3 and MF4 (jr-green-8a567fb.log, jr-green-5bdf307.log) with the failing ids of section 4.5. Not rerun here (F6).",
+    "Allowed set (section 6): 19 non-merge commits since 7af682db, 48 unique files, all by Daniel Bo (one author); own files outside the set: 0. 413f38c4 touches test-strategy.md only. 895c65c8 touches spec.md only. git diff --name-only 7af682db..HEAD -- assets/fireball.ts out/fireball printed nothing.",
+    "Code freeze since review: the last change to scripts/ is 91b2a1ca, which Review A round 3 (review-a-787e846.json) and Review B round 3 (review-b-787e846.json) read at 787e846d. After 787e846d only tests/storytime-card-adversarial.test.ts (6d80fba0), test-strategy.md (413f38c4), and spec.md (895c65c8) changed.",
+    "Reviews and adversarial: review-a-128b6c1 pass; review-b-128b6c1 fail (RB-1 Blocker, RB-2 and RB-3 Major) fixed by Red 96a581a0 and Green e68b4b4f; review-a-a12329d pass (RA2-1 Major fixed by Red 3206662f and Green 91b2a1ca; RA2-2 fixed by spec 11ed8c05); review-a-787e846 pass; review-b-787e846 pass (RB2-1 Major, see F2); adversarial-testing-787e846 pass (ADV-N1 Major fixed by strategy 413f38c4). Blocking findings open: 0.",
+    "Fixtures: sha256 of tests/fixtures/storytime/pictures-v3.json is c3e23cfd...686b and of pictures-v7.json is ba3956fc...8ddf. Both equal git show of Workbooks commits 078917f1 and 95043edc. git check-ignore exit 1 for both (not ignored). docs/storytime/l2-unit1/cards holds 31 files and 0 names outside the pattern.",
+    "Plan: Tasks 1, 2, and 3 are [x] with SHAs 7d1cbdd5, 91b2a1ca, and 5f344886; every SHA exists in git log. The Phase 1 gates line stays [b] for the orchestrator.",
+    "Spec acceptance criteria of Phase 1: fixture and wb-shadow criterion (CF1 to CF5, grep clean, stage-check 3 of 3); guard criterion (CG1 to CG15, ADVC1 to ADVC20, restart attempts test unchanged and passing, single owner of CARD_RUN); spec criterion (CS1 to CS10 pass). Phase 2 criteria are out of scope for this gate.",
+    "FR-12 grep for 'accepted|approved' over the track folder and the card specs: all hits name the Muse path, a negation, the approved.json file name, or 'the approved character' (cast sheet wording in the boy and sad colorPrompt). No hit calls a picture, card, or delivery accepted.",
+    "A3, A4, A6, and A7 not applicable: the exact phase diff changes no contract test, filter, or tracks registry (measure/tracks.md not in the diff). A5 checked: the plan and strategy counts (71, 155, owned tsc 0) match the measured values; the 38 versus 37 total is F4.",
+    "Doctor (structural-only): 13 distinct error lines, 1 of them names this track (F3). The 11-error baseline lines name other tracks.",
+    "No Muse call, no provider call, and no read of the dashboard env file."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run <11 files> --maxWorkers=1' -> Test Files 11 passed (11), Tests 155 passed (155)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=6144 ./node_modules/.bin/tsc --noEmit' -> tsc exit 2, owned tsc errors: 0, total 37",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1' -> Tests 8 failed | 134 passed (142), known-red rule met",
+    "sed -n '4764,4782p' <archive strategy> | sha256sum -> f67cfa8f...; same lines | node --input-type=module - tests/storytime-book-pictures.test.ts -> 142 tests, 13 pin-dependent",
+    "git diff -U0 7af682db..HEAD -- tests/storytime-book-pictures.test.ts",
+    "git log --no-merges --format=%H 7af682db..HEAD with git diff-tree --no-commit-id --name-only -r <sha> (allowed-set filter)",
+    "git diff --name-only 7af682db..HEAD -- tests/storytime-muse-attempts.test.ts tests/storytime-judge-batch.test.ts",
+    "grep -rn 'wb-shadow' tests scripts src",
+    "grep -rnF '2026-11-06T00:00:00Z' scripts tests",
+    "sha256sum of both fixtures and of Workbooks git show 078917f1 and 95043edc",
+    "node measure/tools/doctor.mjs --structural-only --root .",
+    "grep of the track folder for accepted Nit ids"
+  ],
+  "changed_files": [],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_audit",
+  "confidence": "high"
+}

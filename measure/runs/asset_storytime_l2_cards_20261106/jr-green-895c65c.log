@@ -1,0 +1,29 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 1: Card guard, card specs, and fixture
+phase_base_sha: 562c58007d21de4979a198d2c6dff79a84ac6ebc
+role_base_sha: 895c65c8d96755f64608f97acd8b07a24681daf0
+resulting_head: cf6fb8dbaff9231aacf87aa6adffe3c0ab727b79
+commits: |
+  cf6fb8db (plan note only: Task 3 records the train wheels, RA-6).
+dispositions: F1=FIX
+tests_run: |
+  No test run. This round changed only the Task 3 note in the track `plan.md`. No code, no spec
+  JSON, and no file under `tests/` changed.
+files_changed: |
+  `measure/tracks/asset_storytime_l2_cards_20261106/plan.md` only. `git show --stat cf6fb8db` lists
+  one file. The commit used an explicit path; no `git add` ran, so a concurrent test-strategy
+  commit stayed out of it.
+fixes: |
+  F1 (green part): the "Prompt differences recorded" note of Task 3 holds a ninth item. The train
+  spec adds "four small black wheels" to the colorPrompt and "four small wheels" to mustShow. The
+  list prompt does not name the wheels. The week 7 toy sheet shows them. The phrase stays
+  (orchestrator decision 2026-11-06).
+plan_updates: |
+  Only the Task 3 prompt-difference note changed. Task markers and SHAs are unchanged.
+handoff: |
+  The Task 3 note now matches the train spec. The check is a read of the ninth item under "Prompt
+  differences recorded" in the plan. The rest of F1 belongs to the other roles.
+END_MEASURE_AGENT_RESULT

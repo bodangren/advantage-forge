@@ -1,0 +1,34 @@
+Review B (security) log - track asset_storytime_l2_cards_20261106, Phase 1: Card guard, card specs, and fixture
+phase_base_sha: 562c58007d21de4979a198d2c6dff79a84ac6ebc
+role_base_sha:   128b6c125b625a5920d5baedbe524fb1b37fc02c
+audited_head:    128b6c125b625a5920d5baedbe524fb1b37fc02c (confirmed by git rev-parse HEAD)
+
+Provisional verdict written first, then refined with empirical probes.
+
+Probes (scratch copy /tmp/opencode/rb-scratch/m2 from git archive HEAD, empty HOME, no key, no provider call):
+- Probe A: restart call with w01 spend 0.50 + card spend 0.60 -> refused, spend 1.1 (RB-1 confirmed: card rows leak into restart budget).
+- Probe B: exact outDir is card; trailing-slash/muse2/dot-dot are not; cards/muse2 with 5.00 USD -> refused=false, spend=0, run=restart (RB-2 confirmed: unscanned variant bypasses both caps).
+- Probe C: CLI with empty HOME; guard-then-readKey order confirmed; variant outDir created by loadSpec; no costs.tsv without a provider call.
+
+Secret scan: git diff 562c5800..128b6c12 | grep -inE "api[_-]?key|secret|token|bearer|sk-[a-z0-9]{8}|password|credential" -> no output, exit 1. Clean.
+
+Findings: RB-1 Blocker (restart scan counts card spend) -> Green FIX. RB-2 Major (outDir variant escapes both scans) -> Green FIX. RB-3 Major (one spend check per invocation before a 31-call pool) -> Green FIX in Phase 1 per orchestrator answer (owner order: stop at 1.60 USD; not deferred). RB-4/RB-5/RB-6 Nits, noted.
+
+Verified good: guard before readKey and before any provider call; mixed refusal before any scan; --tries counted; no key material in diff; no test reads the real env file; A2 not applicable; no A6 overstatement in tracks.md.
+
+Not run (step limit): the permitted vitest guards-file run; the JSON records it as not run.
+
+Final result: status fail, retry_recommendation escalate_human. Full JSON at review-b-128b6c1.json.
+
+MEASURE_AGENT_RESULT
+role: review-b
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 1: Card guard, card specs, and fixture
+commits: none
+tests_run: scratch probes A/B/C in /tmp/opencode/rb-scratch/m2 (empty HOME, no key, no provider call); secret-scan grep (clean, exit 1); permitted vitest guards-file run not run (step limit)
+files_changed: measure/runs/asset_storytime_l2_cards_20261106/review-b-128b6c1.json, measure/runs/asset_storytime_l2_cards_20261106/review-b-128b6c1.log
+plan_updates: none (audit-only)
+known_failures: RB-1 Blocker (restart scan counts card spend, empirically confirmed); RB-2 Major (outDir variant escapes both scans); RB-3 Major (one spend check per invocation before a 31-call pool; FIX in Phase 1 per orchestrator); RB-4/5/6 Nits
+handoff: Verdict fail with escalate_human; RB-1 routed to Green as FIX (exclude the cards child from scanCostFiles, pin with a test); RB-2 routed to Green as FIX (validate resolved outDir against the scanned layout); RB-3 routed to Green as FIX in Phase 1 (re-check the spend guard before each provider call in the worker loop). Secret scan clean. The role-gate command exits 1 on this fail verdict; that is expected.
+END_MEASURE_AGENT_RESULT

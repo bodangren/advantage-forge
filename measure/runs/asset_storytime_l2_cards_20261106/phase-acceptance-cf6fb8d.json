@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Round 2 at cf6fb8db (HEAD unchanged during the run). F1 of round 1 is closed: test-strategy.md section 8 holds one row for each of RA-2, RA-3, RA-4, RA-6, RA3-2, RB-4, RB-5, RB-6, RB2-2, RB2-3, RB2-4, and for F6, and the plan note of Task 3 holds the ninth prompt difference (train wheels, RA-6). The diff 895c65c8..cf6fb8db lists only plan.md and test-strategy.md of the track, so the carry-over rule of section 4.4 applies: PROJECT_TESTS (11 files, 155 tests), the typecheck (owned tsc errors 0), and the known-red result (rule 4.4 met) carry over from round 1 without a rerun. The static gates and the allowed-set check pass again at the new HEAD. No blocker remains.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F2 [Nit] phase-acceptance: RB2-1 (Review B, Major) has no code fix. Rationale: strategy section 5.1 rules a to f and section 8 close it with operating rules. The Phase 2 checker must verify them, because they are the only control of this gap. Unchanged from round 1.",
+    "F3 [Nit] phase-acceptance: the doctor reports 'in_progress track has no unchecked task' for this plan, because Tasks 1 to 3 are [x] and every other task is [b]. Rationale: the plan does not change a marker in this round. The error clears when the orchestrator marks the first Phase 2 task [~]. Not re-run in round 2: the diff changes no marker.",
+    "F4 [Nit] phase-acceptance: the plan quotes 38 total tsc errors and acceptance measured 37 at 895c65c8 with 0 owned. Rationale: the total is informational. No gate reads it. Record the measured value at closeout.",
+    "F5 [Nit] phase-acceptance: mid-red-29524b0.log has an uncommitted edit and the run records of this track are untracked. Rationale: they are evidence in the allowed run folder. Closeout must add them by explicit path. No owned code, test, fixture, spec, or track path is dirty at cf6fb8db.",
+    "F6 [Nit] phase-acceptance: the checker did not rerun the mutation checks M1 to M7 and MF1 to MF4. Rationale: the orchestrator accepted this and recorded it in a section 8 row (72aa28e9). The Green logs quote each mutation with its failing ids."
+  ],
+  "evidence": [
+    "HEAD check: git rev-parse HEAD printed cf6fb8dbaff9231aacf87aa6adffe3c0ab727b79 at the start and at the end of the run.",
+    "Carry-over (section 4.4): git diff --name-only 895c65c8..cf6fb8db lists measure/tracks/asset_storytime_l2_cards_20261106/plan.md and measure/tracks/asset_storytime_l2_cards_20261106/test-strategy.md only. Commit 72aa28e9 changes test-strategy.md only. Commit cf6fb8db changes plan.md only. git diff --name-only 895c65c8..HEAD -- scripts src tests docs prints nothing.",
+    "Carried from round 1 (phase-acceptance-895c65c.json, not rerun): Test Files 11 passed (11); Tests 155 passed (155); tsc exit 2 with owned tsc errors: 0 (total 37); known red: Tests 8 failed | 134 passed (142), known red failing tests outside the pin set: 0, drift sentinels 4 of 4, T173 shadow-missing text 0, changed lines 2.",
+    "F1 closed, strategy: grep of section 8 finds exactly one row for each of RA-2, RA-3, RA-4, RA-6, RA3-2, RB-4, RB-5, RB-6, RB2-2, RB2-3, RB2-4, and one row for phase acceptance F6. Each row has a default and an owner. RA-4 reads 'Accepted Nit', which matches the orchestrator answer. The RB2-2 row names ADVC12, and tests/storytime-card-adversarial.test.ts:427 holds that test.",
+    "F1 closed, plan: the Task 3 note item (9) says the train spec adds 'four small black wheels' to the colorPrompt and 'four small wheels' to mustShow. docs/storytime/l2-unit1/cards/l2-w07-card-train.json holds both phrases (one match for 'four small black wheels'; line 11 for 'four small wheels'). The note says the phrase stays by orchestrator decision.",
+    "Gate 3: git diff --name-only 7af682db..HEAD -- tests/storytime-muse-attempts.test.ts tests/storytime-judge-batch.test.ts printed nothing.",
+    "Gate 4: grep -rn 'wb-shadow' tests scripts src printed nothing (exit 1).",
+    "Gate 5: grep -rnF '2026-11-06T00:00:00Z' scripts tests lists scripts/storytime-muse-guards.mjs (1), tests/storytime-card-guards.test.ts (2), and tests/storytime-card-adversarial.test.ts (2).",
+    "Allowed set (section 6): 21 non-merge commits since 7af682db; own files outside the set: 0. git diff --name-only 7af682db..HEAD -- assets/fireball.ts out/fireball printed nothing.",
+    "git status --short for scripts, src/storytime, tests, docs/storytime, tests/fixtures, and the track folder printed nothing: no owned path is dirty.",
+    "A3, A4, A6, and A7 not applicable: the round 2 diff changes no contract test, filter, or tracks registry. A5: the new plan text and section 8 rows quote no count that differs from a measured value.",
+    "No Muse call, no provider call, and no read of the dashboard env file."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --name-only 895c65c8..cf6fb8db",
+    "git log --no-merges with git diff-tree for 895c65c8..cf6fb8db",
+    "git diff 895c65c8..cf6fb8db -- plan.md test-strategy.md",
+    "allowed-set filter over git log --no-merges 7af682db..HEAD with git diff-tree",
+    "git diff --name-only 7af682db..HEAD -- <two old test files>",
+    "grep -rn 'wb-shadow' tests scripts src",
+    "grep -rnF '2026-11-06T00:00:00Z' scripts tests",
+    "git diff --name-only 7af682db..HEAD -- assets/fireball.ts out/fireball",
+    "git diff --name-only 895c65c8..HEAD -- scripts src tests docs",
+    "git status --short on owned paths",
+    "grep of section 8 rows, ADVC12, and the train spec phrases"
+  ],
+  "changed_files": [],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high"
+}

@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "track": "asset_storytime_l2_cards_20261106",
+  "archived_at": "2026-11-06T13:17:12Z",
+  "track_base_sha": "7af682db1d2b572d8cf46ed5cc58ec3aa244b6a4",
+  "track_final_sha": "e58c5f7e0e00f98a15040b245d90ba03b0478146",
+  "phase_acceptance_results": [
+    "measure/runs/asset_storytime_l2_cards_20261106/phase-acceptance-cf6fb8d.json",
+    "measure/runs/asset_storytime_l2_cards_20261106/acceptance-p2-bda95d8.json",
+    "measure/runs/asset_storytime_l2_cards_20261106/final-acceptance-e58c5f7.json"
+  ],
+  "completed_phases": [
+    {
+      "id": "Phase 1",
+      "title": "Card guard, card specs, and fixture",
+      "checkpoint": "cf6fb8db"
+    },
+    {
+      "id": "Phase 2",
+      "title": "Card pictures and delivery",
+      "checkpoint": "bda95d83"
+    }
+  ],
+  "gates": {
+    "PROJECT_LINT": "pass — doctor structural-only output names no asset_storytime_l2_cards_20261106 line; grep -rn wb-shadow tests scripts src: exit 1, no output; CARD_START scope: scripts/storytime-muse-guards.mjs, tests/storytime-card-adversarial.test.ts, tests/storytime-card-guards.test.ts (exact); git diff 7af682db..HEAD -- assets/fireball.ts out/fireball: empty; allowed set: 36 commits in 7af682db..HEAD, 0 files outside the set",
+    "PROJECT_CHECKS": "pass — tsc total 38, owned 0 (gate pass); known red Tests 8 failed | 134 passed (142); failing ids T142, T145, T147, T150, T173, T174, T176, T177, all inside the 13-name pin set; sentinels T142, T147, T173, T174 fail; pin-set script SHA-256 f67cfa8f17d380cb7e6f7632612b8f56d5cba6793d642a90abf2b5c1fd4a3fe0",
+    "PROJECT_TESTS": "pass — carried over from 15031cbe (Test Files 11 passed 11, Tests 155 passed 155); git diff --name-only 15031cbe..HEAD lists only plan.md and test-strategy.md",
+    "SECRET_SCAN": "pass — grep -rnE 'sk-[A-Za-z0-9]{8}|Bearer [A-Za-z0-9]|OPENROUTER_API_KEY=' measure/runs/asset_storytime_l2_cards_20261106 gives 3 hits. Each hit is the word 'Bearer' in audit prose ('Bearer tokens' and 'Bearer give'). A credential shape scan (20 characters or more) gives 0 hits. The run folder holds no key and no token",
+    "source": "measure/runs/asset_storytime_l2_cards_20261106/final-acceptance-e58c5f7.log"
+  },
+  "antipatterns_clean": [
+    "A2 consent-blind publish gate — the registry entry, the metadata, and this manifest name model evidence only; no text says that Daniel or Workbooks accepted a picture",
+    "A3 digit-only count — every gate reads a labeled value (tsc errors total 38, Tests 155 passed (155), known red 8 failed | 134 passed (142), spend 0.74 USD in 74 calls)",
+    "A4 vacuous pass — the two calibration controls fail and the known-red set comes from the test bodies, not from the failures",
+    "A5 false claim — each pass below quotes its command, exit code, and label; the doctor count is quoted with its exit code",
+    "A6 registry overstatement — the archived registry entry keeps the words model evidence, not acceptance",
+    "A7 over-broad filter — the typecheck gate counts 38 total errors and 0 owned errors; the known-red gate names its 8 failing test ids inside the 13-name pin set",
+    "A9 archived track paths — no test file names a measure/tracks path for this track; the final acceptance log records the tests/*.sh glob as empty",
+    "A10 generated-facts drift — the generator does not run while measure/generated holds foreign changes; the closeout commit holds no generated fact",
+    "A11 doc-to-code drift — the specification and the plan record the same CARD_RUN values, and the card spec test passed 10 of 10 after each linePrompt change"
+  ],
+  "antipatterns_known_limitations": [
+    "38 pinned tsc errors of other tracks; the typecheck gate counts 38 total errors and 0 owned errors for this track",
+    "known-red file tests/storytime-book-pictures.test.ts stays red by the 5.11.16 rule; 8 failing test ids, all inside the 13-name pin set",
+    "12 structural doctor errors of other tracks; the doctor adds no error for this track",
+    "Phase 1 failed once (phase-acceptance-895c65c.json, record-keeping F1 closed) and Phase 2 failed once (acceptance-p2-15031cb.json, corner F1 amended to a report item); both phase gates then passed",
+    "29 of 31 card rows delivered (58 of 62 files); the ham row failed 3 line tries and the family row failed the 12 px print gate at 4, 8, and 7 px",
+    "22 delivered color files have a corner pixel below 250 (lowest 242 of 255); the class C white-corner rule is a report item and Workbooks decides at its check",
+    "The T180 fixture moved from /tmp/opencode/wb-shadow into tests/fixtures/storytime/pictures-v3.json in Task 1",
+    "measure/generated holds foreign uncommitted changes, so the generator did not run and no generated fact is committed"
+  ],
+  "deferred": [
+    "Human gate: Workbooks checks the 31 cards after the delivery and before the 11-19 card kit; that check is outside this track (deferred 2026-11-06)"
+  ],
+  "deferred_note": "The ham and the family rows failed after their 3 line tries. They are reported, not deferred. No plan task stays open.",
+  "tech_debt": [
+    "TD-29 — RB-P4-1 and PA4-N1 — coverCalmTopReport in src/storytime/book-pictures.ts does not confine cover-calm-top --print output paths, resolve real paths, or require a regular file (Low, Open); this track used the StorytimeManifest form of that file",
+    "TD-30 — RB12-01 and RB12-03, PA3-N3 — a parent symlink under out/ can redirect mkdir, and lstat with mkdir is not atomic (Low, Open); the card delivery writer wrote under out/storytime/l2/unit1/cards/"
+  ],
+  "generated_facts": "not committed: measure/generated holds foreign uncommitted changes; the registry entry in measure/tracks.md is staged through a blob so the foreign Contents hunk stays out (T5)",
+  "artifact_cleanup": "no bulky run artifact was deleted; the orchestrator identified none. The run folder holds JSON, log, txt, md, and mts files only, and it holds no PNG or JPG file. The final acceptance and the closeout evidence stay in the folder",
+  "evidence_classes": {
+    "person_reviewed": "none recorded for the 31 card pictures",
+    "model_evidence_not_acceptance": "The 58 delivered card files carry Sonnet judge results. This is model evidence, not acceptance. Workbooks checks the cards at its own check.",
+    "workbooks_acceptance": "none recorded"
+  }
+}

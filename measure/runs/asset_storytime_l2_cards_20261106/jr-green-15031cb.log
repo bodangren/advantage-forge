@@ -1,0 +1,65 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 2: Card pictures and delivery
+phase_base_sha: cf6fb8dbaff9231aacf87aa6adffe3c0ab727b79
+role_base_sha: 15031cbefd3fe706169910df898fe09697959c7c
+resulting_head: bda95d8359b5b9596d3145c2bc0716eef47865f9
+commits: |
+  bda95d83 (measure(storytime_l2_cards): Task 7 note, white-corner report item). The plan file
+  alone is in the commit. The maker did not run git add, because another session commits
+  test-strategy.md at the same time.
+dispositions: F1=FIX
+changes: |
+  pm report: measure/runs/asset_storytime_l2_cards_20261106/pm-report.md holds a new section
+  "Corner note for Workbooks". It names the 22 color files with their corner values, the class C
+  rule that asks for all four corners at 250 or higher, the fact that the corners are a faint
+  near-white with the lowest value 242 of 255 and most of them at the bottom-left corner from the
+  soft shadow of the render, the precedent of 28 of the 80 class C color files of the week
+  deliveries, the orchestrator default to deliver the files as they are, the two fix options (a
+  corner whitening of the color files, or new color tries), and the question line "Question for
+  the PM: does the class C white-corner rule apply to card color files? Default: no; Workbooks
+  decides at its check." The table lists the same 22 files and the same values, ordered from the
+  lowest value to the highest.
+  handoff manifest: /home/daniebo/Desktop/handoff/storytime-l2-card-pictures/MANIFEST.txt holds
+  one new note block after the failed rows. It names the 22 color files with their values, the
+  class C white-corner rule, the cause, the week delivery precedent, and the line "Workbooks
+  decides at its check." No file line and no header field changed.
+  delivery record: measure/runs/asset_storytime_l2_cards_20261106/delivery-record.txt holds the
+  new MANIFEST.txt sha256 and the line "corner note: 22 color files below 250 (report item,
+  orchestrator decision 2026-11-06)".
+  plan: measure/tracks/asset_storytime_l2_cards_20261106/plan.md holds one new note under Task 7.
+  It names the decision, the acceptance finding F1, the 22 files, the corner values, the cause,
+  the week delivery precedent, the default, and the two record files. No marker changed.
+checks: |
+  command: grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c -  (run in the handoff folder)
+  OK lines: 58
+  FAILED lines: 0
+  the manifest still holds 58 file lines, and no line says accepted or approved
+  the new MANIFEST.txt sha256 is 7fab69d81b47189861bef6930a928c7dc4446ecdb7973694caf5bfa75cf05d31
+  no PNG file changed, no Muse call ran, and no Drive write ran
+  the structural doctor still prints the one known line for this track: "in_progress track has no
+  unchecked task". Every maker task of Phase 2 is [x] and the rest of the plan holds [b] items.
+files_changed: |
+  Committed in bda95d83: measure/tracks/asset_storytime_l2_cards_20261106/plan.md only.
+  Written in the run folder and not committed: pm-report.md, delivery-record.txt, and this log.
+  Written in the handoff folder: MANIFEST.txt. The 58 PNG files, manifest.json, and the contact
+  sheet did not change.
+  No code file, no test file, no card spec file, and no judge kit file changed.
+tasks: |
+  Flipped to [x]: none. No marker changed in this round.
+  Flipped to [b]: none.
+handoff: |
+  The F1 finding of the phase acceptance is recorded as a report item, with the orchestrator
+  decision of 2026-11-06. The 22 color files keep their corner values. The report record and the
+  handoff manifest name them. The delivery stays as it is.
+  Two Nits of the same acceptance run are not routed to the maker and stay open. F2 names the
+  first-line SHAs of the plan items and the source-commit of the manifest. The brief of this round
+  forbids a change of the manifest header and of the markers, so the maker left both as they are.
+  F3 names the provider name in two Phase 1 log files of the run folder. The maker did not touch
+  those files.
+  The next role is the phase acceptance checker on an immutable HEAD. The maker made no picture
+  change, so the delivery folder and the handoff folder hold the same bytes as before.
+  The delivery is model evidence, not acceptance. Workbooks checks the cards.
+END_MEASURE_AGENT_RESULT

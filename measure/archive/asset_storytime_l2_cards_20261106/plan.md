@@ -1,7 +1,7 @@
 # Storytime Level 2 card pictures (31 cards)
 
-Status: new (2026-11-06). The picture date needed is 2026-11-12. The
-[specification](./spec.md) owns the scope and the acceptance gates.
+Status: delivered, awaiting Workbooks check (2026-11-06). 29 of 31 cards delivered (58 files).
+The [specification](./spec.md) owns the scope and the acceptance gates.
 
 ## Method and ownership
 
@@ -317,11 +317,12 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
 
 ## Track-level roles
 
-- [~] Final acceptance at an immutable HEAD after all phase gates. — deferred:closeout (closeout
-  marks it [x] with the final acceptance evidence)
-- [b] Closeout: archive the track, update the registry, run the generator and the doctor, and
-  commit the run records in `measure/runs/asset_storytime_l2_cards_20261106/`. Foreign generated
-  facts stay out of the closeout commit unless their owner has committed them. — deferred:final-acceptance
+- [x] Final acceptance (e58c5f7e) at an immutable HEAD after all phase gates. Evidence:
+  `measure/runs/asset_storytime_l2_cards_20261106/final-acceptance-e58c5f7.json`.
+- [x] Closeout (e58c5f7e): archive the track, update the registry, run the generator and the
+  doctor, and commit the run records in `measure/runs/asset_storytime_l2_cards_20261106/`.
+  Foreign generated facts stay out of the closeout commit unless their owner has committed them.
+  Archived 2026-11-06; the closeout commit follows e58c5f7e.
 
 ## Human gate
 

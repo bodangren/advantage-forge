@@ -1,0 +1,50 @@
+Phase Accept P2 r2 storytime_l2_cards
+audited_head: bda95d8359b5b9596d3145c2bc0716eef47865f9 (unchanged at the end of the run)
+family: checker Sonnet 5.5 equals the judge family; the checker audited the maker, the records, and the contact sheet.
+carry-over: diff 15031cbe..bda95d83 holds only plan.md and test-strategy.md of the track.
+
+PROJECT_TESTS: carry-over from round 1 (Test Files  11 passed (11); Tests  155 passed (155))
+F1 withdrawn: the amended P2-7 (a7d68714) makes the white-corner result a report item. The facts of F1 stand and are reported.
+P2-1: pass (carry-over)
+P2-2: pass (carry-over)
+P2-3: pass (carry-over)
+P2-4: pass (carry-over; max tries per id and kind: 3)
+P2-5: pass (carry-over; 74 rows, 0.74 USD)
+P2-6: pass (rerun: 58 file lines, 0 not OK; manifest.json sha256 unchanged)
+P2-7: pass (rerun, amended text: files checked: 58, gate problems: 0)
+color files below 250: 22
+  l2-w04-card-mom-v1.png 242; l2-w04-card-dad-v1.png 244; l2-w04-card-grandma-v1.png 245; l2-w06-card-boat-v1.png 245;
+  l2-w04-card-grandpa-v1.png 246; l2-w06-card-tomato-v1.png 246; l2-w07-card-doll-v1.png 246; l2-w01-card-teacher-v1.png 247;
+  l2-w07-card-car-v1.png 247; l2-w07-card-mop-v1.png 247; l2-w07-card-otter-v1.png 247; l2-w07-card-train-v1.png 247;
+  l2-w02-card-fan-v1.png 248; l2-w03-card-sheep-v1.png 248; l2-w04-card-jam-v1.png 248; l2-w04-card-sister-v1.png 248;
+  l2-w05-card-dress-v1.png 248; l2-w05-card-sad-v1.png 248; l2-w01-card-boy-v1.png 249; l2-w01-card-hello-v1.png 249;
+  l2-w03-card-pineapple-v1.png 249; l2-w04-card-brother-v1.png 249
+corner report match: pass (pm-report.md and MANIFEST.txt name the same 22 files and values)
+MANIFEST.txt sha256: pass (7fab69d8...5d31 equals delivery-record.txt)
+P2-8: pass (carry-over)
+P2-9: pass (carry-over)
+P2-10: pass (rerun: no accepted or approved claim in MANIFEST.txt, pm-report.md, delivery-record.txt, or the new diff)
+P2-11: pass (rerun: 0 files outside the allowed set; 0 changes under Workbooks content/storytime/l2/print; see F4)
+P2-12: pass (carry-over)
+P2-13: pass (rerun: no secret; see F3)
+operating rules a to f: pass (carry-over from round 1; a: pools below 1.20 USD with concurrency 4 and --tries 1; b: highest row 0.01; c: refused lines 0; d: --tries 1; e: sum 0.74 equals spend-record.txt; f: report point not reached)
+
+F2 [Nit] phase-acceptance: plan task SHAs (Task 6, Task 7) do not name the closing commits.
+F3 [Nit] phase-acceptance: provider name OpenRouter and my round 1 scan pattern text match the P2-13 scan; no secret.
+F4 [Nit] phase-acceptance: other sessions changed the Workbooks tree outside content/storytime/l2/print.
+
+dispositions: none
+
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 2: Card pictures and delivery
+commits: none
+tests_run: PROJECT_TESTS carry-over (11 files, 155 tests, round 1); rerun P2-6, P2-7 (files checked: 58, gate problems: 0; color files below 250: 22), P2-10, P2-11, P2-13, corner report match, MANIFEST.txt sha256: all pass
+files_changed: measure/runs/asset_storytime_l2_cards_20261106/acceptance-p2-bda95d8.json, acceptance-p2-bda95d8.log, and the scratch script acceptance-p2-bda95d8-corners.mts (run folder only)
+plan_updates: none
+known_failures: none
+handoff: Phase 2 passes at bda95d83. F1 is withdrawn under the amended P2-7. The class C white-corner question stays with Workbooks; pm-report.md and MANIFEST.txt name the 22 files. Nits F2, F3, and F4 need no action. Final acceptance should rerun P2-1, P2-5, P2-6, and P2-10 at its HEAD.
+dispositions: none
+END_MEASURE_AGENT_RESULT

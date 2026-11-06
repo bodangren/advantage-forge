@@ -1,0 +1,112 @@
+# Spec Review Run 2 log: asset_storytime_l2_cards_20261106
+
+Role: measure-spec-review (opencode-go/deepseek-v4.1-flash, DeepSeek; substitution for the role-table Kimi model)
+Phase: track setup (plan item "Gate S")
+Baseline SHA: 7af682db1d2b572d8cf46ed5cc58ec3aa244b6a4
+Audited head SHA: 7af682db1d2b572d8cf46ed5cc58ec3aa244b6a4 (equal to HEAD, confirmed with git rev-parse HEAD)
+Result: measure/runs/asset_storytime_l2_cards_20261106/spec-review-7af682d.json
+Prior round: measure/runs/asset_storytime_l2_cards_20261106/spec-review-ac5acf0.json (F1 Blocker, F2 and F3 Major, F4 Nit)
+Date: 2026-11-06
+
+## Standard
+
+Read ~/.agents/skills/measure/references/spec-review.md and
+~/.agents/skills/measure-orchestrator/references/contracts.md.
+measure/anti-patterns.md does not exist in this repository. The review ran without it on the
+orchestrator ruling of 2026-11-06.
+
+## Inputs read
+
+- git show 7af682db (spec.md and plan.md diff, 130 insertions and 48 deletions)
+- measure/tracks/asset_storytime_l2_cards_20261106/plan.md (whole file)
+- measure/tracks/asset_storytime_l2_cards_20261106/spec.md (inputs, judge, tries and spend,
+  card run constant, fixture move, functional requirements, acceptance)
+- measure/runs/asset_storytime_l2_cards_20261106/spec-review-ac5acf0.json (round 1 findings)
+
+## What this track proposes
+
+The track draws the 31 card rows that list v7 adds to the Storytime Level 2 print list. Each card
+needs a color picture and a line-art picture, so the track delivers 62 files at 1500 x 1500 px. It
+reuses the approved Storytime Muse path, the frozen Sonnet judge kit, and the week delivery form,
+and it adds one card run constant CARD_RUN to the guard module. It also moves the T180 version 3
+list fixture into tests/fixtures/storytime/pictures-v3.json and pins list v7 as
+tests/fixtures/storytime/pictures-v7.json. The spend cap is 1.60 USD, the delivery is model
+evidence only, and Workbooks checks the cards after delivery.
+
+## How the current system works, per this spec
+
+The closed unit 1 track holds the Muse path: scripts/storytime-muse.mjs calls meta/muse-image
+through OpenRouter and writes the print file to the spec outDir. scripts/storytime-muse-guards.mjs
+scans every costs.tsv below out/storytime/l2/unit1/, and it enforces 3 tries per id and kind
+against a 1.00 USD restart cap that counts rows since 2026-11-04T07:54:00Z.
+scripts/storytime-judge-batch.mjs builds judge batches for the A-48 specs with a fixed SPEC_DIR and
+a 360 px long side for a card, and its parseArgs takes only --ids, --kind, --try, and --out. The
+delivery form is the StorytimeManifest object in src/storytime/book-pictures.ts with the
+MANIFEST.txt form of the week handoff. Two tests read the version 3 list from
+/tmp/opencode/wb-shadow, and that path is not in git.
+
+## Findings
+
+- F1 [Blocker] withdrawn. The plan now names the judge batch card input shape.
+- F2 [Major] withdrawn. CARD_RUN is the single owner of the card run values.
+- F3 [Major] withdrawn. The test reads a repository fixture, and a Task 5 shell step checks the live file.
+- F4 [Nit] withdrawn. plan.md lines 25-31 and 51-53 document the [b] convention and its owners.
+- F5 [Nit] spec.md Judge and plan.md Task 4 and Task 9: The calibration record and the PM report
+  record have no named file path; the spec says the maker "records the result" and Task 4 says
+  "record the result file". Rationale: The run folder measure/runs/asset_storytime_l2_cards_20261106/
+  owns these records, so the maker picks only a file name inside a named folder; the choice changes
+  no delivered picture, test, or script.
+
+## Fix checks
+
+1. F1. spec.md FR-4 and plan.md Task 2 name one new flag --cards, the spec folder
+   docs/storytime/l2-unit1/cards, the try count from CARD_RUN, and the unchanged path without the
+   flag. The API and CLI shape choice is closed.
+2. F2. spec.md "Card run constant" exports CARD_RUN from scripts/storytime-muse-guards.mjs, with
+   types in scripts/storytime-muse-guards.d.mts. Both files exist. The spec names the two importer
+   files and an acceptance search for a second copy. The start time 2026-11-06T00:00:00Z is later
+   than the newest restart cost row 2026-11-05T03:32:05.918Z (orchestrator evidence, 2026-11-06).
+3. F3. FR-3 and Task 3 fix tests/fixtures/storytime/pictures-v7.json with the SHA-256 pin
+   ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf. A mismatch is a hard failure.
+   The live Workbooks check moved to a Task 5 shell precondition, which defines the absent-file case.
+4. F4. Withdrawn on a re-read of the marker section.
+
+## Zero-decision re-check over the whole plan
+
+- schema: the spec file JSON form follows docs/storytime/l2-unit1/a48/l2-w08-check-row-drum.json.
+  The CARD_RUN shape is fixed member by member, with a declared types file.
+- API or CLI shape: --cards, the exit code 3 for a mixed call, and the CARD_RUN import.
+- dependency: none new. The track reuses the Muse path, the frozen judge kit, and the gws CLI.
+- edge-case behavior: mixed call exit 3; rows before CARD_RUN.startTime not counted; a fourth try
+  refused; a cost-0 call not a try; the absent /tmp/opencode path; the SHA mismatch; the absent live
+  Workbooks file; the report point continues and the cap stops.
+- file location: tests/storytime-card-guards.test.ts, tests/storytime-card-specs.test.ts, both
+  fixture files, docs/storytime/l2-unit1/cards/<id>.json, the delivery folder, the handoff folder,
+  and the Drive TSV.
+- The judge batch behavior for an empty or absent card spec folder in Task 2 follows the existing
+  SPEC_DIR handling, so the plan leaves no new choice there.
+- Each phase names its files and its normal and edge test cases, and each phase leaves the
+  repository testable.
+
+## Verdict
+
+status: pass
+blocking_findings: none
+nonblocking_findings: F5 [Nit]
+retry_recommendation: none
+
+The shell tool was denied for some commands in this role. The hash facts above are orchestrator
+evidence of 2026-11-06. The reviewer ran git rev-parse, git show, grep, and file reads.
+
+MEASURE_AGENT_RESULT
+role: spec-review
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: track setup
+commits: none
+tests_run: none (report-only role; no test command ran)
+files_changed: measure/runs/asset_storytime_l2_cards_20261106/spec-review-7af682d.json, measure/runs/asset_storytime_l2_cards_20261106/spec-review-7af682d.log
+plan_updates: none
+known_failures: none
+handoff: Round 2 passes with no Blocker. F1, F2, and F3 are fixed and withdrawn; F4 is withdrawn on a re-read of the marker section. One new Nit stays open (F5: the calibration record and the PM report record have no named path; the run folder owns them). Gate S can close and the orchestrator can flip Tasks 1 to 3 from [b] to [~]. measure/anti-patterns.md is absent; the review ran without it.
+END_MEASURE_AGENT_RESULT

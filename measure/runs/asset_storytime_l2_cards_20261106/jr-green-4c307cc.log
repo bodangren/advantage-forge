@@ -1,0 +1,127 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: partial
+track: asset_storytime_l2_cards_20261106
+phase: Phase 2: Card pictures and delivery
+phase_base_sha: cf6fb8dbaff9231aacf87aa6adffe3c0ab727b79
+role_base_sha: 4c307cce48b79a9ee7a51c01c1ad465ade2faea0
+resulting_head: 342b79c163572c246c98059499c64bc1c14ef73b
+commits: |
+  342b79c1 (measure(storytime_l2_cards): Phase 2 round 6, bold line try 2 for 8 person cards).
+dispositions: none
+decision: |
+  The orchestrator answered the question of round 5. The default holds: the 8 rows with a print
+  below 12 px get a new Muse line try, then one delivery of the whole set. No partial delivery.
+  A print below 12 px counts as a failed try, so each row keeps its remaining tries. Each of the
+  8 rows used 1 line try, so the new call is line try 2.
+spec_changes: |
+  Only the linePrompt changed in the 8 specs of the decision: l2-w02-card-astronaut,
+  l2-w01-card-goodbye, l2-w01-card-boy, l2-w01-card-teacher, l2-w04-card-mom,
+  l2-w04-card-sister, l2-w04-card-grandpa, and l2-w04-card-family.
+  The line rule sentence "thick, even black lines (about three times a normal outline)" became
+  "very thick, bold, even black lines (about five times a normal outline), like a coloring book
+  for very young children". All 8 prompts word that sentence the same way, so no row needed a
+  different wording of it.
+  Each prompt gained the sentence "Draw fewer, larger inner shapes: leave out small folds,
+  seams, pocket lines, and buttons. The lines stay equally thick everywhere, also on the face
+  and the hands." It sits after the sentence "Keep every shape in the same place and the same
+  size."
+  The family prompt also gained the sentence of the decision after the sentence "Draw exactly
+  six people: Mom, Dad, Grandma, Grandpa, Tom, and Lily, in one row, all full body and in view."
+  All 8 prompts keep the "pure white" rule, the "no gray" rule, and the no-text rule.
+  The card spec test passed after the change: Test Files 1 passed (1), Tests 10 passed (10), exit
+  0. The command was:
+  HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c
+  './node_modules/.bin/vitest run tests/storytime-card-specs.test.ts --maxWorkers=1'
+pool: |
+  spend before pool: 0.65
+  command: node scripts/storytime-muse.mjs line docs/storytime/l2-unit1/cards/l2-w02-card-astronaut.json
+  docs/storytime/l2-unit1/cards/l2-w01-card-goodbye.json
+  docs/storytime/l2-unit1/cards/l2-w01-card-boy.json
+  docs/storytime/l2-unit1/cards/l2-w01-card-teacher.json
+  docs/storytime/l2-unit1/cards/l2-w04-card-mom.json
+  docs/storytime/l2-unit1/cards/l2-w04-card-sister.json
+  docs/storytime/l2-unit1/cards/l2-w04-card-grandpa.json
+  docs/storytime/l2-unit1/cards/l2-w04-card-family.json --from 1 --tries 1 --concurrency 4
+  flags: --from 1 --tries 1 --concurrency 4
+  exit: 0
+  ok lines: 8
+  failed lines: 0
+  error lines: 0
+  refused lines: 0
+  the pool made the line try 2 of the 8 rows
+  log: measure/runs/asset_storytime_l2_cards_20261106/line-pool-r4.log
+costs: |
+  file: out/storytime/l2/unit1/cards/muse/costs.tsv
+  header: time row version kind inputs output size usage_cost note
+  rows: 73
+  spend usd: 0.73
+  highest row cost: 0.01
+  rows above 0.03 USD: 0
+  new rows in this round: 8 line rows, each with cost 0.01 and note redo 2
+  new line files: <id>-m1-line-2.png for the 8 rows, and <id>-m1-line-print-2.png for their prints
+spend_record: |
+  measure/runs/asset_storytime_l2_cards_20261106/spend-record.txt
+  calls: 73
+  spend usd: 0.73
+  report point 0.80 reached: no
+width_check: |
+  file: measure/runs/asset_storytime_l2_cards_20261106/delivery-line-widths-t2.txt
+  measured with inspectLineArtPng of src/storytime/book-pictures.ts on each try 2 print
+  rows checked: 8
+  rows below the 12 px minimum: 1
+  rows that pass the width check: l2-w02-card-astronaut, l2-w01-card-goodbye, l2-w01-card-boy,
+  l2-w01-card-teacher, l2-w04-card-mom, l2-w04-card-sister, l2-w04-card-grandpa
+  the family row still fails: l2-w04-card-family l2-w04-card-family-m1-line-print-2.png width
+  px: 8, result: fail. The try 1 print measured 4 px, so the bold prompt raised it, but not to
+  12 px.
+batches: |
+  line try 2: docs/storytime/l2-unit1/judge/prod/cards-r4-line-t2.json
+  line try 2 entries: 7, all kind line, all use card
+  judge copies: out/storytime-review/judge/prod/<id>-line-t2.png, 7 files at 360 x 360 px
+  each judge copy was compared with a fresh resize of the try 1 file and the try 2 file. Every
+  copy matches its try 2 file and no copy matches its try 1 file.
+  judge batch log: measure/runs/asset_storytime_l2_cards_20261106/judge-batch-r4-line-t2.log
+  no batch was written for the family row, because its print fails the width check.
+operating_rules: |
+  a: the recorded card spend was 0.65 USD, below 1.20 USD, so the pool ran with --concurrency 4.
+  The log names the spend before the pool and the flags of the pool.
+  b: after the pool every new row of out/storytime/l2/unit1/cards/muse/costs.tsv was read.
+  highest row cost: 0.01. No row is above 0.03 USD, so the maker did not stop.
+  c: the output of the run was read for a refusal line. refused lines: 0.
+  d: the line pool used --tries 1. The value is 1, so it is inside the set 1, 2, 3.
+  e: nobody edited costs.tsv. Its header holds a time column and the usage_cost column.
+  f: the spend is 0.73 USD, below the report point of 0.80 USD. The run continued. The maker
+  stops only at the cap of 1.60 USD.
+plan_updates: |
+  Task 7 holds a note on the decision of the orchestrator and the 8 rows, and a note on the line
+  prompt change. Task 7 keeps its [~] marker. No other plan item changed.
+files_changed: |
+  Committed in 342b79c1: the 8 card spec files, docs/storytime/l2-unit1/judge/prod/cards-r4-line-t2.json,
+  and measure/tracks/asset_storytime_l2_cards_20261106/plan.md.
+  Written in the run folder and not committed: spend-record.txt, line-pool-r4.log,
+  judge-batch-r4-line-t2.log, delivery-line-widths-t2.txt, and this log.
+  The throwaway scripts sit in /tmp/opencode/storytime-cards-prep/ and stay out of the
+  repository. No PNG file, no file under out/, no code file, no test file, and no judge kit file
+  changed. The delivery writer did not run in this round.
+tasks: |
+  Flipped to [x]: none.
+  Flipped to [b]: none.
+  Still [~]: Task 7. The 7 new line pictures have no judged result yet, and the family row
+  still has no print at 12 px.
+handoff: |
+  The orchestrator runs the judge batch docs/storytime/l2-unit1/judge/prod/cards-r4-line-t2.json
+  with its 7 files. The maker did not rate any picture and did not run a judge.
+  The 7 rows whose try 2 print measures at least 12 px are ready for the judge. When the judge
+  passes them, their try 2 print becomes the delivered line file. A fail needs a second judge on
+  the file alone, and then the row keeps its last try.
+  The family row is open. Its try 2 print measures 8 px, so it cannot be delivered. The row has
+  one line try left, so the next round can make line try 3 with a prompt that asks for even
+  thicker lines. That prompt is a spec change, so the orchestrator decides it. The cost is one
+  call, about 0.01 USD, so the spend reaches about 0.74 USD. If the orchestrator does not order
+  a try 3, the family row is a failed row of the delivery and the report names it with its best
+  try.
+  The delivery writer did not run in this round, so the delivery folder stays absent and the
+  next round can write the whole set in one pass.
+  The card spend is 0.73 USD, below the report point of 0.80 USD and below the cap of 1.60 USD.
+END_MEASURE_AGENT_RESULT

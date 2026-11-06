@@ -1,0 +1,12 @@
+measured with inspectLineArtPng of src/storytime/book-pictures.ts on the line try 2 print
+rows checked: 8
+rows below the 12 px minimum: 1
+rows that pass the width check: l2-w02-card-astronaut, l2-w01-card-goodbye, l2-w01-card-boy, l2-w01-card-teacher, l2-w04-card-mom, l2-w04-card-sister, l2-w04-card-grandpa
+l2-w02-card-astronaut l2-w02-card-astronaut-m1-line-print-2.png width px: >=12 result: pass
+l2-w01-card-goodbye l2-w01-card-goodbye-m1-line-print-2.png width px: >=12 result: pass
+l2-w01-card-boy l2-w01-card-boy-m1-line-print-2.png width px: >=12 result: pass
+l2-w01-card-teacher l2-w01-card-teacher-m1-line-print-2.png width px: >=12 result: pass
+l2-w04-card-mom l2-w04-card-mom-m1-line-print-2.png width px: >=12 result: pass
+l2-w04-card-sister l2-w04-card-sister-m1-line-print-2.png width px: >=12 result: pass
+l2-w04-card-grandpa l2-w04-card-grandpa-m1-line-print-2.png width px: >=12 result: pass
+l2-w04-card-family l2-w04-card-family-m1-line-print-2.png width px: 8 result: fail

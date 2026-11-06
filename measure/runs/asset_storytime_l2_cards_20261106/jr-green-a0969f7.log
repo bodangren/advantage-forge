@@ -1,0 +1,116 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: partial
+track: asset_storytime_l2_cards_20261106
+phase: Phase 2: Card pictures and delivery
+phase_base_sha: cf6fb8dbaff9231aacf87aa6adffe3c0ab727b79
+role_base_sha: a0969f77c149042fb6fe140508f85b675e9c72be
+resulting_head: 30318176c9576d3997a375289640a6ad08fed5a0
+commits: |
+  30318176 (measure(storytime_l2_cards): Phase 2 round 3, line retries for ham and tomato, goodbye line).
+dispositions: none
+judge_results_read: |
+  judge-cards-cards-r1-color-goodbye-second.json: 1 file, 1 pass, 0 fail. The second judge passes
+  the goodbye color file, so the fail did not stand. Color try 1 (m1) is the passing color of all
+  31 cards. Task 5 is complete.
+  judge-cards-cards-r1-line.json: 30 files, 27 pass, 3 fail. The fails are the ham, the tomato,
+  and the car.
+  judge-cards-cards-r1-line-car-second.json: 1 file, 1 pass. The car fail did not stand, so the
+  car line try 1 passes.
+  judge-cards-cards-r1-line-ham-second.json: 1 file, 0 pass, 1 fail. The ham fail stands. The
+  picture shows a plate ring and an empty oval, and no ham slice reads.
+  judge-cards-cards-r1-line-tomato-second.json: 1 file, 0 pass, 1 fail. The tomato fail stands.
+  One smooth round body, one long stem, and one leaf read as an apple.
+spec_changes: |
+  Only the linePrompt changed in docs/storytime/l2-unit1/cards/l2-w04-card-ham.json and
+  docs/storytime/l2-unit1/cards/l2-w06-card-tomato.json. The card spec test passed after the
+  change: Test Files 1 passed (1), Tests 10 passed (10), exit 0.
+  The command was:
+  HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c
+  './node_modules/.bin/vitest run tests/storytime-card-specs.test.ts --maxWorkers=1'
+pool: |
+  spend before pool: 0.61
+  command: node scripts/storytime-muse.mjs line docs/storytime/l2-unit1/cards/l2-w01-card-goodbye.json
+  docs/storytime/l2-unit1/cards/l2-w04-card-ham.json
+  docs/storytime/l2-unit1/cards/l2-w06-card-tomato.json --from 1 --tries 1 --concurrency 4
+  flags: --from 1 --tries 1 --concurrency 4
+  exit: 0
+  ok lines: 3
+  failed lines: 0
+  error lines: 0
+  refused lines: 0
+  the pool made the goodbye line try 1, the ham line try 2, and the tomato line try 2
+  log: measure/runs/asset_storytime_l2_cards_20261106/line-pool-r2.log
+costs: |
+  file: out/storytime/l2/unit1/cards/muse/costs.tsv
+  header: time row version kind inputs output size usage_cost note
+  rows: 64
+  spend usd: 0.64
+  highest row cost: 0.01
+  rows above 0.03 USD: 0
+  new rows in this round: 3 line rows, each with cost 0.01
+  new line files: l2-w01-card-goodbye-m1-line.png (note ok), l2-w04-card-ham-m1-line-2.png
+  (note redo 2), l2-w06-card-tomato-m1-line-2.png (note redo 2)
+  line rows: 33, color rows: 31
+  ids without an ok line row: none
+spend_record: |
+  measure/runs/asset_storytime_l2_cards_20261106/spend-record.txt
+  calls: 64
+  spend usd: 0.64
+  report point 0.80 reached: no
+batches: |
+  line try 1 of the goodbye: docs/storytime/l2-unit1/judge/prod/cards-r2-line-t1.json
+  line try 2 of the ham and the tomato: docs/storytime/l2-unit1/judge/prod/cards-r2-line-t2.json
+  judge copies: out/storytime-review/judge/prod/<id>-line-t1.png for the goodbye and
+  out/storytime-review/judge/prod/<id>-line-t2.png for the ham and the tomato, all at 360 x 360 px
+  the copy of each new file was compared with a fresh resize of both candidate sources. Each copy
+  matches the new file of this round and no copy matches the try 1 file of the ham or the tomato.
+  judge batch logs: measure/runs/asset_storytime_l2_cards_20261106/judge-batch-r2-line-t1.log and
+  measure/runs/asset_storytime_l2_cards_20261106/judge-batch-r2-line-t2.log
+operating_rules: |
+  a: the recorded card spend was 0.61 USD, below 1.20 USD, so the pool ran with --concurrency 4.
+  The log names the spend before the pool and the flags of the pool.
+  b: after the pool every new row of out/storytime/l2/unit1/cards/muse/costs.tsv was read.
+  highest row cost: 0.01. No row is above 0.03 USD, so the maker did not stop.
+  c: the output of the run was read for a refusal line. refused lines: 0.
+  d: the line pool used --tries 1. The value is 1, so it is inside the set 1, 2, 3.
+  e: nobody edited costs.tsv. Its header holds a time column and the usage_cost column.
+  f: the spend is 0.64 USD, below the report point of 0.80 USD. The run continued. The maker stops
+  only at the cap of 1.60 USD.
+plan_updates: |
+  Task 5 is [x] with (e872a8aa) on its first line. Its evidence names
+  judge-cards-cards-r1-color.json (31 files, 30 pass, 1 fail) and
+  judge-cards-cards-r1-color-goodbye-second.json (the second judge passes the goodbye color, so
+  the fail did not stand). Color try 1 (m1) is the passing color of all 31 cards.
+  Task 6 keeps its [~] marker and holds a note on the two line prompt changes. The note names the
+  orchestrator decision of 2026-11-06, the new sentences, and the one sentence that left each
+  prompt. No other plan item changed.
+files_changed: |
+  Committed in 30318176: docs/storytime/l2-unit1/cards/l2-w04-card-ham.json,
+  docs/storytime/l2-unit1/cards/l2-w06-card-tomato.json,
+  docs/storytime/l2-unit1/judge/prod/cards-r2-line-t1.json,
+  docs/storytime/l2-unit1/judge/prod/cards-r2-line-t2.json, and
+  measure/tracks/asset_storytime_l2_cards_20261106/plan.md.
+  Written in the run folder and not committed: spend-record.txt, line-pool-r2.log,
+  judge-batch-r2-line-t1.log, judge-batch-r2-line-t2.log, and this log.
+  No PNG file, no file under out/, no code file, and no test file changed. The judge kit is
+  unchanged.
+tasks: |
+  Flipped to [x]: Task 5, with the color result and the goodbye second judge.
+  Flipped to [b]: none.
+  Still [~]: Task 6. The three new line pictures have no judged result yet, so no card is
+  delivered.
+handoff: |
+  The orchestrator runs two judge batches. First
+  docs/storytime/l2-unit1/judge/prod/cards-r2-line-t1.json for the goodbye line try 1. Second
+  docs/storytime/l2-unit1/judge/prod/cards-r2-line-t2.json for the ham and the tomato line tries
+  2. The maker did not rate any picture and did not run a judge.
+  The card spend is 0.64 USD, so the next pool runs with --concurrency 4 below 1.20 USD. The cap
+  is 1.60 USD and the report point is 0.80 USD. At the report point the maker records the spend
+  and the projection and continues.
+  A fail on the ham or the tomato line try 2 needs a second judge on the file alone. A third line
+  try is then the last one for that card.
+  The three new line pictures are at out/storytime/l2/unit1/cards/muse/l2-w01-card-goodbye-m1-line.png,
+  out/storytime/l2/unit1/cards/muse/l2-w04-card-ham-m1-line-2.png, and
+  out/storytime/l2/unit1/cards/muse/l2-w06-card-tomato-m1-line-2.png.
+END_MEASURE_AGENT_RESULT
