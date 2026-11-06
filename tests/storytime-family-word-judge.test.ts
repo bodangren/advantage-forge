@@ -101,7 +101,7 @@ const buildOptions = (argv: string[], root: string): judgeBatch.BuildBatchOption
 };
 
 /** The parsed options without the keys that hold no value. */
-const withoutUndefined = (value: Record<string, unknown>) =>
+const withoutUndefined = (value: object) =>
   Object.fromEntries(Object.entries(value).filter(([, item]) => item !== undefined));
 
 const BASE = ['--ids', ID, '--kind', 'color', '--try', '1'];

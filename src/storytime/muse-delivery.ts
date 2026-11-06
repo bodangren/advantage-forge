@@ -616,3 +616,181 @@ export async function deliverMuseCover(options: MuseCoverDeliveryOptions): Promi
   ]);
   return manifest;
 }
+
+// ---------------------------------------------------------------------------
+// The Level 2 family-word set (Phase 1 Task 3). The set holds many color pictures of size class
+// C. No row of the set is a row of the picture list, so the caller fills the text and the source
+// prompt of each row. The set has no line-art twin, so the manifest keeps the color batches only.
+// ---------------------------------------------------------------------------
+
+/** The row id of a family-word row: `l2-w0N-card-<word>`, with N from 1 to 9. */
+const FAMILY_WORD_ROW_ID = /^l2-w0([1-9])-card-[a-z]+$/;
+
+/** One family-word approval entry. A `linePrint` key is refused. */
+const MuseColorSetEntrySchema = z
+  .object({
+    rowId: z.string().min(1),
+    /** The Muse version of the approved print (the `m<n>` of the Muse file names). */
+    version: z.number().int().positive(),
+    colorPrint: MuseFileName,
+    text: z.string().min(1),
+    sourcePrompt: z.string().min(1),
+    reviews: z
+      .object({ kimi: KimiReviewSchema.optional(), person: PersonReviewSchema.optional() })
+      .strict()
+      .optional(),
+    notes: z.array(z.string()).optional(),
+  })
+  .strict();
+
+const MuseColorSetApprovalListSchema = z.object({
+  version: z.literal(1),
+  entries: z.array(MuseColorSetEntrySchema).min(1, { message: 'must hold at least one entry' }),
+});
+
+export type MuseColorSetApprovalEntry = z.infer<typeof MuseColorSetEntrySchema>;
+export type MuseColorSetApprovalList = z.infer<typeof MuseColorSetApprovalListSchema>;
+
+export interface MuseColorSetDeliveryOptions {
+  /** The family-word approval list, or the path of its JSON file. */
+  approvals: MuseColorSetApprovalList | string;
+  /** The folder that holds the Muse print files named in the approval entries. */
+  museRoot: string;
+  /** The delivery batch root: the folder that gets the copied files and manifest.json. */
+  deliveryRoot: string;
+}
+
+interface ColorSetItem {
+  entry: MuseColorSetApprovalEntry;
+  colorFile: string;
+  colorBytes: Buffer;
+  colorSha256: string;
+  candidate: CandidateManifest;
+}
+
+async function parseColorSetApprovals(approvals: MuseColorSetApprovalList | string): Promise<MuseColorSetApprovalList> {
+  const source: unknown =
+    typeof approvals === 'string' ? JSON.parse(await readFile(approvals, 'utf8')) : approvals;
+  const parsed = MuseColorSetApprovalListSchema.safeParse(source);
+  if (parsed.success) return parsed.data;
+  const issue = parsed.error.issues[0];
+  const where = issue ? issue.path.join('.') : 'list';
+  throw new Error(`The family-word approval list is invalid at ${where}: ${issue?.message ?? 'invalid list'}.`);
+}
+
+/**
+ * The manifest job of one family-word row. The week and the folder come from the row id. The
+ * text and the source prompt come from the approval entry.
+ */
+function familyWordJob(rowId: string, text: string, sourcePrompt: string): StorytimeJob {
+  const match = FAMILY_WORD_ROW_ID.exec(rowId);
+  if (!match) throw new Error(`${rowId}: the row id must match l2-w0N-card-<word>, with N from 1 to 9.`);
+  const week = Number(match[1]);
+  return {
+    id: rowId,
+    week,
+    bookKind: 'readalong',
+    bookTitle: '',
+    page: 0,
+    text,
+    sourcePrompt,
+    characters: [],
+    sourcePackage: '',
+    sourceSha256: '',
+    slug: rowId,
+    directory: `w0${week}`,
+    use: 'small',
+    size: 'small',
+  };
+}
+
+/**
+ * Writes the Level 2 family-word delivery: one color print per row, byte for byte, and one
+ * manifest.json with one color batch per week and no line-art batch. Every check runs before the
+ * first write, so a refusal leaves the delivery folder unchanged.
+ */
+export async function deliverMuseColorSet(options: MuseColorSetDeliveryOptions): Promise<StorytimeManifest> {
+  const list = await parseColorSetApprovals(options.approvals);
+  const museRoot = path.resolve(options.museRoot);
+  const deliveryRoot = path.resolve(options.deliveryRoot);
+
+  const deliveryInfo = await lstatOrNull(deliveryRoot);
+  if (deliveryInfo?.isSymbolicLink()) {
+    throw new Error(`The delivery folder ${deliveryRoot} is a symlink; the writer refuses it.`);
+  }
+
+  const seen = new Set<string>();
+  for (const entry of list.entries) {
+    if (seen.has(entry.rowId)) throw new Error(`The approval list holds the row ${entry.rowId} twice.`);
+    seen.add(entry.rowId);
+    if (!FAMILY_WORD_ROW_ID.test(entry.rowId)) {
+      throw new Error(`${entry.rowId}: the row id must match l2-w0N-card-<word>, with N from 1 to 9.`);
+    }
+  }
+
+  const items: ColorSetItem[] = [];
+  const problems: string[] = [];
+  for (const entry of list.entries) {
+    const colorFile = `${entry.rowId}-v1.png`;
+    let colorBytes: Buffer;
+    try {
+      colorBytes = await readMuseFile(museRoot, entry.colorPrint, entry.rowId);
+    } catch (error) {
+      problems.push(error instanceof Error ? error.message : String(error));
+      continue;
+    }
+    const color = await inspectColorPrint(colorBytes, PICTURE_SIZES.small);
+    for (const error of color.errors) problems.push(`${entry.rowId}: color print ${entry.colorPrint}: ${error}`);
+    if (!color.valid) continue;
+    const colorSha256 = sha256(colorBytes);
+    let reviews: CandidateReviews;
+    try {
+      reviews = mapReviews({
+        row: { id: entry.rowId, text: entry.text, prompt: entry.sourcePrompt },
+        entry,
+        version: entry.version,
+        colorFile,
+        colorSha256,
+      });
+    } catch (error) {
+      problems.push(error instanceof Error ? error.message : String(error));
+      continue;
+    }
+    const candidate: CandidateManifest = {
+      jobId: entry.rowId,
+      version: entry.version,
+      file: colorFile,
+      fileSha256: colorSha256,
+      status: 'ready',
+      structural: color,
+      reviews,
+      failures: [],
+    };
+    items.push({ entry, colorFile, colorBytes, colorSha256, candidate });
+  }
+  if (problems.length) throw new Error(`The Muse delivery stopped; nothing was written:\n${problems.join('\n')}`);
+
+  // The writer refuses a delivered file that exists, even with the same bytes.
+  for (const item of items) {
+    const target = path.join(deliveryRoot, item.colorFile);
+    if (await lstatOrNull(target)) {
+      throw new Error(`${item.entry.rowId}: the delivery file ${item.colorFile} exists; the writer will not overwrite it.`);
+    }
+  }
+
+  const jobs = items.map((item) => familyWordJob(item.entry.rowId, item.entry.text, item.entry.sourcePrompt));
+  const assembled = assembleManifest(jobs, items.map((item) => item.candidate));
+  // The family-word set has no line-art twin, so the manifest keeps the color batches only.
+  const manifest: StorytimeManifest = {
+    ...assembled,
+    batches: assembled.batches.filter((batch) => batch.outputKind === 'color'),
+  };
+  const copies: DeliveryCopy[] = items.map((item) => ({
+    file: item.colorFile,
+    bytes: item.colorBytes,
+    sha256: item.colorSha256,
+    rowId: item.entry.rowId,
+  }));
+  await commitDelivery(deliveryRoot, manifest, copies);
+  return manifest;
+}
