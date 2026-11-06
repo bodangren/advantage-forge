@@ -1,0 +1,29 @@
+{
+  "group": "family-words-calibration",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-06T23:39:40Z",
+  "results": [
+    {
+      "id": "l2-w01-story-page-a-nose",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-a-nose-line-v1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the center of the face: a fingertip covers the place of the nose and no nose mark shows",
+      "notes": "Question page: no. Items: a nose (1). Action: none. Seen: a girl with two buns, a star T-shirt, wide eyes that look up, and a smile. One raised finger touches the middle of the face, between the eyes and the mouth. No nose line or nose mark is drawn anywhere on the face. The nose is covered by the finger and nothing of it is drawn, so it is missing. Character matches Nan (two buns, star T-shirt, shorts). Black lines on white, no gray, no gaps, no text. Small marks: the buns have a thin band line; the free arm is a plain tube."
+    },
+    {
+      "id": "l2-w03-story-page-nan-can-get-a-pan",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-nan-can-get-a-pan-m3-line.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole picture: Nan holds a magnifying glass by a low shelf of cups and flat plates, and no pan with a handle is drawn",
+      "notes": "Question page: no. Items: Nan (1), a pan (1). Action: get (note only; the hand must be near a pan). Seen: Nan with two buns and a star T-shirt, smiling, with one hand holding a round magnifying glass with a short handle. A low shelf shows three cups on top and three flat round dishes on the lower shelf. A kitchen unit with a stove, a sink, and a cabinet stands on the right. No object reads as a pan: the flat dishes have no handle and read as plates, and the magnifying glass reads as a magnifying glass. The named prop is missing or wrong. Character matches Nan. Black lines on white, no gray, no gaps, no text. Small marks: a scalloped collar line on the T-shirt; a short line next to the right eye."
+    }
+  ],
+  "summary": { "files": 2, "pass": 0, "fail": 2 }
+}

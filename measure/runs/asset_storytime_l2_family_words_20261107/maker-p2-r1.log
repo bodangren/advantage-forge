@@ -1,0 +1,147 @@
+# Maker log: Phase 2 round 1 (color try 1 and judge batch)
+
+Track: asset_storytime_l2_family_words_20261107
+Phase: Phase 2: Family-word pictures and delivery
+role_base_sha: 9eb453c3dc3f986220dd1b4ee6b30e4086b67d79
+phase_base_sha: 893db8598328eb6689a4266c5c5d4b29247df20a
+Date: 2026-11-07
+
+## Preconditions (before the first Muse call)
+
+list v7 sha256: ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf
+  time: 2026-11-06T23:39:31Z
+family png sha256: ab6067eedf8de3efebb40509c6032f81f7ecee178b212eac8c3727d40a8bff62
+  time: 2026-11-06T23:39:31Z
+costs.tsv before: 74 call rows, 0.74 USD
+  time: 2026-11-06T23:39:31Z
+costs.tsv head sha256: 64b6cc96ec3aedf7bee799874af5a24c3c04b433a959d2e2c1202bca05e9572c
+  time: 2026-11-06T23:39:31Z
+
+The first two values equal the pins of the specification section "Preconditions". The third value
+matches the card spend record. The head SHA-256 lets the checker prove the card rows stay
+unchanged. The first new row of costs.tsv has the time 2026-11-06T23:51:05.533Z. Every
+precondition line is earlier than that time.
+
+## Calibration
+
+The orchestrator ran the two gate controls of `calibration-set.json` through the frozen Sonnet
+judge once. The judge model is claude-code/claude-sonnet-5-5#high. The time is
+2026-11-06T23:39:40Z. Both controls have the verdict fail. The record is
+`measure/runs/asset_storytime_l2_family_words_20261107/calibration-record.json`. The calibration
+spent no Muse money. Task 4 is complete.
+
+## Muse color pool (Task 5, try 1)
+
+command: node scripts/storytime-muse.mjs color docs/storytime/l2-unit1/family-words/*.json --concurrency 4
+
+The glob held the 18 new spec files. The family row has no spec file in that folder, so it got no
+call.
+
+calls: 18
+failed calls: 0
+refused lines: 0
+highest new row cost: 0.01 USD
+new costs.tsv rows: 18, all of kind color, all with the note ok
+track spend: 0.18 USD
+total in costs.tsv: 0.92 USD
+total calls: 92
+
+The pool ran with --concurrency 4 because the recorded total before the pool was 0.74 USD, below
+1.40 USD. The first new row has the time 2026-11-06T23:51:05.533Z and the last has the time
+2026-11-06T23:52:23.302Z. The head SHA-256 of the first 75 lines is the same after the pool.
+
+## Operating rules
+
+a: the recorded total before the pool was 0.74 USD, below 1.40 USD, so the pool ran with
+--concurrency 4. The log names the total before the pool and its flags.
+b: every new row of costs.tsv was read after the pool. highest new row cost: 0.01 USD. No row
+costs more than 0.03 USD, so the maker did not stop.
+c: the output of the run was read for a refusal line. refused lines: 0.
+d: no line call ran in this round, so no --tries value was used.
+e: nobody edited costs.tsv by hand. The header keeps the time column and the usage_cost column.
+The head SHA-256 of the first 75 lines is the same before and after the pool.
+f: the total reached the report point of 0.80 USD at the 6th new call, the call of
+l2-w05-card-hands. The maker recorded the total, the track spend, and the projection once, and
+continued. The maker stops only at the cap of 1.60 USD.
+
+## Report point
+
+report point 0.80 reached: yes
+total at report point: 0.80 USD
+track spend at report point: 0.06 USD
+projection: 0.68 USD of the track share of 0.86 USD is left. At 0.01 USD per call that is 68 more
+calls. The track allows 54 calls at most, so the total would reach 1.28 USD, under the cap of
+1.60 USD.
+
+## Print check
+
+files checked: 18
+problems: 0
+
+Every new color print is a PNG at 1500 x 1500 px, 8-bit, 3 channels, srgb, with no alpha channel
+and no palette. The maker did not view or judge the pictures.
+
+## Judge batch
+
+batch file: docs/storytime/l2-unit1/judge/prod/fw-r1-color.json
+command: node scripts/storytime-judge-batch.mjs --family-words --ids <18 ids> --kind color --try 1 --out fw-r1-color
+entries: 18
+judge copies: 18 files at 360 x 360 px under out/storytime-review/judge/prod/
+
+The tool output is in
+measure/runs/asset_storytime_l2_family_words_20261107/judge-batch-fw-r1-color.log. No word of the
+forbidden list of FR-2 appears in the batch file. The judge kit shows no change:
+git diff --name-only --diff-filter=MDRT prints nothing for docs/storytime/l2-unit1/judge.
+
+## Task state
+
+Task 4 is [x]. Task 5 is [~]. The judge writes its result file
+measure/runs/asset_storytime_l2_family_words_20261107/judge-fw-r1-color.json. The maker wrote no
+judge result file.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: partial
+track: asset_storytime_l2_family_words_20261107
+phase: Phase 2: Family-word pictures and delivery
+phase_base_sha: 893db8598328eb6689a4266c5c5d4b29247df20a
+role_base_sha: 9eb453c3dc3f986220dd1b4ee6b30e4086b67d79
+commits: |
+  the round-1 commit carries this log, the judge batch, the calibration record, the spend record,
+  and the plan. Its SHA is the parent of the plan evidence commit that follows. The plan evidence
+  commit adds that SHA to the Task 4 line.
+tests_run: |
+  the three precondition shell checks of the specification section "Preconditions" at
+  2026-11-06T23:39:31Z: every value equals its pin
+  the print check of the 18 new color prints: files checked 18, problems 0
+  the forbidden word scan of the judge batch file: no line
+  the frozen kit check of docs/storytime/l2-unit1/judge: no line
+files_changed: |
+  docs/storytime/l2-unit1/judge/prod/fw-r1-color.json (new judge batch, 18 entries)
+  measure/tracks/asset_storytime_l2_family_words_20261107/plan.md (Task 4 marker, Task 5 marker,
+  the Phase 1 checkpoint)
+  measure/runs/asset_storytime_l2_family_words_20261107/maker-p2-r1.log (this log)
+  measure/runs/asset_storytime_l2_family_words_20261107/judge-batch-fw-r1-color.log (tool output)
+  measure/runs/asset_storytime_l2_family_words_20261107/spend-record.txt (spend lines)
+  measure/runs/asset_storytime_l2_family_words_20261107/calibration-record.json (orchestrator
+  calibration record)
+  No PNG or JPG file entered git. No file under out/ entered git. No code file, no spec file, and
+  no judge kit file changed.
+plan_updates: |
+  Task 4 is [x]. The Task 4 line holds the SHA of the round-1 commit.
+  Task 5 is [~]. The Phase 1 heading holds [checkpoint: 9eb453c].
+known_failures: none
+handoff: |
+  The judge runs next on the batch file docs/storytime/l2-unit1/judge/prod/fw-r1-color.json with its
+  18 files. The judge writes its result file
+  measure/runs/asset_storytime_l2_family_words_20261107/judge-fw-r1-color.json. The maker did not
+  rate any picture.
+  The 18 new color prints are at out/storytime/l2/unit1/cards/muse/<id>-m1-color-print.png. The
+  judge copies are at out/storytime-review/judge/prod/<id>-color-t1.png. The family row got no
+  call and no new batch.
+  The track spend is 0.18 USD in 18 calls and the total of costs.tsv is 0.92 USD in 92 calls. The
+  next pool runs with --concurrency 4 below 1.40 USD. At or above 1.40 USD the pool runs with
+  --concurrency 1. Each row allows 3 color tries at most.
+  The delivery is model evidence. It is not acceptance.
+dispositions: none
+END_MEASURE_AGENT_RESULT

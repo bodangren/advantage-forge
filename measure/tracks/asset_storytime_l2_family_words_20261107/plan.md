@@ -68,7 +68,7 @@ The Measure doctor of this repository counts only the markers `[ ]`, `[~]`, and 
 count `[b]`. Task 0 is complete (`[x]`). Gate S stays `[~]` until the spec review passes, so the
 plan keeps an open item for the doctor.
 
-## Phase 1: Family-word specs, judge flag, and delivery writer
+## Phase 1: Family-word specs, judge flag, and delivery writer [checkpoint: 9eb453c]
 
 - [x] Task 1 (74d58f1f): The 18 family-word spec files in `docs/storytime/l2-unit1/family-words/<id>.json`
   and a test that checks them.
@@ -137,7 +137,7 @@ plan keeps an open item for the doctor.
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`).
 
-- [ ] Task 4: Preconditions and judge calibration.
+- [x] Task 4: Preconditions and judge calibration.
   - Run the shell checks of the specification section "Preconditions": the SHA-256 of the list v7
     fixture, the SHA-256 of the family PNG, and the cost file check (74 call rows, 0.74 USD).
     Record the three results in the role log.
@@ -146,8 +146,15 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     fail. Record the result file and the verdicts in
     `measure/runs/asset_storytime_l2_family_words_20261107/calibration-record.json`. No Muse
     spend. If a control passes, stop and report to the PM.
-- [b] Task 5: Color calls for the 18 new rows, then judge batches at card size (360 px long side
-  with `--family-words`). deferred:Task 4
+  - The three shell checks passed at 2026-11-06T23:39:31Z. The list v7 fixture has the SHA-256
+    `ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf`. The family PNG has the
+    SHA-256 `ab6067eedf8de3efebb40509c6032f81f7ecee178b212eac8c3727d40a8bff62`. The cost file
+    holds 74 call rows and 0.74 USD. The role log holds the four labeled lines and the SHA-256 of
+    the first 75 cost lines.
+  - The calibration ran through the frozen Sonnet judge. Both controls failed. The record is
+    `measure/runs/asset_storytime_l2_family_words_20261107/calibration-record.json`.
+- [~] Task 5: Color calls for the 18 new rows, then judge batches at card size (360 px long side
+  with `--family-words`).
   - The first judge pass is the delivery. At most 3 color tries for each row. A fail needs a
     second judge on the file alone before it stands. Log every call in `costs.tsv`.
   - Muse calls run 4 at a time at most. The maker starts no call that the guard refuses.

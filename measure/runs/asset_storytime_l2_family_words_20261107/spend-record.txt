@@ -1,0 +1,7 @@
+calls: 18
+track spend usd: 0.18
+total usd: 0.92
+total calls: 92
+report point 0.80 reached: yes
+total at report point: 0.80
+projection: 0.68 USD of the track share of 0.86 USD is left. At 0.01 USD per call that is 68 more calls. The track allows 54 calls at most, so the total would reach 1.28 USD, under the cap of 1.60 USD.

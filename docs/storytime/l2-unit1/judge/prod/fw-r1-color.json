@@ -1,0 +1,223 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-friend-color-t1.png",
+    "id": "l2-w01-card-friend",
+    "kind": "color",
+    "pageText": "friend",
+    "use": "card",
+    "mustShow": [
+      "Pat and Nan",
+      "two children side by side",
+      "both smile",
+      "both full body in view"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-arms-color-t1.png",
+    "id": "l2-w05-card-arms",
+    "kind": "color",
+    "pageText": "arms",
+    "use": "card",
+    "mustShow": [
+      "Nan",
+      "one raised arm",
+      "both arms",
+      "the other hand points at that arm"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-ears-color-t1.png",
+    "id": "l2-w05-card-ears",
+    "kind": "color",
+    "pageText": "ears",
+    "use": "card",
+    "mustShow": [
+      "Pat",
+      "both ears",
+      "one finger points at one ear"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-eyes-color-t1.png",
+    "id": "l2-w05-card-eyes",
+    "kind": "color",
+    "pageText": "eyes",
+    "use": "card",
+    "mustShow": [
+      "Nan",
+      "both eyes",
+      "one finger points at her eyes"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-feet-color-t1.png",
+    "id": "l2-w05-card-feet",
+    "kind": "color",
+    "pageText": "feet",
+    "use": "card",
+    "mustShow": [
+      "Nan",
+      "both feet",
+      "both shoes",
+      "one finger points down at her feet"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-hands-color-t1.png",
+    "id": "l2-w05-card-hands",
+    "kind": "color",
+    "pageText": "hands",
+    "use": "card",
+    "mustShow": [
+      "Pat",
+      "one open hand with five fingers",
+      "both hands",
+      "the other hand points at the open hand"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-legs-color-t1.png",
+    "id": "l2-w05-card-legs",
+    "kind": "color",
+    "pageText": "legs",
+    "use": "card",
+    "mustShow": [
+      "Pat",
+      "both legs",
+      "one finger points down at one leg"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-nose-color-t1.png",
+    "id": "l2-w05-card-nose",
+    "kind": "color",
+    "pageText": "nose",
+    "use": "card",
+    "mustShow": [
+      "Nan",
+      "her nose",
+      "one finger points at her nose"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-bird-color-t1.png",
+    "id": "l2-w06-card-bird",
+    "kind": "color",
+    "pageText": "bird",
+    "use": "card",
+    "mustShow": [
+      "one bird",
+      "a small blue bird",
+      "the whole bird in view"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-cat-color-t1.png",
+    "id": "l2-w06-card-cat",
+    "kind": "color",
+    "pageText": "cat",
+    "use": "card",
+    "mustShow": [
+      "one cat",
+      "a small orange tabby cat",
+      "the whole cat in view"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-dog-color-t1.png",
+    "id": "l2-w06-card-dog",
+    "kind": "color",
+    "pageText": "dog",
+    "use": "card",
+    "mustShow": [
+      "one dog",
+      "a small brown and cream dog",
+      "the whole dog in view"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-duck-color-t1.png",
+    "id": "l2-w06-card-duck",
+    "kind": "color",
+    "pageText": "duck",
+    "use": "card",
+    "mustShow": [
+      "one duck",
+      "a white duck with an orange beak",
+      "the whole duck in view"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-fish-color-t1.png",
+    "id": "l2-w06-card-fish",
+    "kind": "color",
+    "pageText": "fish",
+    "use": "card",
+    "mustShow": [
+      "one fish",
+      "a round blue fish with a yellow belly",
+      "the whole fish in view"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-frog-color-t1.png",
+    "id": "l2-w06-card-frog",
+    "kind": "color",
+    "pageText": "frog",
+    "use": "card",
+    "mustShow": [
+      "one frog",
+      "a small green frog",
+      "the whole frog in view"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-horse-color-t1.png",
+    "id": "l2-w06-card-horse",
+    "kind": "color",
+    "pageText": "horse",
+    "use": "card",
+    "mustShow": [
+      "one horse",
+      "a white horse",
+      "the whole horse in view"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-ball-color-t1.png",
+    "id": "l2-w07-card-ball",
+    "kind": "color",
+    "pageText": "ball",
+    "use": "card",
+    "mustShow": [
+      "one ball",
+      "a red-and-yellow ball",
+      "the whole ball in view"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-drum-color-t1.png",
+    "id": "l2-w07-card-drum",
+    "kind": "color",
+    "pageText": "drum",
+    "use": "card",
+    "mustShow": [
+      "one drum",
+      "a small red drum",
+      "two wooden sticks",
+      "the whole drum in view"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-kite-color-t1.png",
+    "id": "l2-w07-card-kite",
+    "kind": "color",
+    "pageText": "kite",
+    "use": "card",
+    "mustShow": [
+      "one kite",
+      "a red-and-yellow kite",
+      "the whole kite in view"
+    ]
+  }
+]
