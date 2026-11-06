@@ -249,6 +249,15 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     and each label sits under its own card.
   - The 2 failed rows stay out of the delivery: the ham and the family. The record names both
     with the best try.
+  - Orchestrator decision 2026-11-06, after the phase acceptance finding F1 of
+    `measure/runs/asset_storytime_l2_cards_20261106/acceptance-p2-15031cb.json`: the white-corner
+    rule of the class C rows is a report item, not a delivery blocker. 22 of the 29 delivered
+    color files have a corner pixel below 250. The corners are a faint near-white, the lowest is
+    242 of 255, and most of them sit at the bottom-left corner. The soft shadow of the render
+    causes them. The same rule holds for 28 of the 80 class C color files of the week deliveries,
+    and Daniel reviewed those. The orchestrator default is to deliver the files as they are, and
+    Workbooks decides at its check. The report names the 22 files with their values, and the
+    handoff manifest holds the same note.
   - The delivery is model evidence. It is not acceptance. Workbooks checks the cards.
   - Check every file at 1500 x 1500 px, 8-bit PNG, with no alpha channel.
   - Check the line art: grayscale, white background, no gray fill.
