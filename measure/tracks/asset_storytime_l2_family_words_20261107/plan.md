@@ -137,7 +137,7 @@ plan keeps an open item for the doctor.
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`).
 
-- [x] Task 4: Preconditions and judge calibration.
+- [x] Task 4 (cadf975): Preconditions and judge calibration.
   - Run the shell checks of the specification section "Preconditions": the SHA-256 of the list v7
     fixture, the SHA-256 of the family PNG, and the cost file check (74 call rows, 0.74 USD).
     Record the three results in the role log.
