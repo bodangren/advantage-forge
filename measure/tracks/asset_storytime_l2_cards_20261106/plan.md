@@ -110,7 +110,7 @@ the plan keeps an open item for the doctor.
   - Mutation self-check M1 to M7 (scratch copy, guards file alone): M1 `CG1 CG4`, M2 `CG10`,
     M3 `CG8`, M4 `CG11`, M5 `CG11`, M6 `CG1 CG5`, M7 `CG7` (also CG4, CG5, CG6, CG8). The restored
     copy passed 11 of 11.
-- [~] Task 3: The 31 card spec files in `docs/storytime/l2-unit1/cards/<id>.json`, and a test that
+- [x] Task 3: The 31 card spec files in `docs/storytime/l2-unit1/cards/<id>.json`, and a test that
   checks them against list v7: ids, text, file names, size, aspect, `outDir`, and that every
   reference file exists. The maker copies list v7 (the bytes of Workbooks commit `95043edc`,
   `content/storytime/l2/print/pictures.json`, SHA-256
@@ -123,14 +123,12 @@ the plan keeps an open item for the doctor.
     hard failure, not a skip. The test reads no path outside the repository.
   - The test checks 13 person cards, 3 prop cards with references, and 15 cards without references.
   - No Muse call and no provider call runs in this phase. Spend stays 0.00 USD.
-  - Green status: blocked, not complete. The 31 spec files are committed at `5f344886`, and 30 of
-    31 pass. `tests/storytime-card-specs.test.ts` names the train reference
-    `out/storytime/l2/unit1/w04/muse/elements/prop-toys-sheet-m1-color.png`. That file does not
-    exist. The specification (line 117) and the only file on disk are in `w07`. CS4 and CS6 fail for
-    that one card, and CS6 also refuses a missing file. Green may not edit a committed Red test, so
-    Task 3 needs a Mid Red retry.
-  - The typecheck has 8 owned errors, all inside the three Red test files. Green may not edit them.
-    The same Mid Red retry must fix them.
+  - Red amendment against `29524b07`: corrected the train reference to the week 7 file and fixed all eight
+    owned TypeScript errors with type annotations, casts, and safe narrowing. No assertion, expected
+    value, or test id changed.
+  - Amendment verification: the six-file `GREEN_TEST_COMMAND` passed all 6 files and 67 tests.
+    Typecheck reported 38 project errors, including 0 owned errors in Storytime sources, scripts,
+    and tests. The repository-wide typecheck remains nonzero because other project errors remain.
   - Prompt differences recorded: (1) Nan in hello, goodbye, and girl has two round buns with smooth
     red ring bands, per the `cast.json` note, not the list "two small bunches"; (2) the teddy is
     small and brown with no bow, per the card prompt, not the white teddy of the week 7 toy sheet;

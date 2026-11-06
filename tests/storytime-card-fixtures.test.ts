@@ -29,10 +29,10 @@ describe('storytime card fixtures (CF)', () => {
   });
 
   it('CF3 points both v3 constants at the repository fixture', () => {
-    for (const [file, constant] of [
+    for (const [file, constant] of ([
       ['tests/storytime-book-pictures.test.ts', 'LIST_V3_SHADOW_FILE'],
       ['tests/storytime-stage-check.test.ts', 'V3_SHADOW_FILE'],
-    ]) {
+    ] as Array<[string, string]>)) {
       const source = read(file);
       const declaration = source.match(new RegExp(`const ${constant} = ([^;]+);`))?.[1] ?? '';
       expect(declaration).toContain('fixtures/storytime/pictures-v3.json');

@@ -37,7 +37,7 @@ const refs: Record<string, string[]> = {
   'l2-w04-card-sister': [`${REF}cast-lily-sheet-m1-color.png`],
   'l2-w04-card-family': [`${REF}cast-mom-sheet-m1-color.png`, `${REF}cast-dad-sheet-m1-color.png`, `${REF}cast-grandma-sheet-m2-color.png`, `${REF}cast-grandpa-sheet-m2-color.png`, `${REF}cast-tom-sheet-m3-color.png`, `${REF}cast-lily-sheet-m1-color.png`],
   'l2-w07-card-doll': [`${REF}prop-doll-pam-sheet-m1-color.png`],
-  'l2-w07-card-train': [`${REF}prop-toys-sheet-m1-color.png`],
+  'l2-w07-card-train': ['out/storytime/l2/unit1/w07/muse/elements/prop-toys-sheet-m1-color.png'],
   'l2-w07-card-teddy': ['out/storytime-review/batch-22/sprout-pat-render.png'],
 };
 const idsWithRefs = new Set(Object.keys(refs));
@@ -132,7 +132,7 @@ describe('storytime card specs (CS)', () => {
       const printRoot = path.join(temp, 'print');
       mkdirSync(printRoot);
       cpSync(LIST, path.join(printRoot, 'pictures.json'));
-      const list = bookPictures.loadPictureList({ printRoot, expectedSha256: LIST_SHA });
+      const list = bookPictures.loadPictureList({ printRoot, workbooksRoot: temp, expectedSha256: LIST_SHA });
       const cards = list.rows.filter((row: any) => row.use === 'card');
       expect(list.rows, 'CS8 loaded list rows').toHaveLength(227);
       expect(cards, 'CS8 planned card rows').toHaveLength(31);
@@ -151,7 +151,7 @@ describe('storytime card specs (CS)', () => {
       { ...original, outDir: 'out/elsewhere' },
       { ...original, deliverAs: 'wrong.png' },
       { ...original, references: [] },
-      { ...original, references: [...original.references, 'extra.png'] },
+      { ...original, references: [...(original.references ?? []), 'extra.png'] },
       { ...original, goal: ' ' },
     ];
     for (const mutated of mutations) expect(checkSpec(mutated, row).length).toBeGreaterThan(0);

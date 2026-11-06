@@ -1,0 +1,22 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: Phase 1: Card guard, card specs, and fixture; bounded Red amendment round 2
+baseline_sha: 562c58007d21de4979a198d2c6dff79a84ac6ebc
+role_base_sha: 29524b07c3e1fe69ffa4748db8131200ca8073ae
+resulting_head: pending commit
+commits: pending commit
+tests_run: |
+  Typecheck exited 2 with 38 total diagnostics and `owned tsc errors: 0`. The remaining diagnostics
+  are outside owned Storytime paths: assets/rowboat.ts (8), assets/airship.ts (7), assets/plank.ts
+  (6), assets/waterskin.ts (3), assets/storytime-nut.ts (3), assets/mushroom-cap.ts (3),
+  tests/games/castle-defense/rules.adversarial.test.ts (2), and one each in tests/part.test.ts,
+  assets/wool.ts, assets/storytime-picture-book.ts, assets/storytime-crayon-box.ts,
+  assets/merchant-cart.ts, and assets/longship.ts.
+  GREEN_TEST_COMMAND exited 0 with `Test Files  6 passed (6)` and `Tests  67 passed (67)`.
+files_changed: Three card test files and the track plan. This run log records the amendment.
+plan_updates: Marked Task 3 [x]. Recorded the corrected train path, eight type fixes, passing six-file gate, and remaining unrelated typecheck diagnostics.
+known_failures: The six-file test command has no failures. The full typecheck remains nonzero because of the 38 diagnostics listed above. Owned Storytime diagnostics are 0.
+handoff: Green gate now passes. The remaining typecheck errors are outside this role's owned scope. Unrelated dirty paths remain untouched.
+END_MEASURE_AGENT_RESULT

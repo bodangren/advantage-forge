@@ -5,6 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as guards from '../scripts/storytime-muse-guards.mjs';
 import * as judgeBatch from '../scripts/storytime-judge-batch.mjs';
+import type { BatchCommandOptions, BuildBatchOptions } from '../scripts/storytime-judge-batch.mjs';
 import { describe, expect, it } from 'vitest';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -174,14 +175,14 @@ describe('storytime card guards (CG)', () => {
     const argv = ['--ids', ID, '--kind', 'color', '--try', '1', '--cards'];
     let options: Record<string, unknown>;
     try {
-      options = judgeBatch.parseArgs(argv) as Record<string, unknown>;
+      options = judgeBatch.parseArgs(argv) as unknown as Record<string, unknown>;
     } catch {
       expect(false, 'CG11a accepts the --cards option').toBe(true);
       return;
     }
     expect(options.cards).toBe(true);
     expect(() => judgeBatch.parseArgs(['--ids', ID, '--kind', 'color', '--try', '1', '--bogus'])).toThrow(/unknown option/);
-    const base = judgeBatch.parseArgs(['--ids', ID, '--kind', 'color', '--try', '1']) as Record<string, unknown>;
+    const base = judgeBatch.parseArgs(['--ids', ID, '--kind', 'color', '--try', '1']) as unknown as Record<string, unknown>;
     expect(Object.fromEntries(Object.entries(base).filter(([, value]) => value !== undefined))).toEqual({ ids: [ID], kind: 'color', tryNo: 1, out: 'batch-color-t1' });
     const root = temp();
     try {
@@ -192,9 +193,9 @@ describe('storytime card guards (CG)', () => {
       mkdirSync(path.dirname(costFile), { recursive: true });
       writeFileSync(costFile, `time\trow\tversion\tkind\toutput\n2026-11-05T12:00:00Z\t${ID}\tm1\tcolor\t${ID}-m1-color.png\n2026-11-06T01:00:00Z\t${ID}\tm2\tcolor\t${ID}-m2-color.png\n`);
       await import('sharp').then(({ default: sharp }) => sharp({ create: { width: 100, height: 100, channels: 3, background: '#fff' } }).png().toFile(path.join(root, CARD_DIR, `${ID}-m2-color.png`)));
-      const built = await judgeBatch.buildBatch({ ...options, root, judgeDir: path.join(root, 'judge') });
-      expect(built[0].id).toBe(ID);
-      await expect(judgeBatch.buildBatch({ ...base, root, judgeDir: path.join(root, 'judge-old') })).rejects.toThrow(/no A-48 spec/);
+      const built = await judgeBatch.buildBatch({ ...options, root, judgeDir: path.join(root, 'judge') } as BuildBatchOptions);
+      expect(built[0]!.id).toBe(ID);
+      await expect(judgeBatch.buildBatch({ ...base, root, judgeDir: path.join(root, 'judge-old') } as BuildBatchOptions)).rejects.toThrow(/no A-48 spec/);
     } finally { rmSync(root, { recursive: true, force: true }); }
   });
 });
