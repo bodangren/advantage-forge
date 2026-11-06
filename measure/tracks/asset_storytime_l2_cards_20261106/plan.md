@@ -56,12 +56,12 @@ the plan keeps an open item for the doctor.
 
 ## Phase 1: Card guard, card specs, and fixture
 
-- [x] Task 1: Move the T180 fixture. Copy the Workbooks version 3 list (the bytes of Workbooks
-  commit `078917f1`, `content/storytime/l2/print/pictures.json`) into `tests/fixtures/storytime/`.
-  The copy is `tests/fixtures/storytime/pictures-v3.json` (the name is fixed). Point
-  `LIST_V3_SHADOW_FILE` and `V3_SHADOW_FILE` at the copy. Done when both tests read the
-  repository copy, no test path names `/tmp/opencode/wb-shadow`, and both test files behave as
-  before with `/tmp/opencode/wb-shadow` absent.
+- [x] Task 1 (7d1cbdd5): Move the T180 fixture. Copy the Workbooks version 3 list (the bytes of
+  Workbooks commit `078917f1`, `content/storytime/l2/print/pictures.json`) into
+  `tests/fixtures/storytime/`. The copy is `tests/fixtures/storytime/pictures-v3.json` (the name
+  is fixed). Point `LIST_V3_SHADOW_FILE` and `V3_SHADOW_FILE` at the copy. Done when both tests
+  read the repository copy, no test path names `/tmp/opencode/wb-shadow`, and both test files
+  behave as before with `/tmp/opencode/wb-shadow` absent.
   - Complete at Red `7d1cbdd5`. Green verified, not changed: `tests/storytime-card-fixtures.test.ts`
     passed 5 of 5, `tests/storytime-stage-check.test.ts` passed 3 of 3, and
     `grep -rn 'wb-shadow' tests scripts src` printed nothing (exit 1).
@@ -70,8 +70,8 @@ the plan keeps an open item for the doctor.
   - The maker proves the "absent" condition with a run in which the `/tmp` path does not exist (for
     example by running the two test files and checking that no test opens a `/tmp/opencode` path).
   - Red evidence: `tests/storytime-card-fixtures.test.ts` first ran before the move. It had 4 failures and 1 pass (exit 1). After the fixture copies and constant edits, it passed 5 tests (exit 0). Both fixture SHA-256 values matched their pins. `tests/storytime-stage-check.test.ts` passed 3 tests through `heavy-run.sh`. Static `grep -rn 'wb-shadow' tests scripts src` found 0 hits.
-- [x] Task 2: Card run guard. `scripts/storytime-muse-guards.mjs` exports one constant `CARD_RUN`
-  (types in `scripts/storytime-muse-guards.d.mts`):
+- [x] Task 2 (5f344886): Card run guard. `scripts/storytime-muse-guards.mjs` exports one constant
+  `CARD_RUN` (types in `scripts/storytime-muse-guards.d.mts`):
   `{ startTime: '2026-11-06T00:00:00Z', capUsd: 1.6, reportAtUsd: 0.8, marginUsd: 0.01,
   maxTries: 3, outDir: 'out/storytime/l2/unit1/cards/muse' }`. The restart config
   (`RESTART_START` `2026-11-04T07:54:00Z`, cap 1.00 USD) and its tests stay unchanged.
@@ -110,14 +110,14 @@ the plan keeps an open item for the doctor.
   - Mutation self-check M1 to M7 (scratch copy, guards file alone): M1 `CG1 CG4`, M2 `CG10`,
     M3 `CG8`, M4 `CG11`, M5 `CG11`, M6 `CG1 CG5`, M7 `CG7` (also CG4, CG5, CG6, CG8). The restored
     copy passed 11 of 11.
-- [x] Task 3: The 31 card spec files in `docs/storytime/l2-unit1/cards/<id>.json`, and a test that
-  checks them against list v7: ids, text, file names, size, aspect, `outDir`, and that every
-  reference file exists. The maker copies list v7 (the bytes of Workbooks commit `95043edc`,
-  `content/storytime/l2/print/pictures.json`, SHA-256
-  `ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf`) to
-  `tests/fixtures/storytime/pictures-v7.json`. The
-  references follow the table in the specification. The maker records each prompt difference
-  (Nan buns, teddy, car, and any other) in the plan note.
+- [x] Task 3 (5f344886, Red fix ad9cc588): The 31 card spec files in
+  `docs/storytime/l2-unit1/cards/<id>.json`, and a test that checks them against list v7: ids,
+  text, file names, size, aspect, `outDir`, and that every reference file exists. The maker copies
+  list v7 (the bytes of Workbooks commit `95043edc`, `content/storytime/l2/print/pictures.json`,
+  SHA-256 `ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf`) to
+  `tests/fixtures/storytime/pictures-v7.json`. The references follow the table in the
+  specification. The maker records each prompt difference (Nan buns, teddy, car, and any other) in
+  the plan note.
   - The test file is `tests/storytime-card-specs.test.ts`. It reads only
     `tests/fixtures/storytime/pictures-v7.json` and checks its SHA-256 first. A SHA mismatch is a
     hard failure, not a skip. The test reads no path outside the repository.
