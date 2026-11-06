@@ -221,6 +221,15 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     rule, the "no gray" rule, and the no-text rule stay in both prompts.
   - Only the `linePrompt` changed in each file. The card spec test passed after the change:
     `Test Files  1 passed (1)`, `Tests  10 passed (10)`, exit 0.
+  - Orchestrator decision 2026-11-06, after two judges failed the ham line try 2: the ham line
+    prompt changed again for the last line try. The four sentences of round 3 left the prompt.
+    The prompt now names the slice as the main shape that fills most of the plate, the top face,
+    the thick side band, the wide pale fat rim band, three or four long curved grain lines that
+    end on the fat rim, and the rule that no dots and no small circles show. The plate stays one
+    thin ring around the slice. The thick-line rule, the "pure white" rule, the "no gray" rule,
+    and the no-text rule stay in the prompt.
+  - Only the `linePrompt` changed in the ham file. The card spec test passed after the change:
+    `Test Files  1 passed (1)`, `Tests  10 passed (10)`, exit 0.
 - [b] Task 7: Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet. The delivery
   folder is `out/storytime/l2/unit1/cards/delivery-muse-v1/`. The handoff folder is
   `/home/daniebo/Desktop/handoff/storytime-l2-card-pictures/`. The manifest form follows
