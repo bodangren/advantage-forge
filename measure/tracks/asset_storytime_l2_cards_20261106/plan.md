@@ -235,10 +235,21 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     and the no-text rule stay in the prompt.
   - Only the `linePrompt` changed in the ham file. The card spec test passed after the change:
     `Test Files  1 passed (1)`, `Tests  10 passed (10)`, exit 0.
-- [~] Task 7: Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet. The delivery
-  folder is `out/storytime/l2/unit1/cards/delivery-muse-v1/`. The handoff folder is
+- [x] Task 7 (29344ae4): Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet. The
+  delivery folder is `out/storytime/l2/unit1/cards/delivery-muse-v1/`. The handoff folder is
   `/home/daniebo/Desktop/handoff/storytime-l2-card-pictures/`. The manifest form follows
   `/home/daniebo/Desktop/handoff/a48-forge-pictures-a/MANIFEST.txt`.
+  - Evidence: the delivery folder holds 58 PNG files and `manifest.json` for the 29 delivered
+    rows. The writer said `Delivered 29 rows and 14 batch hashes`. Every PNG is 1500 x 1500 px,
+    8-bit, with no alpha channel: files checked 58, problems 0. The handoff folder holds the
+    same 58 PNG files, the same `manifest.json`, the `MANIFEST.txt`, and the contact sheet.
+    `grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c -` gave 58 OK and 0 FAILED. The
+    sha256sum lists of the delivery folder and the handoff folder are equal. The contact sheet
+    `storytime-l2-card-pictures-contact-sheet.png` holds 31 labels and 58 tiles, 4 cells per row,
+    and each label sits under its own card.
+  - The 2 failed rows stay out of the delivery: the ham and the family. The record names both
+    with the best try.
+  - The delivery is model evidence. It is not acceptance. Workbooks checks the cards.
   - Check every file at 1500 x 1500 px, 8-bit PNG, with no alpha channel.
   - Check the line art: grayscale, white background, no gray fill.
   - `sha256sum -c` on the file lines of `MANIFEST.txt` gives OK for every file.
@@ -276,10 +287,9 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     and 7 px. The family row used its 3 line tries, so it fails after its tries and is reported,
     not delivered. Its color passed on try 1. Evidence:
     `measure/runs/asset_storytime_l2_cards_20261106/delivery-line-widths-t3.txt`.
-- [b] Task 8: Drive backup. Upload the delivery to a subfolder `cards` of the private Drive folder
+- [~] Task 8: Drive backup. Upload the delivery to a subfolder `cards` of the private Drive folder
   `1AWdjGVJrJcc35oY7cIAt_jPqyaLtyK9B` with the `gws` CLI. Check the MD5 of every file. Record the
   TSV `out/storytime/l2/unit1/drive-backup-2026-11-06-cards.tsv`. The mismatch count must be 0.
-  — deferred:phase-1-acceptance
 - [b] Task 9: Report record for the PM. It names the handoff path, the spend, the count of calls,
   and each failed row with its best try. The report states that the delivery is model evidence and
   that Workbooks checks the cards. — deferred:phase-1-acceptance
