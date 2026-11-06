@@ -70,7 +70,7 @@ the plan keeps an open item for the doctor.
   - The maker proves the "absent" condition with a run in which the `/tmp` path does not exist (for
     example by running the two test files and checking that no test opens a `/tmp/opencode` path).
   - Red evidence: `tests/storytime-card-fixtures.test.ts` first ran before the move. It had 4 failures and 1 pass (exit 1). After the fixture copies and constant edits, it passed 5 tests (exit 0). Both fixture SHA-256 values matched their pins. `tests/storytime-stage-check.test.ts` passed 3 tests through `heavy-run.sh`. Static `grep -rn 'wb-shadow' tests scripts src` found 0 hits.
-- [x] Task 2 (e68b4b4f): Card run guard. `scripts/storytime-muse-guards.mjs` exports one constant
+- [x] Task 2 (91b2a1ca): Card run guard. `scripts/storytime-muse-guards.mjs` exports one constant
   `CARD_RUN` (types in `scripts/storytime-muse-guards.d.mts`):
   `{ startTime: '2026-11-06T00:00:00Z', capUsd: 1.6, reportAtUsd: 0.8, marginUsd: 0.01,
   maxTries: 3, outDir: 'out/storytime/l2/unit1/cards/muse' }`. The restart config
@@ -134,6 +134,14 @@ the plan keeps an open item for the doctor.
     key access. The targeted command exited 1: 1 test failed and 14 passed. Only CG15 failed, with no
     load error. Typecheck found 0 owned errors and 38 total project errors. Strategy counts add this
     one test: N_new 30 (prior 29 plus 1), N_old remains 41, and the aggregate target becomes 71.
+  - Green round 4 (commit `91b2a1ca`, Red round 4 `3206662f`): `classifyOutDir` returns `invalid`
+    for every path below the child folder `cards` except the exact resolved card folder. The element
+    folder `cards/muse/elements`, a mutated child such as `cards/other/muse`, and `cards/muse2` are
+    refused with exit 3, before `readKey` and before any cost scan, and the message names the raw
+    outDir. A week, cover, or elements path of another child stays `restart` (F6).
+  - Round 4 gate: `GREEN_TEST_COMMAND` passed `Test Files  6 passed (6)` and
+    `Tests  71 passed (71)`. `owned tsc errors: 0`. Mutation MF4 (classify `cards/muse/elements` as
+    restart again) failed `CG15`, with 1 failed and 14 passed; the restored copy passed 15 of 15.
 - [x] Task 3 (5f344886, Red fix ad9cc588): The 31 card spec files in
   `docs/storytime/l2-unit1/cards/<id>.json`, and a test that checks them against list v7: ids,
   text, file names, size, aspect, `outDir`, and that every reference file exists. The maker copies
