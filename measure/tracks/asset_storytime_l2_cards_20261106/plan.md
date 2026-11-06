@@ -208,8 +208,13 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   - Muse calls run 4 at a time at most.
   - At the report point of 0.80 USD the maker records the spend and the projection in its role log
     and continues. The maker stops only at the cap of 1.60 USD.
-- [~] Task 6: Line calls from each passing color with the judge. Each line call is a Muse call from
-  the passing color picture. At most 3 line tries for each card. No local filter.
+- [x] Task 6 (a0969f77): Line calls from each passing color with the judge. Each line call is a
+  Muse call from the passing color picture. At most 3 line tries for each card. No local filter.
+  - The passing line try of each delivered row: line try 1 for 28 rows, line try 2 for the tomato,
+    and line try 1 for the goodbye, which had no line call in round 2.
+  - The ham row used its 3 line tries. Two judges failed each try: the try 1 file, the try 2 file,
+    and the try 3 file. The row fails after its tries, so the report names the ham row and no ham
+    file is delivered. The color of the ham passed on try 1.
   - Orchestrator decision 2026-11-06, after the second judges: the line prompt of the ham and the
     tomato changed so the line art reads as ham and as a tomato. The ham prompt now names the
     slice as the main shape, the pale fat rim band, and 8 to 12 small closed dots. The tomato
@@ -230,13 +235,21 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     and the no-text rule stay in the prompt.
   - Only the `linePrompt` changed in the ham file. The card spec test passed after the change:
     `Test Files  1 passed (1)`, `Tests  10 passed (10)`, exit 0.
-- [b] Task 7: Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet. The delivery
+- [~] Task 7: Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet. The delivery
   folder is `out/storytime/l2/unit1/cards/delivery-muse-v1/`. The handoff folder is
   `/home/daniebo/Desktop/handoff/storytime-l2-card-pictures/`. The manifest form follows
-  `/home/daniebo/Desktop/handoff/a48-forge-pictures-a/MANIFEST.txt`. — deferred:phase-1-acceptance
+  `/home/daniebo/Desktop/handoff/a48-forge-pictures-a/MANIFEST.txt`.
   - Check every file at 1500 x 1500 px, 8-bit PNG, with no alpha channel.
   - Check the line art: grayscale, white background, no gray fill.
   - `sha256sum -c` on the file lines of `MANIFEST.txt` gives OK for every file.
+  - The delivery writer refused on 2026-11-06 before it wrote a file. The line print of 8 rows
+    has a stroke width below the 12 px minimum of the Workbooks picture specification: the
+    astronaut 11 px, the goodbye 10 px, the boy 11 px, the teacher 10 px, the mom 9 px, the
+    sister 10 px, the grandpa 10 px, and the family 4 px. The other 22 rows pass the check.
+    The writer left the delivery folder absent, so the next round can write the whole set in
+    one pass. Evidence:
+    `measure/runs/asset_storytime_l2_cards_20261106/deliver-cards-r1.log` and
+    `measure/runs/asset_storytime_l2_cards_20261106/delivery-line-widths.txt`.
 - [b] Task 8: Drive backup. Upload the delivery to a subfolder `cards` of the private Drive folder
   `1AWdjGVJrJcc35oY7cIAt_jPqyaLtyK9B` with the `gws` CLI. Check the MD5 of every file. Record the
   TSV `out/storytime/l2/unit1/drive-backup-2026-11-06-cards.tsv`. The mismatch count must be 0.
