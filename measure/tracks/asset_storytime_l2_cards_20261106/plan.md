@@ -56,18 +56,21 @@ the plan keeps an open item for the doctor.
 
 ## Phase 1: Card guard, card specs, and fixture
 
-- [~] Task 1: Move the T180 fixture. Copy the Workbooks version 3 list (the bytes of Workbooks
+- [x] Task 1: Move the T180 fixture. Copy the Workbooks version 3 list (the bytes of Workbooks
   commit `078917f1`, `content/storytime/l2/print/pictures.json`) into `tests/fixtures/storytime/`.
   The copy is `tests/fixtures/storytime/pictures-v3.json` (the name is fixed). Point
   `LIST_V3_SHADOW_FILE` and `V3_SHADOW_FILE` at the copy. Done when both tests read the
   repository copy, no test path names `/tmp/opencode/wb-shadow`, and both test files behave as
   before with `/tmp/opencode/wb-shadow` absent.
+  - Complete at Red `7d1cbdd5`. Green verified, not changed: `tests/storytime-card-fixtures.test.ts`
+    passed 5 of 5, `tests/storytime-stage-check.test.ts` passed 3 of 3, and
+    `grep -rn 'wb-shadow' tests scripts src` printed nothing (exit 1).
   - Knowledge todo 7050174a closes with this task.
   - The fixture SHA-256 must equal `c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b`.
   - The maker proves the "absent" condition with a run in which the `/tmp` path does not exist (for
     example by running the two test files and checking that no test opens a `/tmp/opencode` path).
   - Red evidence: `tests/storytime-card-fixtures.test.ts` first ran before the move. It had 4 failures and 1 pass (exit 1). After the fixture copies and constant edits, it passed 5 tests (exit 0). Both fixture SHA-256 values matched their pins. `tests/storytime-stage-check.test.ts` passed 3 tests through `heavy-run.sh`. Static `grep -rn 'wb-shadow' tests scripts src` found 0 hits.
-- [~] Task 2: Card run guard. `scripts/storytime-muse-guards.mjs` exports one constant `CARD_RUN`
+- [x] Task 2: Card run guard. `scripts/storytime-muse-guards.mjs` exports one constant `CARD_RUN`
   (types in `scripts/storytime-muse-guards.d.mts`):
   `{ startTime: '2026-11-06T00:00:00Z', capUsd: 1.6, reportAtUsd: 0.8, marginUsd: 0.01,
   maxTries: 3, outDir: 'out/storytime/l2/unit1/cards/muse' }`. The restart config
@@ -94,6 +97,19 @@ the plan keeps an open item for the doctor.
   - Gate: `tests/storytime-muse-attempts.test.ts` and `tests/storytime-judge-batch.test.ts` pass
     unchanged.
   - Red evidence: `RED_TEST_COMMAND` exited 1. It reported `Test Files  2 failed | 1 passed (3)` and `Tests  11 failed | 15 passed (26)`. The fixtures file passed all 5 tests. CG1, CG3, CG4, CG8, CG10, and CG11 failed on assertions. They require `CARD_RUN`, caller imports, card-specific guard behavior, mixed-call refusal, and `--cards`. Green must add the card guard and wire both callers. CS3 to CS7 failed on assertions for the 31 missing specs and their contract. Green must add those specs. The run had no load, syntax, or module-resolution errors.
+  - Green evidence (implementation commit `5f344886`). The guard module holds `CARD_RUN`,
+    `isCardCall`, `isMixedCardCall`, and `scanCardCostFiles`. `runGuards` refuses a mixed call before
+    any cost scan, uses the card cost files for a card call, and returns `run` and `reportAt`.
+    `scripts/storytime-muse.mjs` imports `CARD_RUN` and prints the card report point for a card call.
+    `scripts/storytime-judge-batch.mjs` imports `CARD_RUN`, takes the card spec folder below `root`,
+    starts the tries at `CARD_RUN.startTime`, and parses `--cards`.
+  - Green gate: `GREEN_TEST_COMMAND` gave `Test Files  1 failed | 5 passed (6)` and
+    `Tests  2 failed | 65 passed (67)`. The guards file passed 11 of 11. The three old files passed
+    41 of 41. The only failures are the two train failures of Task 3. Counts: N_new 26, N_old 41,
+    and 67 = 26 + 41. Typecheck: `owned tsc errors: 8`, all inside the three Red test files.
+  - Mutation self-check M1 to M7 (scratch copy, guards file alone): M1 `CG1 CG4`, M2 `CG10`,
+    M3 `CG8`, M4 `CG11`, M5 `CG11`, M6 `CG1 CG5`, M7 `CG7` (also CG4, CG5, CG6, CG8). The restored
+    copy passed 11 of 11.
 - [~] Task 3: The 31 card spec files in `docs/storytime/l2-unit1/cards/<id>.json`, and a test that
   checks them against list v7: ids, text, file names, size, aspect, `outDir`, and that every
   reference file exists. The maker copies list v7 (the bytes of Workbooks commit `95043edc`,
@@ -107,6 +123,25 @@ the plan keeps an open item for the doctor.
     hard failure, not a skip. The test reads no path outside the repository.
   - The test checks 13 person cards, 3 prop cards with references, and 15 cards without references.
   - No Muse call and no provider call runs in this phase. Spend stays 0.00 USD.
+  - Green status: blocked, not complete. The 31 spec files are committed at `5f344886`, and 30 of
+    31 pass. `tests/storytime-card-specs.test.ts` names the train reference
+    `out/storytime/l2/unit1/w04/muse/elements/prop-toys-sheet-m1-color.png`. That file does not
+    exist. The specification (line 117) and the only file on disk are in `w07`. CS4 and CS6 fail for
+    that one card, and CS6 also refuses a missing file. Green may not edit a committed Red test, so
+    Task 3 needs a Mid Red retry.
+  - The typecheck has 8 owned errors, all inside the three Red test files. Green may not edit them.
+    The same Mid Red retry must fix them.
+  - Prompt differences recorded: (1) Nan in hello, goodbye, and girl has two round buns with smooth
+    red ring bands, per the `cast.json` note, not the list "two small bunches"; (2) the teddy is
+    small and brown with no bow, per the card prompt, not the white teddy of the week 7 toy sheet;
+    (3) the car is red, per the card prompt, not the blue book car; (4) the doll follows the
+    `cast.json` Pam note (yellow yarn hair, cream cloth face, two black button eyes, stitched smile,
+    red dress); (5) the train adds the red wagon of the specification table, and its reference is the
+    week 7 toy sheet with only the train drawn; (6) goodbye drops the open door of the list prompt
+    and keeps the wave and the school bag on a pure white background; (7) sad gives Ben a sad face
+    and a lowered head, although the `cast.json` note gives him a happy smile, so the list prompt
+    wins for the expression and the cast note wins for the look; (8) every card replaces the list
+    phrase "a plain light background" with "plain white" or "pure white".
 - [b] Phase 1 gates: review gates assigned by the test strategy, then phase acceptance at an
   immutable HEAD. — deferred:measure-spec-review
 
