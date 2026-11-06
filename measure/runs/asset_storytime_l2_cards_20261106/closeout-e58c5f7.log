@@ -8,6 +8,7 @@ Track: asset_storytime_l2_cards_20261106. Role: closeout.
 - Final acceptance result: measure/runs/asset_storytime_l2_cards_20261106/final-acceptance-e58c5f7.json (status pass, audited_head_sha e58c5f7e0e00f98a15040b245d90ba03b0478146).
 - Track base sha: 7af682db1d2b572d8cf46ed5cc58ec3aa244b6a4.
 - Archive commit: 62663e4f60df771c153b97ebdedc554369c74de7.
+- Plan SHA fix commit: ebd16db4ccae287b682c9f5fc97bfa3fd76d9611.
 
 ## Pre-closeout state
 
@@ -41,7 +42,7 @@ role: closeout
 status: complete
 track: asset_storytime_l2_cards_20261106
 phase: track
-commits: 62663e4f
+commits: 62663e4f, ebd16db4
 tests_run: ./measure/doctor.sh exit 1 with 11 errors of other tracks and 0 lines naming asset_storytime_l2_cards_20261106; secret scan 3 prose hits and 0 credential shapes; git diff --cached measure/tracks.md held 2 own hunks; git diff measure/tracks.md held the 1 foreign Contents hunk
 files_changed: measure/runs/asset_storytime_l2_cards_20261106/closeout-e58c5f7.json, measure/runs/asset_storytime_l2_cards_20261106/closeout-e58c5f7.log
 result_file: measure/runs/asset_storytime_l2_cards_20261106/closeout-e58c5f7.json
