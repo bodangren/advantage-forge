@@ -68,7 +68,7 @@ plan keeps an open item for the doctor.
 
 ## Phase 1: Family-word specs, judge flag, and delivery writer
 
-- [~] Task 1: The 18 family-word spec files in `docs/storytime/l2-unit1/family-words/<id>.json`
+- [x] Task 1 (74d58f1f): The 18 family-word spec files in `docs/storytime/l2-unit1/family-words/<id>.json`
   and a test that checks them.
   - The files and fields follow the sections "Spec files", "Prompts", "Person rows", "Animal and
     object rows", and "Reference files for the people" of the specification. The maker does not
@@ -78,6 +78,26 @@ plan keeps an open item for the doctor.
   - The test file is `tests/storytime-family-word-specs.test.ts`. It covers FR-1, FR-2, and FR-3.
     It reads only the repository.
   - No Muse call and no provider call runs in this phase. Spend stays 0.00 USD.
+  - Complete at `74d58f1f`. The test command
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-family-word-specs.test.ts tests/storytime-card-specs.test.ts --maxWorkers=1'`
+    exited 0 with `Test Files  2 passed (2)` and `Tests  23 passed (23)`. The type check gave
+    `owned tsc errors: 0` and `tsc errors total: 38`.
+  - The Phase 0 heading holds `[checkpoint: 893db859]`. The measure guard needs that line before
+    a task of Phase 1 starts. The value is the strategy commit that closed Phase 0.
+  - The prompt wording that differs from the card prompt of the same kind:
+    - The person prompts use "Do not change anyone's hair or clothes". The card prompt names the
+      body surface in that sentence.
+    - The person prompts use "a tiny dark tick mark at the outer corner of an eye". The card
+      prompt names a second error in that sentence.
+    - The person prompts use "the four 3D views at the bottom are the character to copy". The card
+      prompt holds one more word in that sentence.
+    - The animal and object prompts add "a plain pure white background" and "a wide empty white
+      margin". The check-row prompt says "a plain white background".
+    - The three toy prompts name only the named toy of the sheet. The story-page prompt names all
+      six toys.
+    - The Nan prompts say "hair in two round buns". The card prompt says "hair in exactly two
+      round buns".
+    - The dog prompt adds "This picture shows one dog, not the puppy Pip."
 - [ ] Task 2: The judge flag `--family-words` in `scripts/storytime-judge-batch.mjs`, with tests.
   - The behavior follows the section "Judge batch input". The `cards` behavior stays unchanged.
   - The test file is `tests/storytime-family-word-judge.test.ts`. It covers FR-4.

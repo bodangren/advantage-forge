@@ -1,0 +1,71 @@
+# Role log: maker, Phase 1 Task 1
+
+Track: asset_storytime_l2_family_words_20261107
+Phase: Phase 1: Family-word specs, judge flag, and delivery writer
+Task: Task 1, the 18 family-word spec files and the spec test
+Role: measure-jr-green, maker of the light lane
+Date: 2026-11-07
+role_base_sha: 893db8598328eb6689a4266c5c5d4b29247df20a
+phase_base_sha: 893db8598328eb6689a4266c5c5d4b29247df20a
+
+## Operating rules
+
+- The maker wrote the 18 spec files and the spec test. No other file of the track changed.
+- No Muse call and no provider call ran. Spend stays 0.00 USD.
+- The maker staged explicit paths. The index holds no foreign path.
+- The measure guard denied the Task 1 marker until the Phase 0 heading holds a checkpoint line.
+  The plan now holds `[checkpoint: 893db859]`.
+- The 18 files sit in `docs/storytime/l2-unit1/family-words/`. The cards folder keeps its 31 files.
+- The 11 reference files sit in untracked `out/`. They exist on this machine.
+- The prompt wording that differs from the card prompt of the same kind sits in the plan note of
+  Task 1.
+
+## Commands
+
+- `git rev-parse HEAD` gave `893db8598328eb6689a4266c5c5d4b29247df20a`. The role base matches.
+- `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-family-word-specs.test.ts tests/storytime-card-specs.test.ts --maxWorkers=1'`
+  exited 0 with `Test Files  2 passed (2)` and `Tests  23 passed (23)`.
+- The type check command exited 2 with `tsc errors total: 38` and `owned tsc errors: 0`.
+- The wording scan of the 18 spec files and the spec test printed nothing.
+- The forbidden-word scan of the 18 spec files printed nothing.
+
+## Commits
+
+- `74d58f1f` feat(storytime_l2_family_words): family-word specs and spec test. The commit holds
+  the 18 spec files, the spec test, and the plan note of the lane.
+
+## New files
+
+- `docs/storytime/l2-unit1/family-words/l2-w01-card-friend.json`
+- `docs/storytime/l2-unit1/family-words/l2-w05-card-arms.json`
+- `docs/storytime/l2-unit1/family-words/l2-w05-card-ears.json`
+- `docs/storytime/l2-unit1/family-words/l2-w05-card-eyes.json`
+- `docs/storytime/l2-unit1/family-words/l2-w05-card-feet.json`
+- `docs/storytime/l2-unit1/family-words/l2-w05-card-hands.json`
+- `docs/storytime/l2-unit1/family-words/l2-w05-card-legs.json`
+- `docs/storytime/l2-unit1/family-words/l2-w05-card-nose.json`
+- `docs/storytime/l2-unit1/family-words/l2-w06-card-bird.json`
+- `docs/storytime/l2-unit1/family-words/l2-w06-card-cat.json`
+- `docs/storytime/l2-unit1/family-words/l2-w06-card-dog.json`
+- `docs/storytime/l2-unit1/family-words/l2-w06-card-duck.json`
+- `docs/storytime/l2-unit1/family-words/l2-w06-card-fish.json`
+- `docs/storytime/l2-unit1/family-words/l2-w06-card-frog.json`
+- `docs/storytime/l2-unit1/family-words/l2-w06-card-horse.json`
+- `docs/storytime/l2-unit1/family-words/l2-w07-card-ball.json`
+- `docs/storytime/l2-unit1/family-words/l2-w07-card-drum.json`
+- `docs/storytime/l2-unit1/family-words/l2-w07-card-kite.json`
+- `tests/storytime-family-word-specs.test.ts`
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_family_words_20261107
+phase: Phase 1: Family-word specs, judge flag, and delivery writer
+commits: 74d58f1f
+tests_run: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-family-word-specs.test.ts tests/storytime-card-specs.test.ts --maxWorkers=1'` exited 0 with `Test Files  2 passed (2)` and `Tests  23 passed (23)`; the type check gave `owned tsc errors: 0`
+files_changed: 18 spec files in `docs/storytime/l2-unit1/family-words/`, `tests/storytime-family-word-specs.test.ts`, the track plan, and this log
+plan_updates: Task 1 is `[x]` at `74d58f1f`; the lane note and the Phase 0 checkpoint line are in the plan
+known_failures: none
+handoff: Task 1 is `[x]` with the SHA `74d58f1f` and the test result above. No task moved to `[b]`. The new files are the 18 spec files and the spec test. The word family has no new spec file; its card spec stays in the cards folder. Tasks 2 and 3 are next: the judge flag and the delivery writer. The Phase 0 heading now holds `[checkpoint: 893db859]`, which the measure guard needs before a task of Phase 1 starts. The plan section "Lanes and roles" still names the standard lane for Phase 1, which the new lane note replaces. phase_base_sha: 893db8598328eb6689a4266c5c5d4b29247df20a. Green HEAD of this round: 74d58f1f. The plan evidence commit follows this log.
+dispositions: none
+END_MEASURE_AGENT_RESULT
