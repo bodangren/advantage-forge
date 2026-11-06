@@ -38,7 +38,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 const SCRIPT = path.resolve(import.meta.dirname, '../scripts/storytime-stage-check.mjs');
 const OUT_DIR = 'out/storytime/l2/unit1/w02/muse';
 const V4_SHA256 = '6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58';
-const V3_SHADOW_FILE = '/tmp/opencode/wb-shadow/content/storytime/l2/print/pictures.json';
+const V3_SHADOW_FILE = path.resolve(import.meta.dirname, 'fixtures/storytime/pictures-v3.json');
 // A 1 x 1 PNG. The stage check reads the signature and the size only.
 const PNG = Buffer.from(
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',

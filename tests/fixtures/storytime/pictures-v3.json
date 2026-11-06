@@ -1,0 +1,2935 @@
+[
+  {
+    "id": "l2-w01-story-page-hello-i-am-pat",
+    "week": 1,
+    "use": "story-page",
+    "text": "Hello, I am Pat.",
+    "prompt": "Pat (drawn young, about five years old) holds his small brown teddy bear and waves at the green door of a bright kindergarten classroom with low tables and a wall with big colorful animal pictures and no letters. The school bag on his back has a small round bump, as if something moves inside. No letters or words anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w01-story-page-hello-i-am-pat-v1.png",
+    "lineArtFileName": "l2-w01-story-page-hello-i-am-pat-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w01-story-page-hello-i-am-may",
+    "week": 1,
+    "use": "story-page",
+    "text": "Hello, I am May.",
+    "prompt": "May (drawn young, about five years old) waves with both hands at a low table with a box of crayons, in a bright kindergarten classroom with a green door, low tables, and a wall with big colorful animal pictures and no letters. No letters or words anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w01-story-page-hello-i-am-may-v1.png",
+    "lineArtFileName": "l2-w01-story-page-hello-i-am-may-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w01-story-page-hello-i-am-sam",
+    "week": 1,
+    "use": "story-page",
+    "text": "Hello, I am Sam.",
+    "prompt": "Sam (drawn young, about five years old) sits in the reading corner with a picture book on his lap and waves.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w01-story-page-hello-i-am-sam-v1.png",
+    "lineArtFileName": "l2-w01-story-page-hello-i-am-sam-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w01-story-page-hello-i-am-mia",
+    "week": 1,
+    "use": "story-page",
+    "text": "Hello, I am Mia.",
+    "prompt": "Mia (drawn young, about five years old) waves next to a big box of colored blocks on the classroom rug.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w01-story-page-hello-i-am-mia-v1.png",
+    "lineArtFileName": "l2-w01-story-page-hello-i-am-mia-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w01-story-page-hello-i-am-nan",
+    "week": 1,
+    "use": "story-page",
+    "text": "Hello, I am Nan.",
+    "prompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, waves at the classroom window next to a small green plant in a pot.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w01-story-page-hello-i-am-nan-v1.png",
+    "lineArtFileName": "l2-w01-story-page-hello-i-am-nan-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w01-story-page-hello-i-am-ben",
+    "week": 1,
+    "use": "story-page",
+    "text": "Hello, I am Ben.",
+    "prompt": "Ben (drawn young, about five years old) hangs his school bag on a hook and waves. Behind him, Pat's school bag sits on the floor and moves a little.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w01-story-page-hello-i-am-ben-v1.png",
+    "lineArtFileName": "l2-w01-story-page-hello-i-am-ben-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w01-story-page-hello-i-am-your-teacher",
+    "week": 1,
+    "use": "story-page",
+    "text": "Hello, I am your teacher.",
+    "prompt": "Teacher Kim kneels at the children's eye level and waves. Pat, May, Sam, Mia, Nan, and Ben (drawn young, about five years old) sit on a round rug and wave back. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w01-story-page-hello-i-am-your-teacher-v1.png",
+    "lineArtFileName": "l2-w01-story-page-hello-i-am-your-teacher-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w01-story-page-hello-i-am-pip",
+    "week": 1,
+    "use": "story-page",
+    "text": "Hello, I am Pip!",
+    "prompt": "Pip the puppy pops his head out of Pat's open school bag with a big happy face. Pat, May, Sam, Mia, Nan, Ben (drawn young, about five years old), and Teacher Kim laugh in surprise. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w01-story-page-hello-i-am-pip-v1.png",
+    "lineArtFileName": "l2-w01-story-page-hello-i-am-pip-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w01-cover-hello",
+    "week": 1,
+    "use": "cover",
+    "text": "Hello!",
+    "prompt": "Pat, May, Sam, Mia, and Ben (drawn young, about five years old) and Nan wave hello at the green door of a bright kindergarten classroom with low tables and a wall with big colorful animal pictures and no letters; Teacher Kim smiles behind them. Pat's school bag has a small round bump, as if something moves inside. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. No letters or words anywhere.",
+    "caption": "Hello!",
+    "objectCounts": {},
+    "sizeClass": "B",
+    "fileName": "l2-w01-cover-hello-v1.png",
+    "lineArtFileName": "l2-w01-cover-hello-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w01-story-page-a-nest",
+    "week": 1,
+    "use": "story-page",
+    "text": "A nest.",
+    "prompt": "A small bird's nest with three light blue eggs on a low tree branch in a garden. Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, points at it. One clear picture, the main thing large in the middle, a simple garden background with soft colors.",
+    "caption": "",
+    "objectCounts": {
+      "nest": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w01-story-page-a-nest-v1.png",
+    "lineArtFileName": "l2-w01-story-page-a-nest-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w01-story-page-a-net",
+    "week": 1,
+    "use": "story-page",
+    "text": "A net.",
+    "prompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, holds up a green butterfly net in a garden. One clear picture, the main thing large in the middle, a simple garden background with soft colors.",
+    "caption": "",
+    "objectCounts": {
+      "net": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w01-story-page-a-net-v1.png",
+    "lineArtFileName": "l2-w01-story-page-a-net-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w01-story-page-a-nut",
+    "week": 1,
+    "use": "story-page",
+    "text": "A nut.",
+    "prompt": "One big brown nut in Nan's open hand, close up. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. One clear picture, the main thing large in the middle, a plain light background.",
+    "caption": "",
+    "objectCounts": {
+      "nut": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w01-story-page-a-nut-v1.png",
+    "lineArtFileName": "l2-w01-story-page-a-nut-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w01-story-page-a-nose",
+    "week": 1,
+    "use": "story-page",
+    "text": "A nose.",
+    "prompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, touches her own nose with one finger and laughs. One clear picture, the main thing large in the middle, a plain light background.",
+    "caption": "",
+    "objectCounts": {
+      "nose": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w01-story-page-a-nose-v1.png",
+    "lineArtFileName": "l2-w01-story-page-a-nose-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w01-story-page-a-neck",
+    "week": 1,
+    "use": "story-page",
+    "text": "A neck.",
+    "prompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, lifts her chin and touches her own neck with both hands; close up of her head and neck. One clear picture, the main thing large in the middle, a plain light background.",
+    "caption": "",
+    "objectCounts": {
+      "neck": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w01-story-page-a-neck-v1.png",
+    "lineArtFileName": "l2-w01-story-page-a-neck-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w01-story-page-a-nurse",
+    "week": 1,
+    "use": "story-page",
+    "text": "A nurse.",
+    "prompt": "A school nurse, a woman of about thirty with short black hair, a white nurse's uniform, a small white nurse's cap, and white shoes, smiles and holds a small first-aid bag with no symbol on it. One clear picture, the main thing large in the middle, a plain light background.",
+    "caption": "",
+    "objectCounts": {
+      "nurse": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w01-story-page-a-nurse-v1.png",
+    "lineArtFileName": "l2-w01-story-page-a-nurse-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w01-story-page-a-nest-and-a-nut",
+    "week": 1,
+    "use": "story-page",
+    "text": "A nest and a nut.",
+    "prompt": "Pip the puppy sniffs a big brown nut in the grass under a low tree. Above him, the bird's nest with three light blue eggs sits on a low branch. The nest and the nut are both large and clear. A simple garden with soft colors. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag.",
+    "caption": "",
+    "objectCounts": {
+      "nest": 1,
+      "nut": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w01-story-page-a-nest-and-a-nut-v1.png",
+    "lineArtFileName": "l2-w01-story-page-a-nest-and-a-nut-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w01-story-page-nan-can-nod",
+    "week": 1,
+    "use": "story-page",
+    "text": "Nan can nod!",
+    "prompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, nods yes with a big smile; Pip the puppy sits next to her and nods too. One clear picture, the main thing large in the middle, a plain light background. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w01-story-page-nan-can-nod-v1.png",
+    "lineArtFileName": "l2-w01-story-page-nan-can-nod-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w01-cover-nan-can-nod",
+    "week": 1,
+    "use": "cover",
+    "text": "Nan Can Nod",
+    "prompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, nods with a big smile in a garden with a low tree; Pip the puppy sits next to her. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag.",
+    "caption": "Nan Can Nod",
+    "objectCounts": {},
+    "sizeClass": "B",
+    "fileName": "l2-w01-cover-nan-can-nod-v1.png",
+    "lineArtFileName": "l2-w01-cover-nan-can-nod-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w01-check-row-nest",
+    "week": 1,
+    "use": "check-row",
+    "text": "nest",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "nest": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w01-check-row-nest-v1.png",
+    "lineArtFileName": "l2-w01-check-row-nest-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w01-check-row-cat",
+    "week": 1,
+    "use": "check-row",
+    "text": "cat",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "cat": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w01-check-row-cat-v1.png",
+    "lineArtFileName": "l2-w01-check-row-cat-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w01-check-row-fish",
+    "week": 1,
+    "use": "check-row",
+    "text": "fish",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "fish": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w01-check-row-fish-v1.png",
+    "lineArtFileName": "l2-w01-check-row-fish-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w01-check-row-dog",
+    "week": 1,
+    "use": "check-row",
+    "text": "dog",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "dog": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w01-check-row-dog-v1.png",
+    "lineArtFileName": "l2-w01-check-row-dog-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w01-check-row-nose",
+    "week": 1,
+    "use": "check-row",
+    "text": "nose",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "nose": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w01-check-row-nose-v1.png",
+    "lineArtFileName": "l2-w01-check-row-nose-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w01-check-row-bus",
+    "week": 1,
+    "use": "check-row",
+    "text": "bus",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "bus": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w01-check-row-bus-v1.png",
+    "lineArtFileName": "l2-w01-check-row-bus-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w01-check-row-hat",
+    "week": 1,
+    "use": "check-row",
+    "text": "hat",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "hat": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w01-check-row-hat-v1.png",
+    "lineArtFileName": "l2-w01-check-row-hat-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w01-check-row-cup",
+    "week": 1,
+    "use": "check-row",
+    "text": "cup",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "cup": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w01-check-row-cup-v1.png",
+    "lineArtFileName": "l2-w01-check-row-cup-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w01-check-row-net",
+    "week": 1,
+    "use": "check-row",
+    "text": "net",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "net": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w01-check-row-net-v1.png",
+    "lineArtFileName": "l2-w01-check-row-net-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w01-practice-line-nose",
+    "week": 1,
+    "use": "practice-line",
+    "text": "nose",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "nose": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w01-practice-line-nose-v1.png",
+    "lineArtFileName": "l2-w01-practice-line-nose-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w01-practice-line-nest",
+    "week": 1,
+    "use": "practice-line",
+    "text": "nest",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "nest": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w01-practice-line-nest-v1.png",
+    "lineArtFileName": "l2-w01-practice-line-nest-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w01-practice-line-nut",
+    "week": 1,
+    "use": "practice-line",
+    "text": "nut",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "nut": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w01-practice-line-nut-v1.png",
+    "lineArtFileName": "l2-w01-practice-line-nut-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w02-story-page-how-many-suns-one",
+    "week": 2,
+    "use": "story-page",
+    "text": "How many suns? One!",
+    "prompt": "Pat (drawn young, about five years old) and Teacher Kim carry a picnic basket into a sunny park with green grass, a small pond, and a low tree; Pat points up at the one bright sun in a blue sky. Pat's school bag has a small round bump, as if something moves inside. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "sun": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w02-story-page-how-many-suns-one-v1.png",
+    "lineArtFileName": "l2-w02-story-page-how-many-suns-one-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w02-story-page-how-many-kites-two",
+    "week": 2,
+    "use": "story-page",
+    "text": "How many kites? Two!",
+    "prompt": "Two kites, one red and one yellow, fly high over a sunny park with green grass, a small pond, and a low tree; May and Sam (drawn young, about five years old) hold the strings and look up. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "kite": 2
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w02-story-page-how-many-kites-two-v1.png",
+    "lineArtFileName": "l2-w02-story-page-how-many-kites-two-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w02-story-page-how-many-ducks-three",
+    "week": 2,
+    "use": "story-page",
+    "text": "How many ducks? Three!",
+    "prompt": "Three white ducks with orange beaks swim on the small pond in the park; Mia (drawn young, about five years old) kneels at the edge and points at them. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "duck": 3
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w02-story-page-how-many-ducks-three-v1.png",
+    "lineArtFileName": "l2-w02-story-page-how-many-ducks-three-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w02-story-page-how-many-birds-four",
+    "week": 2,
+    "use": "story-page",
+    "text": "How many birds? Four!",
+    "prompt": "Four small blue birds sit in a row on a branch of the low tree in the park; Ben (drawn young, about five years old) looks up at them. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "bird": 4
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w02-story-page-how-many-birds-four-v1.png",
+    "lineArtFileName": "l2-w02-story-page-how-many-birds-four-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w02-story-page-how-many-balls-five",
+    "week": 2,
+    "use": "story-page",
+    "text": "How many balls? Five!",
+    "prompt": "Five colorful balls lie in a row on the green grass of the park; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, holds up one hand with five fingers. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "ball": 5
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w02-story-page-how-many-balls-five-v1.png",
+    "lineArtFileName": "l2-w02-story-page-how-many-balls-five-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w02-story-page-how-many-friends-six",
+    "week": 2,
+    "use": "story-page",
+    "text": "How many friends? Six!",
+    "prompt": "Pat, May, Sam, Mia, and Ben (drawn young, about five years old) and Nan sit in a row on a big picnic blanket in the park and smile. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. Pat's school bag lies on the blanket. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "friend": 6
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w02-story-page-how-many-friends-six-v1.png",
+    "lineArtFileName": "l2-w02-story-page-how-many-friends-six-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w02-story-page-how-many-cakes-seven",
+    "week": 2,
+    "use": "story-page",
+    "text": "How many cakes? Seven!",
+    "prompt": "Seven small cupcakes with white cream on a plate on the picnic blanket, in two rows: four at the back and three at the front; Teacher Kim counts them with one finger. The tip of a small black puppy nose peeks out of the open school bag next to the plate. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "cake": 7
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w02-story-page-how-many-cakes-seven-v1.png",
+    "lineArtFileName": "l2-w02-story-page-how-many-cakes-seven-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w02-story-page-how-many-cakes-oh-no-pip",
+    "week": 2,
+    "use": "story-page",
+    "text": "How many cakes? Oh no, Pip!",
+    "prompt": "The plate is empty. Pip the puppy sits next to it with white cream on his nose and a happy face. Pat, May, Sam, Mia, Ben (drawn young, about five years old), Nan, and Teacher Kim laugh in surprise. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w02-story-page-how-many-cakes-oh-no-pip-v1.png",
+    "lineArtFileName": "l2-w02-story-page-how-many-cakes-oh-no-pip-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w02-cover-how-many",
+    "week": 2,
+    "use": "cover",
+    "text": "How Many?",
+    "prompt": "Pat, May, Sam, Mia, and Ben (drawn young, about five years old) and Nan count on their fingers on a picnic blanket in a sunny park with green grass, a small pond, and a low tree; Teacher Kim smiles behind them. Pat's school bag has a small round bump, as if something moves inside. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. No letters, words, or numbers anywhere.",
+    "caption": "How Many?",
+    "objectCounts": {},
+    "sizeClass": "B",
+    "fileName": "l2-w02-cover-how-many-v1.png",
+    "lineArtFileName": "l2-w02-cover-how-many-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w02-story-page-nan-can",
+    "week": 2,
+    "use": "story-page",
+    "text": "Nan can.",
+    "prompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, climbs to the top of a low climbing frame in a sunny playground with a low climbing frame, a low balance beam, and a tall slide and smiles. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w02-story-page-nan-can-v1.png",
+    "lineArtFileName": "l2-w02-story-page-nan-can-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w02-story-page-can-i",
+    "week": 2,
+    "use": "story-page",
+    "text": "Can I?",
+    "prompt": "Ben (drawn young, about five years old) stands at the bottom of the low climbing frame and looks up with a worried face. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w02-story-page-can-i-v1.png",
+    "lineArtFileName": "l2-w02-story-page-can-i-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w02-story-page-i-can",
+    "week": 2,
+    "use": "story-page",
+    "text": "I can!",
+    "prompt": "Ben (drawn young, about five years old) sits at the top of the low climbing frame with a big proud smile. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w02-story-page-i-can-v1.png",
+    "lineArtFileName": "l2-w02-story-page-i-can-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w02-story-page-nan-can-b",
+    "week": 2,
+    "use": "story-page",
+    "text": "Nan can.",
+    "prompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, walks along a low balance beam with her arms out. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w02-story-page-nan-can-b-v1.png",
+    "lineArtFileName": "l2-w02-story-page-nan-can-b-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w02-story-page-can-i-b",
+    "week": 2,
+    "use": "story-page",
+    "text": "Can I?",
+    "prompt": "Ben (drawn young, about five years old) puts one foot on the low balance beam and holds his arms out; he wobbles a little. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w02-story-page-can-i-b-v1.png",
+    "lineArtFileName": "l2-w02-story-page-can-i-b-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w02-story-page-i-can-b",
+    "week": 2,
+    "use": "story-page",
+    "text": "I can!",
+    "prompt": "Ben (drawn young, about five years old) walks along the low balance beam with his arms out and a big smile. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w02-story-page-i-can-b-v1.png",
+    "lineArtFileName": "l2-w02-story-page-i-can-b-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w02-story-page-can-nan",
+    "week": 2,
+    "use": "story-page",
+    "text": "Can Nan?",
+    "prompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, sits at the top of the tall slide and holds on tight; she looks scared. Ben (drawn young, about five years old) climbs the slide ladder behind her and holds out his hand. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w02-story-page-can-nan-v1.png",
+    "lineArtFileName": "l2-w02-story-page-can-nan-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w02-story-page-nan-and-i-can",
+    "week": 2,
+    "use": "story-page",
+    "text": "Nan and I can!",
+    "prompt": "Ben (drawn young, about five years old) and Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, slide down the tall slide together, Ben behind Nan, both laughing with their arms up. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w02-story-page-nan-and-i-can-v1.png",
+    "lineArtFileName": "l2-w02-story-page-nan-and-i-can-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w02-cover-can-i",
+    "week": 2,
+    "use": "cover",
+    "text": "Can I?",
+    "prompt": "Ben (drawn young, about five years old) and Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, stand at the bottom of the tall slide in a sunny playground with a low climbing frame, a low balance beam, and a tall slide and look up at it. No letters, words, or numbers anywhere.",
+    "caption": "Can I?",
+    "objectCounts": {},
+    "sizeClass": "B",
+    "fileName": "l2-w02-cover-can-i-v1.png",
+    "lineArtFileName": "l2-w02-cover-can-i-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w02-check-row-apple",
+    "week": 2,
+    "use": "check-row",
+    "text": "apple",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "apple": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w02-check-row-apple-v1.png",
+    "lineArtFileName": "l2-w02-check-row-apple-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w02-check-row-dog",
+    "week": 2,
+    "use": "check-row",
+    "text": "dog",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "dog": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w02-check-row-dog-v1.png",
+    "lineArtFileName": "l2-w02-check-row-dog-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w02-check-row-sun",
+    "week": 2,
+    "use": "check-row",
+    "text": "sun",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "sun": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w02-check-row-sun-v1.png",
+    "lineArtFileName": "l2-w02-check-row-sun-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w02-check-row-bus",
+    "week": 2,
+    "use": "check-row",
+    "text": "bus",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "bus": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w02-check-row-bus-v1.png",
+    "lineArtFileName": "l2-w02-check-row-bus-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w02-check-row-ant",
+    "week": 2,
+    "use": "check-row",
+    "text": "ant",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "ant": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w02-check-row-ant-v1.png",
+    "lineArtFileName": "l2-w02-check-row-ant-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w02-check-row-fish",
+    "week": 2,
+    "use": "check-row",
+    "text": "fish",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "fish": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w02-check-row-fish-v1.png",
+    "lineArtFileName": "l2-w02-check-row-fish-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w02-check-row-pig",
+    "week": 2,
+    "use": "check-row",
+    "text": "pig",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "pig": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w02-check-row-pig-v1.png",
+    "lineArtFileName": "l2-w02-check-row-pig-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w02-check-row-bed",
+    "week": 2,
+    "use": "check-row",
+    "text": "bed",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "bed": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w02-check-row-bed-v1.png",
+    "lineArtFileName": "l2-w02-check-row-bed-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w02-check-row-alligator",
+    "week": 2,
+    "use": "check-row",
+    "text": "alligator",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "alligator": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w02-check-row-alligator-v1.png",
+    "lineArtFileName": "l2-w02-check-row-alligator-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w03-story-page-it-is-red",
+    "week": 3,
+    "use": "story-page",
+    "text": "It is red.",
+    "prompt": "Pat (drawn young, about five years old) smiles and holds up a big sheet of paper painted all red in the art corner of a bright kindergarten classroom with low tables, with easels and paint pots. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w03-story-page-it-is-red-v1.png",
+    "lineArtFileName": "l2-w03-story-page-it-is-red-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w03-story-page-it-is-blue",
+    "week": 3,
+    "use": "story-page",
+    "text": "It is blue.",
+    "prompt": "May (drawn young, about five years old) holds up a big sheet of paper painted all blue at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w03-story-page-it-is-blue-v1.png",
+    "lineArtFileName": "l2-w03-story-page-it-is-blue-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w03-story-page-it-is-yellow",
+    "week": 3,
+    "use": "story-page",
+    "text": "It is yellow.",
+    "prompt": "Sam (drawn young, about five years old) holds up a big sheet of paper painted all yellow at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w03-story-page-it-is-yellow-v1.png",
+    "lineArtFileName": "l2-w03-story-page-it-is-yellow-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w03-story-page-it-is-green",
+    "week": 3,
+    "use": "story-page",
+    "text": "It is green.",
+    "prompt": "Mia (drawn young, about five years old) holds up a big sheet of paper painted all green at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w03-story-page-it-is-green-v1.png",
+    "lineArtFileName": "l2-w03-story-page-it-is-green-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w03-story-page-it-is-orange",
+    "week": 3,
+    "use": "story-page",
+    "text": "It is orange.",
+    "prompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, holds up a big sheet of paper painted all orange at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w03-story-page-it-is-orange-v1.png",
+    "lineArtFileName": "l2-w03-story-page-it-is-orange-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w03-story-page-it-is-pink",
+    "week": 3,
+    "use": "story-page",
+    "text": "It is pink.",
+    "prompt": "Ben (drawn young, about five years old) holds up a big sheet of paper painted all pink at an easel in the art corner of the kindergarten classroom. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w03-story-page-it-is-pink-v1.png",
+    "lineArtFileName": "l2-w03-story-page-it-is-pink-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w03-story-page-it-is-purple",
+    "week": 3,
+    "use": "story-page",
+    "text": "It is purple.",
+    "prompt": "Teacher Kim holds up a big sheet of paper painted all purple in the art corner of the kindergarten classroom. Behind her, a line of small paw prints in many colors goes across the floor. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w03-story-page-it-is-purple-v1.png",
+    "lineArtFileName": "l2-w03-story-page-it-is-purple-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w03-story-page-it-is-pip",
+    "week": 3,
+    "use": "story-page",
+    "text": "It is Pip!",
+    "prompt": "Pip the puppy has a happy face and spots of red, blue, yellow, green, orange, pink, and purple paint on his fur and paws. He stands on a big sheet of paper with colorful paw prints all over it. Pat, May, Sam, Mia, Ben (drawn young, about five years old), Nan, and Teacher Kim laugh. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w03-story-page-it-is-pip-v1.png",
+    "lineArtFileName": "l2-w03-story-page-it-is-pip-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w03-cover-paint",
+    "week": 3,
+    "use": "cover",
+    "text": "Paint!",
+    "prompt": "Pat, May, Sam, Mia, and Ben (drawn young, about five years old) and Nan paint at easels in the art corner of a bright kindergarten classroom with low tables, with easels and paint pots; Teacher Kim smiles behind them. A small colorful paw print is on the floor. Nan: Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers. No letters, words, or numbers anywhere.",
+    "caption": "Paint!",
+    "objectCounts": {},
+    "sizeClass": "B",
+    "fileName": "l2-w03-cover-paint-v1.png",
+    "lineArtFileName": "l2-w03-cover-paint-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w03-story-page-nan-can-get-a-pan",
+    "week": 3,
+    "use": "story-page",
+    "text": "Nan can get a pan.",
+    "prompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, takes a small red toy pan from the low shelf in the play corner of a bright kindergarten classroom with low tables, with a toy kitchen and a low shelf of toy pans. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "pan": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w03-story-page-nan-can-get-a-pan-v1.png",
+    "lineArtFileName": "l2-w03-story-page-nan-can-get-a-pan-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w03-story-page-i-can-get-a-pan",
+    "week": 3,
+    "use": "story-page",
+    "text": "I can get a pan.",
+    "prompt": "Ben (drawn young, about five years old) takes a tiny blue toy pan from the low shelf of the toy kitchen. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "pan": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w03-story-page-i-can-get-a-pan-v1.png",
+    "lineArtFileName": "l2-w03-story-page-i-can-get-a-pan-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w03-story-page-a-pan-in-a-pan",
+    "week": 3,
+    "use": "story-page",
+    "text": "A pan in a pan.",
+    "prompt": "Ben (drawn young, about five years old) puts the tiny blue toy pan inside the small red toy pan; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, holds the red pan and smiles. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "pan": 2
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w03-story-page-a-pan-in-a-pan-v1.png",
+    "lineArtFileName": "l2-w03-story-page-a-pan-in-a-pan-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w03-story-page-a-pan-on-a-pan",
+    "week": 3,
+    "use": "story-page",
+    "text": "A pan on a pan.",
+    "prompt": "On a low table, the small red toy pan sits upside down, and the tiny blue toy pan sits on top of it, like a tower; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, and Ben (drawn young, about five years old) look at it. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "pan": 2
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w03-story-page-a-pan-on-a-pan-v1.png",
+    "lineArtFileName": "l2-w03-story-page-a-pan-on-a-pan-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w03-story-page-a-pan-on-nan",
+    "week": 3,
+    "use": "story-page",
+    "text": "A pan on Nan!",
+    "prompt": "Ben (drawn young, about five years old) puts the small red toy pan on the head of Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, like a hat; Nan laughs. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "pan": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w03-story-page-a-pan-on-nan-v1.png",
+    "lineArtFileName": "l2-w03-story-page-a-pan-on-nan-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w03-story-page-can-i-get-the-pan",
+    "week": 3,
+    "use": "story-page",
+    "text": "Can I get the pan?",
+    "prompt": "Ben (drawn young, about five years old) points up at a big yellow toy pan on the top shelf of the toy kitchen. The tip of a fluffy golden-brown tail hangs over the edge of the pan. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "pan": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w03-story-page-can-i-get-the-pan-v1.png",
+    "lineArtFileName": "l2-w03-story-page-can-i-get-the-pan-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w03-story-page-i-can-get-the-pan",
+    "week": 3,
+    "use": "story-page",
+    "text": "I can get the pan!",
+    "prompt": "Ben (drawn young, about five years old) stands on his toes and lifts the big yellow toy pan down from the top shelf; it looks heavy. The fluffy golden-brown tail hangs over the edge of the pan. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "pan": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w03-story-page-i-can-get-the-pan-v1.png",
+    "lineArtFileName": "l2-w03-story-page-i-can-get-the-pan-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w03-story-page-a-nap-in-the-pan",
+    "week": 3,
+    "use": "story-page",
+    "text": "A nap in the pan!",
+    "prompt": "Pip the puppy is asleep, curled up inside the big yellow toy pan on the floor. Ben (drawn young, about five years old) and Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, look in and smile. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "pan": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w03-story-page-a-nap-in-the-pan-v1.png",
+    "lineArtFileName": "l2-w03-story-page-a-nap-in-the-pan-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w03-cover-the-pan",
+    "week": 3,
+    "use": "cover",
+    "text": "The Pan",
+    "prompt": "Ben (drawn young, about five years old) and Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, hold up a small red toy pan and a tiny blue toy pan in the play corner of a bright kindergarten classroom with low tables, with a toy kitchen and a low shelf of toy pans. No letters, words, or numbers anywhere.",
+    "caption": "The Pan",
+    "objectCounts": {},
+    "sizeClass": "B",
+    "fileName": "l2-w03-cover-the-pan-v1.png",
+    "lineArtFileName": "l2-w03-cover-the-pan-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w03-check-row-pen",
+    "week": 3,
+    "use": "check-row",
+    "text": "pen",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "pen": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w03-check-row-pen-v1.png",
+    "lineArtFileName": "l2-w03-check-row-pen-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w03-check-row-cat",
+    "week": 3,
+    "use": "check-row",
+    "text": "cat",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "cat": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w03-check-row-cat-v1.png",
+    "lineArtFileName": "l2-w03-check-row-cat-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w03-check-row-sun",
+    "week": 3,
+    "use": "check-row",
+    "text": "sun",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "sun": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w03-check-row-sun-v1.png",
+    "lineArtFileName": "l2-w03-check-row-sun-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w03-check-row-dog",
+    "week": 3,
+    "use": "check-row",
+    "text": "dog",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "dog": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w03-check-row-dog-v1.png",
+    "lineArtFileName": "l2-w03-check-row-dog-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w03-check-row-pear",
+    "week": 3,
+    "use": "check-row",
+    "text": "pear",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "pear": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w03-check-row-pear-v1.png",
+    "lineArtFileName": "l2-w03-check-row-pear-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w03-check-row-bus",
+    "week": 3,
+    "use": "check-row",
+    "text": "bus",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "bus": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w03-check-row-bus-v1.png",
+    "lineArtFileName": "l2-w03-check-row-bus-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w03-check-row-fish",
+    "week": 3,
+    "use": "check-row",
+    "text": "fish",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "fish": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w03-check-row-fish-v1.png",
+    "lineArtFileName": "l2-w03-check-row-fish-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w03-check-row-hat",
+    "week": 3,
+    "use": "check-row",
+    "text": "hat",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "hat": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w03-check-row-hat-v1.png",
+    "lineArtFileName": "l2-w03-check-row-hat-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w03-check-row-pencil",
+    "week": 3,
+    "use": "check-row",
+    "text": "pencil",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "pencil": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w03-check-row-pencil-v1.png",
+    "lineArtFileName": "l2-w03-check-row-pencil-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w04-story-page-this-is-my-mom",
+    "week": 4,
+    "use": "story-page",
+    "text": "This is my mom.",
+    "prompt": "Lily (drawn young, about five years old) stands next to Mom in a bright living room with a green sofa and a window and points at Mom with a big smile. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w04-story-page-this-is-my-mom-v1.png",
+    "lineArtFileName": "l2-w04-story-page-this-is-my-mom-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w04-story-page-this-is-my-dad",
+    "week": 4,
+    "use": "story-page",
+    "text": "This is my dad.",
+    "prompt": "Lily (drawn young, about five years old) stands next to Dad in a bright living room with a green sofa and a window and points at him. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w04-story-page-this-is-my-dad-v1.png",
+    "lineArtFileName": "l2-w04-story-page-this-is-my-dad-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w04-story-page-this-is-my-brother",
+    "week": 4,
+    "use": "story-page",
+    "text": "This is my brother.",
+    "prompt": "Lily (drawn young, about five years old) stands next to Tom (drawn young, about eight years old) in a bright living room with a green sofa and a window and points at him; Tom waves. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w04-story-page-this-is-my-brother-v1.png",
+    "lineArtFileName": "l2-w04-story-page-this-is-my-brother-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w04-story-page-this-is-my-grandma",
+    "week": 4,
+    "use": "story-page",
+    "text": "This is my grandma.",
+    "prompt": "Lily (drawn young, about five years old) stands next to Grandma in a bright living room with a green sofa and a window and points at Grandma; Grandma holds a small cake. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w04-story-page-this-is-my-grandma-v1.png",
+    "lineArtFileName": "l2-w04-story-page-this-is-my-grandma-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w04-story-page-this-is-my-grandpa",
+    "week": 4,
+    "use": "story-page",
+    "text": "This is my grandpa.",
+    "prompt": "Lily (drawn young, about five years old) stands next to Grandpa in a bright living room with a green sofa and a window and points at him; Grandpa holds a newspaper. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w04-story-page-this-is-my-grandpa-v1.png",
+    "lineArtFileName": "l2-w04-story-page-this-is-my-grandpa-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w04-story-page-this-is-my-house",
+    "week": 4,
+    "use": "story-page",
+    "text": "This is my house.",
+    "prompt": "Lily (drawn young, about five years old) stands in front of a small white house with a red door and a green garden, and points at the house. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w04-story-page-this-is-my-house-v1.png",
+    "lineArtFileName": "l2-w04-story-page-this-is-my-house-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w04-story-page-this-is-my-family",
+    "week": 4,
+    "use": "story-page",
+    "text": "This is my family.",
+    "prompt": "Mom, Dad, Grandma, Grandpa, Tom (drawn young, about eight years old), and Lily (drawn young, about five years old) stand in a row in front of the small white house with the red door and smile at the viewer. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w04-story-page-this-is-my-family-v1.png",
+    "lineArtFileName": "l2-w04-story-page-this-is-my-family-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w04-story-page-this-is-my-dog-pip",
+    "week": 4,
+    "use": "story-page",
+    "text": "This is my dog, Pip!",
+    "prompt": "Mom, Dad, Grandma, Grandpa, Tom (drawn young, about eight years old), and Lily (drawn young, about five years old) stand in a row in front of the small white house with the red door; Pip the puppy jumps into the middle of the row with a big happy face, and everyone laughs. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w04-story-page-this-is-my-dog-pip-v1.png",
+    "lineArtFileName": "l2-w04-story-page-this-is-my-dog-pip-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w04-cover-my-family",
+    "week": 4,
+    "use": "cover",
+    "text": "My Family",
+    "prompt": "Lily (drawn young, about five years old) stands in front of Mom, Dad, Grandma, Grandpa, and Tom (drawn young, about eight years old) in a bright living room with a green sofa and a window, and waves. No letters, words, or numbers anywhere.",
+    "caption": "My Family",
+    "objectCounts": {},
+    "sizeClass": "B",
+    "fileName": "l2-w04-cover-my-family-v1.png",
+    "lineArtFileName": "l2-w04-cover-my-family-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w04-story-page-this-is-pam",
+    "week": 4,
+    "use": "story-page",
+    "text": "This is Pam.",
+    "prompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, holds up a small rag doll with yellow yarn hair and a red dress in a cozy living room with a blue sofa, a soft rug, and a toy box and smiles. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w04-story-page-this-is-pam-v1.png",
+    "lineArtFileName": "l2-w04-story-page-this-is-pam-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w04-story-page-pam-can-nap",
+    "week": 4,
+    "use": "story-page",
+    "text": "Pam can nap.",
+    "prompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, puts a small rag doll with yellow yarn hair and a red dress to bed in a small shoe box with a tiny blanket, on the soft rug of the cozy living room with the blue sofa. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w04-story-page-pam-can-nap-v1.png",
+    "lineArtFileName": "l2-w04-story-page-pam-can-nap-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w04-story-page-pam-is-in-a-pan",
+    "week": 4,
+    "use": "story-page",
+    "text": "Pam is in a pan.",
+    "prompt": "A small rag doll with yellow yarn hair and a red dress sits in a big yellow toy pan on the rug; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, laughs. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "pan": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w04-story-page-pam-is-in-a-pan-v1.png",
+    "lineArtFileName": "l2-w04-story-page-pam-is-in-a-pan-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w04-story-page-pam-is-on-a-map",
+    "week": 4,
+    "use": "story-page",
+    "text": "Pam is on a map.",
+    "prompt": "A small rag doll with yellow yarn hair and a red dress lies on a big paper map that is open on the rug; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, points at the doll. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "map": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w04-story-page-pam-is-on-a-map-v1.png",
+    "lineArtFileName": "l2-w04-story-page-pam-is-on-a-map-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w04-story-page-pam-is-on-a-man",
+    "week": 4,
+    "use": "story-page",
+    "text": "Pam is on a man!",
+    "prompt": "Nan's dad, a man of about thirty-five with short straight black hair, a blue T-shirt, gray shorts, and black sandals, lies on the blue sofa with his eyes closed; a small rag doll with yellow yarn hair and a red dress sits on his tummy. Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, laughs. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "man": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w04-story-page-pam-is-on-a-man-v1.png",
+    "lineArtFileName": "l2-w04-story-page-pam-is-on-a-man-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w04-story-page-is-this-pam",
+    "week": 4,
+    "use": "story-page",
+    "text": "Is this Pam?",
+    "prompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, points at a big round bump under a blanket on the blue sofa; the corner of a small red doll dress shows at the edge of the blanket. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w04-story-page-is-this-pam-v1.png",
+    "lineArtFileName": "l2-w04-story-page-is-this-pam-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w04-story-page-this-is-the-man",
+    "week": 4,
+    "use": "story-page",
+    "text": "This is the man!",
+    "prompt": "Nan's dad, a man of about thirty-five with short straight black hair, a blue T-shirt, gray shorts, and black sandals, pops out from under the blanket on the blue sofa with a small rag doll with yellow yarn hair and a red dress on his head, and laughs; Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, laughs too. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "man": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w04-story-page-this-is-the-man-v1.png",
+    "lineArtFileName": "l2-w04-story-page-this-is-the-man-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w04-story-page-nan-and-pam-nap",
+    "week": 4,
+    "use": "story-page",
+    "text": "Nan and Pam nap.",
+    "prompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, is asleep on the blue sofa under the blanket and hugs a small rag doll with yellow yarn hair and a red dress. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w04-story-page-nan-and-pam-nap-v1.png",
+    "lineArtFileName": "l2-w04-story-page-nan-and-pam-nap-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w04-cover-pam",
+    "week": 4,
+    "use": "cover",
+    "text": "Pam",
+    "prompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, hugs a small rag doll with yellow yarn hair and a red dress in a cozy living room with a blue sofa, a soft rug, and a toy box. No letters, words, or numbers anywhere.",
+    "caption": "Pam",
+    "objectCounts": {},
+    "sizeClass": "B",
+    "fileName": "l2-w04-cover-pam-v1.png",
+    "lineArtFileName": "l2-w04-cover-pam-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w04-check-row-monkey",
+    "week": 4,
+    "use": "check-row",
+    "text": "monkey",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "monkey": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w04-check-row-monkey-v1.png",
+    "lineArtFileName": "l2-w04-check-row-monkey-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w04-check-row-cat",
+    "week": 4,
+    "use": "check-row",
+    "text": "cat",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "cat": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w04-check-row-cat-v1.png",
+    "lineArtFileName": "l2-w04-check-row-cat-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w04-check-row-sun",
+    "week": 4,
+    "use": "check-row",
+    "text": "sun",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "sun": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w04-check-row-sun-v1.png",
+    "lineArtFileName": "l2-w04-check-row-sun-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w04-check-row-dog",
+    "week": 4,
+    "use": "check-row",
+    "text": "dog",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "dog": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w04-check-row-dog-v1.png",
+    "lineArtFileName": "l2-w04-check-row-dog-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w04-check-row-mouse",
+    "week": 4,
+    "use": "check-row",
+    "text": "mouse",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "mouse": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w04-check-row-mouse-v1.png",
+    "lineArtFileName": "l2-w04-check-row-mouse-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w04-check-row-bus",
+    "week": 4,
+    "use": "check-row",
+    "text": "bus",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "bus": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w04-check-row-bus-v1.png",
+    "lineArtFileName": "l2-w04-check-row-bus-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w04-check-row-fish",
+    "week": 4,
+    "use": "check-row",
+    "text": "fish",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "fish": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w04-check-row-fish-v1.png",
+    "lineArtFileName": "l2-w04-check-row-fish-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w04-check-row-hat",
+    "week": 4,
+    "use": "check-row",
+    "text": "hat",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "hat": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w04-check-row-hat-v1.png",
+    "lineArtFileName": "l2-w04-check-row-hat-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w04-check-row-milk",
+    "week": 4,
+    "use": "check-row",
+    "text": "milk",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "milk": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w04-check-row-milk-v1.png",
+    "lineArtFileName": "l2-w04-check-row-milk-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w05-story-page-i-have-two-eyes",
+    "week": 5,
+    "use": "story-page",
+    "text": "I have two eyes.",
+    "prompt": "Sam (drawn young, about five years old) stands in a sunny park with green grass and a low tree and points at his two eyes with a big smile. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "eye": 2
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w05-story-page-i-have-two-eyes-v1.png",
+    "lineArtFileName": "l2-w05-story-page-i-have-two-eyes-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w05-story-page-i-have-two-ears",
+    "week": 5,
+    "use": "story-page",
+    "text": "I have two ears.",
+    "prompt": "Sam (drawn young, about five years old) points at his two ears with both hands in the same sunny park with green grass and a low tree. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "ear": 2
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w05-story-page-i-have-two-ears-v1.png",
+    "lineArtFileName": "l2-w05-story-page-i-have-two-ears-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w05-story-page-i-have-two-hands",
+    "week": 5,
+    "use": "story-page",
+    "text": "I have two hands.",
+    "prompt": "Sam (drawn young, about five years old) holds up his two open hands in the same sunny park with green grass and a low tree. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "hand": 2
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w05-story-page-i-have-two-hands-v1.png",
+    "lineArtFileName": "l2-w05-story-page-i-have-two-hands-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w05-story-page-i-have-two-arms",
+    "week": 5,
+    "use": "story-page",
+    "text": "I have two arms.",
+    "prompt": "Sam (drawn young, about five years old) holds his two arms out wide in the same sunny park with green grass and a low tree. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "arm": 2
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w05-story-page-i-have-two-arms-v1.png",
+    "lineArtFileName": "l2-w05-story-page-i-have-two-arms-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w05-story-page-i-have-two-legs",
+    "week": 5,
+    "use": "story-page",
+    "text": "I have two legs.",
+    "prompt": "Sam (drawn young, about five years old) stands on the grass and points at his two legs. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "leg": 2
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w05-story-page-i-have-two-legs-v1.png",
+    "lineArtFileName": "l2-w05-story-page-i-have-two-legs-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w05-story-page-i-have-two-feet",
+    "week": 5,
+    "use": "story-page",
+    "text": "I have two feet.",
+    "prompt": "Sam, a five-year-old boy with large dark-brown eyes and short neat dark-brown hair, in a red T-shirt with two white stripes across the chest and blue denim shorts, sits on the grass in the same sunny park with green grass and a low tree with bare feet; his blue sneakers with white soles stand next to him. He points at his two bare feet. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "foot": 2
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w05-story-page-i-have-two-feet-v1.png",
+    "lineArtFileName": "l2-w05-story-page-i-have-two-feet-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w05-story-page-i-have-one-nose",
+    "week": 5,
+    "use": "story-page",
+    "text": "I have one nose.",
+    "prompt": "Sam (drawn young, about five years old) points at his nose with one finger and laughs in the same sunny park with green grass and a low tree. Behind the tree, the fluffy golden-brown tail of a small puppy sticks out. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "nose": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w05-story-page-i-have-one-nose-v1.png",
+    "lineArtFileName": "l2-w05-story-page-i-have-one-nose-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w05-story-page-i-have-four-legs",
+    "week": 5,
+    "use": "story-page",
+    "text": "I have four legs!",
+    "prompt": "Pip the puppy stands on all four legs on the grass in the same sunny park with green grass and a low tree, seen from the side so that all four legs show, with a happy face and an open mouth; Sam (drawn young, about five years old) kneels next to him, points at Pip's legs, and laughs. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "leg": 4
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w05-story-page-i-have-four-legs-v1.png",
+    "lineArtFileName": "l2-w05-story-page-i-have-four-legs-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w05-cover-i-have-two",
+    "week": 5,
+    "use": "cover",
+    "text": "I Have Two",
+    "prompt": "Sam (drawn young, about five years old) stands in a sunny park with green grass and a low tree with his two arms out wide and a big smile. No letters, words, or numbers anywhere.",
+    "caption": "I Have Two",
+    "objectCounts": {},
+    "sizeClass": "B",
+    "fileName": "l2-w05-cover-i-have-two-v1.png",
+    "lineArtFileName": "l2-w05-cover-i-have-two-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w05-story-page-sam-saw-pam",
+    "week": 5,
+    "use": "story-page",
+    "text": "Sam saw Pam.",
+    "prompt": "Sam (drawn young, about five years old) stands in the cozy living room with a blue sofa, a soft rug, and a toy box and points with a big smile at a small rag doll with yellow yarn hair and a red dress, who sits on top of the toy box. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w05-story-page-sam-saw-pam-v1.png",
+    "lineArtFileName": "l2-w05-story-page-sam-saw-pam-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w05-story-page-sam-can-get-pam",
+    "week": 5,
+    "use": "story-page",
+    "text": "Sam can get Pam.",
+    "prompt": "Sam (drawn young, about five years old) stands on his toes and lifts a small rag doll with yellow yarn hair and a red dress down from the top of the toy box in the same cozy living room. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w05-story-page-sam-can-get-pam-v1.png",
+    "lineArtFileName": "l2-w05-story-page-sam-can-get-pam-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w05-story-page-sam-is-with-pam",
+    "week": 5,
+    "use": "story-page",
+    "text": "Sam is with Pam.",
+    "prompt": "Sam (drawn young, about five years old) sits on the soft rug in the same cozy living room and holds a small rag doll with yellow yarn hair and a red dress on his lap with both hands; he smiles at her. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w05-story-page-sam-is-with-pam-v1.png",
+    "lineArtFileName": "l2-w05-story-page-sam-is-with-pam-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w05-story-page-pam-is-in-a-pan",
+    "week": 5,
+    "use": "story-page",
+    "text": "Pam is in a pan!",
+    "prompt": "A small rag doll with yellow yarn hair and a red dress sits in a big yellow toy pan on the soft rug of the same cozy living room; Sam (drawn young, about five years old) kneels next to the pan and laughs. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "pan": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w05-story-page-pam-is-in-a-pan-v1.png",
+    "lineArtFileName": "l2-w05-story-page-pam-is-in-a-pan-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w05-story-page-pam-is-on-a-map",
+    "week": 5,
+    "use": "story-page",
+    "text": "Pam is on a map!",
+    "prompt": "A small rag doll with yellow yarn hair and a red dress lies on a big paper map that is open on the soft rug of the same cozy living room; Sam (drawn young, about five years old) lies on his tummy next to the map and points at the doll. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "map": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w05-story-page-pam-is-on-a-map-v1.png",
+    "lineArtFileName": "l2-w05-story-page-pam-is-on-a-map-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w05-story-page-pam-is-on-sam",
+    "week": 5,
+    "use": "story-page",
+    "text": "Pam is on Sam!",
+    "prompt": "Sam (drawn young, about five years old) lies on his back on the soft rug of the same cozy living room and laughs; a small rag doll with yellow yarn hair and a red dress sits on his tummy. At the edge of the picture, at the open door of the room, one small white sneaker and the leg of a girl in red shorts step in. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w05-story-page-pam-is-on-sam-v1.png",
+    "lineArtFileName": "l2-w05-story-page-pam-is-on-sam-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w05-story-page-pam-is-off-sam",
+    "week": 5,
+    "use": "story-page",
+    "text": "Pam is off Sam!",
+    "prompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, stands at the open door of the same cozy living room with her hands on her hips and a big surprised face; Sam (drawn young, about five years old) sits up fast on the soft rug, and a small rag doll with yellow yarn hair and a red dress falls off his tummy onto the rug. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w05-story-page-pam-is-off-sam-v1.png",
+    "lineArtFileName": "l2-w05-story-page-pam-is-off-sam-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w05-story-page-sam-nan-and-pam-nap",
+    "week": 5,
+    "use": "story-page",
+    "text": "Sam, Nan, and Pam nap.",
+    "prompt": "Sam (drawn young, about five years old) and Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, are asleep side by side on the soft rug of the same cozy living room under one blanket, with a small rag doll with yellow yarn hair and a red dress asleep between them. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w05-story-page-sam-nan-and-pam-nap-v1.png",
+    "lineArtFileName": "l2-w05-story-page-sam-nan-and-pam-nap-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w05-cover-sam-and-pam",
+    "week": 5,
+    "use": "cover",
+    "text": "Sam and Pam",
+    "prompt": "Sam (drawn young, about five years old) sits on the soft rug of the cozy living room with a blue sofa, a soft rug, and a toy box and smiles at a small rag doll with yellow yarn hair and a red dress, who sits on top of the toy box. No letters, words, or numbers anywhere.",
+    "caption": "Sam and Pam",
+    "objectCounts": {},
+    "sizeClass": "B",
+    "fileName": "l2-w05-cover-sam-and-pam-v1.png",
+    "lineArtFileName": "l2-w05-cover-sam-and-pam-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w05-check-row-sun",
+    "week": 5,
+    "use": "check-row",
+    "text": "sun",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "sun": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w05-check-row-sun-v1.png",
+    "lineArtFileName": "l2-w05-check-row-sun-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w05-check-row-cat",
+    "week": 5,
+    "use": "check-row",
+    "text": "cat",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "cat": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w05-check-row-cat-v1.png",
+    "lineArtFileName": "l2-w05-check-row-cat-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w05-check-row-dog",
+    "week": 5,
+    "use": "check-row",
+    "text": "dog",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "dog": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w05-check-row-dog-v1.png",
+    "lineArtFileName": "l2-w05-check-row-dog-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w05-check-row-pen",
+    "week": 5,
+    "use": "check-row",
+    "text": "pen",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "pen": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w05-check-row-pen-v1.png",
+    "lineArtFileName": "l2-w05-check-row-pen-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w05-check-row-sock",
+    "week": 5,
+    "use": "check-row",
+    "text": "sock",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "sock": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w05-check-row-sock-v1.png",
+    "lineArtFileName": "l2-w05-check-row-sock-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w05-check-row-bed",
+    "week": 5,
+    "use": "check-row",
+    "text": "bed",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "bed": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w05-check-row-bed-v1.png",
+    "lineArtFileName": "l2-w05-check-row-bed-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w05-check-row-cup",
+    "week": 5,
+    "use": "check-row",
+    "text": "cup",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "cup": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w05-check-row-cup-v1.png",
+    "lineArtFileName": "l2-w05-check-row-cup-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w05-check-row-hat",
+    "week": 5,
+    "use": "check-row",
+    "text": "hat",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "hat": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w05-check-row-hat-v1.png",
+    "lineArtFileName": "l2-w05-check-row-hat-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w05-check-row-sofa",
+    "week": 5,
+    "use": "check-row",
+    "text": "sofa",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "sofa": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w05-check-row-sofa-v1.png",
+    "lineArtFileName": "l2-w05-check-row-sofa-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w06-story-page-i-can-see-a-cat",
+    "week": 6,
+    "use": "story-page",
+    "text": "I can see a cat.",
+    "prompt": "Mia (drawn young, about five years old) stands in a sunny meadow with a wooden fence, a small pond, a low tree, and tall grass and points at a gray cat that sits on the wooden fence. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "cat": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w06-story-page-i-can-see-a-cat-v1.png",
+    "lineArtFileName": "l2-w06-story-page-i-can-see-a-cat-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w06-story-page-i-can-see-a-dog",
+    "week": 6,
+    "use": "story-page",
+    "text": "I can see a dog.",
+    "prompt": "A black-and-white dog with a wagging tail runs on the grass in the same sunny meadow; Mia (drawn young, about five years old) points at it and smiles. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "dog": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w06-story-page-i-can-see-a-dog-v1.png",
+    "lineArtFileName": "l2-w06-story-page-i-can-see-a-dog-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w06-story-page-i-can-see-a-bird",
+    "week": 6,
+    "use": "story-page",
+    "text": "I can see a bird.",
+    "prompt": "A small blue bird sits on a branch of the low tree in the same sunny meadow; Mia (drawn young, about five years old) looks up and points at it. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "bird": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w06-story-page-i-can-see-a-bird-v1.png",
+    "lineArtFileName": "l2-w06-story-page-i-can-see-a-bird-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w06-story-page-i-can-see-a-fish",
+    "week": 6,
+    "use": "story-page",
+    "text": "I can see a fish.",
+    "prompt": "Mia (drawn young, about five years old) kneels at the edge of the small pond in the same sunny meadow and points at an orange fish in the clear water. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "fish": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w06-story-page-i-can-see-a-fish-v1.png",
+    "lineArtFileName": "l2-w06-story-page-i-can-see-a-fish-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w06-story-page-i-can-see-a-frog",
+    "week": 6,
+    "use": "story-page",
+    "text": "I can see a frog.",
+    "prompt": "A green frog sits on a lily pad in the small pond in the same sunny meadow; Mia (drawn young, about five years old) points at it and laughs. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "frog": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w06-story-page-i-can-see-a-frog-v1.png",
+    "lineArtFileName": "l2-w06-story-page-i-can-see-a-frog-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w06-story-page-i-can-see-a-duck",
+    "week": 6,
+    "use": "story-page",
+    "text": "I can see a duck.",
+    "prompt": "A white duck swims on the small pond in the same sunny meadow; Mia (drawn young, about five years old) waves at it. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "duck": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w06-story-page-i-can-see-a-duck-v1.png",
+    "lineArtFileName": "l2-w06-story-page-i-can-see-a-duck-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w06-story-page-i-can-see-a-horse",
+    "week": 6,
+    "use": "story-page",
+    "text": "I can see a horse.",
+    "prompt": "A white horse looks over the wooden fence in the same sunny meadow; Mia (drawn young, about five years old) points at it. In the tall grass at the front of the picture, the tip of a fluffy golden-brown tail sticks up. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "horse": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w06-story-page-i-can-see-a-horse-v1.png",
+    "lineArtFileName": "l2-w06-story-page-i-can-see-a-horse-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w06-story-page-i-can-see-pip",
+    "week": 6,
+    "use": "story-page",
+    "text": "I can see Pip!",
+    "prompt": "Pip the puppy jumps out of the tall grass in the same sunny meadow with a big happy face; Mia (drawn young, about five years old) laughs and opens her arms. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w06-story-page-i-can-see-pip-v1.png",
+    "lineArtFileName": "l2-w06-story-page-i-can-see-pip-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w06-cover-i-can-see",
+    "week": 6,
+    "use": "cover",
+    "text": "I Can See",
+    "prompt": "Mia (drawn young, about five years old) stands in a sunny meadow with a wooden fence, a small pond, a low tree, and tall grass and looks around with one hand flat above her eyes; a gray cat sits on the fence, and a white duck swims on the pond. No letters, words, or numbers anywhere.",
+    "caption": "I Can See",
+    "objectCounts": {},
+    "sizeClass": "B",
+    "fileName": "l2-w06-cover-i-can-see-v1.png",
+    "lineArtFileName": "l2-w06-cover-i-can-see-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w06-story-page-pat-sat-on-a-mat",
+    "week": 6,
+    "use": "story-page",
+    "text": "Pat sat on a mat.",
+    "prompt": "Pat (drawn young, about five years old) sits on one of two soft green mats in the book corner of a bright kindergarten classroom and smiles. The book corner has a big basket of books, a big paper map on the wall, and a toy kitchen with a small red toy pan. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "mat": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w06-story-page-pat-sat-on-a-mat-v1.png",
+    "lineArtFileName": "l2-w06-story-page-pat-sat-on-a-mat-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w06-story-page-sam-sat-on-a-mat",
+    "week": 6,
+    "use": "story-page",
+    "text": "Sam sat on a mat.",
+    "prompt": "Sam (drawn young, about five years old) sits down on the second soft green mat, next to Pat, in the same book corner. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "mat": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w06-story-page-sam-sat-on-a-mat-v1.png",
+    "lineArtFileName": "l2-w06-story-page-sam-sat-on-a-mat-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w06-story-page-tap-tap-tap",
+    "week": 6,
+    "use": "story-page",
+    "text": "Tap, tap, tap!",
+    "prompt": "Pat (drawn young, about five years old) and Sam (drawn young, about five years old) sit on their mats in the same book corner and look up with surprised faces. Behind the big basket of books, the tip of a fluffy golden-brown tail shows. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w06-story-page-tap-tap-tap-v1.png",
+    "lineArtFileName": "l2-w06-story-page-tap-tap-tap-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w06-story-page-pat-can-see-a-map",
+    "week": 6,
+    "use": "story-page",
+    "text": "Pat can see a map.",
+    "prompt": "Pat (drawn young, about five years old) lifts one corner of the big paper map on the wall of the same book corner and looks at the empty wall behind it. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "map": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w06-story-page-pat-can-see-a-map-v1.png",
+    "lineArtFileName": "l2-w06-story-page-pat-can-see-a-map-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w06-story-page-sam-can-see-a-pan",
+    "week": 6,
+    "use": "story-page",
+    "text": "Sam can see a pan.",
+    "prompt": "Sam (drawn young, about five years old) looks into the small red toy pan of the toy kitchen in the same book corner; it is empty. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "pan": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w06-story-page-sam-can-see-a-pan-v1.png",
+    "lineArtFileName": "l2-w06-story-page-sam-can-see-a-pan-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w06-story-page-tap-tap-tap-b",
+    "week": 6,
+    "use": "story-page",
+    "text": "Tap, tap, tap!",
+    "prompt": "Sam (drawn young, about five years old) turns around in the same book corner and looks at the big basket of books; Pat (drawn young, about five years old) still looks at the big paper map. Behind the big basket of books, the tip of a fluffy golden-brown tail taps on the floor. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w06-story-page-tap-tap-tap-b-v1.png",
+    "lineArtFileName": "l2-w06-story-page-tap-tap-tap-b-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w06-story-page-he-can-see-pip",
+    "week": 6,
+    "use": "story-page",
+    "text": "He can see Pip!",
+    "prompt": "Sam (drawn young, about five years old) looks behind the big basket of books in the same book corner and points with a big smile: Pip the puppy lies there and wags his tail. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w06-story-page-he-can-see-pip-v1.png",
+    "lineArtFileName": "l2-w06-story-page-he-can-see-pip-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w06-story-page-pip-sat-on-the-mat",
+    "week": 6,
+    "use": "story-page",
+    "text": "Pip sat on the mat!",
+    "prompt": "Pip the puppy sits on a soft green mat in the same book corner, between Pat (drawn young, about five years old) and Sam (drawn young, about five years old); his tail taps the mat, and Pat and Sam laugh. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "mat": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w06-story-page-pip-sat-on-the-mat-v1.png",
+    "lineArtFileName": "l2-w06-story-page-pip-sat-on-the-mat-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w06-cover-tap-tap",
+    "week": 6,
+    "use": "cover",
+    "text": "Tap, Tap!",
+    "prompt": "Pat (drawn young, about five years old) and Sam (drawn young, about five years old) sit on two soft green mats in the book corner of a bright kindergarten classroom and listen, each with one hand behind an ear. The book corner has a big basket of books, a big paper map on the wall, and a toy kitchen with a small red toy pan. No letters, words, or numbers anywhere.",
+    "caption": "Tap, Tap!",
+    "objectCounts": {},
+    "sizeClass": "B",
+    "fileName": "l2-w06-cover-tap-tap-v1.png",
+    "lineArtFileName": "l2-w06-cover-tap-tap-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w06-check-row-tiger",
+    "week": 6,
+    "use": "check-row",
+    "text": "tiger",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "tiger": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w06-check-row-tiger-v1.png",
+    "lineArtFileName": "l2-w06-check-row-tiger-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w06-check-row-sun",
+    "week": 6,
+    "use": "check-row",
+    "text": "sun",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "sun": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w06-check-row-sun-v1.png",
+    "lineArtFileName": "l2-w06-check-row-sun-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w06-check-row-bag",
+    "week": 6,
+    "use": "check-row",
+    "text": "bag",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "bag": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w06-check-row-bag-v1.png",
+    "lineArtFileName": "l2-w06-check-row-bag-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w06-check-row-cup",
+    "week": 6,
+    "use": "check-row",
+    "text": "cup",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "cup": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w06-check-row-cup-v1.png",
+    "lineArtFileName": "l2-w06-check-row-cup-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w06-check-row-ten",
+    "week": 6,
+    "use": "check-row",
+    "text": "ten",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "ten": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w06-check-row-ten-v1.png",
+    "lineArtFileName": "l2-w06-check-row-ten-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w06-check-row-fish",
+    "week": 6,
+    "use": "check-row",
+    "text": "fish",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "fish": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w06-check-row-fish-v1.png",
+    "lineArtFileName": "l2-w06-check-row-fish-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w06-check-row-dog",
+    "week": 6,
+    "use": "check-row",
+    "text": "dog",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "dog": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w06-check-row-dog-v1.png",
+    "lineArtFileName": "l2-w06-check-row-dog-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w06-check-row-pen",
+    "week": 6,
+    "use": "check-row",
+    "text": "pen",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "pen": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w06-check-row-pen-v1.png",
+    "lineArtFileName": "l2-w06-check-row-pen-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w06-check-row-table",
+    "week": 6,
+    "use": "check-row",
+    "text": "table",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "table": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w06-check-row-table-v1.png",
+    "lineArtFileName": "l2-w06-check-row-table-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w07-story-page-is-it-a-ball-no",
+    "week": 7,
+    "use": "story-page",
+    "text": "Is it a ball? No!",
+    "prompt": "May (drawn young, about five years old) kneels on a soft blue rug next to a big red blanket over a small round bump, in the toy corner of a bright kindergarten classroom with a low toy shelf, and points at the bump under the blanket; a thought bubble over her head shows a red-and-yellow ball. Ben (drawn young, about five years old) sits on the other side of the blanket, smiles, and shakes his head. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w07-story-page-is-it-a-ball-no-v1.png",
+    "lineArtFileName": "l2-w07-story-page-is-it-a-ball-no-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w07-story-page-is-it-a-doll-no",
+    "week": 7,
+    "use": "story-page",
+    "text": "Is it a doll? No!",
+    "prompt": "May (drawn young, about five years old) kneels next to the big red blanket in the same toy corner and points at the bump under the blanket; a thought bubble over her head shows a small doll with yellow yarn hair and a red dress. Ben (drawn young, about five years old) sits on the other side of the blanket, smiles, and shakes his head. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w07-story-page-is-it-a-doll-no-v1.png",
+    "lineArtFileName": "l2-w07-story-page-is-it-a-doll-no-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w07-story-page-is-it-a-car-no",
+    "week": 7,
+    "use": "story-page",
+    "text": "Is it a car? No!",
+    "prompt": "May (drawn young, about five years old) kneels next to the big red blanket in the same toy corner and points at the bump under the blanket; a thought bubble over her head shows a small blue toy car. Ben (drawn young, about five years old) sits on the other side of the blanket, smiles, and shakes his head. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w07-story-page-is-it-a-car-no-v1.png",
+    "lineArtFileName": "l2-w07-story-page-is-it-a-car-no-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w07-story-page-is-it-a-kite-no",
+    "week": 7,
+    "use": "story-page",
+    "text": "Is it a kite? No!",
+    "prompt": "May (drawn young, about five years old) kneels next to the big red blanket in the same toy corner and points at the bump under the blanket; a thought bubble over her head shows a red-and-yellow kite. Ben (drawn young, about five years old) sits on the other side of the blanket, smiles, and shakes his head. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w07-story-page-is-it-a-kite-no-v1.png",
+    "lineArtFileName": "l2-w07-story-page-is-it-a-kite-no-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w07-story-page-is-it-a-drum-no",
+    "week": 7,
+    "use": "story-page",
+    "text": "Is it a drum? No!",
+    "prompt": "May (drawn young, about five years old) kneels next to the big red blanket in the same toy corner and points at the bump under the blanket; a thought bubble over her head shows a small red toy drum with two drumsticks. Ben (drawn young, about five years old) sits on the other side of the blanket, smiles, and shakes his head. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w07-story-page-is-it-a-drum-no-v1.png",
+    "lineArtFileName": "l2-w07-story-page-is-it-a-drum-no-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w07-story-page-is-it-a-train-no",
+    "week": 7,
+    "use": "story-page",
+    "text": "Is it a train? No!",
+    "prompt": "May (drawn young, about five years old) kneels next to the big red blanket in the same toy corner and points at the bump under the blanket; a thought bubble over her head shows a small green toy train. Ben (drawn young, about five years old) sits on the other side of the blanket, smiles, and shakes his head. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w07-story-page-is-it-a-train-no-v1.png",
+    "lineArtFileName": "l2-w07-story-page-is-it-a-train-no-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w07-story-page-is-it-a-teddy-no",
+    "week": 7,
+    "use": "story-page",
+    "text": "Is it a teddy? No!",
+    "prompt": "May (drawn young, about five years old) kneels next to the big red blanket in the same toy corner and looks up at a thought bubble over her head that shows a white teddy bear with a blue bow. Behind her, at the other edge of the blanket, the tip of a fluffy golden-brown tail sticks out. Ben (drawn young, about five years old) smiles and shakes his head. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w07-story-page-is-it-a-teddy-no-v1.png",
+    "lineArtFileName": "l2-w07-story-page-is-it-a-teddy-no-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w07-story-page-is-it-pip-yes",
+    "week": 7,
+    "use": "story-page",
+    "text": "Is it Pip? Yes!",
+    "prompt": "Ben (drawn young, about five years old) lifts the big red blanket in the same toy corner, and Pip the puppy jumps out with a big happy face; May (drawn young, about five years old) laughs and opens her arms. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w07-story-page-is-it-pip-yes-v1.png",
+    "lineArtFileName": "l2-w07-story-page-is-it-pip-yes-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w07-cover-is-it-a-ball",
+    "week": 7,
+    "use": "cover",
+    "text": "Is It a Ball?",
+    "prompt": "May (drawn young, about five years old) and Ben (drawn young, about five years old) sit on a soft blue rug next to a big red blanket over a small round bump, in the toy corner of a bright kindergarten classroom with a low toy shelf, and look at the bump under the blanket; May holds one finger on her chin. No letters, words, or numbers anywhere.",
+    "caption": "Is It a Ball?",
+    "objectCounts": {},
+    "sizeClass": "B",
+    "fileName": "l2-w07-cover-is-it-a-ball-v1.png",
+    "lineArtFileName": "l2-w07-cover-is-it-a-ball-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w07-story-page-tom-can-see-a-top",
+    "week": 7,
+    "use": "story-page",
+    "text": "Tom can see a top.",
+    "prompt": "Tom (drawn young, about eight years old) kneels by the open toy box in the bright living room of Tom's home and looks at a small red spinning top with a yellow stripe on top of the toys. The living room has a green sofa, a window, a small brown rug under the window, an open toy box, a soft round blue mat on the floor, and a big silver pot on a low wooden table. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "top": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w07-story-page-tom-can-see-a-top-v1.png",
+    "lineArtFileName": "l2-w07-story-page-tom-can-see-a-top-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w07-story-page-tom-can-get-the-top",
+    "week": 7,
+    "use": "story-page",
+    "text": "Tom can get the top.",
+    "prompt": "Tom (drawn young, about eight years old) takes a small red spinning top with a yellow stripe out of the open toy box in the same living room and holds it up with a big smile. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "top": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w07-story-page-tom-can-get-the-top-v1.png",
+    "lineArtFileName": "l2-w07-story-page-tom-can-get-the-top-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w07-story-page-the-top-on-a-mat",
+    "week": 7,
+    "use": "story-page",
+    "text": "The top on a mat.",
+    "prompt": "A small red spinning top with a yellow stripe spins on the soft round blue mat in the same living room; Tom (drawn young, about eight years old) kneels next to the mat and claps. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "top": 1,
+      "mat": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w07-story-page-the-top-on-a-mat-v1.png",
+    "lineArtFileName": "l2-w07-story-page-the-top-on-a-mat-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w07-story-page-the-top-on-a-pot",
+    "week": 7,
+    "use": "story-page",
+    "text": "The top on a pot!",
+    "prompt": "Tom (drawn young, about eight years old) spins a small red spinning top with a yellow stripe on the lid of the big silver pot on the low wooden table in the same living room and laughs. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "top": 1,
+      "pot": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w07-story-page-the-top-on-a-pot-v1.png",
+    "lineArtFileName": "l2-w07-story-page-the-top-on-a-pot-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w07-story-page-the-top-is-on-mom",
+    "week": 7,
+    "use": "story-page",
+    "text": "The top is on Mom!",
+    "prompt": "Mom sits on the green sofa in the same living room and laughs; Tom (drawn young, about eight years old) puts a small red spinning top with a yellow stripe on top of her head and laughs. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "top": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w07-story-page-the-top-is-on-mom-v1.png",
+    "lineArtFileName": "l2-w07-story-page-the-top-is-on-mom-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w07-story-page-run-tom-run",
+    "week": 7,
+    "use": "story-page",
+    "text": "Run, Tom, run!",
+    "prompt": "A small red spinning top with a yellow stripe falls from Mom's head and rolls fast across the floor in the same living room, toward the window; Tom (drawn young, about eight years old) runs after it, and Mom laughs on the green sofa. Pip the puppy sleeps on the small brown rug under the window. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {},
+    "sizeClass": "A",
+    "fileName": "l2-w07-story-page-run-tom-run-v1.png",
+    "lineArtFileName": "l2-w07-story-page-run-tom-run-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w07-story-page-can-tom-see-the-top",
+    "week": 7,
+    "use": "story-page",
+    "text": "Can Tom see the top?",
+    "prompt": "Tom (drawn young, about eight years old) kneels and looks under the green sofa in the same living room; Mom sits on the green sofa. Behind him, Pip the puppy sleeps on the small brown rug under the window, and a small red spinning top with a yellow stripe sits on Pip's back. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "top": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w07-story-page-can-tom-see-the-top-v1.png",
+    "lineArtFileName": "l2-w07-story-page-can-tom-see-the-top-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w07-story-page-the-top-is-on-pip",
+    "week": 7,
+    "use": "story-page",
+    "text": "The top is on Pip!",
+    "prompt": "Tom (drawn young, about eight years old) turns around and points at Pip with a big smile; Pip the puppy sleeps on the small brown rug under the window in the same living room, with a small red spinning top with a yellow stripe on his back. Mom smiles on the green sofa. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+    "caption": "",
+    "objectCounts": {
+      "top": 1
+    },
+    "sizeClass": "A",
+    "fileName": "l2-w07-story-page-the-top-is-on-pip-v1.png",
+    "lineArtFileName": "l2-w07-story-page-the-top-is-on-pip-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w07-cover-the-top",
+    "week": 7,
+    "use": "cover",
+    "text": "The Top",
+    "prompt": "Tom (drawn young, about eight years old) holds up a small red spinning top with a yellow stripe in the bright living room of Tom's home and smiles; Pip the puppy sits next to him and looks at the top. The living room has a green sofa, a window, a small brown rug under the window, an open toy box, a soft round blue mat on the floor, and a big silver pot on a low wooden table. Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on his forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, and a red collar with a small round gold tag. No letters, words, or numbers anywhere.",
+    "caption": "The Top",
+    "objectCounts": {},
+    "sizeClass": "B",
+    "fileName": "l2-w07-cover-the-top-v1.png",
+    "lineArtFileName": "l2-w07-cover-the-top-line-v1.png",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "id": "l2-w07-check-row-octopus",
+    "week": 7,
+    "use": "check-row",
+    "text": "octopus",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "octopus": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w07-check-row-octopus-v1.png",
+    "lineArtFileName": "l2-w07-check-row-octopus-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w07-check-row-sun",
+    "week": 7,
+    "use": "check-row",
+    "text": "sun",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "sun": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w07-check-row-sun-v1.png",
+    "lineArtFileName": "l2-w07-check-row-sun-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w07-check-row-bed",
+    "week": 7,
+    "use": "check-row",
+    "text": "bed",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "bed": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w07-check-row-bed-v1.png",
+    "lineArtFileName": "l2-w07-check-row-bed-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w07-check-row-cat",
+    "week": 7,
+    "use": "check-row",
+    "text": "cat",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "cat": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w07-check-row-cat-v1.png",
+    "lineArtFileName": "l2-w07-check-row-cat-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w07-check-row-ox",
+    "week": 7,
+    "use": "check-row",
+    "text": "ox",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "ox": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w07-check-row-ox-v1.png",
+    "lineArtFileName": "l2-w07-check-row-ox-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w07-check-row-fish",
+    "week": 7,
+    "use": "check-row",
+    "text": "fish",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "fish": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w07-check-row-fish-v1.png",
+    "lineArtFileName": "l2-w07-check-row-fish-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w07-check-row-pen",
+    "week": 7,
+    "use": "check-row",
+    "text": "pen",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "pen": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w07-check-row-pen-v1.png",
+    "lineArtFileName": "l2-w07-check-row-pen-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w07-check-row-bus",
+    "week": 7,
+    "use": "check-row",
+    "text": "bus",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "bus": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w07-check-row-bus-v1.png",
+    "lineArtFileName": "l2-w07-check-row-bus-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "id": "l2-w07-check-row-olive",
+    "week": 7,
+    "use": "check-row",
+    "text": "olive",
+    "prompt": "",
+    "caption": "",
+    "objectCounts": {
+      "olive": 1
+    },
+    "sizeClass": "C",
+    "fileName": "l2-w07-check-row-olive-v1.png",
+    "lineArtFileName": "l2-w07-check-row-olive-line-v1.png",
+    "width": 1500,
+    "height": 1500
+  }
+]

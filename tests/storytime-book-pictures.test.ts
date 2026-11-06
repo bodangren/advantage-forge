@@ -4079,7 +4079,7 @@ const LIST_MARKDOWN_FILE = path.join(PRINT_ROOT, 'pictures.md');
 const LIST_SHA256 = '6d05dfc596c7f1891577a800a9375228136acc332c7c8b975c9df0bf6c062a58';
 const LIST_MARKDOWN_SHA256 = '7cc4c20178abbddae3ae0904b9e0e08ced09c6e95d6f9e365fcce932cf81ad56';
 const LIST_V3_SHA256 = 'c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b';
-const LIST_V3_SHADOW_FILE = '/tmp/opencode/wb-shadow/content/storytime/l2/print/pictures.json';
+const LIST_V3_SHADOW_FILE = path.resolve(import.meta.dirname, 'fixtures/storytime/pictures-v3.json');
 const LIST_FILE_PATTERN = /^l2-w\d{2}-[a-z-]+-v\d+\.png$/;
 const CLASS_PIXELS = {
   A: { width: 4000, height: 3000 },
