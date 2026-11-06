@@ -140,6 +140,10 @@ the plan keeps an open item for the doctor.
     and a lowered head, although the `cast.json` note gives him a happy smile, so the list prompt
     wins for the expression and the cast note wins for the look; (8) every card replaces the list
     phrase "a plain light background" with "plain white" or "pure white".
+  - Green round 2 (implementation `5f344886`, Red round 2 `ad9cc588`): Green reran
+    `GREEN_TEST_COMMAND` at `ad9cc588` and it exited 0 with `Test Files  6 passed (6)` and
+    `Tests  67 passed (67)`. Green changed no file under `tests/`. The mutation self-check M1 to M7
+    of test-strategy 4.5 passed at `5f344886`, and the guard code is unchanged since then.
 - [b] Phase 1 gates: review gates assigned by the test strategy, then phase acceptance at an
   immutable HEAD. — deferred:measure-spec-review
 
