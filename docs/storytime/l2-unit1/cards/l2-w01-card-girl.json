@@ -1,0 +1,26 @@
+{
+  "id": "l2-w01-card-girl",
+  "text": "girl",
+  "pageText": "girl",
+  "use": "card",
+  "goal": "One picture of Nan that shows the word girl: she stands full body and smiles.",
+  "mustShow": [
+    "Nan",
+    "a five-year-old girl",
+    "she stands and smiles"
+  ],
+  "deliverAs": "l2-w01-card-girl-v1.png",
+  "references": [
+    "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
+    "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-face-crop.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the element pictures. Picture 1 shows the girl Nan in a full-body view: copy her exactly. Picture 2 is a close-up of Nan's face with the correct, clean eyes: copy her face and eyes from picture 2 exactly. Picture 1 has tiny eye-corner rendering errors: do not copy them. Keep the soft, round, bright 3D render look of the pictures, not a 2D drawing and no outlines. The character keeps her chibi proportions: a big head and a small body. The hands are small, clean hands with five clear short fingers and a thumb when open, never fists, and a hanging hand shows relaxed, separate short fingers. Rendering errors to NOT copy from the character pictures: a tiny dark tick mark or pale skin flap at the outer corner of an eye, and a faint pale crease on a forehead. Each eye ends in a smooth, rounded corner; Nan alone keeps one short, thick, curved eyelash flick at each outer eye corner. Clean eye corners, no streak on the forehead, no marks on the face. The ears are smooth, with one clean rounded rim. Each piece of clothing is one even color with no pale patches, no pale blotches at the shoulders, and no stains. Do not change anyone's skin tone, hair, or clothes. The picture: Nan stands and smiles, with both arms relaxed at her sides. A square card picture on a plain pure white background: the full body stands at the middle of the square, the whole figure in view from head to feet, facing the camera, with a wide empty white margin on every side. Exactly one person: no other person, no animal, and nothing else in the picture. The shadow is soft or absent. Keep Nan exactly as in the picture: Nan: black-brown hair in exactly two round buns, one on each side of the head, each with a smooth red ring band (there is no bun on top of the head and no ruffled scrunchie), large dark-brown eyes, an orange T-shirt with a white star, red shorts, white sneakers. Nan keeps her chibi proportions: a big head and a small body. Her hands are small, chubby child hands with five clear short fingers and a thumb, never fists. The page text is \"girl\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture of one person. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No blush circles, no hair strands, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. Draw each eye as a closed outline with a big solid black pupil (a filled black circle) inside it. Draw the mouth exactly as in picture 1: an open mouth stays an open mouth drawn as a closed outline, and a closed smile stays one curve. Draw each hand as a closed outline with each finger as a separate rounded shape. Each head of hair is one closed shape. The ear is one closed outline with at most one inner curve. No lines on the clothes other than the outline, the collar, and the cuffs. Nan keeps her painted eyelash mark in the line art: at the outer corner of each visible eye, draw ONE short thick solid stroke (as thick as the outline) that touches the eye outline; do not leave it out. The eyelash stroke is the only mark beside each eye. Each hair bun is one closed round shape with one closed band ring. Draw the white star on her T-shirt as one closed star shape. Every outline is one closed line; no loose line ends anywhere. Every line inside an object ends on another line. Draw only the person: no ground line, no shadow, and no background shapes. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/cards/muse"
+}

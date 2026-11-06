@@ -1,0 +1,23 @@
+{
+  "id": "l2-w03-card-sheep",
+  "text": "sheep",
+  "pageText": "sheep",
+  "use": "card",
+  "goal": "One sheep, large in the middle of a white card, so a child can name it.",
+  "mustShow": [
+    "one sheep",
+    "a round woolly body",
+    "four short legs"
+  ],
+  "deliverAs": "l2-w03-card-sheep-v1.png",
+  "references": [],
+  "colorPrompt": "Make one children's book picture for a child. No picture is given. Draw the object that this text describes, as a smooth, clean, bright, soft, round 3D render with a plain white background. The object is ONE small fluffy white sheep with a round woolly body, four short legs, a soft round head with two small ears, and a friendly face with two big dark-brown eyes. The picture to make: a square picture of exactly one sheep, large in the middle, filling most of the square, the whole object in view, from the side at a small angle so that the round woolly body, the head, and all four legs show. Exactly one sheep: no second one, no copies, and nothing else in the picture. The background is plain white and empty, with at most a very soft shadow under the sheep. Draw the sheep as a friendly animal with a clear face: two eyes, no open mouth, and no teeth. The page text is \"sheep\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No fine detail, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. The wool of the sheep is one closed cloud-like shape with no wool texture lines. The head is one closed round shape joined to the body, each ear is one small closed shape, and each of the four legs is one short closed shape joined to the body. Each eye is one closed outline with one big solid black pupil inside it. Draw the sheep as a friendly animal with a clear face: two eyes, no open mouth, and no teeth. Every line inside the object ends on another line, with no loose ends. Draw only the sheep: no ground line, no shadow, no background shapes. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/cards/muse"
+}

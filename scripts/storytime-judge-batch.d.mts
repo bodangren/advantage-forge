@@ -40,6 +40,7 @@ export interface BuildBatchOptions {
   ids: string[];
   kind: 'color' | 'line';
   tryNo: number;
+  cards?: boolean;
   specDir?: string;
   judgeDir?: string;
   root?: string;
@@ -50,6 +51,7 @@ export interface BatchCommandOptions {
   kind?: string;
   tryNo?: number;
   out?: string;
+  cards?: boolean;
 }
 
 export declare const RESTART_START: string;

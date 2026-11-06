@@ -39,7 +39,7 @@ export interface ScanCostFilesResult {
 }
 
 export interface GuardContext {
-  spec: { id: string };
+  spec: { id: string; outDir?: string };
 }
 
 export type GuardCommand = 'color' | 'line';
@@ -53,7 +53,18 @@ export interface RunGuardsResult {
   code: number;
   spend: number;
   notice: boolean;
+  run: 'card' | 'restart' | 'mixed';
+  reportAt: number;
   message: string;
+}
+
+export interface CardRun {
+  startTime: string;
+  capUsd: number;
+  reportAtUsd: number;
+  marginUsd: number;
+  maxTries: number;
+  outDir: string;
 }
 
 export declare const RESTART_START: string;
@@ -61,9 +72,12 @@ export declare const MAX_TRIES: number;
 export declare const SPEND_CAP_USD: number;
 export declare const SPEND_MARGIN_USD: number;
 export declare const REPORT_AT_USD: number;
+export declare const CARD_RUN: CardRun;
 export declare const TRY_EXCEPTIONS: TryException[];
 export declare const PICTURE_IDS: Record<string, string[]>;
 
+export declare function isCardCall(ctxs: GuardContext[]): boolean;
+export declare function isMixedCardCall(ctxs: GuardContext[]): boolean;
 export declare function maxTriesFor(id: string, kind: string, maxTries?: number): number;
 export declare function pictureKey(id: string): string;
 export declare function parseCostsTsv(text: string): CostRow[];
@@ -86,6 +100,7 @@ export declare function spendGuard(
   reportAt?: number,
 ): SpendGuardResult;
 export declare function scanCostFiles(unitRoot: string): ScanCostFilesResult;
+export declare function scanCardCostFiles(unitRoot: string): ScanCostFilesResult;
 export declare function runGuards(
   unitRoot: string,
   ctxs: GuardContext[],

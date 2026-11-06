@@ -1,0 +1,26 @@
+{
+  "id": "l2-w07-card-train",
+  "text": "train",
+  "pageText": "train",
+  "use": "card",
+  "goal": "One small green toy train with a red wagon, large in the middle of a white card, so a child can name it.",
+  "mustShow": [
+    "one toy train",
+    "a green toy train",
+    "a red wagon",
+    "four small wheels"
+  ],
+  "deliverAs": "l2-w07-card-train-v1.png",
+  "references": [
+    "out/storytime/l2/unit1/w07/muse/elements/prop-toys-sheet-m1-color.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the element pictures. Picture 1 shows a sheet of toys: copy ONLY the small green toy train with the red wagon, and ignore the other toys and the background. Keep the soft, round, bright 3D render look of the picture, not a 2D drawing and no outlines. The object is ONE small green toy train with a rounded engine, a short chimney, a red wagon, and four small black wheels. The picture to make: a square picture of exactly one toy train, large in the middle, filling most of the square, the whole object in view, from the side at a small angle so that the green engine, the red wagon, and all the wheels show. Exactly one object: no second one, no copies, and nothing else in the picture. The background is plain white and empty, with at most a very soft shadow under it. Draw the train as one green engine and one red wagon, with no other color on it. The page text is \"train\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture of one object. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No fine detail, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. The engine is one closed shape, its chimney is one closed shape on top, and the wagon is one closed box shape behind it. The coupling is one short closed shape that joins the two, so the train is one connected picture. Each wheel is one closed circle joined to the engine or the wagon. Draw no windows, no stripes, and no writing. Every line inside the object ends on another line, with no loose ends. Draw only this object: no ground line, no shadow, no background shapes. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/cards/muse"
+}

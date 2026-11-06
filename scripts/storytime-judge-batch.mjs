@@ -5,10 +5,12 @@
 // provider call: it copies local picture files and writes one JSON batch file.
 //
 //   node scripts/storytime-judge-batch.mjs --ids <id,id,...> --kind color|line --try <n> \
-//        [--out <batch name>]
+//        [--out <batch name>] [--cards]
 //
 // The ids are the row ids of the A-48 specs in docs/storytime/l2-unit1/a48/. The script reads
-// the spec of each id for the page text, the use, and the mustShow phrases.
+// the spec of each id for the page text, the use, and the mustShow phrases. With `--cards` the
+// ids are card row ids, the spec folder is docs/storytime/l2-unit1/cards/, and the tries start at
+// `CARD_RUN.startTime`. Without it the A-48 folder and the restart start time apply.
 //
 // The source file of a try is the Muse version that the restart call made. The script reads the
 // top-level costs.tsv of the week folder of the spec (spec.outDir). A try is a row of that id
@@ -31,6 +33,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import sharp from 'sharp';
+import { CARD_RUN } from './storytime-muse-guards.mjs';
 
 const ROOT = resolve(new URL('..', import.meta.url).pathname);
 const SPEC_DIR = join(ROOT, 'docs/storytime/l2-unit1/a48');
@@ -133,28 +136,26 @@ export function readSpec(specDir, id) {
 /**
  * Builds the batch entries and writes the judge copies. One entry per id. The judge copy is the
  * source file at the printed size. The function makes no provider call.
+ *
+ * With `cards: true` the spec folder is `docs/storytime/l2-unit1/cards` and the tries start at
+ * `CARD_RUN.startTime`. Without it the A-48 spec folder and `RESTART_START` apply.
  */
 export async function buildBatch(options) {
-  const {
-    ids,
-    kind,
-    tryNo,
-    specDir = SPEC_DIR,
-    judgeDir = JUDGE_DIR,
-    root = ROOT,
-  } = options;
+  const { ids, kind, tryNo, cards = false, specDir, judgeDir = JUDGE_DIR, root = ROOT } = options;
   if (!KINDS.includes(kind)) throw new Error(`the kind must be ${KINDS.join(' or ')}; got ${kind}.`);
   if (!Number.isInteger(tryNo) || tryNo < 1) throw new Error(`the try number must be 1 or more; got ${tryNo}.`);
   if (!ids.length) throw new Error('the batch needs at least one id.');
+  const resolvedSpecDir = specDir ?? (cards ? join(root, 'docs/storytime/l2-unit1/cards') : SPEC_DIR);
+  const startTime = cards ? CARD_RUN.startTime : RESTART_START;
   const entries = [];
   for (const id of ids) {
-    const spec = readSpec(specDir, id);
+    const spec = readSpec(resolvedSpecDir, id);
     const weekDir = resolve(root, spec.outDir);
     const costFile = join(weekDir, 'costs.tsv');
     if (!existsSync(costFile)) {
       throw new Error(`no costs.tsv of ${id}: ${costFile} is missing, so the try is unknown.`);
     }
-    const tries = restartTries(parseCostRows(readFileSync(costFile, 'utf8')), id, kind);
+    const tries = restartTries(parseCostRows(readFileSync(costFile, 'utf8')), id, kind, startTime);
     const name = trySourceName(tries, tryNo, kind, id);
     const source = join(weekDir, name);
     if (!existsSync(source)) throw new Error(`no source file for ${id} ${kind} try ${tryNo}: ${source} is missing.`);
@@ -181,13 +182,14 @@ export async function buildBatch(options) {
 
 /** Parses the command line. An unknown option is an error. */
 export function parseArgs(argv) {
-  const options = { ids: [], kind: undefined, tryNo: undefined, out: undefined };
+  const options = { ids: [], kind: undefined, tryNo: undefined, out: undefined, cards: undefined };
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
     if (arg === '--ids') options.ids = (argv[++i] ?? '').split(',').map((id) => id.trim()).filter(Boolean);
     else if (arg === '--kind') options.kind = argv[++i];
     else if (arg === '--try') options.tryNo = Number(argv[++i]);
     else if (arg === '--out') options.out = argv[++i];
+    else if (arg === '--cards') options.cards = true;
     else throw new Error(`unknown option: ${arg}`);
   }
   if (!options.ids.length) throw new Error('the command needs --ids <id,id,...>.');

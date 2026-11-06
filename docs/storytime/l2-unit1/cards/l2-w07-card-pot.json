@@ -1,0 +1,23 @@
+{
+  "id": "l2-w07-card-pot",
+  "text": "pot",
+  "pageText": "pot",
+  "use": "card",
+  "goal": "One cooking pot with a lid, large in the middle of a white card, so a child can name it.",
+  "mustShow": [
+    "one cooking pot",
+    "a small pot with two handles",
+    "a lid with a knob"
+  ],
+  "deliverAs": "l2-w07-card-pot-v1.png",
+  "references": [],
+  "colorPrompt": "Make one children's book picture for a child. No picture is given. Draw the object that this text describes, as a smooth, clean, bright, soft, round 3D render with a plain white background. The object is ONE small cooking pot with a round body, one lid with a small knob on top, and two side handles. The picture to make: a square picture of exactly one cooking pot, large in the middle, filling most of the square, the whole object in view, from the front at a small angle from above so that the lid, the body, and both handles show. Exactly one cooking pot: no second one, no copies, and nothing else in the picture. The background is plain white and empty, with at most a very soft shadow under the cooking pot. The pot has no eyes and no face. The page text is \"pot\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No fine detail, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. The pot body is one closed round shape. The lid is one closed flat shape on top with one small closed knob, and each of the two handles is one closed shape joined to the side. Draw no shine lines and no texture lines on the metal. The pot has no eyes and no face: draw no eyes, no pupils, and no face anywhere. Every line inside the object ends on another line, with no loose ends. Draw only the cooking pot: no ground line, no shadow, no background shapes. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/cards/muse"
+}

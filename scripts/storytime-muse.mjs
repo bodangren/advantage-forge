@@ -21,7 +21,7 @@ import { appendFileSync, copyFileSync, existsSync, mkdirSync, readFileSync, writ
 import { homedir } from 'node:os';
 import { basename, join, resolve } from 'node:path';
 import sharp from 'sharp';
-import { REPORT_AT_USD, runGuards } from './storytime-muse-guards.mjs';
+import { CARD_RUN, REPORT_AT_USD, runGuards } from './storytime-muse-guards.mjs';
 
 const ROOT = resolve(new URL('..', import.meta.url).pathname);
 const DEFAULT_OUT = 'out/storytime/l2/unit1/w01/muse';
@@ -393,14 +393,17 @@ const main = async () => {
   } else if (cmd === 'print') {
     await doPrint(ctxs[0], opts.from ? Number(opts.from) : undefined);
   } else {
-    // Restart guards (T3a, 2026-11-04): at most 3 tries per picture and kind; spend cap 1.00
-    // USD (sum + 0.01 before a call); notice at 0.50 USD. They run before any provider call.
+    // Guards (T3a, 2026-11-04; card run, 2026-11-06): at most 3 tries per picture and kind; spend
+    // cap 1.00 USD for the restart run and 1.60 USD for the card run (sum plus the margin before a
+    // call); notice at 0.50 USD (restart) or 0.80 USD (card). The guards run before any key read
+    // and before any provider call. A call that mixes card specs with other specs is refused.
     const guards = runGuards(resolve(ROOT, 'out/storytime/l2/unit1'), ctxs, cmd, opts);
     if (guards.refused) {
       console.log(guards.message);
       process.exit(guards.code);
     }
-    if (guards.notice) console.log(`notice: spend ${guards.spend.toFixed(4)} USD at or above report point ${REPORT_AT_USD}`);
+    const reportAt = guards.run === 'card' ? CARD_RUN.reportAtUsd : REPORT_AT_USD;
+    if (guards.notice) console.log(`notice: spend ${guards.spend.toFixed(4)} USD at or above report point ${reportAt}`);
     const key = readKey();
     await pool(ctxs, limit, (ctx) => (cmd === 'color' ? doColor(key, ctx) : doLine(key, ctx, opts.from ? Number(opts.from) : undefined, Number(opts.tries ?? 1))));
   }

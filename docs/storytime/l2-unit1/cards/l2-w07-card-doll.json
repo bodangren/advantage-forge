@@ -1,0 +1,26 @@
+{
+  "id": "l2-w07-card-doll",
+  "text": "doll",
+  "pageText": "doll",
+  "use": "card",
+  "goal": "One small rag doll, large in the middle of a white card, so a child can name it.",
+  "mustShow": [
+    "one rag doll",
+    "yellow yarn hair",
+    "a red dress",
+    "two black button eyes"
+  ],
+  "deliverAs": "l2-w07-card-doll-v1.png",
+  "references": [
+    "out/storytime/l2/unit1/w04/muse/elements/prop-doll-pam-sheet-m1-color.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the element pictures. Picture 1 shows the rag doll Pam: three views of the same doll. Copy the doll exactly, and ignore the white background. Keep the soft, round, bright 3D render look of the picture, not a 2D drawing and no outlines. The object is ONE small rag doll with short bright yellow yarn hair (a fringe and two short yarn bunches), a round cream cloth face with two round black button eyes and a small stitched smile, and a simple red dress with short sleeves. The picture to make: a square picture of exactly one rag doll, large in the middle, filling most of the square, the whole object in view, from the front so that the whole doll, her hair, her face, and her red dress show. Exactly one object: no second one, no copies, and nothing else in the picture. The background is plain white and empty, with at most a very soft shadow under it. Draw no pattern on the dress and no writing on the fabric. The page text is \"doll\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture of one object. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No fine detail, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. The doll is one closed shape for the head, one closed shape for each yarn bunch, one closed shape for the dress, each sleeve is one closed shape, and each arm and each leg is one closed shape. Each button eye is one small closed circle, and the stitched smile is one short curve. Draw no yarn strands and no fold lines. Every line inside the object ends on another line, with no loose ends. Draw only this object: no ground line, no shadow, no background shapes. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/cards/muse"
+}

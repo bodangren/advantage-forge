@@ -1,0 +1,23 @@
+{
+  "id": "l2-w05-card-dress",
+  "text": "dress",
+  "pageText": "dress",
+  "use": "card",
+  "goal": "One little girl's yellow dress, large in the middle of a white card, so a child can name it.",
+  "mustShow": [
+    "one dress",
+    "a little girl's yellow dress",
+    "a red bow at the waist"
+  ],
+  "deliverAs": "l2-w05-card-dress-v1.png",
+  "references": [],
+  "colorPrompt": "Make one children's book picture for a child. No picture is given. Draw the object that this text describes, as a smooth, clean, bright, soft, round 3D render with a plain white background. The object is ONE little girl's yellow dress with short sleeves, a round neck, a full skirt, and one red bow at the waist, hanging on a plain white hanger. The picture to make: a square picture of exactly one dress, large in the middle, filling most of the square, the whole object in view, from the front so that the whole dress, the bow, and the hanger show. Exactly one dress: no second one, no copies, and nothing else in the picture. The background is plain white and empty, with at most a very soft shadow under the dress. The dress has no eyes and no face. The page text is \"dress\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No fine detail, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. The dress is one closed shape for the body and one closed shape for the skirt, joined at the waist. Each sleeve is one closed shape. The neck is one closed curve. The bow is one closed shape with two loops. The hanger is one closed shape with one closed hook. Draw no fold lines and no pattern on the dress. The dress has no eyes and no face: draw no eyes, no pupils, and no face anywhere. Every line inside the object ends on another line, with no loose ends. Draw only the dress: no ground line, no shadow, no background shapes. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/cards/muse"
+}

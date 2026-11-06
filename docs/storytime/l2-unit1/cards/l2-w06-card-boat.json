@@ -1,0 +1,23 @@
+{
+  "id": "l2-w06-card-boat",
+  "text": "boat",
+  "pageText": "boat",
+  "use": "card",
+  "goal": "One toy boat with a white sail, large in the middle of a white card, so a child can name it.",
+  "mustShow": [
+    "one toy boat",
+    "a small wooden boat with a white sail",
+    "a patch of calm blue water"
+  ],
+  "deliverAs": "l2-w06-card-boat-v1.png",
+  "references": [],
+  "colorPrompt": "Make one children's book picture for a child. No picture is given. Draw the object that this text describes, as a smooth, clean, bright, soft, round 3D render with a plain white background. The object is ONE small wooden toy boat with a white sail, floating on one small patch of calm blue water under the boat. The picture to make: a square picture of exactly one toy boat, large in the middle, filling most of the square, the whole object in view, from the side at a small angle so that the hull, the mast, and the whole white sail show. Exactly one toy boat: no second one, no copies, and nothing else in the picture. The background is plain white and empty, with at most a very soft shadow under the toy boat. The boat has no eyes and no face. The page text is \"boat\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No fine detail, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. The boat hull is one closed shape, the mast is one closed straight shape, and the sail is one closed triangle shape joined to the mast. The patch of water is one closed flat shape under the hull and touches it. Draw no wood grain lines and no wave lines. The boat has no eyes and no face: draw no eyes, no pupils, and no face anywhere. Every line inside the object ends on another line, with no loose ends. Draw only the toy boat: no ground line, no shadow, no background shapes. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/cards/muse"
+}

@@ -1,0 +1,26 @@
+{
+  "id": "l2-w07-card-teddy",
+  "text": "teddy",
+  "pageText": "teddy",
+  "use": "card",
+  "goal": "One small brown teddy bear, large in the middle of a white card, so a child can name it.",
+  "mustShow": [
+    "one teddy bear",
+    "a small brown teddy bear",
+    "two round ears",
+    "two small button eyes"
+  ],
+  "deliverAs": "l2-w07-card-teddy-v1.png",
+  "references": [
+    "out/storytime-review/batch-22/sprout-pat-render.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the element pictures. Picture 1 shows the boy Pat: the teddy bear in his arms is the object of this picture. Copy only the bear, and draw no boy in this picture. Keep the soft, round, bright 3D render look of the picture, not a 2D drawing and no outlines. The object is ONE small brown teddy bear with a round head, two round ears, a short round muzzle, two small dark button eyes, a small dark nose, and a small stitched smile. The picture to make: a square picture of exactly one teddy bear, large in the middle, filling most of the square, the whole object in view, from the front so that the whole bear, its ears, its face, and its paws show. Exactly one object: no second one, no copies, and nothing else in the picture. The background is plain white and empty, with at most a very soft shadow under it. The whole bear is one even warm brown; draw no bow and no clothing on it. The page text is \"teddy\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture of one object. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No fine detail, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. The bear is one closed shape for the round head, one closed shape for each round ear, one closed shape for the muzzle, one closed shape for the body, and one closed shape for each arm and each leg. Each button eye is one small closed circle, the nose is one small closed shape, and the stitched smile is one short curve. Draw no fur texture lines. Every line inside the object ends on another line, with no loose ends. Draw only this object: no ground line, no shadow, no background shapes. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/cards/muse"
+}

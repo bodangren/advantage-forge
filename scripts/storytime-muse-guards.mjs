@@ -33,6 +33,36 @@ export const SPEND_MARGIN_USD = 0.01;
 export const REPORT_AT_USD = 0.5;
 
 /**
+ * Card run (2026-11-06). The 31 card pictures of list v7 are one paid run with its own start
+ * time, cap, report point, margin, try cap, and output folder. This constant is the only owner
+ * of these values. A card call reads only the card cost files, so the restart cap never counts
+ * card spend and the card cap never counts restart spend.
+ */
+export const CARD_RUN = {
+  startTime: '2026-11-06T00:00:00Z',
+  capUsd: 1.6,
+  reportAtUsd: 0.8,
+  marginUsd: 0.01,
+  maxTries: 3,
+  outDir: 'out/storytime/l2/unit1/cards/muse',
+};
+
+/** The card folder below a unit root: the last two parts of `CARD_RUN.outDir` (`cards/muse`). */
+const CARD_FOLDER_PARTS = CARD_RUN.outDir.split('/').filter(Boolean).slice(-2);
+
+/** True for a spec of the card run. The match is exact: a variant folder is not a card spec. */
+const isCardSpec = (ctx) => ctx?.spec?.outDir === CARD_RUN.outDir;
+
+/** True when every spec of the call is a card spec. */
+export const isCardCall = (ctxs) => ctxs.length > 0 && ctxs.every(isCardSpec);
+
+/** True when a call holds card specs and other specs. Such a call is refused before any scan. */
+export const isMixedCardCall = (ctxs) => {
+  const flags = ctxs.map(isCardSpec);
+  return flags.some(Boolean) && !flags.every(Boolean);
+};
+
+/**
  * Owner-granted extra tries per picture and kind (T4 steps 11 and 13, 2026-11-05). The
  * orchestrator authorized these changes under the PM decisions quoted in each `source`, and the
  * strategy role amended the 5.11 X2/X5 freeze for them. Every entry grants its tries to one id
@@ -161,23 +191,67 @@ export const scanCostFiles = (unitRoot) => {
 };
 
 /**
+ * Scan the card cost files below a unit root. A card call reads only
+ * `<unitRoot>/cards/muse/costs.tsv` and `<unitRoot>/cards/muse/elements/costs.tsv`. The elements
+ * file counts for spend, like the restart scan.
+ */
+export const scanCardCostFiles = (unitRoot) => {
+  const base = join(unitRoot, ...CARD_FOLDER_PARTS);
+  const pictureRows = [];
+  const allRows = [];
+  const top = join(base, 'costs.tsv');
+  if (existsSync(top)) {
+    const rows = parseCostsTsv(readFileSync(top, 'utf8'));
+    pictureRows.push(...rows);
+    allRows.push(...rows);
+  }
+  const elements = join(base, 'elements', 'costs.tsv');
+  if (existsSync(elements)) allRows.push(...parseCostsTsv(readFileSync(elements, 'utf8')));
+  return { pictureRows, allRows };
+};
+
+/**
  * Run the two guards for one invocation. Returns a decision; it makes no call and does not exit.
  * The caller prints the message and exits with code 3 when refused.
+ *
+ * The function is the one decision point for a restart call, a card call, and a mixed call:
+ *   - a mixed call is refused before any cost scan;
+ *   - a card call uses `CARD_RUN` and the card cost files;
+ *   - every other call uses the restart values and the restart scan.
  */
 export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
-  const { pictureRows, allRows } = scanCostFiles(unitRoot);
-  const s = spendGuard(allRows);
+  if (isMixedCardCall(ctxs)) {
+    return {
+      refused: true,
+      code: 3,
+      spend: 0,
+      notice: false,
+      run: 'mixed',
+      reportAt: CARD_RUN.reportAtUsd,
+      message: 'refused: the call mixes card specs with other specs; run each group in its own call',
+    };
+  }
+  const card = isCardCall(ctxs);
+  const run = card ? 'card' : 'restart';
+  const cap = card ? CARD_RUN.capUsd : SPEND_CAP_USD;
+  const margin = card ? CARD_RUN.marginUsd : SPEND_MARGIN_USD;
+  const reportAt = card ? CARD_RUN.reportAtUsd : REPORT_AT_USD;
+  const startTime = card ? CARD_RUN.startTime : RESTART_START;
+  const maxTries = card ? CARD_RUN.maxTries : MAX_TRIES;
+  const { pictureRows, allRows } = card ? scanCardCostFiles(unitRoot) : scanCostFiles(unitRoot);
+  const s = card ? spendGuard(allRows, startTime, cap, margin, reportAt) : spendGuard(allRows);
   const spend = s.spend;
   if (!s.ok) {
-    return { refused: true, code: 3, spend, notice: false, message: `refused: spend ${spend.toFixed(4)} USD plus ${SPEND_MARGIN_USD} over cap ${SPEND_CAP_USD}` };
+    return { refused: true, code: 3, spend, notice: false, run, reportAt, message: `refused: spend ${spend.toFixed(4)} USD plus ${margin} over cap ${cap}` };
   }
   const kind = cmd;
   const requested = cmd === 'line' ? Number(opts.tries ?? 1) : 1;
   for (const ctx of ctxs) {
-    const g = tryGuard(pictureRows, ctx.spec.id, kind, requested);
+    const g = tryGuard(pictureRows, ctx.spec.id, kind, requested, startTime, maxTries);
     if (!g.ok) {
-      return { refused: true, code: 3, spend, notice: s.notice, message: `refused: ${ctx.spec.id} ${kind} count ${g.count} (max ${g.max})` };
+      return { refused: true, code: 3, spend, notice: s.notice, run, reportAt, message: `refused: ${ctx.spec.id} ${kind} count ${g.count} (max ${g.max})` };
     }
   }
-  return { refused: false, code: 0, spend, notice: s.notice, message: '' };
+  return { refused: false, code: 0, spend, notice: s.notice, run, reportAt, message: '' };
 };
+

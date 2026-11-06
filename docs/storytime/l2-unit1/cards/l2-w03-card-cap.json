@@ -1,0 +1,23 @@
+{
+  "id": "l2-w03-card-cap",
+  "text": "cap",
+  "pageText": "cap",
+  "use": "card",
+  "goal": "One red cap, large in the middle of a white card, so a child can name it.",
+  "mustShow": [
+    "one cap",
+    "a red cap with a curved brim",
+    "the cap is large in the middle"
+  ],
+  "deliverAs": "l2-w03-card-cap-v1.png",
+  "references": [],
+  "colorPrompt": "Make one children's book picture for a child. No picture is given. Draw the object that this text describes, as a smooth, clean, bright, soft, round 3D render with a plain white background. The object is ONE red cap with a soft round crown, a curved brim at the front, and a small red button on top. The picture to make: a square picture of exactly one cap, large in the middle, filling most of the square, the whole object in view, from the front at a small angle so that the curved brim and the round crown both show. Exactly one cap: no second one, no copies, and nothing else in the picture. The background is plain white and empty, with at most a very soft shadow under the cap. The cap has no eyes and no face. The page text is \"cap\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No fine detail, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. The cap is one closed round crown shape, and the brim is one closed curved shape joined to it. The button on top is one tiny closed circle. Draw no seam lines on the crown. The cap has no eyes and no face: draw no eyes, no pupils, and no face anywhere. Every line inside the object ends on another line, with no loose ends. Draw only the cap: no ground line, no shadow, no background shapes. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/cards/muse"
+}
