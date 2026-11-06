@@ -83,11 +83,20 @@ files, read from a run of those three files alone. The Green log also quotes `N_
 the three old files, read from a run of those three files alone. Then
 `<N>` equals `N_new` plus `N_old`.
 
-PROJECT_TESTS (acceptance, once): the GREEN files plus `tests/storytime-muse-delivery.test.ts`,
-`tests/storytime-picture-rows.test.ts`, `tests/storytime-line-art-pass.test.ts`, and
-`tests/storytime-muse-delivery-adversarial.test.ts`, in one wrapper, `--maxWorkers=1`. Expected:
-`Test Files  10 passed (10)` and `Tests  <M> passed (<M>)` with `<M>` = `105` + `N_new`. The number 105 is
-the total of the seven old files at the last closeout.
+PROJECT_TESTS (acceptance, once; amended 2026-11-06 at `6d80fba0`): the six GREEN files plus
+`tests/storytime-muse-delivery.test.ts`, `tests/storytime-picture-rows.test.ts`,
+`tests/storytime-line-art-pass.test.ts`, `tests/storytime-muse-delivery-adversarial.test.ts`, and
+`tests/storytime-card-adversarial.test.ts`. That is 11 files, in one wrapper, `--maxWorkers=1`:
+
+```sh
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-card-guards.test.ts tests/storytime-card-specs.test.ts tests/storytime-card-fixtures.test.ts tests/storytime-card-adversarial.test.ts tests/storytime-muse-attempts.test.ts tests/storytime-judge-batch.test.ts tests/storytime-stage-check.test.ts tests/storytime-muse-delivery.test.ts tests/storytime-picture-rows.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-muse-delivery-adversarial.test.ts --maxWorkers=1'
+```
+
+Expected at `6d80fba0`: exit `0`, `Test Files  11 passed (11)`, and `Tests  155 passed (155)`. The total is 105 (seven
+old files) + 30 (`N_new` of the three card files: guards 15, specs 10, fixtures 5) + 20 (the adversarial
+file, ADVC1 to ADVC20). Parse both numbers as labeled integers. A later commit that adds or removes a test
+changes the total, and the gate then wants the new sum with its parts quoted. The number 105 is the total of
+the seven old files at the last closeout.
 
 TYPECHECK_COMMAND (Green once, checker once):
 
@@ -161,6 +170,10 @@ constants; (4) run it again and quote `fixtures after move: 0 failed`. The Red c
 | CG9 | A restart-only call still uses the restart cap: 1.20 USD in `w01/muse/costs.tsv` refuses a restart call although it is below the card cap. Pass on arrival (lock). | `CARD_RUN` serves a restart call. |
 | CG10 | Mixed call at the CLI. `node scripts/storytime-muse.mjs color <card spec> <other spec>` exits `3` and prints nothing with `no key`. Also: other spec first; two card specs and one other; a spec with no `outDir` next to a card spec. The test hashes the real `cards/muse/costs.tsv` and `w01/muse/costs.tsv` (or notes absence) before and after: no change. Spec files are temp files with absolute paths. A card-only call at `runGuards` level is not refused as mixed (temp root). | Exit other than `3`, a `no key` line (the guard ran after the key read), a changed cost file, or a card-only call refused as mixed. |
 | CG11 | Judge batch. (a) `parseArgs([...base, '--cards'])` does not throw, and `--bogus` still throws `unknown option`; without the flag, the parse (falsy keys dropped) equals `{ ids, kind, tryNo, out }`. (b) With the parsed options and `root: <tmp>`, `buildBatch` finds the real spec `l2-w04-card-mom` (Task 3 file); the same call without the flag fails with the A-48 missing-spec error. (c) A color row at `2026-11-05T12:00:00Z` (between the two start times) and one at `2026-11-06T01:00:00Z` in `<tmp>/out/storytime/l2/unit1/cards/muse/costs.tsv`: with the flag, try 1 is the 11-06 row and try 2 fails with `holds 1 try`. The test passes the parsed object whole, so the option name stays free. | The flag selects the A-48 folder, the try count keeps `RESTART_START`, or an old option breaks. |
+| CG12 | The restart scan skips the `cards` child. Card cost rows (spend 0.60 USD) count in a card call and not in a restart call (restart spend 0.50). Result fields `run` (`restart` or `card`), `refused`, `spend`. | A card row that counts in restart spend, or a card call that misses its own rows. |
+| CG13 | Output-path layout. `classifyOutDir` resolves each path. Invalid layouts are refused with code 3 and the `outDir` in the message, also at the CLI before the key read (`no key` absent). The resolved trailing-slash card path is a card call. A spec without `outDir` keeps the w01 default (restart). | A raw-string match, an invalid layout that passes, or a refusal after the key read. |
+| CG14 | Pool projection. The guard reserves one margin (0.01 USD) for each call of the whole color pool or line pool (`--tries`). Card color pool with 1.50 USD spent: 10 specs refuse, 9 specs allow. Card line pool of 2 specs with `tries` 2: 1.56 USD allows, 1.57 refuses. Restart line pool of 2 specs with `tries` 2: 0.95 allows, 0.97 refuses; a restart pool of 10 specs at 0.99 refuses. A single card call keeps its old boundary (1.58 allows, 1.595 refuses). | A pool checked as one call, or a restart pool without the projection. |
+| CG15 | Only the exact folder `cards/muse` is a card folder below `cards/`. Every other subfolder (including `cards/muse/elements`) classifies as `invalid` and a guarded call exits 3 with the folder in the message. The `w03/muse` and `w04/muse/elements` layouts stay `restart`. | A card subfolder that passes, or a restart layout that breaks. |
 
 **`tests/storytime-card-specs.test.ts`** (id prefix `CS`; reads only the repository):
 
@@ -186,6 +199,18 @@ constants; (4) run it again and quote `fixtures after move: 0 failed`. The Red c
 | CF3 | The declaration line of `LIST_V3_SHADOW_FILE` (book-pictures test) and of `V3_SHADOW_FILE` (stage-check test) names `fixtures/storytime/pictures-v3.json` and names no `/tmp`. | A constant that still points outside the repository. |
 | CF4 | A recursive text search of `tests/`, `scripts/`, and `src/` finds no `wb-shadow` (needle in pieces). Seeded control: a temp file with the needle is flagged. The same search with `grep -rn 'wb-shadow' tests scripts src` is an acceptance command. | One hit, or a scanner that skips the two test files. |
 | CF5 | `git check-ignore -q` exits `1` for both fixtures (git does not ignore them). | A fixture that git ignores. |
+
+**`tests/storytime-card-adversarial.test.ts`** (id prefix `ADVC`; 20 tests; Red-class test data written in the
+adversarial round, commit `6d80fba0`). ADVC1 to ADVC20 attack the cap boundary (1.59, 1.60, 1.61; repeated line calls;
+float sums), the time cell (missing, unparseable, offsets, milliseconds, no time column), the `outDir` spellings
+and symlinks, the cost-file scan of every child folder, the mixed CLI call in every order, the live notice line,
+the cost-row parse edges, the pool re-check boundary and its file-only read, the `--tries` values, and a wider
+second-owner scan. Some tests pin known gaps as notes (RB-4, RB2-1, RB2-2), not as fixes. The file passes on
+arrival at its commit and is part of PROJECT_TESTS.
+
+Red history: Red rounds 3 and 4 ran `tests/storytime-card-guards.test.ts` alone as their RED_TEST_COMMAND, because
+only the guards file held new Red tests in those rounds. The three-file RED_TEST_COMMAND of section 3 applied to
+rounds 1 and 2.
 
 Provenance (Red log, not a test): quote `git -C /home/daniebo/Desktop/Workbooks show 078917f1:content/storytime/l2/print/pictures.json | sha256sum`
 and the same for `95043edc`. Both outputs equal the pins.
@@ -218,7 +243,7 @@ known-red rule, and Reviews A and B and the adversarial round with no open block
 | Order in the CLI | The guard runs before `readKey()` and before any provider call. CG10 checks the absence of `no key` in the output. |
 | Restart contract | The restart constants, the restart scan, and `TRY_EXCEPTIONS` stay byte-equal in meaning. `tests/storytime-muse-attempts.test.ts` passes unchanged. |
 | Card scan scope | A card call reads only `cards/muse/costs.tsv` and `cards/muse/elements/costs.tsv`, rows at or after `CARD_RUN.startTime`. The elements file counts for spend. Whether it counts for tries is not pinned: no card element call is planned. |
-| `outDir` match | Exact string equality with `CARD_RUN.outDir`. A variant (trailing slash, `..`) is not a card spec. The adversarial round tests this edge. Review A confirms that the variant fails safe. |
+| `outDir` match (amended: ADV-N2) | `classifyOutDir` compares **resolved** paths. Any spelling that resolves to `CARD_RUN.outDir` (trailing slash, `..` forms) is a card call. Every other path below the child `cards` is invalid. A path that is not `<unit root>/<child>/muse` or `<unit root>/<child>/muse/elements` is invalid. An invalid call exits `3` before the key read and before any cost scan. The restart scan skips the `cards` child, so card cost rows never count in restart spend (CG12). CG13, CG15, ADVC7, ADVC8, and ADVC9 pin this rule. |
 | Notice line | The `notice:` line of `scripts/storytime-muse.mjs` must print the card report point for a card call, not `REPORT_AT_USD`. Review A reads this line. It has no test, because it prints only when the real spend passes the point. |
 | Judge batch | Without `--cards`, `SPEC_DIR`, `RESTART_START`, and the output form stay unchanged. The batch file name for a card round is set with `--out` (Phase 2 uses `cards-<round>-<kind>`). |
 | Types | `scripts/storytime-muse-guards.d.mts` declares `CARD_RUN`. `scripts/storytime-judge-batch.d.mts` accepts the new option. Tests cast the parsed options, so a type choice by Green cannot break them. |
@@ -285,12 +310,21 @@ failing ids.
 | M5 `--cards` keeps the A-48 spec folder | CG11 |
 | M6 the notice point reads `REPORT_AT_USD` | CG5 |
 | M7 the start-time compare uses `>` | CG7 |
+| MF1 remove the `cards` skip in the restart scan | CG12 and CG14 |
+| MF2 restore the exact-string card match | CG13 |
+| MF3 drop the pool projection | CG14 |
+| MF4 classify `cards/muse/elements` as restart again | CG15 |
+
+MF1 to MF3 ran in the Green log `jr-green-8a567fb.log` (scratch copy, guards file alone, 14 tests; the restored
+copy passed 14 of 14). MF4 ran in `jr-green-5bdf307.log` (15 tests; the unmutated copy passed 15 of 15). Both logs
+sit in `measure/runs/asset_storytime_l2_cards_20261106/`. The checker reruns M1 to M7 and MF1 to MF4.
 
 ### 4.6 Artifact tests and live behavior
 
 CF1 to CF5, CS1 to CS10 (fixtures, spec files, reference files, source search) are **artifact tests**: they check
-bytes, files, and text. CG1 to CG9 and CG11 are **behavior tests** of pure functions on temp data. CG10 is a
-behavior test of the real CLI with the key removed. None of them proves a picture or a provider call. The live
+bytes, files, and text. CG1 to CG9 and CG11 to CG15 are **behavior tests** of pure functions on temp data. CG10, the CLI
+parts of CG13 and CG15, and the CLI parts of ADVC13 and ADVC14 are behavior tests of the real CLI with the key removed.
+ADVC1 to ADVC20 are behavior tests on temp data, plus one source scan (ADVC20). None of them proves a picture or a provider call. The live
 behavior proof of the track is Phase 2: the Muse calls, the judge runs, and `costs.tsv`. Phase 1 makes no provider call. Spend stays 0.00 USD.
 
 ### 4.7 Anti-pattern coverage, Phase 1
@@ -374,10 +408,27 @@ Anti-pattern coverage, Phase 2:
 | A7 | P2-10 reads each line, so the legal phrase "approved Storytime Muse path" does not hide a real hit. | A real hit dropped by the filter. |
 | A10 | P2-1 reads the live list again; P2-2 reads the kit diff again. | A result carried over a changed input. |
 
+### 5.1 Operating rules for the maker (decided 2026-11-06 at `6d80fba0`)
+
+The orchestrator decided these rules after Review B round 2 and the adversarial round. They replace a code fix for
+RB2-1. The checker verifies them from the maker log and from `out/storytime/l2/unit1/cards/muse/costs.tsv`
+(`$S/costs.tsv`). A rule that the log does not show is a Phase 2 failure.
+
+| Id | Rule | The checker verifies by | Falsification condition |
+| --- | --- | --- | --- |
+| a (RB2-1) | The per-call re-check cannot see calls in flight: a call writes its cost row only after it ends. So the maker runs color and line pools with `--concurrency 4` at most while the recorded card spend is **below 1.20 USD**. At **or above 1.20 USD** the maker uses `--concurrency 1` and line calls with `--tries 1`. Reason: at most 12 calls are in flight (4 workers x 3 tries), at a worst-case 0.03 USD each. That is 0.36 USD, and 1.20 + 0.36 is below 1.60. | The maker log names the spend before each pool and the flags of each pool. For each pool that started at or above 1.20 USD, the flags show `--concurrency 1` and `--tries 1` (or no `--tries`). The row time order in `$S/costs.tsv` shows no overlap of calls after that point. | A pool at or above 1.20 USD with concurrency above 1 or `--tries` above 1. |
+| b | After each pool the maker reads every new row of `$S/costs.tsv`. If any row costs more than 0.03 USD, the maker stops and reports to the orchestrator. | The maker log lists the highest row cost after each pool. The checker finds the highest cost in the file. | A row above 0.03 USD with no stop and no report. |
+| c (RA2-5) | A refusal in the middle of a pool exits `0`: the tool prints the message and returns. The maker reads the tool output for a `refused` line after every run, not only the exit code. | The maker log quotes the output check (`refused lines: <n>`) for each run. | A run that logs only an exit code. |
+| d (ADV-N4) | `--tries` takes only the integers `1`, `2`, or `3`. The maker never passes a fraction, zero, or a larger number. | The maker log shows the `--tries` value of each line run. | Any other value. |
+| e (ADV-N6) | Nobody edits `costs.tsv` by hand. The header of `$S/costs.tsv` has a `time` column and a cost column (`usage_cost` or `cost_usd`). The spend total equals the sum of the cost column for rows at or after `2026-11-06T00:00:00Z`. | The checker reads the header, sums the column with a read-only script, and compares the sum with `spend-record.txt` and with P2-5. A header with no time or cost column gives every row 0 cost or drops it, so the check fails. | A header without those columns, a sum that differs, or a row that the file history cannot explain. |
+| f | Report point: at 0.80 USD the maker records the spend and the projection in its log and in `spend-record.txt`, and continues. Cap: 1.60 USD. The maker stops only at the cap. | P2-5 reads the report-point lines. | A stop at 0.80 USD, or a missing record. |
+
+The checker adds the labeled line `operating rules a to f: pass|fail` to its log, with one reason for each rule.
+
 ## 6. Allowed file set (Phase 1 gate, Phase 2 gate, final acceptance)
 
 ```text
-^(measure/(tracks|runs)/asset_storytime_l2_cards_20261106/|measure/(tracks|status|tech-debt|lessons-learned)\.md$|measure/generated/|measure/archive/asset_storytime_l2_cards_20261106/|docs/storytime/l2-unit1/cards/l2-w0[1-7]-card-[a-z]+\.json$|docs/storytime/l2-unit1/judge/prod/cards-[a-z0-9-]+\.json$|scripts/storytime-(muse-guards\.mjs|muse-guards\.d\.mts|muse\.mjs|judge-batch\.mjs|judge-batch\.d\.mts)$|tests/storytime-card-(guards|specs|fixtures)\.test\.ts$|tests/fixtures/storytime/pictures-v[37]\.json$|tests/storytime-(book-pictures|stage-check)\.test\.ts$)
+^(measure/(tracks|runs)/asset_storytime_l2_cards_20261106/|measure/(tracks|status|tech-debt|lessons-learned)\.md$|measure/generated/|measure/archive/asset_storytime_l2_cards_20261106/|docs/storytime/l2-unit1/cards/l2-w0[1-7]-card-[a-z]+\.json$|docs/storytime/l2-unit1/judge/prod/cards-[a-z0-9-]+\.json$|scripts/storytime-(muse-guards\.mjs|muse-guards\.d\.mts|muse\.mjs|judge-batch\.mjs|judge-batch\.d\.mts)$|tests/storytime-card-(guards|specs|fixtures|adversarial)\.test\.ts$|tests/fixtures/storytime/pictures-v[37]\.json$|tests/storytime-(book-pictures|stage-check)\.test\.ts$)
 ```
 
 Check: list the files of the commits since `7af682db` (`git log --no-merges --format=%H 7af682db..HEAD`, then
@@ -396,7 +447,7 @@ Final acceptance runs at an immutable HEAD after the Phase 2 gate. It makes no M
    only the guard module and the card tests; the allowed-set check of section 6; the FR-12 grep; the secret scan;
    the plan counts (`[x]` lines, no non-deferred open task); `git diff --name-only 7af682db..HEAD -- assets/fireball.ts out/fireball` prints nothing.
 2. PROJECT_CHECKS: TYPECHECK_COMMAND (`owned tsc errors: 0`) and KNOWN_RED_COMMAND with the rule of 4.4.
-3. PROJECT_TESTS: the 10 files of section 3. `Test Files  10 passed (10)`, `Tests  <M> passed (<M>)`.
+3. PROJECT_TESTS: the 11 files of section 3. `Test Files  11 passed (11)`, `Tests  155 passed (155)` (or the new sum with its parts quoted).
 4. Compare the plan, `metadata.json`, and `pm-report.md` quotes with `spend-record.txt`, `delivery-record.txt`,
    and `drive-record.txt` (A5). Name each difference.
 5. Re-run P2-1, P2-5, P2-6, and P2-10 at the final HEAD. They are cheap and they catch late edits.
@@ -416,3 +467,9 @@ of `measure/tracks.md`, `measure/generated/`, and other plans). It archives the 
 | The float sum can refuse the 160th call at 1.59 USD. | Accept (safe side). The test pins 158 rows and 160 rows only. | Strategy |
 | `loadPictureList` or `deliver` may refuse list v7 in Phase 2. | CS8 checks the loader and the row plan before any spend. A refusal in Phase 2 is a stop and a PM report. | Phase 2 maker |
 | The adversarial round may find the `outDir` variant, a negative cost row, or a bad time cell. | Route to Green with a bounded brief. A negative cost row is a trusted-file case and gets a note. | Orchestrator |
+| RB2-1: calls in flight are not seen by the per-call re-check (Review B round 2, Major). | No code fix. Operating rule 5.1 a limits the in-flight spend (0.36 USD worst case below 1.20 USD). The test ADVC18 pins that the re-check reads the cost file only. | Phase 2 maker; checker verifies |
+| RA2-5: a mid-pool refusal exits 0 (Review A round 2). | Note. Operating rule 5.1 c: the maker reads the output for a refusal line after every run. | Phase 2 maker |
+| ADV-N3: `CostRow` in `scripts/storytime-muse-guards.d.mts` declares `version`, `inputs`, and `size` as required, and the parser never sets them. | Note. No current consumer reads those fields. A later track may mark them optional. | Next guard change |
+| ADV-N4: `--tries` is not validated as an integer. | Note. Operating rule 5.1 d limits the maker to 1, 2, or 3. | Phase 2 maker |
+| ADV-N5: CG3 scans two files with a narrow pattern. | Note. ADVC20 runs a wider scan of `scripts/` and `tests/` with a seeded control. The acceptance search of section 4.2 gate 5 is the final check. | Checker |
+| ADV-N6: a `costs.tsv` header without a time or cost column hides rows (RB-4 extension). | Note. Operating rule 5.1 e: nobody edits the file by hand, and the checker reads the header and the sum. ADVC6 and ADVC16 pin the behavior. | Phase 2 checker |
