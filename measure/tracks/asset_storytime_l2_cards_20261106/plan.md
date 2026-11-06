@@ -287,12 +287,20 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     and 7 px. The family row used its 3 line tries, so it fails after its tries and is reported,
     not delivered. Its color passed on try 1. Evidence:
     `measure/runs/asset_storytime_l2_cards_20261106/delivery-line-widths-t3.txt`.
-- [~] Task 8: Drive backup. Upload the delivery to a subfolder `cards` of the private Drive folder
-  `1AWdjGVJrJcc35oY7cIAt_jPqyaLtyK9B` with the `gws` CLI. Check the MD5 of every file. Record the
-  TSV `out/storytime/l2/unit1/drive-backup-2026-11-06-cards.tsv`. The mismatch count must be 0.
-- [b] Task 9: Report record for the PM. It names the handoff path, the spend, the count of calls,
-  and each failed row with its best try. The report states that the delivery is model evidence and
-  that Workbooks checks the cards. — deferred:phase-1-acceptance
+- [x] Task 8 (ac2502f3): Drive backup. Upload the delivery to a subfolder `cards` of the private
+  Drive folder `1AWdjGVJrJcc35oY7cIAt_jPqyaLtyK9B` with the `gws` CLI. Check the MD5 of every file.
+  Record the TSV `out/storytime/l2/unit1/drive-backup-2026-11-06-cards.tsv`. The mismatch count
+  must be 0.
+  - Evidence: the folder `cards` holds the id `1KJzrGsQJ4JQpRXXAvc9toiQIRk2yI6kA`, and the folder
+    `cards/delivery-muse-v1` holds the id `1gzQ-pFeWMze0tflecKSgWMj59qJf1D0m`. That folder holds
+    the 59 delivered files. The TSV has 59 rows and the MD5 mismatch count is 0. The record:
+    `measure/runs/asset_storytime_l2_cards_20261106/drive-record.txt`.
+- [x] Task 9 (ac2502f3): Report record for the PM. It names the handoff path, the spend, the count
+  of calls, and each failed row with its best try. The report states that the delivery is model
+  evidence and that Workbooks checks the cards.
+  - Evidence: `measure/runs/asset_storytime_l2_cards_20261106/pm-report.md`. It names the handoff
+    path, the Drive backup, the spend of 0.74 USD in 74 calls, the 29 delivered rows, the 2 failed
+    rows with their best tries, the defaults for the PM, and the small marks for Workbooks.
 - [b] Phase 2 gate: phase acceptance by the checker at an immutable HEAD. — deferred:phase-1-acceptance
 
 ## Track-level roles
