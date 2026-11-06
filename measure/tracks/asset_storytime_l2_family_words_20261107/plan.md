@@ -129,14 +129,15 @@ plan keeps an open item for the doctor.
   - The test file of Task 2 held three type errors. Its helper now takes an object. The tests of
     Task 2 changed no behavior.
   - No Muse call and no provider call ran in this phase. Spend stays 0.00 USD.
-- [ ] Phase 1 gates: phase acceptance at an immutable HEAD. The checker runs next. The light lane
-  gives no review gate. The blocker of this gate was Tasks 1 to 3, and those tasks are done.
+- [b] Phase 1 gates: phase acceptance by the checker at an immutable HEAD. deferred:checker
+  The light lane gives no review gate. The blocker of this gate was Tasks 1 to 3, and those tasks
+  are done.
 
 ## Phase 2: Family-word pictures and delivery
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`).
 
-- [b] Task 4: Preconditions and judge calibration. deferred:Phase 1 acceptance
+- [ ] Task 4: Preconditions and judge calibration.
   - Run the shell checks of the specification section "Preconditions": the SHA-256 of the list v7
     fixture, the SHA-256 of the family PNG, and the cost file check (74 call rows, 0.74 USD).
     Record the three results in the role log.
