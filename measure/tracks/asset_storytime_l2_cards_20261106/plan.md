@@ -44,13 +44,15 @@ Phase 1.
 
 - [x] Task 0: Author the track: specification, plan, metadata, index, spec review note, and the
   registry entry. The creation commit has the message `measure(storytime_l2_cards): create the track`.
-- [~] Gate S: Spec review by `measure-spec-review` before Red starts (paraphrase, zoom-out check,
-  and zero-decision check). The result goes to `measure/runs/asset_storytime_l2_cards_20261106/`.
-  This gate is the active item of the track. Tasks 1 to 3 wait for it.
+- [x] Gate S: Spec review by `measure-spec-review` before Red starts (paraphrase, zoom-out check,
+  and zero-decision check). Passed at `7af682db` (round 2; no blocker). Evidence:
+  `measure/runs/asset_storytime_l2_cards_20261106/spec-review-7af682d.json`. Open Nit F5 is closed by
+  the test strategy: it names the record files of the calibration and the PM report. Tasks 1 to 3
+  start with Red after the strategy commit.
 
 The Measure doctor of this repository counts only the markers `[ ]`, `[~]`, and `[x]`. It does not
-count `[b]`. Task 0 and Gate S give the doctor one completed item and one open item, so the plan
-passes its marker checks while every work task stays `[b]`.
+count `[b]`. Task 0 and Gate S are complete (`[x]`). Red marks Tasks 1 to 3 `[~]` when it starts, so
+the plan keeps an open item for the doctor.
 
 ## Phase 1: Card guard, card specs, and fixture
 
@@ -172,5 +174,8 @@ this track. The track records no Workbooks or Daniel acceptance.
 ## Evidence
 
 - Track creation commit: recorded at creation (message `measure(storytime_l2_cards): create the track`).
-- Spec review result: `measure/runs/asset_storytime_l2_cards_20261106/` (written by
-  `measure-spec-review`).
+- Spec review result: `measure/runs/asset_storytime_l2_cards_20261106/spec-review-7af682d.json`
+  (status `pass`, SHA `7af682db`; written by `measure-spec-review`). Round 1:
+  `spec-review-ac5acf0.json`.
+- Test strategy: `test-strategy.md` in this folder (commit message
+  `measure(storytime_l2_cards): test strategy and Gate S closed`).
