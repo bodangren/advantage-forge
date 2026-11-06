@@ -264,6 +264,18 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     All 8 prompts keep the "pure white" rule, the "no gray" rule, and the no-text rule. Only the
     `linePrompt` changed in each file. The card spec test passed after the change:
     `Test Files  1 passed (1)`, `Tests  10 passed (10)`, exit 0.
+  - Orchestrator decision 2026-11-06: the family row gets its last line try, because its try 2
+    print measured 8 px against the 12 px gate. The family line prompt changed again. The line
+    rule of the six persons now asks for the thickest lines that keep each face readable, about
+    eight times a normal outline. The prompt also asks for faces with only two eyes and one
+    smile curve, with no nose line, no eyebrows, and no inner ear lines, and for hands that are
+    one small closed rounded shape. Only the `linePrompt` changed in the family file. The card
+    spec test passed after the change: `Test Files  1 passed (1)`, `Tests  10 passed (10)`,
+    exit 0.
+  - The family try 3 print measured 7 px, below the 12 px gate. The tries measured 4 px, 8 px,
+    and 7 px. The family row used its 3 line tries, so it fails after its tries and is reported,
+    not delivered. Its color passed on try 1. Evidence:
+    `measure/runs/asset_storytime_l2_cards_20261106/delivery-line-widths-t3.txt`.
 - [b] Task 8: Drive backup. Upload the delivery to a subfolder `cards` of the private Drive folder
   `1AWdjGVJrJcc35oY7cIAt_jPqyaLtyK9B` with the `gws` CLI. Check the MD5 of every file. Record the
   TSV `out/storytime/l2/unit1/drive-backup-2026-11-06-cards.tsv`. The mismatch count must be 0.
