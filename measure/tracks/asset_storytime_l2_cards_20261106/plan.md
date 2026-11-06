@@ -171,7 +171,10 @@ the plan keeps an open item for the doctor.
     and keeps the wave and the school bag on a pure white background; (7) sad gives Ben a sad face
     and a lowered head, although the `cast.json` note gives him a happy smile, so the list prompt
     wins for the expression and the cast note wins for the look; (8) every card replaces the list
-    phrase "a plain light background" with "plain white" or "pure white".
+    phrase "a plain light background" with "plain white" or "pure white"; (9) the train spec adds
+    "four small black wheels" to the colorPrompt and "four small wheels" to mustShow. The list
+    prompt does not name the wheels. The week 7 toy sheet shows them. The phrase stays (orchestrator
+    decision 2026-11-06).
   - Green round 2 (implementation `5f344886`, Red round 2 `ad9cc588`): Green reran
     `GREEN_TEST_COMMAND` at `ad9cc588` and it exited 0 with `Test Files  6 passed (6)` and
     `Tests  67 passed (67)`. Green changed no file under `tests/`. The mutation self-check M1 to M7
