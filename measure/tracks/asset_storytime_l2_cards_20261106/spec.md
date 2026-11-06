@@ -196,8 +196,7 @@ export const CARD_RUN = {
 
 ### Guard interaction
 
-The rules below match the Green commit `e68b4b4f`, with one rule (the fourth bullet) that a later
-Green round adds.
+All rules below describe the code at commit `6d80fba0`.
 
 - The restart scan (`scanCostFiles`) skips the direct child folder `cards` of
   `out/storytime/l2/unit1/`. The restart cap of 1.00 USD, which counts rows since
@@ -211,8 +210,8 @@ Green round adds.
   cost scan (review-b RB-2).
 - `scripts/storytime-muse.mjs` picks `CARD_RUN` when every spec of a call has the class `card`.
 - A call that mixes card specs and other specs exits with code 3 and makes no provider call.
-- Below the child `cards`, only the exact card folder is valid (review-a RA2-1, fix pending in
-  the next Green round). `out/storytime/l2/unit1/cards/muse/elements` and any other path below
+- Below the child `cards`, only the exact card folder is valid (review-a RA2-1). The rule is
+  active (Green `91b2a1ca`, test CG15). `out/storytime/l2/unit1/cards/muse/elements` and any other path below
   `cards/` are `invalid` and the tool refuses them. No card element call runs in this track.
 - The guard projects the batch. It refuses the call when the spend plus (calls + cushion) x 0.01
   USD passes the cap. The value `calls` is the number of specs for a color call, and the number
