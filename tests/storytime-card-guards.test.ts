@@ -303,4 +303,51 @@ describe('storytime card guards (CG)', () => {
       expect(singleRefused.refused).toBe(true);
     } finally { rmSync(root, { recursive: true, force: true }); }
   });
+
+  it('CG15 refuses every card subfolder except the exact card output folder', () => {
+    const root = temp();
+    try {
+      const invalidPaths = [
+        'out/storytime/l2/unit1/cards/muse/elements',
+        'out/storytime/l2/unit1/cards/other/muse',
+        'out/storytime/l2/unit1/cards/muse2',
+      ];
+      for (const outDir of invalidPaths) {
+        expect.soft(guards.classifyOutDir({ outDir }, root).kind, `${outDir} classification`).toBe('invalid');
+      }
+      expect.soft(guards.classifyOutDir({ outDir: `${CARD_DIR}/` }, root).kind).toBe('card');
+      expect.soft(guards.classifyOutDir({ outDir: 'out/storytime/l2/unit1/w03/muse' }, root).kind).toBe('restart');
+      expect.soft(guards.classifyOutDir({ outDir: 'out/storytime/l2/unit1/w04/muse/elements' }, root).kind).toBe('restart');
+
+      const elementsDir = invalidPaths[0]!;
+      writeCosts(root, 'cards/muse/elements/costs.tsv', [costRow(CARD_START, 'element-sheet', 'color', 5.0)]);
+      const guarded = guards.runGuards(root, [{ spec: { id: ID, outDir: elementsDir } }], 'color');
+      expect.soft(guarded.refused).toBe(true);
+      expect.soft(guarded.code).toBe(3);
+      expect.soft(guarded.message).toContain(elementsDir);
+
+      const repo = temp();
+      const home = temp();
+      const specFile = path.join(repo, 'invalid-card-elements.json');
+      try {
+        mkdirSync(path.join(repo, 'scripts'), { recursive: true });
+        copyFileSync(path.join(ROOT, 'scripts/storytime-muse.mjs'), path.join(repo, 'scripts/storytime-muse.mjs'));
+        copyFileSync(path.join(ROOT, 'scripts/storytime-muse-guards.mjs'), path.join(repo, 'scripts/storytime-muse-guards.mjs'));
+        symlinkSync(path.join(ROOT, 'node_modules'), path.join(repo, 'node_modules'), 'dir');
+        writeFileSync(specFile, JSON.stringify({ id: ID, outDir: elementsDir, colorPrompt: 'a card on white' }));
+        const cli = spawnSync(process.execPath, ['scripts/storytime-muse.mjs', 'color', specFile], {
+          cwd: repo,
+          env: { PATH: process.env.PATH ?? '', HOME: home },
+          encoding: 'utf8',
+        });
+        const output = `${cli.stdout}${cli.stderr}`;
+        expect.soft(cli.status, 'invalid card-elements CLI path exits 3').toBe(3);
+        expect.soft(output, 'CLI refusal names the invalid outDir').toContain(elementsDir);
+        expect.soft(output, 'CLI refusal happens before key access').not.toContain('no key');
+      } finally {
+        rmSync(home, { recursive: true, force: true });
+        rmSync(repo, { recursive: true, force: true });
+      }
+    } finally { rmSync(root, { recursive: true, force: true }); }
+  });
 });
