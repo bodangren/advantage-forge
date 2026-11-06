@@ -187,10 +187,11 @@ the plan keeps an open item for the doctor.
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`).
 
-- [~] Task 4: Judge calibration check. Run the two gate control files of `calibration-set.json`
-  (the `a-nose` version 1 line art and the `nan-can-get-a-pan` m3 line art try 1) through the
-  frozen Sonnet judge once. Both must fail. Record the result file and the verdicts. No Muse
-  spend. If a control passes, stop and report to the PM.
+- [x] Task 4 (e872a8aa): Judge calibration check. Run the two gate control files of
+  `calibration-set.json` (the `a-nose` version 1 line art and the `nan-can-get-a-pan` m3 line art
+  try 1) through the frozen Sonnet judge once. Both must fail. Record the result file and the
+  verdicts. No Muse spend. If a control passes, stop and report to the PM. Evidence:
+  `measure/runs/asset_storytime_l2_cards_20261106/calibration-record.json`. Both controls fail.
 - [~] Task 5: Color calls for the 31 cards, then judge batches at card size (360 px long side).
   The first passing try is the delivery. At most 3 color tries for each card. A fail needs a second
   judge on the file alone before it stands. Log every call in `costs.tsv`. Stop at the cap of
@@ -202,8 +203,8 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   - Muse calls run 4 at a time at most.
   - At the report point of 0.80 USD the maker records the spend and the projection in its role log
     and continues. The maker stops only at the cap of 1.60 USD.
-- [b] Task 6: Line calls from each passing color with the judge. Each line call is a Muse call from
-  the passing color picture. At most 3 line tries for each card. No local filter. — deferred:phase-1-acceptance
+- [~] Task 6: Line calls from each passing color with the judge. Each line call is a Muse call from
+  the passing color picture. At most 3 line tries for each card. No local filter.
 - [b] Task 7: Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet. The delivery
   folder is `out/storytime/l2/unit1/cards/delivery-muse-v1/`. The handoff folder is
   `/home/daniebo/Desktop/handoff/storytime-l2-card-pictures/`. The manifest form follows
