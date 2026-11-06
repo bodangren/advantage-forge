@@ -9,7 +9,8 @@
   "nonblocking_findings": [
     "CO-1 [Nit] closeout: the secret scan of the run folder gives 3 hits. Each hit is the word 'Bearer' in audit prose: 'Bearer tokens' in acceptance-p2-bda95d8.json and acceptance-p2-15031cb.json, and 'Bearer give' in acceptance-p2-15031cb.json. A credential shape scan of 20 characters or more gives 0 hits. No key and no token sit in the run folder.",
     "CO-2 [Nit] closeout: measure/generated holds foreign uncommitted changes, so the generator did not run and no generated fact is committed. The working tree status.md holds no row for this track, so the doctor reports no stale generated fact.",
-    "CO-3 [Nit] closeout: the archived metadata.json status is 'done'. The doctor status set lists new, in_progress, and completed, and the doctor does not validate tracks under measure/archive. The closed unit 1 track uses the same value."
+    "CO-3 [Nit] closeout: the archived metadata.json status is 'done'. The doctor status set lists new, in_progress, and completed, and the doctor does not validate tracks under measure/archive. The closed unit 1 track uses the same value.",
+    "Closeout r3: Task 0 and Gate S got their SHAs on the first line (ac5acf0b, 7af682db) for the closeout gate."
   ],
   "evidence": [
     "measure/runs/asset_storytime_l2_cards_20261106/final-acceptance-e58c5f7.json (status pass, audited_head_sha e58c5f7e0e00f98a15040b245d90ba03b0478146)",
@@ -18,7 +19,8 @@
     "measure/archive/asset_storytime_l2_cards_20261106/metadata.json holds status done, completed 2026-11-06, and actual_tasks 10",
     "measure/tracks.md holds the archived entry with the link ./archive/asset_storytime_l2_cards_20261106/",
     "measure/doctor.sh exit 1 with 11 errors; no error line names asset_storytime_l2_cards_20261106",
-    "git diff --cached measure/tracks.md held 2 hunks; git diff measure/tracks.md held the 1 foreign Contents hunk"
+    "git diff --cached measure/tracks.md held 2 hunks; git diff measure/tracks.md held the 1 foreign Contents hunk",
+    "measure/archive/asset_storytime_l2_cards_20261106/plan.md holds the SHAs ac5acf0b for Task 0 and 7af682db for Gate S on the first line of each item"
   ],
   "commands": [
     "git rev-parse HEAD => e58c5f7e0e00f98a15040b245d90ba03b0478146 (role base, matches the brief)",

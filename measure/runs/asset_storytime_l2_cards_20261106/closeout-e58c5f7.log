@@ -32,6 +32,10 @@ Track: asset_storytime_l2_cards_20261106. Role: closeout.
 - measure/generated holds foreign uncommitted changes, so the generator did not run and no generated fact is committed.
 - No bulky run artifact was deleted. The orchestrator identified none, and the final acceptance and closeout evidence stay in the folder.
 
+## Closeout r3
+
+The closeout role gate read the first line of each complete plan item. Task 0 and Gate S had no SHA on that line. The archived plan now names ac5acf0b for Task 0 and 7af682db for Gate S. The line wrap stays.
+
 MEASURE_AGENT_RESULT
 role: closeout
 status: complete

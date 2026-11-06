@@ -42,9 +42,9 @@ Phase 1.
 
 ## Phase 0: Authoring and spec review
 
-- [x] Task 0: Author the track: specification, plan, metadata, index, spec review note, and the
+- [x] Task 0 (ac5acf0b): Author the track: specification, plan, metadata, index, spec review note, and the
   registry entry. The creation commit has the message `measure(storytime_l2_cards): create the track`.
-- [x] Gate S: Spec review by `measure-spec-review` before Red starts (paraphrase, zoom-out check,
+- [x] Gate S (7af682db): Spec review by `measure-spec-review` before Red starts (paraphrase, zoom-out check,
   and zero-decision check). Passed at `7af682db` (round 2; no blocker). Evidence:
   `measure/runs/asset_storytime_l2_cards_20261106/spec-review-7af682d.json`. Open Nit F5 is closed by
   the test strategy: it names the record files of the calibration and the PM report. Tasks 1 to 3
