@@ -84,8 +84,9 @@ plan keeps an open item for the doctor.
     unchanged.
 - [b] Task 3: The delivery writer `deliverMuseColorSet` in `src/storytime/muse-delivery.ts`, with
   tests. deferred:Gate S
-  - The behavior follows the section "Delivery". The functions `writeMuseDelivery` and
-    `deliverMuseCover` stay unchanged.
+  - The behavior follows the section "Delivery" and its "Manifest job values" table. The maker
+    chooses no job value. The functions `writeMuseDelivery` and `deliverMuseCover` stay
+    unchanged.
   - The test file is `tests/storytime-family-word-delivery.test.ts`. It covers FR-5.
   - Gate: `tests/storytime-muse-delivery.test.ts` and
     `tests/storytime-muse-delivery-adversarial.test.ts` pass unchanged.
@@ -118,7 +119,8 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   - The delivery folder is `out/storytime/l2/unit1/family-words/delivery-muse-v1/`. The handoff
     folder is `/home/daniebo/Desktop/handoff/storytime-l2-family-word-pictures/`. The form follows
     the section "Delivery" of the specification.
-  - The writer is `deliverMuseColorSet`. The manifest form follows
+  - The writer is `deliverMuseColorSet`. Each entry gets `text` and `sourcePrompt` from the spec
+    file of its row (the family row from the card spec). The manifest form follows
     `/home/daniebo/Desktop/handoff/storytime-l2-card-pictures/MANIFEST.txt`.
   - Check every file at 1500 x 1500 px, 8-bit PNG, no alpha channel.
   - Report the corner values below 250 as a report item (not a gate).

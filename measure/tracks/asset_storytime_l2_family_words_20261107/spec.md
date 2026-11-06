@@ -213,7 +213,8 @@ and the Nan face.
 
 - the spec folder is `docs/storytime/l2-unit1/family-words`;
 - the tries start at `CARD_RUN.startTime`, as with `--cards`;
-- the cost file is the card cost file named by the spec `outDir`.
+- the tool reads `out/storytime/l2/unit1/cards/muse/costs.tsv` to find the tries, as with
+  `--cards`, and writes no cost file.
 
 The flags `--cards` and `--family-words` together are an error: the command stops with exit code
 1 and writes no file. Without `--family-words`, the behavior stays unchanged. The `specDir`
@@ -269,14 +270,48 @@ the cap of 1.60 USD. A test checks that the 18 spec `outDir` values classify as 
 - The writer is a new exported function `deliverMuseColorSet` in `src/storytime/muse-delivery.ts`.
   It takes the same inputs as `deliverMuseCover` (approvals, `museRoot`, `deliveryRoot`) with
   many entries. Each entry holds `rowId`, `version` (the Muse `m<n>`), `colorPrint` (a plain file
-  name in the Muse folder), `reviews`, and `notes`. The function:
+  name in the Muse folder), `text`, `sourcePrompt`, `reviews`, and `notes`. The caller fills `text`
+  and `sourcePrompt` from the spec file of the row (see "Manifest job values"). The function:
   - copies each color print byte for byte under the name `<rowId>-v1.png`;
   - checks each print with `inspectColorPrint` against the size class C size 1500 x 1500
     (`PICTURE_SIZES.small`), 8-bit, no alpha channel;
-  - refuses a duplicate `rowId`, a file name with a folder part, a symlinked delivery folder, and
-    an existing delivered file, and writes nothing when any check fails;
+  - refuses a duplicate `rowId`, a `rowId` that does not match `l2-w0N-card-<word>` (N is 1 to 9),
+    a file name with a folder part, a symlinked delivery folder, and an existing delivered file,
+    and writes nothing when any check fails;
   - writes a `manifest.json` that holds one color batch and no line-art batch.
   The functions `writeMuseDelivery` and `deliverMuseCover` stay unchanged.
+
+#### Manifest job values
+
+The 18 new ids are not rows of the picture list, so `rowCaptureJob` does not build their jobs.
+The writer builds one `StorytimeJob` for each entry. The values follow the form of the card
+delivery, `out/storytime/l2/unit1/cards/delivery-muse-v1/manifest.json` (the job
+`l2-w07-card-teddy` holds week 7, `bookKind` `readalong`, `bookTitle` empty, page 0, `characters`
+empty, `sourcePackage` and `sourceSha256` empty, `slug` equal to the id, `directory` `w07`, `use`
+`small`, and `size` `small`). The 19 jobs hold these values:
+
+| Field | Value |
+| --- | --- |
+| `id` | the row id |
+| `week` | N of `l2-w0N-` as a number |
+| `directory` | `w0N` |
+| `bookKind` | `readalong` |
+| `bookTitle` | empty string |
+| `page` | 0 |
+| `text` | the `text` of the spec file (the word) |
+| `sourcePrompt` | the `goal` of the spec file |
+| `characters` | empty list |
+| `sourcePackage` | empty string |
+| `sourceSha256` | empty string |
+| `slug` | the row id |
+| `use` | `small` |
+| `size` | `small` |
+
+The family job takes `text` and `sourcePrompt` (the `goal`) from
+`docs/storytime/l2-unit1/cards/l2-w04-card-family.json`. The `sourcePrompt` of a job here is the
+spec `goal`, not the list prompt, because the 18 new rows have no list prompt. This is a recorded
+difference from the card delivery, where the list prompt filled the field. The color batch holds
+one candidate for each job, and the manifest holds no line-art batch.
 - The family entry reads the file `l2-w04-card-family-m1-color-print.png` in the Muse folder. The
   18 new entries read the `-m<n>-color-print.png` file of the passing try.
 - The handoff folder is `/home/daniebo/Desktop/handoff/storytime-l2-family-word-pictures/`. It
@@ -334,8 +369,12 @@ unless a row failed.
    the error with `--cards`, and the unchanged behavior without the flag.
 5. **FR-5 Delivery writer.** `deliverMuseColorSet` behaves as the section "Delivery" states. Tests
    cover the happy path (many entries, one color batch, byte-equal copies, names), a wrong size,
-   an alpha channel, a duplicate row, a path with a folder part, an existing file, a symlinked
-   delivery folder, and a failed check that leaves the folder empty.
+   an alpha channel, a duplicate row, a row id outside the form `l2-w0N-card-<word>`, a path with
+   a folder part, an existing file, a symlinked delivery folder, and a failed check that leaves
+   the folder empty. One test pins every job value of "Manifest job values" for at least one
+   person row (`l2-w01-card-friend` or a body-part row), one animal row (for example
+   `l2-w06-card-cat`), and the family row, and checks that the manifest holds the color batch
+   only (no batch of the output kind `line`).
 6. **FR-6 Calibration.** The two gate control files fail the judge before the first judge
    batch. The result is recorded.
 7. **FR-7 Color.** Each of the 18 new rows has one judged passing color picture, or a reported
@@ -350,8 +389,9 @@ unless a row failed.
     rows, the spend, and each failed row.
 12. **FR-12 Wording.** No text claims that Daniel or Workbooks accepted a picture. The word
     "approved" does not describe a picture of this track in any track file or report. It may
-    appear in a quotation of the PM request and where it names the card pictures of the card
-    track.
+    appear in a quotation of the PM request, where it names the card pictures of the card track,
+    and in the phrase "the approved Storytime Muse path", which names the method and not a
+    picture.
 
 ## Non-Functional Requirements
 
