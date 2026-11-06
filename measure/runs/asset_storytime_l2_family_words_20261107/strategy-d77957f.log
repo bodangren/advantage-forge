@@ -1,0 +1,54 @@
+# Strategy log: storytime_l2_family_words (base d77957f9)
+
+Role: measure-strategy. Model: claude-code/claude-sonnet-5-5#high. The role table names Opus 5.5.
+Substitution recorded: Sonnet 5.5 high, chosen by `ra-quota pick strategy`.
+Date: 2026-11-07. `git rev-parse HEAD` at start: d77957f959056b5859137ae23207968518f76428 (equal to role_base_sha).
+Spec review: measure/runs/asset_storytime_l2_family_words_20261107/spec-review-d77957f.json (status pass).
+
+## Files read
+spec.md, plan.md, metadata.json, index.md of the track; measure/workflow.md; measure/lessons-learned.md (no Storytime
+entry exists); the archived strategy measure/archive/asset_storytime_l2_cards_20261106/test-strategy.md;
+scripts/storytime-judge-batch.mjs and .d.mts; scripts/storytime-muse-guards.mjs; src/storytime/muse-delivery.ts;
+tests/storytime-muse-delivery.test.ts (cover section); tests/storytime-card-specs.test.ts; cast.json.
+measure/anti-patterns.md does not exist. The canonical catalog was used instead.
+
+## Measurements (read-only, heavy commands through heavy-run.sh, d77957f9)
+- 11 old PROJECT_TESTS files: exit 0, Test Files  11 passed (11), Tests  155 passed (155), 104 s.
+- 5 regression files alone (judge-batch, card-guards, card-specs, muse-delivery, muse-delivery-adversarial):
+  exit 0, Test Files  5 passed (5), Tests  87 passed (87), 58 s.
+- tsc --noEmit: tsc exit: 2, tsc errors total: 38, owned tsc errors: 0.
+- Fixture sha256 ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf (match).
+- Family print sha256 ab6067eedf8de3efebb40509c6032f81f7ecee178b212eac8c3727d40a8bff62 (match).
+- costs.tsv: 75 lines (header + 74 call rows); header has time and usage_cost columns.
+- All 11 reference files of the specification tables exist.
+- pin-set.mjs sha256 f67cfa8f17d380cb7e6f7632612b8f56d5cba6793d642a90abf2b5c1fd4a3fe0 (match).
+- Card delivery manifest sha256 65699fb55d7e106194b6aca9c49fa30afaa2271472a592e84f25ecb9587c1fe2.
+
+## Findings for the orchestrator (all have a default in the strategy)
+1. The judge batch tool writes docs/storytime/l2-unit1/judge/prod/<out>.json. The specification calls the judge
+   folder frozen. Default: new fw-*.json files are allowed additions; the frozen check uses --diff-filter=MDRT.
+2. scripts/storytime-judge-batch.d.mts is not in the owned paths. Default: allowed, types only.
+3. The specification says "output kind line". The real batch kind is lineart. FD4 checks that every batch is color.
+4. commitDelivery accepts an identical existing file. The specification says refuse. FD10 pins the refusal.
+5. FD13 refuses a missing text or sourcePrompt. FD8 pins a refused id list. Both are strategy decisions (veto allowed).
+6. src/storytime/book-pictures.ts loads muse-delivery.js by dynamic import. So the known-red suite runs once at
+   Phase 1 acceptance and once at final acceptance (section 4.4).
+
+## Commit
+Message: measure(storytime_l2_family_words): test strategy
+Paths: measure/tracks/asset_storytime_l2_family_words_20261107/test-strategy.md, .../plan.md, this log.
+The SHA is in the reply of the role (a commit cannot hold its own SHA).
+
+MEASURE_AGENT_RESULT
+role: strategy
+status: complete
+track: asset_storytime_l2_family_words_20261107
+phase: track setup (test strategy for Phase 1 and Phase 2)
+commits: see the reply (message: measure(storytime_l2_family_words): test strategy)
+tests_run: baseline only, no Red or Green. vitest 11 old files: pass (155 tests). vitest 5 regression files: pass (87 tests). tsc --noEmit: exit 2, 38 errors total, 0 owned.
+files_changed: measure/tracks/asset_storytime_l2_family_words_20261107/test-strategy.md (new); measure/tracks/asset_storytime_l2_family_words_20261107/plan.md (Gate S [x] (d77957f9) with evidence path; Tasks 1 to 3 changed from [b] to [ ]); measure/runs/asset_storytime_l2_family_words_20261107/strategy-d77957f.log
+plan_updates: Gate S marked [x] with (d77957f9) and spec-review-d77957f.json. Tasks 1, 2, 3 are [ ]. Nothing else changed. The Phase 1 gates line and Tasks 4 to 7 stay [b].
+known_failures: none
+handoff: Review gates for Phase 1: Review A yes; Review B yes (bounded: writer path handling, no-write exit of the flag error, empty guard diff); Review C no; adversarial testing yes (one round, 15 tests, tests/storytime-family-word-adversarial.test.ts); UX browser review no (UX_REQUIRED=never); phase acceptance yes. Risk: Phase 1 medium (Task 1 medium, Task 2 low, Task 3 medium); Phase 2 medium. RED_TEST_COMMAND runs tests/storytime-family-word-specs.test.ts, tests/storytime-family-word-judge.test.ts, tests/storytime-family-word-delivery.test.ts through heavy-run.sh (expected exit 1, Test Files 3 failed (3)). GREEN adds the five regression files (N_old 87). PROJECT_TESTS is 14 files (155 + N_new). Capture phase_base_sha after this strategy commit passes the role-gate and before Red starts. Questions with defaults: (1) new fw-*.json batch files in the frozen judge/prod folder (default yes, additions only); (2) the three open choices FD8, FD10, FD13 (default yes). Phase 1 gate also needs KNOWN_RED_COMMAND once (section 4.4).
+dispositions: none
+END_MEASURE_AGENT_RESULT

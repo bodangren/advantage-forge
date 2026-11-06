@@ -55,10 +55,10 @@ Phase 1.
 - [x] Task 0: Author the track: specification, plan, metadata, index, spec review note, and the
   registry entry. The creation commit has the message
   `measure(storytime_l2_family_words): create the track`.
-- [~] Gate S: Spec review by `measure-spec-review` before Red starts (paraphrase, zoom-out check,
-  and zero-decision check). The result goes to
-  `measure/runs/asset_storytime_l2_family_words_20261107/`. The test strategy follows from the
-  strategy role after the spec review.
+- [x] Gate S (d77957f9): Spec review by `measure-spec-review` before Red starts (paraphrase,
+  zoom-out check, and zero-decision check). The result is
+  `measure/runs/asset_storytime_l2_family_words_20261107/spec-review-d77957f.json` (status pass).
+  The test strategy follows from the strategy role after the spec review.
 
 The Measure doctor of this repository counts only the markers `[ ]`, `[~]`, and `[x]`. It does not
 count `[b]`. Task 0 is complete (`[x]`). Gate S stays `[~]` until the spec review passes, so the
@@ -66,8 +66,8 @@ plan keeps an open item for the doctor.
 
 ## Phase 1: Family-word specs, judge flag, and delivery writer
 
-- [b] Task 1: The 18 family-word spec files in `docs/storytime/l2-unit1/family-words/<id>.json`
-  and a test that checks them. deferred:Gate S
+- [ ] Task 1: The 18 family-word spec files in `docs/storytime/l2-unit1/family-words/<id>.json`
+  and a test that checks them.
   - The files and fields follow the sections "Spec files", "Prompts", "Person rows", "Animal and
     object rows", and "Reference files for the people" of the specification. The maker does not
     choose a cast child, a view, or a reference file. The tables decide them.
@@ -76,14 +76,13 @@ plan keeps an open item for the doctor.
   - The test file is `tests/storytime-family-word-specs.test.ts`. It covers FR-1, FR-2, and FR-3.
     It reads only the repository.
   - No Muse call and no provider call runs in this phase. Spend stays 0.00 USD.
-- [b] Task 2: The judge flag `--family-words` in `scripts/storytime-judge-batch.mjs`, with tests.
-  deferred:Gate S
+- [ ] Task 2: The judge flag `--family-words` in `scripts/storytime-judge-batch.mjs`, with tests.
   - The behavior follows the section "Judge batch input". The `cards` behavior stays unchanged.
   - The test file is `tests/storytime-family-word-judge.test.ts`. It covers FR-4.
   - Gate: `tests/storytime-judge-batch.test.ts` and `tests/storytime-card-guards.test.ts` pass
     unchanged.
-- [b] Task 3: The delivery writer `deliverMuseColorSet` in `src/storytime/muse-delivery.ts`, with
-  tests. deferred:Gate S
+- [ ] Task 3: The delivery writer `deliverMuseColorSet` in `src/storytime/muse-delivery.ts`, with
+  tests.
   - The behavior follows the section "Delivery" and its "Manifest job values" table. The maker
     chooses no job value. The functions `writeMuseDelivery` and `deliverMuseCover` stay
     unchanged.
