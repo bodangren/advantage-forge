@@ -317,7 +317,8 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
 
 ## Track-level roles
 
-- [~] Final acceptance at an immutable HEAD after all phase gates.
+- [~] Final acceptance at an immutable HEAD after all phase gates. — deferred:closeout (closeout
+  marks it [x] with the final acceptance evidence)
 - [b] Closeout: archive the track, update the registry, run the generator and the doctor, and
   commit the run records in `measure/runs/asset_storytime_l2_cards_20261106/`. Foreign generated
   facts stay out of the closeout commit unless their owner has committed them. — deferred:final-acceptance
