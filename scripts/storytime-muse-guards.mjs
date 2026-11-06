@@ -67,9 +67,12 @@ const isInside = (rel) => rel !== '' && !rel.startsWith('..') && !isAbsolute(rel
 
 /**
  * Classify the output folder of one spec:
- *   - `card` for the card folder of `CARD_RUN.outDir`;
+ *   - `card` for the exact card folder of `CARD_RUN.outDir`;
  *   - `restart` for a week folder `<unit root>/<child>/muse` or its `elements` folder;
  *   - `invalid` for every other folder, including `..` escapes and mutated names.
+ * Below the child folder `cards` only the exact card folder is valid. A card subfolder such as
+ * `cards/muse/elements` or `cards/other/muse` is invalid, because the restart scan skips `cards`
+ * and no scan would guard its spend.
  * The path is resolved against the repository root, like the muse tool writes it. A spec without
  * `outDir` uses the w01 default. An invalid folder is refused, so no call writes or reads a cost
  * file outside the scanned folders.
@@ -83,6 +86,7 @@ export const classifyOutDir = (spec, unitRoot) => {
     const rel = relative(anchor, resolved);
     if (!isInside(rel)) continue;
     const parts = rel.split(sep);
+    if (parts[0] === CARD_CHILD) return { kind: 'invalid', raw, resolved };
     if (parts.length === 2 && parts[1] === 'muse') return { kind: 'restart', raw, resolved };
     if (parts.length === 3 && parts[1] === 'muse' && parts[2] === 'elements') return { kind: 'restart', raw, resolved };
   }
