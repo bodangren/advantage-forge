@@ -250,6 +250,20 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     one pass. Evidence:
     `measure/runs/asset_storytime_l2_cards_20261106/deliver-cards-r1.log` and
     `measure/runs/asset_storytime_l2_cards_20261106/delivery-line-widths.txt`.
+  - Orchestrator decision 2026-11-06, after the refusal of the delivery writer: the 8 rows with
+    a print below 12 px get a new Muse line try, and the delivery follows in one pass. A print
+    below 12 px counts as a failed try, so each row keeps its remaining tries. Each of the 8 rows
+    used 1 line try, so the new call is line try 2. The rows are
+    `l2-w02-card-astronaut`, `l2-w01-card-goodbye`, `l2-w01-card-boy`, `l2-w01-card-teacher`,
+    `l2-w04-card-mom`, `l2-w04-card-sister`, `l2-w04-card-grandpa`, and `l2-w04-card-family`.
+  - The line prompt of those 8 rows changed. The line rule now names very thick, bold lines of
+    about five times a normal outline, like a coloring book for very young children. Each prompt
+    also asks for fewer and larger inner shapes, with the same thickness on the face and the
+    hands. The family prompt also asks for lines of about six times a normal outline and for six
+    persons with only the hair, the face, the top, the bottoms, and the shoes as closed shapes.
+    All 8 prompts keep the "pure white" rule, the "no gray" rule, and the no-text rule. Only the
+    `linePrompt` changed in each file. The card spec test passed after the change:
+    `Test Files  1 passed (1)`, `Tests  10 passed (10)`, exit 0.
 - [b] Task 8: Drive backup. Upload the delivery to a subfolder `cards` of the private Drive folder
   `1AWdjGVJrJcc35oY7cIAt_jPqyaLtyK9B` with the `gws` CLI. Check the MD5 of every file. Record the
   TSV `out/storytime/l2/unit1/drive-backup-2026-11-06-cards.tsv`. The mismatch count must be 0.

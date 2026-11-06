@@ -1,0 +1,88 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w02-card-astronaut-line-t2.png",
+    "id": "l2-w02-card-astronaut",
+    "kind": "line",
+    "pageText": "astronaut",
+    "use": "card",
+    "mustShow": [
+      "one astronaut",
+      "a white space suit",
+      "the helmet visor is open",
+      "a friendly smiling face"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-goodbye-line-t2.png",
+    "id": "l2-w01-card-goodbye",
+    "kind": "line",
+    "pageText": "goodbye",
+    "use": "card",
+    "mustShow": [
+      "Nan",
+      "her raised open hand in a wave",
+      "a big smile",
+      "the school bag on her back"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-boy-line-t2.png",
+    "id": "l2-w01-card-boy",
+    "kind": "line",
+    "pageText": "boy",
+    "use": "card",
+    "mustShow": [
+      "Pat",
+      "a five-year-old boy",
+      "he stands and smiles"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-teacher-line-t2.png",
+    "id": "l2-w01-card-teacher",
+    "kind": "line",
+    "pageText": "teacher",
+    "use": "card",
+    "mustShow": [
+      "Teacher Kim",
+      "a grown woman",
+      "she stands and smiles"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-mom-line-t2.png",
+    "id": "l2-w04-card-mom",
+    "kind": "line",
+    "pageText": "mom",
+    "use": "card",
+    "mustShow": [
+      "Mom",
+      "a woman of about thirty-five",
+      "she stands and smiles"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-sister-line-t2.png",
+    "id": "l2-w04-card-sister",
+    "kind": "line",
+    "pageText": "sister",
+    "use": "card",
+    "mustShow": [
+      "Lily",
+      "a girl of five",
+      "she stands and smiles"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-grandpa-line-t2.png",
+    "id": "l2-w04-card-grandpa",
+    "kind": "line",
+    "pageText": "grandpa",
+    "use": "card",
+    "mustShow": [
+      "Grandpa",
+      "an older man with white hair and a small white mustache",
+      "he stands and smiles"
+    ]
+  }
+]
