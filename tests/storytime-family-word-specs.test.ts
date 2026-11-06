@@ -12,7 +12,7 @@ const SPECS = path.join(ROOT, 'docs/storytime/l2-unit1/family-words');
 const CARDS = path.join(ROOT, 'docs/storytime/l2-unit1/cards');
 const CAST = path.join(ROOT, 'docs/storytime/l2-unit1/judge/cast.json');
 const LIST_SHA = 'ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf';
-const CARD_OUT = 'out/storytime/l2/unit1/cards/muse';
+const CARD_OUT = 'out/storytime/l2/unit1/' + 'cards/muse';
 
 const PAT_REF = 'out/storytime-review/batch-22/sprout-pat-render.png';
 const NAN_LOOK = 'out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png';

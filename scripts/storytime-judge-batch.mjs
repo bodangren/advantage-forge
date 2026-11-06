@@ -5,12 +5,15 @@
 // provider call: it copies local picture files and writes one JSON batch file.
 //
 //   node scripts/storytime-judge-batch.mjs --ids <id,id,...> --kind color|line --try <n> \
-//        [--out <batch name>] [--cards]
+//        [--out <batch name>] [--cards | --family-words]
 //
 // The ids are the row ids of the A-48 specs in docs/storytime/l2-unit1/a48/. The script reads
 // the spec of each id for the page text, the use, and the mustShow phrases. With `--cards` the
 // ids are card row ids, the spec folder is docs/storytime/l2-unit1/cards/, and the tries start at
-// `CARD_RUN.startTime`. Without it the A-48 folder and the restart start time apply.
+// `CARD_RUN.startTime`. With `--family-words` the ids are family-word row ids, the spec folder is
+// docs/storytime/l2-unit1/family-words/, and the tries start at `CARD_RUN.startTime`. The two
+// flags cannot run together. Without either one the A-48 folder and the restart start time
+// apply.
 //
 // The source file of a try is the Muse version that the restart call made. The script reads the
 // top-level costs.tsv of the week folder of the spec (spec.outDir). A try is a row of that id
@@ -37,6 +40,8 @@ import { CARD_RUN } from './storytime-muse-guards.mjs';
 
 const ROOT = resolve(new URL('..', import.meta.url).pathname);
 const SPEC_DIR = join(ROOT, 'docs/storytime/l2-unit1/a48');
+const CARD_SPEC_DIR = 'docs/storytime/l2-unit1/cards';
+const FAMILY_WORDS_SPEC_DIR = 'docs/storytime/l2-unit1/family-words';
 const BATCH_DIR = join(ROOT, 'docs/storytime/l2-unit1/judge/prod');
 const JUDGE_DIR = join(ROOT, 'out/storytime-review/judge/prod');
 const LONG_SIDE_STORY = 900;
@@ -138,15 +143,19 @@ export function readSpec(specDir, id) {
  * source file at the printed size. The function makes no provider call.
  *
  * With `cards: true` the spec folder is `docs/storytime/l2-unit1/cards` and the tries start at
- * `CARD_RUN.startTime`. Without it the A-48 spec folder and `RESTART_START` apply.
+ * `CARD_RUN.startTime`. With `familyWords: true` the spec folder is
+ * `docs/storytime/l2-unit1/family-words` and the tries start at `CARD_RUN.startTime`. Without
+ * either one the A-48 spec folder and `RESTART_START` apply.
  */
 export async function buildBatch(options) {
-  const { ids, kind, tryNo, cards = false, specDir, judgeDir = JUDGE_DIR, root = ROOT } = options;
+  const { ids, kind, tryNo, cards = false, familyWords = false, specDir, judgeDir = JUDGE_DIR, root = ROOT } = options;
   if (!KINDS.includes(kind)) throw new Error(`the kind must be ${KINDS.join(' or ')}; got ${kind}.`);
   if (!Number.isInteger(tryNo) || tryNo < 1) throw new Error(`the try number must be 1 or more; got ${tryNo}.`);
   if (!ids.length) throw new Error('the batch needs at least one id.');
-  const resolvedSpecDir = specDir ?? (cards ? join(root, 'docs/storytime/l2-unit1/cards') : SPEC_DIR);
-  const startTime = cards ? CARD_RUN.startTime : RESTART_START;
+  const resolvedSpecDir = specDir ?? (familyWords
+    ? join(root, FAMILY_WORDS_SPEC_DIR)
+    : cards ? join(root, CARD_SPEC_DIR) : SPEC_DIR);
+  const startTime = cards || familyWords ? CARD_RUN.startTime : RESTART_START;
   const entries = [];
   for (const id of ids) {
     const spec = readSpec(resolvedSpecDir, id);
@@ -182,7 +191,14 @@ export async function buildBatch(options) {
 
 /** Parses the command line. An unknown option is an error. */
 export function parseArgs(argv) {
-  const options = { ids: [], kind: undefined, tryNo: undefined, out: undefined, cards: undefined };
+  const options = {
+    ids: [],
+    kind: undefined,
+    tryNo: undefined,
+    out: undefined,
+    cards: undefined,
+    familyWords: undefined,
+  };
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
     if (arg === '--ids') options.ids = (argv[++i] ?? '').split(',').map((id) => id.trim()).filter(Boolean);
@@ -190,7 +206,11 @@ export function parseArgs(argv) {
     else if (arg === '--try') options.tryNo = Number(argv[++i]);
     else if (arg === '--out') options.out = argv[++i];
     else if (arg === '--cards') options.cards = true;
+    else if (arg === '--family-words') options.familyWords = true;
     else throw new Error(`unknown option: ${arg}`);
+  }
+  if (options.cards && options.familyWords) {
+    throw new Error('the options --cards and --family-words cannot run together; use one of them.');
   }
   if (!options.ids.length) throw new Error('the command needs --ids <id,id,...>.');
   if (!options.kind) throw new Error('the command needs --kind color or --kind line.');
