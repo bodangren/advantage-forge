@@ -1,0 +1,382 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-hello-color-t1.png",
+    "id": "l2-w01-card-hello",
+    "kind": "color",
+    "pageText": "hello",
+    "use": "card",
+    "mustShow": [
+      "Nan",
+      "her raised open hand in a wave",
+      "a big smile"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-girl-color-t1.png",
+    "id": "l2-w01-card-girl",
+    "kind": "color",
+    "pageText": "girl",
+    "use": "card",
+    "mustShow": [
+      "Nan",
+      "a five-year-old girl",
+      "she stands and smiles"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-boy-color-t1.png",
+    "id": "l2-w01-card-boy",
+    "kind": "color",
+    "pageText": "boy",
+    "use": "card",
+    "mustShow": [
+      "Pat",
+      "a five-year-old boy",
+      "he stands and smiles"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-goodbye-color-t1.png",
+    "id": "l2-w01-card-goodbye",
+    "kind": "color",
+    "pageText": "goodbye",
+    "use": "card",
+    "mustShow": [
+      "Nan",
+      "her raised open hand in a wave",
+      "a big smile",
+      "the school bag on her back"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-teacher-color-t1.png",
+    "id": "l2-w01-card-teacher",
+    "kind": "color",
+    "pageText": "teacher",
+    "use": "card",
+    "mustShow": [
+      "Teacher Kim",
+      "a grown woman",
+      "she stands and smiles"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w02-card-astronaut-color-t1.png",
+    "id": "l2-w02-card-astronaut",
+    "kind": "color",
+    "pageText": "astronaut",
+    "use": "card",
+    "mustShow": [
+      "one astronaut",
+      "a white space suit",
+      "the helmet visor is open",
+      "a friendly smiling face"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w03-card-cap-color-t1.png",
+    "id": "l2-w03-card-cap",
+    "kind": "color",
+    "pageText": "cap",
+    "use": "card",
+    "mustShow": [
+      "one cap",
+      "a red cap with a curved brim",
+      "the cap is large in the middle"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w02-card-fan-color-t1.png",
+    "id": "l2-w02-card-fan",
+    "kind": "color",
+    "pageText": "fan",
+    "use": "card",
+    "mustShow": [
+      "one hand fan",
+      "a round paper fan with a folded face",
+      "a blue handle"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w03-card-pineapple-color-t1.png",
+    "id": "l2-w03-card-pineapple",
+    "kind": "color",
+    "pageText": "pineapple",
+    "use": "card",
+    "mustShow": [
+      "one pineapple",
+      "a spiky green crown on top",
+      "golden-yellow skin"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w03-card-sheep-color-t1.png",
+    "id": "l2-w03-card-sheep",
+    "kind": "color",
+    "pageText": "sheep",
+    "use": "card",
+    "mustShow": [
+      "one sheep",
+      "a round woolly body",
+      "four short legs"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-brother-color-t1.png",
+    "id": "l2-w04-card-brother",
+    "kind": "color",
+    "pageText": "brother",
+    "use": "card",
+    "mustShow": [
+      "Tom",
+      "a boy of eight",
+      "he stands and smiles"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-dad-color-t1.png",
+    "id": "l2-w04-card-dad",
+    "kind": "color",
+    "pageText": "dad",
+    "use": "card",
+    "mustShow": [
+      "Dad",
+      "a man of about thirty-eight",
+      "he stands and smiles"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-grandma-color-t1.png",
+    "id": "l2-w04-card-grandma",
+    "kind": "color",
+    "pageText": "grandma",
+    "use": "card",
+    "mustShow": [
+      "Grandma",
+      "an older woman with silver-gray hair",
+      "she stands and smiles"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-grandpa-color-t1.png",
+    "id": "l2-w04-card-grandpa",
+    "kind": "color",
+    "pageText": "grandpa",
+    "use": "card",
+    "mustShow": [
+      "Grandpa",
+      "an older man with white hair and a small white mustache",
+      "he stands and smiles"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-jam-color-t1.png",
+    "id": "l2-w04-card-jam",
+    "kind": "color",
+    "pageText": "jam",
+    "use": "card",
+    "mustShow": [
+      "one jar of jam",
+      "a glass jar with red strawberry jam",
+      "a plain lid",
+      "a small spoon beside the jar"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-mom-color-t1.png",
+    "id": "l2-w04-card-mom",
+    "kind": "color",
+    "pageText": "mom",
+    "use": "card",
+    "mustShow": [
+      "Mom",
+      "a woman of about thirty-five",
+      "she stands and smiles"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-ham-color-t1.png",
+    "id": "l2-w04-card-ham",
+    "kind": "color",
+    "pageText": "ham",
+    "use": "card",
+    "mustShow": [
+      "one slice of ham",
+      "a slice of pink ham",
+      "a small white plate"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-sister-color-t1.png",
+    "id": "l2-w04-card-sister",
+    "kind": "color",
+    "pageText": "sister",
+    "use": "card",
+    "mustShow": [
+      "Lily",
+      "a girl of five",
+      "she stands and smiles"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-dress-color-t1.png",
+    "id": "l2-w05-card-dress",
+    "kind": "color",
+    "pageText": "dress",
+    "use": "card",
+    "mustShow": [
+      "one dress",
+      "a little girl's yellow dress",
+      "a red bow at the waist"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-family-color-t1.png",
+    "id": "l2-w04-card-family",
+    "kind": "color",
+    "pageText": "family",
+    "use": "card",
+    "mustShow": [
+      "six people",
+      "Mom, Dad, Grandma, Grandpa, Tom, and Lily",
+      "all six stand in one row"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-sandwich-color-t1.png",
+    "id": "l2-w05-card-sandwich",
+    "kind": "color",
+    "pageText": "sandwich",
+    "use": "card",
+    "mustShow": [
+      "one sandwich",
+      "two slices of bread",
+      "green lettuce and a slice of tomato",
+      "a small white plate"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-boat-color-t1.png",
+    "id": "l2-w06-card-boat",
+    "kind": "color",
+    "pageText": "boat",
+    "use": "card",
+    "mustShow": [
+      "one toy boat",
+      "a small wooden boat with a white sail",
+      "a patch of calm blue water"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-sad-color-t1.png",
+    "id": "l2-w05-card-sad",
+    "kind": "color",
+    "pageText": "sad",
+    "use": "card",
+    "mustShow": [
+      "Ben",
+      "a sad face",
+      "his head is down"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-tomato-color-t1.png",
+    "id": "l2-w06-card-tomato",
+    "kind": "color",
+    "pageText": "tomato",
+    "use": "card",
+    "mustShow": [
+      "one tomato",
+      "a round red tomato",
+      "a small green stem on top"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-car-color-t1.png",
+    "id": "l2-w07-card-car",
+    "kind": "color",
+    "pageText": "car",
+    "use": "card",
+    "mustShow": [
+      "one toy car",
+      "a small red car",
+      "four black wheels"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-mop-color-t1.png",
+    "id": "l2-w07-card-mop",
+    "kind": "color",
+    "pageText": "mop",
+    "use": "card",
+    "mustShow": [
+      "one mop",
+      "a long wooden handle",
+      "a white cotton mop head"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-doll-color-t1.png",
+    "id": "l2-w07-card-doll",
+    "kind": "color",
+    "pageText": "doll",
+    "use": "card",
+    "mustShow": [
+      "one rag doll",
+      "yellow yarn hair",
+      "a red dress",
+      "two black button eyes"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-pot-color-t1.png",
+    "id": "l2-w07-card-pot",
+    "kind": "color",
+    "pageText": "pot",
+    "use": "card",
+    "mustShow": [
+      "one cooking pot",
+      "a small pot with two handles",
+      "a lid with a knob"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-teddy-color-t1.png",
+    "id": "l2-w07-card-teddy",
+    "kind": "color",
+    "pageText": "teddy",
+    "use": "card",
+    "mustShow": [
+      "one teddy bear",
+      "a small brown teddy bear",
+      "two round ears",
+      "two small button eyes"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-otter-color-t1.png",
+    "id": "l2-w07-card-otter",
+    "kind": "color",
+    "pageText": "otter",
+    "use": "card",
+    "mustShow": [
+      "one otter",
+      "a small brown otter with a round face",
+      "the otter floats on its back",
+      "a patch of calm blue water"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-train-color-t1.png",
+    "id": "l2-w07-card-train",
+    "kind": "color",
+    "pageText": "train",
+    "use": "card",
+    "mustShow": [
+      "one toy train",
+      "a green toy train",
+      "a red wagon",
+      "four small wheels"
+    ]
+  }
+]

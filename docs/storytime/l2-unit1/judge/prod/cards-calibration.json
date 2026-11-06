@@ -1,0 +1,16 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-a-nose-line-v1.png",
+    "id": "l2-w01-story-page-a-nose",
+    "kind": "line",
+    "pageText": "A nose.",
+    "use": "story-page"
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-nan-can-get-a-pan-m3-line.png",
+    "id": "l2-w03-story-page-nan-can-get-a-pan",
+    "kind": "line",
+    "pageText": "Nan can get a pan.",
+    "use": "story-page"
+  }
+]

@@ -54,7 +54,7 @@ The Measure doctor of this repository counts only the markers `[ ]`, `[~]`, and 
 count `[b]`. Task 0 and Gate S are complete (`[x]`). Red marks Tasks 1 to 3 `[~]` when it starts, so
 the plan keeps an open item for the doctor.
 
-## Phase 1: Card guard, card specs, and fixture
+## Phase 1: Card guard, card specs, and fixture [checkpoint: cf6fb8db]
 
 - [x] Task 1 (7d1cbdd5): Move the T180 fixture. Copy the Workbooks version 3 list (the bytes of
   Workbooks commit `078917f1`, `content/storytime/l2/print/pictures.json`) into
@@ -179,21 +179,22 @@ the plan keeps an open item for the doctor.
     `GREEN_TEST_COMMAND` at `ad9cc588` and it exited 0 with `Test Files  6 passed (6)` and
     `Tests  67 passed (67)`. Green changed no file under `tests/`. The mutation self-check M1 to M7
     of test-strategy 4.5 passed at `5f344886`, and the guard code is unchanged since then.
-- [b] Phase 1 gates: review gates assigned by the test strategy, then phase acceptance at an
-  immutable HEAD. — deferred:measure-spec-review
+- [x] Phase 1 gates (cf6fb8db): review gates assigned by the test strategy, then phase acceptance
+  at an immutable HEAD. Evidence:
+  `measure/runs/asset_storytime_l2_cards_20261106/phase-acceptance-cf6fb8d.json`.
 
 ## Phase 2: Card pictures and delivery
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`).
 
-- [b] Task 4: Judge calibration check. Run the two gate control files of `calibration-set.json`
+- [~] Task 4: Judge calibration check. Run the two gate control files of `calibration-set.json`
   (the `a-nose` version 1 line art and the `nan-can-get-a-pan` m3 line art try 1) through the
   frozen Sonnet judge once. Both must fail. Record the result file and the verdicts. No Muse
-  spend. If a control passes, stop and report to the PM. — deferred:phase-1-acceptance
-- [b] Task 5: Color calls for the 31 cards, then judge batches at card size (360 px long side).
+  spend. If a control passes, stop and report to the PM.
+- [~] Task 5: Color calls for the 31 cards, then judge batches at card size (360 px long side).
   The first passing try is the delivery. At most 3 color tries for each card. A fail needs a second
   judge on the file alone before it stands. Log every call in `costs.tsv`. Stop at the cap of
-  1.60 USD. — deferred:phase-1-acceptance
+  1.60 USD.
   - Precondition (a shell step, not a test): before the first Muse call, check that the live
     Workbooks file `/home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json` still
     has SHA-256 `ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf`. On a mismatch,
