@@ -19,6 +19,8 @@ phase_base_sha: 893db8598328eb6689a4266c5c5d4b29247df20a
   of Phase 1 starts.
 - The writer adds lines to `src/storytime/muse-delivery.ts` and removes no line. The two old
   writers keep their code.
+- The Measure doctor names an in-progress track with no unchecked task. The Phase 1 gate item now
+  holds `[ ]`, so the doctor names no line of this track.
 
 ## Commands
 

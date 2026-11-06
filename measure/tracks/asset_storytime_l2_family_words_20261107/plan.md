@@ -129,8 +129,8 @@ plan keeps an open item for the doctor.
   - The test file of Task 2 held three type errors. Its helper now takes an object. The tests of
     Task 2 changed no behavior.
   - No Muse call and no provider call ran in this phase. Spend stays 0.00 USD.
-- [b] Phase 1 gates: review gates assigned by the test strategy, then phase acceptance at an
-  immutable HEAD. deferred:Tasks 1 to 3
+- [ ] Phase 1 gates: phase acceptance at an immutable HEAD. The checker runs next. The light lane
+  gives no review gate. The blocker of this gate was Tasks 1 to 3, and those tasks are done.
 
 ## Phase 2: Family-word pictures and delivery
 
