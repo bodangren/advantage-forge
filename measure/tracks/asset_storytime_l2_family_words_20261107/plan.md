@@ -44,11 +44,13 @@ Phase 1.
 
 ### Lanes and roles
 
-- Phase 1 is the standard lane: Red, Green, the review gates that the test strategy assigns, and
-  phase acceptance.
-- Phase 2 is the light lane (PM rule of 2026-11-03): one maker (`measure-jr-green`) and one
-  checker (`measure-phase-acceptance`). No Red, no Reviews A, B, and C, no adversarial test, and
-  no UX browser review.
+- The whole track is the light lane (PM rule of 2026-11-03, relayed 2026-11-07): one maker
+  (`measure-jr-green`) and one checker (`measure-phase-acceptance`), then Daniel's look on 11-16.
+  No Red, no Reviews A, B, and C, and no adversarial test.
+- Phase 1 is the light lane. The maker writes the specs, the code, and the tests that
+  `test-strategy.md` names. The checker checks the phase at an immutable HEAD.
+- Phase 2 is the light lane. The maker makes the pictures and the delivery. The checker checks the
+  phase at an immutable HEAD.
 - After Phase 2 the track has a final acceptance and a closeout. These are track-level roles, not
   phases.
 
@@ -98,11 +100,18 @@ plan keeps an open item for the doctor.
     - The Nan prompts say "hair in two round buns". The card prompt says "hair in exactly two
       round buns".
     - The dog prompt adds "This picture shows one dog, not the puppy Pip."
-- [ ] Task 2: The judge flag `--family-words` in `scripts/storytime-judge-batch.mjs`, with tests.
+- [x] Task 2 (82fd4fed): The judge flag `--family-words` in `scripts/storytime-judge-batch.mjs`, with tests.
   - The behavior follows the section "Judge batch input". The `cards` behavior stays unchanged.
   - The test file is `tests/storytime-family-word-judge.test.ts`. It covers FR-4.
   - Gate: `tests/storytime-judge-batch.test.ts` and `tests/storytime-card-guards.test.ts` pass
     unchanged.
+  - Complete at `82fd4fed`. The test command
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-family-word-judge.test.ts tests/storytime-judge-batch.test.ts tests/storytime-card-guards.test.ts --maxWorkers=1'`
+    exited 0 with `Test Files  3 passed (3)` and `Tests  32 passed (32)`.
+  - The test file of Task 1 held a copy of the card output folder. The card guard test CG3 refused
+    that file. The test now builds the folder from two pieces. The 18 spec files did not change.
+  - The error text of a missing try stays as it was. The test matches both wordings of the count:
+    "hold 1 try" and "holds 1 try".
 - [ ] Task 3: The delivery writer `deliverMuseColorSet` in `src/storytime/muse-delivery.ts`, with
   tests.
   - The behavior follows the section "Delivery" and its "Manifest job values" table. The maker
