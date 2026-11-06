@@ -188,19 +188,37 @@ export const CARD_RUN = {
   `out/storytime/l2/unit1/*/muse/costs.tsv` is `2026-11-05T03:32:05.918Z` (file
   `w01/muse/costs.tsv`, row `l2-w01-story-page-a-nut` m5 line). The start time is later than that
   row. The maker does not choose or record a start time.
-- The card spend and the card try count read only
-  `out/storytime/l2/unit1/cards/muse/costs.tsv` (and `cards/muse/elements/costs.tsv` if it
-  exists), rows at or after `CARD_RUN.startTime`. The scope is the folder plus the start time.
+- The card try count reads only `out/storytime/l2/unit1/cards/muse/costs.tsv`, rows at or after
+  `CARD_RUN.startTime`. The card spend reads that file and also
+  `out/storytime/l2/unit1/cards/muse/elements/costs.tsv`, rows at or after `CARD_RUN.startTime`.
+  The `elements` file stays empty, because the tool refuses card element calls (see "Guard
+  interaction"). The scope is the folder plus the start time.
 
 ### Guard interaction
 
-The restart guard scans every `costs.tsv` below `out/storytime/l2/unit1/`, and `cards/muse/` falls
-inside that scan. The restart cap of 1.00 USD counts rows since `2026-11-04T07:54:00Z`. Card spend
-would count against that cap. The track therefore never uses the restart config for card specs.
+The rules below match the Green commit `e68b4b4f`, with one rule (the fourth bullet) that a later
+Green round adds.
 
-- `scripts/storytime-muse.mjs` picks `CARD_RUN` when every spec of a call has `outDir` equal to
-  `CARD_RUN.outDir`.
+- The restart scan (`scanCostFiles`) skips the direct child folder `cards` of
+  `out/storytime/l2/unit1/`. The restart cap of 1.00 USD, which counts rows since
+  `2026-11-04T07:54:00Z`, never counts card spend. The card cap never counts restart spend
+  (review-b RB-1).
+- The tool classifies each spec `outDir` by its resolved path (`classifyOutDir`). The class is
+  `card` when the path resolves to `CARD_RUN.outDir`. The class is `restart` when the path
+  resolves to `<unit root>/<child>/muse` or `<unit root>/<child>/muse/elements` for a child other
+  than `cards`. A spec without `outDir` uses the w01 default. Every other path is `invalid`. The
+  tool refuses a call with an `invalid` spec with exit code 3, before the key read and before any
+  cost scan (review-b RB-2).
+- `scripts/storytime-muse.mjs` picks `CARD_RUN` when every spec of a call has the class `card`.
 - A call that mixes card specs and other specs exits with code 3 and makes no provider call.
+- Below the child `cards`, only the exact card folder is valid (review-a RA2-1, fix pending in
+  the next Green round). `out/storytime/l2/unit1/cards/muse/elements` and any other path below
+  `cards/` are `invalid` and the tool refuses them. No card element call runs in this track.
+- The guard projects the batch. It refuses the call when the spend plus (calls + cushion) x 0.01
+  USD passes the cap. The value `calls` is the number of specs for a color call, and the number
+  of specs x tries for a line-art call. The cushion is 1 for a color call (the line-art call that
+  follows a passing color) and 0 for a line-art call. The CLI checks the guard again before each
+  provider call in the pool and starts no new call after a refusal (review-b RB-3).
 - The restart config (`RESTART_START` `2026-11-04T07:54:00Z`, cap 1.00 USD) and its tests stay
   unchanged. No restart call runs in this track.
 - `scripts/storytime-judge-batch.mjs` gets one new flag: `--cards`. With `--cards`, the spec folder
@@ -273,7 +291,11 @@ It was restored by hand before a green run.
    of "Card run constant". It is the only owner of the values. `scripts/storytime-muse.mjs` picks
    `CARD_RUN` when every spec of a call has `outDir` `out/storytime/l2/unit1/cards/muse`. A call
    that mixes card specs and other specs exits with code 3. The card spend and the card try count
-   read only the card cost files, rows at or after `CARD_RUN.startTime`. The restart config
+   read only the card cost files, rows at or after `CARD_RUN.startTime`. The restart scan skips
+   the child folder `cards`. The tool classifies each `outDir` by its resolved path and refuses
+   every `invalid` path, including any path below `cards/` other than the exact card folder, with
+   exit code 3. The guard projects the batch (calls plus a cushion of 1 for a color call) against
+   the cap, and the CLI checks the guard again before each provider call in the pool. The restart config
    (`RESTART_START` `2026-11-04T07:54:00Z`, cap 1.00 USD) and its tests stay unchanged.
 3. **FR-3 Card specs.** 31 spec files exist in `docs/storytime/l2-unit1/cards/`. A test checks
    them against the repository copy of list v7, `tests/fixtures/storytime/pictures-v7.json`
