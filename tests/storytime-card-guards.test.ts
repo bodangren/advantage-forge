@@ -1,4 +1,4 @@
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
+import { copyFileSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync, existsSync, readdirSync, symlinkSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import os from 'node:os';
 import path from 'node:path';
@@ -196,6 +196,111 @@ describe('storytime card guards (CG)', () => {
       const built = await judgeBatch.buildBatch({ ...options, root, judgeDir: path.join(root, 'judge') } as BuildBatchOptions);
       expect(built[0]!.id).toBe(ID);
       await expect(judgeBatch.buildBatch({ ...base, root, judgeDir: path.join(root, 'judge-old') } as BuildBatchOptions)).rejects.toThrow(/no A-48 spec/);
+    } finally { rmSync(root, { recursive: true, force: true }); }
+  });
+
+  it('CG12 excludes card costs from restart spend but keeps them in card spend', () => {
+    const root = temp();
+    try {
+      writeCosts(root, 'w01/muse/costs.tsv', [costRow('2026-11-05T12:00:00Z', 'l2-w01-story-page-a-nest', 'color', 0.5)]);
+      writeCosts(root, 'cards/muse/costs.tsv', [costRow(CARD_START, ID, 'color', 0.6)]);
+      const restart = guards.runGuards(root, [{ spec: { id: 'l2-w01-story-page-a-nest', outDir: 'out/storytime/l2/unit1/w01/muse' } }], 'color');
+      expect(restart.run).toBe('restart');
+      expect(restart.refused).toBe(false);
+      expect(restart.spend).toBeCloseTo(0.5);
+      const card = guards.runGuards(root, [{ spec: { id: ID, outDir: CARD_DIR } }], 'color');
+      expect(card.run).toBe('card');
+      expect(card.refused).toBe(false);
+      expect(card.spend).toBeCloseTo(0.6);
+    } finally { rmSync(root, { recursive: true, force: true }); }
+  });
+
+  it('CG13 classifies resolved output paths and refuses paths outside scanned folders', () => {
+    const root = temp();
+    try {
+      const run = (outDir?: string) => guards.runGuards(root, [{ spec: { id: ID, ...(outDir === undefined ? {} : { outDir }) } }], 'color');
+      const badPaths = [
+        'out/storytime/l2/unit1/cards/muse2',
+        'out/storytime/l2/unit1/../../../../tmp/storytime-outside/muse',
+      ];
+      for (const outDir of badPaths) {
+        const result = run(outDir);
+        expect.soft(result.refused, `${outDir} is refused`).toBe(true);
+        expect.soft(result.code, `${outDir} exits 3`).toBe(3);
+        expect.soft(result.message, `${outDir} is named`).toContain(outDir);
+      }
+      for (const outDir of [
+        'out/storytime/l2/unit1/w03/muse',
+        'out/storytime/l2/unit1/w04/muse/elements',
+      ]) {
+        const result = run(outDir);
+        expect.soft(result.refused, `${outDir} is allowed`).toBe(false);
+      }
+      const defaultSpec = run();
+      expect.soft(defaultSpec.refused, 'a spec without outDir uses the w01 default').toBe(false);
+      const trailingSlashCard = run(`${CARD_DIR}/`);
+      expect.soft(trailingSlashCard.run, 'the resolved trailing-slash card path is a card call').toBe('card');
+
+      const repo = temp();
+      const home = temp();
+      const specFile = path.join(repo, 'bad-card-spec.json');
+      const invalidOutDir = 'out/storytime/l2/unit1/cards/muse2';
+      try {
+        mkdirSync(path.join(repo, 'scripts'), { recursive: true });
+        copyFileSync(path.join(ROOT, 'scripts/storytime-muse.mjs'), path.join(repo, 'scripts/storytime-muse.mjs'));
+        copyFileSync(path.join(ROOT, 'scripts/storytime-muse-guards.mjs'), path.join(repo, 'scripts/storytime-muse-guards.mjs'));
+        symlinkSync(path.join(ROOT, 'node_modules'), path.join(repo, 'node_modules'), 'dir');
+        writeFileSync(specFile, JSON.stringify({ id: ID, outDir: invalidOutDir, colorPrompt: 'a card on white' }));
+        const cli = spawnSync(process.execPath, ['scripts/storytime-muse.mjs', 'color', specFile], {
+          cwd: repo,
+          env: { PATH: process.env.PATH ?? '', HOME: home },
+          encoding: 'utf8',
+        });
+        const output = `${cli.stdout}${cli.stderr}`;
+        expect.soft(cli.status, 'invalid CLI outDir exits 3').toBe(3);
+        expect.soft(output, 'CLI refusal names the outDir').toContain(invalidOutDir);
+        expect.soft(output, 'CLI refusal happens before key access').not.toContain('no key');
+      } finally {
+        rmSync(home, { recursive: true, force: true });
+        rmSync(repo, { recursive: true, force: true });
+      }
+    } finally { rmSync(root, { recursive: true, force: true }); }
+  });
+
+  it('CG14 projects spend margin across the full color and line call pools', () => {
+    const root = temp();
+    const cardSpecs = (count: number) => Array.from({ length: count }, (_, i) => ({ spec: { id: `card-batch-${i}`, outDir: CARD_DIR } }));
+    const restartSpecs = (count: number) => Array.from({ length: count }, (_, i) => ({ spec: { id: `restart-batch-${i}`, outDir: 'out/storytime/l2/unit1/w03/muse' } }));
+    try {
+      writeCosts(root, 'cards/muse/costs.tsv', [costRow(CARD_START, 'existing-card', 'color', 1.5)]);
+      const cardTen = guards.runGuards(root, cardSpecs(10), 'color');
+      const cardNine = guards.runGuards(root, cardSpecs(9), 'color');
+      expect(cardTen.refused).toBe(true);
+      expect(cardNine.refused).toBe(false);
+
+      writeCosts(root, 'cards/muse/costs.tsv', [costRow(CARD_START, 'existing-card', 'color', 1.56)]);
+      const cardLineAtBoundary = guards.runGuards(root, cardSpecs(2), 'line', { tries: 2 });
+      expect(cardLineAtBoundary.refused).toBe(false);
+      writeCosts(root, 'cards/muse/costs.tsv', [costRow(CARD_START, 'existing-card', 'color', 1.57)]);
+      const cardLineOver = guards.runGuards(root, cardSpecs(2), 'line', { tries: 2 });
+      expect(cardLineOver.refused).toBe(true);
+
+      writeCosts(root, 'w03/muse/costs.tsv', [costRow('2026-11-05T12:00:00Z', 'existing-restart', 'color', 0.95)]);
+      const restartLineAtBoundary = guards.runGuards(root, restartSpecs(2), 'line', { tries: 2 });
+      expect(restartLineAtBoundary.refused).toBe(false);
+      writeCosts(root, 'w03/muse/costs.tsv', [costRow('2026-11-05T12:00:00Z', 'existing-restart', 'color', 0.97)]);
+      const restartLineOver = guards.runGuards(root, restartSpecs(2), 'line', { tries: 2 });
+      expect(restartLineOver.refused).toBe(true);
+      writeCosts(root, 'w03/muse/costs.tsv', [costRow('2026-11-05T12:00:00Z', 'existing-restart', 'color', 0.99)]);
+      const restartTen = guards.runGuards(root, restartSpecs(10), 'color');
+      expect(restartTen.refused).toBe(true);
+
+      writeCosts(root, 'cards/muse/costs.tsv', [costRow(CARD_START, 'existing-card', 'color', 1.58)]);
+      const singleAllowed = guards.runGuards(root, cardSpecs(1), 'color');
+      expect(singleAllowed.refused).toBe(false);
+      writeCosts(root, 'cards/muse/costs.tsv', [costRow(CARD_START, 'existing-card', 'color', 1.595)]);
+      const singleRefused = guards.runGuards(root, cardSpecs(1), 'color');
+      expect(singleRefused.refused).toBe(true);
     } finally { rmSync(root, { recursive: true, force: true }); }
   });
 });
