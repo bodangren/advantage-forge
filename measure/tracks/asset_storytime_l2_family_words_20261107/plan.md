@@ -112,7 +112,7 @@ plan keeps an open item for the doctor.
     that file. The test now builds the folder from two pieces. The 18 spec files did not change.
   - The error text of a missing try stays as it was. The test matches both wordings of the count:
     "hold 1 try" and "holds 1 try".
-- [ ] Task 3: The delivery writer `deliverMuseColorSet` in `src/storytime/muse-delivery.ts`, with
+- [x] Task 3 (e634a052): The delivery writer `deliverMuseColorSet` in `src/storytime/muse-delivery.ts`, with
   tests.
   - The behavior follows the section "Delivery" and its "Manifest job values" table. The maker
     chooses no job value. The functions `writeMuseDelivery` and `deliverMuseCover` stay
@@ -120,6 +120,15 @@ plan keeps an open item for the doctor.
   - The test file is `tests/storytime-family-word-delivery.test.ts`. It covers FR-5.
   - Gate: `tests/storytime-muse-delivery.test.ts` and
     `tests/storytime-muse-delivery-adversarial.test.ts` pass unchanged.
+  - Complete at `e634a052`. The GREEN_TEST_COMMAND of test-strategy.md section 3
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-family-word-specs.test.ts tests/storytime-family-word-judge.test.ts tests/storytime-family-word-delivery.test.ts tests/storytime-judge-batch.test.ts tests/storytime-card-guards.test.ts tests/storytime-card-specs.test.ts tests/storytime-muse-delivery.test.ts tests/storytime-muse-delivery-adversarial.test.ts --maxWorkers=1'`
+    exited 0 with `Test Files  8 passed (8)` and `Tests  124 passed (124)`. The TYPECHECK_COMMAND of
+    the same section gave `owned tsc errors: 0` and `tsc errors total: 38`.
+  - The writer adds 163 lines to `src/storytime/muse-delivery.ts` and removes no line. The two old
+    writers keep their code.
+  - The test file of Task 2 held three type errors. Its helper now takes an object. The tests of
+    Task 2 changed no behavior.
+  - No Muse call and no provider call ran in this phase. Spend stays 0.00 USD.
 - [b] Phase 1 gates: review gates assigned by the test strategy, then phase acceptance at an
   immutable HEAD. deferred:Tasks 1 to 3
 
