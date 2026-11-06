@@ -1,0 +1,26 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-ham-line-t2.png",
+    "id": "l2-w04-card-ham",
+    "kind": "line",
+    "pageText": "ham",
+    "use": "card",
+    "mustShow": [
+      "one slice of ham",
+      "a slice of pink ham",
+      "a small white plate"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-tomato-line-t2.png",
+    "id": "l2-w06-card-tomato",
+    "kind": "line",
+    "pageText": "tomato",
+    "use": "card",
+    "mustShow": [
+      "one tomato",
+      "a round red tomato",
+      "a small green stem on top"
+    ]
+  }
+]

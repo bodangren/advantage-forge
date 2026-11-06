@@ -1,0 +1,15 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-goodbye-line-t1.png",
+    "id": "l2-w01-card-goodbye",
+    "kind": "line",
+    "pageText": "goodbye",
+    "use": "card",
+    "mustShow": [
+      "Nan",
+      "her raised open hand in a wave",
+      "a big smile",
+      "the school bag on her back"
+    ]
+  }
+]

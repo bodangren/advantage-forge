@@ -192,10 +192,15 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   try 1) through the frozen Sonnet judge once. Both must fail. Record the result file and the
   verdicts. No Muse spend. If a control passes, stop and report to the PM. Evidence:
   `measure/runs/asset_storytime_l2_cards_20261106/calibration-record.json`. Both controls fail.
-- [~] Task 5: Color calls for the 31 cards, then judge batches at card size (360 px long side).
-  The first passing try is the delivery. At most 3 color tries for each card. A fail needs a second
-  judge on the file alone before it stands. Log every call in `costs.tsv`. Stop at the cap of
-  1.60 USD.
+- [x] Task 5 (e872a8aa): Color calls for the 31 cards, then judge batches at card size (360 px
+  long side). The first passing try is the delivery. At most 3 color tries for each card. A fail
+  needs a second judge on the file alone before it stands. Log every call in `costs.tsv`. Stop at
+  the cap of 1.60 USD.
+  - Evidence: `measure/runs/asset_storytime_l2_cards_20261106/judge-cards-cards-r1-color.json`
+    holds 31 files, 30 pass and 1 fail. The file
+    `measure/runs/asset_storytime_l2_cards_20261106/judge-cards-cards-r1-color-goodbye-second.json`
+    holds the second judge on the goodbye color file. It passes, so the fail did not stand.
+    Color try 1 (m1) is the passing color of all 31 cards.
   - Precondition (a shell step, not a test): before the first Muse call, check that the live
     Workbooks file `/home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json` still
     has SHA-256 `ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf`. On a mismatch,
@@ -205,6 +210,17 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     and continues. The maker stops only at the cap of 1.60 USD.
 - [~] Task 6: Line calls from each passing color with the judge. Each line call is a Muse call from
   the passing color picture. At most 3 line tries for each card. No local filter.
+  - Orchestrator decision 2026-11-06, after the second judges: the line prompt of the ham and the
+    tomato changed so the line art reads as ham and as a tomato. The ham prompt now names the
+    slice as the main shape, the pale fat rim band, and 8 to 12 small closed dots. The tomato
+    prompt now names the short thick stem, the star calyx of five sepals, and three short curved
+    lobe lines.
+  - One sentence left each prompt. The sentence "Draw no fat lines and no texture lines on the
+    ham." left the ham prompt. The sentence "Draw no shine lines and no texture lines." left the
+    tomato prompt. Each sentence blocked the new marks. The thick-line rule, the "pure white"
+    rule, the "no gray" rule, and the no-text rule stay in both prompts.
+  - Only the `linePrompt` changed in each file. The card spec test passed after the change:
+    `Test Files  1 passed (1)`, `Tests  10 passed (10)`, exit 0.
 - [b] Task 7: Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet. The delivery
   folder is `out/storytime/l2/unit1/cards/delivery-muse-v1/`. The handoff folder is
   `/home/daniebo/Desktop/handoff/storytime-l2-card-pictures/`. The manifest form follows
