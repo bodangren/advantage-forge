@@ -1,0 +1,25 @@
+{
+  "id": "l2-w05-card-hands",
+  "text": "hands",
+  "pageText": "hands",
+  "use": "card",
+  "goal": "One picture of Pat that shows the word hands: he holds up one open hand, and his other hand points at it.",
+  "mustShow": [
+    "Pat",
+    "one open hand with five fingers",
+    "both hands",
+    "the other hand points at the open hand"
+  ],
+  "deliverAs": "l2-w05-card-hands-v1.png",
+  "references": [
+    "out/storytime-review/batch-22/sprout-pat-render.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the element pictures. Picture 1 shows the boy Pat: the four 3D views at the bottom are the character to copy, and the flat drawing at the top is only a hint, so copy the 3D look. Ignore the gray background, the labels, and the shadow. The teddy bear in his arms is not part of this picture, so leave the bear out. Keep the soft, round, bright 3D render look of the pictures, not a 2D drawing and no outlines. The character keeps his chibi proportions: a big head and a small body. The hands are small, clean hands with five clear short fingers and a thumb when open, never fists, and a hanging hand shows relaxed, separate short fingers. Rendering errors to NOT copy from the character pictures: a tiny dark tick mark at the outer corner of an eye, and a faint pale crease on a forehead. Each eye ends in a smooth, rounded corner; no character here has an eyelash flick. Clean eye corners, no streak on the forehead, no marks on the face. The ears are smooth, with one clean rounded rim. Each piece of clothing is one even color with no pale patches, no pale blotches at the shoulders, and no stains. Do not change anyone's hair or clothes. The picture: a waist-up view of Pat facing the camera. He holds up one open hand with the palm toward the viewer, so the palm, all five clear short fingers, and a thumb show. His other hand points at that open hand. The pointing hand has one clear index finger and the other fingers curled, and it stays below the open hand, so it never covers the palm or the fingers. A square card picture on a plain pure white background: the child is large in the middle of the square, the whole body from the waist up in view, with a wide empty white margin on every side. Exactly one child: no other person, no animal, and nothing else in the picture. The shadow is soft or absent. Keep Pat exactly as in the picture: Pat: a five-year-old boy with a chibi look (a big head and a small body), short messy black hair with a fringe and a few small tufts on top, big brown eyes, a green T-shirt, brown cargo shorts, brown sandals. He holds no teddy bear and carries no bag. The page text is \"hands\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/cards/muse"
+}

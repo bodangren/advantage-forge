@@ -32,6 +32,8 @@ The [specification](./spec.md) owns the scope and the acceptance gates.
   - No Drive backup. The PM did not ask for one.
   - White corners of class C are a report item and not a gate (the card-track rule).
 
+PM 2026-11-03: light lane. The PM put this whole track on the light lane on 2026-11-07: one maker (`measure-jr-green`), one checker (`measure-phase-acceptance`), then Daniel's look on 11-16. No Red, Review A, Review B, Review C, or adversarial role runs. The maker writes the specs, the code, and the tests that `test-strategy.md` names. The checker checks each phase at an immutable HEAD.
+
 ### Task markers
 
 `[x]` means complete. `[~]` means in progress. `[b]` means blocked, with a trailing
@@ -50,7 +52,7 @@ Phase 1.
 - After Phase 2 the track has a final acceptance and a closeout. These are track-level roles, not
   phases.
 
-## Phase 0: Authoring and spec review
+## Phase 0: Authoring and spec review [checkpoint: 893db859]
 
 - [x] Task 0: Author the track: specification, plan, metadata, index, spec review note, and the
   registry entry. The creation commit has the message
@@ -66,7 +68,7 @@ plan keeps an open item for the doctor.
 
 ## Phase 1: Family-word specs, judge flag, and delivery writer
 
-- [ ] Task 1: The 18 family-word spec files in `docs/storytime/l2-unit1/family-words/<id>.json`
+- [~] Task 1: The 18 family-word spec files in `docs/storytime/l2-unit1/family-words/<id>.json`
   and a test that checks them.
   - The files and fields follow the sections "Spec files", "Prompts", "Person rows", "Animal and
     object rows", and "Reference files for the people" of the specification. The maker does not

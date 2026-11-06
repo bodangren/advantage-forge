@@ -1,0 +1,27 @@
+{
+  "id": "l2-w01-card-friend",
+  "text": "friend",
+  "pageText": "friend",
+  "use": "card",
+  "goal": "One picture of Pat and Nan that shows the word friend: two children stand side by side, both smile, and they stand close.",
+  "mustShow": [
+    "Pat and Nan",
+    "two children side by side",
+    "both smile",
+    "both full body in view"
+  ],
+  "deliverAs": "l2-w01-card-friend-v1.png",
+  "references": [
+    "out/storytime-review/batch-22/sprout-pat-render.png",
+    "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
+    "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-face-crop.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the element pictures. Picture 1 shows the boy Pat: the four 3D views at the bottom are the character to copy, and the flat drawing at the top is only a hint, so copy the 3D look. Ignore the gray background, the labels, and the shadow. The teddy bear in his arms is not part of this picture, so leave the bear out. Picture 2 shows the girl Nan in a full-body view: copy her exactly. Picture 3 is a close-up of Nan's face with the correct, clean eyes: copy her face and eyes from picture 3 exactly. Picture 2 has tiny eye-corner rendering errors: do not copy them. Keep the soft, round, bright 3D render look of the pictures, not a 2D drawing and no outlines. The children keep their chibi proportions: a big head and a small body. The hands are small, clean hands with five clear short fingers and a thumb when open, never fists, and a hanging hand shows relaxed, separate short fingers. Rendering errors to NOT copy from the character pictures: a tiny dark tick mark at the outer corner of an eye, and a faint pale crease on a forehead. Each eye ends in a smooth, rounded corner; Nan alone keeps one short, thick, curved eyelash flick at each outer eye corner. Clean eye corners, no streak on the forehead, no marks on the face. The ears are smooth, with one clean rounded rim. Each piece of clothing is one even color with no pale patches, no pale blotches at the shoulders, and no stains. Do not change anyone's hair or clothes. The picture: Pat and Nan stand side by side, full body, both facing the camera. They stand close together, and they do not need to touch. They both smile. A square card picture on a plain pure white background: the two children are large in the middle of the square, the whole body of each child in view from head to feet, with a wide empty white margin on every side. Exactly two children: Pat and Nan, and no other person, no animal, and nothing else in the picture. The shadow is soft or absent. Keep Pat exactly as in the picture: Pat: a five-year-old boy with a chibi look (a big head and a small body), short messy black hair with a fringe and a few small tufts on top, big brown eyes, a green T-shirt, brown cargo shorts, brown sandals. He holds no teddy bear and carries no bag. Keep Nan exactly as in the picture: Nan: black-brown hair in two round buns, one on each side of the head, each with a smooth red ring band (there is no bun on top of the head and no ruffled scrunchie), large dark-brown eyes, an orange T-shirt with a white star, red shorts, white sneakers. Nan keeps her chibi proportions: a big head and a small body. Her hands are small, chubby child hands with five clear short fingers and a thumb, never fists. The page text is \"friend\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/cards/muse"
+}

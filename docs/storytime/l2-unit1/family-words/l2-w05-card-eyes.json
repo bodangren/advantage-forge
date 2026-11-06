@@ -1,0 +1,25 @@
+{
+  "id": "l2-w05-card-eyes",
+  "text": "eyes",
+  "pageText": "eyes",
+  "use": "card",
+  "goal": "One picture of Nan that shows the word eyes: she points with one finger at her own eyes, and both eyes stay in clear view.",
+  "mustShow": [
+    "Nan",
+    "both eyes",
+    "one finger points at her eyes"
+  ],
+  "deliverAs": "l2-w05-card-eyes-v1.png",
+  "references": [
+    "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
+    "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-face-crop.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the element pictures. Picture 1 shows the girl Nan: copy her exactly. Picture 2 is a close-up of Nan's face with the correct, clean eyes: copy her face and eyes from picture 2 exactly. Picture 1 has tiny eye-corner rendering errors: do not copy them. Keep the soft, round, bright 3D render look of the pictures, not a 2D drawing and no outlines. The character keeps her chibi proportions: a big head and a small body. The hands are small, clean hands with five clear short fingers and a thumb when open, never fists, and a hanging hand shows relaxed, separate short fingers. Rendering errors to NOT copy from the character pictures: a tiny dark tick mark at the outer corner of an eye, and a faint pale crease on a forehead. Each eye ends in a smooth, rounded corner; Nan alone keeps one short, thick, curved eyelash flick at each outer eye corner. Clean eye corners, no streak on the forehead, no marks on the face. The ears are smooth, with one clean rounded rim. Each piece of clothing is one even color with no pale patches, no pale blotches at the shoulders, and no stains. Do not change anyone's hair or clothes. The picture: a head-and-shoulders view of Nan facing the camera. Her whole head is large and clear in the middle of the square, and both eyes stay in clear view. She points with one hand at her own eyes. The pointing hand has one clear index finger and the other fingers curled, and it stays beside her face, so it never covers her eyes. A square card picture on a plain pure white background: the child is large in the middle of the square, the whole head and shoulders in view, with a wide empty white margin on every side. Exactly one child: no other person, no animal, and nothing else in the picture. The shadow is soft or absent. Keep Nan exactly as in the picture: Nan: black-brown hair in two round buns, one on each side of the head, each with a smooth red ring band (there is no bun on top of the head and no ruffled scrunchie), large dark-brown eyes, an orange T-shirt with a white star, red shorts, white sneakers. Nan keeps her chibi proportions: a big head and a small body. Her hands are small, chubby child hands with five clear short fingers and a thumb, never fists. The page text is \"eyes\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/cards/muse"
+}

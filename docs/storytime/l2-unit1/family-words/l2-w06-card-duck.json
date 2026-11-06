@@ -1,0 +1,24 @@
+{
+  "id": "l2-w06-card-duck",
+  "text": "duck",
+  "pageText": "duck",
+  "use": "card",
+  "goal": "One white duck with an orange beak, large in the middle of a white card, so a child can name it.",
+  "mustShow": [
+    "one duck",
+    "a white duck with an orange beak",
+    "the whole duck in view"
+  ],
+  "deliverAs": "l2-w06-card-duck-v1.png",
+  "references": [
+    "out/storytime/l2/unit1/w02/muse/elements/prop-ducks-sheet-m1-color.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the element picture. Picture 1 shows the white duck with an orange beak, seen from three sides. Draw one white duck only, from the sheet, exactly this duck: the same shape, the same colors, and the same proportions. Keep the soft, round, bright 3D render look of the picture, not a 2D drawing and no outlines. The picture to make: a square card picture on a plain pure white background: exactly one white duck, large in the middle, filling most of the square, seen from the side, the whole duck from the beak to the tail. Exactly one duck: no second one, no copies, and nothing else in the picture. The background is plain white and empty, with at most a very soft shadow under the duck. A wide empty white margin surrounds the duck on every side. The eyes are big, round, and clean, each with a big dark pupil and white highlights, with no pale flaps or marks around them. The page text is \"duck\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/cards/muse"
+}

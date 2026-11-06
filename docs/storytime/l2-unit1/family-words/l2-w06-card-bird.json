@@ -1,0 +1,24 @@
+{
+  "id": "l2-w06-card-bird",
+  "text": "bird",
+  "pageText": "bird",
+  "use": "card",
+  "goal": "One small blue bird, large in the middle of a white card, so a child can name it.",
+  "mustShow": [
+    "one bird",
+    "a small blue bird",
+    "the whole bird in view"
+  ],
+  "deliverAs": "l2-w06-card-bird-v1.png",
+  "references": [
+    "out/storytime/l2/unit1/w06/muse/elements/prop-blue-bird-sheet-m1-color.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the element picture. Picture 1 shows the small blue bird with a pale-blue belly and an orange beak, on a short branch, in a 3D render. Draw one bird only, from the sheet, exactly this bird: the same shape, the same colors, and the same proportions. Keep the soft, round, bright 3D render look of the picture, not a 2D drawing and no outlines. The picture to make: a square card picture on a plain pure white background: exactly one small blue bird, large in the middle, filling most of the square, seen from the side, the whole bird from the beak to the tail. Exactly one bird: no second one, no copies, and nothing else in the picture. No branch and no tree in the picture. The background is plain white and empty, with at most a very soft shadow under the bird. A wide empty white margin surrounds the bird on every side. The eyes are big, round, and clean, each with a big dark pupil and white highlights, with no pale flaps or marks around them. The page text is \"bird\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/cards/muse"
+}

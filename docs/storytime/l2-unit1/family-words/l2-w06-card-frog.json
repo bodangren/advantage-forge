@@ -1,0 +1,24 @@
+{
+  "id": "l2-w06-card-frog",
+  "text": "frog",
+  "pageText": "frog",
+  "use": "card",
+  "goal": "One small green frog, large in the middle of a white card, so a child can name it.",
+  "mustShow": [
+    "one frog",
+    "a small green frog",
+    "the whole frog in view"
+  ],
+  "deliverAs": "l2-w06-card-frog-v1.png",
+  "references": [
+    "out/frog/views/three-quarter.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the element picture. Picture 1 is a 3D render of a small bright green frog with a cream belly, big round white eyes with big black pupils, and folded hind legs, sitting on a gray background with a gray ground shadow. Ignore the gray background and the shadow: do not copy them. Draw the same frog with the same shape, the same colors, and the same proportions as in picture 1, as a smooth, clean, bright, soft, round 3D render with a plain white background. The picture to make: a square card picture on a plain pure white background: exactly one green frog, large in the middle, filling most of the square, seen from the front at a small angle, sitting, the whole frog from the eyes to the feet. Exactly one frog: no second one, no copies, and nothing else in the picture. The background is plain white and empty, with at most a very soft shadow under the frog. A wide empty white margin surrounds the frog on every side. The eyes are big, round, and clean, each with a big dark pupil and white highlights, with no pale flaps or marks around them. The frog has a friendly face with two clear eyes: draw no open mouth and no teeth. The page text is \"frog\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/cards/muse"
+}

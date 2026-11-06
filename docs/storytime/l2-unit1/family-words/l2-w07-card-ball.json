@@ -1,0 +1,24 @@
+{
+  "id": "l2-w07-card-ball",
+  "text": "ball",
+  "pageText": "ball",
+  "use": "card",
+  "goal": "One red-and-yellow ball, large in the middle of a white card, so a child can name it.",
+  "mustShow": [
+    "one ball",
+    "a red-and-yellow ball",
+    "the whole ball in view"
+  ],
+  "deliverAs": "l2-w07-card-ball-v1.png",
+  "references": [
+    "out/storytime/l2/unit1/w07/muse/elements/prop-toys-sheet-m1-color.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the element picture. Picture 1 shows a sheet of six toys, and one of them is a red-and-yellow striped ball. Draw only the red-and-yellow ball, once, exactly like it. The other five toys of the sheet stay out of the picture. Keep the soft, round, bright 3D render look of the picture, not a 2D drawing and no outlines. The picture to make: a square card picture on a plain pure white background: exactly one red-and-yellow ball, large in the middle, filling most of the square, the whole ball in view. Exactly one ball: no second one, no copies, and nothing else in the picture. The background is plain white and empty, with at most a very soft shadow under the ball. A wide empty white margin surrounds the ball on every side. The ball is a plain toy with no face and no eyes. The page text is \"ball\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit1/cards/muse"
+}
