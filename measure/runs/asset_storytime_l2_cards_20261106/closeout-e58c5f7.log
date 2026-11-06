@@ -1,0 +1,48 @@
+# Closeout log e58c5f7
+
+Track: asset_storytime_l2_cards_20261106. Role: closeout.
+
+## Provenance
+
+- role_base_sha: e58c5f7e0e00f98a15040b245d90ba03b0478146. `git rev-parse HEAD` printed that value at run start, so the final acceptance matches the current pre-closeout HEAD.
+- Final acceptance result: measure/runs/asset_storytime_l2_cards_20261106/final-acceptance-e58c5f7.json (status pass, audited_head_sha e58c5f7e0e00f98a15040b245d90ba03b0478146).
+- Track base sha: 7af682db1d2b572d8cf46ed5cc58ec3aa244b6a4.
+- Archive commit: 62663e4f60df771c153b97ebdedc554369c74de7.
+
+## Pre-closeout state
+
+- The archived plan holds 15 complete markers and 0 in-progress markers, 0 space markers, and 0 blocked markers.
+- The archived metadata holds status done, completed 2026-11-06, updated_at 2026-11-06T13:16:33Z, and actual_tasks 10.
+- The registry entry sits under Archived Tracks and names ./archive/asset_storytime_l2_cards_20261106/.
+- The registry entry says model evidence, not acceptance. No text says that Daniel or Workbooks accepted a picture.
+
+## Commands and results
+
+- git mv measure/tracks/asset_storytime_l2_cards_20261106 measure/archive/asset_storytime_l2_cards_20261106: 6 renames and 1 new file.
+- git show HEAD:measure/tracks.md into a temp file, two edits, git hash-object -w gave 36c1c8417dbc1fb3703f102a37fe55c722ded9b5, then git update-index --cacheinfo 100644,36c1c8417dbc1fb3703f102a37fe55c722ded9b5,measure/tracks.md. `git diff --cached measure/tracks.md` held the 2 own hunks. `git diff measure/tracks.md` held the 1 foreign Contents hunk.
+- Secret scan: `grep -rnE 'sk-[A-Za-z0-9]{8}|Bearer [A-Za-z0-9]|OPENROUTER_API_KEY=' measure/runs/asset_storytime_l2_cards_20261106` gave 3 hits. Each hit is the word Bearer in audit prose (Bearer tokens, Bearer give). A credential shape scan of 20 characters or more gave 0 hits. No key and no token sit in the run folder.
+- Run folder: 89 files (27 json, 51 log, 7 txt, 1 md, 3 mts), 0 png and 0 jpg.
+- Staged set: 97 files (7 under measure/archive/asset_storytime_l2_cards_20261106, 1 measure/tracks.md, 89 under measure/runs/asset_storytime_l2_cards_20261106).
+- Commit 62663e4f60df771c153b97ebdedc554369c74de7: measure(storytime_l2_cards): archive the track and commit the run records.
+- A9 check: `grep -rn 'asset_storytime_l2_cards' tests` gave 0 matches. No test file names a measure/tracks path for this track, so no test change was needed.
+- ./measure/doctor.sh: exit 1 with 11 error lines, all of other tracks. No error line names asset_storytime_l2_cards_20261106. The baseline held 12 errors (11 structural plus a stale measure/generated/status.md). The stale fact error is gone because the working tree status.md holds no row for the archived track. This track adds no doctor error.
+
+## Notes
+
+- measure/generated holds foreign uncommitted changes, so the generator did not run and no generated fact is committed.
+- No bulky run artifact was deleted. The orchestrator identified none, and the final acceptance and closeout evidence stay in the folder.
+
+MEASURE_AGENT_RESULT
+role: closeout
+status: complete
+track: asset_storytime_l2_cards_20261106
+phase: track
+commits: 62663e4f
+tests_run: ./measure/doctor.sh exit 1 with 11 errors of other tracks and 0 lines naming asset_storytime_l2_cards_20261106; secret scan 3 prose hits and 0 credential shapes; git diff --cached measure/tracks.md held 2 own hunks; git diff measure/tracks.md held the 1 foreign Contents hunk
+files_changed: measure/runs/asset_storytime_l2_cards_20261106/closeout-e58c5f7.json, measure/runs/asset_storytime_l2_cards_20261106/closeout-e58c5f7.log
+result_file: measure/runs/asset_storytime_l2_cards_20261106/closeout-e58c5f7.json
+plan_updates: the archived plan marks final acceptance and closeout [x] at e58c5f7e, removes both deferred fields, and states the delivered status; the archived metadata holds status done, completed 2026-11-06, and actual_tasks 10; the registry entry moves to Archived Tracks and names the archive path
+known_failures: none
+handoff: the track sits in measure/archive/asset_storytime_l2_cards_20261106 and the run records sit in measure/runs/asset_storytime_l2_cards_20261106. The delivery of 29 of 31 card rows (58 files) is model evidence, not acceptance. Workbooks checks the cards at its own check. The doctor adds no error for this track. The foreign Contents hunk in measure/tracks.md and the foreign changes in measure/generated stay unstaged.
+dispositions: none
+END_MEASURE_AGENT_RESULT

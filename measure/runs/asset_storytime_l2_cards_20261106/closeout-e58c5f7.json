@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Closeout passes at 62663e4f: the audited HEAD is the archive commit, the final acceptance at e58c5f7e is bound to the current pre-closeout HEAD, every plan task is complete, the track folder sits in measure/archive, the registry entry names the archive path, the run folder holds only text records, the secret scan finds no key, and the doctor names no line for this track. The delivery is model evidence, not acceptance.",
+  "audited_head_sha": "62663e4f60df771c153b97ebdedc554369c74de7",
+  "role_base_sha": "e58c5f7e0e00f98a15040b245d90ba03b0478146",
+  "track_base_sha": "7af682db1d2b572d8cf46ed5cc58ec3aa244b6a4",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "CO-1 [Nit] closeout: the secret scan of the run folder gives 3 hits. Each hit is the word 'Bearer' in audit prose: 'Bearer tokens' in acceptance-p2-bda95d8.json and acceptance-p2-15031cb.json, and 'Bearer give' in acceptance-p2-15031cb.json. A credential shape scan of 20 characters or more gives 0 hits. No key and no token sit in the run folder.",
+    "CO-2 [Nit] closeout: measure/generated holds foreign uncommitted changes, so the generator did not run and no generated fact is committed. The working tree status.md holds no row for this track, so the doctor reports no stale generated fact.",
+    "CO-3 [Nit] closeout: the archived metadata.json status is 'done'. The doctor status set lists new, in_progress, and completed, and the doctor does not validate tracks under measure/archive. The closed unit 1 track uses the same value."
+  ],
+  "evidence": [
+    "measure/runs/asset_storytime_l2_cards_20261106/final-acceptance-e58c5f7.json (status pass, audited_head_sha e58c5f7e0e00f98a15040b245d90ba03b0478146)",
+    "measure/archive/asset_storytime_l2_cards_20261106/automation-supervisor-closeout-manifest.json",
+    "measure/archive/asset_storytime_l2_cards_20261106/plan.md holds 15 complete markers, 0 in-progress markers, 0 space markers, and 0 blocked markers",
+    "measure/archive/asset_storytime_l2_cards_20261106/metadata.json holds status done, completed 2026-11-06, and actual_tasks 10",
+    "measure/tracks.md holds the archived entry with the link ./archive/asset_storytime_l2_cards_20261106/",
+    "measure/doctor.sh exit 1 with 11 errors; no error line names asset_storytime_l2_cards_20261106",
+    "git diff --cached measure/tracks.md held 2 hunks; git diff measure/tracks.md held the 1 foreign Contents hunk"
+  ],
+  "commands": [
+    "git rev-parse HEAD => e58c5f7e0e00f98a15040b245d90ba03b0478146 (role base, matches the brief)",
+    "git mv measure/tracks/asset_storytime_l2_cards_20261106 measure/archive/asset_storytime_l2_cards_20261106 => 6 renames and 1 new file",
+    "grep -cE '^\\s*[-*]\\s+\\[x\\]' plan.md => 15 complete markers; grep for [~], [ ], and [b] => 0 each",
+    "grep -rn 'asset_storytime_l2_cards' tests => 0 matches; no test file names a measure/tracks path for this track (A9)",
+    "grep -rnE 'sk-[A-Za-z0-9]{8}|Bearer [A-Za-z0-9]|OPENROUTER_API_KEY=' measure/runs/asset_storytime_l2_cards_20261106 => 3 hits, all the word 'Bearer' in prose; credential shape scan of 20 characters or more => 0 hits",
+    "find measure/runs/asset_storytime_l2_cards_20261106 -type f => 89 files: 27 json, 51 log, 7 txt, 1 md, 3 mts; 0 png and 0 jpg",
+    "git show HEAD:measure/tracks.md > temp; two edits; git hash-object -w => 36c1c8417dbc1fb3703f102a37fe55c722ded9b5; git update-index --cacheinfo 100644,36c1c8417dbc1fb3703f102a37fe55c722ded9b5,measure/tracks.md",
+    "git diff --cached --stat => 97 files: 7 under measure/archive/asset_storytime_l2_cards_20261106, 1 measure/tracks.md, and 89 under measure/runs/asset_storytime_l2_cards_20261106",
+    "git commit -m 'measure(storytime_l2_cards): archive the track and commit the run records' => 62663e4f60df771c153b97ebdedc554369c74de7",
+    "./measure/doctor.sh => exit 1; 11 error lines, all of other tracks; 0 lines name asset_storytime_l2_cards_20261106"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_cards_20261106/closeout-e58c5f7.json",
+    "measure/runs/asset_storytime_l2_cards_20261106/closeout-e58c5f7.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high"
+}
