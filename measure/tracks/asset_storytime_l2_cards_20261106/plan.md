@@ -56,37 +56,51 @@ passes its marker checks while every work task stays `[b]`.
 
 - [b] Task 1: Move the T180 fixture. Copy the Workbooks version 3 list (the bytes of Workbooks
   commit `078917f1`, `content/storytime/l2/print/pictures.json`) into `tests/fixtures/storytime/`.
-  Point `LIST_V3_SHADOW_FILE` and `V3_SHADOW_FILE` at the copy. Done when both tests read the
+  The copy is `tests/fixtures/storytime/pictures-v3.json` (the name is fixed). Point
+  `LIST_V3_SHADOW_FILE` and `V3_SHADOW_FILE` at the copy. Done when both tests read the
   repository copy, no test path names `/tmp/opencode/wb-shadow`, and both test files behave as
   before with `/tmp/opencode/wb-shadow` absent. — deferred:measure-spec-review
   - Knowledge todo 7050174a closes with this task.
   - The fixture SHA-256 must equal `c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b`.
   - The maker proves the "absent" condition with a run in which the `/tmp` path does not exist (for
     example by running the two test files and checking that no test opens a `/tmp/opencode` path).
-- [b] Task 2: Card run guard. Add a second run config in `scripts/storytime-muse-guards.mjs`
-  (types in `scripts/storytime-muse-guards.d.mts`) with its own start time, a cap of 1.60 USD, a
-  report point of 0.80 USD, and 3 tries for each id and kind. It applies to specs in
-  `out/storytime/l2/unit1/cards/muse`. The restart config (`RESTART_START`
-  `2026-11-04T07:54:00Z`, cap 1.00 USD) and its tests stay unchanged. — deferred:measure-spec-review
-  - The tool picks the config from the spec `outDir`. A call that mixes restart specs and card
-    specs is refused with exit code 3.
-  - The card start time lies after the newest cost row of the restart run. The maker records the
-    value and its reason in the plan note.
-  - `scripts/storytime-judge-batch.mjs` reads the card specs and counts card tries from the card
-    start time. Its behavior for the A-48 specs stays unchanged (it has its own `SPEC_DIR` and
-    `RESTART_START`).
+- [b] Task 2: Card run guard. `scripts/storytime-muse-guards.mjs` exports one constant `CARD_RUN`
+  (types in `scripts/storytime-muse-guards.d.mts`):
+  `{ startTime: '2026-11-06T00:00:00Z', capUsd: 1.6, reportAtUsd: 0.8, marginUsd: 0.01,
+  maxTries: 3, outDir: 'out/storytime/l2/unit1/cards/muse' }`. The restart config
+  (`RESTART_START` `2026-11-04T07:54:00Z`, cap 1.00 USD) and its tests stay unchanged. — deferred:measure-spec-review
+  - No other file holds a copy of these values. `scripts/storytime-muse.mjs` and
+    `scripts/storytime-judge-batch.mjs` import `CARD_RUN`.
+  - Reason for the start time (orchestrator evidence, 2026-11-06): the newest restart cost row in
+    any `out/storytime/l2/unit1/*/muse/costs.tsv` is `2026-11-05T03:32:05.918Z` (`w01/muse/costs.tsv`,
+    `l2-w01-story-page-a-nut` m5 line). The maker does not choose or record a start time.
+  - The card spend and the card try count read only
+    `out/storytime/l2/unit1/cards/muse/costs.tsv` (and `cards/muse/elements/costs.tsv` if it
+    exists), rows at or after `CARD_RUN.startTime`.
+  - `scripts/storytime-muse.mjs` picks `CARD_RUN` when every spec of a call has `outDir`
+    `CARD_RUN.outDir`. A call that mixes card specs and other specs exits with code 3 and makes no
+    provider call.
+  - `scripts/storytime-judge-batch.mjs` gets one new flag, `--cards`. With `--cards`, the spec
+    folder is `docs/storytime/l2-unit1/cards` and the try count uses `CARD_RUN`. Without `--cards`,
+    its behavior stays unchanged (`SPEC_DIR` of the A-48 folder and `RESTART_START`).
   - New guard tests go in `tests/storytime-card-guards.test.ts`. They cover: card cap and report
-    point, a fourth try refused, a mixed call refused, restart rows not counted in the card spend,
-    and an unchanged restart config.
+    point from `CARD_RUN`, a fourth try refused, a mixed call refused with exit code 3, restart
+    rows not counted in the card spend, rows before `CARD_RUN.startTime` not counted, the
+    `--cards` flag of the judge batch script, the unchanged behavior without `--cards`, and an
+    unchanged restart config.
   - Gate: `tests/storytime-muse-attempts.test.ts` and `tests/storytime-judge-batch.test.ts` pass
     unchanged.
 - [b] Task 3: The 31 card spec files in `docs/storytime/l2-unit1/cards/<id>.json`, and a test that
-  checks them against list v7 (SHA pin `ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf`):
-  ids, text, file names, size, aspect, `outDir`, and that every reference file exists. The
+  checks them against list v7: ids, text, file names, size, aspect, `outDir`, and that every
+  reference file exists. The maker copies list v7 (the bytes of Workbooks commit `95043edc`,
+  `content/storytime/l2/print/pictures.json`, SHA-256
+  `ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf`) to
+  `tests/fixtures/storytime/pictures-v7.json`. The
   references follow the table in the specification. The maker records each prompt difference
   (Nan buns, teddy, car, and any other) in the plan note. — deferred:measure-spec-review
-  - The test file is `tests/storytime-card-specs.test.ts`. It reads the list from the Workbooks
-    path and checks the SHA first. A SHA mismatch is a hard failure, not a skip.
+  - The test file is `tests/storytime-card-specs.test.ts`. It reads only
+    `tests/fixtures/storytime/pictures-v7.json` and checks its SHA-256 first. A SHA mismatch is a
+    hard failure, not a skip. The test reads no path outside the repository.
   - The test checks 13 person cards, 3 prop cards with references, and 15 cards without references.
   - No Muse call and no provider call runs in this phase. Spend stays 0.00 USD.
 - [b] Phase 1 gates: review gates assigned by the test strategy, then phase acceptance at an
@@ -102,9 +116,15 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   spend. If a control passes, stop and report to the PM. — deferred:phase-1-acceptance
 - [b] Task 5: Color calls for the 31 cards, then judge batches at card size (360 px long side).
   The first passing try is the delivery. At most 3 color tries for each card. A fail needs a second
-  judge on the file alone before it stands. Log every call in `costs.tsv`. Stop at the cap. — deferred:phase-1-acceptance
+  judge on the file alone before it stands. Log every call in `costs.tsv`. Stop at the cap of
+  1.60 USD. — deferred:phase-1-acceptance
+  - Precondition (a shell step, not a test): before the first Muse call, check that the live
+    Workbooks file `/home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json` still
+    has SHA-256 `ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf`. On a mismatch,
+    stop and report to the PM. Record the check in the role log.
   - Muse calls run 4 at a time at most.
-  - The maker reports the running spend at the report point of 0.80 USD.
+  - At the report point of 0.80 USD the maker records the spend and the projection in its role log
+    and continues. The maker stops only at the cap of 1.60 USD.
 - [b] Task 6: Line calls from each passing color with the judge. Each line call is a Muse call from
   the passing color picture. At most 3 line tries for each card. No local filter. — deferred:phase-1-acceptance
 - [b] Task 7: Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet. The delivery
@@ -139,10 +159,12 @@ this track. The track records no Workbooks or Daniel acceptance.
 
 | Risk | Control |
 | --- | --- |
-| The restart cap of 1.00 USD counts card spend (the scan includes `cards/muse/`). | Task 2 adds a separate card config. A guard test checks that restart rows do not count in the card spend. |
+| The restart cap of 1.00 USD counts card spend (the scan includes `cards/muse/`). | Task 2 exports `CARD_RUN`, which reads only the card cost files from its start time. A guard test checks that restart rows do not count in the card spend. |
+| A second copy of the card run values drifts from `CARD_RUN`. | `CARD_RUN` is the only owner. The muse tool and the judge batch script import it. The acceptance search finds no second copy. |
+| The live Workbooks list changes before the first Muse call. | The Task 5 shell step checks its SHA-256. On a mismatch the maker stops and reports to the PM. |
 | The judge passes a card that has a wrong person (similar cast looks). | The cast note in `cast.json` and the references bind each person. The checker looks at the contact sheet. |
 | A reference differs from the card prompt (Nan buns, teddy, car, doll). | The specification records the decision. The maker records each difference. |
-| The spend passes 1.60 USD through retries. | The guard refuses at the cap. The maker stops at 0.80 USD and reports the projection. |
+| The spend passes 1.60 USD through retries. | The guard refuses at the cap. At 0.80 USD the maker records the spend and the projection in its role log and continues. The maker stops only at the cap of 1.60 USD. |
 | A delivered file has no judge pass. | The delivery writer takes only judged tries. The checker compares the manifest with the judge result files. |
 | Text calls the delivery accepted. | FR-12. The checker greps the track files, `MANIFEST.txt`, and the report. |
 | A foreign hunk in `measure/tracks.md` enters the commit. | The author staged the registry entry through a blob. `git diff --cached` shows the entry only. |

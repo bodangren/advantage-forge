@@ -51,6 +51,12 @@ Forge reads these files and never changes them.
 Author check (2026-11-06): `git show 95043edc:content/storytime/l2/print/pictures.json` has the
 SHA-256 above, and the working file has the same SHA-256.
 
+The card spec test reads a repository copy of list v7, not the Workbooks path. The copy is
+`tests/fixtures/storytime/pictures-v7.json` (Task 3). Its bytes are the bytes of Workbooks commit
+`95043edc`, path `content/storytime/l2/print/pictures.json`, SHA-256
+`ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf`. A shell step in Task 5 checks
+the live Workbooks file against this SHA-256 before the first Muse call (see "Preconditions").
+
 The 31 card rows have the id `l2-wNN-card-<word>`. Each card row has `sizeClass` C, 1500 x 1500 px,
 `fileName` `<id>-v1.png`, `lineArtFileName` `<id>-line-v1.png`, and `objectCounts` with the card
 word only. The first 196 rows of the list stay as they are. This track does not touch them.
@@ -149,22 +155,66 @@ references. The total is 31.
 - Each card gets at most 3 color tries and at most 3 line-art tries.
 - A row that fails after its tries is reported with its best try. It is not delivered.
 - The spend cap for this track is 1.60 USD. The report point is 0.80 USD. The tool refuses a call
-  when the sum plus 0.01 USD passes the cap. The maker stops at the cap and reports.
-- The count includes only cost rows at or after the card run start time. The card run start time
-  is a constant that Task 2 sets. It lies after the last cost row of the restart run.
+  when the sum plus 0.01 USD passes the cap. The maker stops only at the cap of 1.60 USD.
+- At the report point of 0.80 USD the maker records the spend and the projection in its role log
+  and continues. The maker does not stop at the report point.
+- The card run values have one owner: the exported constant `CARD_RUN` in
+  `scripts/storytime-muse-guards.mjs` (see "Card run constant"). The spend and the try count read
+  only the card cost files, rows at or after `CARD_RUN.startTime`.
 - Muse calls cost about 0.01 USD each. The minimum is 62 calls (about 0.62 USD). The cap allows
   about 160 calls.
 - A failed call with cost 0 does not count as a try (the rule of the restart guard).
 - The maker logs every call and its cost in `out/storytime/l2/unit1/cards/muse/costs.tsv`.
 
-### Guard interaction (risk)
+### Card run constant
 
-The restart guard in `scripts/storytime-muse-guards.mjs` scans every `costs.tsv` below
-`out/storytime/l2/unit1/`. The folder `cards/muse/` falls inside that scan. The restart cap of
-1.00 USD counts rows since `2026-11-04T07:54:00Z`. The card spend would count against that cap.
-Task 2 therefore adds a second run config with its own start time, cap, report point, and try
-limit. The tool picks the config from the `outDir` of the specs. A call that mixes restart specs
-and card specs is refused. The restart config and its tests stay unchanged.
+`scripts/storytime-muse-guards.mjs` exports one constant, and its types are in
+`scripts/storytime-muse-guards.d.mts`:
+
+```js
+export const CARD_RUN = {
+  startTime: '2026-11-06T00:00:00Z',
+  capUsd: 1.6,
+  reportAtUsd: 0.8,
+  marginUsd: 0.01,
+  maxTries: 3,
+  outDir: 'out/storytime/l2/unit1/cards/muse',
+};
+```
+
+- No other file holds a copy of these values. `scripts/storytime-muse.mjs` and
+  `scripts/storytime-judge-batch.mjs` import `CARD_RUN`.
+- Reason for the start time (orchestrator evidence, 2026-11-06): the newest restart cost row in any
+  `out/storytime/l2/unit1/*/muse/costs.tsv` is `2026-11-05T03:32:05.918Z` (file
+  `w01/muse/costs.tsv`, row `l2-w01-story-page-a-nut` m5 line). The start time is later than that
+  row. The maker does not choose or record a start time.
+- The card spend and the card try count read only
+  `out/storytime/l2/unit1/cards/muse/costs.tsv` (and `cards/muse/elements/costs.tsv` if it
+  exists), rows at or after `CARD_RUN.startTime`. The scope is the folder plus the start time.
+
+### Guard interaction
+
+The restart guard scans every `costs.tsv` below `out/storytime/l2/unit1/`, and `cards/muse/` falls
+inside that scan. The restart cap of 1.00 USD counts rows since `2026-11-04T07:54:00Z`. Card spend
+would count against that cap. The track therefore never uses the restart config for card specs.
+
+- `scripts/storytime-muse.mjs` picks `CARD_RUN` when every spec of a call has `outDir` equal to
+  `CARD_RUN.outDir`.
+- A call that mixes card specs and other specs exits with code 3 and makes no provider call.
+- The restart config (`RESTART_START` `2026-11-04T07:54:00Z`, cap 1.00 USD) and its tests stay
+  unchanged. No restart call runs in this track.
+- `scripts/storytime-judge-batch.mjs` gets one new flag: `--cards`. With `--cards`, the spec folder
+  is `docs/storytime/l2-unit1/cards` and the try count uses `CARD_RUN`. Without `--cards`, the
+  behavior stays unchanged (`SPEC_DIR` of the A-48 folder and `RESTART_START`).
+
+### Preconditions
+
+- Before the first Muse call (Task 5), the maker checks that the live Workbooks file
+  `/home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json` still has SHA-256
+  `ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf`. On a mismatch the maker
+  stops and reports to the PM.
+- This check is a shell step (`sha256sum`). It is not a test. No test reads a path outside the
+  repository.
 
 ### Delivery
 
@@ -208,7 +258,7 @@ It was restored by hand before a green run.
   Author check: `git show 078917f1:content/storytime/l2/print/pictures.json | sha256sum` gives
   `c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b`. This value equals
   `LIST_V3_SHA256` in `tests/storytime-book-pictures.test.ts`.
-- The copy goes to `tests/fixtures/storytime/` (the maker picks the file name and records it).
+- The copy is `tests/fixtures/storytime/pictures-v3.json`. The file name is fixed.
 - `LIST_V3_SHADOW_FILE` (`tests/storytime-book-pictures.test.ts`, near line 4082) and
   `V3_SHADOW_FILE` (`tests/storytime-stage-check.test.ts`, near line 41) point at the repository
   copy.
@@ -216,18 +266,23 @@ It was restored by hand before a green run.
 
 ## Functional Requirements
 
-1. **FR-1 Fixture.** Both test files read the version 3 list from `tests/fixtures/storytime/`.
-   The fixture bytes equal Workbooks commit `078917f1`. Both test files behave as before when
+1. **FR-1 Fixture.** Both test files read the version 3 list from
+   `tests/fixtures/storytime/pictures-v3.json`. The fixture bytes equal Workbooks commit `078917f1`. Both test files behave as before when
    `/tmp/opencode/wb-shadow` is absent.
-2. **FR-2 Card guard.** A second run config exists with its own start time, a cap of 1.60 USD, a
-   report point of 0.80 USD, and 3 tries for each id and kind. It applies to specs whose `outDir`
-   is `out/storytime/l2/unit1/cards/muse`. The restart config (`RESTART_START`
-   `2026-11-04T07:54:00Z`, cap 1.00 USD) and its tests stay unchanged. A mixed call is refused.
+2. **FR-2 Card guard.** `scripts/storytime-muse-guards.mjs` exports `CARD_RUN` with the values
+   of "Card run constant". It is the only owner of the values. `scripts/storytime-muse.mjs` picks
+   `CARD_RUN` when every spec of a call has `outDir` `out/storytime/l2/unit1/cards/muse`. A call
+   that mixes card specs and other specs exits with code 3. The card spend and the card try count
+   read only the card cost files, rows at or after `CARD_RUN.startTime`. The restart config
+   (`RESTART_START` `2026-11-04T07:54:00Z`, cap 1.00 USD) and its tests stay unchanged.
 3. **FR-3 Card specs.** 31 spec files exist in `docs/storytime/l2-unit1/cards/`. A test checks
-   them against list v7 (SHA pin): ids, text, file names, size, aspect, `outDir`, and that every
-   reference file exists.
-4. **FR-4 Judge batch.** The judge batch script reads the card specs and counts card tries from
-   the card start time. Its behavior for the A-48 specs stays unchanged.
+   them against the repository copy of list v7, `tests/fixtures/storytime/pictures-v7.json`
+   (SHA pin; the test checks the SHA first and a mismatch is a hard failure): ids, text, file
+   names, size, aspect, `outDir`, and that every reference file exists. The test reads no path
+   outside the repository.
+4. **FR-4 Judge batch.** `scripts/storytime-judge-batch.mjs` imports `CARD_RUN` and has one new
+   flag, `--cards`. With `--cards`, the spec folder is `docs/storytime/l2-unit1/cards` and the try
+   count uses `CARD_RUN`. Without `--cards`, its behavior stays unchanged.
 5. **FR-5 Calibration.** The two gate control files fail the judge before the first card judge
    batch. The result is recorded.
 6. **FR-6 Color.** Each card has one passing color picture, or a reported failure after 3 tries.
@@ -258,7 +313,7 @@ It was restored by hand before a green run.
 - `scripts/storytime-muse-guards.mjs` and `scripts/storytime-muse-guards.d.mts`
 - `scripts/storytime-muse.mjs` and `scripts/storytime-judge-batch.mjs`, only if needed
 - New tests: `tests/storytime-card-*.test.ts`
-- `tests/fixtures/storytime/`
+- `tests/fixtures/storytime/` (`pictures-v3.json` and `pictures-v7.json`)
 - The fixture constants in `tests/storytime-book-pictures.test.ts` (`LIST_V3_SHADOW_FILE`, near
   line 4082) and `tests/storytime-stage-check.test.ts` (`V3_SHADOW_FILE`, near line 41)
 - `/home/daniebo/Desktop/handoff/storytime-l2-card-pictures/`
@@ -269,8 +324,13 @@ It was restored by hand before a green run.
 - Both test files read the repository fixture. `grep -rn 'wb-shadow' tests scripts src` finds
   nothing. Both files pass with `/tmp/opencode/wb-shadow` absent.
 - The card guard tests pass. The restart guard tests (`tests/storytime-muse-attempts.test.ts`)
-  pass unchanged.
-- The card spec test passes: 31 specs, list v7 SHA pin, every reference file exists.
+  pass unchanged. `CARD_RUN` is the only holder of the card run values: a search of `scripts/` and
+  `tests/` finds no second copy of `2026-11-06T00:00:00Z`, `1.6` as the card cap, or `0.8` as the
+  card report point outside the guard module and its tests.
+- The card spec test passes: 31 specs, the list v7 fixture SHA pin, every reference file exists.
+  The test reads no path outside the repository.
+- The live Workbooks list had the SHA-256 `ba3956fc…` before the first Muse call (the Task 5 shell
+  step). The role log records the check.
 - The calibration record shows both gate controls fail.
 - 62 files exist in the delivery folder and in the handoff folder, each 1500 x 1500 px. Every file
   holds a judge pass, or the manifest lists the row as failed and the file stays out.
