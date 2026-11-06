@@ -129,6 +129,11 @@ the plan keeps an open item for the doctor.
     only CG12, CG13, and CG14 failed, with no load error. Typecheck reported 0 owned errors and 38
     total errors outside the owned Storytime paths. Strategy counts add these 3 tests: N_new 29
     (prior 26 plus 3), N_old remains 41, and the full aggregate target becomes 70.
+  - Remediation round 4 (review-a RA2-1), Red test commit `3206662f959ecef24848dc97b67483b4710d75ba`.
+    Added CG15 for invalid paths below `cards/`, guarded element-folder spend, and CLI refusal before
+    key access. The targeted command exited 1: 1 test failed and 14 passed. Only CG15 failed, with no
+    load error. Typecheck found 0 owned errors and 38 total project errors. Strategy counts add this
+    one test: N_new 30 (prior 29 plus 1), N_old remains 41, and the aggregate target becomes 71.
 - [x] Task 3 (5f344886, Red fix ad9cc588): The 31 card spec files in
   `docs/storytime/l2-unit1/cards/<id>.json`, and a test that checks them against list v7: ids,
   text, file names, size, aspect, `outDir`, and that every reference file exists. The maker copies
