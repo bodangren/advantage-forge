@@ -70,7 +70,7 @@ the plan keeps an open item for the doctor.
   - The maker proves the "absent" condition with a run in which the `/tmp` path does not exist (for
     example by running the two test files and checking that no test opens a `/tmp/opencode` path).
   - Red evidence: `tests/storytime-card-fixtures.test.ts` first ran before the move. It had 4 failures and 1 pass (exit 1). After the fixture copies and constant edits, it passed 5 tests (exit 0). Both fixture SHA-256 values matched their pins. `tests/storytime-stage-check.test.ts` passed 3 tests through `heavy-run.sh`. Static `grep -rn 'wb-shadow' tests scripts src` found 0 hits.
-- [x] Task 2 (5f344886): Card run guard. `scripts/storytime-muse-guards.mjs` exports one constant
+- [~] Task 2 (5f344886): Card run guard. `scripts/storytime-muse-guards.mjs` exports one constant
   `CARD_RUN` (types in `scripts/storytime-muse-guards.d.mts`):
   `{ startTime: '2026-11-06T00:00:00Z', capUsd: 1.6, reportAtUsd: 0.8, marginUsd: 0.01,
   maxTries: 3, outDir: 'out/storytime/l2/unit1/cards/muse' }`. The restart config
@@ -110,6 +110,11 @@ the plan keeps an open item for the doctor.
   - Mutation self-check M1 to M7 (scratch copy, guards file alone): M1 `CG1 CG4`, M2 `CG10`,
     M3 `CG8`, M4 `CG11`, M5 `CG11`, M6 `CG1 CG5`, M7 `CG7` (also CG4, CG5, CG6, CG8). The restored
     copy passed 11 of 11.
+  - Remediation round 3 (review-b F1 to F3), Red test commit `96a581a001a990243f5015e71a384e26a518ecf9`.
+    Added CG12, CG13, and CG14. The targeted command exited 1: 3 failed and 11 passed across 14 tests;
+    only CG12, CG13, and CG14 failed, with no load error. Typecheck reported 0 owned errors and 38
+    total errors outside the owned Storytime paths. Strategy counts add these 3 tests: N_new 29
+    (prior 26 plus 3), N_old remains 41, and the full aggregate target becomes 70.
 - [x] Task 3 (5f344886, Red fix ad9cc588): The 31 card spec files in
   `docs/storytime/l2-unit1/cards/<id>.json`, and a test that checks them against list v7: ids,
   text, file names, size, aspect, `outDir`, and that every reference file exists. The maker copies
