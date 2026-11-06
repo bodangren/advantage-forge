@@ -21,9 +21,10 @@ import { appendFileSync, copyFileSync, existsSync, mkdirSync, readFileSync, writ
 import { homedir } from 'node:os';
 import { basename, join, resolve } from 'node:path';
 import sharp from 'sharp';
-import { CARD_RUN, REPORT_AT_USD, runGuards } from './storytime-muse-guards.mjs';
+import { CARD_RUN, runGuards } from './storytime-muse-guards.mjs';
 
 const ROOT = resolve(new URL('..', import.meta.url).pathname);
+const UNIT_ROOT = 'out/storytime/l2/unit1';
 const DEFAULT_OUT = 'out/storytime/l2/unit1/w01/muse';
 const MODEL = 'meta/muse-image';
 const URL_API = 'https://openrouter.ai/api/v1/images';
@@ -393,19 +394,30 @@ const main = async () => {
   } else if (cmd === 'print') {
     await doPrint(ctxs[0], opts.from ? Number(opts.from) : undefined);
   } else {
-    // Guards (T3a, 2026-11-04; card run, 2026-11-06): at most 3 tries per picture and kind; spend
-    // cap 1.00 USD for the restart run and 1.60 USD for the card run (sum plus the margin before a
-    // call); notice at 0.50 USD (restart) or 0.80 USD (card). The guards run before any key read
-    // and before any provider call. A call that mixes card specs with other specs is refused.
-    const guards = runGuards(resolve(ROOT, 'out/storytime/l2/unit1'), ctxs, cmd, opts);
+    // Guards (T3a, 2026-11-04; card run, 2026-11-06; pool projection, 2026-11-06): at most 3 tries
+    // per picture and kind; spend cap 1.00 USD for the restart run and 1.60 USD for the card run
+    // (sum plus the margin before a call); notice at 0.50 USD (restart) or 0.80 USD (card). The
+    // guard also projects the whole pool and refuses a spec whose outDir is outside the scanned
+    // folders. It runs before any key read and before any provider call, and again before each
+    // call in the pool.
+    const unitRoot = resolve(ROOT, UNIT_ROOT);
+    const guards = runGuards(unitRoot, ctxs, cmd, opts);
     if (guards.refused) {
       console.log(guards.message);
       process.exit(guards.code);
     }
-    const reportAt = guards.run === 'card' ? CARD_RUN.reportAtUsd : REPORT_AT_USD;
-    if (guards.notice) console.log(`notice: spend ${guards.spend.toFixed(4)} USD at or above report point ${reportAt}`);
+    if (guards.run === 'card') console.log(`card run: cap ${CARD_RUN.capUsd} USD`);
+    if (guards.notice) console.log(`notice: spend ${guards.spend.toFixed(4)} USD at or above report point ${guards.reportAt}`);
     const key = readKey();
-    await pool(ctxs, limit, (ctx) => (cmd === 'color' ? doColor(key, ctx) : doLine(key, ctx, opts.from ? Number(opts.from) : undefined, Number(opts.tries ?? 1))));
+    await pool(ctxs, limit, async (ctx) => {
+      // One more check before each provider call, so a pool stops starting calls at the cap.
+      const recheck = runGuards(unitRoot, [ctx], cmd, opts);
+      if (recheck.refused) {
+        console.log(recheck.message);
+        return;
+      }
+      return cmd === 'color' ? doColor(key, ctx) : doLine(key, ctx, opts.from ? Number(opts.from) : undefined, Number(opts.tries ?? 1));
+    });
   }
   const dirs = [...new Set(ctxs.map((c) => c.dir))];
   for (const d of dirs) console.log(`running total ${basename(d)}: ${costTotal(d).toFixed(4)} USD`);

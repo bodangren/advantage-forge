@@ -24,7 +24,10 @@
 // The try counter maps every id to its picture and counts the rows of the whole group.
 
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { isAbsolute, join, relative, resolve, sep } from 'node:path';
+
+/** The repository root. The guard resolves every spec outDir against it, like the muse tool. */
+const ROOT = resolve(new URL('..', import.meta.url).pathname);
 
 export const RESTART_START = '2026-11-04T07:54:00Z';
 export const MAX_TRIES = 3;
@@ -50,16 +53,40 @@ export const CARD_RUN = {
 /** The card folder below a unit root: the last two parts of `CARD_RUN.outDir` (`cards/muse`). */
 const CARD_FOLDER_PARTS = CARD_RUN.outDir.split('/').filter(Boolean).slice(-2);
 
-/** True for a spec of the card run. The match is exact: a variant folder is not a card spec. */
-const isCardSpec = (ctx) => ctx?.spec?.outDir === CARD_RUN.outDir;
+/** The direct child folder of the card run below a unit root (`cards`). The restart scan skips it. */
+const CARD_CHILD = CARD_FOLDER_PARTS[0];
 
-/** True when every spec of the call is a card spec. */
-export const isCardCall = (ctxs) => ctxs.length > 0 && ctxs.every(isCardSpec);
+/** The unit root of the card run: `CARD_RUN.outDir` without its last two parts. */
+const UNIT_PARTS = CARD_RUN.outDir.split('/').filter(Boolean).slice(0, -2);
 
-/** True when a call holds card specs and other specs. Such a call is refused before any scan. */
-export const isMixedCardCall = (ctxs) => {
-  const flags = ctxs.map(isCardSpec);
-  return flags.some(Boolean) && !flags.every(Boolean);
+/** The default outDir of a spec without one. The muse tool uses the same default. */
+const DEFAULT_OUT = [...UNIT_PARTS, 'w01', 'muse'].join('/');
+
+/** True when a relative path holds no `..` part and no absolute start. */
+const isInside = (rel) => rel !== '' && !rel.startsWith('..') && !isAbsolute(rel);
+
+/**
+ * Classify the output folder of one spec:
+ *   - `card` for the card folder of `CARD_RUN.outDir`;
+ *   - `restart` for a week folder `<unit root>/<child>/muse` or its `elements` folder;
+ *   - `invalid` for every other folder, including `..` escapes and mutated names.
+ * The path is resolved against the repository root, like the muse tool writes it. A spec without
+ * `outDir` uses the w01 default. An invalid folder is refused, so no call writes or reads a cost
+ * file outside the scanned folders.
+ */
+export const classifyOutDir = (spec, unitRoot) => {
+  const raw = spec?.outDir ?? DEFAULT_OUT;
+  const resolved = resolve(ROOT, raw);
+  const cardDirs = [resolve(ROOT, CARD_RUN.outDir), join(unitRoot, ...CARD_FOLDER_PARTS)];
+  if (cardDirs.includes(resolved)) return { kind: 'card', raw, resolved };
+  for (const anchor of [resolve(ROOT, ...UNIT_PARTS), resolve(unitRoot)]) {
+    const rel = relative(anchor, resolved);
+    if (!isInside(rel)) continue;
+    const parts = rel.split(sep);
+    if (parts.length === 2 && parts[1] === 'muse') return { kind: 'restart', raw, resolved };
+    if (parts.length === 3 && parts[1] === 'muse' && parts[2] === 'elements') return { kind: 'restart', raw, resolved };
+  }
+  return { kind: 'invalid', raw, resolved };
 };
 
 /**
@@ -171,13 +198,15 @@ export const spendGuard = (rows, startTime = RESTART_START, cap = SPEND_CAP_USD,
 /**
  * Scan the unit 1 muse folders. pictureRows: rows of the top-level costs.tsv files (picture
  * tries). allRows: rows of the top-level and the elements costs.tsv files (spend rows; element
- * and reference calls are the rows of the elements files).
+ * and reference calls are the rows of the elements files). The restart scan skips the direct
+ * child folder `cards`, so the card run never counts toward the restart cap and the restart run
+ * never counts toward the card cap. `scanCardCostFiles` reads that folder.
  */
 export const scanCostFiles = (unitRoot) => {
   const pictureRows = [];
   const allRows = [];
   for (const e of readdirSync(unitRoot, { withFileTypes: true })) {
-    if (!e.isDirectory()) continue;
+    if (!e.isDirectory() || e.name === CARD_CHILD) continue;
     const top = join(unitRoot, e.name, 'muse', 'costs.tsv');
     if (existsSync(top)) {
       const rows = parseCostsTsv(readFileSync(top, 'utf8'));
@@ -211,16 +240,35 @@ export const scanCardCostFiles = (unitRoot) => {
 };
 
 /**
- * Run the two guards for one invocation. Returns a decision; it makes no call and does not exit.
+ * Run the guards for one invocation. Returns a decision; it makes no call and does not exit.
  * The caller prints the message and exits with code 3 when refused.
  *
- * The function is the one decision point for a restart call, a card call, and a mixed call:
+ * The function is the one decision point for a restart call, a card call, a mixed call, and an
+ * unknown output folder:
+ *   - a spec with an unknown output folder is refused before any cost scan;
  *   - a mixed call is refused before any cost scan;
  *   - a card call uses `CARD_RUN` and the card cost files;
  *   - every other call uses the restart values and the restart scan.
+ * After the spend check of the current sum, the function projects the whole pool: one margin per
+ * provider call, plus one margin for a color pool (the line picture that follows each passing
+ * color). A projected sum over the cap is refused, so a pool cannot pass the cap by its own calls.
  */
 export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
-  if (isMixedCardCall(ctxs)) {
+  const classes = ctxs.map((ctx) => ({ id: ctx?.spec?.id, ...classifyOutDir(ctx?.spec, unitRoot) }));
+  const invalid = classes.find((c) => c.kind === 'invalid');
+  if (invalid) {
+    return {
+      refused: true,
+      code: 3,
+      spend: 0,
+      notice: false,
+      run: 'invalid',
+      reportAt: CARD_RUN.reportAtUsd,
+      message: `refused: outDir ${invalid.raw} of ${invalid.id} is outside the scanned cost folders`,
+    };
+  }
+  const cardFlags = classes.map((c) => c.kind === 'card');
+  if (cardFlags.some(Boolean) && !cardFlags.every(Boolean)) {
     return {
       refused: true,
       code: 3,
@@ -231,7 +279,7 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
       message: 'refused: the call mixes card specs with other specs; run each group in its own call',
     };
   }
-  const card = isCardCall(ctxs);
+  const card = ctxs.length > 0 && cardFlags.every(Boolean);
   const run = card ? 'card' : 'restart';
   const cap = card ? CARD_RUN.capUsd : SPEND_CAP_USD;
   const margin = card ? CARD_RUN.marginUsd : SPEND_MARGIN_USD;
@@ -246,6 +294,12 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
   }
   const kind = cmd;
   const requested = cmd === 'line' ? Number(opts.tries ?? 1) : 1;
+  const calls = cmd === 'line' ? ctxs.length * requested : ctxs.length;
+  const cushion = cmd === 'line' ? 0 : 1;
+  const projected = spend + (calls + cushion) * margin;
+  if (projected > cap) {
+    return { refused: true, code: 3, spend, notice: s.notice, run, reportAt, message: `refused: projected spend ${projected.toFixed(4)} USD over cap ${cap}` };
+  }
   for (const ctx of ctxs) {
     const g = tryGuard(pictureRows, ctx.spec.id, kind, requested, startTime, maxTries);
     if (!g.ok) {

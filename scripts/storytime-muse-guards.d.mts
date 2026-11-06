@@ -53,9 +53,15 @@ export interface RunGuardsResult {
   code: number;
   spend: number;
   notice: boolean;
-  run: 'card' | 'restart' | 'mixed';
+  run: 'card' | 'restart' | 'mixed' | 'invalid';
   reportAt: number;
   message: string;
+}
+
+export interface OutDirClass {
+  kind: 'card' | 'restart' | 'invalid';
+  raw: string;
+  resolved: string;
 }
 
 export interface CardRun {
@@ -78,6 +84,7 @@ export declare const PICTURE_IDS: Record<string, string[]>;
 
 export declare function isCardCall(ctxs: GuardContext[]): boolean;
 export declare function isMixedCardCall(ctxs: GuardContext[]): boolean;
+export declare function classifyOutDir(spec: { outDir?: string } | undefined, unitRoot: string): OutDirClass;
 export declare function maxTriesFor(id: string, kind: string, maxTries?: number): number;
 export declare function pictureKey(id: string): string;
 export declare function parseCostsTsv(text: string): CostRow[];
