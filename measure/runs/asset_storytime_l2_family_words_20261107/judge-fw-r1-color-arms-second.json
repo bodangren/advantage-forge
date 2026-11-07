@@ -1,0 +1,20 @@
+{
+  "group": "fw-r1-color-arms-second",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-07T00:02:07Z",
+  "results": [
+    {
+      "id": "l2-w05-card-arms",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-arms-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Page text: 'arms'. Items: Nan (1), her arms (2). Action: none named in the text; mustShow names raising and pointing (note only). Seen: a girl with two round dark-brown buns with red bands, large brown eyes, an orange star T-shirt, red shorts, cream sneakers. Her right arm (viewer's right) is raised up with an open hand of five fingers. Her left arm (viewer's left) is bent across her body, and the hand has one finger out. Both arms are drawn and visible. Character matches the Nan cast sheet. No text, no extra people. mustShow: 'Nan' = drawn and matches the cast. 'one raised arm' = drawn and visible, viewer's right arm raised with an open hand. 'both arms' = both arms drawn and visible, none hidden or cut by the frame. 'the other hand points at that arm' = the other hand is drawn and visible with a pointing finger; this is an action, so it is a note: the finger touches her chest near the star and does not clearly reach the raised arm. Small mark only, not a fail under rules 6 and 7."
+    }
+  ],
+  "summary": { "files": 1, "pass": 1, "fail": 0 }
+}

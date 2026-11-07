@@ -1,0 +1,15 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-arms-color-t2.png",
+    "id": "l2-w05-card-arms",
+    "kind": "color",
+    "pageText": "arms",
+    "use": "card",
+    "mustShow": [
+      "Nan",
+      "one raised arm",
+      "both arms",
+      "the other hand points at that arm"
+    ]
+  }
+]

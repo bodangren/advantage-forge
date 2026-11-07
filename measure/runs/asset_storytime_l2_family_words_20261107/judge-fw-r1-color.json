@@ -1,0 +1,173 @@
+{
+  "group": "fw-r1-color",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-06T23:57:51Z",
+  "results": [
+    {
+      "id": "l2-w01-card-friend",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w01-card-friend-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1), Nan (1), two children side by side, both smiling, both full body. Seen: a black-haired boy in a green T-shirt, brown shorts, brown sandals on the left; a girl with two buns with red bands, orange star T-shirt, red shorts, white sneakers on the right; both smile; both full body in view. Both match the cast. Decision: all drawn and clear."
+    },
+    {
+      "id": "l2-w05-card-arms",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-arms-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), arms (2), one raised arm, other hand pointing at that arm. Seen: Nan matches the cast; her right arm is raised with an open hand; the other arm is bent and its pointing hand points toward her own chest. Both arms drawn and visible. Pointing is an action (note only); the pointing hand aims at the chest more than at the raised arm. Small mark only."
+    },
+    {
+      "id": "l2-w05-card-ears",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-ears-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1), ears (2), one finger pointing at one ear. Seen: a black-haired boy in a green T-shirt; both ears visible, one on each side of the head; his raised hand points a finger at his right ear. Both ears drawn and visible. Matches the cast."
+    },
+    {
+      "id": "l2-w05-card-eyes",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-eyes-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), eyes (2), one finger pointing at her eyes. Seen: Nan matches the cast; two large brown eyes clearly drawn; one finger touches near the outer edge of her left eye, covering only a small part of the lid line. Both eyes visible. Small mark only."
+    },
+    {
+      "id": "l2-w05-card-feet",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-feet-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), feet (2), shoes (2), one finger pointing down at her feet. Seen: Nan matches the cast; two white sneakers visible at the bottom; her arms hang down with the fingers pointing down. Both feet and shoes drawn and visible. The pointing is a weak action (note only)."
+    },
+    {
+      "id": "l2-w05-card-hands",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-hands-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1), hands (2), one open hand with five fingers, other hand pointing at the open hand. Seen: a black-haired boy, green T-shirt, brown cargo shorts; one raised open hand with five fingers; the other hand points toward the raised hand. Both hands drawn and visible. Matches the cast clothes and hair; the render style is a little smoother and less chibi than the sheet, and the sandals are cut by the bottom frame (small marks, not required by the text)."
+    },
+    {
+      "id": "l2-w05-card-legs",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-legs-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1), legs (2), one finger pointing down at one leg. Seen: a black-haired boy, green T-shirt, brown shorts, brown sandals; two bare legs standing; one hand hangs by the side with the finger pointing down toward his leg. Both legs drawn and visible. Hair tufts on top are large (small mark). Matches the cast."
+    },
+    {
+      "id": "l2-w05-card-nose",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-nose-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), her nose (1), one finger pointing at her nose. Seen: Nan matches the cast; one finger touches the lower tip of her nose; the nose bridge and a mark of the nose still show above the finger. Nose drawn and visible (rule 7). The feet are cut by the bottom frame (small mark, not needed by the text)."
+    },
+    {
+      "id": "l2-w06-card-bird",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-bird-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: bird (1), small and blue, whole bird in view. Seen: one round blue bird with a pale belly, an orange beak, orange feet, and a small tail. Whole bird in view. Reads as a bird to a child."
+    },
+    {
+      "id": "l2-w06-card-cat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-cat-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: cat (1), small orange tabby, whole cat in view. Seen: one orange striped cat with green eyes, whiskers, pink ears, and a curled tail. Whole cat in view. Reads as a cat."
+    },
+    {
+      "id": "l2-w06-card-dog",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-dog-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: dog (1), small brown and cream, whole dog in view. Seen: one small brown puppy with a cream muzzle and chest, floppy dark ears, a red collar with a gold tag, and the tongue out. Whole dog in view. Reads as a dog."
+    },
+    {
+      "id": "l2-w06-card-duck",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-duck-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: duck (1), white with an orange beak, whole duck in view. Seen: one white duck in side view with an orange beak and orange feet, one eye visible. Whole duck in view. Reads as a duck."
+    },
+    {
+      "id": "l2-w06-card-fish",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-fish-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: fish (1), round, blue with a yellow belly, whole fish in view. Seen: one round blue fish with a yellow belly, yellow fins and tail, and a big eye. Whole fish in view. Reads as a fish."
+    },
+    {
+      "id": "l2-w06-card-frog",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-frog-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: frog (1), small and green, whole frog in view. Seen: one green frog with big eyes, a cream belly, a smile, and four green feet. Whole frog in view. Reads as a frog."
+    },
+    {
+      "id": "l2-w06-card-horse",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w06-card-horse-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: horse (1), white, whole horse in view. Seen: one white pony with a cream mane and tail, a pink-gray muzzle, four legs with gray hooves. Whole horse in view. Reads as a horse."
+    },
+    {
+      "id": "l2-w07-card-ball",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-ball-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: ball (1), red and yellow, whole ball in view. Seen: one round ball with red and yellow stripes. Whole ball in view. Reads as a ball."
+    },
+    {
+      "id": "l2-w07-card-drum",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-drum-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: drum (1), small red, two wooden sticks, whole drum in view. Seen: one red drum with white rims; two wooden sticks lie in front. Whole drum and both sticks in view. Reads as a drum."
+    },
+    {
+      "id": "l2-w07-card-kite",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w07-card-kite-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: kite (1), red and yellow, whole kite in view. Seen: one diamond kite in red and yellow with a string and three red bows on the tail. Whole kite in view. Reads as a kite."
+    }
+  ],
+  "summary": { "files": 18, "pass": 18, "fail": 0 }
+}

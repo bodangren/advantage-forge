@@ -162,6 +162,11 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     total, the track spend, and the projection in its role log once and continues. The maker
     stops only at the guard cap of 1.60 USD in total.
   - The family row gets no call and no new judge batch.
+  - Orchestrator decision 2026-11-07: the arms color try 1 passed both judges, but both judges
+    recorded that the finger touches the chest and not the raised arm. The PM rule says a
+    body-part picture shows a child pointing to the part, so try 1 counts as a failed try. Try 2
+    uses a new pose: one arm held straight out to the side, with the index finger of the other
+    hand on that arm. Only the picture sentences of the arms colorPrompt changed.
 - [b] Task 6: Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet. deferred:Task 5
   - The delivery folder is `out/storytime/l2/unit1/family-words/delivery-muse-v1/`. The handoff
     folder is `/home/daniebo/Desktop/handoff/storytime-l2-family-word-pictures/`. The form follows

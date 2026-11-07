@@ -93,11 +93,77 @@ measure/runs/asset_storytime_l2_family_words_20261107/judge-batch-fw-r1-color.lo
 forbidden list of FR-2 appears in the batch file. The judge kit shows no change:
 git diff --name-only --diff-filter=MDRT prints nothing for docs/storytime/l2-unit1/judge.
 
+## Round 3: judge r1 result and the arms color try 2
+
+### Judge result of round 1
+
+The judge result file
+`measure/runs/asset_storytime_l2_family_words_20261107/judge-fw-r1-color.json` holds 18 files with
+18 pass and 0 fail on color try 1. The maker did not rate any picture.
+
+### The arms row and the orchestrator decision
+
+The arms row passed the first judge. The second judge on the arms file alone,
+`measure/runs/asset_storytime_l2_family_words_20261107/judge-fw-r1-color-arms-second.json`, also
+passed it. Both judges record the same note: the pointing finger touches Nan's chest near the
+star, and it does not reach the raised arm.
+
+Orchestrator decision 2026-11-07: the PM rule says a body-part picture shows a child pointing to
+the part. The arms try 1 picture does not show that, so try 1 counts as a failed try under the PM
+rule. The arms row gets color try 2. The other 17 rows pass on try 1 and get no new call.
+
+### The change of the arms spec
+
+Only the picture sentences of the arms `colorPrompt` changed. The new sentences hold one arm
+straight out to the side at shoulder height, and they put the index finger of the other hand on
+that arm. Every other sentence of the prompt stays as it was, and every other field of the file
+stays as it was. The `goal` changed because the pose changed. It now reads "One picture of Nan
+that shows the word arms: she holds one arm out to the side, and a finger of her other hand
+touches that arm." The `mustShow` list stays as it was.
+
+The spec test command
+`HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-family-word-specs.test.ts --maxWorkers=1'`
+exited 0 with `Test Files  1 passed (1)` and `Tests  13 passed (13)`. The test does not pin the
+old sentences, so no test file changed.
+
+### The arms color try 2
+
+command: node scripts/storytime-muse.mjs color docs/storytime/l2-unit1/family-words/l2-w05-card-arms.json
+
+calls: 1
+failed calls: 0
+refused lines: 0
+highest new row cost: 0.01 USD
+new costs.tsv rows: 1, of kind color, with the note ok
+track spend after this call: 0.19 USD
+total in costs.tsv: 0.93 USD
+total calls: 93
+
+The guard printed the report notice because the total was already at or above 0.80 USD. The new
+row has the time 2026-11-07T00:05:39.034Z. The head SHA-256 of the first 75 lines is the same
+before and after the call. The arms row has 2 color tries now, of at most 3.
+
+The new print check: files checked 1, problems 0. The file
+`out/storytime/l2/unit1/cards/muse/l2-w05-card-arms-m2-color-print.png` is a PNG at 1500 x 1500 px,
+8-bit, 3 channels, srgb, with no alpha channel and no palette. The maker did not view or judge
+it.
+
+### The judge batch of try 2
+
+batch file: docs/storytime/l2-unit1/judge/prod/fw-r2-color-arms.json
+command: node scripts/storytime-judge-batch.mjs --family-words --ids l2-w05-card-arms --kind color --try 2 --out fw-r2-color-arms
+entries: 1
+judge copy: out/storytime-review/judge/prod/l2-w05-card-arms-color-t2.png at 360 x 360 px
+
+The tool output is in
+measure/runs/asset_storytime_l2_family_words_20261107/judge-batch-fw-r2-color-arms.log. No word
+of the forbidden list of FR-2 appears in the batch file or in the arms spec file.
+
 ## Task state
 
 Task 4 is [x]. Task 5 is [~]. The judge writes its result file
-measure/runs/asset_storytime_l2_family_words_20261107/judge-fw-r1-color.json. The maker wrote no
-judge result file.
+measure/runs/asset_storytime_l2_family_words_20261107/judge-fw-r2-color-arms.json. The maker
+wrote no judge result file.
 
 MEASURE_AGENT_RESULT
 role: jr-green
@@ -107,41 +173,47 @@ phase: Phase 2: Family-word pictures and delivery
 phase_base_sha: 893db8598328eb6689a4266c5c5d4b29247df20a
 role_base_sha: 9eb453c3dc3f986220dd1b4ee6b30e4086b67d79
 commits: |
-  the round-1 commit carries this log, the judge batch, the calibration record, the spend record,
-  and the plan. Its SHA is the parent of the plan evidence commit that follows. The plan evidence
-  commit adds that SHA to the Task 4 line.
+  the round-3 commit carries the arms spec, the plan, the judge r1 result file, the arms second
+  judge result file, the try 2 judge batch, the judge batch log, the spend record, and this log.
+  Its SHA is the parent of the plan evidence commit that follows.
 tests_run: |
-  the three precondition shell checks of the specification section "Preconditions" at
-  2026-11-06T23:39:31Z: every value equals its pin
-  the print check of the 18 new color prints: files checked 18, problems 0
-  the forbidden word scan of the judge batch file: no line
-  the frozen kit check of docs/storytime/l2-unit1/judge: no line
+  the spec test after the arms prompt change: exit 0, Test Files 1 passed (1), Tests 13 passed (13)
+  the print check of the arms try 2 print: files checked 1, problems 0
+  the forbidden word scan of the try 2 batch file and the arms spec file: no line
+  the head SHA-256 of the first 75 cost lines after the call: unchanged
 files_changed: |
-  docs/storytime/l2-unit1/judge/prod/fw-r1-color.json (new judge batch, 18 entries)
-  measure/tracks/asset_storytime_l2_family_words_20261107/plan.md (Task 4 marker, Task 5 marker,
-  the Phase 1 checkpoint)
-  measure/runs/asset_storytime_l2_family_words_20261107/maker-p2-r1.log (this log)
-  measure/runs/asset_storytime_l2_family_words_20261107/judge-batch-fw-r1-color.log (tool output)
+  docs/storytime/l2-unit1/family-words/l2-w05-card-arms.json (the picture sentences of the color
+  prompt and the goal)
+  docs/storytime/l2-unit1/judge/prod/fw-r2-color-arms.json (new judge batch, 1 entry)
+  measure/tracks/asset_storytime_l2_family_words_20261107/plan.md (one sub-bullet under Task 5)
+  measure/runs/asset_storytime_l2_family_words_20261107/judge-fw-r1-color.json (judge result of
+  round 1)
+  measure/runs/asset_storytime_l2_family_words_20261107/judge-fw-r1-color-arms-second.json (second
+  judge on the arms file)
+  measure/runs/asset_storytime_l2_family_words_20261107/judge-batch-fw-r2-color-arms.log (tool
+  output)
   measure/runs/asset_storytime_l2_family_words_20261107/spend-record.txt (spend lines)
-  measure/runs/asset_storytime_l2_family_words_20261107/calibration-record.json (orchestrator
-  calibration record)
-  No PNG or JPG file entered git. No file under out/ entered git. No code file, no spec file, and
+  measure/runs/asset_storytime_l2_family_words_20261107/maker-p2-r1.log (this log)
+  No PNG or JPG file entered git. No file under out/ entered git. No test file, no code file, and
   no judge kit file changed.
 plan_updates: |
-  Task 4 is [x]. The Task 4 line holds the SHA of the round-1 commit.
-  Task 5 is [~]. The Phase 1 heading holds [checkpoint: 9eb453c].
+  Task 5 stays [~]. It holds one new sub-bullet with the orchestrator decision of 2026-11-07 about
+  the arms try 1 and the new pose of try 2.
+  Task 4 stays [x] with its round-1 SHA.
 known_failures: none
 handoff: |
-  The judge runs next on the batch file docs/storytime/l2-unit1/judge/prod/fw-r1-color.json with its
-  18 files. The judge writes its result file
-  measure/runs/asset_storytime_l2_family_words_20261107/judge-fw-r1-color.json. The maker did not
-  rate any picture.
-  The 18 new color prints are at out/storytime/l2/unit1/cards/muse/<id>-m1-color-print.png. The
-  judge copies are at out/storytime-review/judge/prod/<id>-color-t1.png. The family row got no
-  call and no new batch.
-  The track spend is 0.18 USD in 18 calls and the total of costs.tsv is 0.92 USD in 92 calls. The
+  The judge runs next on the batch file docs/storytime/l2-unit1/judge/prod/fw-r2-color-arms.json
+  with its one file. The judge writes its result file
+  measure/runs/asset_storytime_l2_family_words_20261107/judge-fw-r2-color-arms.json. The maker did
+  not rate any picture.
+  The arms try 2 print is at
+  out/storytime/l2/unit1/cards/muse/l2-w05-card-arms-m2-color-print.png. The judge copy is at
+  out/storytime-review/judge/prod/l2-w05-card-arms-color-t2.png.
+  The 17 other rows pass on color try 1 and need no new call. The arms row has one try left of its
+  3 tries.
+  The track spend is 0.19 USD in 19 calls and the total of costs.tsv is 0.93 USD in 93 calls. The
   next pool runs with --concurrency 4 below 1.40 USD. At or above 1.40 USD the pool runs with
-  --concurrency 1. Each row allows 3 color tries at most.
+  --concurrency 1.
   The delivery is model evidence. It is not acceptance.
 dispositions: none
 END_MEASURE_AGENT_RESULT
