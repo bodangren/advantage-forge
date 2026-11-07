@@ -1,0 +1,159 @@
+# Storytime Level 2 card line-art retry (ham and family)
+
+Status: created, awaiting the maker (2026-11-07). No new call has run. Spend of this track: 0.00
+USD. The total of `costs.tsv` is 0.95 USD in 95 calls.
+The [specification](./spec.md) owns the scope and the acceptance gates.
+
+## Method and ownership
+
+- Primary owner: the Measure orchestrator for this track.
+- Owned paths are in the "Owned paths" section of the specification. The owned planning paths are
+  this folder and `measure/runs/asset_storytime_l2_card_line_retry_20261107/`.
+- Do not change `assets/fireball.ts` or `out/fireball/`. Their owner review stays separate.
+- Do not change the judge kit, `scripts/storytime-muse.mjs`, `scripts/storytime-judge-batch.mjs`,
+  `src/storytime/muse-delivery.ts`, or the block `CARD_RUN`.
+- The question tool is denied. Route every question for Daniel through the PM orchestrator.
+- Other agents share the git index. Commit explicit paths only.
+- Muse calls, judge batches, and the delivery script are light roles. They run with `node` or
+  `tsx` and without `heavy-run.sh`.
+- Run every full test suite and the typecheck with
+  `bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<command>'`. Exit code 75
+  means hold. Record `lock wait over 600 s` and stop the run.
+- No song or video command runs.
+- Spend limit: 0.05 USD for this track (5 calls at most). The total of `costs.tsv` then reaches
+  1.00 USD at most. The guard cap of 1.60 USD stays the hard stop.
+- The delivery is model evidence. It is not acceptance. No text may claim that Daniel or Workbooks
+  accepted a picture.
+- Defaults recorded by the author (each one is open to a PM change): see the section "Open
+  questions answered by default" of the specification.
+
+PM 2026-11-03: light lane. The PM put this whole track on the light lane: one maker
+(`measure-jr-green`) and one checker (`measure-phase-acceptance`), then closeout. No spec review,
+test strategy, Red, Review A, Review B, Review C, adversarial, UX review, or final acceptance role
+runs. The maker writes the code, the tests, the prompt edits, and the pictures. The checker checks
+each phase at an immutable HEAD.
+
+### Task markers
+
+`[x]` means complete. `[~]` means in progress. `[ ]` means ready and not started. `[b]` means
+blocked, with a trailing `deferred:<owner>` field. The orchestrator changes `[b]` to `[~]` when
+the blocker clears and the task starts. Tasks 1 and 2 are `[ ]` because no gate blocks them. The
+blocker of Tasks 3 to 7 is the acceptance of Phase 1. The doctor counts only `[ ]`, `[~]`, and
+`[x]`, so Tasks 1 and 2 keep the track open for the doctor.
+
+## Phase 0: Authoring
+
+- [x] Task 0: Author the track: specification, plan, metadata, index, spec review note, and the
+  registry entry. The creation commit has the message
+  `measure(storytime_l2_card_line_retry): create the track`.
+
+The light lane has no spec review gate.
+
+## Phase 1: Guard and prompts
+
+Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`).
+
+- [ ] Task 1: The line retry allowance in the guard, with a test.
+  - The behavior follows the section "Guard". The files are `scripts/storytime-muse-guards.mjs`
+    and `scripts/storytime-muse-guards.d.mts`. Set `CARD_LINE_RETRY_START` from `date -u` (cut to
+    the minute) at this task. Check that it is later than the last row of `costs.tsv`.
+  - The test file is `tests/storytime-card-line-retry.test.ts`. It covers FR-1: ham line tries 4
+    and 5 allowed and try 6 refused; family line tries 4 to 6 allowed and try 7 refused; a request
+    for two tries after one allowed try is refused for the ham; earlier tries do not count; the
+    ham color and a third row (for example the tomato line) keep the 3-try rule; the spend cap
+    still refuses. The test builds rows in memory and imports `CARD_RUN`. It holds no literal of
+    the card start time.
+  - Gate: `tests/storytime-card-guards.test.ts` and `tests/storytime-card-adversarial.test.ts`
+    pass without change. Test command:
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-card-line-retry.test.ts tests/storytime-card-guards.test.ts tests/storytime-card-adversarial.test.ts tests/storytime-card-specs.test.ts --maxWorkers=1'`.
+    Also run the typecheck and record the count of owned errors (it must be 0).
+  - No Muse call and no provider call runs in this task. Spend stays 0.00 USD.
+- [ ] Task 2: The ham prompt edit.
+  - Edit `docs/storytime/l2-unit1/cards/l2-w04-card-ham.json`: set `linePrompt` to the exact text
+    of the specification and remove the phrase "a small white plate" from `mustShow`. Change no
+    other field.
+  - Run the card spec test (it is in the command of Task 1). Record the `git diff` summary: only
+    `linePrompt` and `mustShow` changed.
+  - The family prompt edits happen in Task 5, one step before each try.
+- [b] Phase 1 gate: phase acceptance by the checker at an immutable HEAD. deferred:Tasks 1 and 2
+  - The checker runs the test command, checks that `CARD_RUN` is byte equal and that the literal
+    of the card start time is only in the three files that held it, and checks the ham diff.
+
+## Phase 2: Tries, delivery, and report
+
+Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`).
+
+- [b] Task 3: Preconditions. deferred:Phase 1 acceptance
+  - Check and record in the role log: the three SHA-256 values of the section "Inputs"; the
+    `costs.tsv` check (95 call rows, 0.95 USD); the SHA-256 of `approved.json` and of the 58 files
+    of `delivery-muse-v1`; that the judge kit is unchanged since the calibration record
+    (`git diff` of `docs/storytime/l2-unit1/judge/` against the record commit is empty); that
+    `CARD_LINE_RETRY_START` is later than the last `costs.tsv` row.
+  - If a check fails, stop and report to the PM. No Muse spend.
+- [b] Task 4: Ham line tries. deferred:Task 3
+  - Follow the section "Tries, order, and stop rules". Call, measure the width, judge at card
+    size (`--cards --kind line --try <n>`), second judge on a fail. Try 4 first, then try 5 only
+    if try 4 does not pass. Stop at the first pass or at try 5.
+  - Record for each try: the file, the width, the judge result file, the verdict, and the defect
+    class.
+- [b] Task 5: Family line tries. deferred:Task 4
+  - Before each call, apply the next step of the ladder (E4 for try 4, E5 for try 5, E6 for try
+    6) to `docs/storytime/l2-unit1/cards/l2-w04-card-family.json`, and run the card spec test.
+    Commit each edit before its call (explicit path).
+  - After each call, measure the width. Below 12 px: a failed try, no judge. At 12 px or more:
+    judge at card size, and a second judge on a fail. Stop at the first pass or at try 6.
+  - Stop both rows at the spend stop of 0.05 USD in total.
+- [b] Task 6: Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet.
+  deferred:Task 5
+  - The form follows the section "Delivery". Write `approved-v2.json` and the folder
+    `out/storytime/l2/unit1/cards/delivery-muse-v2/` with `writeMuseDelivery`. Copy the old
+    handoff `MANIFEST.txt` and `manifest.json` to the run folder first. The family-word run
+    folder holds a model script for the contact sheet and the manifest text
+    (`measure/runs/asset_storytime_l2_family_words_20261107/make-handoff.mts`).
+  - Check that the 58 old files have the same SHA-256 in the v1 folder, the v2 folder, and the
+    handoff folder. Check every new PNG at 1500 x 1500 px, 8-bit, no alpha.
+  - A failed row: add its color print and note, and name its best try.
+  - Report the corner values below 250 of the new color files (report item, not a gate).
+  - `grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c -` in the handoff folder gives OK for
+    every file. The handoff `manifest.json` equals the v2 `manifest.json`.
+- [b] Task 7: Report record for the PM:
+  `measure/runs/asset_storytime_l2_card_line_retry_20261107/pm-report.md`. deferred:Task 6
+  - It follows the section "PM report" of the specification.
+- [b] Phase 2 gate: phase acceptance by the checker at an immutable HEAD. deferred:Tasks 3 to 7
+
+## Track-level roles
+
+- [b] Closeout: archive the track, update the registry, run the generator and the doctor, and
+  commit the run records in `measure/runs/asset_storytime_l2_card_line_retry_20261107/`. Foreign
+  generated facts stay out of the closeout commit unless their owner has committed them.
+  deferred:Phase 2 gate
+
+The light lane has no final acceptance role.
+
+## Human gate
+
+Workbooks checks the pictures after the delivery. Daniel sees the print cards in his 11-16 check.
+Both checks are outside this track. The track records no Workbooks or Daniel acceptance.
+
+## Risks
+
+| Risk | Control |
+| --- | --- |
+| The retry allowance opens more tries than the PM gave. | The allowance is per row (ham 2, family 3), counted from a start time, and the spend stop is 0.05 USD. FR-1 tests the limits. |
+| The guard change breaks the card rules. | `CARD_RUN` stays byte equal. Other rows and kinds keep the 3-try rule. The two old guard tests pass without change. |
+| The start time lies in the future or before the last cost row. | Task 1 reads `date -u`. Task 3 checks it against the last row of `costs.tsv`. |
+| The judge fails a correct ham picture for the missing plate. | The ham `mustShow` loses the plate phrase (Task 2). The report records the difference. |
+| The ham slice still reads as a plate, a pizza, or a pie. | The prompt draws the slice only, with one fat rim band and long grain lines. The row stops at try 5 and then names its best try. |
+| The family strokes stay below 12 px. | The ladder E4 to E6 thickens the strokes at each try. A try below 12 px goes to no judge. After try 6 the row falls back to the color file. |
+| A thick family line loses the faces. | The judge checks the persons and the faces at card size. The ladder keeps the eyes and the smile in every step. |
+| A prompt edit drifts from the text in the file. | The maker stops when a sentence of a step is not in the current text. The test of the card specs runs after each edit. |
+| The old handoff files change. | The checker compares the SHA-256 of the 58 old files in three folders. The old `MANIFEST.txt` and `manifest.json` are copied first. |
+| Text calls the delivery accepted. | FR-10. The checker greps the track files, `MANIFEST.txt`, and the report. |
+| A foreign hunk in `measure/tracks.md` enters the commit. | The author staged the registry entry through a blob. `git diff --cached` shows the entry only. |
+
+## Evidence
+
+- Track creation commit: recorded at creation (message
+  `measure(storytime_l2_card_line_retry): create the track`).
+- Run records: `measure/runs/asset_storytime_l2_card_line_retry_20261107/` (role logs, judge
+  result files, width record, delivery script, PM report, acceptance results).
