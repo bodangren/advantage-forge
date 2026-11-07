@@ -1,0 +1,9 @@
+Corner values of the new files (2026-11-07T03:10:34.487Z). A corner below 250 is a report item, not a gate.
+
+l2-w04-card-ham-v1.png (the ham color print): TL 255 TR 254 BL 254 BR 255 lowest 254
+l2-w04-card-family-v1.png: TL 255 TR 255 BL 247 BR 255 lowest 247
+l2-w04-card-family-line-v1.png: TL 255 TR 255 BL 255 BR 255 lowest 255
+
+1b1e93e0bd8251ae1a31a7353bc47c82371485db12b7d829e5638c59d9eb795c  /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/cards/muse/l2-w04-card-ham-m1-color-print.png  (l2-w04-card-ham-v1.png (the ham color print))
+ab6067eedf8de3efebb40509c6032f81f7ecee178b212eac8c3727d40a8bff62  /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/cards/delivery-muse-v2/l2-w04-card-family-v1.png  (l2-w04-card-family-v1.png)
+641c70b25d321ae180763b11e161f7756bbda87c963c533a0df822e2fd04bb27  /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/cards/delivery-muse-v2/l2-w04-card-family-line-v1.png  (l2-w04-card-family-line-v1.png)

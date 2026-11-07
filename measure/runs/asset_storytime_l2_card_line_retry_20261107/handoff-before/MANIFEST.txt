@@ -1,0 +1,140 @@
+Storytime Advantage Level 2 Unit 1 card pictures: 29 of the 31 card rows of the
+Workbooks picture list v7. Each row has one color file and one line-art file. The two
+rows that are not here are named below with the reason.
+
+source-repo: /home/daniebo/Desktop/advantage-forge
+source-paths: out/storytime/l2/unit1/cards/delivery-muse-v1/
+source-commit: 29344ae4 (the maker commit before the delivery; PNG files stay out of git)
+picture-ids: l2-w02-card-fan, l2-w03-card-sheep, l2-w03-card-cap, l2-w04-card-jam, l2-w05-card-dress, l2-w05-card-sad, l2-w06-card-boat, l2-w07-card-pot, l2-w07-card-mop, l2-w02-card-astronaut, l2-w03-card-pineapple, l2-w05-card-sandwich, l2-w06-card-tomato, l2-w07-card-otter, l2-w01-card-hello, l2-w01-card-goodbye, l2-w01-card-boy, l2-w01-card-girl, l2-w01-card-teacher, l2-w04-card-mom, l2-w04-card-dad, l2-w04-card-brother, l2-w04-card-sister, l2-w04-card-grandma, l2-w04-card-grandpa, l2-w07-card-doll, l2-w07-card-car, l2-w07-card-train, l2-w07-card-teddy
+picture-list-row: /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json (list v7, SHA-256 ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf, Workbooks commit 95043edc)
+judge-result-files: measure/runs/asset_storytime_l2_cards_20261106/ (calibration-record.json, judge-cards-cards-r1-color.json, judge-cards-cards-r1-color-goodbye-second.json, judge-cards-cards-r1-line.json, judge-cards-cards-r1-line-car-second.json, judge-cards-cards-r1-line-ham-second.json, judge-cards-cards-r2-line-t1.json, judge-cards-cards-r2-line-t2.json, judge-cards-cards-r2-line-t2-ham-second.json, judge-cards-cards-r3-line-t3.json, judge-cards-cards-r3-line-t3-ham-second.json, judge-cards-cards-r4-line-t2.json)
+contact-sheet: storytime-l2-card-pictures-contact-sheet.png
+date: 2026-11-06 18:12 ICT
+sender: advantage-forge (Forge Green, Phase 2 maker)
+
+Files (SHA-256 and name; every file is 1500 x 1500 px, 8-bit PNG, no alpha channel):
+b5fbbe6f42a8bd4ce42a9d76f0ac50e03441b15cdb9a18650c0c0d297902dc81  l2-w02-card-fan-v1.png
+92d4a6ef937e2a21153e912b784ea7da6d9764e2de66d9b92921e96e3e002034  l2-w02-card-fan-line-v1.png
+4af5223c8971061a6eacf86f8c718df329337921308b0ca47e962a890358700a  l2-w03-card-sheep-v1.png
+df57baca35bbb3af947f140fe9092d0b29229fc5d944c1ee723e5eb3d9151a0e  l2-w03-card-sheep-line-v1.png
+a8de8ebd17660fab7b63b94c6d1fb53973981a6f4afc82f9bcd7f0eb83fb7342  l2-w03-card-cap-v1.png
+d5e5ab77aae95f087be4138601a0e7371817cb78ba7dd914312a356db22b1695  l2-w03-card-cap-line-v1.png
+d8b4ecc2864fd369fa70a898af00ca249f3ef7c916e391cbf2eb301fb5fbf90a  l2-w04-card-jam-v1.png
+bbda45328bf0a6dad6e79c66fcd54b91806f9efec4af0c9387c1385cfb9b6775  l2-w04-card-jam-line-v1.png
+588fc16163035167543396f209bf39efdbd7bf3081c580a22d81e0bbbc78cbd0  l2-w05-card-dress-v1.png
+292aec2d207e297cdf6ef989c964521b9af41450cf64256c361b521f619dd4d3  l2-w05-card-dress-line-v1.png
+31cd472629ce09d84015e95efd7dd90add25c51ac3f5e6d5e9c71db5b2ea8594  l2-w05-card-sad-v1.png
+22d2f182129295de12446a90ca1feee436821e6fe7d8c9ed84bd63934b444987  l2-w05-card-sad-line-v1.png
+bff3ebb71950e17ca85bd1a1d64c5fd54aa3013886d77067f10d13074b0f6e92  l2-w06-card-boat-v1.png
+23e7712130687c2b59f979e5cc03be870bf34b32923250702144c5e66575cdff  l2-w06-card-boat-line-v1.png
+824b8ad2ef72edd9db989e988ba5821e6e9912c679a2a7dfb61ca66c1f77113e  l2-w07-card-pot-v1.png
+121029557ebea712be0d4ca015cfdb7bd1fc67c610d0ca8f5c13924d5137867e  l2-w07-card-pot-line-v1.png
+887c6d0347de2cc8a6315de36dd67e723349792afe632e2f561c579bec070570  l2-w07-card-mop-v1.png
+4ae58b049c3d6d5da23c916b6fe751d5e22940430b5c66eb77f8e64055953976  l2-w07-card-mop-line-v1.png
+8fb891a2a00a2272618c6bfe6a7e17e75ca3e5972d61f2e04d9efa2f5b1ffc44  l2-w02-card-astronaut-v1.png
+2de6c90afebed81de73cff6b06167d161bbb980e2036353a92cdcbaf451901e7  l2-w02-card-astronaut-line-v1.png
+f62202f166239c1d879fd305d5b408825449f1c74149f479be8e04d694642ff7  l2-w03-card-pineapple-v1.png
+d972a9c7d1aa308b84cb654c1da9880254d02f856d5f9455bf6020b4411870cc  l2-w03-card-pineapple-line-v1.png
+d63d15e218aa12724cac67ebd5e72901fb21f5339d3e624b5b37d7a2153d9f85  l2-w05-card-sandwich-v1.png
+b405e382ac1e65fc263924df45c8e28cbb801355175c8641c774933d9f1153a2  l2-w05-card-sandwich-line-v1.png
+79ff763f57c1f3dd21136f6e95eaf9d82a8603968e6fe1ab229e63fec8e17e93  l2-w06-card-tomato-v1.png
+09e4bd463abec8b744e6ec42871178e645b4d68337577d963c9a3d0f4631e72b  l2-w06-card-tomato-line-v1.png
+0eff0b69ec32e1009891df1345695b90e0e97094760804bc29e22fd3451612d1  l2-w07-card-otter-v1.png
+18e27950a4eafbb52c7e809cf32813068cf8b38963cbbed3658ae8af306e8a60  l2-w07-card-otter-line-v1.png
+daf4aadaa888c76eb33f9e81225d1644253b9d3a98cb352bc61372f81359ee96  l2-w01-card-hello-v1.png
+0b84ecb7e9617aaa739276ec152f0091b3c57d4cabb7b3a716c786150f167d43  l2-w01-card-hello-line-v1.png
+cf8900d54a38ba0c6d58ab51acfe4704c1e8568080f09ec3172a704d2ed3fe1c  l2-w01-card-goodbye-v1.png
+379fc0d0822083dc16e486f384c51453c13d2f3c4feccfc7501ff974d32c3c90  l2-w01-card-goodbye-line-v1.png
+abcb0f23b155a4c216a147d5661332c88dbf8c62aa7031acff764cfec5cb5d00  l2-w01-card-boy-v1.png
+bb19e2fc32b606ac4017e2e9875795297f1f16ebcdce90da21a489f387c0fcb4  l2-w01-card-boy-line-v1.png
+de2aab38a716b7c96d76a1d7b65c3ceac1e1706495e2b0df5d97a2fc55dddc4e  l2-w01-card-girl-v1.png
+b7676451f28707d644cc3f5ca0a570e999b02cd7ab63d6fd541107d82269fc52  l2-w01-card-girl-line-v1.png
+5c76f4c0979be120ab79c518e1d06ba8c55d8c9d012c0f2ed720cf2251710ac0  l2-w01-card-teacher-v1.png
+a2004c2d3c57fdd79adb8eccd37c4bd0bd44b5d3aba4716452084acad605b551  l2-w01-card-teacher-line-v1.png
+130c8a0087191a37330f6095979c9ae748ce21c2298393dff365c0268d111278  l2-w04-card-mom-v1.png
+8203a69ba47f4ce665266728f194181f9c567cdbd209faebadfa3cd3d59b145a  l2-w04-card-mom-line-v1.png
+f01113ea407b13db5d1b767b8bae5dda754ca9100777493ae9b460fe587b776d  l2-w04-card-dad-v1.png
+fb301e88ce559a98d84f889192d5b7515824f0d9cefe2eca8236ce6994551488  l2-w04-card-dad-line-v1.png
+dcc1cfd12fd776404d6aff8090f4f52148ea3ddbbf459491eaccfe4c0b637a7b  l2-w04-card-brother-v1.png
+bb348b5e4ead986b02e0431fdf43732f65301c18950e6c81fb395abb52a6a287  l2-w04-card-brother-line-v1.png
+f5af1f1400ddfd2d8e667114049a7af3ba709997cfc510865dcf50c883377870  l2-w04-card-sister-v1.png
+f9f9b0dbb48c20ba35d584e2fdf435d93511275169ebd9c1c39aa1400d3a397d  l2-w04-card-sister-line-v1.png
+fe8ed8b60e635dbdeee9159332e6d408ad2afa74246136a5ae827ff9647fe3af  l2-w04-card-grandma-v1.png
+6f93476cdfd2efee0118e4f74b798c49a40b17668f71ee9aaef69ce1153acd63  l2-w04-card-grandma-line-v1.png
+69303b1dc092109d4d51b51ea6713b12de2324b9d40684cb88cf6478fb690ec1  l2-w04-card-grandpa-v1.png
+6923768a3042ce73940dbd54525343acd48d3a68d572c5fef256aed145ebe2a1  l2-w04-card-grandpa-line-v1.png
+ee7228f9253df1815a10d5e345cfa0f39959176198de00b3d6a55acbb2ef81f9  l2-w07-card-doll-v1.png
+d8caa9c3fc8cfc702e52f62a1de8da71e16aacbe62e0b5e198f0c3457c30e1fc  l2-w07-card-doll-line-v1.png
+34dbe03bdccef8c2cddea14b035709dcccd784a004351767eaea4cef3879447c  l2-w07-card-car-v1.png
+2bac8879979da8986239b81c2e36c966f2c7688f665bb4e965f9e77871aa0ce5  l2-w07-card-car-line-v1.png
+cb017bf3293fa856d6041dfef96b4784ba659ab80df442eeb36aa187c489a9a2  l2-w07-card-train-v1.png
+359668cf610dd2b662777bdf0aaa901f78051bd0aa4ebb40d47d44ce5f8a665b  l2-w07-card-train-line-v1.png
+3c9ae3bf36374b00b33435b6c5bf740428b70032bbbcd72b9c1aa4399ecbaa42  l2-w07-card-teddy-v1.png
+96cddf4a87d0742dc84072a3fb57041c14131f3d87df53130ef1910758e0a718  l2-w07-card-teddy-line-v1.png
+
+The 58 files are the color prints and the line prints of the 29 card rows.
+The delivered bytes are the judge-passed Muse prints, copied without change. Each line
+print is the plain Muse print of the judged line try, not a despeckled file. The line
+print of the tomato and of 7 person cards is the print of the line try 2. Every line
+print measures at least 12 px of stroke width.
+
+Judge results that passed these files (model evidence, not acceptance):
+l2-w02-card-fan  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+l2-w03-card-sheep  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+l2-w03-card-cap  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+l2-w04-card-jam  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+l2-w05-card-dress  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+l2-w05-card-sad  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+l2-w06-card-boat  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+l2-w07-card-pot  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+l2-w07-card-mop  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+l2-w02-card-astronaut  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r4-line-t2.json (line try 2)
+l2-w03-card-pineapple  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+l2-w05-card-sandwich  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+l2-w06-card-tomato  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r2-line-t2.json (line try 2)
+l2-w07-card-otter  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+l2-w01-card-hello  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+l2-w01-card-goodbye  color judge-cards-cards-r1-color-goodbye-second.json (m1)  line judge-cards-cards-r4-line-t2.json (line try 2)
+l2-w01-card-boy  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r4-line-t2.json (line try 2)
+l2-w01-card-girl  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+l2-w01-card-teacher  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r4-line-t2.json (line try 2)
+l2-w04-card-mom  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r4-line-t2.json (line try 2)
+l2-w04-card-dad  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+l2-w04-card-brother  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+l2-w04-card-sister  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r4-line-t2.json (line try 2)
+l2-w04-card-grandma  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+l2-w04-card-grandpa  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r4-line-t2.json (line try 2)
+l2-w07-card-doll  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+l2-w07-card-car  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line-car-second.json (line try 1)
+l2-w07-card-train  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+l2-w07-card-teddy  color judge-cards-cards-r1-color.json (m1)  line judge-cards-cards-r1-line.json (line try 1)
+
+The result files live in measure/runs/asset_storytime_l2_cards_20261106/ of the source repo.
+The judge was claude-code/claude-sonnet-5-5#high with the fixed prompt
+docs/storytime/l2-unit1/judge/judge-prompt.md version 6.
+The bar is the text of Daniel of 2026-11-01 14:15 ICT.
+No person review yet. Workbooks checks the cards.
+
+failed rows: l2-w04-card-ham (color m1 judge pass; line tries 1 to 3 each failed by two
+judges; the slice reads as a plate, a pizza, or a pie; not delivered)
+failed rows: l2-w04-card-family (color m1 judge pass; line try 1 judge pass but the print
+measured 4 px; tries 2 and 3 measured 8 px and 7 px; the delivery gate is 12 px; not delivered)
+
+corner note: 22 color files have a corner below 250 (class C white-corner rule):
+l2-w04-card-mom-v1.png 242; l2-w04-card-dad-v1.png 244; l2-w04-card-grandma-v1.png 245;
+l2-w06-card-boat-v1.png 245; l2-w04-card-grandpa-v1.png 246; l2-w06-card-tomato-v1.png 246;
+l2-w07-card-doll-v1.png 246; l2-w01-card-teacher-v1.png 247; l2-w07-card-car-v1.png 247;
+l2-w07-card-mop-v1.png 247; l2-w07-card-otter-v1.png 247; l2-w07-card-train-v1.png 247;
+l2-w02-card-fan-v1.png 248; l2-w03-card-sheep-v1.png 248; l2-w04-card-jam-v1.png 248;
+l2-w04-card-sister-v1.png 248; l2-w05-card-dress-v1.png 248; l2-w05-card-sad-v1.png 248;
+l2-w01-card-boy-v1.png 249; l2-w01-card-hello-v1.png 249; l2-w03-card-pineapple-v1.png 249;
+l2-w04-card-brother-v1.png 249.
+The corners are a faint near-white, mostly at the bottom-left corner, from the soft shadow of the
+render. The same rule holds for 28 of the 80 class C color files of the week deliveries.
+Workbooks decides at its check.
+
+spend: 0.74 USD, 74 Muse calls, cap 1.60 USD
+
+Check the files with this command (run it in this folder):
+grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c -
+

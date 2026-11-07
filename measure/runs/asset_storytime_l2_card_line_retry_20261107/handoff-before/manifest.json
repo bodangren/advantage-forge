@@ -1,0 +1,1903 @@
+{
+  "version": 1,
+  "batchHashAlgorithm": "SHA-256 of UTF-8 JSON.stringify([{file,sha256}]) with entries sorted by file and no whitespace",
+  "jobs": [
+    {
+      "id": "l2-w02-card-fan",
+      "week": 2,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "fan",
+      "sourcePrompt": "A small round paper hand fan with a blue handle, open. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w02-card-fan",
+      "directory": "w02",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w02-card-fan",
+          "version": 1,
+          "file": "l2-w02-card-fan-v1.png",
+          "fileSha256": "b5fbbe6f42a8bd4ce42a9d76f0ac50e03441b15cdb9a18650c0c0d297902dc81",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "b5fbbe6f42a8bd4ce42a9d76f0ac50e03441b15cdb9a18650c0c0d297902dc81",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w02-card-fan-line-v1.png",
+            "fileSha256": "92d4a6ef937e2a21153e912b784ea7da6d9764e2de66d9b92921e96e3e002034",
+            "colorFile": "l2-w02-card-fan-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "92d4a6ef937e2a21153e912b784ea7da6d9764e2de66d9b92921e96e3e002034",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w02-card-fan-v1.png",
+      "selectedSha256": "b5fbbe6f42a8bd4ce42a9d76f0ac50e03441b15cdb9a18650c0c0d297902dc81",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w03-card-sheep",
+      "week": 3,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "sheep",
+      "sourcePrompt": "A small fluffy white sheep with a round body, short legs, and a friendly face. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w03-card-sheep",
+      "directory": "w03",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w03-card-sheep",
+          "version": 1,
+          "file": "l2-w03-card-sheep-v1.png",
+          "fileSha256": "4af5223c8971061a6eacf86f8c718df329337921308b0ca47e962a890358700a",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "4af5223c8971061a6eacf86f8c718df329337921308b0ca47e962a890358700a",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w03-card-sheep-line-v1.png",
+            "fileSha256": "df57baca35bbb3af947f140fe9092d0b29229fc5d944c1ee723e5eb3d9151a0e",
+            "colorFile": "l2-w03-card-sheep-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "df57baca35bbb3af947f140fe9092d0b29229fc5d944c1ee723e5eb3d9151a0e",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w03-card-sheep-v1.png",
+      "selectedSha256": "4af5223c8971061a6eacf86f8c718df329337921308b0ca47e962a890358700a",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w03-card-cap",
+      "week": 3,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "cap",
+      "sourcePrompt": "A red cap with a curved brim, seen from the front. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w03-card-cap",
+      "directory": "w03",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w03-card-cap",
+          "version": 1,
+          "file": "l2-w03-card-cap-v1.png",
+          "fileSha256": "a8de8ebd17660fab7b63b94c6d1fb53973981a6f4afc82f9bcd7f0eb83fb7342",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "a8de8ebd17660fab7b63b94c6d1fb53973981a6f4afc82f9bcd7f0eb83fb7342",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w03-card-cap-line-v1.png",
+            "fileSha256": "d5e5ab77aae95f087be4138601a0e7371817cb78ba7dd914312a356db22b1695",
+            "colorFile": "l2-w03-card-cap-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "d5e5ab77aae95f087be4138601a0e7371817cb78ba7dd914312a356db22b1695",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w03-card-cap-v1.png",
+      "selectedSha256": "a8de8ebd17660fab7b63b94c6d1fb53973981a6f4afc82f9bcd7f0eb83fb7342",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w04-card-jam",
+      "week": 4,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "jam",
+      "sourcePrompt": "A glass jar of red strawberry jam with a plain lid and a spoon next to it. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w04-card-jam",
+      "directory": "w04",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w04-card-jam",
+          "version": 1,
+          "file": "l2-w04-card-jam-v1.png",
+          "fileSha256": "d8b4ecc2864fd369fa70a898af00ca249f3ef7c916e391cbf2eb301fb5fbf90a",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "d8b4ecc2864fd369fa70a898af00ca249f3ef7c916e391cbf2eb301fb5fbf90a",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w04-card-jam-line-v1.png",
+            "fileSha256": "bbda45328bf0a6dad6e79c66fcd54b91806f9efec4af0c9387c1385cfb9b6775",
+            "colorFile": "l2-w04-card-jam-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "bbda45328bf0a6dad6e79c66fcd54b91806f9efec4af0c9387c1385cfb9b6775",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w04-card-jam-v1.png",
+      "selectedSha256": "d8b4ecc2864fd369fa70a898af00ca249f3ef7c916e391cbf2eb301fb5fbf90a",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w05-card-dress",
+      "week": 5,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "dress",
+      "sourcePrompt": "A little girl's yellow dress with short sleeves and a red bow at the waist, on a plain hanger. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w05-card-dress",
+      "directory": "w05",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w05-card-dress",
+          "version": 1,
+          "file": "l2-w05-card-dress-v1.png",
+          "fileSha256": "588fc16163035167543396f209bf39efdbd7bf3081c580a22d81e0bbbc78cbd0",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "588fc16163035167543396f209bf39efdbd7bf3081c580a22d81e0bbbc78cbd0",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w05-card-dress-line-v1.png",
+            "fileSha256": "292aec2d207e297cdf6ef989c964521b9af41450cf64256c361b521f619dd4d3",
+            "colorFile": "l2-w05-card-dress-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "292aec2d207e297cdf6ef989c964521b9af41450cf64256c361b521f619dd4d3",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w05-card-dress-v1.png",
+      "selectedSha256": "588fc16163035167543396f209bf39efdbd7bf3081c580a22d81e0bbbc78cbd0",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w05-card-sad",
+      "week": 5,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "sad",
+      "sourcePrompt": "Ben (drawn young, about five years old) with a sad face and his head down. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w05-card-sad",
+      "directory": "w05",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w05-card-sad",
+          "version": 1,
+          "file": "l2-w05-card-sad-v1.png",
+          "fileSha256": "31cd472629ce09d84015e95efd7dd90add25c51ac3f5e6d5e9c71db5b2ea8594",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "31cd472629ce09d84015e95efd7dd90add25c51ac3f5e6d5e9c71db5b2ea8594",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w05-card-sad-line-v1.png",
+            "fileSha256": "22d2f182129295de12446a90ca1feee436821e6fe7d8c9ed84bd63934b444987",
+            "colorFile": "l2-w05-card-sad-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "22d2f182129295de12446a90ca1feee436821e6fe7d8c9ed84bd63934b444987",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w05-card-sad-v1.png",
+      "selectedSha256": "31cd472629ce09d84015e95efd7dd90add25c51ac3f5e6d5e9c71db5b2ea8594",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w06-card-boat",
+      "week": 6,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "boat",
+      "sourcePrompt": "A small wooden toy boat with a white sail on a little patch of calm blue water. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w06-card-boat",
+      "directory": "w06",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w06-card-boat",
+          "version": 1,
+          "file": "l2-w06-card-boat-v1.png",
+          "fileSha256": "bff3ebb71950e17ca85bd1a1d64c5fd54aa3013886d77067f10d13074b0f6e92",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "bff3ebb71950e17ca85bd1a1d64c5fd54aa3013886d77067f10d13074b0f6e92",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w06-card-boat-line-v1.png",
+            "fileSha256": "23e7712130687c2b59f979e5cc03be870bf34b32923250702144c5e66575cdff",
+            "colorFile": "l2-w06-card-boat-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "23e7712130687c2b59f979e5cc03be870bf34b32923250702144c5e66575cdff",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w06-card-boat-v1.png",
+      "selectedSha256": "bff3ebb71950e17ca85bd1a1d64c5fd54aa3013886d77067f10d13074b0f6e92",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w07-card-pot",
+      "week": 7,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "pot",
+      "sourcePrompt": "A small cooking pot with two handles and a lid. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w07-card-pot",
+      "directory": "w07",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w07-card-pot",
+          "version": 1,
+          "file": "l2-w07-card-pot-v1.png",
+          "fileSha256": "824b8ad2ef72edd9db989e988ba5821e6e9912c679a2a7dfb61ca66c1f77113e",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "824b8ad2ef72edd9db989e988ba5821e6e9912c679a2a7dfb61ca66c1f77113e",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w07-card-pot-line-v1.png",
+            "fileSha256": "121029557ebea712be0d4ca015cfdb7bd1fc67c610d0ca8f5c13924d5137867e",
+            "colorFile": "l2-w07-card-pot-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "121029557ebea712be0d4ca015cfdb7bd1fc67c610d0ca8f5c13924d5137867e",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w07-card-pot-v1.png",
+      "selectedSha256": "824b8ad2ef72edd9db989e988ba5821e6e9912c679a2a7dfb61ca66c1f77113e",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w07-card-mop",
+      "week": 7,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "mop",
+      "sourcePrompt": "A mop with a long wooden handle and a white cotton head. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w07-card-mop",
+      "directory": "w07",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w07-card-mop",
+          "version": 1,
+          "file": "l2-w07-card-mop-v1.png",
+          "fileSha256": "887c6d0347de2cc8a6315de36dd67e723349792afe632e2f561c579bec070570",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "887c6d0347de2cc8a6315de36dd67e723349792afe632e2f561c579bec070570",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w07-card-mop-line-v1.png",
+            "fileSha256": "4ae58b049c3d6d5da23c916b6fe751d5e22940430b5c66eb77f8e64055953976",
+            "colorFile": "l2-w07-card-mop-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "4ae58b049c3d6d5da23c916b6fe751d5e22940430b5c66eb77f8e64055953976",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w07-card-mop-v1.png",
+      "selectedSha256": "887c6d0347de2cc8a6315de36dd67e723349792afe632e2f561c579bec070570",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w02-card-astronaut",
+      "week": 2,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "astronaut",
+      "sourcePrompt": "An astronaut in a white space suit with the helmet visor open and a friendly smiling face. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w02-card-astronaut",
+      "directory": "w02",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w02-card-astronaut",
+          "version": 1,
+          "file": "l2-w02-card-astronaut-v1.png",
+          "fileSha256": "8fb891a2a00a2272618c6bfe6a7e17e75ca3e5972d61f2e04d9efa2f5b1ffc44",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "8fb891a2a00a2272618c6bfe6a7e17e75ca3e5972d61f2e04d9efa2f5b1ffc44",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w02-card-astronaut-line-v1.png",
+            "fileSha256": "2de6c90afebed81de73cff6b06167d161bbb980e2036353a92cdcbaf451901e7",
+            "colorFile": "l2-w02-card-astronaut-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "2de6c90afebed81de73cff6b06167d161bbb980e2036353a92cdcbaf451901e7",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w02-card-astronaut-v1.png",
+      "selectedSha256": "8fb891a2a00a2272618c6bfe6a7e17e75ca3e5972d61f2e04d9efa2f5b1ffc44",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w03-card-pineapple",
+      "week": 3,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "pineapple",
+      "sourcePrompt": "A ripe pineapple with a spiky green crown and golden skin. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w03-card-pineapple",
+      "directory": "w03",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w03-card-pineapple",
+          "version": 1,
+          "file": "l2-w03-card-pineapple-v1.png",
+          "fileSha256": "f62202f166239c1d879fd305d5b408825449f1c74149f479be8e04d694642ff7",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "f62202f166239c1d879fd305d5b408825449f1c74149f479be8e04d694642ff7",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w03-card-pineapple-line-v1.png",
+            "fileSha256": "d972a9c7d1aa308b84cb654c1da9880254d02f856d5f9455bf6020b4411870cc",
+            "colorFile": "l2-w03-card-pineapple-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "d972a9c7d1aa308b84cb654c1da9880254d02f856d5f9455bf6020b4411870cc",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w03-card-pineapple-v1.png",
+      "selectedSha256": "f62202f166239c1d879fd305d5b408825449f1c74149f479be8e04d694642ff7",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w05-card-sandwich",
+      "week": 5,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "sandwich",
+      "sourcePrompt": "A sandwich with two slices of bread, green lettuce, and a slice of tomato, on a small white plate. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w05-card-sandwich",
+      "directory": "w05",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w05-card-sandwich",
+          "version": 1,
+          "file": "l2-w05-card-sandwich-v1.png",
+          "fileSha256": "d63d15e218aa12724cac67ebd5e72901fb21f5339d3e624b5b37d7a2153d9f85",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "d63d15e218aa12724cac67ebd5e72901fb21f5339d3e624b5b37d7a2153d9f85",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w05-card-sandwich-line-v1.png",
+            "fileSha256": "b405e382ac1e65fc263924df45c8e28cbb801355175c8641c774933d9f1153a2",
+            "colorFile": "l2-w05-card-sandwich-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "b405e382ac1e65fc263924df45c8e28cbb801355175c8641c774933d9f1153a2",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w05-card-sandwich-v1.png",
+      "selectedSha256": "d63d15e218aa12724cac67ebd5e72901fb21f5339d3e624b5b37d7a2153d9f85",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w06-card-tomato",
+      "week": 6,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "tomato",
+      "sourcePrompt": "A round red tomato with a small green stem. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w06-card-tomato",
+      "directory": "w06",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w06-card-tomato",
+          "version": 1,
+          "file": "l2-w06-card-tomato-v1.png",
+          "fileSha256": "79ff763f57c1f3dd21136f6e95eaf9d82a8603968e6fe1ab229e63fec8e17e93",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "79ff763f57c1f3dd21136f6e95eaf9d82a8603968e6fe1ab229e63fec8e17e93",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w06-card-tomato-line-v1.png",
+            "fileSha256": "09e4bd463abec8b744e6ec42871178e645b4d68337577d963c9a3d0f4631e72b",
+            "colorFile": "l2-w06-card-tomato-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "09e4bd463abec8b744e6ec42871178e645b4d68337577d963c9a3d0f4631e72b",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w06-card-tomato-v1.png",
+      "selectedSha256": "79ff763f57c1f3dd21136f6e95eaf9d82a8603968e6fe1ab229e63fec8e17e93",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w07-card-otter",
+      "week": 7,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "otter",
+      "sourcePrompt": "A small brown otter with a round face and short whiskers, floating on its back on a little patch of calm blue water. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w07-card-otter",
+      "directory": "w07",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w07-card-otter",
+          "version": 1,
+          "file": "l2-w07-card-otter-v1.png",
+          "fileSha256": "0eff0b69ec32e1009891df1345695b90e0e97094760804bc29e22fd3451612d1",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "0eff0b69ec32e1009891df1345695b90e0e97094760804bc29e22fd3451612d1",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w07-card-otter-line-v1.png",
+            "fileSha256": "18e27950a4eafbb52c7e809cf32813068cf8b38963cbbed3658ae8af306e8a60",
+            "colorFile": "l2-w07-card-otter-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "18e27950a4eafbb52c7e809cf32813068cf8b38963cbbed3658ae8af306e8a60",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w07-card-otter-v1.png",
+      "selectedSha256": "0eff0b69ec32e1009891df1345695b90e0e97094760804bc29e22fd3451612d1",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w01-card-hello",
+      "week": 1,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "hello",
+      "sourcePrompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, waves hello with a big smile. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w01-card-hello",
+      "directory": "w01",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w01-card-hello",
+          "version": 1,
+          "file": "l2-w01-card-hello-v1.png",
+          "fileSha256": "daf4aadaa888c76eb33f9e81225d1644253b9d3a98cb352bc61372f81359ee96",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "daf4aadaa888c76eb33f9e81225d1644253b9d3a98cb352bc61372f81359ee96",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w01-card-hello-line-v1.png",
+            "fileSha256": "0b84ecb7e9617aaa739276ec152f0091b3c57d4cabb7b3a716c786150f167d43",
+            "colorFile": "l2-w01-card-hello-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "0b84ecb7e9617aaa739276ec152f0091b3c57d4cabb7b3a716c786150f167d43",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w01-card-hello-v1.png",
+      "selectedSha256": "daf4aadaa888c76eb33f9e81225d1644253b9d3a98cb352bc61372f81359ee96",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w01-card-goodbye",
+      "week": 1,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "goodbye",
+      "sourcePrompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, waves goodbye at an open door with her school bag on her back. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w01-card-goodbye",
+      "directory": "w01",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w01-card-goodbye",
+          "version": 1,
+          "file": "l2-w01-card-goodbye-v1.png",
+          "fileSha256": "cf8900d54a38ba0c6d58ab51acfe4704c1e8568080f09ec3172a704d2ed3fe1c",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "cf8900d54a38ba0c6d58ab51acfe4704c1e8568080f09ec3172a704d2ed3fe1c",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w01-card-goodbye-line-v1.png",
+            "fileSha256": "379fc0d0822083dc16e486f384c51453c13d2f3c4feccfc7501ff974d32c3c90",
+            "colorFile": "l2-w01-card-goodbye-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "379fc0d0822083dc16e486f384c51453c13d2f3c4feccfc7501ff974d32c3c90",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w01-card-goodbye-v1.png",
+      "selectedSha256": "cf8900d54a38ba0c6d58ab51acfe4704c1e8568080f09ec3172a704d2ed3fe1c",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w01-card-boy",
+      "week": 1,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "boy",
+      "sourcePrompt": "Pat (drawn young, about five years old) stands and smiles. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w01-card-boy",
+      "directory": "w01",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w01-card-boy",
+          "version": 1,
+          "file": "l2-w01-card-boy-v1.png",
+          "fileSha256": "abcb0f23b155a4c216a147d5661332c88dbf8c62aa7031acff764cfec5cb5d00",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "abcb0f23b155a4c216a147d5661332c88dbf8c62aa7031acff764cfec5cb5d00",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w01-card-boy-line-v1.png",
+            "fileSha256": "bb19e2fc32b606ac4017e2e9875795297f1f16ebcdce90da21a489f387c0fcb4",
+            "colorFile": "l2-w01-card-boy-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "bb19e2fc32b606ac4017e2e9875795297f1f16ebcdce90da21a489f387c0fcb4",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w01-card-boy-v1.png",
+      "selectedSha256": "abcb0f23b155a4c216a147d5661332c88dbf8c62aa7031acff764cfec5cb5d00",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w01-card-girl",
+      "week": 1,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "girl",
+      "sourcePrompt": "Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers, stands and smiles. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w01-card-girl",
+      "directory": "w01",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w01-card-girl",
+          "version": 1,
+          "file": "l2-w01-card-girl-v1.png",
+          "fileSha256": "de2aab38a716b7c96d76a1d7b65c3ceac1e1706495e2b0df5d97a2fc55dddc4e",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "de2aab38a716b7c96d76a1d7b65c3ceac1e1706495e2b0df5d97a2fc55dddc4e",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w01-card-girl-line-v1.png",
+            "fileSha256": "b7676451f28707d644cc3f5ca0a570e999b02cd7ab63d6fd541107d82269fc52",
+            "colorFile": "l2-w01-card-girl-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "b7676451f28707d644cc3f5ca0a570e999b02cd7ab63d6fd541107d82269fc52",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w01-card-girl-v1.png",
+      "selectedSha256": "de2aab38a716b7c96d76a1d7b65c3ceac1e1706495e2b0df5d97a2fc55dddc4e",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w01-card-teacher",
+      "week": 1,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "teacher",
+      "sourcePrompt": "Teacher Kim stands and smiles. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w01-card-teacher",
+      "directory": "w01",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w01-card-teacher",
+          "version": 1,
+          "file": "l2-w01-card-teacher-v1.png",
+          "fileSha256": "5c76f4c0979be120ab79c518e1d06ba8c55d8c9d012c0f2ed720cf2251710ac0",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "5c76f4c0979be120ab79c518e1d06ba8c55d8c9d012c0f2ed720cf2251710ac0",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w01-card-teacher-line-v1.png",
+            "fileSha256": "a2004c2d3c57fdd79adb8eccd37c4bd0bd44b5d3aba4716452084acad605b551",
+            "colorFile": "l2-w01-card-teacher-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "a2004c2d3c57fdd79adb8eccd37c4bd0bd44b5d3aba4716452084acad605b551",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w01-card-teacher-v1.png",
+      "selectedSha256": "5c76f4c0979be120ab79c518e1d06ba8c55d8c9d012c0f2ed720cf2251710ac0",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w04-card-mom",
+      "week": 4,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "mom",
+      "sourcePrompt": "Mom stands and smiles. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w04-card-mom",
+      "directory": "w04",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w04-card-mom",
+          "version": 1,
+          "file": "l2-w04-card-mom-v1.png",
+          "fileSha256": "130c8a0087191a37330f6095979c9ae748ce21c2298393dff365c0268d111278",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "130c8a0087191a37330f6095979c9ae748ce21c2298393dff365c0268d111278",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w04-card-mom-line-v1.png",
+            "fileSha256": "8203a69ba47f4ce665266728f194181f9c567cdbd209faebadfa3cd3d59b145a",
+            "colorFile": "l2-w04-card-mom-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "8203a69ba47f4ce665266728f194181f9c567cdbd209faebadfa3cd3d59b145a",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w04-card-mom-v1.png",
+      "selectedSha256": "130c8a0087191a37330f6095979c9ae748ce21c2298393dff365c0268d111278",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w04-card-dad",
+      "week": 4,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "dad",
+      "sourcePrompt": "Dad stands and smiles. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w04-card-dad",
+      "directory": "w04",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w04-card-dad",
+          "version": 1,
+          "file": "l2-w04-card-dad-v1.png",
+          "fileSha256": "f01113ea407b13db5d1b767b8bae5dda754ca9100777493ae9b460fe587b776d",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "f01113ea407b13db5d1b767b8bae5dda754ca9100777493ae9b460fe587b776d",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w04-card-dad-line-v1.png",
+            "fileSha256": "fb301e88ce559a98d84f889192d5b7515824f0d9cefe2eca8236ce6994551488",
+            "colorFile": "l2-w04-card-dad-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "fb301e88ce559a98d84f889192d5b7515824f0d9cefe2eca8236ce6994551488",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w04-card-dad-v1.png",
+      "selectedSha256": "f01113ea407b13db5d1b767b8bae5dda754ca9100777493ae9b460fe587b776d",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w04-card-brother",
+      "week": 4,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "brother",
+      "sourcePrompt": "Tom (drawn young, about eight years old) stands and smiles. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w04-card-brother",
+      "directory": "w04",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w04-card-brother",
+          "version": 1,
+          "file": "l2-w04-card-brother-v1.png",
+          "fileSha256": "dcc1cfd12fd776404d6aff8090f4f52148ea3ddbbf459491eaccfe4c0b637a7b",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "dcc1cfd12fd776404d6aff8090f4f52148ea3ddbbf459491eaccfe4c0b637a7b",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w04-card-brother-line-v1.png",
+            "fileSha256": "bb348b5e4ead986b02e0431fdf43732f65301c18950e6c81fb395abb52a6a287",
+            "colorFile": "l2-w04-card-brother-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "bb348b5e4ead986b02e0431fdf43732f65301c18950e6c81fb395abb52a6a287",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w04-card-brother-v1.png",
+      "selectedSha256": "dcc1cfd12fd776404d6aff8090f4f52148ea3ddbbf459491eaccfe4c0b637a7b",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w04-card-sister",
+      "week": 4,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "sister",
+      "sourcePrompt": "Lily (drawn young, about five years old) stands and smiles. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w04-card-sister",
+      "directory": "w04",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w04-card-sister",
+          "version": 1,
+          "file": "l2-w04-card-sister-v1.png",
+          "fileSha256": "f5af1f1400ddfd2d8e667114049a7af3ba709997cfc510865dcf50c883377870",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "f5af1f1400ddfd2d8e667114049a7af3ba709997cfc510865dcf50c883377870",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w04-card-sister-line-v1.png",
+            "fileSha256": "f9f9b0dbb48c20ba35d584e2fdf435d93511275169ebd9c1c39aa1400d3a397d",
+            "colorFile": "l2-w04-card-sister-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "f9f9b0dbb48c20ba35d584e2fdf435d93511275169ebd9c1c39aa1400d3a397d",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w04-card-sister-v1.png",
+      "selectedSha256": "f5af1f1400ddfd2d8e667114049a7af3ba709997cfc510865dcf50c883377870",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w04-card-grandma",
+      "week": 4,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "grandma",
+      "sourcePrompt": "Grandma stands and smiles. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w04-card-grandma",
+      "directory": "w04",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w04-card-grandma",
+          "version": 1,
+          "file": "l2-w04-card-grandma-v1.png",
+          "fileSha256": "fe8ed8b60e635dbdeee9159332e6d408ad2afa74246136a5ae827ff9647fe3af",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "fe8ed8b60e635dbdeee9159332e6d408ad2afa74246136a5ae827ff9647fe3af",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w04-card-grandma-line-v1.png",
+            "fileSha256": "6f93476cdfd2efee0118e4f74b798c49a40b17668f71ee9aaef69ce1153acd63",
+            "colorFile": "l2-w04-card-grandma-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "6f93476cdfd2efee0118e4f74b798c49a40b17668f71ee9aaef69ce1153acd63",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w04-card-grandma-v1.png",
+      "selectedSha256": "fe8ed8b60e635dbdeee9159332e6d408ad2afa74246136a5ae827ff9647fe3af",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w04-card-grandpa",
+      "week": 4,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "grandpa",
+      "sourcePrompt": "Grandpa stands and smiles. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w04-card-grandpa",
+      "directory": "w04",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w04-card-grandpa",
+          "version": 1,
+          "file": "l2-w04-card-grandpa-v1.png",
+          "fileSha256": "69303b1dc092109d4d51b51ea6713b12de2324b9d40684cb88cf6478fb690ec1",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "69303b1dc092109d4d51b51ea6713b12de2324b9d40684cb88cf6478fb690ec1",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w04-card-grandpa-line-v1.png",
+            "fileSha256": "6923768a3042ce73940dbd54525343acd48d3a68d572c5fef256aed145ebe2a1",
+            "colorFile": "l2-w04-card-grandpa-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "6923768a3042ce73940dbd54525343acd48d3a68d572c5fef256aed145ebe2a1",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w04-card-grandpa-v1.png",
+      "selectedSha256": "69303b1dc092109d4d51b51ea6713b12de2324b9d40684cb88cf6478fb690ec1",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w07-card-doll",
+      "week": 7,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "doll",
+      "sourcePrompt": "A small rag doll with yellow yarn hair and a red dress. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w07-card-doll",
+      "directory": "w07",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w07-card-doll",
+          "version": 1,
+          "file": "l2-w07-card-doll-v1.png",
+          "fileSha256": "ee7228f9253df1815a10d5e345cfa0f39959176198de00b3d6a55acbb2ef81f9",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "ee7228f9253df1815a10d5e345cfa0f39959176198de00b3d6a55acbb2ef81f9",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w07-card-doll-line-v1.png",
+            "fileSha256": "d8caa9c3fc8cfc702e52f62a1de8da71e16aacbe62e0b5e198f0c3457c30e1fc",
+            "colorFile": "l2-w07-card-doll-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "d8caa9c3fc8cfc702e52f62a1de8da71e16aacbe62e0b5e198f0c3457c30e1fc",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w07-card-doll-v1.png",
+      "selectedSha256": "ee7228f9253df1815a10d5e345cfa0f39959176198de00b3d6a55acbb2ef81f9",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w07-card-car",
+      "week": 7,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "car",
+      "sourcePrompt": "A small red toy car with four black wheels. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w07-card-car",
+      "directory": "w07",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w07-card-car",
+          "version": 1,
+          "file": "l2-w07-card-car-v1.png",
+          "fileSha256": "34dbe03bdccef8c2cddea14b035709dcccd784a004351767eaea4cef3879447c",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "34dbe03bdccef8c2cddea14b035709dcccd784a004351767eaea4cef3879447c",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w07-card-car-line-v1.png",
+            "fileSha256": "2bac8879979da8986239b81c2e36c966f2c7688f665bb4e965f9e77871aa0ce5",
+            "colorFile": "l2-w07-card-car-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "2bac8879979da8986239b81c2e36c966f2c7688f665bb4e965f9e77871aa0ce5",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w07-card-car-v1.png",
+      "selectedSha256": "34dbe03bdccef8c2cddea14b035709dcccd784a004351767eaea4cef3879447c",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w07-card-train",
+      "week": 7,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "train",
+      "sourcePrompt": "A small green toy train. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w07-card-train",
+      "directory": "w07",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w07-card-train",
+          "version": 1,
+          "file": "l2-w07-card-train-v1.png",
+          "fileSha256": "cb017bf3293fa856d6041dfef96b4784ba659ab80df442eeb36aa187c489a9a2",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "cb017bf3293fa856d6041dfef96b4784ba659ab80df442eeb36aa187c489a9a2",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w07-card-train-line-v1.png",
+            "fileSha256": "359668cf610dd2b662777bdf0aaa901f78051bd0aa4ebb40d47d44ce5f8a665b",
+            "colorFile": "l2-w07-card-train-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "359668cf610dd2b662777bdf0aaa901f78051bd0aa4ebb40d47d44ce5f8a665b",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w07-card-train-v1.png",
+      "selectedSha256": "cb017bf3293fa856d6041dfef96b4784ba659ab80df442eeb36aa187c489a9a2",
+      "status": "ready"
+    },
+    {
+      "id": "l2-w07-card-teddy",
+      "week": 7,
+      "bookKind": "readalong",
+      "bookTitle": "",
+      "page": 0,
+      "text": "teddy",
+      "sourcePrompt": "Pat's small brown teddy bear. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere.",
+      "characters": [],
+      "sourcePackage": "",
+      "sourceSha256": "",
+      "slug": "l2-w07-card-teddy",
+      "directory": "w07",
+      "use": "small",
+      "size": "small",
+      "candidates": [
+        {
+          "jobId": "l2-w07-card-teddy",
+          "version": 1,
+          "file": "l2-w07-card-teddy-v1.png",
+          "fileSha256": "3c9ae3bf36374b00b33435b6c5bf740428b70032bbbcd72b9c1aa4399ecbaa42",
+          "status": "ready",
+          "structural": {
+            "valid": true,
+            "width": 1500,
+            "height": 1500,
+            "sha256": "3c9ae3bf36374b00b33435b6c5bf740428b70032bbbcd72b9c1aa4399ecbaa42",
+            "errors": []
+          },
+          "reviews": {},
+          "lineArt": {
+            "file": "l2-w07-card-teddy-line-v1.png",
+            "fileSha256": "96cddf4a87d0742dc84072a3fb57041c14131f3d87df53130ef1910758e0a718",
+            "colorFile": "l2-w07-card-teddy-v1.png",
+            "renderEvidenceFile": "",
+            "status": "ready",
+            "structural": {
+              "valid": true,
+              "width": 1500,
+              "height": 1500,
+              "sha256": "96cddf4a87d0742dc84072a3fb57041c14131f3d87df53130ef1910758e0a718",
+              "errors": []
+            },
+            "errors": []
+          },
+          "failures": []
+        }
+      ],
+      "selectedVersion": 1,
+      "selectedFile": "l2-w07-card-teddy-v1.png",
+      "selectedSha256": "3c9ae3bf36374b00b33435b6c5bf740428b70032bbbcd72b9c1aa4399ecbaa42",
+      "status": "ready"
+    }
+  ],
+  "batches": [
+    {
+      "id": "w02/color",
+      "week": 2,
+      "bookKind": "readalong",
+      "outputKind": "color",
+      "files": [
+        {
+          "file": "l2-w02-card-astronaut-v1.png",
+          "sha256": "8fb891a2a00a2272618c6bfe6a7e17e75ca3e5972d61f2e04d9efa2f5b1ffc44"
+        },
+        {
+          "file": "l2-w02-card-fan-v1.png",
+          "sha256": "b5fbbe6f42a8bd4ce42a9d76f0ac50e03441b15cdb9a18650c0c0d297902dc81"
+        }
+      ],
+      "sha256": "411bb22ae305fdd2537ca9912a0a34b34c6460075fd834c15de034d431195864"
+    },
+    {
+      "id": "w02/lineart",
+      "week": 2,
+      "bookKind": "readalong",
+      "outputKind": "lineart",
+      "files": [
+        {
+          "file": "l2-w02-card-astronaut-line-v1.png",
+          "sha256": "2de6c90afebed81de73cff6b06167d161bbb980e2036353a92cdcbaf451901e7"
+        },
+        {
+          "file": "l2-w02-card-fan-line-v1.png",
+          "sha256": "92d4a6ef937e2a21153e912b784ea7da6d9764e2de66d9b92921e96e3e002034"
+        }
+      ],
+      "sha256": "168d08b3ee93acf9baa397df9de2a3c45dea4fcde8c3e526ee73d12bba267f5a"
+    },
+    {
+      "id": "w03/color",
+      "week": 3,
+      "bookKind": "readalong",
+      "outputKind": "color",
+      "files": [
+        {
+          "file": "l2-w03-card-cap-v1.png",
+          "sha256": "a8de8ebd17660fab7b63b94c6d1fb53973981a6f4afc82f9bcd7f0eb83fb7342"
+        },
+        {
+          "file": "l2-w03-card-pineapple-v1.png",
+          "sha256": "f62202f166239c1d879fd305d5b408825449f1c74149f479be8e04d694642ff7"
+        },
+        {
+          "file": "l2-w03-card-sheep-v1.png",
+          "sha256": "4af5223c8971061a6eacf86f8c718df329337921308b0ca47e962a890358700a"
+        }
+      ],
+      "sha256": "8189cddb19c2e299f8c0571270d4aed738b21cd0e774185171f4f62e3cf76a55"
+    },
+    {
+      "id": "w03/lineart",
+      "week": 3,
+      "bookKind": "readalong",
+      "outputKind": "lineart",
+      "files": [
+        {
+          "file": "l2-w03-card-cap-line-v1.png",
+          "sha256": "d5e5ab77aae95f087be4138601a0e7371817cb78ba7dd914312a356db22b1695"
+        },
+        {
+          "file": "l2-w03-card-pineapple-line-v1.png",
+          "sha256": "d972a9c7d1aa308b84cb654c1da9880254d02f856d5f9455bf6020b4411870cc"
+        },
+        {
+          "file": "l2-w03-card-sheep-line-v1.png",
+          "sha256": "df57baca35bbb3af947f140fe9092d0b29229fc5d944c1ee723e5eb3d9151a0e"
+        }
+      ],
+      "sha256": "9d88a3bd9d67310be1174a39759b5c8a5aa6ba2c499e5c05ba27123314820424"
+    },
+    {
+      "id": "w04/color",
+      "week": 4,
+      "bookKind": "readalong",
+      "outputKind": "color",
+      "files": [
+        {
+          "file": "l2-w04-card-brother-v1.png",
+          "sha256": "dcc1cfd12fd776404d6aff8090f4f52148ea3ddbbf459491eaccfe4c0b637a7b"
+        },
+        {
+          "file": "l2-w04-card-dad-v1.png",
+          "sha256": "f01113ea407b13db5d1b767b8bae5dda754ca9100777493ae9b460fe587b776d"
+        },
+        {
+          "file": "l2-w04-card-grandma-v1.png",
+          "sha256": "fe8ed8b60e635dbdeee9159332e6d408ad2afa74246136a5ae827ff9647fe3af"
+        },
+        {
+          "file": "l2-w04-card-grandpa-v1.png",
+          "sha256": "69303b1dc092109d4d51b51ea6713b12de2324b9d40684cb88cf6478fb690ec1"
+        },
+        {
+          "file": "l2-w04-card-jam-v1.png",
+          "sha256": "d8b4ecc2864fd369fa70a898af00ca249f3ef7c916e391cbf2eb301fb5fbf90a"
+        },
+        {
+          "file": "l2-w04-card-mom-v1.png",
+          "sha256": "130c8a0087191a37330f6095979c9ae748ce21c2298393dff365c0268d111278"
+        },
+        {
+          "file": "l2-w04-card-sister-v1.png",
+          "sha256": "f5af1f1400ddfd2d8e667114049a7af3ba709997cfc510865dcf50c883377870"
+        }
+      ],
+      "sha256": "9ce1d2033ee5be27a0a7ee8e9ac071d5619873e1a77c82c74e15c2d5202f71f4"
+    },
+    {
+      "id": "w04/lineart",
+      "week": 4,
+      "bookKind": "readalong",
+      "outputKind": "lineart",
+      "files": [
+        {
+          "file": "l2-w04-card-brother-line-v1.png",
+          "sha256": "bb348b5e4ead986b02e0431fdf43732f65301c18950e6c81fb395abb52a6a287"
+        },
+        {
+          "file": "l2-w04-card-dad-line-v1.png",
+          "sha256": "fb301e88ce559a98d84f889192d5b7515824f0d9cefe2eca8236ce6994551488"
+        },
+        {
+          "file": "l2-w04-card-grandma-line-v1.png",
+          "sha256": "6f93476cdfd2efee0118e4f74b798c49a40b17668f71ee9aaef69ce1153acd63"
+        },
+        {
+          "file": "l2-w04-card-grandpa-line-v1.png",
+          "sha256": "6923768a3042ce73940dbd54525343acd48d3a68d572c5fef256aed145ebe2a1"
+        },
+        {
+          "file": "l2-w04-card-jam-line-v1.png",
+          "sha256": "bbda45328bf0a6dad6e79c66fcd54b91806f9efec4af0c9387c1385cfb9b6775"
+        },
+        {
+          "file": "l2-w04-card-mom-line-v1.png",
+          "sha256": "8203a69ba47f4ce665266728f194181f9c567cdbd209faebadfa3cd3d59b145a"
+        },
+        {
+          "file": "l2-w04-card-sister-line-v1.png",
+          "sha256": "f9f9b0dbb48c20ba35d584e2fdf435d93511275169ebd9c1c39aa1400d3a397d"
+        }
+      ],
+      "sha256": "8923b66356f3abe325c5df77432486bf682181bf0dbee1246403723b599a9044"
+    },
+    {
+      "id": "w05/color",
+      "week": 5,
+      "bookKind": "readalong",
+      "outputKind": "color",
+      "files": [
+        {
+          "file": "l2-w05-card-dress-v1.png",
+          "sha256": "588fc16163035167543396f209bf39efdbd7bf3081c580a22d81e0bbbc78cbd0"
+        },
+        {
+          "file": "l2-w05-card-sad-v1.png",
+          "sha256": "31cd472629ce09d84015e95efd7dd90add25c51ac3f5e6d5e9c71db5b2ea8594"
+        },
+        {
+          "file": "l2-w05-card-sandwich-v1.png",
+          "sha256": "d63d15e218aa12724cac67ebd5e72901fb21f5339d3e624b5b37d7a2153d9f85"
+        }
+      ],
+      "sha256": "78b71041f74e092cd7f61a224728066d04b40b6fb2057209376a6bc1537a79b6"
+    },
+    {
+      "id": "w05/lineart",
+      "week": 5,
+      "bookKind": "readalong",
+      "outputKind": "lineart",
+      "files": [
+        {
+          "file": "l2-w05-card-dress-line-v1.png",
+          "sha256": "292aec2d207e297cdf6ef989c964521b9af41450cf64256c361b521f619dd4d3"
+        },
+        {
+          "file": "l2-w05-card-sad-line-v1.png",
+          "sha256": "22d2f182129295de12446a90ca1feee436821e6fe7d8c9ed84bd63934b444987"
+        },
+        {
+          "file": "l2-w05-card-sandwich-line-v1.png",
+          "sha256": "b405e382ac1e65fc263924df45c8e28cbb801355175c8641c774933d9f1153a2"
+        }
+      ],
+      "sha256": "efb7d97b41605e60ebc014fc43923acfb2e1609f87c5866087122dbef2f6cfd2"
+    },
+    {
+      "id": "w06/color",
+      "week": 6,
+      "bookKind": "readalong",
+      "outputKind": "color",
+      "files": [
+        {
+          "file": "l2-w06-card-boat-v1.png",
+          "sha256": "bff3ebb71950e17ca85bd1a1d64c5fd54aa3013886d77067f10d13074b0f6e92"
+        },
+        {
+          "file": "l2-w06-card-tomato-v1.png",
+          "sha256": "79ff763f57c1f3dd21136f6e95eaf9d82a8603968e6fe1ab229e63fec8e17e93"
+        }
+      ],
+      "sha256": "eabe402783d067e13cf4d4b80c24889c4c27f57d3d2fcc1ccd50588b9570a4e9"
+    },
+    {
+      "id": "w06/lineart",
+      "week": 6,
+      "bookKind": "readalong",
+      "outputKind": "lineart",
+      "files": [
+        {
+          "file": "l2-w06-card-boat-line-v1.png",
+          "sha256": "23e7712130687c2b59f979e5cc03be870bf34b32923250702144c5e66575cdff"
+        },
+        {
+          "file": "l2-w06-card-tomato-line-v1.png",
+          "sha256": "09e4bd463abec8b744e6ec42871178e645b4d68337577d963c9a3d0f4631e72b"
+        }
+      ],
+      "sha256": "2198bf08bcfab9de9256521252a2fca40eac6cb80be0a0a1dcf4bd29da212769"
+    },
+    {
+      "id": "w07/color",
+      "week": 7,
+      "bookKind": "readalong",
+      "outputKind": "color",
+      "files": [
+        {
+          "file": "l2-w07-card-car-v1.png",
+          "sha256": "34dbe03bdccef8c2cddea14b035709dcccd784a004351767eaea4cef3879447c"
+        },
+        {
+          "file": "l2-w07-card-doll-v1.png",
+          "sha256": "ee7228f9253df1815a10d5e345cfa0f39959176198de00b3d6a55acbb2ef81f9"
+        },
+        {
+          "file": "l2-w07-card-mop-v1.png",
+          "sha256": "887c6d0347de2cc8a6315de36dd67e723349792afe632e2f561c579bec070570"
+        },
+        {
+          "file": "l2-w07-card-otter-v1.png",
+          "sha256": "0eff0b69ec32e1009891df1345695b90e0e97094760804bc29e22fd3451612d1"
+        },
+        {
+          "file": "l2-w07-card-pot-v1.png",
+          "sha256": "824b8ad2ef72edd9db989e988ba5821e6e9912c679a2a7dfb61ca66c1f77113e"
+        },
+        {
+          "file": "l2-w07-card-teddy-v1.png",
+          "sha256": "3c9ae3bf36374b00b33435b6c5bf740428b70032bbbcd72b9c1aa4399ecbaa42"
+        },
+        {
+          "file": "l2-w07-card-train-v1.png",
+          "sha256": "cb017bf3293fa856d6041dfef96b4784ba659ab80df442eeb36aa187c489a9a2"
+        }
+      ],
+      "sha256": "34d14948d58a8a1f874ff81fd377f16a067cab3346cffe5a01f592824008752b"
+    },
+    {
+      "id": "w07/lineart",
+      "week": 7,
+      "bookKind": "readalong",
+      "outputKind": "lineart",
+      "files": [
+        {
+          "file": "l2-w07-card-car-line-v1.png",
+          "sha256": "2bac8879979da8986239b81c2e36c966f2c7688f665bb4e965f9e77871aa0ce5"
+        },
+        {
+          "file": "l2-w07-card-doll-line-v1.png",
+          "sha256": "d8caa9c3fc8cfc702e52f62a1de8da71e16aacbe62e0b5e198f0c3457c30e1fc"
+        },
+        {
+          "file": "l2-w07-card-mop-line-v1.png",
+          "sha256": "4ae58b049c3d6d5da23c916b6fe751d5e22940430b5c66eb77f8e64055953976"
+        },
+        {
+          "file": "l2-w07-card-otter-line-v1.png",
+          "sha256": "18e27950a4eafbb52c7e809cf32813068cf8b38963cbbed3658ae8af306e8a60"
+        },
+        {
+          "file": "l2-w07-card-pot-line-v1.png",
+          "sha256": "121029557ebea712be0d4ca015cfdb7bd1fc67c610d0ca8f5c13924d5137867e"
+        },
+        {
+          "file": "l2-w07-card-teddy-line-v1.png",
+          "sha256": "96cddf4a87d0742dc84072a3fb57041c14131f3d87df53130ef1910758e0a718"
+        },
+        {
+          "file": "l2-w07-card-train-line-v1.png",
+          "sha256": "359668cf610dd2b662777bdf0aaa901f78051bd0aa4ebb40d47d44ce5f8a665b"
+        }
+      ],
+      "sha256": "62f5fc36ff65a49161929010538e8b476a47dd8bf30bd85c7871a39ef6e22a9c"
+    },
+    {
+      "id": "w01/color",
+      "week": 1,
+      "bookKind": "readalong",
+      "outputKind": "color",
+      "files": [
+        {
+          "file": "l2-w01-card-boy-v1.png",
+          "sha256": "abcb0f23b155a4c216a147d5661332c88dbf8c62aa7031acff764cfec5cb5d00"
+        },
+        {
+          "file": "l2-w01-card-girl-v1.png",
+          "sha256": "de2aab38a716b7c96d76a1d7b65c3ceac1e1706495e2b0df5d97a2fc55dddc4e"
+        },
+        {
+          "file": "l2-w01-card-goodbye-v1.png",
+          "sha256": "cf8900d54a38ba0c6d58ab51acfe4704c1e8568080f09ec3172a704d2ed3fe1c"
+        },
+        {
+          "file": "l2-w01-card-hello-v1.png",
+          "sha256": "daf4aadaa888c76eb33f9e81225d1644253b9d3a98cb352bc61372f81359ee96"
+        },
+        {
+          "file": "l2-w01-card-teacher-v1.png",
+          "sha256": "5c76f4c0979be120ab79c518e1d06ba8c55d8c9d012c0f2ed720cf2251710ac0"
+        }
+      ],
+      "sha256": "5bf43bdeb1049c611f2d605dda2994e1298a83cb585bd21e2b50f95d0ea86739"
+    },
+    {
+      "id": "w01/lineart",
+      "week": 1,
+      "bookKind": "readalong",
+      "outputKind": "lineart",
+      "files": [
+        {
+          "file": "l2-w01-card-boy-line-v1.png",
+          "sha256": "bb19e2fc32b606ac4017e2e9875795297f1f16ebcdce90da21a489f387c0fcb4"
+        },
+        {
+          "file": "l2-w01-card-girl-line-v1.png",
+          "sha256": "b7676451f28707d644cc3f5ca0a570e999b02cd7ab63d6fd541107d82269fc52"
+        },
+        {
+          "file": "l2-w01-card-goodbye-line-v1.png",
+          "sha256": "379fc0d0822083dc16e486f384c51453c13d2f3c4feccfc7501ff974d32c3c90"
+        },
+        {
+          "file": "l2-w01-card-hello-line-v1.png",
+          "sha256": "0b84ecb7e9617aaa739276ec152f0091b3c57d4cabb7b3a716c786150f167d43"
+        },
+        {
+          "file": "l2-w01-card-teacher-line-v1.png",
+          "sha256": "a2004c2d3c57fdd79adb8eccd37c4bd0bd44b5d3aba4716452084acad605b551"
+        }
+      ],
+      "sha256": "2db381ee45678db3b7afb83e2162887cc42e4ecb844fa1b4612afb6c42fc3302"
+    }
+  ]
+}

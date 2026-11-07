@@ -1,0 +1,276 @@
+{
+  "version": 1,
+  "pictureListSha256": "ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf",
+  "entries": [
+    {
+      "rowId": "l2-w02-card-fan",
+      "version": 1,
+      "colorPrint": "l2-w02-card-fan-m1-color-print.png",
+      "linePrint": "l2-w02-card-fan-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w03-card-sheep",
+      "version": 1,
+      "colorPrint": "l2-w03-card-sheep-m1-color-print.png",
+      "linePrint": "l2-w03-card-sheep-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w03-card-cap",
+      "version": 1,
+      "colorPrint": "l2-w03-card-cap-m1-color-print.png",
+      "linePrint": "l2-w03-card-cap-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w04-card-jam",
+      "version": 1,
+      "colorPrint": "l2-w04-card-jam-m1-color-print.png",
+      "linePrint": "l2-w04-card-jam-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w05-card-dress",
+      "version": 1,
+      "colorPrint": "l2-w05-card-dress-m1-color-print.png",
+      "linePrint": "l2-w05-card-dress-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w05-card-sad",
+      "version": 1,
+      "colorPrint": "l2-w05-card-sad-m1-color-print.png",
+      "linePrint": "l2-w05-card-sad-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w06-card-boat",
+      "version": 1,
+      "colorPrint": "l2-w06-card-boat-m1-color-print.png",
+      "linePrint": "l2-w06-card-boat-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w07-card-pot",
+      "version": 1,
+      "colorPrint": "l2-w07-card-pot-m1-color-print.png",
+      "linePrint": "l2-w07-card-pot-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w07-card-mop",
+      "version": 1,
+      "colorPrint": "l2-w07-card-mop-m1-color-print.png",
+      "linePrint": "l2-w07-card-mop-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w02-card-astronaut",
+      "version": 1,
+      "colorPrint": "l2-w02-card-astronaut-m1-color-print.png",
+      "linePrint": "l2-w02-card-astronaut-m1-line-print-2.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r4-line-t2.json"
+      ]
+    },
+    {
+      "rowId": "l2-w03-card-pineapple",
+      "version": 1,
+      "colorPrint": "l2-w03-card-pineapple-m1-color-print.png",
+      "linePrint": "l2-w03-card-pineapple-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w05-card-sandwich",
+      "version": 1,
+      "colorPrint": "l2-w05-card-sandwich-m1-color-print.png",
+      "linePrint": "l2-w05-card-sandwich-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w06-card-tomato",
+      "version": 1,
+      "colorPrint": "l2-w06-card-tomato-m1-color-print.png",
+      "linePrint": "l2-w06-card-tomato-m1-line-print-2.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r2-line-t2.json"
+      ]
+    },
+    {
+      "rowId": "l2-w07-card-otter",
+      "version": 1,
+      "colorPrint": "l2-w07-card-otter-m1-color-print.png",
+      "linePrint": "l2-w07-card-otter-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w01-card-hello",
+      "version": 1,
+      "colorPrint": "l2-w01-card-hello-m1-color-print.png",
+      "linePrint": "l2-w01-card-hello-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w01-card-goodbye",
+      "version": 1,
+      "colorPrint": "l2-w01-card-goodbye-m1-color-print.png",
+      "linePrint": "l2-w01-card-goodbye-m1-line-print-2.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color-goodbye-second.json; judge-cards-cards-r4-line-t2.json"
+      ]
+    },
+    {
+      "rowId": "l2-w01-card-boy",
+      "version": 1,
+      "colorPrint": "l2-w01-card-boy-m1-color-print.png",
+      "linePrint": "l2-w01-card-boy-m1-line-print-2.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r4-line-t2.json"
+      ]
+    },
+    {
+      "rowId": "l2-w01-card-girl",
+      "version": 1,
+      "colorPrint": "l2-w01-card-girl-m1-color-print.png",
+      "linePrint": "l2-w01-card-girl-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w01-card-teacher",
+      "version": 1,
+      "colorPrint": "l2-w01-card-teacher-m1-color-print.png",
+      "linePrint": "l2-w01-card-teacher-m1-line-print-2.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r4-line-t2.json"
+      ]
+    },
+    {
+      "rowId": "l2-w04-card-mom",
+      "version": 1,
+      "colorPrint": "l2-w04-card-mom-m1-color-print.png",
+      "linePrint": "l2-w04-card-mom-m1-line-print-2.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r4-line-t2.json"
+      ]
+    },
+    {
+      "rowId": "l2-w04-card-dad",
+      "version": 1,
+      "colorPrint": "l2-w04-card-dad-m1-color-print.png",
+      "linePrint": "l2-w04-card-dad-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w04-card-brother",
+      "version": 1,
+      "colorPrint": "l2-w04-card-brother-m1-color-print.png",
+      "linePrint": "l2-w04-card-brother-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w04-card-sister",
+      "version": 1,
+      "colorPrint": "l2-w04-card-sister-m1-color-print.png",
+      "linePrint": "l2-w04-card-sister-m1-line-print-2.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r4-line-t2.json"
+      ]
+    },
+    {
+      "rowId": "l2-w04-card-grandma",
+      "version": 1,
+      "colorPrint": "l2-w04-card-grandma-m1-color-print.png",
+      "linePrint": "l2-w04-card-grandma-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w04-card-grandpa",
+      "version": 1,
+      "colorPrint": "l2-w04-card-grandpa-m1-color-print.png",
+      "linePrint": "l2-w04-card-grandpa-m1-line-print-2.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r4-line-t2.json"
+      ]
+    },
+    {
+      "rowId": "l2-w07-card-doll",
+      "version": 1,
+      "colorPrint": "l2-w07-card-doll-m1-color-print.png",
+      "linePrint": "l2-w07-card-doll-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w07-card-car",
+      "version": 1,
+      "colorPrint": "l2-w07-card-car-m1-color-print.png",
+      "linePrint": "l2-w07-card-car-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line-car-second.json"
+      ]
+    },
+    {
+      "rowId": "l2-w07-card-train",
+      "version": 1,
+      "colorPrint": "l2-w07-card-train-m1-color-print.png",
+      "linePrint": "l2-w07-card-train-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w07-card-teddy",
+      "version": 1,
+      "colorPrint": "l2-w07-card-teddy-m1-color-print.png",
+      "linePrint": "l2-w07-card-teddy-m1-line-print.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json; judge-cards-cards-r1-line.json"
+      ]
+    },
+    {
+      "rowId": "l2-w04-card-family",
+      "version": 1,
+      "colorPrint": "l2-w04-card-family-m1-color-print.png",
+      "linePrint": "l2-w04-card-family-m1-line-print-4.png",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): measure/runs/asset_storytime_l2_card_line_retry_20261107/judge-cards-retry-family-t4.json; stroke width 12 px (gate 12 px)"
+      ]
+    }
+  ]
+}

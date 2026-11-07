@@ -1,0 +1,20 @@
+
+## 2026-11-07T03:10:34.659Z
+
+Picture list /home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json SHA-256 ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf.
+Rows in the list: 227.
+Approval list /home/daniebo/Desktop/advantage-forge/measure/runs/asset_storytime_l2_card_line_retry_20261107/approved-v2.json: 30 entries.
+Skipped l2-w04-card-ham (The approval list has no entry for l2-w04-card-ham; the row is not clean and gets no job.)
+Skipped rows: 197 (all outside the card rows).
+Wrote 14 batches to /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/cards/delivery-muse-v2.
+Delivered PNG files: 60.
+manifest.json SHA-256: e60b10efb37e7e5754d9205038b7b17b16c53b59a08e28ecb14ce6861d1fc6f6.
+v1 PNG files: 58.
+Old file comparisons: 116 (expected 116), mismatches 0.
+l2-w04-card-family-v1.png: 1500 x 1500, channels 3, alpha false, depth uchar.
+l2-w04-card-family-line-v1.png: 1500 x 1500, channels 1, alpha false, depth uchar.
+inspectLineArtPng of l2-w04-card-family-line-v1.png: valid true, errors [].
+corner l2-w04-card-ham-v1.png (the ham color print): TL 255 TR 254 BL 254 BR 255 lowest 254
+corner l2-w04-card-family-v1.png: TL 255 TR 255 BL 247 BR 255 lowest 247
+corner l2-w04-card-family-line-v1.png: TL 255 TR 255 BL 255 BR 255 lowest 255
+Corner record: /home/daniebo/Desktop/advantage-forge/measure/runs/asset_storytime_l2_card_line_retry_20261107/corner-record-v2.txt
