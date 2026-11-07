@@ -1,0 +1,49 @@
+# Phase 1 acceptance log: asset_storytime_l2_family_words_20261107
+
+Role: measure-phase-acceptance (light lane). Track: asset_storytime_l2_family_words_20261107.
+Phase: Phase 1: Family-word specs, judge flag, and delivery writer.
+Audited HEAD: 9eb453c3dc3f986220dd1b4ee6b30e4086b67d79. Role base: the same commit.
+Phase base: 893db8598328eb6689a4266c5c5d4b29247df20a.
+
+## Result
+
+Status pass. Blocking findings: 0. Nonblocking findings: 1 (F1 Nit).
+
+## Checks
+
+- HEAD equals the supplied audited HEAD.
+- The 18 spec files match the specification tables: ids, text, fields, references, outDir,
+  printSize [1500, 1500], deliverAs, and no linePrompt. Every reference path exists.
+- The prompts hold pure white, no text, no letters, rated G, and the cast and pointing rules.
+  Body-part rows show a child who points to the named part. The friend row shows two children.
+- The forbidden-word grep prints no line.
+- The cards folder holds 31 files.
+- The judge flag diff adds --family-words, the family-words folder, the CARD_RUN.startTime try
+  start, and the both-flag error before any write. The --cards behavior is unchanged.
+- The writer diff is 178 insertions and 0 deletions. deliverMuseColorSet holds the delivery and
+  manifest rules of the specification. writeMuseDelivery and deliverMuseCover are unchanged.
+- The frozen paths show no diff. No PNG or JPG file is in git since the phase base. Every changed
+  file is in the allowed set of test-strategy.md section 6.
+- GREEN_TEST_COMMAND: exit 0, Test Files 8 passed (8), Tests 124 passed (124) (37 new, 87 old).
+- TYPECHECK_COMMAND: owned tsc errors 0, tsc errors total 38.
+- Each functional requirement has a test that fails when the behavior breaks (FS4, FS7, FS3,
+  FJ2/FJ3/FJ5/FJ6, FD3 and FD6 to FD12).
+
+## Finding
+
+F1 [Nit] plan.md Task 3 says the writer adds 163 lines. git diff --numstat 893db859..HEAD gives
+178 0 for src/storytime/muse-delivery.ts. The number is stale and changes no behavior.
+
+MEASURE_AGENT_RESULT
+role: measure-phase-acceptance
+status: complete
+track: asset_storytime_l2_family_words_20261107
+phase: Phase 1: Family-word specs, judge flag, and delivery writer
+commits: none
+tests_run: GREEN_TEST_COMMAND exit 0, Test Files 8 passed (8), Tests 124 passed (124); TYPECHECK_COMMAND owned tsc errors 0, total 38
+files_changed: measure/runs/asset_storytime_l2_family_words_20261107/acceptance-p1-9eb453c.json, measure/runs/asset_storytime_l2_family_words_20261107/acceptance-p1-9eb453c.log
+plan_updates: none
+known_failures: none
+handoff: pass at HEAD 9eb453c3. One Nit: plan.md Task 3 says 163 added lines, the diff gives 178. Route F1 to the plan owner. Phase 2 may start.
+dispositions: none
+END_MEASURE_AGENT_RESULT

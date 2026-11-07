@@ -1,7 +1,6 @@
 # Storytime Level 2 family-word pictures (19 words)
 
-Status: created, awaiting spec review (2026-11-07). No picture exists yet except the family
-picture of the card track.
+Status: delivered, awaiting Daniel's look on 11-16 (2026-11-07). 19 of 19 family-word pictures delivered.
 The [specification](./spec.md) owns the scope and the acceptance gates.
 
 ## Method and ownership
@@ -20,8 +19,8 @@ The [specification](./spec.md) owns the scope and the acceptance gates.
   means hold. Record `lock wait over 600 s` and stop the run.
 - No song or video command runs.
 - Spend limit: the guard cap of 1.60 USD in total for `costs.tsv`, which means 0.86 USD for this
-  track. The card track spent 0.74 USD in 74 calls. Spend of this track so far: 0.00 USD. No Muse
-  call ran.
+  track. The card track spent 0.74 USD in 74 calls. Spend of this track: 0.21 USD in 21 Muse calls.
+  The total of `costs.tsv` is 0.95 USD in 95 calls.
 - The delivery is model evidence. It is not acceptance. No text may claim that Daniel or Workbooks
   accepted a picture.
 - Defaults recorded by the author (each one is open to a PM change):
@@ -38,9 +37,9 @@ PM 2026-11-03: light lane. The PM put this whole track on the light lane on 2026
 
 `[x]` means complete. `[~]` means in progress. `[b]` means blocked, with a trailing
 `deferred:<owner>` field. The orchestrator changes `[b]` to `[~]` when the blocker clears and the
-task starts. The author set every work task to `[b]` because no work task has started. The blocker
-of Tasks 1 to 3 is the spec review (Gate S). The blocker of Tasks 4 to 7 is the acceptance of
-Phase 1.
+task starts. The author set every work task to `[b]` because no work task had started. The blocker
+of Tasks 1 to 3 was the spec review (Gate S). The blocker of Tasks 4 to 7 was the acceptance of
+Phase 1. Every work task is now `[x]`.
 
 ### Lanes and roles
 
@@ -56,8 +55,8 @@ Phase 1.
 
 ## Phase 0: Authoring and spec review [checkpoint: 893db859]
 
-- [x] Task 0: Author the track: specification, plan, metadata, index, spec review note, and the
-  registry entry. The creation commit has the message
+- [x] Task 0 (19220fda): Author the track: specification, plan, metadata, index, spec review
+  note, and the registry entry. The creation commit has the message
   `measure(storytime_l2_family_words): create the track`.
 - [x] Gate S (d77957f9): Spec review by `measure-spec-review` before Red starts (paraphrase,
   zoom-out check, and zero-decision check). The result is
@@ -65,8 +64,8 @@ Phase 1.
   The test strategy follows from the strategy role after the spec review.
 
 The Measure doctor of this repository counts only the markers `[ ]`, `[~]`, and `[x]`. It does not
-count `[b]`. Task 0 is complete (`[x]`). Gate S stays `[~]` until the spec review passes, so the
-plan keeps an open item for the doctor.
+count `[b]`. Task 0 is complete (`[x]`). Gate S is complete (`[x]`), so the plan holds no open
+item for the doctor.
 
 ## Phase 1: Family-word specs, judge flag, and delivery writer [checkpoint: 9eb453c]
 
@@ -129,9 +128,10 @@ plan keeps an open item for the doctor.
   - The test file of Task 2 held three type errors. Its helper now takes an object. The tests of
     Task 2 changed no behavior.
   - No Muse call and no provider call ran in this phase. Spend stays 0.00 USD.
-- [b] Phase 1 gates: phase acceptance by the checker at an immutable HEAD. deferred:checker
-  The light lane gives no review gate. The blocker of this gate was Tasks 1 to 3, and those tasks
-  are done.
+- [x] Phase 1 gates (9eb453c3): phase acceptance by the checker passed at 9eb453c3.
+  - Evidence: `measure/runs/asset_storytime_l2_family_words_20261107/acceptance-p1-9eb453c.json`.
+  - The light lane gives no review gate. The blocker of this gate was Tasks 1 to 3, and those tasks
+    are done.
 
 ## Phase 2: Family-word pictures and delivery
 
@@ -237,15 +237,23 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     19 family-word pictures delivered; spend 0.21 USD (total 0.95 USD of the 1.60 USD card
     limit)." The record names the three try 2 decisions, the family reuse, the 7 defaults, the
     corner list of the 12 files below 250, and the legs row as the weakest pointing picture.
-- [b] Phase 2 gate: phase acceptance by the checker at an immutable HEAD. deferred:checker
+- [x] Phase 2 gate (dcb9dd6e): phase acceptance by the checker passed at dcb9dd6e.
+  - Evidence: `measure/runs/asset_storytime_l2_family_words_20261107/acceptance-p2-dcb9dd6.json`.
+  - Checker findings and orchestrator dispositions: F1 [Major] legs pointing weak: DECLINE; the
+    fingertips touch the legs (both judges and the checker), the row keeps 1 try, and the PM report
+    names legs for Daniel's 11-16 look. F2 [Major] test-strategy P2-3 text against the three
+    try-2 decisions: DECLINE; the decisions are recorded under Task 5 and in the PM report. F3 to
+    F6 [Nit]: recorded, no change.
 
 ## Track-level roles
 
-- [b] Final acceptance at an immutable HEAD after all phase gates. deferred:Phase 2 gate
-- [b] Closeout: archive the track, update the registry, run the generator and the doctor, and
-  commit the run records in `measure/runs/asset_storytime_l2_family_words_20261107/`. Foreign
-  generated facts stay out of the closeout commit unless their owner has committed them.
-  deferred:Final acceptance
+- [b] Final acceptance: not run under the light lane (PM 2026-11-03 rule 3; PM 2026-11-07: one
+  maker, one checker). deferred:PM
+- [x] Closeout (dcb9dd6e): archive the track, update the registry, and run the doctor. Archived
+  2026-11-07; the closeout commit follows dcb9dd6e. The generator does not run because
+  measure/generated/ holds foreign changes. The run records in
+  `measure/runs/asset_storytime_l2_family_words_20261107/` are committed. Foreign generated facts
+  stay out of the closeout commit unless their owner has committed them.
 
 ## Human gate
 

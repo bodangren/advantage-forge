@@ -1,0 +1,73 @@
+# Spec Review Log: asset_storytime_l2_family_words_20261107
+
+Date: 2026-11-07
+Round: 2
+Reviewer: measure-spec-review, opencode-go/deepseek-v4.1-flash (substitution: the role table names Kimi, which is at 81.8% weekly).
+Author model: claude-code/claude-sonnet-5-5#high (Anthropic). The reviewer family differs.
+Baseline and audited HEAD: d77957f959056b5859137ae23207968518f76428 (git rev-parse HEAD matches).
+Standard: /home/daniebo/.agents/skills/measure/references/spec-review.md.
+Contract: /home/daniebo/.agents/skills/measure-orchestrator/references/contracts.md.
+Round 1 record: measure/runs/asset_storytime_l2_family_words_20261107/spec-review-19220fd.json.
+
+## Revision under review
+
+`git diff 19220fda..d77957f9` changes only `spec.md` and `plan.md` of this track: 53 insertions and 11 deletions. No picture, cost, code, or test file changed.
+
+## What this track proposes
+
+The track draws 19 color pictures for Storytime Level 2 family words. Eighteen new rows use the Storytime Muse color path and the frozen Sonnet judge at card size. The family row reuses the color print of the card track. The track delivers 1500 x 1500 PNG files named l2-w0N-card-<word>-v1.png to the handoff folder, with manifest.json, MANIFEST.txt (SHA-256), and a contact sheet. The work stays inside the remaining 0.86 USD of the 1.60 USD card limit and reports one status line to the PM by 2026-11-10.
+
+## How the current system works, per this spec
+
+The current system has the Storytime Muse path in scripts/storytime-muse.mjs and one guard module, scripts/storytime-muse-guards.mjs. That module owns CARD_RUN: cap 1.60 USD, start 2026-11-06, 3 tries, and the card Muse folder. It classifies each spec outDir and checks spend and tries before each provider call. scripts/storytime-judge-batch.mjs builds judge batches from a spec folder, and it has a --cards mode. src/storytime/muse-delivery.ts holds writeMuseDelivery for list rows with color and line prints, and deliverMuseCover for one cover entry. The new writer builds one StorytimeJob per row from the pinned Manifest job values table, because the 18 new ids are not list rows.
+
+## Closure of round 1 findings
+
+- F1 [Blocker] manifest job fields: CLOSED. spec.md adds the section "Manifest job values". The table pins id, week, directory, bookKind, bookTitle, page, text, sourcePrompt, characters, sourcePackage, sourceSha256, slug, use, and size for the 19 jobs. The delivery entry now holds text and sourcePrompt, and plan Task 6 names their source. FR-5 adds a test that pins every job value for a person row, an animal row, and the family row, and checks the color batch only.
+  - Author check: the pinned values match the card delivery record out/storytime/l2/unit1/cards/delivery-muse-v1/manifest.json:1490-1503 for l2-w07-card-teddy. That job holds week 7, bookKind readalong, empty bookTitle, page 0, characters [], empty sourcePackage and sourceSha256, slug equal to the id, directory w07, use small, and size small. The table states the same values.
+  - The section records the one difference from the card delivery: sourcePrompt holds the spec goal, because the 18 new rows have no list prompt.
+- F2 [Nit] FR-12 wording: CLOSED. FR-12 now permits the phrase "the approved Storytime Muse path" and states that it names the method, not a picture. The Overview uses that exact phrase.
+- F3 [Nit] judge cost-file sentence: CLOSED. The Judge batch input section now states that the tool reads out/storytime/l2/unit1/cards/muse/costs.tsv to find the tries and writes no cost file.
+
+## New-open-decision check
+
+The revision adds one refusal: a rowId outside the form l2-w0N-card-<word>. FR-5 covers that case. The 19 fixed ids all match the form, so the refusal leaves no open choice that changes the delivery. The revision adds no new flag, dependency, path, or schema field without a stated value.
+
+## Zoom-out check
+
+1. Root problem: the app shows 19 family words as text only. The spec draws those pictures. Pass.
+2. Speculative feature: the new judge flag serves the new spec folder. Pass.
+3. Premature optimization: none. Pass.
+4. Reuse: CARD_RUN, classifyOutDir, inspectColorPrint, PICTURE_SIZES.small, assembleManifest, deliverMuseCover, and writeMuseDelivery. Pass.
+5. Correct place: docs/storytime/l2-unit1/family-words/, src/storytime/muse-delivery.ts, and scripts/storytime-judge-batch.mjs. Pass.
+6. Requirement level: the revision moves the manifest mapping to the requirement level with a value table. Pass.
+
+## Zero-decision check
+
+1. Schema: every StorytimeJob value is pinned. Pass.
+2. API and CLI shape: --family-words is fully stated, with the error for --cards and exit code 1. Pass.
+3. Dependency: no new dependency. Pass.
+4. Edge-case behavior: duplicate row, bad row id, folder part, symlink, existing file, size, alpha, judge controls, failed rows, and white corners are stated. Pass.
+5. File location: every file and folder is named. Pass.
+
+## Findings
+
+- None.
+
+## Verdict
+
+Status: pass. Round 1 F1, F2, and F3 are closed. The revision adds no new open decision. The track may start Red after the test strategy.
+
+MEASURE_AGENT_RESULT
+role: spec-review
+status: complete
+track: asset_storytime_l2_family_words_20261107
+phase: track setup
+commits: none
+tests_run: python3 -m json.tool measure/runs/asset_storytime_l2_family_words_20261107/spec-review-d77957f.json (pass); no code tests ran.
+files_changed: measure/runs/asset_storytime_l2_family_words_20261107/spec-review-d77957f.json; measure/runs/asset_storytime_l2_family_words_20261107/spec-review-d77957f.log
+plan_updates: none
+known_failures: none
+handoff: Verdict pass, retry none. F1 is closed by the Manifest job values table and the FR-5 test item. The table matches the card delivery manifest record for l2-w07-card-teddy. F2 is closed by the FR-12 exception for "the approved Storytime Muse path". F3 is closed by the corrected judge input sentence. No new open decision. Gate S may close, and the strategy role writes test-strategy.md.
+dispositions: none
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,22 @@
+{
+  "track_id": "asset_storytime_l2_family_words_20261107",
+  "type": "feature",
+  "status": "done",
+  "created_at": "2026-11-07T00:00:00Z",
+  "updated_at": "2026-11-07T00:54:25Z",
+  "completed": "2026-11-07",
+  "description": "Storytime Level 2 family-word pictures: 19 color pictures (friend, family, 7 body parts, 7 animals, 3 toys) with the Muse path and the Sonnet judge, delivery with manifest and contact sheet, spend inside the remaining 0.86 USD of the 1.60 USD card limit",
+  "estimated_tasks": 7,
+  "actual_tasks": 8,
+  "deviation_notes": "Created from the PM request of 2026-11-07 (follows the archived track asset_storytime_l2_cards_20261106, which is not a dependency id because it is archived) (spend: the remaining 0.86 USD of the card limit of 1.60 USD that Daniel gave on 2026-11-06 with 'Go'). Phase 1 is the standard lane. Phase 2 is the light lane of 2026-11-03. The family picture reuses the card-track color file; no Muse call runs for it. The 18 new rows write their tries to the card Muse folder, so the existing guard enforces the cap with no change to CARD_RUN. The 18 spec files sit in docs/storytime/l2-unit1/family-words/ because a card spec test pins the cards folder to 31 files. No line art and no Drive backup. The delivery is model evidence, not acceptance. Daniel sees the pictures in his 11-16 check. The registry entry is staged through a blob because measure/tracks.md holds a foreign uncommitted hunk. The generator is not run because measure/generated/ holds foreign changes. Whole track on the PM light lane from 2026-11-07 (one maker, one checker; no Red, reviews, adversarial, or final acceptance). 19 of 19 delivered. Arms, legs, and feet delivered at color try 2: orchestrator decision, the try 1 pictures did not show the child pointing to the part (PM rule). Spend 0.21 USD in 21 Muse calls (total 0.95 USD of the 1.60 USD card limit). 12 files have a corner below 250 (report item). Route substitutions are in the role logs of measure/runs/asset_storytime_l2_family_words_20261107/.",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [
+    "tests/fixtures/storytime/pictures-v7.json",
+    "docs/storytime/l2-unit1/family-words/",
+    "out/storytime/l2/unit1/family-words/delivery-muse-v1/manifest.json",
+    "/home/daniebo/Desktop/handoff/storytime-l2-family-word-pictures/MANIFEST.txt",
+    "measure/runs/asset_storytime_l2_family_words_20261107/"
+  ],
+  "dependencies": []
+}

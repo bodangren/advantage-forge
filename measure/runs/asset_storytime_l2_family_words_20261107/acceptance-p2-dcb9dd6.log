@@ -1,0 +1,78 @@
+Phase acceptance, Phase 2: Family-word pictures and delivery
+Track: asset_storytime_l2_family_words_20261107
+Audited HEAD: dcb9dd6eb9b1ff0f7bb5e96e815b260753fb8a82 (equal to role_base_sha)
+phase_base_sha: 9eb453c3dc3f986220dd1b4ee6b30e4086b67d79
+Role: measure-phase-acceptance, light lane. Model: claude-code/claude-sonnet-5-5#high (image input needed).
+
+Verdict: pass. Blockers: 0. Major: 2 (F1, F2). Nit: 4 (F3 to F6).
+
+operating rules: pass
+  a: pools ran with --concurrency 4 at totals below 1.40 USD (maker log lines 49 and 56).
+  b: highest new row cost 0.01 USD. The file maximum for new rows is 0.01 USD.
+  c: maker log quotes "refused lines: 0" for each run.
+  e: costs.tsv header keeps time and usage_cost. head -n 75 sha256 equals the logged value.
+  f: spend-record.txt holds the report-point lines. No stop at 0.80 USD.
+
+P2-1 preconditions: pass. Four lines at 2026-11-06T23:39:31Z, before the first new row (23:51:05Z).
+P2-2 calibration: pass. Both controls fail. Time 23:39:40Z, before the first judge result.
+P2-3 judge and print link: pass with note F2. Every delivered row has a pass record for its version.
+P2-4 tries and order: pass. max tries per id: 2. 21 new rows, color only, 18 ids, no family call.
+P2-5 spend: pass. track spend 0.21, total 0.95, total calls 95. Equal to spend-record.txt.
+P2-6 manifest and bytes: pass. 19 OK. Folders equal. 19 jobs. No lineart batch.
+P2-7 sizes: pass. files checked 19, gate problems 0. color files below 250: 12 (report item, listed in pm-report and MANIFEST).
+P2-8 contact sheet: pass with notes F1, F3, F4. 19 tiles, 5 in a row, a word under each tile.
+P2-9 wording: pass. No acceptance claim.
+P2-10 forbidden words: pass. No hit in the spec files, pm-report, MANIFEST.txt, maker log.
+P2-11 frozen paths: pass. P2-12 file set: pass (only run folder, 3 specs, 3 fw batch files, plan.md).
+P2-13 no picture in git: pass (0). P2-14 card delivery untouched: pass (65699fb5, 31 files).
+P2-15 secret scan: pass. P2-16 PM report: pass with note F5.
+P2-17 maker script scope: pass. make-handoff.mts writes only to the handoff folder. deliver-family-words.mts writes only corner-record.txt and calls deliverMuseColorSet. No key text, no process.env.
+
+Per-card lines (one line each):
+friend: Pat and Nan side by side, both smile, two children only, cast looks match, white background.
+eyes: Nan, finger at one eye, both eyes clear, one child, cast look matches.
+ears: Pat, finger at the right ear, both ears show, one child, cast look matches. Faint gray corners (215).
+nose: Nan, finger on the nose, one child, cast look matches.
+hands: Pat, open raised hand, other hand points toward the raised arm (F3), one child, cast look matches.
+arms: Nan, one arm out to the side, finger of the other hand on that arm, one child, cropped at the bottom (F4).
+legs: Pat standing, arms at the sides, fingertips at the shorts hem (F1), one child, cast look matches.
+feet: Nan sitting, legs out, fingertip on the toe of one shoe, one child, cast look matches.
+cat: one orange tabby cat, green eyes, no text.
+dog: one brown and cream puppy, floppy ears, red collar, no text. Not compared to the Pip reference file.
+bird: one small blue bird, no text.
+fish: one blue and yellow fish, no text.
+frog: one green frog, no text.
+duck: one white duck with an orange bill, no text.
+horse: one white horse, cream mane, no text.
+ball: one red and yellow striped ball, no text.
+kite: one red and yellow kite with a bow tail, no text.
+drum: one small red drum with two sticks, no text.
+family: six persons (woman, man, grandmother, grandfather, boy, girl), white background, no text.
+All 19 pictures are rated G. No letter or number shows in any picture.
+
+Findings:
+F1 [Major] legs picture: fingertips rest at the shorts hem, hands hang at the sides. Pointing is weak against the PM rule. The PM report names it. The orchestrator decides (a third try costs 0.01 USD).
+F2 [Major] test-strategy P2-3 text: arms, legs, feet delivered at m2 although m1 had a judge pass. The plan records the orchestrator decision. The strategy text still says an earlier try needs a confirmed fail.
+F3 [Nit] hands picture: the pointing hand aims at the raised arm, not at the open hand. Sandals cut at the bottom edge.
+F4 [Nit] eyes, nose, arms pictures cropped at the bottom frame. Pat and Nan render style varies between cards.
+F5 [Nit] pm-report.md has no "Defaults taken:" line at its end (heading in the middle). Content present.
+F6 [Nit] plan.md keeps earlier numbers (19 calls, 0.93 USD, 10 files, round 4) next to the final ones.
+
+Not applicable: A3, A4, A6, A7 (the phase diff changed no contract test, filter, or registry). A5 passes.
+The shell tool refused commands with awk and with diff or a /tmp redirect. The checker used python3 -I, cmp-free comparisons, and sha256sum lists instead.
+
+Questions for the orchestrator: none that block. Default for F1 and F2: keep the delivery and report both to the PM.
+
+MEASURE_AGENT_RESULT
+role: measure-phase-acceptance
+status: complete
+track: asset_storytime_l2_family_words_20261107
+phase: Phase 2: Family-word pictures and delivery
+commits: none
+tests_run: no project test suite run (light lane, read-only checks); sha256sum -c on MANIFEST.txt 19 OK, costs.tsv sum 0.95 USD, git hygiene checks pass
+files_changed: measure/runs/asset_storytime_l2_family_words_20261107/acceptance-p2-dcb9dd6.json, measure/runs/asset_storytime_l2_family_words_20261107/acceptance-p2-dcb9dd6.log
+plan_updates: none (gate-only role)
+known_failures: none blocking; F1 and F2 Major, F3 to F6 Nit
+handoff: Verdict pass at dcb9dd6e with 0 blockers. The orchestrator decides F1 (legs pointing weak) and F2 (P2-3 text versus the three try-2 decisions). P2-17 passes (maker scripts read). Marking the Phase 2 gate in the plan stays with the orchestrator.
+dispositions: none
+END_MEASURE_AGENT_RESULT

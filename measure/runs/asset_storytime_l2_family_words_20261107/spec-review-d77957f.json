@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Round 2 passes with no open finding. The revision d77957f9 closes F1 with a Manifest job values table that pins all StorytimeJob fields for the 19 rows and an FR-5 test item. The table matches the card delivery manifest record for l2-w07-card-teddy. F2 is closed: FR-12 now permits the phrase \"the approved Storytime Muse path\", and the Overview uses that phrase. F3 is closed: the judge input states that the tool reads the card costs.tsv and writes no cost file. The revision adds no new open decision.",
+  "audited_head_sha": "d77957f959056b5859137ae23207968518f76428",
+  "role_base_sha": "d77957f959056b5859137ae23207968518f76428",
+  "paraphrase": {
+    "proposes": "The track draws 19 color pictures for Storytime Level 2 family words. Eighteen new rows use the Storytime Muse color path and the frozen Sonnet judge at card size. The family row reuses the color print of the card track. The track delivers 1500 x 1500 PNG files named l2-w0N-card-<word>-v1.png to the handoff folder, with manifest.json, MANIFEST.txt (SHA-256), and a contact sheet. The work stays inside the remaining 0.86 USD of the 1.60 USD card limit and reports one status line to the PM by 2026-11-10.",
+    "current_system": "The current system has the Storytime Muse path in scripts/storytime-muse.mjs and one guard module, scripts/storytime-muse-guards.mjs. That module owns CARD_RUN: cap 1.60 USD, start 2026-11-06, 3 tries, and the card Muse folder. It classifies each spec outDir and checks spend and tries before each provider call. scripts/storytime-judge-batch.mjs builds judge batches from a spec folder, and it has a --cards mode. src/storytime/muse-delivery.ts holds writeMuseDelivery for list rows with color and line prints, and deliverMuseCover for one cover entry. The new writer builds one StorytimeJob per row from the pinned Manifest job values table, because the 18 new ids are not list rows."
+  },
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "git rev-parse HEAD gives d77957f959056b5859137ae23207968518f76428, equal to role_base_sha.",
+    "git diff 19220fda..d77957f9 changes only spec.md and plan.md of this track.",
+    "F1 withdrawn: spec.md now has the section \"Manifest job values\". The table pins id, week, directory, bookKind, bookTitle, page, text, sourcePrompt, characters, sourcePackage, sourceSha256, slug, use, and size for the 19 jobs. The delivery entry now holds text and sourcePrompt, and plan Task 6 names their source. FR-5 pins every job value for a person row, an animal row, and the family row, and checks the color batch only.",
+    "The pinned values match the card delivery record out/storytime/l2/unit1/cards/delivery-muse-v1/manifest.json:1490-1503 for l2-w07-card-teddy: week 7, readalong, empty bookTitle, page 0, characters [], empty sourcePackage and sourceSha256, slug equal to the id, directory w07, use small, size small.",
+    "F2 withdrawn: FR-12 now permits the phrase \"the approved Storytime Muse path\", and the Overview uses that phrase for the method. The remaining uses name the card pictures or quote the PM request.",
+    "F3 withdrawn: the Judge batch input section now states that the tool reads out/storytime/l2/unit1/cards/muse/costs.tsv to find the tries and writes no cost file.",
+    "The revision adds one refusal, a rowId outside l2-w0N-card-<word>. FR-5 covers it. The 19 fixed ids all match the form, so the refusal leaves no open choice that changes the delivery.",
+    "No picture, cost, or code file changed in the revision.",
+    "Round 1 evidence stays valid: the family PNG SHA-256 and the list v7 fixture SHA-256 match. The cards folder holds 31 spec files. The family color try 1 has a judge pass. CARD_RUN holds the cap and the try limit, and runGuards runs before each provider call."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat 19220fda80a361661db66a781d8a76a1d511e70a d77957f959056b5859137ae23207968518f76428",
+    "git diff 19220fda80a361661db66a781d8a76a1d511e70a d77957f959056b5859137ae23207968518f76428 -- measure/tracks/asset_storytime_l2_family_words_20261107/",
+    "python3 -m json.tool measure/runs/asset_storytime_l2_family_words_20261107/spec-review-d77957f.json"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_family_words_20261107/spec-review-d77957f.json",
+    "measure/runs/asset_storytime_l2_family_words_20261107/spec-review-d77957f.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high"
+}

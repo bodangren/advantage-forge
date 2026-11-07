@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "role": "measure-phase-acceptance",
+  "track": "asset_storytime_l2_family_words_20261107",
+  "phase": "Phase 1: Family-word specs, judge flag, and delivery writer",
+  "lane": "light",
+  "status": "pass",
+  "summary": "Phase 1 passes at HEAD 9eb453c3. The 18 family-word specs match the specification tables, the --family-words judge flag and deliverMuseColorSet behave as specified, the frozen paths are unchanged, every changed file is in the allowed set, the GREEN suite gives 8 files and 124 tests passed, and the typecheck gives 0 owned errors. One Nit finding records a stale line count in the plan text.",
+  "audited_head_sha": "9eb453c3dc3f986220dd1b4ee6b30e4086b67d79",
+  "role_base_sha": "9eb453c3dc3f986220dd1b4ee6b30e4086b67d79",
+  "phase_base_sha": "893db8598328eb6689a4266c5c5d4b29247df20a",
+  "head_is_current": true,
+  "prerequisites": {
+    "same_head": true,
+    "note": "Light lane by PM order of 2026-11-07: no Red, Review A, Review B, Review C, adversarial, or UX review ran. This role is the only check of the phase."
+  },
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] plan.md Task 3: the plan says the writer adds 163 lines; git diff --numstat 893db859..HEAD gives 178 0 for src/storytime/muse-delivery.ts. The number is stale and changes no behavior."
+  ],
+  "evidence": [
+    "A1 Spec files: docs/storytime/l2-unit1/family-words/ holds exactly 18 files. Each file name, id, text, pageText, use, deliverAs, print, aspect, printSize, outDir and key set match the specification table. No file holds linePrompt.",
+    "A2 References: each of the 18 reference sets equals the tables 'Person rows', 'Animal and object rows', and 'Reference files for the people', and every reference path exists in the repository.",
+    "A3 Prompts: each colorPrompt holds pure white, no text, no letters, rated G, and margin. Body-part prompts hold exactly one, index finger, curled, the named part, and both eyes/both ears/palm/five clear short fingers/elbow/both legs/both shoes where the table names them. The friend prompt holds exactly two and both sets of clothes. Nan rows hold orange T-shirt, red shorts, eyelash; Pat rows hold green T-shirt, brown cargo shorts, no teddy bear, no bag.",
+    "A4 Forbidden words: grep -rliwE 'skin|race|racial|ethnic|ethnicity|complexion' docs/storytime/l2-unit1/family-words/ prints no line.",
+    "A5 Cards folder: docs/storytime/l2-unit1/cards/ holds exactly 31 files.",
+    "A6 Judge flag: git diff 893db859..HEAD -- scripts/storytime-judge-batch.mjs scripts/storytime-judge-batch.d.mts adds --family-words, the family-words spec folder, the CARD_RUN.startTime try start, and a both-flag error in parseArgs before buildBatch and before any write. --cards behavior and the specDir option stay as they were.",
+    "A7 Writer: git diff 893db859..HEAD -- src/storytime/muse-delivery.ts is 178 insertions and 0 deletions. deliverMuseColorSet copies each color print byte for byte as <rowId>-v1.png, checks inspectColorPrint against PICTURE_SIZES.small (1500 x 1500, 8-bit, no alpha, 3 channels), refuses duplicate rowId, bad row id, folder part in a file name, symlinked delivery folder, symlinked print, and existing delivered file, throws before commitDelivery, and keeps color batches only. familyWordJob writes the 'Manifest job values' table. writeMuseDelivery and deliverMuseCover keep their code.",
+    "A8 Frozen paths: git diff --name-only 893db859..HEAD prints nothing for scripts/storytime-muse-guards.mjs, scripts/storytime-muse.mjs, docs/storytime/l2-unit1/cards, and docs/storytime/l2-unit1/judge (judge with --diff-filter=MDRT).",
+    "A9 Allowed set: git log --no-merges --name-only 893db859..HEAD lists only measure/tracks/asset_storytime_l2_family_words_20261107/plan.md, measure/runs/asset_storytime_l2_family_words_20261107/*.log, docs/storytime/l2-unit1/family-words/*.json, scripts/storytime-judge-batch.mjs, scripts/storytime-judge-batch.d.mts, src/storytime/muse-delivery.ts, and tests/storytime-family-word-{specs,judge,delivery}.test.ts. No PNG or JPG file appears.",
+    "A10 Test meaning: FS4 (FR-1) fails on a wrong field or key set; FS7 (FR-2) fails on a forbidden word; FS3 (FR-3) fails on a card count other than 31; FJ2, FJ3, FJ5 and FJ6 (FR-4) fail on the wrong spec folder, the wrong try start, an accepted two-flag run, or a changed cards run; FD3, FD6, FD7, FD8, FD9, FD10, FD11 and FD12 (FR-5) fail on a wrong job value, a bad print, a duplicate row, a bad row id, a folder part, an existing file, a symlink, or a partial write.",
+    "A11 Wording: grep for accepted|approved in the track folder and the new test files lists only the PM quotation, 'the approved Storytime Muse path', and negations. No text claims that Daniel or Workbooks accepted a picture.",
+    "A12 Precondition state: out/storytime/l2/unit1/cards/muse/costs.tsv holds 75 lines, which is the header plus the 74 card-track rows of the specification.",
+    "A13 Working tree: no uncommitted file sits under src/, tests/, scripts/, or docs/storytime/. The run at HEAD equals the working-tree run."
+  ],
+  "commands": [
+    "GREEN_TEST_COMMAND: exit 0, Test Files 8 passed (8), Tests 124 passed (124) (37 new + 87 old, 62.77 s)",
+    "TYPECHECK_COMMAND: owned tsc errors: 0, tsc errors total: 38",
+    "forbidden-word-scan: grep -rliwE 'skin|race|racial|ethnic|ethnicity|complexion' docs/storytime/l2-unit1/family-words/ printed no line, exit 1",
+    "frozen-paths: git diff --name-only 893db859..HEAD for the guard file, storytime-muse.mjs, the cards folder, and the judge folder (MDRT) printed nothing"
+  ],
+  "changed_files": [],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "handoff": "F1 [Nit] route to the plan owner: change 163 to 178 in plan.md Task 3, or leave it as a recorded report item. No blocker. Phase 2 may start."
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "track": "asset_storytime_l2_family_words_20261107",
+  "archived_at": "2026-11-07T01:00:50Z",
+  "track_base_sha": "19220fda80a361661db66a781d8a76a1d511e70a",
+  "track_final_sha": "dcb9dd6eb9b1ff0f7bb5e96e815b260753fb8a82",
+  "phase_acceptance_results": [
+    "measure/runs/asset_storytime_l2_family_words_20261107/acceptance-p1-9eb453c.json",
+    "measure/runs/asset_storytime_l2_family_words_20261107/acceptance-p2-dcb9dd6.json"
+  ],
+  "completed_phases": [
+    {
+      "id": "Phase 1",
+      "title": "Family-word specs, judge flag, and delivery writer",
+      "checkpoint": "9eb453c3"
+    },
+    {
+      "id": "Phase 2",
+      "title": "Family-word pictures and delivery",
+      "checkpoint": "dcb9dd6e"
+    }
+  ],
+  "final_acceptance": "not run: the PM put the whole track on the light lane on 2026-11-07 (PM 2026-11-03 light lane, one maker and one checker). PM rule 3 of 2026-11-03 gives no final acceptance under the light lane. The plan records the item as [b] Final acceptance with deferred:PM.",
+  "gates": {
+    "PROJECT_LINT": "pass — bash measure/doctor.sh gives exit 1 with 11 structural errors, and every error names another track (6 'new track has started tasks' lines and 5 'missing registry link' lines); grep for asset_storytime_l2_family_words_20261107 in the doctor output gives exit 1 with no line",
+    "PROJECT_CHECKS": "pass — Phase 1 checker at 9eb453c3: owned tsc errors 0, tsc errors total 38; GREEN suite 8 files passed (8) and 124 tests passed (124), which is 37 new tests and 87 old tests",
+    "PROJECT_TESTS": "pass — Phase 1 GREEN_TEST_COMMAND exit 0 at 9eb453c3 (Test Files 8 passed (8), Tests 124 passed (124)); the phase 2 checker reports no change in src/, scripts/, tests/, the kit, or the cards folder since 9eb453c3, so no test rerun applies to that phase",
+    "SECRET_SCAN": "pass — grep -rnE 'sk-[A-Za-z0-9]{8}|Bearer [A-Za-z0-9]|OPENROUTER_API_KEY=' measure/runs/asset_storytime_l2_family_words_20261107 gives 1 hit. The hit is the word 'Bearer' in audit prose ('Bearer in the run folder and the handoff text files finds no hit'). A credential-shape scan (20 characters or more, and the OPENAI, ANTHROPIC, GEMINI, AKIA, and ghp_ shapes) gives 0 hits. The run folder holds no key and no token",
+    "source": "measure/runs/asset_storytime_l2_family_words_20261107/acceptance-p2-dcb9dd6.json"
+  },
+  "antipatterns_clean": [
+    "A2 consent-blind publish gate — the registry entry, the metadata, the plan, and this manifest name model evidence only; no text says that Daniel or Workbooks accepted a picture",
+    "A3 digit-only count — every gate reads a labeled value (tsc errors total 38, owned 0, Tests 124 passed (124), spend 0.21 USD in 21 calls, total 0.95 USD in 95 calls)",
+    "A4 vacuous pass — the calibration record holds 2 controls and both verdicts are fail, and the two phase checkers read the files, not only the exit codes",
+    "A5 false claim — each pass above quotes its command, its exit code, and a label; the plan and the PM report repeat the recorded spend and file counts",
+    "A6 registry overstatement — the archived registry entry keeps the words 'model evidence, not acceptance' and names the 11-16 look as pending",
+    "A7 over-broad filter — the repo-wide checks quote their scope; the secret scan names the one prose hit and the stricter credential-shape scan that gives 0 hits",
+    "A9 archived track paths — grep for asset_storytime_l2_family_words_20261107 in tests/, scripts/, and src/ gives no hit; the only remaining path text sits in run records",
+    "A10 generated-facts drift — the generator does not run while measure/generated holds foreign changes; the closeout commit holds no generated fact",
+    "A11 doc-to-code drift — the specification tables, the 18 spec files, the judge flag, and the delivery writer agree; the phase 2 checker compares the manifest, the checksums, and the judge records"
+  ],
+  "antipatterns_known_limitations": [
+    "11 structural doctor errors of other tracks; the doctor adds no error for this track",
+    "38 pinned tsc errors of other tracks; the typecheck gate counts 38 total errors and 0 owned errors for this track",
+    "F1 [Major] of the Phase 2 checker, declined: the legs picture shows fingertips at the shorts hem and reads as a boy standing, not a child pointing. The picture keeps 1 call, both judges passed it, and the PM report names legs first in Daniel's 11-16 look",
+    "F2 [Major] of the Phase 2 checker, declined: test-strategy P2-3 still says each earlier try needs a confirmed fail, while the orchestrator applied the PM pointing rule to arms, legs, and feet. The plan and the PM report hold the decision; each row stays at 2 tries of the 3 allowed",
+    "12 of the 19 delivered color files have a corner pixel below 250 (lowest 215, ears). This is a report item, not a delivery gate; Workbooks decides at its check",
+    "The Phase 2 checker also raised F3 to F6 as Nits (hands pointing away from the open hand, bottom-frame crop on three rows, a style difference between cards, a missing 'Defaults taken' line at the end of the PM report, and older plan lines kept beside their updates); the orchestrator recorded them with no change",
+    "measure/generated holds foreign uncommitted changes, so the generator did not run and no generated fact is committed"
+  ],
+  "deferred": [
+    "Human gate: Daniel sees the 19 pictures in his 11-16 check; that check is outside this track (deferred 2026-11-07)",
+    "Final acceptance did not run under the PM light lane (deferred:PM)"
+  ],
+  "deferred_note": "No plan task stays open. Every work task is [x] with a commit SHA. The only [b] line is Final acceptance with a trailing deferred:PM field, and the PM gave the light-lane order.",
+  "tech_debt": [
+    "TD-29 — RB-P4-1 and PA4-N1 — coverCalmTopReport in src/storytime/book-pictures.ts does not confine cover-calm-top --print output paths, resolve real paths, or require a regular file (Low, Open); this track did not use that path",
+    "TD-30 — RB12-01 and RB12-03, PA3-N3 — a parent symlink under out/ can redirect mkdir, and lstat with mkdir is not atomic (Low, Open); deliverMuseColorSet wrote under out/storytime/l2/unit1/family-words/delivery-muse-v1/"
+  ],
+  "tech_debt_note": "No new debt entry is warranted. The track added no debt beyond TD-29 and TD-30, which stay Open. measure/tech-debt.md is unchanged by this closeout.",
+  "lessons_learned": "No lessons-learned entry is warranted. The family-word reuse of the card color print and the try-2 pointing rule are recorded in the plan and the PM report. measure/lessons-learned.md is unchanged by this closeout.",
+  "generated_facts": "not committed: measure/generated holds foreign uncommitted changes; the registry entry in measure/tracks.md is staged through a blob so the foreign Contents hunk stays out",
+  "artifact_cleanup": "no bulky run artifact was deleted; the orchestrator identified none. The run folder holds JSON, log, txt, md, mts, and no PNG or JPG file (find count 0). The phase acceptance results stay in the folder",
+  "evidence_classes": {
+    "person_reviewed": "none recorded for the 19 family-word pictures",
+    "model_evidence_not_acceptance": "The 19 delivered family-word files carry Sonnet judge results and a calibration record. This is model evidence, not acceptance. Daniel sees the pictures at his 11-16 look.",
+    "workbooks_acceptance": "none recorded"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Phase 2 passes at dcb9dd6e. Spend (21 calls, 0.21 USD, total 0.95 USD), judge records, delivery bytes, manifest, checksums, git hygiene, wording, and plan markers all match the records. Calibration failed both controls. No blocker. Two Major notes for the orchestrator: the legs picture shows weak pointing, and P2-3 text differs from the three orchestrator try-2 decisions.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Major] out/storytime/l2/unit1/family-words/delivery-muse-v1/l2-w05-card-legs-v1.png: Pat stands with both arms at his sides. The fingertips rest at the shorts hem, not on a leg. The picture reads as a boy standing, and the PM rule asks for a child pointing to the part. The PM report names legs as the weakest picture. The orchestrator decides whether to keep it or to run try 3 (spend 0.01 USD, a third try is allowed).",
+    "F2 [Major] measure/tracks/asset_storytime_l2_family_words_20261107/test-strategy.md P2-3: arms, legs, and feet delivered at m2 although try m1 of each has a judge pass (judge-fw-r1-color.json). P2-3 says each earlier try needs a confirmed fail. The plan records the orchestrator decision under the PM rule, and each row stays within 3 tries. The strategy text was not updated. The orchestrator decides if this deviation stands.",
+    "F3 [Nit] l2-w05-card-hands-v1.png: the pointing hand aims at the raised upper arm and shoulder and does not touch the open hand. The Pat style is smoother than the cast sheet (the judge noted this). The sandals are cut by the bottom frame.",
+    "F4 [Nit] l2-w05-card-eyes-v1.png, l2-w05-card-nose-v1.png, l2-w05-card-arms-v1.png: the child is cropped by the bottom frame (shorts and legs cut). Pat and Nan differ in render style between cards (smooth, clay, and chibi looks). The hair, clothes, and colors match the cast in every card.",
+    "F5 [Nit] measure/runs/asset_storytime_l2_family_words_20261107/pm-report.md: the file ends with 'Facts changed: none.' but holds no 'Defaults taken:' line at the end. 'Defaults taken' is a heading in the middle, followed by 'Human gate'. The content is present.",
+    "F6 [Nit] measure/tracks/asset_storytime_l2_family_words_20261107/plan.md Task 5 and Task 6: the plan keeps the earlier statements (19 calls, 0.93 USD, 10 corner files, round-4 delivery) beside the later correct ones (21 calls, 0.95 USD, 12 files, round-6 delivery). Each old line is followed by its update, and the final numbers equal the records."
+  ],
+  "evidence": [
+    "HEAD check: git rev-parse HEAD = dcb9dd6eb9b1ff0f7bb5e96e815b260753fb8a82 = audited HEAD and role_base_sha.",
+    "Spend: costs.tsv holds 95 call rows and 0.95 USD (usage_cost column 8). Rows 76-96 of the file (21 rows) sum to 0.21 USD, and the highest new row is 0.01 USD. head -n 75 sha256 = 64b6cc96ec3aedf7bee799874af5a24c3c04b433a959d2e2c1202bca05e9572c, equal to the maker log value.",
+    "Tries: the 21 new rows are all kind color, for the 18 new ids. Arms, legs, and feet have 2 rows. The other 15 ids have 1 row. The family id has 0 new rows. Maximum tries per id = 2. spend-record.txt states calls 21, track spend 0.21, total 0.95, total calls 95, and the report-point lines.",
+    "Preconditions: the maker log holds the four labeled lines at 2026-11-06T23:39:31Z. The first new cost row is 2026-11-06T23:51:05Z. The list v7 and family sha values equal the pins.",
+    "Calibration: calibration-record.json holds 2 controls, both verdict fail, status complete, time 2026-11-06T23:39:40Z. This is before the first judge result (23:57:51Z). The kit paths have no M/D/R/T change since the phase base.",
+    "Judge: judge-fw-r1-color.json = 18 files, 18 pass (15 delivered at m1). Arms m2 pass in judge-fw-r2-color-arms.json. Legs m2 and feet m2 pass in judge-fw-r2-color-legs-feet.json. The family m1 pass is in judge-cards-cards-r1-color.json. Every delivered row has a pass record for its delivered version. The ids with a try-1 pass that was overruled by the orchestrator are in F2.",
+    "Delivery: handoff folder holds 22 entries: 19 PNG named l2-w0N-card-<word>-v1.png for the 19 PM words, manifest.json, MANIFEST.txt, and the contact sheet. file shows 1500 x 1500, 8-bit/color RGB, non-interlaced for all 19 (no alpha). The delivery folder holds 20 entries (19 PNG and manifest.json). The sha256sum lists of both folders are identical.",
+    "MANIFEST: grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c - gave 19 OK and 0 not OK. manifest.json holds 19 jobs with week, directory, bookKind readalong, empty bookTitle, page 0, empty characters, empty sourcePackage and sourceSha256, slug = id, use small, size small. Candidate versions are 2 for arms, legs, and feet and 1 for the others. The color batches are w01, w05, w06, w07, w04 and no lineart batch. The family file sha256 = ab6067ee... .",
+    "Corners: corner-record.txt reports files checked 19, gate problems 0, and 12 files below 250 (ears 215, bird 244, family 247, horse 247, kite 247, friend 248, legs 248, dog 248, duck 248, ball 248, feet 249, nose 249). pm-report.md and MANIFEST.txt name the same 12 files and values. The ears contact-sheet cell shows the faint gray corner gradient. This is a report item and not a finding (spec decision).",
+    "Git: git diff --diff-filter=A 9eb453c3..HEAD names 0 PNG or JPG files. Changed files since the phase base are only measure/runs/asset_storytime_l2_family_words_20261107/**, docs/storytime/l2-unit1/family-words (arms, legs, feet specs), docs/storytime/l2-unit1/judge/prod/fw-*.json (3 files), and the track plan.md. No src, scripts, tests, kit, or card change. The card delivery manifest sha256 = 65699fb5... and docs/storytime/l2-unit1/cards holds 31 files.",
+    "Wording: whole-word scan for skin, race, racial, ethnic, ethnicity, complexion finds no hit in the family-words spec files, pm-report.md, MANIFEST.txt, and the maker log. The only hits in track documents are the PM request quote, the FR-2 rule text, and the test-strategy rule text. Scan for accepted or approved in pm-report.md, MANIFEST.txt, delivery-record.txt, and spend-record.txt finds no hit. The text says model evidence, not acceptance. No Daniel or Workbooks acceptance claim. Scan for sk-, OPENROUTER, Bearer in the run folder and the handoff text files finds no hit.",
+    "PM report: the file opens with 'Status: done. 19 of 19 family-word pictures delivered; spend 0.21 USD (total 0.95 USD of the 1.60 USD card limit).' Its numbers equal spend-record.txt and delivery-record.txt (A5 pass). It ends with 'Facts changed: none.' The 'Defaults taken' heading holds 7 items (see F5).",
+    "Plan: Tasks 4, 5, 6, 7 are '[x]' with SHAs cadf975, 501dacf6, 177e4e3, cec85a5 on the first line. All four SHAs resolve to commits. The Phase 2 gate line is '[b] Phase 2 gate: ... deferred:checker'.",
+    "P2-17: make-handoff.mts writes only to the handoff folder (copyFileSync, writeFileSync of the sheet and MANIFEST.txt). deliver-family-words.mts writes only corner-record.txt and calls deliverMuseColorSet. No key text and no process.env in either script.",
+    "A5: plan claims (74 rows, 0.74 USD, 19 OK, 21 calls, 0.21 USD, 0.95 USD, 12 corner files, 1500 x 1500) equal the files. A3, A4, A6, A7 not applicable: the phase diff changed no contract test, filter, or registry file.",
+    "Per-card view (contact sheet and full-size files): friend = Pat (messy black hair, green T-shirt, brown shorts, sandals) and Nan (two buns with red bands, orange star T-shirt, red shorts, white shoes) side by side, both smile, exactly two children. eyes = Nan, finger at the outer corner of one eye, both eyes clear. ears = Pat, finger at the right ear, both ears show, one child. nose = Nan, finger on the nose. hands = Pat, one open raised hand, other hand points toward the raised arm (F3). arms = Nan, one arm straight out to the side, index finger of the other hand on that arm. legs = Pat standing, fingertips at the shorts hem (F1). feet = Nan sitting with legs out, index fingertip on the toe of one shoe. cat = one orange tabby, green eyes. dog = one brown and cream puppy with floppy ears, red collar, gold tag. bird = one small blue bird. fish = one blue and yellow fish. frog = one green frog. duck = one white duck, orange bill. horse = one white horse, cream mane. ball = one red and yellow striped ball. kite = one red and yellow kite with a bow tail. drum = one small red drum with two sticks. family = six persons (woman, man, grandmother, grandfather, boy, girl) on white. No text or number in any picture. All 19 are rated G, on white, one subject per card."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "head -n 75 out/storytime/l2/unit1/cards/muse/costs.tsv | sha256sum",
+    "python3 -I -c '<sum and count of costs.tsv rows, rows 76-96, tries per id>'",
+    "python3 -I -c '<read judge-fw-*.json and judge-cards-cards-r1-color.json verdicts>'",
+    "grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c -   (in the handoff folder: 19 OK)",
+    "sha256sum of delivery folder and handoff folder (lists equal)",
+    "file l2-*.png (19 x 1500 x 1500, 8-bit/color RGB)",
+    "git diff --name-only --diff-filter=A 9eb453c3dc3f986220dd1b4ee6b30e4086b67d79 HEAD | grep -ciE png/jpg (0)",
+    "git diff --name-only 9eb453c3dc3f986220dd1b4ee6b30e4086b67d79 HEAD",
+    "grep -rniwE 'skin|race|racial|ethnic|ethnicity|complexion' (spec files, pm-report, MANIFEST.txt, maker log)",
+    "grep -rniE 'accepted|approved' (pm-report, MANIFEST.txt, delivery-record, spend-record)",
+    "grep -rnE 'sk-|OPENROUTER|Bearer' (run folder, handoff text files)",
+    "sha256sum out/storytime/l2/unit1/cards/delivery-muse-v1/manifest.json (65699fb5...)",
+    "Read: contact sheet, friend, ears, hands, arms, legs, feet, dog PNG files"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_family_words_20261107/acceptance-p2-dcb9dd6.json",
+    "measure/runs/asset_storytime_l2_family_words_20261107/acceptance-p2-dcb9dd6.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "medium"
+}

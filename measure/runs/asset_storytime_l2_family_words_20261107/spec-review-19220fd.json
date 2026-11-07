@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "summary": "The spec solves the root problem and stays inside the PM order, but one zero-decision gap is a Blocker: the delivery writer must build a StorytimeManifest, and the spec gives no StorytimeJob values for the 19 rows. Two Nits cover the FR-12 wording rule and one unclear sentence of the judge input. The spend stop, the 3-try cap, the no-skin rule, the pointing-child rule, the no-text rule, the family reuse, and the no-PNG-in-git rule are all stated and supported by the code and records.",
+  "audited_head_sha": "19220fda80a361661db66a781d8a76a1d511e70a",
+  "role_base_sha": "19220fda80a361661db66a781d8a76a1d511e70a",
+  "paraphrase": {
+    "proposes": "The track draws 19 color pictures for Storytime Level 2 family words. Eighteen new rows use the Storytime Muse color path and the frozen Sonnet judge at card size. The family row reuses the color print of the card track. The track delivers 1500 x 1500 PNG files named l2-w0N-card-<word>-v1.png to the handoff folder, with manifest.json, MANIFEST.txt (SHA-256), and a contact sheet. The work stays inside the remaining 0.86 USD of the 1.60 USD card limit and reports one status line to the PM by 2026-11-10.",
+    "current_system": "The current system has the Storytime Muse path in scripts/storytime-muse.mjs and one guard module, scripts/storytime-muse-guards.mjs. That module owns CARD_RUN: cap 1.60 USD, start 2026-11-06, 3 tries, and the card Muse folder. It classifies each spec outDir and checks spend and tries before each provider call. scripts/storytime-judge-batch.mjs builds judge batches from a spec folder, and it has a --cards mode. src/storytime/muse-delivery.ts holds writeMuseDelivery for list rows with color and line prints, and deliverMuseCover for one cover entry. Eighteen of the 19 words are not rows of list v7; the family word is a card row."
+  },
+  "blocking_findings": [
+    "F1 [Blocker] spec.md Delivery (deliverMuseColorSet): The specification names the entry fields rowId, version, colorPrint, reviews, and notes. It does not give the StorytimeJob values that assembleManifest needs: week, directory, bookKind, page, text, use, and size. rowCaptureJob derives them from a PictureListRow (src/storytime/book-pictures.ts:3639). coverJob hard-codes the cover values (src/storytime/muse-delivery.ts:548). The 18 new ids are not list rows. Rationale: the plan leaves a manifest schema choice to the implementer, and no FR-5 test pins the values, so a wrong manifest can pass every gate."
+  ],
+  "nonblocking_findings": [
+    "F2 [Nit] spec.md FR-12 Wording and Overview: The second sentence of FR-12 permits the word \"approved\" only in the PM quotation and where it names card pictures. The Overview and the Decisions section write \"the approved Storytime Muse path\". Rationale: a wording rule that the specification itself breaks can make the checker report a false finding. The meaning does not change.",
+    "F3 [Nit] spec.md Judge batch input: The sentence \"the cost file is the card cost file named by the spec outDir\" is unclear, because the judge batch reads costs.tsv and writes no cost file. Rationale: the implementer can read it as a new write. The stated behavior is the same as --cards."
+  ],
+  "evidence": [
+    "git rev-parse HEAD gives 19220fda80a361661db66a781d8a76a1d511e70a, equal to role_base_sha.",
+    "sha256sum gives ab6067eedf8de3efebb40509c6032f81f7ecee178b212eac8c3727d40a8bff62 for the family PNG and ba3956fc10de8f0c37ccdbd6cd70b1c11d35a1a67608e0aa3d0fe3d410078ddf for the list v7 fixture. Both match the Inputs table of spec.md.",
+    "docs/storytime/l2-unit1/cards holds 31 spec files. CS3 of tests/storytime-card-specs.test.ts:80 pins exactly 31 names, so the new folder docs/storytime/l2-unit1/family-words/ is the correct place.",
+    "measure/runs/asset_storytime_l2_cards_20261106/judge-cards-cards-r1-color.json:181-187 holds a pass for l2-w04-card-family color try 1.",
+    "out/storytime/l2/unit1/cards/muse/costs.tsv holds 75 lines: one header and 74 call rows. The spec states 74 calls and 0.74 USD.",
+    "scripts/storytime-muse-guards.mjs:44 holds CARD_RUN with capUsd 1.6, reportAtUsd 0.8, maxTries 3, and the card outDir. runGuards (line 260) refuses on spend and try before a call. scripts/storytime-muse.mjs:404 and :414 call it before the key read and before each provider call in the pool.",
+    "PICTURE_SIZES.small is 1500 x 1500 (src/storytime/book-pictures.ts:29). inspectColorPrint (src/storytime/muse-delivery.ts:208) checks PNG, 1500 x 1500, 8-bit, 3 channels, and no alpha.",
+    "All reference files named in spec.md exist, including the Pat render, both Nan references, the cat, dog, fish, and frog views, and the four element sheets.",
+    "The 18 new ids are not rows of tests/fixtures/storytime/pictures-v7.json. l2-w04-card-family is a row.",
+    "Card color prompts hold \"rated G\", \"No text, no letters\", and \"pure white\". The new prompts are required to hold the same phrases and to drop the two card sentences that name skin."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "sha256sum out/storytime/l2/unit1/cards/muse/l2-w04-card-family-m1-color-print.png tests/fixtures/storytime/pictures-v7.json",
+    "python3 -m json.tool measure/runs/asset_storytime_l2_family_words_20261107/spec-review-19220fd.json"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_family_words_20261107/spec-review-19220fd.json",
+    "measure/runs/asset_storytime_l2_family_words_20261107/spec-review-19220fd.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high"
+}
