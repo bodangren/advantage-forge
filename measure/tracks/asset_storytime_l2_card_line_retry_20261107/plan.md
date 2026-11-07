@@ -114,20 +114,23 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`).
 
-- [~] Task 3: Preconditions.
+- [x] Task 3 (cfeefcd2): Preconditions.
+  - Evidence: `measure/runs/asset_storytime_l2_card_line_retry_20261107/maker-p2.log`. All checks
+    pass: the three input SHA-256 values, 95 cost rows at 0.9500 USD, the 58 v1 files, the judge
+    prompt and cast unchanged since `cadf975d`, and the start time after the last cost row.
   - Check and record in the role log: the three SHA-256 values of the section "Inputs"; the
     `costs.tsv` check (95 call rows, 0.95 USD); the SHA-256 of `approved.json` and of the 58 files
     of `delivery-muse-v1`; that the judge kit is unchanged since the calibration record
     (`git diff` of `docs/storytime/l2-unit1/judge/` against the record commit is empty); that
     `CARD_LINE_RETRY_START` is later than the last `costs.tsv` row.
   - If a check fails, stop and report to the PM. No Muse spend.
-- [b] Task 4: Ham line tries. deferred:Task 3
+- [~] Task 4: Ham line tries.
   - Follow the section "Tries, order, and stop rules". Call, measure the width, judge at card
     size (`--cards --kind line --try <n>`), second judge on a fail. Try 4 first, then try 5 only
     if try 4 does not pass. Stop at the first pass or at try 5.
   - Record for each try: the file, the width, the judge result file, the verdict, and the defect
     class.
-- [b] Task 5: Family line tries. deferred:Task 4
+- [~] Task 5: Family line tries.
   - Orchestrator decision 2026-11-07: ham try 4 and family try 4 run in the same round. The two
     rows are independent, so both calls share one judge cycle.
   - Before each call, apply the next step of the ladder (E4 for try 4, E5 for try 5, E6 for try

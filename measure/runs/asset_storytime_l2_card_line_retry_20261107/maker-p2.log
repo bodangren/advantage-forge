@@ -1,0 +1,52 @@
+# Maker log: Phase 2, round 1 (preconditions and try 4 of both rows)
+
+Track: `asset_storytime_l2_card_line_retry_20261107`. Role: `measure-jr-green` (light lane).
+Date: 2026-11-07. Phase base: `93f8021b8ae37dd2489129d54a3828f809a39f60` (the HEAD at the start of
+this role).
+
+Model note: `ra-quota pick green` gave MiniMax, which stopped at its plan limit in the morning of
+2026-11-07. The orchestrator kept DeepSeek (`opencode-go/deepseek-v4.1-flash`) for continuity.
+
+## Task 3: preconditions
+
+Commit of the Task 3 marker: `cfeefcd2`.
+
+### Input SHA-256 values
+
+| File | Measured SHA-256 | Spec value | Result |
+| --- | --- | --- | --- |
+| `out/storytime/l2/unit1/cards/muse/l2-w04-card-ham-m1-color-print.png` | `1b1e93e0bd8251ae1a31a7353bc47c82371485db12b7d829e5638c59d9eb795c` | same | OK |
+| `out/storytime/l2/unit1/cards/muse/l2-w04-card-ham-m1-color.png` | `97444a8d8a03e7b6ae5321d8c88d20a0de7ebf437cb082e34a9fa967630a41f2` | same | OK |
+| `out/storytime/l2/unit1/cards/muse/l2-w04-card-family-m1-color-print.png` | `ab6067eedf8de3efebb40509c6032f81f7ecee178b212eac8c3727d40a8bff62` | same | OK |
+
+### Cost rows and start time
+
+- `out/storytime/l2/unit1/cards/muse/costs.tsv`: 95 call rows and 0.9500 USD.
+- The last row time is `2026-11-07T00:26:13.647Z`. `CARD_LINE_RETRY_START` is
+  `2026-11-07T02:00:00Z`, so the start time is later than the last row. OK.
+- The guard cap is 1.60 USD. The track spend stop is 0.05 USD.
+
+### Approval list and the v1 delivery
+
+- `out/storytime/l2/unit1/cards/muse/approved.json` SHA-256:
+  `151d5c4c8a8d18d9490df4226bd672477463320982735c89bd7fe4885a031910`.
+- `out/storytime/l2/unit1/cards/delivery-muse-v1/manifest.json` SHA-256:
+  `65699fb55d7e106194b6aca9c49fa30afaa2271472a592e84f25ecb9587c1fe2`.
+- The 58 PNG files of `delivery-muse-v1` match the `selectedSha256` and the `lineArt.fileSha256`
+  of their 29 manifest jobs: 58 checked, 0 mismatch. The folder holds 58 PNG files.
+
+### Judge kit against the calibration record
+
+- The calibration record is
+  `measure/runs/asset_storytime_l2_family_words_20261107/calibration-record.json`, commit
+  `cadf975dfc11d26aaebc3e97a0f1f7678a7244e8`.
+- `docs/storytime/l2-unit1/judge/judge-prompt.md` (Version 6, 2026-11-04) and
+  `docs/storytime/l2-unit1/judge/cast.json` have a 0-line `git diff` against that commit.
+  Measured SHA-256: `db5b443a6ea7740f435fedb7f13d0fd12971332c08b6e71d09e4a468da02ffd8` and
+  `2eb4a6a14d2ba6e49223e27d9ad390aad7ba1d247b272f6a467742b931046e76`.
+- The only additions in the kit folder since that commit are two judge result files of the
+  family-word track: `docs/storytime/l2-unit1/judge/prod/fw-r2-color-arms.json` and
+  `fw-r2-color-legs-feet.json`. They are outputs, not kit inputs. The prompt and the cast file are
+  unchanged, so the precondition holds.
+
+All precondition checks pass. No Muse call ran in Task 3.
