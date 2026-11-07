@@ -52,10 +52,10 @@ each phase at an immutable HEAD.
 
 `[x]` means complete. `[~]` means in progress. `[ ]` means ready and not started. `[b]` means
 blocked, with a trailing `deferred:<owner>` field. The orchestrator changes `[b]` to `[~]` when
-the blocker clears and the task starts. Tasks 1 and 2 are complete. Task 3 is `[ ]`; its blocker
-is the Phase 1 gate above it. The blocker of Tasks 4 to 7 is the acceptance of the phase before
-each one. The doctor counts only `[ ]`, `[~]`, and `[x]`, so Task 3 keeps the track open for the
-doctor.
+the blocker clears and the task starts. Tasks 1 and 2 are complete. The Phase 1 gate passed at
+93f8021b. Task 3 is in progress. The blocker of Tasks 4 to 7 is the acceptance of the phase before
+each one. The doctor counts only `[ ]`, `[~]`, and `[x]`, so the open tasks keep the track open
+for the doctor.
 
 ## Phase 0: Authoring [checkpoint: eb8e77f]
 
@@ -65,11 +65,12 @@ doctor.
 
 The light lane has no spec review gate.
 
-## Phase 1: Guard and prompts
+## Phase 1: Guard and prompts [checkpoint: 93f8021]
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`).
 
-- [x] Task 1: The line retry allowance in the guard, with a test. Implementation
+- [x] Task 1 (0d47c15): The line retry allowance in the guard, with a test.
+  Implementation commit
   `0d47c15749f8712de0532de44f7349266233d91e` (2026-11-07).
   - `CARD_LINE_RETRY_START` is `2026-11-07T02:00:00Z`, from `date -u +%Y-%m-%dT%H:%M:%SZ` at
     02:00:24Z, cut to the minute. It is later than the last row of `costs.tsv`
@@ -91,24 +92,29 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   - The guard required a checkpoint on the Phase 0 heading before Phase 1 could start. The heading
     now holds `[checkpoint: eb8e77f]`, the creation commit of Phase 0.
   - No Muse call and no provider call ran. Spend stayed 0.00 USD.
-- [x] Task 2: The ham prompt edit. Implementation
+- [x] Task 2 (fbfa5fd): The ham prompt edit.
+  Implementation commit
   `fbfa5fd9c120f59eaba978714f43b02573f4b702` (2026-11-07).
   - `linePrompt` is the exact text of the specification (byte comparison gives equal).
     `mustShow` lost "a small white plate" and keeps "one slice of ham" and "a slice of pink ham".
     The `git diff` touches only `linePrompt` and `mustShow`. `colorPrompt` is byte equal.
   - Card spec test: 1 file passes, 10 tests pass, exit 0.
   - The family prompt edits happen in Task 5, one step before each try.
-- [b] Phase 1 gate: phase acceptance by the checker at an immutable HEAD. deferred:checker
+- [x] Phase 1 gate (93f8021b): phase acceptance by the checker passed at 93f8021b.
+  - Evidence: `measure/runs/asset_storytime_l2_card_line_retry_20261107/acceptance-p1-93f8021.json`
+    (`status: pass`, no blocking finding) and its log `acceptance-p1-93f8021.log`.
   - The checker runs the test command, checks that `CARD_RUN` is byte equal and that the literal
     of the card start time is only in the three files that held it, and checks the ham diff.
   - The maker log is
     `measure/runs/asset_storytime_l2_card_line_retry_20261107/maker-p1.log`.
+  - Checker finding F1 was a Nit about the plan marker lines. This phase moves the SHA to the
+    first line of Task 1 and Task 2.
 
 ## Phase 2: Tries, delivery, and report
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`).
 
-- [ ] Task 3: Preconditions.
+- [~] Task 3: Preconditions.
   - Check and record in the role log: the three SHA-256 values of the section "Inputs"; the
     `costs.tsv` check (95 call rows, 0.95 USD); the SHA-256 of `approved.json` and of the 58 files
     of `delivery-muse-v1`; that the judge kit is unchanged since the calibration record
@@ -122,6 +128,8 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   - Record for each try: the file, the width, the judge result file, the verdict, and the defect
     class.
 - [b] Task 5: Family line tries. deferred:Task 4
+  - Orchestrator decision 2026-11-07: ham try 4 and family try 4 run in the same round. The two
+    rows are independent, so both calls share one judge cycle.
   - Before each call, apply the next step of the ladder (E4 for try 4, E5 for try 5, E6 for try
     6) to `docs/storytime/l2-unit1/cards/l2-w04-card-family.json`, and run the card spec test.
     Commit each edit before its call (explicit path).

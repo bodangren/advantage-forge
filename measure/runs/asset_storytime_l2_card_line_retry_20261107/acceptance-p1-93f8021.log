@@ -1,0 +1,99 @@
+# Acceptance log: Phase 1 (guard and prompts)
+
+Track: `asset_storytime_l2_card_line_retry_20261107`. Role: `measure-phase-acceptance`.
+Date: 2026-11-07. Lane: PM 2026-11-03 light lane (one maker, one checker).
+Audited HEAD: `93f8021b8ae37dd2489129d54a3828f809a39f60`.
+`role_base_sha`: `93f8021b8ae37dd2489129d54a3828f809a39f60` (equal to HEAD).
+`phase_base_sha`: `eb8e77f4bdbf685fa66ebce2a8651b7351802db4`.
+Verdict: PASS. One nonblocking finding (F1). No routed findings arrived, so dispositions are none.
+
+## Head and prerequisites
+
+- `git rev-parse HEAD` gives `93f8021b8ae37dd2489129d54a3828f809a39f60`.
+- `git log --oneline eb8e77f4..HEAD` gives 3 commits: `93f8021`, `fbfa5fd9`, `0d47c157`.
+- `git status --porcelain` of the owned paths is empty. The tracked work sits at the audited HEAD.
+- `maker-p1.log` is committed at HEAD. It names phase base `eb8e77f4` and both task commits.
+  Every prerequisite result targets this HEAD.
+
+## Check 1: guard file
+
+- The `CARD_RUN` block extract has sha256 `a37a937690354d7292935497b7aed9f858b3e154530442bcb0356b4cc0b9db43`
+  at `eb8e77f4` and at HEAD. The block is byte equal.
+- `CARD_LINE_RETRY_START` is `2026-11-07T02:00:00Z`.
+- The last `costs.tsv` row is `2026-11-07T00:26:13.647Z`. The start time is later than that row.
+- `CARD_LINE_RETRY.rows` holds `l2-w04-card-ham: 2` and `l2-w04-card-family: 3`.
+- `lineRetryGuard` counts the line tries of the row since the start time. A row without an entry
+  gets `null`.
+- `runGuards` applies the retry rule only for a card call with the command `line`. Every other
+  row and kind keeps `tryGuard` with `CARD_RUN`.
+- `spendGuard` (cap 1.60 USD) and the projected spend check run before the try loop.
+- `scripts/storytime-muse-guards.d.mts` declares `CardLineRetry`, the two constants, and
+  `lineRetryGuard`. The shapes match the implementation.
+
+## Check 2: test file
+
+- `tests/storytime-card-line-retry.test.ts` holds 8 tests (LR1 to LR8).
+- Rule tests that fail when the rule breaks:
+  - Ham limit (try 4 and 5 allowed, try 6 refused): LR2 and LR6.
+  - Family limit (tries 4 to 6 allowed, try 7 refused): LR3 and LR6.
+  - CARD_RUN fallback for the ham color and other rows: LR7.
+  - Spend cap still refuses: LR8.
+  - Start time and null row: LR5. Multi-try request: LR4. Export shape: LR1.
+- `grep -rlF 2026-11-06T00:00:00Z scripts tests | sort` gives exactly
+  `scripts/storytime-muse-guards.mjs`, `tests/storytime-card-adversarial.test.ts`, and
+  `tests/storytime-card-guards.test.ts`.
+- The new test holds no `2026-11-06T00:00:00Z` literal. The two old guard test files are
+  unchanged in the phase diff and pass.
+
+## Check 3: ham prompt
+
+- The `linePrompt` extract has sha256 `957e4702680540178357141f7bacb168533a0419508bd01bfe4625b870fe6eb9`.
+  The spec quote at `spec.md` line 125 has the same sha256. The texts are byte equal.
+- `mustShow` lost only `a small white plate`. It keeps `one slice of ham` and
+  `a slice of pink ham`.
+- `colorPrompt` is unchanged diff context.
+- The prompt holds the PM rule: no plate, one closed round outline, one fat rim band,
+  three or four grain lines, no dots, thick lines, pure white, no gray, and no text.
+
+## Check 4: tests
+
+- Brief command with `HEAVY_MIN_AVAIL_MB=1500` and `heavy-run.sh`: exit 0, 5 test files pass,
+  83 tests pass. The run repeats with the same result.
+- The 4-file subset gives exit 0 and 73 tests pass. 83 minus 73 gives 10 card spec tests. The
+  plan claims of 73 and 10 tests match reality.
+- Typecheck was not rerun, as the brief orders. `maker-p1.log` lines 30-33 record
+  `tsc --noEmit` exit 2 with 38 old repository errors and 0 errors in owned paths.
+
+## Check 5: spend, git, and plan
+
+- `costs.tsv` holds 96 lines: 1 header and 95 call rows. Column 8 sums to 0.95 USD. No new cost
+  row entered in this phase, so no Muse call ran.
+- The phase diff holds no PNG or JPG file.
+- Plan Task 1 is `[x]` (line 72, SHA on line 73) and Task 2 is `[x]` (line 94, SHA on line 95).
+- Plan line 101 is the Phase 1 gate: `[b] ... deferred:checker`.
+- The SHA sits on the second line of each task entry, while `maker-p1.log` lines 55-56 claim it
+  sits on the first line. This is finding F1, a Nit.
+
+## Criteria A3, A4, A6, A7
+
+The phase diff adds no digit-only count assertion, no marker-consistency check, no tracks
+registry entry, and no banned-term filter. The criteria are not triggered by this diff.
+
+## Findings
+
+- F1 [Nit] plan.md: Task 1 and Task 2 hold the implementation SHA on the second line, not the
+  first line. No spend rule, no try rule, and no prompt text is affected.
+
+MEASURE_AGENT_RESULT
+role: measure-phase-acceptance
+status: complete
+track: asset_storytime_l2_card_line_retry_20261107
+phase: Phase 1: Guard and prompts
+commits: 93f8021 (audited head; maker commits 0d47c15, fbfa5fd)
+tests_run: heavy-run vitest 5 files (card-line-retry, card-guards, card-adversarial, muse-attempts, card-specs) => 83 tests pass, exit 0; heavy-run vitest 4-file subset => 73 tests pass, exit 0
+files_changed: measure/runs/asset_storytime_l2_card_line_retry_20261107/acceptance-p1-93f8021.json, measure/runs/asset_storytime_l2_card_line_retry_20261107/acceptance-p1-93f8021.log
+plan_updates: none; gate-only role, the Phase 1 gate stays [b] deferred:checker until the orchestrator acts
+known_failures: none blocking; one nonblocking Nit F1 in the result JSON
+handoff: PASS at HEAD 93f8021. The Phase 1 gate can clear for Phase 2. CARD_RUN is byte equal, the retry rule is capped (ham 2, family 3 from 2026-11-07T02:00:00Z), and the spend cap runs first. Spend state: 95 rows, 0.95 USD, no Muse call in this phase. F1 is a plan line-placement Nit for the plan owner.
+dispositions: none
+END_MEASURE_AGENT_RESULT
