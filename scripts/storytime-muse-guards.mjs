@@ -50,6 +50,24 @@ export const CARD_RUN = {
   outDir: 'out/storytime/l2/unit1/cards/muse',
 };
 
+/**
+ * Line retry allowance of the card run (2026-11-07). The PM gave the ham row up to 2 more line
+ * tries and the family row up to 3, inside the card limit. The allowance counts line tries since
+ * its own start time, so the 3 line tries of each row before it do not count. The spend cap and
+ * its start time stay in `CARD_RUN`. Every row without an entry, every other kind, and every
+ * restart call keeps the `CARD_RUN` try rule. The start time is the real UTC time of Task 1,
+ * cut to the minute, and it is later than the last row of `costs.tsv`.
+ */
+export const CARD_LINE_RETRY_START = '2026-11-07T02:00:00Z';
+
+export const CARD_LINE_RETRY = {
+  startTime: CARD_LINE_RETRY_START,
+  rows: {
+    'l2-w04-card-ham': 2,
+    'l2-w04-card-family': 3,
+  },
+};
+
 /** The card folder below a unit root: the last two parts of `CARD_RUN.outDir` (`cards/muse`). */
 const CARD_FOLDER_PARTS = CARD_RUN.outDir.split('/').filter(Boolean).slice(-2);
 
@@ -192,6 +210,21 @@ export const tryGuard = (rows, id, kind, requested = 1, startTime = RESTART_STAR
   return { ok: true, count, max: limit };
 };
 
+/**
+ * Line retry guard: gives the allowance decision of one card row, in the form of `tryGuard`.
+ * It counts the line tries of the row id since `CARD_LINE_RETRY.startTime`. A row without an
+ * entry gets `null`, so the caller keeps the `CARD_RUN` rule for it.
+ */
+export const lineRetryGuard = (rows, id, requested = 1) => {
+  if (!Object.hasOwn(CARD_LINE_RETRY.rows, id)) return null;
+  const max = CARD_LINE_RETRY.rows[id];
+  const count = countTries(rows, id, 'line', CARD_LINE_RETRY.startTime);
+  if (count + requested > max) {
+    return { ok: false, count, max, reason: `count ${count} plus requested ${requested} over max ${max}` };
+  }
+  return { ok: true, count, max };
+};
+
 /** Spend guard: refuses when the sum plus the margin is over the cap. Gives the notice state. */
 export const spendGuard = (rows, startTime = RESTART_START, cap = SPEND_CAP_USD, margin = SPEND_MARGIN_USD, reportAt = REPORT_AT_USD) => {
   const spend = spendTotal(rows, startTime);
@@ -305,7 +338,8 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
     return { refused: true, code: 3, spend, notice: s.notice, run, reportAt, message: `refused: projected spend ${projected.toFixed(4)} USD over cap ${cap}` };
   }
   for (const ctx of ctxs) {
-    const g = tryGuard(pictureRows, ctx.spec.id, kind, requested, startTime, maxTries);
+    const retry = card && kind === 'line' ? lineRetryGuard(pictureRows, ctx.spec.id, requested) : null;
+    const g = retry ?? tryGuard(pictureRows, ctx.spec.id, kind, requested, startTime, maxTries);
     if (!g.ok) {
       return { refused: true, code: 3, spend, notice: s.notice, run, reportAt, message: `refused: ${ctx.spec.id} ${kind} count ${g.count} (max ${g.max})` };
     }

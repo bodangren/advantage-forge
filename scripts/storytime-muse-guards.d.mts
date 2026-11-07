@@ -73,12 +73,19 @@ export interface CardRun {
   outDir: string;
 }
 
+export interface CardLineRetry {
+  startTime: string;
+  rows: Record<string, number>;
+}
+
 export declare const RESTART_START: string;
 export declare const MAX_TRIES: number;
 export declare const SPEND_CAP_USD: number;
 export declare const SPEND_MARGIN_USD: number;
 export declare const REPORT_AT_USD: number;
 export declare const CARD_RUN: CardRun;
+export declare const CARD_LINE_RETRY_START: string;
+export declare const CARD_LINE_RETRY: CardLineRetry;
 export declare const TRY_EXCEPTIONS: TryException[];
 export declare const PICTURE_IDS: Record<string, string[]>;
 
@@ -99,6 +106,7 @@ export declare function tryGuard(
   startTime?: string,
   maxTries?: number,
 ): TryGuardResult;
+export declare function lineRetryGuard(rows: CostRow[], id: string, requested?: number): TryGuardResult | null;
 export declare function spendGuard(
   rows: CostRow[],
   startTime?: string,
