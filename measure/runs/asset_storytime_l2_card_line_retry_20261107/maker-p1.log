@@ -1,0 +1,92 @@
+# Maker log: Phase 1 (guard and prompts)
+
+Track: `asset_storytime_l2_card_line_retry_20261107`. Role: `measure-jr-green` (light lane).
+Date: 2026-11-07. Phase base: `eb8e77f4bdbf685fa66ebce2a8651b7351802db4` (the HEAD at the start of
+this role; it equals `role_base_sha`).
+
+Spend of this phase: 0.00 USD. No Muse call and no provider call ran.
+
+## Task 1: line retry allowance in the guard
+
+- Implementation commit: `0d47c15749f8712de0532de44f7349266233d91e`
+  (`feat(storytime_l2_card_line_retry): line retry allowance in the card guard`).
+- `CARD_LINE_RETRY_START = '2026-11-07T02:00:00Z'`. The value comes from
+  `date -u +%Y-%m-%dT%H:%M:%SZ` at 02:00:24Z, cut to the minute. The last row of `costs.tsv` is
+  `2026-11-07T00:26:13.647Z`, so the start time is later than it.
+- `CARD_LINE_RETRY = { startTime, rows: { 'l2-w04-card-ham': 2, 'l2-w04-card-family': 3 } }`.
+- `lineRetryGuard(rows, id, requested)`: it returns `null` for a row without an entry. Otherwise it
+  counts the line tries of the row since the start time and refuses when `count + requested` is
+  more than the allowance. The result has the form of `tryGuard`.
+- `runGuards` uses `lineRetryGuard` only for a card call with the command `line` and a row with an
+  entry. The refusal message keeps the existing form:
+  `refused: <id> line count <n> (max <allowance>)`.
+- The block `CARD_RUN` is byte equal. The `git diff` of that block is empty.
+- New test file: `tests/storytime-card-line-retry.test.ts`, 8 tests. It imports `CARD_RUN` and
+  holds no literal of the card start time.
+- Test command:
+  `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-card-line-retry.test.ts tests/storytime-card-guards.test.ts tests/storytime-card-adversarial.test.ts tests/storytime-muse-attempts.test.ts --maxWorkers=1'`
+  - Result: 4 test files passed, 73 tests passed, exit 0. The new file alone gives 8 tests.
+  - The two old guard test files pass without change.
+- Typecheck command:
+  `bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=6144 ./node_modules/.bin/tsc --noEmit'`
+  - Result: exit 2, 38 errors in the repository (the old total). 0 errors match
+    `src/storytime/`, `scripts/storytime-`, or `tests/storytime-`.
+- Literal check: `grep -rlF 2026-11-06T00:00:00Z scripts tests | sort` names exactly three files:
+  `scripts/storytime-muse-guards.mjs`, `tests/storytime-card-adversarial.test.ts`, and
+  `tests/storytime-card-guards.test.ts`.
+- Plan repair: the measure guard refused the `[~]` marker, because the heading of Phase 0 had no
+  checkpoint. The heading now holds `[checkpoint: eb8e77f]`, the creation commit of Phase 0. The
+  edit is in `plan.md` only.
+
+## Task 2: ham line prompt
+
+- Implementation commit: `fbfa5fd9c120f59eaba978714f43b02573f4b702`
+  (`feat(storytime_l2_card_line_retry): ham line prompt without the plate`).
+- `linePrompt` equals the text of the specification (byte comparison gives equal).
+- `mustShow` lost "a small white plate" and keeps "one slice of ham" and "a slice of pink ham".
+- `git diff` of `l2-w04-card-ham.json` touches `linePrompt` and `mustShow` only. `colorPrompt` and
+  every other field are byte equal.
+- Card spec test command:
+  `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-card-specs.test.ts --maxWorkers=1'`
+  - Result: 1 test file passed, 10 tests passed, exit 0.
+
+## Plan state
+
+- Task 1: `[x]`, with the implementation SHA on its first line.
+- Task 2: `[x]`, with the implementation SHA on its first line.
+- Phase 1 gate: `[b] ... deferred:checker`. The checker checks this phase at an immutable HEAD.
+- Task 3: `[ ]`, as the orchestrator asked.
+- The orchestrator decisions of 2026-11-07 are in the section "Method and ownership" of the plan.
+
+## Files of this phase
+
+- `scripts/storytime-muse-guards.mjs`: `CARD_LINE_RETRY_START`, `CARD_LINE_RETRY`,
+  `lineRetryGuard`, and one branch of `runGuards`.
+- `scripts/storytime-muse-guards.d.mts`: `CardLineRetry` and the declarations.
+- `tests/storytime-card-line-retry.test.ts`: new test file.
+- `docs/storytime/l2-unit1/cards/l2-w04-card-ham.json`: `linePrompt` and `mustShow`.
+- `measure/tracks/asset_storytime_l2_card_line_retry_20261107/plan.md`: decisions, task markers,
+  and evidence.
+- This log.
+
+## Handoff to the checker
+
+- The checker runs the test command of Task 1 and the card spec test of Task 2.
+- The checker compares the `CARD_RUN` block of `scripts/storytime-muse-guards.mjs` against
+  `eb8e77f4` and checks the three-file literal result above.
+- The checker checks the ham diff: `linePrompt` and `mustShow` only.
+- The family line prompt is unchanged in this phase. Task 5 edits it, one step before each try.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_card_line_retry_20261107
+phase: Phase 1: Guard and prompts
+commits: 0d47c15 (guard and test), fbfa5fd (ham prompt), this log commit (plan evidence)
+tests_run: vitest tests/storytime-card-line-retry.test.ts tests/storytime-card-guards.test.ts tests/storytime-card-adversarial.test.ts tests/storytime-muse-attempts.test.ts --maxWorkers=1 => 4 files, 73 tests pass, exit 0; vitest tests/storytime-card-specs.test.ts --maxWorkers=1 => 10 tests pass, exit 0; tsc --noEmit => 38 old repo errors, 0 in owned paths
+files_changed: scripts/storytime-muse-guards.mjs, scripts/storytime-muse-guards.d.mts, tests/storytime-card-line-retry.test.ts (new), docs/storytime/l2-unit1/cards/l2-w04-card-ham.json, measure/tracks/asset_storytime_l2_card_line_retry_20261107/plan.md, measure/runs/asset_storytime_l2_card_line_retry_20261107/maker-p1.log
+plan_updates: Task 1 [x] with 0d47c15; Task 2 [x] with fbfa5fd; Phase 1 gate [b] deferred:checker; Task 3 [ ]; orchestrator decisions recorded; Phase 0 heading got [checkpoint: eb8e77f] because the guard required it
+known_failures: none owned; the repository tsc total stays at 38 old errors
+handoff: Phase 1 is ready for measure-phase-acceptance at an immutable HEAD. CARD_LINE_RETRY_START is 2026-11-07T02:00:00Z. The family linePrompt is untouched; Task 5 edits it. No Muse or provider call ran; spend is 0.00 USD.
+dispositions: none
+END_MEASURE_AGENT_RESULT

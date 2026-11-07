@@ -13,6 +13,21 @@ The [specification](./spec.md) owns the scope and the acceptance gates.
 - Do not change the judge kit, `scripts/storytime-muse.mjs`, `scripts/storytime-judge-batch.mjs`,
   `src/storytime/muse-delivery.ts`, or the block `CARD_RUN`.
 - The question tool is denied. Route every question for Daniel through the PM orchestrator.
+
+### Orchestrator decisions 2026-11-07
+
+The orchestrator answered the author questions on 2026-11-07. The maker applies them.
+
+1. Ham `mustShow`: yes. The maker removes only the phrase "a small white plate" from the ham
+   `mustShow`, because the PM ordered a slice with no plate. The two other phrases stay.
+2. Color-only row: yes. A row that fails all its tries stays out of `manifest.json` and out of
+   `delivery-muse-v2`. It appears in `MANIFEST.txt` and in the PM report with its color file.
+3. Width gate for the ham: yes. A ham try that passes the judge and measures below 12 px is a
+   failed try.
+4. Retry start time: yes. The constant is the real UTC time at Task 1, cut to the minute. It is
+   not an example time.
+
+The family stroke ladder keeps the fixed steps E4 to E6 of the specification.
 - Other agents share the git index. Commit explicit paths only.
 - Muse calls, judge batches, and the delivery script are light roles. They run with `node` or
   `tsx` and without `heavy-run.sh`.
@@ -37,11 +52,12 @@ each phase at an immutable HEAD.
 
 `[x]` means complete. `[~]` means in progress. `[ ]` means ready and not started. `[b]` means
 blocked, with a trailing `deferred:<owner>` field. The orchestrator changes `[b]` to `[~]` when
-the blocker clears and the task starts. Tasks 1 and 2 are `[ ]` because no gate blocks them. The
-blocker of Tasks 3 to 7 is the acceptance of Phase 1. The doctor counts only `[ ]`, `[~]`, and
-`[x]`, so Tasks 1 and 2 keep the track open for the doctor.
+the blocker clears and the task starts. Tasks 1 and 2 are complete. Task 3 is `[ ]`; its blocker
+is the Phase 1 gate above it. The blocker of Tasks 4 to 7 is the acceptance of the phase before
+each one. The doctor counts only `[ ]`, `[~]`, and `[x]`, so Task 3 keeps the track open for the
+doctor.
 
-## Phase 0: Authoring
+## Phase 0: Authoring [checkpoint: eb8e77f]
 
 - [x] Task 0: Author the track: specification, plan, metadata, index, spec review note, and the
   registry entry. The creation commit has the message
@@ -53,37 +69,46 @@ The light lane has no spec review gate.
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`).
 
-- [ ] Task 1: The line retry allowance in the guard, with a test.
-  - The behavior follows the section "Guard". The files are `scripts/storytime-muse-guards.mjs`
-    and `scripts/storytime-muse-guards.d.mts`. Set `CARD_LINE_RETRY_START` from `date -u` (cut to
-    the minute) at this task. Check that it is later than the last row of `costs.tsv`.
-  - The test file is `tests/storytime-card-line-retry.test.ts`. It covers FR-1: ham line tries 4
-    and 5 allowed and try 6 refused; family line tries 4 to 6 allowed and try 7 refused; a request
-    for two tries after one allowed try is refused for the ham; earlier tries do not count; the
-    ham color and a third row (for example the tomato line) keep the 3-try rule; the spend cap
-    still refuses. The test builds rows in memory and imports `CARD_RUN`. It holds no literal of
-    the card start time.
-  - Gate: `tests/storytime-card-guards.test.ts` and `tests/storytime-card-adversarial.test.ts`
-    pass without change. Test command:
-    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-card-line-retry.test.ts tests/storytime-card-guards.test.ts tests/storytime-card-adversarial.test.ts tests/storytime-card-specs.test.ts --maxWorkers=1'`.
-    Also run the typecheck and record the count of owned errors (it must be 0).
-  - No Muse call and no provider call runs in this task. Spend stays 0.00 USD.
-- [ ] Task 2: The ham prompt edit.
-  - Edit `docs/storytime/l2-unit1/cards/l2-w04-card-ham.json`: set `linePrompt` to the exact text
-    of the specification and remove the phrase "a small white plate" from `mustShow`. Change no
-    other field.
-  - Run the card spec test (it is in the command of Task 1). Record the `git diff` summary: only
-    `linePrompt` and `mustShow` changed.
+- [x] Task 1: The line retry allowance in the guard, with a test. Implementation
+  `0d47c15749f8712de0532de44f7349266233d91e` (2026-11-07).
+  - `CARD_LINE_RETRY_START` is `2026-11-07T02:00:00Z`, from `date -u +%Y-%m-%dT%H:%M:%SZ` at
+    02:00:24Z, cut to the minute. It is later than the last row of `costs.tsv`
+    (`2026-11-07T00:26:13.647Z`).
+  - `CARD_LINE_RETRY.rows` holds `l2-w04-card-ham: 2` and `l2-w04-card-family: 3` for the line
+    kind. `lineRetryGuard` counts the line tries of the row since the start time. A row without an
+    entry gets `null`. `runGuards` uses the retry rule only for a card line call of the two rows.
+  - `CARD_RUN` is byte equal (the `git diff` of that block is empty).
+  - The new test `tests/storytime-card-line-retry.test.ts` holds 8 tests and imports `CARD_RUN`.
+    It holds no literal of the card start time.
+  - Test command (the 4 files of the brief): 4 files pass, 73 tests pass, exit 0.
+    `tests/storytime-card-guards.test.ts` and `tests/storytime-card-adversarial.test.ts` pass
+    without change.
+  - Typecheck: `tsc --noEmit` gives 38 errors in the repository (the old count) and 0 errors in
+    `src/storytime/`, `scripts/storytime-`, and `tests/storytime-`.
+  - Literal check: `grep -rlF 2026-11-06T00:00:00Z scripts tests` names exactly
+    `scripts/storytime-muse-guards.mjs`, `tests/storytime-card-adversarial.test.ts`, and
+    `tests/storytime-card-guards.test.ts`.
+  - The guard required a checkpoint on the Phase 0 heading before Phase 1 could start. The heading
+    now holds `[checkpoint: eb8e77f]`, the creation commit of Phase 0.
+  - No Muse call and no provider call ran. Spend stayed 0.00 USD.
+- [x] Task 2: The ham prompt edit. Implementation
+  `fbfa5fd9c120f59eaba978714f43b02573f4b702` (2026-11-07).
+  - `linePrompt` is the exact text of the specification (byte comparison gives equal).
+    `mustShow` lost "a small white plate" and keeps "one slice of ham" and "a slice of pink ham".
+    The `git diff` touches only `linePrompt` and `mustShow`. `colorPrompt` is byte equal.
+  - Card spec test: 1 file passes, 10 tests pass, exit 0.
   - The family prompt edits happen in Task 5, one step before each try.
-- [b] Phase 1 gate: phase acceptance by the checker at an immutable HEAD. deferred:Tasks 1 and 2
+- [b] Phase 1 gate: phase acceptance by the checker at an immutable HEAD. deferred:checker
   - The checker runs the test command, checks that `CARD_RUN` is byte equal and that the literal
     of the card start time is only in the three files that held it, and checks the ham diff.
+  - The maker log is
+    `measure/runs/asset_storytime_l2_card_line_retry_20261107/maker-p1.log`.
 
 ## Phase 2: Tries, delivery, and report
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`).
 
-- [b] Task 3: Preconditions. deferred:Phase 1 acceptance
+- [ ] Task 3: Preconditions.
   - Check and record in the role log: the three SHA-256 values of the section "Inputs"; the
     `costs.tsv` check (95 call rows, 0.95 USD); the SHA-256 of `approved.json` and of the 58 files
     of `delivery-muse-v1`; that the judge kit is unchanged since the calibration record
