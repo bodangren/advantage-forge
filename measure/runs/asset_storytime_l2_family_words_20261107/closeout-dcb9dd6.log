@@ -1,0 +1,73 @@
+# Closeout record: asset_storytime_l2_family_words_20261107
+
+Track: `asset_storytime_l2_family_words_20261107`.
+Role: `measure-closeout`.
+Archive commit: `782df2c96239d9510eec8c83e1158343b4a0171f`.
+Parent commit: `dcb9dd6eb9b1ff0f7bb5e96e815b260753fb8a82`.
+
+## Pre-closeout state
+
+The HEAD equalled `dcb9dd6eb9b1ff0f7bb5e96e815b260753fb8a82` before the closeout.
+The two phase acceptance results passed: `acceptance-p1-9eb453c.json` (status pass at
+`9eb453c3`, owned tsc errors 0, GREEN 8 files and 124 tests passed) and
+`acceptance-p2-dcb9dd6.json` (status pass at `dcb9dd6e`, no blocker).
+Final acceptance did not run. The PM put the whole track on the light lane on 2026-11-07,
+and PM rule 3 of 2026-11-03 gives no final acceptance under the light lane.
+
+## Marker check
+
+The archived plan holds 12 `[x]` lines. Each work task line carries its commit SHA.
+The plan holds one `[b]` line: Final acceptance, with a trailing `deferred:PM` field.
+The grep for `[~]` and `[ ]` gives 3 lines. Each line is marker legend prose, not a task line.
+No in-progress task and no space-marker task remains.
+
+## Archive steps
+
+1. The folder moved with `git mv` to
+   `measure/archive/asset_storytime_l2_family_words_20261107/`.
+2. `plan.md` records the delivered state, the phase gate evidence, and the closeout item.
+3. `metadata.json` holds `status` done, `completed` 2026-11-07, and `actual_tasks` 8.
+4. `measure/tracks.md` lost the active family-word entry and gained the archived entry.
+   The archived entry says model evidence, not acceptance, and names the 11-16 look.
+5. The foreign `## Contents` hunk of `measure/tracks.md` stays unstaged.
+6. `./measure/generate.sh` did not run, because `measure/generated/` holds foreign changes.
+7. `automation-supervisor-closeout-manifest.json` records the audits, the commands, the SHAs,
+   the retained evidence, and the artifact cleanup.
+
+## Gates
+
+- Doctor: `bash measure/doctor.sh` gives exit 1 with 11 structural errors.
+  Six errors are `new track has started tasks` lines and five are `missing registry link` lines.
+  Every error names another track. Grep for the track id gives exit 1 with no line.
+  The same 11 lines appear before and after the archive commit.
+- Secret scan: the broad pattern gives 1 hit, the word `Bearer` in audit prose.
+  The credential-shape scan of 20 characters or more gives exit 1 with no hit.
+- No file in the run folder is a PNG, a JPG, or a JPEG. The find count is 0.
+- A9: no test, script, or source file names the track path. Grep gives no hit.
+- A2 and A6: no text says that Daniel or Workbooks accepted a picture.
+
+## Retained evidence
+
+The run folder keeps all phase acceptance records, spec review records, judge records,
+spend records, delivery records, and the two scripts. No bulky artifact was deleted, because
+the orchestrator identified none.
+
+## Files
+
+`measure/archive/asset_storytime_l2_family_words_20261107/automation-supervisor-closeout-manifest.json` holds
+the closeout manifest. This log and `closeout-dcb9dd6.json` hold the closeout record.
+
+MEASURE_AGENT_RESULT
+role: closeout
+status: complete
+track: asset_storytime_l2_family_words_20261107
+phase: track closeout
+commits: 782df2c96239d9510eec8c83e1158343b4a0171f
+tests_run: bash measure/doctor.sh (exit 1, 11 errors of other tracks, no line names this track); phase acceptance 9eb453c3 pass, dcb9dd6e pass (carried over, not rerun)
+files_changed: measure/archive/asset_storytime_l2_family_words_20261107/automation-supervisor-closeout-manifest.json, measure/archive/asset_storytime_l2_family_words_20261107/index.md, measure/archive/asset_storytime_l2_family_words_20261107/metadata.json, measure/archive/asset_storytime_l2_family_words_20261107/plan.md, measure/archive/asset_storytime_l2_family_words_20261107/spec-review.md, measure/archive/asset_storytime_l2_family_words_20261107/spec.md, measure/archive/asset_storytime_l2_family_words_20261107/test-strategy.md, measure/runs/asset_storytime_l2_family_words_20261107/acceptance-p1-9eb453c.json, measure/runs/asset_storytime_l2_family_words_20261107/acceptance-p1-9eb453c.log, measure/runs/asset_storytime_l2_family_words_20261107/acceptance-p2-dcb9dd6.json, measure/runs/asset_storytime_l2_family_words_20261107/acceptance-p2-dcb9dd6.log, measure/runs/asset_storytime_l2_family_words_20261107/spec-review-19220fd.json, measure/runs/asset_storytime_l2_family_words_20261107/spec-review-19220fd.log, measure/runs/asset_storytime_l2_family_words_20261107/spec-review-d77957f.json, measure/runs/asset_storytime_l2_family_words_20261107/spec-review-d77957f.log, measure/tracks.md, measure/runs/asset_storytime_l2_family_words_20261107/closeout-dcb9dd6.json, measure/runs/asset_storytime_l2_family_words_20261107/closeout-dcb9dd6.log
+plan_updates: the archived plan records the delivered state, the Phase 1 and Phase 2 gate evidence, the closeout item, and Final acceptance as [b] deferred:PM; metadata status is done with completed 2026-11-07
+known_failures: 11 structural doctor errors of other tracks; 38 pinned tsc errors of other tracks, 0 owned by this track; 12 delivered color files have a corner below 250 (report item); the legs picture is the weakest pointing picture and Daniel sees it on 11-16
+handoff: the track is archived at measure/archive/asset_storytime_l2_family_words_20261107/ and the registry entry sits in Archived Tracks; final acceptance did not run under the PM light lane, so the orchestrator must not ask for one; the generator did not run and measure/tracks.md keeps a foreign Contents hunk unstaged; Daniel's 11-16 look is the next human step
+result_file: measure/runs/asset_storytime_l2_family_words_20261107/closeout-dcb9dd6.json
+dispositions: none
+END_MEASURE_AGENT_RESULT

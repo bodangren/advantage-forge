@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "role": "closeout",
+  "track": "asset_storytime_l2_family_words_20261107",
+  "status": "pass",
+  "summary": "Closeout passes at the archive commit 782df2c9. The track folder moved to measure/archive/asset_storytime_l2_family_words_20261107/ with a git mv. The registry entry moved from the active family-word section to the Archived Tracks section with the words model evidence, not acceptance. metadata.json holds status done and completed 2026-11-07. Every work task is [x] with a commit SHA, and the one [b] line is Final acceptance with deferred:PM. The two phase acceptance results passed (9eb453c3 and dcb9dd6e). Final acceptance did not run under the PM light lane. The doctor gives 11 structural errors of other tracks and no line names this track.",
+  "audited_head_sha": "782df2c96239d9510eec8c83e1158343b4a0171f",
+  "role_base_sha": "dcb9dd6eb9b1ff0f7bb5e96e815b260753fb8a82",
+  "track_base_sha": "19220fda80a361661db66a781d8a76a1d511e70a",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "The legs picture is the weakest pointing picture of the 19 (checker F1, declined): the fingertips rest at the shorts hem. The PM report names legs first in Daniel's 11-16 look.",
+    "test-strategy.md P2-3 still says each earlier try needs a confirmed fail, while the orchestrator applied the PM pointing rule to arms, legs, and feet (checker F2, declined). The plan and the PM report hold the decision.",
+    "12 of the 19 delivered color files have a corner pixel below 250 (lowest 215, ears). This is a report item, not a delivery gate; Workbooks decides at its check.",
+    "11 structural doctor errors of other tracks stay open; the doctor adds no error for this track and the same 11 lines appear before and after the archive commit.",
+    "38 pinned tsc errors of other tracks stay open; this track holds 0 owned errors.",
+    "measure/generated holds foreign uncommitted changes, so the generator did not run and no generated fact is committed. measure/tracks.md keeps a foreign Contents hunk unstaged."
+  ],
+  "evidence": [
+    "git rev-parse HEAD = 782df2c96239d9510eec8c83e1158343b4a0171f, the archive commit; its parent is dcb9dd6eb9b1ff0f7bb5e96e815b260753fb8a82",
+    "git status --short for measure/tracks.md after the commit shows only the foreign Contents hunk, and git diff --cached measure/tracks.md at commit time showed only the removed active entry and the new archived entry",
+    "The archive commit staged 16 paths: 6 renames with content change on plan.md and metadata.json, the new manifest, 8 run records, and measure/tracks.md",
+    "measure/archive/asset_storytime_l2_family_words_20261107/metadata.json holds status done, completed 2026-11-07, actual_tasks 8; python3 -m json.tool accepts it",
+    "measure/archive/asset_storytime_l2_family_words_20261107/plan.md holds 12 [x] lines with commit SHAs and one [b] line, Final acceptance, with a trailing deferred:PM field; no [~] and no [ ] task line remains",
+    "acceptance-p1-9eb453c.json: status pass at 9eb453c3, owned tsc errors 0, GREEN 8 files and 124 tests passed, one Nit finding",
+    "acceptance-p2-dcb9dd6.json: status pass at dcb9dd6e, no blocker, two Major notes declined, four Nits recorded",
+    "bash measure/doctor.sh gives exit 1 with 11 errors; grep for asset_storytime_l2_family_words_20261107 in its output gives exit 1 with no line",
+    "The secret scan gives 1 hit, the word Bearer in audit prose; the credential-shape scan of 20 characters or more gives exit 1 with no hit",
+    "find measure/runs/asset_storytime_l2_family_words_20261107 for png, jpg, and jpeg gives count 0",
+    "grep for asset_storytime_l2_family_words_20261107 in tests/, scripts/, and src/ gives no hit, so A9 does not trigger"
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --cached --stat",
+    "git diff --cached --name-status",
+    "git commit -m 'measure(storytime_l2_family_words): archive the track and commit the run records' (782df2c9)",
+    "bash measure/doctor.sh (exit 1, 11 errors, no line names this track)",
+    "grep -rnE 'sk-[A-Za-z0-9]{8}|Bearer [A-Za-z0-9]|OPENROUTER_API_KEY=' measure/runs/asset_storytime_l2_family_words_20261107 (1 prose hit)",
+    "grep -rnE 'sk-[A-Za-z0-9]{20,}|Bearer [A-Za-z0-9._-]{20,}|OPENROUTER_API_KEY=[^ ]{8,}' measure/runs/asset_storytime_l2_family_words_20261107 (exit 1, no hit)",
+    "find measure/runs/asset_storytime_l2_family_words_20261107 -type f -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' (count 0)",
+    "python3 -m json.tool measure/archive/asset_storytime_l2_family_words_20261107/automation-supervisor-closeout-manifest.json",
+    "grep -rnE '\\[~\\]|\\[ \\]' measure/archive/asset_storytime_l2_family_words_20261107/plan.md (3 lines, all marker legend prose)"
+  ],
+  "changed_files": [
+    "measure/archive/asset_storytime_l2_family_words_20261107/automation-supervisor-closeout-manifest.json",
+    "measure/archive/asset_storytime_l2_family_words_20261107/index.md",
+    "measure/archive/asset_storytime_l2_family_words_20261107/metadata.json",
+    "measure/archive/asset_storytime_l2_family_words_20261107/plan.md",
+    "measure/archive/asset_storytime_l2_family_words_20261107/spec-review.md",
+    "measure/archive/asset_storytime_l2_family_words_20261107/spec.md",
+    "measure/archive/asset_storytime_l2_family_words_20261107/test-strategy.md",
+    "measure/tracks.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high"
+}
