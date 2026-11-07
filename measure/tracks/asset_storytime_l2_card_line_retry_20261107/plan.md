@@ -133,6 +133,10 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
 - [~] Task 5: Family line tries.
   - Orchestrator decision 2026-11-07: ham try 4 and family try 4 run in the same round. The two
     rows are independent, so both calls share one judge cycle.
+  - E4 applied on 2026-11-07 (try 4): the first sentence now asks for "extremely thick, heavy,
+    even black marker lines (about ten times a normal outline)", and the later line asks for
+    "about twelve times a normal outline, as thick as a fat marker". `colorPrompt` and
+    `references` are byte equal. Card spec test: 10 tests pass, exit 0.
   - Before each call, apply the next step of the ladder (E4 for try 4, E5 for try 5, E6 for try
     6) to `docs/storytime/l2-unit1/cards/l2-w04-card-family.json`, and run the card spec test.
     Commit each edit before its call (explicit path).
