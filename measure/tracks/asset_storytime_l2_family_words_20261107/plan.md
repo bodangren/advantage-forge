@@ -186,7 +186,7 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     the 1.60 USD cap of the card run.
   - The legs and the feet rows made 2 more calls. The track made 21 calls for 0.21 USD. The total
     of `costs.tsv` is 0.95 USD in 95 calls.
-- [~] Task 6 (ee11adf4): Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet.
+- [x] Task 6 (177e4e3): Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet.
   - The delivery of round 4 is to be rewritten after the legs and the feet try 2.
   - The delivery of round 6 is the rewritten one. The round-4 delivery folder was removed first,
     because the writer refuses a file that already exists. The approval list now names the arms
