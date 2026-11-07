@@ -174,7 +174,7 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     family row reuses the card track color print and gets no call and no new judge batch.
   - The track made 19 calls for 0.19 USD. The total of `costs.tsv` is 0.93 USD in 93 calls, under
     the 1.60 USD cap of the card run.
-- [~] Task 6: Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet.
+- [x] Task 6 (ee11adf4): Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet.
   - The delivery folder is `out/storytime/l2/unit1/family-words/delivery-muse-v1/`. The handoff
     folder is `/home/daniebo/Desktop/handoff/storytime-l2-family-word-pictures/`. The form follows
     the section "Delivery" of the specification.
@@ -184,8 +184,23 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   - Check every file at 1500 x 1500 px, 8-bit PNG, no alpha channel.
   - Report the corner values below 250 as a report item (not a gate).
   - `sha256sum -c` on the file lines of `MANIFEST.txt` gives OK for every file.
-- [b] Task 7: Report record for the PM:
-  `measure/runs/asset_storytime_l2_family_words_20261107/pm-report.md`. deferred:Task 6
+  - The writer delivered 19 rows and 5 color batches to
+    `out/storytime/l2/unit1/family-words/delivery-muse-v1/`. Every delivered PNG is byte for byte
+    the print of its try, and every file is 1500 x 1500 px, 8-bit, 3 channels, srgb, with no alpha
+    channel. The manifest holds 19 jobs and no line-art batch. The family file holds the SHA-256
+    `ab6067eedf8de3efebb40509c6032f81f7ecee178b212eac8c3727d40a8bff62`.
+  - The handoff folder holds the same 19 PNG files, the same `manifest.json`, the `MANIFEST.txt`,
+    and the contact sheet `storytime-l2-family-word-pictures-contact-sheet.png`. The sheet holds
+    19 cells, 5 cells per row, with the word under each card.
+  - The check `grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c -` in the handoff folder gave
+    19 OK and 0 FAILED. The sha256sum lists of the delivery folder and the handoff folder are
+    equal, 20 names each.
+  - The corner record is `measure/runs/asset_storytime_l2_family_words_20261107/corner-record.txt`.
+    Files checked 19, gate problems 0. Ten files have a corner below 250. The ears file holds a
+    faint gray gradient at all four corners, with the lowest value 215. The other nine hold the
+    low value at the bottom-left corner only. This is a report item, not a gate.
+- [~] Task 7: Report record for the PM:
+  `measure/runs/asset_storytime_l2_family_words_20261107/pm-report.md`.
   - It holds the one status line, the handoff path, the track spend, the total of `costs.tsv`,
     the count of calls, each failed row with its best try, and the white-corner list. It states
     that the delivery is model evidence and that Daniel sees the pictures in his 11-16 check.

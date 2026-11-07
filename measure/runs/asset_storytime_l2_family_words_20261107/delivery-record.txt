@@ -1,0 +1,12 @@
+delivered files: 19
+failed rows: none
+manifest.json sha256: 3f06d5644cc5d539d67592b57804b5cae4b836ae5a04e609bb84d3ff2a5e8fbd
+MANIFEST.txt sha256: 36da5df3b33bea6d062932fa7b0930b533439726a2869606cd9f1a755ae6a300
+contact sheet sha256: 88b13e06bc165b182b0010def19c74d71509db8ebc19fcc8da87e7800d0168ac
+delivery folder: out/storytime/l2/unit1/family-words/delivery-muse-v1/
+handoff folder: /home/daniebo/Desktop/handoff/storytime-l2-family-word-pictures/
+sha256sum -c check in the handoff folder:
+  grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c -
+  OK lines: 19
+  FAILED lines: 0
+  the sha256sum lists of the delivery folder and the handoff folder are equal, 20 names each
