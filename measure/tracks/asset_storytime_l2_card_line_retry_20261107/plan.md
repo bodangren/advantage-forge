@@ -1,10 +1,9 @@
 # Storytime Level 2 card line-art retry (ham and family)
 
-Status: in progress, Phase 2 round 2 (2026-11-07). The family row passed at try 4 (12 px, judge
-`pass`) and is the delivery of that row. The ham row failed try 4 twice (pie or ball). Ham try 5
-measures 36 px. Its judge batch holds the try 5 picture under the copy name `line-t6.png`; the
-judge verdict is pending. Spend of this track: 0.03 USD. The total of `costs.tsv` is 0.98 USD in 99
-rows.
+Status: in progress, Phase 2 round 3 (2026-11-07). The family row passed at try 4 (12 px, judge
+`pass`). The ham row failed both retry tries; the best try is try 5 at 36 px, and the ham color
+print goes to the handoff as the fallback. Spend of this track: 0.03 USD. The total of `costs.tsv`
+is 0.98 USD in 99 rows.
 The [specification](./spec.md) owns the scope and the acceptance gates.
 
 ## Method and ownership
@@ -126,7 +125,7 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     (`git diff` of `docs/storytime/l2-unit1/judge/` against the record commit is empty); that
     `CARD_LINE_RETRY_START` is later than the last `costs.tsv` row.
   - If a check fails, stop and report to the PM. No Muse spend.
-- [~] Task 4: Ham line tries.
+- [x] Task 4 (ec212248): Ham line tries.
   - Try 4 on 2026-11-07: `l2-w04-card-ham-m1-line-4.png` (1600 x 1600, 0.01 USD), print
     `l2-w04-card-ham-m1-line-print-4.png` at 27 px (gate 12 px), judge batch
     `docs/storytime/l2-unit1/judge/prod/cards-retry-ham-t4.json`.
@@ -157,9 +156,18 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     copy is named `line-t6.png`. The frozen builder did not change. Batch:
     `docs/storytime/l2-unit1/judge/prod/cards-retry-ham-t5.json`. Judge copy:
     `out/storytime-review/judge/prod/l2-w04-card-ham-line-t6.png`, byte equal to a 360 px copy of
-    the try 5 Muse file. The judge verdict is pending.
+    the try 5 Muse file.
+  - Try 5 fails. First judge: `fail`, defect class `wrong-or-missing-prop`; the oval with a rim
+    and three wavy lines reads as a lid, a bowl, a pie, or a bun. Result file:
+    `judge-cards-retry-ham-t5.json`. Second judge on the same file: `fail` with the same defect
+    class; it reads as a plate, a lid, a bun, or a ball. Result file:
+    `judge-cards-retry-ham-t5-second.json`. The fail stands.
   - The ham row has no more tries: the allowance counts the two line tries since the start time
-    (`-line-4` and `-line-5`), and 2 is the ham limit.
+    (`-line-4` and `-line-5`), and 2 is the ham limit. The row fails.
+  - Best try by the spec rule (fewest hard defects; a tie goes to the later try): try 5,
+    `out/storytime/l2/unit1/cards/muse/l2-w04-card-ham-m1-line-print-5.png` at 36 px. The handoff
+    gets the ham color print as the color-only fallback, and Workbooks makes the greyscale
+    fallback.
   - Follow the section "Tries, order, and stop rules". Call, measure the width, judge at card
     size (`--cards --kind line --try <n>`), second judge on a fail. Try 4 first, then try 5 only
     if try 4 does not pass. Stop at the first pass or at try 5.
@@ -186,8 +194,7 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   - After each call, measure the width. Below 12 px: a failed try, no judge. At 12 px or more:
     judge at card size, and a second judge on a fail. Stop at the first pass or at try 6.
   - Stop both rows at the spend stop of 0.05 USD in total.
-- [b] Task 6: Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet.
-  deferred:Task 5
+- [~] Task 6: Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet.
   - The form follows the section "Delivery". Write `approved-v2.json` and the folder
     `out/storytime/l2/unit1/cards/delivery-muse-v2/` with `writeMuseDelivery`. Copy the old
     handoff `MANIFEST.txt` and `manifest.json` to the run folder first. The family-word run

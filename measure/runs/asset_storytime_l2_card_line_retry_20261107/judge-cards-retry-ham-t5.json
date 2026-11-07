@@ -1,0 +1,20 @@
+{
+  "group": "cards-retry-ham-t5",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-07T03:06:28Z",
+  "results": [
+    {
+      "id": "l2-w04-card-ham",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-ham-line-t6.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole picture: one oval object with a rim and three wavy stripes inside",
+      "notes": "Question page: no. Card text: ham. Items: one slice of ham (1), a slice of pink ham (1). Action: none. Seen: a flat oval, tilted, with a double outline like a rim or a lid edge, and three wavy S-shaped lines inside. It reads as a lid, a bowl, a pie, or a bun with stripes. It does not read as a slice of ham to a young child at book size. No pink can be judged in line art; the shape and the common ham marks (a fat edge, a round slice cut) are not clear. No characters, so the cast check does not apply. Line art is black on white. No gray and no text. No line gap that makes coloring hard. The fail is the wrong prop: the named thing reads as a different object."
+    }
+  ],
+  "summary": { "files": 1, "pass": 0, "fail": 1 }
+}

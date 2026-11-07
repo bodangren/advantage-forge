@@ -1,0 +1,20 @@
+{
+  "group": "cards-retry-ham-t5-second",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-07T03:07:14Z",
+  "results": [
+    {
+      "id": "l2-w04-card-ham",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-ham-line-t6.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole picture: a round oval disc with a rim and three wavy stripes that does not read as a slice of ham",
+      "notes": "Question page: no. Items: one slice of ham (1). Action: none. No character in the picture, so the cast check does not apply. Seen: a round oval disc with a thick rim ring around it and three wavy curved lines across the top, like a plate, a lid, a bun, or a ball. No meat edge, no fat edge, no bone, and no slice shape. A young child would not know it as ham at book size. The line art is black on white with no gray, no gap, and no text. The fail is the prop: ham reads as a different object."
+    }
+  ],
+  "summary": { "files": 1, "pass": 0, "fail": 1 }
+}
