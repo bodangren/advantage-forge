@@ -1,0 +1,20 @@
+{
+  "group": "fw-r2-color-arms",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-07T00:08:21Z",
+  "results": [
+    {
+      "id": "l2-w05-card-arms",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-arms-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Page text 'arms' (card). Items: Nan (1), arms (2). Action: raising and pointing (note only). Seen: Nan with two round buns with red bands, big brown eyes, orange T-shirt, red shorts; her right arm is stretched out to the left side of the picture with an open hand; her other arm is bent across her chest and its hand points a finger at the stretched arm. Character matches the cast sheet (the star on the shirt is partly covered by the bent arm and the shoes are cut by the frame: small marks, not character changes). mustShow: 'Nan' = drawn and visible, matches cast. 'one raised arm' = drawn and visible: the arm stretched out sideways with an open hand. 'both arms' = drawn and visible: the stretched arm and the bent arm both show with hands. 'the other hand points at that arm' = drawn and visible: the bent arm's hand points one finger at the stretched arm, and the fingertip touches the forearm of the stretched arm, between the elbow and the wrist, near the left-center of the picture (about 40 percent from the left edge, in the middle of the picture height). Hands and fingers read as normal child hands. No text in the picture."
+    }
+  ],
+  "summary": { "files": 1, "pass": 1, "fail": 0 }
+}

@@ -217,3 +217,141 @@ handoff: |
   The delivery is model evidence. It is not acceptance.
 dispositions: none
 END_MEASURE_AGENT_RESULT
+
+## Round 4: the delivery, the handoff, and the PM report
+
+### The judge result of the arms try 2
+
+The judge result file
+`measure/runs/asset_storytime_l2_family_words_20261107/judge-fw-r2-color-arms.json` passes the
+arms try 2. The judge recorded that the fingertip touches the forearm of the outstretched arm. So
+19 delivered colors are: 17 rows at m1, the arms row at m2, and the family row at the m1 of the
+card track. The maker made no Muse call in this round.
+
+### The delivery
+
+The runner script `deliver-family-words.mts` and the approval list `approvals.json` live in this
+run folder. The approval list holds 19 entries. Each entry takes its `text` and `sourcePrompt`
+from the spec file of its row, and the family entry takes them from
+`docs/storytime/l2-unit1/cards/l2-w04-card-family.json`. The writer `deliverMuseColorSet` copied
+the 19 color prints into `out/storytime/l2/unit1/family-words/delivery-muse-v1/`.
+
+command: ./node_modules/.bin/tsx measure/runs/asset_storytime_l2_family_words_20261107/deliver-family-words.mts
+
+delivered rows: 19
+color batches: 5, one for each week w01, w04, w05, w06, and w07
+line-art batches: 0
+manifest.json sha256: 3f06d5644cc5d539d67592b57804b5cae4b836ae5a04e609bb84d3ff2a5e8fbd
+
+Every delivered PNG is byte for byte the print of its try. Every file is 1500 x 1500 px, 8-bit,
+3 channels, srgb, with no alpha channel and no palette. The manifest holds 19 jobs and no line-art
+batch. The family file holds the SHA-256
+`ab6067eedf8de3efebb40509c6032f81f7ecee178b212eac8c3727d40a8bff62`. The tool output is in
+`deliver-family-words.log`.
+
+### The corner check
+
+files checked: 19
+gate problems: 0
+color files below 250: 10
+
+The corner record is `corner-record.txt`. It holds the four corner values of every file. Nine of
+the files below 250 hold the low value at the bottom-left corner only, from the soft shadow of the
+render. The ears file holds a faint gray gradient at all four corners, and its lowest value is
+215. This is a report item, not a gate.
+
+### The handoff
+
+The script `make-handoff.mts` copied the 19 PNG files and the manifest.json to
+`/home/daniebo/Desktop/handoff/storytime-l2-family-word-pictures/`, wrote the `MANIFEST.txt` in
+the form of the card handoff manifest, and built the contact sheet. The tool output is in
+`make-handoff.log`.
+
+command: ./node_modules/.bin/tsx measure/runs/asset_storytime_l2_family_words_20261107/make-handoff.mts
+
+contact sheet: storytime-l2-family-word-pictures-contact-sheet.png at 1420 x 1324, 19 cells, 5 per row
+MANIFEST.txt sha256: 36da5df3b33bea6d062932fa7b0930b533439726a2869606cd9f1a755ae6a300
+contact sheet sha256: 88b13e06bc165b182b0010def19c74d71509db8ebc19fcc8da87e7800d0168ac
+
+The check in the handoff folder gave 19 OK and 0 FAILED:
+grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c -
+
+The sha256sum lists of the delivery folder and the handoff folder are equal, 20 names each. The
+maker opened the contact sheet once, and each label sits under its own card.
+
+### The PM report
+
+The record `pm-report.md` holds the status line, the handoff path, the calls, the total of
+`costs.tsv`, the arms decision, the family reuse, the corner list, the defaults, and the
+statement that the delivery is model evidence and that Daniel sees the pictures in his 11-16 check.
+It ends with "Facts changed: none."
+
+## Task state
+
+Tasks 4, 5, 6, and 7 are [x]. The Phase 2 gate is [b] with the field `deferred:checker`.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_family_words_20261107
+phase: Phase 2: Family-word pictures and delivery
+phase_base_sha: 893db8598328eb6689a4266c5c5d4b29247df20a
+role_base_sha: 9eb453c3dc3f986220dd1b4ee6b30e4086b67d79
+commits: |
+  cadf975 (measure(storytime_l2_family_words): Phase 2 round 1, color try 1 and judge batch). The
+  18 color calls, the judge batch fw-r1-color.json, the calibration record, the spend record, and
+  the maker log.
+  6b98b84 (measure(storytime_l2_family_words): Task 4 evidence). The Task 4 line of the plan.
+  501dacf (measure(storytime_l2_family_words): Phase 2 round 3, judge r1 and arms color try 2).
+  The arms spec change, the arms try 2 call, the batch fw-r2-color-arms.json, the judge r1
+  result files, the spend record, and the maker log.
+  ee11adf4 (measure(storytime_l2_family_words): Phase 2 delivery and handoff). The delivery
+  runner, the approval list, the corner record, and the Task 5 and Task 6 plan markers.
+  2a90930 (measure(storytime_l2_family_words): Phase 2 delivery and handoff). The handoff script,
+  the delivery record, and the Task 6 plan marker.
+  the last commit of the phase carries this log, the PM report, and the Task 7 and Phase 2 gate
+  plan markers. Its SHA is the parent of the checker run.
+tests_run: |
+  the delivery writer: 19 rows and 5 color batches, exit 0
+  the print and corner check of the 19 delivered files: files checked 19, gate problems 0
+  the sha256sum -c check in the handoff folder: 19 OK, 0 FAILED
+  the sha256sum lists of the delivery folder and the handoff folder: equal, 20 names each
+  the forbidden word scan of the maker files: no line
+  the wording scan of the maker files and the handoff manifest: no line
+files_changed: |
+  docs/storytime/l2-unit1/family-words/l2-w05-card-arms.json (the arms picture sentences and goal)
+  docs/storytime/l2-unit1/judge/prod/fw-r1-color.json (judge batch of round 1)
+  docs/storytime/l2-unit1/judge/prod/fw-r2-color-arms.json (judge batch of the arms try 2)
+  measure/tracks/asset_storytime_l2_family_words_20261107/plan.md (the task markers of Tasks 4 to 7
+  and the Phase 2 gate, the Phase 1 checkpoint)
+  measure/runs/asset_storytime_l2_family_words_20261107/approvals.json (the 19 approval entries)
+  measure/runs/asset_storytime_l2_family_words_20261107/deliver-family-words.mts (the runner)
+  measure/runs/asset_storytime_l2_family_words_20261107/deliver-family-words.log (the writer output)
+  measure/runs/asset_storytime_l2_family_words_20261107/make-handoff.mts (the handoff script)
+  measure/runs/asset_storytime_l2_family_words_20261107/make-handoff.log (the handoff output)
+  measure/runs/asset_storytime_l2_family_words_20261107/corner-record.txt (the corner values)
+  measure/runs/asset_storytime_l2_family_words_20261107/delivery-record.txt (the delivery facts)
+  measure/runs/asset_storytime_l2_family_words_20261107/pm-report.md (the report record)
+  measure/runs/asset_storytime_l2_family_words_20261107/spend-record.txt (the spend lines)
+  measure/runs/asset_storytime_l2_family_words_20261107/maker-p2-r1.log (this log)
+  No PNG or JPG file entered git. No file under out/ entered git. No test file, no code file, and
+  no judge kit file changed.
+plan_updates: |
+  Task 4 is [x] with cadf975. Task 5 is [x] with 501dacf6. Task 6 is [x] with ee11adf4.
+  Task 7 is [x] with 2a90930. The Phase 2 gate is [b] with the field deferred:checker.
+  The Phase 1 heading holds [checkpoint: 9eb453c].
+known_failures: none
+handoff: |
+  Phase 2 is ready for the checker at an immutable HEAD. The checker reads the delivery folder
+  out/storytime/l2/unit1/family-words/delivery-muse-v1/, the handoff folder
+  /home/daniebo/Desktop/handoff/storytime-l2-family-word-pictures/, the run folder
+  measure/runs/asset_storytime_l2_family_words_20261107/, and the judge result files.
+  The 19 delivered colors are the 17 rows at m1, the arms row at m2, and the family row at the m1
+  of the card track. Each file has a judge pass in a record file.
+  The track spend is 0.19 USD in 19 calls and the total of costs.tsv is 0.93 USD in 93 calls.
+  Ten files have a corner below 250. The report item is in the report, in the manifest, and in the
+  corner record.
+  The delivery is model evidence, not acceptance. Workbooks checks the pictures, and Daniel sees
+  them in his 11-16 check.
+dispositions: none
+END_MEASURE_AGENT_RESULT

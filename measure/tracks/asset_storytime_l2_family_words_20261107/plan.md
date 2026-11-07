@@ -199,12 +199,15 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     Files checked 19, gate problems 0. Ten files have a corner below 250. The ears file holds a
     faint gray gradient at all four corners, with the lowest value 215. The other nine hold the
     low value at the bottom-left corner only. This is a report item, not a gate.
-- [~] Task 7: Report record for the PM:
+- [x] Task 7 (2a90930): Report record for the PM:
   `measure/runs/asset_storytime_l2_family_words_20261107/pm-report.md`.
   - It holds the one status line, the handoff path, the track spend, the total of `costs.tsv`,
     the count of calls, each failed row with its best try, and the white-corner list. It states
     that the delivery is model evidence and that Daniel sees the pictures in his 11-16 check.
-- [b] Phase 2 gate: phase acceptance by the checker at an immutable HEAD. deferred:Tasks 4 to 7
+  - The status line reads "Status: done. 19 of 19 family-word pictures delivered; spend 0.19 USD
+    (total 0.93 USD of the 1.60 USD card limit)." The record names the arms decision, the family
+    reuse, the 6 defaults of the specification, and the corner list of the 10 files below 250.
+- [b] Phase 2 gate: phase acceptance by the checker at an immutable HEAD. deferred:checker
 
 ## Track-level roles
 
