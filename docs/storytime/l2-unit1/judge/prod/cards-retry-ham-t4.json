@@ -1,0 +1,13 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-ham-line-t4.png",
+    "id": "l2-w04-card-ham",
+    "kind": "line",
+    "pageText": "ham",
+    "use": "card",
+    "mustShow": [
+      "one slice of ham",
+      "a slice of pink ham"
+    ]
+  }
+]

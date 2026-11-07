@@ -1,7 +1,8 @@
 # Storytime Level 2 card line-art retry (ham and family)
 
-Status: created, awaiting the maker (2026-11-07). No new call has run. Spend of this track: 0.00
-USD. The total of `costs.tsv` is 0.95 USD in 95 calls.
+Status: in progress, Phase 2 round 1 (2026-11-07). Two line calls ran: ham try 4 and family try 4.
+Spend of this track: 0.02 USD. The total of `costs.tsv` is 0.97 USD in 97 calls. The Sonnet judge
+verdicts for both tries are pending.
 The [specification](./spec.md) owns the scope and the acceptance gates.
 
 ## Method and ownership
@@ -125,6 +126,9 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     `CARD_LINE_RETRY_START` is later than the last `costs.tsv` row.
   - If a check fails, stop and report to the PM. No Muse spend.
 - [~] Task 4: Ham line tries.
+  - Try 4 on 2026-11-07: `l2-w04-card-ham-m1-line-4.png` (1600 x 1600, 0.01 USD), print
+    `l2-w04-card-ham-m1-line-print-4.png` at 27 px (gate 12 px), judge batch
+    `docs/storytime/l2-unit1/judge/prod/cards-retry-ham-t4.json`. The judge verdict is pending.
   - Follow the section "Tries, order, and stop rules". Call, measure the width, judge at card
     size (`--cards --kind line --try <n>`), second judge on a fail. Try 4 first, then try 5 only
     if try 4 does not pass. Stop at the first pass or at try 5.
@@ -137,6 +141,10 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     even black marker lines (about ten times a normal outline)", and the later line asks for
     "about twelve times a normal outline, as thick as a fat marker". `colorPrompt` and
     `references` are byte equal. Card spec test: 10 tests pass, exit 0.
+  - Try 4 on 2026-11-07: `l2-w04-card-family-m1-line-4.png` (1600 x 1600, 0.01 USD), print
+    `l2-w04-card-family-m1-line-print-4.png` at 12 px (gate 12 px, so the try goes to the judge),
+    judge batch `docs/storytime/l2-unit1/judge/prod/cards-retry-family-t4.json`. The judge verdict
+    is pending.
   - Before each call, apply the next step of the ladder (E4 for try 4, E5 for try 5, E6 for try
     6) to `docs/storytime/l2-unit1/cards/l2-w04-card-family.json`, and run the card spec test.
     Commit each edit before its call (explicit path).

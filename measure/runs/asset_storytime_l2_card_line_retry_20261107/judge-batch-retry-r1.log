@@ -1,0 +1,6 @@
+batch /home/daniebo/Desktop/advantage-forge/docs/storytime/l2-unit1/judge/prod/cards-retry-ham-t4.json: 1 files
+  line l2-w04-card-ham out/storytime-review/judge/prod/l2-w04-card-ham-line-t4.png
+ham batch exit=0
+batch /home/daniebo/Desktop/advantage-forge/docs/storytime/l2-unit1/judge/prod/cards-retry-family-t4.json: 1 files
+  line l2-w04-card-family out/storytime-review/judge/prod/l2-w04-card-family-line-t4.png
+family batch exit=0

@@ -1,0 +1,20 @@
+# Line widths: Phase 2 round 1 (try 4 of the ham row and the family row)
+
+Date: 2026-11-07. Track: `asset_storytime_l2_card_line_retry_20261107`.
+
+Rule: `inspectLineArtPng` of `src/storytime/book-pictures.ts`, gate
+`MIN_LINE_ART_LINE_WIDTH_PX` = 12 px, measured on the 1500 x 1500 print file of the try.
+
+| Row | Print file | Size | Width | Ink coverage | SHA-256 | Gate |
+| --- | --- | --- | --- | --- | --- | --- |
+| `l2-w04-card-ham` try 4 | `out/storytime/l2/unit1/cards/muse/l2-w04-card-ham-m1-line-print-4.png` | 1500 x 1500 | 27 px | 12.08% | `60a64254f376d7da0f2e1c02dc5330462b43c476b1dd644bc7158f66c375ee52` | pass (27 >= 12) |
+| `l2-w04-card-family` try 4 | `out/storytime/l2/unit1/cards/muse/l2-w04-card-family-m1-line-print-4.png` | 1500 x 1500 | 12 px | 12.92% | `641c70b25d321ae180763b11e161f7756bbda87c963c533a0df822e2fd04bb27` | pass (12 >= 12) |
+
+Both prints are 8-bit greyscale with no alpha, and `inspectLineArtPng` reports `valid: true` with
+an empty `errors` list.
+
+The Muse output files are `l2-w04-card-ham-m1-line-4.png` and `l2-w04-card-family-m1-line-4.png`
+at 1600 x 1600. The print files above are the 1500 x 1500 crops of those files.
+
+Result: the ham try 4 goes to the judge. The family try 4 is at the 12 px gate, so it goes to the
+judge too.

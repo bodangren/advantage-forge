@@ -1,0 +1,14 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-family-line-t4.png",
+    "id": "l2-w04-card-family",
+    "kind": "line",
+    "pageText": "family",
+    "use": "card",
+    "mustShow": [
+      "six people",
+      "Mom, Dad, Grandma, Grandpa, Tom, and Lily",
+      "all six stand in one row"
+    ]
+  }
+]

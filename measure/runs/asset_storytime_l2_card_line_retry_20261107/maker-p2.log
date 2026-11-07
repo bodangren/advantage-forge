@@ -50,3 +50,84 @@ Commit of the Task 3 marker: `cfeefcd2`.
   unchanged, so the precondition holds.
 
 All precondition checks pass. No Muse call ran in Task 3.
+
+## Task 4 and Task 5: try 4 of both rows (one round)
+
+Orchestrator decision 2026-11-07: ham try 4 and family try 4 run in the same round. The two rows
+are independent, so both calls share one judge cycle.
+
+### Family prompt E4
+
+Commit: `31106b59` (`feat(storytime_l2_card_line_retry): family line prompt E4`).
+The first sentence now asks for "extremely thick, heavy, even black marker lines (about ten times
+a normal outline)". The later line asks for "about twelve times a normal outline, as thick as a
+fat marker". `colorPrompt` and `references` are byte equal. The card spec test gives 10 tests,
+exit 0.
+
+### The two line calls
+
+Each call used `--from 1 --tries 1`. The guard allowed each call.
+
+| Order | Command row | Output file | Size | Cost | Note |
+| --- | --- | --- | --- | --- | --- |
+| 1 | `l2-w04-card-ham` m1 line | `l2-w04-card-ham-m1-line-4.png` | 1600 x 1600 | 0.01 USD | `redo 4` |
+| 2 | `l2-w04-card-family` m1 line | `l2-w04-card-family-m1-line-4.png` | 1600 x 1600 | 0.01 USD | `redo 4` |
+
+- Call output: `l2-w04-card-ham-m1 line try 4 ok 1600x1600 cost 0.01` and running total 0.9600 USD.
+- Call output: `l2-w04-card-family-m1 line try 4 ok 1600x1600 cost 0.01` and running total 0.9700
+  USD.
+- The two cost rows have the times `2026-11-07T02:50:56.843Z` and `2026-11-07T02:51:38.406Z`.
+- `costs.tsv` now holds 97 rows and 0.9700 USD. The spend of this track is 0.02 USD.
+
+### Widths
+
+Record: `line-widths-r1.txt`.
+
+- `l2-w04-card-ham-m1-line-print-4.png`: 1500 x 1500, 27 px, coverage 12.08%,
+  SHA-256 `60a64254f376d7da0f2e1c02dc5330462b43c476b1dd644bc7158f66c375ee52`.
+- `l2-w04-card-family-m1-line-print-4.png`: 1500 x 1500, 12 px, coverage 12.92%,
+  SHA-256 `641c70b25d321ae180763b11e161f7756bbda87c963c533a0df822e2fd04bb27`.
+- Both prints pass the 12 px gate and `inspectLineArtPng` gives `valid: true`.
+
+### Judge batches
+
+Log: `judge-batch-retry-r1.log`. The builder makes no provider call.
+
+- Ham: `node scripts/storytime-judge-batch.mjs --cards --ids l2-w04-card-ham --kind line --try 4
+  --out cards-retry-ham-t4`, exit 0. Batch:
+  `docs/storytime/l2-unit1/judge/prod/cards-retry-ham-t4.json`. Judge copy:
+  `out/storytime-review/judge/prod/l2-w04-card-ham-line-t4.png` (SHA-256
+  `3b08192629abe83cd7f98b1fba77cf8f35c371bdda4721b200b89b7c1d19c684`). The `mustShow` list holds
+  "one slice of ham" and "a slice of pink ham" and no plate phrase.
+- Family: the width is 12 px, so the try goes to the judge.
+  `node scripts/storytime-judge-batch.mjs --cards --ids l2-w04-card-family --kind line --try 4
+  --out cards-retry-family-t4`, exit 0. Batch:
+  `docs/storytime/l2-unit1/judge/prod/cards-retry-family-t4.json`. Judge copy:
+  `out/storytime-review/judge/prod/l2-w04-card-family-line-t4.png` (SHA-256
+  `ffc086f1bff172a2f558ed0fdb73061560f1f92f70ef9f8cebfa54fdd10a6598`).
+- Both batches see the picture at 360 px, the card size, as the judge prompt v6 rule 1 asks.
+- The Sonnet judge run is not part of this maker role. It runs on these two batch files at the
+  judge model `claude-code/claude-sonnet-5-5#high`. No judge verdict exists at this commit.
+
+### State of the rows
+
+- Task 4 (ham): try 4 is called, measured, and batched. The judge verdict is pending, so the task
+  stays `[~]`.
+- Task 5 (family): E4 is applied and committed; try 4 is called, measured, and batched. The judge
+  verdict is pending, so the task stays `[~]`.
+- Spend stop: 0.05 USD. The track spend is 0.02 USD. The guard cap is 1.60 USD.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_card_line_retry_20261107
+phase: Phase 2: Tries, delivery, and report (round 1)
+commits: cfeefcd2 (Phase 1 gate), 293517a4 (preconditions), 31106b59 (family E4), this commit (round 1 records)
+tests_run: vitest tests/storytime-card-specs.test.ts --maxWorkers=1 => 10 tests pass, exit 0
+files_changed: plan.md, measure/runs/asset_storytime_l2_card_line_retry_20261107/{maker-p2.log, line-widths-r1.txt, judge-batch-retry-r1.log, acceptance-p1-93f8021.json, acceptance-p1-93f8021.log}, docs/storytime/l2-unit1/cards/l2-w04-card-family.json, docs/storytime/l2-unit1/judge/prod/cards-retry-ham-t4.json, docs/storytime/l2-unit1/judge/prod/cards-retry-family-t4.json
+plan_updates: Task 1 and Task 2 hold the SHA on the first line; Phase 1 gate [x] with 93f8021b; Task 3 [x] with cfeefcd2; Tasks 4 and 5 [~]; orchestrator round decision and E4 recorded under Task 5; Phase 1 heading got [checkpoint: 93f8021] because the guard required it
+known_failures: none; the Sonnet judge verdicts are pending outside this role
+handoff: ham try 4 is 27 px and family try 4 is 12 px, so both rows have their judge batch. costs.tsv holds 97 rows and 0.9700 USD. The track spend is 0.02 USD. The Sonnet judge runs on docs/storytime/l2-unit1/judge/prod/cards-retry-ham-t4.json and cards-retry-family-t4.json. No PNG or JPG entered git.
+dispositions: none
+END_MEASURE_AGENT_RESULT
+
