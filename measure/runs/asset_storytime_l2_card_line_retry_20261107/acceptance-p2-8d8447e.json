@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Phase 2 passes at HEAD 8d8447ed. Family line art passed at try 4 (12 px, judge pass) and is delivered. Ham failed tries 4 and 5 with two judge fails each; its color file is in the handoff and try 5 is named as the best try. Spend is 0.03 USD for the track and 0.98 USD in 99 rows. sha256sum -c on MANIFEST.txt gives 61 OK. Two nonblocking Nits stay: F1 (Task 7 has no SHA) and F2 (the best try has no SHA-256 in MANIFEST.txt or the report).",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] measure/tracks/asset_storytime_l2_card_line_retry_20261107/plan.md: Task 7 ('- [x] Task 7: Report record for the PM') holds no commit SHA on its first line; Tasks 3 to 6 hold one. Rationale: the brief asks for a SHA on the first line of Tasks 3 to 7. The closeout can add 8d8447ed. No spend, try, or delivery fact is affected.",
+    "F2 [Nit] handoff MANIFEST.txt and pm-report.md: The ham best try is named with its file path but not with its SHA-256. The spec section 'Failed row' asks for the file path and the SHA-256. Rationale: the SHA-256 0d874ba2a39d3760f20f26ca8d0c7653b632404e5667f7b9ee21e5ea5b78e93c is only in line-widths-r2.txt. The PM done-when asks only that the best try is named, so the PM gate is met."
+  ],
+  "evidence": [
+    "git rev-parse HEAD gives 8d8447ed6fbe7664f473e27861f5d25932778c1d, equal to role_base_sha and audited_head_sha. git log 93f8021b..HEAD lists 11 commits, the last is 8d8447ed.",
+    "costs.tsv: 100 lines, 99 call rows, sum of usage_cost 0.98 USD. Rows from 2026-11-07T02:00:00Z are 4: ham try 4 (02:50:56Z, 0.01, redo 4), family try 4 (02:51:38Z, 0.01, redo 4), ham zero-cost network failure (03:00:44Z, output none, 0), ham try 5 (03:01:31Z, 0.01, redo 5). Track spend 0.03 USD. Ham used 2 paid line tries and family 1. The last row before the start time is 00:26:13Z.",
+    "Width record: line-widths-r1.txt gives ham try 4 at 27 px and family try 4 at 12 px (gate 12 px). line-widths-r2.txt gives ham try 5 at 36 px. The family try 4 went to the judge and judge-cards-retry-family-t4.json holds verdict pass.",
+    "Ham judge files: judge-cards-retry-ham-t4.json, -t4-second.json, -t5.json, -t5-second.json each hold verdict fail with defectClass wrong-or-missing-prop. Four result files, two judges for each try.",
+    "judge-batch-retry-r2.log and maker-p2.log: --try 5 refused (zero-cost row holds builder position 5); --try 6 built the batch cards-retry-ham-t5.json; the judge copy line-t6.png is recorded as byte equal to a 360 px copy of l2-w04-card-ham-m1-line-5.png. The frozen builder did not change (git diff of scripts/ src/ tests/ since 93f8021b is empty).",
+    "Handoff /home/daniebo/Desktop/handoff/storytime-l2-card-pictures/: 64 entries: 61 card PNG files, the contact sheet PNG, MANIFEST.txt, and manifest.json. MANIFEST.txt lists the 61 card PNG files and not the contact sheet. grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c - gives 61 OK and 0 FAILED.",
+    "manifest.json SHA-256 of the handoff folder and of out/storytime/l2/unit1/cards/delivery-muse-v2/manifest.json are both e60b10efb37e7e5754d9205038b7b17b16c53b59a08e28ecb14ce6861d1fc6f6. It holds 30 jobs and 60 distinct row ids in its text. delivery-muse-v2 holds 61 entries (60 PNG and manifest.json).",
+    "The 58 old file lines of handoff-before/MANIFEST.txt, checked with sha256sum -c inside the handoff folder, give 58 OK. The old files keep their SHA-256.",
+    "file(1): l2-w04-card-family-v1.png and l2-w04-card-ham-v1.png are 1500 x 1500 8-bit RGB, l2-w04-card-family-line-v1.png is 1500 x 1500 8-bit grayscale. No alpha channel on any of the three.",
+    "MANIFEST.txt text: header says 30 of the 31 card rows; the ham failed-row note reads 'color only; the line art failed after 5 tries (best try 5, out/storytime/l2/unit1/cards/muse/l2-w04-card-ham-m1-line-print-5.png); Workbooks makes the greyscale fallback'; spend line says 0.98 USD, 99 cost rows; the check command is present.",
+    "Read tool on l2-w04-card-family-line-v1.png: six persons in one row (woman, man, grandmother, grandfather, boy, girl), readable faces with eye dots and smile, black lines on white, no gray fill, no text.",
+    "Read tool on the contact sheet: 31 cells, one label under each card; the ham cell shows the color picture and the label 'line art failed'. The ham color picture and the family line art hold no text. The family cell shows the color and line pair.",
+    "git diff --name-only 93f8021b..HEAD | grep -ciE '\\.(png|jpe?g)$' gives 0. The diff holds the 2 card spec files, 3 judge batch files, plan.md, and files in the run folder. No file under scripts/, src/, tests/, assets/fireball.ts, the judge prompt, or the cast file changed, so the judge kit, storytime-judge-batch.mjs, and CARD_RUN are unchanged.",
+    "FR-10 grep for accept and approv in MANIFEST.txt and pm-report.md gives only 'model evidence, not acceptance' lines (MANIFEST.txt lines 83 and 143, pm-report.md line 49). No text says Daniel or Workbooks accepted a picture.",
+    "pm-report.md line 1 is 'Status: done. ...' and the file holds one 'Facts changed' heading with 4 facts. It names the handoff path, spend, calls, widths, judge results, the failed row with the best try, the ham mustShow difference, the builder note, and the corner values.",
+    "plan.md Phase 2: Task 3 (cfeefcd2), Task 4 (ec212248), Task 5 (c55fa018), Task 6 (a58d78b0) are [x] with an existing commit SHA on the first line (git cat-file -t gives commit for all four). Task 7 is [x] without a SHA (F1). The Phase 2 gate is '[b] Phase 2 gate: ... deferred:checker'.",
+    "A5: the plan claims 'sha256sum -c gives OK for every file' and '61 file lines'. The check gives 61 OK, so the claim matches reality. A3, A4, A6, and A7 are not triggered: the phase diff changes no contract test, filter, or tracks registry entry.",
+    "Corner values: family color 247 at the bottom-left corner, ham color 254, family line 255. The family value is below 250 and is a report item, not a finding. The pm-report.md and MANIFEST.txt list it."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git log --oneline 93f8021b..HEAD",
+    "tail -n +2 out/storytime/l2/unit1/cards/muse/costs.tsv | cut -f8 | awk '{s+=$1} END{print NR, s}'",
+    "tail -n 7 out/storytime/l2/unit1/cards/muse/costs.tsv",
+    "grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c - (in the handoff folder) => 61 OK",
+    "grep -E '^[0-9a-f]{64}  ' measure/runs/asset_storytime_l2_card_line_retry_20261107/handoff-before/MANIFEST.txt | (cd handoff folder && sha256sum -c -) => 58 OK",
+    "sha256sum handoff manifest.json out/storytime/l2/unit1/cards/delivery-muse-v2/manifest.json",
+    "file l2-w04-card-family-v1.png l2-w04-card-family-line-v1.png l2-w04-card-ham-v1.png",
+    "git diff --name-only 93f8021b..HEAD | grep -ciE '\\.(png|jpe?g)$' => 0",
+    "git diff --stat 93f8021b..HEAD -- scripts src tests docs/storytime/l2-unit1/judge/judge-prompt.md docs/storytime/l2-unit1/judge/cast.json assets/fireball.ts => empty",
+    "grep -niE 'accept|approv' MANIFEST.txt pm-report.md",
+    "grep -oE verdict and defectClass in judge-cards-retry-*.json",
+    "Read tool on the family line file and on the contact sheet",
+    "git cat-file -t ec212248 c55fa018 a58d78b0 cfeefcd2"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_card_line_retry_20261107/acceptance-p2-8d8447e.json",
+    "measure/runs/asset_storytime_l2_card_line_retry_20261107/acceptance-p2-8d8447e.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high"
+}

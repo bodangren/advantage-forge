@@ -1,0 +1,60 @@
+# Phase 2 acceptance log
+
+Track: asset_storytime_l2_card_line_retry_20261107. Phase: Phase 2: Tries, delivery, and report.
+Audited HEAD and role_base_sha: 8d8447ed6fbe7664f473e27861f5d25932778c1d (git rev-parse HEAD equal).
+phase_base_sha: 93f8021b8ae37dd2489129d54a3828f809a39f60. Lane: light lane, single checker.
+Result JSON: measure/runs/asset_storytime_l2_card_line_retry_20261107/acceptance-p2-8d8447e.json
+
+## Checks
+
+1. Spend and tries: PASS. costs.tsv holds 99 call rows and 0.98 USD. Four rows start at
+   2026-11-07T02:00:00Z: ham try 4, family try 4, one zero-cost network failure (output none),
+   and ham try 5. The sum of the four rows is 0.03 USD. Ham used 2 paid line tries, family 1.
+   No other row is newer than 00:26:13Z.
+2. Family and ham: PASS. Family try 4 measures 12 px (gate 12 px) and
+   judge-cards-retry-family-t4.json gives pass. Ham tries 4 (27 px) and 5 (36 px) each hold two
+   judge fails (four files, class wrong-or-missing-prop). The try 5 batch used --try 6 for the
+   builder position reason, and maker-p2.log holds the byte-equality proof. Best try is try 5.
+3. Handoff: PASS. sha256sum -c on MANIFEST.txt gives 61 OK and 0 FAILED. The handoff
+   manifest.json and the delivery-muse-v2 manifest.json have the same SHA-256 (e60b10ef...) and
+   hold 30 jobs. The 58 old files give 58 OK against handoff-before/MANIFEST.txt. The family pair
+   and the ham color file are 1500 x 1500, 8-bit, no alpha. MANIFEST.txt names the ham best try
+   (path) and the greyscale fallback note.
+4. Pictures: PASS. The family line art shows six persons with readable faces, black on white,
+   no gray fill, no text. The contact sheet shows 31 cells with one label under each card. The ham
+   cell shows the color picture and the label "line art failed". No text sits inside a picture.
+5. Git and claims: PASS. No PNG or JPG entered git since 93f8021b. The diff holds no change in
+   scripts/, src/, tests/, the judge prompt, the cast file, or assets/fireball.ts. The grep for
+   accept and approv gives only "not acceptance" lines. pm-report.md opens with one status line
+   and holds "Facts changed".
+6. Plan: PASS with Nit F1. Tasks 3 to 6 hold a commit SHA on the first line. Task 7 is [x]
+   without a SHA. The Phase 2 gate is [b] with deferred:checker.
+
+Specific criteria: A5 verified (the plan claim of 61 OK matches the check). A3, A4, A6, and A7 do
+not apply, because the phase diff changes no contract test, filter, or tracks registry entry.
+
+Corner values below 250 (report item, not a finding): family color 247 at the bottom-left corner.
+
+## Findings
+
+- F1 [Nit] plan.md Task 7: no commit SHA on the first line. The closeout can add 8d8447ed.
+- F2 [Nit] MANIFEST.txt and pm-report.md: the best try has a path and no SHA-256. The SHA-256
+  0d874ba2a39d3760f20f26ca8d0c7653b632404e5667f7b9ee21e5ea5b78e93c is in line-widths-r2.txt.
+
+No Blocker finding. The audit wrote only files under measure/runs/. No commit was made.
+
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: asset_storytime_l2_card_line_retry_20261107
+phase: Phase 2: Tries, delivery, and report
+audited_head_sha: 8d8447ed6fbe7664f473e27861f5d25932778c1d
+verdict: pass
+sha256sum_c: 61 OK, 0 FAILED
+blocking_findings: none
+nonblocking_findings: F1 [Nit] plan.md Task 7 has no SHA; F2 [Nit] best try has no SHA-256 in MANIFEST.txt and pm-report.md
+result_json: measure/runs/asset_storytime_l2_card_line_retry_20261107/acceptance-p2-8d8447e.json
+retry_recommendation: none
+handoff: Phase 2 passes. The orchestrator can run the closeout. Add 8d8447ed to Task 7 (F1) and optionally the best-try SHA-256 (F2).
+dispositions: none
+END_MEASURE_AGENT_RESULT

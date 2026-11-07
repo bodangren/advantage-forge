@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "track": "asset_storytime_l2_card_line_retry_20261107",
+  "archived_at": "2026-11-07T03:23:04Z",
+  "track_base_sha": "eb8e77f4bdbf685fa66ebce2a8651b7351802db4",
+  "track_final_sha": "8d8447ed6fbe7664f473e27861f5d25932778c1d",
+  "phase_acceptance_results": [
+    "measure/runs/asset_storytime_l2_card_line_retry_20261107/acceptance-p1-93f8021.json",
+    "measure/runs/asset_storytime_l2_card_line_retry_20261107/acceptance-p2-8d8447e.json"
+  ],
+  "completed_phases": [
+    {
+      "id": "Phase 1",
+      "title": "Guard and prompts",
+      "checkpoint": "93f8021b"
+    },
+    {
+      "id": "Phase 2",
+      "title": "Tries, delivery, and report",
+      "checkpoint": "8d8447ed"
+    }
+  ],
+  "final_acceptance": "not run: the PM put the whole track on the light lane on 2026-11-03 (one maker and one checker). PM rule 3 of 2026-11-03 gives no final acceptance under the light lane. The plan records the closeout item as done and holds no final acceptance task.",
+  "gates": {
+    "PROJECT_LINT": "pass — bash measure/doctor.sh gives exit 1 with 11 structural errors, and every error names another track; grep for asset_storytime_l2_card_line_retry_20261107 in the doctor output gives exit 1 with no line",
+    "PROJECT_CHECKS": "pass — Phase 1 checker at 93f8021b: 0 owned tsc errors and 38 tsc errors total in the repository; 5 test files passed with 83 tests. Phase 2 changed no src/, scripts/, or tests/ file, so no test rerun applies to that phase",
+    "PROJECT_TESTS": "pass — Phase 1 the 4-file command gives exit 0 with 4 files and 73 tests passed at 93f8021b; the 5-file command adds the card spec file and gives 5 files and 83 tests passed",
+    "SECRET_SCAN": "pass — grep -rnE 'sk-[A-Za-z0-9]{20}|Bearer [A-Za-z0-9]{20}|OPENROUTER_API_KEY=' measure/runs/asset_storytime_l2_card_line_retry_20261107 gives exit 1 with no hit. find of PNG, JPG, and JPEG files in the run folder gives count 0",
+    "source": "measure/runs/asset_storytime_l2_card_line_retry_20261107/acceptance-p2-8d8447e.json"
+  },
+  "antipatterns_clean": [
+    "A2 consent-blind publish gate — the registry entry, the metadata, the plan, and this manifest name model evidence only; no text says that Daniel or Workbooks accepted a picture",
+    "A3 digit-only count — every gate reads a labeled value (owned tsc errors 0, total 38, Tests 83 passed (83), family line 12 px, 61 OK checksums, spend 0.03 USD in 3 paid calls, total 0.98 USD in 99 rows)",
+    "A4 vacuous pass — the two phase checkers read the picture files, the widths, the four ham judge files, the family judge file, the checksums, and the frozen files; each pass quotes its command and a label",
+    "A5 false claim — the plan claims 61 file lines and 61 OK checksums, 12 px for the family, and 0.98 USD in 99 rows; the checker measured each claim and the values agree",
+    "A6 registry overstatement — the archived registry entry keeps the words 'model evidence, not acceptance', names the failed ham row with its best try, and gives the spend as 0.03 USD",
+    "A7 over-broad filter — the secret scan quotes its scope and its exit code; the closeout adds no filter and changes no contract test",
+    "A9 archived track paths — grep for asset_storytime_l2_card_line_retry_20261107 in tests/, scripts/, src/, and docs/ gives no hit, so no test reads the track path and the archive move breaks no test",
+    "A10 generated-facts drift — the generator does not run while measure/generated holds foreign changes; the closeout commit holds no generated fact",
+    "A11 doc-to-code drift — the specification text, the two card spec files, the two judge batch files, MANIFEST.txt, and the delivery manifest agree; the phase 2 checker compares the checksums and the judge records"
+  ],
+  "antipatterns_known_limitations": [
+    "11 structural doctor errors of other tracks; the doctor adds no error for this track",
+    "38 pinned tsc errors of other tracks stay open; the typecheck gate counts 0 owned errors for this track",
+    "F1 [Nit] of the Phase 2 checker, fixed in the closeout: Task 7 held no SHA on its marker line; the closeout adds 8d8447ed",
+    "F2 [Nit] of the Phase 2 checker, declined: the ham best try has no SHA-256 in MANIFEST.txt and the PM report. The PM done-when needs the best try named, and the SHA-256 0d874ba2a39d3760f20f26ca8d0c7653b632404e5667f7b9ee21e5ea5b78e93c sits in line-widths-r2.txt and in the PM reply",
+    "F1 [Nit] of the Phase 1 checker, fixed during Phase 1: the plan marker lines held no SHA on the first line of Task 1 and Task 2; they now do",
+    "The family color file has a corner value of 247, below 250. This is a report item, not a delivery gate; Workbooks decides at its check",
+    "measure/generated holds foreign uncommitted changes, so the generator did not run and no generated fact is committed"
+  ],
+  "deferred": [
+    "Human gate: Daniel sees the print cards in his 11-16 check, and Workbooks checks the pictures; both checks are outside this track (deferred 2026-11-07)",
+    "Final acceptance did not run under the PM light lane (deferred:PM)"
+  ],
+  "deferred_note": "No plan task stays open. Every task line is [x] with a commit SHA on its first line, and no [b], [~], or [ ] task line remains. The PM light-lane order replaced final acceptance.",
+  "tech_debt": [
+    "TD-29 — RB-P4-1 and PA4-N1 — coverCalmTopReport in src/storytime/book-pictures.ts does not confine cover-calm-top --print output paths, resolve real paths, or require a regular file (Low, Open); this track did not use that path",
+    "TD-30 — RB12-01 and RB12-03, PA3-N3 — a parent symlink under out/ can redirect mkdir, and lstat with mkdir is not atomic (Low, Open); deliverMuse wrote under out/storytime/l2/unit1/cards/delivery-muse-v2/"
+  ],
+  "tech_debt_note": "No new debt entry is warranted. The track added no debt beyond TD-29 and TD-30, which stay Open. measure/tech-debt.md is unchanged by this closeout.",
+  "lessons_learned": "No lessons-learned entry is warranted. The zero-cost failure row shifting the judge builder position is recorded in the plan, the PM report, and the deviation notes. measure/lessons-learned.md is unchanged by this closeout.",
+  "generated_facts": "not committed: measure/generated holds foreign uncommitted changes; the registry entry in measure/tracks.md is staged through a blob so the foreign Contents hunk stays out",
+  "artifact_cleanup": "no bulky run artifact was deleted; the orchestrator identified none. The run folder holds JSON, log, txt, md, and mts files and no PNG or JPG file (find count 0). The two phase acceptance results stay in the folder",
+  "evidence_classes": {
+    "person_reviewed": "none recorded for the family line picture; Daniel sees the print cards in his 11-16 check",
+    "model_evidence_not_acceptance": "The family line file carries one Sonnet judge pass at card size; the two ham tries carry four Sonnet judge fails. This is model evidence, not acceptance. Workbooks checks the pictures after the delivery.",
+    "workbooks_acceptance": "none recorded"
+  }
+}

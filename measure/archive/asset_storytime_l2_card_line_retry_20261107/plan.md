@@ -1,9 +1,8 @@
 # Storytime Level 2 card line-art retry (ham and family)
 
-Status: in progress, Phase 2 gate (2026-11-07). The family row passed at try 4 (12 px, judge
-`pass`) and is delivered. The ham row failed both retry tries; the best try is try 5 at 36 px, and
-the ham color print is in the handoff as the fallback. Spend of this track: 0.03 USD. The total of
-`costs.tsv` is 0.98 USD in 99 rows. The checker checks the phase at an immutable HEAD.
+Status: delivered, awaiting Daniel's look on 11-16 (2026-11-07). Family line art delivered (try 4);
+ham line art failed after 2 more tries (best try 5; ham color file in the handoff for the greyscale
+fallback). Spend of this track: 0.03 USD. The total of `costs.tsv` is 0.98 USD in 99 rows.
 The [specification](./spec.md) owns the scope and the acceptance gates.
 
 ## Method and ownership
@@ -54,14 +53,14 @@ each phase at an immutable HEAD.
 
 `[x]` means complete. `[~]` means in progress. `[ ]` means ready and not started. `[b]` means
 blocked, with a trailing `deferred:<owner>` field. The orchestrator changes `[b]` to `[~]` when
-the blocker clears and the task starts. Tasks 1 to 7 are complete. The Phase 2 gate is blocked on
-the checker. The doctor counts only `[ ]`, `[~]`, and `[x]`, so the complete tasks keep the track
+the blocker clears and the task starts. Tasks 0 to 7 are complete. The Phase 2 gate passed at
+8d8447ed. The doctor counts only `[ ]`, `[~]`, and `[x]`, so the complete tasks keep the track
 open for the doctor.
 
 ## Phase 0: Authoring [checkpoint: eb8e77f]
 
-- [x] Task 0: Author the track: specification, plan, metadata, index, spec review note, and the
-  registry entry. The creation commit has the message
+- [x] Task 0 (eb8e77f4): Author the track: specification, plan, metadata, index, spec review
+  note, and the registry entry. The creation commit has the message
   `measure(storytime_l2_card_line_retry): create the track`.
 
 The light lane has no spec review gate.
@@ -222,7 +221,7 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   - Report the corner values below 250 of the new color files (report item, not a gate).
   - `grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c -` in the handoff folder gives OK for
     every file. The handoff `manifest.json` equals the v2 `manifest.json`.
-- [x] Task 7: Report record for the PM:
+- [x] Task 7 (8d8447ed): Report record for the PM:
   `measure/runs/asset_storytime_l2_card_line_retry_20261107/pm-report.md`.
   - The report starts with the status line: family line art delivered at try 4 (12 px); the ham
     line art failed after 2 more tries, with best try 5 named and the ham color file added for the
@@ -231,10 +230,14 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     the judge read of each try, the builder note of the `--try 6` selection, the corner values,
     and the "Facts changed:" list. It states that the delivery is model evidence, and that
     Workbooks checks the pictures.
-- [b] Phase 2 gate: phase acceptance by the checker at an immutable HEAD. deferred:checker
-  - `./measure/doctor.sh` reports "in_progress track has no unchecked task", because every counted
-    task is `[x]` and this gate is `[b]`. The check counts only `[ ]`, `[~]`, and `[x]`. The
-    closeout step clears this state.
+- [x] Phase 2 gate (8d8447ed): phase acceptance by the checker passed at 8d8447ed.
+  - Evidence: `measure/runs/asset_storytime_l2_card_line_retry_20261107/acceptance-p2-8d8447e.json`
+    (`status: pass`, no blocking finding) and its log `acceptance-p2-8d8447e.log`.
+  - Checker findings and orchestrator dispositions: F1 [Nit] Task 7 SHA: FIX in the closeout.
+    F2 [Nit] the ham best try has no SHA-256 in MANIFEST.txt and the PM report: DECLINE; the PM
+    done-when needs the best try named, and the SHA-256
+    0d874ba2a39d3760f20f26ca8d0c7653b632404e5667f7b9ee21e5ea5b78e93c is in line-widths-r2.txt and
+    in the PM reply.
   - The maker log is
     `measure/runs/asset_storytime_l2_card_line_retry_20261107/maker-p2.log`.
   - The checker runs the test command, the SHA-256 comparison of the 58 old files in
@@ -247,10 +250,9 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
 
 ## Track-level roles
 
-- [b] Closeout: archive the track, update the registry, run the generator and the doctor, and
-  commit the run records in `measure/runs/asset_storytime_l2_card_line_retry_20261107/`. Foreign
-  generated facts stay out of the closeout commit unless their owner has committed them.
-  deferred:Phase 2 gate
+- [x] Closeout (8d8447ed): archive the track, update the registry, and run the doctor. Archived
+  2026-11-07; the closeout commit follows 8d8447ed. The generator does not run because
+  measure/generated/ holds foreign changes.
 
 The light lane has no final acceptance role.
 

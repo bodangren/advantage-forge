@@ -135,9 +135,6 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Chibi Sprouts, release 1 art**
   *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
 
-- [~] **Track: Storytime Level 2 card line-art retry (ham and family)**
-  *Link: [./tracks/asset_storytime_l2_card_line_retry_20261107/](./tracks/asset_storytime_l2_card_line_retry_20261107/)*
-
 ## Games
 
 - [x] **Track: Player avatar system: base, equipment fit, pack, composer**
@@ -349,6 +346,9 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
   *Link: [./tracks/riven_fx_geometry_20261009/](./tracks/riven_fx_geometry_20261009/)*
 
 ## Archived Tracks
+
+- [x] Storytime Level 2 card line-art retry (ham and family), completed 2026-11-07; family line art delivered (try 4, 12 px) with Sonnet judge evidence (model evidence, not acceptance); ham line art failed after 2 more tries, best try named, ham color file added for the greyscale fallback; spend 0.03 USD.
+  *Link: [./archive/asset_storytime_l2_card_line_retry_20261107/](./archive/asset_storytime_l2_card_line_retry_20261107/)*
 
 - [x] Storytime Level 2 family-word pictures (19 words), completed 2026-11-07; 19 of 19 color pictures delivered with Sonnet judge evidence (model evidence, not acceptance); delivered, awaiting Daniel's look on 11-16; spend 0.21 USD.
   *Link: [./archive/asset_storytime_l2_family_words_20261107/](./archive/asset_storytime_l2_family_words_20261107/)*
