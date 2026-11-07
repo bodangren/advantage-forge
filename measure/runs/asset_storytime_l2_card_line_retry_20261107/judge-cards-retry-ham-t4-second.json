@@ -1,0 +1,20 @@
+{
+  "group": "cards-retry-ham-t4-second",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-07T02:56:39Z",
+  "results": [
+    {
+      "id": "l2-w04-card-ham",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-ham-line-t4.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole picture: a round object with a scalloped edge, an inner ring, and curved bands across a plate-like center",
+      "notes": "Question page: no. Items: one slice of ham (1), a slice of pink ham (1). Action: none. Seen: a round shape with a wavy scalloped rim, an inner ring, and three curved lines across the middle. It reads as a pie, a tart, or a ball, not as a slice of ham. No fat edge, no flat slice outline, no clear ham shape. A young child would not know it as ham. Line art: black lines on white, no gray, no gaps that make coloring hard, no text, no characters. The mustShow items fail: one slice of ham reads as a different object; a slice of pink ham is not clear (pink is a color note for line art)."
+    }
+  ],
+  "summary": { "files": 1, "pass": 0, "fail": 1 }
+}

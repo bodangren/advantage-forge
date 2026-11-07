@@ -1,8 +1,8 @@
 # Storytime Level 2 card line-art retry (ham and family)
 
-Status: in progress, Phase 2 round 1 (2026-11-07). Two line calls ran: ham try 4 and family try 4.
-Spend of this track: 0.02 USD. The total of `costs.tsv` is 0.97 USD in 97 calls. The Sonnet judge
-verdicts for both tries are pending.
+Status: in progress, Phase 2 round 2 (2026-11-07). The family row passed at try 4 (12 px, judge
+`pass`) and is the delivery of that row. The ham row failed try 4 twice (pie or ball); try 5 is the
+last ham try. Spend of this track: 0.02 USD. The total of `costs.tsv` is 0.97 USD in 97 calls.
 The [specification](./spec.md) owns the scope and the acceptance gates.
 
 ## Method and ownership
@@ -53,10 +53,9 @@ each phase at an immutable HEAD.
 
 `[x]` means complete. `[~]` means in progress. `[ ]` means ready and not started. `[b]` means
 blocked, with a trailing `deferred:<owner>` field. The orchestrator changes `[b]` to `[~]` when
-the blocker clears and the task starts. Tasks 1 and 2 are complete. The Phase 1 gate passed at
-93f8021b. Task 3 is in progress. The blocker of Tasks 4 to 7 is the acceptance of the phase before
-each one. The doctor counts only `[ ]`, `[~]`, and `[x]`, so the open tasks keep the track open
-for the doctor.
+the blocker clears and the task starts. Tasks 1, 2, 3, and 5 are complete. Task 4 is in progress:
+try 5 is open after the try 4 fail. The blocker of Task 6 is the end of Task 4. The doctor counts
+only `[ ]`, `[~]`, and `[x]`, so the open tasks keep the track open for the doctor.
 
 ## Phase 0: Authoring [checkpoint: eb8e77f]
 
@@ -128,13 +127,26 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
 - [~] Task 4: Ham line tries.
   - Try 4 on 2026-11-07: `l2-w04-card-ham-m1-line-4.png` (1600 x 1600, 0.01 USD), print
     `l2-w04-card-ham-m1-line-print-4.png` at 27 px (gate 12 px), judge batch
-    `docs/storytime/l2-unit1/judge/prod/cards-retry-ham-t4.json`. The judge verdict is pending.
+    `docs/storytime/l2-unit1/judge/prod/cards-retry-ham-t4.json`.
+  - Try 4 fails. First judge: `fail`, defect class `wrong-or-missing-prop`, "a round disc with a
+    wavy scalloped outer edge, an inner oval ring, and three curved stripe lines inside" that
+    reads as a pie, a tart, or a ball. Result file:
+    `measure/runs/asset_storytime_l2_card_line_retry_20261107/judge-cards-retry-ham-t4.json`.
+    Second judge on the same file: `fail` with the same defect class. Result file:
+    `judge-cards-retry-ham-t4-second.json`. The fail stands.
+  - Orchestrator decision 2026-11-07: ham try 5 is the last ham try.
+  - Orchestrator decision 2026-11-07: the try 5 linePrompt changes the shape to a wide oval slice
+    with the fat band along the top edge only.
   - Follow the section "Tries, order, and stop rules". Call, measure the width, judge at card
     size (`--cards --kind line --try <n>`), second judge on a fail. Try 4 first, then try 5 only
     if try 4 does not pass. Stop at the first pass or at try 5.
   - Record for each try: the file, the width, the judge result file, the verdict, and the defect
     class.
-- [~] Task 5: Family line tries.
+- [x] Task 5 (c55fa018): Family line tries.
+  - The row passed at try 4 and the row stops there: 12 px (the 12 px gate is met), judge verdict
+    `pass`, result file
+    `measure/runs/asset_storytime_l2_card_line_retry_20261107/judge-cards-retry-family-t4.json`.
+    Try 4 is the delivery of the family row.
   - Orchestrator decision 2026-11-07: ham try 4 and family try 4 run in the same round. The two
     rows are independent, so both calls share one judge cycle.
   - E4 applied on 2026-11-07 (try 4): the first sentence now asks for "extremely thick, heavy,
@@ -142,9 +154,9 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     "about twelve times a normal outline, as thick as a fat marker". `colorPrompt` and
     `references` are byte equal. Card spec test: 10 tests pass, exit 0.
   - Try 4 on 2026-11-07: `l2-w04-card-family-m1-line-4.png` (1600 x 1600, 0.01 USD), print
-    `l2-w04-card-family-m1-line-print-4.png` at 12 px (gate 12 px, so the try goes to the judge),
-    judge batch `docs/storytime/l2-unit1/judge/prod/cards-retry-family-t4.json`. The judge verdict
-    is pending.
+    `l2-w04-card-family-m1-line-print-4.png` at 12 px (gate met, so the try went to the judge).
+    Judge batch `docs/storytime/l2-unit1/judge/prod/cards-retry-family-t4.json`. Judge verdict
+    `pass`; six people in one row, clear faces, no text.
   - Before each call, apply the next step of the ladder (E4 for try 4, E5 for try 5, E6 for try
     6) to `docs/storytime/l2-unit1/cards/l2-w04-card-family.json`, and run the card spec test.
     Commit each edit before its call (explicit path).

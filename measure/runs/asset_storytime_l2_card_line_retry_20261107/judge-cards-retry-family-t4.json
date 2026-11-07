@@ -1,0 +1,20 @@
+{
+  "group": "cards-retry-family-t4",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-07T02:55:29Z",
+  "results": [
+    {
+      "id": "l2-w04-card-family",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w04-card-family-line-t4.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: six people (6): Mom, Dad, Grandma, Grandpa, Tom, Lily. Action: none (all stand in one row). Seen, left to right: a woman with short hair in a long-sleeved top and trousers (Mom); a man with short hair in a collared shirt and trousers (Dad); a woman with curly hair, cardigan, and long skirt (Grandma); a man with a mustache, round glasses, and a cardigan (Grandpa); a small boy with short hair in a T-shirt and shorts (Tom); a small girl with a bob, a bow, and a dress (Lily). Count is six. All stand in one row on one ground line; Tom and Lily hold hands and sit smaller, as children. Faces are clear on all six: round heads with two black oval eyes and a smile. Small marks: Mom's hair reads short and straight, not wavy shoulder length; Grandpa has round glasses that the cast note does not list; Tom's shirt has no stripes. Lines are black on white, no gray, no gap that blocks coloring, no text."
+    }
+  ],
+  "summary": { "files": 1, "pass": 1, "fail": 0 }
+}
