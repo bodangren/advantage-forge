@@ -232,4 +232,85 @@ handoff: the ham try 5 judge batch is docs/storytime/l2-unit1/judge/prod/cards-r
 dispositions: none
 END_MEASURE_AGENT_RESULT
 
+## Round 3: ham try 5 fails, delivery v2, handoff, and the PM report
+
+Commit of the row close: `35b3785e` (`measure(storytime_l2_card_line_retry): ham try 5 fails, row
+closed`). Commit of the delivery and handoff records: `a58d78b0`
+(`measure(storytime_l2_card_line_retry): card delivery v2 and handoff update`).
+
+### Judge results of ham try 5
+
+- `judge-cards-retry-ham-t5.json`: `fail`, class `wrong-or-missing-prop`. The oval with a rim and
+  three wavy lines reads as a lid, a bowl, a pie, or a bun.
+- `judge-cards-retry-ham-t5-second.json`: `fail`, class `wrong-or-missing-prop`. It reads as a
+  plate, a lid, a bun, or a ball.
+- The fail stands. The ham row used its 2 retry tries and fails. Best try by the spec rule (fewest
+  hard defects; a tie goes to the later try): try 5,
+  `out/storytime/l2/unit1/cards/muse/l2-w04-card-ham-m1-line-print-5.png`, 36 px.
+- Task 4 is `[x]` with `ec212248` on its first line.
+
+### Delivery v2
+
+Log: `deliver-v2.log`. Runner: `deliver-v2.mts`.
+
+- `approved-v2.json`: 30 entries (the 29 of `approved.json` plus the family row with color print
+  m1 and line print try 4) and the pin `ba3956fc`.
+- `writeMuseDelivery` wrote 60 PNG files (30 rows) to
+  `out/storytime/l2/unit1/cards/delivery-muse-v2/`. The writer skipped the ham row, because the
+  approval list has no entry for it.
+- The v2 `manifest.json` SHA-256 is
+  `e60b10efb37e7e5754d9205038b7b17b16c53b59a08e28ecb14ce6861d1fc6f6`.
+- The 58 old files match their v1 SHA-256 in v1, v2, and the handoff folder: 116 comparisons, 0
+  mismatch.
+- The family pair is 1500 x 1500, 8-bit, no alpha. The family line print passes
+  `inspectLineArtPng` (12 px, `valid: true`).
+- Corner values of the new files (`corner-record-v2.txt`): ham color 254, family color 247 at the
+  bottom-left corner, family line 255.
+
+### Handoff folder
+
+Log: `handoff-v2.log`. Script: `make-handoff-v2.mts`. Folder:
+`/home/daniebo/Desktop/handoff/storytime-l2-card-pictures/`.
+
+- The old `MANIFEST.txt` and `manifest.json` are copied to `handoff-before/`.
+- The folder holds 61 PNG files: 58 old, the family pair, and the ham color fallback
+  `l2-w04-card-ham-v1.png` (the ham m1 color print).
+- `manifest.json` equals the v2 file (same SHA-256).
+- `MANIFEST.txt` holds 61 file lines.
+  `grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c -` gives OK for every file (0 fails).
+- The ham note: "color only; the line art failed after 5 tries (best try 5,
+  out/storytime/l2/unit1/cards/muse/l2-w04-card-ham-m1-line-print-5.png); Workbooks makes the
+  greyscale fallback".
+- The contact sheet `storytime-l2-card-pictures-contact-sheet.png` is 1566 x 3434 px with 31
+  cells: 30 color+line pairs and the ham cell with its color and the words "line art failed".
+
+### PM report
+
+`pm-report.md` starts with the status line. It holds the handoff path, the spend, the calls, the
+widths, the judge results, the failed row and its best try, the ham `mustShow` difference, the
+builder note, the corner values, and the "Facts changed:" list.
+
+- This track spend: 4 cost rows, 3 paid calls, 0.03 USD.
+- Total of `costs.tsv`: 0.98 USD in 99 rows, cap 1.60 USD.
+
+### Doctor note
+
+`./measure/doctor.sh` reports "in_progress track has no unchecked task" for this plan. Every
+counted task is `[x]` and the Phase 2 gate is `[b]`. The check counts only `[ ]`, `[~]`, and
+`[x]`. The closeout step clears this state. The other doctor errors belong to foreign tracks.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_card_line_retry_20261107
+phase: Phase 2: Tries, delivery, and report
+commits: 293517a4 (preconditions), 31106b59 (family E4), c55fa018 (round 1 records), 29ab198a (round 1 judge records), a910c930 (ham try 5 prompt), 0010b0cd (round 2 records), ec212248 (ham try 5 batch), 35b3785e (ham try 5 fails, row closed), a58d78b0 (delivery v2 and handoff), this commit (PM report and phase gate)
+tests_run: vitest tests/storytime-card-specs.test.ts --maxWorkers=1 => 10 tests pass, exit 0; no test command runs against the handoff folder, which sits outside the repo
+files_changed: plan.md; run folder pm-report.md, maker-p2.log, approved-v2.json, deliver-v2.mts, make-handoff-v2.mts, deliver-v2.log, handoff-v2.log, corner-record-v2.txt, handoff-before/MANIFEST.txt, handoff-before/manifest.json, judge result files, line-widths-r1.txt, line-widths-r2.txt, judge-batch-retry-r1.log, judge-batch-retry-r2.log; docs/storytime/l2-unit1/cards/l2-w04-card-ham.json, docs/storytime/l2-unit1/cards/l2-w04-card-family.json; docs/storytime/l2-unit1/judge/prod/cards-retry-ham-t5.json
+plan_updates: Task 4 [x] with ec212248 (both retry tries failed two judges; best try 5); Task 5 [x] with c55fa018 (12 px, judge pass); Task 6 [x] with a58d78b0 (delivery v2 and handoff); Task 7 [x]; Phase 2 gate [b] deferred:checker
+known_failures: the ham line art fails after 5 tries; the handoff holds its color print only; Workbooks makes the greyscale fallback; doctor reports "in_progress track has no unchecked task" because all counted tasks are [x] and the gate is [b]
+handoff: Phase 2 is ready for measure-phase-acceptance at an immutable HEAD. Delivery: out/storytime/l2/unit1/cards/delivery-muse-v2/ (60 PNG, manifest e60b10ef). Handoff: /home/daniebo/Desktop/handoff/storytime-l2-card-pictures/ (61 PNG, 61 MANIFEST file lines with sha256sum -c OK, manifest.json equals the v2 file, contact sheet 31 cells). Family line art at try 4 (12 px, judge pass); ham line art failed at try 5 (36 px, two judge fails), best try 5 named. Spend: 0.03 USD this track, 0.98 USD total in 99 rows. The 58 old files match in v1, v2, and the handoff folder. No PNG or JPG entered git. The doctor line about "no unchecked task" is the gate-only state and the closeout clears it.
+dispositions: none
+END_MEASURE_AGENT_RESULT
+
 

@@ -1,9 +1,9 @@
 # Storytime Level 2 card line-art retry (ham and family)
 
-Status: in progress, Phase 2 round 3 (2026-11-07). The family row passed at try 4 (12 px, judge
-`pass`). The ham row failed both retry tries; the best try is try 5 at 36 px, and the ham color
-print goes to the handoff as the fallback. Spend of this track: 0.03 USD. The total of `costs.tsv`
-is 0.98 USD in 99 rows.
+Status: in progress, Phase 2 gate (2026-11-07). The family row passed at try 4 (12 px, judge
+`pass`) and is delivered. The ham row failed both retry tries; the best try is try 5 at 36 px, and
+the ham color print is in the handoff as the fallback. Spend of this track: 0.03 USD. The total of
+`costs.tsv` is 0.98 USD in 99 rows. The checker checks the phase at an immutable HEAD.
 The [specification](./spec.md) owns the scope and the acceptance gates.
 
 ## Method and ownership
@@ -54,9 +54,9 @@ each phase at an immutable HEAD.
 
 `[x]` means complete. `[~]` means in progress. `[ ]` means ready and not started. `[b]` means
 blocked, with a trailing `deferred:<owner>` field. The orchestrator changes `[b]` to `[~]` when
-the blocker clears and the task starts. Tasks 1, 2, 3, and 5 are complete. Task 4 is in progress:
-try 5 is open after the try 4 fail. The blocker of Task 6 is the end of Task 4. The doctor counts
-only `[ ]`, `[~]`, and `[x]`, so the open tasks keep the track open for the doctor.
+the blocker clears and the task starts. Tasks 1 to 7 are complete. The Phase 2 gate is blocked on
+the checker. The doctor counts only `[ ]`, `[~]`, and `[x]`, so the complete tasks keep the track
+open for the doctor.
 
 ## Phase 0: Authoring [checkpoint: eb8e77f]
 
@@ -194,7 +194,23 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   - After each call, measure the width. Below 12 px: a failed try, no judge. At 12 px or more:
     judge at card size, and a second judge on a fail. Stop at the first pass or at try 6.
   - Stop both rows at the spend stop of 0.05 USD in total.
-- [~] Task 6: Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet.
+- [x] Task 6 (a58d78b0): Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet.
+  - `approved-v2.json` holds the 30 entries (the 29 of `approved.json` plus the family row with
+    color print m1 and line print try 4) and the pin `ba3956fc`.
+  - `deliver-v2.log`: `writeMuseDelivery` wrote 60 PNG files (30 rows) to
+    `out/storytime/l2/unit1/cards/delivery-muse-v2/`; manifest SHA-256 `e60b10ef`.
+  - The 58 old files match their v1 SHA-256 in v1, v2, and the handoff folder: 116 comparisons, 0
+    mismatch. The family pair is 1500 x 1500, 8-bit, no alpha; the family line print passes
+    `inspectLineArtPng` (12 px, `valid: true`).
+  - The handoff folder copied the family pair, replaced `manifest.json` with the v2 one (same
+    SHA-256), and added the ham color fallback `l2-w04-card-ham-v1.png`. The old
+    `MANIFEST.txt` and `manifest.json` are in `handoff-before/`.
+  - `MANIFEST.txt` holds 61 file lines; `grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c -`
+    gives OK for every file. The ham note names best try 5 and the greyscale fallback.
+  - The contact sheet is 1566 x 3434 px with 31 cells: 30 color+line pairs and the ham cell with
+    its color and the words "line art failed".
+  - Corner values (`corner-record-v2.txt`): ham color 254, family color 247 (bottom-left), family
+    line 255. This is a report item, not a gate.
   - The form follows the section "Delivery". Write `approved-v2.json` and the folder
     `out/storytime/l2/unit1/cards/delivery-muse-v2/` with `writeMuseDelivery`. Copy the old
     handoff `MANIFEST.txt` and `manifest.json` to the run folder first. The family-word run
@@ -206,10 +222,28 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   - Report the corner values below 250 of the new color files (report item, not a gate).
   - `grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c -` in the handoff folder gives OK for
     every file. The handoff `manifest.json` equals the v2 `manifest.json`.
-- [b] Task 7: Report record for the PM:
-  `measure/runs/asset_storytime_l2_card_line_retry_20261107/pm-report.md`. deferred:Task 6
-  - It follows the section "PM report" of the specification.
-- [b] Phase 2 gate: phase acceptance by the checker at an immutable HEAD. deferred:Tasks 3 to 7
+- [x] Task 7: Report record for the PM:
+  `measure/runs/asset_storytime_l2_card_line_retry_20261107/pm-report.md`.
+  - The report starts with the status line: family line art delivered at try 4 (12 px); the ham
+    line art failed after 2 more tries, with best try 5 named and the ham color file added for the
+    greyscale fallback; spend 0.03 USD, total 0.98 USD of 1.60 USD.
+  - It holds the handoff path, the file counts, the `sha256sum -c` result, the calls and widths,
+    the judge read of each try, the builder note of the `--try 6` selection, the corner values,
+    and the "Facts changed:" list. It states that the delivery is model evidence, and that
+    Workbooks checks the pictures.
+- [b] Phase 2 gate: phase acceptance by the checker at an immutable HEAD. deferred:checker
+  - `./measure/doctor.sh` reports "in_progress track has no unchecked task", because every counted
+    task is `[x]` and this gate is `[b]`. The check counts only `[ ]`, `[~]`, and `[x]`. The
+    closeout step clears this state.
+  - The maker log is
+    `measure/runs/asset_storytime_l2_card_line_retry_20261107/maker-p2.log`.
+  - The checker runs the test command, the SHA-256 comparison of the 58 old files in
+    `delivery-muse-v1`, `delivery-muse-v2`, and the handoff folder, and
+    `grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c -` in the handoff folder.
+  - The checker greps for FR-10 and checks the frozen files: the judge kit,
+    `scripts/storytime-muse.mjs`, `scripts/storytime-judge-batch.mjs`,
+    `src/storytime/muse-delivery.ts`, the block `CARD_RUN`, and the 29 card spec files other than
+    the ham and the family.
 
 ## Track-level roles
 
