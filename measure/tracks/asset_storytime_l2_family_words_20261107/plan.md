@@ -224,7 +224,7 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     19 OK and 0 FAILED. The sha256sum lists of the delivery folder and the handoff folder are
     equal, 20 names each. The `manifest.json` of the round-6 delivery has the SHA-256
     `4300373783eef8232581c6e0fb70f4d7b8a2cb3a42d3dfd953265d10cb1f8719`.
-- [~] Task 7 (2a90930): Report record for the PM:
+- [x] Task 7 (cec85a5): Report record for the PM:
   `measure/runs/asset_storytime_l2_family_words_20261107/pm-report.md`.
   - The report record is to be rewritten after the legs and the feet try 2.
   - It holds the one status line, the handoff path, the track spend, the total of `costs.tsv`,
@@ -233,7 +233,11 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   - The status line reads "Status: done. 19 of 19 family-word pictures delivered; spend 0.19 USD
     (total 0.93 USD of the 1.60 USD card limit)." The record names the arms decision, the family
     reuse, the 6 defaults of the specification, and the corner list of the 10 files below 250.
-- [b] Phase 2 gate: phase acceptance by the checker at an immutable HEAD. deferred:Task 6
+  - The report record of round 6 is the rewritten one. Its status line reads "Status: done. 19 of
+    19 family-word pictures delivered; spend 0.21 USD (total 0.95 USD of the 1.60 USD card
+    limit)." The record names the three try 2 decisions, the family reuse, the 7 defaults, the
+    corner list of the 12 files below 250, and the legs row as the weakest pointing picture.
+- [b] Phase 2 gate: phase acceptance by the checker at an immutable HEAD. deferred:checker
 
 ## Track-level roles
 

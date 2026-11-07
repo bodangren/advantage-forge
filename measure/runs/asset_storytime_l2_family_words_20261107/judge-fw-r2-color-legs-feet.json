@@ -1,0 +1,29 @@
+{
+  "group": "fw-r2-color-legs-feet",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-07T00:31:07Z",
+  "results": [
+    {
+      "id": "l2-w05-card-legs",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-legs-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Card text 'legs'. Items: Pat (1), both legs (2), one finger pointing down at one leg. Action: pointing (note only). Seen: a standing boy with messy black hair with small tufts, green T-shirt, brown cargo shorts, brown sandals; both bare legs visible from the shorts hem to the sandals; both hands hang down in front of the thighs with the fingers angled downward. mustShow: Pat = yes, matches the cast (hair, green shirt, cargo shorts, sandals). Both legs = yes, two full legs drawn. One finger points down at one leg = yes at book size: the hands are drawn and the fingers point down at the thighs; the fingertip of the viewer-right hand touches the top of the right thigh at the shorts hem. Small mark: both hands point down, not exactly one finger, a note only because motion and finger count are not a hard defect. No text in the picture."
+    },
+    {
+      "id": "l2-w05-card-feet",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-feet-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Card text 'feet'. Items: Nan (1), both feet (2), both shoes (2), one finger pointing down at her feet. Action: pointing (note only). Seen: a girl sitting on the ground with her legs spread; black-brown hair in two round buns with red rings, orange T-shirt with a white star, red shorts; a cream sneaker at the end of each leg, both fully visible. mustShow: Nan = yes, matches the cast (two buns, star shirt, red shorts). Both feet = yes, one at each side. Both shoes = yes, two cream sneakers (the cast sheet also shows cream sneakers). One finger points down at her feet = yes: the viewer-right hand has a pointing index finger directed down, and its fingertip touches her leg just above the viewer-right shoe at the ankle; the other hand rests on the floor near the viewer-left shoe. Small marks: a note only. No text in the picture."
+    }
+  ],
+  "summary": { "files": 2, "pass": 2, "fail": 0 }
+}
