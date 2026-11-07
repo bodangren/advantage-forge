@@ -3,3 +3,8 @@ error: the line try 5 of l2-w04-card-ham has no picture file (the call failed).
 exit=1
 # The builder counts the zero-cost network failure row at 2026-11-07T03:00:44.344Z as try 5.
 # It refuses that row because its output column is none. No batch file was written.
+$ node scripts/storytime-judge-batch.mjs --cards --ids l2-w04-card-ham --kind line --try 6 --out cards-retry-ham-t5
+batch /home/daniebo/Desktop/advantage-forge/docs/storytime/l2-unit1/judge/prod/cards-retry-ham-t5.json: 1 files
+  line l2-w04-card-ham out/storytime-review/judge/prod/l2-w04-card-ham-line-t6.png
+exit=0
+Orchestrator decision 2026-11-07: the zero-cost network failure row holds builder position 5, so --try 6 selects the try 5 picture l2-w04-card-ham-m1-line-5.png; the judge copy is named line-t6.png. The frozen builder did not change.

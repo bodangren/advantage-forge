@@ -2,8 +2,9 @@
 
 Status: in progress, Phase 2 round 2 (2026-11-07). The family row passed at try 4 (12 px, judge
 `pass`) and is the delivery of that row. The ham row failed try 4 twice (pie or ball). Ham try 5
-measures 36 px. Its judge batch is blocked: the batch builder counts the zero-cost network failure
-row as try 5. Spend of this track: 0.03 USD. The total of `costs.tsv` is 0.98 USD in 99 rows.
+measures 36 px. Its judge batch holds the try 5 picture under the copy name `line-t6.png`; the
+judge verdict is pending. Spend of this track: 0.03 USD. The total of `costs.tsv` is 0.98 USD in 99
+rows.
 The [specification](./spec.md) owns the scope and the acceptance gates.
 
 ## Method and ownership
@@ -151,6 +152,12 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     ("has no picture file (the call failed)"), so no batch file exists. The builder is a frozen
     file (FR-12) and the maker does not change it. The error is in
     `judge-batch-retry-r2.log`. The orchestrator must choose the path.
+  - Resolved by orchestrator decision 2026-11-07: the zero-cost network failure row holds builder
+    position 5, so `--try 6` selects the try 5 picture `l2-w04-card-ham-m1-line-5.png`; the judge
+    copy is named `line-t6.png`. The frozen builder did not change. Batch:
+    `docs/storytime/l2-unit1/judge/prod/cards-retry-ham-t5.json`. Judge copy:
+    `out/storytime-review/judge/prod/l2-w04-card-ham-line-t6.png`, byte equal to a 360 px copy of
+    the try 5 Muse file. The judge verdict is pending.
   - The ham row has no more tries: the allowance counts the two line tries since the start time
     (`-line-4` and `-line-5`), and 2 is the ham limit.
   - Follow the section "Tries, order, and stop rules". Call, measure the width, judge at card

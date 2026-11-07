@@ -198,17 +198,38 @@ The batch builder counts the zero-cost failure row as try 5. The three options:
 Default if no answer: (B) only with your authorization; otherwise (A) with the t6 copy note in the
 record.
 
+### Resolution: option (A)
+
+Orchestrator answer 2026-11-07: option (A). The builder did not change.
+
+- The cost rows of `l2-w04-card-ham` with kind `line` since the card start time, in time order:
+  1. `l2-w04-card-ham-m1-line.png`, 2. `-line-2.png`, 3. `-line-3.png`, 4. `-line-4.png`,
+  5. `null` (the network failure), 6. `l2-w04-card-ham-m1-line-5.png`. Position 6 holds the try 5
+  picture.
+- Command: `node scripts/storytime-judge-batch.mjs --cards --ids l2-w04-card-ham --kind line
+  --try 6 --out cards-retry-ham-t5`, exit 0.
+- Batch: `docs/storytime/l2-unit1/judge/prod/cards-retry-ham-t5.json`. Judge copy:
+  `out/storytime-review/judge/prod/l2-w04-card-ham-line-t6.png` at 360 x 360.
+- Source check: the judge copy is byte equal to a 360 px copy of
+  `l2-w04-card-ham-m1-line-5.png` (SHA-256
+  `d742e3134ff77d14958494855cc38de2631c18e3d7b91096059f9db2bb040695`). A 360 px copy of the
+  print file has a different SHA-256, because the print file is the 1500 px crop.
+- The orchestrator note is in `judge-batch-retry-r2.log`: the zero-cost network failure row holds
+  builder position 5, so `--try 6` selects the try 5 picture; the judge copy is named
+  `line-t6.png`; the frozen builder did not change.
+
 MEASURE_AGENT_RESULT
 role: jr-green
-status: blocked
+status: complete
 track: asset_storytime_l2_card_line_retry_20261107
 phase: Phase 2: Tries, delivery, and report (round 2)
-commits: 29ab198a (family pass and ham fail records), a910c930 (ham try 5 prompt), this commit (round 2 records)
+commits: 29ab198a (family pass and ham fail records), a910c930 (ham try 5 prompt), 0010b0cd (round 2 records), this commit (ham try 5 judge batch)
 tests_run: vitest tests/storytime-card-specs.test.ts --maxWorkers=1 => 10 tests pass, exit 0
-files_changed: plan.md; docs/storytime/l2-unit1/cards/l2-w04-card-ham.json; run folder judge-cards-retry-family-t4.json, judge-cards-retry-ham-t4.json, judge-cards-retry-ham-t4-second.json, line-widths-r2.txt, judge-batch-retry-r2.log, maker-p2.log
-plan_updates: Task 5 [x] with c55fa018 (12 px, judge pass); Task 4 records the try 4 double fail, the two orchestrator decisions, the try 5 prompt, the try 5 width of 36 px, and the blocked batch
-known_failures: the ham try 5 judge batch does not exist; the builder refuses --try 5 because the zero-cost failure row sits at position 5
-handoff: QUESTION for the orchestrator: the judge batch builder counts the zero-cost network failure row as try 5, so --try 5 exits 1 with "the line try 5 of l2-w04-card-ham has no picture file (the call failed)". Options: (A) build with --try 6 (judge copy line-t6.png, the right picture with a t6 name); (B) authorize a one-line change in scripts/storytime-judge-batch.mjs so restartTries skips rows with output none, then --try 5 builds line-t5.png (changes frozen file FR-12); (C) accept the row as failed with no judge (breaks the spec). Default: (B) only with your authorization, otherwise (A) with the t6 note. Other facts: ham try 5 is 36 px; costs.tsv holds 99 rows and 0.9800 USD; the track spend is 0.03 USD; the ham allowance is full; the family row is delivered at try 4. No PNG or JPG entered git.
+files_changed: plan.md; docs/storytime/l2-unit1/judge/prod/cards-retry-ham-t5.json; run folder judge-batch-retry-r2.log, maker-p2.log
+plan_updates: Task 4 records the batch decision and the try 6 selection of the try 5 picture
+known_failures: none; the ham try 5 judge verdict is pending outside this role
+handoff: the ham try 5 judge batch is docs/storytime/l2-unit1/judge/prod/cards-retry-ham-t5.json. The judgeFile is out/storytime-review/judge/prod/l2-w04-card-ham-line-t6.png, byte equal to a 360 px copy of l2-w04-card-ham-m1-line-5.png (try 5, 36 px). The Sonnet judge runs on that batch. costs.tsv holds 99 rows and 0.9800 USD; the track spend is 0.03 USD; the ham allowance is full; the family row is delivered at try 4. No PNG or JPG entered git.
 dispositions: none
 END_MEASURE_AGENT_RESULT
+
 
