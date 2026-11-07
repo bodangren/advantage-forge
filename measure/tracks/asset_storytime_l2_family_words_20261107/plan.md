@@ -172,6 +172,11 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     picture shows a child pointing to the part, so both tries count as failed tries. Try 2 of each
     row uses a fingertip that touches the part. Only the picture sentences and the goal of the two
     spec files changed.
+  - Orchestrator decision 2026-11-07: legs m2 and feet m2 pass the judge; legs is the weakest
+    pointing picture and the report names it. The judge notes say the legs fingertips rest at the
+    shorts hem, and both judges record that they touch the thighs. The delivered colors are 15
+    rows at m1, the arms row at m2, the legs row at m2, the feet row at m2, and the family row
+    at the m1 of the card track.
   - The judge result file
     `measure/runs/asset_storytime_l2_family_words_20261107/judge-fw-r1-color.json` holds 18 files
     with 18 pass and 0 fail on color try 1. The arms row passes on try 2 in
@@ -183,6 +188,9 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     of `costs.tsv` is 0.95 USD in 95 calls.
 - [~] Task 6 (ee11adf4): Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet.
   - The delivery of round 4 is to be rewritten after the legs and the feet try 2.
+  - The delivery of round 6 is the rewritten one. The round-4 delivery folder was removed first,
+    because the writer refuses a file that already exists. The approval list now names the arms
+    try 2, the legs try 2, and the feet try 2 prints.
   - The delivery folder is `out/storytime/l2/unit1/family-words/delivery-muse-v1/`. The handoff
     folder is `/home/daniebo/Desktop/handoff/storytime-l2-family-word-pictures/`. The form follows
     the section "Delivery" of the specification.
@@ -207,6 +215,15 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     Files checked 19, gate problems 0. Ten files have a corner below 250. The ears file holds a
     faint gray gradient at all four corners, with the lowest value 215. The other nine hold the
     low value at the bottom-left corner only. This is a report item, not a gate.
+  - The corner record of the round-6 delivery holds 12 files below 250. The legs and the feet
+    prints joined the list, and the arms print left it. The ears file still holds the lowest value
+    at 215, with a faint gray gradient at all four corners. The other 11 files hold the low value
+    at the bottom-left corner only. This is a report item, not a gate.
+  - The handoff folder holds 22 files: the 19 PNG files, `manifest.json`, the `MANIFEST.txt`, and
+    the contact sheet. The check `grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c -` gave
+    19 OK and 0 FAILED. The sha256sum lists of the delivery folder and the handoff folder are
+    equal, 20 names each. The `manifest.json` of the round-6 delivery has the SHA-256
+    `4300373783eef8232581c6e0fb70f4d7b8a2cb3a42d3dfd953265d10cb1f8719`.
 - [~] Task 7 (2a90930): Report record for the PM:
   `measure/runs/asset_storytime_l2_family_words_20261107/pm-report.md`.
   - The report record is to be rewritten after the legs and the feet try 2.

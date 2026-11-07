@@ -63,22 +63,22 @@
     },
     {
       "rowId": "l2-w05-card-legs",
-      "version": 1,
-      "colorPrint": "l2-w05-card-legs-m1-color-print.png",
+      "version": 2,
+      "colorPrint": "l2-w05-card-legs-m2-color-print.png",
       "text": "legs",
       "sourcePrompt": "One picture of Pat that shows the word legs: he stands and points down with one finger at one of his legs.",
       "notes": [
-        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r1-color.json"
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r2-color-legs-feet.json"
       ]
     },
     {
       "rowId": "l2-w05-card-feet",
-      "version": 1,
-      "colorPrint": "l2-w05-card-feet-m1-color-print.png",
+      "version": 2,
+      "colorPrint": "l2-w05-card-feet-m2-color-print.png",
       "text": "feet",
       "sourcePrompt": "One picture of Nan that shows the word feet: she stands and points down with one finger at her feet.",
       "notes": [
-        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r1-color.json"
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r2-color-legs-feet.json"
       ]
     },
     {

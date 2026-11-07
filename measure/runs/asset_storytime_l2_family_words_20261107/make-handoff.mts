@@ -7,7 +7,7 @@
  *
  *   ./node_modules/.bin/tsx measure/runs/asset_storytime_l2_family_words_20261107/make-handoff.mts
  */
-import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { appendFileSync, copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { join, resolve } from 'node:path';
 import sharp from 'sharp';
@@ -19,6 +19,14 @@ const HANDOFF = '/home/daniebo/Desktop/handoff/storytime-l2-family-word-pictures
 const SHEET_NAME = 'storytime-l2-family-word-pictures-contact-sheet.png';
 
 const sha256 = (bytes: Buffer): string => createHash('sha256').update(bytes).digest('hex');
+
+const RUN_LABEL = process.argv[2] ?? 'Run';
+const LOG = join(RUN, 'make-handoff.log');
+const out: string[] = [];
+const say = (line: string): void => {
+  out.push(line);
+  console.log(line);
+};
 
 const list = JSON.parse(readFileSync(join(RUN, 'approvals.json'), 'utf8')) as {
   entries: Array<{ rowId: string; version: number; colorPrint: string; text: string }>;
@@ -35,13 +43,26 @@ for (const entry of list.entries) {
 }
 copyFileSync(join(DELIVERY, 'manifest.json'), join(HANDOFF, 'manifest.json'));
 const manifestSha256 = sha256(readFileSync(join(HANDOFF, 'manifest.json')));
-console.log(`Copied ${copied.length} PNG files and manifest.json to ${HANDOFF}.`);
+say(`Copied ${copied.length} PNG files and manifest.json to ${HANDOFF}.`);
 
 // The corner record of the delivered files.
 const cornerLines = readFileSync(join(RUN, 'corner-record.txt'), 'utf8').split('\n');
 const belowStart = cornerLines.findIndex((line) => line.startsWith('color files below 250:'));
 const cornerCount = Number(cornerLines[belowStart]?.split(':')[1]?.trim() ?? '0');
 const cornerList = cornerLines.slice(belowStart + 1).filter((line) => line.trim().length > 0);
+
+// The four corner values of every file, read from the corner record.
+const cornerValues = new Map<string, number[]>();
+for (const line of cornerLines) {
+  const match = /^(\S+\.png) (\d+) (\d+) (\d+) (\d+) lowest (\d+)$/.exec(line);
+  if (match) cornerValues.set(match[1]!, [Number(match[2]), Number(match[3]), Number(match[4]), Number(match[5])]);
+}
+const belowFiles = cornerList.map((line) => line.split(' ')[0]!);
+const allFour = belowFiles.filter((name) => (cornerValues.get(name) ?? []).every((value) => value < 250));
+const bottomLeftOnly = belowFiles.filter((name) => {
+  const values = cornerValues.get(name) ?? [];
+  return values.length === 4 && values[0] >= 250 && values[1] >= 250 && values[2] < 250;
+});
 
 // The contact sheet: one cell per delivered row, the word under the card, 5 cells per row.
 const CELL = 260;
@@ -71,7 +92,13 @@ const sheet = await sharp({
   .png()
   .toBuffer();
 writeFileSync(join(HANDOFF, SHEET_NAME), sheet);
-console.log(`Contact sheet: ${join(HANDOFF, SHEET_NAME)} at ${WIDTH} x ${HEIGHT}, ${copied.length} cells, ${COLS} per row.`);
+say(`Contact sheet: ${join(HANDOFF, SHEET_NAME)} at ${WIDTH} x ${HEIGHT}, ${copied.length} cells, ${COLS} per row.`);
+
+// The spend lines of the run record, so the manifest never holds a stale number.
+const spendLines = readFileSync(join(RUN, 'spend-record.txt'), 'utf8').split('\n');
+const spendValue = (label: string): string => (spendLines.find((line) => line.startsWith(label + ':')) ?? '').split(':')[1]?.trim() ?? '0';
+const spendCalls = spendValue('track spend usd');
+const spendCount = spendValue('calls');
 
 // The MANIFEST.txt in the form of the card handoff manifest. The file lines hold the SHA-256
 // and the name only, so the check command of the card track reads every line.
@@ -86,9 +113,10 @@ const manifestLines = [
   '',
   'source-repo: /home/daniebo/Desktop/advantage-forge',
   'source-paths: out/storytime/l2/unit1/family-words/delivery-muse-v1/',
-  'source-commit: ee11adf4 (the maker commit before the handoff; PNG files stay out of git)',
+  'source-commit: a6c4cd8 (the maker commit before the delivery; PNG files stay out of git)',
   'picture-ids: ' + ids,
-  'judge-result-files: measure/runs/asset_storytime_l2_family_words_20261107/ (calibration-record.json, judge-fw-r1-color.json, judge-fw-r1-color-arms-second.json, judge-fw-r2-color-arms.json); the family row reuses the color print of the card track, whose judge pass is in measure/runs/asset_storytime_l2_cards_20261106/judge-cards-cards-r1-color.json',
+  'judge-result-files: measure/runs/asset_storytime_l2_family_words_20261107/ (calibration-record.json, judge-fw-r1-color.json, judge-fw-r1-color-arms-second.json, judge-fw-r2-color-arms.json, judge-fw-r2-color-legs-feet.json); the family row reuses the color print of the card track, whose judge pass is in measure/runs/asset_storytime_l2_cards_20261106/judge-cards-cards-r1-color.json',
+  'delivered-tries: 15 rows at m1, the arms row at m2, the legs row at m2, the feet row at m2, and the family row at the m1 of the card track',
   'contact-sheet: ' + SHEET_NAME,
   'date: ' + dateLine,
   'sender: advantage-forge (Forge Green, Phase 2 maker)',
@@ -106,12 +134,17 @@ const manifestLines = [
   '',
   'corner note: ' + cornerCount + ' color files have a corner below 250 (class C white-corner rule):',
   ...cornerList.map((line) => line),
-  'Nine of these files hold the low value at the bottom-left corner only. The corners are a faint',
-  'near-white from the soft shadow of the render. The ears file holds a faint gray gradient at all',
-  'four corners, and its lowest value is 215.',
+  bottomLeftOnly.length + ' of these files hold the low value at the bottom-left corner only. Their',
+  'corners are a faint near-white from the soft shadow of the render.',
+  ...(allFour.length > 0
+    ? [
+        'The file ' + allFour.join(', ') + ' holds a faint gray gradient at all four corners. Its',
+        'lowest value is ' + (cornerValues.get(allFour[0]!) ?? []).reduce((a, b) => Math.min(a, b), 255) + '.',
+      ]
+    : []),
   'This is a report item, not a delivery gate. Workbooks decides at its check.',
   '',
-  'spend: 0.19 USD, 19 Muse calls, cap 1.60 USD',
+  'spend: ' + spendCalls + ' USD, ' + spendCount + ' Muse calls, cap 1.60 USD',
   '',
   'This delivery is model evidence, not acceptance. Daniel sees the pictures in his 11-16 check.',
   '',
@@ -120,6 +153,11 @@ const manifestLines = [
   '',
 ];
 writeFileSync(join(HANDOFF, 'MANIFEST.txt'), manifestLines.join('\n'));
-console.log(`MANIFEST.txt: ${join(HANDOFF, 'MANIFEST.txt')}`);
-console.log(`manifest.json sha256: ${manifestSha256}`);
-console.log(`color files below 250: ${cornerCount}`);
+say(`MANIFEST.txt: ${join(HANDOFF, 'MANIFEST.txt')}`);
+say(`manifest.json sha256: ${manifestSha256}`);
+say(`color files below 250: ${cornerCount}`);
+say(`files with all four corners below 250: ${allFour.join(', ') || 'none'}`);
+say(`files with the low value at the bottom-left corner only: ${bottomLeftOnly.length}`);
+
+appendFileSync(LOG, `\n## ${RUN_LABEL}\n\n${out.join('\n')}\n`);
+console.log(`Log: ${LOG}`);

@@ -8,9 +8,9 @@ l2-w04-card-family-v1.png 255 255 247 255 lowest 247
 l2-w05-card-arms-v1.png 255 255 252 255 lowest 252
 l2-w05-card-ears-v1.png 227 229 215 216 lowest 215
 l2-w05-card-eyes-v1.png 255 255 255 255 lowest 255
-l2-w05-card-feet-v1.png 255 255 253 254 lowest 253
+l2-w05-card-feet-v1.png 255 255 249 255 lowest 249
 l2-w05-card-hands-v1.png 255 255 253 255 lowest 253
-l2-w05-card-legs-v1.png 255 255 252 255 lowest 252
+l2-w05-card-legs-v1.png 255 255 248 253 lowest 248
 l2-w05-card-nose-v1.png 255 255 249 255 lowest 249
 l2-w06-card-bird-v1.png 255 255 244 255 lowest 244
 l2-w06-card-cat-v1.png 255 255 252 255 lowest 252
@@ -23,14 +23,16 @@ l2-w07-card-ball-v1.png 255 255 248 253 lowest 248
 l2-w07-card-drum-v1.png 254 255 252 255 lowest 252
 l2-w07-card-kite-v1.png 255 255 247 253 lowest 247
 
-color files below 250: 10
+color files below 250: 12
 l2-w05-card-ears-v1.png 215
 l2-w06-card-bird-v1.png 244
 l2-w04-card-family-v1.png 247
 l2-w06-card-horse-v1.png 247
 l2-w07-card-kite-v1.png 247
 l2-w01-card-friend-v1.png 248
+l2-w05-card-legs-v1.png 248
 l2-w06-card-dog-v1.png 248
 l2-w06-card-duck-v1.png 248
 l2-w07-card-ball-v1.png 248
+l2-w05-card-feet-v1.png 249
 l2-w05-card-nose-v1.png 249

@@ -3,3 +3,30 @@ Delivered 19 rows and 5 color batches to /home/daniebo/Desktop/advantage-forge/o
 Corner record: /home/daniebo/Desktop/advantage-forge/measure/runs/asset_storytime_l2_family_words_20261107/corner-record.txt
 Color files below 250: 10
 manifest.json sha256: 3f06d5644cc5d539d67592b57804b5cae4b836ae5a04e609bb84d3ff2a5e8fbd
+
+## Round 6: the delivery with the arms, the legs, and the feet try 2
+
+Approval list /home/daniebo/Desktop/advantage-forge/measure/runs/asset_storytime_l2_family_words_20261107/approvals.json: 19 entries.
+  l2-w01-card-friend version 1 l2-w01-card-friend-m1-color-print.png
+  l2-w05-card-eyes version 1 l2-w05-card-eyes-m1-color-print.png
+  l2-w05-card-ears version 1 l2-w05-card-ears-m1-color-print.png
+  l2-w05-card-nose version 1 l2-w05-card-nose-m1-color-print.png
+  l2-w05-card-hands version 1 l2-w05-card-hands-m1-color-print.png
+  l2-w05-card-arms version 2 l2-w05-card-arms-m2-color-print.png
+  l2-w05-card-legs version 2 l2-w05-card-legs-m2-color-print.png
+  l2-w05-card-feet version 2 l2-w05-card-feet-m2-color-print.png
+  l2-w06-card-cat version 1 l2-w06-card-cat-m1-color-print.png
+  l2-w06-card-dog version 1 l2-w06-card-dog-m1-color-print.png
+  l2-w06-card-bird version 1 l2-w06-card-bird-m1-color-print.png
+  l2-w06-card-fish version 1 l2-w06-card-fish-m1-color-print.png
+  l2-w06-card-frog version 1 l2-w06-card-frog-m1-color-print.png
+  l2-w06-card-duck version 1 l2-w06-card-duck-m1-color-print.png
+  l2-w06-card-horse version 1 l2-w06-card-horse-m1-color-print.png
+  l2-w07-card-ball version 1 l2-w07-card-ball-m1-color-print.png
+  l2-w07-card-kite version 1 l2-w07-card-kite-m1-color-print.png
+  l2-w07-card-drum version 1 l2-w07-card-drum-m1-color-print.png
+  l2-w04-card-family version 1 l2-w04-card-family-m1-color-print.png
+Delivered 19 rows and 5 color batches to /home/daniebo/Desktop/advantage-forge/out/storytime/l2/unit1/family-words/delivery-muse-v1.
+manifest.json sha256: 4300373783eef8232581c6e0fb70f4d7b8a2cb3a42d3dfd953265d10cb1f8719
+Corner record: /home/daniebo/Desktop/advantage-forge/measure/runs/asset_storytime_l2_family_words_20261107/corner-record.txt
+Color files below 250: 12

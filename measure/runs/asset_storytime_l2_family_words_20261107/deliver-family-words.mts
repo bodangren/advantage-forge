@@ -5,9 +5,12 @@
  * folder. It makes no provider call and no Muse call. It writes only inside the delivery folder
  * and inside this run folder.
  *
- *   ./node_modules/.bin/tsx measure/runs/asset_storytime_l2_family_words_20261107/deliver-family-words.mts
+ * The first argument is the label of the run. The runner appends a labeled section with its
+ * output to `deliver-family-words.log`, so each run keeps the record of the earlier runs.
+ *
+ *   ./node_modules/.bin/tsx measure/runs/asset_storytime_l2_family_words_20261107/deliver-family-words.mts "Round 6"
  */
-import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { appendFileSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { join, resolve } from 'node:path';
 import sharp from 'sharp';
@@ -18,6 +21,8 @@ const RUN = join(ROOT, 'measure/runs/asset_storytime_l2_family_words_20261107');
 const MUSE_ROOT = join(ROOT, 'out/storytime/l2/unit1/cards/muse');
 const DELIVERY_ROOT = join(ROOT, 'out/storytime/l2/unit1/family-words/delivery-muse-v1');
 const APPROVALS = join(RUN, 'approvals.json');
+const LOG = join(RUN, 'deliver-family-words.log');
+const LABEL = process.argv[2] ?? 'Run';
 
 const sha256 = (bytes: Buffer): string => createHash('sha256').update(bytes).digest('hex');
 
@@ -26,7 +31,14 @@ const list = JSON.parse(readFileSync(APPROVALS, 'utf8')) as {
   entries: Array<{ rowId: string; version: number; colorPrint: string; text: string; sourcePrompt: string }>;
 };
 
-console.log(`Approval list ${APPROVALS}: ${list.entries.length} entries.`);
+const out: string[] = [];
+const say = (line: string): void => {
+  out.push(line);
+  console.log(line);
+};
+
+say(`Approval list ${APPROVALS}: ${list.entries.length} entries.`);
+for (const entry of list.entries) say(`  ${entry.rowId} version ${entry.version} ${entry.colorPrint}`);
 
 const manifest = await deliverMuseColorSet({
   approvals: APPROVALS,
@@ -35,11 +47,13 @@ const manifest = await deliverMuseColorSet({
 });
 
 const files = readdirSync(DELIVERY_ROOT).filter((name) => name.endsWith('.png')).sort();
-console.log(`Delivered ${files.length} rows and ${manifest.batches.length} color batches to ${DELIVERY_ROOT}.`);
+say(`Delivered ${files.length} rows and ${manifest.batches.length} color batches to ${DELIVERY_ROOT}.`);
+say(`manifest.json sha256: ${sha256(readFileSync(join(DELIVERY_ROOT, 'manifest.json')))}`);
 
 // The corner record: the four corner values of every delivered PNG. A corner below 250 is a
 // report item for the class C white-corner rule, not a delivery gate.
-const corners: Array<{ file: string; values: number[]; lowest: number }> = [];for (const name of files) {
+const corners: Array<{ file: string; values: number[]; lowest: number }> = [];
+for (const name of files) {
   const { data, info } = await sharp(join(DELIVERY_ROOT, name))
     .raw()
     .toBuffer({ resolveWithObject: true });
@@ -56,6 +70,7 @@ const corners: Array<{ file: string; values: number[]; lowest: number }> = [];fo
   corners.push({ file: name, values, lowest: Math.min(...values) });
 }
 
+const below = corners.filter((c) => c.lowest < 250);
 const lines = [
   'files checked: ' + corners.length,
   'gate problems: 0',
@@ -64,13 +79,12 @@ const lines = [
   'corner values (top-left, top-right, bottom-left, bottom-right):',
   ...corners.map((c) => `${c.file} ${c.values.join(' ')} lowest ${c.lowest}`),
   '',
-  'color files below 250: ' + corners.filter((c) => c.lowest < 250).length,
-  ...corners
-    .filter((c) => c.lowest < 250)
-    .sort((a, b) => a.lowest - b.lowest)
-    .map((c) => `${c.file} ${c.lowest}`),
+  'color files below 250: ' + below.length,
+  ...below.sort((a, b) => a.lowest - b.lowest).map((c) => `${c.file} ${c.lowest}`),
 ];
 writeFileSync(join(RUN, 'corner-record.txt'), lines.join('\n') + '\n');
-console.log(`Corner record: ${join(RUN, 'corner-record.txt')}`);
-console.log(`Color files below 250: ${corners.filter((c) => c.lowest < 250).length}`);
-console.log(`manifest.json sha256: ${sha256(readFileSync(join(DELIVERY_ROOT, 'manifest.json')))}`);
+say(`Corner record: ${join(RUN, 'corner-record.txt')}`);
+say(`Color files below 250: ${below.length}`);
+
+appendFileSync(LOG, `\n## ${LABEL}\n\n${out.join('\n')}\n`);
+console.log(`Log: ${LOG}`);
