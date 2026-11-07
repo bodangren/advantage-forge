@@ -1,0 +1,5 @@
+$ node scripts/storytime-judge-batch.mjs --cards --ids l2-w04-card-ham --kind line --try 5 --out cards-retry-ham-t5
+error: the line try 5 of l2-w04-card-ham has no picture file (the call failed).
+exit=1
+# The builder counts the zero-cost network failure row at 2026-11-07T03:00:44.344Z as try 5.
+# It refuses that row because its output column is none. No batch file was written.

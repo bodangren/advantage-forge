@@ -131,3 +131,84 @@ handoff: ham try 4 is 27 px and family try 4 is 12 px, so both rows have their j
 dispositions: none
 END_MEASURE_AGENT_RESULT
 
+## Round 2: judge results, ham prompt for try 5, and the try 5 call
+
+Commit of the round 2 judge records: `29ab198a`
+(`measure(storytime_l2_card_line_retry): family try 4 passes, ham try 4 fails`).
+Commit of the try 5 prompt: `a910c930` (`feat(storytime_l2_card_line_retry): ham line prompt for
+try 5`).
+
+### Judge results of round 1
+
+- Family try 4: `pass`, result file `judge-cards-retry-family-t4.json`. The row is delivered at
+  try 4 and Task 5 is `[x]`.
+- Ham try 4: `fail`, defect class `wrong-or-missing-prop`, result file
+  `judge-cards-retry-ham-t4.json`. The second judge on the same file also fails, result file
+  `judge-cards-retry-ham-t4-second.json`. The fail stands.
+- Orchestrator decision 2026-11-07: ham try 5 is the last ham try.
+
+### Ham try 5 prompt
+
+The `linePrompt` is the exact text of the orchestrator brief of 2026-11-07: a wide, lopsided oval
+slice with the fat rim along the top edge only, and no round disc, ring, or scallop. `colorPrompt`,
+`mustShow`, `goal`, `references`, and every other field are byte equal. Card spec test: 10 tests
+pass, exit 0. Commit `a910c930`.
+
+### Ham try 5 call
+
+- First call: `network error: UND_ERR_CONNECT_TIMEOUT`, cost 0 USD, output `none`, time
+  `2026-11-07T03:00:44.344Z`. A zero-cost failure is not a try, so the maker repeated the call
+  once, as the spec allows.
+- Repeat: `ok 1600x1600 cost 0.01`, output `l2-w04-card-ham-m1-line-5.png`, note `redo 5`, time
+  `2026-11-07T03:01:31.651Z`, running total 0.9800 USD.
+- Width: `l2-w04-card-ham-m1-line-print-5.png` at 1500 x 1500 measures 36 px (gate 12 px),
+  coverage 14.60%, SHA-256
+  `0d874ba2a39d3760f20f26ca8d0c7653b632404e5667f7b9ee21e5ea5b78e93c`. Record:
+  `line-widths-r2.txt`.
+- `costs.tsv` now holds 99 rows and 0.9800 USD. The track spend is 0.03 USD.
+- The ham allowance is full: the two line tries since the start time are `-line-4` and `-line-5`,
+  and the ham limit is 2. No further ham call is allowed.
+
+### Blocked judge batch
+
+- Command: `node scripts/storytime-judge-batch.mjs --cards --ids l2-w04-card-ham --kind line
+  --try 5 --out cards-retry-ham-t5`.
+- Result: exit 1, `error: the line try 5 of l2-w04-card-ham has no picture file (the call
+  failed).` Log: `judge-batch-retry-r2.log`. No batch file exists.
+- Cause: `restartTries` of the builder reads every cost row of the id and kind in time order. The
+  zero-cost failure row is the 5th such row, and its output column is `none`. The builder counts
+  it as try 5 and refuses it. The picture file is the 6th row (`-line-5.png`).
+- The builder is a frozen file (FR-12). The maker does not change it. This is a decision for the
+  orchestrator.
+
+### Question for the orchestrator
+
+The batch builder counts the zero-cost failure row as try 5. The three options:
+
+- (A) Build the batch with `--try 6`. The judge copy becomes `l2-w04-card-ham-line-t6.png` while
+  the Muse file is `-line-5.png`. The judge sees the right picture, but the copy name and the
+  result file say try 6.
+- (B) Authorize a one-line change in `scripts/storytime-judge-batch.mjs`: skip a row whose output
+  is `none` in `restartTries`. Then `--try 5` builds the batch with the copy
+  `l2-w04-card-ham-line-t5.png`. This matches the spec rule that a zero-cost failure is not a try,
+  but it changes a frozen file (FR-12) and needs your word.
+- (C) Accept the ham row as failed at try 5 with no judge. That breaks the spec rule that every
+  ham try goes to the judge.
+
+Default if no answer: (B) only with your authorization; otherwise (A) with the t6 copy note in the
+record.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: blocked
+track: asset_storytime_l2_card_line_retry_20261107
+phase: Phase 2: Tries, delivery, and report (round 2)
+commits: 29ab198a (family pass and ham fail records), a910c930 (ham try 5 prompt), this commit (round 2 records)
+tests_run: vitest tests/storytime-card-specs.test.ts --maxWorkers=1 => 10 tests pass, exit 0
+files_changed: plan.md; docs/storytime/l2-unit1/cards/l2-w04-card-ham.json; run folder judge-cards-retry-family-t4.json, judge-cards-retry-ham-t4.json, judge-cards-retry-ham-t4-second.json, line-widths-r2.txt, judge-batch-retry-r2.log, maker-p2.log
+plan_updates: Task 5 [x] with c55fa018 (12 px, judge pass); Task 4 records the try 4 double fail, the two orchestrator decisions, the try 5 prompt, the try 5 width of 36 px, and the blocked batch
+known_failures: the ham try 5 judge batch does not exist; the builder refuses --try 5 because the zero-cost failure row sits at position 5
+handoff: QUESTION for the orchestrator: the judge batch builder counts the zero-cost network failure row as try 5, so --try 5 exits 1 with "the line try 5 of l2-w04-card-ham has no picture file (the call failed)". Options: (A) build with --try 6 (judge copy line-t6.png, the right picture with a t6 name); (B) authorize a one-line change in scripts/storytime-judge-batch.mjs so restartTries skips rows with output none, then --try 5 builds line-t5.png (changes frozen file FR-12); (C) accept the row as failed with no judge (breaks the spec). Default: (B) only with your authorization, otherwise (A) with the t6 note. Other facts: ham try 5 is 36 px; costs.tsv holds 99 rows and 0.9800 USD; the track spend is 0.03 USD; the ham allowance is full; the family row is delivered at try 4. No PNG or JPG entered git.
+dispositions: none
+END_MEASURE_AGENT_RESULT
+

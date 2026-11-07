@@ -1,8 +1,9 @@
 # Storytime Level 2 card line-art retry (ham and family)
 
 Status: in progress, Phase 2 round 2 (2026-11-07). The family row passed at try 4 (12 px, judge
-`pass`) and is the delivery of that row. The ham row failed try 4 twice (pie or ball); try 5 is the
-last ham try. Spend of this track: 0.02 USD. The total of `costs.tsv` is 0.97 USD in 97 calls.
+`pass`) and is the delivery of that row. The ham row failed try 4 twice (pie or ball). Ham try 5
+measures 36 px. Its judge batch is blocked: the batch builder counts the zero-cost network failure
+row as try 5. Spend of this track: 0.03 USD. The total of `costs.tsv` is 0.98 USD in 99 rows.
 The [specification](./spec.md) owns the scope and the acceptance gates.
 
 ## Method and ownership
@@ -141,6 +142,17 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     a wide lopsided oval with the fat band along the top edge only. `colorPrompt`, `mustShow`,
     `goal`, `references`, and every other field are byte equal. Card spec test: 10 tests pass,
     exit 0.
+  - Try 5 call on 2026-11-07: the first call failed with `network error: UND_ERR_CONNECT_TIMEOUT`
+    at cost 0 USD (not a try, per the spec). The repeat made `l2-w04-card-ham-m1-line-5.png`
+    (1600 x 1600, 0.01 USD, note `redo 5`). Print `l2-w04-card-ham-m1-line-print-5.png` at 36 px
+    (gate met).
+  - The judge batch of try 5 is blocked. The builder
+    `scripts/storytime-judge-batch.mjs` counts the zero-cost failure row as try 5 and refuses it
+    ("has no picture file (the call failed)"), so no batch file exists. The builder is a frozen
+    file (FR-12) and the maker does not change it. The error is in
+    `judge-batch-retry-r2.log`. The orchestrator must choose the path.
+  - The ham row has no more tries: the allowance counts the two line tries since the start time
+    (`-line-4` and `-line-5`), and 2 is the ham limit.
   - Follow the section "Tries, order, and stop rules". Call, measure the width, judge at card
     size (`--cards --kind line --try <n>`), second judge on a fail. Try 4 first, then try 5 only
     if try 4 does not pass. Stop at the first pass or at try 5.

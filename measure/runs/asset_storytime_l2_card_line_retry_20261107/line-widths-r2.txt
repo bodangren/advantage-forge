@@ -1,0 +1,25 @@
+# Line widths: Phase 2 round 2 (ham try 5)
+
+Date: 2026-11-07. Track: `asset_storytime_l2_card_line_retry_20261107`.
+
+Rule: `inspectLineArtPng` of `src/storytime/book-pictures.ts`, gate
+`MIN_LINE_ART_LINE_WIDTH_PX` = 12 px, measured on the 1500 x 1500 print file of the try.
+
+| Row | Print file | Size | Width | Ink coverage | SHA-256 | Gate |
+| --- | --- | --- | --- | --- | --- | --- |
+| `l2-w04-card-ham` try 5 | `out/storytime/l2/unit1/cards/muse/l2-w04-card-ham-m1-line-print-5.png` | 1500 x 1500 | 36 px | 14.60% | `0d874ba2a39d3760f20f26ca8d0c7653b632404e5667f7b9ee21e5ea5b78e93c` | pass (36 >= 12) |
+
+The print is 8-bit greyscale with no alpha. `inspectLineArtPng` reports `valid: true` with an empty
+`errors` list. The Muse output file is `l2-w04-card-ham-m1-line-5.png` at 1600 x 1600.
+
+## The two cost rows of the try 5 attempt
+
+The first call failed with a network error and cost 0 USD. A failed call with cost 0 is not a try
+(the spec rule). The maker repeated the call once, as the spec allows.
+
+| Time | Output | Cost | Note | Is a try |
+| --- | --- | --- | --- | --- |
+| `2026-11-07T03:00:44.344Z` | `none` | 0 | `network error: UND_ERR_CONNECT_TIMEOUT` | no |
+| `2026-11-07T03:01:31.651Z` | `l2-w04-card-ham-m1-line-5.png` | 0.01 | `redo 5` | yes |
+
+Result: the ham try 5 measures 36 px and goes to the judge.
