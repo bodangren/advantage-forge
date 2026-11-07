@@ -137,6 +137,10 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   - Orchestrator decision 2026-11-07: ham try 5 is the last ham try.
   - Orchestrator decision 2026-11-07: the try 5 linePrompt changes the shape to a wide oval slice
     with the fat band along the top edge only.
+  - Try 5 linePrompt applied on 2026-11-07: the exact text of the orchestrator brief. The slice is
+    a wide lopsided oval with the fat band along the top edge only. `colorPrompt`, `mustShow`,
+    `goal`, `references`, and every other field are byte equal. Card spec test: 10 tests pass,
+    exit 0.
   - Follow the section "Tries, order, and stop rules". Call, measure the width, judge at card
     size (`--cards --kind line --try <n>`), second judge on a fail. Try 4 first, then try 5 only
     if try 4 does not pass. Stop at the first pass or at try 5.
