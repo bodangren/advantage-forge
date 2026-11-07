@@ -1,0 +1,86 @@
+# Closeout log: Storytime Level 2 card line-art retry (ham and family)
+
+Track: asset_storytime_l2_card_line_retry_20261107
+Role: measure-closeout
+Date: 2026-11-07
+
+## Provenance
+
+- role_base_sha: 8d8447ed6fbe7664f473e27861f5d25932778c1d. `git rev-parse HEAD` gave this value
+  before the closeout, so the pre-closeout state matched Final Acceptance provenance.
+- The track ran on the PM light lane of 2026-11-03: one maker and one checker, with no final
+  acceptance role. The closeout gate is the two phase acceptance results, and both passed.
+- Phase 1: acceptance-p1-93f8021.json, status pass at 93f8021b, no blocking finding.
+- Phase 2: acceptance-p2-8d8447e.json, status pass at 8d8447ed, no blocking finding.
+
+## Pre-closeout state
+
+- No `[~]` task line and no `[ ]` task line existed in the plan.
+- Two `[b]` lines existed: the Phase 2 gate with `deferred:checker` and the closeout with
+  `deferred:Phase 2 gate`. Both are now `[x]` with evidence, so no deferred field remains.
+- Every `- [x]` line held a commit SHA of 7 to 40 hex on its first line. Task 0 now reads
+  `(eb8e77f4)` and Task 7 reads `(8d8447ed)`.
+- The count of lines that start with `- [x] Task` is 8, so `actual_tasks` is 8.
+- A5: the plan claims 61 MANIFEST.txt file lines and 61 OK checksums, a family line at 12 px, and
+  0.98 USD in 99 rows. The Phase 2 checker measured each value and the values agree.
+- A6: the new registry entry names model evidence only, names the failed ham row with its best
+  try, and gives the spend as 0.03 USD. It records no acceptance.
+
+## Commands and results
+
+- `git mv measure/tracks/asset_storytime_l2_card_line_retry_20261107
+  measure/archive/asset_storytime_l2_card_line_retry_20261107` moved the folder. Git records 5
+  pure renames and 2 renames with content change.
+- The registry staged through a blob: `git show HEAD:measure/tracks.md` into a temp file, the two
+  own edits, `git hash-object -w` (blob 99576018), and `git update-index --cacheinfo`. The staged
+  diff held 2 hunks only. The worktree file keeps the foreign `## Contents` hunk unstaged.
+- `python3 -m json.tool` accepts metadata.json and the closeout manifest.
+- The archive commit is 4dcd20bad7d4666b38c40eb9636f9372a124dc30 with 9 staged paths.
+- `bash measure/doctor.sh` gives exit 1 with 11 errors. Every error names another track, and
+  `grep` for asset_storytime_l2_card_line_retry_20261107 gives exit 1 with no line.
+- The secret scan
+  `grep -rnE 'sk-[A-Za-z0-9]{20}|Bearer [A-Za-z0-9]{20}|OPENROUTER_API_KEY='` over the run folder
+  gives exit 1 with no hit.
+- `find` for PNG, JPG, and JPEG files in the run folder gives count 0. The archive commit holds no
+  image file.
+- The generator did not run, because measure/generated holds foreign changes.
+
+## Anti-pattern check
+
+- A2: no text says that Daniel or Workbooks accepted a picture. The delivery is model evidence.
+- A3: each gate reads a labeled value.
+- A4: the two checkers read the pictures, the widths, the judge JSON files, and the checksums.
+- A5: the plan and the report claims match the checker measurements.
+- A6: the registry entry states the failed ham row and the model-evidence status.
+- A7: the secret scan states its scope and its exit code.
+- A9: no test, script, source, or doc file names the track path, so the archive move breaks no
+  test.
+- A10: the closeout commit holds no generated fact.
+- A11: the specification, the card spec files, the judge batches, and the manifest agree.
+
+## Retained evidence
+
+The run folder keeps all phase acceptance records, five judge result files, the width records,
+the maker and checker logs, the PM report, the delivery script, the handoff script, and the
+handoff-before inputs. No bulky artifact was deleted, because the orchestrator identified none.
+
+## Files
+
+`measure/archive/asset_storytime_l2_card_line_retry_20261107/automation-supervisor-closeout-manifest.json`
+holds the closeout manifest. This log and `closeout-8d8447e.json` hold the closeout record. The
+closeout commit adds these two files only.
+
+MEASURE_AGENT_RESULT
+role: closeout
+status: complete
+track: asset_storytime_l2_card_line_retry_20261107
+phase: track closeout
+commits: 4dcd20bad7d4666b38c40eb9636f9372a124dc30
+tests_run: bash measure/doctor.sh (exit 1, 11 errors of other tracks, no line names this track); phase acceptance 93f8021b pass and 8d8447ed pass (carried over, not rerun)
+files_changed: measure/archive/asset_storytime_l2_card_line_retry_20261107/automation-supervisor-closeout-manifest.json, measure/archive/asset_storytime_l2_card_line_retry_20261107/index.md, measure/archive/asset_storytime_l2_card_line_retry_20261107/metadata.json, measure/archive/asset_storytime_l2_card_line_retry_20261107/plan.md, measure/archive/asset_storytime_l2_card_line_retry_20261107/spec-review.md, measure/archive/asset_storytime_l2_card_line_retry_20261107/spec.md, measure/runs/asset_storytime_l2_card_line_retry_20261107/acceptance-p2-8d8447e.json, measure/runs/asset_storytime_l2_card_line_retry_20261107/acceptance-p2-8d8447e.log, measure/tracks.md, measure/runs/asset_storytime_l2_card_line_retry_20261107/closeout-8d8447e.json, measure/runs/asset_storytime_l2_card_line_retry_20261107/closeout-8d8447e.log
+plan_updates: the archived plan holds the delivered status line, the Phase 2 gate as [x] with its evidence and the F1 and F2 dispositions, the closeout as [x], and 8 task lines with a SHA; metadata status is done with completed 2026-11-07 and actual_tasks 8
+known_failures: 11 structural doctor errors of other tracks; 38 pinned tsc errors of other tracks with 0 owned by this track; the family color corner value is 247 (report item); the ham line art failed and its color file is the greyscale fallback
+handoff: the track is archived at measure/archive/asset_storytime_l2_card_line_retry_20261107/ and the registry entry sits in Archived Tracks; final acceptance did not run under the PM light lane, so nobody should ask for one; the generator did not run and measure/tracks.md keeps a foreign Contents hunk unstaged; Daniel's 11-16 look and the Workbooks check are the next human steps
+result_file: measure/runs/asset_storytime_l2_card_line_retry_20261107/closeout-8d8447e.json
+dispositions: none
+END_MEASURE_AGENT_RESULT
