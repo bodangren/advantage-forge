@@ -1,0 +1,27 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-legs-color-t2.png",
+    "id": "l2-w05-card-legs",
+    "kind": "color",
+    "pageText": "legs",
+    "use": "card",
+    "mustShow": [
+      "Pat",
+      "both legs",
+      "one finger points down at one leg"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod/l2-w05-card-feet-color-t2.png",
+    "id": "l2-w05-card-feet",
+    "kind": "color",
+    "pageText": "feet",
+    "use": "card",
+    "mustShow": [
+      "Nan",
+      "both feet",
+      "both shoes",
+      "one finger points down at her feet"
+    ]
+  }
+]

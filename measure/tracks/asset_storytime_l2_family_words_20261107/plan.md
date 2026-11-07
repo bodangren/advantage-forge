@@ -167,6 +167,11 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     body-part picture shows a child pointing to the part, so try 1 counts as a failed try. Try 2
     uses a new pose: one arm held straight out to the side, with the index finger of the other
     hand on that arm. Only the picture sentences of the arms colorPrompt changed.
+  - Orchestrator decision 2026-11-07, after the contact sheet: the legs try 1 and the feet try 1
+    show hanging arms, and the judge notes call the pointing weak. The PM rule says a body-part
+    picture shows a child pointing to the part, so both tries count as failed tries. Try 2 of each
+    row uses a fingertip that touches the part. Only the picture sentences and the goal of the two
+    spec files changed.
   - The judge result file
     `measure/runs/asset_storytime_l2_family_words_20261107/judge-fw-r1-color.json` holds 18 files
     with 18 pass and 0 fail on color try 1. The arms row passes on try 2 in
@@ -174,7 +179,10 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     family row reuses the card track color print and gets no call and no new judge batch.
   - The track made 19 calls for 0.19 USD. The total of `costs.tsv` is 0.93 USD in 93 calls, under
     the 1.60 USD cap of the card run.
-- [x] Task 6 (ee11adf4): Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet.
+  - The legs and the feet rows made 2 more calls. The track made 21 calls for 0.21 USD. The total
+    of `costs.tsv` is 0.95 USD in 95 calls.
+- [~] Task 6 (ee11adf4): Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet.
+  - The delivery of round 4 is to be rewritten after the legs and the feet try 2.
   - The delivery folder is `out/storytime/l2/unit1/family-words/delivery-muse-v1/`. The handoff
     folder is `/home/daniebo/Desktop/handoff/storytime-l2-family-word-pictures/`. The form follows
     the section "Delivery" of the specification.
@@ -199,15 +207,16 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     Files checked 19, gate problems 0. Ten files have a corner below 250. The ears file holds a
     faint gray gradient at all four corners, with the lowest value 215. The other nine hold the
     low value at the bottom-left corner only. This is a report item, not a gate.
-- [x] Task 7 (2a90930): Report record for the PM:
+- [~] Task 7 (2a90930): Report record for the PM:
   `measure/runs/asset_storytime_l2_family_words_20261107/pm-report.md`.
+  - The report record is to be rewritten after the legs and the feet try 2.
   - It holds the one status line, the handoff path, the track spend, the total of `costs.tsv`,
     the count of calls, each failed row with its best try, and the white-corner list. It states
     that the delivery is model evidence and that Daniel sees the pictures in his 11-16 check.
   - The status line reads "Status: done. 19 of 19 family-word pictures delivered; spend 0.19 USD
     (total 0.93 USD of the 1.60 USD card limit)." The record names the arms decision, the family
     reuse, the 6 defaults of the specification, and the corner list of the 10 files below 250.
-- [b] Phase 2 gate: phase acceptance by the checker at an immutable HEAD. deferred:checker
+- [b] Phase 2 gate: phase acceptance by the checker at an immutable HEAD. deferred:Task 6
 
 ## Track-level roles
 
