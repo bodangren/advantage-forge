@@ -279,8 +279,14 @@ grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c -
 The sha256sum lists of the delivery folder and the handoff folder are equal, 20 names each. The
 maker opened the contact sheet once, and each label sits under its own card.
 
-### The PM report
+### The doctor line
 
+The doctor prints one line for this track: "in_progress track has no unchecked task". The track is
+still in progress, and every work task of Phase 2 is [x]. The rest of the plan holds [b] items
+with a deferred owner. The doctor counts only the markers [ ], [~], and [x]. The card track had the
+same line at the end of its Phase 2. The line clears when the closeout role archives the track.
+
+### The PM report
 The record `pm-report.md` holds the status line, the handoff path, the calls, the total of
 `costs.tsv`, the arms decision, the family reuse, the corner list, the defaults, and the
 statement that the delivery is model evidence and that Daniel sees the pictures in his 11-16 check.
