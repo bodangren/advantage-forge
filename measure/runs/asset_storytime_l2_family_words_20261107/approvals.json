@@ -1,0 +1,195 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "rowId": "l2-w01-card-friend",
+      "version": 1,
+      "colorPrint": "l2-w01-card-friend-m1-color-print.png",
+      "text": "friend",
+      "sourcePrompt": "One picture of Pat and Nan that shows the word friend: two children stand side by side, both smile, and they stand close.",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r1-color.json"
+      ]
+    },
+    {
+      "rowId": "l2-w05-card-eyes",
+      "version": 1,
+      "colorPrint": "l2-w05-card-eyes-m1-color-print.png",
+      "text": "eyes",
+      "sourcePrompt": "One picture of Nan that shows the word eyes: she points with one finger at her own eyes, and both eyes stay in clear view.",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r1-color.json"
+      ]
+    },
+    {
+      "rowId": "l2-w05-card-ears",
+      "version": 1,
+      "colorPrint": "l2-w05-card-ears-m1-color-print.png",
+      "text": "ears",
+      "sourcePrompt": "One picture of Pat that shows the word ears: he points with one finger at one of his ears, and both ears show.",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r1-color.json"
+      ]
+    },
+    {
+      "rowId": "l2-w05-card-nose",
+      "version": 1,
+      "colorPrint": "l2-w05-card-nose-m1-color-print.png",
+      "text": "nose",
+      "sourcePrompt": "One picture of Nan that shows the word nose: she points with one finger at her own nose.",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r1-color.json"
+      ]
+    },
+    {
+      "rowId": "l2-w05-card-hands",
+      "version": 1,
+      "colorPrint": "l2-w05-card-hands-m1-color-print.png",
+      "text": "hands",
+      "sourcePrompt": "One picture of Pat that shows the word hands: he holds up one open hand, and his other hand points at it.",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r1-color.json"
+      ]
+    },
+    {
+      "rowId": "l2-w05-card-arms",
+      "version": 2,
+      "colorPrint": "l2-w05-card-arms-m2-color-print.png",
+      "text": "arms",
+      "sourcePrompt": "One picture of Nan that shows the word arms: she holds one arm out to the side, and a finger of her other hand touches that arm.",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r2-color-arms.json"
+      ]
+    },
+    {
+      "rowId": "l2-w05-card-legs",
+      "version": 1,
+      "colorPrint": "l2-w05-card-legs-m1-color-print.png",
+      "text": "legs",
+      "sourcePrompt": "One picture of Pat that shows the word legs: he stands and points down with one finger at one of his legs.",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r1-color.json"
+      ]
+    },
+    {
+      "rowId": "l2-w05-card-feet",
+      "version": 1,
+      "colorPrint": "l2-w05-card-feet-m1-color-print.png",
+      "text": "feet",
+      "sourcePrompt": "One picture of Nan that shows the word feet: she stands and points down with one finger at her feet.",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r1-color.json"
+      ]
+    },
+    {
+      "rowId": "l2-w06-card-cat",
+      "version": 1,
+      "colorPrint": "l2-w06-card-cat-m1-color-print.png",
+      "text": "cat",
+      "sourcePrompt": "One small orange tabby cat, large in the middle of a white card, so a child can name it.",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r1-color.json"
+      ]
+    },
+    {
+      "rowId": "l2-w06-card-dog",
+      "version": 1,
+      "colorPrint": "l2-w06-card-dog-m1-color-print.png",
+      "text": "dog",
+      "sourcePrompt": "One small brown and cream dog, large in the middle of a white card, so a child can name it.",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r1-color.json"
+      ]
+    },
+    {
+      "rowId": "l2-w06-card-bird",
+      "version": 1,
+      "colorPrint": "l2-w06-card-bird-m1-color-print.png",
+      "text": "bird",
+      "sourcePrompt": "One small blue bird, large in the middle of a white card, so a child can name it.",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r1-color.json"
+      ]
+    },
+    {
+      "rowId": "l2-w06-card-fish",
+      "version": 1,
+      "colorPrint": "l2-w06-card-fish-m1-color-print.png",
+      "text": "fish",
+      "sourcePrompt": "One round blue fish with a yellow belly, large in the middle of a white card, so a child can name it.",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r1-color.json"
+      ]
+    },
+    {
+      "rowId": "l2-w06-card-frog",
+      "version": 1,
+      "colorPrint": "l2-w06-card-frog-m1-color-print.png",
+      "text": "frog",
+      "sourcePrompt": "One small green frog, large in the middle of a white card, so a child can name it.",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r1-color.json"
+      ]
+    },
+    {
+      "rowId": "l2-w06-card-duck",
+      "version": 1,
+      "colorPrint": "l2-w06-card-duck-m1-color-print.png",
+      "text": "duck",
+      "sourcePrompt": "One white duck with an orange beak, large in the middle of a white card, so a child can name it.",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r1-color.json"
+      ]
+    },
+    {
+      "rowId": "l2-w06-card-horse",
+      "version": 1,
+      "colorPrint": "l2-w06-card-horse-m1-color-print.png",
+      "text": "horse",
+      "sourcePrompt": "One white horse, large in the middle of a white card, so a child can name it.",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r1-color.json"
+      ]
+    },
+    {
+      "rowId": "l2-w07-card-ball",
+      "version": 1,
+      "colorPrint": "l2-w07-card-ball-m1-color-print.png",
+      "text": "ball",
+      "sourcePrompt": "One red-and-yellow ball, large in the middle of a white card, so a child can name it.",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r1-color.json"
+      ]
+    },
+    {
+      "rowId": "l2-w07-card-kite",
+      "version": 1,
+      "colorPrint": "l2-w07-card-kite-m1-color-print.png",
+      "text": "kite",
+      "sourcePrompt": "One red-and-yellow kite, large in the middle of a white card, so a child can name it.",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r1-color.json"
+      ]
+    },
+    {
+      "rowId": "l2-w07-card-drum",
+      "version": 1,
+      "colorPrint": "l2-w07-card-drum-m1-color-print.png",
+      "text": "drum",
+      "sourcePrompt": "One small red drum with two wooden sticks, large in the middle of a white card, so a child can name it.",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-fw-r1-color.json"
+      ]
+    },
+    {
+      "rowId": "l2-w04-card-family",
+      "version": 1,
+      "colorPrint": "l2-w04-card-family-m1-color-print.png",
+      "text": "family",
+      "sourcePrompt": "One picture of the six family members in one row that shows the word family: Mom, Dad, Grandma, Grandpa, Tom, and Lily stand together and smile.",
+      "notes": [
+        "Sonnet judge pass (model evidence, not acceptance): judge-cards-cards-r1-color.json of the card track"
+      ]
+    }
+  ]
+}

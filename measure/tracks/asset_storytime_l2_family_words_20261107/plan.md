@@ -153,8 +153,8 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     the first 75 cost lines.
   - The calibration ran through the frozen Sonnet judge. Both controls failed. The record is
     `measure/runs/asset_storytime_l2_family_words_20261107/calibration-record.json`.
-- [~] Task 5: Color calls for the 18 new rows, then judge batches at card size (360 px long side
-  with `--family-words`).
+- [x] Task 5 (501dacf6): Color calls for the 18 new rows, then judge batches at card size (360 px
+  long side with `--family-words`).
   - The first judge pass is the delivery. At most 3 color tries for each row. A fail needs a
     second judge on the file alone before it stands. Log every call in `costs.tsv`.
   - Muse calls run 4 at a time at most. The maker starts no call that the guard refuses.
@@ -167,7 +167,14 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     body-part picture shows a child pointing to the part, so try 1 counts as a failed try. Try 2
     uses a new pose: one arm held straight out to the side, with the index finger of the other
     hand on that arm. Only the picture sentences of the arms colorPrompt changed.
-- [b] Task 6: Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet. deferred:Task 5
+  - The judge result file
+    `measure/runs/asset_storytime_l2_family_words_20261107/judge-fw-r1-color.json` holds 18 files
+    with 18 pass and 0 fail on color try 1. The arms row passes on try 2 in
+    `measure/runs/asset_storytime_l2_family_words_20261107/judge-fw-r2-color-arms.json`. The
+    family row reuses the card track color print and gets no call and no new judge batch.
+  - The track made 19 calls for 0.19 USD. The total of `costs.tsv` is 0.93 USD in 93 calls, under
+    the 1.60 USD cap of the card run.
+- [~] Task 6: Delivery folder, handoff folder, `MANIFEST.txt`, and contact sheet.
   - The delivery folder is `out/storytime/l2/unit1/family-words/delivery-muse-v1/`. The handoff
     folder is `/home/daniebo/Desktop/handoff/storytime-l2-family-word-pictures/`. The form follows
     the section "Delivery" of the specification.
