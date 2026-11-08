@@ -120,6 +120,17 @@ describe('unit 2 Muse specs', () => {
     }
   });
 
+
+  it('R9: an adult person-form row keeps the adult proportions, not the chibi sentence', () => {
+    const adults = ['dad', 'mom', 'grandma', 'grandpa', 'teacher-kim', 'nans-dad'];
+    for (const { row, spec } of specs) {
+      if (row.form !== 'person-card') continue;
+      if (!row.cast.some((k: string) => adults.includes(k))) continue;
+      expect(spec.colorPrompt, spec.id).not.toContain('chibi proportions of a five-year-old');
+      expect(spec.colorPrompt, spec.id).toMatch(/keeps the adult proportions of (his|her) picture/);
+    }
+  });
+
   it('FR-6: every reuse row names a source that exists', () => {
     for (const { row } of specs) {
       if (!row.reuse) continue;
