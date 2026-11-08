@@ -57,14 +57,14 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
 - [x] Task 2 (58f4ee10): Judge option (D2). Add `--unit2` to
   `scripts/storytime-judge-batch.mjs` (and its `.d.mts`). Write
   `tests/storytime-u2-judge-batch.test.ts`. Commit with explicit paths.
-- [b] Task 3 deferred:maker: Delivery writer (D3). Write `deliverMuseUnit2` and
+- [x] Task 3 (7ee4757f): Delivery writer (D3). Write `deliverMuseUnit2` and
   `tests/storytime-u2-delivery.test.ts` with generated fixtures, the reuse copy, the size and alpha
   checks, and the pin refusal. Commit with explicit paths.
-- [b] Task 4 deferred:maker: Line sentence (D4). Fix `scripts/storytime-u2-specs.mjs`, regenerate
+- [x] Task 4 (4c7e2b11): Line sentence (D4). Fix `scripts/storytime-u2-specs.mjs`, regenerate
   the specs and the prompt list, add the check to `tests/storytime-u2-specs.test.ts`, rebuild the
   hand-off folder with `make-handoff.mjs`, and run `sha256sum -c MANIFEST.txt` (0 failures).
   Commit with explicit paths.
-- [b] Task 5 deferred:maker: Zero-spend proof and report (D5). The `costs.tsv` hashes equal the
+- [~] Task 5: Zero-spend proof and report (D5). The `costs.tsv` hashes equal the
   hashes before the work. Run the GREEN test command and the typecheck. Write
   `measure/runs/asset_storytime_l2_unit2_tooling_20261108/pm-report.md`: the first line is
   `Status: done.`; then the hand-off MANIFEST count; then the guard state

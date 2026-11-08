@@ -52,7 +52,38 @@ Base HEAD check: `git rev-parse HEAD` gave 26fee64e925df82e53633b39cb8a15169318c
 - Commit 58f4ee10041cc4a89a63bc8c676936411ab9383e: judge batch unit 2 option.
 - First typecheck try: the Node heap hit the 3G scope limit (exit 134, no type error line).
   Second try with NODE_OPTIONS=--max-old-space-size=2560 through heavy-run.
-- Typecheck at 2026-11-08T13:4xZ with NODE_OPTIONS=--max-old-space-size=2560: exit 2,
+- Typecheck about 06:27Z (13:27 ICT) with NODE_OPTIONS=--max-old-space-size=2560: exit 2,
   38 error lines, all in old asset files and tests/games or tests/part; 0 error lines in
   scripts/storytime-*, tests/storytime-u2-*, or any other storytime test. The count matches the
   known old repository errors.
+
+## Round 2, Tasks 3 to 5
+
+- Start HEAD 294953ca. Spend 0 USD. U2_RUN.capUsd stays null.
+- Task 3, commit 7ee4757f40fd983b7b575945e66868841fab9894: unit 2 delivery writer.
+  New file src/storytime/muse-delivery-u2.ts. src/storytime/muse-delivery.ts only gained
+  `export` on parseApprovals, inspectColorPrint, readMuseFile, mapReviews, DeliveryCopy, and
+  commitDelivery; behavior is unchanged. Test tests/storytime-u2-delivery.test.ts, 9 tests.
+  Test command: vitest on the unit 2 delivery test, tests/storytime-muse-delivery.test.ts,
+  tests/storytime-muse-delivery-adversarial.test.ts, tests/storytime-family-word-delivery.test.ts:
+  4 files, 78 tests, pass. tsc: exit 2, 38 old errors, 0 in src/storytime or tests/storytime-*.
+- Task 4, commit 4c7e2b11de9a3c89f83ccf24e36b50249760ce9c: animal line sentences and the
+  hand-off rebuild. Each face word has its own sentence in LINE_FEATURES. A word without an
+  entry stops the maker. The 24 face-word specs changed on the linePrompt line only.
+  Regenerate command: node scripts/storytime-u2-specs.mjs
+  /home/daniebo/Desktop/Workbooks/content/storytime/drafts/l2/print/pictures-u2.json
+  docs/storytime/l2-unit2/elements.json docs/storytime/l2-unit2/rows.json docs/storytime/l2-unit2
+  Test: vitest tests/storytime-u2-specs.test.ts: 1 file, 17 tests, pass.
+  Hand-off: node measure/runs/asset_storytime_l2_unit2_prep_20261108/make-handoff.mjs gave 258
+  files. sha256sum -c MANIFEST.txt in the hand-off folder: 257 OK, 0 FAILED, exit 0.
+- Task 5: no costs-before.txt existed in round 1. The 16 costs.tsv hashes equal the hash lines
+  of measure/runs/asset_storytime_l2_unit2_prep_20261108/costs-after.txt (diff empty). The track
+  costs-after.txt was written. pm-report.md was written.
+- Defaults: the approval entry wins over a reuse source for the same row; the delivered version
+  of a reuse row comes from its list name (-v1); an element spec has no `use` and gets 'element';
+  a judge copy sits below the build root; the hen line sentence has no class C row, so the test
+  reads it from the spec maker.
+- Task 5 GREEN run at 13:55Z (13:56 ICT): the 13-file GREEN command gave 13 files and 205 tests,
+  pass, exit 0. The typecheck gave exit 2 with 38 old errors and 0 errors in src/storytime,
+  scripts/storytime-*, or tests/storytime-*.
+- The 16 costs.tsv hashes equal the prep costs-after lines. Track costs-after.txt written.
