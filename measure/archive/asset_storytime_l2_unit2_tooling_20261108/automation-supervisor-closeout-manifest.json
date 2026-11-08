@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "track": "asset_storytime_l2_unit2_tooling_20261108",
-  "archived_at": "2026-11-08T07:58:00Z",
+  "archived_at": "2026-11-08T07:59:03Z",
   "track_base_sha": "f11c0c24263f7b6995a7970d7bc3242ac49f26a9",
   "track_final_sha": "a0b56846f5c616911d6d95329f9a412c5b3bc1d1",
   "phase_acceptance_results": [
@@ -16,9 +16,9 @@
   ],
   "final_acceptance": "not run: the PM put the whole track on the light lane on 2026-11-03 (one maker and one checker). The light-lane role set of PM 2026-11-03 gives no final acceptance. The plan holds no final acceptance task, and the closeout item is [x] with a commit SHA.",
   "gates": {
-    "PROJECT_LINT": "pass — bash measure/doctor.sh gives exit 1 with 14 error lines, and none names asset_storytime_l2_unit2_tooling_20261108: grep for the track id in the doctor output gives exit 1 with 0 lines. The 14 lines name 5 other tracks with started tasks, 5 missing registry links of other tracks, and 3 stale generated facts. The archive move removes the last two lines about this track.",
+    "PROJECT_LINT": "pass — bash measure/doctor.sh gives exit 1 with 13 error lines, and none names asset_storytime_l2_unit2_tooling_20261108: grep for the track id in the doctor output gives 0 lines. The 13 lines name 6 other tracks with started tasks, 5 missing registry links of other tracks, and 2 stale generated facts.",
     "PROJECT_CHECKS": "pass — the closeout changed no src/, scripts/, or tests/ file. git diff --name-only a0b56846..HEAD holds measure/ paths only.",
-    "PROJECT_TESTS": "pass — the closeout reran the GREEN command in real mode through heavy-run.sh at HEAVY_MIN_AVAIL_MB=1500 at 14:56 ICT: 13 files passed, 209 tests passed, exit 0, duration 58.94 s. The run used the tree after the archive move, and the closeout changed no test or script file.",
+    "PROJECT_TESTS": "pass — the closeout reran the GREEN command in real mode through heavy-run.sh at HEAVY_MIN_AVAIL_MB=1500 at 14:56 ICT: 13 files passed, 209 tests passed, exit 0, duration 58.94 s. The worktree held the closeout edits of measure/ paths only, and the closeout changed no src/, scripts/, or tests/ file.",
     "SECRET_SCAN": "pass — grep -rnE 'sk-[A-Za-z0-9]{20}|Bearer [A-Za-z0-9]{20}|OPENROUTER_API_KEY=' measure/runs/asset_storytime_l2_unit2_tooling_20261108 gives exit 1 with no hit. find for PNG and JPG files in the same folder gives 0 files.",
     "source": "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-p1-a0b5684.json"
   },
