@@ -1,0 +1,38 @@
+{
+  "group": "u2-r3-color-t2",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T19:08:12Z",
+  "results": [
+    {
+      "id": "l2-w10-story-page-dad-has-a-pan",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-dad-has-a-pan-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), Tom (1), a pan (1). Action: has (note only). Seen: a man in a mustard polo, blue jeans, brown shoes holding a frying pan with a handle in one hand; a boy with dark hair, navy T-shirt, khaki shorts, red shoes. Both match the cast. The pan is drawn, visible, one, and reads as a frying pan. mustShow: dad ok, tom ok, 1 pan ok. No text."
+    },
+    {
+      "id": "l2-w11-story-page-where-is-lily-on-the-chair",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-lily-on-the-chair-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: the first sentence asks where Lily is; the second answers it, so the stated items are checked as visible. Items: Lily (1), a chair (1), Nan (1). Seen: a girl with a dark bob, fringe, lilac bow, lilac dress with a white collar, pink shoes, sitting on a wooden chair with a pink blanket over her lap; Nan with two buns and red bands, orange star T-shirt, red shorts, white sneakers, holding the blanket. The chair back, legs, and seat show and read as a chair. mustShow: nan ok, lily ok, 1 chair ok. Small mark: the blanket covers most of the seat. No text."
+    },
+    {
+      "id": "l2-w14-cover-hot-and-cold",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-cover-hot-and-cold-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover. Subject: hot and cold. Seen: a split picture. Left: Nan in the orange star T-shirt and red shorts under a yellow umbrella, bright sun, green grass. Right: Nan in a red coat and red scarf, white boots, snow falling, a snowy tree. Nan matches the cast (two buns with red bands, big brown eyes) in both halves. The subject shows clearly. mustShow: nan ok. No text."
+    }
+  ],
+  "summary": { "files": 3, "pass": 3, "fail": 0 }
+}

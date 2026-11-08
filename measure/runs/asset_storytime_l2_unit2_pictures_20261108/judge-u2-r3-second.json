@@ -1,0 +1,52 @@
+{
+  "group": "u2-r3-second",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T19:11:44Z",
+  "mode": "second judge, each file alone",
+  "results": [
+    {
+      "id": "l2-w10-story-page-put-on-your-hat-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the group in the middle and left of the page: nine children are drawn, not the seven the page names",
+      "notes": "Question page: no. Items: 7 children (Sam, May, Ben, Mia, Pat, Lily, Nan), Teacher Kim (1), Pip (1), a hat. Action: put on (note only). Seen: Pip on an open suitcase wears a straw hat with a bow; Teacher Kim stands at the back; I count 9 child heads: far-left boy, girl with ponytail, boy behind her at the top, striped-shirt boy, spiky-haired boy at the back, winking boy, girl with a fringe, girl in overalls, and a child with two buns at the right. That is two children more than the mustShow list. Pip, Kim, and the hat are drawn and clear. Line art is clean black on white, no gray, no gaps, no text."
+    },
+    {
+      "id": "l2-w13-check-row-dot",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-check-row-dot-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole picture: a large oval with two curved bands",
+      "notes": "Question page: no. Items: a dot (1). Action: none. Seen: one big horizontal oval with two curved band lines across it, like a striped ball, an egg, or a bun. No small round dot is drawn. A young child would not read this as a dot. Line art itself is clean: black on white, no gray, no gaps, no text."
+    },
+    {
+      "id": "l2-w13-d4-prompt-jump",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-d4-prompt-jump-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "broken-face",
+      "where": "the boy's head: the face is empty, with no eyes, no nose, and no mouth",
+      "notes": "Question page: no. Items: a child who jumps. Action: jump (note only). Seen: a boy in a striped T-shirt and shorts, both arms up, knees bent, feet off the ground. The pose reads as jump. The head has hair and ears but a completely blank face; only a small neck mark shows. A teacher or child sees a faceless character at book size. Line art is clean: no gray, no gaps, no text."
+    },
+    {
+      "id": "l2-w10-card-trousers",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-trousers-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: trousers (1 pair). Action: none. Seen: one pair of cuffed trousers with a waistband, belt loops, two side pockets, a center seam, and rolled cuffs at the lower leg. Drawn, whole, and not cut by the frame. The legs are short and rolled, so they could read as cropped pants; small mark, a young child still reads them as trousers or pants. Line art is clean: black on white, no gray, no gaps that hurt coloring, no text."
+    }
+  ],
+  "summary": {
+    "files": 4,
+    "pass": 1,
+    "fail": 3
+  }
+}

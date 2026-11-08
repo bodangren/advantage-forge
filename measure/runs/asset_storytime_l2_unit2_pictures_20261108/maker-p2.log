@@ -255,3 +255,15 @@ Spec edits in commit b9ed6043 (the orchestrator brief lists the reasons):
   - u2-r3-line-t1: 8 entries, the new m2 lines of the 8 rows whose color passed at try 2 or 3.
   - u2-r3-line-t2: 11 entries, the new m1 lines of the 11 rows of N.B.
   - Check: a sharp script compared every judge copy against the newest source file of its row. All 24 entries have pixel distance 0.00 to the newest file. Result: 24 ok, 0 failures.
+
+## Round 9 (Green · P2 T6 · storytime_l2_unit2_pictures · r9)
+
+- 2026-11-09T01:40Z: start. HEAD d7f5672d, equal to role_base_sha. Model: minimax-cn-coding-plan/MiniMax-M3.1-Flash.
+- Step P (judge records, 0 USD). The orchestrator ran the frozen judge claude-code/claude-sonnet-5-5#high on the 4 round 3 batches, then a second judge on each file alone.
+  - Color try 2 and 3, 5 rows: 5 pass, 0 fail. l2-w11-story-page-here and l2-w11-story-page-ten-men-in-the-den pass at try 3. l2-w10-story-page-dad-has-a-pan, l2-w11-story-page-where-is-lily-on-the-chair, and l2-w14-cover-hot-and-cold pass at try 2.
+  - Line try 1 and 2, 19 rows: 15 pass at the first judge. The second judge passed l2-w10-card-trousers, so 16 pass.
+  - Standing line fails, 3 rows:
+    1. l2-w10-story-page-put-on-your-hat-pip
+    2. l2-w13-check-row-dot
+    3. l2-w13-d4-prompt-jump
+  - The 5 judge files are copied into measure/runs/asset_storytime_l2_unit2_pictures_20261108/ and committed with this step.

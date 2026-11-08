@@ -1,0 +1,29 @@
+{
+  "group": "u2-r3-color-t3",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T19:08:12Z",
+  "results": [
+    {
+      "id": "l2-w11-story-page-here",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-here-color-t3.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip, Nan, Sam, May, Ben, Mia, Pat, Lily, each once. Action: pointing (note only). Seen, left to right: Nan (two buns, orange star T-shirt, red shorts), Sam (red T-shirt with two white stripes, blue shorts, blue shoes), May (black hair, ponytail, yellow star clip, yellow T-shirt, blue skirt), Ben (light-brown messy hair, light-blue T-shirt, dark-blue shorts, grey sneakers), Mia (light-brown hair, pink bow, pink T-shirt, denim overalls), Pat (black messy hair, green T-shirt, brown shorts, sandals), Lily (dark bob, lilac bow, lilac dress, pink shoes); Pip the puppy with a red collar and tag in front. Eight figures, each once, each matches the cast. mustShow: all eight ok. No text."
+    },
+    {
+      "id": "l2-w11-story-page-ten-men-in-the-den",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-ten-men-in-the-den-color-t3.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: ten men (10), a den (1), Tom (1). Seen: Tom (dark hair, navy T-shirt, khaki shorts, red shoe) kneeling and smiling under a cream blanket draped as a tent over a blue rug; ten small wooden peg figures in a row in front of the den, counted by eye as 10. The blanket tent reads as a den. The peg figures read as little people. mustShow: tom ok, 10 men ok, 1 den ok. Small mark: the men are simple wooden peg dolls. No text."
+    }
+  ],
+  "summary": { "files": 2, "pass": 2, "fail": 0 }
+}

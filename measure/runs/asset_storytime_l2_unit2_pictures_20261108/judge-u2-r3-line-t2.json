@@ -1,0 +1,110 @@
+{
+  "group": "u2-r3-line-t2",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T19:10:02Z",
+  "results": [
+    {
+      "id": "l2-w09-story-page-dad-can-mop-the-mat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-dad-can-mop-the-mat-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), a mat (1), a mop (1). Action: mop (note only). Seen: a man with short hair in a polo shirt and trousers, bent forward, holding a mop whose head rests on a large oval mat on the floor. The mat is drawn, visible, and clear. Small marks: a second smaller oval lies far behind, part of the room floor and not the mat the mop touches; the man's head is large in this bent pose. Black lines on white, no gray, no text."
+    },
+    {
+      "id": "l2-w09-story-page-tom-can-see-the-mop",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-tom-can-see-the-mop-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), a mop (1), Dad. Action: see (note only). Seen: a boy with side-swept hair pointing toward a tall mop that leans by the toy chest; a man in a polo shirt and jeans sits on the armchair at the left, smiling. One mop with a long pole and a clear mop head. Black lines on white, no gray, no text."
+    },
+    {
+      "id": "l2-w09-story-page-pip-can-mop",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-pip-can-mop-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), Dad (1), Tom (1), a mop (1). Action: mop (note only). Seen: a puppy with floppy ears, a collar with a round tag, and a fluffy tail, holding the mop pole in its mouth with a paw on it; the mop head touches the floor; a smiling man in a polo shirt; a laughing boy in a T-shirt and shorts. All drawn and visible. Black lines on white, no gray, no text."
+    },
+    {
+      "id": "l2-w09-card-dinosaur",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-dinosaur-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a dinosaur (1). Seen: a sitting long-neck dinosaur with a big smile, back plates, a curved tail, and round toes. It reads as a dinosaur. Lines are closed, black on white, no gray, no text."
+    },
+    {
+      "id": "l2-w10-card-trousers",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-trousers-line-t2.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole picture: the legs end below the knee with rolled cuffs, so the garment reads as shorts or cropped pants",
+      "notes": "Question page: no. Items: trousers (1 pair). Seen: a pair of pants with a waistband, belt loops, two pockets, and two short legs with rolled cuffs. The legs are shorter than the rise of the garment, so at book size a young child reads it as shorts, not as trousers. Wrong prop. Black lines on white, no gray, no text."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-may",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-may-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: May (1), a book (1, open). Action: open (note only). Seen: a girl with black hair, a side ponytail, and a star hair clip at a school desk, with both hands on an open book lying on the desk. The book is drawn open and visible. Small mark: her hair overlaps the bottom of the lion frame. Black lines on white, no gray, no text."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-pip-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), Nan (1), Teacher Kim (1), a book (1, open). Action: open (note only). Seen: a puppy lying with a paw by an open book on the floor, with a collar and tag; a girl with two buns and a star T-shirt kneeling and looking at the book; Kim standing at the right with a ponytail and a buttoned cardigan. All drawn and visible. Black lines on white, no gray, no text."
+    },
+    {
+      "id": "l2-w12-story-page-dad-is-hot",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-dad-is-hot-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1). Action: hot (note only). Seen: a man with short hair and a polo shirt outdoors, wiping his forehead with one hand and holding a straw hat in the other; suns in the sky. He reads as hot. Small marks: three sun shapes in the sky, and a haystack shape and a flat shape on the ground. Black lines on white, no gray, no text."
+    },
+    {
+      "id": "l2-w12-card-hippo",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-hippo-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a hippo (1). Seen: a round, smiling sitting hippo with a wide muzzle, nostrils, and small round ears. It reads as a hippo. Lines are closed, black on white, no gray, no text."
+    },
+    {
+      "id": "l2-w14-story-page-mom-has-a-fan",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-mom-has-a-fan-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mom (1), a fan (1). Action: has (note only). Seen: a woman with wavy shoulder-length hair, a collared top, and trousers, holding a round hand fan with blade sections and a handle in both hands. The fan is drawn, visible, and one. It reads as a hand fan. Black lines on white, no gray, no text."
+    },
+    {
+      "id": "l2-w14-story-page-a-fan-for-you-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-a-fan-for-you-pip-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a fan (1), Mom (1), Pip (1), Dad (1). Seen: a woman with wavy hair kneeling and holding a small desk fan with visible blades, a ring, and a stand, and touching the puppy's head; the puppy sits smiling with a collar and tag; a man in a polo shirt stands at the right smiling. One fan, clear. Black lines on white, no gray, no text."
+    }
+  ],
+  "summary": { "files": 11, "pass": 10, "fail": 1 }
+}

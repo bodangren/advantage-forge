@@ -1,0 +1,83 @@
+{
+  "group": "u2-r3-line-t1",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T19:10:02Z",
+  "results": [
+    {
+      "id": "l2-w10-check-row-ten",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-check-row-ten-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: ten (10 objects). Seen: two rows of five circles, counted by eye as 10. Black lines on white, closed circles, no gray, no text."
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-hat-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the crowd of children on the left and centre: nine children are drawn instead of the seven named children",
+      "notes": "Question page: no. Items: Pip with a hat (1), Teacher Kim (1), Sam, May, Ben, Mia, Pat, Lily, Nan (7 children, each once). Seen: Kim at the back with a ponytail and cardigan; Pip on the open suitcase wearing a straw hat with a flower; Nan at the right with two buns; a boy with sandals at the left; a girl with a ponytail; a girl in a dress with a fringe; a girl in overalls; and a striped-shirt child. Two more children show: one head behind at the upper left, and one boy winking at the front centre. Counted by eye: 9 children where 7 are named, so two children are extra or repeated. Pip and the hat are clear. Line art is black on white with no gray; no text."
+    },
+    {
+      "id": "l2-w11-story-page-the-den-is-on-dad",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-the-den-is-on-dad-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: the den (1), Dad (1), Tom (1), Mom (1), Pip (1). Seen: a blanket tent in the centre with a smiling man's head and two open hands showing at the front under it (Dad); Pip standing on top of the tent with a collar and tag; a boy at the left with short hair and open arms (Tom); a woman at the right with wavy shoulder-length hair, a collared top, and trousers (Mom). All are drawn and visible. The den reads as a blanket tent. Small mark: ten small peg figures sit on the rug in front of the den; the sentence does not name them. Black lines on white, no gray, no gap, no text."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-nan",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-nan-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), a book (1, open). Action: open (note only). Seen: a girl with two round buns at a school desk, holding an open book with picture shapes, a small tail of a dog showing beside her chair. The book is drawn open and visible. Small marks: her head overlaps the bottom of the elephant frame; the dog tail is a small extra mark. Black lines on white, no gray, no text."
+    },
+    {
+      "id": "l2-w13-check-row-dot",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-check-row-dot-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole picture",
+      "notes": "Question page: no. Items: a dot (1). Seen: a large oval with two curved bands across it, like a striped ball, bean, or egg. It does not read as a dot to a young child. A dot is a small round spot. Wrong prop. Black lines on white, no gray, no text."
+    },
+    {
+      "id": "l2-w13-d4-prompt-jump",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-d4-prompt-jump-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "broken-face",
+      "where": "the head of the child: the face is empty, with no eyes, no nose, and no mouth",
+      "notes": "Question page: no. Items: a child jumping (1). Action: jump (note only). Seen: a child with arms raised and legs bent in the air, in a striped T-shirt and shorts. Body, hands, and feet are clear. The head is a plain round shape with a hair line and two ears but no face marks at all. A blank face reads as a broken face at book size. Black lines on white, no gray, no text."
+    },
+    {
+      "id": "l2-w13-cover-look-at-me",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-cover-look-at-me-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover. Title names the subject. Items: Sam, May, Ben, Mia, Pat, Lily, Nan, Teacher Kim, each once. Seen: Kim at the back with a ponytail and cardigan; seven children running in a row on a playground: a striped-shirt boy, a girl with a ponytail and a hair clip, a boy, a girl in overalls, a boy, a girl in a dress with a fringe and a bow, and a girl with buns and a star T-shirt. Counted by eye: 7 children plus Kim, each once. A slide, climbing frame, sun, and clouds show. Black lines on white, no gray, no gap, no text."
+    },
+    {
+      "id": "l2-w15-cover-look-a-bus",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-cover-look-a-bus-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover. Title names the subject: a bus. Items: a bus (1), Sam, May, Ben, Mia, Pat, Lily, Nan, Teacher Kim, each once. Seen: a bus at the upper right with windows, a door, a grille, two round headlights, and two wheels; Kim at the left holding the hand of a boy; six more children in a row holding hands (striped shirt, overalls, dress with fringe, buns with a star shirt). Counted by eye: 7 children plus Kim, each once. Small mark: the bus body is boxy and a roof shape stands behind it. It still reads as a bus. Black lines on white, no gray, no text."
+    }
+  ],
+  "summary": { "files": 8, "pass": 5, "fail": 3 }
+}
