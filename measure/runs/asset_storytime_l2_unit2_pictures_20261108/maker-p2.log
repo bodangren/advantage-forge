@@ -389,3 +389,11 @@ END_MEASURE_AGENT_RESULT
   - Judge batches: u2-r6-line-t2 (18 entries) and u2-r6-line-t3 (2 entries).
   - Check: a sharp script compared every judge copy against the downscale of the newest line file of
     its row. All 20 entries have pixel distance 0. Result: 20 ok, 0 failures.
+- Step AA (approvals, 0 USD; round 13). The round 6 judge gave 18 of 18 pass on u2-r6-line-t2 and 1
+  pass plus 1 fail on u2-r6-line-t3 (l2-w12-card-hippo passes; l2-w09-story-page-tom-can-see-the-mop
+  fails: Dad wears glasses). The 12 rows that pass both the print gate and the judge name their new
+  line print (`-m1-line-print-2.png`): l2-w09-card-nod, l2-w09-story-page-i-like-eggs-yum,
+  l2-w10-story-page-put-on-your-t-shirt, l2-w11-check-row-elephant,
+  l2-w11-story-page-where-is-sam-under-the-table, l2-w12-card-crayon, l2-w13-card-catch,
+  l2-w13-card-run, l2-w13-story-page-pip-can-catch, l2-w14-card-rainy, l2-w15-card-helicopter, and
+  l2-w15-story-page-pip-has-a-tag. The two judge files are committed.
