@@ -1,13 +1,16 @@
 import { createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
+import { lstat, readFile } from 'node:fs/promises';
 import path from 'node:path';
+import { z } from 'zod';
 import {
   assembleManifest,
   inspectLineArtPng,
+  PICTURE_SIZES,
   planPictureRow,
   rowCaptureJob,
   type CandidateManifest,
   type PictureListRow,
+  type StorytimeJob,
   type StorytimeManifest,
 } from './book-pictures.js';
 import {
@@ -23,9 +26,10 @@ import {
 
 // The Storytime Level 2 unit 2 delivery writer (D3, 2026-11-08). It copies the approved Muse
 // prints of the unit 2 run to one delivery folder under the list names, and it writes one
-// manifest.json in the StorytimeManifest shape of unit 1. The 48 reuse rows (PM decision 2) copy
-// the color file of their unit 1 source and its line twin; they make no Muse entry. The writer
-// reads local files only. It makes no network call, no provider call, and no key read.
+// manifest.json in the StorytimeManifest shape of unit 1. The 47 reuse rows (PM decision 2) copy
+// the color file of their source and its line twin: 45 rows copy a unit 1 delivery, and 2 rows
+// copy an earlier unit 2 row. They make no Muse entry. The writer reads local files only. It makes
+// no network call, no provider call, and no key read.
 
 /** The approved SHA-256 pin of the unit 2 picture list. */
 export const UNIT2_LIST_SHA256 = '63d415000eca9d6be1a6ad533c12ff81e127cd2c76ffac339697f91b99f754ec';
@@ -404,6 +408,208 @@ export async function deliverMuseUnit2(options: MuseUnit2DeliveryOptions): Promi
       { file: item.row.lineArtFileName, bytes: item.lineBytes, sha256: item.lineSha256, rowId: item.row.id },
     );
   }
+  await commitDelivery(deliveryRoot, manifest, copies);
+  return manifest;
+}
+
+// ---------------------------------------------------------------------------
+// The Level 2 app family words (Phase 3 Task 9, 2026-11-09). The set holds 18 color pictures of
+// size class C. The unit 1 writer `deliverMuseColorSet` refuses these ids, because its row id rule
+// holds the unit 1 family words only, so the writer lives here. It writes one color print per row
+// under the `<id>-v1.png` name of unit 1, and one manifest.json in the StorytimeManifest shape.
+// The set has no line-art twin, so the manifest keeps the color batches only.
+// ---------------------------------------------------------------------------
+
+/** The 18 app family-word ids of unit 2, in the order of the paid media list. */
+export const UNIT2_FAMILY_WORD_IDS = [
+  'l2-w09-family-egg',
+  'l2-w09-family-milk',
+  'l2-w09-family-cake',
+  'l2-w10-family-hat',
+  'l2-w11-family-bed',
+  'l2-w11-family-table',
+  'l2-w11-family-sofa',
+  'l2-w11-family-box',
+  'l2-w11-family-chair',
+  'l2-w12-family-book',
+  'l2-w12-family-bag',
+  'l2-w12-family-pencil',
+  'l2-w12-family-pen',
+  'l2-w13-family-jump',
+  'l2-w15-family-bus',
+  'l2-w15-family-bike',
+  'l2-w15-family-truck',
+  'l2-w15-family-plane',
+] as const;
+
+/** One app family-word approval entry. */
+const FamilyWordApprovalSchema = z
+  .object({
+    rowId: z.string().min(1),
+    /** The Muse version of the approved print: the `m<n>` of the Muse file names. */
+    version: z.union([z.string().regex(/^m\d+$/), z.number().int().positive()]),
+    colorPrint: z.string().min(1),
+  })
+  .strict();
+
+const FamilyWordApprovalListSchema = z.object({
+  version: z.literal(1),
+  entries: z.array(FamilyWordApprovalSchema).min(1, { message: 'must hold at least one entry' }),
+});
+
+export type MuseUnit2FamilyWordApproval = z.infer<typeof FamilyWordApprovalSchema>;
+export type MuseUnit2FamilyWordApprovalList = z.infer<typeof FamilyWordApprovalListSchema>;
+
+export interface MuseUnit2FamilyWordDeliveryOptions {
+  /** The app family-word approval list, or the path of its JSON file. */
+  approvals: MuseUnit2FamilyWordApprovalList | string;
+  /** The folder that holds the Muse print files named in the approval entries. */
+  museRoot: string;
+  /** The delivery batch root: the folder that gets the copied files and manifest.json. */
+  deliveryRoot: string;
+}
+
+interface FamilyWordItem {
+  entry: MuseUnit2FamilyWordApproval;
+  colorFile: string;
+  colorBytes: Buffer;
+  colorSha256: string;
+  candidate: CandidateManifest;
+}
+
+async function parseFamilyWordApprovals(
+  approvals: MuseUnit2FamilyWordApprovalList | string,
+): Promise<MuseUnit2FamilyWordApprovalList> {
+  const source: unknown =
+    typeof approvals === 'string' ? JSON.parse(await readFile(approvals, 'utf8')) : approvals;
+  const parsed = FamilyWordApprovalListSchema.safeParse(source);
+  if (parsed.success) return parsed.data;
+  const issue = parsed.error.issues[0];
+  const where = issue ? issue.path.join('.') : 'list';
+  throw new Error(`The app family-word approval list is invalid at ${where}: ${issue?.message ?? 'invalid list'}.`);
+}
+
+/** The state of a path, or null when the path does not exist. */
+async function lstatOrNull(file: string) {
+  try {
+    return await lstat(file);
+  } catch (error) {
+    const code = (error as NodeJS.ErrnoException).code;
+    if (code === 'ENOENT') return null;
+    throw error;
+  }
+}
+
+/** The week of an app family-word id: the number of its `w<nn>` part. */
+function familyWordWeek(rowId: string): number {
+  const match = /^l2-w(\d\d)-family-[a-z]+$/.exec(rowId);
+  if (!match) throw new Error(`${rowId}: the id must match l2-w<nn>-family-<word>.`);
+  return Number(match[1]);
+}
+
+/** The word of an app family-word id: the part after `family-`. */
+function familyWordText(rowId: string): string {
+  return rowId.replace(/^l2-w\d\d-family-/, '');
+}
+
+/** The number of an approval version: the `m<n>` name or the plain number. */
+function familyWordVersion(version: string | number): number {
+  if (typeof version === 'number') return version;
+  return Number(version.replace(/^m/, ''));
+}
+
+/** The manifest job of one app family word. The week and the word come from the row id. */
+function familyWordJob(rowId: string): StorytimeJob {
+  const week = familyWordWeek(rowId);
+  return {
+    id: rowId,
+    week,
+    bookKind: 'readalong',
+    bookTitle: '',
+    page: 0,
+    text: familyWordText(rowId),
+    sourcePrompt: '',
+    characters: [],
+    sourcePackage: '',
+    sourceSha256: '',
+    slug: rowId,
+    directory: `w${String(week).padStart(2, '0')}`,
+    use: 'small',
+    size: 'small',
+  };
+}
+
+/**
+ * Writes the Level 2 app family-word delivery: one color print per row, byte for byte, and one
+ * manifest.json with one color batch per week and no line-art batch. Every check runs before the
+ * first write, so a refusal leaves the delivery folder unchanged. The writer refuses an id outside
+ * the 18 app family words, an existing delivery folder, and a missing or wrong print file.
+ */
+export async function deliverMuseUnit2FamilyWords(
+  options: MuseUnit2FamilyWordDeliveryOptions,
+): Promise<StorytimeManifest> {
+  const list = await parseFamilyWordApprovals(options.approvals);
+  const museRoot = path.resolve(options.museRoot);
+  const deliveryRoot = path.resolve(options.deliveryRoot);
+
+  const deliveryInfo = await lstatOrNull(deliveryRoot);
+  if (deliveryInfo) {
+    throw new Error(`The delivery folder ${deliveryRoot} exists; the writer refuses it.`);
+  }
+
+  const seen = new Set<string>();
+  for (const entry of list.entries) {
+    if (seen.has(entry.rowId)) throw new Error(`The approval list holds the row ${entry.rowId} twice.`);
+    seen.add(entry.rowId);
+    if (!UNIT2_FAMILY_WORD_IDS.includes(entry.rowId as (typeof UNIT2_FAMILY_WORD_IDS)[number])) {
+      throw new Error(`${entry.rowId}: the id is not one of the 18 app family words.`);
+    }
+  }
+
+  const items: FamilyWordItem[] = [];
+  const problems: string[] = [];
+  for (const entry of list.entries) {
+    const colorFile = `${entry.rowId}-v1.png`;
+    let colorBytes: Buffer;
+    try {
+      colorBytes = await readMuseFile(museRoot, entry.colorPrint, entry.rowId);
+    } catch (error) {
+      problems.push(error instanceof Error ? error.message : String(error));
+      continue;
+    }
+    const color = await inspectColorPrint(colorBytes, PICTURE_SIZES.small);
+    for (const error of color.errors) problems.push(`${entry.rowId}: color print ${entry.colorPrint}: ${error}`);
+    if (!color.valid) continue;
+    const colorSha256 = sha256(colorBytes);
+    const candidate: CandidateManifest = {
+      jobId: entry.rowId,
+      version: familyWordVersion(entry.version),
+      file: colorFile,
+      fileSha256: colorSha256,
+      status: 'ready',
+      structural: color,
+      reviews: {},
+      failures: [],
+    };
+    items.push({ entry, colorFile, colorBytes, colorSha256, candidate });
+  }
+  if (problems.length) {
+    throw new Error(`The app family-word delivery stopped; nothing was written:\n${problems.join('\n')}`);
+  }
+
+  const jobs = items.map((item) => familyWordJob(item.entry.rowId));
+  const assembled = assembleManifest(jobs, items.map((item) => item.candidate));
+  // The app family words have no line-art twin, so the manifest keeps the color batches only.
+  const manifest: StorytimeManifest = {
+    ...assembled,
+    batches: assembled.batches.filter((batch) => batch.outputKind === 'color'),
+  };
+  const copies: DeliveryCopy[] = items.map((item) => ({
+    file: item.colorFile,
+    bytes: item.colorBytes,
+    sha256: item.colorSha256,
+    rowId: item.entry.rowId,
+  }));
   await commitDelivery(deliveryRoot, manifest, copies);
   return manifest;
 }

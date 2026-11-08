@@ -13,11 +13,13 @@
 //
 // Every test reads local files or writes to a temp folder. No test makes a provider call.
 import { describe, expect, it } from 'vitest';
+import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { resolve } from 'node:path';
 import sharp from 'sharp';
+import * as delivery from '../src/storytime/muse-delivery-u2.js';
 import * as guards from '../scripts/storytime-muse-guards.mjs';
 import * as judgeBatch from '../scripts/storytime-judge-batch.mjs';
 
@@ -367,6 +369,168 @@ describe('the app family-word judge option (U2FWJ)', () => {
       });
       expect(entries[0]!.judgeFile).toBe(`${FW_JUDGE_REL}/${id}-color-t2.png`);
       expect(existsSync(path.join(root, FW_JUDGE_REL, `${id}-color-t2.png`))).toBe(true);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+});
+
+describe('the app family-word delivery writer (U2FWD)', () => {
+  const FW_IDS = delivery.UNIT2_FAMILY_WORD_IDS;
+
+  /** A temp root with a Muse folder and a delivery folder path that does not exist yet. */
+  const makeDeliveryRoot = () => mkdtempSync(path.join(os.tmpdir(), 'storytime-u2-fw-delivery-'));
+
+  /** Writes one Muse print file into the Muse folder of the root. */
+  const writePrint = async (
+    root: string,
+    name: string,
+    options: { width?: number; height?: number; channels?: 3 | 4 } = {},
+  ) => {
+    const file = path.join(root, 'muse', name);
+    mkdirSync(path.dirname(file), { recursive: true });
+    const png = await sharp({
+      create: {
+        width: options.width ?? 1500,
+        height: options.height ?? 1500,
+        channels: options.channels ?? 3,
+        background: '#ffffff',
+      },
+    })
+      .png()
+      .toBuffer();
+    writeFileSync(file, png);
+    return png;
+  };
+
+  /** The approval list of one app family word. */
+  const approval = (rowId: string, colorPrint: string) => ({
+    version: 1 as const,
+    entries: [{ rowId, version: 'm1', colorPrint }],
+  });
+
+  it('U2FWD1 holds the 18 ids of the spec folder', () => {
+    expect(FW_IDS).toHaveLength(18);
+    expect([...FW_IDS]).toEqual(IDS);
+    const files = readdirSync(resolve(REPO, SPEC_DIR)).filter((name) => name.endsWith('.json')).sort();
+    expect(files).toEqual(IDS.map((id) => `${id}.json`).sort());
+  });
+
+  it('U2FWD2 writes the color files and a manifest with the hash and the size', async () => {
+    const id = 'l2-w09-family-egg';
+    const root = makeDeliveryRoot();
+    try {
+      const png = await writePrint(root, `${id}-m1-color.png`);
+      const deliveryRoot = path.join(root, 'delivery');
+      const manifest = await delivery.deliverMuseUnit2FamilyWords({
+        approvals: approval(id, `${id}-m1-color.png`),
+        museRoot: path.join(root, 'muse'),
+        deliveryRoot,
+      });
+      const file = path.join(deliveryRoot, `${id}-v1.png`);
+      expect(existsSync(file)).toBe(true);
+      expect(readFileSync(file)).toEqual(png);
+      expect(existsSync(path.join(deliveryRoot, 'manifest.json'))).toBe(true);
+      const digest = createHash('sha256').update(png).digest('hex');
+      expect(manifest.jobs).toHaveLength(1);
+      expect(manifest.jobs[0]!.id).toBe(id);
+      expect(manifest.jobs[0]!.week).toBe(9);
+      expect(manifest.jobs[0]!.text).toBe('egg');
+      expect(manifest.jobs[0]!.directory).toBe('w09');
+      expect(manifest.jobs[0]!.selectedFile).toBe(`${id}-v1.png`);
+      expect(manifest.jobs[0]!.selectedSha256).toBe(digest);
+      const candidate = manifest.jobs[0]!.candidates[0]!;
+      expect(candidate.file).toBe(`${id}-v1.png`);
+      expect(candidate.fileSha256).toBe(digest);
+      expect(candidate.structural.width).toBe(1500);
+      expect(candidate.structural.height).toBe(1500);
+      expect(candidate.structural.sha256).toBe(digest);
+      expect(manifest.batches.map((batch) => batch.id)).toEqual(['w09/color']);
+      expect(manifest.batches[0]!.files).toEqual([{ file: `${id}-v1.png`, sha256: digest }]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('U2FWD3 refuses an id outside the 18 app family words', async () => {
+    const root = makeDeliveryRoot();
+    try {
+      await writePrint(root, 'l2-w09-card-banana-m1-color.png');
+      await expect(
+        delivery.deliverMuseUnit2FamilyWords({
+          approvals: approval('l2-w09-card-banana', 'l2-w09-card-banana-m1-color.png'),
+          museRoot: path.join(root, 'muse'),
+          deliveryRoot: path.join(root, 'delivery'),
+        }),
+      ).rejects.toThrow(/not one of the 18 app family words/);
+      expect(existsSync(path.join(root, 'delivery'))).toBe(false);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('U2FWD4 refuses an existing delivery folder', async () => {
+    const id = 'l2-w09-family-egg';
+    const root = makeDeliveryRoot();
+    try {
+      await writePrint(root, `${id}-m1-color.png`);
+      const deliveryRoot = path.join(root, 'delivery');
+      mkdirSync(deliveryRoot, { recursive: true });
+      await expect(
+        delivery.deliverMuseUnit2FamilyWords({
+          approvals: approval(id, `${id}-m1-color.png`),
+          museRoot: path.join(root, 'muse'),
+          deliveryRoot,
+        }),
+      ).rejects.toThrow(/exists/);
+      expect(readdirSync(deliveryRoot)).toEqual([]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('U2FWD5 stops the write with the id when a print file is missing', async () => {
+    const id = 'l2-w13-family-jump';
+    const root = makeDeliveryRoot();
+    try {
+      const deliveryRoot = path.join(root, 'delivery');
+      let message = '';
+      try {
+        await delivery.deliverMuseUnit2FamilyWords({
+          approvals: approval(id, `${id}-m1-color.png`),
+          museRoot: path.join(root, 'muse'),
+          deliveryRoot,
+        });
+      } catch (error) {
+        message = (error as Error).message;
+      }
+      expect(message).toContain(id);
+      expect(message).toContain('nothing was written');
+      expect(existsSync(deliveryRoot)).toBe(false);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('U2FWD6 refuses a print that is not 1500 x 1500, 8-bit, and free of alpha', async () => {
+    const id = 'l2-w12-family-pen';
+    const root = makeDeliveryRoot();
+    try {
+      await writePrint(root, `${id}-m1-color.png`, { width: 800, height: 800 });
+      const deliveryRoot = path.join(root, 'delivery');
+      let message = '';
+      try {
+        await delivery.deliverMuseUnit2FamilyWords({
+          approvals: approval(id, `${id}-m1-color.png`),
+          museRoot: path.join(root, 'muse'),
+          deliveryRoot,
+        });
+      } catch (error) {
+        message = (error as Error).message;
+      }
+      expect(message).toContain(id);
+      expect(message).toContain('1500 x 1500');
+      expect(existsSync(deliveryRoot)).toBe(false);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }

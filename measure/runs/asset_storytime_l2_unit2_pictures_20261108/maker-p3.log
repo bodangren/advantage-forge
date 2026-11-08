@@ -57,3 +57,22 @@ refuses --cards, --family-words, and --unit2. The 0-cost failure rule is unchang
 still counts as a try, and the script refuses a try with no picture file. The other options of the
 script do not change, and the three judge test files pass (28 tests).
 The new test file holds 11 tests: 6 spec tests and 5 judge tests.
+
+## Step 4: the app family-word delivery writer (2026-11-09)
+
+`deliverMuseUnit2FamilyWords` in src/storytime/muse-delivery-u2.ts writes the app family-word
+delivery. The unit 1 writer `deliverMuseColorSet` refuses these ids, because its row id rule holds
+the unit 1 family words only, so the writer lives in the unit 2 file. It takes an approval list of
+{ rowId, version (m<n>), colorPrint }, the Muse folder, and the delivery folder. It writes the
+color files under the unit 1 family-word name `<id>-v1.png` and one manifest.json in the
+StorytimeManifest shape. Each candidate holds the SHA-256 and the pixel size of the print. Every
+check runs before the first write: the print is a PNG of 1500 x 1500 pixels, 8-bit, and free of
+alpha; an id outside the 18 app family words is refused; an existing delivery folder is refused; a
+missing print file stops the write with the id.
+The Phase 1 Nit F1 is fixed in the same file: the header comment said 48 reuse rows, and the row
+model has 47: 45 rows copy a unit 1 delivery, and 2 rows copy an earlier unit 2 row.
+The GREEN command gives 14 files and 232 tests, and the run exits 0. The typecheck
+`tsc --noEmit -p .` exits 2: 0 errors in src/storytime, scripts/storytime-*, and tests/storytime-*.
+Every error of that run is outside the storytime paths, in assets/*.ts, tests/games/castle-defense,
+and tests/part.test.ts.
+The new test file holds 17 tests: 6 spec tests, 5 judge tests, and 6 delivery tests.
