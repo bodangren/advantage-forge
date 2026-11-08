@@ -109,6 +109,7 @@ export declare const PICTURE_IDS: Record<string, string[]>;
 export declare function isCardCall(ctxs: GuardContext[]): boolean;
 export declare function isMixedCardCall(ctxs: GuardContext[]): boolean;
 export declare function isUnit2OutDir(specOrPath: { outDir?: string } | string | undefined): boolean;
+export declare function cliGuardOptions(opts?: Record<string, unknown>): Record<string, unknown>;
 export declare function classifyOutDir(spec: { outDir?: string } | undefined, unitRoot: string): OutDirClass;
 export declare function maxTriesFor(id: string, kind: string, maxTries?: number): number;
 export declare function pictureKey(id: string): string;

@@ -21,7 +21,7 @@ import { appendFileSync, copyFileSync, existsSync, mkdirSync, readFileSync, writ
 import { homedir } from 'node:os';
 import { basename, join, resolve } from 'node:path';
 import sharp from 'sharp';
-import { CARD_RUN, U2_RUN, isUnit2OutDir, runGuards } from './storytime-muse-guards.mjs';
+import { CARD_RUN, U2_RUN, cliGuardOptions, isUnit2OutDir, runGuards } from './storytime-muse-guards.mjs';
 
 const ROOT = resolve(new URL('..', import.meta.url).pathname);
 const UNIT_ROOT = 'out/storytime/l2/unit1';
@@ -403,7 +403,9 @@ const main = async () => {
     // Unit 2 (2026-11-08): a unit 2 spec is sent to the unit 2 root, so the unit 2 guard reads the
     // unit 2 cost files and refuses the call while the unit 2 cap is empty.
     const unitRoot = isUnit2OutDir(ctxs[0]?.dir) ? resolve(ROOT, U2_RUN.unitRoot) : resolve(ROOT, UNIT_ROOT);
-    const guards = runGuards(unitRoot, ctxs, cmd, opts);
+    // The test-only cap key never reaches the guard from the CLI (F3, 2026-11-08).
+    const guardOpts = cliGuardOptions(opts);
+    const guards = runGuards(unitRoot, ctxs, cmd, guardOpts);
     if (guards.refused) {
       console.log(guards.message);
       process.exit(guards.code);
@@ -413,7 +415,7 @@ const main = async () => {
     const key = readKey();
     await pool(ctxs, limit, async (ctx) => {
       // One more check before each provider call, so a pool stops starting calls at the cap.
-      const recheck = runGuards(unitRoot, [ctx], cmd, opts);
+      const recheck = runGuards(unitRoot, [ctx], cmd, guardOpts);
       if (recheck.refused) {
         console.log(recheck.message);
         return;

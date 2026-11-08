@@ -316,6 +316,29 @@ describe('the unit 2 judge option (U2J)', () => {
     }
   });
 
+  it('U2J11 refuses a row id that is in neither rows.json nor the picture list', async () => {
+    const root = await makeRoot([], []);
+    const ghost = 'l2-w09-check-row-ghost';
+    try {
+      writeJson(root, `${U2_SPEC_ROOT}/w09/muse/${ghost}.json`, {
+        id: ghost,
+        text: 'ghost',
+        use: 'check-row',
+        sizeClass: 'C',
+        outDir: STORY_DIR,
+        colorPrompt: 'a color prompt',
+        linePrompt: 'a line prompt',
+      });
+      writeCosts(root, `${STORY_DIR}/costs.tsv`, [costRow(ghost, at(HOUR))]);
+      await writeSource(root, `${STORY_DIR}/${ghost}-m1-color.png`, '#334455');
+      await expect(build(root, { ids: [ghost] })).rejects.toThrow(
+        new RegExp(`${ghost}: the unit 2 rows file and the picture list hold no row`),
+      );
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
   it('U2J10 refuses the mixed CLI flags and writes no batch file', () => {
     const out = 'u2-nowrite-test';
     const prodDir = path.join(ROOT, 'docs/storytime/l2-unit2/judge/prod');

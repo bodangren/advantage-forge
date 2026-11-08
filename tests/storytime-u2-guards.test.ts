@@ -218,6 +218,37 @@ describe('unit 2 mixed calls and the unchanged unit 1 and card behavior (U2G7 to
     expect(guards.SPEND_CAP_USD).toBe(1.0);
   });
 
+  it('U2G11 keeps the test-only cap key away from the CLI guard options', () => {
+    expect(guards.cliGuardOptions({ u2CapUsd: 99, tries: 2 })).toEqual({ tries: 2 });
+    expect(Object.hasOwn(guards.cliGuardOptions({ u2CapUsd: 99 }), 'u2CapUsd')).toBe(false);
+
+    const home = temp();
+    const specDir = temp();
+    const createdRoot = !existsSync(path.join(ROOT, U2_DIR));
+    const specFile = path.join(specDir, 'u2-cap-option.json');
+    writeFileSync(
+      specFile,
+      JSON.stringify({ id: U2_ID, outDir: `${U2_DIR}/w09/muse`, colorPrompt: 'a story page' }),
+    );
+    try {
+      for (const value of ['99', '0.5']) {
+        const run = spawnSync(
+          process.execPath,
+          ['scripts/storytime-muse.mjs', 'color', specFile, '--u2CapUsd', value],
+          { cwd: ROOT, env: { PATH: process.env.PATH ?? '', HOME: home }, encoding: 'utf8' },
+        );
+        const output = `${run.stdout}${run.stderr}`;
+        expect(run.status, output).toBe(3);
+        expect(output).toContain(guards.U2_CAP_MESSAGE);
+        expect(output).not.toContain('no key');
+      }
+    } finally {
+      if (createdRoot) rmSync(path.join(ROOT, U2_DIR), { recursive: true, force: true });
+      rmSync(specDir, { recursive: true, force: true });
+      rmSync(home, { recursive: true, force: true });
+    }
+  });
+
   it('U2G10 routes a unit 2 CLI spec to the u2 refusal before key access', () => {
     const home = temp();
     const specDir = temp();

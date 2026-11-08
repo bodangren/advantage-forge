@@ -134,6 +134,17 @@ export const isUnit2OutDir = (specOrPath) => {
 };
 
 /**
+ * The guard options of a CLI call. The test-only cap key `u2CapUsd` never reaches `runGuards`
+ * from the CLI, so a future option-parser change cannot raise the unit 2 cap. A JS caller keeps
+ * its own options object.
+ */
+export const cliGuardOptions = (opts = {}) => {
+  const next = { ...opts };
+  delete next.u2CapUsd;
+  return next;
+};
+
+/**
  * Classify the output folder of one spec:
  *   - `card` for the exact card folder of `CARD_RUN.outDir`;
  *   - `u2` for the unit 2 folder `w09` to `w16` and then `muse` or `muse/elements`;

@@ -179,6 +179,32 @@ async function readReuseSources(source: MuseUnit2DeliveryOptions['rows'], repoRo
   return reuseSourcesOf(JSON.parse(text) as { rows: Unit2Row[] });
 }
 
+/**
+ * Reads the id of the earlier unit 2 row named by a `unit2-earlier-row` reuse source. The source
+ * is the spec file of that earlier row, not a print file.
+ */
+async function readEarlierRowId(repoRoot: string, relative: string, rowId: string): Promise<string> {
+  const file = path.resolve(repoRoot, relative);
+  let text: string;
+  try {
+    text = await readFile(file, 'utf8');
+  } catch (error) {
+    const reason = error instanceof Error ? error.message : String(error);
+    throw new Error(`${rowId}: cannot read the spec of the earlier unit 2 row ${relative}: ${reason}`);
+  }
+  let spec: { id?: unknown };
+  try {
+    spec = JSON.parse(text) as { id?: unknown };
+  } catch (error) {
+    const reason = error instanceof Error ? error.message : String(error);
+    throw new Error(`${rowId}: the earlier unit 2 row spec ${relative} is not valid JSON: ${reason}`);
+  }
+  if (typeof spec.id !== 'string' || !spec.id) {
+    throw new Error(`${rowId}: the earlier unit 2 row spec ${relative} holds no id.`);
+  }
+  return spec.id;
+}
+
 async function readReuseFile(repoRoot: string, relative: string, rowId: string, role: string): Promise<Buffer> {
   const file = path.resolve(repoRoot, relative);
   try {
@@ -276,6 +302,32 @@ export async function deliverMuseUnit2(options: MuseUnit2DeliveryOptions): Promi
         lineBytes = await readMuseFile(museRoot, entry.linePrint, row.id);
       } catch (error) {
         problems.push(error instanceof Error ? error.message : String(error));
+        continue;
+      }
+    } else if (source && source.kind === 'unit2-earlier-row') {
+      // The source is the spec of an earlier unit 2 row. Its approved prints are the reuse files,
+      // so the earlier row needs an approval entry in this same run.
+      let earlierId: string;
+      try {
+        earlierId = await readEarlierRowId(repoRoot, source.source, row.id);
+      } catch (error) {
+        problems.push(error instanceof Error ? error.message : String(error));
+        continue;
+      }
+      const earlier = approvals.entries.find((candidate) => candidate.rowId === earlierId);
+      if (!earlier) {
+        problems.push(
+          `${row.id}: the earlier unit 2 row ${earlierId} has no approval entry in this run; ` +
+            `the write stops with ${row.id} and ${earlierId}.`,
+        );
+        continue;
+      }
+      try {
+        colorBytes = await readMuseFile(museRoot, earlier.colorPrint, row.id);
+        lineBytes = await readMuseFile(museRoot, earlier.linePrint, row.id);
+      } catch (error) {
+        const reason = error instanceof Error ? error.message : String(error);
+        problems.push(`${row.id}: cannot read the approved print of the earlier row ${earlierId}: ${reason}`);
         continue;
       }
     } else if (source) {

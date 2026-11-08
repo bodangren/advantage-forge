@@ -67,6 +67,10 @@ const ROWS = [
   listRow(SKIP, 'story-page', 'A'),
 ];
 
+const FAN_W10 = listRow('l2-w10-check-row-fan', 'check-row', 'C', 10);
+const FAN_W14 = listRow('l2-w14-check-row-fan', 'check-row', 'C', 14);
+const FAN_SPEC_REL = 'docs/storytime/l2-unit2/w10/muse/l2-w10-check-row-fan.json';
+
 const ROWS_DOC = {
   track: 'test',
   rows: [
@@ -157,7 +161,12 @@ const approvals = (entries: MuseApprovalList['entries']) => ({ version: 1 as con
 
 /** One approval entry with its Muse print files in the Muse root. */
 async function writeMuseEntry(rowId: string, version = 1) {
-  const row = ROWS.find((candidate) => candidate.id === rowId)!;
+  return writeMuseEntryFor(ROWS.find((candidate) => candidate.id === rowId)!, version);
+}
+
+/** The same, for a row object that the base list does not hold. */
+async function writeMuseEntryFor(row: ReturnType<typeof listRow>, version = 1) {
+  const rowId = row.id;
   const size = row.sizeClass === 'C' ? PICTURE_SIZES.small : PICTURE_SIZES.story;
   const color = printName(rowId, version, 'color');
   const line = printName(rowId, version, 'line');
@@ -301,6 +310,59 @@ describe('the unit 2 delivery writer (U2D)', () => {
     expect(skipped).toContain(SKIP);
     expect(manifest.jobs.some((job) => job.id === SKIP)).toBe(false);
     expect(await deliveryFiles()).not.toContain(`${SKIP}-v1.png`);
+  });
+
+  it('U2D10 copies an earlier-row reuse from the earlier row approval prints', async () => {
+    const fanPin = await writeList([...ROWS, FAN_W10, FAN_W14]);
+    await mkdir(path.dirname(path.join(root, FAN_SPEC_REL)), { recursive: true });
+    await writeFile(path.join(root, FAN_SPEC_REL), JSON.stringify({ id: FAN_W10.id }, null, 2));
+    const story = await writeMuseEntry(STORY);
+    const fan = await writeMuseEntryFor(FAN_W10);
+    const fanRows = [
+      ...ROWS_DOC.rows,
+      { id: FAN_W14.id, cast: [], reuse: { word: 'fan', source: FAN_SPEC_REL, kind: 'unit2-earlier-row' } },
+    ];
+    const manifest = await deliverMuseUnit2({
+      listFile,
+      pictureListPin: fanPin,
+      approvals: approvals([story, fan]),
+      rows: { rows: fanRows },
+      repoRoot: root,
+      museRoot,
+      deliveryRoot,
+      onSkip: () => {},
+    });
+    expect(await readFile(path.join(deliveryRoot, `${FAN_W14.id}-v1.png`))).toEqual(
+      await readFile(path.join(museRoot, fan.colorPrint)),
+    );
+    expect(await readFile(path.join(deliveryRoot, `${FAN_W14.id}-line-v1.png`))).toEqual(
+      await readFile(path.join(museRoot, fan.linePrint)),
+    );
+    expect(manifest.jobs.some((job) => job.id === FAN_W14.id)).toBe(true);
+  });
+
+  it('U2D11 stops the write when the earlier-row reuse has no approval entry', async () => {
+    const fanPin = await writeList([...ROWS, FAN_W10, FAN_W14]);
+    await mkdir(path.dirname(path.join(root, FAN_SPEC_REL)), { recursive: true });
+    await writeFile(path.join(root, FAN_SPEC_REL), JSON.stringify({ id: FAN_W10.id }, null, 2));
+    const story = await writeMuseEntry(STORY);
+    const fanRows = [
+      ...ROWS_DOC.rows,
+      { id: FAN_W14.id, cast: [], reuse: { word: 'fan', source: FAN_SPEC_REL, kind: 'unit2-earlier-row' } },
+    ];
+    await expect(
+      deliverMuseUnit2({
+        listFile,
+        pictureListPin: fanPin,
+        approvals: approvals([story]),
+        rows: { rows: fanRows },
+        repoRoot: root,
+        museRoot,
+        deliveryRoot,
+        onSkip: () => {},
+      }),
+    ).rejects.toThrow(new RegExp(`${FAN_W14.id}.*${FAN_W10.id}|${FAN_W10.id}.*${FAN_W14.id}`));
+    expect(existsSync(deliveryRoot)).toBe(false);
   });
 
   it('U2D9 reads the list with its pin and finds the reuse sources', async () => {

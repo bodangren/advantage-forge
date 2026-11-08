@@ -286,7 +286,16 @@ export async function buildBatch(options) {
       spec = readUnit2Spec(unit2SpecFile(root, id), id);
       const row = rows.get(id);
       const listRow = list.get(id);
-      mustShow = row || listRow ? unit2MustShow(row, listRow) : [id];
+      if (row || listRow) {
+        mustShow = unit2MustShow(row, listRow);
+      } else if (unit2WeekOf(id) === null) {
+        // An element id has no row in rows.json and no row in the picture list.
+        mustShow = [id];
+      } else {
+        throw new Error(
+          `${id}: the unit 2 rows file and the picture list hold no row for this id, so the mustShow phrases are unknown.`,
+        );
+      }
       side = unit2LongSide(spec.sizeClass ?? listRow?.sizeClass);
     } else {
       spec = readSpec(resolvedSpecDir, id);
