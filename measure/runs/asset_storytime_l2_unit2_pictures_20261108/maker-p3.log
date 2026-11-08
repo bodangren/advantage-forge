@@ -45,3 +45,15 @@ plain cover and blank pages), bag (a school bag with a flap, a handle, and two s
 unit 2 spec draws a pencil), pen (the check row says "ONE pen"), jump (the kind is a child
 jumping with both feet off the ground; Sam is the cast child of D6), bus (a yellow school bus with
 black wheels and a row of windows), plane (a small white airplane).
+
+### Step 3: the judge option --unit2-family-words (2026-11-09)
+
+The option reads the 18 app specs in docs/storytime/l2-unit2/family-words/, takes the tries from
+the cost file of the app folder since U2_FW_RUN.startTime in time order, writes the judge copies
+at 360 px to out/storytime-review/judge/prod-u2/, and writes the batch files to
+docs/storytime/l2-unit2/judge/prod/. The use of an entry is family-word. The mustShow phrase is
+the word, and for the jump word it is "a child jumping with both feet off the ground". The option
+refuses --cards, --family-words, and --unit2. The 0-cost failure rule is unchanged: a failed call
+still counts as a try, and the script refuses a try with no picture file. The other options of the
+script do not change, and the three judge test files pass (28 tests).
+The new test file holds 11 tests: 6 spec tests and 5 judge tests.

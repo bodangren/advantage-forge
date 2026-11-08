@@ -23,6 +23,13 @@
 // out/storytime-review/judge/prod-u2/. `--unit2` cannot run with `--cards` or `--family-words`.
 // The mustShow phrases of a unit 2 row are the cast names of rows.json plus the object counts of
 // the picture list, or the row word for class C.
+// With `--unit2-family-words` (2026-11-09) the ids are the 18 app family-word ids. The spec
+// folder is docs/storytime/l2-unit2/family-words, the tries come from the cost file of the app
+// folder since `U2_FW_RUN.startTime`, the judge copies (360 px) go to
+// out/storytime-review/judge/prod-u2/, and the batch files go to docs/storytime/l2-unit2/judge/prod/.
+// The use of a batch entry is `family-word`. The mustShow phrase is the word, and for the jump
+// word it is `a child jumping with both feet off the ground`. The option cannot run with
+// `--cards`, `--family-words`, or `--unit2`.
 //
 // The source file of a try is the Muse version that the restart call made. The script reads the
 // top-level costs.tsv of the week folder of the spec (spec.outDir). A try is a row of that id
@@ -45,12 +52,13 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import sharp from 'sharp';
-import { CARD_RUN, U2_RUN, U2_WEEKS } from './storytime-muse-guards.mjs';
+import { CARD_RUN, U2_FW_RUN, U2_RUN, U2_WEEKS } from './storytime-muse-guards.mjs';
 
 const ROOT = resolve(new URL('..', import.meta.url).pathname);
 const SPEC_DIR = join(ROOT, 'docs/storytime/l2-unit1/a48');
 const CARD_SPEC_DIR = 'docs/storytime/l2-unit1/cards';
 const FAMILY_WORDS_SPEC_DIR = 'docs/storytime/l2-unit1/family-words';
+const UNIT2_FW_SPEC_DIR = 'docs/storytime/l2-unit2/family-words';
 const BATCH_DIR = join(ROOT, 'docs/storytime/l2-unit1/judge/prod');
 /** The unit 2 spec root below the repository root. It holds the 8 week folders. */
 const UNIT2_SPEC_ROOT = 'docs/storytime/l2-unit2';
@@ -78,7 +86,8 @@ export const longSideOf = (use) => (use === 'story-page' ? LONG_SIDE_STORY : LON
 export const unit2LongSide = (sizeClass) => (sizeClass === 'C' ? LONG_SIDE_CARD : LONG_SIDE_STORY);
 
 /** The batch folder of a mode. The unit 2 batch files go to the unit 2 folder. */
-export const batchDirOf = (options) => (options?.unit2 ? join(ROOT, UNIT2_BATCH_DIR) : BATCH_DIR);
+export const batchDirOf = (options) =>
+  (options?.unit2 || options?.unit2FamilyWords ? join(ROOT, UNIT2_BATCH_DIR) : BATCH_DIR);
 
 /** A time as a number of milliseconds. A time without a zone is UTC. */
 export const utcMs = (time) => Date.parse(/(Z|[+-]\d\d:?\d\d)$/.test(time) ? time : `${time}Z`);
@@ -235,6 +244,16 @@ export function unit2MustShow(row, listRow) {
 }
 
 /**
+ * The mustShow phrases of one app family word: the word of the spec, and for the jump word the
+ * phrase `a child jumping with both feet off the ground`.
+ */
+export const familyWordMustShow = (spec) => {
+  const word = String(spec.text ?? '').trim();
+  if (!word) throw new Error(`the family-word spec ${spec.id} has no text.`);
+  return word === 'jump' ? ['a child jumping with both feet off the ground'] : [word];
+};
+
+/**
  * Builds the batch entries and writes the judge copies. One entry per id. The judge copy is the
  * source file at the printed size. The function makes no provider call.
  *
@@ -259,6 +278,7 @@ export async function buildBatch(options) {
     cards = false,
     familyWords = false,
     unit2 = false,
+    unit2FamilyWords = false,
     specDir,
     root = ROOT,
     rowsFile,
@@ -270,11 +290,20 @@ export async function buildBatch(options) {
   if (unit2 && (cards || familyWords)) {
     throw new Error('the option --unit2 cannot run with --cards or --family-words; use --unit2 alone.');
   }
-  const resolvedSpecDir = specDir ?? (familyWords
-    ? join(root, FAMILY_WORDS_SPEC_DIR)
-    : cards ? join(root, CARD_SPEC_DIR) : SPEC_DIR);
-  const startTime = unit2 ? U2_RUN.startTime : cards || familyWords ? CARD_RUN.startTime : RESTART_START;
-  const judgeRelDir = unit2 ? UNIT2_JUDGE_DIR : 'out/storytime-review/judge/prod';
+  if (unit2FamilyWords && (cards || familyWords || unit2)) {
+    throw new Error(
+      'the option --unit2-family-words cannot run with --cards, --family-words, or --unit2; use --unit2-family-words alone.',
+    );
+  }
+  const resolvedSpecDir = specDir ?? (unit2FamilyWords
+    ? join(root, UNIT2_FW_SPEC_DIR)
+    : familyWords
+      ? join(root, FAMILY_WORDS_SPEC_DIR)
+      : cards ? join(root, CARD_SPEC_DIR) : SPEC_DIR);
+  const startTime = unit2FamilyWords
+    ? U2_FW_RUN.startTime
+    : unit2 ? U2_RUN.startTime : cards || familyWords ? CARD_RUN.startTime : RESTART_START;
+  const judgeRelDir = unit2FamilyWords || unit2 ? UNIT2_JUDGE_DIR : 'out/storytime-review/judge/prod';
   const rows = unit2 ? readUnit2Rows(root, rowsFile) : null;
   const list = unit2 ? readUnit2List(root, listFile) : null;
   const entries = [];
@@ -282,7 +311,11 @@ export async function buildBatch(options) {
     let spec;
     let mustShow;
     let side;
-    if (unit2) {
+    if (unit2FamilyWords) {
+      spec = readSpec(resolvedSpecDir, id);
+      mustShow = familyWordMustShow(spec);
+      side = LONG_SIDE_CARD;
+    } else if (unit2) {
       spec = readUnit2Spec(unit2SpecFile(root, id), id);
       const row = rows.get(id);
       const listRow = list.get(id);
@@ -324,7 +357,7 @@ export async function buildBatch(options) {
       id,
       kind,
       pageText: spec.pageText ?? spec.text,
-      use: spec.use ?? 'element',
+      use: unit2FamilyWords ? 'family-word' : (spec.use ?? 'element'),
       mustShow,
     });
   }
@@ -341,6 +374,7 @@ export function parseArgs(argv) {
     cards: undefined,
     familyWords: undefined,
     unit2: undefined,
+    unit2FamilyWords: undefined,
   };
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
@@ -351,6 +385,7 @@ export function parseArgs(argv) {
     else if (arg === '--cards') options.cards = true;
     else if (arg === '--family-words') options.familyWords = true;
     else if (arg === '--unit2') options.unit2 = true;
+    else if (arg === '--unit2-family-words') options.unit2FamilyWords = true;
     else throw new Error(`unknown option: ${arg}`);
   }
   if (options.cards && options.familyWords) {
@@ -358,6 +393,11 @@ export function parseArgs(argv) {
   }
   if (options.unit2 && (options.cards || options.familyWords)) {
     throw new Error('the option --unit2 cannot run with --cards or --family-words; use --unit2 alone.');
+  }
+  if (options.unit2FamilyWords && (options.cards || options.familyWords || options.unit2)) {
+    throw new Error(
+      'the option --unit2-family-words cannot run with --cards, --family-words, or --unit2; use --unit2-family-words alone.',
+    );
   }
   if (!options.ids.length) throw new Error('the command needs --ids <id,id,...>.');
   if (!options.kind) throw new Error('the command needs --kind color or --kind line.');

@@ -66,6 +66,8 @@ export interface BuildBatchOptions {
   cards?: boolean;
   familyWords?: boolean;
   unit2?: boolean;
+  /** The 18 app family words of unit 2. The option runs alone. */
+  unit2FamilyWords?: boolean;
   specDir?: string;
   judgeDir?: string;
   root?: string;
@@ -83,12 +85,15 @@ export interface BatchCommandOptions {
   cards?: boolean;
   familyWords?: boolean;
   unit2?: boolean;
+  unit2FamilyWords?: boolean;
 }
 
 export declare const RESTART_START: string;
 export declare const UNIT2_JUDGE_DIR: string;
 export declare function unit2LongSide(sizeClass: string | undefined): number;
-export declare function batchDirOf(options: { unit2?: boolean } | undefined): string;
+export declare function batchDirOf(
+  options: { unit2?: boolean; unit2FamilyWords?: boolean } | undefined,
+): string;
 export declare function longSideOf(use: string): number;
 export declare function utcMs(time: string): number;
 export declare function parseCostRows(text: string): CostRow[];
@@ -105,5 +110,6 @@ export declare function unit2MustShow(
   row: Unit2Row | undefined,
   listRow: Unit2ListRow | undefined,
 ): string[];
+export declare function familyWordMustShow(spec: { id: string; text?: string }): string[];
 export declare function buildBatch(options: BuildBatchOptions): Promise<JudgeBatchEntry[]>;
 export declare function parseArgs(argv: string[]): BatchCommandOptions;
