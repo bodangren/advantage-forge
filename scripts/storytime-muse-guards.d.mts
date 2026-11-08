@@ -48,9 +48,14 @@ export interface GuardOptions {
   tries?: number | string;
   /**
    * Test-only stand-in for `U2_RUN.capUsd`. The muse CLI never sets it. The unit 2 tests use it
-   * to pass the cap check without a change to the U2_RUN constant.
+   * to check the empty-cap refusal and the separate scans with a small fixture spend.
    */
   u2CapUsd?: number | string | null;
+  /**
+   * Test-only stand-in for `U2_FW_RUN.capUsd`. The muse CLI never sets it. The family-word tests
+   * use it the same way as `u2CapUsd`.
+   */
+  u2FwCapUsd?: number | string | null;
 }
 
 export interface RunGuardsResult {
@@ -58,13 +63,13 @@ export interface RunGuardsResult {
   code: number;
   spend: number;
   notice: boolean;
-  run: 'card' | 'restart' | 'u2' | 'mixed' | 'invalid';
+  run: 'card' | 'restart' | 'u2' | 'u2fw' | 'mixed' | 'invalid';
   reportAt: number | null;
   message: string;
 }
 
 export interface OutDirClass {
-  kind: 'card' | 'restart' | 'u2' | 'invalid';
+  kind: 'card' | 'restart' | 'u2' | 'u2fw' | 'invalid';
   raw: string;
   resolved: string;
 }
@@ -92,6 +97,15 @@ export interface U2Run {
   unitRoot: string;
 }
 
+export interface U2FwRun {
+  startTime: string;
+  capUsd: number;
+  reportAtUsd: number;
+  marginUsd: number;
+  maxTries: number;
+  outDir: string;
+}
+
 export declare const RESTART_START: string;
 export declare const MAX_TRIES: number;
 export declare const SPEND_CAP_USD: number;
@@ -101,14 +115,17 @@ export declare const CARD_RUN: CardRun;
 export declare const CARD_LINE_RETRY_START: string;
 export declare const CARD_LINE_RETRY: CardLineRetry;
 export declare const U2_RUN: U2Run;
+export declare const U2_FW_RUN: U2FwRun;
 export declare const U2_WEEKS: string[];
 export declare const U2_CAP_MESSAGE: string;
+export declare const U2_FW_CAP_MESSAGE: string;
 export declare const TRY_EXCEPTIONS: TryException[];
 export declare const PICTURE_IDS: Record<string, string[]>;
 
 export declare function isCardCall(ctxs: GuardContext[]): boolean;
 export declare function isMixedCardCall(ctxs: GuardContext[]): boolean;
 export declare function isUnit2OutDir(specOrPath: { outDir?: string } | string | undefined): boolean;
+export declare function isUnit2FwOutDir(specOrPath: { outDir?: string } | string | undefined): boolean;
 export declare function cliGuardOptions(opts?: Record<string, unknown>): Record<string, unknown>;
 export declare function classifyOutDir(spec: { outDir?: string } | undefined, unitRoot: string): OutDirClass;
 export declare function maxTriesFor(id: string, kind: string, maxTries?: number): number;
@@ -136,6 +153,7 @@ export declare function spendGuard(
 export declare function scanCostFiles(unitRoot: string): ScanCostFilesResult;
 export declare function scanCardCostFiles(unitRoot: string): ScanCostFilesResult;
 export declare function scanU2CostFiles(unitRoot: string): ScanCostFilesResult;
+export declare function scanU2FwCostFiles(unitRoot: string): ScanCostFilesResult;
 export declare function runGuards(
   unitRoot: string,
   ctxs: GuardContext[],

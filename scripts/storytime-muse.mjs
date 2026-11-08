@@ -21,7 +21,7 @@ import { appendFileSync, copyFileSync, existsSync, mkdirSync, readFileSync, writ
 import { homedir } from 'node:os';
 import { basename, join, resolve } from 'node:path';
 import sharp from 'sharp';
-import { CARD_RUN, U2_RUN, cliGuardOptions, isUnit2OutDir, runGuards } from './storytime-muse-guards.mjs';
+import { CARD_RUN, U2_RUN, cliGuardOptions, isUnit2FwOutDir, isUnit2OutDir, runGuards } from './storytime-muse-guards.mjs';
 
 const ROOT = resolve(new URL('..', import.meta.url).pathname);
 const UNIT_ROOT = 'out/storytime/l2/unit1';
@@ -400,10 +400,11 @@ const main = async () => {
     // guard also projects the whole pool and refuses a spec whose outDir is outside the scanned
     // folders. It runs before any key read and before any provider call, and again before each
     // call in the pool.
-    // Unit 2 (2026-11-08): a unit 2 spec is sent to the unit 2 root, so the unit 2 guard reads the
-    // unit 2 cost files and refuses the call while the unit 2 cap is empty.
-    const unitRoot = isUnit2OutDir(ctxs[0]?.dir) ? resolve(ROOT, U2_RUN.unitRoot) : resolve(ROOT, UNIT_ROOT);
-    // The test-only cap key never reaches the guard from the CLI (F3, 2026-11-08).
+    // Unit 2 (2026-11-08): a unit 2 book or family-word spec is sent to the unit 2 root, so the
+    // unit 2 guard reads the unit 2 cost files and applies the unit 2 caps.
+    const unit2 = isUnit2OutDir(ctxs[0]?.dir) || isUnit2FwOutDir(ctxs[0]?.dir);
+    const unitRoot = unit2 ? resolve(ROOT, U2_RUN.unitRoot) : resolve(ROOT, UNIT_ROOT);
+    // The test-only cap keys never reach the guard from the CLI (F3, 2026-11-08).
     const guardOpts = cliGuardOptions(opts);
     const guards = runGuards(unitRoot, ctxs, cmd, guardOpts);
     if (guards.refused) {

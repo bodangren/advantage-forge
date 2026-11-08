@@ -69,18 +69,33 @@ export const CARD_LINE_RETRY = {
 };
 
 /**
- * Unit 2 run (2026-11-08). The unit 2 paid run waits for Daniel's "Go" and for the PM to write
- * the approved limit. This constant holds the real UTC time of Task 1, cut to the minute, and no
- * cap value: `capUsd` stays null, so every unit 2 call is refused. The later PM-approved change
- * writes the cap in one line; that change is outside this track.
+ * Unit 2 run (2026-11-08). The PM gave the book caps on 2026-11-08: `capUsd` 18.33 and
+ * `reportAtUsd` 14.66. This constant holds the real UTC time of the guard task, cut to the minute.
+ * A book call reads only the 8 week folders `w09` to `w16`.
  */
 export const U2_RUN = {
   startTime: '2026-11-08T05:21:00Z',
-  capUsd: null,
-  reportAtUsd: null,
+  capUsd: 18.33,
+  reportAtUsd: 14.66,
   marginUsd: 0.01,
   maxTries: 3,
   unitRoot: 'out/storytime/l2/unit2',
+};
+
+/**
+ * Unit 2 family-word run (2026-11-08). The 18 app family-word pictures are one paid item with its
+ * own start time, stop, report point, margin, try cap, and output folder. The value of `startTime`
+ * is the real UTC time of Task 1, cut to the minute. A family-word call reads only the `costs.tsv`
+ * of `outDir` since `startTime`, so book spend never counts against the app stop and app spend
+ * never counts against the book stop.
+ */
+export const U2_FW_RUN = {
+  startTime: '2026-11-08T13:39:00Z',
+  capUsd: 0.29,
+  reportAtUsd: 0.23,
+  marginUsd: 0.01,
+  maxTries: 3,
+  outDir: 'out/storytime/l2/unit2/family-words/muse',
 };
 
 /** The 8 unit 2 week folders. Only these folders hold unit 2 cost files. */
@@ -88,6 +103,9 @@ export const U2_WEEKS = ['w09', 'w10', 'w11', 'w12', 'w13', 'w14', 'w15', 'w16']
 
 /** The refusal message of a unit 2 call while the cap is empty. */
 export const U2_CAP_MESSAGE = 'refused: the unit 2 cap is empty; the PM writes the approved limit in U2_RUN.capUsd';
+
+/** The refusal message of a unit 2 family-word call while the app cap is empty. */
+export const U2_FW_CAP_MESSAGE = 'refused: the unit 2 family-word cap is empty; the PM writes the approved limit in U2_FW_RUN.capUsd';
 
 /** The card folder below a unit root: the last two parts of `CARD_RUN.outDir` (`cards/muse`). */
 const CARD_FOLDER_PARTS = CARD_RUN.outDir.split('/').filter(Boolean).slice(-2);
@@ -106,6 +124,12 @@ const isInside = (rel) => rel !== '' && !rel.startsWith('..') && !isAbsolute(rel
 
 /** The unit 2 root, resolved like every other folder. It holds the 8 week folders. */
 const U2_ROOT = resolve(ROOT, U2_RUN.unitRoot);
+
+/** The family-word folder below a unit root: the last two parts of `U2_FW_RUN.outDir`. */
+const U2_FW_PARTS = U2_FW_RUN.outDir.split('/').filter(Boolean).slice(-2);
+
+/** The exact family-word folder of the app run. No other folder carries the kind `u2fw`. */
+const U2_FW_ROOT = resolve(ROOT, U2_FW_RUN.outDir);
 
 /** The unit 2 week folder names, as a set for the classifier. */
 const U2_WEEK_SET = new Set(U2_WEEKS);
@@ -134,13 +158,24 @@ export const isUnit2OutDir = (specOrPath) => {
 };
 
 /**
- * The guard options of a CLI call. The test-only cap key `u2CapUsd` never reaches `runGuards`
- * from the CLI, so a future option-parser change cannot raise the unit 2 cap. A JS caller keeps
+ * True when a spec (or a folder path) points at the exact family-word folder of the app run. The
+ * muse tool uses it to send a family-word call to the unit 2 guard.
+ */
+export const isUnit2FwOutDir = (specOrPath) => {
+  const raw = typeof specOrPath === 'string' ? specOrPath : specOrPath?.outDir;
+  if (!raw) return false;
+  return resolve(ROOT, raw) === U2_FW_ROOT;
+};
+
+/**
+ * The guard options of a CLI call. The test-only cap keys `u2CapUsd` and `u2FwCapUsd` never reach
+ * `runGuards` from the CLI, so a future option-parser change cannot raise a cap. A JS caller keeps
  * its own options object.
  */
 export const cliGuardOptions = (opts = {}) => {
   const next = { ...opts };
   delete next.u2CapUsd;
+  delete next.u2FwCapUsd;
   return next;
 };
 
@@ -148,6 +183,7 @@ export const cliGuardOptions = (opts = {}) => {
  * Classify the output folder of one spec:
  *   - `card` for the exact card folder of `CARD_RUN.outDir`;
  *   - `u2` for the unit 2 folder `w09` to `w16` and then `muse` or `muse/elements`;
+ *   - `u2fw` for exactly the family-word folder of `U2_FW_RUN.outDir`;
  *   - `restart` for a week folder `<unit root>/<child>/muse` or its `elements` folder;
  *   - `invalid` for every other folder, including `..` escapes and mutated names.
  * Below the child folder `cards` only the exact card folder is valid. A card subfolder such as
@@ -164,6 +200,7 @@ export const classifyOutDir = (spec, unitRoot) => {
   const resolved = resolve(ROOT, raw);
   const cardDirs = [resolve(ROOT, CARD_RUN.outDir), join(unitRoot, ...CARD_FOLDER_PARTS)];
   if (cardDirs.includes(resolved)) return { kind: 'card', raw, resolved };
+  if (resolved === U2_FW_ROOT) return { kind: 'u2fw', raw, resolved };
   if (isU2Folder(resolved)) return { kind: 'u2', raw, resolved };
   for (const anchor of [resolve(ROOT, ...UNIT_PARTS), resolve(unitRoot)]) {
     const rel = relative(anchor, resolved);
@@ -363,16 +400,35 @@ export const scanU2CostFiles = (unitRoot) => {
 };
 
 /**
+ * Scan the family-word cost file of the app run below a unit root. A family-word call reads only
+ * `<unitRoot>/family-words/muse/costs.tsv` and keeps the rows at or after `U2_FW_RUN.startTime`.
+ * No other folder is read, so book spend never counts against the app stop.
+ */
+export const scanU2FwCostFiles = (unitRoot) => {
+  const pictureRows = [];
+  const allRows = [];
+  const top = join(unitRoot, ...U2_FW_PARTS, 'costs.tsv');
+  if (existsSync(top)) {
+    const rows = parseCostsTsv(readFileSync(top, 'utf8')).filter((r) => sinceStart(r.time, U2_FW_RUN.startTime));
+    pictureRows.push(...rows);
+    allRows.push(...rows);
+  }
+  return { pictureRows, allRows };
+};
+
+/**
  * Run the guards for one invocation. Returns a decision; it makes no call and does not exit.
  * The caller prints the message and exits with code 3 when refused.
  *
- * The function is the one decision point for a restart call, a card call, a unit 2 call, a mixed
- * call, and an unknown output folder:
+ * The function is the one decision point for a restart call, a card call, a unit 2 call, a
+ * family-word call, a mixed call, and an unknown output folder:
  *   - a spec with an unknown output folder is refused before any cost scan;
  *   - a mixed call is refused before any cost scan;
- *   - a unit 2 call reads only the unit 2 cost files and is refused while the unit 2 cap is empty;
+ *   - a book call reads only the unit 2 week cost files and uses `U2_RUN`;
+ *   - a family-word call reads only the family-word cost file and uses `U2_FW_RUN`;
  *   - a card call uses `CARD_RUN` and the card cost files;
  *   - every other call uses the restart values and the restart scan.
+ * An empty or invalid cap of either unit 2 kind is refused.
  * After the spend check of the current sum, the function projects the whole pool: one margin per
  * provider call, plus one margin for a color pool (the line picture that follows each passing
  * color). A projected sum over the cap is refused, so a pool cannot pass the cap by its own calls.
@@ -403,11 +459,26 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
       message: 'refused: the call mixes unit 2 specs with other specs; run each group in its own call',
     };
   }
+  const u2fwFlags = classes.map((c) => c.kind === 'u2fw');
+  if (u2fwFlags.some(Boolean) && !u2fwFlags.every(Boolean)) {
+    return {
+      refused: true,
+      code: 3,
+      spend: 0,
+      notice: false,
+      run: 'mixed',
+      reportAt: CARD_RUN.reportAtUsd,
+      message: 'refused: the call mixes unit 2 family-word specs with other specs; run each group in its own call',
+    };
+  }
   const u2 = ctxs.length > 0 && u2Flags.every(Boolean);
-  // The test-only `opts.u2CapUsd` stands in for the cap that the PM writes later. The CLI never
-  // sets it, and the U2_RUN constant keeps its null value in this track.
+  const u2fw = ctxs.length > 0 && u2fwFlags.every(Boolean);
+  // The test-only `opts.u2CapUsd` and `opts.u2FwCapUsd` stand in for a cap in a test. The CLI
+  // never sets them; `cliGuardOptions` removes them.
   const u2Cap = u2 ? (Object.hasOwn(opts, 'u2CapUsd') ? opts.u2CapUsd : U2_RUN.capUsd) : null;
-  if (u2 && !(typeof u2Cap === 'number' && Number.isFinite(u2Cap) && u2Cap > 0)) {
+  const u2FwCap = u2fw ? (Object.hasOwn(opts, 'u2FwCapUsd') ? opts.u2FwCapUsd : U2_FW_RUN.capUsd) : null;
+  const capOk = (cap) => typeof cap === 'number' && Number.isFinite(cap) && cap > 0;
+  if (u2 && !capOk(u2Cap)) {
     return {
       refused: true,
       code: 3,
@@ -416,6 +487,17 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
       run: 'u2',
       reportAt: U2_RUN.reportAtUsd,
       message: U2_CAP_MESSAGE,
+    };
+  }
+  if (u2fw && !capOk(u2FwCap)) {
+    return {
+      refused: true,
+      code: 3,
+      spend: 0,
+      notice: false,
+      run: 'u2fw',
+      reportAt: U2_FW_RUN.reportAtUsd,
+      message: U2_FW_CAP_MESSAGE,
     };
   }
   const cardFlags = classes.map((c) => c.kind === 'card');
@@ -431,14 +513,14 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
     };
   }
   const card = ctxs.length > 0 && cardFlags.every(Boolean);
-  const run = u2 ? 'u2' : card ? 'card' : 'restart';
-  const cap = u2 ? u2Cap : card ? CARD_RUN.capUsd : SPEND_CAP_USD;
-  const margin = u2 ? U2_RUN.marginUsd : card ? CARD_RUN.marginUsd : SPEND_MARGIN_USD;
-  const reportAt = u2 ? (U2_RUN.reportAtUsd ?? Number.POSITIVE_INFINITY) : card ? CARD_RUN.reportAtUsd : REPORT_AT_USD;
-  const startTime = u2 ? U2_RUN.startTime : card ? CARD_RUN.startTime : RESTART_START;
-  const maxTries = u2 ? U2_RUN.maxTries : card ? CARD_RUN.maxTries : MAX_TRIES;
-  const { pictureRows, allRows } = u2 ? scanU2CostFiles(unitRoot) : card ? scanCardCostFiles(unitRoot) : scanCostFiles(unitRoot);
-  const s = u2 || card ? spendGuard(allRows, startTime, cap, margin, reportAt) : spendGuard(allRows);
+  const run = u2 ? 'u2' : u2fw ? 'u2fw' : card ? 'card' : 'restart';
+  const cap = u2 ? u2Cap : u2fw ? u2FwCap : card ? CARD_RUN.capUsd : SPEND_CAP_USD;
+  const margin = u2 ? U2_RUN.marginUsd : u2fw ? U2_FW_RUN.marginUsd : card ? CARD_RUN.marginUsd : SPEND_MARGIN_USD;
+  const reportAt = u2 ? (U2_RUN.reportAtUsd ?? Number.POSITIVE_INFINITY) : u2fw ? (U2_FW_RUN.reportAtUsd ?? Number.POSITIVE_INFINITY) : card ? CARD_RUN.reportAtUsd : REPORT_AT_USD;
+  const startTime = u2 ? U2_RUN.startTime : u2fw ? U2_FW_RUN.startTime : card ? CARD_RUN.startTime : RESTART_START;
+  const maxTries = u2 ? U2_RUN.maxTries : u2fw ? U2_FW_RUN.maxTries : card ? CARD_RUN.maxTries : MAX_TRIES;
+  const { pictureRows, allRows } = u2 ? scanU2CostFiles(unitRoot) : u2fw ? scanU2FwCostFiles(unitRoot) : card ? scanCardCostFiles(unitRoot) : scanCostFiles(unitRoot);
+  const s = u2 || u2fw || card ? spendGuard(allRows, startTime, cap, margin, reportAt) : spendGuard(allRows);
   const spend = s.spend;
   if (!s.ok) {
     return { refused: true, code: 3, spend, notice: false, run, reportAt: u2 ? U2_RUN.reportAtUsd : reportAt, message: `refused: spend ${spend.toFixed(4)} USD plus ${margin} over cap ${cap}` };
