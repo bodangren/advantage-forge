@@ -1,0 +1,14 @@
+# Input SHA-256 record. Read only: /home/daniebo/Desktop/Workbooks.
+# Command: sha256sum <file> (paths relative to /home/daniebo/Desktop/Workbooks)
+63d415000eca9d6be1a6ad533c12ff81e127cd2c76ffac339697f91b99f754ec  content/storytime/drafts/l2/print/pictures-u2.json
+d24d534361d84ad9b4ebc27f3571e0380fc59f6d493442043d4207fa7eae9059  content/storytime/drafts/l2/print/card-pictures-u2.json
+fbf80559419b1fefcc97834cd146c245f437e479365c507c1616cb094bb4e24f  content/storytime/drafts/l2/print/pictures-u2.md
+c1bbb491a35f10b60bea5f43d30d09d5ac3daab39924c2996b25ba1a98b4ef83  measure/tracks/storytime_l2_unit2_20261106/forge-brief.md
+75f0cfd7282fe28dfcfc04bee492df0d99448976a677585b6f0085e950c36566  content/storytime/drafts/l2/w09.json
+7a1088a622fd1bf6d51213be97bcdd41866b5f9bc8fb2cbb3956bbc79f3a0658  content/storytime/drafts/l2/w10.json
+99773f9be73bbfdbde73f5831be5fe0fe864eaf4870753cefd3db57a04af623f  content/storytime/drafts/l2/w11.json
+8cb3ad50d8749c7439b1ebd3edc06186eaede7543d37fbe20738767b516fb39f  content/storytime/drafts/l2/w12.json
+d1914d9453e9eecf9ce3521182c7ed5f64a91fb18e0237b4817b71aa95c05106  content/storytime/drafts/l2/w13.json
+fba5309fa496a6b59ca93777ac6c443df99cd0be11eaf9890cd4b6096ef99d77  content/storytime/drafts/l2/w14.json
+06fe25807a9550acac67c9391645108311ab56d38f8c5aaf84b6a25b543fd6e5  content/storytime/drafts/l2/w15.json
+c96a6b598e9031d97182a8111688a7d3eb95160fb4e066ef8d56cd4d127bb061  content/storytime/drafts/l2/w16.json

@@ -1,0 +1,15 @@
+# Maker log: Phase 1 (asset_storytime_l2_unit2_prep_20261108)
+
+Role: measure-jr-green. Session: Green · P1 · storytime_l2_unit2_prep.
+Model: deepseek/deepseek-flash#high.
+role_base_sha and phase_base_sha: e010c5f62cb5765b0c888a9ba1949b1a2801e00e.
+Start: 2026-11-08 10:30 ICT. Hard limit: 11:45 ICT.
+Spend: 0 USD. No Muse call, no OpenRouter call, no image API call.
+
+## Sequence
+
+- 10:30 Checked `git rev-parse HEAD`: e010c5f6. Read spec.md and plan.md.
+- 10:31 Measured the inputs. `pictures-u2.json` is
+  63d415000eca9d6be1a6ad533c12ff81e127cd2c76ffac339697f91b99f754ec, which matches the
+  specification. Continue.
+- 10:32 Step 0: plan markers, then the commit.

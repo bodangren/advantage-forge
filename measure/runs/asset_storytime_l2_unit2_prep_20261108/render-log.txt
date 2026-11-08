@@ -1,0 +1,35 @@
+# Render log. Task 4: render each Forge asset of the element map only when its views file is missing.
+# Command pattern: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './forge render <asset>'
+# Result: the missing list is EMPTY. Every Forge asset that elements.json names had a views file. No render ran. No asset source changed.
+# Forge render files used (existing views):
+out/barn/views/three-quarter.png
+out/bed/views/three-quarter.png
+out/bowl/views/three-quarter.png
+out/bread/views/three-quarter.png
+out/cat/views/three-quarter.png
+out/chair/views/three-quarter.png
+out/chicken/views/three-quarter.png
+out/dog/views/three-quarter.png
+out/door/views/three-quarter.png
+out/drum/views/three-quarter.png
+out/fence/views/three-quarter.png
+out/fish/views/side.png
+out/frog/views/three-quarter.png
+out/goat/views/three-quarter.png
+out/horse/views/three-quarter.png
+out/mug/views/three-quarter.png
+out/plate/views/three-quarter.png
+out/pot/views/three-quarter.png
+out/rooster/views/three-quarter.png
+out/stool/views/three-quarter.png
+out/storytime-block-box/views/three-quarter.png
+out/storytime-child-cup/views/three-quarter.png
+out/storytime-crayon-box/views/three-quarter.png
+out/storytime-green-door/views/three-quarter.png
+out/storytime-low-table/views/three-quarter.png
+out/storytime-picture-book/views/three-quarter.png
+out/storytime-school-bag/views/three-quarter.png
+out/storytime-school-bus/views/three-quarter.png
+out/storytime-sun-hat/views/three-quarter.png
+out/table/views/three-quarter.png
+out/window/views/three-quarter.png
