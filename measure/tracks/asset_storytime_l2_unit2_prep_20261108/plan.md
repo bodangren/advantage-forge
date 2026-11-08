@@ -35,9 +35,9 @@ phase at an immutable HEAD.
 `[x]` means complete. `[~]` means in progress. `[ ]` means ready and not started. `[b]` means
 blocked, with a trailing `deferred:<owner>` field. The doctor counts only `[ ]`, `[~]`, and `[x]`.
 
-## Phase 0: Authoring
+## Phase 0: Authoring [checkpoint: e010c5f]
 
-- [ ] Task 0: Author the track: specification, plan, metadata, index, spec review note, and the
+- [x] Task 0 (e010c5f6): Author the track: specification, plan, metadata, index, spec review note, and the
   registry entry. The creation commit has the message
   `measure(storytime_l2_unit2_prep): create the track`.
 
@@ -81,8 +81,8 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   `Status: done.` with the folder, the file count, and the open questions with defaults; then the
   next unpaid steps of D8; then a "Facts changed:" list. Send the PM one line: folder, count,
   open questions with defaults.
-- [ ] Phase 1 gate: phase acceptance by the checker (`measure-phase-acceptance`) at an immutable
-  HEAD.
+- [b] Phase 1 gate: phase acceptance by the checker (`measure-phase-acceptance`) at an immutable
+  HEAD. (deferred:checker)
   - The checker runs the test command of Task 3, `sha256sum -c MANIFEST.txt` in the hand-off
     folder, and the comparison of `costs-after.txt` with `costs-before.txt`.
   - The checker greps FR-4 and FR-10, and checks the frozen files of FR-12 and `git status` for
@@ -90,7 +90,7 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
 
 ## Track-level roles
 
-- [ ] Closeout: archive the track, update the registry, and run the doctor.
+- [b] Closeout: archive the track, update the registry, and run the doctor. (deferred:closeout)
 
 The light lane has no final acceptance role. Closeout commits `measure/runs/<track>/` with the
 archive.
