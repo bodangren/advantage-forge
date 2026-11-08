@@ -114,3 +114,10 @@ MANIFEST.txt holds 20 hash lines and the lines "app spend 0.18 USD of the 0.29 U
 "18 calls", "words delivered 18 of 18", and "model evidence, not acceptance".
 The check `grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c -` exits 0 and gives 20 OK and 0
 FAILED.
+Step F (0 USD): the pm-report.md is rewritten. Its first line is "Status: done.". It holds
+the spend per item with the calls and the stop, the rows done, the 9 rows out with their best
+tries, the two open PM questions with their defaults, the folders with their MANIFEST OK counts,
+and the Facts changed list.
+The FR-12 grep over plan.md, spec.md, and the files of the run folder finds 11 hits for
+the two acceptance words of FR-12. The hits stand at these places: plan.md:3, plan.md:32, spec.md:23, spec.md:214, acceptance-p1-d99aa89.log:61, acceptance-p1-d99aa89.log:75, acceptance-p2-ac23e9e.log:61, acceptance-p2-ac23e9e.log:78, acceptance-p2-ac23e9e.log:83, maker-p2.log:194, maker-p2.log:298. Every hit is
+a negation, and no file of the track claims an acceptance.

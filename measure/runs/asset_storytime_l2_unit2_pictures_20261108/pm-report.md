@@ -1,14 +1,25 @@
-Status: in progress (book delivered; app family words next).
+Status: done.
 
-# Storytime Level 2 unit 2: book part, PM report
+# Storytime Level 2 unit 2: final PM report
 
-These pictures are model evidence, not acceptance. No file of this track says that Daniel, the PM, or
-Workbooks accepted a picture.
+These pictures are model evidence, not acceptance. No file of this track claims that Daniel, the
+PM, or Workbooks gave approval of a picture.
 
-## Book spend
+## Spend
+
+Daniel's Go of 2026-11-08 opened the unit 2 spend. The PM holds the 25.21 USD unit stop, and that
+stop also covers the Workbooks speech and songs. The Forge spend of this track is 4.50 USD.
+
+| item | calls | spend USD | stop USD |
+| --- | --- | --- | --- |
+| book | 445 | 4.32 | 18.33 |
+| app | 18 | 0.18 | 0.29 |
+| Forge total | 463 | 4.50 | 25.21 (the PM holds the unit stop) |
+
+### The book item
 
 The book item spent 4.32 USD of the 18.33 USD stop. The guard needed no stop. The highest call cost
-0.01 USD, under the 0.03 USD limit. The amounts come from the unit 2 `costs.tsv` rows.
+was 0.01 USD, under the 0.03 USD limit. The amounts come from the unit 2 `costs.tsv` rows.
 
 | kind | calls | spend USD |
 | --- | --- | --- |
@@ -27,7 +38,13 @@ The book item spent 4.32 USD of the 18.33 USD stop. The guard needed no stop. Th
   l2-w09-story-page-tom-can-see-the-mop and l2-w12-cover-the-hen-and-the-hat.
 - 2 element color calls on set-nan-bedroom got a network connect timeout.
 
-## Rows delivered
+### The app item
+
+The app item spent 0.18 USD of the 0.29 USD stop. The pool made 18 color calls: 18 ok, 0 failed, 0
+refused. The highest call cost was 0.01 USD. The 0.23 USD report point was not reached, so no
+projection was recorded. The 18 words of the paid media list each have one color picture.
+
+## Rows done
 
 The book list holds 229 rows. 220 rows are delivered: 173 new rows and 47 reuse rows. The delivery
 holds 440 PNG files and one `manifest.json`. Every file has the class size (A and B 4000 x 3000, C
@@ -36,6 +53,9 @@ holds 440 PNG files and one `manifest.json`. Every file has the class size (A an
 3 rows use the despeckled print of the same line try: l2-w12-cover-open-your-book,
 l2-w12-story-page-open-your-book-pip, and l2-w13-cover-look-at-me. The largest changed area of the
 despeckle is below 0.05 percent of the picture for each row.
+
+The app item holds 18 words. 18 of 18 are delivered: one color file of 1500 x 1500 px per word, and
+one `manifest.json`. The judge gave 18 of 18 pass at color try 1, so no word needed a retry.
 
 ## The 9 rows out
 
@@ -54,21 +74,32 @@ These rows have no delivery entry. They have no tries left. Their best prints ar
 | l2-w14-card-cold | m1 | line try 3 (judge pass, 9 px) | The line is below the 12 px print gate. |
 | l2-w14-card-windy | m1 | line try 3 (judge pass, 9 px) | The line is below the 12 px print gate. |
 
-## PM question
+## The two open PM questions
 
-The 9 rows have no tries left. Options: (a) one more try for each (9 line calls and 1 color call,
-about 0.10 USD; success is not sure for the thin cards); (b) accept the judge-passing thin line
-prints (8 to 11 px) of the 8 line rows with a writer exception; (c) thicken those 8 prints
-mechanically to 12 px (0 USD, a derived file); (d) leave the 9 rows to Workbooks with the best tries
-in not-delivered/. Default: (d) until the PM chooses.
+1. The hat-pip try exception. The row l2-w10-story-page-put-on-your-hat-pip has no color try left.
+   The PM may grant one more color try for that row. Default: the row stays out.
+2. The 9 rows. The 9 rows have no tries left. Options: (a) one more try for each (9 line calls and
+   1 color call, about 0.10 USD; success is not sure for the thin cards); (b) accept the
+   judge-passing thin line prints (8 to 11 px) of the 8 line rows with a writer exception; (c)
+   thicken those 8 prints mechanically to 12 px (0 USD, a derived file); (d) leave the 9 rows to
+   Workbooks with the best tries in not-delivered/. Default: (d) until the PM chooses.
 
 ## Folders
 
-- Delivery: `out/storytime/l2/unit2/delivery-muse-v1/`.
-- Hand-off: `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures/`. It holds 440 hard links
+- Book delivery: `out/storytime/l2/unit2/delivery-muse-v1/`. It holds 220 rows, 440 PNG files, and
+  `manifest.json`.
+- Book hand-off: `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures/`. It holds 440 hard links
   of the delivered PNG files, `manifest.json`, 8 contact sheets, `not-delivered/`, `README.md`, and
   `MANIFEST.txt`. `sha256sum -c MANIFEST.txt` gives 468 OK and 0 FAILED.
+- App delivery: `out/storytime/l2/unit2/family-words/delivery-muse-v1/`. It holds 18 PNG files named
+  `<id>-v1.png` and `manifest.json`, with 18 manifest jobs and 6 color batches. Every file is
+  1500 x 1500 px, 8-bit, and free of alpha.
+- App hand-off: `/home/daniebo/Desktop/handoff/storytime-l2u2-family-word-pictures/`. It holds 18 hard
+  links of the delivered PNG files, a copy of `manifest.json`, `contact-sheet.png`, and
+  `MANIFEST.txt`. `sha256sum -c MANIFEST.txt` gives 20 OK and 0 FAILED.
 
 ## Facts changed
 
-None for now.
+- Storytime Level 2 unit 2 picture spend: 4.50 USD (book 4.32, app 0.18).
+- Unit 2 book pictures: 220 of 229 rows delivered; 9 rows wait for a PM decision.
+- Unit 2 app family-word pictures: 18 of 18 delivered.
