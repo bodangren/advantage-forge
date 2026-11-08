@@ -67,3 +67,19 @@ role_base_sha: d99aa896d31d86b336c63026d7821115ecdba8bb (confirmed equal to HEAD
 - Task 4 stays [~] until the judge returns a pass for each sheet.
 - Spend: book 0.10 USD of 18.33 USD, 12 costs.tsv rows, 0 refused, 3 failed call rows (all
   set-nan-bedroom, all at 0 cost). No call above 0.03 USD.
+
+## Step D, close Task 4 (0 USD)
+
+- 2026-11-08T15:12Z: the orchestrator ran the frozen judge on the two element color batches.
+  - judge-u2-elements-r1-color.json: group unit2-elements-r1-color, 9 files, 9 pass, 0 fail.
+  - judge-u2-elements-r1-color-bedroom-t3.json: group unit2-elements-r1-color-bedroom-t3, 1 file,
+    1 pass, 0 fail. set-nan-bedroom is the first picture after two 0-cost network errors.
+  - Judge kit, model, and cast: unchanged (judge prompt v6, claude-code/claude-sonnet-5-5#high).
+- Weak pass recorded: set-tom-kitchen. The judge says the kitchen is "weak but readable": the
+  picture has a low orange counter with three shallow round metal pans, a tiled floor, a table, a
+  green door, and a green mat. It has no stove, no sink, and no fridge. The pans could also read as
+  bowls. The judge calls it a pass, because it is not a clear wrong set and it matches the spec
+  prompt. No retry is needed.
+- Every sheet passed at m1. Therefore no row reference change runs (D3: only a pass at m<n> with n
+  above 1 changes the row `references`). The rows already name `<id>-m1-color.png`.
+- Task 4 marked [x] (01b97374). Spend 0 USD in this step. Book spend stays 0.10 USD of 18.33 USD.

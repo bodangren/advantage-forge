@@ -1,0 +1,96 @@
+{
+  "group": "u2-elements-r1-color",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T15:12:29Z",
+  "results": [
+    {
+      "id": "set-classroom-lunch-table",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/set-classroom-lunch-table-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Element sheet. Goal: one empty bright kindergarten classroom with a long low lunch table. Seen: a cream room with a window and cream curtains; one long low wooden table with four round legs in the middle; two small child chairs, one at each side; a low wooden shelf at the right with plates and cups. Goal items: room (yes), long low table (yes), empty (yes). No person, no animal, no text. Style: smooth round 3D children's-book render. Small mark: the room is quite plain and pale."
+    },
+    {
+      "id": "set-classroom-dress-up-corner",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/set-classroom-dress-up-corner-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Element sheet. Goal: one empty dress-up corner of the kindergarten classroom. Seen: a wall corner with a large wooden-framed mirror at the left, a low wooden bench under it, and an open wooden chest at the right that holds folded pink, blue, and yellow clothes. Goal items: dress-up corner (yes, mirror, chest of clothes, bench), empty (yes). No person, no text. Style: smooth 3D children's-book render. Small mark: the mirror shows only a pale wall, no reflection."
+    },
+    {
+      "id": "set-tom-kitchen",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/set-tom-kitchen-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Element sheet. Goal: one empty bright kitchen of Tom. Seen: a cream room with a light tiled floor; a low orange counter at the left with three shallow round metal pans on top; one low wooden table in the middle; one green door at the right; one round green mat by the door. Goal items: bright room (yes), empty (yes), kitchen: weak but readable, because of the counter with pans and the tiled floor; the picture has no stove, sink, or fridge, and the pans are shallow and handleless, so they could also read as bowls. This matches the spec prompt. Not a clear case of a wrong set, so a pass. No person, no animal, no text. Style correct."
+    },
+    {
+      "id": "prop-hen-sheet",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/prop-hen-sheet-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Element sheet. Goal: ONE small brown hen with a red comb. Seen: one round brown hen shown in three views (front, side, three-quarter back) with a red comb, red wattle, yellow beak, orange legs, brown eyes, brown wing, small tail. It is one hen, brown, with a red comb. Clean white background. No text. Style: smooth clay-like 3D children's-book render. Small marks: the front-view comb is thin because it is seen edge-on; the two right views are very similar."
+    },
+    {
+      "id": "set-classroom-tables",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/set-classroom-tables-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Element sheet. Goal: one empty bright kindergarten classroom with low tables. Seen: a cream room with three low wooden tables in a row, each with one small wooden chair in front; a low bookshelf at the right with colored books; three wooden-framed pictures on the wall (an elephant, a lion, a bear). Goal items: room (yes), low tables (yes, three), empty (yes). No person, no text on the pictures or the book spines. Style: smooth 3D children's-book render. Small mark: the wall pictures are flatter and more 2D than the rest."
+    },
+    {
+      "id": "set-farmyard",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/set-farmyard-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Element sheet. Goal: one empty sunny farmyard of Grandma and Grandpa. Seen: a green field under a blue sky with clouds; a brown wooden fence across the back; a red round-roof barn with a white door at the right; a patch of straw at the left. Goal items: farmyard (yes: barn, fence, straw, field), sunny (blue sky, bright light), empty (yes). No person, no animal, no text. Style: smooth clay-like 3D render. Small marks: the barn is a simple red block that could read as a small house; the field is large and plain."
+    },
+    {
+      "id": "set-tom-garden",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/set-tom-garden-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Element sheet. Goal: one empty small sunny garden of Tom. Seen: a green lawn; a wooden fence across the back; a row of red flowers with yellow centers on green bushes along the fence; one green tree at the right; a clear blue sky. Goal items: garden (yes, flowers, fence, tree, lawn), sunny (yes), small (yes), empty (yes). No person, no animal, no text. Style: smooth clay-like 3D render. Small mark: the flower row is very regular."
+    },
+    {
+      "id": "set-nan-front-garden",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/set-nan-front-garden-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Element sheet. Goal: one empty small front garden of Nan. Seen: a green lawn with soft grass tufts; a round-stone path from the front to the back; a white picket fence across the back; one green tree at the right; a clear blue sky. Goal items: front garden (yes, path, fence, lawn, tree), empty (yes). No person, no animal, no text. Style: smooth 3D children's-book render. Small marks: the path ends at the fence with no gate; the grass tufts are fluffy and soft-focus."
+    },
+    {
+      "id": "set-town-street-bridge",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/set-town-street-bridge-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Element sheet. Goal: one empty quiet street of a small town. Seen: three small pastel houses with round-top doors and square windows; a row of small round trees; a blue canal with a small gray stone arch bridge; a wide gray street in the foreground. Goal items: street (yes, wide gray road at the front), small town (yes, houses, trees), bridge (yes), quiet and empty (yes). No person, no vehicle, no animal, no text. Style: smooth clay-like 3D render. Small marks: the street is a plain gray band; the houses and bridge have soft depth-of-field blur."
+    }
+  ],
+  "summary": {
+    "files": 9,
+    "pass": 9,
+    "fail": 0
+  }
+}

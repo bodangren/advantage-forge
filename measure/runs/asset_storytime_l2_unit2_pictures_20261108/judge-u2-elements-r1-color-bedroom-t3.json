@@ -1,0 +1,24 @@
+{
+  "group": "u2-elements-r1-color-bedroom-t3",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T15:12:29Z",
+  "results": [
+    {
+      "id": "set-nan-bedroom",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/set-nan-bedroom-color-t3.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Element sheet. Goal: one empty small cozy bedroom of Nan. Seen: a small cream room with a wooden floor; one single bed with a white pillow and a blue blanket at the right; a small wooden bedside table; a round cream rug; a window with cream curtains and a soft glowing light. Goal items: bedroom (yes: bed, pillow, blanket, bedside table, rug, window), small and cozy (yes), empty (yes). No person, no animal, no text. Style: smooth 3D children's-book render."
+    }
+  ],
+  "summary": {
+    "files": 1,
+    "pass": 1,
+    "fail": 0
+  }
+}
