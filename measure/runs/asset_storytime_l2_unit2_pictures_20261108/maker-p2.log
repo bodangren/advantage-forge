@@ -364,3 +364,13 @@ END_MEASURE_AGENT_RESULT
   - The high differing count comes from the re-threshold: the outline edges move by about one
     pixel. The largest changed areas are 1 to 2 px wide edge slivers, not blobs.
   - Record: `despeckle-record.txt`.
+- Step Y (linePrompt edits, 0 USD; orchestrator decision 03:10 ICT). 20 spec files changed. Each
+  file changed only the linePrompt field. Each had exactly one 'thick, even black lines (about three
+  times a normal outline)' phrase, and it became 'very thick, even black lines (about five times a
+  normal outline; never thin lines or hairline strokes)'. No row needed the fallback sentence.
+  - The 4 edge-frame rows also took the white-border sentence: l2-w09-story-page-i-like-eggs-yum,
+    l2-w10-story-page-put-on-your-t-shirt, l2-w11-story-page-where-is-sam-under-the-table, and
+    l2-w15-story-page-pip-has-a-tag.
+  - The round 8 glasses sentence went to l2-w13-story-page-pip-can-catch: its cast has May, and its
+    linePrompt lacked the sentence. The other rows with Dad, Mom, or May already held it
+    (l2-w09-story-page-tom-can-see-the-mop) or had no face in a card (l2-w09-card-nod).
