@@ -121,3 +121,16 @@ and the Facts changed list.
 The FR-12 grep over plan.md, spec.md, and the files of the run folder finds 11 hits for
 the two acceptance words of FR-12. The hits stand at these places: plan.md:3, plan.md:32, spec.md:23, spec.md:214, acceptance-p1-d99aa89.log:61, acceptance-p1-d99aa89.log:75, acceptance-p2-ac23e9e.log:61, acceptance-p2-ac23e9e.log:78, acceptance-p2-ac23e9e.log:83, maker-p2.log:194, maker-p2.log:298. Every hit is
 a negation, and no file of the track claims an acceptance.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: done
+track: asset_storytime_l2_unit2_pictures_20261108
+phase: Phase 3: App family-word pictures
+commits: 262026e93917101a5f7f6eb0486dc66bf038a4ee, 5ae7e8f8d531f3b57ec77a7524eaa13c0bf6f02f, 19a0a8f4207793419349daea31ab5fa1cf6e4cc3, b20c9ff9c32d385423205b2faea821e6d4c30631, d963fc836f55593e3768c32f206afd45cdab65fa, e738d477dba2c6b09562eb5079fae183bcdd7579, 2d3a2314c8ff0a2f420ec8348765dbcf38556f0e, eef37a5e2f26da6622afb40b4be5046a7f7ec2e1, 44bfc75f3e014e32c44120b1404a3e355d8a0b1b, b55248ea4ef8cea6c958016acefd343052638d8f
+tests_run: GREEN 14 files and 232 tests passed at d963fc83; the app pool made 18 Muse calls and no test run; the judge copies were checked with sharp (pixel distance 0, 360 px long side, 18 of 18); the delivery file checks gave 18 files and 0 problems; sha256sum -c on the app hand-off gave 20 OK and 0 FAILED
+files_changed: docs/storytime/l2-unit2/family-words/ (18 specs), docs/storytime/l2-unit2/judge/prod/u2-fw-r1-color.json, scripts/storytime-judge-batch.mjs, scripts/storytime-judge-batch.d.mts, src/storytime/muse-delivery-u2.ts, tests/storytime-u2-family-words.test.ts, measure/tracks/asset_storytime_l2_unit2_pictures_20261108/plan.md, measure/runs/asset_storytime_l2_unit2_pictures_20261108/ (maker-p3.log, spend-record.txt, approvals-u2-fw.json, deliver-u2-fw.mts, make-handoff-fw.mts, delivery-record-fw.txt, judge-u2-fw-r1-color.json, pm-report.md)
+plan_updates: the Phase 2 gate [x] at ac23e9e2; Task 9 [x] Task 9 (b20c9ff9); Task 10 [x] Task 10 (eef37a5e); Task 11 [x] Task 11 (b55248ea); the Phase 3 gate stays [b] deferred:checker
+known_failures: the app item has none: 18 of 18 words pass the judge at color try 1 and each has one delivered color file. The 9 book rows stay out and wait for a PM decision: the hat-pip try exception (default: the row stays out) and the options a to d (default: d). The typecheck exits 2 with errors outside the storytime paths, in assets/*.ts, tests/games/castle-defense, and tests/part.test.ts.
+handoff: the Phase 3 gate is open for the checker at the final HEAD. The app costs.tsv holds 18 rows and 0.18 USD since U2_FW_RUN.startTime, the judge file gives 18 of 18 pass at try 1, the delivery folder holds 18 PNG files and manifest.json, and the app hand-off MANIFEST.txt gives 20 OK and 0 FAILED. The closeout role archives the track after the checker passes.
+END_MEASURE_AGENT_RESULT

@@ -174,9 +174,12 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   - The hand-off folder `/home/daniebo/Desktop/handoff/storytime-l2u2-family-word-pictures/` holds
     18 hard links of the delivered PNG files, a copy of `manifest.json`, `contact-sheet.png`, and
     `MANIFEST.txt`. `sha256sum -c` on the 20 hash lines gives 20 OK and 0 FAILED.
-- [b] Task 11: Final PM report (D8). Complete `pm-report.md`: the first line `Status: done.` (or
+- [x] Task 11 (b55248ea): Final PM report (D8). Complete `pm-report.md`: the first line `Status: done.` (or
   `Status: blocked.`), the spend for each item with calls and stop, the rows done, the failures with
-  the best try, the delivery and hand-off folders, and `Facts changed:`. deferred:maker
+  the best try, the delivery and hand-off folders, and `Facts changed:`.
+  - The report opens with `Status: done.` It holds the book and the app spend with the calls and the
+    stops, the rows done, the 9 rows out with their best tries, the two open PM questions with their
+    defaults, the four folders with their MANIFEST OK counts, and the Facts changed list.
 - [b] Phase 3 gate: phase acceptance by the checker at an immutable HEAD. The checker compares the
   app `costs.tsv` total with the spend record, checks the judge files and the delivery manifest, runs
   `sha256sum -c` on the hand-off folder, and greps FR-12 and FR-14. deferred:checker
