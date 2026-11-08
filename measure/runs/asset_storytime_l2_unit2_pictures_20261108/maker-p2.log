@@ -300,3 +300,52 @@ Spec edits in commit b9ed6043 (the orchestrator brief lists the reasons):
   - Book total 4.06 USD, left 14.27 USD against the 18.33 USD stop. Highest call 0.01 USD, under the 0.03 USD limit.
   - Judge batch u2-r5-line-t3: 1 entry, the line try 3 picture of l2-w13-check-row-dot.
   - Check: a sharp script compared the judge copy against the newest line file of the row. Pixel distance 0.00. Result: 1 ok, 0 failures.
+
+## Delivery round (Green · P2 T7-T8 · storytime_l2_unit2_pictures · r11, 0 USD)
+
+- 2026-11-09: start. HEAD fbd71357. Model: deepseek/deepseek-flash#high. No Muse call.
+- Step U (close Tasks 5 and 6, 0 USD). Committed `judge-u2-r5-line-t3.json` and the plan evidence.
+  - Task 5: color passes 182 of 182 (165 try 1, 13 try 2, 4 try 3). 36 judge files. 11 zero-cost
+    provider failures counted as tries (9 color: 7 HTTP 400 and 2 network; 2 line: HTTP 502).
+  - Task 6: line passes 181 of 182. The fail is l2-w10-story-page-put-on-your-hat-pip; its best try
+    is line try 1, and two judges count 9 children while the page names 7. Its color passed at try 3
+    (m2, cleared by the second judge). It has no color try left and goes to `onSkip`.
+  - Commit fbd71357.
+- Step V (Task 7, delivery; 0 USD). Prepared the approval list and the runner. The writer stopped.
+  - `approvals-u2.json`: 181 entries. The try map follows `trySourceName` (the n-th cost row of the
+    id and kind after the unit 2 start time). Print names use the passing color version and the
+    passing line output (`-line-print`, `-line-print-<n>`, and the despeckled forms).
+  - Sharp check: all 362 judge copies equal the downscale of the chosen color and line source files.
+    Largest pixel distance 0.
+  - `deliver-u2.mts` stages the 362 print files as hard links, calls `deliverMuseUnit2`, verifies
+    every delivered PNG, and writes `delivery-record.txt`. The first runs failed on a wrong rows
+    path (`docs/storytime/l2/unit2/rows.json`); the path is now `UNIT2_ROWS_FILE`
+    (`docs/storytime/l2-unit2/rows.json`).
+  - The writer refused 23 of the 181 approved rows because their line print fails the v1 print
+    gate at the printed size: 19 have lines of 8 to 11 px against the 12 px minimum, and 4 fail the
+    white edge frame (below 90 percent). The writer wrote nothing; no delivery folder exists.
+    The 47 reuse rows and the other 158 approved rows pass. The per-row record is
+    `delivery-gate.txt`.
+  - Three of the 23 pass with the despeckled print of the same try: l2-w12-cover-open-your-book,
+    l2-w12-story-page-open-your-book-pip, and l2-w13-cover-look-at-me. That file is not the file
+    the judge saw. The other 20 rows have no passing print variant.
+  - The round stops for a PM decision. Option A: accept the thin lines as a recorded writer
+    exception (delivery 228 rows). Option B: accept the three despeckled prints and an exception
+    for the 20 (delivery 228 rows). Option C: regenerate the 23 lines in a later paid round
+    (about 0.23 USD plus judge calls, and a try-cap exception). Option D: deliver the 205 rows that
+    pass the gate and name the 23 in the PM report. No default; the round stops.
+- No Step W: the report cannot claim rows done or folders that do not exist.
+
+```MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: blocked
+track: asset_storytime_l2_unit2_pictures_20261108
+phase: Phase 2: Book pictures (paid)
+commits: 9ba5f0e1, 01b97374, d7f5672d, d34d9e91, fbd71357, and this blocked-round commit (HEAD)
+tests_run: deliver-u2.mts (node tsx; stopped by the writer, 23 line-print refusals); sharp try-to-judge check (362 comparisons, largest distance 0)
+files_changed: measure/runs/.../approvals-u2.json, deliver-u2.mts, delivery-gate.txt, maker-p2.log, judge-u2-r5-line-t3.json, plan.md
+plan_updates: Task 5 [x] (d7f5672d); Task 6 [x] (d34d9e91); Task 7 stays [~] with the gate record; Task 8 stays [b]; Phase 2 gate stays [b] deferred:checker
+known_failures: 23 of 181 approved line prints fail the v1 print gate (19 below 12 px, 4 edge frame); l2-w10-story-page-put-on-your-hat-pip has no passing line
+handoff: Product decision for the PM. `deliverMuseUnit2` refuses 23 of the 181 approved rows at the printed size: 19 have line prints of 8 to 11 px against the 12 px minimum, and 4 fail the white edge frame. Three of the 23 pass with the despeckled print of the same try, but that file is not the file the judge saw; 20 have no passing variant. Question: which option does the PM choose? A. Accept the thin lines with a recorded writer exception (delivery 228 rows). B. Accept the 3 despeckled prints plus an exception for the 20 (delivery 228 rows). C. Regenerate the 23 lines in a later paid round (about 0.23 USD plus judge calls, and a try-cap exception). D. Deliver the 205 rows that pass the gate and name the 23 in pm-report.md with their passing try and the gate error. No default; the round stops. Book spend unchanged at 4.06 USD of 18.33 USD. Authoritative files: measure/runs/asset_storytime_l2_unit2_pictures_20261108/delivery-gate.txt (per-row errors) and the writer src/storytime/muse-delivery-u2.ts.
+END_MEASURE_AGENT_RESULT
+```

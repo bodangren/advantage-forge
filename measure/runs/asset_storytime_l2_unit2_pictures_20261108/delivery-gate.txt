@@ -1,0 +1,53 @@
+# Book delivery gate, round 11 (0 USD)
+
+The writer `deliverMuseUnit2` stopped before any write. It refused 23 of the 181 approved rows
+because their line print fails the v1 print gate at the printed size. The 47 reuse rows and the
+other 158 approved rows passed the gate. No delivery folder exists.
+
+Rules: the line print must have lines at least 12 px thick, and its 2 percent edge frame must be
+at least 90 percent white (src/storytime/book-pictures.ts, MIN_LINE_ART_LINE_WIDTH_PX).
+
+Rows refused: 23 of 181 approved rows.
+
+| row | line print | error |
+| --- | --- | --- |
+| l2-w09-card-nod | l2-w09-card-nod-m1-line-print.png | Line-art twin lines must be at least 12 px thick; measured 9 px. |
+| l2-w09-card-rice | l2-w09-card-rice-m1-line-print.png | Line-art twin lines must be at least 12 px thick; measured 10 px. |
+| l2-w09-story-page-i-like-eggs-yum | l2-w09-story-page-i-like-eggs-yum-m1-line-print.png | Line-art twin edge frame must be at least 90 percent white. |
+| l2-w09-story-page-tom-can-see-the-mop | l2-w09-story-page-tom-can-see-the-mop-m1-line-print-2.png | Line-art twin lines must be at least 12 px thick; measured 11 px. |
+| l2-w10-story-page-put-on-your-t-shirt | l2-w10-story-page-put-on-your-t-shirt-m1-line-print.png | Line-art twin edge frame must be at least 90 percent white. |
+| l2-w11-check-row-elephant | l2-w11-check-row-elephant-m1-line-print.png | Line-art twin lines must be at least 12 px thick; measured 10 px. |
+| l2-w11-story-page-where-is-sam-under-the-table | l2-w11-story-page-where-is-sam-under-the-table-m1-line-print.png | Line-art twin edge frame must be at least 90 percent white. |
+| l2-w12-card-crayon | l2-w12-card-crayon-m1-line-print.png | Line-art twin lines must be at least 12 px thick; measured 10 px. |
+| l2-w12-card-hippo | l2-w12-card-hippo-m1-line-print-2.png | Line-art twin lines must be at least 12 px thick; measured 9 px. |
+| l2-w12-card-ruler | l2-w12-card-ruler-m1-line-print.png | Line-art twin lines must be at least 12 px thick; measured 5 px. |
+| l2-w12-cover-open-your-book | l2-w12-cover-open-your-book-m1-line-print.png | Line-art twin lines must be at least 12 px thick; measured 11 px. |
+| l2-w12-story-page-open-your-book-pip | l2-w12-story-page-open-your-book-pip-m1-line-print-2.png | Line-art twin lines must be at least 12 px thick; measured 11 px. |
+| l2-w13-card-catch | l2-w13-card-catch-m1-line-print.png | Line-art twin lines must be at least 12 px thick; measured 11 px. |
+| l2-w13-card-clap | l2-w13-card-clap-m1-line-print.png | Line-art twin lines must be at least 12 px thick; measured 8 px. |
+| l2-w13-card-run | l2-w13-card-run-m1-line-print.png | Line-art twin lines must be at least 12 px thick; measured 11 px. |
+| l2-w13-card-throw | l2-w13-card-throw-m1-line-print.png | Line-art twin lines must be at least 12 px thick; measured 8 px. |
+| l2-w13-cover-look-at-me | l2-w13-cover-look-at-me-m2-line-print.png | Line-art twin lines must be at least 12 px thick; measured 11 px. |
+| l2-w13-story-page-pip-can-catch | l2-w13-story-page-pip-can-catch-m1-line-print.png | Line-art twin lines must be at least 12 px thick; measured 11 px. |
+| l2-w14-card-cold | l2-w14-card-cold-m1-line-print.png | Line-art twin lines must be at least 12 px thick; measured 8 px. |
+| l2-w14-card-rainy | l2-w14-card-rainy-m1-line-print.png | Line-art twin lines must be at least 12 px thick; measured 9 px. |
+| l2-w14-card-windy | l2-w14-card-windy-m1-line-print.png | Line-art twin lines must be at least 12 px thick; measured 8 px. |
+| l2-w15-card-helicopter | l2-w15-card-helicopter-m1-line-print.png | Line-art twin lines must be at least 12 px thick; measured 9 px. |
+| l2-w15-story-page-pip-has-a-tag | l2-w15-story-page-pip-has-a-tag-m1-line-print.png | Line-art twin edge frame must be at least 90 percent white. |
+
+Counts by error:
+- Line-art twin lines must be at least 12 px thick: 19
+- Line-art twin edge frame must be at least 90 percent white.: 4
+
+Three of the 23 rows have a passing print: the despeckled print of the same line try passes the
+gate, but that file is not the file the judge saw:
+- l2-w12-cover-open-your-book (l2-w12-cover-open-your-book-m1-line-print-despeckled.png)
+- l2-w12-story-page-open-your-book-pip (l2-w12-story-page-open-your-book-pip-m1-line-print-2-despeckled.png)
+- l2-w13-cover-look-at-me (l2-w13-cover-look-at-me-m2-line-print-despeckled.png)
+
+The other 20 rows have no print variant that passes.
+
+PM question: accept the thin lines in the book delivery (writer exception), accept the despeckled
+prints for the three rows, regenerate the 23 lines in a later paid round (23 line calls, 0.23 USD
+plus judge calls, and a try-cap exception), or deliver the 205 rows that pass the gate and name
+the 23 in the PM report.

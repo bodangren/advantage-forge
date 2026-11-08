@@ -116,11 +116,18 @@ runs the frozen judge and the calibration controls. The stop is 18.33 USD.
     color try left, so it gets no delivery entry and goes to `onSkip`; the PM decides on one try exception.
     The judge files are the same 36 `judge-u2-*.json` files. The last try judged is
     `judge-u2-r5-line-t3.json` (l2-w13-check-row-dot line try 3 passes).
-- [b] Task 7: Delivery and hand-off (D7). Run `deliverMuseUnit2` into
+- [~] Task 7: Delivery and hand-off (D7). Run `deliverMuseUnit2` into
   `out/storytime/l2/unit2/delivery-muse-v1/` with the list pin. Build the hand-off folder
   `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures/` with the PNG files, `manifest.json`,
   `MANIFEST.txt`, and one contact sheet for each week (sharp; Chrome only through `heavy-run.sh`).
-  Run `sha256sum -c MANIFEST.txt` (0 FAILED). deferred:maker
+  Run `sha256sum -c MANIFEST.txt` (0 FAILED).
+  - Round 11 (0 USD): the approval list and the runner are ready (`approvals-u2.json`, 181 entries;
+    `deliver-u2.mts`). `deliverMuseUnit2` refused 23 of the 181 rows: 19 line prints have lines of
+    8 to 11 px against the 12 px minimum, and 4 fail the white edge frame. The writer wrote nothing.
+    The 47 reuse rows and the other 158 approved rows pass. The per-row record is `delivery-gate.txt`.
+    Three rows pass with the despeckled print of the same try. The round stops for the PM decision:
+    accept the thin lines, accept the despeckled prints, regenerate the lines in a later paid round,
+    or deliver the 205 rows that pass. No delivery folder exists.
 - [b] Task 8: Book part of the PM report (D8). Write the book lines of `pm-report.md`: spend, calls,
   the stop, rows done, failures with the best try, and the folders. deferred:maker
 - [b] Phase 2 gate: phase acceptance by the checker at an immutable HEAD. The checker compares the
