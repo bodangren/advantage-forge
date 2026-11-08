@@ -91,12 +91,13 @@ runs the frozen judge and the calibration controls. The stop is 18.33 USD.
   900 px with the use `element`. At most 3 tries for each sheet. If a sheet passes at `m<n>` with n
   above 1, change the references of the rows that use it, and record the change. Log the pool in the
   spend record. deferred:maker
-- [~] Task 5: Color pools and judges (D4, D5). Run color try 1 for the 182 new rows at concurrency 4,
+- [x] Task 5 (d7f5672d): Color pools and judges (D4, D5). Run color try 1 for the 182 new rows at concurrency 4,
   then the judge for each week. Retry a failed row up to 3 color tries in total, with a second judge
   before a fail stands. Log each pool in the spend record. At 14.66 USD record the total and the
   projection once. The task may span rounds. Round 3 (a24f3558 generator): the 7 HTTP 400 group rows reran as color try 2 (7 ok, 0.07 USD). Judge batch u2-r1-color-group-t2 is built, not judged. Round 8 (0e1f8452 base): the color try 2 and 3 judge gave 8 of 10 pass, and l2-w11-story-page-here and l2-w11-story-page-ten-men-in-the-den fail again with 1 color try left each. The 5 rows of N.A ran a new color pool (5 ok, 0.05 USD). Judge batches u2-r3-color-t2 and u2-r3-color-t3 are built, not judged. deferred:maker
   - Real maker models (orchestrator, from the OpenCode session store model-switched rows, 2026-11-09): the requested route opencode/deepseek-v4.1-flash-free#high fell back silently to claude-code/claude-haiku-5-5 at 22:41, 22:44, and 23:40 ICT on 2026-11-08. Commits on DeepSeek: 9ba5f0e1, a1b63217, 01b97374, ff245b58. Commits made fully or partly on Haiku: 9718baa5, a24f3558, f7138831, bd741797, b9ed6043, 179f438a. Phase 1 (57fe034e to d99aa896) ran fully on DeepSeek. From round 6 the maker runs on minimax-cn-coding-plan/MiniMax-M3.1-Flash. The light lane has no Red. The Phase 2 checker runs on a family other than Anthropic, DeepSeek, and MiniMax. The frozen judge stays claude-code/claude-sonnet-5-5#high by the judge kit rule of 2026-11-04; it judges the Muse pictures, not the maker code.
-- [~] Task 6: Line pools and judges (D4, D5). Run line calls with `--tries 1` from each passing color,
+  - Evidence (0 USD, round 11): color passes 182 of 182. 165 rows passed at try 1, 13 at try 2, and 4 at try 3 (17 retried). The judge files are `measure/runs/asset_storytime_l2_unit2_pictures_20261108/judge-u2-*.json` (36 files: the week batches u2-w09-r1 to u2-w16-r1, the round batches u2-r1 to u2-r5, and the `-second` files). 11 provider failures cost 0 USD and still counted as tries: 9 color calls (7 HTTP 400, 2 network timeouts) and 2 line calls (HTTP 502). Each fail stood only after a second judge.
+- [x] Task 6 (d34d9e91): Line pools and judges (D4, D5). Run line calls with `--tries 1` from each passing color,
   then the judge. Retry up to 3 line tries in total, with a second judge before a fail stands. Name
   each row with no pass and its best try. Round 7 (b42008b3 base): the line pool ran for the 172
   rows that passed the color judge (1.72 USD, 172 ok, 1 retry). Judge batches u2-w09-r1-line to
@@ -108,7 +109,13 @@ runs the frozen judge and the calibration controls. The stop is 18.33 USD.
   Judge batches u2-r4-line-t1, u2-r4-line-t2, and u2-r4-line-t3 are built, not judged.
   Round 10 (b1420a85 base): the round 4 judge gave 6 of 7 lines pass. The last line try of
   l2-w13-check-row-dot ran at line try 3 (1 ok, 0.01 USD). Judge batch u2-r5-line-t3 is built,
-  not judged. deferred:maker
+  not judged.
+  - Evidence (0 USD, round 11): line passes 181 of 182. 164 rows passed at try 1, 15 at try 2, and 2 at try 3.
+    l2-w10-story-page-put-on-your-hat-pip is the only line fail: its best try is line try 1, and two judges count
+    9 children while the page names 7. Its passing color is try 3 (m2, cleared by the second judge). It has no
+    color try left, so it gets no delivery entry and goes to `onSkip`; the PM decides on one try exception.
+    The judge files are the same 36 `judge-u2-*.json` files. The last try judged is
+    `judge-u2-r5-line-t3.json` (l2-w13-check-row-dot line try 3 passes).
 - [b] Task 7: Delivery and hand-off (D7). Run `deliverMuseUnit2` into
   `out/storytime/l2/unit2/delivery-muse-v1/` with the list pin. Build the hand-off folder
   `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures/` with the PNG files, `manifest.json`,
