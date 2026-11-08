@@ -267,3 +267,19 @@ Spec edits in commit b9ed6043 (the orchestrator brief lists the reasons):
     2. l2-w13-check-row-dot
     3. l2-w13-d4-prompt-jump
   - The 5 judge files are copied into measure/runs/asset_storytime_l2_unit2_pictures_20261108/ and committed with this step.
+- Step Q (linePrompt edits, 0 USD; orchestrator decision 2026-11-09 02:15 ICT). 4 spec files changed. Each file changed only the linePrompt field, and each kept its old prompt as a prefix.
+  - l2-w13-check-row-dot: the plain round circle sentence appended.
+  - l2-w13-d4-prompt-jump: the Sam face sentence appended.
+  - The glasses sentence of round 8 went to 2 of the 5 named rows, because the cast of the other 3 holds no Dad, Mom, May, or Teacher Kim. l2-w11-story-page-here has May, so it took the sentence. l2-w10-story-page-dad-has-a-pan has Dad, so it took the sentence. l2-w11-story-page-ten-men-in-the-den has only Tom, l2-w11-story-page-where-is-lily-on-the-chair has Nan and Lily, and l2-w14-cover-hot-and-cold has only Nan, so the 3 kept their old prompt.
+  - Commit 1f3a76d7, message `fix(storytime_l2_unit2_pictures): line sentences for dot, jump, and the round 3 colors`.
+- Step R (line pool, paid). Command: `node scripts/storytime-muse.mjs line <7 rows> --tries 1 --concurrency 4`.
+  - Pool result: 7 calls, 6 ok, 1 failed, 0 refused. The failed call was l2-w13-d4-prompt-jump with a 0-cost HTTP 502 from the provider.
+  - Retry at concurrency 1: l2-w13-d4-prompt-jump, 1 ok, 0 failed, 0 refused, cost 0.01 USD. The row holds 3 line rows now: the round 8 picture, the 502, and the new picture.
+  - Sources: l2-w11-story-page-here and l2-w11-story-page-ten-men-in-the-den took m3, and the other 5 took m2.
+  - D5 worst case before the pool: 8 calls x 0.01 USD + 3.98 USD + 0.03 USD = 4.09 USD, under the book stop 18.33 USD.
+  - Book total 4.05 USD, left 14.28 USD against the 18.33 USD stop. Highest call 0.01 USD, under the 0.03 USD limit.
+- Step R judge batches. 3 batches, 7 entries.
+  - u2-r4-line-t1: 2 entries, the new m3 lines of l2-w11-story-page-here and l2-w11-story-page-ten-men-in-the-den.
+  - u2-r4-line-t2: 4 entries, the new m2 lines of l2-w10-story-page-dad-has-a-pan, l2-w11-story-page-where-is-lily-on-the-chair, l2-w14-cover-hot-and-cold, and l2-w13-check-row-dot.
+  - u2-r4-line-t3: 1 entry, the new m2 line of l2-w13-d4-prompt-jump.
+  - Check: a sharp script compared every judge copy against the newest line file of its row. All 7 entries have pixel distance 0.00 to the newest file. Result: 7 ok, 0 failures.

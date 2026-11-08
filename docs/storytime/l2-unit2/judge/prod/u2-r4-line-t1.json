@@ -1,0 +1,31 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-here-line-t1.png",
+    "id": "l2-w11-story-page-here",
+    "kind": "line",
+    "pageText": "Here!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "nan",
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-ten-men-in-the-den-line-t1.png",
+    "id": "l2-w11-story-page-ten-men-in-the-den",
+    "kind": "line",
+    "pageText": "Ten men in the den!",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "10 men",
+      "1 den"
+    ]
+  }
+]

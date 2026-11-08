@@ -1,0 +1,46 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-dad-has-a-pan-line-t2.png",
+    "id": "l2-w10-story-page-dad-has-a-pan",
+    "kind": "line",
+    "pageText": "Dad has a pan.",
+    "use": "story-page",
+    "mustShow": [
+      "dad",
+      "tom",
+      "1 pan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-lily-on-the-chair-line-t2.png",
+    "id": "l2-w11-story-page-where-is-lily-on-the-chair",
+    "kind": "line",
+    "pageText": "Where is Lily? On the chair.",
+    "use": "story-page",
+    "mustShow": [
+      "nan",
+      "lily",
+      "1 chair"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-cover-hot-and-cold-line-t2.png",
+    "id": "l2-w14-cover-hot-and-cold",
+    "kind": "line",
+    "pageText": "Hot and Cold",
+    "use": "cover",
+    "mustShow": [
+      "nan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-check-row-dot-line-t2.png",
+    "id": "l2-w13-check-row-dot",
+    "kind": "line",
+    "pageText": "dot",
+    "use": "check-row",
+    "mustShow": [
+      "dot"
+    ]
+  }
+]
