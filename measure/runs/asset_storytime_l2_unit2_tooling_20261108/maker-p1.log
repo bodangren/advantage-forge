@@ -103,3 +103,37 @@ plan_updates: Task 1 (580bc970), Task 2 (58f4ee10), Task 3 (7ee4757f), Task 4 (4
 known_failures: none. The first typecheck attempt in round 1 died from the 3G scope memory limit with no type error; the retries completed. No PNG or JPG is in git. U2_RUN.capUsd is null. No unit 1 file, judge kit file, asset, or Workbooks file changed.
 handoff: phase_base_sha 26fee64e925df82e53633b39cb8a15169318c0d0; final HEAD is this evidence commit. The checker runs the GREEN command and the typecheck at this HEAD, probes the guard (every u2 call refused with the empty cap; unit 1 and card calls unchanged), runs sha256sum -c MANIFEST.txt in /home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep/ (257 OK, 0 FAILED), compares the 16 costs.tsv hashes with the track costs-after.txt, and greps FR-8. The paid run stays closed until Daniel's Go and the PM cap write.
 END_MEASURE_AGENT_RESULT
+
+## Round r3, checker findings of acceptance-p1-fa05dfe
+
+- Start HEAD fa05dfeb. Spend 0 USD. U2_RUN.capUsd stays null.
+- F1: a reuse source of kind unit2-earlier-row now resolves to the earlier row id in its spec
+  file, takes the approval entry of that earlier row, and copies its approved color and line
+  prints under the new row names with the same checks. A missing earlier-row entry stops the
+  write and names both row ids. The only such row is l2-w14-check-row-fan, and the code handles
+  every row of the kind.
+- F3: new guard helper cliGuardOptions drops the test-only u2CapUsd key. storytime-muse.mjs passes
+  that object to runGuards, so the CLI cannot reach the test-only cap path.
+- F4: the --unit2 judge build throws when a row id is in neither rows.json nor the picture list.
+  An element id keeps the [id] rule.
+- F5: pm-report.md now holds the exact phrase 'cap empty, refuses all unit 2 calls'. The reuse
+  text now states 47 unit 1 files and 1 earlier-row reuse, with the row ids.
+- Tests added: U2D10 (earlier-row reuse copies the same bytes), U2D11 (missing earlier-row
+  approval stops the write and names both ids), U2G11 (the CLI drops u2CapUsd and still refuses),
+  U2J11 (unknown row id throws).
+- GREEN at the new tree: 13 files, 209 tests, pass, exit 0. Typecheck: exit 2, 38 known old
+  errors, 0 errors in src/storytime, scripts/storytime-*, or tests/storytime-*.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_unit2_tooling_20261108
+phase: Phase 1 checker fixes, round r3 (F1, F3, F4, F5)
+commits: 258c1b93 and this evidence commit (HEAD)
+tests_run: GREEN command (13 files, 209 tests) passed with exit 0; tsc --noEmit -p . gave exit 2 with 38 known old errors and 0 in src/storytime, scripts/storytime-*, or tests/storytime-*
+files_changed: src/storytime/muse-delivery-u2.ts (unit2-earlier-row reuse), scripts/storytime-muse-guards.mjs and .d.mts (cliGuardOptions), scripts/storytime-muse.mjs (sanitized guard options), scripts/storytime-judge-batch.mjs (mustShow throws for an unknown row id), tests/storytime-u2-guards.test.ts, tests/storytime-u2-judge-batch.test.ts, tests/storytime-u2-delivery.test.ts, pm-report.md, plan.md, maker-p1.log
+plan_updates: Task 3 note with the checker findings, the F1/F3/F4/F5 fix commit 258c1b93, and the F2 GREEN rerun
+known_failures: none. No PNG or JPG entered git. U2_RUN.capUsd is null. The checker files were not changed or staged.
+handoff: phase_base_sha 26fee64e925df82e53633b39cb8a15169318c0d0; the previous HEAD was fa05dfeb; this round adds 258c1b93 and this evidence commit. The checker reruns the GREEN command and the typecheck at this HEAD. F1 probe: l2-w14-check-row-fan delivers the prints of l2-w10-check-row-fan and a run without that entry stops with both ids. The report keeps 258 hand-off files, 257 OK, and the costs hashes equal the prep file.
+dispositions: F1=FIX; F2=FIX; F3=FIX; F4=FIX; F5=FIX
+END_MEASURE_AGENT_RESULT

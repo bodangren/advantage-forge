@@ -60,6 +60,8 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
 - [x] Task 3 (7ee4757f): Delivery writer (D3). Write `deliverMuseUnit2` and
   `tests/storytime-u2-delivery.test.ts` with generated fixtures, the reuse copy, the size and alpha
   checks, and the pin refusal. Commit with explicit paths.
+  Checker findings F1, F3, F4, F5 of acceptance-p1-fa05dfe (2026-11-08): FIX in round r3,
+  commit 258c1b93; F2: GREEN rerun at the new HEAD.
 - [x] Task 4 (4c7e2b11): Line sentence (D4). Fix `scripts/storytime-u2-specs.mjs`, regenerate
   the specs and the prompt list, add the check to `tests/storytime-u2-specs.test.ts`, rebuild the
   hand-off folder with `make-handoff.mjs`, and run `sha256sum -c MANIFEST.txt` (0 failures).
