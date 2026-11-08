@@ -2,13 +2,6 @@
 
 This registry gives each historical, current, and planned work item one Measure owner.
 
-## Contents
-
-- [Foundation and history](#foundation-and-history)
-- [Asset production](#asset-production)
-- [Games](#games)
-- [Riven Lands pack](#riven-lands-pack)
-
 ## Foundation and history
 
 - [x] **Track: History: Add rigging, animation, and clearance checks**
