@@ -44,7 +44,7 @@ role: closeout
 status: complete
 track: asset_storytime_l2_unit2_pictures_20261108
 phase: track closeout
-commits: the archive commit
+commits: f1563b16, df07ff01, f1fb272c
 tests_run: bash measure/doctor.sh (exit 1; 13 errors of other tracks; no line names this track); GREEN from /tmp/opencode/green-step4.log (Test Files 14 passed (14), Tests 232 passed (232), GREEN_EXIT=0); tsc from the same log (38 error lines, 0 in the storytime paths); secret scan of the run folder (0 hits); find for PNG or JPG in the run folder (0)
 files_changed: measure/archive/asset_storytime_l2_unit2_pictures_20261108/ (plan.md, metadata.json, index.md, spec.md, spec-review.md, automation-supervisor-closeout-manifest.json) and the removal of measure/tracks/asset_storytime_l2_unit2_pictures_20261108/; measure/runs/asset_storytime_l2_unit2_pictures_20261108/ (80 files, including the untracked acceptance-p3-179365e.json and the probe-p3 files); measure/tracks.md (the staged blob); measure/lessons-learned.md
 plan_updates: the Phase 3 checkpoint, the Phase 3 gate, the Closeout line, and the status line of the archived plan
