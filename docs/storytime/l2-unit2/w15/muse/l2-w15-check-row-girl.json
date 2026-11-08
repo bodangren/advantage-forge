@@ -1,9 +1,12 @@
 {
   "id": "l2-w15-check-row-girl",
   "text": "girl",
-  "goal": "",
-  "references": [],
-  "colorPrompt": "Compose one children's book picture from the element pictures. Draw the same object with the same shape, the same colors, and the same proportions as in picture 1, as a smooth, clean, bright, soft, round 3D render with a plain white background. The picture to make: a square picture of exactly ONE girl, large in the middle, filling most of the square, the whole object in view, seen from a three-quarter view, so that its shape reads clearly. Exactly one girl: no second one, no copies, and nothing else in the picture. The background is plain white and empty, with at most a very soft shadow under the object. The object has no eyes and no face. The page text is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "goal": "One picture of Nan that shows the word girl: she points at one girl.",
+  "references": [
+    "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
+    "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-face-crop.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the element pictures. Picture 1 shows the girl Nan in a full-body view: copy her exactly. Picture 2 is a close-up of Nan's face with the correct, clean eyes: copy her face and eyes from it exactly; each eye ends in a smooth, rounded outer corner with one short, thick, curved eyelash flick; there is no pale skin flap, no torn edge, and no separate small tick mark at any eye corner. Keep the soft, round, bright 3D render look of the pictures, not a 2D drawing and no outlines. The character keeps the chibi proportions of a five-year-old child: a big head and a small body. The hands are small, clean hands with five clear short fingers and a thumb when open, never fists, and a hanging hand shows relaxed, separate short fingers. Rendering errors to NOT copy from the character pictures: a tiny dark tick mark or pale skin flap at the outer corner of an eye, and a faint pale crease on a forehead. Each eye ends in a smooth, rounded corner. Clean eye corners, no streak on the forehead, no marks on the face. The ears are smooth, with one clean rounded rim. Each piece of clothing is one even color with no pale patches, no pale blotches at the shoulders, and no stains. Do not change anyone's hair or clothes. The picture: Nan stands full body on a plain white background and points at one girl with one hand. A square card picture on a plain pure white background: the full body stands at the middle of the square, the whole figure in view from head to feet, facing the camera, with a wide empty white margin on every side. Exactly one person: no other person, no animal, and nothing else in the picture. The shadow is soft or absent. Keep Nan exactly as in the picture: Nan: black-brown hair in exactly two round buns with smooth red ring bands (no bun on top), large dark-brown eyes, an orange T-shirt with a white star, red shorts, white sneakers The page text is \"girl\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
   "linePrompt": "Picture 1 is a 3D-rendered children's book picture of one object. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No fine detail, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. The object outline is one closed shape. No fur strands, scales, grain, or texture lines. The bus body, the wheels, and each window are separate closed shapes with thick outlines. This object has no eyes and no face: draw no eyes, no pupils, and no face anywhere. Every line inside the object ends on another line, with no loose ends. Draw only the object: no ground line, no shadow, no background shapes. Do not draw any text, letters, or numbers.",
   "print": "crop",
   "aspect": "1:1",
@@ -20,7 +23,9 @@
   "donorFiles": {
     "rule": "docs/storytime/l2-unit1/w07/muse/l2-w07-check-row-bus.json",
     "line": "docs/storytime/l2-unit1/w07/muse/l2-w07-check-row-bus.json",
-    "cast": [],
+    "cast": [
+      "docs/storytime/l2-unit1/cards/l2-w01-card-hello.json"
+    ],
     "scene": "pictures-u2.json (Workbooks row prompt)"
   }
 }

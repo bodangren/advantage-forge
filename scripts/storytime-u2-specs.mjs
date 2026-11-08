@@ -128,12 +128,25 @@ function sentenceFor(ref, row) {
 function setSentence(ref) {
   for (const el of Object.values(E)) {
     if (el.path !== ref || el.kind !== 'set') continue;
-    if (el.source === 'new') {
-      return `is the new empty ${el.look} (a draft element sheet for the paid run: make the empty room first); use it as the background and keep the same room.`;
+    const place = /playground|farmyard|garden|street|park|meadow/.test(el.id);
+    let look = el.look.replace(/^empty\s+/i, '');
+    let extra = '';
+    if (el.id === 'set-tom-living-room') {
+      // R2: the unit 1 set holds a low table with a silver pot. The row leaves it out.
+      look = look.replace(/, and ONE low wooden table with ONE big silver pot with a lid in the right foreground/, '');
+      extra = ' The set picture also shows a low wooden table with a big silver pot in the right foreground: leave out the table and the pot; that part of the floor is clear.';
     }
-    return `is the empty ${el.look}; use it as the background and keep the same room.`;
+    const pre = el.source === 'new' ? 'is the new ' : 'is the ';
+    return `${pre}${look}; use it as the background and keep the same ${place ? 'place' : 'room'}.${extra}`;
   }
   return null;
+}
+
+// Display name of a cast key, for "Keep <name> exactly as in the picture".
+function displayName(key) {
+  const raw = key.replace(/-/g, ' ');
+  if (raw === 'nans dad') return "Nan's dad";
+  return raw.replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 function lineCopyWithSetShapes(row) {
@@ -174,19 +187,39 @@ for (const row of rowsDoc.rows) {
   const cardText = isCard ? (cardList.find((c) => c.week === row.week && row.id.endsWith(`-card-${String(c.word).toLowerCase().replace(/[^a-z0-9]+/g, '-')}`)) || {}).prompt : null;
   const donorFile = DONOR[row.use] || DONOR['story-page'];
   let cp;
+  let goal = row.scene;
   if (isC) {
-    const head = isCard
-      ? `Compose one children's book picture from the element pictures${refs.length === 1 ? '' : ''}.`
-      : `Compose one children's book picture from the element picture${refs.length === 1 ? '' : 's'}.`;
-    cp = [head, ...sentences].join(' ');
-    if (isCard && cardText) {
-      const keep = row.cast.length
-        ? ` Keep ${row.text} exactly as in the picture: ${row.cast.map((k) => (elements.castPeople[k] ? elements.castPeople[k].note : k)).join('; ')}.`
+    const form = row.form || 'object';
+    const person = row.cast[0];
+    const personName = person ? displayName(person) : null;
+    const personNote = person && elements.castPeople[person] ? elements.castPeople[person].note : '';
+    if (form === 'text-object') {
+      // R4: no reference picture. Describe the object in words and never say "picture 1".
+      const words = textOnly.map((el) => el.look).join('; ') || `ONE ${row.text}`;
+      goal = `One picture of ${words.replace(/^ONE /, 'one ')}.`;
+      cp = `Make one children's book picture. Do not use a reference picture: draw the object from these words. The object: ${words}. Draw it as a smooth, clean, bright, soft, round 3D render with a plain white background. The picture to make: a square picture of exactly ONE ${row.text}, large in the middle, filling most of the square, the whole object in view, seen from a three-quarter view, so that its shape reads clearly. Exactly one ${row.text}: no second one, no copies, and nothing else in the picture. The background is plain white and empty, with at most a very soft shadow under the object. The object has no eyes and no face. The page text is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.`;
+    } else if (form === 'person-card') {
+      // R5: a person word uses the person form of the card rows.
+      goal = `One picture of ${personName} that shows the word ${row.text}: ${row.text === 'dad' ? 'he stands' : 'she points at one ' + row.text}.`;
+      const note = personNote ? ` Keep ${personName} exactly as in the picture: ${personNote}` : '';
+      cp = `Compose one children's book picture from the element pictures. ${sentences.join(' ')} Keep the soft, round, bright 3D render look of the pictures, not a 2D drawing and no outlines. The character keeps the chibi proportions of a five-year-old child: a big head and a small body. The hands are small, clean hands with five clear short fingers and a thumb when open, never fists, and a hanging hand shows relaxed, separate short fingers. Rendering errors to NOT copy from the character pictures: a tiny dark tick mark or pale skin flap at the outer corner of an eye, and a faint pale crease on a forehead. Each eye ends in a smooth, rounded corner. Clean eye corners, no streak on the forehead, no marks on the face. The ears are smooth, with one clean rounded rim. Each piece of clothing is one even color with no pale patches, no pale blotches at the shoulders, and no stains. Do not change anyone's hair or clothes. The picture: ${personName} stands full body on a plain white background and ${row.text === 'dad' ? 'smiles' : 'points at one ' + row.text + ' with one hand'}. A square card picture on a plain pure white background: the full body stands at the middle of the square, the whole figure in view from head to feet, facing the camera, with a wide empty white margin on every side. Exactly one person: no other person, no animal, and nothing else in the picture. The shadow is soft or absent.${note} The page text is "${row.text}" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.`;
+    } else if (form === 'body-part') {
+      // R5: a body-part word uses the body-part form of the family-words spec.
+      goal = `One picture of ${personName} that shows the word ${row.text}: she points at one ${row.text}.`;
+      const note = personNote ? ` Keep ${personName} exactly as in the picture: ${personNote}` : '';
+      cp = `Compose one children's book picture from the element pictures. ${sentences.join(' ')} Keep the soft, round, bright 3D render look of the pictures, not a 2D drawing and no outlines. The character keeps her chibi proportions: a big head and a small body. The hands are small, clean hands with five clear short fingers and a thumb when open, never fists. Rendering errors to NOT copy from the character pictures: a tiny dark tick mark at the outer corner of an eye, and a faint pale crease on a forehead. Each eye ends in a smooth, rounded corner; ${personName} keeps one short, thick, curved eyelash flick at each outer eye corner. Clean eye corners, no streak on the forehead, no marks on the face. The ears are smooth, with one clean rounded rim. Each piece of clothing is one even color with no pale patches and no stains. Do not change anyone's hair or clothes. The picture: ${personName} sits on a plain white background, one leg out, and points at ONE ${row.text} with one hand. A square picture of one person on a plain pure white background: the whole figure in view, facing the camera, with a wide empty white margin on every side. Exactly one person and exactly one ${row.text}: no second one and nothing else in the picture.${note} The page text is "${row.text}" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.`;
+    } else if (isCard && cardText) {
+      // R6: the keep line names the cast person, never the card word.
+      const keep = person
+        ? ` Keep ${personName} exactly as in the picture: ${personNote}`
         : '';
-      cp += ` The picture: ${cardText}${keep} The background is plain white and empty, with at most a very soft shadow under the person.`;
-      cp += ` The page text is "${row.text}" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.`;
+      cp = `Compose one children's book picture from the element pictures. ${sentences.join(' ')} The picture: ${cardText}${keep} The background is plain white and empty, with at most a very soft shadow under the object. The page text is "${row.text}" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.`;
+      goal = cardText;
     } else {
+      const head = `Compose one children's book picture from the element picture${refs.length === 1 ? '' : 's'}.`;
+      cp = [head, ...sentences].join(' ');
       cp += ` Draw the same object with the same shape, the same colors, and the same proportions as in picture 1, as a smooth, clean, bright, soft, round 3D render with a plain white background. The picture to make: a square picture of exactly ONE ${row.text}, large in the middle, filling most of the square, the whole object in view, seen from a three-quarter view, so that its shape reads clearly. Exactly one ${row.text}: no second one, no copies, and nothing else in the picture. ${RULE[row.use] || RULE['check-row']}`;
+      goal = `One picture of exactly one ${row.text}.`;
     }
   } else {
     const head = row.use === 'cover'
@@ -205,7 +238,7 @@ for (const row of rowsDoc.rows) {
   const spec = {
     id: row.id,
     text: row.text,
-    goal: row.scene,
+    goal,
     references: refs,
     colorPrompt: cp,
     linePrompt: lineCopyWithSetShapes(row),

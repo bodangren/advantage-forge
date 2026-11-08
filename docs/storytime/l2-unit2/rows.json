@@ -19,6 +19,7 @@
         "text-rice",
         "bowl"
       ],
+      "form": "scene",
       "textOnly": [
         "text-spoon",
         "text-rice"
@@ -40,6 +41,7 @@
         "text-egg",
         "plate"
       ],
+      "form": "scene",
       "textOnly": [
         "text-egg"
       ],
@@ -60,6 +62,7 @@
         "milk",
         "cup"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -77,6 +80,7 @@
       "props": [
         "text-banana"
       ],
+      "form": "scene",
       "textOnly": [
         "text-banana"
       ],
@@ -96,6 +100,7 @@
       "props": [
         "bread"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -114,6 +119,7 @@
         "text-juice",
         "cup"
       ],
+      "form": "scene",
       "textOnly": [
         "text-juice"
       ],
@@ -134,6 +140,7 @@
         "cake",
         "plate"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -154,6 +161,7 @@
         "cake",
         "plate"
       ],
+      "form": "scene",
       "textOnly": [
         "text-napkin"
       ],
@@ -181,6 +189,7 @@
         "plate",
         "cup"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -192,13 +201,13 @@
       "text": "Dad has a mop.",
       "scene": "Dad holds a mop with a long wooden handle and a gray mop head in the bright living room of Tom's home and smiles. The bright living room of Tom's home has a green sofa, a window, a small brown rug under the window, an open toy box, and a soft round blue mat on the floor.",
       "cast": [
-        "dad",
-        "tom"
+        "dad"
       ],
       "set": "set-tom-living-room",
       "props": [
         "text-mop"
       ],
+      "form": "scene",
       "textOnly": [
         "text-mop"
       ],
@@ -218,6 +227,7 @@
       "props": [
         "text-mop"
       ],
+      "form": "scene",
       "textOnly": [
         "text-mop"
       ],
@@ -238,6 +248,7 @@
       "props": [
         "text-mop"
       ],
+      "form": "scene",
       "textOnly": [
         "text-mop"
       ],
@@ -257,6 +268,7 @@
       "props": [
         "text-mop"
       ],
+      "form": "scene",
       "textOnly": [
         "text-mop"
       ],
@@ -274,6 +286,7 @@
       ],
       "set": "set-tom-living-room",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -292,6 +305,7 @@
       "props": [
         "text-mop"
       ],
+      "form": "scene",
       "textOnly": [
         "text-mop"
       ],
@@ -311,6 +325,7 @@
       "props": [
         "text-mop"
       ],
+      "form": "scene",
       "textOnly": [
         "text-mop"
       ],
@@ -332,6 +347,7 @@
       "props": [
         "text-mop"
       ],
+      "form": "scene",
       "textOnly": [
         "text-mop"
       ],
@@ -346,13 +362,13 @@
       "scene": "Dad holds a mop with a long wooden handle and a gray mop head in the bright living room of Tom's home and smiles; Pip the puppy sits next to the mop and looks up at it. The bright living room of Tom's home has a green sofa, a window, a small brown rug under the window, an open toy box, and a soft round blue mat on the floor.",
       "cast": [
         "dad",
-        "tom",
         "pip"
       ],
       "set": "set-tom-living-room",
       "props": [
         "text-mop"
       ],
+      "form": "scene",
       "textOnly": [
         "text-mop"
       ],
@@ -368,6 +384,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "dog",
@@ -385,6 +402,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "sun",
@@ -402,6 +420,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "cat",
@@ -419,6 +438,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "fish",
@@ -436,6 +456,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": null
     },
@@ -449,6 +470,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "bus",
@@ -466,6 +488,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "pen",
@@ -483,6 +506,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "cup",
@@ -500,6 +524,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": null
     },
@@ -513,6 +538,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": null
     },
@@ -528,6 +554,7 @@
       ],
       "set": "set-classroom-dress-up-corner",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -543,6 +570,7 @@
       ],
       "set": "set-classroom-dress-up-corner",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -558,6 +586,7 @@
       ],
       "set": "set-classroom-dress-up-corner",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -573,6 +602,7 @@
       ],
       "set": "set-classroom-dress-up-corner",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -590,6 +620,7 @@
       "props": [
         "socks"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -605,6 +636,7 @@
       ],
       "set": "set-classroom-dress-up-corner",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -623,6 +655,7 @@
       "props": [
         "sunhat"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -648,6 +681,7 @@
       "props": [
         "sunhat"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -670,6 +704,7 @@
       ],
       "set": "set-classroom-dress-up-corner",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -686,6 +721,7 @@
       ],
       "set": "set-tom-kitchen",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -703,6 +739,7 @@
       "props": [
         "text-gingerbread"
       ],
+      "form": "scene",
       "textOnly": [
         "text-gingerbread"
       ],
@@ -720,6 +757,7 @@
       "props": [
         "text-gingerbread"
       ],
+      "form": "scene",
       "textOnly": [
         "text-gingerbread"
       ],
@@ -740,6 +778,7 @@
       "props": [
         "text-gingerbread"
       ],
+      "form": "scene",
       "textOnly": [
         "text-gingerbread"
       ],
@@ -760,6 +799,7 @@
       "props": [
         "text-gingerbread"
       ],
+      "form": "scene",
       "textOnly": [
         "text-gingerbread"
       ],
@@ -777,6 +817,7 @@
       "props": [
         "text-gingerbread"
       ],
+      "form": "scene",
       "textOnly": [
         "text-gingerbread"
       ],
@@ -797,6 +838,7 @@
       "props": [
         "text-gingerbread"
       ],
+      "form": "scene",
       "textOnly": [
         "text-gingerbread"
       ],
@@ -817,6 +859,7 @@
       "props": [
         "text-gingerbread"
       ],
+      "form": "scene",
       "textOnly": [
         "text-gingerbread"
       ],
@@ -837,6 +880,7 @@
       "props": [
         "text-gingerbread"
       ],
+      "form": "scene",
       "textOnly": [
         "text-gingerbread"
       ],
@@ -854,6 +898,7 @@
       "props": [
         "text-fan"
       ],
+      "form": "text-object",
       "textOnly": [
         "text-fan"
       ],
@@ -869,6 +914,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "dog",
@@ -886,6 +932,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "bed",
@@ -903,6 +950,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "cup",
@@ -920,6 +968,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": null
     },
@@ -933,6 +982,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "sun",
@@ -950,6 +1000,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "sock",
@@ -964,9 +1015,12 @@
       "sizeClass": "C",
       "text": "dad",
       "scene": "",
-      "cast": [],
+      "cast": [
+        "dad"
+      ],
       "set": null,
       "props": [],
+      "form": "person-card",
       "textOnly": [],
       "reuse": null
     },
@@ -980,6 +1034,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "ten",
@@ -1004,6 +1059,7 @@
         "text-armchair",
         "low-table"
       ],
+      "form": "scene",
       "textOnly": [
         "text-armchair"
       ],
@@ -1022,6 +1078,7 @@
       ],
       "set": "set-nan-living-room",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1040,6 +1097,7 @@
       "props": [
         "green-door"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1056,6 +1114,7 @@
       ],
       "set": "set-nan-bedroom",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1072,6 +1131,7 @@
       ],
       "set": "set-nan-living-room",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1091,6 +1151,7 @@
         "chair",
         "text-armchair"
       ],
+      "form": "scene",
       "textOnly": [
         "text-armchair"
       ],
@@ -1114,6 +1175,7 @@
       ],
       "set": "set-nan-living-room",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1136,6 +1198,7 @@
       ],
       "set": "set-nan-living-room",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1161,6 +1224,7 @@
         "text-armchair",
         "low-table"
       ],
+      "form": "scene",
       "textOnly": [
         "text-armchair"
       ],
@@ -1180,6 +1244,7 @@
       "props": [
         "text-blanket"
       ],
+      "form": "scene",
       "textOnly": [
         "text-blanket"
       ],
@@ -1199,6 +1264,7 @@
       "props": [
         "text-blanket"
       ],
+      "form": "scene",
       "textOnly": [
         "text-blanket"
       ],
@@ -1219,6 +1285,7 @@
       "props": [
         "text-blanket"
       ],
+      "form": "scene",
       "textOnly": [
         "text-blanket"
       ],
@@ -1239,6 +1306,7 @@
       "props": [
         "text-blanket"
       ],
+      "form": "scene",
       "textOnly": [
         "text-blanket"
       ],
@@ -1260,6 +1328,7 @@
       "props": [
         "text-blanket"
       ],
+      "form": "scene",
       "textOnly": [
         "text-blanket"
       ],
@@ -1280,6 +1349,7 @@
         "top",
         "text-blanket"
       ],
+      "form": "scene",
       "textOnly": [
         "text-blanket"
       ],
@@ -1301,6 +1371,7 @@
         "top",
         "text-blanket"
       ],
+      "form": "scene",
       "textOnly": [
         "text-blanket"
       ],
@@ -1314,7 +1385,6 @@
       "text": "The den is on Dad!",
       "scene": "The big blue blanket lies over Dad's head and back in the same living room; Pip the puppy sits on Dad's back on top of the blanket and wags his tail, and Tom (drawn young, about eight years old) and Mom laugh. The ten small wooden toy men lie on the soft round blue mat.",
       "cast": [
-        "dad",
         "pip",
         "tom",
         "mom"
@@ -1324,6 +1394,7 @@
         "top",
         "text-blanket"
       ],
+      "form": "scene",
       "textOnly": [
         "text-blanket"
       ],
@@ -1343,6 +1414,7 @@
       "props": [
         "text-blanket"
       ],
+      "form": "scene",
       "textOnly": [
         "text-blanket"
       ],
@@ -1360,6 +1432,7 @@
       "props": [
         "text-egg"
       ],
+      "form": "text-object",
       "textOnly": [
         "text-egg"
       ],
@@ -1375,6 +1448,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "sun",
@@ -1392,6 +1466,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "cat",
@@ -1409,6 +1484,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "dog",
@@ -1426,6 +1502,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": null
     },
@@ -1439,6 +1516,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "fish",
@@ -1456,6 +1534,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "cat",
@@ -1473,6 +1552,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "dog",
@@ -1490,6 +1570,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "ten",
@@ -1512,6 +1593,7 @@
       "props": [
         "book"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1529,6 +1611,7 @@
       "props": [
         "book"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1546,6 +1629,7 @@
       "props": [
         "book"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1563,6 +1647,7 @@
       "props": [
         "book"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1580,6 +1665,7 @@
       "props": [
         "book"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1597,6 +1683,7 @@
       "props": [
         "book"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1615,6 +1702,7 @@
         "book",
         "bag"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1634,6 +1722,7 @@
       "props": [
         "book"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1658,6 +1747,7 @@
       "props": [
         "book"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1669,14 +1759,13 @@
       "text": "Dad has a hat.",
       "scene": "Dad holds a big straw hat in the sunny farmyard of Grandma and Grandpa's farm and smiles. The sunny farmyard of Grandma and Grandpa's farm has green grass, a small red barn, a low wooden fence, and a small straw mat on the grass.",
       "cast": [
-        "dad",
-        "grandma",
-        "grandpa"
+        "dad"
       ],
       "set": "set-farmyard",
       "props": [
         "sunhat"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1695,6 +1784,7 @@
         "sun",
         "sunhat"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1712,6 +1802,7 @@
       "props": [
         "sunhat"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1728,6 +1819,7 @@
         "hen",
         "sunhat"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1744,6 +1836,7 @@
         "hen",
         "sunhat"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1760,6 +1853,7 @@
         "hen",
         "sunhat"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1778,6 +1872,7 @@
         "hen",
         "sunhat"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1797,6 +1892,7 @@
         "hen",
         "sunhat"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1808,15 +1904,14 @@
       "text": "The Hen and the Hat",
       "scene": "Dad holds a big straw hat in the sunny farmyard of Grandma and Grandpa's farm, and a small brown hen with a red comb looks up at the hat. The sunny farmyard of Grandma and Grandpa's farm has green grass, a small red barn, a low wooden fence, and a small straw mat on the grass.",
       "cast": [
-        "dad",
-        "grandma",
-        "grandpa"
+        "dad"
       ],
       "set": "set-farmyard",
       "props": [
         "hen",
         "sunhat"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -1830,6 +1925,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "hat",
@@ -1847,6 +1943,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "sun",
@@ -1864,6 +1961,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "cat",
@@ -1881,6 +1979,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "dog",
@@ -1898,6 +1997,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": null
     },
@@ -1911,6 +2011,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "fish",
@@ -1928,6 +2029,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "pen",
@@ -1945,6 +2047,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "cup",
@@ -1962,6 +2065,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": null
     },
@@ -1975,6 +2079,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": null
     },
@@ -1990,6 +2095,7 @@
       ],
       "set": "set-playground",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2005,6 +2111,7 @@
       ],
       "set": "set-playground",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2022,6 +2129,7 @@
       "props": [
         "balls"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2039,6 +2147,7 @@
       "props": [
         "balls"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2056,6 +2165,7 @@
       "props": [
         "balls"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2071,6 +2181,7 @@
       ],
       "set": "set-playground",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2088,6 +2199,7 @@
       "props": [
         "balls"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2112,6 +2224,7 @@
       "props": [
         "balls"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2134,6 +2247,7 @@
       ],
       "set": "set-playground",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2151,6 +2265,7 @@
       "props": [
         "pot"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2169,6 +2284,7 @@
       "props": [
         "pot"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2188,6 +2304,7 @@
         "top",
         "pot"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2206,6 +2323,7 @@
         "top",
         "pot"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2225,6 +2343,7 @@
         "top",
         "pot"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2246,6 +2365,7 @@
         "pot",
         "book"
       ],
+      "form": "scene",
       "textOnly": [
         "text-mat"
       ],
@@ -2269,6 +2389,7 @@
         "top",
         "pot"
       ],
+      "form": "scene",
       "textOnly": [
         "text-mat"
       ],
@@ -2290,6 +2411,7 @@
       "props": [
         "text-mat"
       ],
+      "form": "scene",
       "textOnly": [
         "text-mat"
       ],
@@ -2310,6 +2432,7 @@
       "props": [
         "pot"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2323,6 +2446,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": null
     },
@@ -2336,6 +2460,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "sun",
@@ -2353,6 +2478,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "bed",
@@ -2370,6 +2496,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "cup",
@@ -2387,6 +2514,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": null
     },
@@ -2400,6 +2528,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "fish",
@@ -2417,6 +2546,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "hat",
@@ -2434,6 +2564,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "pen",
@@ -2453,6 +2584,7 @@
       "props": [
         "text-mop"
       ],
+      "form": "text-object",
       "textOnly": [
         "text-mop"
       ],
@@ -2468,6 +2600,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": null
     },
@@ -2486,6 +2619,7 @@
         "sun",
         "balls"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2503,6 +2637,7 @@
       "props": [
         "text-cloud"
       ],
+      "form": "scene",
       "textOnly": [
         "text-cloud"
       ],
@@ -2522,6 +2657,7 @@
       "props": [
         "kites"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2541,6 +2677,7 @@
         "text-cloud",
         "text-rain"
       ],
+      "form": "scene",
       "textOnly": [
         "text-umbrella",
         "text-cloud",
@@ -2563,6 +2700,7 @@
         "sun",
         "cup"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2578,6 +2716,7 @@
       ],
       "set": "set-nan-front-garden",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2599,6 +2738,7 @@
         "text-sofa",
         "sunhat"
       ],
+      "form": "scene",
       "textOnly": [
         "text-blanket",
         "text-wool-hat",
@@ -2625,6 +2765,7 @@
         "text-sofa",
         "sunhat"
       ],
+      "form": "scene",
       "textOnly": [
         "text-blanket",
         "text-wool-hat",
@@ -2647,6 +2788,7 @@
         "text-umbrella",
         "text-rain"
       ],
+      "form": "scene",
       "textOnly": [
         "text-umbrella",
         "text-rain"
@@ -2661,11 +2803,11 @@
       "text": "Dad is hot.",
       "scene": "Dad sits on the green sofa in the bright living room of Tom's home on a hot day and wipes his forehead. The bright living room of Tom's home has a green sofa, a window, a small brown rug under the window, an open toy box, and a soft round blue mat on the floor.",
       "cast": [
-        "dad",
-        "tom"
+        "dad"
       ],
       "set": "set-tom-living-room",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2683,6 +2825,7 @@
       "props": [
         "text-fan"
       ],
+      "form": "scene",
       "textOnly": [
         "text-fan"
       ],
@@ -2703,6 +2846,7 @@
       "props": [
         "text-fan"
       ],
+      "form": "scene",
       "textOnly": [
         "text-fan"
       ],
@@ -2722,6 +2866,7 @@
       "props": [
         "text-fan"
       ],
+      "form": "scene",
       "textOnly": [
         "text-fan"
       ],
@@ -2739,6 +2884,7 @@
       ],
       "set": "set-tom-living-room",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -2756,6 +2902,7 @@
       "props": [
         "text-fan"
       ],
+      "form": "scene",
       "textOnly": [
         "text-fan"
       ],
@@ -2776,6 +2923,7 @@
       "props": [
         "text-fan"
       ],
+      "form": "scene",
       "textOnly": [
         "text-fan"
       ],
@@ -2797,6 +2945,7 @@
       "props": [
         "text-fan"
       ],
+      "form": "scene",
       "textOnly": [
         "text-fan"
       ],
@@ -2811,7 +2960,6 @@
       "scene": "Mom holds a small white electric fan on a low stand in the bright living room of Tom's home, and Dad smiles on the green sofa; Pip the puppy lies on the small brown rug. The bright living room of Tom's home has a green sofa, a window, a small brown rug under the window, an open toy box, and a soft round blue mat on the floor.",
       "cast": [
         "mom",
-        "tom",
         "dad",
         "pip"
       ],
@@ -2819,6 +2967,7 @@
       "props": [
         "text-fan"
       ],
+      "form": "scene",
       "textOnly": [
         "text-fan"
       ],
@@ -2834,6 +2983,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "fish",
@@ -2851,6 +3001,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "sun",
@@ -2868,6 +3019,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "cat",
@@ -2885,6 +3037,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "dog",
@@ -2899,9 +3052,12 @@
       "sizeClass": "C",
       "text": "foot",
       "scene": "",
-      "cast": [],
+      "cast": [
+        "nan"
+      ],
       "set": null,
       "props": [],
+      "form": "body-part",
       "textOnly": [],
       "reuse": null
     },
@@ -2915,6 +3071,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "bed",
@@ -2932,6 +3089,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "pen",
@@ -2949,6 +3107,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "cup",
@@ -2968,6 +3127,7 @@
       "props": [
         "text-fan"
       ],
+      "form": "text-object",
       "textOnly": [
         "text-fan"
       ],
@@ -2991,6 +3151,7 @@
       "props": [
         "bus"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -3008,6 +3169,7 @@
       "props": [
         "text-car"
       ],
+      "form": "scene",
       "textOnly": [
         "text-car"
       ],
@@ -3027,6 +3189,7 @@
       "props": [
         "text-bike"
       ],
+      "form": "scene",
       "textOnly": [
         "text-bike"
       ],
@@ -3046,6 +3209,7 @@
       "props": [
         "text-truck"
       ],
+      "form": "scene",
       "textOnly": [
         "text-truck"
       ],
@@ -3065,6 +3229,7 @@
       "props": [
         "text-train"
       ],
+      "form": "scene",
       "textOnly": [
         "text-train"
       ],
@@ -3085,6 +3250,7 @@
         "fence",
         "text-boat"
       ],
+      "form": "scene",
       "textOnly": [
         "text-boat"
       ],
@@ -3105,6 +3271,7 @@
         "text-bike",
         "text-plane"
       ],
+      "form": "scene",
       "textOnly": [
         "text-bike",
         "text-plane"
@@ -3133,6 +3300,7 @@
       "props": [
         "text-bike"
       ],
+      "form": "scene",
       "textOnly": [
         "text-bike"
       ],
@@ -3159,6 +3327,7 @@
       "props": [
         "bus"
       ],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -3170,14 +3339,14 @@
       "text": "Pip has a tag.",
       "scene": "Pip the puppy sits on the small brown rug in the bright living room of Tom's home; the small round gold tag of his red collar shines. The bright living room of Tom's home has a green sofa, a window, a small brown rug under the window, an open toy box, a soft round blue mat on the floor, a small clay pot by the door, and a row of coat pegs on the wall next to the door.",
       "cast": [
-        "pip",
-        "tom"
+        "pip"
       ],
       "set": "set-tom-living-room",
       "props": [
         "text-tag",
         "text-pegs"
       ],
+      "form": "scene",
       "textOnly": [
         "text-tag",
         "text-pegs"
@@ -3199,6 +3368,7 @@
       "props": [
         "text-tag"
       ],
+      "form": "scene",
       "textOnly": [
         "text-tag"
       ],
@@ -3218,6 +3388,7 @@
       "props": [
         "text-tag"
       ],
+      "form": "scene",
       "textOnly": [
         "text-tag"
       ],
@@ -3236,6 +3407,7 @@
       ],
       "set": "set-tom-living-room",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -3251,6 +3423,7 @@
       ],
       "set": "set-tom-living-room",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -3266,6 +3439,7 @@
       ],
       "set": "set-tom-living-room",
       "props": [],
+      "form": "scene",
       "textOnly": [],
       "reuse": null
     },
@@ -3286,6 +3460,7 @@
         "text-tag",
         "text-pegs"
       ],
+      "form": "scene",
       "textOnly": [
         "text-tag",
         "text-pegs"
@@ -3307,6 +3482,7 @@
       "props": [
         "text-tag"
       ],
+      "form": "scene",
       "textOnly": [
         "text-tag"
       ],
@@ -3320,14 +3496,14 @@
       "text": "The Tag",
       "scene": "Pip the puppy sits on the small brown rug in the bright living room of Tom's home and wags his tail; the small round gold tag of his red collar shines. The bright living room of Tom's home has a green sofa, a window, a small brown rug under the window, an open toy box, a soft round blue mat on the floor, a small clay pot by the door, and a row of coat pegs on the wall next to the door.",
       "cast": [
-        "pip",
-        "tom"
+        "pip"
       ],
       "set": "set-tom-living-room",
       "props": [
         "text-tag",
         "text-pegs"
       ],
+      "form": "scene",
       "textOnly": [
         "text-tag",
         "text-pegs"
@@ -3344,6 +3520,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": null
     },
@@ -3357,6 +3534,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "sun",
@@ -3374,6 +3552,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "cat",
@@ -3391,6 +3570,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "bed",
@@ -3405,9 +3585,12 @@
       "sizeClass": "C",
       "text": "girl",
       "scene": "",
-      "cast": [],
+      "cast": [
+        "nan"
+      ],
       "set": null,
       "props": [],
+      "form": "person-card",
       "textOnly": [],
       "reuse": null
     },
@@ -3421,6 +3604,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "fish",
@@ -3438,6 +3622,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "sun",
@@ -3455,6 +3640,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "pen",
@@ -3472,6 +3658,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "text-object",
       "textOnly": [],
       "reuse": {
         "word": "dog",
@@ -3491,6 +3678,7 @@
       "props": [
         "text-guitar"
       ],
+      "form": "text-object",
       "textOnly": [
         "text-guitar"
       ],
@@ -3508,6 +3696,7 @@
       ],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3521,6 +3710,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3534,6 +3724,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3547,6 +3738,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3560,6 +3752,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3573,6 +3766,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3586,6 +3780,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3599,6 +3794,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3612,6 +3808,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3625,6 +3822,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3638,6 +3836,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3651,6 +3850,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3664,6 +3864,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3679,6 +3880,7 @@
       ],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3692,6 +3894,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3705,6 +3908,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3718,6 +3922,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3733,6 +3938,7 @@
       ],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3746,6 +3952,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3759,6 +3966,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3772,6 +3980,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3785,6 +3994,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3800,6 +4010,7 @@
       ],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3815,6 +4026,7 @@
       ],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3830,6 +4042,7 @@
       ],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3845,6 +4058,7 @@
       ],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3860,6 +4074,7 @@
       ],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3875,6 +4090,7 @@
       ],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3888,6 +4104,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3901,6 +4118,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3914,6 +4132,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3927,6 +4146,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3940,6 +4160,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3953,6 +4174,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3966,6 +4188,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     },
@@ -3979,6 +4202,7 @@
       "cast": [],
       "set": null,
       "props": [],
+      "form": "card",
       "textOnly": [],
       "reuse": null
     }

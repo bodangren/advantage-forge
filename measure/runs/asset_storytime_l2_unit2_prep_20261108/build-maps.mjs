@@ -23,6 +23,9 @@ function forge(id, asset, look, view = 'three-quarter.png') {
 function unit1(id, kind, file, look, lineShapes) {
   E[id] = { id, kind, source: 'unit1', path: `out/storytime/l2/unit1/${file}`, look, lineShapes };
 }
+// The unit 1 element style sentences, word for word, from
+// docs/storytime/l2-unit1/w07/muse-elements/set-tom-living-room-empty.json.
+const ELEMENT_STYLE = `Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains.`;
 function fresh(id, kind, week, look, lineShapes) {
   const sheet = `${id}-m1-color.png`;
   E[id] = {
@@ -170,6 +173,10 @@ for (const [id, look] of Object.entries({
   'text-clothes': 'a few folded dress-up clothes',
 })) text(id, look);
 
+for (const [id, el] of Object.entries(E)) {
+  if (/playground|farmyard|garden|street|park|meadow/.test(id)) el.outdoor = true;
+}
+
 // ---- set per book --------------------------------------------------------
 // Scene key: w<nn>-<1 read-along | 2 decodable>.
 const SET = {
@@ -207,11 +214,19 @@ const NAMES = [
   ['Dad', 'dad'], ['Mom', 'mom'], ['Grandma', 'grandma'], ['Grandpa', 'grandpa'],
   ['Pip', 'pip'],
 ];
+// A possessive place name is not a cast mention: "Tom's home", "Grandma and Grandpa's farm".
+function withoutPossessives(prompt) {
+  const names = NAMES.map(([n]) => n.replace(/ /g, '\\s')).join('|');
+  return prompt
+    .replace(new RegExp(`\\b(?:${names})(?: and (?:${names}))?'s\\b`, 'g'), 'the')
+    .replace(new RegExp(`\\b(?:${names})'(?=\\s)`, 'g'), 'the');
+}
 function castOf(prompt) {
+  const clean = withoutPossessives(prompt);
   const hits = [];
   for (const [name, key] of NAMES) {
     const re = new RegExp(`\\b${name.replace(/ /g, '\\s')}\\b`);
-    if (re.test(prompt)) hits.push({ name, key, at: prompt.search(re) });
+    if (re.test(clean)) hits.push({ name, key, at: clean.search(re) });
   }
   return hits.sort((a, b) => a.at - b.at).map(({ name, key }) => ({ name, key }));
 }
@@ -299,9 +314,21 @@ for (const p of pictures) {
     if (setLook && (new RegExp(`\\b${bare}\\b`).test(setLook) || new RegExp(`\\b${word}\\b`).test(setLook))) continue;
     kept.push(x);
   }
+  const refs = kept.filter((x) => E[x.element]?.source !== 'text').length;
+  // Class C form (R4, R5, R6): a person form for a person word, a body-part form for a part,
+  // a text-only object form when no reference picture exists, an object form otherwise.
+  let form = p.sizeClass === 'C' ? (refs ? 'object' : 'text-object') : 'scene';
+  if (p.use === 'card') form = 'card';
+  const castKeys = cast.map((c) => c.key);
+  const word = String(p.text).toLowerCase();
+  if (p.use === 'check-row' && (word === 'dad' || word === 'girl' || word === 'foot')) {
+    form = word === 'foot' ? 'body-part' : 'person-card';
+    if (word === 'dad') { castKeys.length = 0; castKeys.push('dad'); }
+    else { castKeys.length = 0; castKeys.push('nan'); }
+  }
   rows.push({
     id: p.id, week: p.week, use: p.use, sizeClass: p.sizeClass, text: p.text,
-    scene, cast: cast.map((c) => c.key), set, props: kept.map((x) => x.element),
+    scene, cast: castKeys, set, props: kept.map((x) => x.element), form,
     textOnly: kept.filter((x) => E[x.element]?.source === 'text').map((x) => x.element),
     reuse: null,
   });
@@ -459,7 +486,7 @@ for (const el of Object.values(E)) {
     text: '',
     goal: `One empty ${el.look.split(':')[0]} for the unit 2 picture composites.`,
     references: [],
-    colorPrompt: `Compose one children's book background picture from the text below. The picture to make: ${el.look}. Use the soft, round, bright 3D render look of the unit 1 element pictures, not a 2D drawing and no outlines. The room is empty: no person, no animal, no extra object. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.`,
+    colorPrompt: `${ELEMENT_STYLE} The picture shows the ${el.outdoor ? 'EMPTY place' : 'EMPTY room'}${el.outdoor ? '' : ''}, with nobody and no animal in it: ${el.look}. The picture is one calm wide scene, camera at a low child eye level. Exactly one clear shape for each object that the text names. No sun, no people, no animals, no extra furniture. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people and no animals unless named.${el.outdoor ? ' The place is empty.' : ''}`,
     linePrompt: `Picture 1 is a 3D-rendered children's book background. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No shading, no gray, no texture lines, no text. Simplify the background: draw only a few large, simple, closed shapes (${el.lineShapes}). No wood grain lines, no floor plank lines, no wall texture, no hatching, no tick marks, no small details. Every outline is one closed line that never runs into a background line; no loose line ends anywhere. Use few background shapes.`,
     print: 'crop',
     aspect: '4:3',

@@ -381,7 +381,8 @@
       "source": "unit1",
       "path": "out/storytime/l2/unit1/w02/muse/elements/set-playground-empty-m3-color.png",
       "look": "empty sunny kindergarten playground: green grass, a low red climbing frame, a white line on the ground, and a blue sky",
-      "lineShapes": "the grass line, the sky line, the climbing frame as a few closed bar shapes, and the white ground line as one long closed shape"
+      "lineShapes": "the grass line, the sky line, the climbing frame as a few closed bar shapes, and the white ground line as one long closed shape",
+      "outdoor": true
     },
     "set-book-corner": {
       "id": "set-book-corner",
@@ -449,7 +450,8 @@
       "path": "out/storytime/l2/unit2/w12/muse/elements/set-farmyard-m1-color.png",
       "spec": "docs/storytime/l2-unit2/w12/muse-elements/set-farmyard.json",
       "look": "sunny farmyard of Grandma and Grandpa: green grass, a small red barn with a white door at the right, ONE low wooden fence along the back, ONE small straw mat on the ground at the left, and a blue sky",
-      "lineShapes": "the grass line, the sky line, the barn as one closed shape with its door, the fence as a few closed rail shapes, and the straw mat as one closed rectangle"
+      "lineShapes": "the grass line, the sky line, the barn as one closed shape with its door, the fence as a few closed rail shapes, and the straw mat as one closed rectangle",
+      "outdoor": true
     },
     "set-tom-garden": {
       "id": "set-tom-garden",
@@ -459,7 +461,8 @@
       "path": "out/storytime/l2/unit2/w13/muse/elements/set-tom-garden-m1-color.png",
       "spec": "docs/storytime/l2-unit2/w13/muse-elements/set-tom-garden.json",
       "look": "small sunny garden of Tom: green grass, ONE low wooden fence along the back, ONE row of red flowers along the fence, ONE small tree at the right, and a blue sky",
-      "lineShapes": "the grass line, the sky line, the fence as a few closed rail shapes, each flower as one closed round shape with a stem, and the tree as one closed crown shape with its trunk"
+      "lineShapes": "the grass line, the sky line, the fence as a few closed rail shapes, each flower as one closed round shape with a stem, and the tree as one closed crown shape with its trunk",
+      "outdoor": true
     },
     "set-nan-front-garden": {
       "id": "set-nan-front-garden",
@@ -469,7 +472,8 @@
       "path": "out/storytime/l2/unit2/w14/muse/elements/set-nan-front-garden-m1-color.png",
       "spec": "docs/storytime/l2-unit2/w14/muse-elements/set-nan-front-garden.json",
       "look": "small front garden of Nan: green grass, ONE low white fence along the back, ONE small tree at the right, ONE narrow path of flat stones in the middle, and a blue sky",
-      "lineShapes": "the grass line, the sky line, the fence as a few closed rail shapes, the tree as one closed crown shape with its trunk, and each path stone as one closed oval"
+      "lineShapes": "the grass line, the sky line, the fence as a few closed rail shapes, the tree as one closed crown shape with its trunk, and each path stone as one closed oval",
+      "outdoor": true
     },
     "set-town-street-bridge": {
       "id": "set-town-street-bridge",
@@ -479,7 +483,8 @@
       "path": "out/storytime/l2/unit2/w15/muse/elements/set-town-street-bridge-m1-color.png",
       "spec": "docs/storytime/l2-unit2/w15/muse-elements/set-town-street-bridge.json",
       "look": "quiet street of a small town: a wide light-gray footpath, ONE low stone bridge over a calm blue river, a few plain houses with doors and windows along the street, ONE row of small green trees, and a blue sky",
-      "lineShapes": "the footpath line, the river line, the bridge as one closed arch shape with its rails, each house as one closed shape with its door and windows, and each tree as one closed crown shape with its trunk"
+      "lineShapes": "the footpath line, the river line, the bridge as one closed arch shape with its rails, each house as one closed shape with its door and windows, and each tree as one closed crown shape with its trunk",
+      "outdoor": true
     },
     "text-mop": {
       "id": "text-mop",
