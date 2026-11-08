@@ -168,14 +168,32 @@ function objectLine(word) {
     `Each part of the ${word} is a separate closed shape with a thick outline.`,
   );
 }
+// F8 (D4): each face word gets its own line feature sentence. The unit 1 cat sentence named ears
+// for every animal, so a duck and a doll got ears. A word without an entry stops the maker, so no
+// new face word can fall back to the cat ears by accident. Dog, cat, fish, and hen follow the same
+// form: the feature of the animal, then what sits on the head.
+const LINE_FEATURES = {
+  dog: 'The dog has floppy ears and a short tail; draw the ears as two separate closed shapes on the sides of the head.',
+  cat: 'The cat has pointed ears and a long tail; draw the ears as two separate closed shapes on top of the head.',
+  fish: 'The fish has fins and a fan tail; draw nothing on top of the head, and draw each fin as one closed shape.',
+  duck: 'The duck has a flat bill and folded wings; draw nothing on top of the head, and draw the bill as one closed shape.',
+  hen: 'The hen has a small beak, a red comb, a red wattle, and folded wings; draw nothing on top of the head, and draw the comb and the wattle as separate closed shapes.',
+  elephant: 'The elephant has big round ears and a long trunk; draw each ear as one closed shape and the trunk as one long closed shape.',
+  horse: 'The horse has pointed ears and a mane; draw the ears as two separate closed shapes on top of the head, and the mane as one closed shape along the neck.',
+  goat: 'The goat has pointed ears, small horns, and a small beard; draw the horns and the beard as separate closed shapes.',
+  doll: 'The doll has hair and a dress; draw nothing on top of the head, and draw the hair as one closed shape.',
+};
 function faceLine(word) {
+  const key = String(word).toLowerCase();
+  const feature = LINE_FEATURES[key];
+  if (!feature) throw new Error(`no line feature sentence for the face word ${word}`);
   return LINE_FACE
     .replace('The whole cat is one closed outline (no fur strands).', 'The whole animal is one closed outline (no fur strands).')
     .replace(' Draw no stripes at all.', '')
     .replace(' Draw the whiskers as three thick lines on each side.', '')
     .replace('The tail is one long curved closed shape that starts at the back of the cat, curls behind the body, and does not touch the head.', 'The tail is one closed shape.')
     .replace('The chest, the front legs, and the back legs are plain closed shapes with no stripe lines on the legs.', 'The legs and the body are plain closed shapes.')
-    .replace(/The two ears are the only shapes on top of the head\./, `The ears of the ${word} are separate closed shapes on top of the head.`);
+    .replace(/The two ears are the only shapes on top of the head\./, feature);
 }
 function personLine(extra = '') {
   return LINE_PERSON

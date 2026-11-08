@@ -183,6 +183,32 @@ describe('unit 2 Muse specs', () => {
     }
   });
 
+  it('F8: a duck, a doll, and a fish line prompt names no ears, and the elephant names the trunk', () => {
+    const noEars = ['duck', 'doll', 'fish'];
+    const seen = new Set<string>();
+    for (const { row, spec } of specs) {
+      if (row.use !== 'check-row') continue;
+      const word = String(row.text).toLowerCase();
+      if (!noEars.includes(word)) continue;
+      seen.add(word);
+      expect(spec.linePrompt, spec.id).not.toMatch(/\bear[s]?\b/i);
+    }
+    expect([...seen].sort()).toEqual(['doll', 'duck', 'fish']);
+
+    const elephants = specs.filter(({ row }: any) => row.use === 'check-row' && String(row.text).toLowerCase() === 'elephant');
+    expect(elephants.length).toBeGreaterThan(0);
+    for (const { spec } of elephants) {
+      expect(spec.linePrompt, spec.id).toContain('trunk');
+      expect(spec.linePrompt, spec.id).toContain('big round ears');
+    }
+
+    // The hen has no class C row in unit 2, so the check reads its sentence from the spec maker.
+    const source = readFileSync(resolve(REPO, 'scripts/storytime-u2-specs.mjs'), 'utf8');
+    const hen = /hen: '([^']+)'/.exec(source)?.[1] ?? '';
+    expect(hen).not.toMatch(/\bear[s]?\b/i);
+    expect(hen).toContain('comb');
+  });
+
   it('F6: every unit 2 reference is the output of an element spec, named from its id', () => {
     const outputs = new Map<string, string>();
     for (const el of Object.values(elements.elements as Record<string, any>)) {
