@@ -46,6 +46,11 @@ export type GuardCommand = 'color' | 'line';
 
 export interface GuardOptions {
   tries?: number | string;
+  /**
+   * Test-only stand-in for `U2_RUN.capUsd`. The muse CLI never sets it. The unit 2 tests use it
+   * to pass the cap check without a change to the U2_RUN constant.
+   */
+  u2CapUsd?: number | string | null;
 }
 
 export interface RunGuardsResult {
@@ -53,13 +58,13 @@ export interface RunGuardsResult {
   code: number;
   spend: number;
   notice: boolean;
-  run: 'card' | 'restart' | 'mixed' | 'invalid';
-  reportAt: number;
+  run: 'card' | 'restart' | 'u2' | 'mixed' | 'invalid';
+  reportAt: number | null;
   message: string;
 }
 
 export interface OutDirClass {
-  kind: 'card' | 'restart' | 'invalid';
+  kind: 'card' | 'restart' | 'u2' | 'invalid';
   raw: string;
   resolved: string;
 }
@@ -78,6 +83,15 @@ export interface CardLineRetry {
   rows: Record<string, number>;
 }
 
+export interface U2Run {
+  startTime: string;
+  capUsd: number | null;
+  reportAtUsd: number | null;
+  marginUsd: number;
+  maxTries: number;
+  unitRoot: string;
+}
+
 export declare const RESTART_START: string;
 export declare const MAX_TRIES: number;
 export declare const SPEND_CAP_USD: number;
@@ -86,11 +100,15 @@ export declare const REPORT_AT_USD: number;
 export declare const CARD_RUN: CardRun;
 export declare const CARD_LINE_RETRY_START: string;
 export declare const CARD_LINE_RETRY: CardLineRetry;
+export declare const U2_RUN: U2Run;
+export declare const U2_WEEKS: string[];
+export declare const U2_CAP_MESSAGE: string;
 export declare const TRY_EXCEPTIONS: TryException[];
 export declare const PICTURE_IDS: Record<string, string[]>;
 
 export declare function isCardCall(ctxs: GuardContext[]): boolean;
 export declare function isMixedCardCall(ctxs: GuardContext[]): boolean;
+export declare function isUnit2OutDir(specOrPath: { outDir?: string } | string | undefined): boolean;
 export declare function classifyOutDir(spec: { outDir?: string } | undefined, unitRoot: string): OutDirClass;
 export declare function maxTriesFor(id: string, kind: string, maxTries?: number): number;
 export declare function pictureKey(id: string): string;
@@ -116,6 +134,7 @@ export declare function spendGuard(
 ): SpendGuardResult;
 export declare function scanCostFiles(unitRoot: string): ScanCostFilesResult;
 export declare function scanCardCostFiles(unitRoot: string): ScanCostFilesResult;
+export declare function scanU2CostFiles(unitRoot: string): ScanCostFilesResult;
 export declare function runGuards(
   unitRoot: string,
   ctxs: GuardContext[],

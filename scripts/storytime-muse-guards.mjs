@@ -68,6 +68,27 @@ export const CARD_LINE_RETRY = {
   },
 };
 
+/**
+ * Unit 2 run (2026-11-08). The unit 2 paid run waits for Daniel's "Go" and for the PM to write
+ * the approved limit. This constant holds the real UTC time of Task 1, cut to the minute, and no
+ * cap value: `capUsd` stays null, so every unit 2 call is refused. The later PM-approved change
+ * writes the cap in one line; that change is outside this track.
+ */
+export const U2_RUN = {
+  startTime: '2026-11-08T05:21:00Z',
+  capUsd: null,
+  reportAtUsd: null,
+  marginUsd: 0.01,
+  maxTries: 3,
+  unitRoot: 'out/storytime/l2/unit2',
+};
+
+/** The 8 unit 2 week folders. Only these folders hold unit 2 cost files. */
+export const U2_WEEKS = ['w09', 'w10', 'w11', 'w12', 'w13', 'w14', 'w15', 'w16'];
+
+/** The refusal message of a unit 2 call while the cap is empty. */
+export const U2_CAP_MESSAGE = 'refused: the unit 2 cap is empty; the PM writes the approved limit in U2_RUN.capUsd';
+
 /** The card folder below a unit root: the last two parts of `CARD_RUN.outDir` (`cards/muse`). */
 const CARD_FOLDER_PARTS = CARD_RUN.outDir.split('/').filter(Boolean).slice(-2);
 
@@ -83,14 +104,46 @@ const DEFAULT_OUT = [...UNIT_PARTS, 'w01', 'muse'].join('/');
 /** True when a relative path holds no `..` part and no absolute start. */
 const isInside = (rel) => rel !== '' && !rel.startsWith('..') && !isAbsolute(rel);
 
+/** The unit 2 root, resolved like every other folder. It holds the 8 week folders. */
+const U2_ROOT = resolve(ROOT, U2_RUN.unitRoot);
+
+/** The unit 2 week folder names, as a set for the classifier. */
+const U2_WEEK_SET = new Set(U2_WEEKS);
+
+/**
+ * True when a resolved folder is a unit 2 output folder: `w09` to `w16` and then `muse` or
+ * `muse/elements`. Every other unit 2 folder, including a mutated name or a `..` escape, is false.
+ */
+const isU2Folder = (resolved) => {
+  const rel = relative(U2_ROOT, resolved);
+  if (!isInside(rel)) return false;
+  const parts = rel.split(sep);
+  if (!U2_WEEK_SET.has(parts[0])) return false;
+  if (parts.length === 2 && parts[1] === 'muse') return true;
+  return parts.length === 3 && parts[1] === 'muse' && parts[2] === 'elements';
+};
+
+/**
+ * True when a spec (or a folder path) points into the unit 2 output tree. The muse tool uses it to
+ * send a unit 2 call to the unit 2 root.
+ */
+export const isUnit2OutDir = (specOrPath) => {
+  const raw = typeof specOrPath === 'string' ? specOrPath : specOrPath?.outDir;
+  if (!raw) return false;
+  return isU2Folder(resolve(ROOT, raw));
+};
+
 /**
  * Classify the output folder of one spec:
  *   - `card` for the exact card folder of `CARD_RUN.outDir`;
+ *   - `u2` for the unit 2 folder `w09` to `w16` and then `muse` or `muse/elements`;
  *   - `restart` for a week folder `<unit root>/<child>/muse` or its `elements` folder;
  *   - `invalid` for every other folder, including `..` escapes and mutated names.
  * Below the child folder `cards` only the exact card folder is valid. A card subfolder such as
  * `cards/muse/elements` or `cards/other/muse` is invalid, because the restart scan skips `cards`
  * and no scan would guard its spend.
+ * The unit 2 test runs first and uses the fixed unit 2 root of `U2_RUN`, so a unit 2 folder is
+ * `u2` even when the caller passes another unit root.
  * The path is resolved against the repository root, like the muse tool writes it. A spec without
  * `outDir` uses the w01 default. An invalid folder is refused, so no call writes or reads a cost
  * file outside the scanned folders.
@@ -100,6 +153,7 @@ export const classifyOutDir = (spec, unitRoot) => {
   const resolved = resolve(ROOT, raw);
   const cardDirs = [resolve(ROOT, CARD_RUN.outDir), join(unitRoot, ...CARD_FOLDER_PARTS)];
   if (cardDirs.includes(resolved)) return { kind: 'card', raw, resolved };
+  if (isU2Folder(resolved)) return { kind: 'u2', raw, resolved };
   for (const anchor of [resolve(ROOT, ...UNIT_PARTS), resolve(unitRoot)]) {
     const rel = relative(anchor, resolved);
     if (!isInside(rel)) continue;
@@ -277,13 +331,35 @@ export const scanCardCostFiles = (unitRoot) => {
 };
 
 /**
+ * Scan the unit 2 cost files below the unit 2 root. A unit 2 call reads only the 8 week folders
+ * `w09` to `w16` of the root it is given: the top-level `costs.tsv` files (picture tries) and the
+ * `muse/elements/costs.tsv` files (spend rows). A folder outside those 8 weeks is not read.
+ */
+export const scanU2CostFiles = (unitRoot) => {
+  const pictureRows = [];
+  const allRows = [];
+  for (const week of U2_WEEKS) {
+    const top = join(unitRoot, week, 'muse', 'costs.tsv');
+    if (existsSync(top)) {
+      const rows = parseCostsTsv(readFileSync(top, 'utf8'));
+      pictureRows.push(...rows);
+      allRows.push(...rows);
+    }
+    const elements = join(unitRoot, week, 'muse', 'elements', 'costs.tsv');
+    if (existsSync(elements)) allRows.push(...parseCostsTsv(readFileSync(elements, 'utf8')));
+  }
+  return { pictureRows, allRows };
+};
+
+/**
  * Run the guards for one invocation. Returns a decision; it makes no call and does not exit.
  * The caller prints the message and exits with code 3 when refused.
  *
- * The function is the one decision point for a restart call, a card call, a mixed call, and an
- * unknown output folder:
+ * The function is the one decision point for a restart call, a card call, a unit 2 call, a mixed
+ * call, and an unknown output folder:
  *   - a spec with an unknown output folder is refused before any cost scan;
  *   - a mixed call is refused before any cost scan;
+ *   - a unit 2 call reads only the unit 2 cost files and is refused while the unit 2 cap is empty;
  *   - a card call uses `CARD_RUN` and the card cost files;
  *   - every other call uses the restart values and the restart scan.
  * After the spend check of the current sum, the function projects the whole pool: one margin per
@@ -304,6 +380,33 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
       message: `refused: outDir ${invalid.raw} of ${invalid.id} is outside the scanned cost folders`,
     };
   }
+  const u2Flags = classes.map((c) => c.kind === 'u2');
+  if (u2Flags.some(Boolean) && !u2Flags.every(Boolean)) {
+    return {
+      refused: true,
+      code: 3,
+      spend: 0,
+      notice: false,
+      run: 'mixed',
+      reportAt: CARD_RUN.reportAtUsd,
+      message: 'refused: the call mixes unit 2 specs with other specs; run each group in its own call',
+    };
+  }
+  const u2 = ctxs.length > 0 && u2Flags.every(Boolean);
+  // The test-only `opts.u2CapUsd` stands in for the cap that the PM writes later. The CLI never
+  // sets it, and the U2_RUN constant keeps its null value in this track.
+  const u2Cap = u2 ? (Object.hasOwn(opts, 'u2CapUsd') ? opts.u2CapUsd : U2_RUN.capUsd) : null;
+  if (u2 && !(typeof u2Cap === 'number' && Number.isFinite(u2Cap) && u2Cap > 0)) {
+    return {
+      refused: true,
+      code: 3,
+      spend: 0,
+      notice: false,
+      run: 'u2',
+      reportAt: U2_RUN.reportAtUsd,
+      message: U2_CAP_MESSAGE,
+    };
+  }
   const cardFlags = classes.map((c) => c.kind === 'card');
   if (cardFlags.some(Boolean) && !cardFlags.every(Boolean)) {
     return {
@@ -317,17 +420,17 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
     };
   }
   const card = ctxs.length > 0 && cardFlags.every(Boolean);
-  const run = card ? 'card' : 'restart';
-  const cap = card ? CARD_RUN.capUsd : SPEND_CAP_USD;
-  const margin = card ? CARD_RUN.marginUsd : SPEND_MARGIN_USD;
-  const reportAt = card ? CARD_RUN.reportAtUsd : REPORT_AT_USD;
-  const startTime = card ? CARD_RUN.startTime : RESTART_START;
-  const maxTries = card ? CARD_RUN.maxTries : MAX_TRIES;
-  const { pictureRows, allRows } = card ? scanCardCostFiles(unitRoot) : scanCostFiles(unitRoot);
-  const s = card ? spendGuard(allRows, startTime, cap, margin, reportAt) : spendGuard(allRows);
+  const run = u2 ? 'u2' : card ? 'card' : 'restart';
+  const cap = u2 ? u2Cap : card ? CARD_RUN.capUsd : SPEND_CAP_USD;
+  const margin = u2 ? U2_RUN.marginUsd : card ? CARD_RUN.marginUsd : SPEND_MARGIN_USD;
+  const reportAt = u2 ? (U2_RUN.reportAtUsd ?? Number.POSITIVE_INFINITY) : card ? CARD_RUN.reportAtUsd : REPORT_AT_USD;
+  const startTime = u2 ? U2_RUN.startTime : card ? CARD_RUN.startTime : RESTART_START;
+  const maxTries = u2 ? U2_RUN.maxTries : card ? CARD_RUN.maxTries : MAX_TRIES;
+  const { pictureRows, allRows } = u2 ? scanU2CostFiles(unitRoot) : card ? scanCardCostFiles(unitRoot) : scanCostFiles(unitRoot);
+  const s = u2 || card ? spendGuard(allRows, startTime, cap, margin, reportAt) : spendGuard(allRows);
   const spend = s.spend;
   if (!s.ok) {
-    return { refused: true, code: 3, spend, notice: false, run, reportAt, message: `refused: spend ${spend.toFixed(4)} USD plus ${margin} over cap ${cap}` };
+    return { refused: true, code: 3, spend, notice: false, run, reportAt: u2 ? U2_RUN.reportAtUsd : reportAt, message: `refused: spend ${spend.toFixed(4)} USD plus ${margin} over cap ${cap}` };
   }
   const kind = cmd;
   const requested = cmd === 'line' ? Number(opts.tries ?? 1) : 1;
@@ -335,15 +438,15 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
   const cushion = cmd === 'line' ? 0 : 1;
   const projected = spend + (calls + cushion) * margin;
   if (projected > cap) {
-    return { refused: true, code: 3, spend, notice: s.notice, run, reportAt, message: `refused: projected spend ${projected.toFixed(4)} USD over cap ${cap}` };
+    return { refused: true, code: 3, spend, notice: s.notice, run, reportAt: u2 ? U2_RUN.reportAtUsd : reportAt, message: `refused: projected spend ${projected.toFixed(4)} USD over cap ${cap}` };
   }
   for (const ctx of ctxs) {
     const retry = card && kind === 'line' ? lineRetryGuard(pictureRows, ctx.spec.id, requested) : null;
     const g = retry ?? tryGuard(pictureRows, ctx.spec.id, kind, requested, startTime, maxTries);
     if (!g.ok) {
-      return { refused: true, code: 3, spend, notice: s.notice, run, reportAt, message: `refused: ${ctx.spec.id} ${kind} count ${g.count} (max ${g.max})` };
+      return { refused: true, code: 3, spend, notice: s.notice, run, reportAt: u2 ? U2_RUN.reportAtUsd : reportAt, message: `refused: ${ctx.spec.id} ${kind} count ${g.count} (max ${g.max})` };
     }
   }
-  return { refused: false, code: 0, spend, notice: s.notice, run, reportAt, message: '' };
+  return { refused: false, code: 0, spend, notice: s.notice, run, reportAt: u2 ? U2_RUN.reportAtUsd : reportAt, message: '' };
 };
 

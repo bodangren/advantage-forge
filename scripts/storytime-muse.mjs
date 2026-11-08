@@ -21,7 +21,7 @@ import { appendFileSync, copyFileSync, existsSync, mkdirSync, readFileSync, writ
 import { homedir } from 'node:os';
 import { basename, join, resolve } from 'node:path';
 import sharp from 'sharp';
-import { CARD_RUN, runGuards } from './storytime-muse-guards.mjs';
+import { CARD_RUN, U2_RUN, isUnit2OutDir, runGuards } from './storytime-muse-guards.mjs';
 
 const ROOT = resolve(new URL('..', import.meta.url).pathname);
 const UNIT_ROOT = 'out/storytime/l2/unit1';
@@ -400,7 +400,9 @@ const main = async () => {
     // guard also projects the whole pool and refuses a spec whose outDir is outside the scanned
     // folders. It runs before any key read and before any provider call, and again before each
     // call in the pool.
-    const unitRoot = resolve(ROOT, UNIT_ROOT);
+    // Unit 2 (2026-11-08): a unit 2 spec is sent to the unit 2 root, so the unit 2 guard reads the
+    // unit 2 cost files and refuses the call while the unit 2 cap is empty.
+    const unitRoot = isUnit2OutDir(ctxs[0]?.dir) ? resolve(ROOT, U2_RUN.unitRoot) : resolve(ROOT, UNIT_ROOT);
     const guards = runGuards(unitRoot, ctxs, cmd, opts);
     if (guards.refused) {
       console.log(guards.message);
