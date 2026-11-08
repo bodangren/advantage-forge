@@ -1,0 +1,249 @@
+{
+  "group": "u2-w10-r1-line",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T18:11:20Z",
+  "results": [
+    {
+      "id": "l2-w10-story-page-put-on-your-dress",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-dress-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: May (1), a dress (1). Action: putting on (note only). Seen: a girl with a long side ponytail holds up a dress with a collar and a ruffle hem; a chest of clothes, a bench, and a mirror with her reflection show. The dress is clear. Small mark: the star clip shows in the mirror but not on the girl. Line art clean."
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-skirt",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-skirt-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia (1), a skirt (1). Action: putting on (note only). Seen: a girl with a bow and short hair stands in a flared skirt with overall straps and a bib pocket; the mirror shows her reflection. The flared skirt reads as a skirt. Small mark: overall straps (her cast overalls). Line art clean."
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-t-shirt",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Ben (1), a T-shirt (1). Action: putting on (note only). Seen: a boy with a swept fringe and raised arms wears a short-sleeve T-shirt with a round neck and shorts; a chest with clothes is at the right. The T-shirt is clear. Small mark: the mirror frame is empty. Line art clean."
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-trousers",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-trousers-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1), trousers (1 pair). Action: putting on (note only). Seen: a boy in sandals holds up a pair of long loose trousers with two legs in front of him; a chest of clothes is at the right. Trousers are clear. Line art clean."
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-socks",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-socks-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Lily (1), socks (1 pair). Action: putting on (note only). Seen: a girl with a bob, a fringe, a bow, and a collar dress sits on the floor and pulls a striped sock over one foot; the other foot has a striped sock; two shoes lie beside her. Socks are clear. Small mark: very large eyes. Line art clean."
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-shoes",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-shoes-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), shoes (1 pair). Action: putting on (note only). Seen: a boy with a striped T-shirt and shorts stands in a pair of round chunky shoes. Shoes are clear. Line art clean."
+    },
+    {
+      "id": "l2-w10-cover-dress-up",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-cover-dress-up-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover; title names the subject. Question page: no. Items: Teacher Kim, Sam, May, Ben, Mia, Pat, Lily, Nan (each 1). Action: none. Seen: a woman with a low ponytail and a cardigan behind 7 children at a chest of clothes: a striped shirt, a star hair clip, messy hair, overalls with a clip, tufts, a bob with a bow, and a bun. All 8 show once. Small mark: an unclear shape (probably Pip's ears) behind the lid at the right edge. Line art clean."
+    },
+    {
+      "id": "l2-w10-story-page-dad-has-a-pan",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-dad-has-a-pan-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the dish in Dad's hands in the middle of the picture: a shallow round dish with no handle",
+      "notes": "Question page: no. Items: Dad (1), Tom (1), a pan (1). Action: none. Seen: Dad (polo shirt, short hair, ringed eyes) holds a shallow round dish by the rim; Tom stands near a low table. The dish has no handle and looks like the three bowls on the counter at the left, so it reads as a bowl or a plate, not a pan. The fail is the pan."
+    },
+    {
+      "id": "l2-w10-story-page-a-tan-man",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-a-tan-man-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), a tan man (1 gingerbread man). Action: none. Seen: Tom reaches toward a gingerbread man with a smile and buttons that lies on a plate on a low table. The man is small but clear. Line art clean."
+    },
+    {
+      "id": "l2-w10-story-page-run-man-run",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-run-man-run-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a man (1; a gingerbread man). Action: running (note only). Seen: a gingerbread man with a smiling face, arms out, and legs apart jumps off a counter. Head, arms, and legs show. Line art clean."
+    },
+    {
+      "id": "l2-w10-story-page-tom-and-dad-run",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-tom-and-dad-run-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Dad (1). Action: running (note only). Seen: Tom with a big head runs at the front with an arm out; Dad (short hair, polo shirt, no glasses) runs behind with an arm up; a gingerbread man sits near the door. Both persons are clear and match the cast. Line art clean."
+    },
+    {
+      "id": "l2-w10-story-page-they-were-sad",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-they-were-sad-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Dad (1). Action: none. Seen: Tom (big head, frown) stands in front; Dad (polo shirt, no glasses, frown) stands behind him; a gingerbread man stands on the floor. Both look sad and match the cast. Line art clean."
+    },
+    {
+      "id": "l2-w10-story-page-a-man-on-a-mat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-a-man-on-a-mat-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a man (1; a gingerbread man), a mat (1). Action: none. Seen: a gingerbread man sits on one oval mat next to the door and waves. One mat and one man, both clear. Line art clean."
+    },
+    {
+      "id": "l2-w10-story-page-tom-and-dad-sat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-tom-and-dad-sat-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Dad (1). Action: sat (note only). Seen: Tom and Dad sit on the floor and look at a gingerbread man between them. Both are drawn and clear; Dad has no glasses. Line art clean."
+    },
+    {
+      "id": "l2-w10-story-page-the-man-sat-too",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-the-man-sat-too-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Dad (1), a man (1; a gingerbread man). Action: sat (note only). Seen: Tom and Dad sit on one oval mat; a gingerbread man sits between them with a smile. All three are clear; Dad has no glasses. Line art clean."
+    },
+    {
+      "id": "l2-w10-cover-the-tan-man",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-cover-the-tan-man-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover; title names the subject. Question page: no. Items: Dad (1), Tom (1), a tan man (1 gingerbread man). Action: none. Seen: Dad (short hair, polo shirt) holds a plate with a gingerbread man; Tom (big head, short hair) looks at it. The subject shows and the characters match the cast. Small mark: ringed eyes on Dad. Line art clean."
+    },
+    {
+      "id": "l2-w10-check-row-fan",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-check-row-fan-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a fan (1). Action: none. Seen: a desk fan with a round guard, blades, and a round base. Clear. Line art clean."
+    },
+    {
+      "id": "l2-w10-check-row-van",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-check-row-van-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a van (1). Action: none. Seen: a small van with a roof, four windows, a sliding door, two lights, and wheels. Reads as a van. Line art clean."
+    },
+    {
+      "id": "l2-w10-check-row-dad",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-check-row-dad-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a dad (1 man). Action: none. Seen: a standing man with short hair, a collar T-shirt, long trousers, and shoes. Clear. Small mark: ringed eyes. Line art clean."
+    },
+    {
+      "id": "l2-w10-card-pad",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-pad-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a pad (1). Action: none. Seen: a blank notepad with a top band and a curled page. It reads as a notepad. Line art clean."
+    },
+    {
+      "id": "l2-w10-card-skirt",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-skirt-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a skirt (1). Action: none. Seen: a pleated skirt with a waistband. Clear. Line art clean."
+    },
+    {
+      "id": "l2-w10-card-t-shirt",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-t-shirt-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a T-shirt (1). Action: none. Seen: a short-sleeve T-shirt with a round neck. Clear. Line art clean."
+    },
+    {
+      "id": "l2-w10-card-trousers",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-trousers-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole garment: legs end at the knee with rolled cuffs",
+      "notes": "Question page: no. Items: trousers (1 pair). Action: none. Seen: a pair of pants with a belt, pockets, a fly, and rolled cuffs; the legs are short and end at the knee. At book size it reads as shorts, not trousers. The fail is the short legs."
+    },
+    {
+      "id": "l2-w10-card-socks",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-socks-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: socks (1 pair). Action: none. Seen: two striped socks side by side. Clear. Line art clean."
+    },
+    {
+      "id": "l2-w10-card-shoes",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-shoes-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: shoes (1 pair). Action: none. Seen: two shoes, each with a bow. Reads as shoes. Line art clean."
+    },
+    {
+      "id": "l2-w10-card-jacket",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-jacket-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a jacket (1). Action: none. Seen: a jacket with a collar, a front zip, two pockets, and cuffs. Clear. Line art clean."
+    }
+  ],
+  "summary": {
+    "files": 26,
+    "pass": 24,
+    "fail": 2
+  }
+}

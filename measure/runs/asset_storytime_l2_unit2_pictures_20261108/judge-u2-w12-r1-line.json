@@ -1,0 +1,236 @@
+{
+  "group": "u2-w12-r1-line",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T18:18:14Z",
+  "results": [
+    {
+      "id": "l2-w12-story-page-open-your-book-sam",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-sam-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "the boy at the desk (Sam): his shirt has no two stripes across the chest",
+      "notes": "Question page: no. Items: Teacher Kim (1), Sam (1), a book. Action: opening a book (note only). Seen: a tall woman with a ponytail, a cardigan, trousers, and flat shoes holding an open book that shows a circle and a fish; a boy with short side-swept hair and an open smile at a desk with an open book. Kim matches the cast (small mark: her ponytail sits higher than low). The boy's chest is plainly visible above the table and shows a plain tee with no stripes, which are Sam's mark in the cast and in the other Sam line pictures, so the clothes are changed. Line art clean."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-may",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-may-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "May's face: she wears round glasses with a nose bridge",
+      "notes": "Question page: no. Items: May (1), a book. Action: opening a book (note only). Seen: a girl with a long side ponytail and a star clip at a desk with an open book; round glasses with a visible bridge on her face. The cast May has no glasses, so an accessory is added. Hair, clip, and book match. Line art clean."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-ben",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-ben-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Ben (1), a book. Action: opening a book (note only). Seen: a chibi boy with a swept fringe, big round eyes, and an open smile at a desk with an open book. Matches the cast. Line art clean. Small mark: the wall picture of the lion has a heavy ring at its face."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-mia",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-mia-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia (1), a book. Action: opening a book (note only). Seen: a girl with short hair, a small bow at the side, and overalls at the left desk with an open book. Matches the cast. Line art clean."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-pat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-pat-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1), a book. Action: opening a book (note only). Seen: a boy with short hair, a collared shirt, and an open smile at the left desk with an open book. Matches the cast at line-art level. Small marks: the hair is smooth; the lion in the wall picture has a heavy ring at its face. Line art clean."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-lily",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-lily-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Lily (1), a book. Action: opening a book (note only). Seen: a girl with a bob, a straight fringe, a small bow at the side, and a collared dress at a desk with an open book. Matches the cast. Line art clean."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-pip-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "Teacher Kim at the upper right: she wears round glasses with a bridge and a frame to the ear",
+      "notes": "Question page: no. Items: Pip (1), Nan (1), Teacher Kim (1), a book. Action: opening a book (note only). Seen: a puppy with floppy ears, a collar with a tag, and a fluffy tail lying by an open book; a girl with two buns and a star shirt kneeling by it; a woman with a ponytail and a cardigan standing at the right with clear round glasses. Pip and Nan match the cast. The cast Kim has no glasses. Line art clean."
+    },
+    {
+      "id": "l2-w12-cover-open-your-book",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-cover-open-your-book-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover: title only, no count. Items: Sam, May, Ben, Mia, Pat, Lily, Nan, Teacher Kim. Seen: seven children at three desks: a boy with a teddy bear, a girl with a ponytail, two boys, a girl with a fringe, a girl in overalls with a small bow, and a girl with a bun at the front right; a woman with a ponytail holding an open book with a circle and a fish; a sleeping puppy under the middle desk. Seven children and Kim, no glasses. At this size Sam's stripes and Lily's bow are not clear (small marks). No child clearly contradicts the cast. Line art clean."
+    },
+    {
+      "id": "l2-w12-story-page-dad-has-a-hat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-dad-has-a-hat-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), a hat (1). Action: holding (note only). Seen: a man with short side-parted hair, a collared polo, and trousers holding one wide-brim sun hat with a crown ring and a flower bow in front of him; a mat at the lower left. The hat is tilted and reads as a hat because of the brim, crown, and bow. Dad matches the cast and wears no glasses. Line art clean."
+    },
+    {
+      "id": "l2-w12-story-page-dad-is-hot",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-dad-is-hot-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "Dad's face at the top center: he wears round glasses with a bridge",
+      "notes": "Question page: no. Items: Dad (1). Action: wiping his brow (note only). Seen: a man in a polo with his hand on his forehead and a hat in the other hand, under three suns. The cast Dad has no glasses, so an accessory is added. Hair and clothes match. Small mark: three suns. Line art clean."
+    },
+    {
+      "id": "l2-w12-story-page-it-is-on-the-mat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-it-is-on-the-mat-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), a mat (1); the hat is the thing on it. Action: walking (note only). Seen: a man in a polo walking at the center; a striped rectangular mat at the lower left with a sun hat on top. Mat and hat clear. Dad matches the cast and wears no glasses. Line art clean."
+    },
+    {
+      "id": "l2-w12-story-page-a-hen-can-hop",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-a-hen-can-hop-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a hen (1). Action: hopping (note only). Seen: one cartoon hen with a comb, a beak, a wattle, a wing, and two thin legs stepping across the grass; a hat on a mat at the left. The hen reads as a hen. Line art clean."
+    },
+    {
+      "id": "l2-w12-story-page-hop-hop-hop",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-hop-hop-hop-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: no object named; the action hop (note only). Seen: one hen with a raised leg moving across a lawn, a sun hat in the middle, and a square mat at the lower left. The hopping shows as a stride. Line art clean."
+    },
+    {
+      "id": "l2-w12-story-page-the-hen-sat-in-it",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-the-hen-sat-in-it-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a hen (1); the sentence names no other thing. Action: sitting (note only). Seen: one hen with raised wings sitting in a round container on a mat. The container reads as a bowl with no brim or bow, so it does not look like the hat from the other pages (small mark). The hen is clear. Line art clean."
+    },
+    {
+      "id": "l2-w12-story-page-dad-said-get-off",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-dad-said-get-off-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1). Action: calling out with raised hands (note only). Seen: a man with a sun hat on his head, a polo, and trousers with both hands up; a hen stands at the right; a mat at the left. Dad matches the cast and wears no glasses. Line art clean."
+    },
+    {
+      "id": "l2-w12-story-page-that-hen-has-the-hat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-that-hen-has-the-hat-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), Tom (1), a hen (1), a hat (1). Action: none. Seen: a man in a polo at the left; a chibi boy with a big head and a side-swept fringe in the middle; a hen at the right with a sun hat with a bow on its head. All visible, match the cast, and no glasses. Line art clean."
+    },
+    {
+      "id": "l2-w12-cover-the-hen-and-the-hat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-cover-the-hen-and-the-hat-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover: title only, no count. Items: Dad; a hen and a hat as the subject. Seen: a man in a polo holding a sun hat with a bow out in front of him; a hen at the lower right looking at it; a mat at the left. Subject shows. Small mark: Dad's eyes have heavy rings that could read as glasses; there is no frame or temple line, so I read them as eyes. Line art clean."
+    },
+    {
+      "id": "l2-w12-check-row-horse",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-check-row-horse-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a horse (1). Seen: a small pony with pointed ears, a mane, a smiling muzzle, four legs with hoof bands, and a tail. Reads as a horse. Line art clean."
+    },
+    {
+      "id": "l2-w12-check-row-house",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-check-row-house-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a house (1). Seen: a small house with a tiled roof, a chimney, a door with a knob, and two round windows with curtains. Reads as a house. Line art clean."
+    },
+    {
+      "id": "l2-w12-d4-prompt-book",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-d4-prompt-book-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a book (1). Seen: a closed hardback book with a spine, page edges, and a cover with a cloud, three stars, and a rainbow. No words on the cover. Reads as a book. Line art clean."
+    },
+    {
+      "id": "l2-w12-card-hop",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-hop-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: the action hop (note only); a person must show. Seen: a chibi boy in a tee and shorts with arms out, one foot lifted behind him. The action reads as a hop or skip. Line art clean."
+    },
+    {
+      "id": "l2-w12-card-hippo",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-hippo-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "broken-face",
+      "where": "the head at the top center: no eyes, nose, nostrils, or mouth are drawn",
+      "notes": "Question page: no. Items: a hippo (1). Seen: a round seated animal with two small round ears, a big plain dome head, a large round body, and toes on four feet. The head is blank. Without a face or muzzle the animal could read as a bear or a blob to a child, so the key hippo marks are missing. Line art clean."
+    },
+    {
+      "id": "l2-w12-card-crayon",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-crayon-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a crayon (1). Seen: a tall crayon with a cone tip, a paper wrapper with bands, and a scalloped base. Reads as a crayon. Line art clean."
+    },
+    {
+      "id": "l2-w12-card-eraser",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-eraser-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: an eraser (1). Seen: a plain rounded rectangular block in a three-quarter view with no sleeve or marks. This is the common block eraser shape. Small mark: with no other clue it could also read as a soap bar. Line art clean."
+    },
+    {
+      "id": "l2-w12-card-ruler",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-ruler-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a ruler (1). Seen: a long flat bar with tick marks along the top and bottom edges. No numbers or letters. Reads as a ruler. Line art clean."
+    }
+  ],
+  "summary": { "files": 25, "pass": 20, "fail": 5 }
+}

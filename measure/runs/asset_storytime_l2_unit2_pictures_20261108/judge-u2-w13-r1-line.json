@@ -1,0 +1,240 @@
+{
+  "group": "u2-w13-r1-line",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T18:21:36Z",
+  "results": [
+    {
+      "id": "l2-w13-story-page-i-can-run",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-run-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1). Action: run (note only). Seen: a boy with short side-swept fringe, short-sleeve shirt with horizontal bands across the chest, shorts, running shoes, mid-stride on a playground with slide and climbing frame. Drawn, visible, matches Sam. Small mark: sun is a flower-like sun."
+    },
+    {
+      "id": "l2-w13-story-page-i-can-jump",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-jump-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: May (1). Action: jump (note only). Seen: a girl with a ponytail at the side and a small star clip, short-sleeve shirt, pleated skirt, shoes, arms up, both feet off the ground. Matches May. Hands and legs read clearly."
+    },
+    {
+      "id": "l2-w13-story-page-i-can-kick",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-kick-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Ben (1). Action: kick (note only). Seen: a boy with messy tufted fringe hair, big open smile, T-shirt, shorts, one foot meeting a round ball. Matches Ben. Ball drawn and visible. Hands and legs read clearly."
+    },
+    {
+      "id": "l2-w13-story-page-i-can-throw",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-throw-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia (1). Action: throw (note only). Seen: a girl with shoulder-length hair and a small bow at the side, T-shirt, overalls with a chest pocket, shoes, one arm raised. Matches Mia. Small mark: two round shapes in the sky (a sun and a second circle); no ball is needed by the text."
+    },
+    {
+      "id": "l2-w13-story-page-i-can-catch",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-catch-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1). Action: catch (note only). Seen: a boy with short hair and a fringe, buttoned short-sleeve shirt, cargo shorts with pocket, sandals, both hands holding a round ball. Matches Pat closely enough; hair tufts on top are mild. Hands and ball clear."
+    },
+    {
+      "id": "l2-w13-story-page-i-can-clap",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-clap-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Lily (1). Action: clap (note only). Seen: a girl with a straight fringe, a bob, a small bow at the side, a dress with a collar, socks and shoes, both palms pressed together at the chest. Matches Lily. Hands drawn and visible. Her hair partly covers the slide behind her; only a small mark."
+    },
+    {
+      "id": "l2-w13-story-page-i-can-hop",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-hop-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1). Action: hop (note only). Seen: a girl with two round buns with ring bands, a T-shirt with a star, shorts, shoes, one foot raised, arms out. Matches Nan. Small mark: a round ball and a leafy tuft (a bush) at the bottom right; neither is needed by the text."
+    },
+    {
+      "id": "l2-w13-story-page-pip-can-catch",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-pip-can-catch-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1) and seven children (Sam, May, Ben, Mia, Pat, Lily, Nan). Action: catch, clap (notes only). Seen: a puppy with floppy ears and a fluffy tail jumping in the air with a ball at its mouth and paws; seven children in a row below, all with clapping hands, each with its own hair, clothes and accessories (striped shirt, ponytail, star shirt with buns, bow). All eight drawn, visible, and distinct. Small marks: faces are small at this size."
+    },
+    {
+      "id": "l2-w13-story-page-tom-has-a-pot",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-tom-has-a-pot-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), a pot (1). Seen: a boy with dark side-swept hair, big eyes, a plain T-shirt, holding one upright flower pot with a rim and two bands in both hands in front of him. Matches Tom. Pot is drawn, visible, and reads as a pot."
+    },
+    {
+      "id": "l2-w13-story-page-a-pot-for-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-a-pot-for-pip-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Pip (1), a pot (1). Seen: a crouching boy with side-swept hair reaching a hand toward one pot; the pot is upside down, a flower pot with a wide rim at the base and bands, as a stand; a puppy with collar and tag sitting next to it. All drawn and visible. Small mark: the upside-down pot is the same pot as on the page before and still reads as a flower pot. Pip's face is a little crowded."
+    },
+    {
+      "id": "l2-w13-story-page-hop-on-top-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-hop-on-top-pip-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Pip (1). Action: hop (note only). Seen: a boy with side-swept hair pointing at an upside-down pot; a puppy with floppy ears, collar and tag sitting beside the pot; three spinning tops on the ground. Both drawn and visible. Tops are small extra marks."
+    },
+    {
+      "id": "l2-w13-story-page-he-is-on-top",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-he-is-on-top-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), a pot or top place. Seen: a puppy standing on top of an upside-down pot, collar with tag, floppy ears, fluffy tail, open mouth. Drawn and visible. Small mark: the eyebrows slant so the face looks fierce, and the tail looks like a wing; eyes, nose, and mouth are all in place so the face is not broken."
+    },
+    {
+      "id": "l2-w13-story-page-i-like-it",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-like-it-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Pip (1). Action: clap (note only). Seen: a boy with side-swept hair and a hair band-like fringe, hands together at the chest, smiling; a puppy standing on an upside-down pot with a collar and a curled tail. Both drawn and visible. Small mark: Tom's hair shows a flat strip across the front."
+    },
+    {
+      "id": "l2-w13-story-page-mom-is-on-a-mat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-mom-is-on-a-mat-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mom (1), Pip (1), a mat (1). Seen: a woman lying on a flat oval mat with closed eyes, long-sleeve collared blouse, trousers and sneakers, a book on her middle; a puppy with a collar sitting in an upright pot at the right; spinning tops at the left. All drawn and visible. Mat reads as a mat. Small mark: Mom's hair is simple here."
+    },
+    {
+      "id": "l2-w13-story-page-do-not-hop-on-mom",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-do-not-hop-on-mom-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Pip (1), Mom (1). Seen: a boy with arms up and a collared shirt; a puppy sitting in a flower pot; a woman standing with curly hair, a collared blouse with buttons, trousers and flat shoes, standing on an oval mat. All drawn and visible. Small mark: Mom's curly hair is fuller than the cast note but still wavy and shoulder length."
+    },
+    {
+      "id": "l2-w13-story-page-pip-is-on-mom",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-pip-is-on-mom-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), Mom (1), Tom (1). Seen: a woman with wavy hair lying on a mat, open smile; a puppy with collar and tag sitting on her middle; a boy kneeling at the right with a big smile. All drawn and visible. Small mark: Mom's body is long; hands show fingers."
+    },
+    {
+      "id": "l2-w13-cover-hop-on-top",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-cover-hop-on-top-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Cover; the title names the subject. Items: Tom (1), Pip (1). Seen: a boy with side-swept hair holding an upright pot in both hands; a puppy with collar and floppy ears sitting at the right and looking at him. Both match the cast. Drawn and visible."
+    },
+    {
+      "id": "l2-w13-check-row-pot",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-check-row-pot-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a pot (1). Seen: one round pot with a belly and a thick rim, nothing else. Reads as a pot. Lines closed."
+    },
+    {
+      "id": "l2-w13-check-row-mop",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-check-row-mop-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a mop (1). Seen: a long stick with a plate at the end and a cluster of round loops as the mop head. Reads as a mop at book size. Small mark: the head is made of round loops, not strands."
+    },
+    {
+      "id": "l2-w13-card-run",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-run-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a person running. Action: run (note only). Seen: a boy with short hair, collared shirt, shorts, shoes, in a run with swinging arms and legs. Drawn and visible."
+    },
+    {
+      "id": "l2-w13-card-walk",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-walk-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a person walking. Action: walk (note only). Seen: a boy with tufted hair, T-shirt, shorts, shoes, mid-step with swinging arms. Drawn and visible."
+    },
+    {
+      "id": "l2-w13-card-clap",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-clap-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a person clapping. Action: clap (note only). Seen: a smiling girl with a bow and shoulder-length hair, overalls, both hands together at the chest. Drawn and visible."
+    },
+    {
+      "id": "l2-w13-card-kick",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-kick-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a person and a ball. Action: kick (note only). Seen: a boy with curly hair, T-shirt, shorts with a patch, sandals, a foot raised toward one round ball. Drawn and visible."
+    },
+    {
+      "id": "l2-w13-card-throw",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-throw-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a person and a ball. Action: throw (note only). Seen: a girl with a bob and fringe, a dress with a collar, one arm out, one round ball in the air. Drawn and visible. Small mark: the ear on her left shows as a large knob."
+    },
+    {
+      "id": "l2-w13-card-catch",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-catch-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a person and a ball. Action: catch (note only). Seen: a boy with short hair holding one round ball in both hands in front of the chest. Drawn and visible."
+    }
+  ],
+  "summary": {
+    "files": 25,
+    "pass": 25,
+    "fail": 0
+  }
+}

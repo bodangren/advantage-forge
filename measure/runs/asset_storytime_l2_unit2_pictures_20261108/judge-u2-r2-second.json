@@ -1,0 +1,187 @@
+{
+  "group": "u2-r2-second",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T18:29:11Z",
+  "mode": "second judge, each file alone",
+  "results": [
+    {
+      "id": "l2-w10-story-page-put-on-your-hat-pip",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-color-t3.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), a hat (1), Sam, May, Ben, Mia, Pat, Lily, Nan, Teacher Kim. Action: put on (note only). Seen: Pip in the open chest with a straw hat with a purple ribbon on his head; Pat green, May yellow with ponytail and star clip, Sam red stripes, Ben light-blue shirt, Lily lilac dress, Mia pink top and overalls, Nan orange star shirt with two buns, Kim in green cardigan. All nine present and match the cast. Small marks: Lily's lilac bow is not clear at this size. Two extra children are copies of Sam (top left) and Ben (top middle); the sentence does not count children, so this is a note only."
+    },
+    {
+      "id": "l2-w11-story-page-here",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-here-color-t2.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "the child in the center front of the sofa group: light-brown messy hair (Ben's hair) with a yellow T-shirt and a blue pleated skirt (May's clothes)",
+      "notes": "Question page: no. Items: Pip, Nan, Sam, May, Ben, Mia, Pat, Lily. Action: pointing and calling (note only). Seen: Nan front left (orange star, buns), Pip the puppy with tongue out, Sam red stripes, Mia (overalls, pink bow) and May (yellow, ponytail) on the sofa, Lily lilac dress with bow. The center child has Ben's hair but May's yellow shirt and blue skirt, so Ben is a changed character. No child with Pat's black messy hair and green T-shirt is drawn, so Pat is also missing."
+    },
+    {
+      "id": "l2-w11-story-page-ten-men-in-the-den",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-ten-men-in-the-den-color-t2.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the row of small wooden men under the blanket on the blue rug: I count 11 (5 in the back row, 6 in the front row), not 10",
+      "notes": "Question page: no. Items: Tom (1), men (10), den (1). Seen: Tom kneeling, dark swept hair, navy T-shirt, khaki shorts, red shoe, matches the cast. A cream blanket draped as a tent over a blue rug reads as a den. Small wooden peg men: 5 back, 6 front, 11 in total. Wrong count."
+    },
+    {
+      "id": "l2-w09-story-page-dad-can-mop-the-mat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-dad-can-mop-the-mat-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "the mopping figure in the center: drawn with a child's chibi proportions (head about half of the height) and a ring mark around one eye, not the grown man of the Dad cast",
+      "notes": "Question page: no. Items: Dad (1), a mat (1). Action: mopping (note only). Seen: a short-haired figure in a polo shirt mopping an oval rug with a rope-style mop; the mop reads as a mop. The figure reads as a boy, not as the tall adult Dad of the cast, and one eye has an extra ring. Two oval rugs are drawn on the floor (note: the sentence counts one mat). Black lines on white, no gray, no gap."
+    },
+    {
+      "id": "l2-w09-story-page-tom-can-see-the-mop",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-tom-can-see-the-mop-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "Dad on the armchair at the left: he wears round glasses that the Dad cast does not have",
+      "notes": "Question page: no. Items: Tom (1), Dad (1), a mop (1). Action: seeing (note only). Seen: Tom, a boy with swept hair, T-shirt and shorts, pointing; a mop with a flared strand head and a long handle standing at the right (the head is plain and may read close to a broom, note); Dad seated in a polo shirt with round glasses. Tom and the mop pass. The glasses are a changed face detail of Dad. Line art is black on white, no gray."
+    },
+    {
+      "id": "l2-w09-story-page-pip-can-mop",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-pip-can-mop-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "Dad at the center right: he wears round glasses that the Dad cast does not have",
+      "notes": "Question page: no. Items: Pip (1), Dad (1), Tom (1). Action: mopping (note only). Seen: a puppy with a collar and tag holding the mop handle, with a rope mop head on the floor; Tom, a boy in T-shirt and shorts, smiling; Dad in a polo shirt with round glasses. Pip, Tom and the mop pass. The glasses on Dad are a changed face detail. Black lines on white, no gap."
+    },
+    {
+      "id": "l2-w09-card-dinosaur",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-dinosaur-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "broken-face",
+      "where": "the dinosaur's head at the top: a plain empty oval with no eye, no nostril, and no mouth",
+      "notes": "Question page: no. Items: a dinosaur (1). Seen: a long-neck dinosaur sitting, with back plates, a curved tail and toed feet. The body reads as a dinosaur, but the head is blank and has no face at all, which a child sees as an unfinished animal. Line art is black on white, no gray."
+    },
+    {
+      "id": "l2-w10-story-page-dad-has-a-pan",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-dad-has-a-pan-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the dish in Dad's hands at the center: a round shallow bowl with no handle, it reads as a bowl, not as a pan",
+      "notes": "Question page: no. Items: Dad (1), Tom (1), a pan (1). Seen: Dad holds a wide round shallow dish with no handle; three similar bowls sit on the counter at the left; Tom, a boy, stands near a low table. A pan has a handle; this object reads as a bowl at book size. Dad also wears round glasses that the cast does not have (note)."
+    },
+    {
+      "id": "l2-w10-card-trousers",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-trousers-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole garment: the legs end near the knee with rolled cuffs, so it reads as shorts",
+      "notes": "Question page: no. Items: trousers (1 pair). Seen: a knee-length pair with a waistband, pockets and rolled cuffs. A young child knows this as shorts, not as long trousers. Line art is black on white, no gray, no gap."
+    },
+    {
+      "id": "l2-w11-story-page-where-is-lily-on-the-chair",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-lily-on-the-chair-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the furniture: Lily sits in a big armchair while a separate wooden chair stands at the right edge, so two chairs are drawn (the sentence names one chair)",
+      "notes": "Question page: yes (Where is Lily?), and the text answers On the chair. Items: Nan (1), Lily (1), a chair (1). Seen: Nan at the left with two buns holding a blanket; Lily with a bob, fringe and bow under a blanket in an armchair; a wooden chair at the right with a toy box. Nan and Lily match the cast. Two chairs make the count and the place of Lily unclear."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-sam",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-sam-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Teacher Kim (1), Sam (1), a book. Action: opening a book (note only). Seen: a tall woman with a ponytail, cardigan and trousers holding an open picture book; a boy with short hair at a desk with an open book. Both drawn and clear. Small marks: Sam's shirt shows no stripes; Kim's ponytail sits higher than the low ponytail of the cast. Black lines on white, no gray, no gap, no text."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-may",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-may-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "May at the center desk: she wears round glasses that the May cast does not have",
+      "notes": "Question page: no. Items: May (1), a book (1). Action: opening a book (note only). Seen: a girl with a long side ponytail and a star clip, a collar, reading an open book at a desk; round glasses on her face. Ponytail and star clip match the cast, but the glasses are a changed face detail."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-pip-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "Teacher Kim at the right: she wears round glasses that the Teacher Kim cast does not have",
+      "notes": "Question page: no. Items: Pip (1), Nan (1), Teacher Kim (1), a book. Action: opening a book (note only). Seen: a puppy with a collar and tag lying by an open book; Nan on her knees with two buns and a star on her shirt; a tall woman in a cardigan with a ponytail and round glasses. Pip and Nan pass. The glasses are a changed face detail of Kim."
+    },
+    {
+      "id": "l2-w12-story-page-dad-is-hot",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-dad-is-hot-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "Dad at the center: he wears round glasses that the Dad cast does not have",
+      "notes": "Question page: no. Items: Dad (1). Action: wiping his brow (note only). Seen: a man in a polo shirt, hand on his forehead, holding a sun hat, with round glasses; suns in the sky, a fence and a haystack. The scene reads as hot. The glasses are a changed face detail."
+    },
+    {
+      "id": "l2-w12-card-hippo",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-hippo-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "broken-face",
+      "where": "the hippo's head at the top: a plain empty shape with two ears and no eye, no nostril, and no mouth",
+      "notes": "Question page: no. Items: a hippo (1). Seen: a round sitting animal with small round ears and four feet; the head is blank with no face and no snout shape. A child sees a faceless animal. Line art is black on white, no gray."
+    },
+    {
+      "id": "l2-w14-cover-hot-and-cold",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-cover-hot-and-cold-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole scene: only rain, a cloud, an umbrella, and puddles show; nothing shows hot or cold",
+      "notes": "Cover: the page text is the title Hot and Cold. Items: Nan (1) and the subject. Seen: Nan with two buns, a star shirt and shorts under an umbrella, a rain cloud, and a path of puddles. Nan matches the cast. The picture shows a rainy day, not hot and not cold (no sun, snow, or fan), so the subject of the title does not show."
+    },
+    {
+      "id": "l2-w14-story-page-mom-has-a-fan",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-mom-has-a-fan-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "Mom at the center: short curly hair and round glasses, but the cast Mom has wavy shoulder-length hair and no glasses",
+      "notes": "Question page: no. Items: Mom (1), a fan (1). Seen: a woman holding one table fan with blades and a stand; the fan is clear and counts as 1. The woman has short curly hair (like Grandma) and round glasses, so Mom is a changed character."
+    },
+    {
+      "id": "l2-w14-story-page-a-fan-for-you-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-a-fan-for-you-pip-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "Mom at the left: she wears round glasses that the Mom cast does not have",
+      "notes": "Question page: no. Items: Mom (1), Pip (1), Dad (1), a fan (1). Seen: a woman kneeling with wavy hair and round glasses next to a table fan; a puppy with a collar and tag; a man standing in a polo shirt without glasses. Fan (1), Pip, and Dad pass. The glasses on Mom are a changed face detail."
+    },
+    {
+      "id": "l2-w15-story-page-pip-has-no-tag",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-pip-has-no-tag-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), Tom (1), no tag. Action: pointing (note only). Seen: a puppy sitting with a collar and floppy ears; Tom, a boy with short hair in a T-shirt and shorts, kneeling and pointing at Pip with a surprised face; a small round item lies on the rug near Pip. Both characters match the cast. Small mark: a small ring shape at the collar reads as a buckle, not as a gold tag. Black lines on white, no gray, no gap, no text."
+    }
+  ],
+  "summary": {
+    "files": 19,
+    "pass": 3,
+    "fail": 16
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "group": "u2-w11-r1-line",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T18:15:31Z",
+  "results": [
+    {
+      "id": "l2-w11-story-page-where-is-sam-under-the-table",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-sam-under-the-table-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Nan (1), Sam (1), a table (1). Action: crawling (note only). Seen: a girl with two round buns and a small body under a low table; a boy with short side-swept hair and a striped shirt under the same table; one four-legged table over both. All drawn, visible, clear. Line art black on white, no gray, no gap. Small mark: Nan's star is not visible from this angle."
+    },
+    {
+      "id": "l2-w11-story-page-where-is-may-in-the-box",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-may-in-the-box-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Nan (1), May (1), a box (1). Action: none. Seen: a girl with two buns standing at the left; a girl with a long side ponytail and a star clip inside a big open cardboard box; one box. All clear. Line art clean. Small mark: Nan's star is hidden by her pose."
+    },
+    {
+      "id": "l2-w11-story-page-where-is-ben-under-the-bed",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-ben-under-the-bed-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Nan (1), Ben (1), a bed (1). Action: lying (note only). Seen: a girl with two buns and a star shirt crawling on the left; a boy with messy fringe hair lying under the bed with his head and hands out; one bed with a pillow and blanket. All clear. Line art clean."
+    },
+    {
+      "id": "l2-w11-story-page-where-is-mia-in-the-bed",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-mia-in-the-bed-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Nan (1), Mia (1), a bed (1). Action: none. Seen: a girl with two buns and a star shirt standing and waving at the left; a smiling girl with shoulder-length hair and a small bow in a bed under a blanket; one bed. All clear. Line art clean."
+    },
+    {
+      "id": "l2-w11-story-page-where-is-pat-on-the-sofa",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-pat-on-the-sofa-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Nan (1), Pat (1), a sofa (1). Action: lifting a pillow (note only). Seen: a girl with two buns and a star shirt holding up a big pillow; a short-haired boy lying on a sofa among cushions; one sofa. All clear. Line art clean."
+    },
+    {
+      "id": "l2-w11-story-page-where-is-lily-on-the-chair",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-lily-on-the-chair-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "Lily sits in a big armchair in the middle; the only plain chair is the empty wooden chair at the right edge",
+      "notes": "Question page: yes. Items: Nan (1), Lily (1), a chair (1). Action: none. Seen: a girl with two buns holding a blanket at the left; a girl with a bob, straight fringe, and a small bow sitting in a big cushioned armchair with a sofa behind her; a separate empty wooden chair at the right. Lily and Nan match the cast. The seat under Lily reads as an armchair or sofa chair, and the one plain chair is empty, so two chair shapes show and the sentence counts one. Line art clean."
+    },
+    {
+      "id": "l2-w11-story-page-where-is-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-pip-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Nan, Sam, May, Ben, Mia, Pat, Lily (7 children); Pip is hidden on purpose. Action: waving (note only). Seen: seven children in a row with raised hands: a girl with two buns and a star shirt at the left (a fluffy tail shows behind her as the clue), a boy in a striped shirt, a girl with a ponytail and star clip in a pleated skirt, a plain-shirt boy, a girl in overalls, a boy in sandals, a girl with a bob, bow, and collared dress. Seven children, all match the cast. Line art clean."
+    },
+    {
+      "id": "l2-w11-cover-where-is-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-cover-where-is-pip-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover: title only, no count. Items: Nan, Sam, May, Ben, Mia, Pat, Lily; Pip is the subject. Action: hiding eyes, creeping (note only). Seen: a girl with two buns and a star shirt covering her eyes at the center; a line of children creeping in from the left; two girls and a puppy peeking over the sofa (a puppy with floppy ears and collar at the right). Subject shows. At this size I can match Sam (striped shirt), Mia, and Lily; the other left-side children read as generic children and I count one or two more heads than the cast, so a recount is worth a look. No child clearly contradicts the cast. Line art clean."
+    },
+    {
+      "id": "l2-w11-story-page-tom-set-up-a-den",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-tom-set-up-a-den-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), a den (1). Action: setting up (note only). Seen: a chibi boy with a big round head and side-swept short hair pulling a large blanket over two stools and the arm of a sofa, which forms a blanket tent. The tent reads as a den. Tom matches the cast. Line art clean."
+    },
+    {
+      "id": "l2-w11-story-page-see-me-mom",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-see-me-mom-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Mom (1). Action: waving, calling (note only). Seen: a chibi boy crawling out of a blanket tent and waving; a tall woman with wavy shoulder-length hair, a collared button blouse, trousers, and flat shoes standing at the right. Both match the cast. Small mark: Mom's large round eyes read slightly like glasses. Line art clean."
+    },
+    {
+      "id": "l2-w11-story-page-mom-is-in-too",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-mom-is-in-too-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mom (1), Tom (1). Action: none. Seen: a woman with big wavy hair and a collared blouse on hands and knees under a blanket tent; a chibi boy sitting next to her. A row of about twelve tiny toy figures stands on the rug at the lower right (small mark, not named by the sentence). Both persons match the cast. Line art clean."
+    },
+    {
+      "id": "l2-w11-story-page-dad-is-in-too",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-dad-is-in-too-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), Mom (1), Tom (1). Action: none. Seen: a man with short hair and a collared polo on the left; a woman with wavy hair and a collared top in the middle; a chibi boy at the right; all three under and beside one blanket tent. All match the cast and are visible. Line art clean."
+    },
+    {
+      "id": "l2-w11-story-page-pip-sat-on-top",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-pip-sat-on-top-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1). Action: sitting (note only). Seen: a small puppy with floppy ears, a collar with a round tag, and a fluffy tail sitting on a round rug; three toy tops on the floor. The sentence names no object that it sits on, so only Pip is checked. Note: no blanket tent is drawn on this page. Pip matches the cast. Line art clean."
+    },
+    {
+      "id": "l2-w11-story-page-pip-get-off",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-pip-get-off-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Pip (1). Action: calling out (note only). Seen: a chibi boy with squinting laughing eyes and an open smile under the edge of a blanket tent; a puppy with collar and tag sitting on top of the blanket. Both visible and clear. Small mark: Tom's laughing eyes are round rings. Line art clean."
+    },
+    {
+      "id": "l2-w11-cover-the-den",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-cover-the-den-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover: title only, no count. Items: Tom; the den as subject. Action: holding up a blanket (note only). Seen: a chibi boy with short side-swept hair holding a big blanket in front of him, with two stools, a sofa, and a toy box around him. The den is shown as being set up, with the blanket and the furniture ready. Tom matches the cast. Line art clean."
+    },
+    {
+      "id": "l2-w11-check-row-egg",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-check-row-egg-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: an egg (1). Seen: a tilted egg shape, narrow at the top and wide at the bottom, with a band and curved stripes across it, like a decorated egg. The egg outline reads as an egg to a child. Small mark: the stripes could also read as a globe. Line art clean."
+    },
+    {
+      "id": "l2-w11-check-row-elephant",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-check-row-elephant-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: an elephant (1). Seen: a cute elephant with a big round head, a large ear, a curled trunk, a small tusk, a round eye, four legs, and a tail tuft. Clear to a child. Line art clean."
+    },
+    {
+      "id": "l2-w11-card-elbow",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-card-elbow-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: an elbow (the word); a body part. Seen: a chibi boy in a short-sleeve shirt with one arm bent and pointing to the right and the other arm bent with a hand at his stomach; both bent elbows show at their place. A mark of the elbow shows (rule 7). Small mark: no arrow or pointer marks the elbow. Line art clean."
+    },
+    {
+      "id": "l2-w11-card-envelope",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-card-envelope-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: an envelope (1). Seen: a closed rectangular envelope with a triangular flap and a small heart seal. Reads as an envelope to a child. Line art clean."
+    },
+    {
+      "id": "l2-w11-card-door",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-card-door-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a door (1). Seen: a tall rectangular door with four panels, a round knob, and hinge marks on the left side. Reads as a door. Line art clean."
+    },
+    {
+      "id": "l2-w11-card-window",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-card-window-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a window (1). Seen: a rectangular window with a double frame and four panes. Reads as a window. Line art clean."
+    }
+  ],
+  "summary": { "files": 21, "pass": 20, "fail": 1 }
+}

@@ -1,0 +1,204 @@
+{
+  "group": "u2-w15-r1-line",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T18:25:40Z",
+  "results": [
+    {
+      "id": "l2-w15-story-page-look-a-bus",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-bus-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), a bus (1). Action: look, point (notes only). Seen: a boy with short side-swept hair and a shirt with horizontal bands, pointing; a vehicle with a long body, a door, a row of windows and big wheels on the road. Sam matches the cast. The vehicle reads as a bus. Small mark: the bus is a short, toy-like bus."
+    },
+    {
+      "id": "l2-w15-story-page-look-a-car",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-car-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: May (1), a car (1). Seen: a girl with a ponytail and a small star clip, a short-sleeve shirt and a pleated skirt, pointing; one small car with windows and two wheels on the road in front of a house. May matches the cast. The car is small but reads as a car."
+    },
+    {
+      "id": "l2-w15-story-page-look-a-bike",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-bike-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Ben (1), a bike (1). Seen: a boy with tufted hair, T-shirt and shorts, pointing; one bike with two wheels, a frame, handlebars, a seat and a front basket beside a wall. Ben matches the cast. The bike is large and clear."
+    },
+    {
+      "id": "l2-w15-story-page-look-a-truck",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-truck-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia (1), a truck (1). Seen: a girl with shoulder-length hair and a bow, a T-shirt with overalls, pointing; one small truck with a cab and an open flat bed on the road at the right. Mia matches the cast. The truck is small but reads as a truck."
+    },
+    {
+      "id": "l2-w15-story-page-look-a-train",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-train-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1), a train (1). Seen: a boy with short hair, a T-shirt, cargo shorts with a pocket and sandals, one hand raised; at the far right, in the distance, one small steam engine with a chimney pulling three cars on a track. Pat matches the cast. Small mark: the train is small; it still reads as a train."
+    },
+    {
+      "id": "l2-w15-story-page-look-a-boat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-boat-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Lily (1), a boat (1). Seen: a girl with a straight fringe, a bob and a small bow, a dress with a collar, pointing, her lower body behind a fence; one rowing boat with an oar on the water at the right. Lily matches the cast. The boat reads as a boat. Small mark: a curved hair shape at her left side is large; the fence hides her legs."
+    },
+    {
+      "id": "l2-w15-story-page-look-a-plane",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-plane-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), a plane (1). Seen: a girl with a star T-shirt pointing up; her hair and buns overlap a house roof behind her head; one airplane with wings, a tail and an engine in the sky at the top. Nan matches the cast. The plane reads as a plane. Small marks: the roof lines merge with her head outline; a puppy rides a bike in the background (not named)."
+    },
+    {
+      "id": "l2-w15-story-page-look-pip-on-a-bike",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-pip-on-a-bike-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), a bike (1), and for the cast: Grandpa, Sam, May, Ben, Mia, Pat, Lily, Nan. Seen: an older man with short hair, a mustache and a buttoned cardigan riding one bike with a front basket; a puppy with floppy ears sitting in the basket; seven laughing children in a row, pointing, with striped shirt, bangs and bow, tufts, a star shirt with buns, sandals. Bike, Pip, and Grandpa are clear. Seven children are drawn. Small marks: Grandpa's ringed eyes may read as round glasses; May and Mia are small and hard to tell apart."
+    },
+    {
+      "id": "l2-w15-story-page-pip-has-a-tag",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-pip-has-a-tag-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), a tag (1). Seen: a puppy sitting on a small mat with a collar and one small round tag hanging from it. The tag is small but drawn, visible, and reads as a tag. Small mark: a room with a sofa and a toy box."
+    },
+    {
+      "id": "l2-w15-story-page-pip-has-no-tag",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-pip-has-no-tag-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "Pip's collar at the front of his neck: a round tag hangs from the collar although the text says no tag",
+      "notes": "Question page: no. Items: Pip (1), Tom (1), no tag. Seen: a boy kneeling and pointing to a sitting puppy with a surprised mouth; the puppy wears a collar with a round tag at the front; a small round object lies on the mat. The sentence says Pip has no tag, but a round tag is drawn on his collar."
+    },
+    {
+      "id": "l2-w15-story-page-is-it-on-the-mat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-is-it-on-the-mat-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Tom (1), a mat (1). Seen: a crouching boy with dark swept hair lifting one soft flat floor mat with both hands; a small round disc lies on the floor next to it. Tom is drawn and matches the cast. The mat is a flat oval cloth that is lifted; the question page allows the hidden thing. Small mark: the lifted mat shape reads like a cloth or rug."
+    },
+    {
+      "id": "l2-w15-story-page-no-it-is-not",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-no-it-is-not-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no (an answer page). Items: Tom (1), Pip (1). Seen: a boy with a worried face crouching with one hand on the floor and one hand out; a puppy with a collar and tag sitting at the right, looking at him. Both drawn and match the cast."
+    },
+    {
+      "id": "l2-w15-story-page-is-it-in-the-pot",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-is-it-in-the-pot-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Tom (1), a pot (1). Seen: a boy bending over with big eyes, hands down, looking at one round pot with a rim on the floor in front of him. Tom is drawn and matches the cast. The pot is clear and reads as a pot."
+    },
+    {
+      "id": "l2-w15-story-page-no-it-is-not-b",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-no-it-is-not-b-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no (an answer page). Items: Tom (1). Seen: a boy with a worried face, standing with one hand out; a round pot on the floor at the right. Tom is drawn and matches the cast."
+    },
+    {
+      "id": "l2-w15-story-page-it-is-on-a-peg",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-it-is-on-a-peg-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Mom (1), a peg (1). Seen: a boy with swept hair pointing up; a woman with wavy hair, a collared blouse and trousers at the door; a wall rail with pegs, one peg holds a round ring (the tag) and one peg holds a backpack. Tom, Mom, and a peg with the tag are drawn and visible. Small marks: the rail has three pegs; the tag is small."
+    },
+    {
+      "id": "l2-w15-story-page-pip-got-his-tag",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-pip-got-his-tag-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Pip (1). Seen: a boy kneeling with both hands holding a small round thing at the collar of a puppy; the puppy stands with a collar and a round tag at the neck. Both drawn and match the cast."
+    },
+    {
+      "id": "l2-w15-cover-the-tag",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-cover-the-tag-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Cover; the title names the subject, the tag. Items: Pip (1), a tag. Seen: a puppy sitting on a small mat, with a collar and a round tag at the front of the collar; room items around it. Pip matches the cast and the tag is drawn. Small mark: a peg rail crosses the edge of the door at the right."
+    },
+    {
+      "id": "l2-w15-check-row-goat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-check-row-goat-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a goat (1). Seen: one standing goat with two curved horns, a small beard, a floppy ear, hooves and a tufted tail. Reads as a goat. Lines closed."
+    },
+    {
+      "id": "l2-w15-check-row-girl",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-check-row-girl-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a girl (1). Seen: a girl with two buns, a star T-shirt, shorts and shoes, pointing to the right. Reads as a girl."
+    },
+    {
+      "id": "l2-w15-card-garden",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-card-garden-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a garden. Seen: a tree on an oval patch of ground with many flowers and small bushes. Reads as a garden."
+    },
+    {
+      "id": "l2-w15-card-helicopter",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-card-helicopter-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a helicopter (1). Seen: one helicopter with a body, a round window, a top rotor, a tail with a small rotor and skids. Reads as a helicopter. Lines closed."
+    }
+  ],
+  "summary": {
+    "files": 21,
+    "pass": 20,
+    "fail": 1
+  }
+}

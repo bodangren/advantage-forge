@@ -1,0 +1,24 @@
+{
+  "group": "u2-w10-r2-line",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T18:11:20Z",
+  "results": [
+    {
+      "id": "l2-w10-story-page-put-on-your-jacket",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-jacket-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), Teacher Kim (1), a jacket (1). Action: putting on (note only). Seen: Nan (two buns, star on her shirt) pulls on a jacket with a collar, cuffs, and pockets over her shirt; Teacher Kim (low ponytail, cardigan, trousers) stands beside her and holds a hat. Both match the cast and the jacket is clear. Small mark: Pip looks out of the chest (not needed). Line art clean."
+    }
+  ],
+  "summary": {
+    "files": 1,
+    "pass": 1,
+    "fail": 0
+  }
+}

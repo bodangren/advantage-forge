@@ -1,0 +1,258 @@
+{
+  "group": "u2-w09-r1-line",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T18:08:43Z",
+  "results": [
+    {
+      "id": "l2-w09-story-page-i-like-rice-yum",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-rice-yum-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), rice (1 bowl). Action: eating (note only). Seen: a boy with swept fringe and a striped shirt holds a spoon over a bowl of rice (heaped grains). Both drawn and clear. Black lines on white, no gray, no gaps, no text."
+    },
+    {
+      "id": "l2-w09-story-page-i-like-eggs-yum",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-eggs-yum-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: May (1), eggs (2). Action: none. Seen: a girl with a high ponytail and a star clip holds one egg up; a second egg sits on a plate on the table. Two eggs, both clear. Small mark: big ringed eyes. Line art clean."
+    },
+    {
+      "id": "l2-w09-story-page-i-like-milk-yum",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-milk-yum-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Ben (1), milk (a glass). Action: drinking (note only). Seen: a boy drinks from a glass; three more glasses with a liquid level and a mug stand on the table. Milk shows as a glass of milk. Small mark: Ben's hair is smoother than the cast. Line art clean."
+    },
+    {
+      "id": "l2-w09-story-page-i-like-bananas-yum",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-bananas-yum-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia (1), bananas (2). Action: none. Seen: a girl with a bow, short curly hair, and overalls holds one banana in each raised hand; both have a curve and a stem. Two bananas, both clear. Small mark: ringed eyes. Line art clean."
+    },
+    {
+      "id": "l2-w09-story-page-i-like-bread-yum",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-bread-yum-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1), bread (1). Action: none. Seen: a boy with a cap of hair and sandals, with a pocket on his shorts, holds a slice of bread with a crust. Bread is clear. Small mark: rings around the eyes look like glasses. Line art clean."
+    },
+    {
+      "id": "l2-w09-story-page-i-like-juice-yum",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-juice-yum-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Lily (1), juice (a cup). Action: drinking (note only). Seen: a girl with a bob, a straight fringe, a small bow, and a collar dress holds a cup with both hands. The liquid is not visible inside the cup; a child reads it as a drink. Small mark: nothing marks the drink as juice. Line art clean."
+    },
+    {
+      "id": "l2-w09-story-page-i-like-cake-yum",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-cake-yum-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), cake (1 slice on a plate). Action: none. Seen: a girl with two buns holds a plate with a layered cake slice with a cherry. Both clear. Small mark: Pip lies under the table (not needed). Line art clean."
+    },
+    {
+      "id": "l2-w09-story-page-pip-likes-cake-yum",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-pip-likes-cake-yum-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), Nan (1), cake. Action: none. Seen: Pip the puppy (floppy ears, collar, tongue out) sits on a chair at the table with a cake in front of him; Nan (two buns, star shirt) sits opposite with a cake slice. Both match the cast and the cake shows. Line art clean."
+    },
+    {
+      "id": "l2-w09-cover-yum",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-cover-yum-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover; title names the subject. Question page: no. Items: Sam, May, Ben, Mia, Pat, Lily, Nan, Teacher Kim (each 1). Action: none. Seen: 7 children around a table (messy tufts, a ponytail with a star, a striped shirt, messy curls, overalls, a bob with a bow, two buns and a star shirt) and a woman in a cardigan behind them. All 8 show once. Small marks: only a bushy tail shows at the bottom edge; plates look empty. Line art clean."
+    },
+    {
+      "id": "l2-w09-story-page-dad-has-a-mop",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-dad-has-a-mop-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), a mop (1). Action: none. Seen: a man in a polo shirt holds a mop with a long handle and a strand head. One mop, clear. Line art clean."
+    },
+    {
+      "id": "l2-w09-story-page-dad-can-mop-the-mat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-dad-can-mop-the-mat-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "a second oval rug behind Dad, above the front rug that he mops",
+      "notes": "Question page: no. Items: Dad (1), a mat (1). Action: mopping (note only). Seen: Dad bends and pushes a mop head on an oval rug; a second smaller oval rug lies behind him near the wall. That is 2 mats, and the sentence names one mat. Dad and the mop are fine. The fail is the wrong count."
+    },
+    {
+      "id": "l2-w09-story-page-dad-sat-on-the-mat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-dad-sat-on-the-mat-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), Pip (1), a mat (1). Action: sat (note only). Seen: Dad sits on one oval rug; Pip the puppy (collar, tag, floppy ears) sits near him; a mop leans on the sofa. One mat, both characters clear. Line art clean."
+    },
+    {
+      "id": "l2-w09-story-page-dad-cannot-see-the-mop",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-dad-cannot-see-the-mop-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), a mop (1). Action: cannot see (note only). Seen: Dad with his hands up and a surprised face; a mop leans in the right corner behind him, with its head on the floor. One mop, drawn and visible. Hands show five fingers. Line art clean."
+    },
+    {
+      "id": "l2-w09-story-page-dad-is-sad",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-dad-is-sad-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1). Action: none. Seen: a man in a polo shirt sits on an armchair with a sad face and a frown. Clear. Line art clean."
+    },
+    {
+      "id": "l2-w09-story-page-tom-can-see-the-mop",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-tom-can-see-the-mop-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "the man on the sofa (Dad) at the left wears round glasses",
+      "notes": "Question page: no. Items: Tom (1), Dad (1), a mop (1). Action: seeing and pointing (note only). Seen: Tom (side-swept hair, T-shirt, shorts) points at a mop that leans on the toy box at the right; one mop, clear. Dad sits on the sofa with round glasses on his face. The Dad of the cast has no glasses, so Dad is changed. The fail is Dad's glasses."
+    },
+    {
+      "id": "l2-w09-story-page-pip-has-the-mop",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-pip-has-the-mop-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), a mop (1). Action: has (note only). Seen: Pip the puppy (collar with a tag, floppy ears, tail) holds the mop handle in his mouth; the mop strands hang below. One mop, clear. Line art clean."
+    },
+    {
+      "id": "l2-w09-story-page-pip-can-mop",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-pip-can-mop-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "the man at the right (Dad) wears round glasses",
+      "notes": "Question page: no. Items: Pip (1), Dad (1), Tom (1). Action: mopping (note only). Seen: Pip the puppy pushes a mop; Tom stands at the right with a big head; Dad stands behind with round glasses. The Dad of the cast has no glasses, so Dad is changed. The fail is Dad's glasses."
+    },
+    {
+      "id": "l2-w09-cover-dad-and-the-mop",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-cover-dad-and-the-mop-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover; title names the subject. Question page: no. Items: Dad (1), a mop (1), Pip (1). Action: none. Seen: a smiling man in a polo shirt with short hair and no glasses holds a mop on a rug; Pip the puppy sits at his side. Clear. Small mark: Dad's head is large. Line art clean."
+    },
+    {
+      "id": "l2-w09-check-row-duck",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-check-row-duck-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a duck (1). Action: none. Seen: a duckling with a bill, a wing, feet, and a tuft. Clear. Line art clean."
+    },
+    {
+      "id": "l2-w09-check-row-doll",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-check-row-doll-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a doll (1). Action: none. Seen: a sitting cloth doll with curly hair, overalls, and round shoes. It reads as a doll. Line art clean."
+    },
+    {
+      "id": "l2-w09-d4-prompt-cake",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-d4-prompt-cake-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a cake (1). Action: none. Seen: a round layered cake with strawberries and cream swirls on top. Clear. Line art clean."
+    },
+    {
+      "id": "l2-w09-card-nod",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-nod-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a child who nods (1). Action: nodding (note only). Seen: a smiling girl with a high ponytail and a star clip stands with her head slightly down. Head and body are drawn and visible. Line art clean."
+    },
+    {
+      "id": "l2-w09-card-dinosaur",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-dinosaur-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "broken-face",
+      "where": "the head at the top of the long neck: a blank oval with no eye and no mouth",
+      "notes": "Question page: no. Items: a dinosaur (1). Action: none. Seen: a long-neck dinosaur sits, with back plates, a tail, and toed feet. It reads as a dinosaur, but the head is a blank oval with no eye, no nostril, and no mouth. The face is missing. The fail is the faceless head."
+    },
+    {
+      "id": "l2-w09-card-rice",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-rice-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: rice (1 bowl). Action: none. Seen: a bowl full of heaped grains. It reads as rice. Line art clean."
+    },
+    {
+      "id": "l2-w09-card-banana",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-banana-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a banana (1). Action: none. Seen: one curved banana with a stem and a tip. Small mark: the cross lines on the peel are bold. Line art clean."
+    },
+    {
+      "id": "l2-w09-card-bread",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-bread-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: bread (1 slice). Action: none. Seen: one slice of bread with a crust edge and small seeds. Clear. Line art clean."
+    },
+    {
+      "id": "l2-w09-card-juice",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-juice-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: juice (1 glass). Action: none. Seen: a tall glass of a drink with ice cubes and a citrus slice on the rim. It reads as a glass of juice. Line art clean."
+    }
+  ],
+  "summary": {
+    "files": 27,
+    "pass": 23,
+    "fail": 4
+  }
+}

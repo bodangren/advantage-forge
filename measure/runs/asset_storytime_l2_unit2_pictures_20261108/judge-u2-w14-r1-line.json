@@ -1,0 +1,240 @@
+{
+  "group": "u2-w14-r1-line",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T18:23:37Z",
+  "results": [
+    {
+      "id": "l2-w14-story-page-it-is-sunny",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-sunny-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), a sun (the weather word). Seen: a girl with two round buns with bands, a T-shirt with a star, shorts, shoes, one hand holding a ball; sun shapes in the sky; a path of ovals, a tree, a fence. Nan matches the cast. Sun is drawn and clear. Small marks: three suns in the sky and two plain circles on the ground."
+    },
+    {
+      "id": "l2-w14-story-page-it-is-cloudy",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-cloudy-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), clouds. Seen: a girl with a star T-shirt and round hair buns looking up, arms out; many large clouds fill the sky; a puppy sits at the right. Nan matches the cast. Clouds are drawn and clear. Small mark: the buns read as small round bumps at the sides of her hair."
+    },
+    {
+      "id": "l2-w14-story-page-it-is-windy",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-windy-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), wind. Seen: a girl with a star T-shirt and two buns (a small bow sits on the left bun), holding a string of a flying kite with a tail of bows; leaves blow from a tree. Nan matches the cast. Wind reads clearly from the kite and leaves. Small mark: the bow on the left bun is an extra hair mark; the ring band is not clear."
+    },
+    {
+      "id": "l2-w14-story-page-it-is-rainy",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-rainy-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), rain. Seen: a girl with a star T-shirt and two buns, thick eyebrows, holding an open umbrella; clouds at the top; a path of ovals; a tree. Nan matches the cast. Rain reads from the umbrella and clouds. Small mark: no raindrops are drawn."
+    },
+    {
+      "id": "l2-w14-story-page-it-is-hot",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-hot-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), heat. Action: drinking, wiping the brow (notes only). Seen: a girl with two buns and a star T-shirt, one hand on the forehead, the other holding a cup to her mouth; a sun at the top right; a second cup on the ground. Nan matches the cast. Hot reads from the sun and the wiped brow."
+    },
+    {
+      "id": "l2-w14-story-page-it-is-cold",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-cold-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), cold. Seen: a girl with two buns in a buttoned winter coat with hands pressed together; a puppy beside her; a fence, a tree, a path. Nan matches the cast (face, buns). Cold reads from the thick coat and the pressed hands. Small mark: no snow or breath marks."
+    },
+    {
+      "id": "l2-w14-story-page-it-is-very-cold",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-very-cold-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), cold. Seen: a girl wearing a woolly hat, with a star T-shirt, sitting on a sofa under a blanket, hands on the blanket; a window with a fence; a hat and a box on the floor. Nan matches the cast. Very cold reads from the hat and the blanket. Small marks: a fluffy tail shows under the blanket; the buns show as bumps under the hat."
+    },
+    {
+      "id": "l2-w14-story-page-pip-is-cold-too",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-pip-is-cold-too-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), Nan (1). Seen: a girl with two buns and a star T-shirt sitting on a sofa; a puppy with a collar and a tag sitting beside her wearing a woolly hat. Both drawn, visible, and match the cast. Small mark: Nan wears summer clothes."
+    },
+    {
+      "id": "l2-w14-cover-hot-and-cold",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-cover-hot-and-cold-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole picture: a rainy scene with an umbrella, a rain cloud and raindrops, and nothing hot or cold",
+      "notes": "Question page: no. Cover; the title names the subject, here the weather words hot and cold. Items: Nan (1), the subject. Seen: a girl with a star T-shirt and two buns holding an umbrella, a cloud with raindrops, a puddle. Nan matches the cast. The subject of the title (hot and cold) does not show: there is no sun, heat, coat, or cold sign. A child sees a rainy day."
+    },
+    {
+      "id": "l2-w14-story-page-dad-is-hot",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-dad-is-hot-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), heat. Action: wiping the brow (note only). Seen: a man with short side-parted hair, a collared polo shirt with buttons and trousers, sitting on a sofa, one hand on the forehead, sweat drops at the forehead; a window and a toy box. Dad matches the cast. Small mark: the head is large, as in the cartoon style of the book."
+    },
+    {
+      "id": "l2-w14-story-page-mom-has-a-fan",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-mom-has-a-fan-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "Mom's face: round glasses with side arms on her face, and puffy curly hair",
+      "notes": "Question page: no. Items: Mom (1), a fan (1). Seen: a woman with puffy curly hair and round glasses, a collared blouse, trousers, flat shoes, holding one table fan with blades and a round base in front of her. The fan is drawn, visible, and reads as a fan. The cast note for Mom has no glasses; the glasses change her face."
+    },
+    {
+      "id": "l2-w14-story-page-on-goes-the-fan",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-on-goes-the-fan-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mom (1), Dad (1), a fan (1). Action: switching on (note only). Seen: a woman with large curly hair, a collared blouse and trousers, crouching with a hand on a table fan with a grille and a round base; a man with short side-swept hair in a polo shirt standing at the right. Fan, Mom, and Dad drawn and visible. Small mark: Mom's curly hair is fuller than the cast note."
+    },
+    {
+      "id": "l2-w14-story-page-dad-is-not-hot",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-dad-is-not-hot-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1). Seen: a man with a swept hair tuft, a polo shirt with buttons, trousers, sitting calm and smiling on a sofa, a fan beside him. Dad matches the cast. Drawn and visible. Small mark: the fan is not named by the text."
+    },
+    {
+      "id": "l2-w14-story-page-pip-is-hot",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-pip-is-hot-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1). Seen: a puppy lying on a round mat with an open mouth, floppy ears, a collar with a tag; a sofa, a window, and a toy box. Pip is drawn and visible and matches the cast shape (the forehead stripe is not drawn). Small mark: the heat shows only in the open mouth."
+    },
+    {
+      "id": "l2-w14-story-page-pip-sat-on-the-mat",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-pip-sat-on-the-mat-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), a mat (1). Action: sat (note only). Seen: a puppy sitting on one round mat with a collar and a tag, a face patch and floppy ears; a table fan next to the mat. Both drawn and visible. Small mark: the fan is extra."
+    },
+    {
+      "id": "l2-w14-story-page-dad-is-hot-b",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-dad-is-hot-b-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), Pip (1). Seen: a man with short hair in a polo shirt sitting on a sofa with a hand on the forehead and an open mouth; a puppy with a collar sitting on a round mat; a fan at the right edge, fully inside the frame. Both drawn, visible, and match the cast."
+    },
+    {
+      "id": "l2-w14-story-page-a-fan-for-you-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-a-fan-for-you-pip-line-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "Mom's face: round glasses with side arms; puffy curly hair",
+      "notes": "Question page: no. Items: Mom (1), Pip (1), Dad (1), a fan (1). Seen: a woman kneeling with round glasses and curly hair, holding a table fan with grille and base next to a sitting puppy; a man in a polo shirt standing at the right. Fan, Pip, and Dad are drawn and visible. The cast note for Mom has no glasses; the glasses change her face."
+    },
+    {
+      "id": "l2-w14-cover-on-goes-the-fan",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-cover-on-goes-the-fan-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Cover; the title names the subject, the fan. Items: Mom (1), Dad (1), Pip (1), a fan. Seen: a woman with long wavy hair and a collared blouse standing on the left and holding a table fan with a grille and a base; a man in a polo shirt sitting on the sofa; a puppy lying on a small mat. All drawn and visible. Small mark: a hand covers a small part of the fan grille."
+    },
+    {
+      "id": "l2-w14-check-row-foot",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-check-row-foot-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a foot (1). Seen: a girl with two buns and a star T-shirt sitting down, one leg raised so a sole with toe marks and a striped sock shows at the lower right. The foot shows with toes. Small mark: the foot is small in the whole figure."
+    },
+    {
+      "id": "l2-w14-card-sunny",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-sunny-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a sun. Seen: one large sun with a ring of rays and grass below. Clear. Lines closed."
+    },
+    {
+      "id": "l2-w14-card-cloudy",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-cloudy-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: clouds. Seen: two large clouds with a small part of the sun behind. Clear and closed lines."
+    },
+    {
+      "id": "l2-w14-card-windy",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-windy-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: wind. Seen: a tree bent to the right with many leaves blowing away. Reads as windy."
+    },
+    {
+      "id": "l2-w14-card-rainy",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-rainy-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: rain. Seen: one cloud with raindrops falling to flowers and grass. Clear."
+    },
+    {
+      "id": "l2-w14-card-hot",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-hot-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: heat. Seen: a large sun with wavy heat lines around and below it. Reads as hot."
+    },
+    {
+      "id": "l2-w14-card-cold",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-cold-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: cold. Seen: a woolly hat with a pompom and a long scarf on a chair. Reads as cold weather clothes. Small mark: no snow."
+    }
+  ],
+  "summary": {
+    "files": 25,
+    "pass": 22,
+    "fail": 3
+  }
+}

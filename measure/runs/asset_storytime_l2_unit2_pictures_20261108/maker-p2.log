@@ -207,3 +207,26 @@ Spec edits in commit b9ed6043 (the orchestrator brief lists the reasons):
   - Check: total entries 172 equals the rows with a line picture 172, with no missing and no extra id. A sharp script compared every judge copy against the line file of its row: 172 copies checked, 0 failures.
 - Items 5 and 6: spend-record.txt has one line per week pool and one line for the retry. Book total 3.74 USD, left 14.59 USD against the 18.33 USD stop.
 - Open finding (unchanged from Rounds 4 and 5): docs/storytime/l2-unit2/prompt-list.md was not regenerated after the spec changes. No change made.
+
+## Round 8 (Green · P2 T5-T6 · storytime_l2_unit2_pictures · r8)
+
+- 2026-11-09T00:05Z: start. HEAD bdbf5bfc, equal to role_base_sha. Model: minimax-cn-coding-plan/MiniMax-M3.1-Flash.
+- Step M (judge records, 0 USD). The orchestrator ran the frozen judge claude-code/claude-sonnet-5-5#high on the two color batches and the nine line batches, then a second judge on each file alone.
+  - Color try 2 and 3, 10 rows: 8 pass, 2 fail. l2-w10-story-page-put-on-your-hat-pip passes at try 3 after the second judge. l2-w11-story-page-here and l2-w11-story-page-ten-men-in-the-den fail again. Each has 1 color try left.
+  - Line try 1, 172 rows: 158 pass after the second judge, 14 fails stand.
+  - Standing line fails, 14 rows:
+    1. l2-w09-card-dinosaur
+    2. l2-w09-story-page-dad-can-mop-the-mat
+    3. l2-w09-story-page-pip-can-mop
+    4. l2-w09-story-page-tom-can-see-the-mop
+    5. l2-w10-card-trousers
+    6. l2-w10-story-page-dad-has-a-pan
+    7. l2-w11-story-page-where-is-lily-on-the-chair
+    8. l2-w12-card-hippo
+    9. l2-w12-story-page-dad-is-hot
+    10. l2-w12-story-page-open-your-book-may
+    11. l2-w12-story-page-open-your-book-pip
+    12. l2-w14-cover-hot-and-cold
+    13. l2-w14-story-page-a-fan-for-you-pip
+    14. l2-w14-story-page-mom-has-a-fan
+  - The 12 judge files are copied into measure/runs/asset_storytime_l2_unit2_pictures_20261108/ and committed with this step.

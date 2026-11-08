@@ -1,0 +1,33 @@
+{
+  "group": "u2-r2-color-group-t3",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T18:06:10Z",
+  "results": [
+    {
+      "id": "l2-w10-story-page-put-on-your-hat-pip",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-color-t3.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the group behind the front row: a second boy with brown hair and a red shirt (back left) and a second boy with light-brown hair and a blue shirt (back middle)",
+      "notes": "Question page: no. Items: Pip (1), Sam, May, Ben, Mia, Pat, Lily, Nan, Teacher Kim (each once), a hat on Pip (1). Action: putting on a hat (note only). Seen: Pip with a straw hat with a lilac band; Pat, May, Lily, Mia, Nan, and Teacher Kim, one each; but two boys with Sam's brown hair and red shirt (one in front with the striped shirt, one behind at the back left) and two boys with Ben's light-brown hair and light-blue shirt (one in front, one behind next to Teacher Kim). That is 11 figures, not 9. Sam and Ben show twice."
+    },
+    {
+      "id": "l2-w15-cover-look-a-bus",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-cover-look-a-bus-color-t3.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover; title names the subject. Question page: no. Items: a bus (1), Sam, May, Ben, Mia, Pat, Lily, Nan, Teacher Kim (each once). Action: none. Seen: a yellow school bus with windows, a door, and wheels at the top right; in a line holding hands from left to right: Pat (green shirt), Teacher Kim (green cardigan), May (yellow shirt, blue skirt, star clip), Ben (light-blue shirt), Sam (red striped shirt), Mia (pink bow, overalls), Lily (lilac dress, bow), Nan (orange star shirt, buns). All 8 show once and match the cast. The bus is clear. Small mark: May's ponytail is not clear. No text."
+    }
+  ],
+  "summary": {
+    "files": 2,
+    "pass": 1,
+    "fail": 1
+  }
+}

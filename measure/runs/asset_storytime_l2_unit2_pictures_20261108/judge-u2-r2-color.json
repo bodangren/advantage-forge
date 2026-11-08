@@ -1,0 +1,87 @@
+{
+  "group": "u2-r2-color",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T18:06:10Z",
+  "results": [
+    {
+      "id": "l2-w11-story-page-here",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-here-color-t2.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "the child in front of the sofa in the middle: Ben's light-brown messy hair with a yellow T-shirt, a blue pleated skirt, and white sneakers (May's outfit)",
+      "notes": "Question page: no. Items: Pip, Nan, Sam, May, Ben, Mia, Pat, Lily (each 1). Action: pointing (note only). Seen: Nan (orange star shirt, two buns), Pip (golden dog, red collar and tag), Sam (red striped shirt, blue shoes), May (black ponytail, yellow star clip, yellow shirt, back right), Mia (pink bow, overalls, back left), Lily (lilac dress, lilac bow). The front-middle child has Ben's hair but wears a yellow shirt and a blue skirt, so Ben is wrong. No child in a light-blue shirt, and no Pat (green shirt, black hair) shows. Only 7 figures. Ben is changed and Pat is missing."
+    },
+    {
+      "id": "l2-w11-story-page-ten-men-in-the-den",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-ten-men-in-the-den-color-t2.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the small wooden men in front of the blanket den: 5 in the back row and 6 in the front row, 11 in all",
+      "notes": "Question page: no. Items: Tom (1), men (10), den (1). Action: none. Seen: Tom (navy shirt, khaki shorts, red shoes, dark swept hair) kneeling; a cream blanket tent as the den; small wooden peg men on a blue rug at its opening. By count: 5 in the back row and 6 in the front row = 11, not 10. Tom and the den are fine. The fail is the wrong count."
+    },
+    {
+      "id": "l2-w11-story-page-the-den-is-on-dad",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-the-den-is-on-dad-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), Tom (1), Mom (1), the den (1), Dad (named in the text). Action: none. Seen: Pip (golden dog, red collar, gold tag) sits on top of a blue blanket den; Dad (mustard polo, dark hair) lies in the den opening, with the blanket over him; Tom (navy shirt, khaki shorts, red shoes) on the left; Mom (coral blouse, jeans, white sneakers, wavy hair) on the right. All match the cast and read clearly. Small mark: wooden toy men on the rug (not needed)."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-nan",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-nan-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), a book (1; named in the text). Action: opening and reading (note only). Seen: Nan with two buns and red bands, big brown eyes, red shorts, white sneakers, behind a small table; she holds an open picture book (a yellow circle and a blue fish, no words). Nan matches the cast; her orange shirt is hidden behind the book. Small marks: a bushy tail shows behind the chair; animal pictures on the wall hold no text."
+    },
+    {
+      "id": "l2-w13-cover-look-at-me",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-cover-look-at-me-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover; title names the subject. Question page: no. Items: Sam, May, Ben, Mia, Pat, Lily, Nan, Teacher Kim (each 1). Action: none. Seen, left to right: Sam (red striped shirt, blue shoes), May (black hair, yellow star clip, yellow shirt, blue skirt), Ben (light-blue shirt, dark-blue shorts, grey sneakers), Mia (pink bow, overalls), Pat (green shirt, black hair, sandals), Lily (lilac dress, lilac bow), Nan (orange star shirt, buns), Teacher Kim behind them (green cardigan, low ponytail). All 8 show once and match the cast."
+    },
+    {
+      "id": "l2-w10-check-row-ten",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-check-row-ten-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: ten (10 objects). Action: none. Seen: 10 red balls in two rows of 5. All are drawn, round, and clear. No text."
+    },
+    {
+      "id": "l2-w13-check-row-dot",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-check-row-dot-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a dot (1). Action: none. Seen: one flat red round disc on white. It reads as a big red dot. Small mark: a child could also call it a red circle."
+    },
+    {
+      "id": "l2-w13-d4-prompt-jump",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-d4-prompt-jump-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a child who jumps (1). Action: jumping (note only). Seen: a boy with brown hair, red shirt with two white stripes, blue shorts, and blue shoes, in the air with both arms up and both feet off the ground, with a small shadow below. This is Sam and matches the cast. Body parts are drawn and visible. No text."
+    }
+  ],
+  "summary": {
+    "files": 8,
+    "pass": 6,
+    "fail": 2
+  }
+}
