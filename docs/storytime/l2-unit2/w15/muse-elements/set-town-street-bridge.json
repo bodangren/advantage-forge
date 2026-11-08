@@ -1,0 +1,13 @@
+{
+  "id": "set-town-street-bridge",
+  "text": "",
+  "goal": "One empty quiet street of a small town for the unit 2 picture composites.",
+  "references": [],
+  "colorPrompt": "Compose one children's book background picture from the text below. The picture to make: quiet street of a small town: a wide light-gray footpath, ONE low stone bridge over a calm blue river, a few plain houses with doors and windows along the street, ONE row of small green trees, and a blue sky. Use the soft, round, bright 3D render look of the unit 1 element pictures, not a 2D drawing and no outlines. The room is empty: no person, no animal, no extra object. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book background. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No shading, no gray, no texture lines, no text. Simplify the background: draw only a few large, simple, closed shapes (the footpath line, the river line, the bridge as one closed arch shape with its rails, each house as one closed shape with its door and windows, and each tree as one closed crown shape with its trunk). No wood grain lines, no floor plank lines, no wall texture, no hatching, no tick marks, no small details. Every outline is one closed line that never runs into a background line; no loose line ends anywhere. Use few background shapes.",
+  "print": "crop",
+  "aspect": "4:3",
+  "outDir": "out/storytime/l2/unit2/w15/muse/elements",
+  "styleDonor": "docs/storytime/l2-unit1/w07/muse-elements/set-tom-living-room-empty.json",
+  "status": "draft for the paid run; not generated"
+}

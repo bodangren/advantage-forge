@@ -1,0 +1,30 @@
+{
+  "id": "l2-w12-card-hop",
+  "text": "hop",
+  "goal": "Ben (drawn young, about five years old) hops on one foot, full body. One clear picture, the main thing large in the middle, a plain light background.",
+  "references": [
+    "out/storytime/l2/unit1/w01/muse/elements/ben-ref-clean-2.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the element pictures. Picture 1 shows the boy Ben: the four 3D views at the bottom are the approved character, and the flat drawing at the top is only a side hint, so copy the 3D look. The picture: Ben (drawn young, about five years old) hops on one foot, full body. One clear picture, the main thing large in the middle, a plain light background. No letters, words, or numbers anywhere. Keep hop exactly as in the picture: Ben: a five-year-old boy with a chibi look (a big head and a small body), short messy light-brown hair with a fringe, big brown eyes, a big open-mouth happy smile, a light-blue T-shirt, dark-blue shorts, grey sneakers. The background is plain white and empty, with at most a very soft shadow under the person. The page text is \"hop\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture of one person. Convert picture 1 to line art for a student book: very thick, bold, even black lines (about five times a normal outline), like a coloring book for very young children, simple closed shapes that a 5-year-old can color, on pure white. No blush circles, no eyelash ticks, no hair strands, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. Draw fewer, larger inner shapes: leave out small folds, seams, pocket lines, and buttons. The lines stay equally thick everywhere, also on the face and the hands. Draw each eye as a closed outline with a big solid black pupil (a filled black circle) inside it. Draw the mouth exactly as in picture 1: an open mouth stays an open mouth drawn as a closed outline, and a closed smile stays one curve. Draw each hand as a closed outline with each finger as a separate rounded shape. Each head of hair is one closed shape. The ear is one closed outline with at most one inner curve. No lines on the clothes other than the outline, the collar, and the cuffs. Pat's hair is one closed shape with a few rounded tufts along the top and over the forehead, not a plain smooth cap and not many thin strands. Each cargo-shorts pocket and each sandal is one closed shape. Every outline is one closed line; no loose line ends anywhere. Every line inside an object ends on another line. Draw only the person: no ground line, no shadow, and no background shapes. Do not draw any text, letters, or numbers.",
+  "print": "crop",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit2/w12/muse",
+  "sizeClass": "C",
+  "use": "card",
+  "set": null,
+  "props": [],
+  "reuse": null,
+  "donorFiles": {
+    "rule": "docs/storytime/l2-unit1/cards/l2-w01-card-boy.json",
+    "line": "docs/storytime/l2-unit1/cards/l2-w01-card-boy.json",
+    "cast": [
+      "docs/storytime/l2-unit1/cards/l2-w05-card-sad.json"
+    ],
+    "scene": "pictures-u2.json (Workbooks row prompt)"
+  }
+}

@@ -1,0 +1,3986 @@
+{
+  "track": "asset_storytime_l2_unit2_prep_20261108",
+  "count": 229,
+  "source": "pictures-u2.json",
+  "rows": [
+    {
+      "id": "l2-w09-story-page-i-like-rice-yum",
+      "week": 9,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "I like rice. Yum!",
+      "scene": "Sam (drawn young, about five years old) sits at the long low lunch table in a bright kindergarten classroom and eats white rice from a white bowl with a spoon, with a big smile.",
+      "cast": [
+        "sam"
+      ],
+      "set": "set-classroom-lunch-table",
+      "props": [
+        "text-spoon",
+        "text-rice",
+        "bowl"
+      ],
+      "textOnly": [
+        "text-spoon",
+        "text-rice"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-story-page-i-like-eggs-yum",
+      "week": 9,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "I like eggs. Yum!",
+      "scene": "May (drawn young, about five years old) sits at the same lunch table and holds up one of two white boiled eggs from her plate, with a big smile.",
+      "cast": [
+        "may"
+      ],
+      "set": "set-classroom-lunch-table",
+      "props": [
+        "text-egg",
+        "plate"
+      ],
+      "textOnly": [
+        "text-egg"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-story-page-i-like-milk-yum",
+      "week": 9,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "I like milk. Yum!",
+      "scene": "Ben (drawn young, about five years old) sits at the same lunch table and drinks from a glass of white milk, with a big smile.",
+      "cast": [
+        "ben"
+      ],
+      "set": "set-classroom-lunch-table",
+      "props": [
+        "milk",
+        "cup"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-story-page-i-like-bananas-yum",
+      "week": 9,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "I like bananas. Yum!",
+      "scene": "Mia (drawn young, about five years old) sits at the same lunch table and holds up two yellow bananas, with a big smile.",
+      "cast": [
+        "mia"
+      ],
+      "set": "set-classroom-lunch-table",
+      "props": [
+        "text-banana"
+      ],
+      "textOnly": [
+        "text-banana"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-story-page-i-like-bread-yum",
+      "week": 9,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "I like bread. Yum!",
+      "scene": "Pat (drawn young, about five years old) sits at the same lunch table and holds up one slice of brown bread, with a big smile.",
+      "cast": [
+        "pat"
+      ],
+      "set": "set-classroom-lunch-table",
+      "props": [
+        "bread"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-story-page-i-like-juice-yum",
+      "week": 9,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "I like juice. Yum!",
+      "scene": "Lily (drawn young, about five years old) sits at the same lunch table and drinks from a glass of orange juice, with a big smile.",
+      "cast": [
+        "lily"
+      ],
+      "set": "set-classroom-lunch-table",
+      "props": [
+        "text-juice",
+        "cup"
+      ],
+      "textOnly": [
+        "text-juice"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-story-page-i-like-cake-yum",
+      "week": 9,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "I like cake. Yum!",
+      "scene": "Nan sits at the same lunch table and holds up a small white plate with one slice of pink cake, with a big smile. Under the table, a black nose and the tip of a fluffy golden-brown tail stick out.",
+      "cast": [
+        "nan"
+      ],
+      "set": "set-classroom-lunch-table",
+      "props": [
+        "cake",
+        "plate"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-story-page-pip-likes-cake-yum",
+      "week": 9,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Pip likes cake. Yum!",
+      "scene": "Pip the puppy sits on a small chair at the same lunch table with a white paper napkin around his neck; in front of him is his own small blue plate with a tiny round puppy cake. Pip licks his lips, and Nan sits next to him with her own slice of pink cake and laughs.",
+      "cast": [
+        "pip",
+        "nan"
+      ],
+      "set": "set-classroom-lunch-table",
+      "props": [
+        "text-napkin",
+        "cake",
+        "plate"
+      ],
+      "textOnly": [
+        "text-napkin"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-cover-yum",
+      "week": 9,
+      "use": "cover",
+      "sizeClass": "B",
+      "text": "Yum!",
+      "scene": "Sam, May, Ben, Mia, Pat, and Lily (drawn young, about five years old) and Nan sit at the long low lunch table in a bright kindergarten classroom, each with a plate or a cup in front of them; Teacher Kim smiles behind them. Under the table, the tip of a fluffy golden-brown tail sticks out.",
+      "cast": [
+        "sam",
+        "may",
+        "ben",
+        "mia",
+        "pat",
+        "lily",
+        "nan",
+        "teacher-kim"
+      ],
+      "set": "set-classroom-lunch-table",
+      "props": [
+        "plate",
+        "cup"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-story-page-dad-has-a-mop",
+      "week": 9,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Dad has a mop.",
+      "scene": "Dad holds a mop with a long wooden handle and a gray mop head in the bright living room of Tom's home and smiles. The bright living room of Tom's home has a green sofa, a window, a small brown rug under the window, an open toy box, and a soft round blue mat on the floor.",
+      "cast": [
+        "dad",
+        "tom"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-mop"
+      ],
+      "textOnly": [
+        "text-mop"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-story-page-dad-can-mop-the-mat",
+      "week": 9,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Dad can mop the mat.",
+      "scene": "Dad mops the soft round blue mat with the mop in the same living room.",
+      "cast": [
+        "dad"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-mop"
+      ],
+      "textOnly": [
+        "text-mop"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-story-page-dad-sat-on-the-mat",
+      "week": 9,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Dad sat on the mat.",
+      "scene": "Dad sits on the soft round blue mat in the same living room and rests; the mop leans on the green sofa behind him, and Pip the puppy looks at the mop.",
+      "cast": [
+        "dad",
+        "pip"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-mop"
+      ],
+      "textOnly": [
+        "text-mop"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-story-page-dad-cannot-see-the-mop",
+      "week": 9,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Dad cannot see the mop!",
+      "scene": "Dad stands next to the green sofa in the same living room and looks around with both hands up; there is no mop next to the sofa now.",
+      "cast": [
+        "dad"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-mop"
+      ],
+      "textOnly": [
+        "text-mop"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-story-page-dad-is-sad",
+      "week": 9,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Dad is sad.",
+      "scene": "Dad sits on the green sofa in the same living room with a sad face.",
+      "cast": [
+        "dad"
+      ],
+      "set": "set-tom-living-room",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-story-page-tom-can-see-the-mop",
+      "week": 9,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Tom can see the mop.",
+      "scene": "Tom (drawn young, about eight years old) points at the gray mop head behind the open toy box in the same living room; Dad sits on the green sofa.",
+      "cast": [
+        "tom",
+        "dad"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-mop"
+      ],
+      "textOnly": [
+        "text-mop"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-story-page-pip-has-the-mop",
+      "week": 9,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Pip has the mop!",
+      "scene": "Pip the puppy holds the wooden handle of the mop in his mouth behind the open toy box in the same living room and wags his tail.",
+      "cast": [
+        "pip"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-mop"
+      ],
+      "textOnly": [
+        "text-mop"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-story-page-pip-can-mop",
+      "week": 9,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Pip can mop!",
+      "scene": "Pip the puppy pulls the mop across the floor of the same living room with the handle in his mouth, and the floor shines behind him; Dad and Tom (drawn young, about eight years old) laugh.",
+      "cast": [
+        "pip",
+        "dad",
+        "tom"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-mop"
+      ],
+      "textOnly": [
+        "text-mop"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-cover-dad-and-the-mop",
+      "week": 9,
+      "use": "cover",
+      "sizeClass": "B",
+      "text": "Dad and the Mop",
+      "scene": "Dad holds a mop with a long wooden handle and a gray mop head in the bright living room of Tom's home and smiles; Pip the puppy sits next to the mop and looks up at it. The bright living room of Tom's home has a green sofa, a window, a small brown rug under the window, an open toy box, and a soft round blue mat on the floor.",
+      "cast": [
+        "dad",
+        "tom",
+        "pip"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-mop"
+      ],
+      "textOnly": [
+        "text-mop"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-check-row-dog",
+      "week": 9,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "dog",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "dog",
+        "source": "out/storytime/l2/unit1/w06/delivery-muse-v1/l2-w06-check-row-dog-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w09-check-row-sun",
+      "week": 9,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "sun",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "sun",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-sun-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w09-check-row-cat",
+      "week": 9,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "cat",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "cat",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-cat-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w09-check-row-fish",
+      "week": 9,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "fish",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "fish",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-fish-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w09-check-row-duck",
+      "week": 9,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "duck",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-check-row-bus",
+      "week": 9,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "bus",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "bus",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-bus-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w09-check-row-pen",
+      "week": 9,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "pen",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "pen",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-pen-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w09-check-row-cup",
+      "week": 9,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "cup",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "cup",
+        "source": "out/storytime/l2/unit1/w06/delivery-muse-v1/l2-w06-check-row-cup-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w09-check-row-doll",
+      "week": 9,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "doll",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-d4-prompt-cake",
+      "week": 9,
+      "use": "d4-prompt",
+      "sizeClass": "C",
+      "text": "cake",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-dress",
+      "week": 10,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Put on your dress.",
+      "scene": "May (drawn young, about five years old) puts a big blue dress on over her clothes in front of the long mirror in the dress-up corner of a bright kindergarten classroom with a big open dress-up box and a long mirror, with a big smile.",
+      "cast": [
+        "may"
+      ],
+      "set": "set-classroom-dress-up-corner",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-skirt",
+      "week": 10,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Put on your skirt.",
+      "scene": "Mia (drawn young, about five years old) puts a big red skirt on over her clothes in front of the same long mirror, with a big smile.",
+      "cast": [
+        "mia"
+      ],
+      "set": "set-classroom-dress-up-corner",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-t-shirt",
+      "week": 10,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Put on your T-shirt.",
+      "scene": "Ben (drawn young, about five years old) pulls a big yellow T-shirt on over his clothes next to the same dress-up box, with a big smile.",
+      "cast": [
+        "ben"
+      ],
+      "set": "set-classroom-dress-up-corner",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-trousers",
+      "week": 10,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Put on your trousers.",
+      "scene": "Pat (drawn young, about five years old) pulls a pair of big green trousers on over his clothes next to the same dress-up box, with a big smile.",
+      "cast": [
+        "pat"
+      ],
+      "set": "set-classroom-dress-up-corner",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-socks",
+      "week": 10,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Put on your socks.",
+      "scene": "Lily (drawn young, about five years old) sits on the floor next to the same dress-up box and pulls a pair of big white socks with red stripes over her feet, with a big smile.",
+      "cast": [
+        "lily"
+      ],
+      "set": "set-classroom-dress-up-corner",
+      "props": [
+        "socks"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-shoes",
+      "week": 10,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Put on your shoes.",
+      "scene": "Sam (drawn young, about five years old) stands in a pair of big red shoes next to the same dress-up box and looks down at them, with a big smile.",
+      "cast": [
+        "sam"
+      ],
+      "set": "set-classroom-dress-up-corner",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-jacket",
+      "week": 10,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Put on your jacket.",
+      "scene": "Nan puts a big orange jacket on over her clothes in front of the same long mirror. Behind her, Teacher Kim holds a small purple hat and looks at the same dress-up box: its lid is up a little, and a black nose sticks out.",
+      "cast": [
+        "nan",
+        "teacher-kim"
+      ],
+      "set": "set-classroom-dress-up-corner",
+      "props": [
+        "sunhat"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-hat-pip",
+      "week": 10,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Put on your hat, Pip!",
+      "scene": "Pip the puppy sits in the same big open dress-up box with a small purple hat on his head and wags his tail; Sam, May, Ben, Mia, Pat, and Lily (drawn young, about five years old) and Nan stand around the box in their big dress-up clothes and laugh, and Teacher Kim smiles.",
+      "cast": [
+        "pip",
+        "sam",
+        "may",
+        "ben",
+        "mia",
+        "pat",
+        "lily",
+        "nan",
+        "teacher-kim"
+      ],
+      "set": "set-classroom-dress-up-corner",
+      "props": [
+        "sunhat"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-cover-dress-up",
+      "week": 10,
+      "use": "cover",
+      "sizeClass": "B",
+      "text": "Dress Up!",
+      "scene": "Teacher Kim holds up the lid of the big open dress-up box in the dress-up corner of a bright kindergarten classroom with a big open dress-up box and a long mirror; Sam, May, Ben, Mia, Pat, and Lily (drawn young, about five years old) and Nan look into the box with big smiles. Behind the box, a floppy ear with a dark tip sticks out.",
+      "cast": [
+        "teacher-kim",
+        "sam",
+        "may",
+        "ben",
+        "mia",
+        "pat",
+        "lily",
+        "nan"
+      ],
+      "set": "set-classroom-dress-up-corner",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-story-page-dad-has-a-pan",
+      "week": 10,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Dad has a pan.",
+      "scene": "Dad holds a baking pan in the bright kitchen of Tom's home; Tom (drawn young, about eight years old) stands next to him and looks at the pan. The bright kitchen of Tom's home has a low wooden table, a door, and a soft round green mat by the door.",
+      "cast": [
+        "dad",
+        "tom"
+      ],
+      "set": "set-tom-kitchen",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-story-page-a-tan-man",
+      "week": 10,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "A tan man!",
+      "scene": "On the baking pan on the low wooden table in the same kitchen lies one small tan gingerbread man with white icing eyes and a big icing smile; Tom (drawn young, about eight years old) points at it.",
+      "cast": [
+        "tom"
+      ],
+      "set": "set-tom-kitchen",
+      "props": [
+        "text-gingerbread"
+      ],
+      "textOnly": [
+        "text-gingerbread"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-story-page-run-man-run",
+      "week": 10,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Run, man, run!",
+      "scene": "The small tan gingerbread man with white icing eyes jumps off the baking pan and runs across the floor of the same kitchen with a big icing smile.",
+      "cast": [],
+      "set": "set-tom-kitchen",
+      "props": [
+        "text-gingerbread"
+      ],
+      "textOnly": [
+        "text-gingerbread"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-story-page-tom-and-dad-run",
+      "week": 10,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Tom and Dad run.",
+      "scene": "Tom (drawn young, about eight years old) and Dad run across the same kitchen after the small tan gingerbread man; he runs ahead of them toward the door.",
+      "cast": [
+        "tom",
+        "dad"
+      ],
+      "set": "set-tom-kitchen",
+      "props": [
+        "text-gingerbread"
+      ],
+      "textOnly": [
+        "text-gingerbread"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-story-page-they-were-sad",
+      "week": 10,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "They were sad.",
+      "scene": "Tom (drawn young, about eight years old) and Dad stand by the door of the same kitchen with sad faces and look around; there is no gingerbread man on the floor.",
+      "cast": [
+        "tom",
+        "dad"
+      ],
+      "set": "set-tom-kitchen",
+      "props": [
+        "text-gingerbread"
+      ],
+      "textOnly": [
+        "text-gingerbread"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-story-page-a-man-on-a-mat",
+      "week": 10,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "A man on a mat!",
+      "scene": "The small tan gingerbread man with white icing eyes sits on the soft round green mat by the door of the same kitchen and waves.",
+      "cast": [],
+      "set": "set-tom-kitchen",
+      "props": [
+        "text-gingerbread"
+      ],
+      "textOnly": [
+        "text-gingerbread"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-story-page-tom-and-dad-sat",
+      "week": 10,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Tom and Dad sat.",
+      "scene": "Tom (drawn young, about eight years old) and Dad sit down on the floor next to the soft round green mat in the same kitchen and smile at the small tan gingerbread man.",
+      "cast": [
+        "tom",
+        "dad"
+      ],
+      "set": "set-tom-kitchen",
+      "props": [
+        "text-gingerbread"
+      ],
+      "textOnly": [
+        "text-gingerbread"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-story-page-the-man-sat-too",
+      "week": 10,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "The man sat, too!",
+      "scene": "The small tan gingerbread man with white icing eyes sits between Tom (drawn young, about eight years old) and Dad on the soft round green mat in the same kitchen, and all three smile.",
+      "cast": [
+        "tom",
+        "dad"
+      ],
+      "set": "set-tom-kitchen",
+      "props": [
+        "text-gingerbread"
+      ],
+      "textOnly": [
+        "text-gingerbread"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-cover-the-tan-man",
+      "week": 10,
+      "use": "cover",
+      "sizeClass": "B",
+      "text": "The Tan Man",
+      "scene": "Dad holds a baking pan with one small tan gingerbread man with white icing eyes and a big icing smile on it in the bright kitchen of Tom's home, and Tom (drawn young, about eight years old) smiles at it. The bright kitchen of Tom's home has a low wooden table, a door, and a soft round green mat by the door.",
+      "cast": [
+        "dad",
+        "tom"
+      ],
+      "set": "set-tom-kitchen",
+      "props": [
+        "text-gingerbread"
+      ],
+      "textOnly": [
+        "text-gingerbread"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-check-row-fan",
+      "week": 10,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "fan",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [
+        "text-fan"
+      ],
+      "textOnly": [
+        "text-fan"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-check-row-dog",
+      "week": 10,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "dog",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "dog",
+        "source": "out/storytime/l2/unit1/w06/delivery-muse-v1/l2-w06-check-row-dog-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w10-check-row-bed",
+      "week": 10,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "bed",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "bed",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-bed-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w10-check-row-cup",
+      "week": 10,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "cup",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "cup",
+        "source": "out/storytime/l2/unit1/w06/delivery-muse-v1/l2-w06-check-row-cup-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w10-check-row-van",
+      "week": 10,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "van",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-check-row-sun",
+      "week": 10,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "sun",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "sun",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-sun-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w10-check-row-sock",
+      "week": 10,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "sock",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "sock",
+        "source": "out/storytime/l2/unit1/w05/delivery-muse-v1/l2-w05-check-row-sock-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w10-check-row-dad",
+      "week": 10,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "dad",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-check-row-ten",
+      "week": 10,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "ten",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "ten",
+        "source": "out/storytime/l2/unit1/w06/delivery-muse-v2/l2-w06-check-row-ten-v2.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w11-story-page-where-is-sam-under-the-table",
+      "week": 11,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Where is Sam? Under the table.",
+      "scene": "Nan kneels and looks under the low wooden table in the cozy living room of Nan's home with a blue sofa, a soft rug, a toy box, a low wooden table, a big soft armchair, a door, and a window; Sam (drawn young, about five years old) crouches under the table and smiles.",
+      "cast": [
+        "nan",
+        "sam"
+      ],
+      "set": "set-nan-living-room",
+      "props": [
+        "green-door",
+        "text-armchair",
+        "low-table"
+      ],
+      "textOnly": [
+        "text-armchair"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-story-page-where-is-may-in-the-box",
+      "week": 11,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Where is May? In the box.",
+      "scene": "Nan looks into a big empty cardboard box next to the blue sofa in the same living room; May (drawn young, about five years old) crouches in the box and smiles.",
+      "cast": [
+        "nan",
+        "may"
+      ],
+      "set": "set-nan-living-room",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-story-page-where-is-ben-under-the-bed",
+      "week": 11,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Where is Ben? Under the bed.",
+      "scene": "Nan kneels and looks under the low bed in Nan's small bedroom with a low bed with a yellow blanket, a window, and a door; Ben (drawn young, about five years old) lies on the floor under the bed and smiles.",
+      "cast": [
+        "nan",
+        "ben"
+      ],
+      "set": "set-nan-bedroom",
+      "props": [
+        "green-door"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-story-page-where-is-mia-in-the-bed",
+      "week": 11,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Where is Mia? In the bed.",
+      "scene": "Nan pulls back the yellow blanket on the same low bed in Nan's small bedroom; Mia (drawn young, about five years old) lies in the bed and laughs.",
+      "cast": [
+        "nan",
+        "mia"
+      ],
+      "set": "set-nan-bedroom",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-story-page-where-is-pat-on-the-sofa",
+      "week": 11,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Where is Pat? On the sofa.",
+      "scene": "Nan lifts a big soft cushion on the blue sofa in the same living room; Pat (drawn young, about five years old) lies on the sofa under a pile of big soft cushions and laughs.",
+      "cast": [
+        "nan",
+        "pat"
+      ],
+      "set": "set-nan-living-room",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-story-page-where-is-lily-on-the-chair",
+      "week": 11,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Where is Lily? On the chair.",
+      "scene": "Nan lifts a big pink blanket on the big soft armchair in the same living room; Lily (drawn young, about five years old) sits curled up on the chair under the blanket and smiles.",
+      "cast": [
+        "nan",
+        "lily"
+      ],
+      "set": "set-nan-living-room",
+      "props": [
+        "chair",
+        "text-armchair"
+      ],
+      "textOnly": [
+        "text-armchair"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-story-page-where-is-pip",
+      "week": 11,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Where is Pip?",
+      "scene": "Nan and Sam, May, Ben, Mia, Pat, and Lily (drawn young, about five years old) stand in the middle of the same living room and look around with their hands up. Right behind Nan, the tip of a fluffy golden-brown tail sticks out.",
+      "cast": [
+        "nan",
+        "sam",
+        "may",
+        "ben",
+        "mia",
+        "pat",
+        "lily"
+      ],
+      "set": "set-nan-living-room",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-story-page-here",
+      "week": 11,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Here!",
+      "scene": "Pip the puppy sits right behind Nan in the same living room and wags his tail; Sam, May, Ben, Mia, Pat, and Lily (drawn young, about five years old) point at him and laugh, and Nan turns around with a big smile.",
+      "cast": [
+        "pip",
+        "nan",
+        "sam",
+        "may",
+        "ben",
+        "mia",
+        "pat",
+        "lily"
+      ],
+      "set": "set-nan-living-room",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-cover-where-is-pip",
+      "week": 11,
+      "use": "cover",
+      "sizeClass": "B",
+      "text": "Where Is Pip?",
+      "scene": "Nan covers her eyes with both hands in the cozy living room of Nan's home with a blue sofa, a soft rug, a toy box, a low wooden table, a big soft armchair, a door, and a window; Sam, May, Ben, Mia, Pat, and Lily (drawn young, about five years old) tiptoe away to hide, with big smiles. Behind the blue sofa, a floppy ear with a dark tip sticks out.",
+      "cast": [
+        "nan",
+        "sam",
+        "may",
+        "ben",
+        "mia",
+        "pat",
+        "lily"
+      ],
+      "set": "set-nan-living-room",
+      "props": [
+        "green-door",
+        "text-armchair",
+        "low-table"
+      ],
+      "textOnly": [
+        "text-armchair"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-story-page-tom-set-up-a-den",
+      "week": 11,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Tom set up a den.",
+      "scene": "Tom (drawn young, about eight years old) puts a big blue blanket over the back of the green sofa and two kitchen chairs in the bright living room of Tom's home to make a den. The bright living room of Tom's home has a green sofa, a window, a small brown rug under the window, an open toy box, and a soft round blue mat on the floor.",
+      "cast": [
+        "tom"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-blanket"
+      ],
+      "textOnly": [
+        "text-blanket"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-story-page-ten-men-in-the-den",
+      "week": 11,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Ten men in the den!",
+      "scene": "Inside the blanket den in the same living room, ten small wooden toy men stand in a row on the soft round blue mat; Tom (drawn young, about eight years old) kneels next to them and smiles.",
+      "cast": [
+        "tom"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-blanket"
+      ],
+      "textOnly": [
+        "text-blanket"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-story-page-see-me-mom",
+      "week": 11,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "See me, Mom!",
+      "scene": "Tom (drawn young, about eight years old) looks out of the open end of the blanket den in the same living room and waves at Mom; Mom stands by the window and smiles.",
+      "cast": [
+        "tom",
+        "mom"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-blanket"
+      ],
+      "textOnly": [
+        "text-blanket"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-story-page-mom-is-in-too",
+      "week": 11,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Mom is in, too.",
+      "scene": "Mom crawls into the blanket den next to Tom (drawn young, about eight years old) in the same living room and laughs; the ten small wooden toy men stand in a row next to them.",
+      "cast": [
+        "mom",
+        "tom"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-blanket"
+      ],
+      "textOnly": [
+        "text-blanket"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-story-page-dad-is-in-too",
+      "week": 11,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Dad is in, too.",
+      "scene": "Dad squeezes into the blanket den next to Mom and Tom (drawn young, about eight years old) in the same living room; the big blue blanket bulges, and all three laugh.",
+      "cast": [
+        "dad",
+        "mom",
+        "tom"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-blanket"
+      ],
+      "textOnly": [
+        "text-blanket"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-story-page-pip-sat-on-top",
+      "week": 11,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Pip sat on top.",
+      "scene": "Pip the puppy sits on top of the big blue blanket of the den in the same living room; the blanket sags low under him.",
+      "cast": [
+        "pip"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "top",
+        "text-blanket"
+      ],
+      "textOnly": [
+        "text-blanket"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-story-page-pip-get-off",
+      "week": 11,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Pip, get off!",
+      "scene": "Tom (drawn young, about eight years old) looks out of the open end of the blanket den in the same living room and calls up to Pip the puppy, who still sits on top; the blanket sags lower.",
+      "cast": [
+        "tom",
+        "pip"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "top",
+        "text-blanket"
+      ],
+      "textOnly": [
+        "text-blanket"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-story-page-the-den-is-on-dad",
+      "week": 11,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "The den is on Dad!",
+      "scene": "The big blue blanket lies over Dad's head and back in the same living room; Pip the puppy sits on Dad's back on top of the blanket and wags his tail, and Tom (drawn young, about eight years old) and Mom laugh. The ten small wooden toy men lie on the soft round blue mat.",
+      "cast": [
+        "dad",
+        "pip",
+        "tom",
+        "mom"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "top",
+        "text-blanket"
+      ],
+      "textOnly": [
+        "text-blanket"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-cover-the-den",
+      "week": 11,
+      "use": "cover",
+      "sizeClass": "B",
+      "text": "The Den",
+      "scene": "Tom (drawn young, about eight years old) holds up a big blue blanket next to the green sofa in the bright living room of Tom's home and smiles; two kitchen chairs stand next to the sofa. The bright living room of Tom's home has a green sofa, a window, a small brown rug under the window, an open toy box, and a soft round blue mat on the floor.",
+      "cast": [
+        "tom"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-blanket"
+      ],
+      "textOnly": [
+        "text-blanket"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-check-row-egg",
+      "week": 11,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "egg",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [
+        "text-egg"
+      ],
+      "textOnly": [
+        "text-egg"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-check-row-sun",
+      "week": 11,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "sun",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "sun",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-sun-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w11-check-row-cat",
+      "week": 11,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "cat",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "cat",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-cat-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w11-check-row-dog",
+      "week": 11,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "dog",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "dog",
+        "source": "out/storytime/l2/unit1/w06/delivery-muse-v1/l2-w06-check-row-dog-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w11-check-row-elephant",
+      "week": 11,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "elephant",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-check-row-fish",
+      "week": 11,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "fish",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "fish",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-fish-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w11-check-row-cat-b",
+      "week": 11,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "cat",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "cat",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-cat-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w11-check-row-dog-b",
+      "week": 11,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "dog",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "dog",
+        "source": "out/storytime/l2/unit1/w06/delivery-muse-v1/l2-w06-check-row-dog-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w11-check-row-ten",
+      "week": 11,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "ten",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "ten",
+        "source": "out/storytime/l2/unit1/w06/delivery-muse-v2/l2-w06-check-row-ten-v2.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-sam",
+      "week": 12,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Open your book, Sam.",
+      "scene": "Teacher Kim holds up a big open picture book at the front of a bright kindergarten classroom with low tables and a wall with big colorful animal pictures; Sam (drawn young, about five years old) sits at a low table and opens his small book, with a big smile.",
+      "cast": [
+        "teacher-kim",
+        "sam"
+      ],
+      "set": "set-classroom-tables",
+      "props": [
+        "book"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-may",
+      "week": 12,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Open your book, May.",
+      "scene": "May (drawn young, about five years old) sits at a low table in the same classroom and opens her small book, with a big smile.",
+      "cast": [
+        "may"
+      ],
+      "set": "set-classroom-tables",
+      "props": [
+        "book"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-ben",
+      "week": 12,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Open your book, Ben.",
+      "scene": "Ben (drawn young, about five years old) sits at a low table in the same classroom and opens his small book, with a big smile.",
+      "cast": [
+        "ben"
+      ],
+      "set": "set-classroom-tables",
+      "props": [
+        "book"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-mia",
+      "week": 12,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Open your book, Mia.",
+      "scene": "Mia (drawn young, about five years old) sits at a low table in the same classroom and opens her small book, with a big smile.",
+      "cast": [
+        "mia"
+      ],
+      "set": "set-classroom-tables",
+      "props": [
+        "book"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-pat",
+      "week": 12,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Open your book, Pat.",
+      "scene": "Pat (drawn young, about five years old) sits at a low table in the same classroom and opens his small book, with a big smile.",
+      "cast": [
+        "pat"
+      ],
+      "set": "set-classroom-tables",
+      "props": [
+        "book"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-lily",
+      "week": 12,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Open your book, Lily.",
+      "scene": "Lily (drawn young, about five years old) sits at a low table in the same classroom and opens her small book, with a big smile.",
+      "cast": [
+        "lily"
+      ],
+      "set": "set-classroom-tables",
+      "props": [
+        "book"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-nan",
+      "week": 12,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Open your book, Nan.",
+      "scene": "Nan looks into her open school bag at a low table in the same classroom with a surprised face; there is no book in the bag. Under the table, the tip of a fluffy golden-brown tail sticks out.",
+      "cast": [
+        "nan"
+      ],
+      "set": "set-classroom-tables",
+      "props": [
+        "book",
+        "bag"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-pip",
+      "week": 12,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Open your book, Pip!",
+      "scene": "Pip the puppy lies under the same low table and opens Nan's small book with his nose and one paw; Nan looks under the table and laughs, and Teacher Kim smiles.",
+      "cast": [
+        "pip",
+        "nan",
+        "teacher-kim"
+      ],
+      "set": "set-classroom-tables",
+      "props": [
+        "book"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-cover-open-your-book",
+      "week": 12,
+      "use": "cover",
+      "sizeClass": "B",
+      "text": "Open Your Book!",
+      "scene": "Sam, May, Ben, Mia, Pat, and Lily (drawn young, about five years old) and Nan sit at the low tables of a bright kindergarten classroom with low tables and a wall with big colorful animal pictures with small closed books in front of them; Teacher Kim holds up a big picture book and smiles. Under one table, a floppy ear with a dark tip sticks out.",
+      "cast": [
+        "sam",
+        "may",
+        "ben",
+        "mia",
+        "pat",
+        "lily",
+        "nan",
+        "teacher-kim"
+      ],
+      "set": "set-classroom-tables",
+      "props": [
+        "book"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-story-page-dad-has-a-hat",
+      "week": 12,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Dad has a hat.",
+      "scene": "Dad holds a big straw hat in the sunny farmyard of Grandma and Grandpa's farm and smiles. The sunny farmyard of Grandma and Grandpa's farm has green grass, a small red barn, a low wooden fence, and a small straw mat on the grass.",
+      "cast": [
+        "dad",
+        "grandma",
+        "grandpa"
+      ],
+      "set": "set-farmyard",
+      "props": [
+        "sunhat"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-story-page-dad-is-hot",
+      "week": 12,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Dad is hot.",
+      "scene": "Dad wipes his forehead with one hand under the bright sun in the same farmyard; he holds the big straw hat in his other hand.",
+      "cast": [
+        "dad"
+      ],
+      "set": "set-farmyard",
+      "props": [
+        "sun",
+        "sunhat"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-story-page-it-is-on-the-mat",
+      "week": 12,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "It is on the mat.",
+      "scene": "The big straw hat lies upside down on the small straw mat on the grass of the same farmyard; Dad walks to the low wooden fence.",
+      "cast": [
+        "dad"
+      ],
+      "set": "set-farmyard",
+      "props": [
+        "sunhat"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-story-page-a-hen-can-hop",
+      "week": 12,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "A hen can hop.",
+      "scene": "A small brown hen with a red comb hops across the grass of the same farmyard toward the big straw hat on the mat.",
+      "cast": [],
+      "set": "set-farmyard",
+      "props": [
+        "hen",
+        "sunhat"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-story-page-hop-hop-hop",
+      "week": 12,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Hop, hop, hop!",
+      "scene": "The same small brown hen hops onto the small straw mat, next to the big straw hat.",
+      "cast": [],
+      "set": "set-farmyard",
+      "props": [
+        "hen",
+        "sunhat"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-story-page-the-hen-sat-in-it",
+      "week": 12,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "The hen sat in it.",
+      "scene": "The same small brown hen sits in the big straw hat on the small straw mat and fluffs her feathers.",
+      "cast": [],
+      "set": "set-farmyard",
+      "props": [
+        "hen",
+        "sunhat"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-story-page-dad-said-get-off",
+      "week": 12,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Dad said, \"Get off!\"",
+      "scene": "Dad comes back from the low wooden fence of the same farmyard and waves both hands at the small brown hen in his big straw hat.",
+      "cast": [
+        "dad"
+      ],
+      "set": "set-farmyard",
+      "props": [
+        "hen",
+        "sunhat"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-story-page-that-hen-has-the-hat",
+      "week": 12,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "That hen has the hat!",
+      "scene": "The same small brown hen walks away across the grass of the same farmyard with the big straw hat on her head; Dad and Tom (drawn young, about eight years old) laugh.",
+      "cast": [
+        "dad",
+        "tom"
+      ],
+      "set": "set-farmyard",
+      "props": [
+        "hen",
+        "sunhat"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-cover-the-hen-and-the-hat",
+      "week": 12,
+      "use": "cover",
+      "sizeClass": "B",
+      "text": "The Hen and the Hat",
+      "scene": "Dad holds a big straw hat in the sunny farmyard of Grandma and Grandpa's farm, and a small brown hen with a red comb looks up at the hat. The sunny farmyard of Grandma and Grandpa's farm has green grass, a small red barn, a low wooden fence, and a small straw mat on the grass.",
+      "cast": [
+        "dad",
+        "grandma",
+        "grandpa"
+      ],
+      "set": "set-farmyard",
+      "props": [
+        "hen",
+        "sunhat"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-check-row-hat",
+      "week": 12,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "hat",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "hat",
+        "source": "out/storytime/l2/unit1/w05/delivery-muse-v1/l2-w05-check-row-hat-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w12-check-row-sun",
+      "week": 12,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "sun",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "sun",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-sun-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w12-check-row-cat",
+      "week": 12,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "cat",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "cat",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-cat-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w12-check-row-dog",
+      "week": 12,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "dog",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "dog",
+        "source": "out/storytime/l2/unit1/w06/delivery-muse-v1/l2-w06-check-row-dog-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w12-check-row-horse",
+      "week": 12,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "horse",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-check-row-fish",
+      "week": 12,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "fish",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "fish",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-fish-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w12-check-row-pen",
+      "week": 12,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "pen",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "pen",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-pen-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w12-check-row-cup",
+      "week": 12,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "cup",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "cup",
+        "source": "out/storytime/l2/unit1/w06/delivery-muse-v1/l2-w06-check-row-cup-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w12-check-row-house",
+      "week": 12,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "house",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-d4-prompt-book",
+      "week": 12,
+      "use": "d4-prompt",
+      "sizeClass": "C",
+      "text": "book",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-story-page-i-can-run",
+      "week": 13,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "I can run.",
+      "scene": "Sam (drawn young, about five years old) runs fast across the green grass of the sunny playground of the kindergarten with green grass, a low red climbing frame, and a white line on the ground, with a big smile.",
+      "cast": [
+        "sam"
+      ],
+      "set": "set-playground",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-story-page-i-can-jump",
+      "week": 13,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "I can jump.",
+      "scene": "May (drawn young, about five years old) jumps high with both feet off the ground on the green grass of the same playground, with a big smile.",
+      "cast": [
+        "may"
+      ],
+      "set": "set-playground",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-story-page-i-can-kick",
+      "week": 13,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "I can kick.",
+      "scene": "Ben (drawn young, about five years old) kicks a red ball on the green grass of the same playground, with a big smile.",
+      "cast": [
+        "ben"
+      ],
+      "set": "set-playground",
+      "props": [
+        "balls"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-story-page-i-can-throw",
+      "week": 13,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "I can throw.",
+      "scene": "Mia (drawn young, about five years old) throws the same red ball high in the air on the same playground, with a big smile.",
+      "cast": [
+        "mia"
+      ],
+      "set": "set-playground",
+      "props": [
+        "balls"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-story-page-i-can-catch",
+      "week": 13,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "I can catch.",
+      "scene": "Pat (drawn young, about five years old) catches the same red ball with both hands on the same playground, with a big smile.",
+      "cast": [
+        "pat"
+      ],
+      "set": "set-playground",
+      "props": [
+        "balls"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-story-page-i-can-clap",
+      "week": 13,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "I can clap.",
+      "scene": "Lily (drawn young, about five years old) claps her hands next to the low red climbing frame of the same playground, with a big smile.",
+      "cast": [
+        "lily"
+      ],
+      "set": "set-playground",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-story-page-i-can-hop",
+      "week": 13,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "I can hop.",
+      "scene": "Nan hops on one foot along the white line of the same playground, with a big smile. Behind her, the same red ball rolls toward the climbing frame, and the tip of a fluffy golden-brown tail sticks out from under it.",
+      "cast": [
+        "nan"
+      ],
+      "set": "set-playground",
+      "props": [
+        "balls"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-story-page-pip-can-catch",
+      "week": 13,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Pip can catch!",
+      "scene": "Pip the puppy jumps up and catches the same red ball in his mouth on the same playground; Sam, May, Ben, Mia, Pat, and Lily (drawn young, about five years old) and Nan clap and laugh.",
+      "cast": [
+        "pip",
+        "sam",
+        "may",
+        "ben",
+        "mia",
+        "pat",
+        "lily",
+        "nan"
+      ],
+      "set": "set-playground",
+      "props": [
+        "balls"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-cover-look-at-me",
+      "week": 13,
+      "use": "cover",
+      "sizeClass": "B",
+      "text": "Look at Me!",
+      "scene": "Sam, May, Ben, Mia, Pat, and Lily (drawn young, about five years old) and Nan run, jump, and clap on the green grass of the sunny playground of the kindergarten with green grass, a low red climbing frame, and a white line on the ground, with big smiles; Teacher Kim smiles behind them. Under the climbing frame, a floppy ear with a dark tip sticks out.",
+      "cast": [
+        "sam",
+        "may",
+        "ben",
+        "mia",
+        "pat",
+        "lily",
+        "nan",
+        "teacher-kim"
+      ],
+      "set": "set-playground",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-story-page-tom-has-a-pot",
+      "week": 13,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Tom has a pot.",
+      "scene": "Tom (drawn young, about eight years old) holds a big empty clay pot in the small sunny garden of Tom's home and smiles. The small sunny garden of Tom's home has green grass, a low wooden fence, and red flowers along the fence.",
+      "cast": [
+        "tom"
+      ],
+      "set": "set-tom-garden",
+      "props": [
+        "pot"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-story-page-a-pot-for-pip",
+      "week": 13,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "A pot for Pip!",
+      "scene": "Tom (drawn young, about eight years old) puts the big clay pot upside down on the grass of the same garden; Pip the puppy looks at it and wags his tail.",
+      "cast": [
+        "tom",
+        "pip"
+      ],
+      "set": "set-tom-garden",
+      "props": [
+        "pot"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-story-page-hop-on-top-pip",
+      "week": 13,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Hop on top, Pip!",
+      "scene": "Tom (drawn young, about eight years old) points at the top of the upside-down clay pot on the grass of the same garden; Pip the puppy looks up at it.",
+      "cast": [
+        "tom",
+        "pip"
+      ],
+      "set": "set-tom-garden",
+      "props": [
+        "top",
+        "pot"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-story-page-he-is-on-top",
+      "week": 13,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "He is on top!",
+      "scene": "Pip the puppy stands on top of the upside-down clay pot on the grass of the same garden and wags his tail.",
+      "cast": [
+        "pip"
+      ],
+      "set": "set-tom-garden",
+      "props": [
+        "top",
+        "pot"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-story-page-i-like-it",
+      "week": 13,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "I like it!",
+      "scene": "Tom (drawn young, about eight years old) claps his hands next to the upside-down clay pot in the same garden; Pip the puppy still stands on top of it.",
+      "cast": [
+        "tom",
+        "pip"
+      ],
+      "set": "set-tom-garden",
+      "props": [
+        "top",
+        "pot"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-story-page-mom-is-on-a-mat",
+      "week": 13,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Mom is on a mat.",
+      "scene": "Mom lies on a soft blue mat on the grass of the same garden with her eyes closed and a closed book on her tummy; the upside-down clay pot with Pip the puppy on top is next to the mat.",
+      "cast": [
+        "mom",
+        "pip"
+      ],
+      "set": "set-tom-garden",
+      "props": [
+        "text-mat",
+        "top",
+        "pot",
+        "book"
+      ],
+      "textOnly": [
+        "text-mat"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-story-page-do-not-hop-on-mom",
+      "week": 13,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Do not hop on Mom!",
+      "scene": "Tom (drawn young, about eight years old) waves both hands in the same garden; Pip the puppy stands on top of the clay pot and looks down at Mom on the soft blue mat.",
+      "cast": [
+        "tom",
+        "pip",
+        "mom"
+      ],
+      "set": "set-tom-garden",
+      "props": [
+        "text-mat",
+        "top",
+        "pot"
+      ],
+      "textOnly": [
+        "text-mat"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-story-page-pip-is-on-mom",
+      "week": 13,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Pip is on Mom!",
+      "scene": "Pip the puppy sits on Mom's tummy on the soft blue mat in the same garden and licks her chin; Mom opens her eyes and laughs, and Tom (drawn young, about eight years old) laughs too.",
+      "cast": [
+        "pip",
+        "mom",
+        "tom"
+      ],
+      "set": "set-tom-garden",
+      "props": [
+        "text-mat"
+      ],
+      "textOnly": [
+        "text-mat"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-cover-hop-on-top",
+      "week": 13,
+      "use": "cover",
+      "sizeClass": "B",
+      "text": "Hop on Top!",
+      "scene": "Tom (drawn young, about eight years old) holds a big empty clay pot in the small sunny garden of Tom's home, and Pip the puppy looks up at it. The small sunny garden of Tom's home has green grass, a low wooden fence, and red flowers along the fence.",
+      "cast": [
+        "tom",
+        "pip"
+      ],
+      "set": "set-tom-garden",
+      "props": [
+        "pot"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-check-row-pot",
+      "week": 13,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "pot",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-check-row-sun",
+      "week": 13,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "sun",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "sun",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-sun-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w13-check-row-bed",
+      "week": 13,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "bed",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "bed",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-bed-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w13-check-row-cup",
+      "week": 13,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "cup",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "cup",
+        "source": "out/storytime/l2/unit1/w06/delivery-muse-v1/l2-w06-check-row-cup-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w13-check-row-dot",
+      "week": 13,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "dot",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-check-row-fish",
+      "week": 13,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "fish",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "fish",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-fish-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w13-check-row-hat",
+      "week": 13,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "hat",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "hat",
+        "source": "out/storytime/l2/unit1/w05/delivery-muse-v1/l2-w05-check-row-hat-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w13-check-row-pen",
+      "week": 13,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "pen",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "pen",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-pen-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w13-check-row-mop",
+      "week": 13,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "mop",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [
+        "text-mop"
+      ],
+      "textOnly": [
+        "text-mop"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-d4-prompt-jump",
+      "week": 13,
+      "use": "d4-prompt",
+      "sizeClass": "C",
+      "text": "jump",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-story-page-it-is-sunny",
+      "week": 14,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "It is sunny.",
+      "scene": "Nan plays with a red ball in the small front garden of Nan's home with green grass, a low white fence, and a small tree under a bright yellow sun in a clear blue sky, with a big smile.",
+      "cast": [
+        "nan"
+      ],
+      "set": "set-nan-front-garden",
+      "props": [
+        "sun",
+        "balls"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-story-page-it-is-cloudy",
+      "week": 14,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "It is cloudy.",
+      "scene": "Nan stands in the same garden and looks up at big gray clouds that cover the sky.",
+      "cast": [
+        "nan"
+      ],
+      "set": "set-nan-front-garden",
+      "props": [
+        "text-cloud"
+      ],
+      "textOnly": [
+        "text-cloud"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-story-page-it-is-windy",
+      "week": 14,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "It is windy.",
+      "scene": "Nan holds the string of a red kite high in the windy sky over the same garden; the leaves of the small tree fly in the wind.",
+      "cast": [
+        "nan"
+      ],
+      "set": "set-nan-front-garden",
+      "props": [
+        "kites"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-story-page-it-is-rainy",
+      "week": 14,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "It is rainy.",
+      "scene": "Nan stands under a yellow umbrella in the same garden; rain falls from gray clouds all around her.",
+      "cast": [
+        "nan"
+      ],
+      "set": "set-nan-front-garden",
+      "props": [
+        "text-umbrella",
+        "text-cloud",
+        "text-rain"
+      ],
+      "textOnly": [
+        "text-umbrella",
+        "text-cloud",
+        "text-rain"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-story-page-it-is-hot",
+      "week": 14,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "It is hot.",
+      "scene": "Nan drinks from a glass of water in the same garden under a hot bright sun and wipes her forehead.",
+      "cast": [
+        "nan"
+      ],
+      "set": "set-nan-front-garden",
+      "props": [
+        "sun",
+        "cup"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-story-page-it-is-cold",
+      "week": 14,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "It is cold.",
+      "scene": "Nan wears a warm blue jacket over her clothes in the same garden on a cool gray morning and rubs her hands together.",
+      "cast": [
+        "nan"
+      ],
+      "set": "set-nan-front-garden",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-story-page-it-is-very-cold",
+      "week": 14,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "It is very cold!",
+      "scene": "Nan sits under a big soft blanket on the blue sofa in the cozy living room of Nan's home with a blue sofa, a soft rug, and a toy box, with a warm red wool hat on her head. Under the edge of the blanket, the tip of a fluffy golden-brown tail sticks out.",
+      "cast": [
+        "nan"
+      ],
+      "set": "set-nan-front-garden",
+      "props": [
+        "text-blanket",
+        "text-wool-hat",
+        "text-toy-box",
+        "text-sofa",
+        "sunhat"
+      ],
+      "textOnly": [
+        "text-blanket",
+        "text-wool-hat",
+        "text-toy-box",
+        "text-sofa"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-story-page-pip-is-cold-too",
+      "week": 14,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Pip is cold, too!",
+      "scene": "Pip the puppy sits next to Nan under the same big soft blanket on the blue sofa, with a small red wool hat on his head; Nan laughs.",
+      "cast": [
+        "pip",
+        "nan"
+      ],
+      "set": "set-nan-front-garden",
+      "props": [
+        "text-blanket",
+        "text-wool-hat",
+        "text-sofa",
+        "sunhat"
+      ],
+      "textOnly": [
+        "text-blanket",
+        "text-wool-hat",
+        "text-sofa"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-cover-hot-and-cold",
+      "week": 14,
+      "use": "cover",
+      "sizeClass": "B",
+      "text": "Hot and Cold",
+      "scene": "Nan stands in the small front garden of Nan's home with green grass, a low white fence, and a small tree; on the left of the picture the sky is sunny, and on the right it is cloudy with a little rain. Nan holds a yellow umbrella and smiles. Behind the small tree, a floppy ear with a dark tip sticks out.",
+      "cast": [
+        "nan"
+      ],
+      "set": "set-nan-front-garden",
+      "props": [
+        "text-umbrella",
+        "text-rain"
+      ],
+      "textOnly": [
+        "text-umbrella",
+        "text-rain"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-story-page-dad-is-hot",
+      "week": 14,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Dad is hot.",
+      "scene": "Dad sits on the green sofa in the bright living room of Tom's home on a hot day and wipes his forehead. The bright living room of Tom's home has a green sofa, a window, a small brown rug under the window, an open toy box, and a soft round blue mat on the floor.",
+      "cast": [
+        "dad",
+        "tom"
+      ],
+      "set": "set-tom-living-room",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-story-page-mom-has-a-fan",
+      "week": 14,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Mom has a fan.",
+      "scene": "Mom carries a small white electric fan on a low stand into the same living room.",
+      "cast": [
+        "mom"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-fan"
+      ],
+      "textOnly": [
+        "text-fan"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-story-page-on-goes-the-fan",
+      "week": 14,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "On goes the fan!",
+      "scene": "Mom presses the button of the small white electric fan in front of the green sofa in the same living room; the fan turns, and the air blows on Dad.",
+      "cast": [
+        "mom",
+        "dad"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-fan"
+      ],
+      "textOnly": [
+        "text-fan"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-story-page-dad-is-not-hot",
+      "week": 14,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Dad is not hot.",
+      "scene": "Dad sits on the green sofa in front of the small white electric fan in the same living room and smiles with his eyes closed; his hair blows a little.",
+      "cast": [
+        "dad"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-fan"
+      ],
+      "textOnly": [
+        "text-fan"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-story-page-pip-is-hot",
+      "week": 14,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Pip is hot.",
+      "scene": "Pip the puppy lies on the small brown rug in the same living room with his tongue out.",
+      "cast": [
+        "pip"
+      ],
+      "set": "set-tom-living-room",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-story-page-pip-sat-on-the-mat",
+      "week": 14,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Pip sat on the mat.",
+      "scene": "Pip the puppy sits on the soft round blue mat right in front of the small white electric fan in the same living room; his ears blow back.",
+      "cast": [
+        "pip"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-fan"
+      ],
+      "textOnly": [
+        "text-fan"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-story-page-dad-is-hot-b",
+      "week": 14,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Dad is hot!",
+      "scene": "Dad sits on the green sofa in the same living room and wipes his forehead again; Pip the puppy sits between him and the small white electric fan, and the air blows on Pip.",
+      "cast": [
+        "dad",
+        "pip"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-fan"
+      ],
+      "textOnly": [
+        "text-fan"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-story-page-a-fan-for-you-pip",
+      "week": 14,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "A fan for you, Pip!",
+      "scene": "Mom puts a second, smaller white electric fan on the floor next to Pip the puppy in the same living room; the big fan blows on Dad again, and Dad, Mom, and Pip are happy.",
+      "cast": [
+        "mom",
+        "pip",
+        "dad"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-fan"
+      ],
+      "textOnly": [
+        "text-fan"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-cover-on-goes-the-fan",
+      "week": 14,
+      "use": "cover",
+      "sizeClass": "B",
+      "text": "On Goes the Fan!",
+      "scene": "Mom holds a small white electric fan on a low stand in the bright living room of Tom's home, and Dad smiles on the green sofa; Pip the puppy lies on the small brown rug. The bright living room of Tom's home has a green sofa, a window, a small brown rug under the window, an open toy box, and a soft round blue mat on the floor.",
+      "cast": [
+        "mom",
+        "tom",
+        "dad",
+        "pip"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-fan"
+      ],
+      "textOnly": [
+        "text-fan"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-check-row-fish",
+      "week": 14,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "fish",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "fish",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-fish-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w14-check-row-sun",
+      "week": 14,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "sun",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "sun",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-sun-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w14-check-row-cat",
+      "week": 14,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "cat",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "cat",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-cat-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w14-check-row-dog",
+      "week": 14,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "dog",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "dog",
+        "source": "out/storytime/l2/unit1/w06/delivery-muse-v1/l2-w06-check-row-dog-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w14-check-row-foot",
+      "week": 14,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "foot",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-check-row-bed",
+      "week": 14,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "bed",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "bed",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-bed-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w14-check-row-pen",
+      "week": 14,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "pen",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "pen",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-pen-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w14-check-row-cup",
+      "week": 14,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "cup",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "cup",
+        "source": "out/storytime/l2/unit1/w06/delivery-muse-v1/l2-w06-check-row-cup-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w14-check-row-fan",
+      "week": 14,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "fan",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [
+        "text-fan"
+      ],
+      "textOnly": [
+        "text-fan"
+      ],
+      "reuse": {
+        "word": "fan",
+        "source": "docs/storytime/l2-unit2/w10/muse/l2-w10-check-row-fan.json",
+        "kind": "unit2-earlier-row"
+      }
+    },
+    {
+      "id": "l2-w15-story-page-look-a-bus",
+      "week": 15,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Look, a bus!",
+      "scene": "Sam (drawn young, about five years old) stands on the wide footpath of a quiet street of a small town with a wide footpath, a low bridge over a calm river, and a blue sky and points at a big yellow bus on the street, with a big smile.",
+      "cast": [
+        "sam"
+      ],
+      "set": "set-town-street-bridge",
+      "props": [
+        "bus"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-story-page-look-a-car",
+      "week": 15,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Look, a car!",
+      "scene": "May (drawn young, about five years old) stands on the same footpath and points at a small red car on the street, with a big smile.",
+      "cast": [
+        "may"
+      ],
+      "set": "set-town-street-bridge",
+      "props": [
+        "text-car"
+      ],
+      "textOnly": [
+        "text-car"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-story-page-look-a-bike",
+      "week": 15,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Look, a bike!",
+      "scene": "Ben (drawn young, about five years old) stands on the same footpath and points at a blue bike next to a low wall, with a big smile.",
+      "cast": [
+        "ben"
+      ],
+      "set": "set-town-street-bridge",
+      "props": [
+        "text-bike"
+      ],
+      "textOnly": [
+        "text-bike"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-story-page-look-a-truck",
+      "week": 15,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Look, a truck!",
+      "scene": "Mia (drawn young, about five years old) stands on the same footpath and points at a big green truck on the street, with a big smile.",
+      "cast": [
+        "mia"
+      ],
+      "set": "set-town-street-bridge",
+      "props": [
+        "text-truck"
+      ],
+      "textOnly": [
+        "text-truck"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-story-page-look-a-train",
+      "week": 15,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Look, a train!",
+      "scene": "Pat (drawn young, about five years old) stands on the same footpath and points at a long red and white train on a bridge far away, with a big smile.",
+      "cast": [
+        "pat"
+      ],
+      "set": "set-town-street-bridge",
+      "props": [
+        "text-train"
+      ],
+      "textOnly": [
+        "text-train"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-story-page-look-a-boat",
+      "week": 15,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Look, a boat!",
+      "scene": "Lily (drawn young, about five years old) stands on the same footpath behind a low fence and points at a small white boat on the calm river far away, with a big smile.",
+      "cast": [
+        "lily"
+      ],
+      "set": "set-town-street-bridge",
+      "props": [
+        "fence",
+        "text-boat"
+      ],
+      "textOnly": [
+        "text-boat"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-story-page-look-a-plane",
+      "week": 15,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Look, a plane!",
+      "scene": "Nan stands on the same footpath and points up at a white plane in the blue sky, with a big smile. Down the street, a red bike comes nearer, and a floppy ear with a dark tip sticks out of its front basket.",
+      "cast": [
+        "nan"
+      ],
+      "set": "set-town-street-bridge",
+      "props": [
+        "text-bike",
+        "text-plane"
+      ],
+      "textOnly": [
+        "text-bike",
+        "text-plane"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-story-page-look-pip-on-a-bike",
+      "week": 15,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Look, Pip on a bike!",
+      "scene": "Grandpa rides a red bike slowly along the street next to the same footpath; Pip the puppy sits in the front basket of the bike, and his ears blow back. Sam, May, Ben, Mia, Pat, and Lily (drawn young, about five years old) and Nan point and laugh, and Lily waves at Grandpa.",
+      "cast": [
+        "grandpa",
+        "pip",
+        "sam",
+        "may",
+        "ben",
+        "mia",
+        "pat",
+        "lily",
+        "nan"
+      ],
+      "set": "set-town-street-bridge",
+      "props": [
+        "text-bike"
+      ],
+      "textOnly": [
+        "text-bike"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-cover-look-a-bus",
+      "week": 15,
+      "use": "cover",
+      "sizeClass": "B",
+      "text": "Look, a Bus!",
+      "scene": "Sam, May, Ben, Mia, Pat, and Lily (drawn young, about five years old) and Nan walk in a line on the wide footpath of a quiet street of a small town with a wide footpath, a low bridge over a calm river, and a blue sky, two by two and hand in hand; Teacher Kim walks in front of them and smiles. A big yellow bus drives by on the street.",
+      "cast": [
+        "sam",
+        "may",
+        "ben",
+        "mia",
+        "pat",
+        "lily",
+        "nan",
+        "teacher-kim"
+      ],
+      "set": "set-town-street-bridge",
+      "props": [
+        "bus"
+      ],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-story-page-pip-has-a-tag",
+      "week": 15,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Pip has a tag.",
+      "scene": "Pip the puppy sits on the small brown rug in the bright living room of Tom's home; the small round gold tag of his red collar shines. The bright living room of Tom's home has a green sofa, a window, a small brown rug under the window, an open toy box, a soft round blue mat on the floor, a small clay pot by the door, and a row of coat pegs on the wall next to the door.",
+      "cast": [
+        "pip",
+        "tom"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-tag",
+        "text-pegs"
+      ],
+      "textOnly": [
+        "text-tag",
+        "text-pegs"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-story-page-pip-has-no-tag",
+      "week": 15,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Pip has no tag!",
+      "scene": "Pip the puppy sits on the same rug, and his red collar has no tag on it; Tom (drawn young, about eight years old) kneels next to him and looks at the collar with a surprised face.",
+      "cast": [
+        "pip",
+        "tom"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-tag"
+      ],
+      "textOnly": [
+        "text-tag"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-story-page-is-it-on-the-mat",
+      "week": 15,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Is it on the mat?",
+      "scene": "Tom (drawn young, about eight years old) lifts the soft round blue mat in the same living room and looks under it; there is no tag.",
+      "cast": [
+        "tom"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-tag"
+      ],
+      "textOnly": [
+        "text-tag"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-story-page-no-it-is-not",
+      "week": 15,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "No, it is not.",
+      "scene": "Tom (drawn young, about eight years old) puts the soft round blue mat back in the same living room and shakes his head; Pip the puppy watches him.",
+      "cast": [
+        "tom",
+        "pip"
+      ],
+      "set": "set-tom-living-room",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-story-page-is-it-in-the-pot",
+      "week": 15,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Is it in the pot?",
+      "scene": "Tom (drawn young, about eight years old) looks into the small clay pot by the door of the same living room.",
+      "cast": [
+        "tom"
+      ],
+      "set": "set-tom-living-room",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-story-page-no-it-is-not-b",
+      "week": 15,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "No, it is not.",
+      "scene": "Tom (drawn young, about eight years old) stands next to the small clay pot in the same living room and shakes his head; the pot is empty.",
+      "cast": [
+        "tom"
+      ],
+      "set": "set-tom-living-room",
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-story-page-it-is-on-a-peg",
+      "week": 15,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "It is on a peg!",
+      "scene": "Tom (drawn young, about eight years old) points up at the row of coat pegs next to the door of the same living room: the small round gold tag hangs on a peg next to Mom's bag, and Mom smiles in the doorway.",
+      "cast": [
+        "tom",
+        "mom"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "bag",
+        "text-tag",
+        "text-pegs"
+      ],
+      "textOnly": [
+        "text-tag",
+        "text-pegs"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-story-page-pip-got-his-tag",
+      "week": 15,
+      "use": "story-page",
+      "sizeClass": "A",
+      "text": "Pip got his tag!",
+      "scene": "Tom (drawn young, about eight years old) kneels and puts the small round gold tag back on the red collar of Pip the puppy in the same living room; Pip wags his tail and licks Tom's hand.",
+      "cast": [
+        "tom",
+        "pip"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-tag"
+      ],
+      "textOnly": [
+        "text-tag"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-cover-the-tag",
+      "week": 15,
+      "use": "cover",
+      "sizeClass": "B",
+      "text": "The Tag",
+      "scene": "Pip the puppy sits on the small brown rug in the bright living room of Tom's home and wags his tail; the small round gold tag of his red collar shines. The bright living room of Tom's home has a green sofa, a window, a small brown rug under the window, an open toy box, a soft round blue mat on the floor, a small clay pot by the door, and a row of coat pegs on the wall next to the door.",
+      "cast": [
+        "pip",
+        "tom"
+      ],
+      "set": "set-tom-living-room",
+      "props": [
+        "text-tag",
+        "text-pegs"
+      ],
+      "textOnly": [
+        "text-tag",
+        "text-pegs"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-check-row-goat",
+      "week": 15,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "goat",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-check-row-sun",
+      "week": 15,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "sun",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "sun",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-sun-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w15-check-row-cat",
+      "week": 15,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "cat",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "cat",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-cat-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w15-check-row-bed",
+      "week": 15,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "bed",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "bed",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-bed-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w15-check-row-girl",
+      "week": 15,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "girl",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-check-row-fish",
+      "week": 15,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "fish",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "fish",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-fish-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w15-check-row-sun-b",
+      "week": 15,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "sun",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "sun",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-sun-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w15-check-row-pen",
+      "week": 15,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "pen",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "pen",
+        "source": "out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-pen-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w15-check-row-dog",
+      "week": 15,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "dog",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": {
+        "word": "dog",
+        "source": "out/storytime/l2/unit1/w06/delivery-muse-v1/l2-w06-check-row-dog-v1.png",
+        "kind": "unit1-delivery"
+      }
+    },
+    {
+      "id": "l2-w16-check-row-guitar",
+      "week": 16,
+      "use": "check-row",
+      "sizeClass": "C",
+      "text": "guitar",
+      "scene": "",
+      "cast": [],
+      "set": null,
+      "props": [
+        "text-guitar"
+      ],
+      "textOnly": [
+        "text-guitar"
+      ],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-card-nod",
+      "week": 9,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "nod",
+      "scene": "May (drawn young, about five years old) nods her head yes with a big smile; two small curved lines next to her chin show the nod. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [
+        "may"
+      ],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-card-dinosaur",
+      "week": 9,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "dinosaur",
+      "scene": "A friendly green toy dinosaur with a long neck, a long tail, and a big smile. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-card-rice",
+      "week": 9,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "rice",
+      "scene": "A white bowl of white rice. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-card-banana",
+      "week": 9,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "banana",
+      "scene": "A yellow banana. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-card-bread",
+      "week": 9,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "bread",
+      "scene": "A slice of brown bread. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w09-card-juice",
+      "week": 9,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "juice",
+      "scene": "A glass of orange juice. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-card-pad",
+      "week": 10,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "pad",
+      "scene": "A small notepad of plain yellow paper with a red top edge, with no writing on it. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-card-skirt",
+      "week": 10,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "skirt",
+      "scene": "A small red skirt. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-card-t-shirt",
+      "week": 10,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "T-shirt",
+      "scene": "A small yellow T-shirt. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-card-trousers",
+      "week": 10,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "trousers",
+      "scene": "A pair of small green trousers. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-card-socks",
+      "week": 10,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "socks",
+      "scene": "A pair of small white socks with red stripes. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-card-shoes",
+      "week": 10,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "shoes",
+      "scene": "A pair of small red shoes. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w10-card-jacket",
+      "week": 10,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "jacket",
+      "scene": "A small orange jacket. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-card-elbow",
+      "week": 11,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "elbow",
+      "scene": "Sam (drawn young, about five years old) bends one arm and points at his elbow with the other hand. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [
+        "sam"
+      ],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-card-envelope",
+      "week": 11,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "envelope",
+      "scene": "A closed white paper envelope with a red heart sticker on the flap. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-card-door",
+      "week": 11,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "door",
+      "scene": "A green door, closed. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w11-card-window",
+      "week": 11,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "window",
+      "scene": "A window with white frames and a blue sky behind it. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-card-hop",
+      "week": 12,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "hop",
+      "scene": "Ben (drawn young, about five years old) hops on one foot, full body. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [
+        "ben"
+      ],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-card-hippo",
+      "week": 12,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "hippo",
+      "scene": "A gray hippo with a big round body, small ears, and a friendly face. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-card-crayon",
+      "week": 12,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "crayon",
+      "scene": "A green crayon. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-card-eraser",
+      "week": 12,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "eraser",
+      "scene": "A pink eraser. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w12-card-ruler",
+      "week": 12,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "ruler",
+      "scene": "A wooden ruler with plain line marks. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-card-run",
+      "week": 13,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "run",
+      "scene": "Sam (drawn young, about five years old) runs, full body. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [
+        "sam"
+      ],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-card-walk",
+      "week": 13,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "walk",
+      "scene": "Ben (drawn young, about five years old) walks, full body. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [
+        "ben"
+      ],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-card-clap",
+      "week": 13,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "clap",
+      "scene": "Mia (drawn young, about five years old) claps both hands, full body. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [
+        "mia"
+      ],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-card-kick",
+      "week": 13,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "kick",
+      "scene": "Pat (drawn young, about five years old) kicks a red ball, full body. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [
+        "pat"
+      ],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-card-throw",
+      "week": 13,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "throw",
+      "scene": "Lily (drawn young, about five years old) throws a red ball with one hand, full body. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [
+        "lily"
+      ],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w13-card-catch",
+      "week": 13,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "catch",
+      "scene": "Tom (drawn young, about eight years old) catches a red ball with both hands, full body. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [
+        "tom"
+      ],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-card-sunny",
+      "week": 14,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "sunny",
+      "scene": "A bright yellow sun with short rays over a small patch of green grass. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-card-cloudy",
+      "week": 14,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "cloudy",
+      "scene": "Two big gray clouds that hide a small yellow sun. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-card-windy",
+      "week": 14,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "windy",
+      "scene": "A small tree that bends in the wind, with leaves that fly in the air. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-card-rainy",
+      "week": 14,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "rainy",
+      "scene": "A gray cloud with blue raindrops that fall onto a small patch of green grass. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-card-hot",
+      "week": 14,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "hot",
+      "scene": "A bright red sun with short wavy heat lines over dry yellow grass. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w14-card-cold",
+      "week": 14,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "cold",
+      "scene": "A blue wool hat and a blue scarf on a small white chair. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-card-garden",
+      "week": 15,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "garden",
+      "scene": "A small garden with green grass, red and yellow flowers, and a little tree. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    },
+    {
+      "id": "l2-w15-card-helicopter",
+      "week": 15,
+      "use": "card",
+      "sizeClass": "C",
+      "text": "helicopter",
+      "scene": "A small orange helicopter with a round window and long blades on top. One clear picture, the main thing large in the middle, a plain light background.",
+      "cast": [],
+      "set": null,
+      "props": [],
+      "textOnly": [],
+      "reuse": null
+    }
+  ]
+}

@@ -48,14 +48,14 @@ commit to this heading before Phase 1 starts (measure-guard).
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`).
 
-- [ ] Task 1: Input record. Write the SHA-256 of the inputs in
+- [~] Task 1: Input record. Write the SHA-256 of the inputs in
   `measure/runs/asset_storytime_l2_unit2_prep_20261108/inputs.txt`. Stop and report when
   `pictures-u2.json` differs from `63d41500...`. Write the baseline `sha256sum` of every
   `out/storytime/**/costs.tsv` in `costs-before.txt`.
-- [ ] Task 2: Element map and row table. Write `docs/storytime/l2-unit2/elements.json`, the row
+- [~] Task 2: Element map and row table. Write `docs/storytime/l2-unit2/elements.json`, the row
   table `docs/storytime/l2-unit2/rows.json` (per row: cast names, set, props with their element
   sources, reuse source if D3 applies), and the drafted new element specs (D5 c).
-- [ ] Task 3: Spec maker and test. Write `scripts/storytime-u2-specs.mjs` (node, no network,
+- [~] Task 3: Spec maker and test. Write `scripts/storytime-u2-specs.mjs` (node, no network,
   inputs by path arguments). It writes the 229 row specs in the unit 1 spec shape, `prompt-list.tsv`,
   and `prompt-list.md` (row id, week, use, class, size, text, element sources, reuse source, new or
   reuse, color prompt). It copies the shared rule text of `colorPrompt` and `linePrompt` word for
@@ -66,9 +66,9 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   the output path of a drafted new element spec; no forbidden word; every `colorPrompt` says no
   letters, words, or numbers; `outDir` is below `out/storytime/l2/unit2/`. Run the test with
   `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-u2-specs.test.ts --maxWorkers=1'`.
-- [ ] Task 4: Local 3D renders by D6, one at a time, only for an asset with no views file. Write
+- [~] Task 4: Local 3D renders by D6, one at a time, only for an asset with no views file. Write
   `render-log.txt` (command, exit code, time, the file made, no `warning:` line).
-- [ ] Task 5: Hand-off folder `/home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep/`:
+- [~] Task 5: Hand-off folder `/home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep/`:
   `prompt-list.tsv`, `prompt-list.md`, `specs/` (the 229 row specs and the new element specs),
   `renders/` (a copy of every Forge render file that a spec names), `elements-reused.tsv` (unit 1
   element files that the specs name, with SHA-256, not copied), a contact sheet of `renders/`,
@@ -76,7 +76,7 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   reused; the cost estimate at 0.080 USD for each new row plus 0.01 USD for each new element
   sheet; the open questions with defaults), and `MANIFEST.txt` in `sha256sum` form for every file.
   `sha256sum -c MANIFEST.txt` gives 0 failures.
-- [ ] Task 6: Zero-spend proof and report. `costs-after.txt` equals `costs-before.txt`. Write
+- [~] Task 6: Zero-spend proof and report. `costs-after.txt` equals `costs-before.txt`. Write
   `measure/runs/asset_storytime_l2_unit2_prep_20261108/pm-report.md`: the first line is
   `Status: done.` with the folder, the file count, and the open questions with defaults; then the
   next unpaid steps of D8; then a "Facts changed:" list. Send the PM one line: folder, count,

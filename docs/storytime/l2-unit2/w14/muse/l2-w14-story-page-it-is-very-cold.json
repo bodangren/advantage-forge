@@ -1,0 +1,35 @@
+{
+  "id": "l2-w14-story-page-it-is-very-cold",
+  "text": "It is very cold!",
+  "goal": "Nan sits under a big soft blanket on the blue sofa in the cozy living room of Nan's home with a blue sofa, a soft rug, and a toy box, with a warm red wool hat on her head. Under the edge of the blanket, the tip of a fluffy golden-brown tail sticks out.",
+  "references": [
+    "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
+    "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-face-crop.png",
+    "out/storytime/l2/unit2/w14/muse/elements/set-nan-front-garden-m1-color.png",
+    "out/storytime-sun-hat/views/three-quarter.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the element pictures. Picture 1 shows the girl Nan in a full-body view: copy her exactly. Picture 2 is a close-up of Nan's face with the correct, clean eyes: copy her face and eyes from it exactly; each eye ends in a smooth, rounded outer corner with one short, thick, curved eyelash flick; there is no pale skin flap, no torn edge, and no separate small tick mark at any eye corner. Picture 3 is the new empty small front garden of Nan: green grass, ONE low white fence along the back, ONE small tree at the right, ONE narrow path of flat stones in the middle, and a blue sky (a draft element sheet for the paid run: make the empty room first); use it as the background and keep the same room. Picture 4 is a 3D render of ONE big straw sun hat with a wide brim and a ribbon, on a gray or white background, perhaps with a ground shadow; ignore the background and the shadow, and draw the same object with the same shape and colors. Keep the soft, round, bright 3D render look of the pictures, not a 2D drawing and no outlines. The children keep their chibi proportions: a big head and a small body; Mom keeps the adult proportions of her picture (about one and a half times as tall as a five-year-old child); Tom, who is eight, is a little taller than a five-year-old child and has the same chibi proportions. Hands are small, clean hands with five clear short fingers (four fingers and one thumb) when open, never fists unless stated, and a hanging hand shows relaxed, separate short fingers. Rendering errors to NOT copy from the character pictures: a tiny dark tick mark or pale skin flap at the outer corner of an eye, and a faint pale crease on a forehead. Each eye ends in a smooth, rounded corner; no character here has an eyelash flick. Clean eye corners, no streak on the forehead, no marks on the face. The ears are smooth, with one clean rounded rim. Each piece of clothing is one even color with no pale patches, no pale blotches at the shoulders, and no stains. Do not change anyone's hair or clothes. No text, no letters, no numbers, no logos, no writing on any picture or sign. The picture is for young children and is rated G. Keep each character exactly as in the pictures: Nan: black-brown hair in exactly two round buns with smooth red ring bands (no bun on top), large dark-brown eyes, an orange T-shirt with a white star, red shorts, white sneakers. The picture: Nan sits under a big soft blanket on the blue sofa in the cozy living room of Nan's home with a blue sofa, a soft rug, and a toy box, with a warm red wool hat on her head. Under the edge of the blanket, the tip of a fluffy golden-brown tail sticks out. Simple objects with no reference picture: ONE big soft blanket; ONE small red wool hat; ONE open wooden toy box with a few blocks; ONE blue sofa with one cushion. A wide shot at a low camera height in the room. Exactly the characters named here are in the picture, and no other person or animal. A character of the pictures that this description does not name must not appear. Every named character has a clear, whole, friendly face. The page text is \"It is very cold!\" and is context only: do not draw any text.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book picture. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No blush circles, no eyelash ticks, no hair strands, no shading, no gray, no texture lines, no text. Keep every shape in the same place and the same size. Draw each eye as a closed outline with a big solid black pupil (a filled black circle) inside it. Draw the mouth exactly as in picture 1: an open mouth stays an open mouth drawn as a closed outline, and a closed smile stays one curve. Draw each hand as a closed outline with each finger as a separate rounded shape. Each head of hair is one closed shape. The ear is one closed outline with at most one inner curve. No lines on the clothes other than the outline, the collar, the cuffs, the buttons, and the pocket. No wrinkle lines on any face. Simplify the background: draw only a few large, simple, closed shapes (the grass line, the sky line, the fence as a few closed rail shapes, the tree as one closed crown shape with its trunk, and each path stone as one closed oval). No wood grain lines, no floor plank lines, no wall texture, no hatching, no tick marks, no small details. Every outline is one closed line that never runs into a background line; no loose line ends anywhere. Every line inside an object ends on another line. Use few background shapes. Each eye of every person is a ring: one closed outline circle with a smaller solid black circle inside it and a thin white gap between the two; no eye is a solid black shape without an outline. Mom's wavy hair is one closed cloud-like shape with no strands; her collar, her cuffs, her jeans, and each sneaker are closed shapes. Tom's hair is one closed shape with a side sweep; his T-shirt, shorts, and each shoe are closed shapes. Each hand is one closed outline with five fingers drawn as separate rounded closed shapes (four fingers and one thumb). The top is one closed shape with its yellow stripe as one closed band, its stem and knob as closed shapes, and its point as one closed shape; no motion lines. Pip: the ears, the collar, and the round tag are separate closed shapes; the fur has no strands.",
+  "print": "crop",
+  "aspect": "4:3",
+  "outDir": "out/storytime/l2/unit2/w14/muse",
+  "sizeClass": "A",
+  "use": "story-page",
+  "set": "set-nan-front-garden",
+  "props": [
+    "text-blanket",
+    "text-wool-hat",
+    "text-toy-box",
+    "text-sofa",
+    "sunhat"
+  ],
+  "reuse": null,
+  "donorFiles": {
+    "rule": "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-run-tom-run.json",
+    "line": "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-run-tom-run.json",
+    "cast": [
+      "docs/storytime/l2-unit1/cards/l2-w01-card-hello.json"
+    ],
+    "scene": "pictures-u2.json (Workbooks row prompt)"
+  }
+}

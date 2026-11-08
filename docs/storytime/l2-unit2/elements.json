@@ -1,0 +1,914 @@
+{
+  "track": "asset_storytime_l2_unit2_prep_20261108",
+  "note": "Element map for the 229 unit 2 rows. Order of sources (D5): forge, unit1, new, text.",
+  "readOnlyInputs": {
+    "pictures": "63d415000eca9d6be1a6ad533c12ff81e127cd2c76ffac339697f91b99f754ec",
+    "brief": "c1bbb491a35f10b60bea5f43d30d09d5ac3daab39924c2996b25ba1a98b4ef83",
+    "cast": "docs/storytime/l2-unit1/judge/cast.json"
+  },
+  "elementSourceOrder": [
+    "forge",
+    "unit1",
+    "new",
+    "text"
+  ],
+  "elements": {
+    "dog": {
+      "id": "dog",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/dog/views/three-quarter.png",
+      "asset": "dog",
+      "look": "ONE small friendly dog with short brown fur, floppy ears, and a red collar, three times (front, three-quarter, sitting)"
+    },
+    "cat": {
+      "id": "cat",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/cat/views/three-quarter.png",
+      "asset": "cat",
+      "look": "ONE small gray cat with a round head, pointed ears, and a long curled tail, three times (front, three-quarter, sitting)"
+    },
+    "fish": {
+      "id": "fish",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/fish/views/side.png",
+      "asset": "fish",
+      "look": "ONE small orange fish with a round body, a fan tail, and one round eye, three times (side, three-quarter, top)"
+    },
+    "bed": {
+      "id": "bed",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/bed/views/three-quarter.png",
+      "asset": "bed",
+      "look": "ONE small child's bed with a wooden frame, a white pillow, and a blue blanket"
+    },
+    "hen": {
+      "id": "hen",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/chicken/views/three-quarter.png",
+      "asset": "chicken",
+      "look": "ONE small brown hen with a red comb, a red wattle, a small beak, and two orange legs, three times (side, three-quarter, front)"
+    },
+    "rooster": {
+      "id": "rooster",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/rooster/views/three-quarter.png",
+      "asset": "rooster",
+      "look": "ONE rooster with a red comb, a brown body, and a long dark-green tail"
+    },
+    "horse": {
+      "id": "horse",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/horse/views/three-quarter.png",
+      "asset": "horse",
+      "look": "ONE white horse with a long mane and a long tail, three times (side, three-quarter, front)"
+    },
+    "goat": {
+      "id": "goat",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/goat/views/three-quarter.png",
+      "asset": "goat",
+      "look": "ONE small white goat with short horns and a small beard"
+    },
+    "pot": {
+      "id": "pot",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/pot/views/three-quarter.png",
+      "asset": "pot",
+      "look": "ONE round clay flower pot with a wide rim, three times (front, three-quarter, top)"
+    },
+    "chair": {
+      "id": "chair",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/chair/views/three-quarter.png",
+      "asset": "chair",
+      "look": "ONE small wooden chair with four legs and a low back"
+    },
+    "window": {
+      "id": "window",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/window/views/three-quarter.png",
+      "asset": "window",
+      "look": "ONE window with white frames and a blue sky behind it"
+    },
+    "door": {
+      "id": "door",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/door/views/three-quarter.png",
+      "asset": "door",
+      "look": "ONE green door with a round handle, closed"
+    },
+    "bread": {
+      "id": "bread",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/bread/views/three-quarter.png",
+      "asset": "bread",
+      "look": "ONE slice of brown bread with a soft crust"
+    },
+    "bowl": {
+      "id": "bowl",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/bowl/views/three-quarter.png",
+      "asset": "bowl",
+      "look": "ONE white bowl with a round body and a wide rim"
+    },
+    "barn": {
+      "id": "barn",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/barn/views/three-quarter.png",
+      "asset": "barn",
+      "look": "ONE small red barn with a white door and a white trim"
+    },
+    "fence": {
+      "id": "fence",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/fence/views/three-quarter.png",
+      "asset": "fence",
+      "look": "ONE low wooden fence with three rails and two posts"
+    },
+    "table": {
+      "id": "table",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/table/views/three-quarter.png",
+      "asset": "table",
+      "look": "ONE low wooden table with a plain top and four legs"
+    },
+    "stool": {
+      "id": "stool",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/stool/views/three-quarter.png",
+      "asset": "stool",
+      "look": "ONE small wooden stool with four legs"
+    },
+    "mug": {
+      "id": "mug",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/mug/views/three-quarter.png",
+      "asset": "mug",
+      "look": "ONE mug with a round body and a handle"
+    },
+    "drum": {
+      "id": "drum",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/drum/views/three-quarter.png",
+      "asset": "drum",
+      "look": "ONE toy drum with a red body, a white top, and two drumsticks"
+    },
+    "frog": {
+      "id": "frog",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/frog/views/three-quarter.png",
+      "asset": "frog",
+      "look": "ONE small green frog with a round body and two big round eyes"
+    },
+    "bus": {
+      "id": "bus",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/storytime-school-bus/views/three-quarter.png",
+      "asset": "storytime-school-bus",
+      "look": "ONE yellow school bus with black wheels and a row of windows"
+    },
+    "cup": {
+      "id": "cup",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/storytime-child-cup/views/three-quarter.png",
+      "asset": "storytime-child-cup",
+      "look": "ONE small child's cup with two handles and a white body"
+    },
+    "low-table": {
+      "id": "low-table",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/storytime-low-table/views/three-quarter.png",
+      "asset": "storytime-low-table",
+      "look": "ONE long low wooden table with a plain top and four short legs"
+    },
+    "green-door": {
+      "id": "green-door",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/storytime-green-door/views/three-quarter.png",
+      "asset": "storytime-green-door",
+      "look": "ONE green door with a round handle, closed"
+    },
+    "book": {
+      "id": "book",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/storytime-picture-book/views/three-quarter.png",
+      "asset": "storytime-picture-book",
+      "look": "ONE open picture book with a plain cover and blank pages"
+    },
+    "bag": {
+      "id": "bag",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/storytime-school-bag/views/three-quarter.png",
+      "asset": "storytime-school-bag",
+      "look": "ONE school bag with a flap, a handle, and two straps"
+    },
+    "crayons": {
+      "id": "crayons",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/storytime-crayon-box/views/three-quarter.png",
+      "asset": "storytime-crayon-box",
+      "look": "ONE open box of crayons in several colors"
+    },
+    "sunhat": {
+      "id": "sunhat",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/storytime-sun-hat/views/three-quarter.png",
+      "asset": "storytime-sun-hat",
+      "look": "ONE big straw sun hat with a wide brim and a ribbon"
+    },
+    "blocks": {
+      "id": "blocks",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/storytime-block-box/views/three-quarter.png",
+      "asset": "storytime-block-box",
+      "look": "ONE open wooden box with a few colored blocks"
+    },
+    "plate": {
+      "id": "plate",
+      "kind": "object",
+      "source": "forge",
+      "path": "out/plate/views/three-quarter.png",
+      "asset": "plate",
+      "look": "ONE round white plate with a plain rim"
+    },
+    "milk": {
+      "id": "milk",
+      "kind": "object",
+      "source": "unit1",
+      "path": "out/storytime/l2/unit1/w04/muse/elements/prop-milk-sheet-m1-color.png",
+      "look": "ONE glass of white milk, three times (front, three-quarter, side)"
+    },
+    "cake": {
+      "id": "cake",
+      "kind": "object",
+      "source": "unit1",
+      "path": "out/storytime/l2/unit1/w04/muse/elements/prop-cake-sheet-m1-color.png",
+      "look": "ONE small pink cake with white icing, three times (front, three-quarter, side)"
+    },
+    "duck": {
+      "id": "duck",
+      "kind": "object",
+      "source": "unit1",
+      "path": "out/storytime/l2/unit1/w02/muse/elements/prop-ducks-sheet-m1-color.png",
+      "look": "ONE small yellow rubber duck, three times (front, three-quarter, side)"
+    },
+    "white-horse": {
+      "id": "white-horse",
+      "kind": "object",
+      "source": "unit1",
+      "path": "out/storytime/l2/unit1/w06/muse/elements/prop-white-horse-sheet-m1-color.png",
+      "look": "ONE white horse with a long mane, three times (side, three-quarter, front)"
+    },
+    "sun": {
+      "id": "sun",
+      "kind": "object",
+      "source": "unit1",
+      "path": "out/storytime/l2/unit1/w02/muse/elements/prop-sun-sheet-m1-color.png",
+      "look": "ONE bright yellow sun with short rays, three times (front, three-quarter, side)"
+    },
+    "pen": {
+      "id": "pen",
+      "kind": "object",
+      "source": "unit1",
+      "path": "out/storytime/l2/unit1/w07/muse/elements/prop-pen-sheet-m1-color.png",
+      "look": "ONE blue ballpoint pen, three times (front, three-quarter, side)"
+    },
+    "socks": {
+      "id": "socks",
+      "kind": "object",
+      "source": "unit1",
+      "path": "out/storytime/l2/unit1/w05/muse/elements/prop-sock-sheet-m2-color.png",
+      "look": "ONE pair of big white socks with red stripes, three times (front, three-quarter, side)"
+    },
+    "pans": {
+      "id": "pans",
+      "kind": "object",
+      "source": "unit1",
+      "path": "out/storytime/l2/unit1/w03/muse/elements/prop-pans-sheet-m1-color.png",
+      "look": "ONE baking pan with a flat base and a small rim, three times (front, three-quarter, side)"
+    },
+    "kites": {
+      "id": "kites",
+      "kind": "object",
+      "source": "unit1",
+      "path": "out/storytime/l2/unit1/w02/muse/elements/prop-kites-sheet-m1-color.png",
+      "look": "ONE red kite with a tail and a bow, three times (front, three-quarter, side)"
+    },
+    "balls": {
+      "id": "balls",
+      "kind": "object",
+      "source": "unit1",
+      "path": "out/storytime/l2/unit1/w02/muse/elements/prop-balls-sheet-m1-color.png",
+      "look": "ONE red ball with a smooth round surface, three times (front, three-quarter, side)"
+    },
+    "doll": {
+      "id": "doll",
+      "kind": "object",
+      "source": "unit1",
+      "path": "out/storytime/l2/unit1/w04/muse/elements/prop-doll-pam-sheet-m1-color.png",
+      "look": "the small rag doll Pam with yellow yarn hair and a red dress, three times (front, three-quarter, lying flat)"
+    },
+    "pencil": {
+      "id": "pencil",
+      "kind": "object",
+      "source": "unit1",
+      "path": "out/storytime/l2/unit1/w03/muse/elements/prop-pencil-sheet-m1-color.png",
+      "look": "ONE yellow pencil with a pink eraser end, three times (front, three-quarter, side)"
+    },
+    "silver-pot": {
+      "id": "silver-pot",
+      "kind": "object",
+      "source": "unit1",
+      "path": "out/storytime/l2/unit1/w07/muse/elements/prop-silver-pot-sheet-m1-color.png",
+      "look": "ONE big silver pot with a lid, three times (front, three-quarter, side)"
+    },
+    "top": {
+      "id": "top",
+      "kind": "object",
+      "source": "unit1",
+      "path": "out/storytime/l2/unit1/w07/muse/elements/prop-top-sheet-m2-color.png",
+      "look": "ONE small red spinning top with a yellow stripe, three times (upright, tilted, on its side)"
+    },
+    "set-tom-living-room": {
+      "id": "set-tom-living-room",
+      "kind": "set",
+      "source": "unit1",
+      "path": "out/storytime/l2/unit1/w07/muse/elements/set-tom-living-room-empty-m1-color.png",
+      "look": "bright living room of Tom: warm cream walls, a light wooden floor, ONE green sofa with two cushions and four short wooden legs (a clear gap of floor under the sofa) at the left, ONE window with cream curtains in the middle of the back wall, ONE small plain brown rug on the floor under the window, ONE open wooden toy box with a few blocks and a yellow rubber duck at the right, ONE soft round blue mat on the floor in the middle, and ONE low wooden table with ONE big silver pot with a lid in the right foreground",
+      "lineShapes": "the floor line, the wall line, the window as one closed rectangle with each curtain as one closed shape, the sofa as one closed shape with each cushion and each leg as closed shapes, the brown rug and the blue mat as closed ovals, the toy box as one closed box shape with a few big closed toy shapes, the low table as one closed shape with its legs, and the pot as closed shapes: the body, the lid, the knob, and each handle"
+    },
+    "set-nan-living-room": {
+      "id": "set-nan-living-room",
+      "kind": "set",
+      "source": "unit1",
+      "path": "out/storytime/l2/unit1/w04/muse/elements/set-nan-living-room-empty-m1-color.png",
+      "look": "empty cozy living room of Nan: warm cream walls, a light wooden floor, a blue sofa with one cushion and a folded blanket on its arm, a big round soft rug, a wooden toy box with a few toys at the right, and a small window at the left",
+      "lineShapes": "the floor line, the wall line, the window as one closed rectangle, the sofa as one closed shape with its cushion as one closed shape, the rug as one closed oval, and the toy box as one closed box shape with its lid"
+    },
+    "set-playground": {
+      "id": "set-playground",
+      "kind": "set",
+      "source": "unit1",
+      "path": "out/storytime/l2/unit1/w02/muse/elements/set-playground-empty-m3-color.png",
+      "look": "empty sunny kindergarten playground: green grass, a low red climbing frame, a white line on the ground, and a blue sky",
+      "lineShapes": "the grass line, the sky line, the climbing frame as a few closed bar shapes, and the white ground line as one long closed shape"
+    },
+    "set-book-corner": {
+      "id": "set-book-corner",
+      "kind": "set",
+      "source": "unit1",
+      "path": "out/storytime/l2/unit1/w06/muse/elements/set-book-corner-empty-m2-color.png",
+      "look": "empty book corner of the kindergarten classroom: warm cream walls, a low wooden shelf with a few big picture books, a soft round mat, and a small window",
+      "lineShapes": "the floor line, the wall line, the window as one closed rectangle, the shelf as one closed box shape with a few big closed book shapes, and the mat as one closed oval"
+    },
+    "set-classroom-lunch-table": {
+      "id": "set-classroom-lunch-table",
+      "kind": "set",
+      "source": "new",
+      "week": 9,
+      "path": "out/storytime/l2/unit2/w09/muse/elements/set-classroom-lunch-table-m1-color.png",
+      "spec": "docs/storytime/l2-unit2/w09/muse-elements/set-classroom-lunch-table.json",
+      "look": "bright kindergarten classroom with a long low lunch table: warm cream walls, a light wooden floor, ONE long low wooden lunch table with a plain top and four short legs in the middle, ONE small wooden chair at each end of the table, ONE big window with cream curtains on the back wall, ONE low wooden shelf with a few white plates and cups at the right, and a clear empty floor around the table",
+      "lineShapes": "the floor line, the wall line, the window as one closed rectangle with each curtain as one closed shape, the lunch table as one closed shape with its legs, each chair as one closed shape, and the shelf as one closed shape with a few big closed plate and cup shapes"
+    },
+    "set-classroom-dress-up-corner": {
+      "id": "set-classroom-dress-up-corner",
+      "kind": "set",
+      "source": "new",
+      "week": 10,
+      "path": "out/storytime/l2/unit2/w10/muse/elements/set-classroom-dress-up-corner-m1-color.png",
+      "spec": "docs/storytime/l2-unit2/w10/muse-elements/set-classroom-dress-up-corner.json",
+      "look": "dress-up corner of the kindergarten classroom: warm cream walls, a light wooden floor, ONE big open wooden dress-up box with a raised lid and a few folded clothes inside at the right, ONE long mirror with a plain wooden frame on the left wall, ONE low bench under the mirror, and a clear empty floor in the middle",
+      "lineShapes": "the floor line, the wall line, the dress-up box as one closed box shape with its lid as one closed shape and a few big folded clothes as closed shapes, the mirror as one closed rounded rectangle with its frame, and the bench as one closed shape with its legs"
+    },
+    "set-tom-kitchen": {
+      "id": "set-tom-kitchen",
+      "kind": "set",
+      "source": "new",
+      "week": 10,
+      "path": "out/storytime/l2/unit2/w10/muse/elements/set-tom-kitchen-m1-color.png",
+      "spec": "docs/storytime/l2-unit2/w10/muse-elements/set-tom-kitchen.json",
+      "look": "bright kitchen of Tom: warm cream walls, a light tiled floor, ONE low wooden table with a plain top in the middle, ONE green door at the right, ONE soft round green mat on the floor by the door, and ONE low wooden counter with a few plain pans at the left",
+      "lineShapes": "the floor line, the wall line, the low table as one closed shape with its legs, the door as one closed rectangle with its frame, the green mat as one closed oval, and the counter as one closed shape with a few big closed pan shapes"
+    },
+    "set-nan-bedroom": {
+      "id": "set-nan-bedroom",
+      "kind": "set",
+      "source": "new",
+      "week": 11,
+      "path": "out/storytime/l2/unit2/w11/muse/elements/set-nan-bedroom-m1-color.png",
+      "spec": "docs/storytime/l2-unit2/w11/muse-elements/set-nan-bedroom.json",
+      "look": "small cozy bedroom of Nan: warm cream walls, a light wooden floor, ONE small bed with a white pillow and a blue blanket at the right, ONE low wooden bedside table at the left of the bed, ONE small window with cream curtains on the back wall, and a soft round rug on the floor",
+      "lineShapes": "the floor line, the wall line, the bed as one closed shape with the pillow and the blanket as closed shapes, the bedside table as one closed shape with its legs, the window as one closed rectangle with each curtain as one closed shape, and the rug as one closed oval"
+    },
+    "set-classroom-tables": {
+      "id": "set-classroom-tables",
+      "kind": "set",
+      "source": "new",
+      "week": 12,
+      "path": "out/storytime/l2/unit2/w12/muse/elements/set-classroom-tables-m1-color.png",
+      "spec": "docs/storytime/l2-unit2/w12/muse-elements/set-classroom-tables.json",
+      "look": "bright kindergarten classroom with low tables: warm cream walls, a light wooden floor, THREE low wooden tables with plain tops in the middle, ONE small wooden chair at each table, ONE long wall with big plain animal pictures in frames on the back wall, and ONE low shelf with a few books at the right",
+      "lineShapes": "the floor line, the wall line, each low table as one closed shape with its legs, each chair as one closed shape, each wall picture as one closed rectangle with its frame, and the shelf as one closed shape with a few big closed book shapes"
+    },
+    "set-farmyard": {
+      "id": "set-farmyard",
+      "kind": "set",
+      "source": "new",
+      "week": 12,
+      "path": "out/storytime/l2/unit2/w12/muse/elements/set-farmyard-m1-color.png",
+      "spec": "docs/storytime/l2-unit2/w12/muse-elements/set-farmyard.json",
+      "look": "sunny farmyard of Grandma and Grandpa: green grass, a small red barn with a white door at the right, ONE low wooden fence along the back, ONE small straw mat on the ground at the left, and a blue sky",
+      "lineShapes": "the grass line, the sky line, the barn as one closed shape with its door, the fence as a few closed rail shapes, and the straw mat as one closed rectangle"
+    },
+    "set-tom-garden": {
+      "id": "set-tom-garden",
+      "kind": "set",
+      "source": "new",
+      "week": 13,
+      "path": "out/storytime/l2/unit2/w13/muse/elements/set-tom-garden-m1-color.png",
+      "spec": "docs/storytime/l2-unit2/w13/muse-elements/set-tom-garden.json",
+      "look": "small sunny garden of Tom: green grass, ONE low wooden fence along the back, ONE row of red flowers along the fence, ONE small tree at the right, and a blue sky",
+      "lineShapes": "the grass line, the sky line, the fence as a few closed rail shapes, each flower as one closed round shape with a stem, and the tree as one closed crown shape with its trunk"
+    },
+    "set-nan-front-garden": {
+      "id": "set-nan-front-garden",
+      "kind": "set",
+      "source": "new",
+      "week": 14,
+      "path": "out/storytime/l2/unit2/w14/muse/elements/set-nan-front-garden-m1-color.png",
+      "spec": "docs/storytime/l2-unit2/w14/muse-elements/set-nan-front-garden.json",
+      "look": "small front garden of Nan: green grass, ONE low white fence along the back, ONE small tree at the right, ONE narrow path of flat stones in the middle, and a blue sky",
+      "lineShapes": "the grass line, the sky line, the fence as a few closed rail shapes, the tree as one closed crown shape with its trunk, and each path stone as one closed oval"
+    },
+    "set-town-street-bridge": {
+      "id": "set-town-street-bridge",
+      "kind": "set",
+      "source": "new",
+      "week": 15,
+      "path": "out/storytime/l2/unit2/w15/muse/elements/set-town-street-bridge-m1-color.png",
+      "spec": "docs/storytime/l2-unit2/w15/muse-elements/set-town-street-bridge.json",
+      "look": "quiet street of a small town: a wide light-gray footpath, ONE low stone bridge over a calm blue river, a few plain houses with doors and windows along the street, ONE row of small green trees, and a blue sky",
+      "lineShapes": "the footpath line, the river line, the bridge as one closed arch shape with its rails, each house as one closed shape with its door and windows, and each tree as one closed crown shape with its trunk"
+    },
+    "text-mop": {
+      "id": "text-mop",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE mop with a long wooden handle and a gray mop head"
+    },
+    "text-mat": {
+      "id": "text-mat",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE soft round blue mat on the floor"
+    },
+    "text-napkin": {
+      "id": "text-napkin",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE white paper napkin"
+    },
+    "text-spoon": {
+      "id": "text-spoon",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE small metal spoon"
+    },
+    "text-egg": {
+      "id": "text-egg",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE white boiled egg, peeled"
+    },
+    "text-banana": {
+      "id": "text-banana",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE yellow banana"
+    },
+    "text-rice": {
+      "id": "text-rice",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE mound of white rice"
+    },
+    "text-juice": {
+      "id": "text-juice",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE glass of orange juice"
+    },
+    "text-car": {
+      "id": "text-car",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE small red car"
+    },
+    "text-bike": {
+      "id": "text-bike",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE red bicycle with a front basket"
+    },
+    "text-truck": {
+      "id": "text-truck",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE small blue truck"
+    },
+    "text-train": {
+      "id": "text-train",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE small green train"
+    },
+    "text-boat": {
+      "id": "text-boat",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE small rowing boat"
+    },
+    "text-plane": {
+      "id": "text-plane",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE small white airplane"
+    },
+    "text-umbrella": {
+      "id": "text-umbrella",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE yellow umbrella, open"
+    },
+    "text-blanket": {
+      "id": "text-blanket",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE big soft blanket"
+    },
+    "text-wool-hat": {
+      "id": "text-wool-hat",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE small red wool hat"
+    },
+    "text-scarf": {
+      "id": "text-scarf",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE blue scarf"
+    },
+    "text-fan": {
+      "id": "text-fan",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE small white electric fan with a round cage"
+    },
+    "text-cloud": {
+      "id": "text-cloud",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE big gray cloud"
+    },
+    "text-rain": {
+      "id": "text-rain",
+      "kind": "object",
+      "source": "text",
+      "look": "blue raindrops that fall from a gray cloud"
+    },
+    "text-tree": {
+      "id": "text-tree",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE small tree with a round green crown"
+    },
+    "text-flower": {
+      "id": "text-flower",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE red flower with a green stem"
+    },
+    "text-tag": {
+      "id": "text-tag",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE small round gold tag"
+    },
+    "text-gingerbread": {
+      "id": "text-gingerbread",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE small tan gingerbread man with white icing eyes and an icing smile"
+    },
+    "text-guitar": {
+      "id": "text-guitar",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE wooden guitar with six strings"
+    },
+    "text-envelope": {
+      "id": "text-envelope",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE closed white paper envelope with a red heart sticker on the flap"
+    },
+    "text-pad": {
+      "id": "text-pad",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE small notepad of plain yellow paper with a red top edge"
+    },
+    "text-eraser": {
+      "id": "text-eraser",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE small pink eraser"
+    },
+    "text-ruler": {
+      "id": "text-ruler",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE wooden ruler with plain line marks"
+    },
+    "text-hippo": {
+      "id": "text-hippo",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE gray hippo with a big round body and small ears"
+    },
+    "text-dinosaur": {
+      "id": "text-dinosaur",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE friendly green toy dinosaur with a long neck and a long tail"
+    },
+    "text-helicopter": {
+      "id": "text-helicopter",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE small orange helicopter with a round window and long rotor blades"
+    },
+    "text-mirror": {
+      "id": "text-mirror",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE long mirror with a plain wooden frame"
+    },
+    "text-dressup-box": {
+      "id": "text-dressup-box",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE big open wooden dress-up box with a raised lid"
+    },
+    "text-toy-box": {
+      "id": "text-toy-box",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE open wooden toy box with a few blocks"
+    },
+    "text-armchair": {
+      "id": "text-armchair",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE big soft armchair"
+    },
+    "text-sofa": {
+      "id": "text-sofa",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE blue sofa with one cushion"
+    },
+    "text-pegs": {
+      "id": "text-pegs",
+      "kind": "object",
+      "source": "text",
+      "look": "ONE row of wooden coat pegs on the wall"
+    },
+    "text-clothes": {
+      "id": "text-clothes",
+      "kind": "object",
+      "source": "text",
+      "look": "a few folded dress-up clothes"
+    }
+  },
+  "sets": {
+    "w09-1": "set-classroom-lunch-table",
+    "w09-2": "set-tom-living-room",
+    "w10-1": "set-classroom-dress-up-corner",
+    "w10-2": "set-tom-kitchen",
+    "w11-1": "set-nan-living-room",
+    "w11-2": "set-tom-living-room",
+    "w12-1": "set-classroom-tables",
+    "w12-2": "set-farmyard",
+    "w13-1": "set-playground",
+    "w13-2": "set-tom-garden",
+    "w14-1": "set-nan-front-garden",
+    "w14-2": "set-tom-living-room",
+    "w15-1": "set-town-street-bridge",
+    "w15-2": "set-tom-living-room"
+  },
+  "secondBookMarker": {
+    "9": "dad-has-a-mop",
+    "10": "dad-has-a-pan",
+    "11": "tom-set-up-a-den",
+    "12": "dad-has-a-hat",
+    "13": "tom-has-a-pot",
+    "14": "dad-is-hot",
+    "15": "pip-has-a-tag"
+  },
+  "castPeople": {
+    "nan": {
+      "source": "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
+      "note": "Nan: black-brown hair in exactly two round buns with smooth red ring bands (no bun on top), large dark-brown eyes, an orange T-shirt with a white star, red shorts, white sneakers",
+      "extraFace": "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-face-crop.png"
+    },
+    "pip": {
+      "source": "out/storytime/l2/unit1/w04/muse/elements/pip-ref-render.png",
+      "note": "Pip: a small puppy with golden-brown fur, a cream chest, a cream muzzle, a cream stripe on the forehead, floppy ears with darker tips, large dark-brown eyes, a black nose, a fluffy tail, a red collar with a small round gold tag",
+      "extraFace": null
+    },
+    "ben": {
+      "source": "out/storytime/l2/unit1/w01/muse/elements/ben-ref-clean-2.png",
+      "note": "Ben: a five-year-old boy with a chibi look (a big head and a small body), short messy light-brown hair with a fringe, big brown eyes, a big open-mouth happy smile, a light-blue T-shirt, dark-blue shorts, grey sneakers",
+      "extraFace": null
+    },
+    "tom": {
+      "source": "out/storytime/l2/unit1/w04/muse/elements/cast-tom-sheet-m3-color.png",
+      "note": "Tom: a boy of eight with the same chibi proportions as a five-year-old child (a huge round head, about half of his height, no neck, a short chubby body), only a little taller, with short dark-brown hair swept to the side, big brown eyes, a plain navy-blue T-shirt (no stripes), khaki shorts, red shoes",
+      "extraFace": null
+    },
+    "may": {
+      "source": "out/storytime/l2/unit1/w07/muse/elements/may-ref-render.png",
+      "note": "May: a five-year-old girl with a chibi look (a big head and a small body), black hair with a fringe and one long ponytail at the side with a small yellow star hair clip, big brown eyes, a small smile, a yellow T-shirt, a blue pleated skirt, white socks, white sneakers",
+      "extraFace": null
+    },
+    "sam": {
+      "source": "out/storytime/l2/unit1/w05/muse/elements/sam-ref-render.png",
+      "note": "Sam: a five-year-old boy with a chibi look (a big head and a small body), short brown hair with a side-swept fringe, big brown eyes, a big open-mouth smile, a red T-shirt with two white stripes across the chest, blue shorts, blue shoes",
+      "extraFace": null
+    },
+    "pat": {
+      "source": "out/storytime-review/batch-22/sprout-pat-render.png",
+      "note": "Pat: a five-year-old boy with a chibi look (a big head and a small body), short messy black hair with a fringe and a few small tufts on top, big brown eyes, a green T-shirt, brown cargo shorts, brown sandals",
+      "extraFace": null
+    },
+    "mia": {
+      "source": "out/storytime/l2/unit1/w06/muse/elements/mia-ref-render.png",
+      "note": "Mia: a five-year-old girl with a chibi look (a big head and a small body), light-brown shoulder-length hair with a small pink bow on the side, big brown eyes, a pink T-shirt, blue denim overalls, white shoes",
+      "extraFace": null
+    },
+    "pam-doll": {
+      "source": "out/storytime/l2/unit1/w04/muse/elements/prop-doll-pam-sheet-m1-color.png",
+      "note": "Pam: a small rag doll with short bright yellow yarn hair (a fringe and two short yarn bunches), a round cream cloth face with two round black button eyes, a small stitched smile, and a simple red dress with short sleeves",
+      "extraFace": null
+    },
+    "teacher-kim": {
+      "source": "out/storytime/l2/unit1/w01/muse/elements/cast-group-b-2.png",
+      "note": "Teacher Kim: a grown woman, about one and a half times as tall as the children, with medium-length dark-brown hair in a low ponytail, a soft green cardigan over a cream blouse, navy trousers, brown flat shoes, a gentle smile",
+      "extraFace": null
+    },
+    "nurse": {
+      "source": "out/storytime-review/muse-cast/nurse-sheet.png",
+      "note": "School nurse: a woman of about thirty with short black hair, a small white nurse cap, a white short-sleeved tunic, white trousers, white shoes, a gentle smile",
+      "extraFace": null
+    },
+    "mom": {
+      "source": "out/storytime/l2/unit1/w04/muse/elements/cast-mom-sheet-m1-color.png",
+      "note": "Mom: a woman of about thirty-five with wavy shoulder-length dark-brown hair with a side parting, a coral-pink long-sleeved blouse with a collar, blue jeans, white sneakers",
+      "extraFace": null
+    },
+    "dad": {
+      "source": "out/storytime/l2/unit1/w04/muse/elements/cast-dad-sheet-m1-color.png",
+      "note": "Dad: a man of about thirty-eight with short dark-brown hair with a side parting, a mustard-yellow polo shirt, dark-blue jeans, brown shoes",
+      "extraFace": null
+    },
+    "lily": {
+      "source": "out/storytime/l2/unit1/w04/muse/elements/cast-lily-sheet-m1-color.png",
+      "note": "Lily: a girl of five with a short dark-brown bob with a straight fringe and one small lilac bow at the side of her hair, big brown eyes, a lilac dress with short sleeves and a small white collar, white socks, pink shoes",
+      "extraFace": null
+    },
+    "grandma": {
+      "source": "out/storytime/l2/unit1/w04/muse/elements/cast-grandma-sheet-m2-color.png",
+      "note": "Grandma: an older woman, a little shorter than Mom, with short curly silver-gray hair, a rose-red cardigan over a cream blouse, a long dark-blue skirt, brown flat shoes",
+      "extraFace": null
+    },
+    "grandpa": {
+      "source": "out/storytime/l2/unit1/w04/muse/elements/cast-grandpa-sheet-m2-color.png",
+      "note": "Grandpa: an older man, a little shorter than Dad, with short white hair and a small white mustache, a green knitted cardigan over a white shirt, brown trousers, brown shoes",
+      "extraFace": null
+    },
+    "nans-dad": {
+      "source": "out/storytime/l2/unit1/w04/muse/elements/cast-man-sheet-m1-color.png",
+      "note": "Nan's dad: a man of about thirty-five with short straight black hair, a blue T-shirt, gray shorts, black sandals",
+      "extraFace": null
+    }
+  },
+  "castSentences": {
+    "nan": {
+      "sentence": "the girl Nan in a full-body view: copy her exactly.",
+      "donor": "docs/storytime/l2-unit1/cards/l2-w01-card-hello.json",
+      "picture": 1
+    },
+    "pip": {
+      "sentence": "the puppy Pip in four 3D views (the flat drawing at the top is only a hint).",
+      "donor": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-i-can-see-pip.json",
+      "picture": 3
+    },
+    "ben": {
+      "sentence": "the boy Ben: the four 3D views at the bottom are the approved character, and the flat drawing at the top is only a side hint, so copy the 3D look.",
+      "donor": "docs/storytime/l2-unit1/cards/l2-w05-card-sad.json",
+      "picture": 1
+    },
+    "tom": {
+      "sentence": "the boy Tom, front view and three-quarter view: copy only the boy.",
+      "donor": "docs/storytime/l2-unit1/cards/l2-w04-card-brother.json",
+      "picture": 1
+    },
+    "may": {
+      "sentence": "the girl May: the four 3D views at the bottom are the approved character, and the flat drawing at the top is only a hint, so copy the 3D look; ignore the gray background, the labels, and the shadow.",
+      "donor": "docs/storytime/l2-unit1/w07/muse/l2-w07-story-page-is-it-pip-yes.json",
+      "picture": 1
+    },
+    "sam": {
+      "sentence": "the boy Sam: the four 3D views at the bottom are the approved character, and the flat drawing at the top is only a hint, so copy the 3D look; ignore the gray background, the labels, and the shadow.",
+      "donor": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-tap-tap-tap.json",
+      "picture": 2
+    },
+    "pat": {
+      "sentence": "the boy Pat: the four 3D views at the bottom are the approved character, and the flat drawing at the top is only a hint, so copy the 3D look. Ignore the gray background, the labels, and the shadow. The teddy bear in his arms is not part of this picture, so leave the bear out.",
+      "donor": "docs/storytime/l2-unit1/cards/l2-w01-card-boy.json",
+      "picture": 1
+    },
+    "mia": {
+      "sentence": "the girl Mia: the four 3D views at the bottom are the approved character, and the flat drawing at the top is only a hint, so copy the 3D look; ignore the gray background, the labels, and the shadow.",
+      "donor": "docs/storytime/l2-unit1/w06/muse/l2-w06-story-page-i-can-see-pip.json",
+      "picture": 1
+    },
+    "pam-doll": {
+      "sentence": "Pam, the small rag doll with yellow yarn hair and a red dress, three times (front, three-quarter, lying flat); draw ONE doll only, exactly this doll, with the same yellow yarn hair and the same red dress.",
+      "donor": "docs/storytime/l2-unit1/w05/muse/l2-w05-story-page-sam-saw-pam.json",
+      "picture": 2
+    },
+    "nurse": {
+      "sentence": "a character sheet of the school nurse in four views (front, three-quarter, side, back). Use only the front view and copy her exactly: a woman of about thirty with short black hair, a small white nurse cap, a white short-sleeved tunic, white trousers, white shoes, a gentle smile, and a small plain white first-aid bag with a handle, with no symbol and no cross on it.",
+      "donor": "docs/storytime/l2-unit1/w01/muse/l2-w01-story-page-a-nurse.json",
+      "picture": 1
+    },
+    "mom": {
+      "sentence": "Mom, front view and three-quarter view: copy only the woman.",
+      "donor": "docs/storytime/l2-unit1/cards/l2-w04-card-mom.json",
+      "picture": 1
+    },
+    "dad": {
+      "sentence": "Dad, front view and three-quarter view: copy only the man.",
+      "donor": "docs/storytime/l2-unit1/cards/l2-w04-card-dad.json",
+      "picture": 1
+    },
+    "lily": {
+      "sentence": "the girl Lily, front view and three-quarter view: copy only the girl.",
+      "donor": "docs/storytime/l2-unit1/cards/l2-w04-card-sister.json",
+      "picture": 1
+    },
+    "grandma": {
+      "sentence": "Grandma, front view and three-quarter view: copy only the woman.",
+      "donor": "docs/storytime/l2-unit1/cards/l2-w04-card-grandma.json",
+      "picture": 1
+    },
+    "grandpa": {
+      "sentence": "Grandpa, front view and three-quarter view: copy only the man.",
+      "donor": "docs/storytime/l2-unit1/cards/l2-w04-card-grandpa.json",
+      "picture": 1
+    }
+  }
+}

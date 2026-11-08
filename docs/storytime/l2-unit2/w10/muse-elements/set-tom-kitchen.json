@@ -1,0 +1,13 @@
+{
+  "id": "set-tom-kitchen",
+  "text": "",
+  "goal": "One empty bright kitchen of Tom for the unit 2 picture composites.",
+  "references": [],
+  "colorPrompt": "Compose one children's book background picture from the text below. The picture to make: bright kitchen of Tom: warm cream walls, a light tiled floor, ONE low wooden table with a plain top in the middle, ONE green door at the right, ONE soft round green mat on the floor by the door, and ONE low wooden counter with a few plain pans at the left. Use the soft, round, bright 3D render look of the unit 1 element pictures, not a 2D drawing and no outlines. The room is empty: no person, no animal, no extra object. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "linePrompt": "Picture 1 is a 3D-rendered children's book background. Convert picture 1 to line art for a student book: thick, even black lines (about three times a normal outline), simple closed shapes that a 5-year-old can color, on pure white. No shading, no gray, no texture lines, no text. Simplify the background: draw only a few large, simple, closed shapes (the floor line, the wall line, the low table as one closed shape with its legs, the door as one closed rectangle with its frame, the green mat as one closed oval, and the counter as one closed shape with a few big closed pan shapes). No wood grain lines, no floor plank lines, no wall texture, no hatching, no tick marks, no small details. Every outline is one closed line that never runs into a background line; no loose line ends anywhere. Use few background shapes.",
+  "print": "crop",
+  "aspect": "4:3",
+  "outDir": "out/storytime/l2/unit2/w10/muse/elements",
+  "styleDonor": "docs/storytime/l2-unit1/w07/muse-elements/set-tom-living-room-empty.json",
+  "status": "draft for the paid run; not generated"
+}
