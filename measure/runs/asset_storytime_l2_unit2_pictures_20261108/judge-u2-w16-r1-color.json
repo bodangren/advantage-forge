@@ -1,0 +1,20 @@
+{
+  "group": "u2-w16-r1-color",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T16:25:26Z",
+  "results": [
+    {
+      "id": "l2-w16-check-row-guitar",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w16-check-row-guitar-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a guitar (1). Action: none. Seen: one wooden acoustic guitar with a round body, a sound hole, a bridge, a long neck with strings, and tuning pegs, on a white background. It reads as a guitar to a child. No text."
+    }
+  ],
+  "summary": { "files": 1, "pass": 1, "fail": 0 }
+}

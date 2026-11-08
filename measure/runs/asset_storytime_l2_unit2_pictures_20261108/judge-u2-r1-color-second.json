@@ -1,0 +1,115 @@
+{
+  "group": "u2-r1-color-second",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T16:32:52Z",
+  "mode": "second judge, each file alone",
+  "results": [
+    {
+      "id": "l2-w10-story-page-put-on-your-hat-pip",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-color-t2.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "Nan is not in the picture: no child with two round buns and an orange star T-shirt",
+      "notes": "Question page: no. Items: Pip (1) with a hat, Sam, May, Ben, Mia, Pat, Lily, Nan, Teacher Kim. Action: put on a hat (note only). Seen: Pip the puppy in a purple hat in an open box; Pat (green), May (yellow, ponytail, star clip), Ben (light-blue shirt, light-brown hair), Sam (red stripes), Lily (lilac dress, bow), Mia (pink, overalls, bow), Teacher Kim on the right. All match the cast. No child with two buns and an orange shirt: Nan is missing."
+    },
+    {
+      "id": "l2-w15-cover-look-a-bus",
+      "kind": "cover",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-cover-look-a-bus-color-t2.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "two light-brown-haired boys in blue shirts: one at the back centre top and one behind at the left of the group",
+      "notes": "Cover: yes. Subject: a bus, drawn at the right, big and clear (yellow school bus). Seen: Teacher Kim at the left; Pat (green), May (yellow), Sam (red stripes), Mia (pink overalls), Lily (lilac), Nan (orange, two buns). Two separate boys have light-brown tufted hair and a blue shirt, so Ben appears twice and the group has 8 children instead of 7. The extra boy is a wrong or changed character."
+    },
+    {
+      "id": "l2-w10-check-row-ten",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-check-row-ten-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "text-in-picture",
+      "where": "the whole picture: a 3D yellow numeral 10",
+      "notes": "Question page: no. Item: ten. Seen: a big yellow 3D number 1 and 0 (the numeral 10). It is a number in the picture, which rule 8 forbids. It also shows no ten things."
+    },
+    {
+      "id": "l2-w11-story-page-here",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-here-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "Mia is not in the picture: no light-brown shoulder-length hair, no pink bow, no pink T-shirt with overalls",
+      "notes": "Question page: no. Items: Pip, Nan, Sam, May, Ben, Mia, Pat, Lily. Action: pointing (note only). Seen: Nan (orange star shirt, two buns) laughing at the left; Pip the puppy in the middle; Sam (red stripes), Ben (light blue shirt, light-brown hair), May (black hair, yellow star clip, blue skirt), Pat (green, black hair), Lily (lilac dress, bow). Seven of eight shown. Mia is missing."
+    },
+    {
+      "id": "l2-w11-story-page-ten-men-in-the-den",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-ten-men-in-the-den-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the row of small wooden men on the blue rug in front of the blanket den: I count 11, not 10",
+      "notes": "Question page: no. Items: Tom (1), men (10), den (1). Seen: Tom kneeling, dark swept hair, navy T-shirt, khaki shorts, red shoe; a cream blanket over a frame as a den; a row of small wooden figures at its mouth; I count 11 figures from left to right. Tom and the den are clear. The count is wrong by one. The small figures are tiny, but each is a distinct figure."
+    },
+    {
+      "id": "l2-w11-cover-the-den",
+      "kind": "cover",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-cover-the-den-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover: yes. Required: Tom. Seen: Tom with short dark swept hair, big brown eyes, a happy face, holding a blue blanket in front of his body; red shoes show below. His shirt and shorts are hidden by the blanket, but the hair, face, and shoes match the cast. Small note: the den itself is not built yet; there is a blanket, two chairs, and a rug. The title names the subject and the required item is Tom."
+    },
+    {
+      "id": "l2-w11-story-page-the-den-is-on-dad",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-the-den-is-on-dad-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "Dad is not drawn: the blue blanket mound in the middle covers him and no mark of him (hand, foot, head) shows",
+      "notes": "Question page: no. Items: den (1), Dad (1). Seen: a blue blanket mound on a rug with ten small wooden toy men around it; Pip sitting on top; Tom laughing (dark hair, navy shirt, khaki shorts); Mom laughing (wavy hair, coral blouse, jeans, white sneakers). Pip, Tom, Mom, and the blanket den are drawn and match the cast. The sentence names Dad, and he is covered with no mark of him visible. A covered named person is missing on a statement page."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-nan",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-nan-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the red open box on the desk in front of Nan: it reads as a lunch box or bag, not a book",
+      "notes": "Question page: no. Items: Nan (1), a book (1). Action: open (note only). Seen: Nan (two buns, orange star shirt) peeking over a desk; a red case with a blue strap and a yellow label, its lid open. It reads as a lunch box or a bag. The books on the shelf at the right are not Nan's book. The book the sentence needs is a wrong prop. Wall pictures hold no words."
+    },
+    {
+      "id": "l2-w13-cover-look-at-me",
+      "kind": "cover",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-cover-look-at-me-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "the child at the right in a green T-shirt and brown shorts: he has Nan's two round buns with red bands, not Pat's messy tufts",
+      "notes": "Cover: yes. Seen: Sam (red stripes), May (yellow, ponytail, star clip), Ben (light blue shirt), Mia (pink, overalls, bow), Lily (lilac dress, bow), Teacher Kim, a puppy under a red bar. The child at the right mixes Nan's hair (two buns, red bands) with Pat's clothes (green T-shirt, brown cargo shorts, sandals). It is a changed character, and neither Pat nor Nan shows right."
+    },
+    {
+      "id": "l2-w13-check-row-dot",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-check-row-dot-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole picture: a yellow 3D sphere",
+      "notes": "Question page: no. Item: a dot (1). Seen: a big smooth yellow ball. At book size it reads as a ball, not as a flat round dot. A child would name it a ball or the sun."
+    },
+    {
+      "id": "l2-w13-d4-prompt-jump",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-d4-prompt-jump-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "text-in-picture",
+      "where": "the whole picture: yellow 3D letters that spell ONE",
+      "notes": "Question page: no. Item: jump (action, note only). Seen: the letters O, N, E in yellow 3D form. These are letters in the picture, which rule 8 forbids. No person or object shows a jump."
+    }
+  ],
+  "summary": {
+    "files": 11,
+    "pass": 1,
+    "fail": 10
+  }
+}

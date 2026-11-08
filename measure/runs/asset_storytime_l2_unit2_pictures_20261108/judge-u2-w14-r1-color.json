@@ -1,0 +1,240 @@
+{
+  "group": "u2-w14-r1-color",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T16:21:21Z",
+  "results": [
+    {
+      "id": "l2-w14-story-page-it-is-windy",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-windy-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), wind (weather). Seen: girl with two buns and red ring bands, orange star T-shirt, red shorts, white sneakers, holding a red kite on a string; leaves blow off the tree and grass bends. Matches cast; windy reads clearly."
+    },
+    {
+      "id": "l2-w14-story-page-it-is-rainy",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-rainy-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), rain. Seen: Nan under a yellow umbrella, dark clouds, raindrops and splashes. Matches cast; rainy reads clearly."
+    },
+    {
+      "id": "l2-w14-story-page-it-is-sunny",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-sunny-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), sun. Seen: Nan holding a red ball, blue sky with bright suns, green lawn. Matches cast. Small marks: the sky shows three suns, and two more red balls lie on the grass; the sentence counts none of them."
+    },
+    {
+      "id": "l2-w14-story-page-it-is-cloudy",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-cloudy-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), clouds. Seen: Nan with open arms under a gray sky full of fluffy gray clouds; Pip sits beside her. Matches cast; cloudy reads clearly. Small mark: Pip is not named."
+    },
+    {
+      "id": "l2-w14-story-page-it-is-cold",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-cold-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), cold. Seen: Nan in a blue puffer jacket over her orange shirt, hands rubbed together, gray sky; Pip sits beside her. Hair, buns and bands match cast; the jacket is a page item. Cold reads from the jacket."
+    },
+    {
+      "id": "l2-w14-story-page-it-is-hot",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-hot-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), hot. Seen: Nan with one hand on her forehead and the other holding a glass of water to her mouth, a bright sun in a blue sky. Matches cast. Small mark: a white mug on the grass."
+    },
+    {
+      "id": "l2-w14-story-page-it-is-very-cold",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-very-cold-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), very cold. Seen: Nan on a blue sofa under a thick cream blanket, wearing a red knit beanie; her buns show at the sides, the red bands are under the beanie. Matches cast otherwise. Small marks: a fluffy tail sticks out of the blanket; a straw hat and toy box at the left."
+    },
+    {
+      "id": "l2-w14-cover-hot-and-cold",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-cover-hot-and-cold-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover; title only. Items: Nan (1). Seen: Nan with yellow umbrella; sunny sky at the left and a dark rain cloud at the right. Nan matches cast. Small mark: the picture shows sun against rain, so hot and cold read only weakly; no one is hot or cold."
+    },
+    {
+      "id": "l2-w14-story-page-pip-is-cold-too",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-pip-is-cold-too-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), Nan (1). Seen: Nan smiling on a blue sofa on a cream knit blanket; Pip sits next to her wearing a red knit hat. Both match cast. Small mark: the blanket is a page item."
+    },
+    {
+      "id": "l2-w14-story-page-dad-is-hot",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-dad-is-hot-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1). Seen: man with short dark hair, mustard-yellow polo, dark-blue jeans, brown shoes, sitting on a green sofa with a hand on his forehead and sweat marks. Matches cast; hot reads from the hand and sweat."
+    },
+    {
+      "id": "l2-w14-story-page-mom-has-a-fan",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-mom-has-a-fan-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mom (1), a fan (1). Seen: woman with wavy dark-brown hair, coral blouse, jeans, white sneakers, holding one small white desk fan in front of her. Matches cast; fan reads as a fan."
+    },
+    {
+      "id": "l2-w14-story-page-on-goes-the-fan",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-on-goes-the-fan-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mom (1), Dad (1), a fan (1). Seen: Mom crouching and touching one white fan on a blue mat; Dad standing, his hair blown by the air. Both match cast. Fan drawn and clear."
+    },
+    {
+      "id": "l2-w14-story-page-pip-is-hot",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-pip-is-hot-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1). Seen: Pip lying on a brown mat with its tongue out, red collar and gold tag. Matches cast; hot reads from the tongue."
+    },
+    {
+      "id": "l2-w14-story-page-pip-sat-on-the-mat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-pip-sat-on-the-mat-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), a mat (1). Action: sitting (note only). Seen: Pip sits on a blue round mat with ears blown by a fan. Pip matches cast; mat clear. Small mark: a second, brown mat lies behind in the room, as in the room set."
+    },
+    {
+      "id": "l2-w14-story-page-dad-is-not-hot",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-dad-is-not-hot-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1). Seen: Dad sitting on the green sofa with closed eyes and a smile, hair blown by a fan beside him. Matches cast; not hot reads from the relaxed face."
+    },
+    {
+      "id": "l2-w14-story-page-dad-is-hot-b",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-dad-is-hot-b-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), Pip (1). Seen: Dad on the sofa with a hand on his forehead; Pip sits on a blue mat with its tongue out; a fan stands at the right. Both match cast."
+    },
+    {
+      "id": "l2-w14-check-row-foot",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-check-row-foot-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: a foot (1). Seen: Nan sitting, one leg stretched out with a white sneaker, her finger pointing to it. A foot in a shoe is drawn, visible, and clear."
+    },
+    {
+      "id": "l2-w14-story-page-a-fan-for-you-pip",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-a-fan-for-you-pip-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mom (1), Pip (1), Dad (1), a fan (1). Seen: Mom kneeling with one white fan and a hand toward Pip; Pip on a blue mat; Dad standing at the right. All match cast; fan clear."
+    },
+    {
+      "id": "l2-w14-card-cloudy",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-cloudy-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: cloudy. Seen: two gray clouds with a small sun behind. Reads as cloudy."
+    },
+    {
+      "id": "l2-w14-card-sunny",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-sunny-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: sunny. Seen: a large yellow sun with rays over grass. Reads as sunny."
+    },
+    {
+      "id": "l2-w14-card-windy",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-windy-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: windy. Seen: a bent tree with many leaves blown sideways. Reads as windy."
+    },
+    {
+      "id": "l2-w14-cover-on-goes-the-fan",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-cover-on-goes-the-fan-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover; title only. Items: Mom, Dad, Pip, a fan (1). Seen: Mom standing holding one white fan, Dad sitting on the sofa, Pip lying on a brown mat. All match cast and show. Small mark: a second blue mat on the floor."
+    },
+    {
+      "id": "l2-w14-card-rainy",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-rainy-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: rainy. Seen: a gray cloud with blue raindrops over grass. Reads as rainy."
+    },
+    {
+      "id": "l2-w14-card-hot",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-hot-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: hot. Seen: a red smiling sun with wavy heat lines over dry yellow grass. Reads as hot."
+    },
+    {
+      "id": "l2-w14-card-cold",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-cold-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: cold. Seen: a blue knit hat and a blue scarf on a white chair. Reads as cold-weather clothes."
+    }
+  ],
+  "summary": {
+    "files": 25,
+    "pass": 25,
+    "fail": 0
+  }
+}

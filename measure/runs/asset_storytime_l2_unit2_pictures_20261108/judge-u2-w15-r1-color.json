@@ -1,0 +1,191 @@
+{
+  "group": "u2-w15-r1-color",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T16:25:26Z",
+  "results": [
+    {
+      "id": "l2-w15-story-page-look-a-car",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-car-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: May (1), a car (1). Action: look/point (note only). Seen: a girl with black hair, one ponytail, a yellow star clip, a yellow T-shirt, a blue skirt, white sneakers, who points at a small red car on the far road. May matches the cast. The car is drawn, visible, and reads as a car. Small mark: the car is small."
+    },
+    {
+      "id": "l2-w15-story-page-look-a-bike",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-bike-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Ben (1), a bike (1). Action: look/point (note only). Seen: a boy with messy light-brown hair, a light-blue T-shirt, dark-blue shorts, grey sneakers, who points at a red bicycle with a basket by a stone wall. Ben matches the cast. The bike is drawn whole, visible, and clear."
+    },
+    {
+      "id": "l2-w15-story-page-look-a-bus",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-bus-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), a bus (1). Action: look/point (note only). Seen: a boy with brown side-swept hair, a red T-shirt with two white stripes, blue shorts, blue shoes, who points at a yellow bus with windows, a door, and four wheels. Sam matches the cast. The bus is drawn, visible, and reads as a bus."
+    },
+    {
+      "id": "l2-w15-story-page-look-a-truck",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-truck-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia (1), a truck (1). Action: look/point (note only). Seen: a girl with light-brown shoulder-length hair, a small pink bow, a pink T-shirt, blue denim overalls, white shoes, who points at a small blue pickup truck on the far road. Mia matches the cast. The truck has a cab and an open back and reads as a truck. Small mark: the truck is small and far."
+    },
+    {
+      "id": "l2-w15-story-page-look-a-boat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-boat-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Lily (1), a boat (1). Action: look/point (note only). Seen: a girl with a dark-brown bob, a straight fringe, a lilac bow at the side, a lilac dress with a white collar, who points at a white rowboat with an oar on the water. Lily matches the cast. A wooden fence hides her legs and socks but her pink shoe tips show. The boat is drawn, visible, and clear."
+    },
+    {
+      "id": "l2-w15-story-page-look-a-plane",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-plane-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), a plane (1). Action: look/point (note only). Seen: a girl with black-brown hair in two round buns with red bands, an orange T-shirt with a white star, red shorts, white sneakers, who points up at a white airplane in the sky. Nan matches the cast. The plane is drawn, visible, and reads as a plane. Small mark: a puppy rides a red bike in a basket at the right; the sentence does not name it."
+    },
+    {
+      "id": "l2-w15-story-page-look-a-train",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-train-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1), a train (1). Action: look/point (note only). Seen: a boy with messy black hair and small tufts, a green T-shirt, brown cargo shorts, brown sandals, who points at a green steam engine with a smokestack and a car on a far bridge. Pat matches the cast. The train is drawn, visible, and reads as a train. Small mark: the train is small and far."
+    },
+    {
+      "id": "l2-w15-story-page-pip-has-a-tag",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-pip-has-a-tag-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), a tag (1). Action: none. Seen: a golden-brown puppy with a cream chest and a cream stripe on the forehead, floppy ears, a red collar with one small round gold tag that hangs at the chest. Pip matches the cast. The tag is drawn, visible, and reads as a tag. Small mark: the tag is small."
+    },
+    {
+      "id": "l2-w15-story-page-pip-has-no-tag",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-pip-has-no-tag-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), Tom (1), no tag on Pip. Action: none. Seen: a puppy with a plain red collar and no tag on it, a boy with dark side-swept hair, a navy T-shirt, khaki shorts, a red shoe, who kneels and points at the floor, and a gold disc on the floor. Both match the cast. The collar has no tag, as the text says. Small mark: the gold disc on the floor reads as the lost tag."
+    },
+    {
+      "id": "l2-w15-story-page-is-it-on-the-mat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-is-it-on-the-mat-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Tom (1), a mat (1). Action: none. Seen: a boy with dark swept hair, a navy T-shirt, khaki shorts, red shoes, who bends and lifts a round blue mat; a gold disc lies on the floor under it. Tom matches the cast. The blue mat is drawn, visible, and clear. Small mark: the edge of a second brown mat shows behind him."
+    },
+    {
+      "id": "l2-w15-story-page-no-it-is-not",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-no-it-is-not-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no (an answer). Items: Tom (1), Pip (1). Action: none. Seen: a boy with a worried face, a navy T-shirt, khaki shorts, red shoes, who kneels by a blue mat, and a puppy with a red collar and a small gold tag who sits and looks at him. Both match the cast. Small mark: the tag hangs on Pip's collar on this page."
+    },
+    {
+      "id": "l2-w15-story-page-is-it-in-the-pot",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-is-it-in-the-pot-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Tom (1), a pot (1). Action: none. Seen: a boy with dark swept hair, a navy T-shirt, khaki shorts, red shoes, who looks at a brown clay pot with an open top on the floor. Tom matches the cast. The pot is drawn, visible, and clear."
+    },
+    {
+      "id": "l2-w15-story-page-no-it-is-not-b",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-no-it-is-not-b-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no (an answer). Items: Tom (1). Action: none. Seen: a boy with a sad face, dark swept hair, a navy T-shirt, khaki shorts, red shoes, who stands with open hands beside a clay pot. Tom matches the cast. The face reads as a sad face, not broken."
+    },
+    {
+      "id": "l2-w15-cover-the-tag",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-cover-the-tag-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Cover. Items: Pip (1), a tag (subject of the title). Action: none. Seen: a golden-brown puppy sitting on a brown mat, a red collar with a small round gold tag at the chest. Pip matches the cast. The tag shows and reads as a tag. Small mark: the tag is small."
+    },
+    {
+      "id": "l2-w15-check-row-goat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-check-row-goat-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a goat (1). Action: none. Seen: one cream-white goat with two curved horns, floppy ears, a small beard, a tail tuft, and hooves, on a white background. It reads as a goat to a child. No text."
+    },
+    {
+      "id": "l2-w15-story-page-it-is-on-a-peg",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-it-is-on-a-peg-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Mom (1), a peg (1). Action: point (note only). Seen: a boy with dark swept hair, a navy T-shirt, khaki shorts, red shoes, who points up at a wall rail; a woman in a doorway with wavy dark-brown hair, a coral blouse, blue jeans, white sneakers; a gold tag that hangs on the left knob of the rail, a red backpack on the middle knob. Tom and Mom match the cast. The peg with the tag is drawn and clear. Small mark: the rail has three pegs, as a normal peg rail does."
+    },
+    {
+      "id": "l2-w15-card-garden",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-card-garden-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a garden (1). Action: none. Seen: a green lawn patch with a leafy tree, red flowers, and yellow flowers. It reads as a garden to a child. No text."
+    },
+    {
+      "id": "l2-w15-card-helicopter",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-card-helicopter-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a helicopter (1). Action: none. Seen: one orange helicopter with a round window, a top rotor with four blades, a tail rotor, and skids. It reads as a helicopter to a child. No text."
+    },
+    {
+      "id": "l2-w15-story-page-pip-got-his-tag",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-pip-got-his-tag-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Pip (1), a tag (1). Action: got (note only). Seen: a boy with dark swept hair, a navy T-shirt, khaki shorts, a red shoe, who kneels and holds a small gold disc near the puppy; a puppy with a red collar and a gold tag at its chest. Both match the cast. The tag is drawn and visible. Small mark: a gold disc also shows in Tom's hand."
+    },
+    {
+      "id": "l2-w15-check-row-girl",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-check-row-girl-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a girl (1). Action: point (note only). Seen: one girl with black-brown hair in two round buns with red bands, an orange T-shirt with a white star, red shorts, white sneakers, on a white background. She matches Nan in the cast and reads as a girl. Hands are normal. No text."
+    }
+  ],
+  "summary": { "files": 20, "pass": 20, "fail": 0 }
+}

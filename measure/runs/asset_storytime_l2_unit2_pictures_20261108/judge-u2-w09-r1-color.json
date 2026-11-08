@@ -1,0 +1,240 @@
+{
+  "group": "u2-w09-r1-color",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T16:05:49Z",
+  "results": [
+    {
+      "id": "l2-w09-story-page-i-like-rice-yum",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-rice-yum-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), rice (1). Action: eat (note only). Seen: a boy with brown side-swept hair, red T-shirt with two white stripes, blue shorts, blue shoes, a spoon in his raised hand; a white bowl heaped with white rice on the table. Sam matches the cast. Rice reads as rice. No text."
+    },
+    {
+      "id": "l2-w09-story-page-i-like-bananas-yum",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-bananas-yum-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia (1), bananas (plural; 2 drawn). Action: like (note only). Seen: a girl with light-brown hair, pink bow, pink T-shirt, blue denim overalls, white shoes; one yellow banana in each raised hand. Mia matches the cast. Both bananas clear."
+    },
+    {
+      "id": "l2-w09-story-page-i-like-milk-yum",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-milk-yum-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Ben (1), milk (1). Action: drink (note only). Seen: a boy with messy light-brown hair, light-blue T-shirt, dark-blue shorts, grey sneakers; he holds a glass of white milk to his mouth. Three more glasses of milk and a white mug stand on the table. Ben matches the cast. Milk reads as milk. Small mark: extra glasses on the table."
+    },
+    {
+      "id": "l2-w09-story-page-i-like-juice-yum",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-juice-yum-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Lily (1), juice (1). Action: drink (note only). Seen: a girl with a dark-brown bob and straight fringe, a small lilac bow at the side, lilac dress, white sock, pink shoe; she holds a white mug with orange liquid at the rim. Lily matches the cast. Orange drink reads as juice. Small mark: juice is in a mug, not a glass."
+    },
+    {
+      "id": "l2-w09-story-page-i-like-bread-yum",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-bread-yum-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1), bread (1). Action: eat (note only). Seen: a boy with messy black hair and small tufts, green T-shirt, brown cargo shorts, brown sandals; he holds one slice of sandwich bread with a crust. Pat matches the cast. Bread reads as bread."
+    },
+    {
+      "id": "l2-w09-story-page-i-like-eggs-yum",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-eggs-yum-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: May (1), eggs (plural; 2 drawn). Action: like (note only). Seen: a girl with black hair, one ponytail, a yellow star clip, yellow T-shirt, blue skirt, white sneakers; one white egg in her raised hand and one white egg on a plate on the table. May matches the cast. Both eggs read as eggs."
+    },
+    {
+      "id": "l2-w09-story-page-i-like-cake-yum",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-cake-yum-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), cake (1). Action: like (note only). Seen: a girl with black-brown hair in two round buns with red bands, orange T-shirt, red shorts, white sneakers; she holds a plate with one slice of layered cake with cream and a cherry. Nan matches the cast. Cake reads as cake. Small marks: the star on the shirt is not visible; a dog (Pip) peeks out under the table and the table leg cuts it, but the page text does not name it."
+    },
+    {
+      "id": "l2-w09-story-page-pip-likes-cake-yum",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-pip-likes-cake-yum-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), cake (named; 2 slices drawn), Nan (1, mustShow). Action: like (note only). Seen: a golden-brown dog with a cream chest, floppy ears, a tongue out, sits on a chair with its paws on the table and looks at a slice of cake with cream and berries; Nan sits on the other side, orange T-shirt with a white star, red shorts, white sneakers, two buns with red bands. Both match the cast. Small mark: Pip wears a white bib, and the red collar is not visible under it; the bib reads as a napkin prop."
+    },
+    {
+      "id": "l2-w09-story-page-dad-sat-on-the-mat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-dad-sat-on-the-mat-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), mat (1), Pip (1, mustShow). Action: sit (note only). Seen: a man with dark hair and a side parting, mustard polo, dark-blue jeans, brown shoes, who sits on a round blue mat; a golden-brown puppy with a red collar and a gold tag sits at the right. Dad and Pip match the cast. One mat is clear under Dad. Small mark: a brown rug edge shows behind him; a mop leans at the left."
+    },
+    {
+      "id": "l2-w09-story-page-dad-can-mop-the-mat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-dad-can-mop-the-mat-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), mop (1, implied by the verb), mat (1). Action: mop (note only). Seen: a man in a mustard polo and blue jeans who bends and holds a mop with both hands; the grey mop head lies on a round blue mat. Dad matches the cast. One mat and one mop are clear. Small mark: a second small brown rug sits far behind; the mop and Dad work on the blue mat."
+    },
+    {
+      "id": "l2-w09-story-page-dad-has-a-mop",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-dad-has-a-mop-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), mop (1). Action: have (note only). Seen: a man in a mustard polo and blue jeans who stands and holds a long mop with both hands; the grey mop head touches the floor. Dad matches the cast. The mop is drawn and visible, and reads as a mop."
+    },
+    {
+      "id": "l2-w09-story-page-dad-cannot-see-the-mop",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-dad-cannot-see-the-mop-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), mop (1). Action: cannot see (note only). Seen: a man in a mustard polo and blue jeans with both open hands raised and a puzzled look, who looks the other way; a mop with a grey head leans on the wall at the right. Dad matches the cast. The mop is drawn and visible, and reads as a mop. Each hand shows five fingers."
+    },
+    {
+      "id": "l2-w09-story-page-dad-is-sad",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-dad-is-sad-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1). Action: none. Seen: a man in a mustard polo and blue jeans who sits on a green sofa and looks down with a sad face. Dad matches the cast. The sad look reads clearly."
+    },
+    {
+      "id": "l2-w09-story-page-pip-can-mop",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-pip-can-mop-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), mop (1), Dad (1), Tom (1). Action: mop (note only). Seen: a golden-brown puppy with a red collar and gold tag who holds a mop handle in its mouth and paws with the mop head on a wet floor; Dad in a mustard polo smiles at the back; a boy with dark swept hair, navy T-shirt, khaki shorts and red shoes smiles at the right. All match the cast. Mop is clear. Small mark: the toy box is partly hidden behind Tom."
+    },
+    {
+      "id": "l2-w09-check-row-duck",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-check-row-duck-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a duck (1). Action: none. Seen: one yellow duck with an orange flat bill, black eyes, a wing and orange feet on a white background. It reads as a duck to a young child. No text."
+    },
+    {
+      "id": "l2-w09-story-page-pip-has-the-mop",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-pip-has-the-mop-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), mop (1). Action: have (note only). Seen: a golden-brown puppy with a cream chest, a red collar and a gold tag, who holds a mop handle in its mouth; the grey mop head hangs below. Pip matches the cast. The mop is drawn and visible."
+    },
+    {
+      "id": "l2-w09-cover-dad-and-the-mop",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-cover-dad-and-the-mop-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover; the title is the page text. Question page: no. Items: Dad (1), Pip (1), mop (1, in the title). Seen: a smiling man in a mustard polo and blue jeans who holds a mop with the head on a blue mat; a golden-brown puppy with a red collar and gold tag sits on the mat and looks at him. Both match the cast. The subject shows. No text in the picture."
+    },
+    {
+      "id": "l2-w09-d4-prompt-cake",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-d4-prompt-cake-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a cake (1). Action: none. Seen: a round pink cake with two layers, pink cream swirls, strawberries and blueberries on top, on a white background. It reads as a cake. No text."
+    },
+    {
+      "id": "l2-w09-check-row-doll",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-check-row-doll-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a doll (1). Action: none. Seen: a soft baby doll with curly blond hair, brown eyes, a light-blue top and blue overalls, who sits. It reads as a doll. No text."
+    },
+    {
+      "id": "l2-w09-card-dinosaur",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-dinosaur-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a dinosaur (1). Action: none. Seen: a green stitched toy dinosaur with a long neck, a smiling face, back plates and a tail, who sits. It reads as a dinosaur to a young child. No text."
+    },
+    {
+      "id": "l2-w09-card-rice",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-rice-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: rice (1). Action: none. Seen: a white bowl full of cooked white rice on a white background. It reads as rice. No text."
+    },
+    {
+      "id": "l2-w09-card-bread",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-bread-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: bread (1). Action: none. Seen: one slice of brown bread with a crust and seeds on a white background. It reads as bread. No text."
+    },
+    {
+      "id": "l2-w09-card-nod",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-nod-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a person who nods (1). Action: nod (note only; a still picture cannot show it). Seen: a smiling girl with black hair, a ponytail and a yellow star clip, a yellow T-shirt, a blue pleated skirt and white sneakers, who has two small curved marks beside her head. The person and the head are drawn and visible. The girl matches May. No text."
+    },
+    {
+      "id": "l2-w09-card-juice",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-juice-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: juice (1). Action: none. Seen: a tall clear glass of orange juice with ice cubes and an orange slice on the rim. It reads as juice. No text."
+    },
+    {
+      "id": "l2-w09-card-banana",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-banana-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a banana (1). Action: none. Seen: one yellow banana with a brown stem and small brown spots on a white background. It reads as a banana. No text."
+    }
+  ],
+  "summary": {
+    "files": 25,
+    "pass": 25,
+    "fail": 0
+  }
+}

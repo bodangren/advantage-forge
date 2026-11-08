@@ -1,0 +1,222 @@
+{
+  "group": "u2-w11-r1-color",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T16:15:14Z",
+  "results": [
+    {
+      "id": "l2-w11-story-page-where-is-mia-in-the-bed",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-mia-in-the-bed-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Nan (1), Mia (1), a bed (1). Seen: Nan (two buns with red bands, orange star shirt, red shorts, white shoes) pulls a yellow blanket; Mia (light-brown hair, pink bow, pink shirt at the collar) laughs in a bed under the blanket with a pillow. Both match the cast. The bed is drawn and clear."
+    },
+    {
+      "id": "l2-w11-story-page-where-is-ben-under-the-bed",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-ben-under-the-bed-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Nan (1), Ben (1), a bed (1). Seen: Nan kneels on a rug; Ben (messy light-brown hair, blue shirt, grey shoes) lies on the floor under a bed with a yellow blanket and a pillow. Both match the cast. The bed is clear."
+    },
+    {
+      "id": "l2-w11-story-page-where-is-may-in-the-box",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-may-in-the-box-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Nan (1), May (1), a box (1). Seen: Nan in orange shirt leans on the box; May (black hair, ponytail with a yellow star clip, yellow shirt) sits in an open cardboard box. Both match the cast. The box reads as a box."
+    },
+    {
+      "id": "l2-w11-story-page-where-is-sam-under-the-table",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-sam-under-the-table-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Nan (1), Sam (1), a table (1). Seen: Nan and Sam (brown hair, red shirt with white stripes, blue shorts) kneel and look under a wooden table with four red legs. Both match the cast. The table is clear."
+    },
+    {
+      "id": "l2-w11-story-page-where-is-pat-on-the-sofa",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-pat-on-the-sofa-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Nan (1), Pat (1), a sofa (1). Seen: Nan (orange star shirt) lifts a big blue pillow; Pat (messy black hair, green shirt, brown shorts, brown sandals) lies laughing on a blue sofa. Both match the cast. The sofa is clear."
+    },
+    {
+      "id": "l2-w11-story-page-where-is-lily-on-the-chair",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-lily-on-the-chair-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Nan (1), Lily (1), a chair (1). Seen: Nan holds a pink blanket; Lily (dark bob with fringe, lilac bow, lilac dress at the collar) sits in a pink armchair under a blanket. A small wooden chair stands at the right edge. Lily matches the cast. The armchair reads as a chair. Small mark: a second small chair at the edge."
+    },
+    {
+      "id": "l2-w11-story-page-here",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-here-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the girl between Ben and Pat; only 6 children show",
+      "notes": "Question page: no. Items: Pip (1), Nan, Sam, May, Ben, Mia, Pat, Lily (7 children). Seen: Pip the puppy (correct, red collar); Nan; Sam (red striped shirt); Ben (light-blue shirt, light-brown hair); one girl with black hair and a yellow clip who wears blue overalls and a blue skirt-like bottom; Pat (green); Lily (lilac dress, bow). That is 6 children. May and Mia are not both there: this girl mixes May's black hair and yellow clip with Mia's blue overalls, and Mia's pink shirt and light-brown hair are absent. One needed character is missing."
+    },
+    {
+      "id": "l2-w11-story-page-where-is-pip",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-pip-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes. Items: Nan, Sam, May, Ben, Mia, Pat, Lily (7 children). Seen, left to right: Nan (orange star shirt), Sam (red stripes), May (ponytail, yellow clip, yellow shirt, blue skirt), Ben (light-blue shirt), Mia (light-brown hair, pink bow, pink shirt, overalls), Pat (green shirt), Lily (lilac dress, bow). All 7 match the cast. A fluffy brown tail shows behind Nan as a clue for Pip. Pip is hidden on purpose, which a question page allows."
+    },
+    {
+      "id": "l2-w11-story-page-ten-men-in-the-den",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-ten-men-in-the-den-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the row of small wooden men at the mouth of the den; 11 figures, not 10",
+      "notes": "Question page: no. Items: Tom (1), men (10), a den (1). Seen: Tom (dark hair, navy shirt, khaki shorts, red shoes) kneels at a cream blanket den; a row of small wooden peg men stands at its mouth. I count 11 men: 4 on the left, then 7 more in a tight row. The den and Tom are clear and the men read as toy people. The count is 11 instead of 10."
+    },
+    {
+      "id": "l2-w11-story-page-tom-set-up-a-den",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-tom-set-up-a-den-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), a den (1). Action: setting up (note). Seen: Tom (dark hair, navy shirt, khaki shorts, red shoes) pulls a blue blanket over two small wooden stools beside the sofa. It reads as a blanket den. Tom matches the cast."
+    },
+    {
+      "id": "l2-w11-story-page-see-me-mom",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-see-me-mom-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Mom (1). Seen: Tom (dark hair, navy shirt) peeks out from under a cream blanket and waves; Mom (wavy dark-brown hair, coral blouse, blue jeans, white sneakers) stands and smiles. Both match the cast and are visible."
+    },
+    {
+      "id": "l2-w11-story-page-mom-is-in-too",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-mom-is-in-too-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mom (1), Tom (1). Seen: Mom (wavy brown hair, coral blouse, jeans) kneels laughing under a blue blanket den; Tom (navy shirt, red shoes) sits next to her. A row of wooden men lies outside, not named in the text. Both match the cast."
+    },
+    {
+      "id": "l2-w11-story-page-pip-sat-on-top",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-pip-sat-on-top-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1). Action: sat on top (note). Seen: Pip (golden-brown fur, cream chest, red collar with gold tag, fluffy tail) sits on top of a rumpled blue blanket. Pip matches the cast. Small mark: three red toy tops on the floor."
+    },
+    {
+      "id": "l2-w11-story-page-dad-is-in-too",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-dad-is-in-too-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), Mom (1), Tom (1). Seen: Dad (dark side-parted hair, mustard polo, brown shoes), Mom (wavy brown hair, coral blouse, white sneakers), and Tom (navy shirt, red shoes) sit together under a blue blanket. All three match the cast and are visible."
+    },
+    {
+      "id": "l2-w11-story-page-pip-get-off",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-pip-get-off-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Pip (1). Seen: Tom (dark hair, navy shirt) peeks out of a cream blanket den; Pip sits on top of the den and looks down. Both match the cast. Action: get off (note only)."
+    },
+    {
+      "id": "l2-w11-cover-the-den",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-cover-the-den-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole picture: no den is built",
+      "notes": "Cover. Title names the subject: a den. Items: Tom (1), a den (1). Seen: Tom (dark hair, red shoes) holds up a blue blanket in front of the camera; two wooden chairs stand behind him. No den shows, only a blanket and chairs. Tom matches the cast. The subject of the title is missing."
+    },
+    {
+      "id": "l2-w11-story-page-the-den-is-on-dad",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-the-den-is-on-dad-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "under the blue blanket on the rug; Dad is not drawn",
+      "notes": "Question page: no. Items: the den (1), Dad (1), and mustShow Pip, Tom, Mom. Seen: a blue blanket lies flat on a round rug with Pip sitting on top; Tom (navy shirt) and Mom (coral blouse, jeans) laugh. Pip, Tom, Mom, and the blanket den are clear and match the cast. Dad is named in the text, but no part of him shows: no head, hand, or foot, and the blanket shows no clear body shape. A hidden thing counts as missing on a page that is not a question page."
+    },
+    {
+      "id": "l2-w11-check-row-egg",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-check-row-egg-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: an egg (1). Seen: one white egg, soft shadow, white background. Clear, no text."
+    },
+    {
+      "id": "l2-w11-card-envelope",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-card-envelope-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: an envelope (1). Seen: one white envelope with a flap and a red heart seal. It reads as an envelope. No text."
+    },
+    {
+      "id": "l2-w11-card-door",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-card-door-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a door (1). Seen: one green door with four panels, a frame, and a gold knob. Clear, no text."
+    },
+    {
+      "id": "l2-w11-check-row-elephant",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-check-row-elephant-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: an elephant (1). Seen: one blue-gray cartoon elephant with big ears, trunk, and tusks. Clear, no text."
+    },
+    {
+      "id": "l2-w11-card-window",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-card-window-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a window (1). Seen: one white window with four panes showing blue sky and clouds. Clear, no text."
+    },
+    {
+      "id": "l2-w11-card-elbow",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-card-elbow-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: an elbow (body part). Seen: a boy (brown side-swept hair, red shirt with white stripes, blue shorts, blue shoes, like Sam) with both arms bent in front of him and one finger pointing at the other arm; the bends of the arms show as elbows. A mark of the elbow shows at its place. Small mark: the pointing finger lands near the forearm, but the bent arms read as elbows."
+    }
+  ],
+  "summary": {
+    "files": 23,
+    "pass": 19,
+    "fail": 4
+  }
+}

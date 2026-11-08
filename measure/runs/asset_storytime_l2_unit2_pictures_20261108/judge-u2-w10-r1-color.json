@@ -1,0 +1,267 @@
+{
+  "group": "u2-w10-r1-color",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T16:08:19Z",
+  "results": [
+    {
+      "id": "l2-w10-story-page-put-on-your-t-shirt",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Ben (1), a T-shirt (1). Action: put on (note only). Seen: a boy with messy light-brown hair, big brown eyes, a big smile, blue shorts and grey sneakers, who wears a yellow T-shirt with short sleeves and pulls its neck over his head with both raised hands; folded clothes lie in the open box. Ben matches the cast (the blue top of the cast is the shirt on the page). The T-shirt is drawn and reads as a T-shirt. Small mark: the cloth over his head looks a little like a hood."
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-trousers",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-trousers-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1), trousers (1 pair). Action: put on (note only). Seen: a boy with messy black hair and a tuft, green T-shirt, brown sandals, who holds up a pair of wide green long trousers at his waist with both hands; brown cargo shorts show at the side. Pat matches the cast. The green trousers are clear and read as trousers."
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-skirt",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-skirt-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia (1), a skirt (1). Action: put on (note only). Seen: a girl with light-brown shoulder-length hair, a pink bow at the side, a pink T-shirt and the bib of blue denim overalls, who wears a red flared skirt; blue denim cuffs show above white shoes. Her reflection smiles in the mirror. Mia matches the cast. The red skirt is drawn and reads as a skirt."
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-dress",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-dress-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: May (1), a dress (1). Action: put on (note only). Seen: a girl with black hair, a fringe and a long ponytail, a small yellow tie at the ear, big brown eyes, who wears a blue dress with puffed sleeves, a white collar and a ruffle hem, white socks and white shoes; her reflection shows the ponytail with a yellow star clip. May matches the cast. The dress is clear and reads as a dress. Small marks: the star clip is not seen on the girl herself, only in the mirror; the ponytail sits lower than in the cast."
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-shoes",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-shoes-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), shoes (1 pair). Action: put on (note only). Seen: a boy with brown side-swept hair, a red T-shirt with two white stripes, blue shorts, who stands in a pair of red shoes with a strap. Sam matches the cast. The red shoes are the page prop and read as shoes. Small mark: the shoes are red, the cast shoes are blue."
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-socks",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-socks-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Lily (1), socks (plural). Action: put on (note only). Seen: a girl with a dark-brown bob and straight fringe, a small lilac bow at the side, a lilac dress with a white collar, who sits on the floor and holds a white sock in both hands; red and white striped socks show on her feet and on the floor, and one pink shoe lies at the right. Lily matches the cast. Socks are clear and read as socks. Small mark: more than a pair of socks lies in the picture."
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-jacket",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-jacket-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1), a jacket (1), Teacher Kim (1, mustShow). Action: put on (note only). Seen: a girl with black-brown hair in two round buns with red bands, an orange T-shirt with a white star, red shorts, white sneakers, who wears an orange padded jacket with a collar; a tall woman with dark hair in a low ponytail, a green cardigan, a cream blouse, navy trousers and brown flat shoes holds a purple hat. Nan and Teacher Kim match the cast. The jacket is clear. Small mark: Pip peeks out of the clothes box."
+    },
+    {
+      "id": "l2-w10-story-page-dad-has-a-pan",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-dad-has-a-pan-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), a pan (1), Tom (1, mustShow). Action: have (note only). Seen: a man in a mustard polo, blue jeans and brown shoes who holds out one round shallow pan with a gold rim; a boy with dark hair, navy T-shirt, khaki shorts and red shoes who looks up at it. Dad and Tom match the cast. The pan Dad holds is drawn and reads as a baking pan in the kitchen. Small marks: the pan has no handle; three more pans stand on the counter at the left, and Dad has only the one."
+    },
+    {
+      "id": "l2-w10-cover-dress-up",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-cover-dress-up-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover; the title is the page text. Question page: no. Items: seven children and Teacher Kim, a box of clothes. Seen: Teacher Kim (dark ponytail, green cardigan) behind the open clothes box, and Sam (red striped T-shirt, blue shoes), May (ponytail with a yellow star clip, yellow T-shirt, blue skirt), Ben (light-blue T-shirt, messy light-brown hair), Mia (pink bow, pink top, overalls), Pat (black tufted hair, green T-shirt), Lily (dark bob, lilac bow, lilac dress) and Nan (two buns with red bands, orange T-shirt, red shorts); folded pink, blue and yellow shirts lie in the box. All eight match the cast. The subject shows. Small mark: Pip is half hidden at the right edge."
+    },
+    {
+      "id": "l2-w10-story-page-a-tan-man",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-a-tan-man-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), a tan man (1). Action: point (note only). Seen: a boy with dark swept hair, navy T-shirt, khaki shorts, red shoes, who points at a tan gingerbread man with white icing and a smile that lies in a round pan on a low table. Tom matches the cast. One tan man is drawn, small but clear. Small mark: three empty pans stand on the counter."
+    },
+    {
+      "id": "l2-w10-story-page-run-man-run",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-run-man-run-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a man (1, the gingerbread man). Action: run (note only; a still picture cannot show it). Seen: one tan gingerbread man with a smile and white icing, with arms and legs spread in a leap above the floor, near the counter and a green door. The man is drawn and visible and reads as a running man."
+    },
+    {
+      "id": "l2-w10-story-page-a-man-on-a-mat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-a-man-on-a-mat-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a man (1, the gingerbread man), a mat (1). Seen: one tan gingerbread man who sits on one round green mat near the green door and waves. Both are drawn and clear. One man and one mat."
+    },
+    {
+      "id": "l2-w10-story-page-tom-and-dad-run",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-tom-and-dad-run-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Dad (1). Action: run (note only). Seen: a boy with dark swept hair, navy T-shirt, khaki shorts and red shoes who runs with an arm out; a man in a mustard polo, blue jeans and brown shoes who runs behind; a gingerbread man stands near the door. Tom and Dad match the cast. Small mark: the gingerbread man is extra."
+    },
+    {
+      "id": "l2-w10-story-page-tom-and-dad-sat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-tom-and-dad-sat-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Dad (1). Action: sit (note only). Seen: a boy with dark swept hair, navy T-shirt, khaki shorts and red shoes who sits on the floor; a man in a mustard polo and blue jeans who sits cross-legged; a gingerbread man stands between them. Tom and Dad match the cast. Both sit and are clear."
+    },
+    {
+      "id": "l2-w10-story-page-they-were-sad",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-they-were-sad-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Dad (1). Action: none (a feeling). Seen: a boy with dark swept hair, navy T-shirt, khaki shorts and red shoes, with wet eyes and a down mouth; a man in a mustard polo and blue jeans with a worried, sad face. Tom and Dad match the cast. A gingerbread man stands on the floor and is extra."
+    },
+    {
+      "id": "l2-w10-story-page-the-man-sat-too",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-the-man-sat-too-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: the man (1, the gingerbread man), Tom (1), Dad (1). Action: sit (note only). Seen: a boy with dark swept hair, navy T-shirt and red shoes, and a man in a mustard polo and blue jeans, who both sit on a round green mat; one tan gingerbread man sits between them with its legs forward. Tom and Dad match the cast. One man (the gingerbread man) is clear."
+    },
+    {
+      "id": "l2-w10-cover-the-tan-man",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-cover-the-tan-man-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover; the title is the page text. Question page: no. Items: Dad (1), Tom (1), the tan man (1). Seen: a man in a mustard polo, blue jeans and brown shoes who holds out a round grey pan with one tan gingerbread man with white icing on it; a boy with dark swept hair, navy T-shirt, khaki shorts and red shoes who looks at him. Dad and Tom match the cast. The subject shows, small but clear."
+    },
+    {
+      "id": "l2-w10-check-row-van",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-check-row-van-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a van (1). Seen: one blue van with windows, two lights and wheels on a white background. It reads as a van. No text."
+    },
+    {
+      "id": "l2-w10-check-row-fan",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-check-row-fan-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a fan (1). Seen: one white table fan with a round guard, four blades and a round base, on a white background. It reads as a fan. No text."
+    },
+    {
+      "id": "l2-w10-check-row-dad",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-check-row-dad-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1). Seen: a man with dark-brown hair and a side parting, a mustard polo, dark-blue jeans and brown shoes, who stands and smiles, on a white background. Dad matches the cast. No text."
+    },
+    {
+      "id": "l2-w10-card-pad",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-pad-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a pad (1). Seen: one yellow note pad with a red top strip and a few sheets, on a white background. It reads as a note pad. No text."
+    },
+    {
+      "id": "l2-w10-card-skirt",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-skirt-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a skirt (1). Seen: one red flared skirt with a waistband and soft folds, on a white background. It reads as a skirt. No text."
+    },
+    {
+      "id": "l2-w10-card-t-shirt",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-t-shirt-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a T-shirt (1). Seen: one yellow T-shirt with short sleeves and a round neck, on a white background. It reads as a T-shirt. No text."
+    },
+    {
+      "id": "l2-w10-check-row-ten",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-check-row-ten-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "text-in-picture",
+      "where": "the whole picture: a large yellow numeral 10",
+      "notes": "Question page: no. Items: ten (a count or a number). Seen: a large yellow 3D numeral 10 on a white background; no ten objects are drawn. Rule 8 forbids a number in the picture, so the numeral is a hard defect. The page text asks for ten; the picture shows the number and no counted things. Note for the orchestrator: the numeral 10 on a check-row picture follows the rule only if the row owner allows numerals."
+    },
+    {
+      "id": "l2-w10-card-trousers",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-trousers-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: trousers (1 pair). Seen: one pair of green long trousers with an elastic waist, pockets and rolled cuffs, on a white background. It reads as trousers. No text."
+    },
+    {
+      "id": "l2-w10-card-jacket",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-jacket-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a jacket (1). Seen: one orange jacket with a collar, a front zip, two pockets and ribbed cuffs, on a white background. It reads as a jacket. No text."
+    },
+    {
+      "id": "l2-w10-card-shoes",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-shoes-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: shoes (1 pair). Seen: one pair of red lace-up shoes with bows, on a white background. They read as shoes. No text."
+    },
+    {
+      "id": "l2-w10-card-socks",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-socks-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: socks (1 pair). Seen: one pair of white socks with red stripes, on a white background. They read as socks. No text."
+    }
+  ],
+  "summary": {
+    "files": 28,
+    "pass": 27,
+    "fail": 1
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "group": "u2-w09-r1-color-mop-t2",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T16:05:49Z",
+  "results": [
+    {
+      "id": "l2-w09-story-page-tom-can-see-the-mop",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-tom-can-see-the-mop-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Dad (1, mustShow), mop (1). Action: see (note only). Seen: a boy with dark swept hair, navy T-shirt, khaki shorts, red shoes, who points to the right with one hand; a man in a mustard polo, jeans and brown shoes who sits on a green sofa and smiles; one grey-headed mop that leans on the wall next to the toy box. Tom and Dad match the cast. The mop is drawn and visible. Small mark: the toy box is cut by the right edge."
+    }
+  ],
+  "summary": {
+    "files": 1,
+    "pass": 1,
+    "fail": 0
+  }
+}

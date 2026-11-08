@@ -1,0 +1,231 @@
+{
+  "group": "u2-w12-r1-color",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T16:16:54Z",
+  "results": [
+    {
+      "id": "l2-w12-story-page-open-your-book-ben",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-ben-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Ben (1), a book (1). Action: open (note). Seen: Ben (messy light-brown hair, blue shirt, grey sneakers) smiles at a school desk with an open picture book. Ben matches the cast. The open book is clear."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-may",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-may-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: May (1), a book (1). Seen: May (black hair, ponytail with a yellow star clip, yellow shirt) sits at a desk with an open picture book. May matches the cast. The book is clear. Small mark: the chair back hides her skirt."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-sam",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-sam-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1), Teacher Kim (1), a book (1). Seen: Teacher Kim (low ponytail, green cardigan, navy trousers, brown shoes) holds up a big open book with a sun and a fish; Sam (side-swept brown hair, red shirt, blue shoes) sits at a desk with an open book. Both match the cast. The books are clear."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-mia",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-mia-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia (1), a book (1). Seen: Mia (light-brown hair, pink bow, pink shirt, denim overalls, white shoes) sits at a desk on the left with an open picture book. Mia matches the cast. The book is clear."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-pat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-pat-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1), a book (1). Seen: Pat (messy black hair, green shirt, brown sandals) sits at a desk on the left with an open picture book. Pat matches the cast. The book is clear."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-pip",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-pip-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), a book (1), and mustShow Nan, Teacher Kim. Seen: Pip (golden-brown fur, cream face, red collar with tag) lies on the floor beside an open picture book; Nan (two buns, orange star shirt, red shorts) kneels and points at the book; Teacher Kim (green cardigan, navy trousers) stands at the right. All match the cast. The book is clear."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-lily",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-lily-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Lily (1), a book (1). Seen: Lily (dark bob with fringe, lilac bow, lilac dress with a white collar, pink shoes) sits at a desk with an open picture book. Lily matches the cast. The book is clear."
+    },
+    {
+      "id": "l2-w12-story-page-open-your-book-nan",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-nan-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the desk in front of Nan: she opens a red lunch box, no book is drawn",
+      "notes": "Question page: no. Items: Nan (1), a book (1). Action: open (note). Seen: Nan (two buns, orange star shirt) leans on a desk and looks into an open red lunch box with a yellow label; a fluffy tail shows under the chair. Nan matches the cast. No book shows anywhere. The red box reads as a lunch box, not a book."
+    },
+    {
+      "id": "l2-w12-story-page-it-is-on-the-mat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-it-is-on-the-mat-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), a mat (1); \"it\" is the hat. Seen: Dad (dark hair, mustard polo, jeans, brown shoes) walks past; a straw hat lies on a woven yellow mat at the left. Dad matches the cast. The mat reads as a mat and the hat sits on it."
+    },
+    {
+      "id": "l2-w12-story-page-dad-has-a-hat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-dad-has-a-hat-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), a hat (1). Seen: Dad (dark hair, mustard polo, jeans, brown shoes) smiles and holds a straw hat with a red ribbon in front of him. Dad matches the cast. The hat is clear."
+    },
+    {
+      "id": "l2-w12-story-page-dad-is-hot",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-dad-is-hot-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1). Seen: Dad (mustard polo, jeans) wipes his brow with one hand and holds the straw hat in the other. Three suns shine above him. Dad matches the cast. Small mark: three suns."
+    },
+    {
+      "id": "l2-w12-story-page-a-hen-can-hop",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-a-hen-can-hop-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a hen (1). Action: hop (note). Seen: one brown hen with a red comb and orange legs, one foot lifted. Clear hen. A hat on a mat at the left is not in the text."
+    },
+    {
+      "id": "l2-w12-story-page-hop-hop-hop",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-hop-hop-hop-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a hen (1) as the one who hops. Action: hop, hop, hop (note). Seen: one brown hen with a red comb steps up on a woven mat, one foot raised; a hat stands nearby. The hen is drawn and clear. No text in the picture."
+    },
+    {
+      "id": "l2-w12-story-page-dad-said-get-off",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-dad-said-get-off-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1). Action: said (note). Seen: Dad (dark hair, mustard polo, jeans, brown shoes) wears the straw hat and raises both open hands; a hen stands near him. Dad matches the cast. Hands show five fingers each."
+    },
+    {
+      "id": "l2-w12-story-page-the-hen-sat-in-it",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-the-hen-sat-in-it-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a hen (1); \"it\" has no noun. Seen: one brown fluffy hen sits in a yellow upside-down hat that looks like a bowl, on a woven mat. The hen is drawn and clear. Small mark: the hat reads like a yellow bowl, and the hen looks fluffier than on other pages."
+    },
+    {
+      "id": "l2-w12-story-page-that-hen-has-the-hat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-that-hen-has-the-hat-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: the hen (1), a hat (1), and mustShow Dad, Tom. Seen: Dad (mustard polo, jeans) laughs; Tom (dark hair, navy shirt, khaki shorts, red shoes) smiles; the brown hen walks with the straw hat with a red ribbon on her head. All match the cast. The hat is on the hen and clear."
+    },
+    {
+      "id": "l2-w12-check-row-house",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-check-row-house-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a house (1). Seen: one soft clay house with a pink roof, a chimney, round windows, and a blue door. Clear, no text."
+    },
+    {
+      "id": "l2-w12-check-row-horse",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-check-row-horse-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a horse (1). Seen: one tan cartoon horse with a cream mane and tail, standing. Clear, no text."
+    },
+    {
+      "id": "l2-w12-d4-prompt-book",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-d4-prompt-book-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a book (1). Seen: one closed blue book with a spine, a cloud, three stars, and a rainbow on the cover. It reads as a book. No words."
+    },
+    {
+      "id": "l2-w12-card-hippo",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-hippo-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a hippo (1). Seen: one gray smiling hippo sitting, drawn like a watercolor. Clear, no text."
+    },
+    {
+      "id": "l2-w12-card-crayon",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-crayon-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a crayon (1). Seen: one green crayon with a paper wrapper, a pointed tip, and a worn base. Clear, no text."
+    },
+    {
+      "id": "l2-w12-card-hop",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-hop-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a child who hops. Action: hop (note). Seen: a boy (messy light-brown hair, blue shirt, dark-blue shorts, grey sneakers, like Ben) jumps on one foot with the other leg bent and both fists up. The boy matches the cast. No text."
+    },
+    {
+      "id": "l2-w12-card-ruler",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-ruler-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a ruler (1). Seen: one wooden ruler with tick marks along both long edges. No numbers or letters show. Clear."
+    },
+    {
+      "id": "l2-w12-card-eraser",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-eraser-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: an eraser (1). Seen: one pink rounded rubber block. It is the common pink eraser form and reads as an eraser. Small mark: it has no sleeve or label. No text."
+    }
+  ],
+  "summary": {
+    "files": 24,
+    "pass": 23,
+    "fail": 1
+  }
+}

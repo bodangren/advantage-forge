@@ -1,0 +1,24 @@
+{
+  "group": "u2-w12-r1-color-henhat-t2",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T16:16:54Z",
+  "results": [
+    {
+      "id": "l2-w12-cover-the-hen-and-the-hat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-cover-the-hen-and-the-hat-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover. Title names the subject: a hen and a hat. Items: a hen (1), a hat (1), Dad (mustShow). Seen: Dad (dark hair, mustard polo, jeans, brown shoes) holds out a straw hat with a red ribbon toward one brown hen with a red comb. Dad matches the cast. The hen and the hat both show and are clear."
+    }
+  ],
+  "summary": {
+    "files": 1,
+    "pass": 1,
+    "fail": 0
+  }
+}

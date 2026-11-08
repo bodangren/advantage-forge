@@ -1,0 +1,74 @@
+{
+  "group": "u2-r1-color-group-t2",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T16:31:00Z",
+  "results": [
+    {
+      "id": "l2-w09-cover-yum",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-cover-yum-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover: the title names the subject, a meal. Persons: 7 children and Teacher Kim, each once. Seen, left to right at the table: Pat (black tufted hair, green tee), May (ponytail, yellow clip, yellow tee), Sam (brown hair, red striped tee), Ben (messy light-brown hair, light-blue tee), Mia (light-brown hair, pink bow, pink tee, overalls), Lily (black bob, lilac bow, lilac dress), Nan (two buns with red bands, orange star tee). Teacher Kim stands behind in a green cardigan with a low ponytail. All match the cast. Plates and cups are on the table. Small mark: a puppy tail shows at the bottom edge and is cut by the frame; the title does not name it."
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-hat-pip",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-color-t2.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "Nan is missing: no girl with two buns, red bands, and an orange star tee shows among the children or anywhere in the room",
+      "notes": "Question page: no. Items: Pip (1), a hat (1), Sam, May, Ben, Mia, Pat, Lily, Nan, Teacher Kim (1 each). Action: put on (note only). Seen: Pat (green tee), May (yellow tee, star clip), Ben (light-blue tee), Sam (red striped tee), Lily (lilac dress, bow), and Mia (pink tee, overalls, pink bow) in a line; Teacher Kim at the right; Pip in the clothes box with a purple hat on his head. That is 6 children. Pip, the hat, and the other 5 children and Kim match the cast. Nan is not drawn, so a named person is missing."
+    },
+    {
+      "id": "l2-w11-cover-where-is-pip",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-cover-where-is-pip-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover: the title is a question; the subject is Pip hiding. Persons: Nan, Sam, May, Ben, Mia, Pat, Lily, each once. Seen: Nan in front with both hands over her eyes (two buns with red bands, orange star tee, red shorts, white shoes); Pat (green), May (yellow, star clip), Sam (red striped tee) walking in on the left; Ben (light-blue tee, messy light-brown hair), Mia (light-brown hair, pink bow), and Lily (black bob, lilac bow) peeking over the sofa; two ears and part of Pip's head show behind the sofa. All 7 children show once and match the cast. Small mark: the three behind the sofa show only the head and shoulders."
+    },
+    {
+      "id": "l2-w12-cover-open-your-book",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-cover-open-your-book-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover: the title names the subject, a book. Persons: 7 children and Teacher Kim, each once. Seen: Pat (green tee, holds a teddy bear), May (yellow tee, ponytail, star clip), Sam (red striped tee), Ben (light-blue tee, messy hair), Lily (lilac dress, bow, black bob), Mia (pink tee, overalls, bow), Nan (two buns, orange star tee) at three desks; Teacher Kim at the right holds up an open book with a yellow circle and a blue fish. A puppy sits under the middle desk. The book is drawn and clear. All persons match the cast. No words or letters show on the book or the wall pictures."
+    },
+    {
+      "id": "l2-w13-story-page-pip-can-catch",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-pip-can-catch-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), a ball (1), Sam, May, Ben, Mia, Pat, Lily, Nan (1 each). Action: catch (note only). Seen: a golden-brown puppy with a red collar jumps and holds a red ball with a front paw and his mouth; below, in a row: Pat (green), May (yellow, star clip), Sam (red striped tee), Nan (two buns, orange star tee), Ben (light-blue tee), Lily (lilac dress, bow), Mia (pink tee, overalls, bow), all clapping. 7 children show once. Everyone matches the cast. The puppy and the ball are clear."
+    },
+    {
+      "id": "l2-w15-cover-look-a-bus",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-cover-look-a-bus-color-t2.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "Ben shows twice: two boys with messy light-brown hair and light-blue tees, one behind May and Sam at the left of centre, one at the top centre behind the group",
+      "notes": "Cover: the title names the subject, a bus. Persons: Sam, May, Ben, Mia, Pat, Lily, Nan, Teacher Kim, each once; that is 7 children. Seen: Teacher Kim at the left leads the line; Pat (green tee), May (yellow tee, black hair), Sam (red striped tee), Mia (pink tee, overalls), Nan (two buns, orange tee), Lily (lilac dress, bow); and 2 boys with messy light-brown hair and light-blue tees. That is 8 children, so Ben is drawn twice (wrong count). A yellow school bus is at the right; it is cut by the right frame edge but its front, door, and wheel show and read as a bus (small mark). Other persons match the cast."
+    },
+    {
+      "id": "l2-w15-story-page-look-pip-on-a-bike",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-pip-on-a-bike-color-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), a bike (1), Grandpa, Sam, May, Ben, Mia, Pat, Lily, Nan (1 each). Action: look/point (note only). Seen: Grandpa (white hair, white mustache, green cardigan, brown trousers and shoes) rides one red bike; Pip (golden-brown, red collar with a gold tag) sits in the bike basket; 7 children stand at the right and point or wave: Pat (green tee), May (yellow tee, star clip), Ben (light-blue tee), Sam (red striped tee), Mia (pink tee, overalls, bow, hand up), Lily (lilac dress, bow), Nan (orange star tee, two buns). Each person shows once and matches the cast. The bike is drawn whole and clear. Small mark: Pip's ears stick out to the sides."
+    }
+  ],
+  "summary": { "files": 7, "pass": 5, "fail": 2 }
+}

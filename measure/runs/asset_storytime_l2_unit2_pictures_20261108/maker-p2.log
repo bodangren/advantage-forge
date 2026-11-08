@@ -146,3 +146,20 @@ role_base_sha: d99aa896d31d86b336c63026d7821115ecdba8bb (confirmed equal to HEAD
 - 2026-11-08T15:55:53Z: G2 result. 7 calls, 7 ok, 0 failed, 0 refused, 0.07 USD. Highest call cost 0.01 USD. Files: out/storytime/l2/unit2/<wNN>/muse/<id>-m1-color.png (2.0 to 2.7 MB each) plus -print.png and -m1.json. Tee output: /tmp/opencode/u2-color-r1-ten-refs.out.
 - 2026-11-08T15:56:50Z: G3 batch. `--unit2 --kind color --try 2 --out u2-r1-color-group-t2` wrote docs/storytime/l2-unit2/judge/prod/u2-r1-color-group-t2.json with 7 entries. Judge copies in out/storytime-review/judge/prod-u2/ named `<id>-color-t2.png`. No judging by the maker.
 - 2026-11-08T16:00:00Z: G4 gate. heavy-run, vitest on tests/storytime-u2-specs, -guards, -delivery, --maxWorkers=1. Result: 3 files passed, 45 of 45 tests passed, exit 0. Task 5 stays [~] for the judge pass.
+## Round 4 (Green · P2 T5-T6 · r4), Step H: color try 1 judge records
+- 2026-11-08T16:34:59Z: start. HEAD f7138831. Step H records only. No paid call.
+- Judge round 1 (orchestrator, frozen judge claude-code/claude-sonnet-5-5#high, judge prompt v6): 182 unique rows judged. 171 pass, 11 fail.
+- Second judge (`judge-u2-r1-color-second.json`, each file alone): 11 entries. 10 fail, 1 pass. l2-w11-cover-the-den cleared (pass).
+- Colors passing after the second judge: 172 of 182 rows (the 172 rows go to the Step J line pool).
+- Standing fails: 10 rows, each sent to Step I color try 2:
+  1. l2-w10-story-page-put-on-your-hat-pip
+  2. l2-w15-cover-look-a-bus
+  3. l2-w10-check-row-ten
+  4. l2-w11-story-page-here
+  5. l2-w11-story-page-ten-men-in-the-den
+  6. l2-w11-story-page-the-den-is-on-dad
+  7. l2-w12-story-page-open-your-book-nan
+  8. l2-w13-cover-look-at-me
+  9. l2-w13-check-row-dot
+  10. l2-w13-d4-prompt-jump
+- Open finding: docs/storytime/l2-unit2/prompt-list.md was not regenerated after the spec changes. No change made. Report only.

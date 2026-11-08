@@ -1,0 +1,258 @@
+{
+  "group": "u2-w13-r1-color",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T16:21:20Z",
+  "results": [
+    {
+      "id": "l2-w13-story-page-i-can-run",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-run-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Sam (1). Action: running (note only). Seen: boy with brown side-swept hair, red T-shirt with two white stripes, blue shorts, blue shoes, mid-stride on grass with playground behind. Matches cast; drawn and visible."
+    },
+    {
+      "id": "l2-w13-story-page-i-can-kick",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-kick-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Ben (1). Action: kicking (note only). Seen: boy with messy light-brown hair, light-blue T-shirt, dark-blue shorts, grey sneakers, one foot lifted next to a red ball. Matches cast; ball and leg drawn."
+    },
+    {
+      "id": "l2-w13-story-page-i-can-throw",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-throw-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mia (1). Action: throwing (note only). Seen: girl with light-brown shoulder-length hair, pink bow at the side, pink T-shirt, denim overalls, white shoes, arm raised, red ball in the air. Matches cast."
+    },
+    {
+      "id": "l2-w13-story-page-i-can-jump",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-jump-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: May (1). Action: jumping (note only). Seen: girl with black hair, long side ponytail, yellow star clip, yellow T-shirt, blue pleated skirt, white socks and sneakers, both feet off the ground. Matches cast."
+    },
+    {
+      "id": "l2-w13-story-page-i-can-catch",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-catch-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pat (1). Action: catching (note only). Seen: boy with black messy hair with small tufts, green T-shirt, brown cargo shorts, brown sandals, both hands holding a red ball. Matches cast."
+    },
+    {
+      "id": "l2-w13-story-page-i-can-hop",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-hop-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Nan (1). Action: hopping (note only). Seen: girl with two round buns and red ring bands, orange T-shirt with white star, red shorts, white sneakers, one foot raised. Matches cast. Small mark: a red ball with a small brown fluffy tuft behind it at the bottom right (reads as a partly hidden tail); the sentence does not name it."
+    },
+    {
+      "id": "l2-w13-story-page-tom-has-a-pot",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-tom-has-a-pot-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), a pot (1). Seen: boy with dark swept hair, navy T-shirt, khaki shorts, red shoes, both hands holding one large terracotta flower pot, upright and clear. Matches cast; pot reads as a pot."
+    },
+    {
+      "id": "l2-w13-cover-look-at-me",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-cover-look-at-me-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "the rightmost child at the bottom right",
+      "notes": "Cover; title only. mustShow: sam, may, ben, mia, pat, lily, nan, teacher-kim (8). Seen: Sam (red stripes) ok; May (yellow, ponytail, star clip) ok; Ben (blue shirt) ok; Mia (pink, overalls, bow) ok; Lily (lilac dress, bow) ok; Teacher Kim (green cardigan, low ponytail) ok. Only 7 people are drawn. The rightmost child has Nan's two buns with red bands but wears a green T-shirt, brown shorts and sandals (Pat's clothes). So Pat and Nan are merged into one changed character; one of the two is missing. Small mark: a dog (Pip) hides under the red platform at the bottom left and is partly cut; Pip has dark ears, not the cast look."
+    },
+    {
+      "id": "l2-w13-story-page-i-can-clap",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-clap-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Lily (1). Action: clapping (note only). Seen: girl with dark bob and straight fringe, lilac bow, lilac dress with white collar, white socks, pink shoes, both hands together in front of the chest. Matches cast."
+    },
+    {
+      "id": "l2-w13-story-page-a-pot-for-pip",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-a-pot-for-pip-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Pip (1), a pot (1). Seen: Tom crouching with both hands on one terracotta flower pot, turned upside down; Pip sitting beside it with red collar and gold tag. Matches cast. Small mark: the pot is upside down but still reads as the same flower pot."
+    },
+    {
+      "id": "l2-w13-story-page-hop-on-top-pip",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-hop-on-top-pip-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Pip (1). Action: hopping, pointing (note only). Seen: Tom pointing at an upside-down flower pot; Pip sitting next to it looking at it. Both match cast. Small mark: three red spinning tops on the grass, not named."
+    },
+    {
+      "id": "l2-w13-story-page-he-is-on-top",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-he-is-on-top-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip, he (1), the top of the pot (1). Seen: Pip standing on top of an upside-down terracotta pot, red collar and gold tag, fluffy tail. Pip matches cast; he is clearly on top. Small mark: three spinning tops on the grass."
+    },
+    {
+      "id": "l2-w13-story-page-i-like-it",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-like-it-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Pip (1). Seen: Tom clapping his hands and smiling; Pip standing on the upside-down pot. Both match cast. Small mark: three spinning tops."
+    },
+    {
+      "id": "l2-w13-story-page-mom-is-on-a-mat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-mom-is-on-a-mat-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Mom (1), Pip (1), a mat (1). Seen: Mom (wavy dark-brown hair, coral blouse, jeans, white sneakers) lying on one round blue mat with a red book on her stomach; Pip sitting on a small pot at the right. All drawn and clear; the round blue mat reads as a mat. Small mark: spinning tops."
+    },
+    {
+      "id": "l2-w13-cover-hop-on-top",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-cover-hop-on-top-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover; title only. mustShow: tom, pip. Seen: Tom holding an upright terracotta pot, and Pip sitting next to him. Both match cast and show."
+    },
+    {
+      "id": "l2-w13-story-page-pip-is-on-mom",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-pip-is-on-mom-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), Mom (1), Tom (1). Seen: Pip sitting on Mom's stomach, licking her face; Mom lying on a blue mat, laughing; Tom kneeling at the right, laughing. All match cast and are visible."
+    },
+    {
+      "id": "l2-w13-check-row-pot",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-check-row-pot-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: a pot (1). Seen: one pale-blue round pot with a rim, empty, on white. Reads as a pot."
+    },
+    {
+      "id": "l2-w13-check-row-mop",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-check-row-mop-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: a mop (1). Seen: a mop with a wooden handle and a gray strand head. Reads as a mop."
+    },
+    {
+      "id": "l2-w13-check-row-dot",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-check-row-dot-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole picture",
+      "notes": "Question page: no. Item: a dot (1). Seen: one large yellow 3D sphere with soft shading, like a ball. At book size a child reads it as a ball, not as a dot (a flat round spot)."
+    },
+    {
+      "id": "l2-w13-story-page-do-not-hop-on-mom",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-do-not-hop-on-mom-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Pip (1), Mom (1). Action: hopping (note only). Seen: Tom with open hands; Pip standing on an upright pot; Mom standing with a blue mat under her feet. All match cast and are visible. Small mark: spinning tops."
+    },
+    {
+      "id": "l2-w13-card-walk",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-walk-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: a boy walking. Seen: boy (Ben look) in mid-step with legs apart and arms swinging. Reads as walking."
+    },
+    {
+      "id": "l2-w13-card-run",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-run-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: a boy running. Seen: boy (Sam look) leaning forward, fists up, legs in a run. Reads as running."
+    },
+    {
+      "id": "l2-w13-d4-prompt-jump",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-d4-prompt-jump-color-t1.png",
+      "verdict": "fail",
+      "defectClass": "text-in-picture",
+      "where": "the whole picture: the letters ONE in 3D yellow",
+      "notes": "Question page: no. Item: a jump (action). Seen: the 3D yellow letters \"ONE\". No person jumps. The letters are text in the picture."
+    },
+    {
+      "id": "l2-w13-card-kick",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-kick-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: a kick. Seen: boy (Pat look) with one leg swung toward a red ball. Reads as kicking."
+    },
+    {
+      "id": "l2-w13-card-throw",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-throw-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: a throw. Seen: girl (Lily look) with an arm stretched out after a red ball flying away. Reads as throwing."
+    },
+    {
+      "id": "l2-w13-card-clap",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-clap-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: a clap. Seen: girl (Mia look) with both hands together in front of the chest, smiling. Reads as clapping."
+    },
+    {
+      "id": "l2-w13-card-catch",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-catch-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: a catch. Seen: boy (Tom look) holding a red ball in both hands. Reads as catching."
+    }
+  ],
+  "summary": {
+    "files": 27,
+    "pass": 24,
+    "fail": 3
+  }
+}
