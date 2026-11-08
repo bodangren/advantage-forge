@@ -1,40 +1,5 @@
 [
   {
-    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-color-t2.png",
-    "id": "l2-w10-story-page-put-on-your-hat-pip",
-    "kind": "color",
-    "pageText": "Put on your hat, Pip!",
-    "use": "story-page",
-    "mustShow": [
-      "pip",
-      "sam",
-      "may",
-      "ben",
-      "mia",
-      "pat",
-      "lily",
-      "nan",
-      "teacher-kim"
-    ]
-  },
-  {
-    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-cover-look-a-bus-color-t2.png",
-    "id": "l2-w15-cover-look-a-bus",
-    "kind": "color",
-    "pageText": "Look, a Bus!",
-    "use": "cover",
-    "mustShow": [
-      "sam",
-      "may",
-      "ben",
-      "mia",
-      "pat",
-      "lily",
-      "nan",
-      "teacher-kim"
-    ]
-  },
-  {
     "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-here-color-t2.png",
     "id": "l2-w11-story-page-here",
     "kind": "color",
