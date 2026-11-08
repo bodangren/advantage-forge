@@ -336,7 +336,7 @@ Spec edits in commit b9ed6043 (the orchestrator brief lists the reasons):
     pass the gate and name the 23 in the PM report. No default; the round stops.
 - No Step W: the report cannot claim rows done or folders that do not exist.
 
-```MEASURE_AGENT_RESULT
+MEASURE_AGENT_RESULT
 role: measure-jr-green
 status: blocked
 track: asset_storytime_l2_unit2_pictures_20261108
@@ -348,7 +348,6 @@ plan_updates: Task 5 [x] (d7f5672d); Task 6 [x] (d34d9e91); Task 7 stays [~] wit
 known_failures: 23 of 181 approved line prints fail the v1 print gate (19 below 12 px, 4 edge frame); l2-w10-story-page-put-on-your-hat-pip has no passing line
 handoff: Product decision for the PM. `deliverMuseUnit2` refuses 23 of the 181 approved rows at the printed size: 19 have line prints of 8 to 11 px against the 12 px minimum, and 4 fail the white edge frame. Three of the 23 pass with the despeckled print of the same try, but that file is not the file the judge saw; 20 have no passing variant. Question: which option does the PM choose? A. Accept the thin lines with a recorded writer exception (delivery 228 rows). B. Accept the 3 despeckled prints plus an exception for the 20 (delivery 228 rows). C. Regenerate the 23 lines in a later paid round (about 0.23 USD plus judge calls, and a try-cap exception). D. Deliver the 205 rows that pass the gate and name the 23 in pm-report.md with their passing try and the gate error. No default; the round stops. Book spend unchanged at 4.06 USD of 18.33 USD. Authoritative files: measure/runs/asset_storytime_l2_unit2_pictures_20261108/delivery-gate.txt (per-row errors) and the writer src/storytime/muse-delivery-u2.ts.
 END_MEASURE_AGENT_RESULT
-```
 
 ## Delivery round (Green · P2 T7 · storytime_l2_unit2_pictures · r12, 0 USD)
 
@@ -439,16 +438,15 @@ END_MEASURE_AGENT_RESULT
   evidence, not acceptance. Task 8 marked with the report commit ed40d429. The Phase 2 gate stays
   `[b] ... deferred:checker`.
 
-```MEASURE_AGENT_RESULT
+MEASURE_AGENT_RESULT
 role: measure-jr-green
 status: completed
 track: asset_storytime_l2_unit2_pictures_20261108
 phase: Phase 2: Book pictures (paid)
-commits: 9ba5f0e1 a1b63217 01b97374 ff245b58 9718baa5 a24f3558 f7138831 bd741797 b9ed6043 179f438a 4ae0b1dc b42008b3 bdbf5bfc b9a951be 0e1f8452 d7f5672d d187be3c 1f3a76d7 3ac1b6a6 5be133fe b1420a85 d34d9e91 fbd71357 624dd5e1 6e0e3f8c 2ed04885 4fa293e3 801a6731 1ab8216f 307d75f6 d0a1ebde a6052181 21abcead ed40d429, and the Phase 2 evidence commit (HEAD)
+commits: 9ba5f0e12c506cb744f066c94885bc5ee3a6e42e, a1b63217c01e82ce283aef482a4d1713b4fa87c3, 01b97374434172bedfee2e45dde3949d0dd2bcfd, ff245b586505483bff35410a921081fd0a064a89, 9718baa517d43af2be059e0ffac32e15b9c1f9df, a24f35588019f403c57a5c00d56cebca21498095, f7138831632a51a28294d5ea8c839577c02269b8, bd741797c31f028135a613b689baf52794b244cd, b9ed60435ef1107abaac59145c7eb4f6109aa371, 179f438a70c9a49aeed3a4c91520a713355379ef, 4ae0b1dc33af27dbc17331dfe593c28050fc53d6, b42008b3959b93119bc83032e836a7c61da4ab6d, bdbf5bfcd3430d35cdd67ceb8fe51da0d1ad8952, b9a951be729fad48e5c9790036e0ac6a9f48d151, 0e1f8452b3f6d93eedfacd80324418a3733fef07, d7f5672df659ef75fd4652aa05c318b271d2eabf, d187be3cac04a808de26084d1b06c5f0aa2319a1, 1f3a76d7182e048c0a5882ec4ed4fef9aca8f9ee, 3ac1b6a618dd0b8a955fb4c65f7a0f7c2f429698, 5be133fed766ea2a8fe4a59d08f8bbf2a325ce67, b1420a8573e0092f5d612956750c42146663ab0a, d34d9e91c94cdaa292084da79b12bc7ab5254ca7, fbd713579c7ae80da2d3d73074e7c6e9e4a77284, 624dd5e1f85721eda8d7c21815a1322c9d27f8b1, 6e0e3f8c245a55faa3493041041823ffca203fb3, 2ed04885305e0b6515cbfaa7d5e592a7dcc10966, 4fa293e3167dd3550482551cd211bea49da6ce6b, 801a67316a27414f167129ac0e0617a3fd44d879, 1ab8216fe72afb93a44919aa5639d3ab558e40a3, 307d75f63753a277e4b620c221a18ccafab85e90, d0a1ebde63a806f4a3dd16be3ed838806d9ee8e0, a6052181b9ef2b7a4105838a61d5da15d0062e1b, 21abcead5fdb3b96fc4561f65177989f557248a2, ed40d429f1cd05fb1a88723eef3cc420fb9e99a8, 64405a53a32d49d37d6701ebdf528c3867a6930f
 tests_run: deliver-u2.mts (220 rows, 440 PNG, 0 file problems); sha256sum -c MANIFEST.txt (468 OK, 0 FAILED); print gate on 26 regenerated lines; judge pixel checks on u2-r6 and u2-r7 batches (distance 0); hard-link inode check
 files_changed: approvals-u2.json; delivery-record.txt; delivery-gate.txt; despeckle-record.txt; line-gate-r6.txt; line-gate-r7.txt; spend-record.txt; judge-u2-r5-line-t3.json, -r6-line-t2.json, -r6-line-t3.json, -r7-line-t3.json, -r7-second.json; 26 unit 2 spec linePrompt files; plan.md; pm-report.md; maker-p2.log; delivery folder and hand-off folder (not in git)
 plan_updates: Tasks 3, 4, 5, 6, 7, and 8 are [x] with evidence; the Phase 2 gate stays [b] deferred:checker
 known_failures: 9 of 229 rows have no delivery entry and no tries left. l2-w10-story-page-put-on-your-hat-pip: 9 children for 7 named. l2-w09-story-page-tom-can-see-the-mop: line try 2 is 11 px, line try 3 fails the judge (glasses). l2-w09-card-rice: line try 2 is 10 px, line try 3 fails the judge (beans). l2-w12-card-hippo 9 px, l2-w12-card-ruler 8 px, l2-w13-card-clap 11 px, l2-w13-card-throw 11 px, l2-w14-card-cold 9 px, l2-w14-card-windy 9 px: judge pass, print gate fail
 handoff: Phase 2 is ready for the checker (measure-phase-acceptance) at the Phase 2 evidence commit. Check the costs totals against the spend record (book 4.32 USD of 18.33), the calibration record, the judge files, `out/storytime/l2/unit2/delivery-muse-v1/manifest.json`, and `sha256sum -c` in `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures/` (468 OK, 0 FAILED). The 9 rows out are named in `pm-report.md` with the PM question and default (d). Do not treat the delivery as acceptance.
 END_MEASURE_AGENT_RESULT
-```
