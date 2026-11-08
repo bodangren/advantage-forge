@@ -1,0 +1,68 @@
+# Acceptance log, Phase 1, round r3 re-check (light lane checker)
+
+Track: asset_storytime_l2_unit2_tooling_20261108
+Role: measure-phase-acceptance (Sonnet 5.5)
+phase_base_sha: 26fee64e925df82e53633b39cb8a15169318c0d0
+role_base_sha and audited_head_sha: a0b56846f5c616911d6d95329f9a412c5b3bc1d1 (git rev-parse HEAD matched)
+Earlier result: acceptance-p1-fa05dfe.json/.log (kept).
+
+## Verdict: PASS (0 Blockers; 1 Major for a PM decision)
+
+- F1 closed. The earlier-row reuse of l2-w14-check-row-fan reads the id of the w10 fan spec, finds the w10 fan
+  approval entry, and copies its approved prints. A missing entry stops the write with both ids.
+- F3 closed. cliGuardOptions removes u2CapUsd before runGuards; both runGuards calls of the CLI use it.
+- F4 closed. A unit 2 row id with no row in rows.json and in the picture list throws; an element id keeps [id].
+- F5 closed. The report guard line holds the phrase "refuses all unit 2 calls".
+- F2 (GREEN) is evidence, not a finding: heavy-run.sh was denied again. The orchestrator jr-green gate passed
+  at a0b56846 at 14:40 ICT ("PASS: jr-green gate passed", same GREEN command). The maker log r3 reports 209
+  tests and 0 tsc errors in the storytime paths.
+- F6 [Major] NEW, PM decision needed. With the real unit 1 files, the reuse source of l2-w10-check-row-ten and
+  l2-w11-check-row-ten (unit 1 w06 ten-line-v2.png) has line width 10 px; the writer minimum is 12 px. The
+  writer stops the whole write and names both rows (as D3 requires). Options for the PM: accept 10 px (writer
+  exception), regenerate the ten line print in the paid run, or drop the reuse for the two ten rows. The other
+  46 reuse rows pass.
+
+## Probe results
+
+- acceptance-probe-guard.mjs: 168 rows, 0 failures. Every u2 call refused with code 3 and the exact message;
+  mixed calls refused; 17 mutated paths invalid; unit 1 = restart; card = card.
+- acceptance-probe-guard.mjs --cli with HOME = empty fakehome/: 10 of 10 exit 3 with the exact message,
+  including --u2CapUsd 99 (before and after the spec), --u2CapUsd 0.5 --tries 2, and a bare --u2CapUsd.
+- acceptance-probe-cliopts.mjs: cliGuardOptions({u2CapUsd:'99',tries:'2',from:'1'}) has keys tries,from; no
+  u2CapUsd key. U2_RUN.capUsd is null.
+- acceptance-probe-earlier-row.mts (real list and pin, real rows.json, real unit 1 files, generated w10 fan
+  prints): case A2 (ten rows without reuse) writes 47 jobs, w14 fan files equal the w10 fan prints,
+  manifest.json present: PASS. Case B (no w10 fan entry): stops with both ids, nothing written: PASS. Case A
+  (real rows.json unchanged) fails on the two ten rows only: F6.
+
+## Regression
+
+- U2_RUN.capUsd null. CARD_RUN and CARD_LINE_RETRY sha256 equal between 26fee64e and HEAD.
+- Hand-off folder: lines not ending in ': OK' = 0; 257 OK; 257 files besides MANIFEST.txt.
+- costs.tsv hashes equal the prep costs-after.txt hash lines (diff empty).
+- No PNG or JPG in git since 26fee64e; no unit 1 doc, asset, out/fireball, or Workbooks path changed.
+- FR-8: no Go, no cap approval, no picture acceptance claim. No cap value written.
+- Plan: Tasks 0 to 5 [x] with SHAs; gate [b] deferred:checker (r3 added a note line only).
+- No Muse or OpenRouter call; no API key set or read; no commit.
+
+## Files (measure/runs/asset_storytime_l2_unit2_tooling_20261108/)
+
+- acceptance-p1-a0b5684.json, acceptance-p1-a0b5684.log
+- acceptance-probe-guard.mjs, acceptance-probe-reuse.mjs, acceptance-probe-reuse-files.mjs (earlier run)
+- acceptance-probe-cliopts.mjs, acceptance-probe-earlier-row.mts (this run)
+- fakehome/ (empty HOME for the CLI probe)
+- probe-earlier-row/ (generated fixtures and probe delivery folders, no key, no network)
+
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: asset_storytime_l2_unit2_tooling_20261108
+phase: Phase 1: Guard, judge option, delivery writer, and line sentence
+commits: none
+tests_run: guard probe 168 rows 0 failures; CLI probe 10 of 10 refused with fakehome; cliopts probe ok; earlier-row probe A2 and B pass (case A fails on two ten rows, F6); sha256sum -c MANIFEST.txt 0 non-OK, 257 OK; costs hashes equal; GREEN not run by the checker (heavy-run.sh denied; orchestrator jr-green gate PASS at a0b56846, maker 209 tests)
+files_changed: measure/runs/asset_storytime_l2_unit2_tooling_20261108/ (acceptance-p1-a0b5684.json, acceptance-p1-a0b5684.log, acceptance-probe-cliopts.mjs, acceptance-probe-earlier-row.mts, probe-earlier-row/)
+plan_updates: none
+known_failures: none blocking. F6 [Major]: l2-w10-check-row-ten and l2-w11-check-row-ten reuse sources have 10 px lines (minimum 12 px); the full delivery stops until the PM decides.
+handoff: Phase 1 acceptance passes at a0b56846f5c616911d6d95329f9a412c5b3bc1d1. Send F6 to the PM through the orchestrator before the paid run delivery (accept 10 px with a writer exception, regenerate ten line, or drop the two ten reuses). Then closeout.
+dispositions: none
+END_MEASURE_AGENT_RESULT

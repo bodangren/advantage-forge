@@ -1,6 +1,6 @@
 # Storytime Level 2 unit 2 run tooling (unpaid)
 
-Status: new (2026-11-08). The unpaid tools for the unit 2 paid run wait for the maker.
+Status: delivered (2026-11-08). The unit 2 guard entry (cap empty), the judge option, the delivery writer, and the line sentences are in place; the paid run waits for Daniel's Go and the PM cap write.
 
 The track builds the unit 2 guard entry (cap empty), the judge batch unit 2 option, the unit 2
 delivery writer, and the fix to the animal line-art sentence. It spends 0 USD. The
@@ -71,14 +71,24 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   `measure/runs/asset_storytime_l2_unit2_tooling_20261108/pm-report.md`: the first line is
   `Status: done.`; then the hand-off MANIFEST count; then the guard state
   `cap empty, refuses all unit 2 calls`; then `Facts changed:`.
-- [b] Phase 1 gate deferred:checker: phase acceptance by the checker (`measure-phase-acceptance`)
-  at an immutable HEAD. The checker runs the GREEN test command and the typecheck. It probes the
-  guard: every `u2` call is refused with an empty cap, and the unit 1 and card calls are
-  unchanged. It runs `sha256sum -c MANIFEST.txt`, compares the `costs.tsv` hashes, and greps FR-8.
+- [x] Phase 1 gate (a0b56846): phase acceptance by the checker passed at a0b56846.
+  - Evidence: `measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-p1-fa05dfe.json`
+    (fail; a server incident stopped its first run at about 14:18 and it ran again) and
+    `measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-p1-a0b5684.json` (pass).
+  - Checker findings and orchestrator dispositions: F1 to F5 of acceptance-p1-fa05dfe FIX in round
+    r3 (258c1b93); F2 GREEN: the checker shell could not run heavy-run.sh, so the orchestrator
+    jr-green role gate ran the GREEN command at a0b56846 with PASS (14:40 ICT). F6 [Major] of
+    acceptance-p1-a0b5684 (the unit 1 reuse source l2-w06-check-row-ten-line-v2.png has 10 px lines,
+    below 12 px; the writer stops on l2-w10-check-row-ten and l2-w11-check-row-ten): ESCALATE to the
+    PM with the default: l2-w10-check-row-ten becomes a new row of the paid run and
+    l2-w11-check-row-ten reuses it (estimate 182 x 0.080 + 10 x 0.01 = 14.66 USD); the rows.json
+    change is the first task of the paid-run track.
 
 ## Track-level roles
 
-- [b] Closeout deferred:closeout: archive the track, update the registry, and run the doctor.
+- [x] Closeout (a0b56846): archive the track, update the registry, and run the doctor. Archived
+  2026-11-08; the closeout commit follows a0b56846. The generator does not run because
+  measure/generated/ holds foreign changes.
 
 The light lane has no final acceptance role. Closeout commits `measure/runs/<track>/` with the
 archive.

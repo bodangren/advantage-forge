@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "track": "asset_storytime_l2_unit2_tooling_20261108",
+  "archived_at": "2026-11-08T07:58:00Z",
+  "track_base_sha": "f11c0c24263f7b6995a7970d7bc3242ac49f26a9",
+  "track_final_sha": "a0b56846f5c616911d6d95329f9a412c5b3bc1d1",
+  "phase_acceptance_results": [
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-p1-a0b5684.json"
+  ],
+  "completed_phases": [
+    {
+      "id": "Phase 1",
+      "title": "Guard, judge option, delivery writer, and line sentence",
+      "checkpoint": "a0b56846"
+    }
+  ],
+  "final_acceptance": "not run: the PM put the whole track on the light lane on 2026-11-03 (one maker and one checker). The light-lane role set of PM 2026-11-03 gives no final acceptance. The plan holds no final acceptance task, and the closeout item is [x] with a commit SHA.",
+  "gates": {
+    "PROJECT_LINT": "pass — bash measure/doctor.sh gives exit 1 with 14 error lines, and none names asset_storytime_l2_unit2_tooling_20261108: grep for the track id in the doctor output gives exit 1 with 0 lines. The 14 lines name 5 other tracks with started tasks, 5 missing registry links of other tracks, and 3 stale generated facts. The archive move removes the last two lines about this track.",
+    "PROJECT_CHECKS": "pass — the closeout changed no src/, scripts/, or tests/ file. git diff --name-only a0b56846..HEAD holds measure/ paths only.",
+    "PROJECT_TESTS": "pass — the closeout reran the GREEN command in real mode through heavy-run.sh at HEAVY_MIN_AVAIL_MB=1500 at 14:56 ICT: 13 files passed, 209 tests passed, exit 0, duration 58.94 s. The run used the tree after the archive move, and the closeout changed no test or script file.",
+    "SECRET_SCAN": "pass — grep -rnE 'sk-[A-Za-z0-9]{20}|Bearer [A-Za-z0-9]{20}|OPENROUTER_API_KEY=' measure/runs/asset_storytime_l2_unit2_tooling_20261108 gives exit 1 with no hit. find for PNG and JPG files in the same folder gives 0 files.",
+    "source": "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-p1-a0b5684.json"
+  },
+  "antipatterns_clean": [
+    "A2 consent-blind publish gate — the registry entry, the metadata, the plan, and this manifest name model evidence only; no text says that Daniel, the PM, or Workbooks gave the Go, approved a cap, or accepted a picture",
+    "A3 digit-only count — every gate reads a labeled value (13 test files and 209 tests passed, 257 OK checksums, 168 guard probe rows and 10 CLI probe cases refused, 47 unit 1 reuse pairs and 1 earlier-row reuse, 0 USD spend, 0 PNG and JPG files)",
+    "A4 vacuous pass — the phase checker ran the guard probe, the CLI probe, the earlier-row probe, the MANIFEST check, the costs comparison, the frozen-path diff, and the test command; each pass quotes its command and a label, and the closeout reran the test command in real mode",
+    "A5 false claim — the plan claims the counts above; the checker measured each claim at a0b56846 and the values agree. The plan Status line says 'delivered' for the unpaid tools only, and it names the paid run as waiting for Daniel's Go and the PM cap write",
+    "A6 registry overstatement — the archived registry entry says 'delivered' for the unpaid tools and names the paid run as waiting; it names no acceptance, no Go, and no cap value",
+    "A7 over-broad filter — the secret scan quotes its scope and its exit code; the closeout adds no filter and changes no contract test",
+    "A9 archived track paths — grep for asset_storytime_l2_unit2_tooling_20261108 in tests/, scripts/, src/, and docs/ gives no hit, so no test reads the track path and the archive move breaks no test",
+    "A10 generated-facts drift — the generator does not run because measure/generated holds foreign changes; the closeout commit holds no generated fact",
+    "A11 doc-to-code drift — the specification, the pm-report, the MANIFEST, the plan, and the metadata agree; the checker compares the counts and the checksums at a0b56846"
+  ],
+  "antipatterns_known_limitations": [
+    "14 structural doctor errors of other tracks and of the foreign generated facts; the doctor adds no error for this track",
+    "F6 [Major] of acceptance-p1-a0b5684 stays open for the PM: the unit 1 reuse source l2-w06-check-row-ten-line-v2.png has 10 px lines, below the 12 px minimum, so the writer stops on l2-w10-check-row-ten and l2-w11-check-row-ten. The default is that l2-w10-check-row-ten becomes a new row of the paid run and l2-w11-check-row-ten reuses it",
+    "The GREEN command passed 209 tests, but the typecheck keeps 38 known old errors in old asset and games files, with 0 errors in src/storytime, scripts/storytime-*, and tests/storytime-*",
+    "measure/generated holds foreign uncommitted changes, so the generator did not run and no generated fact is committed"
+  ],
+  "deferred": [
+    "Human gate: Daniel's Go on the Workbooks paid media list opens the paid run for the unit 2 pictures; the paid run waits for that Go and for the PM cap write in U2_RUN.capUsd (deferred:Daniel)",
+    "F6 [Major] of acceptance-p1-a0b5684: the PM must choose between the default (a new paid row for l2-w10-check-row-ten and a reuse for l2-w11-check-row-ten), a writer exception for 10 px, and a drop of the reuse for the two ten rows (deferred:PM)",
+    "Final acceptance did not run under the PM light lane (deferred:PM)"
+  ],
+  "deferred_note": "No plan task stays open. Every task line is [x] with a commit SHA on its first line, and no [b], [~], or [ ] task line remains.",
+  "tech_debt": [
+    "TD-29 — RB-P4-1 and PA4-N1 — coverCalmTopReport in src/storytime/book-pictures.ts does not confine cover-calm-top --print output paths, resolve real paths, or require a regular file (Low, Open); this track made no render and did not use that path",
+    "TD-30 — RB12-01 and RB12-03, PA3-N3 — a parent symlink under out/ can redirect mkdir, and lstat with mkdir is not atomic (Low, Open); this track made no render and wrote under out/ not at all"
+  ],
+  "tech_debt_note": "No new debt entry is warranted. The track made 0 renders and 0 paid calls. TD-29 and TD-30 stay Open. measure/tech-debt.md is unchanged by this closeout.",
+  "lessons_learned": "No lessons-learned entry is warranted. The round history (checker findings F1 to F6, the F1-to-F5 fix in r3, and the server incident) is recorded in the plan and the deviation notes. measure/lessons-learned.md is unchanged by this closeout.",
+  "generated_facts": "not committed: measure/generated holds foreign uncommitted changes; the registry entry in measure/tracks.md is staged through a blob so the foreign Contents hunk stays out",
+  "artifact_cleanup": "the checker probe output probe-earlier-row/ (96 PNG files, 44 MB) moved out of the repository to /tmp/opencode/u2-tooling-probe-earlier-row/; the empty fakehome/ folder is removed. The run folder holds JSON, log, txt, md, mjs, and mts files and no PNG or JPG file (find count 0). The phase acceptance results and their logs stay in the folder",
+  "evidence_classes": {
+    "person_reviewed": "none recorded for the unit 2 tooling; the paid run waits for Daniel's Go",
+    "model_evidence_not_acceptance": "The phase checker result acceptance-p1-a0b5684.json carries a model pass at a0b56846 over the guard probe, the CLI probe, the earlier-row probe, the MANIFEST, and the costs files; the orchestrator jr-green role gate ran the GREEN command with PASS. This is model evidence, not acceptance",
+    "workbooks_acceptance": "none recorded"
+  }
+}

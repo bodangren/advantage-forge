@@ -135,9 +135,6 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Chibi Sprouts, release 1 art**
   *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
 
-- [~] **Track: Storytime Level 2 unit 2 run tooling (unpaid)**
-  *Link: [./tracks/asset_storytime_l2_unit2_tooling_20261108/](./tracks/asset_storytime_l2_unit2_tooling_20261108/)*
-
 ## Games
 
 - [x] **Track: Player avatar system: base, equipment fit, pack, composer**
@@ -349,6 +346,10 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
   *Link: [./tracks/riven_fx_geometry_20261009/](./tracks/riven_fx_geometry_20261009/)*
 
 ## Archived Tracks
+
+- [x] Storytime Level 2 unit 2 run tooling (unpaid), completed 2026-11-08; Storytime Level 2 unit 2 run tooling (unpaid): the unit 2 guard entry with an empty cap, the judge batch unit 2 option, the unit 2 delivery writer, and the fix to the animal line-art sentence; spend 0 USD
+  *Link: [./archive/asset_storytime_l2_unit2_tooling_20261108/](./archive/asset_storytime_l2_unit2_tooling_20261108/)*
+  *Storytime Level 2 unit 2 run tooling (unpaid): the unit 2 guard entry with an empty cap, the judge batch unit 2 option, the unit 2 delivery writer, and the fix to the animal line-art sentence; spend 0 USD*
 
 - [x] Storytime Level 2 unit 2 picture prep (unpaid), completed 2026-11-08; one Muse spec for each of the 229 unit 2 rows (unit 1 look, hair and clothes only), the element map, 10 new element sheet specs with 13 reused Forge element views and 24 reused unit 1 element files, and a hand-off folder with a prompt list, specs, and a MANIFEST with checksums; spend 0 USD
   *Link: [./archive/asset_storytime_l2_unit2_prep_20261108/](./archive/asset_storytime_l2_unit2_prep_20261108/)*

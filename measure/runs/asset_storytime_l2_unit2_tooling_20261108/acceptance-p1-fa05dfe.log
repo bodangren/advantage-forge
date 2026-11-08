@@ -1,0 +1,79 @@
+# Acceptance log, Phase 1, storytime_l2_unit2_tooling (light lane checker)
+
+Track: asset_storytime_l2_unit2_tooling_20261108
+Role: measure-phase-acceptance (Sonnet 5.5, route of `ra-quota pick acceptance --not-family deepseek`)
+phase_base_sha: 26fee64e925df82e53633b39cb8a15169318c0d0
+role_base_sha and audited_head_sha: fa05dfeb4deb9680d153fb0946fa9c37d43d0909 (git rev-parse HEAD matched at the start and after the server restart)
+
+## Verdict: FAIL (1 Blocker)
+
+- F1 [Blocker] Delivery writer: l2-w14-check-row-fan (reuse kind unit2-earlier-row, source is the spec
+  docs/storytime/l2-unit2/w10/muse/l2-w10-check-row-fan.json). lineTwinOf throws, so deliverMuseUnit2
+  stops on the full list. D3 and FR-5 name 48 reuse rows; the writer handles 47. No test covers the row.
+  pm-report.md says the writer copies the 48 reuse files: false for 1 row. The failure is safe (no write).
+- F2 [Major] The checker could not run the GREEN command or the typecheck: heavy-run.sh was denied by the
+  shell tool for every call. No bypass of the heavy lock. Rerun at the new HEAD.
+- F3 [Nit] opts.u2CapUsd is reachable as a CLI own key; safe only because CLI values are strings.
+- F4 [Nit] judge --unit2 mustShow falls back to [id] for an unknown id.
+- F5 [Nit] pm-report.md lacks the exact phrase `cap empty, refuses all unit 2 calls`.
+
+## Guard probe (the spend safety check)
+
+- U2_RUN.capUsd is null in the committed file. No cap value was written anywhere.
+- acceptance-probe-guard.mjs: 168 rows, 0 failures (runGuards, no network).
+  Every u2 call is refused with code 3 and the exact message: color and line; one folder, three week
+  folders, an element folder, a week plus its element folder; opts none, from, tries, concurrency, and
+  u2CapUsd as string, null, 0, -1, 'abc', NaN, undefined. A u2 spec with the unit 1 root is also refused.
+- Mixed calls (u2+unit1, unit1+u2, u2+card) are refused with run=mixed. u2 plus an invalid folder is refused.
+- classifyOutDir: 8 weeks x muse and muse/elements = u2; 17 mutated or escaping paths = invalid;
+  unit 1 = restart; card = card; unit 1 cards/muse/elements = invalid.
+- CLI probe with HOME set to the empty fakehome/ folder (a passed guard would stop at readKey, which reads
+  ~/Desktop/Workbooks/dashboard/.env.local): 10 of 10 cases exit 3 with the exact message, including
+  `--u2CapUsd 99` (before and after the spec), `--u2CapUsd 0.5 --tries 2`, a bare `--u2CapUsd`, `--from 1
+  --tries 3`, `--concurrency 1`, three week specs, and an element spec. The refusal runs before readKey.
+  The maker test U2G10 uses a temp HOME and asserts no 'no key' output (confirmed).
+- CARD_RUN and CARD_LINE_RETRY blocks are byte equal to 26fee64e. Unit 1 and card runs keep their labels.
+- No Muse, OpenRouter, or other paid call ran. No API key was set or read.
+
+## Other checks
+
+- Judge option (D2): code read, no wrong-file defect; one Nit (F4).
+- Delivery writer (D3): every check runs before any write; a missing reuse source names the row id; pins,
+  size, srgb, 8-bit, 3 channels, no alpha, and 0/255 line twin are checked. The 47 unit1 reuse pairs are
+  real files: color 1500x1500 RGB, line 1500x1500 one channel. F1 is the one gap.
+- Line sentences (D4): duck, doll, fish prompts hold no 'ear' (every week copy); elephant names the trunk;
+  hen has no unit 2 class C row, its sentence is tested through the source file.
+- Hand-off folder: 257 ': OK' lines, 257 files besides MANIFEST.txt. A direct non-OK count was denied by the
+  shell tool; the maker reports 0 FAILED.
+- Zero spend: costs.tsv hashes equal the prep costs-after.txt hash lines and the track costs-after.txt
+  (apart from its '#' header line).
+- No PNG or JPG in git since 26fee64e. No change to the judge kit, unit 1 docs, assets, out/fireball, or
+  Workbooks. A3, A4, A6, A7 not applicable (no contract test, filter, or registry change). A5: see F1.
+- Plan: Tasks 0 to 5 [x] with SHAs; gate [b] deferred:checker. pm-report.md: 'Status: done.' first line and
+  'Facts changed:' present. FR-8: no Go, no cap approval, no picture acceptance claim.
+
+## Files written by this run (all in measure/runs/asset_storytime_l2_unit2_tooling_20261108/)
+
+- acceptance-p1-fa05dfe.json
+- acceptance-p1-fa05dfe.log
+- acceptance-probe-guard.mjs
+- acceptance-probe-reuse.mjs
+- acceptance-probe-reuse-files.mjs
+- fakehome/ (empty folder, used as HOME for the CLI probe)
+
+The CLI probe made empty folders out/storytime/l2/unit2/w*/muse by loadSpec (mkdirSync). They hold no
+costs.tsv. No code, plan, spec, or hand-off file was edited. No commit was made.
+
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: partial
+track: asset_storytime_l2_unit2_tooling_20261108
+phase: Phase 1: Guard, judge option, delivery writer, and line sentence
+commits: none
+tests_run: guard probe 168 rows 0 failures; CLI probe 10 of 10 refused; reuse file probe 47 pairs ok; sha256sum -c MANIFEST.txt 257 OK; costs hashes equal; GREEN command and typecheck not run by the checker (heavy-run.sh denied)
+files_changed: measure/runs/asset_storytime_l2_unit2_tooling_20261108/ (acceptance-p1-fa05dfe.json, acceptance-p1-fa05dfe.log, three acceptance-probe-*.mjs, fakehome/)
+plan_updates: none
+known_failures: F1 [Blocker] deliverMuseUnit2 cannot deliver the reuse row l2-w14-check-row-fan; F2 [Major] GREEN not run by the checker
+handoff: Route F1 to the maker (jr-green): handle the unit2-earlier-row reuse (the w10 fan prints), add a test, fix the report text, then rerun the GREEN command and typecheck and rerun this acceptance at the new HEAD. Optional Nits F3 to F5.
+dispositions: none
+END_MEASURE_AGENT_RESULT

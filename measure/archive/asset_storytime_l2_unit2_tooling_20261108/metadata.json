@@ -1,0 +1,27 @@
+{
+  "track_id": "asset_storytime_l2_unit2_tooling_20261108",
+  "type": "chore",
+  "status": "done",
+  "created_at": "2026-11-08T05:30:00Z",
+  "updated_at": "2026-11-08T07:45:28Z",
+  "completed": "2026-11-08",
+  "description": "Storytime Level 2 unit 2 run tooling (unpaid): the unit 2 guard entry with an empty cap, the judge batch unit 2 option, the unit 2 delivery writer, and the fix to the animal line-art sentence; spend 0 USD",
+  "estimated_tasks": 6,
+  "actual_tasks": 6,
+  "deviation_notes": "Created from the PM decision of 2026-11-08 about 12:15 ICT (unpaid fix round before Daniel's Go on the Workbooks paid media list, due 18:00). Follows the archived tracks asset_storytime_l2_unit2_prep_20261108 and asset_storytime_l2_card_line_retry_20261107, which are not dependency ids because they are archived. Whole track on the PM light lane of 2026-11-03: one maker (measure-jr-green), one checker (measure-phase-acceptance), then closeout; no spec review, strategy, Red, review, adversarial, or final acceptance role. The cap of the unit 2 guard stays empty; the PM writes it after the Go. The registry entry is staged through a blob because measure/tracks.md holds a foreign uncommitted hunk. The generator is not run because measure/generated/ holds foreign changes. Defaults are in the section Open questions answered by default of the specification. Light lane (PM 2026-11-03). Guard U2_RUN with an empty cap refuses every unit 2 call (checker probes: 168 guard rows and 10 CLI cases refused); judge option --unit2; delivery writer deliverMuseUnit2 with 47 unit 1 reuse pairs and 1 earlier-row reuse; animal line sentences; hand-off MANIFEST 257 OK. Checker F1 to F5 fixed in r3; F6 (10 px unit 1 ten line) escalated to the PM with a default. A server incident (13:57 to 14:2x ICT) cut one maker reply and one checker run; no duplicate commit. Spend 0 USD. Maker and closeout on deepseek/deepseek-flash#high, checker and track author on claude-sonnet-5-5#high (ra-quota pick).",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [
+    "scripts/storytime-muse-guards.mjs",
+    "scripts/storytime-judge-batch.mjs",
+    "src/storytime/muse-delivery.ts",
+    "scripts/storytime-u2-specs.mjs",
+    "docs/storytime/l2-unit2/",
+    "tests/storytime-u2-guards.test.ts",
+    "tests/storytime-u2-judge-batch.test.ts",
+    "tests/storytime-u2-delivery.test.ts",
+    "/home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep/MANIFEST.txt",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/"
+  ],
+  "dependencies": []
+}

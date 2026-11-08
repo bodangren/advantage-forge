@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "summary": "Guard, judge option, line sentences, hand-off, zero spend, and FR-8 pass. The delivery writer cannot deliver 1 of the 48 reuse rows (l2-w14-check-row-fan has a spec path as source), so D3 and FR-5 are not met. The checker could not run the GREEN command (heavy-run.sh denied); the orchestrator role gate and the maker report PASS.",
+  "blocking_findings": [
+    "F1 [Blocker] src/storytime/muse-delivery-u2.ts:lineTwinOf/deliverMuseUnit2 (D3, FR-5): the row l2-w14-check-row-fan has reuse kind unit2-earlier-row and source docs/storytime/l2-unit2/w10/muse/l2-w10-check-row-fan.json (a spec path, not a -v<n>.png print). lineTwinOf throws for it, so deliverMuseUnit2 stops with 'no -v<n>.png suffix' on the full unit 2 list, and no test covers this row. D3 requires all 48 reuse rows (47 unit1-delivery plus 1 unit2-earlier-row). pm-report.md says the writer copies 'the 48 reuse files', which is false for 1 row. Fix: deliver the fan row from the w10 fan print of the same run (or document and test a different rule), add a test for the unit2-earlier-row case, and correct the report text. The write fails safe (nothing written, no wrong file), so this is a missing behavior, not a data defect."
+  ],
+  "nonblocking_findings": [
+    "F2 [Major] acceptance criterion 1: the checker could not run the GREEN command or the typecheck. The shell tool denied every call to heavy-run.sh in this session (even an echo). The checker did not bypass the heavy lock. The orchestrator ran the jr-green role gate at fa05dfeb (PASS, 13 test files) and the maker log reports 205 tests and 38 old tsc errors with 0 new. The orchestrator must rerun GREEN and the typecheck at the new HEAD after the F1 fix.",
+    "F3 [Nit] scripts/storytime-muse-guards.mjs runGuards (opts.u2CapUsd): the test-only cap key is an own property of the CLI opts object, because storytime-muse.mjs parses any --name value into opts. The CLI cannot raise the cap only because CLI values are strings and the guard needs typeof number. Verified: --u2CapUsd 99, --u2CapUsd 0.5, and a bare --u2CapUsd are all refused with code 3. A later change to the option parser (for example Number coercion) would open the cap. Prefer a test-only path that the CLI cannot reach.",
+    "F4 [Nit] scripts/storytime-judge-batch.mjs buildBatch (unit2): when an id is in neither rows.json nor the picture list, mustShow becomes [id] and the judge looks for the id text. Throw an error instead of a silent fallback.",
+    "F5 [Nit] measure/runs/asset_storytime_l2_unit2_tooling_20261108/pm-report.md: the guard line does not carry the exact phrase 'cap empty, refuses all unit 2 calls' that spec acceptance criterion 6 names."
+  ],
+  "evidence": [
+    "HEAD check: git rev-parse HEAD = fa05dfeb4deb9680d153fb0946fa9c37d43d0909 (checked at start and after the restart); phase_base_sha 26fee64e925df82e53633b39cb8a15169318c0d0.",
+    "Guard probe measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-guard.mjs: 168 runGuards rows, 0 failures. Every u2 call (color and line; one folder, 3 week folders, an element folder, week plus element; opts none, from, tries, concurrency, u2CapUsd string/null/0/-1/'abc'/NaN/undefined) gives code 3, run u2, and the exact message. A u2 spec with the unit 1 root is also refused.",
+    "Mixed calls refused with code 3 run=mixed: u2+unit1, unit1+u2, u2+card. u2 plus an invalid folder is refused even with the test cap. A numeric test cap passes only through a JS caller (expected).",
+    "classifyOutDir: 8 weeks x (muse, muse/elements) = u2; 17 mutated or escaping paths (w08, w17, W09, w9, muses, extra subfolder, cards subfolder, .. escapes, unit2x, absolute path) = invalid; unit1 w01 = restart; card = card; unit1 cards/muse/elements = invalid.",
+    "CLI probe (acceptance-probe-guard.mjs --cli, HOME set to the empty fakehome/ folder, no key in env or file, so a passed guard would stop at readKey): 10 of 10 cases exit 3 with the exact message, including --from, --tries, --concurrency, three week specs, an element spec, and --u2CapUsd 99 before and after the spec path. The maker test U2G10 uses a temp HOME and asserts no 'no key' output: confirmed in tests/storytime-u2-guards.test.ts lines 221-246. The refusal comes before readKey in storytime-muse.mjs.",
+    "CARD_RUN and CARD_LINE_RETRY blocks are byte equal between 26fee64e and fa05dfeb (sha256 a37a9376... and 1e543e18... on both sides). Unit 1 and card runs keep run=restart and run=card in the probe.",
+    "U2_RUN.capUsd is null in the committed file. FR-8 grep over the track files, pm-report.md, maker-p1.log, scripts, src, and tests finds no text that says Daniel or the PM gave a Go, approved a cap, or accepted a picture, and no cap value in U2_RUN. spec.md and pm-report.md say there is no Go.",
+    "Judge option: code read against D2 (spec folders w<nn>/muse and muse-elements, startTime U2_RUN, batch dir docs/storytime/l2-unit2/judge/prod, copies in prod-u2, 900/360 px by size class, rejects --cards and --family-words with --unit2, frozen kit untouched). No wrong-file defect found; one Nit (F4).",
+    "Delivery writer: code read against D3. Checks before any write: list SHA-256 pin, approval pin, duplicate rows and file names, size, PNG, srgb, 8-bit, 3 channels, no alpha, line art 0/255 twin; a missing reuse source stops the write and names the row id; nothing is written on a refusal (tests U2D3 to U2D6). Probe acceptance-probe-reuse-files.mjs: the 47 unit1-delivery reuse pairs exist and all are 1500x1500 PNG, color 3 channels srgb no alpha, line 1 channel. Probe acceptance-probe-reuse.mjs: 48 reuse rows = 47 unit1-delivery + 1 unit2-earlier-row (F1).",
+    "Line sentences (D4): the check-row line prompts of duck, doll, and fish (and every week copy) hold no 'ear'; elephant holds 'big round ears and a long trunk'; horse, goat, dog, cat follow the form; the hen sentence (comb, wattle, no ears) is in LINE_FEATURES and is tested through the source file because no unit 2 class C row has the word hen. 24 specs changed on the linePrompt line only.",
+    "Hand-off folder: sha256sum -c MANIFEST.txt gives 257 ': OK' lines (grep -c); find gives 257 files besides MANIFEST.txt, so every file is checked. A direct count of non-OK lines (grep -vc) was denied by the shell tool; the maker log reports 0 FAILED and the 257 OK lines match the 257 files.",
+    "Zero spend: find out/storytime -name costs.tsv | sort | xargs sha256sum equals the hash lines of the prep costs-after.txt (diff empty) and equals the track costs-after.txt except for its '#' header line. No Muse or OpenRouter call ran in this check.",
+    "git diff 26fee64e..fa05dfeb: no PNG or JPG; no path under docs/storytime/l2-unit1, assets/, out/fireball, or Workbooks; changed files are scripts, src, tests, docs/storytime/l2-unit2, and measure paths of this track. No framework surface changed (contract tests, filters, tracks registry): A3, A4, A6, A7 not applicable.",
+    "Plan: Tasks 0 to 5 are [x] with SHAs (f11c0c24, 580bc970, 58f4ee10, 7ee4757f, 4c7e2b11, 395c573e), all in git log 26fee64e..HEAD; the gate is '[b] ... deferred:checker'. pm-report.md opens with 'Status: done.' and has 'Facts changed:'. A5: the plan holds no PASS/FAIL count claim; the report claim of 48 reuse files is false (F1).",
+    "GREEN command not run by the checker (F2)."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff 26fee64e..fa05dfeb -- scripts src tests",
+    "node measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-guard.mjs",
+    "node measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-guard.mjs --cli",
+    "node measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-reuse.mjs",
+    "node measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-reuse-files.mjs",
+    "sha256sum -c MANIFEST.txt (in /home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep)",
+    "find out/storytime -name costs.tsv -print0 | sort -z | xargs -0 sha256sum | diff - costs-after (prep and track)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<GREEN command>' (denied by the shell tool, not run)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-p1-fa05dfe.json",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-p1-fa05dfe.log",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-guard.mjs",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-reuse.mjs",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-reuse-files.mjs",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/fakehome/"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "medium"
+}

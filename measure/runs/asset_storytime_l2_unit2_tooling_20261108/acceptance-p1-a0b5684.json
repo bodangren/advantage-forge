@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "F1, F3, F4, and F5 of acceptance-p1-fa05dfe are closed at a0b56846. The guard still refuses every unit 2 call, and the CLI no longer passes the test-only cap key to runGuards. The earlier-row reuse of l2-w14-check-row-fan resolves to the w10 fan approval entry and stops with both ids when the entry is missing. One new Major (F6) needs a PM decision: 2 of the 48 reuse rows fail the 12 px line check with the real unit 1 files. The checker could not run GREEN (heavy-run.sh denied); the orchestrator jr-green gate passed at this HEAD.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F6 [Major] src/storytime/muse-delivery-u2.ts with real data: the unit 1 source for l2-w10-check-row-ten and l2-w11-check-row-ten is out/storytime/l2/unit1/w06/delivery-muse-v2/l2-w06-check-row-ten-line-v2.png, and its line width is 10 px (minimum 12 px). deliverMuseUnit2 stops the whole write and names both row ids (checked with the real list and the real rows.json). The writer follows D3 (a reuse source that fails a check stops the write), so this is a data and decision gap, not a code defect. The PM must choose one of: accept 10 px for the two ten rows (needs a writer exception), regenerate the ten line print in the paid run, or drop the reuse for the two ten rows. Without a choice the full 229-row delivery cannot complete. The other 46 reuse rows pass every check."
+  ],
+  "evidence": [
+    "HEAD check: git rev-parse HEAD = a0b56846f5c616911d6d95329f9a412c5b3bc1d1; commits since fa05dfeb: 258c1b93 (fix) and a0b56846 (evidence). phase_base_sha 26fee64e925df82e53633b39cb8a15169318c0d0.",
+    "F1 closed: readEarlierRowId and the unit2-earlier-row branch in deliverMuseUnit2 read the id from the earlier row spec, find its approval entry, and copy its approved prints; a missing entry gives a problem 'the write stops with l2-w14-check-row-fan and l2-w10-check-row-fan'. Tests U2D10 and U2D11 read and match. Probe acceptance-probe-earlier-row.mts (real list with its real pin, real rows.json, real unit 1 files, generated w10 fan prints in measure/runs/.../probe-earlier-row/): case A2 (the two ten rows set to no reuse) writes 47 jobs; the w14 fan color and line files equal the w10 fan approved prints; manifest.json is present. Case B (no w10 fan entry): the write stops, the message holds both ids, and the delivery folder does not exist. PASS 6 of 6 in A2 and B.",
+    "F6 evidence: case A of the same probe (the real rows.json unchanged) fails with 'l2-w10-check-row-ten: line print: Line-art twin lines must be at least 12 px thick; measured 10 px.' and the same for l2-w11-check-row-ten. The unit 1 w06 manifest lists ten-line-v2 as delivered, so unit 1 accepted this file; the unit 2 writer applies MIN_LINE_ART_LINE_WIDTH_PX = 12.",
+    "F3 closed: cliGuardOptions deletes u2CapUsd; storytime-muse.mjs passes guardOpts to both runGuards calls. Probe acceptance-probe-cliopts.mjs: cliGuardOptions({u2CapUsd:'99',tries:'2',from:'1'}) gives keys tries,from and no u2CapUsd key. Test U2G11 present.",
+    "F4 closed: for a row id (l2-w<nn>-...) with no row in rows.json and no row in the picture list, buildBatch throws; an element id keeps [id]. Test U2J11 present.",
+    "F5 closed: pm-report.md guard line now reads 'U2_RUN cap empty, refuses all unit 2 calls until the PM writes the approved limit'; the delivery text now describes the 47 + 1 reuse rows.",
+    "Guard probe re-run: acceptance-probe-guard.mjs 168 rows 0 failures (all u2 shapes refused with code 3, run u2, exact message; mixed calls refused; 17 mutated paths invalid). CLI probe with the empty fakehome/ HOME: 10 of 10 cases exit 3 with the exact message, including --u2CapUsd 99 before and after the spec, --u2CapUsd 0.5 --tries 2, a bare --u2CapUsd, --from 1 --tries 3, three week specs, and an element spec.",
+    "Regression: U2_RUN.capUsd null; CARD_RUN and CARD_LINE_RETRY sha256 equal between 26fee64e and HEAD (a37a9376... and 1e543e18...); hand-off folder sha256sum -c MANIFEST.txt: 0 lines that do not end in ': OK', 257 OK lines, 257 files besides MANIFEST.txt; costs.tsv hashes equal the prep costs-after.txt hash lines (diff empty); no PNG, JPG, unit 1 doc, asset, out/fireball, or Workbooks path in git diff 26fee64e..HEAD; FR-8 text (pm-report.md, plan.md additions) claims no Go, no cap approval, no picture acceptance; plan Tasks 0 to 5 are [x] with SHAs and the gate stays '[b] ... deferred:checker' (the r3 diff adds a note line only).",
+    "F2 (GREEN): the shell tool denied heavy-run.sh again. Per the brief this is evidence, not a finding: the orchestrator ran the jr-green role gate at a0b56846 at 14:40 ICT with 'PASS: jr-green gate passed' (the gate runs this exact GREEN command), and the maker log r3 block reports 209 tests and 0 tsc errors in the storytime paths.",
+    "No Muse, OpenRouter, or other paid call ran. No API key was set or read. No cap value was written. The CLI probe made no network call (HOME = empty fakehome/)."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git log --oneline fa05dfeb..HEAD; git diff fa05dfeb..HEAD",
+    "node measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-guard.mjs",
+    "node measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-guard.mjs --cli",
+    "node measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-cliopts.mjs",
+    "./node_modules/.bin/tsx measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-earlier-row.mts",
+    "sha256sum -c MANIFEST.txt (in /home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep)",
+    "find out/storytime -name costs.tsv -print0 | sort -z | xargs -0 sha256sum | diff - prep costs-after",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<GREEN command>' (denied by the shell tool, not run)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-p1-a0b5684.json",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-p1-a0b5684.log",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-earlier-row.mts",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-cliopts.mjs",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-guard.mjs (edited in the earlier run)",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/probe-earlier-row/ (generated fixtures and probe deliveries)"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "medium"
+}
