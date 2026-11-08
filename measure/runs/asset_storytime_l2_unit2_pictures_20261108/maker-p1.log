@@ -1,0 +1,87 @@
+# Maker log, Phase 1, Tasks 1 and 2 (light lane)
+
+Track: asset_storytime_l2_unit2_pictures_20261108
+Role: measure-jr-green (maker). Model: opencode/deepseek-v4.1-flash-free#high
+(route of `ra-quota pick green`). The light lane has no Red role.
+session: Green · P1 T1-T2 · storytime_l2_unit2_pictures
+phase_base_sha and role_base_sha: 5ebb3db1594e2378a888130f9852464fab2f6d09
+Base HEAD check: `git rev-parse HEAD` gave 5ebb3db1594e2378a888130f9852464fab2f6d09.
+Start: 2026-11-08T13:39Z (20:39 ICT, 2026-11-08).
+Spend: 0 USD. No Muse call, no OpenRouter call, no API key set.
+
+## Defaults taken (no question tool)
+
+- U2_FW_RUN.startTime is 2026-11-08T13:39:00Z, the real UTC time of Task 1 cut to the minute.
+- The u2fw scan reads `<unitRoot>/family-words/muse/costs.tsv` and keeps only the rows at or after
+  U2_FW_RUN.startTime. The production call gives the unit 2 root, so the folder is exactly
+  `out/storytime/l2/unit2/family-words/muse`.
+- The app refusal message is
+  `refused: the unit 2 family-word cap is empty; the PM writes the approved limit in U2_FW_RUN.capUsd`.
+- The specs script writes the corrected reuse values back to `docs/storytime/l2-unit2/rows.json`
+  when the named exclusion changes a row, so the delivery writer reads the same row model as the
+  spec files. The write happens only when a value changes, so a second run writes nothing.
+- The CLI cap check asserts that the test-only cap keys never reach the guard, and that a CLI run
+  with `--u2CapUsd 99` or `--u2FwCapUsd 99` reaches the key read instead of a cap refusal.
+
+## Task 1, D1 guard
+
+- 13:39Z Read spec.md, plan.md, the prep and tooling maker logs, the guard and its types, the muse
+  tool, the specs script, and the three unit 2 tests.
+- 13:39Z Task 1 marked [~] in plan.md.
+- Guard changes: U2_RUN capUsd 18.33 and reportAtUsd 14.66; new U2_FW_RUN with startTime
+  2026-11-08T13:39:00Z, capUsd 0.29, reportAtUsd 0.23, marginUsd 0.01, maxTries 3, outDir
+  out/storytime/l2/unit2/family-words/muse; new U2_FW_CAP_MESSAGE; the kind u2fw in
+  classifyOutDir for exactly the family-word folder; isUnit2FwOutDir; scanU2FwCostFiles; the
+  empty-cap refusal for both kinds; mixed u2fw calls refused; cliGuardOptions drops u2CapUsd and
+  u2FwCapUsd. The muse tool sends a family-word spec to the unit 2 root.
+- 13:59Z (20:59 ICT) Task 1 test run (heavy-run): tests/storytime-u2-guards.test.ts,
+  tests/storytime-card-guards.test.ts, tests/storytime-card-line-retry.test.ts,
+  tests/storytime-muse-attempts.test.ts, tests/storytime-card-adversarial.test.ts:
+  5 files passed, 86 tests passed, exit 0.
+
+## Task 2, D2 the ten row
+
+- 14:00Z Task 2 marked [~] in plan.md.
+- The specs script holds the named exclusion `REUSE_EXCLUSIONS` for
+  `out/storytime/l2/unit1/w06/delivery-muse-v2/l2-w06-check-row-ten-line-v2.png` with the PM
+  decision of 2026-11-08. The first excluded row of a word becomes new; each later row of the
+  word reuses the earlier row in the form of l2-w14-check-row-fan. The script writes the
+  corrected reuse values back to `rows.json` only when a value changes.
+- Regenerate command: node scripts/storytime-u2-specs.mjs
+  /home/daniebo/Desktop/Workbooks/content/storytime/drafts/l2/print/pictures-u2.json
+  docs/storytime/l2-unit2/elements.json docs/storytime/l2-unit2/rows.json
+  docs/storytime/l2-unit2. It reported 229 specs and 80 missing refs (the new element outputs).
+- `git diff docs/storytime/l2-unit2` holds only the two ten rows and their derived lines:
+  rows.json 2 rows, w10 and w11 ten specs, prompt-list.tsv 2 lines, prompt-list.md 2 count lines
+  and 2 row lines. Counts: 182 new, 47 reuse (45 unit 1, 2 earlier-row).
+- Tests: a D2 case in tests/storytime-u2-specs.test.ts (counts, the two ten rows, the named rule,
+  the row model) and U2D12 in tests/storytime-u2-delivery.test.ts (the row model counts and the
+  w11 earlier-row source). The stale "48 reuse rows" comment now says 47.
+- Hand-off rebuild: node measure/runs/asset_storytime_l2_unit2_prep_20261108/make-handoff.mjs gave
+  258 files, 182 new rows, 47 reuse rows, estimate 14.66 USD. `sha256sum -c MANIFEST.txt` in
+  /home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep/: 257 OK, 0 FAILED, exit 0.
+- Costs: the 16 costs.tsv hashes equal the tooling track costs-after.txt lines.
+- 14:11Z GREEN command (13 files): 213 tests passed, exit 0.
+- 14:14Z tsc --noEmit -p . with NODE_OPTIONS=--max-old-space-size=2560: exit 2, 38 known old
+  errors, 0 errors in src/storytime, scripts/storytime-*, or tests/storytime-*.
+
+## Result
+
+- Commit 1 (Task 1): 57fe034e983a7763ecb8a4dec8cacfbc86a1fec1. Caps 18.33 and 0.29 USD.
+- Commit 2 (Task 2): 7c53c29a64e6e2f7adcedc55877f18e59b516881. The ten row is new in week 10.
+- Evidence commit: HEAD (this commit).
+- Phase 1 gate: [b], deferred:checker.
+- Spend 0 USD. No PNG or JPG in git. No unit 1, judge kit, asset, or Workbooks file changed.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_unit2_pictures_20261108
+phase: Phase 1: Caps and the ten row (unpaid)
+commits: 57fe034e (caps and guard entry), 7c53c29a (the ten row), and this evidence commit (HEAD)
+tests_run: GREEN command (13 test files) -> 13 files passed, 213 tests passed, exit 0; tsc --noEmit -p . with NODE_OPTIONS=--max-old-space-size=2560 -> exit 2, 38 known old errors, 0 in src/storytime, scripts/storytime-*, or tests/storytime-*; sha256sum -c MANIFEST.txt in /home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep/ -> 257 OK, 0 FAILED (258 files); the 16 costs.tsv hashes equal measure/runs/asset_storytime_l2_unit2_tooling_20261108/costs-after.txt
+files_changed: scripts/storytime-muse-guards.mjs and .d.mts; scripts/storytime-muse.mjs; scripts/storytime-u2-specs.mjs; tests/storytime-u2-guards.test.ts; tests/storytime-u2-specs.test.ts; tests/storytime-u2-delivery.test.ts; docs/storytime/l2-unit2/rows.json, prompt-list.md, prompt-list.tsv, w10/muse/l2-w10-check-row-ten.json, w11/muse/l2-w11-check-row-ten.json; measure/tracks/asset_storytime_l2_unit2_pictures_20261108/plan.md; measure/runs/asset_storytime_l2_unit2_pictures_20261108/maker-p1.log and costs-p1.txt
+plan_updates: Task 1 [x] with 57fe034e; Task 2 [x] with 7c53c29a; the status line says Phase 1 is done; the Phase 1 gate stays [b] deferred:checker; the Evidence section names the two commits and the gate results
+known_failures: none
+handoff: phase_base_sha and role_base_sha 5ebb3db1594e2378a888130f9852464fab2f6d09; final Green HEAD is this evidence commit. The checker probes both caps (an 18.32 USD book fixture and a 0.28 USD app fixture each refuse the next call of their own kind), the separate scans, the mixed family-word call, the CLI cap strip, and the byte-equal CARD_RUN and CARD_LINE_RETRY blocks. It reruns the 13-file GREEN command and the typecheck at this HEAD, runs sha256sum -c MANIFEST.txt (257 OK, 0 FAILED), and compares the 16 costs.tsv hashes with costs-p1.txt. U2_FW_RUN.startTime is 2026-11-08T13:39:00Z. Spend is 0 USD, so the paid phases wait for the orchestrator and the PM.
+END_MEASURE_AGENT_RESULT

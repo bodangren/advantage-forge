@@ -1,0 +1,16 @@
+deabe72fff310d7231476eb3720614b272dd30d642829d9fd6a1af4a600504a2  out/storytime/l2/unit1/cards/muse/costs.tsv
+5546f0a13aedd82a3a358ac2ca09dd0f573951ef211eedf7e6299ec0f54f902a  out/storytime/l2/unit1/cover/muse/costs.tsv
+43d6a3b2263f64fd2823498d1ddb2b573e194711e863a73df772853d7a25e8fc  out/storytime/l2/unit1/w01/muse/costs.tsv
+5b060403964af54868f147e662a033197e2c01525b56ffdef9107a4139fa4378  out/storytime/l2/unit1/w02/muse/costs.tsv
+0bb64595b63a59e1ef5e2f76e0a4cb37e4c3ab389e1a0c4f1f3f0b88409756dc  out/storytime/l2/unit1/w02/muse/elements/costs.tsv
+f01ebf2a88f67fbcdd26da5033d090a1fd83a92c85fd7c8a3ea665a90da9bad8  out/storytime/l2/unit1/w03/muse/costs.tsv
+822ca3b38b3ec35bc5d9197e9938bd01c3bbb9fbbb6226b36d8c69a7a7de88b2  out/storytime/l2/unit1/w03/muse/elements/costs.tsv
+2e6da8bec506f11dd1bb7cd5275a0da5a231e49ae94dbffd03f6cb5955d40f3d  out/storytime/l2/unit1/w04/muse/costs.tsv
+8dd34fbae70e89855ba81fbbab31e1d1e58f2eaa55dbd03e4c5d153c46e7eba6  out/storytime/l2/unit1/w04/muse/elements/costs.tsv
+ae3267226545271709bf296c421a2549efa33c891ee2c347c4085cefebac0920  out/storytime/l2/unit1/w05/muse/costs.tsv
+8a0a72cde9f7d4e6f0b2ebcfdf62e44a28976693550e40f19d993e8bca258196  out/storytime/l2/unit1/w05/muse/elements/costs.tsv
+b0338b5bfcd4bdee87a05265f7783161c93179ab471a5bcdc1221f948e871e01  out/storytime/l2/unit1/w06/muse/costs.tsv
+1349cd6b5b34488a4091c88f0bb49608413ded9bdf85cde6527f169c6cf5a764  out/storytime/l2/unit1/w06/muse/elements/costs.tsv
+503f40ab505dccb9aa602a17a4d7879b3b399290cfff91af783308d14abe5f60  out/storytime/l2/unit1/w07/muse/costs.tsv
+a5f9de1bc3ac02efbf8abaac29ba184c9402109da79d67a3c692694150c636fb  out/storytime/l2/unit1/w07/muse/elements/costs.tsv
+3ae205838c9826402dbd64f189396cc12ab39fb9b7172e2afe3e44e7a56ca5fe  out/storytime/l2/unit1/w08/muse/costs.tsv

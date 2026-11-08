@@ -1,6 +1,7 @@
 # Storytime Level 2 unit 2 paid pictures (book rows, element sheets, app family words)
 
-Status: planned (2026-11-08). The PM gave the caps and Daniel gave the "Go". The caps are not in the guard yet.
+Status: in progress (2026-11-08). Phase 1 is done (caps and the ten row, 0 USD). The phase
+acceptance gate waits for the checker.
 
 The track writes the unit 2 caps into the guard, fixes the ten row, makes 182 new book rows and 10
 element sheets, and makes 18 app family-word pictures. The [specification](./spec.md) owns the
@@ -53,7 +54,7 @@ on this heading.
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`). Spend 0 USD.
 
-- [ ] Task 1: Caps (D1). Add `U2_FW_RUN`, the kind `u2fw`, and the separate scans. Write the caps
+- [x] Task 1 (57fe034e): Caps (D1). Add `U2_FW_RUN`, the kind `u2fw`, and the separate scans. Write the caps
   18.33 and 14.66 in `U2_RUN`. Strip every test-only cap key in `cliGuardOptions`. Route `u2fw` specs
   in the muse tool, with no other change. Update `tests/storytime-u2-guards.test.ts` and add the
   family-word cases: the empty or invalid cap refusal for both kinds, the separate scans, the mixed
@@ -61,11 +62,11 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   minute. Run the GREEN test command. Commit with explicit paths and the message
   `feat(storytime_l2_unit2_pictures): unit 2 caps 18.33 and 0.29 USD`. The maker replies with the
   guard commit and the start time.
-- [b] Task 2: The ten row (D2). Add the named exclusion rule to `scripts/storytime-u2-specs.mjs`,
+- [x] Task 2 (7c53c29a): The ten row (D2). Add the named exclusion rule to `scripts/storytime-u2-specs.mjs`,
   regenerate `docs/storytime/l2-unit2`, update `tests/storytime-u2-specs.test.ts` and the delivery
   test counts (182 new, 47 reuse: 45 and 2), rebuild the prep hand-off folder with `make-handoff.mjs`,
   and run `sha256sum -c MANIFEST.txt` (0 FAILED). Run the GREEN test command and the typecheck (0 new
-  errors in the storytime paths). Commit with explicit paths. deferred:maker
+  errors in the storytime paths). Commit with explicit paths.
 - [b] Phase 1 gate: phase acceptance by the checker at an immutable HEAD. The checker probes both
   caps with fixture cost files at 18.32 USD and 0.28 USD (the next call is refused), checks that book
   spend does not count for the app and the reverse, checks that a mixed call is refused, checks that a
@@ -158,5 +159,12 @@ PM and not to Daniel. The track records no acceptance of a picture by Daniel, th
 
 - Track creation commit: recorded at creation (message
   `measure(storytime_l2_unit2_pictures): create the track`).
+- Phase 1 maker (measure-jr-green, 2026-11-08): commits `57fe034e` (the caps and the guard entry)
+  and `7c53c29a` (the ten row). `U2_FW_RUN.startTime` is 2026-11-08T13:39:00Z. The GREEN command
+  gave 13 files and 213 tests, pass. The typecheck gave 38 known old errors and 0 errors in the
+  storytime paths. The prep hand-off gave 257 OK and 0 FAILED (258 files). The 16 `costs.tsv`
+  hashes equal `measure/runs/asset_storytime_l2_unit2_tooling_20261108/costs-after.txt`. Spend
+  0 USD. The maker log is
+  `measure/runs/asset_storytime_l2_unit2_pictures_20261108/maker-p1.log`.
 - Run records: `measure/runs/asset_storytime_l2_unit2_pictures_20261108/` (spend record, calibration
   record, judge files, role logs, PM report, acceptance results).
