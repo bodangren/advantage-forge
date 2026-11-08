@@ -1,0 +1,21 @@
+# Last line try for 6 cards, round 13 (Step AB, paid 0.06 USD)
+
+One line call for each of the 6 cards, at concurrency 4, from each row's passing color. All 6 at
+line try 3 (the last). 6 ok, 0 failed, 0 refused. Highest call 0.01 USD. Book total 4.32 USD of
+18.33 USD.
+
+| row | new line | print | width px | despeckled print | width px | passes |
+| --- | --- | --- | --- | --- | --- | --- |
+| l2-w09-card-rice | -m1-line-3.png | pass | 15 | pass | 15 | both |
+| l2-w12-card-ruler | -m1-line-3.png | fail | 8 | fail | 8 | none |
+| l2-w13-card-clap | -m1-line-3.png | fail | 11 | fail | 11 | none |
+| l2-w13-card-throw | -m1-line-3.png | fail | 11 | fail | 11 | none |
+| l2-w14-card-cold | -m1-line-3.png | fail | 9 | fail | 9 | none |
+| l2-w14-card-windy | -m1-line-3.png | fail | 9 | fail | 9 | none |
+
+Result: 1 of 6 rows passes the print gate (rice, 10 to 15 px). 5 rows stay below 12 px and are at
+their last line try: ruler 8, clap 11, throw 11, cold 9, and windy 9. They cannot be regenerated
+without a PM try-cap exception.
+
+Judge batch u2-r7-line-t3 (6 entries). Each judge copy equals the downscale of the newest line file
+of its row; the largest pixel distance is 0.

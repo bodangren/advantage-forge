@@ -397,3 +397,16 @@ END_MEASURE_AGENT_RESULT
   l2-w11-story-page-where-is-sam-under-the-table, l2-w12-card-crayon, l2-w13-card-catch,
   l2-w13-card-run, l2-w13-story-page-pip-can-catch, l2-w14-card-rainy, l2-w15-card-helicopter, and
   l2-w15-story-page-pip-has-a-tag. The two judge files are committed.
+- Step AB (last line try for 6 thin cards, paid 0.06 USD; orchestrator decision 03:20 ICT). Six spec
+  files changed, linePrompt only: the r4 five-times sentence became the marker-pen sentence (every
+  line about one hundredth of the picture width). Files: l2-w09-card-rice, l2-w12-card-ruler,
+  l2-w13-card-clap, l2-w13-card-throw, l2-w14-card-cold, l2-w14-card-windy. Commit 307d75f6.
+  - Worst case before the pool: 6 calls x 0.01 USD + 4.26 USD + 0.03 USD = 4.35 USD, under the book
+    stop 18.33 USD. Highest call 0.01 USD, under the 0.03 USD limit.
+  - Pool result: 6 calls, 6 ok, 0 failed, 0 refused. All 6 at line try 3 (the last). Book total
+    4.32 USD, left 14.01 USD. Spend record line added.
+  - Print gate: 1 of 6 passes. l2-w09-card-rice passes at 15 px (was 10). The other 5 fail:
+    l2-w12-card-ruler 8, l2-w13-card-clap 11, l2-w13-card-throw 11, l2-w14-card-cold 9, and
+    l2-w14-card-windy 9. They are at their last line try.
+  - Judge batch u2-r7-line-t3: 6 entries. Check: every judge copy has pixel distance 0 to the
+    downscale of the newest line file of its row. Result: 6 ok, 0 failures.

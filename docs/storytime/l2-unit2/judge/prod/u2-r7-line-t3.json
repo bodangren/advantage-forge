@@ -1,0 +1,62 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-rice-line-t3.png",
+    "id": "l2-w09-card-rice",
+    "kind": "line",
+    "pageText": "rice",
+    "use": "card",
+    "mustShow": [
+      "rice"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-ruler-line-t3.png",
+    "id": "l2-w12-card-ruler",
+    "kind": "line",
+    "pageText": "ruler",
+    "use": "card",
+    "mustShow": [
+      "ruler"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-clap-line-t3.png",
+    "id": "l2-w13-card-clap",
+    "kind": "line",
+    "pageText": "clap",
+    "use": "card",
+    "mustShow": [
+      "clap"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-throw-line-t3.png",
+    "id": "l2-w13-card-throw",
+    "kind": "line",
+    "pageText": "throw",
+    "use": "card",
+    "mustShow": [
+      "throw"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-cold-line-t3.png",
+    "id": "l2-w14-card-cold",
+    "kind": "line",
+    "pageText": "cold",
+    "use": "card",
+    "mustShow": [
+      "cold"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-windy-line-t3.png",
+    "id": "l2-w14-card-windy",
+    "kind": "line",
+    "pageText": "windy",
+    "use": "card",
+    "mustShow": [
+      "windy"
+    ]
+  }
+]
