@@ -17,7 +17,7 @@
   "use": "cover",
   "set": "set-farmyard",
   "props": [
-    "prop-hen",
+    "prop-hen-sheet",
     "sunhat"
   ],
   "reuse": null,

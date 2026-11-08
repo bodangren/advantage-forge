@@ -45,8 +45,8 @@
       "asset": "bed",
       "look": "ONE small child's bed with a wooden frame, a white pillow, and a blue blanket"
     },
-    "prop-hen": {
-      "id": "prop-hen",
+    "prop-hen-sheet": {
+      "id": "prop-hen-sheet",
       "kind": "object",
       "source": "new-prop",
       "week": 12,

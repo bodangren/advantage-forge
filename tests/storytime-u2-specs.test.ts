@@ -172,6 +172,34 @@ describe('unit 2 Muse specs', () => {
     }
   });
 
+
+  it('F1-r6: no face word says "no eyes and no face" in either prompt', () => {
+    const face = ['dog', 'cat', 'fish', 'duck', 'elephant', 'horse', 'goat', 'doll', 'hen', 'dad', 'girl', 'foot'];
+    for (const { row, spec } of specs) {
+      if (row.use !== 'check-row' || !face.includes(String(row.text))) continue;
+      expect(spec.colorPrompt, spec.id).not.toContain('no eyes and no face');
+      expect(spec.linePrompt, spec.id).not.toContain('no eyes and no face');
+      expect(spec.linePrompt, spec.id).toContain('solid black pupil');
+    }
+  });
+
+  it('F6: every unit 2 reference is the output of an element spec, named from its id', () => {
+    const outputs = new Map<string, string>();
+    for (const el of Object.values(elements.elements as Record<string, any>)) {
+      if (el.source !== 'new' && el.source !== 'new-prop') continue;
+      const spec = read(el.spec);
+      const out = `${spec.outDir}/${spec.id}-m1-color.png`;
+      expect(out, el.id).toBe(el.path);
+      outputs.set(out, el.id);
+    }
+    expect(outputs.size).toBe(10);
+    for (const { spec } of specs) {
+      for (const ref of spec.references) {
+        if (ref.startsWith('out/storytime/l2/unit2/')) expect(outputs.has(ref), `${spec.id}: ${ref}`).toBe(true);
+      }
+    }
+  });
+
   it('FR-6: every reuse row names a source that exists', () => {
     for (const { row } of specs) {
       if (!row.reuse) continue;

@@ -158,7 +158,10 @@ function displayName(key) {
 
 
 // F1: the line prompt follows the kind of the word.
-const FACE_WORDS = new Set(['dog', 'cat', 'fish', 'duck', 'elephant', 'horse', 'goat', 'doll', 'prop-hen']);
+const FACE_WORDS = new Set(['dog', 'cat', 'fish', 'duck', 'elephant', 'horse', 'goat', 'doll', 'prop-hen-sheet']);
+// The face rule depends on the word, with or without an element (F1).
+const FACE_NAMES = new Set(['dog', 'cat', 'fish', 'duck', 'elephant', 'horse', 'goat', 'doll', 'hen']);
+const faceText = (word) => `The ${word} has a friendly face with two eyes and a smiling mouth; draw them.`;
 function objectLine(word) {
   return LINE['check-row'].replace(
     'The bus body, the wheels, and each window are separate closed shapes with thick outlines.',
@@ -183,14 +186,17 @@ function personLine(extra = '') {
 }
 function lineFor(row) {
   if (row.sizeClass !== 'C') return lineCopyWithSetShapes(row);
+  if (FACE_NAMES.has(String(row.text).toLowerCase())) return faceLine(row.text);
   if (row.form === 'person-card') return personLine();
   if (row.use === 'card' && row.cast.length) return personLine();
   if (row.form === 'body-part') {
     return personLine(' Draw the pointed foot as one closed shape with five rounded toe shapes.');
   }
   if (row.form === 'text-object') return objectLine(row.text);
+  const word = String(row.text).toLowerCase();
+  if (FACE_NAMES.has(word)) return faceLine(row.text);
   const el = (row.props || []).map((id) => E[id]).find(Boolean);
-  if (el && (FACE_WORDS.has(el.id) || el.id === 'prop-hen')) return faceLine(row.text);
+  if (el && FACE_WORDS.has(el.id)) return faceLine(row.text);
   return objectLine(row.text);
 }
 
@@ -242,7 +248,7 @@ for (const row of rowsDoc.rows) {
       // R4: no reference picture. Describe the object in words and never say "picture 1".
       const words = textOnly.map((el) => el.look).join('; ') || `ONE ${row.text}`;
       goal = `One picture of ${words.replace(/^ONE /, 'one ')}.`;
-      cp = `Make one children's book picture. Do not use a reference picture: draw the object from these words. The object: ${words}. Draw it as a smooth, clean, bright, soft, round 3D render with a plain white background. The picture to make: a square picture of exactly ONE ${row.text}, large in the middle, filling most of the square, the whole object in view, seen from a three-quarter view, so that its shape reads clearly. Exactly one ${row.text}: no second one, no copies, and nothing else in the picture. The background is plain white and empty, with at most a very soft shadow under the object. The object has no eyes and no face. The page text is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.`;
+      cp = `Make one children's book picture. Do not use a reference picture: draw the object from these words. The object: ${words}. Draw it as a smooth, clean, bright, soft, round 3D render with a plain white background. The picture to make: a square picture of exactly ONE ${row.text}, large in the middle, filling most of the square, the whole object in view, seen from a three-quarter view, so that its shape reads clearly. Exactly one ${row.text}: no second one, no copies, and nothing else in the picture. ${FACE_NAMES.has(String(row.text).toLowerCase()) ? faceText(String(row.text).toLowerCase()) : 'The object has no eyes and no face.'} The background is plain white and empty, with at most a very soft shadow under the object. The page text is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.`;
     } else if (form === 'person-card') {
       // R9: an adult keeps the adult proportions of the picture; a child keeps the chibi sentence.
       const ADULT = ['dad', 'mom', 'grandma', 'grandpa', 'teacher-kim', 'nans-dad'];
@@ -271,6 +277,9 @@ for (const row of rowsDoc.rows) {
       const head = `Compose one children's book picture from the element picture${refs.length === 1 ? '' : 's'}.`;
       cp = [head, ...sentences].join(' ');
       cp += ` Draw the same object with the same shape, the same colors, and the same proportions as in picture 1, as a smooth, clean, bright, soft, round 3D render with a plain white background. The picture to make: a square picture of exactly ONE ${row.text}, large in the middle, filling most of the square, the whole object in view, seen from a three-quarter view, so that its shape reads clearly. Exactly one ${row.text}: no second one, no copies, and nothing else in the picture. ${RULE[row.use] || RULE['check-row']}`;
+      if (FACE_NAMES.has(String(row.text).toLowerCase())) {
+        cp = cp.replace('The object has no eyes and no face.', faceText(String(row.text).toLowerCase()));
+      }
       goal = `One picture of exactly one ${row.text}.`;
     }
   } else {

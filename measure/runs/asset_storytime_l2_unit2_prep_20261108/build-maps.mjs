@@ -43,8 +43,8 @@ forge('cat', 'cat', 'ONE small gray cat with a round head, pointed ears, and a l
 forge('fish', 'fish', 'ONE small orange fish with a round body, a fan tail, and one round eye, three times (side, three-quarter, top)', 'side.png');
 forge('bed', 'bed', 'ONE small child\'s bed with a wooden frame, a white pillow, and a blue blanket');
 // F2: the Forge chicken is white; the week 12 hen is small and brown. The paid run makes this prop sheet.
-E['prop-hen'] = {
-  id: 'prop-hen', kind: 'object', source: 'new-prop', week: 12,
+E['prop-hen-sheet'] = {
+  id: 'prop-hen-sheet', kind: 'object', source: 'new-prop', week: 12,
   path: 'out/storytime/l2/unit2/w12/muse/elements/prop-hen-sheet-m1-color.png',
   spec: 'docs/storytime/l2-unit2/w12/muse-elements/prop-hen-sheet.json',
   look: 'ONE small brown hen with a red comb, a red wattle, a small yellow beak, two orange legs, a soft round brown body, and a short tail',
@@ -250,7 +250,7 @@ const PROP = [
   [/\bbowl\b/, 'bowl'], [/\bbread\b/, 'bread'], [/\bplate\b/, 'plate'], [/\bglass\b|\bcup\b/, 'cup'],
   [/\bbook\b/, 'book'], [/\bbag\b/, 'bag'], [/\bcrayons?\b/, 'crayons'], [/\beraser\b/, 'text-eraser'],
   [/\bruler\b/, 'text-ruler'], [/\bchair\b/, 'chair'], [/\bwindow\b/, 'window'], [/\bdoor\b/, 'green-door'],
-  [/\bbed\b/, 'bed'], [/\bbarn\b/, 'barn'], [/\bfence\b/, 'fence'], [/\bhen\b/, 'prop-hen'],
+  [/\bbed\b/, 'bed'], [/\bbarn\b/, 'barn'], [/\bfence\b/, 'fence'], [/\bhen\b/, 'prop-hen-sheet'],
   [/\bhorse\b/, 'horse'], [/\bgoat\b/, 'goat'], [/\bbus\b/, 'bus'], [/\bcar\b/, 'text-car'],
   [/\bbike\b/, 'text-bike'], [/\btruck\b/, 'text-truck'], [/\btrain\b/, 'text-train'],
   [/\bboat\b/, 'text-boat'], [/\bplane\b/, 'text-plane'], [/\bumbrella\b/, 'text-umbrella'],
