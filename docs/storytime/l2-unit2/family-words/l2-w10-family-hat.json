@@ -1,0 +1,20 @@
+{
+  "id": "l2-w10-family-hat",
+  "text": "hat",
+  "pageText": "hat",
+  "use": "card",
+  "goal": "One small purple hat, large in the middle of a white card, so a child can name it.",
+  "mustShow": [
+    "hat"
+  ],
+  "deliverAs": "l2-w10-family-hat-v1.png",
+  "references": [],
+  "colorPrompt": "Make one children's book picture. Do not use a reference picture: draw the object from these words. The object: ONE small purple hat. Draw it as a smooth, clean, bright, soft, round 3D render with a plain white background. The picture to make: a square card picture on a plain pure white background: exactly ONE hat, large in the middle, filling most of the square, the whole hat in view, seen from a three-quarter view, so that its shape reads clearly. Exactly one hat: no second one, no copies, and nothing else in the picture. The object has no eyes and no face. The background is plain white and empty, with at most a very soft shadow under the object. A wide empty white margin surrounds the hat on every side. The page text is \"hat\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "print": "pad",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit2/family-words/muse"
+}

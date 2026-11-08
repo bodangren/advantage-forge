@@ -1,0 +1,47 @@
+# Maker log - Phase 3 (maker-jr-green light lane)
+
+Track: asset_storytime_l2_unit2_pictures_20261108
+Role: measure-jr-green (light lane maker)
+Model: minimax-cn-coding-plan/MiniMax-M3.1-Flash
+role_base_sha: ac23e9e2 (immutable phase base for Phase 3)
+Spend this round: 0 USD (no Muse call, no API key)
+
+## Round 1 - 2026-11-09
+
+Step 1: Phase 2 gate records (plan.md Phase 2 heading + gate line, F1 applied to Task 7).
+Step 2: Task 9 specs (18 family-word spec files) + tests/storytime-u2-family-words.test.ts.
+Step 3: Task 9 judge option --unit2-family-words.
+Step 4: Task 9 delivery writer deliverMuseUnit2FamilyWords + Phase 1 Nit fix + tests.
+
+### Step 2: the orchestrator fix on the object of the app pictures (2026-11-09)
+
+Rule: an app picture shows the object that the unit 2 story or check-row spec of the same word
+draws, in kind and color. The source spec is the story spec of the week of the word, or the
+check-row spec of the word when that spec draws the word alone.
+
+F1 l2-w15-family-truck: FIX. The spec said "ONE small blue truck", the object list line of
+l2-w15-story-page-look-a-truck. The story picture of that spec draws "a big green truck". The app
+spec now says "ONE big green truck". The reference list stays empty, because the unit 2 spec has
+no truck reference file.
+F2 l2-w15-family-bike: FIX. The spec said "ONE red bicycle with a front basket", the object list
+line of l2-w15-story-page-look-a-bike. The story picture draws "a blue bike". The app spec now
+says "ONE blue bike". No reference file.
+F3 l2-w10-family-hat: FIX. The spec said "ONE big straw sun hat with a wide brim and a ribbon",
+the reference sentence of l2-w10-story-page-put-on-your-hat-pip. The story picture draws "a small
+purple hat" on Pip. The app spec now says "ONE small purple hat". The sun hat reference file was
+removed, because it shows another hat. Note for the reviewer: the judge of the delivered story
+color of l2-w10-story-page-put-on-your-hat-pip saw "a straw hat with a purple ribbon", so the
+delivered book picture and the app card show different hats.
+F4 l2-w11-family-bed: FIX. The spec said "ONE small bed with a white pillow and a blue blanket",
+the set description of l2-w11-story-page-where-is-mia-in-the-bed. The story pictures of week 11
+draw a low bed with a yellow blanket. The app spec now says "ONE small bed with a pillow and a
+yellow blanket". No reference file.
+
+Checked, no change: egg (a white boiled egg, peeled), milk (a glass of white milk), cake (a small
+pink cake with white icing), table (a long low wooden table with a plain top and four short legs),
+sofa (a blue sofa with one cushion and a folded blanket on its arm), box (a big empty cardboard
+box), chair (a small wooden chair with four legs and a low back), book (an open picture book with a
+plain cover and blank pages), bag (a school bag with a flap, a handle, and two straps), pencil (no
+unit 2 spec draws a pencil), pen (the check row says "ONE pen"), jump (the kind is a child
+jumping with both feet off the ground; Sam is the cast child of D6), bus (a yellow school bus with
+black wheels and a row of windows), plane (a small white airplane).

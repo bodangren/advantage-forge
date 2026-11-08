@@ -1,0 +1,22 @@
+{
+  "id": "l2-w12-family-bag",
+  "text": "bag",
+  "pageText": "bag",
+  "use": "card",
+  "goal": "One school bag with a flap, a handle, and two straps, large in the middle of a white card, so a child can name it.",
+  "mustShow": [
+    "bag"
+  ],
+  "deliverAs": "l2-w12-family-bag-v1.png",
+  "references": [
+    "out/storytime-school-bag/views/three-quarter.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the reference picture. Picture 1 is a 3D render of ONE school bag with a flap, a handle, and two straps, ONE view only, on a gray or white background, perhaps with a ground shadow; ignore the background and the shadow, and draw the same object with the same shape and colors. Draw it as a smooth, clean, bright, soft, round 3D render with a plain white background. The picture to make: a square card picture on a plain pure white background: exactly ONE bag, large in the middle, filling most of the square, the whole bag in view, seen from a three-quarter view, so that its shape reads clearly. Exactly one bag: no second one, no copies, and nothing else in the picture. The object has no eyes and no face. The background is plain white and empty, with at most a very soft shadow under the object. A wide empty white margin surrounds the bag on every side. The page text is \"bag\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "print": "pad",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit2/family-words/muse"
+}

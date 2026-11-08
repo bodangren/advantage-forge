@@ -1,0 +1,22 @@
+{
+  "id": "l2-w13-family-jump",
+  "text": "jump",
+  "pageText": "jump",
+  "use": "card",
+  "goal": "One picture of Sam jumping with both feet off the ground, large in the middle of a white card, so a child can name the action.",
+  "mustShow": [
+    "a child jumping with both feet off the ground"
+  ],
+  "deliverAs": "l2-w13-family-jump-v1.png",
+  "references": [
+    "out/storytime/l2/unit1/w05/muse/elements/sam-ref-render.png"
+  ],
+  "colorPrompt": "Compose one children's book picture from the reference picture. Picture 1 shows the boy Sam: the four 3D views at the bottom are the approved character, and the flat drawing at the top is only a hint, so copy the 3D look; ignore the gray background, the labels, and the shadow. Keep the soft, round, bright 3D render look of the pictures, not a 2D drawing and no outlines. The child keeps his chibi proportions: a big head and a small body. Hands are small, clean hands with five clear short fingers (four fingers and one thumb) when open, never fists unless stated, and a hanging hand shows relaxed, separate short fingers. Rendering errors to NOT copy from the character picture: a tiny dark tick mark or a pale flap at the outer corner of an eye, and a faint pale crease on a forehead. Each eye ends in a smooth, rounded corner; no eyelash flick. Clean eye corners, no streak on the forehead, no marks on the face. The ears are smooth, with one clean rounded rim. Each piece of clothing is one even color with no pale patches, no pale blotches at the shoulders, and no stains. Do not change the child's hair or clothes. Keep the child exactly as in the picture: Sam: a five-year-old boy with a chibi look (a big head and a small body), short brown hair with a side-swept fringe, big brown eyes, a big open-mouth smile, a red T-shirt with two white stripes across the chest, blue shorts, blue shoes. The picture: Sam jumps high in the air with both feet off the ground, knees bent, both arms up, and a big smile, on a plain pure white background; a small soft shadow on the ground below him shows that he is in the air. A square card picture on a plain pure white background: the child is large in the middle of the square, the whole body from head to shoes in view, with a wide empty white margin on every side. Exactly one child and nothing else in the picture. The page text is \"jump\" and is context only: do not draw any text. No text, no letters, no numbers, no logos. The picture is for young children and is rated G.",
+  "print": "pad",
+  "aspect": "1:1",
+  "printSize": [
+    1500,
+    1500
+  ],
+  "outDir": "out/storytime/l2/unit2/family-words/muse"
+}
