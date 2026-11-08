@@ -40,27 +40,27 @@ the code, the tests, and the pictures. The checker checks each phase at an immut
 blocked, with a trailing `deferred:<owner>` field. The owner changes `[b]` to `[~]` when the
 blocker clears and the task starts. The doctor counts only `[ ]`, `[~]`, and `[x]`.
 
-## Phase 0: Authoring
+## Phase 0: Authoring [checkpoint: 677ecaa]
 
-- [ ] Task 0: Author the track: specification, plan, metadata, index, spec review note, and the
+- [x] Task 0 (677ecaa0): Author the track: specification, plan, metadata, index, spec review note, and the
   registry entry. The creation commit has the message
   `measure(storytime_l2_unit2_pictures): create the track`.
 
-The light lane has no spec review gate. A second small commit marks Task 0 and puts the checkpoint on
-this heading.
+The light lane has no spec review gate. The second small commit marked Task 0 and put the checkpoint
+on this heading.
 
 ## Phase 1: Caps and the ten row (unpaid)
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`). Spend 0 USD.
 
-- [b] Task 1: Caps (D1). Add `U2_FW_RUN`, the kind `u2fw`, and the separate scans. Write the caps
+- [ ] Task 1: Caps (D1). Add `U2_FW_RUN`, the kind `u2fw`, and the separate scans. Write the caps
   18.33 and 14.66 in `U2_RUN`. Strip every test-only cap key in `cliGuardOptions`. Route `u2fw` specs
   in the muse tool, with no other change. Update `tests/storytime-u2-guards.test.ts` and add the
   family-word cases: the empty or invalid cap refusal for both kinds, the separate scans, the mixed
   call, and the CLI strip. Set `U2_FW_RUN.startTime` to the real UTC time of this task, cut to the
   minute. Run the GREEN test command. Commit with explicit paths and the message
   `feat(storytime_l2_unit2_pictures): unit 2 caps 18.33 and 0.29 USD`. The maker replies with the
-  guard commit and the start time. deferred:maker
+  guard commit and the start time.
 - [b] Task 2: The ten row (D2). Add the named exclusion rule to `scripts/storytime-u2-specs.mjs`,
   regenerate `docs/storytime/l2-unit2`, update `tests/storytime-u2-specs.test.ts` and the delivery
   test counts (182 new, 47 reuse: 45 and 2), rebuild the prep hand-off folder with `make-handoff.mjs`,
