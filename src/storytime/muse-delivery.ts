@@ -167,7 +167,7 @@ async function lstatOrNull(file: string): Promise<Stats | null> {
   }
 }
 
-async function parseApprovals(approvals: MuseApprovalList | string): Promise<MuseApprovalList> {
+export async function parseApprovals(approvals: MuseApprovalList | string): Promise<MuseApprovalList> {
   const source: unknown =
     typeof approvals === 'string' ? JSON.parse(await readFile(approvals, 'utf8')) : approvals;
   const parsed = MuseApprovalListSchema.safeParse(source);
@@ -205,7 +205,7 @@ function deliveredNames(
   return { colorFile: replace(plan.colorFile), lineFile: replace(plan.lineArtFile), version: entry.fileVersion };
 }
 
-async function inspectColorPrint(
+export async function inspectColorPrint(
   png: Buffer,
   expected: { width: number; height: number },
 ): Promise<PictureStructuralCheck> {
@@ -244,7 +244,7 @@ async function inspectColorPrint(
   }
 }
 
-async function readMuseFile(museRoot: string, name: string, rowId: string): Promise<Buffer> {
+export async function readMuseFile(museRoot: string, name: string, rowId: string): Promise<Buffer> {
   const file = path.join(museRoot, name);
   try {
     const link = await lstat(file);
@@ -260,7 +260,7 @@ async function readMuseFile(museRoot: string, name: string, rowId: string): Prom
 }
 
 /** Maps the review fields of one approval entry. The mapper adds no review that the entry lacks. */
-function mapReviews(item: {
+export function mapReviews(item: {
   row: Pick<PictureListRow, 'id' | 'text' | 'prompt'>;
   entry: Pick<MuseApprovalEntry, 'reviews'>;
   version: number;
@@ -459,7 +459,7 @@ export async function writeMuseDelivery(options: MuseDeliveryOptions): Promise<S
   return manifest;
 }
 
-interface DeliveryCopy {
+export interface DeliveryCopy {
   file: string;
   bytes: Buffer;
   sha256: string;
@@ -471,7 +471,7 @@ interface DeliveryCopy {
  * manifest, or a different file under a delivered name, stops the run before any write. A
  * symlink at a target stops the run too: the writer never follows a link.
  */
-async function commitDelivery(deliveryRoot: string, manifest: StorytimeManifest, copies: DeliveryCopy[]): Promise<void> {
+export async function commitDelivery(deliveryRoot: string, manifest: StorytimeManifest, copies: DeliveryCopy[]): Promise<void> {
   const manifestText = `${JSON.stringify(manifest, null, 2)}\n`;
   const manifestFile = path.join(deliveryRoot, MANIFEST_FILE);
   const manifestInfo = await lstatOrNull(manifestFile);
