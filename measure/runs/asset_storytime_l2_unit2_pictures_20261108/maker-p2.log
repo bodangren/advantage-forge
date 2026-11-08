@@ -163,3 +163,18 @@ role_base_sha: d99aa896d31d86b336c63026d7821115ecdba8bb (confirmed equal to HEAD
   9. l2-w13-check-row-dot
   10. l2-w13-d4-prompt-jump
 - Open finding: docs/storytime/l2-unit2/prompt-list.md was not regenerated after the spec changes. No change made. Report only.
+
+## Round 5 (Green · P2 T5 · colour try 2, 10 rows)
+
+- 2026-11-08T16:50:14Z: start. Spec commit b9ed6043. Colour pool `--concurrency 4`, timeout 3600000 ms, stop rule 0.03 USD per call. No stop.
+- Result: 10 ok, 0 failed, 0 refused. Every call cost 0.01 USD. Highest call cost 0.01 USD.
+- Spend: per-row costs.tsv sum for the 10 new m2 rows is 0.10 USD. Book total 1.92 USD before this round, 2.02 USD after it. The pool "running total" lines (0.23 to 0.31 USD) count per process and do not match the per-row logs; the per-row logs govern.
+- Spend record line appended to spend-record.txt (left 16.31 USD against the 18.33 USD book guard).
+- Judge batch `docs/storytime/l2-unit2/judge/prod/u2-r2-color.json`: 10 entries, kind color, try 2, judge copies in out/storytime-review/judge/prod-u2/.
+
+Spec edits in commit b9ed6043 (the orchestrator brief lists the reasons):
+
+- l2-w12-story-page-open-your-book-nan: Nan now holds the open picture book with both hands. Index 18 changed from "there is no book in the bag" to "Nan holds the open picture book". The bag reference `out/storytime-school-bag/views/three-quarter.png` stays in the reference list but no scene sentence uses it. Choice: the book in hands replaces the bag sentence.
+- l2-w11-story-page-the-den-is-on-dad: Dad had no reference. The Dad sheet `out/storytime/l2/unit1/w04/muse/elements/cast-dad-sheet-m1-color.png` is appended as the sixth reference. Picture 6 text added for Dad. Choice: appended, not renumbered, so existing picture numbers stay the same. References now 6.
+- Warning: regenerating `docs/storytime/l2-unit2` would undo these ten spec edits. Re-apply them from commit b9ed6043 before any regeneration.
+- Open finding (unchanged from Round 4): docs/storytime/l2-unit2/prompt-list.md was not regenerated after the spec changes. No change made in Round 5.

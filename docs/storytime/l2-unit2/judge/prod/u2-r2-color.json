@@ -1,0 +1,136 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-color-t2.png",
+    "id": "l2-w10-story-page-put-on-your-hat-pip",
+    "kind": "color",
+    "pageText": "Put on your hat, Pip!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily",
+      "nan",
+      "teacher-kim"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-cover-look-a-bus-color-t2.png",
+    "id": "l2-w15-cover-look-a-bus",
+    "kind": "color",
+    "pageText": "Look, a Bus!",
+    "use": "cover",
+    "mustShow": [
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily",
+      "nan",
+      "teacher-kim"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-here-color-t2.png",
+    "id": "l2-w11-story-page-here",
+    "kind": "color",
+    "pageText": "Here!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "nan",
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-ten-men-in-the-den-color-t2.png",
+    "id": "l2-w11-story-page-ten-men-in-the-den",
+    "kind": "color",
+    "pageText": "Ten men in the den!",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "10 men",
+      "1 den"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-the-den-is-on-dad-color-t2.png",
+    "id": "l2-w11-story-page-the-den-is-on-dad",
+    "kind": "color",
+    "pageText": "The den is on Dad!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "tom",
+      "mom",
+      "1 den"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-nan-color-t2.png",
+    "id": "l2-w12-story-page-open-your-book-nan",
+    "kind": "color",
+    "pageText": "Open your book, Nan.",
+    "use": "story-page",
+    "mustShow": [
+      "nan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-cover-look-at-me-color-t2.png",
+    "id": "l2-w13-cover-look-at-me",
+    "kind": "color",
+    "pageText": "Look at Me!",
+    "use": "cover",
+    "mustShow": [
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily",
+      "nan",
+      "teacher-kim"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-check-row-ten-color-t2.png",
+    "id": "l2-w10-check-row-ten",
+    "kind": "color",
+    "pageText": "ten",
+    "use": "check-row",
+    "mustShow": [
+      "ten"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-check-row-dot-color-t2.png",
+    "id": "l2-w13-check-row-dot",
+    "kind": "color",
+    "pageText": "dot",
+    "use": "check-row",
+    "mustShow": [
+      "dot"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-d4-prompt-jump-color-t2.png",
+    "id": "l2-w13-d4-prompt-jump",
+    "kind": "color",
+    "pageText": "jump",
+    "use": "d4-prompt",
+    "mustShow": [
+      "jump"
+    ]
+  }
+]

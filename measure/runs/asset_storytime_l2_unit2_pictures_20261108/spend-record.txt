@@ -13,3 +13,4 @@ utc_time	item	calls	pool_usd	item_total_usd	item_stop_usd	left_usd	note
 2026-11-08T15:37:30Z	book	1	0.01	1.83	18.33	16.50	row color pool w16: 1 ok, 0 failed, 0 refused
 2026-11-08T15:39:23Z	book	2	0.02	1.85	18.33	16.48	network-error retries at concurrency 1: mop and hen-hat both ok, first picture is try 2
 2026-11-08T15:55:53Z	book	7	0.07	1.92	18.33	16.41	row color pool group rows: 7 ok, 0 failed, 0 refused
+2026-11-08T16:51:16Z	book	10	0.10	2.02	18.33	16.31	row color try 2 pool, 10 rows: 10 ok, 0 failed, 0 refused; per-row costs.tsv sum 0.10
