@@ -1,0 +1,33 @@
+{
+  "group": "u2-r6-line-t3",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T20:17:55Z",
+  "results": [
+    {
+      "id": "l2-w09-story-page-tom-can-see-the-mop",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-tom-can-see-the-mop-line-t3.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "Dad's face on the sofa at the left: he wears round glasses; the cast sheet shows him without glasses",
+      "notes": "Question page: no. Items: Tom (1), a mop (1), Dad (1). Action: see (note only). Seen: Tom points at a mop that stands near a toy box; the mop has a long handle and a fringed head. The mop reads as a mop. Tom matches the cast. Dad sits on the sofa with round glasses that the cast sheet does not show. No gray, no text. The fail is the glasses on Dad."
+    },
+    {
+      "id": "l2-w12-card-hippo",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-hippo-line-t3.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: hippo (1). Seen: a round, smiling hippo with small ears, a wide muzzle with nostrils, and two feet. Reads as a hippo. Black on white, no gray, no text."
+    }
+  ],
+  "summary": {
+    "files": 2,
+    "pass": 1,
+    "fail": 1
+  }
+}

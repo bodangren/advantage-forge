@@ -1,0 +1,177 @@
+{
+  "group": "u2-r6-line-t2",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T20:17:55Z",
+  "results": [
+    {
+      "id": "l2-w09-card-nod",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-nod-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: nod (action, note only). Seen: a smiling girl with a ponytail and a star clip, head and body drawn, standing. Person drawn and visible. Black lines on white, no gray, closed lines. No text."
+    },
+    {
+      "id": "l2-w09-card-rice",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-rice-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: rice (1 bowl). Seen: a round bowl with a heap of small grains. Reads as a bowl of rice. The grain heap is busy but closed for coloring. Black on white, no gray, no text."
+    },
+    {
+      "id": "l2-w09-story-page-i-like-eggs-yum",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-eggs-yum-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: May (1), eggs (plural). Action: like, yum (note only). Seen: May with a ponytail and a star clip, smiling, holds an egg up in one hand; a second egg lies on a plate on the table. Two eggs are drawn and read as eggs. May matches the cast. Table, chairs, window, shelf are closed lines. No gray, no text."
+    },
+    {
+      "id": "l2-w10-story-page-put-on-your-t-shirt",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Ben (1), a T-shirt (1). Action: put on (note only). Seen: Ben, smiling, hands raised, wears a short-sleeve T-shirt; folded shirts lie in an open case. The T-shirt is drawn and reads as a T-shirt. Ben matches the cast (short messy hair, fringe). Blank mirror and case lid are only empty frames. No gray, no text."
+    },
+    {
+      "id": "l2-w11-check-row-elephant",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-check-row-elephant-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: elephant (1). Seen: a baby elephant with big ears, a trunk, a tusk, four legs and a small tail. Reads clearly as an elephant. Lines closed. No gray, no text."
+    },
+    {
+      "id": "l2-w11-story-page-where-is-sam-under-the-table",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-sam-under-the-table-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes, a where question that the text answers. Items: Nan (1), Sam (1), table (1). Seen: Nan with two round buns and Sam with short hair and a striped shirt crawl on a rug under one table. Both are under the table. Both match the cast. One table with four legs. A sofa, door, window, and toy box are in the room. Frame, no gray, no text."
+    },
+    {
+      "id": "l2-w12-card-crayon",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-crayon-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: crayon (1). Seen: an upright crayon with a pointed tip, a paper wrapper, and a flat base. Reads as a crayon. Black on white, no gray, no text."
+    },
+    {
+      "id": "l2-w12-card-ruler",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-ruler-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: ruler (1). Seen: a long flat bar with tick marks along both long edges. Reads as a ruler. The ticks have no numbers. Black on white, no gray, no text."
+    },
+    {
+      "id": "l2-w13-card-catch",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-catch-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: catch (action, note only). Seen: a boy holds a ball in both hands against his chest, hands and ball drawn. Persons and the ball are drawn and visible. Black on white, no gray, no text."
+    },
+    {
+      "id": "l2-w13-card-clap",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-clap-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: clap (action, note only). Seen: a smiling girl with a bow, in overalls, holds both hands together in front of her chest. Both hands are drawn and visible. Black on white, no gray, no text."
+    },
+    {
+      "id": "l2-w13-card-run",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-run-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: run (action, note only). Seen: a boy in a striped shirt in a running pose, one arm up, one leg back. Body, arms and legs are drawn and visible. Black on white, no gray, no text."
+    },
+    {
+      "id": "l2-w13-card-throw",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-throw-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: throw (action, note only). Seen: a girl with an open hand reaching out, and a plain ball in the air near her hand. Girl, hand and ball are drawn and visible. Black on white, no gray, no text."
+    },
+    {
+      "id": "l2-w13-story-page-pip-can-catch",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-pip-can-catch-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), Sam, May, Ben, Mia, Pat, Lily, Nan (7 children). Action: catch (note only). Seen: a puppy with floppy ears jumps in the air and holds a ball at its front paws and mouth. Seven children stand in a row and clap: a short-haired boy (Ben), a girl with a long hair line at the side (May), a striped-shirt boy (Sam), a girl with two buns and a star on her shirt (Nan), a boy with messy tufts (Pat), a girl with a bob, a fringe and a bow (Lily), a girl with shoulder-length hair, a bow and overalls (Mia). All seven are drawn and match the cast. Small mark: the diagonal line over May's head is hard to read at this size (ponytail or playground post). Not a defect. Playground, sun and clouds are closed lines. No gray, no text."
+    },
+    {
+      "id": "l2-w14-card-cold",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-cold-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: cold (weather word). Seen: a wool hat with a pompom, a scarf, and a glove on a chair. Reads as winter clothes, so as cold. Black on white, no gray, no text."
+    },
+    {
+      "id": "l2-w14-card-rainy",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-rainy-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: rainy. Seen: a cloud with many raindrops that fall on a small patch of grass and flowers. Reads clearly as rain. Black on white, no gray, no text."
+    },
+    {
+      "id": "l2-w14-card-windy",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-windy-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: windy. Seen: a bent tree with leaves that blow to the right. Reads as wind. Many small leaves, but lines are closed. Black on white, no gray, no text."
+    },
+    {
+      "id": "l2-w15-card-helicopter",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-card-helicopter-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Item: helicopter (1). Seen: a helicopter with a round body, a round window, a top rotor, a tail with a small rotor, and landing skids. Reads as a helicopter. Black on white, no gray, no text."
+    },
+    {
+      "id": "l2-w15-story-page-pip-has-a-tag",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-pip-has-a-tag-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), a tag (1). Seen: a sitting puppy with floppy ears, a collar, and one small round tag at the front of the collar. The tag is drawn and visible. Pip matches the cast. Room with chair, window, toy box, duck, door. No gray, no text."
+    }
+  ],
+  "summary": {
+    "files": 18,
+    "pass": 18,
+    "fail": 0
+  }
+}
