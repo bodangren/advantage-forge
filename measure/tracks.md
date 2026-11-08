@@ -349,6 +349,7 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
 
 - [x] Storytime Level 2 unit 2 picture prep (unpaid), completed 2026-11-08; one Muse spec for each of the 229 unit 2 rows (unit 1 look, hair and clothes only), the element map, 10 new element sheet specs with 13 reused Forge element views and 24 reused unit 1 element files, and a hand-off folder with a prompt list, specs, and a MANIFEST with checksums; spend 0 USD
   *Link: [./archive/asset_storytime_l2_unit2_prep_20261108/](./archive/asset_storytime_l2_unit2_prep_20261108/)*
+  *Storytime Level 2 unit 2 picture prep (unpaid): one Muse spec for each of the 229 unit 2 rows (unit 1 look, hair and clothes only), the element map, 10 new element sheet specs with 13 reused Forge element views and 24 reused unit 1 element files, and a hand-off folder with a prompt list, specs, and a MANIFEST with checksums; spend 0 USD*
 
 - [x] Storytime Level 2 card line-art retry (ham and family), completed 2026-11-07; family line art delivered (try 4, 12 px) with Sonnet judge evidence (model evidence, not acceptance); ham line art failed after 2 more tries, best try named, ham color file added for the greyscale fallback; spend 0.03 USD.
   *Link: [./archive/asset_storytime_l2_card_line_retry_20261107/](./archive/asset_storytime_l2_card_line_retry_20261107/)*
