@@ -135,6 +135,9 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Chibi Sprouts, release 1 art**
   *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
 
+- [~] **Track: Storytime Level 2 unit 2 picture prep (unpaid)**
+  *Link: [./tracks/asset_storytime_l2_unit2_prep_20261108/](./tracks/asset_storytime_l2_unit2_prep_20261108/)*
+
 ## Games
 
 - [x] **Track: Player avatar system: base, equipment fit, pack, composer**
