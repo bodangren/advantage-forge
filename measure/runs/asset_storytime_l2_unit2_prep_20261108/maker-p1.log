@@ -13,3 +13,28 @@ Spend: 0 USD. No Muse call, no OpenRouter call, no image API call.
   63d415000eca9d6be1a6ad533c12ff81e127cd2c76ffac339697f91b99f754ec, which matches the
   specification. Continue.
 - 10:32 Step 0: plan markers, then the commit.
+
+## Result
+
+- 10:44 GREEN test passed: 4 tests, exit 0 (heavy-run).
+- 10:47 Hand-off folder built and checked: 257 files OK in `sha256sum -c MANIFEST.txt`, 0 FAILED.
+- 10:50 Costs equal: `costs-after.txt` equals `costs-before.txt`.
+- 10:51 Commits:
+  - f02e1e28 the unit 2 spec maker, the element map, the row specs
+  - 7ff505ef the hand-off script and the run records
+  - a02c7178 the plan evidence
+- Open items: none for Phase 1. The phase acceptance gate waits for the checker.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_unit2_prep_20261108
+phase: Phase 1: Prompt drafts, renders, and hand-off
+commits: f11b2a10, f02e1e28, 7ff505ef, a02c7178
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-u2-specs.test.ts --maxWorkers=1' -> 1 file, 4 tests, pass (exit 0); sha256sum -c MANIFEST.txt in the hand-off folder -> 257 OK, 0 FAILED
+files_changed: scripts/storytime-u2-specs.mjs; tests/storytime-u2-specs.test.ts; docs/storytime/l2-unit2/** (elements.json, rows.json, prompt-list.tsv, prompt-list.md, 9 muse-elements specs, 229 row specs); measure/runs/asset_storytime_l2_unit2_prep_20261108/**; measure/tracks/asset_storytime_l2_unit2_prep_20261108/plan.md
+plan_updates: Task 0 [x] e010c5f6; Phase 0 checkpoint e010c5f; Tasks 1 to 6 [x] with f02e1e28 or 7ff505ef; Phase 1 gate [b] deferred:checker; Closeout [b] deferred:closeout
+known_failures: none
+handoff: Hand-off folder /home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep with 258 files. 229 rows: 181 new, 48 reuse. 9 new element sheets. 0 renders made, 14 Forge view files reused, 24 unit 1 element files reused. Cost estimate 14.57 USD for the paid run, 0 USD spent now. The checker runs the test command of Task 3, sha256sum -c MANIFEST.txt, the costs comparison, and the FR-4, FR-10, and FR-12 greps. The plan markers for the phase gate and closeout are [b] with a deferred owner.
+dispositions: none
+END_MEASURE_AGENT_RESULT
