@@ -95,6 +95,7 @@ runs the frozen judge and the calibration controls. The stop is 18.33 USD.
   then the judge for each week. Retry a failed row up to 3 color tries in total, with a second judge
   before a fail stands. Log each pool in the spend record. At 14.66 USD record the total and the
   projection once. The task may span rounds. Round 3 (a24f3558 generator): the 7 HTTP 400 group rows reran as color try 2 (7 ok, 0.07 USD). Judge batch u2-r1-color-group-t2 is built, not judged. deferred:maker
+  - Real maker models (orchestrator, from the OpenCode session store model-switched rows, 2026-11-09): the requested route opencode/deepseek-v4.1-flash-free#high fell back silently to claude-code/claude-haiku-5-5 at 22:41, 22:44, and 23:40 ICT on 2026-11-08. Commits on DeepSeek: 9ba5f0e1, a1b63217, 01b97374, ff245b58. Commits made fully or partly on Haiku: 9718baa5, a24f3558, f7138831, bd741797, b9ed6043, 179f438a. Phase 1 (57fe034e to d99aa896) ran fully on DeepSeek. From round 6 the maker runs on minimax-cn-coding-plan/MiniMax-M3.1-Flash. The light lane has no Red. The Phase 2 checker runs on a family other than Anthropic, DeepSeek, and MiniMax. The frozen judge stays claude-code/claude-sonnet-5-5#high by the judge kit rule of 2026-11-04; it judges the Muse pictures, not the maker code.
 - [b] Task 6: Line pools and judges (D4, D5). Run line calls with `--tries 1` from each passing color,
   then the judge. Retry up to 3 line tries in total, with a second judge before a fail stands. Name
   each row with no pass and its best try. deferred:maker
