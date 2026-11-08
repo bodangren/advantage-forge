@@ -57,6 +57,38 @@ describe('unit 2 Muse specs', () => {
     }
   });
 
+  it('REF10: every row and element spec holds at most 10 references', () => {
+    for (const { spec } of specs) {
+      expect(spec.references.length, spec.id).toBeLessThanOrEqual(10);
+    }
+    for (const el of Object.values(elements.elements as Record<string, any>)) {
+      if (!el.spec) continue;
+      const elSpec = read(el.spec);
+      expect(elSpec.references.length, elSpec.id).toBeLessThanOrEqual(10);
+    }
+  });
+
+  it('REF10-group: a row that uses the group sheet has no separate pat, may, sam, or mia render', () => {
+    const groupPath = 'out/storytime/l2/unit1/w01/muse/elements/cast-group-a-2.png';
+    const fourSources = ['pat', 'may', 'sam', 'mia'].map((k) => elements.castPeople[k].source);
+    const grouped = specs.filter(({ spec }: any) => spec.references.includes(groupPath));
+    expect(grouped.map(({ spec }: any) => spec.id).sort()).toEqual([
+      'l2-w09-cover-yum',
+      'l2-w10-story-page-put-on-your-hat-pip',
+      'l2-w11-cover-where-is-pip',
+      'l2-w12-cover-open-your-book',
+      'l2-w13-story-page-pip-can-catch',
+      'l2-w15-cover-look-a-bus',
+      'l2-w15-story-page-look-pip-on-a-bike',
+    ].sort());
+    for (const { spec } of grouped) {
+      for (const source of fourSources) expect(spec.references, `${spec.id}: ${source}`).not.toContain(source);
+      expect(spec.colorPrompt, spec.id).toContain(
+        'shows four approved 3D children side by side, left to right: Pat, May, Sam, and Mia',
+      );
+    }
+  });
+
 
   it('R1: a possessive place name is not a cast mention', () => {
     const expected: Record<string, string[]> = {

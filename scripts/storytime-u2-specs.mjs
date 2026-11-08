@@ -141,6 +141,33 @@ function referencesFor(row) {
   return refs;
 }
 
+// ---- G1: at most 10 references through the unit 1 group sheet (2026-11-08) -------------------
+// The Muse reference cap is 10 images (HTTP 400 above it). When a row has more than 10
+// references and its cast holds Pat, May, Sam, and Mia, the four separate renders become one
+// approved group sheet at the position of the first of them. Every other reference stays.
+const GROUP_RULE = {
+  date: '2026-11-08',
+  keys: ['pat', 'may', 'sam', 'mia'],
+  path: 'out/storytime/l2/unit1/w01/muse/elements/cast-group-a-2.png',
+  sentence: 'shows four approved 3D children side by side, left to right: Pat, May, Sam, and Mia (ignore the gray background and the shadow; copy only the children).',
+};
+
+function groupReferences(refs) {
+  const sources = GROUP_RULE.keys.map((k) => elements.castPeople[k] && elements.castPeople[k].source);
+  if (refs.length <= 10 || !sources.every((s) => s && refs.includes(s))) return refs;
+  const out = [];
+  let placed = false;
+  for (const ref of refs) {
+    if (!sources.includes(ref)) {
+      out.push(ref);
+    } else if (!placed) {
+      out.push(GROUP_RULE.path);
+      placed = true;
+    }
+  }
+  return out;
+}
+
 function hasNoTextSentence(p) {
   return /no text, no letters, no numbers/i.test(p);
 }
@@ -275,12 +302,12 @@ const list = [];
 for (const row of rowsDoc.rows) {
   const p = pictures.find((x) => x.id === row.id);
   if (!p) throw new Error(`row not in pictures: ${row.id}`);
-  const refs = referencesFor(row);
+  const refs = groupReferences(referencesFor(row));
   const sentences = [];
   let n = 0;
   for (const ref of refs) {
     n += 1;
-    const s = setSentence(ref) || sentenceFor(ref, row);
+    const s = ref === GROUP_RULE.path ? GROUP_RULE.sentence : setSentence(ref) || sentenceFor(ref, row);
     if (!s) throw new Error(`no picture sentence for ${ref} (row ${row.id})`);
     sentences.push(`Picture ${n} ${s}`);
   }
