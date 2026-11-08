@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "role": "closeout",
+  "status": "pass",
+  "summary": "Closeout of asset_storytime_l2_unit2_tooling_20261108. The track is archived at measure/archive/asset_storytime_l2_unit2_tooling_20261108, the registry entry moved to the Archived Tracks section, metadata status is done with completed 2026-11-08, and the doctor names this track in 0 lines. The GREEN command passed in real mode (13 files, 209 tests, exit 0). The checker probe output of 96 PNG files and 44 MB left the repository, and no PNG or JPG remains in the run folder.",
+  "audited_head_sha": "473b6ff3e2262258e55b079f2978dd3f69c31b97",
+  "role_base_sha": "a0b56846f5c616911d6d95329f9a412c5b3bc1d1",
+  "track_base_sha": "f11c0c24263f7b6995a7970d7bc3242ac49f26a9",
+  "track_final_sha": "a0b56846f5c616911d6d95329f9a412c5b3bc1d1",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F6 [Major] of acceptance-p1-a0b5684 stays open for the PM: the unit 1 reuse source l2-w06-check-row-ten-line-v2.png has 10 px lines, below the 12 px minimum, so the writer stops on l2-w10-check-row-ten and l2-w11-check-row-ten. The closeout escalated it with the default: l2-w10-check-row-ten becomes a new row of the paid run and l2-w11-check-row-ten reuses it (estimate 182 x 0.080 + 10 x 0.01 = 14.66 USD); the rows.json change is the first task of the paid-run track.",
+    "F2 of the earlier checker run: the checker shell could not run heavy-run.sh. The orchestrator jr-green role gate ran the GREEN command at a0b56846 with PASS at 14:40 ICT, and the closeout reran it in real mode at 14:56 ICT with 13 files and 209 tests passed.",
+    "The doctor holds 13 structural errors: 6 started tasks of other tracks, 5 missing registry links of other tracks, and 2 stale generated facts. None names this track. The generator did not run because measure/generated holds foreign changes.",
+    "The typecheck keeps 38 known old errors in old asset and games files, with 0 errors in src/storytime, scripts/storytime-*, and tests/storytime-*."
+  ],
+  "evidence": [
+    "HEAD check at start: git rev-parse HEAD = a0b56846f5c616911d6d95329f9a412c5b3bc1d1, equal to role_base_sha.",
+    "Final acceptance: not run, because the PM put the whole track on the light lane on 2026-11-03. The phase acceptance result is measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-p1-a0b5684.json with status pass at a0b56846. The result acceptance-p1-fa05dfe.json stays as the failed record.",
+    "Plan state: every task line is [x] with a commit SHA on its first line; no [b], [~], or [ ] task line remains; the Closeout line has no deferred field.",
+    "Metadata: status done, completed 2026-11-08, actual_tasks 6, and the deviation note records the light lane, the 168 guard probe rows and 10 CLI probe cases, the 47 unit 1 reuse pairs and 1 earlier-row reuse, the F1 to F5 fix in r3, the F6 escalation, the server incident, and 0 USD spend.",
+    "Archive: git mv moved measure/tracks/asset_storytime_l2_unit2_tooling_20261108 to measure/archive/asset_storytime_l2_unit2_tooling_20261108. The registry entry moved under ## Archived Tracks in the three-line form of its Link line and description; the entry is staged through a blob so the foreign Contents hunk stays out.",
+    "Doctor: bash measure/doctor.sh gives exit 1 with 13 error lines and 0 lines that name asset_storytime_l2_unit2_tooling_20261108.",
+    "Secret scan: grep -rnE 'sk-[A-Za-z0-9]{20}|Bearer [A-Za-z0-9]{20}|OPENROUTER_API_KEY=' measure/runs/asset_storytime_l2_unit2_tooling_20261108 gives exit 1 with no hit.",
+    "Artifact cleanup: probe-earlier-row/ (96 PNG files, 44 MB) moved to /tmp/opencode/u2-tooling-probe-earlier-row/, and the empty fakehome/ folder is removed. find for PNG and JPG files in the run folder gives 0 files.",
+    "Track-path check (A9): grep for asset_storytime_l2_unit2_tooling_20261108 in tests/, scripts/, src/, and docs/ gives no hit, so the archive move breaks no test.",
+    "No Muse, OpenRouter, or other paid call ran. U2_RUN.capUsd stays null. No text claims the Go, a cap approval, or a picture acceptance."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-u2-guards.test.ts tests/storytime-u2-judge-batch.test.ts tests/storytime-u2-delivery.test.ts tests/storytime-u2-specs.test.ts tests/storytime-card-guards.test.ts tests/storytime-card-line-retry.test.ts tests/storytime-muse-attempts.test.ts tests/storytime-judge-batch.test.ts tests/storytime-muse-delivery.test.ts tests/storytime-muse-delivery-adversarial.test.ts tests/storytime-card-adversarial.test.ts tests/storytime-family-word-judge.test.ts tests/storytime-family-word-delivery.test.ts --maxWorkers=1'",
+    "find measure/runs/asset_storytime_l2_unit2_tooling_20261108 -iname '*.png' -o -iname '*.jpg'",
+    "grep -rnE 'sk-[A-Za-z0-9]{20}|Bearer [A-Za-z0-9]{20}|OPENROUTER_API_KEY=' measure/runs/asset_storytime_l2_unit2_tooling_20261108",
+    "bash measure/doctor.sh",
+    "python3 -m json.tool measure/tracks/asset_storytime_l2_unit2_tooling_20261108/metadata.json",
+    "python3 -m json.tool measure/archive/asset_storytime_l2_unit2_tooling_20261108/automation-supervisor-closeout-manifest.json",
+    "git diff --cached --stat; git diff --cached --name-only"
+  ],
+  "changed_files": [
+    "measure/archive/asset_storytime_l2_unit2_tooling_20261108/plan.md",
+    "measure/archive/asset_storytime_l2_unit2_tooling_20261108/metadata.json",
+    "measure/archive/asset_storytime_l2_unit2_tooling_20261108/automation-supervisor-closeout-manifest.json",
+    "measure/tracks.md",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-p1-a0b5684.json",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-p1-a0b5684.log",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-p1-fa05dfe.json",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-p1-fa05dfe.log",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-cliopts.mjs",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-earlier-row.mts",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-guard.mjs",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-reuse-files.mjs",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/acceptance-probe-reuse.mjs",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/closeout-a0b5684.json",
+    "measure/runs/asset_storytime_l2_unit2_tooling_20261108/closeout-a0b5684.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high"
+}

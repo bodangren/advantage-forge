@@ -1,0 +1,88 @@
+# Closeout: asset_storytime_l2_unit2_tooling_20261108
+
+Date: 2026-11-08
+Role: measure-closeout
+Role base SHA: a0b56846f5c616911d6d95329f9a412c5b3bc1d1
+Home: measure/runs/asset_storytime_l2_unit2_tooling_20261108/
+
+## 1. Entry check
+
+- `git rev-parse HEAD` = a0b56846f5c616911d6d95329f9a412c5b3bc1d1. It equals role_base_sha, so the closeout ran.
+- The phase check passed: acceptance-p1-a0b5684.json has status pass at a0b56846. The earlier result
+  acceptance-p1-fa05dfe.json stays as the failed record.
+- The track was on the PM light lane of 2026-11-03. It has no final acceptance task.
+
+## 2. Pre-closeout task state
+
+- No `[~]` task line remained.
+- No `[ ]` task line remained.
+- No `[b]` task line remained. The Phase 1 gate and the Closeout line became `[x]` with a commit SHA
+  on the first line.
+- Task count: 6 lines start with `- [x] Task` in plan.md. metadata actual_tasks is 6.
+
+## 3. Step 0: artifact cleanup
+
+- `measure/runs/asset_storytime_l2_unit2_tooling_20261108/probe-earlier-row/` held 96 PNG files
+  (44 MB). It moved to `/tmp/opencode/u2-tooling-probe-earlier-row/`.
+- The empty `fakehome/` folder is removed with rmdir.
+- `find measure/runs/asset_storytime_l2_unit2_tooling_20261108 -iname '*.png' -o -iname '*.jpg'`
+  prints nothing.
+
+## 4. Planning files
+
+- plan.md: the Status line now reads `delivered (2026-11-08)` for the unpaid tools. The Phase 1 gate
+  records acceptance-p1-fa05dfe (fail) and acceptance-p1-a0b5684 (pass), the F1 to F5 fix in r3
+  (258c1b93), the F2 GREEN gate at a0b56846 (PASS, 14:40 ICT), and the F6 escalation with the
+  default. The Closeout line records the archive.
+- metadata.json: status done, completed 2026-11-08, updated_at 2026-11-08T07:45:28Z, actual_tasks 6,
+  and the deviation note appended. `python3 -m json.tool` passed.
+- automation-supervisor-closeout-manifest.json: same keys as the prep manifest.
+
+## 5. Archive and registry
+
+- `git mv measure/tracks/asset_storytime_l2_unit2_tooling_20261108
+  measure/archive/asset_storytime_l2_unit2_tooling_20261108`.
+- measure/tracks.md: the active entry (Track line, Link line, and one blank line) is removed. The
+  three-line archived form sits first under `## Archived Tracks`. The entry is staged through a blob
+  (32d3c52c) so the foreign `## Contents` hunk stays out of the index. `git diff --cached` showed
+  only the two closeout hunks, and `git diff` showed only the Contents hunk.
+- Archive commit: 30b097fece58d8fc69949a21db525d020daf0f02. It holds 16 files: 6 under the archive
+  path, 9 under the run folder, and measure/tracks.md.
+- Manifest correction commit: 473b6ff3e2262258e55b079f2978dd3f69c31b97. The doctor gave 13 error
+  lines after the archive (not 14), so the PROJECT_LINT gate text was corrected.
+
+## 6. Gates
+
+- PROJECT_TESTS: the GREEN command ran in real mode through heavy-run.sh at HEAVY_MIN_AVAIL_MB=1500
+  at 14:56 ICT: 13 files passed, 209 tests passed, exit 0, 58.94 s.
+- PROJECT_LINT: `bash measure/doctor.sh` gives exit 1 with 13 error lines (6 started tasks of other
+  tracks, 5 missing registry links of other tracks, 2 stale generated facts). 0 lines name
+  asset_storytime_l2_unit2_tooling_20261108.
+- SECRET_SCAN: the grep gives exit 1 with no hit.
+- Artifact check: 0 PNG and JPG files in the run folder.
+- A9: grep for the track id in tests/, scripts/, src/, and docs/ gives no hit, so no test reads the
+  track path.
+- The generator did not run because measure/generated holds foreign changes.
+
+## 7. Open items
+
+- F6 [Major] of acceptance-p1-a0b5684 is escalated to the PM with the default: l2-w10-check-row-ten
+  becomes a new row of the paid run and l2-w11-check-row-ten reuses it (estimate 182 x 0.080 + 10 x
+  0.01 = 14.66 USD).
+- The paid run waits for Daniel's Go and the PM cap write. U2_RUN.capUsd stays null.
+- No text claims the Go, a cap approval, or a picture acceptance.
+
+## 8. Dispositions
+
+- Findings that need a disposition: none. F1 to F5 are FIXED (r3, 258c1b93). F6 is ESCALATED to the
+  PM with a default. F2 is evidence, not a finding, because the jr-green role gate ran the GREEN
+  command.
+
+MEASURE_AGENT_RESULT
+role: closeout
+track: asset_storytime_l2_unit2_tooling_20261108
+status: pass
+commits: 30b097fece58d8fc69949a21db525d020daf0f02 473b6ff3e2262258e55b079f2978dd3f69c31b97
+audited_head_sha: 473b6ff3e2262258e55b079f2978dd3f69c31b97
+gate: GREEN 13 files / 209 tests pass; doctor 13 errors, 0 lines name this track
+dispositions: none
