@@ -76,3 +76,11 @@ The GREEN command gives 14 files and 232 tests, and the run exits 0. The typeche
 Every error of that run is outside the storytime paths, in assets/*.ts, tests/games/castle-defense,
 and tests/part.test.ts.
 The new test file holds 17 tests: 6 spec tests, 5 judge tests, and 6 delivery tests.
+
+## Task 10 round 1: the app color pool (2026-11-09)
+
+Step A (0 USD): the 18 spec files of docs/storytime/l2-unit2/family-words/ exist. The app folder
+out/storytime/l2/unit2/family-words/ does not exist, so it holds no costs.tsv and no row since
+U2_FW_RUN.startTime: the app spend is 0.00 USD of the 0.29 stop.
+The worst case of the pool: 18 calls x 0.01 USD + 0.00 USD + 0.03 USD margin = 0.21 USD. That is
+under the 0.23 USD report point and under the 0.29 USD stop, so the pool runs.

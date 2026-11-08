@@ -154,13 +154,12 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   - The 18 specs: commit 5ae7e8f8. The judge option `--unit2-family-words`: commit 19a0a8f4. The
     writer `deliverMuseUnit2FamilyWords`: commit b20c9ff9. GREEN: 14 files and 232 tests passed.
     Typecheck: 0 errors in src/storytime, scripts/storytime-*, and tests/storytime-*.
-- [b] Task 10: Color pool, judges, delivery, and hand-off (D5, D6). Run color try 1 for the 18 words
+- [~] Task 10: Color pool, judges, delivery, and hand-off (D5, D6). Run color try 1 for the 18 words
   (concurrency 4), then the judge at 360 px. Retry a failed word up to 3 color tries in total, with a
   second judge before a fail stands. Log each pool in the spend record. At 0.23 USD record the total
   and the projection once. Deliver to `out/storytime/l2/unit2/family-words/delivery-muse-v1/` and
   build `/home/daniebo/Desktop/handoff/storytime-l2u2-family-word-pictures/` with the PNG files,
   `manifest.json`, `MANIFEST.txt`, and a contact sheet. Run `sha256sum -c MANIFEST.txt` (0 FAILED).
-  deferred:maker
 - [b] Task 11: Final PM report (D8). Complete `pm-report.md`: the first line `Status: done.` (or
   `Status: blocked.`), the spend for each item with calls and stop, the rows done, the failures with
   the best try, the delivery and hand-off folders, and `Facts changed:`. deferred:maker
