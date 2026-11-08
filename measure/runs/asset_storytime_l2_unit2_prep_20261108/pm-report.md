@@ -7,10 +7,15 @@ Status: done.
 - Rows: 229. New rows: 181. Reuse rows (D3): 48.
 - New element sheets: 9 (draft specs in `specs/elements/`).
 - Forge renders reused: 14 view files. Forge renders made now: 0. Every named asset had a views file.
-- Unit 1 element files reused (not copied): 24, with SHA-256 in `elements-reused.tsv`.
+- Unit 1 element files reused (not copied): 23, with SHA-256 in `elements-reused.tsv`.
 - Cost estimate for the paid run: 181 x 0.080 USD plus 9 x 0.01 USD = 14.57 USD.
 - Spend now: 0 USD. `costs-after.txt` equals `costs-before.txt`.
-- Spec test: 4 tests pass.
+- Spec test: 10 tests pass (round r2 adds the R1 to R8 checks).
+
+## Round r2
+
+Orchestrator findings R1 to R8 are fixed, all FIX. The counts do not change except the unit 1
+element files reused (23 now). The hand-off folder is rebuilt.
 
 ## Open questions with defaults
 

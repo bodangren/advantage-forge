@@ -38,3 +38,33 @@ known_failures: none
 handoff: Hand-off folder /home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep with 258 files. 229 rows: 181 new, 48 reuse. 9 new element sheets. 0 renders made, 14 Forge view files reused, 24 unit 1 element files reused. Cost estimate 14.57 USD for the paid run, 0 USD spent now. The checker runs the test command of Task 3, sha256sum -c MANIFEST.txt, the costs comparison, and the FR-4, FR-10, and FR-12 greps. The plan markers for the phase gate and closeout are [b] with a deferred owner.
 dispositions: none
 END_MEASURE_AGENT_RESULT
+
+## Round r2 (remediation)
+
+- Findings R1 to R8: all FIX.
+- R1: cast detection drops a possessive place name. The 8 named rows no longer load a person.
+- R2: a row with the Tom living room set carries the leave-out sentence for the table and pot.
+- R3: no "empty empty"; an outdoor set says "keep the same place".
+- R4: a class C row with no reference uses the words-only object form and has a goal.
+- R5: dad and girl use the person form; foot uses the body-part form.
+- R6: the card keep line names the cast person, never the card word.
+- R7: a new element sheet copies the unit 1 element style sentences and has no "unit 1 element pictures".
+- R8: the test grows from 4 to 10 checks.
+- Test: 10 tests pass, exit 0 (heavy-run).
+- Hand-off folder rebuilt: 257 files OK, 0 FAILED.
+- Costs equal again.
+- Commit: 71c310c7.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_unit2_prep_20261108
+phase: Phase 1: Prompt drafts, renders, and hand-off (round r2)
+commits: 71c310c7 and the plan and run-record commit after it
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-u2-specs.test.ts --maxWorkers=1' -> 1 file, 10 tests, pass (exit 0); sha256sum -c MANIFEST.txt -> 257 OK, 0 FAILED
+files_changed: scripts/storytime-u2-specs.mjs; tests/storytime-u2-specs.test.ts; measure/runs/asset_storytime_l2_unit2_prep_20261108/build-maps.mjs; docs/storytime/l2-unit2/**; measure/runs/asset_storytime_l2_unit2_prep_20261108/costs-after.txt; measure/runs/asset_storytime_l2_unit2_prep_20261108/pm-report.md; measure/tracks/asset_storytime_l2_unit2_prep_20261108/plan.md
+plan_updates: Task 3 gains the line "Orchestrator findings R1 to R8 (2026-11-08): FIX in round r2, commit 71c310c7."
+known_failures: none
+handoff: Hand-off folder rebuilt with 258 files. Rows: 229, 181 new, 48 reuse. 9 new element sheets. 0 renders made, 14 Forge view files reused, 23 unit 1 element files reused. Cost estimate 14.57 USD, 0 USD spent. The checker reruns the 10-test command, sha256sum -c MANIFEST.txt, the costs comparison, and the FR-4, FR-10, FR-12 greps.
+dispositions: R1=FIX; R2=FIX; R3=FIX; R4=FIX; R5=FIX; R6=FIX; R7=FIX; R8=FIX
+END_MEASURE_AGENT_RESULT
