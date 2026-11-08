@@ -1,0 +1,42 @@
+# Phase acceptance re-check log: Phase 1, asset_storytime_l2_unit2_prep_20261108 (after round r6)
+
+Role: measure-phase-acceptance (light lane checker), session r3. Model: claude-code/claude-sonnet-5-5#high.
+audited_head_sha and role_base_sha: 91de1d16922ed9f132cdd16ae4654f04c39d45c8. phase_base_sha: e010c5f62cb5765b0c888a9ba1949b1a2801e00e.
+Earlier results acceptance-p1-ab68f98.* and acceptance-p1-0c76da0.* stay bound to their heads.
+Result JSON: measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-91de1d1.json
+
+## Verdict: PASS (0 Blockers, 2 Nits)
+
+Earlier findings at the new HEAD:
+- F1 fixed: doll, duck, elephant, horse, goat have a friendly face with two eyes in the colorPrompt, and eye outlines with solid pupils in the linePrompt. No "no eyes and no face" in these rows. The van keeps the object rule. dad, girl, foot keep the person form.
+- F6 fixed: element id prop-hen-sheet equals its file name and the output name; the six hen references match; 0 dangling references; the FR-3 test reads each element spec.
+- F7 fixed: pm-report counts say 24.
+
+Gates (all pass):
+- GREEN test via heavy-run.sh with HEAVY_MIN_AVAIL_MB=1500: 1 file, 16 tests passed, exit 0.
+- sha256sum -c MANIFEST.txt: 257 OK, 0 FAILED. Folder files equal the MANIFEST entries (258 files).
+- costs-before and costs-after hash lines equal; they equal the current tree. 0 USD spent.
+- Frozen paths and no PNG or JPG since e010c5f6: clean.
+- README, pm-report, and prompt list agree: 229 rows, 181 new, 48 reuse, 10 element sheets, 14.58 USD.
+
+Nits:
+- F8: the five face-bearing line prompts reuse the cat sentences (ears of the duck, tail, legs); a duck or a doll has no ears.
+- F9: the maker ran one GREEN test with HEAVY_MIN_AVAIL_MB=1200 after a queue time-out; the checker run with 1500 passed.
+
+## Check scripts (read only, kept in measure/runs)
+
+acceptance-p1-ab68f98-check.mjs to -check7.mjs, acceptance-p1-0c76da0-check8.mjs, acceptance-p1-91de1d1-check9.mjs
+
+MEASURE_AGENT_RESULT
+role: measure-phase-acceptance
+status: complete
+track: asset_storytime_l2_unit2_prep_20261108
+phase: Phase 1: Prompt drafts, renders, and hand-off (re-check after round r6)
+commits: none
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-u2-specs.test.ts --maxWorkers=1' -> 1 file, 16 tests, pass (exit 0); sha256sum -c MANIFEST.txt -> 257 OK, 0 FAILED; costs-after equals costs-before and the current tree
+files_changed: measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-91de1d1.json, acceptance-p1-91de1d1.log, acceptance-p1-91de1d1-check9.mjs
+plan_updates: none
+known_failures: none (2 Nits: F8 cat-text reuse in five face line prompts; F9 maker test run at 1200 MB)
+handoff: Phase 1 acceptance passes at 91de1d1. The orchestrator can close the phase gate for the light lane and start closeout. The paid run stays behind Daniel's Go. The Nits need no fix before the paid run; F8 may be tidied if a row fails the judge.
+dispositions: none
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,44 @@
+# Phase acceptance re-check log: Phase 1, asset_storytime_l2_unit2_prep_20261108 (after round r5)
+
+Role: measure-phase-acceptance (light lane checker), session r2. Model: claude-code/claude-sonnet-5-5#high.
+audited_head_sha and role_base_sha: 0c76da07806a12d33ff11819c002bc81f177e8be. phase_base_sha: e010c5f62cb5765b0c888a9ba1949b1a2801e00e.
+The earlier result acceptance-p1-ab68f98.* stays bound to ab68f981.
+Result JSON: measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-0c76da0.json
+
+## Verdict: FAIL (2 Blockers, 1 Nit)
+
+Regression gates (all pass):
+- GREEN test via heavy-run.sh: 1 file, 14 tests passed, exit 0.
+- sha256sum -c MANIFEST.txt: 257 OK, 0 FAILED. Folder files equal the MANIFEST entries (258 files in total).
+- costs-before and costs-after hash lines equal; they equal the current tree. 0 USD spent.
+- Frozen paths and no PNG or JPG since e010c5f6: clean.
+- README, pm-report, and prompt list agree: 229 rows, 181 new, 48 reuse, 10 element sheets, 14.58 USD.
+
+Earlier findings at the new HEAD:
+- F1 (check-row line prompts): bus sentence gone in all 64 rows. dad, girl, foot use the person form. STILL OPEN for doll, duck, elephant, horse, goat: both prompts keep "no eyes and no face" (FACE_WORDS applies only when an element exists, scripts/storytime-u2-specs.mjs:193). Kept as F1 [Blocker].
+- F2 (hen and pot): the hen uses a new prop sheet, no brown-versus-white conflict, "ONE view only", and the pot rows say "without the plant". Fixed. A new fault from the fix is F6.
+- F3 (24 versus 23): fixed in the counts; one old sentence is stale (F7 Nit).
+- F4 (Pat text and "in the room"): fixed.
+- F5 (Pat render SHA-256): fixed.
+
+New findings:
+- F6 [Blocker] The six hen rows reference prop-hen-sheet-m1-color.png. The element spec has id prop-hen, so the muse tool writes prop-hen-m1-color.png (scripts/storytime-muse.mjs:211-212). The FR-3 test uses the same elements.json path and cannot see this.
+- F7 [Nit] pm-report.md line 20 says "(23 now)"; the count is 24.
+
+## Check scripts (read only, kept in measure/runs)
+
+acceptance-p1-ab68f98-check.mjs to -check7.mjs (earlier run), acceptance-p1-0c76da0-check8.mjs (this run)
+
+MEASURE_AGENT_RESULT
+role: measure-phase-acceptance
+status: complete
+track: asset_storytime_l2_unit2_prep_20261108
+phase: Phase 1: Prompt drafts, renders, and hand-off (re-check after round r5)
+commits: none
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-u2-specs.test.ts --maxWorkers=1' -> 1 file, 14 tests, pass (exit 0); sha256sum -c MANIFEST.txt -> 257 OK, 0 FAILED; costs-after equals costs-before and the current tree
+files_changed: measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-0c76da0.json, acceptance-p1-0c76da0.log, acceptance-p1-0c76da0-check8.mjs
+plan_updates: none
+known_failures: F1 [Blocker] doll, duck, elephant, horse, goat keep "no eyes and no face" in colorPrompt and linePrompt; F6 [Blocker] hen rows reference prop-hen-sheet-m1-color.png but the element spec id prop-hen makes prop-hen-m1-color.png; F7 [Nit] stale "23 now" in pm-report
+handoff: Verdict fail at 0c76da0. The maker fixes F1 (face rules for face-bearing words with no element) and F6 (spec id or path, plus an FR-3 test that derives the output from the spec id), then F7. Rerun acceptance on the new HEAD. No paid call may start before F1 and F6 are fixed.
+dispositions: none
+END_MEASURE_AGENT_RESULT

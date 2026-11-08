@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "audited_head_sha": "91de1d16922ed9f132cdd16ae4654f04c39d45c8",
+  "role_base_sha": "91de1d16922ed9f132cdd16ae4654f04c39d45c8",
+  "phase_base_sha": "e010c5f62cb5765b0c888a9ba1949b1a2801e00e",
+  "summary": "Pass. F1, F6, and F7 of acceptance-p1-0c76da0 are fixed at 91de1d16. Test 16/16, MANIFEST 257 OK and 0 FAILED, costs equal, frozen paths clean, counts match (229, 181 new, 48 reuse, 10 element sheets, 14.58 USD). Two Nits remain.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F8 [Nit] docs/storytime/l2-unit2 check-row linePrompt of duck, doll, elephant, horse, goat: the line text is the cat rule set with the word swapped: 'The ears of the duck are separate closed shapes on top of the head', 'The tail', 'The legs'. A duck or a doll has no ears; an elephant has a trunk that the text does not name. The face rules now hold (friendly face, two eyes, closed outline, solid pupil). The line step may draw a wrong detail; the judge step will catch it. A later round can use word-specific sentences.",
+    "F9 [Nit] measure/runs/asset_storytime_l2_unit2_prep_20261108/maker-p1.log round r6: the maker ran the GREEN test with HEAVY_MIN_AVAIL_MB=1200 after a queue time-out, not 1500. The checker ran the exact command with 1500 and got 16 of 16 passed, so the result stands."
+  ],
+  "evidence": [
+    "HEAD = 91de1d16922ed9f132cdd16ae4654f04c39d45c8 at start; commits since the last check: 5706766f (round r6 fixes) and 91de1d16 (evidence)",
+    "F1 fixed: no spec of doll, duck, elephant, horse, goat holds 'no eyes and no face' in either prompt; the colorPrompt says 'The <word> has a friendly face with two eyes and a smiling mouth; draw them'; the linePrompt has 'Each eye is one closed outline with one big solid black pupil'; dad, girl, foot keep the person form; the van still has the object rule 'no eyes and no face' (right for a van); 0 bus sentences outside the bus rows",
+    "F6 fixed: the hen element spec id is prop-hen-sheet and equals the file name; all 10 element ids equal their file names; the muse tool output name <id>-m1-color.png equals the elements.json path; the 6 hen rows reference prop-hen-sheet-m1-color.png; 0 references are neither on disk nor the output of an element spec by id; the FR-3 test now reads each element spec (16 tests)",
+    "F7 fixed: pm-report.md says 24 in the counts, the r2 text ('24 now'), and the Facts changed list; README.md and elements-reused.tsv (24 rows, 0 SHA-256 mismatch) agree",
+    "vitest run tests/storytime-u2-specs.test.ts via heavy-run.sh with HEAVY_MIN_AVAIL_MB=1500: 1 file, 16 tests passed, exit 0",
+    "sha256sum -c MANIFEST.txt in /home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep: 257 OK, 0 FAILED; folder files except MANIFEST.txt equal the MANIFEST entries; 258 files in total; specs/elements 10, renders/ 13",
+    "costs: hash lines of costs-before.txt and costs-after.txt equal; they equal the current find out/storytime -name costs.tsv | sha256sum output; 0 USD spent",
+    "specs: 229 (181 new, 48 reuse); aspect, printSize, outDir right; no forbidden word; no-letters rule in every colorPrompt; 0 missing reuse sources; 0 cards with Pat or cargo-shorts text",
+    "README and pm-report: 229 rows, 181 new, 48 reuse, 10 new element sheets, 13 Forge views, 24 unit 1 and cast files; 181 x 0.080 + 10 x 0.01 = 14.58 USD; prompt-list.tsv has 230 lines (header and 229 rows)",
+    "FR-12: git diff --name-only e010c5f6..HEAD shows no change in scripts/storytime-muse.mjs, scripts/storytime-muse-guards.mjs, scripts/storytime-judge-batch.mjs, docs/storytime/l2-unit1, assets, out; no PNG or JPG in the diff; changed paths: docs/storytime/l2-unit2 (243), run folder (8), track folder (1), scripts/storytime-u2-specs.mjs, tests/storytime-u2-specs.test.ts",
+    "plan Task 3 holds 'Checker findings F1, F6, F7 of acceptance-p1-0c76da0 (2026-11-08): FIX in round r6, commit 5706766f'; README and pm-report hold no accept or Go claim",
+    "A3, A4, A6, A7 not applicable (no contract test, filter, or registry surface in the phase diff); A5: '16 tests pass' and '257 OK, 0 FAILED' hold"
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-u2-specs.test.ts --maxWorkers=1'",
+    "sha256sum -c MANIFEST.txt (in /home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep)",
+    "diff of the hash lines of costs-before.txt and costs-after.txt; find out/storytime -name costs.tsv -print0 | sort -z | xargs -0 sha256sum",
+    "git diff --name-only e010c5f6..HEAD",
+    "node measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-91de1d1-check9.mjs"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-91de1d1.json",
+    "measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-91de1d1.log",
+    "measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-91de1d1-check9.mjs"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high"
+}

@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "audited_head_sha": "ab68f981efe427dac6353721431662a6de5de1a8",
+  "role_base_sha": "ab68f981efe427dac6353721431662a6de5de1a8",
+  "phase_base_sha": "e010c5f62cb5765b0c888a9ba1949b1a2801e00e",
+  "summary": "Mechanical gates pass (test 11/11, MANIFEST 257 OK and 0 FAILED, costs equal, frozen paths and FR-4 and FR-10 clean, plan markers right). The phase fails on one prompt defect: all 64 check-row specs carry the bus line prompt, so a paid line-art call for dad, girl, foot and face-bearing animals gets 'no eyes and no face'. The R5 fix reached the colorPrompt only.",
+  "blocking_findings": [
+    "F1 [Blocker] docs/storytime/l2-unit2/w*/muse/l2-w*-check-row-*.json linePrompt (64 specs, 16 new rows): every check-row linePrompt is the unit 1 bus text: 'The bus body, the wheels, and each window are separate closed shapes' and 'This object has no eyes and no face: draw no eyes, no pupils, and no face anywhere'. l2-w10-check-row-dad and l2-w15-check-row-girl say 'one object' for a person, and l2-w14-check-row-foot says 'one object' for a body part (the R5 fix reached only the colorPrompt). The new rows doll, duck, elephant, horse, and goat have faces, so the paid line-art call would remove eyes and face. Unit 1 l2-w07-check-row-cat has its own cat rule with eyes and pupil. Fix: object-specific or person-form line rules, no bus sentence, face rule only for an object without a face; rerun the maker, the test, and the hand-off build."
+  ],
+  "nonblocking_findings": [
+    "F2 [Major] docs/storytime/l2-unit2/w12/muse l2-w12-* hen rows (6 rows) and w13 pot rows (8 rows): the Forge reference out/chicken/views/three-quarter.png shows a WHITE hen, but the colorPrompt says 'ONE small brown hen ... draw the same object with the same shape and colors', so the paid call gets two colors. The text says 'three times (side, three-quarter, front)' (hen) and 'three times (front, three-quarter, top)' (pot), but the reference file holds one view. The pot render shows a plant with red flowers; the text says 'round clay flower pot' with no plant. Decide: change the text to match the render, or use a new element sheet.",
+    "F3 [Nit] measure/runs/asset_storytime_l2_unit2_prep_20261108/pm-report.md 'Facts changed': says '24 unit 1 element files reused'; the same file, README.md, and elements-reused.tsv say 23 (the file has 23 rows). A5 false-claim text: fix the report to 23.",
+    "F4 [Nit] docs/storytime/l2-unit2 card specs (36) and farmyard story pages: the card linePrompt keeps unit 1 text about 'Pat's hair' and 'each cargo-shorts pocket and each sandal' in cards of May, Sam, Ben, Mia, and others. Farmyard story pages say 'a low camera height in the room' and carry the Mom and Tom proportion sentences with no Mom or Tom. The 'Exactly the characters named here' sentence limits the effect, so low risk.",
+    "F5 [Nit] docs/storytime/l2-unit2 (18 rows) and hand-off elements-reused.tsv: the Pat reference out/storytime-review/batch-22/sprout-pat-render.png (source in docs/storytime/l2-unit1/judge/cast.json) is on disk but is in neither elements-reused.tsv nor renders/, so the hand-off has no SHA-256 for it."
+  ],
+  "evidence": [
+    "HEAD = ab68f981efe427dac6353721431662a6de5de1a8 at start and at end of the check",
+    "vitest run tests/storytime-u2-specs.test.ts via heavy-run.sh: 1 file, 11 tests passed, exit 0",
+    "sha256sum -c MANIFEST.txt in /home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep: 257 OK, 0 FAILED; folder files except MANIFEST.txt (257) equal the MANIFEST entries; 258 files in total",
+    "costs: hash lines of costs-before.txt and costs-after.txt are equal (16 files); they differ only in comment line 2; they equal the current find out/storytime -name costs.tsv | sha256sum output; 0 USD spent",
+    "inputs: pictures-u2.json SHA-256 63d41500...f754ec equals inputs.txt and the Workbooks file now; Workbooks git log --since=2026-11-08T03:00Z for content/storytime/drafts shows no commit",
+    "specs: 229 muse specs; ids and order equal pictures-u2.json; 181 new and 48 reuse; uses story-page 112, cover 14, check-row 64, d4-prompt 3, card 36; aspect 4:3 for A and B, 1:1 for C with printSize 1500 x 1500; outDir below out/storytime/l2/unit2/; no forbidden word (FR-4) in specs, prompt-list.tsv, prompt-list.md; every colorPrompt has the no-letters rule; the 74 missing references are all the _m1-color.png outputs of the 9 element specs",
+    "the word 'skin' occurs only in the eye-corner rule 'pale skin flap' (D1 allows it); README.md names the forbidden words only in a rule sentence, not in a prompt",
+    "9 element specs read: set-farmyard and set-tom-kitchen are in the unit 1 element shape, empty place, no letters, 4:3, outDir out/storytime/l2/unit2/w<nn>/muse/elements",
+    "specs read: l2-w09-story-page-dad-has-a-mop, l2-w09-story-page-pip-can-mop, l2-w09-story-page-tom-can-see-the-mop, l2-w10-story-page-dad-has-a-pan, l2-w14-story-page-mom-has-a-fan, l2-w12-story-page-a-hen-can-hop, l2-w09-cover-dad-and-the-mop, l2-w12-cover-the-hen-and-the-hat, l2-w09-cover-yum, l2-w10-check-row-dad, l2-w10-check-row-van, l2-w09-card-nod, l2-w09-d4-prompt-cake; cast equals the row text, the silver pot of the Tom room is left out in every Tom living room spec (0 misses), no 'Picture N' without a reference (0), the card keep line names the cast person (9 of 9)",
+    "R1 to R4, R6, R7, R9 checks hold in the specs; R5 holds in the colorPrompt only (see F1)",
+    "hand-off README counts 229 / 181 / 48 / 9 / 0 renders made / 14 Forge renders reused match the specs; 181 x 0.080 + 9 x 0.01 = 14.57 USD; 4 open questions have defaults; the 14 files in renders/ equal their sources by SHA-256; elements-reused.tsv 23 rows, 0 SHA-256 mismatch, equal to the unit 1 references of the specs",
+    "contact-sheet.png and renders/chicken, storytime-school-bus, storytime-low-table viewed: Forge renders on gray, no text inside",
+    "FR-12: git diff --name-only e010c5f6..HEAD shows no change in scripts/storytime-muse.mjs, scripts/storytime-muse-guards.mjs, scripts/storytime-judge-batch.mjs, docs/storytime/l2-unit1, assets, out; no PNG or JPG in the diff; changed paths are docs/storytime/l2-unit2 (242), the run folder (8), the track folder, scripts/storytime-u2-specs.mjs, tests/storytime-u2-specs.test.ts",
+    "git status: only assets/wizard-argon-trial.ts is untracked in assets; it was untracked before this track and is not in any track commit (no asset source change by this track)",
+    "plan.md: Tasks 0 to 6 are [x] with commit SHAs e010c5f6, f02e1e28, 7ff505ef (all exist); r2 71c310c7 and r3 887021c7 are noted in Task 3; Phase 1 gate is '[b] ... (deferred:checker)'; pm-report.md has 'Status: done.' and a 'Facts changed' list",
+    "FR-10: no file of the track, README, or report says that Daniel, the PM, or Workbooks accepted a unit 2 picture or gave a Go; 'approved' appears only in the PM quotation, its explanation, and 'approved unit 1 specs'",
+    "A3, A4, A6, A7: not applicable, the phase diff changes no contract test, filter, or tracks registry surface; A5 checked: the claim '11 tests pass' and '257 OK, 0 FAILED' hold, one false count in F3"
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-u2-specs.test.ts --maxWorkers=1'",
+    "sha256sum -c MANIFEST.txt (in /home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep)",
+    "find out/storytime -name costs.tsv -print0 | sort -z | xargs -0 sha256sum (compared with costs-after.txt)",
+    "git diff --name-only e010c5f6..HEAD",
+    "git -C /home/daniebo/Desktop/Workbooks log --since=2026-11-08T03:00Z --format='%h %s' -- content/storytime/drafts",
+    "node measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-ab68f98-check.mjs",
+    "node measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-ab68f98-check2.mjs",
+    "node measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-ab68f98-check3.mjs",
+    "node measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-ab68f98-check4.mjs",
+    "node measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-ab68f98-check5.mjs",
+    "node measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-ab68f98-check6.mjs",
+    "node measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-ab68f98-check7.mjs"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-ab68f98.json",
+    "measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-ab68f98.log",
+    "measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-ab68f98-check.mjs",
+    "measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-ab68f98-check2.mjs",
+    "measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-ab68f98-check3.mjs",
+    "measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-ab68f98-check4.mjs",
+    "measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-ab68f98-check5.mjs",
+    "measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-ab68f98-check6.mjs",
+    "measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-ab68f98-check7.mjs"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high"
+}

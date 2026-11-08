@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "track": "asset_storytime_l2_unit2_prep_20261108",
+  "archived_at": "2026-11-08T05:10:00Z",
+  "track_base_sha": "e010c5f62cb5765b0c888a9ba1949b1a2801e00e",
+  "track_final_sha": "91de1d16922ed9f132cdd16ae4654f04c39d45c8",
+  "phase_acceptance_results": [
+    "measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-91de1d1.json"
+  ],
+  "completed_phases": [
+    {
+      "id": "Phase 1",
+      "title": "Prompt drafts, renders, and hand-off",
+      "checkpoint": "91de1d16"
+    }
+  ],
+  "final_acceptance": "not run: the PM put the whole track on the light lane on 2026-11-03 (one maker and one checker). PM rule 3 of 2026-11-03 gives no final acceptance under the light lane. The plan records the closeout item as done and holds no final acceptance task.",
+  "gates": {
+    "PROJECT_LINT": "pass — bash measure/doctor.sh gives exit 1 with 11 structural errors (6 'new track has started tasks' and 5 'missing registry link'), and every error names another track; grep for asset_storytime_l2_unit2_prep_20261108 in the doctor output gives exit 1 with no line",
+    "PROJECT_CHECKS": "pass — the closeout changed no src/, scripts/, or tests/ file: git diff --name-only 91de1d16..HEAD holds measure/ paths only. The last real run is the Phase 1 checker's at 91de1d16: 1 file and 16 tests passed through heavy-run.sh at HEAVY_MIN_AVAIL_MB=1500",
+    "PROJECT_TESTS": "pass — 1 file and 16 tests passed (16) with exit 0 at 91de1d16. The closeout could not rerun the test: the heavy-run lock was held by other sessions' jobs, and a 120 s wait gave no slot. The closeout changed no test or script file, so the 91de1d16 result stands",
+    "SECRET_SCAN": "pass — grep -rnE 'sk-[A-Za-z0-9]{20}|Bearer [A-Za-z0-9]{20}|OPENROUTER_API_KEY=' measure/runs/asset_storytime_l2_unit2_prep_20261108 gives exit 1 with no hit. The find of PNG and JPG files in the run folder gives count 0",
+    "source": "measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-91de1d1.json"
+  },
+  "antipatterns_clean": [
+    "A2 consent-blind publish gate — the registry entry, the metadata, the plan, and this manifest name model evidence and a hand-off draft only; no text says that Daniel, the PM, or Workbooks accepted a picture or gave the Go",
+    "A3 digit-only count — every gate reads a labeled value (16 tests passed, 257 OK checksums and 0 FAILED, 229 rows with 181 new and 48 reuse, 10 element sheets, 13 Forge views, 24 reused element files, 14.58 USD estimate, 0 USD spend)",
+    "A4 vacuous pass — the phase checker ran the test, the MANIFEST check, the costs comparison, the frozen-path diff, and the count checks; each pass quotes its command and a label",
+    "A5 false claim — the plan claims 16 tests, 257 checksums, and the counts above; the checker measured each claim and the values agree",
+    "A6 registry overstatement — the archived registry entry says 'delivered' for the hand-off folder and names the paid run as waiting for Daniel's Go; it names no acceptance",
+    "A7 over-broad filter — the secret scan quotes its scope and its exit code; the closeout adds no filter and changes no contract test",
+    "A9 archived track paths — grep for asset_storytime_l2_unit2_prep_20261108 in tests/, scripts/, src/, and docs/ gives no hit, so no test reads the track path and the archive move breaks no test",
+    "A10 generated-facts drift — the generator does not run while measure/generated holds foreign changes; the closeout commit holds no generated fact",
+    "A11 doc-to-code drift — the specification, the 229 row specs, the 10 element sheet specs, the README, the PM report, and MANIFEST.txt agree; the phase checker compares the counts and the checksums"
+  ],
+  "antipatterns_known_limitations": [
+    "11 structural doctor errors of other tracks; the doctor adds no error for this track",
+    "F8 [Nit] of the Phase 1 checker, declined: the animal and doll line prompts reuse the cat ear sentences ('the ears of the duck are separate closed shapes on top of the head'). The paid-run track fixes the sentence before the first line call, and the judge checks each line picture",
+    "F9 [Nit] of the Phase 1 checker, declined: the maker ran one GREEN test at HEAVY_MIN_AVAIL_MB=1200; the checker ran the same test at 1500 and got 16 of 16 passed, so the result stands",
+    "The hand-off folder is a model-made draft. It is not acceptance, and it is not a Go",
+    "measure/generated holds foreign uncommitted changes, so the generator did not run and no generated fact is committed"
+  ],
+  "deferred": [
+    "Human gate: Daniel's Go on the Workbooks paid media list opens the paid run for the 229 unit 2 pictures; the paid run waits for that Go (deferred:Daniel)",
+    "Final acceptance did not run under the PM light lane (deferred:PM)"
+  ],
+  "deferred_note": "No plan task stays open. Every task line is [x] with a commit SHA on its first line, and no [b], [~], or [ ] task line remains. The PM light-lane order replaced final acceptance.",
+  "tech_debt": [
+    "TD-29 — RB-P4-1 and PA4-N1 — coverCalmTopReport in src/storytime/book-pictures.ts does not confine cover-calm-top --print output paths, resolve real paths, or require a regular file (Low, Open); this track made no render and did not use that path",
+    "TD-30 — RB12-01 and RB12-03, PA3-N3 — a parent symlink under out/ can redirect mkdir, and lstat with mkdir is not atomic (Low, Open); this track made no render and wrote under out/ not at all"
+  ],
+  "tech_debt_note": "No new debt entry is warranted. The track made 0 renders and 0 paid calls. TD-29 and TD-30 stay Open. measure/tech-debt.md is unchanged by this closeout.",
+  "lessons_learned": "No lessons-learned entry is warranted. The round history (orchestrator findings R1 to R9, checker findings F1 to F7, and the two declined Nits) is recorded in the plan and the deviation notes. measure/lessons-learned.md is unchanged by this closeout.",
+  "generated_facts": "not committed: measure/generated holds foreign uncommitted changes; the registry entry in measure/tracks.md is staged through a blob so the foreign Contents hunk stays out",
+  "artifact_cleanup": "no bulky run artifact was deleted; the orchestrator identified none. The run folder holds JSON, log, txt, md, and mjs files and no PNG or JPG file (find count 0). The three phase acceptance results and their logs stay in the folder",
+  "evidence_classes": {
+    "person_reviewed": "none recorded for the unit 2 picture prep; the hand-off folder waits for Daniel's Go and the Workbooks paid run",
+    "model_evidence_not_acceptance": "The phase checker result acceptance-p1-91de1d1.json carries a model pass at 91de1d16 over the specs, the MANIFEST, and the costs files. This is model evidence, not acceptance",
+    "workbooks_acceptance": "none recorded"
+  }
+}

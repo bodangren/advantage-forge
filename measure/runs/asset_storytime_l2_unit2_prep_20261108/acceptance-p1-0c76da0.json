@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "audited_head_sha": "0c76da07806a12d33ff11819c002bc81f177e8be",
+  "role_base_sha": "0c76da07806a12d33ff11819c002bc81f177e8be",
+  "phase_base_sha": "e010c5f62cb5765b0c888a9ba1949b1a2801e00e",
+  "summary": "Regression gates pass (test 14/14, MANIFEST 257 OK and 0 FAILED, costs equal, frozen paths clean, counts match). F2 to F5 of the earlier result are fixed and the person rows of F1 are fixed. Two Blockers remain: five animal or toy check-rows still say 'no eyes and no face', and the six hen rows point to a file that the element spec will not create (prop-hen-sheet-m1-color.png instead of prop-hen-m1-color.png).",
+  "blocking_findings": [
+    "F1 [Blocker] docs/storytime/l2-unit2 check-row specs doll (w09), duck (w09), elephant (w11), horse (w12), goat (w15) and scripts/storytime-u2-specs.mjs:193: part 2 of the earlier F1 is open. The maker claims that a face-bearing animal or toy uses the unit 1 cat line rules. The code applies FACE_WORDS only when an element exists (line 193), and these five rows have no reference. Their linePrompt still says 'This object has no eyes and no face: draw no eyes, no pupils, and no face anywhere', and their colorPrompt says 'The object has no eyes and no face'. The paid calls would give a faceless doll, duck, elephant, horse, and goat. Fixed: the bus sentence is gone in all 64 rows, and dad, girl, and foot use the person form (foot has the pointed-foot sentence). Fix: for a face-bearing word, give the colorPrompt and the linePrompt the face rules of the unit 1 cat spec, with no 'no eyes and no face' sentence.",
+    "F6 [Blocker] docs/storytime/l2-unit2/w12/muse-elements/prop-hen-sheet.json (id prop-hen), elements.json prop-hen path, and 6 hen rows of week 12: the rows reference out/storytime/l2/unit2/w12/muse/elements/prop-hen-sheet-m1-color.png. The muse tool writes <spec.id>-m<n>-color.png (scripts/storytime-muse.mjs lines 211 to 212), so the element run makes prop-hen-m1-color.png. In unit 1, the spec id prop-alligator-sheet gives prop-alligator-sheet-m1-color.png. The six hen rows would point to a file that no run makes (FR-3). The FR-3 test builds its output set from the same elements.json path, so it cannot see this. Fix: set the spec id to prop-hen-sheet (or change the path and the references to prop-hen-m1-color.png), and make the FR-3 test derive the output from the element spec id."
+  ],
+  "nonblocking_findings": [
+    "F7 [Nit] measure/runs/asset_storytime_l2_unit2_prep_20261108/pm-report.md line 20: the round r2 text says 'the unit 1 element files reused (23 now)'. The count is now 24 (line 10 and 44 are right). Old round text; fix or add 'after round r5: 24'."
+  ],
+  "evidence": [
+    "HEAD = 0c76da07806a12d33ff11819c002bc81f177e8be at start",
+    "F1 earlier (part 1): 0 check-row linePrompts hold the bus sentence; dad, girl, foot use 'one person' lines with eye and pupil rules; foot adds 'Draw the pointed foot as one closed shape with five rounded toe shapes'; the colorPrompt of dad, girl, foot has no 'no eyes and no face'",
+    "F2 earlier withdrawn in part: week 12 hen rows no longer reference out/chicken, no 'brown hen' conflict with the render, no 'three times' text for a one-view Forge render ('ONE view only'), the pot rows say 'draw the pot only, empty, without the plant' (8 of 8) and carry no 'three times'; the new reference problem is F6",
+    "F3 withdrawn: pm-report.md, README.md, and elements-reused.tsv all say 24 unit 1 and cast element files; the tsv has 24 rows with 0 SHA-256 mismatch; only the old r2 sentence is stale (F7)",
+    "F4 withdrawn: 0 card linePrompts hold 'Pat's hair' or 'cargo-shorts'; card nod (person) and card banana (object) read right; 0 outdoor rows say 'in the room'",
+    "F5 withdrawn: elements-reused.tsv holds a327c76c...bd03 out/storytime-review/batch-22/sprout-pat-render.png and the SHA-256 matches the file",
+    "vitest run tests/storytime-u2-specs.test.ts via heavy-run.sh: 1 file, 14 tests passed, exit 0",
+    "sha256sum -c MANIFEST.txt in /home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep: 257 OK, 0 FAILED; folder files except MANIFEST.txt equal the MANIFEST entries; 258 files in total; renders/ 13 files; specs/elements 10 files",
+    "costs: hash lines of costs-before.txt and costs-after.txt equal; they equal the current find out/storytime -name costs.tsv | sha256sum output; 0 USD spent",
+    "specs: 229 (181 new, 48 reuse); aspect, printSize, outDir right; no forbidden word; no-letters rule in every colorPrompt; reuse sources exist (0 missing); the only references that are neither on disk nor an element output by id are the 6 hen references (F6)",
+    "README: 229 rows, 181 new, 48 reuse, 10 new element sheets, 13 Forge views reused, 24 unit 1 and cast files; 181 x 0.080 + 10 x 0.01 = 14.58 USD; equals pm-report.md; prompt-list.tsv holds 230 lines (header and 229 rows)",
+    "FR-12: git diff --name-only e010c5f6..HEAD shows no change in scripts/storytime-muse.mjs, scripts/storytime-muse-guards.mjs, scripts/storytime-judge-batch.mjs, docs/storytime/l2-unit1, assets, out; no PNG or JPG in the diff; changed paths: docs/storytime/l2-unit2 (243), run folder (8), track folder (1), scripts/storytime-u2-specs.mjs, tests/storytime-u2-specs.test.ts; untracked assets/wizard-argon-trial.ts and docs/*-mockups/*.jpg are foreign and not in any commit",
+    "plan Task 3 holds the line 'Checker findings F1 to F5 of acceptance-p1-ab68f98 (2026-11-08): FIX in round r5, commit 5dcd760d'; the README and pm-report say no accept or Go claim (grep of approv and accept)",
+    "A3, A4, A6, A7 not applicable (no contract test, filter, or registry surface in the phase diff); A5: the claims '14 tests pass' and '257 OK, 0 FAILED' hold; the claim in maker-p1.log r5 that a face-bearing animal or toy uses the cat line rules does not hold for doll, duck, elephant, horse, goat (F1)"
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-u2-specs.test.ts --maxWorkers=1'",
+    "sha256sum -c MANIFEST.txt (in /home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep)",
+    "diff of the hash lines of costs-before.txt and costs-after.txt; find out/storytime -name costs.tsv -print0 | sort -z | xargs -0 sha256sum",
+    "git diff --name-only e010c5f6..HEAD",
+    "node measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-0c76da0-check8.mjs",
+    "grep of scripts/storytime-muse.mjs and tests/storytime-u2-specs.test.ts for the output name and FR-3"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-0c76da0.json",
+    "measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-0c76da0.log",
+    "measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-0c76da0-check8.mjs"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high"
+}

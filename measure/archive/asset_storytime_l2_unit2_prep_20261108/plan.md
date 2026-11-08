@@ -1,8 +1,11 @@
 # Storytime Level 2 unit 2 picture prep (unpaid)
 
-Status: new (2026-11-08). The track drafts the Muse specs, the element map, and the local renders
-for the 229 unit 2 pictures, with 0 USD spend. The [specification](./spec.md) owns the scope and
-the acceptance gates.
+Status: delivered (2026-11-08). Unpaid prep for the unit 2 pictures is in the hand-off folder;
+the paid run waits for Daniel's Go.
+
+The track drafts the Muse specs, the element map, and the local renders for the 229 unit 2
+pictures, with 0 USD spend. The [specification](./spec.md) owns the scope and the acceptance
+gates.
 
 ## Method and ownership
 
@@ -85,8 +88,14 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   `Status: done.` with the folder, the file count, and the open questions with defaults; then the
   next unpaid steps of D8; then a "Facts changed:" list. Send the PM one line: folder, count,
   open questions with defaults.
-- [b] Phase 1 gate: phase acceptance by the checker (`measure-phase-acceptance`) at an immutable
-  HEAD. (deferred:checker)
+- [x] Phase 1 gate (91de1d16): phase acceptance by the checker passed at 91de1d16.
+  Evidence: `acceptance-p1-ab68f98.json` (fail), `acceptance-p1-0c76da0.json` (fail),
+  `acceptance-p1-91de1d1.json` (pass).
+  - Checker findings and orchestrator dispositions: F1 to F7 FIX in rounds r5 and r6. F8 [Nit]
+    the animal and doll line prompts reuse cat ear sentences: DECLINE for this track; the
+    paid-run track fixes the sentence before the first line call, and the judge checks each line
+    picture. F9 [Nit] one GREEN run at HEAVY_MIN_AVAIL_MB=1200: DECLINE; the checker ran the same
+    test at 1500 with a pass.
   - The checker runs the test command of Task 3, `sha256sum -c MANIFEST.txt` in the hand-off
     folder, and the comparison of `costs-after.txt` with `costs-before.txt`.
   - The checker greps FR-4 and FR-10, and checks the frozen files of FR-12 and `git status` for
@@ -94,7 +103,9 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
 
 ## Track-level roles
 
-- [b] Closeout: archive the track, update the registry, and run the doctor. (deferred:closeout)
+- [x] Closeout (91de1d16): archive the track, update the registry, and run the doctor. Archived
+  2026-11-08; the closeout commit follows 91de1d16. The generator does not run because
+  measure/generated/ holds foreign changes.
 
 The light lane has no final acceptance role. Closeout commits `measure/runs/<track>/` with the
 archive.

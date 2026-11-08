@@ -1,0 +1,44 @@
+# Phase acceptance log: Phase 1, asset_storytime_l2_unit2_prep_20261108
+
+Role: measure-phase-acceptance (light lane checker). Model: claude-code/claude-sonnet-5-5#high.
+audited_head_sha and role_base_sha: ab68f981efe427dac6353721431662a6de5de1a8. phase_base_sha: e010c5f62cb5765b0c888a9ba1949b1a2801e00e.
+HEAD was equal to the audited head at the start and at the end of the check.
+Result JSON: measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-ab68f98.json
+
+## Verdict: FAIL (1 Blocker, 1 Major, 3 Nit)
+
+Gates that pass:
+- GREEN test via heavy-run.sh: 1 file, 11 tests passed, exit 0.
+- sha256sum -c MANIFEST.txt: 257 OK, 0 FAILED. The 257 folder files equal the MANIFEST entries.
+- costs-before and costs-after: the hash lines are equal (the files differ in comment line 2 only). They equal the current costs.tsv hashes. 0 USD spent.
+- Inputs: pictures-u2.json SHA-256 63d41500...f754ec. No Forge commit in Workbooks drafts.
+- Specs: 229, ids and order equal the list, outDir right, aspect and printSize right, no forbidden word, no-letters rule in every colorPrompt, references exist or are element outputs.
+- Frozen paths (FR-12): no change. No PNG or JPG in git. No asset source change by this track.
+- Plan: Tasks 0 to 6 [x] with SHAs; the gate is [b] deferred:checker; pm-report has Status: done. and Facts changed.
+- FR-10: no accept, approve, or Go claim about a unit 2 picture.
+
+## Findings
+
+- F1 [Blocker] docs/storytime/l2-unit2/w*/muse check-row specs, linePrompt: all 64 carry the unit 1 bus line text. Dad, girl, and foot say "one object"; every one says "no eyes and no face". The 16 new rows include faces (doll, duck, elephant, horse, goat) and people (dad, girl). A paid line-art call would remove the faces. The R5 fix reached the colorPrompt only. Owner: maker (retry_implementation).
+- F2 [Major] w12 hen rows (6) and w13 pot rows (8): the white Forge hen conflicts with the text "brown hen" and "same colors"; text says "three times" for one view; the pot render has a plant.
+- F3 [Nit] pm-report.md Facts changed: "24" unit 1 element files; the true count is 23.
+- F4 [Nit] 36 card linePrompts keep "Pat's hair", cargo-shorts, and sandal text; farmyard pages say "in the room".
+- F5 [Nit] Pat reference (sprout-pat-render.png, 18 rows) has no SHA-256 in the hand-off.
+
+## Check scripts (read only, kept in measure/runs)
+
+acceptance-p1-ab68f98-check.mjs, -check2.mjs, -check3.mjs, -check4.mjs, -check5.mjs, -check6.mjs, -check7.mjs
+
+MEASURE_AGENT_RESULT
+role: measure-phase-acceptance
+status: complete
+track: asset_storytime_l2_unit2_prep_20261108
+phase: Phase 1: Prompt drafts, renders, and hand-off
+commits: none
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-u2-specs.test.ts --maxWorkers=1' -> 1 file, 11 tests, pass (exit 0); sha256sum -c MANIFEST.txt -> 257 OK, 0 FAILED; costs-after equals costs-before (hash lines)
+files_changed: measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-ab68f98.json, acceptance-p1-ab68f98.log, acceptance-p1-ab68f98-check.mjs to -check7.mjs
+plan_updates: none
+known_failures: F1 [Blocker] check-row linePrompt is the bus text for all 64 check-rows (faces removed; dad, girl, foot called objects); F2 [Major] hen color and view-count conflict; F3, F4, F5 Nit
+handoff: Acceptance verdict fail at ab68f98. The maker fixes F1 (and should fix F2, F3), reruns the test and the hand-off build, and the orchestrator reruns acceptance on the new HEAD. No paid call may start before F1 is fixed.
+dispositions: none
+END_MEASURE_AGENT_RESULT

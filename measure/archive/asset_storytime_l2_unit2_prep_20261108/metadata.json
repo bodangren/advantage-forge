@@ -1,0 +1,22 @@
+{
+  "track_id": "asset_storytime_l2_unit2_prep_20261108",
+  "type": "chore",
+  "status": "done",
+  "created_at": "2026-11-08T03:30:00Z",
+  "updated_at": "2026-11-08T05:07:00Z",
+  "completed": "2026-11-08",
+  "description": "Storytime Level 2 unit 2 picture prep (unpaid): one Muse spec for each of the 229 unit 2 rows (unit 1 look, hair and clothes only), the element map, 10 new element sheet specs with 13 reused Forge element views and 24 reused unit 1 element files, and a hand-off folder with a prompt list, specs, and a MANIFEST with checksums; spend 0 USD",
+  "estimated_tasks": 7,
+  "actual_tasks": 7,
+  "deviation_notes": "Created from the PM request of 2026-11-08 about 10:16 ICT (time box end 2026-11-08 12:20 ICT). Follows the archived tracks asset_storytime_l2_unit1_pictures_20261025, asset_storytime_l2_cards_20261106, and asset_storytime_l2_card_line_retry_20261107, which are not dependency ids because they are archived. Whole track on the PM light lane of 2026-11-03: one maker (measure-jr-green), one checker (measure-phase-acceptance), then closeout; no spec review, strategy, Red, review, adversarial, or final acceptance role. The registry entry is staged through a blob because measure/tracks.md holds a foreign uncommitted hunk. The generator is not run because measure/generated/ holds foreign changes. Defaults are in the section Open questions answered by default of the specification. Light lane (PM 2026-11-03). 229 row specs, 10 new element sheet specs, 0 renders made (13 Forge views and 24 unit 1 element files reused), estimate 14.58 USD for the paid run, spend 0 USD. Orchestrator findings R1 to R9 (rounds r2, r3) and checker findings F1 to F7 (rounds r5, r6) fixed; F8 and F9 declined. Maker and closeout on deepseek/deepseek-flash#high, checker and track author on claude-sonnet-5-5#high (ra-quota pick).",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [
+    "docs/storytime/l2-unit2/",
+    "scripts/storytime-u2-specs.mjs",
+    "tests/storytime-u2-specs.test.ts",
+    "/home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep/MANIFEST.txt",
+    "measure/runs/asset_storytime_l2_unit2_prep_20261108/"
+  ],
+  "dependencies": []
+}
