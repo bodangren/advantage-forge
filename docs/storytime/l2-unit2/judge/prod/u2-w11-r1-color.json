@@ -1,0 +1,268 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-mia-in-the-bed-color-t1.png",
+    "id": "l2-w11-story-page-where-is-mia-in-the-bed",
+    "kind": "color",
+    "pageText": "Where is Mia? In the bed.",
+    "use": "story-page",
+    "mustShow": [
+      "nan",
+      "mia",
+      "1 bed"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-ben-under-the-bed-color-t1.png",
+    "id": "l2-w11-story-page-where-is-ben-under-the-bed",
+    "kind": "color",
+    "pageText": "Where is Ben? Under the bed.",
+    "use": "story-page",
+    "mustShow": [
+      "nan",
+      "ben",
+      "1 bed"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-may-in-the-box-color-t1.png",
+    "id": "l2-w11-story-page-where-is-may-in-the-box",
+    "kind": "color",
+    "pageText": "Where is May? In the box.",
+    "use": "story-page",
+    "mustShow": [
+      "nan",
+      "may",
+      "1 box"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-sam-under-the-table-color-t1.png",
+    "id": "l2-w11-story-page-where-is-sam-under-the-table",
+    "kind": "color",
+    "pageText": "Where is Sam? Under the table.",
+    "use": "story-page",
+    "mustShow": [
+      "nan",
+      "sam",
+      "1 table"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-pat-on-the-sofa-color-t1.png",
+    "id": "l2-w11-story-page-where-is-pat-on-the-sofa",
+    "kind": "color",
+    "pageText": "Where is Pat? On the sofa.",
+    "use": "story-page",
+    "mustShow": [
+      "nan",
+      "pat",
+      "1 sofa"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-lily-on-the-chair-color-t1.png",
+    "id": "l2-w11-story-page-where-is-lily-on-the-chair",
+    "kind": "color",
+    "pageText": "Where is Lily? On the chair.",
+    "use": "story-page",
+    "mustShow": [
+      "nan",
+      "lily",
+      "1 chair"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-here-color-t1.png",
+    "id": "l2-w11-story-page-here",
+    "kind": "color",
+    "pageText": "Here!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "nan",
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-pip-color-t1.png",
+    "id": "l2-w11-story-page-where-is-pip",
+    "kind": "color",
+    "pageText": "Where is Pip?",
+    "use": "story-page",
+    "mustShow": [
+      "nan",
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-ten-men-in-the-den-color-t1.png",
+    "id": "l2-w11-story-page-ten-men-in-the-den",
+    "kind": "color",
+    "pageText": "Ten men in the den!",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "10 men",
+      "1 den"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-tom-set-up-a-den-color-t1.png",
+    "id": "l2-w11-story-page-tom-set-up-a-den",
+    "kind": "color",
+    "pageText": "Tom set up a den.",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "1 den"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-see-me-mom-color-t1.png",
+    "id": "l2-w11-story-page-see-me-mom",
+    "kind": "color",
+    "pageText": "See me, Mom!",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "mom"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-mom-is-in-too-color-t1.png",
+    "id": "l2-w11-story-page-mom-is-in-too",
+    "kind": "color",
+    "pageText": "Mom is in, too.",
+    "use": "story-page",
+    "mustShow": [
+      "mom",
+      "tom"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-pip-sat-on-top-color-t1.png",
+    "id": "l2-w11-story-page-pip-sat-on-top",
+    "kind": "color",
+    "pageText": "Pip sat on top.",
+    "use": "story-page",
+    "mustShow": [
+      "pip"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-dad-is-in-too-color-t1.png",
+    "id": "l2-w11-story-page-dad-is-in-too",
+    "kind": "color",
+    "pageText": "Dad is in, too.",
+    "use": "story-page",
+    "mustShow": [
+      "dad",
+      "mom",
+      "tom"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-pip-get-off-color-t1.png",
+    "id": "l2-w11-story-page-pip-get-off",
+    "kind": "color",
+    "pageText": "Pip, get off!",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "pip"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-cover-the-den-color-t1.png",
+    "id": "l2-w11-cover-the-den",
+    "kind": "color",
+    "pageText": "The Den",
+    "use": "cover",
+    "mustShow": [
+      "tom"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-the-den-is-on-dad-color-t1.png",
+    "id": "l2-w11-story-page-the-den-is-on-dad",
+    "kind": "color",
+    "pageText": "The den is on Dad!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "tom",
+      "mom",
+      "1 den"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-check-row-egg-color-t1.png",
+    "id": "l2-w11-check-row-egg",
+    "kind": "color",
+    "pageText": "egg",
+    "use": "check-row",
+    "mustShow": [
+      "egg"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-card-envelope-color-t1.png",
+    "id": "l2-w11-card-envelope",
+    "kind": "color",
+    "pageText": "envelope",
+    "use": "card",
+    "mustShow": [
+      "envelope"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-card-door-color-t1.png",
+    "id": "l2-w11-card-door",
+    "kind": "color",
+    "pageText": "door",
+    "use": "card",
+    "mustShow": [
+      "door"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-check-row-elephant-color-t1.png",
+    "id": "l2-w11-check-row-elephant",
+    "kind": "color",
+    "pageText": "elephant",
+    "use": "check-row",
+    "mustShow": [
+      "elephant"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-card-window-color-t1.png",
+    "id": "l2-w11-card-window",
+    "kind": "color",
+    "pageText": "window",
+    "use": "card",
+    "mustShow": [
+      "window"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-card-elbow-color-t1.png",
+    "id": "l2-w11-card-elbow",
+    "kind": "color",
+    "pageText": "elbow",
+    "use": "card",
+    "mustShow": [
+      "elbow"
+    ]
+  }
+]

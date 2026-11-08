@@ -1,0 +1,300 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-color-t1.png",
+    "id": "l2-w10-story-page-put-on-your-t-shirt",
+    "kind": "color",
+    "pageText": "Put on your T-shirt.",
+    "use": "story-page",
+    "mustShow": [
+      "ben"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-trousers-color-t1.png",
+    "id": "l2-w10-story-page-put-on-your-trousers",
+    "kind": "color",
+    "pageText": "Put on your trousers.",
+    "use": "story-page",
+    "mustShow": [
+      "pat"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-skirt-color-t1.png",
+    "id": "l2-w10-story-page-put-on-your-skirt",
+    "kind": "color",
+    "pageText": "Put on your skirt.",
+    "use": "story-page",
+    "mustShow": [
+      "mia"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-dress-color-t1.png",
+    "id": "l2-w10-story-page-put-on-your-dress",
+    "kind": "color",
+    "pageText": "Put on your dress.",
+    "use": "story-page",
+    "mustShow": [
+      "may"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-shoes-color-t1.png",
+    "id": "l2-w10-story-page-put-on-your-shoes",
+    "kind": "color",
+    "pageText": "Put on your shoes.",
+    "use": "story-page",
+    "mustShow": [
+      "sam"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-socks-color-t1.png",
+    "id": "l2-w10-story-page-put-on-your-socks",
+    "kind": "color",
+    "pageText": "Put on your socks.",
+    "use": "story-page",
+    "mustShow": [
+      "lily"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-jacket-color-t1.png",
+    "id": "l2-w10-story-page-put-on-your-jacket",
+    "kind": "color",
+    "pageText": "Put on your jacket.",
+    "use": "story-page",
+    "mustShow": [
+      "nan",
+      "teacher-kim"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-dad-has-a-pan-color-t1.png",
+    "id": "l2-w10-story-page-dad-has-a-pan",
+    "kind": "color",
+    "pageText": "Dad has a pan.",
+    "use": "story-page",
+    "mustShow": [
+      "dad",
+      "tom",
+      "1 pan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-cover-dress-up-color-t1.png",
+    "id": "l2-w10-cover-dress-up",
+    "kind": "color",
+    "pageText": "Dress Up!",
+    "use": "cover",
+    "mustShow": [
+      "teacher-kim",
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily",
+      "nan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-a-tan-man-color-t1.png",
+    "id": "l2-w10-story-page-a-tan-man",
+    "kind": "color",
+    "pageText": "A tan man!",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "1 tan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-run-man-run-color-t1.png",
+    "id": "l2-w10-story-page-run-man-run",
+    "kind": "color",
+    "pageText": "Run, man, run!",
+    "use": "story-page",
+    "mustShow": [
+      "Run, man, run!"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-a-man-on-a-mat-color-t1.png",
+    "id": "l2-w10-story-page-a-man-on-a-mat",
+    "kind": "color",
+    "pageText": "A man on a mat!",
+    "use": "story-page",
+    "mustShow": [
+      "1 man",
+      "1 mat"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-tom-and-dad-run-color-t1.png",
+    "id": "l2-w10-story-page-tom-and-dad-run",
+    "kind": "color",
+    "pageText": "Tom and Dad run.",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "dad"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-tom-and-dad-sat-color-t1.png",
+    "id": "l2-w10-story-page-tom-and-dad-sat",
+    "kind": "color",
+    "pageText": "Tom and Dad sat.",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "dad"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-they-were-sad-color-t1.png",
+    "id": "l2-w10-story-page-they-were-sad",
+    "kind": "color",
+    "pageText": "They were sad.",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "dad"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-the-man-sat-too-color-t1.png",
+    "id": "l2-w10-story-page-the-man-sat-too",
+    "kind": "color",
+    "pageText": "The man sat, too!",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "dad",
+      "1 man"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-cover-the-tan-man-color-t1.png",
+    "id": "l2-w10-cover-the-tan-man",
+    "kind": "color",
+    "pageText": "The Tan Man",
+    "use": "cover",
+    "mustShow": [
+      "dad",
+      "tom"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-check-row-van-color-t1.png",
+    "id": "l2-w10-check-row-van",
+    "kind": "color",
+    "pageText": "van",
+    "use": "check-row",
+    "mustShow": [
+      "van"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-check-row-fan-color-t1.png",
+    "id": "l2-w10-check-row-fan",
+    "kind": "color",
+    "pageText": "fan",
+    "use": "check-row",
+    "mustShow": [
+      "fan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-check-row-dad-color-t1.png",
+    "id": "l2-w10-check-row-dad",
+    "kind": "color",
+    "pageText": "dad",
+    "use": "check-row",
+    "mustShow": [
+      "dad"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-pad-color-t1.png",
+    "id": "l2-w10-card-pad",
+    "kind": "color",
+    "pageText": "pad",
+    "use": "card",
+    "mustShow": [
+      "pad"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-skirt-color-t1.png",
+    "id": "l2-w10-card-skirt",
+    "kind": "color",
+    "pageText": "skirt",
+    "use": "card",
+    "mustShow": [
+      "skirt"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-t-shirt-color-t1.png",
+    "id": "l2-w10-card-t-shirt",
+    "kind": "color",
+    "pageText": "T-shirt",
+    "use": "card",
+    "mustShow": [
+      "T-shirt"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-check-row-ten-color-t1.png",
+    "id": "l2-w10-check-row-ten",
+    "kind": "color",
+    "pageText": "ten",
+    "use": "check-row",
+    "mustShow": [
+      "ten"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-trousers-color-t1.png",
+    "id": "l2-w10-card-trousers",
+    "kind": "color",
+    "pageText": "trousers",
+    "use": "card",
+    "mustShow": [
+      "trousers"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-jacket-color-t1.png",
+    "id": "l2-w10-card-jacket",
+    "kind": "color",
+    "pageText": "jacket",
+    "use": "card",
+    "mustShow": [
+      "jacket"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-shoes-color-t1.png",
+    "id": "l2-w10-card-shoes",
+    "kind": "color",
+    "pageText": "shoes",
+    "use": "card",
+    "mustShow": [
+      "shoes"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-socks-color-t1.png",
+    "id": "l2-w10-card-socks",
+    "kind": "color",
+    "pageText": "socks",
+    "use": "card",
+    "mustShow": [
+      "socks"
+    ]
+  }
+]

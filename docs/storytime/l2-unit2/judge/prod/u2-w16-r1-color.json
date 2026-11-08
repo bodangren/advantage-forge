@@ -1,0 +1,12 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w16-check-row-guitar-color-t1.png",
+    "id": "l2-w16-check-row-guitar",
+    "kind": "color",
+    "pageText": "guitar",
+    "use": "check-row",
+    "mustShow": [
+      "guitar"
+    ]
+  }
+]

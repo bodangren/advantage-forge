@@ -83,3 +83,61 @@ role_base_sha: d99aa896d31d86b336c63026d7821115ecdba8bb (confirmed equal to HEAD
 - Every sheet passed at m1. Therefore no row reference change runs (D3: only a pass at m<n> with n
   above 1 changes the row `references`). The rows already name `<id>-m1-color.png`.
 - Task 4 marked [x] (01b97374). Spend 0 USD in this step. Book spend stays 0.10 USD of 18.33 USD.
+
+## Step E, Task 5 color try 1 (paid)
+
+- 2026-11-08T15:15Z: Task 5 marked [~] in plan.md before the paid call.
+- The 182 new rows (reuse null) map to existing specs: w09 27, w10 29, w11 24, w12 26, w13 28,
+  w14 25, w15 22, w16 1. Every spec file exists.
+- D5 worst case: 182 planned calls x 0.01 USD = 1.82 USD. Item total 0.10 + 1.82 + 0.03 = 1.95 USD,
+  under the book stop 18.33 USD. Concurrency 4 runs. The F2 rule does not apply at 1.95 USD.
+- Commands: one shell loop over w09 to w16, each week
+  `node scripts/storytime-muse.mjs color <that week's 182-row specs> --concurrency 4 | tee
+  /tmp/opencode/u2-color-r1-<week>.out`. Light role: node, no heavy-run.sh.
+
+## Round 2 (Green · P2 T4-T5), Task 4 close and Task 5 color try 1
+
+- Task 4 closed (01b97374). Frozen judge passed 10 of 10 element sheets at m1 (judge-u2-elements-r1-color.json: 9 pass; judge-u2-elements-r1-color-bedroom-t3.json: 1 pass). Judge note: set-tom-kitchen is a weak pass (pans read as shallow bowls; no stove, sink, or fridge). No reference change.
+- 2026-11-08T15:14:04Z: row list built. 182 new rows, 0 missing specs (w09 27, w10 29, w11 24, w12 26, w13 28, w14 25, w15 22, w16 1). Worst case 1.95 USD of 18.33 USD, concurrency 4.
+- Week pools, concurrency 4, UTC 15:14:46Z to 15:37:30Z (ICT 22:14:46 to 22:37:30). Refused 0 in every pool.
+
+| week | rows | ok | failed | refused |
+|---|---|---|---|---|
+| w09 | 27 | 25 | 2 | 0 |
+| w10 | 29 | 28 | 1 | 0 |
+| w11 | 24 | 23 | 1 | 0 |
+| w12 | 26 | 24 | 2 | 0 |
+| w13 | 28 | 27 | 1 | 0 |
+| w14 | 25 | 25 | 0 | 0 |
+| w15 | 22 | 20 | 2 | 0 |
+| w16 | 1 | 1 | 0 | 0 |
+| total | 182 | 173 | 9 | 0 |
+
+- Failed calls: 7 rows gave HTTP 400 "image must contain at most 10 items, got 11" (cost 0). 2 rows gave network errors UND_ERR_CONNECT_TIMEOUT (cost 0): l2-w09-story-page-tom-can-see-the-mop and l2-w12-cover-the-hen-and-the-hat.
+- 2026-11-08T15:38:12Z to 15:39:23Z (ICT 22:38:12 to 22:39:23): retry pool at concurrency 1 for the 2 network-error rows. Both returned ok at 0.01 USD each. Their first picture is try 2.
+- Rows with no picture (7): l2-w09-cover-yum, l2-w10-story-page-put-on-your-hat-pip, l2-w11-cover-where-is-pip, l2-w12-cover-open-your-book, l2-w13-story-page-pip-can-catch, l2-w15-story-page-look-pip-on-a-bike, l2-w15-cover-look-a-bus. All 7 fail with the same 400. A retry with the same inputs repeats the 400, so no retry was made. The fix is a reference-count decision (11 references, limit 10). Round 3 needs it. Not changed here.
+- Book spend: 1.85 USD of 18.33 USD (16.48 USD left). Element and row calls: 0.01 USD each. Highest call cost: 0.01 USD. No call above 0.03 USD.
+- Pictures on disk: 175 (out/storytime/l2/unit2/w*/muse/*-m*-color.png). Size by spec sizeClass: C = 1600x1600 (56 files); A = 1920x1280 (109); B = 1920x1280 (10).
+- Task 5 stays [~]. 175 of 182 rows have a picture. 7 rows wait.
+
+### Judge batches (Step F, built, not run; the orchestrator runs the frozen judge)
+
+| batch file (docs/storytime/l2-unit2/judge/prod/) | entries |
+|---|---|
+| u2-w09-r1-color.json | 25 |
+| u2-w09-r1-color-mop-t2.json | 1 |
+| u2-w10-r1-color.json | 28 |
+| u2-w11-r1-color.json | 23 |
+| u2-w12-r1-color.json | 24 |
+| u2-w12-r1-color-henhat-t2.json | 1 |
+| u2-w13-r1-color.json | 27 |
+| u2-w14-r1-color.json | 25 |
+| u2-w15-r1-color.json | 20 |
+| u2-w16-r1-color.json | 1 |
+| total | 175 |
+
+### Defaults taken (round 2)
+
+1. The 2 network-error rows got one retry each, at concurrency 1, inside the D5 worst case.
+2. The 7 HTTP 400 rows got no retry. The same inputs fail the same way.
+3. Each split batch (mop-t2, henhat-t2) holds only the try 2 picture of its row. The main w09 and w12 batches hold the try 1 pictures.

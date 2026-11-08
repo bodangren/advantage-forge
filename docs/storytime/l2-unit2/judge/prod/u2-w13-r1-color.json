@@ -1,0 +1,291 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-run-color-t1.png",
+    "id": "l2-w13-story-page-i-can-run",
+    "kind": "color",
+    "pageText": "I can run.",
+    "use": "story-page",
+    "mustShow": [
+      "sam"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-kick-color-t1.png",
+    "id": "l2-w13-story-page-i-can-kick",
+    "kind": "color",
+    "pageText": "I can kick.",
+    "use": "story-page",
+    "mustShow": [
+      "ben"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-throw-color-t1.png",
+    "id": "l2-w13-story-page-i-can-throw",
+    "kind": "color",
+    "pageText": "I can throw.",
+    "use": "story-page",
+    "mustShow": [
+      "mia"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-jump-color-t1.png",
+    "id": "l2-w13-story-page-i-can-jump",
+    "kind": "color",
+    "pageText": "I can jump.",
+    "use": "story-page",
+    "mustShow": [
+      "may"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-catch-color-t1.png",
+    "id": "l2-w13-story-page-i-can-catch",
+    "kind": "color",
+    "pageText": "I can catch.",
+    "use": "story-page",
+    "mustShow": [
+      "pat"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-hop-color-t1.png",
+    "id": "l2-w13-story-page-i-can-hop",
+    "kind": "color",
+    "pageText": "I can hop.",
+    "use": "story-page",
+    "mustShow": [
+      "nan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-tom-has-a-pot-color-t1.png",
+    "id": "l2-w13-story-page-tom-has-a-pot",
+    "kind": "color",
+    "pageText": "Tom has a pot.",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "1 pot"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-cover-look-at-me-color-t1.png",
+    "id": "l2-w13-cover-look-at-me",
+    "kind": "color",
+    "pageText": "Look at Me!",
+    "use": "cover",
+    "mustShow": [
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily",
+      "nan",
+      "teacher-kim"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-can-clap-color-t1.png",
+    "id": "l2-w13-story-page-i-can-clap",
+    "kind": "color",
+    "pageText": "I can clap.",
+    "use": "story-page",
+    "mustShow": [
+      "lily"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-a-pot-for-pip-color-t1.png",
+    "id": "l2-w13-story-page-a-pot-for-pip",
+    "kind": "color",
+    "pageText": "A pot for Pip!",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "pip",
+      "1 pot"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-hop-on-top-pip-color-t1.png",
+    "id": "l2-w13-story-page-hop-on-top-pip",
+    "kind": "color",
+    "pageText": "Hop on top, Pip!",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "pip"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-he-is-on-top-color-t1.png",
+    "id": "l2-w13-story-page-he-is-on-top",
+    "kind": "color",
+    "pageText": "He is on top!",
+    "use": "story-page",
+    "mustShow": [
+      "pip"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-i-like-it-color-t1.png",
+    "id": "l2-w13-story-page-i-like-it",
+    "kind": "color",
+    "pageText": "I like it!",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "pip"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-mom-is-on-a-mat-color-t1.png",
+    "id": "l2-w13-story-page-mom-is-on-a-mat",
+    "kind": "color",
+    "pageText": "Mom is on a mat.",
+    "use": "story-page",
+    "mustShow": [
+      "mom",
+      "pip",
+      "1 mat"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-cover-hop-on-top-color-t1.png",
+    "id": "l2-w13-cover-hop-on-top",
+    "kind": "color",
+    "pageText": "Hop on Top!",
+    "use": "cover",
+    "mustShow": [
+      "tom",
+      "pip"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-pip-is-on-mom-color-t1.png",
+    "id": "l2-w13-story-page-pip-is-on-mom",
+    "kind": "color",
+    "pageText": "Pip is on Mom!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "mom",
+      "tom"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-check-row-pot-color-t1.png",
+    "id": "l2-w13-check-row-pot",
+    "kind": "color",
+    "pageText": "pot",
+    "use": "check-row",
+    "mustShow": [
+      "pot"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-check-row-mop-color-t1.png",
+    "id": "l2-w13-check-row-mop",
+    "kind": "color",
+    "pageText": "mop",
+    "use": "check-row",
+    "mustShow": [
+      "mop"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-check-row-dot-color-t1.png",
+    "id": "l2-w13-check-row-dot",
+    "kind": "color",
+    "pageText": "dot",
+    "use": "check-row",
+    "mustShow": [
+      "dot"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-do-not-hop-on-mom-color-t1.png",
+    "id": "l2-w13-story-page-do-not-hop-on-mom",
+    "kind": "color",
+    "pageText": "Do not hop on Mom!",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "pip",
+      "mom"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-walk-color-t1.png",
+    "id": "l2-w13-card-walk",
+    "kind": "color",
+    "pageText": "walk",
+    "use": "card",
+    "mustShow": [
+      "walk"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-run-color-t1.png",
+    "id": "l2-w13-card-run",
+    "kind": "color",
+    "pageText": "run",
+    "use": "card",
+    "mustShow": [
+      "run"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-d4-prompt-jump-color-t1.png",
+    "id": "l2-w13-d4-prompt-jump",
+    "kind": "color",
+    "pageText": "jump",
+    "use": "d4-prompt",
+    "mustShow": [
+      "jump"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-kick-color-t1.png",
+    "id": "l2-w13-card-kick",
+    "kind": "color",
+    "pageText": "kick",
+    "use": "card",
+    "mustShow": [
+      "kick"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-throw-color-t1.png",
+    "id": "l2-w13-card-throw",
+    "kind": "color",
+    "pageText": "throw",
+    "use": "card",
+    "mustShow": [
+      "throw"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-clap-color-t1.png",
+    "id": "l2-w13-card-clap",
+    "kind": "color",
+    "pageText": "clap",
+    "use": "card",
+    "mustShow": [
+      "clap"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-catch-color-t1.png",
+    "id": "l2-w13-card-catch",
+    "kind": "color",
+    "pageText": "catch",
+    "use": "card",
+    "mustShow": [
+      "catch"
+    ]
+  }
+]

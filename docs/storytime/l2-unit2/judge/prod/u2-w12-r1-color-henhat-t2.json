@@ -1,0 +1,12 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-cover-the-hen-and-the-hat-color-t2.png",
+    "id": "l2-w12-cover-the-hen-and-the-hat",
+    "kind": "color",
+    "pageText": "The Hen and the Hat",
+    "use": "cover",
+    "mustShow": [
+      "dad"
+    ]
+  }
+]

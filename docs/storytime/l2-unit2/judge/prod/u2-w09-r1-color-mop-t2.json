@@ -1,0 +1,14 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-tom-can-see-the-mop-color-t2.png",
+    "id": "l2-w09-story-page-tom-can-see-the-mop",
+    "kind": "color",
+    "pageText": "Tom can see the mop.",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "dad",
+      "1 mop"
+    ]
+  }
+]

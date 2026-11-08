@@ -91,7 +91,7 @@ runs the frozen judge and the calibration controls. The stop is 18.33 USD.
   900 px with the use `element`. At most 3 tries for each sheet. If a sheet passes at `m<n>` with n
   above 1, change the references of the rows that use it, and record the change. Log the pool in the
   spend record. deferred:maker
-- [b] Task 5: Color pools and judges (D4, D5). Run color try 1 for the 182 new rows at concurrency 4,
+- [~] Task 5: Color pools and judges (D4, D5). Run color try 1 for the 182 new rows at concurrency 4,
   then the judge for each week. Retry a failed row up to 3 color tries in total, with a second judge
   before a fail stands. Log each pool in the spend record. At 14.66 USD record the total and the
   projection once. The task may span rounds. deferred:maker
