@@ -141,3 +141,8 @@ role_base_sha: d99aa896d31d86b336c63026d7821115ecdba8bb (confirmed equal to HEAD
 1. The 2 network-error rows got one retry each, at concurrency 1, inside the D5 worst case.
 2. The 7 HTTP 400 rows got no retry. The same inputs fail the same way.
 3. Each split batch (mop-t2, henhat-t2) holds only the try 2 picture of its row. The main w09 and w12 batches hold the try 1 pictures.
+## Round 3 (Green · P2 T5 · r3), G2 color pool, 7 group rows
+- 2026-11-08T15:52:11Z: start. HEAD a24f3558. The 7 specs carry 9, 9, 8, 8, 8, 8, 8 references (max 10). D5 worst case: 7 x 0.01 + 0.03 = 0.10 USD; item 1.85 + 0.10 = 1.95 USD, under 18.33.
+- 2026-11-08T15:55:53Z: G2 result. 7 calls, 7 ok, 0 failed, 0 refused, 0.07 USD. Highest call cost 0.01 USD. Files: out/storytime/l2/unit2/<wNN>/muse/<id>-m1-color.png (2.0 to 2.7 MB each) plus -print.png and -m1.json. Tee output: /tmp/opencode/u2-color-r1-ten-refs.out.
+- 2026-11-08T15:56:50Z: G3 batch. `--unit2 --kind color --try 2 --out u2-r1-color-group-t2` wrote docs/storytime/l2-unit2/judge/prod/u2-r1-color-group-t2.json with 7 entries. Judge copies in out/storytime-review/judge/prod-u2/ named `<id>-color-t2.png`. No judging by the maker.
+- 2026-11-08T16:00:00Z: G4 gate. heavy-run, vitest on tests/storytime-u2-specs, -guards, -delivery, --maxWorkers=1. Result: 3 files passed, 45 of 45 tests passed, exit 0. Task 5 stays [~] for the judge pass.

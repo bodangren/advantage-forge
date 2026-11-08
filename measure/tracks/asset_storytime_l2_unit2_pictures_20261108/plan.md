@@ -94,7 +94,7 @@ runs the frozen judge and the calibration controls. The stop is 18.33 USD.
 - [~] Task 5: Color pools and judges (D4, D5). Run color try 1 for the 182 new rows at concurrency 4,
   then the judge for each week. Retry a failed row up to 3 color tries in total, with a second judge
   before a fail stands. Log each pool in the spend record. At 14.66 USD record the total and the
-  projection once. The task may span rounds. deferred:maker
+  projection once. The task may span rounds. Round 3 (a24f3558 generator): the 7 HTTP 400 group rows reran as color try 2 (7 ok, 0.07 USD). Judge batch u2-r1-color-group-t2 is built, not judged. deferred:maker
 - [b] Task 6: Line pools and judges (D4, D5). Run line calls with `--tries 1` from each passing color,
   then the judge. Retry up to 3 line tries in total, with a second judge before a fail stands. Name
   each row with no pass and its best try. deferred:maker

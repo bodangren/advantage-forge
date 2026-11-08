@@ -1,0 +1,123 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-cover-yum-color-t2.png",
+    "id": "l2-w09-cover-yum",
+    "kind": "color",
+    "pageText": "Yum!",
+    "use": "cover",
+    "mustShow": [
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily",
+      "nan",
+      "teacher-kim"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-color-t2.png",
+    "id": "l2-w10-story-page-put-on-your-hat-pip",
+    "kind": "color",
+    "pageText": "Put on your hat, Pip!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily",
+      "nan",
+      "teacher-kim"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-cover-where-is-pip-color-t2.png",
+    "id": "l2-w11-cover-where-is-pip",
+    "kind": "color",
+    "pageText": "Where Is Pip?",
+    "use": "cover",
+    "mustShow": [
+      "nan",
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-cover-open-your-book-color-t2.png",
+    "id": "l2-w12-cover-open-your-book",
+    "kind": "color",
+    "pageText": "Open Your Book!",
+    "use": "cover",
+    "mustShow": [
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily",
+      "nan",
+      "teacher-kim"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-pip-can-catch-color-t2.png",
+    "id": "l2-w13-story-page-pip-can-catch",
+    "kind": "color",
+    "pageText": "Pip can catch!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily",
+      "nan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-cover-look-a-bus-color-t2.png",
+    "id": "l2-w15-cover-look-a-bus",
+    "kind": "color",
+    "pageText": "Look, a Bus!",
+    "use": "cover",
+    "mustShow": [
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily",
+      "nan",
+      "teacher-kim"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-pip-on-a-bike-color-t2.png",
+    "id": "l2-w15-story-page-look-pip-on-a-bike",
+    "kind": "color",
+    "pageText": "Look, Pip on a bike!",
+    "use": "story-page",
+    "mustShow": [
+      "grandpa",
+      "pip",
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily",
+      "nan",
+      "1 bike"
+    ]
+  }
+]
