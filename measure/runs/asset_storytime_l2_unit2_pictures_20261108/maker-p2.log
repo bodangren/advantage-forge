@@ -374,3 +374,18 @@ END_MEASURE_AGENT_RESULT
   - The round 8 glasses sentence went to l2-w13-story-page-pip-can-catch: its cast has May, and its
     linePrompt lacked the sentence. The other rows with Dad, Mom, or May already held it
     (l2-w09-story-page-tom-can-see-the-mop) or had no face in a card (l2-w09-card-nod).
+- Step Z (line pool, paid 0.20 USD; orchestrator decision 03:10 ICT). Command:
+  `node scripts/storytime-muse.mjs line <20 specs> --tries 1 --concurrency 4`.
+  - Worst case before the pool: 20 calls x 0.01 USD + 4.06 USD + 0.03 USD = 4.29 USD, under the book
+    stop 18.33 USD. Highest call seen 0.01 USD, under the 0.03 USD limit.
+  - Pool result: 20 calls, 20 ok, 0 failed, 0 refused. Every row took the new line at try 2, except
+    l2-w09-story-page-tom-can-see-the-mop and l2-w12-card-hippo at try 3 (their last try).
+  - Book total 4.26 USD, left 14.07 USD against the 18.33 USD stop. Spend record line added.
+  - Print gate check with the writer code (`inspectLineArtPng`) on each new print and its despeckled
+    print, at the class size: 13 of 20 rows pass. 7 rows stay below 12 px: l2-w09-card-rice 10,
+    l2-w12-card-hippo 9, l2-w12-card-ruler 7, l2-w13-card-clap 10, l2-w13-card-throw 11,
+    l2-w14-card-cold 9, and l2-w14-card-windy 9. The 4 edge-frame rows now pass.
+  - l2-w12-card-hippo is at line try 3 now. The other 6 failing rows have one try left.
+  - Judge batches: u2-r6-line-t2 (18 entries) and u2-r6-line-t3 (2 entries).
+  - Check: a sharp script compared every judge copy against the downscale of the newest line file of
+    its row. All 20 entries have pixel distance 0. Result: 20 ok, 0 failures.

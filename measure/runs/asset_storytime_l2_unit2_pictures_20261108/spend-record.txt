@@ -28,3 +28,4 @@ utc_time	item	calls	pool_usd	item_total_usd	item_stop_usd	left_usd	note
 2026-11-08T19:16:29.714Z	book	7	0.06	4.04	18.33	14.29	row line pool, 7 rows of step R: 6 ok, 1 failed, 0 refused
 2026-11-08T19:17:07.076Z	book	1	0.01	4.05	18.33	14.28	row line retry at concurrency 1: l2-w13-d4-prompt-jump, 1 ok, 0 failed, 0 refused
 2026-11-08T19:23:57.093Z	book	1	0.01	4.06	18.33	14.27	row line pool, l2-w13-check-row-dot at line try 3: 1 ok, 0 failed, 0 refused; last line try of the row
+2026-11-08T20:15:30Z	book	20	0.20	4.26	18.33	14.07	row line pool, 20 rows of the print gate: 20 ok, 0 failed, 0 refused; highest call 0.01 USD; 13 rows pass the print gate

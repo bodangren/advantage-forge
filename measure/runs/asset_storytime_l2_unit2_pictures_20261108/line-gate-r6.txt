@@ -1,0 +1,37 @@
+# Line pool and print gate, round 12 (Step Z, paid 0.20 USD)
+
+One line call for each of the 20 rows, at concurrency 4, from each row's passing color. 20 ok,
+0 failed, 0 refused. Highest call 0.01 USD. Pool spend 0.20 USD. Book total 4.26 USD of 18.33 USD.
+
+The gate check calls the writer check code (`inspectLineArtPng`) on the new print file and on its
+despeckled print, at the class size. The line width is the measured median stroke width.
+
+| row | new line | try | print | width px | despeckled print | width px | passes |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| l2-w09-card-nod | -m1-line-2.png | 2 | pass | 13 | pass | 13 | both |
+| l2-w09-card-rice | -m1-line-2.png | 2 | fail | 10 | fail | 10 | none |
+| l2-w09-story-page-i-like-eggs-yum | -m1-line-2.png | 2 | pass | 20 | pass | 21 | both |
+| l2-w09-story-page-tom-can-see-the-mop | -m1-line-3.png | 3 | pass | 19 | pass | 19 | both |
+| l2-w10-story-page-put-on-your-t-shirt | -m1-line-2.png | 2 | pass | 24 | pass | 24 | both |
+| l2-w11-check-row-elephant | -m1-line-2.png | 2 | pass | 21 | pass | 21 | both |
+| l2-w11-story-page-where-is-sam-under-the-table | -m1-line-2.png | 2 | pass | 22 | pass | 22 | both |
+| l2-w12-card-crayon | -m1-line-2.png | 2 | pass | 18 | pass | 18 | both |
+| l2-w12-card-hippo | -m1-line-3.png | 3 | fail | 9 | fail | 9 | none |
+| l2-w12-card-ruler | -m1-line-2.png | 2 | fail | 7 | fail | 7 | none |
+| l2-w13-card-catch | -m1-line-2.png | 2 | pass | 16 | pass | 16 | both |
+| l2-w13-card-clap | -m1-line-2.png | 2 | fail | 10 | fail | 10 | none |
+| l2-w13-card-run | -m1-line-2.png | 2 | pass | 16 | pass | 16 | both |
+| l2-w13-card-throw | -m1-line-2.png | 2 | fail | 11 | fail | 11 | none |
+| l2-w13-story-page-pip-can-catch | -m1-line-2.png | 2 | pass | 16 | pass | 16 | both |
+| l2-w14-card-cold | -m1-line-2.png | 2 | fail | 9 | fail | 9 | none |
+| l2-w14-card-rainy | -m1-line-2.png | 2 | pass | 12 | pass | 12 | both |
+| l2-w14-card-windy | -m1-line-2.png | 2 | fail | 9 | fail | 9 | none |
+| l2-w15-card-helicopter | -m1-line-2.png | 2 | pass | 13 | pass | 13 | both |
+| l2-w15-story-page-pip-has-a-tag | -m1-line-2.png | 2 | pass | 27 | pass | 26 | both |
+
+Result: 13 of 20 rows pass the print gate. 7 rows stay below the 12 px minimum: rice 10, hippo 9,
+ruler 7, clap 10, throw 11, cold 9, and windy 9. The 4 edge-frame rows now pass.
+l2-w12-card-hippo is at line try 3 (its last). The other 6 failing rows have one try left.
+
+Judge batches: u2-r6-line-t2 (18 entries) and u2-r6-line-t3 (2 entries). Each judge copy equals the
+downscale of the newest line file of its row; the largest pixel distance is 0 over the 20 entries.

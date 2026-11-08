@@ -1,0 +1,192 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-nod-line-t2.png",
+    "id": "l2-w09-card-nod",
+    "kind": "line",
+    "pageText": "nod",
+    "use": "card",
+    "mustShow": [
+      "nod"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-rice-line-t2.png",
+    "id": "l2-w09-card-rice",
+    "kind": "line",
+    "pageText": "rice",
+    "use": "card",
+    "mustShow": [
+      "rice"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-eggs-yum-line-t2.png",
+    "id": "l2-w09-story-page-i-like-eggs-yum",
+    "kind": "line",
+    "pageText": "I like eggs. Yum!",
+    "use": "story-page",
+    "mustShow": [
+      "may"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-line-t2.png",
+    "id": "l2-w10-story-page-put-on-your-t-shirt",
+    "kind": "line",
+    "pageText": "Put on your T-shirt.",
+    "use": "story-page",
+    "mustShow": [
+      "ben"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-check-row-elephant-line-t2.png",
+    "id": "l2-w11-check-row-elephant",
+    "kind": "line",
+    "pageText": "elephant",
+    "use": "check-row",
+    "mustShow": [
+      "elephant"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-sam-under-the-table-line-t2.png",
+    "id": "l2-w11-story-page-where-is-sam-under-the-table",
+    "kind": "line",
+    "pageText": "Where is Sam? Under the table.",
+    "use": "story-page",
+    "mustShow": [
+      "nan",
+      "sam",
+      "1 table"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-crayon-line-t2.png",
+    "id": "l2-w12-card-crayon",
+    "kind": "line",
+    "pageText": "crayon",
+    "use": "card",
+    "mustShow": [
+      "crayon"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-ruler-line-t2.png",
+    "id": "l2-w12-card-ruler",
+    "kind": "line",
+    "pageText": "ruler",
+    "use": "card",
+    "mustShow": [
+      "ruler"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-catch-line-t2.png",
+    "id": "l2-w13-card-catch",
+    "kind": "line",
+    "pageText": "catch",
+    "use": "card",
+    "mustShow": [
+      "catch"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-clap-line-t2.png",
+    "id": "l2-w13-card-clap",
+    "kind": "line",
+    "pageText": "clap",
+    "use": "card",
+    "mustShow": [
+      "clap"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-run-line-t2.png",
+    "id": "l2-w13-card-run",
+    "kind": "line",
+    "pageText": "run",
+    "use": "card",
+    "mustShow": [
+      "run"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-throw-line-t2.png",
+    "id": "l2-w13-card-throw",
+    "kind": "line",
+    "pageText": "throw",
+    "use": "card",
+    "mustShow": [
+      "throw"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-story-page-pip-can-catch-line-t2.png",
+    "id": "l2-w13-story-page-pip-can-catch",
+    "kind": "line",
+    "pageText": "Pip can catch!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily",
+      "nan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-cold-line-t2.png",
+    "id": "l2-w14-card-cold",
+    "kind": "line",
+    "pageText": "cold",
+    "use": "card",
+    "mustShow": [
+      "cold"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-rainy-line-t2.png",
+    "id": "l2-w14-card-rainy",
+    "kind": "line",
+    "pageText": "rainy",
+    "use": "card",
+    "mustShow": [
+      "rainy"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-windy-line-t2.png",
+    "id": "l2-w14-card-windy",
+    "kind": "line",
+    "pageText": "windy",
+    "use": "card",
+    "mustShow": [
+      "windy"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-card-helicopter-line-t2.png",
+    "id": "l2-w15-card-helicopter",
+    "kind": "line",
+    "pageText": "helicopter",
+    "use": "card",
+    "mustShow": [
+      "helicopter"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-pip-has-a-tag-line-t2.png",
+    "id": "l2-w15-story-page-pip-has-a-tag",
+    "kind": "line",
+    "pageText": "Pip has a tag.",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "1 tag"
+    ]
+  }
+]
