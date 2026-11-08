@@ -1,0 +1,51 @@
+{
+  "group": "u2-r4-line-t2",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T19:20:29Z",
+  "results": [
+    {
+      "id": "l2-w10-story-page-dad-has-a-pan",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-dad-has-a-pan-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Dad (1), Tom (1), a pan (1). Action: has (holds). Seen: a man with short side-parted hair and a polo shirt holds a frying pan by the handle; a boy with swept hair, a plain T-shirt and shorts stands next to him. The pan is a clear frying pan and is not hidden. Dad and Tom match the cast. Line art is clean, no gray, no gaps."
+    },
+    {
+      "id": "l2-w11-story-page-where-is-lily-on-the-chair",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-lily-on-the-chair-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: yes ('Where is Lily?'; the answer is on the chair). Items: Nan (1), Lily (1), a chair (1). Action: none. Seen: a girl with two buns and a star T-shirt holds up a blanket; a girl with a bob, fringe and a bow sits on a wooden ladder-back chair, face, hands and a shoe visible, a blanket over her lap. One chair, Lily on it, clear. Line art is clean, no gray, no gaps."
+    },
+    {
+      "id": "l2-w14-cover-hot-and-cold",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-cover-hot-and-cold-line-t2.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Cover: the title names the subject (hot and cold weather). Items: Nan (1). Seen: a girl with two buns under a striped umbrella, a star T-shirt, shorts, a sun with rays, clouds, a fence, a tree, and stepping-stone ovals. Nan matches the cast (buns, star shirt). Subject shows. Line art is clean, no gray, no gaps. Small mark: heavy eyebrows."
+    },
+    {
+      "id": "l2-w13-check-row-dot",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-check-row-dot-line-t2.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole picture: a single large empty oval outline",
+      "notes": "Question page: no. Items: a dot (1). Action: none. Seen: one large thick-lined empty oval (wider than tall) on a plain white page. It reads as an oval or a ring, not as a dot. A young child would not know this form as the word dot. Line art is clean black on white with no gray and no gap."
+    }
+  ],
+  "summary": {
+    "files": 4,
+    "pass": 3,
+    "fail": 1
+  }
+}

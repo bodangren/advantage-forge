@@ -1,0 +1,24 @@
+{
+  "group": "u2-r4-line-t3",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T19:20:29Z",
+  "results": [
+    {
+      "id": "l2-w13-d4-prompt-jump",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-d4-prompt-jump-line-t3.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a child who jumps (1). Action: jump (note only; a still picture cannot show motion). Seen: a boy with short fringe hair, a striped T-shirt and shorts, both arms up with open hands, knees bent and both feet off the ground. Body, arms, hands, and legs are drawn and visible and read as jumping. Line art is clean, no gray, no gaps. Small mark: the eyes are plain open rings."
+    }
+  ],
+  "summary": {
+    "files": 1,
+    "pass": 1,
+    "fail": 0
+  }
+}

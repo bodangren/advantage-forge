@@ -1,0 +1,25 @@
+{
+  "group": "u2-r4-second",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T19:21:16Z",
+  "mode": "second judge, each file alone",
+  "results": [
+    {
+      "id": "l2-w13-check-row-dot",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-check-row-dot-line-t2.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole picture: one large wide empty oval ring that fills the frame",
+      "notes": "Question page: no. Items: a dot (1). Action: none. Seen: one large, wide, empty oval outline, black on white, with no fill, no small round mark, no context. Black lines on white; no gray, no gap, no text. At book size a young child reads this as an oval, a ring, or an egg shape, not as a dot. A dot is a small round spot, and this is a large stretched oval, an uncommon form for the word dot. Rule 5 third part applies."
+    }
+  ],
+  "summary": {
+    "files": 1,
+    "pass": 0,
+    "fail": 1
+  }
+}

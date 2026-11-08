@@ -1,0 +1,33 @@
+{
+  "group": "u2-r4-line-t1",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T19:20:29Z",
+  "results": [
+    {
+      "id": "l2-w11-story-page-here",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-here-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1), Nan, Sam, May, Ben, Mia, Pat, Lily (1 each). Action: none. Seen, left to right: a girl with two buns and a star T-shirt (Nan); a boy with a striped T-shirt (Sam); a girl with a high ponytail and a star clip, skirt (May); a boy in a plain T-shirt and shorts (Ben); a girl with a bow and overalls (Mia); a boy in a T-shirt with pocket shorts and sandals (Pat); a girl with a bob, fringe, bow and a collared dress (Lily); a puppy with a collar sits in the middle (Pip). Each named person shows exactly once. Line art is black on white with no gray; lines are closed. Small mark: Nan's face is a little older than the cast sheet."
+    },
+    {
+      "id": "l2-w11-story-page-ten-men-in-the-den",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-ten-men-in-the-den-line-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), ten men (10), a den (1). Action: none. Seen: a boy with swept hair, plain T-shirt and shorts, kneeling under a blanket tent (the den); a row of 10 small peg-people with round heads and bodies on the rug at the tent edge (counted 10). Tom, the den, and 10 figures are drawn and visible. Peg-people read as toy men to a child. Line art is clean, no gray, no gaps. Small mark: the figures have no faces or arms; the two at the far right stand just outside the blanket edge."
+    }
+  ],
+  "summary": {
+    "files": 2,
+    "pass": 2,
+    "fail": 0
+  }
+}
