@@ -136,7 +136,7 @@ runs the frozen judge and the calibration controls. The stop is 18.33 USD.
   - Hand-off `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures/`: 440 hard links,
     `manifest.json`, 8 contact sheets (sharp), `not-delivered/` with 18 hard links and `README.md`,
     and `MANIFEST.txt`. `sha256sum -c MANIFEST.txt`: 468 OK, 0 FAILED.
-- [b] Task 8: Book part of the PM report (D8). Write the book lines of `pm-report.md`: spend, calls,
+- [x] Task 8 (ed40d429): Book part of the PM report (D8). Write the book lines of `pm-report.md`: spend, calls,
   the stop, rows done, failures with the best try, and the folders. deferred:maker
 - [b] Phase 2 gate: phase acceptance by the checker at an immutable HEAD. The checker compares the
   `costs.tsv` totals with the spend record, the calibration record, the judge files, and the delivery
