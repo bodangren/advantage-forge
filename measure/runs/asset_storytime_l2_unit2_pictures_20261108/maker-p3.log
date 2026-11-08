@@ -94,3 +94,15 @@ entries, one per app word, with the use family-word and the mustShow phrase of t
 entry holds the phrase "a child jumping with both feet off the ground". Every judge copy in
 out/storytime-review/judge/prod-u2/ has a 360 px long side and equals a downscale of the m1 color
 file of its id with a pixel distance of 0.
+Step D (0 USD): the judge file of the orchestrator is
+measure/runs/asset_storytime_l2_unit2_pictures_20261108/judge-u2-fw-r1-color.json: 18 of 18 pass at
+color try 1. The notes name a faint rounded-card edge at the corners of the sofa and the truck, 20
+to 30 px margins on the cake, the hat, the book, and the pencil, a white plane on a white
+background, and Sam with both feet off the ground for the jump word. The approval list
+approvals-u2-fw.json holds 18 entries of { rowId, version m1, colorPrint }, and the colorPrint of
+each entry is the m1 color print file of the app Muse folder. The runner deliver-u2-fw.mts calls
+deliverMuseUnit2FamilyWords with the app Muse folder and the new delivery folder
+out/storytime/l2/unit2/family-words/delivery-muse-v1/. The writer refused nothing. The delivery
+folder holds 18 PNG files named <id>-v1.png and manifest.json. The manifest holds 18 jobs and 6
+color batches. The file checks: 18 files checked, 0 problems; every file is 1500 x 1500 px, 8-bit,
+and free of alpha. The record is delivery-record-fw.txt.

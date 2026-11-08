@@ -1,0 +1,24 @@
+files checked: 18
+problems: 0
+every PNG is 1500 x 1500 px, 8-bit, no alpha channel
+manifest.json sha256: 4746f464290b83fc7ae1751095f8091c3baf8887549ec89e190eca85246d78c1
+manifest jobs: 18, color batches: 6
+
+l2-w09-family-cake-v1.png: 1500 x 1500, png, uchar, 8 bits, alpha false, channels 3, sha256 dae400d5cecf614872de74641c4581d2012c06c10d854d14d496e60a1179ead0
+l2-w09-family-egg-v1.png: 1500 x 1500, png, uchar, 8 bits, alpha false, channels 3, sha256 6bd1481f47c4fe372eb74128fe967a728f638841c99e743f4a5cf1546985419c
+l2-w09-family-milk-v1.png: 1500 x 1500, png, uchar, 8 bits, alpha false, channels 3, sha256 1af9f071aea6ca1e0b9b9abe9702054c2dd884fa7072da4db0f39cb76120871b
+l2-w10-family-hat-v1.png: 1500 x 1500, png, uchar, 8 bits, alpha false, channels 3, sha256 8ec42af33179b2a731929ce0dfbebfc48cf7f88c42f16fe24673d78df5f57142
+l2-w11-family-bed-v1.png: 1500 x 1500, png, uchar, 8 bits, alpha false, channels 3, sha256 d8ba5f6c7c9cbc7c0951696a15f458eb5e7f975910f5c8305cdce8c9bcf68581
+l2-w11-family-box-v1.png: 1500 x 1500, png, uchar, 8 bits, alpha false, channels 3, sha256 03ea937662df97486933fc07538919f6fb40639f12111d59e423842361c9fda7
+l2-w11-family-chair-v1.png: 1500 x 1500, png, uchar, 8 bits, alpha false, channels 3, sha256 90d78b778631a4152007b9cff08072d9c34a20425a9ceb6583a64e105afb0a99
+l2-w11-family-sofa-v1.png: 1500 x 1500, png, uchar, 8 bits, alpha false, channels 3, sha256 8b89916a0f479e731b30c93427dfdcbe5e61259cb7c8cc7e685f6f8531f0e7a7
+l2-w11-family-table-v1.png: 1500 x 1500, png, uchar, 8 bits, alpha false, channels 3, sha256 049eba2bf6a90262622c3e38e07f8ac8a29d9a1f993425591876d327275e30f7
+l2-w12-family-bag-v1.png: 1500 x 1500, png, uchar, 8 bits, alpha false, channels 3, sha256 6802f7ceea05bfb2dabcc7d6c1b732549fecf794ab5b694102593bd3928b59e1
+l2-w12-family-book-v1.png: 1500 x 1500, png, uchar, 8 bits, alpha false, channels 3, sha256 3a776af538fd3cc83f21b3fef8ea20cac9e374d632a37ac5443a4f71a164d113
+l2-w12-family-pen-v1.png: 1500 x 1500, png, uchar, 8 bits, alpha false, channels 3, sha256 626300d1076bd119b642fd0306b7a22fe8b194da63907efca0bfeee45379dc73
+l2-w12-family-pencil-v1.png: 1500 x 1500, png, uchar, 8 bits, alpha false, channels 3, sha256 5063f75d05606787f1cccd39ba1c1fdd790c7969b6577a4c3a5ed747c2fe4cc4
+l2-w13-family-jump-v1.png: 1500 x 1500, png, uchar, 8 bits, alpha false, channels 3, sha256 cc170f7fb7b100f4585b695f677cf064cf0213f31da25a04e6372e909a17d352
+l2-w15-family-bike-v1.png: 1500 x 1500, png, uchar, 8 bits, alpha false, channels 3, sha256 a6a4bcfc7d521f6d15369a8468268da1cdb6717cfdeacc74c45645f44fe288b6
+l2-w15-family-bus-v1.png: 1500 x 1500, png, uchar, 8 bits, alpha false, channels 3, sha256 303b8d3824a8f431a17282f7c1c12442c9861de4ab93d94867703218f77eae0c
+l2-w15-family-plane-v1.png: 1500 x 1500, png, uchar, 8 bits, alpha false, channels 3, sha256 40efa522d5e82751e378753be7aa0de8c2431af08964c1fbedb400a40738a862
+l2-w15-family-truck-v1.png: 1500 x 1500, png, uchar, 8 bits, alpha false, channels 3, sha256 16e8e8157ef6da84121bf79b47bab8d84011cbecc20fc678d059acf890583ac9

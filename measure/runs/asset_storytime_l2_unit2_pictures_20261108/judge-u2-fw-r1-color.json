@@ -1,0 +1,173 @@
+{
+  "group": "u2-fw-r1-color",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T23:06:54Z",
+  "results": [
+    {
+      "id": "l2-w09-family-egg",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-family-egg-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: an egg (1). Action: none. Seen: one white egg with a soft shadow on a plain white background, wide margin. Drawn, visible, reads as an egg. No text."
+    },
+    {
+      "id": "l2-w09-family-milk",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-family-milk-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: milk (1). Action: none. Seen: a clear glass full of white milk on a plain white background. Reads as a glass of milk to a child. No text."
+    },
+    {
+      "id": "l2-w09-family-cake",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-family-cake-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a cake (1). Action: none. Seen: a yellow sponge cake with pink and white cream, three candles, three cherries, on a white plate. Clearly a cake. Small mark: the plate edge sits close to the left and right frame edges (about 20 px), a narrow margin but nothing is cut. No text."
+    },
+    {
+      "id": "l2-w10-family-hat",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-family-hat-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a hat (1). Action: none. Seen: one purple soft bucket hat with a brim on a plain white background. Reads as a hat. Small mark: the right brim is about 30 px from the frame edge. No text."
+    },
+    {
+      "id": "l2-w11-family-bed",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-family-bed-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a bed (1). Action: none. Seen: a cream bed frame with round feet, a pillow, and a yellow blanket. Reads as a bed. Plain white background, good margin. No text."
+    },
+    {
+      "id": "l2-w11-family-table",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-family-table-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a table (1). Action: none. Seen: a rectangular tan table top on four red legs. Reads as a table. Plain white background, good margin. No text."
+    },
+    {
+      "id": "l2-w11-family-sofa",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-family-sofa-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a sofa (1). Action: none. Seen: one blue three-seat sofa with a small cushion and a gray-blue blanket on the right arm. Reads as a sofa. Small mark: a very faint rounded-card edge shows at the frame corners; it is faint and not a layout fault at book size. No text."
+    },
+    {
+      "id": "l2-w11-family-box",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-family-box-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a box (1). Action: none. Seen: an open cardboard box with folded flaps, brown, on a plain white background. Reads as a box. No text."
+    },
+    {
+      "id": "l2-w11-family-chair",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-family-chair-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a chair (1). Action: none. Seen: one wooden chair with a slatted back, a plank seat, and four legs. Reads as a chair. Plain white background, good margin. No text."
+    },
+    {
+      "id": "l2-w12-family-book",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-family-book-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a book (1). Action: none. Seen: an open book with a red cover, cream pages, a center spine, a yellow circle on the left page and a blue fish shape on the right page. Reads as a book. The shapes are pictures, not letters. Small mark: the book sits about 30 px from the edges. No text."
+    },
+    {
+      "id": "l2-w12-family-bag",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-family-bag-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a bag (1). Action: none. Seen: a red school backpack with a yellow front pocket and blue straps. Reads as a bag. Plain white background. No text."
+    },
+    {
+      "id": "l2-w12-family-pencil",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-family-pencil-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a pencil (1). Action: none. Seen: one yellow pencil with a pink eraser, a silver band, and a sharpened wood and gray tip. Reads as a pencil. Small mark: the pencil sits about 30 px from the corners. No text."
+    },
+    {
+      "id": "l2-w12-family-pen",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-family-pen-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a pen (1). Action: none. Seen: one blue pen with a cap band, a clip on the left, and a small gray tip at the bottom. Reads as a pen (not a pencil: no eraser, no wood). Plain white background. No text."
+    },
+    {
+      "id": "l2-w13-family-jump",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-family-jump-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a child (1), both feet off the ground. Action: jumping (note only; a still picture cannot show motion). Seen: one boy in the air with a soft floor shadow below, both feet clearly above the shadow and bent, both arms up with open hands (five fingers each), open-mouth smile. Cast check, Sam: brown hair with a side-swept fringe, big brown eyes, open-mouth smile, red T-shirt with two white stripes, blue shorts, blue shoes. All match. Small mark: the head is a little smaller than the cast chibi look, still a big head. Plain white background, wide margin. No text."
+    },
+    {
+      "id": "l2-w15-family-bus",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-family-bus-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a bus (1). Action: none. Seen: a yellow school bus with a door, side windows, headlights, black stripes, and four wheels (two visible on each side view). Reads as a bus. Plain white background. No text."
+    },
+    {
+      "id": "l2-w15-family-bike",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-family-bike-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a bike (1). Action: none. Seen: a blue child's bike with two wheels, handlebars, a seat, a frame, and a chain guard. Reads as a bike. Plain white background. No text."
+    },
+    {
+      "id": "l2-w15-family-truck",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-family-truck-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a truck (1). Action: none. Seen: a green pickup truck with a cab, blue windows, yellow headlights, an open cargo bed, and gray wheels. Reads as a truck. Small mark: a very faint rounded-card edge shows at the frame corners; not a layout fault at book size. No text."
+    },
+    {
+      "id": "l2-w15-family-plane",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-family-plane-color-t1.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a plane (1). Action: none. Seen: a white toy airplane with two wings, a propeller, a cockpit window, and a tail, on a plain white background with a soft shadow. Reads as a plane. Small mark: white on white gives low contrast, but the shape and shadow stay clear. No text."
+    }
+  ],
+  "summary": { "files": 18, "pass": 18, "fail": 0 }
+}
