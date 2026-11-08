@@ -122,3 +122,30 @@ known_failures: none
 handoff: The hand-off folder is rebuilt: 258 files, 257 OK and 0 FAILED, 229 rows (181 new, 48 reuse), 10 element sheets, 13 Forge view files reused, 24 unit 1 and cast element files reused, estimate 14.58 USD, 0 USD spent. The checker reruns the 14-test command, the manifest check, and the costs comparison.
 dispositions: F1=FIX; F2=FIX; F3=FIX; F4=FIX; F5=FIX
 END_MEASURE_AGENT_RESULT
+
+## Round r6 (checker fixes)
+
+- F1: the face rule depends on the word. The text-only face rows (doll, duck, elephant, horse,
+  goat) say the animal or doll has a friendly face with two eyes, and their line prompt uses the
+  animal rules with closed eye outlines and solid black pupils. No face row says "no eyes and no
+  face" in either prompt.
+- F6: the hen element id is prop-hen-sheet, so the muse tool output name and the hen references
+  agree. The test reads each element spec and checks every unit 2 reference against its output.
+- F7: the report count is 24.
+- Test: 16 tests pass, exit 0.
+- Hand-off rebuilt: 257 files OK, 0 FAILED. Costs equal.
+- Commit: 5706766f.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_unit2_prep_20261108
+phase: Phase 1: Prompt drafts, renders, and hand-off (round r6)
+commits: 5706766f and the plan and run-record commit after it
+tests_run: HEAVY_MIN_AVAIL_MB=1200 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c "./node_modules/.bin/vitest run tests/storytime-u2-specs.test.ts --maxWorkers=1" -> 1 file, 16 tests, pass (exit 0); sha256sum -c MANIFEST.txt -> 257 OK, 0 FAILED
+files_changed: scripts/storytime-u2-specs.mjs; tests/storytime-u2-specs.test.ts; docs/storytime/l2-unit2/**; measure/runs/asset_storytime_l2_unit2_prep_20261108/build-maps.mjs, costs-after.txt, pm-report.md, maker-p1.log; measure/tracks/asset_storytime_l2_unit2_prep_20261108/plan.md
+plan_updates: Task 3 gains "Checker findings F1, F6, F7 of acceptance-p1-0c76da0 (2026-11-08): FIX in round r6, commit 5706766f."
+known_failures: none
+handoff: Hand-off folder rebuilt: 257 OK and 0 FAILED, 229 rows (181 new, 48 reuse), 10 element sheets, estimate 14.58 USD, 0 USD spent. The checker reruns the 16-test command and the manifest check.
+dispositions: F1=FIX; F6=FIX; F7=FIX
+END_MEASURE_AGENT_RESULT

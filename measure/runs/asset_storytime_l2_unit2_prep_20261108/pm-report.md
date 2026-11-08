@@ -17,7 +17,7 @@ Status: done.
 
 Orchestrator findings R1 to R8 are fixed, all FIX. Round r3 fixes R9: an adult person-form
 row keeps the adult proportions of the picture, and a child keeps the chibi sentence. The counts do not change except the unit 1
-element files reused (23 now). The hand-off folder is rebuilt.
+element files reused (24 now). The hand-off folder is rebuilt.
 
 ## Open questions with defaults
 
