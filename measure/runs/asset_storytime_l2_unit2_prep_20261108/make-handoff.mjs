@@ -24,7 +24,7 @@ mkdirSync(join(DEST, 'renders'), { recursive: true });
 
 // Specs.
 for (const { spec } of specs) writeFileSync(join(DEST, 'specs', `${spec.id}.json`), JSON.stringify(spec, null, 2) + '\n');
-const newSheets = Object.values(E).filter((e) => e.source === 'new');
+const newSheets = Object.values(E).filter((e) => e.source === 'new' || e.source === 'new-prop');
 for (const el of newSheets) {
   copyFileSync(join(REPO, el.spec), join(DEST, 'specs', 'elements', `${el.id}.json`));
 }
@@ -34,8 +34,10 @@ const forgeRefs = new Map();
 const unit1Refs = new Map();
 for (const { spec } of specs) {
   for (const ref of spec.references) {
-    if (ref.startsWith('out/storytime/l2/unit1/')) unit1Refs.set(ref, true);
-    else if (ref.startsWith('out/') && !ref.startsWith('out/storytime/l2/unit2/') && ref.includes('/views/')) forgeRefs.set(ref, true);
+    if (ref.startsWith('out/storytime/l2/unit2/')) continue;
+    if (ref.includes('/views/')) { forgeRefs.set(ref, true); continue; }
+    // F5: every other reference is a unit 1 or cast element file, with its SHA-256.
+    unit1Refs.set(ref, true);
   }
 }
 let made = 0;

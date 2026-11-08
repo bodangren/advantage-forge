@@ -1816,7 +1816,7 @@
       "cast": [],
       "set": "set-farmyard",
       "props": [
-        "hen",
+        "prop-hen",
         "sunhat"
       ],
       "form": "scene",
@@ -1833,7 +1833,7 @@
       "cast": [],
       "set": "set-farmyard",
       "props": [
-        "hen",
+        "prop-hen",
         "sunhat"
       ],
       "form": "scene",
@@ -1850,7 +1850,7 @@
       "cast": [],
       "set": "set-farmyard",
       "props": [
-        "hen",
+        "prop-hen",
         "sunhat"
       ],
       "form": "scene",
@@ -1869,7 +1869,7 @@
       ],
       "set": "set-farmyard",
       "props": [
-        "hen",
+        "prop-hen",
         "sunhat"
       ],
       "form": "scene",
@@ -1889,7 +1889,7 @@
       ],
       "set": "set-farmyard",
       "props": [
-        "hen",
+        "prop-hen",
         "sunhat"
       ],
       "form": "scene",
@@ -1908,7 +1908,7 @@
       ],
       "set": "set-farmyard",
       "props": [
-        "hen",
+        "prop-hen",
         "sunhat"
       ],
       "form": "scene",

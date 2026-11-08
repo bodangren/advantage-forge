@@ -37,7 +37,7 @@ describe('unit 2 Muse specs', () => {
   it('FR-3: every reference exists, or is the output of a drafted element spec', () => {
     const elementOutputs = new Set(
       Object.values(elements.elements as Record<string, any>)
-        .filter((e: any) => e.source === 'new')
+        .filter((e: any) => e.source === 'new' || e.source === 'new-prop')
         .map((e: any) => e.path),
     );
     for (const { spec } of specs) {
@@ -128,6 +128,47 @@ describe('unit 2 Muse specs', () => {
       if (!row.cast.some((k: string) => adults.includes(k))) continue;
       expect(spec.colorPrompt, spec.id).not.toContain('chibi proportions of a five-year-old');
       expect(spec.colorPrompt, spec.id).toMatch(/keeps the adult proportions of (his|her) picture/);
+    }
+  });
+
+
+  it('F1: the line prompt follows the kind of the word', () => {
+    const faceWords = ['dog', 'cat', 'fish', 'duck', 'elephant', 'horse', 'goat', 'doll', 'prop-hen'];
+    for (const { row, spec } of specs) {
+      if (row.use !== 'check-row') continue;
+      expect(spec.linePrompt, spec.id).not.toContain('The bus body, the wheels, and each window');
+      const isPerson = ['dad', 'girl', 'foot'].includes(String(row.text));
+      const isFace = (row.props || []).some((id: string) => faceWords.includes(id));
+      if (isPerson || isFace) {
+        expect(spec.linePrompt, spec.id).not.toContain('no eyes and no face');
+        expect(spec.linePrompt, spec.id).toContain('solid black pupil');
+      }
+    }
+  });
+
+  it('F2: the hen uses its own sheet, and a one-view render is not called "three times"', () => {
+    for (const { row, spec } of specs) {
+      if (!(row.props || []).includes('prop-hen')) continue;
+      expect(spec.references, spec.id).toContain('out/storytime/l2/unit2/w12/muse/elements/prop-hen-sheet-m1-color.png');
+      expect(spec.references.some((r: string) => r.startsWith('out/chicken/')), spec.id).toBe(false);
+    }
+    for (const { row, spec } of specs) {
+      for (const ref of spec.references) {
+        if (!ref.includes('/views/')) continue;
+        const sentence = spec.colorPrompt.split('Picture ').find((x: string) => x.includes('3D render')) || '';
+        expect(/three times|three views/.test(sentence), `${spec.id}: ${ref}`).toBe(false);
+      }
+    }
+  });
+
+  it('F4: a card line prompt names no other cast member, and an outdoor page says "in the place"', () => {
+    for (const { row, spec } of specs) {
+      if (row.use !== 'card') continue;
+      expect(/Pat's hair|cargo-shorts|sandal/.test(spec.linePrompt), spec.id).toBe(false);
+    }
+    for (const { row, spec } of specs) {
+      if (!/playground|farmyard|garden|street/.test(String(row.set))) continue;
+      expect(/in the room/.test(spec.colorPrompt), spec.id).toBe(false);
     }
   });
 

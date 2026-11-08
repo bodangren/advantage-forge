@@ -1,4 +1,4 @@
-# Costs after the work (round r3). Command: find out/storytime -name costs.tsv -print0 | sort -z | xargs -0 sha256sum
+# Costs after the work (round r5). Command: find out/storytime -name costs.tsv -print0 | sort -z | xargs -0 sha256sum
 deabe72fff310d7231476eb3720614b272dd30d642829d9fd6a1af4a600504a2  out/storytime/l2/unit1/cards/muse/costs.tsv
 5546f0a13aedd82a3a358ac2ca09dd0f573951ef211eedf7e6299ec0f54f902a  out/storytime/l2/unit1/cover/muse/costs.tsv
 43d6a3b2263f64fd2823498d1ddb2b573e194711e863a73df772853d7a25e8fc  out/storytime/l2/unit1/w01/muse/costs.tsv

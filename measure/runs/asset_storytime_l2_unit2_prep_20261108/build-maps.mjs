@@ -42,7 +42,14 @@ forge('dog', 'dog', 'ONE small friendly dog with short brown fur, floppy ears, a
 forge('cat', 'cat', 'ONE small gray cat with a round head, pointed ears, and a long curled tail, three times (front, three-quarter, sitting)');
 forge('fish', 'fish', 'ONE small orange fish with a round body, a fan tail, and one round eye, three times (side, three-quarter, top)', 'side.png');
 forge('bed', 'bed', 'ONE small child\'s bed with a wooden frame, a white pillow, and a blue blanket');
-forge('hen', 'chicken', 'ONE small brown hen with a red comb, a red wattle, a small beak, and two orange legs, three times (side, three-quarter, front)');
+// F2: the Forge chicken is white; the week 12 hen is small and brown. The paid run makes this prop sheet.
+E['prop-hen'] = {
+  id: 'prop-hen', kind: 'object', source: 'new-prop', week: 12,
+  path: 'out/storytime/l2/unit2/w12/muse/elements/prop-hen-sheet-m1-color.png',
+  spec: 'docs/storytime/l2-unit2/w12/muse-elements/prop-hen-sheet.json',
+  look: 'ONE small brown hen with a red comb, a red wattle, a small yellow beak, two orange legs, a soft round brown body, and a short tail',
+  simple: 'ONE small brown hen with a red comb',
+};
 forge('rooster', 'rooster', 'ONE rooster with a red comb, a brown body, and a long dark-green tail');
 forge('horse', 'horse', 'ONE white horse with a long mane and a long tail, three times (side, three-quarter, front)');
 forge('goat', 'goat', 'ONE small white goat with short horns and a small beard');
@@ -243,7 +250,7 @@ const PROP = [
   [/\bbowl\b/, 'bowl'], [/\bbread\b/, 'bread'], [/\bplate\b/, 'plate'], [/\bglass\b|\bcup\b/, 'cup'],
   [/\bbook\b/, 'book'], [/\bbag\b/, 'bag'], [/\bcrayons?\b/, 'crayons'], [/\beraser\b/, 'text-eraser'],
   [/\bruler\b/, 'text-ruler'], [/\bchair\b/, 'chair'], [/\bwindow\b/, 'window'], [/\bdoor\b/, 'green-door'],
-  [/\bbed\b/, 'bed'], [/\bbarn\b/, 'barn'], [/\bfence\b/, 'fence'], [/\bhen\b/, 'hen'],
+  [/\bbed\b/, 'bed'], [/\bbarn\b/, 'barn'], [/\bfence\b/, 'fence'], [/\bhen\b/, 'prop-hen'],
   [/\bhorse\b/, 'horse'], [/\bgoat\b/, 'goat'], [/\bbus\b/, 'bus'], [/\bcar\b/, 'text-car'],
   [/\bbike\b/, 'text-bike'], [/\btruck\b/, 'text-truck'], [/\btrain\b/, 'text-train'],
   [/\bboat\b/, 'text-boat'], [/\bplane\b/, 'text-plane'], [/\bumbrella\b/, 'text-umbrella'],
@@ -480,6 +487,26 @@ const donor = JSON.parse(readFileSync(
   join(REPO, 'docs/storytime/l2-unit1/w07/muse-elements/set-tom-living-room-empty.json'), 'utf8'));
 let nSheets = 0;
 for (const el of Object.values(E)) {
+  if (el.source === 'new-prop') {
+    const propSpec = {
+      id: el.id,
+      text: '',
+      goal: `A friendly ${el.simple || el.look} for the unit 2 picture composites.`,
+      references: [],
+      colorPrompt: `${ELEMENT_STYLE} The sheet shows exactly three views of ${el.look}, side by side on a plain white background: a front view, a three-quarter view, and a side view. The animal is friendly, with simple friendly shapes and even colors. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people.`,
+      linePrompt: '',
+      print: 'pad',
+      aspect: '3:2',
+      outDir: `out/storytime/l2/unit2/w${String(el.week).padStart(2, '0')}/muse/elements`,
+      styleDonor: 'docs/storytime/l2-unit1/w02/muse-elements/prop-alligator-sheet.json',
+      status: 'draft for the paid run; not generated',
+    };
+    const file = join(REPO, el.spec);
+    mkdirSync(dirname(file), { recursive: true });
+    writeFileSync(file, JSON.stringify(propSpec, null, 2) + '\n');
+    nSheets++;
+    continue;
+  }
   if (el.source !== 'new') continue;
   const spec = {
     id: el.id,

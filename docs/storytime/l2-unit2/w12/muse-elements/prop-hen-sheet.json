@@ -1,0 +1,13 @@
+{
+  "id": "prop-hen",
+  "text": "",
+  "goal": "A friendly ONE small brown hen with a red comb for the unit 2 picture composites.",
+  "references": [],
+  "colorPrompt": "Make one element sheet picture. Style: a smooth, clean, bright, soft, round 3D render look for a children's book, with simple friendly shapes and even colors, no outlines, no scratches or stains. The sheet shows exactly three views of ONE small brown hen with a red comb, a red wattle, a small yellow beak, two orange legs, a soft round brown body, and a short tail, side by side on a plain white background: a front view, a three-quarter view, and a side view. The animal is friendly, with simple friendly shapes and even colors. Rated G for young children. No text, no letters, no numbers, no labels, no logos, no symbols. No people.",
+  "linePrompt": "",
+  "print": "pad",
+  "aspect": "3:2",
+  "outDir": "out/storytime/l2/unit2/w12/muse/elements",
+  "styleDonor": "docs/storytime/l2-unit1/w02/muse-elements/prop-alligator-sheet.json",
+  "status": "draft for the paid run; not generated"
+}

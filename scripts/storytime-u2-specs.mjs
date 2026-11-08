@@ -65,6 +65,8 @@ const DONOR = {
 const RULE = {};
 const COUNT = {};
 const LINE = {};
+const LINE_FACE = block('docs/storytime/l2-unit1/w07/muse/l2-w07-check-row-cat.json', 'line');
+const LINE_PERSON = block('docs/storytime/l2-unit1/cards/l2-w01-card-girl.json', 'line');
 for (const [use, file] of Object.entries(DONOR)) {
   if (use === 'check-row' || use === 'd4-prompt' || use === 'card') {
     RULE[use] = block(file, 'tail');
@@ -118,7 +120,12 @@ function sentenceFor(ref, row) {
     if (el.path !== ref) continue;
     if (el.kind === 'set') return `is the empty ${el.look}; use it as the background and keep the same room.`;
     if (el.source === 'forge') {
-      return `is a 3D render of ${el.look}, on a gray or white background, perhaps with a ground shadow; ignore the background and the shadow, and draw the same object with the same shape and colors.`;
+      const one = el.look.replace(/,\s*(three|four) times?[^.;]*/i, '');
+      const extra = el.id === 'pot' ? ' Draw the pot only, empty, without the plant.' : '';
+      return `is a 3D render of ${one}, ONE view only, on a gray or white background, perhaps with a ground shadow; ignore the background and the shadow, and draw the same object with the same shape and colors.${extra}`;
+    }
+    if (el.source === 'new-prop') {
+      return `shows ${el.look}, three views (front, three-quarter, side); draw exactly ONE such animal like it.`;
     }
     return `shows ${el.look}; draw the object exactly like it.`;
   }
@@ -147,6 +154,44 @@ function displayName(key) {
   const raw = key.replace(/-/g, ' ');
   if (raw === 'nans dad') return "Nan's dad";
   return raw.replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+
+// F1: the line prompt follows the kind of the word.
+const FACE_WORDS = new Set(['dog', 'cat', 'fish', 'duck', 'elephant', 'horse', 'goat', 'doll', 'prop-hen']);
+function objectLine(word) {
+  return LINE['check-row'].replace(
+    'The bus body, the wheels, and each window are separate closed shapes with thick outlines.',
+    `Each part of the ${word} is a separate closed shape with a thick outline.`,
+  );
+}
+function faceLine(word) {
+  return LINE_FACE
+    .replace('The whole cat is one closed outline (no fur strands).', 'The whole animal is one closed outline (no fur strands).')
+    .replace(' Draw no stripes at all.', '')
+    .replace(' Draw the whiskers as three thick lines on each side.', '')
+    .replace('The tail is one long curved closed shape that starts at the back of the cat, curls behind the body, and does not touch the head.', 'The tail is one closed shape.')
+    .replace('The chest, the front legs, and the back legs are plain closed shapes with no stripe lines on the legs.', 'The legs and the body are plain closed shapes.')
+    .replace(/The two ears are the only shapes on top of the head\./, `The ears of the ${word} are separate closed shapes on top of the head.`);
+}
+function personLine(extra = '') {
+  return LINE_PERSON
+    .replace(' Nan keeps her painted eyelash mark in the line art: at the outer corner of each visible eye, draw ONE short thick solid stroke (as thick as the outline) that touches the eye outline; do not leave it out. The eyelash stroke is the only mark beside each eye.', '')
+    .replace(' Each hair bun is one closed round shape with one closed band ring.', '')
+    .replace(' Draw the white star on her T-shirt as one closed star shape.', '')
+    .replace('Draw only the person:', `Each piece of the clothes is one closed shape; the collar and the cuffs are separate closed shapes.${extra} Draw only the person:`);
+}
+function lineFor(row) {
+  if (row.sizeClass !== 'C') return lineCopyWithSetShapes(row);
+  if (row.form === 'person-card') return personLine();
+  if (row.use === 'card' && row.cast.length) return personLine();
+  if (row.form === 'body-part') {
+    return personLine(' Draw the pointed foot as one closed shape with five rounded toe shapes.');
+  }
+  if (row.form === 'text-object') return objectLine(row.text);
+  const el = (row.props || []).map((id) => E[id]).find(Boolean);
+  if (el && (FACE_WORDS.has(el.id) || el.id === 'prop-hen')) return faceLine(row.text);
+  return objectLine(row.text);
 }
 
 function lineCopyWithSetShapes(row) {
@@ -242,13 +287,21 @@ for (const row of rowsDoc.rows) {
     cp += ` ${RULE[row.use]}${castLine} The picture: ${sceneText} ${COUNT[row.use]} The page text is "${row.text}" and is context only: do not draw any text.`;
   }
   cp = cp.replace("Do not change anyone's skin tone, hair, or clothes.", "Do not change anyone's hair or clothes.");
+  const outdoor = row.set && /playground|farmyard|garden|street/.test(String(row.set));
+  if (!row.cast.includes('mom')) {
+    cp = cp.replace('Mom keeps the adult proportions of her picture (about one and a half times as tall as a five-year-old child); ', '');
+  }
+  if (!row.cast.includes('tom')) {
+    cp = cp.replace('; Tom, who is eight, is a little taller than a five-year-old child and has the same chibi proportions', '');
+  }
+  if (outdoor) cp = cp.split('in the room').join('in the place');
   const spec = {
     id: row.id,
     text: row.text,
     goal,
     references: refs,
     colorPrompt: cp,
-    linePrompt: lineCopyWithSetShapes(row),
+    linePrompt: lineFor(row),
     print: 'crop',
     aspect: isC ? '1:1' : '4:3',
     ...(isC ? { printSize: [1500, 1500] } : {}),

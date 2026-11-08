@@ -45,13 +45,15 @@
       "asset": "bed",
       "look": "ONE small child's bed with a wooden frame, a white pillow, and a blue blanket"
     },
-    "hen": {
-      "id": "hen",
+    "prop-hen": {
+      "id": "prop-hen",
       "kind": "object",
-      "source": "forge",
-      "path": "out/chicken/views/three-quarter.png",
-      "asset": "chicken",
-      "look": "ONE small brown hen with a red comb, a red wattle, a small beak, and two orange legs, three times (side, three-quarter, front)"
+      "source": "new-prop",
+      "week": 12,
+      "path": "out/storytime/l2/unit2/w12/muse/elements/prop-hen-sheet-m1-color.png",
+      "spec": "docs/storytime/l2-unit2/w12/muse-elements/prop-hen-sheet.json",
+      "look": "ONE small brown hen with a red comb, a red wattle, a small yellow beak, two orange legs, a soft round brown body, and a short tail",
+      "simple": "ONE small brown hen with a red comb"
     },
     "rooster": {
       "id": "rooster",
