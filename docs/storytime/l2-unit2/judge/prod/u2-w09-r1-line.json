@@ -1,0 +1,291 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-rice-yum-line-t1.png",
+    "id": "l2-w09-story-page-i-like-rice-yum",
+    "kind": "line",
+    "pageText": "I like rice. Yum!",
+    "use": "story-page",
+    "mustShow": [
+      "sam"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-eggs-yum-line-t1.png",
+    "id": "l2-w09-story-page-i-like-eggs-yum",
+    "kind": "line",
+    "pageText": "I like eggs. Yum!",
+    "use": "story-page",
+    "mustShow": [
+      "may"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-milk-yum-line-t1.png",
+    "id": "l2-w09-story-page-i-like-milk-yum",
+    "kind": "line",
+    "pageText": "I like milk. Yum!",
+    "use": "story-page",
+    "mustShow": [
+      "ben"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-bananas-yum-line-t1.png",
+    "id": "l2-w09-story-page-i-like-bananas-yum",
+    "kind": "line",
+    "pageText": "I like bananas. Yum!",
+    "use": "story-page",
+    "mustShow": [
+      "mia"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-bread-yum-line-t1.png",
+    "id": "l2-w09-story-page-i-like-bread-yum",
+    "kind": "line",
+    "pageText": "I like bread. Yum!",
+    "use": "story-page",
+    "mustShow": [
+      "pat"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-juice-yum-line-t1.png",
+    "id": "l2-w09-story-page-i-like-juice-yum",
+    "kind": "line",
+    "pageText": "I like juice. Yum!",
+    "use": "story-page",
+    "mustShow": [
+      "lily"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-i-like-cake-yum-line-t1.png",
+    "id": "l2-w09-story-page-i-like-cake-yum",
+    "kind": "line",
+    "pageText": "I like cake. Yum!",
+    "use": "story-page",
+    "mustShow": [
+      "nan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-pip-likes-cake-yum-line-t1.png",
+    "id": "l2-w09-story-page-pip-likes-cake-yum",
+    "kind": "line",
+    "pageText": "Pip likes cake. Yum!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "nan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-cover-yum-line-t1.png",
+    "id": "l2-w09-cover-yum",
+    "kind": "line",
+    "pageText": "Yum!",
+    "use": "cover",
+    "mustShow": [
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily",
+      "nan",
+      "teacher-kim"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-dad-has-a-mop-line-t1.png",
+    "id": "l2-w09-story-page-dad-has-a-mop",
+    "kind": "line",
+    "pageText": "Dad has a mop.",
+    "use": "story-page",
+    "mustShow": [
+      "dad",
+      "1 mop"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-dad-can-mop-the-mat-line-t1.png",
+    "id": "l2-w09-story-page-dad-can-mop-the-mat",
+    "kind": "line",
+    "pageText": "Dad can mop the mat.",
+    "use": "story-page",
+    "mustShow": [
+      "dad",
+      "1 mat"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-dad-sat-on-the-mat-line-t1.png",
+    "id": "l2-w09-story-page-dad-sat-on-the-mat",
+    "kind": "line",
+    "pageText": "Dad sat on the mat.",
+    "use": "story-page",
+    "mustShow": [
+      "dad",
+      "pip",
+      "1 mat"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-dad-cannot-see-the-mop-line-t1.png",
+    "id": "l2-w09-story-page-dad-cannot-see-the-mop",
+    "kind": "line",
+    "pageText": "Dad cannot see the mop!",
+    "use": "story-page",
+    "mustShow": [
+      "dad",
+      "1 mop"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-dad-is-sad-line-t1.png",
+    "id": "l2-w09-story-page-dad-is-sad",
+    "kind": "line",
+    "pageText": "Dad is sad.",
+    "use": "story-page",
+    "mustShow": [
+      "dad"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-tom-can-see-the-mop-line-t1.png",
+    "id": "l2-w09-story-page-tom-can-see-the-mop",
+    "kind": "line",
+    "pageText": "Tom can see the mop.",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "dad",
+      "1 mop"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-pip-has-the-mop-line-t1.png",
+    "id": "l2-w09-story-page-pip-has-the-mop",
+    "kind": "line",
+    "pageText": "Pip has the mop!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "1 mop"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-pip-can-mop-line-t1.png",
+    "id": "l2-w09-story-page-pip-can-mop",
+    "kind": "line",
+    "pageText": "Pip can mop!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "dad",
+      "tom"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-cover-dad-and-the-mop-line-t1.png",
+    "id": "l2-w09-cover-dad-and-the-mop",
+    "kind": "line",
+    "pageText": "Dad and the Mop",
+    "use": "cover",
+    "mustShow": [
+      "dad",
+      "pip"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-check-row-duck-line-t1.png",
+    "id": "l2-w09-check-row-duck",
+    "kind": "line",
+    "pageText": "duck",
+    "use": "check-row",
+    "mustShow": [
+      "duck"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-check-row-doll-line-t1.png",
+    "id": "l2-w09-check-row-doll",
+    "kind": "line",
+    "pageText": "doll",
+    "use": "check-row",
+    "mustShow": [
+      "doll"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-d4-prompt-cake-line-t1.png",
+    "id": "l2-w09-d4-prompt-cake",
+    "kind": "line",
+    "pageText": "cake",
+    "use": "d4-prompt",
+    "mustShow": [
+      "cake"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-nod-line-t1.png",
+    "id": "l2-w09-card-nod",
+    "kind": "line",
+    "pageText": "nod",
+    "use": "card",
+    "mustShow": [
+      "nod"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-dinosaur-line-t1.png",
+    "id": "l2-w09-card-dinosaur",
+    "kind": "line",
+    "pageText": "dinosaur",
+    "use": "card",
+    "mustShow": [
+      "dinosaur"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-rice-line-t1.png",
+    "id": "l2-w09-card-rice",
+    "kind": "line",
+    "pageText": "rice",
+    "use": "card",
+    "mustShow": [
+      "rice"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-banana-line-t1.png",
+    "id": "l2-w09-card-banana",
+    "kind": "line",
+    "pageText": "banana",
+    "use": "card",
+    "mustShow": [
+      "banana"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-bread-line-t1.png",
+    "id": "l2-w09-card-bread",
+    "kind": "line",
+    "pageText": "bread",
+    "use": "card",
+    "mustShow": [
+      "bread"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-juice-line-t1.png",
+    "id": "l2-w09-card-juice",
+    "kind": "line",
+    "pageText": "juice",
+    "use": "card",
+    "mustShow": [
+      "juice"
+    ]
+  }
+]

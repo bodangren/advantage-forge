@@ -1,0 +1,13 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-jacket-line-t2.png",
+    "id": "l2-w10-story-page-put-on-your-jacket",
+    "kind": "line",
+    "pageText": "Put on your jacket.",
+    "use": "story-page",
+    "mustShow": [
+      "nan",
+      "teacher-kim"
+    ]
+  }
+]

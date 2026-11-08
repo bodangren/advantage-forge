@@ -1,0 +1,242 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-sam-under-the-table-line-t1.png",
+    "id": "l2-w11-story-page-where-is-sam-under-the-table",
+    "kind": "line",
+    "pageText": "Where is Sam? Under the table.",
+    "use": "story-page",
+    "mustShow": [
+      "nan",
+      "sam",
+      "1 table"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-may-in-the-box-line-t1.png",
+    "id": "l2-w11-story-page-where-is-may-in-the-box",
+    "kind": "line",
+    "pageText": "Where is May? In the box.",
+    "use": "story-page",
+    "mustShow": [
+      "nan",
+      "may",
+      "1 box"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-ben-under-the-bed-line-t1.png",
+    "id": "l2-w11-story-page-where-is-ben-under-the-bed",
+    "kind": "line",
+    "pageText": "Where is Ben? Under the bed.",
+    "use": "story-page",
+    "mustShow": [
+      "nan",
+      "ben",
+      "1 bed"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-mia-in-the-bed-line-t1.png",
+    "id": "l2-w11-story-page-where-is-mia-in-the-bed",
+    "kind": "line",
+    "pageText": "Where is Mia? In the bed.",
+    "use": "story-page",
+    "mustShow": [
+      "nan",
+      "mia",
+      "1 bed"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-pat-on-the-sofa-line-t1.png",
+    "id": "l2-w11-story-page-where-is-pat-on-the-sofa",
+    "kind": "line",
+    "pageText": "Where is Pat? On the sofa.",
+    "use": "story-page",
+    "mustShow": [
+      "nan",
+      "pat",
+      "1 sofa"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-lily-on-the-chair-line-t1.png",
+    "id": "l2-w11-story-page-where-is-lily-on-the-chair",
+    "kind": "line",
+    "pageText": "Where is Lily? On the chair.",
+    "use": "story-page",
+    "mustShow": [
+      "nan",
+      "lily",
+      "1 chair"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-where-is-pip-line-t1.png",
+    "id": "l2-w11-story-page-where-is-pip",
+    "kind": "line",
+    "pageText": "Where is Pip?",
+    "use": "story-page",
+    "mustShow": [
+      "nan",
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-cover-where-is-pip-line-t1.png",
+    "id": "l2-w11-cover-where-is-pip",
+    "kind": "line",
+    "pageText": "Where Is Pip?",
+    "use": "cover",
+    "mustShow": [
+      "nan",
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-tom-set-up-a-den-line-t1.png",
+    "id": "l2-w11-story-page-tom-set-up-a-den",
+    "kind": "line",
+    "pageText": "Tom set up a den.",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "1 den"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-see-me-mom-line-t1.png",
+    "id": "l2-w11-story-page-see-me-mom",
+    "kind": "line",
+    "pageText": "See me, Mom!",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "mom"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-mom-is-in-too-line-t1.png",
+    "id": "l2-w11-story-page-mom-is-in-too",
+    "kind": "line",
+    "pageText": "Mom is in, too.",
+    "use": "story-page",
+    "mustShow": [
+      "mom",
+      "tom"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-dad-is-in-too-line-t1.png",
+    "id": "l2-w11-story-page-dad-is-in-too",
+    "kind": "line",
+    "pageText": "Dad is in, too.",
+    "use": "story-page",
+    "mustShow": [
+      "dad",
+      "mom",
+      "tom"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-pip-sat-on-top-line-t1.png",
+    "id": "l2-w11-story-page-pip-sat-on-top",
+    "kind": "line",
+    "pageText": "Pip sat on top.",
+    "use": "story-page",
+    "mustShow": [
+      "pip"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-pip-get-off-line-t1.png",
+    "id": "l2-w11-story-page-pip-get-off",
+    "kind": "line",
+    "pageText": "Pip, get off!",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "pip"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-cover-the-den-line-t1.png",
+    "id": "l2-w11-cover-the-den",
+    "kind": "line",
+    "pageText": "The Den",
+    "use": "cover",
+    "mustShow": [
+      "tom"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-check-row-egg-line-t1.png",
+    "id": "l2-w11-check-row-egg",
+    "kind": "line",
+    "pageText": "egg",
+    "use": "check-row",
+    "mustShow": [
+      "egg"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-check-row-elephant-line-t1.png",
+    "id": "l2-w11-check-row-elephant",
+    "kind": "line",
+    "pageText": "elephant",
+    "use": "check-row",
+    "mustShow": [
+      "elephant"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-card-elbow-line-t1.png",
+    "id": "l2-w11-card-elbow",
+    "kind": "line",
+    "pageText": "elbow",
+    "use": "card",
+    "mustShow": [
+      "elbow"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-card-envelope-line-t1.png",
+    "id": "l2-w11-card-envelope",
+    "kind": "line",
+    "pageText": "envelope",
+    "use": "card",
+    "mustShow": [
+      "envelope"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-card-door-line-t1.png",
+    "id": "l2-w11-card-door",
+    "kind": "line",
+    "pageText": "door",
+    "use": "card",
+    "mustShow": [
+      "door"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-card-window-line-t1.png",
+    "id": "l2-w11-card-window",
+    "kind": "line",
+    "pageText": "window",
+    "use": "card",
+    "mustShow": [
+      "window"
+    ]
+  }
+]

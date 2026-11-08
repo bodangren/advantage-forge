@@ -178,3 +178,32 @@ Spec edits in commit b9ed6043 (the orchestrator brief lists the reasons):
 - l2-w11-story-page-the-den-is-on-dad: Dad had no reference. The Dad sheet `out/storytime/l2/unit1/w04/muse/elements/cast-dad-sheet-m1-color.png` is appended as the sixth reference. Picture 6 text added for Dad. Choice: appended, not renumbered, so existing picture numbers stay the same. References now 6.
 - Warning: regenerating `docs/storytime/l2-unit2` would undo these ten spec edits. Re-apply them from commit b9ed6043 before any regeneration.
 - Open finding (unchanged from Round 4): docs/storytime/l2-unit2/prompt-list.md was not regenerated after the spec changes. No change made in Round 5.
+
+## Round 6 (Green · P2 T5-T6 · storytime_l2_unit2_pictures · r6)
+
+- 2026-11-08T17:34Z: start. role_base_sha 179f438a (equal to HEAD at start). Model: minimax-cn-coding-plan/MiniMax-M3.1-Flash. The light lane has no Red.
+- Step K (records, 0 USD): added the "Real maker models" sub-bullet under Task 5 in plan.md. Commit 4ae0b1dc, message `measure(storytime_l2_unit2_pictures): record the real maker models`.
+- Step L (batch fix, 0 USD): the batch tool counts try n as the n-th cost row. l2-w10-story-page-put-on-your-hat-pip and l2-w15-cover-look-a-bus each have a 0-cost HTTP 400 row first, so their try 2 is the old m1 picture. Their new picture is m2 = try 3.
+  - Rebuilt `docs/storytime/l2-unit2/judge/prod/u2-r2-color.json` with `--unit2 --kind color --try 2` for the other 8 ids.
+  - Built `docs/storytime/l2-unit2/judge/prod/u2-r2-color-group-t3.json` with `--try 3` for the 2 group rows.
+  - Check: a sharp pixel-distance script compared every judge copy against the m2 file of its row. All 10 entries: same aspect, m2 newer than m1, pixel distance 0.00 to m2 and 11.92 to 57.68 to m1. Result: all 10 ok.
+  - Commit b42008b3, message `measure(storytime_l2_unit2_pictures): color try 2 batch fix for the two group rows`.
+- Step J (Task 6 line pool, paid): marked Task 6 `[~]` in plan.md before the pool.
+  - Row set: 182 rows in rows.json with reuse null, minus the 10 rows of Step L, gives 172 rows. Check by week: w09 27, w10 27, w11 21, w12 25, w13 25, w14 25, w15 21, w16 1. Each has a spec file, a linePrompt, the unit 2 outDir, and one passing color at its latest version m1.
+  - D5 worst case before the pool: 172 x 0.01 USD + 2.02 USD + 0.03 USD = 3.77 USD, under the book stop 18.33 USD. The pool runs at concurrency 4.
+  - Guard check before the pool: runGuards accepted all 8 weeks, spend 2.02 USD, no refusal.
+  - Command: `node scripts/storytime-muse.mjs line <week specs> --tries 1`, one week per call, in one shell loop over w09 to w16. Output in /tmp/opencode/u2-line-r1-w09.out to w16.out.
+
+## Round 7 (Green · P2 T6 · storytime_l2_unit2_pictures · r7)
+
+- 2026-11-08T17:55Z: start. HEAD b42008b3. The line pool of Round 6 had run to the end; this round reads it, retries one row, builds the judge batches, and records the spend.
+- Item 1, pool analysis (0 USD). Script: /tmp/opencode/u2-line-r1-count.py.
+  - Book total over all costs.tsv under out/storytime/l2/unit2 (15 files, family-words excluded): 3.74 USD over 386 rows. Highest call 0.01 USD. No call above 0.03 USD.
+  - Per week line results since 2026-11-08T17:30Z: w09 27 ok, 0 failed; w10 26 ok, 1 failed; w11 21 ok, 0 failed; w12 25 ok, 0 failed; w13 25 ok, 0 failed; w14 25 ok, 0 failed; w15 21 ok, 0 failed; w16 1 ok, 0 failed. Refused lines in the 8 tee files: 0.
+  - One row had no ok line row: l2-w10-story-page-put-on-your-jacket. Its only line row was a 0-cost HTTP 502 from the provider (Meta internal server error, "Retry once"). It was not a network error, so the brief's retry rule did not name it. Decision: retry it once at concurrency 1, because the provider asked for a retry and the cost was 0. The row is now the only row whose first real line picture is try 2.
+- Item 2, retry (0.01 USD). `node scripts/storytime-muse.mjs line docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-jacket.json --tries 1 --concurrency 1`. Result: ok 1920x1280, cost 0.01 USD. After the retry every one of the 172 rows has an ok line row, and no row lacks a line picture file.
+- Item 3, judge batches (0 USD). One shell loop over the 8 weeks, `--unit2 --kind line --try 1`, name u2-w<nn>-r1-line. The one row whose first real line picture is try 2 went into its own batch u2-w10-r2-line with `--try 2`.
+  - u2-w09-r1-line 27 entries; u2-w10-r1-line 26; u2-w10-r2-line 1; u2-w11-r1-line 21; u2-w12-r1-line 25; u2-w13-r1-line 25; u2-w14-r1-line 25; u2-w15-r1-line 21; u2-w16-r1-line 1.
+  - Check: total entries 172 equals the rows with a line picture 172, with no missing and no extra id. A sharp script compared every judge copy against the line file of its row: 172 copies checked, 0 failures.
+- Items 5 and 6: spend-record.txt has one line per week pool and one line for the retry. Book total 3.74 USD, left 14.59 USD against the 18.33 USD stop.
+- Open finding (unchanged from Rounds 4 and 5): docs/storytime/l2-unit2/prompt-list.md was not regenerated after the spec changes. No change made.

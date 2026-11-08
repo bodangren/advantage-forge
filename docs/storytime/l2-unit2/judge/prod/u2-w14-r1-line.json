@@ -1,0 +1,263 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-sunny-line-t1.png",
+    "id": "l2-w14-story-page-it-is-sunny",
+    "kind": "line",
+    "pageText": "It is sunny.",
+    "use": "story-page",
+    "mustShow": [
+      "nan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-cloudy-line-t1.png",
+    "id": "l2-w14-story-page-it-is-cloudy",
+    "kind": "line",
+    "pageText": "It is cloudy.",
+    "use": "story-page",
+    "mustShow": [
+      "nan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-windy-line-t1.png",
+    "id": "l2-w14-story-page-it-is-windy",
+    "kind": "line",
+    "pageText": "It is windy.",
+    "use": "story-page",
+    "mustShow": [
+      "nan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-rainy-line-t1.png",
+    "id": "l2-w14-story-page-it-is-rainy",
+    "kind": "line",
+    "pageText": "It is rainy.",
+    "use": "story-page",
+    "mustShow": [
+      "nan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-hot-line-t1.png",
+    "id": "l2-w14-story-page-it-is-hot",
+    "kind": "line",
+    "pageText": "It is hot.",
+    "use": "story-page",
+    "mustShow": [
+      "nan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-cold-line-t1.png",
+    "id": "l2-w14-story-page-it-is-cold",
+    "kind": "line",
+    "pageText": "It is cold.",
+    "use": "story-page",
+    "mustShow": [
+      "nan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-it-is-very-cold-line-t1.png",
+    "id": "l2-w14-story-page-it-is-very-cold",
+    "kind": "line",
+    "pageText": "It is very cold!",
+    "use": "story-page",
+    "mustShow": [
+      "nan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-pip-is-cold-too-line-t1.png",
+    "id": "l2-w14-story-page-pip-is-cold-too",
+    "kind": "line",
+    "pageText": "Pip is cold, too!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "nan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-cover-hot-and-cold-line-t1.png",
+    "id": "l2-w14-cover-hot-and-cold",
+    "kind": "line",
+    "pageText": "Hot and Cold",
+    "use": "cover",
+    "mustShow": [
+      "nan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-dad-is-hot-line-t1.png",
+    "id": "l2-w14-story-page-dad-is-hot",
+    "kind": "line",
+    "pageText": "Dad is hot.",
+    "use": "story-page",
+    "mustShow": [
+      "dad"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-mom-has-a-fan-line-t1.png",
+    "id": "l2-w14-story-page-mom-has-a-fan",
+    "kind": "line",
+    "pageText": "Mom has a fan.",
+    "use": "story-page",
+    "mustShow": [
+      "mom",
+      "1 fan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-on-goes-the-fan-line-t1.png",
+    "id": "l2-w14-story-page-on-goes-the-fan",
+    "kind": "line",
+    "pageText": "On goes the fan!",
+    "use": "story-page",
+    "mustShow": [
+      "mom",
+      "dad",
+      "1 fan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-dad-is-not-hot-line-t1.png",
+    "id": "l2-w14-story-page-dad-is-not-hot",
+    "kind": "line",
+    "pageText": "Dad is not hot.",
+    "use": "story-page",
+    "mustShow": [
+      "dad"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-pip-is-hot-line-t1.png",
+    "id": "l2-w14-story-page-pip-is-hot",
+    "kind": "line",
+    "pageText": "Pip is hot.",
+    "use": "story-page",
+    "mustShow": [
+      "pip"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-pip-sat-on-the-mat-line-t1.png",
+    "id": "l2-w14-story-page-pip-sat-on-the-mat",
+    "kind": "line",
+    "pageText": "Pip sat on the mat.",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "1 mat"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-dad-is-hot-b-line-t1.png",
+    "id": "l2-w14-story-page-dad-is-hot-b",
+    "kind": "line",
+    "pageText": "Dad is hot!",
+    "use": "story-page",
+    "mustShow": [
+      "dad",
+      "pip"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-a-fan-for-you-pip-line-t1.png",
+    "id": "l2-w14-story-page-a-fan-for-you-pip",
+    "kind": "line",
+    "pageText": "A fan for you, Pip!",
+    "use": "story-page",
+    "mustShow": [
+      "mom",
+      "pip",
+      "dad",
+      "1 fan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-cover-on-goes-the-fan-line-t1.png",
+    "id": "l2-w14-cover-on-goes-the-fan",
+    "kind": "line",
+    "pageText": "On Goes the Fan!",
+    "use": "cover",
+    "mustShow": [
+      "mom",
+      "dad",
+      "pip"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-check-row-foot-line-t1.png",
+    "id": "l2-w14-check-row-foot",
+    "kind": "line",
+    "pageText": "foot",
+    "use": "check-row",
+    "mustShow": [
+      "foot"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-sunny-line-t1.png",
+    "id": "l2-w14-card-sunny",
+    "kind": "line",
+    "pageText": "sunny",
+    "use": "card",
+    "mustShow": [
+      "sunny"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-cloudy-line-t1.png",
+    "id": "l2-w14-card-cloudy",
+    "kind": "line",
+    "pageText": "cloudy",
+    "use": "card",
+    "mustShow": [
+      "cloudy"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-windy-line-t1.png",
+    "id": "l2-w14-card-windy",
+    "kind": "line",
+    "pageText": "windy",
+    "use": "card",
+    "mustShow": [
+      "windy"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-rainy-line-t1.png",
+    "id": "l2-w14-card-rainy",
+    "kind": "line",
+    "pageText": "rainy",
+    "use": "card",
+    "mustShow": [
+      "rainy"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-hot-line-t1.png",
+    "id": "l2-w14-card-hot",
+    "kind": "line",
+    "pageText": "hot",
+    "use": "card",
+    "mustShow": [
+      "hot"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-cold-line-t1.png",
+    "id": "l2-w14-card-cold",
+    "kind": "line",
+    "pageText": "cold",
+    "use": "card",
+    "mustShow": [
+      "cold"
+    ]
+  }
+]

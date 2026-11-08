@@ -1,0 +1,266 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-sam-line-t1.png",
+    "id": "l2-w12-story-page-open-your-book-sam",
+    "kind": "line",
+    "pageText": "Open your book, Sam.",
+    "use": "story-page",
+    "mustShow": [
+      "teacher-kim",
+      "sam"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-may-line-t1.png",
+    "id": "l2-w12-story-page-open-your-book-may",
+    "kind": "line",
+    "pageText": "Open your book, May.",
+    "use": "story-page",
+    "mustShow": [
+      "may"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-ben-line-t1.png",
+    "id": "l2-w12-story-page-open-your-book-ben",
+    "kind": "line",
+    "pageText": "Open your book, Ben.",
+    "use": "story-page",
+    "mustShow": [
+      "ben"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-mia-line-t1.png",
+    "id": "l2-w12-story-page-open-your-book-mia",
+    "kind": "line",
+    "pageText": "Open your book, Mia.",
+    "use": "story-page",
+    "mustShow": [
+      "mia"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-pat-line-t1.png",
+    "id": "l2-w12-story-page-open-your-book-pat",
+    "kind": "line",
+    "pageText": "Open your book, Pat.",
+    "use": "story-page",
+    "mustShow": [
+      "pat"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-lily-line-t1.png",
+    "id": "l2-w12-story-page-open-your-book-lily",
+    "kind": "line",
+    "pageText": "Open your book, Lily.",
+    "use": "story-page",
+    "mustShow": [
+      "lily"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-pip-line-t1.png",
+    "id": "l2-w12-story-page-open-your-book-pip",
+    "kind": "line",
+    "pageText": "Open your book, Pip!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "nan",
+      "teacher-kim"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-cover-open-your-book-line-t1.png",
+    "id": "l2-w12-cover-open-your-book",
+    "kind": "line",
+    "pageText": "Open Your Book!",
+    "use": "cover",
+    "mustShow": [
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily",
+      "nan",
+      "teacher-kim"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-dad-has-a-hat-line-t1.png",
+    "id": "l2-w12-story-page-dad-has-a-hat",
+    "kind": "line",
+    "pageText": "Dad has a hat.",
+    "use": "story-page",
+    "mustShow": [
+      "dad",
+      "1 hat"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-dad-is-hot-line-t1.png",
+    "id": "l2-w12-story-page-dad-is-hot",
+    "kind": "line",
+    "pageText": "Dad is hot.",
+    "use": "story-page",
+    "mustShow": [
+      "dad"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-it-is-on-the-mat-line-t1.png",
+    "id": "l2-w12-story-page-it-is-on-the-mat",
+    "kind": "line",
+    "pageText": "It is on the mat.",
+    "use": "story-page",
+    "mustShow": [
+      "dad",
+      "1 mat"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-a-hen-can-hop-line-t1.png",
+    "id": "l2-w12-story-page-a-hen-can-hop",
+    "kind": "line",
+    "pageText": "A hen can hop.",
+    "use": "story-page",
+    "mustShow": [
+      "1 hen"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-hop-hop-hop-line-t1.png",
+    "id": "l2-w12-story-page-hop-hop-hop",
+    "kind": "line",
+    "pageText": "Hop, hop, hop!",
+    "use": "story-page",
+    "mustShow": [
+      "Hop, hop, hop!"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-the-hen-sat-in-it-line-t1.png",
+    "id": "l2-w12-story-page-the-hen-sat-in-it",
+    "kind": "line",
+    "pageText": "The hen sat in it.",
+    "use": "story-page",
+    "mustShow": [
+      "1 hen"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-dad-said-get-off-line-t1.png",
+    "id": "l2-w12-story-page-dad-said-get-off",
+    "kind": "line",
+    "pageText": "Dad said, \"Get off!\"",
+    "use": "story-page",
+    "mustShow": [
+      "dad"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-that-hen-has-the-hat-line-t1.png",
+    "id": "l2-w12-story-page-that-hen-has-the-hat",
+    "kind": "line",
+    "pageText": "That hen has the hat!",
+    "use": "story-page",
+    "mustShow": [
+      "dad",
+      "tom",
+      "1 hat"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-cover-the-hen-and-the-hat-line-t1.png",
+    "id": "l2-w12-cover-the-hen-and-the-hat",
+    "kind": "line",
+    "pageText": "The Hen and the Hat",
+    "use": "cover",
+    "mustShow": [
+      "dad"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-check-row-horse-line-t1.png",
+    "id": "l2-w12-check-row-horse",
+    "kind": "line",
+    "pageText": "horse",
+    "use": "check-row",
+    "mustShow": [
+      "horse"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-check-row-house-line-t1.png",
+    "id": "l2-w12-check-row-house",
+    "kind": "line",
+    "pageText": "house",
+    "use": "check-row",
+    "mustShow": [
+      "house"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-d4-prompt-book-line-t1.png",
+    "id": "l2-w12-d4-prompt-book",
+    "kind": "line",
+    "pageText": "book",
+    "use": "d4-prompt",
+    "mustShow": [
+      "book"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-hop-line-t1.png",
+    "id": "l2-w12-card-hop",
+    "kind": "line",
+    "pageText": "hop",
+    "use": "card",
+    "mustShow": [
+      "hop"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-hippo-line-t1.png",
+    "id": "l2-w12-card-hippo",
+    "kind": "line",
+    "pageText": "hippo",
+    "use": "card",
+    "mustShow": [
+      "hippo"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-crayon-line-t1.png",
+    "id": "l2-w12-card-crayon",
+    "kind": "line",
+    "pageText": "crayon",
+    "use": "card",
+    "mustShow": [
+      "crayon"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-eraser-line-t1.png",
+    "id": "l2-w12-card-eraser",
+    "kind": "line",
+    "pageText": "eraser",
+    "use": "card",
+    "mustShow": [
+      "eraser"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-ruler-line-t1.png",
+    "id": "l2-w12-card-ruler",
+    "kind": "line",
+    "pageText": "ruler",
+    "use": "card",
+    "mustShow": [
+      "ruler"
+    ]
+  }
+]

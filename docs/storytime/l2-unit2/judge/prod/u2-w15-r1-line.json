@@ -1,0 +1,236 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-bus-line-t1.png",
+    "id": "l2-w15-story-page-look-a-bus",
+    "kind": "line",
+    "pageText": "Look, a bus!",
+    "use": "story-page",
+    "mustShow": [
+      "sam",
+      "1 bus"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-car-line-t1.png",
+    "id": "l2-w15-story-page-look-a-car",
+    "kind": "line",
+    "pageText": "Look, a car!",
+    "use": "story-page",
+    "mustShow": [
+      "may",
+      "1 car"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-bike-line-t1.png",
+    "id": "l2-w15-story-page-look-a-bike",
+    "kind": "line",
+    "pageText": "Look, a bike!",
+    "use": "story-page",
+    "mustShow": [
+      "ben",
+      "1 bike"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-truck-line-t1.png",
+    "id": "l2-w15-story-page-look-a-truck",
+    "kind": "line",
+    "pageText": "Look, a truck!",
+    "use": "story-page",
+    "mustShow": [
+      "mia",
+      "1 truck"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-train-line-t1.png",
+    "id": "l2-w15-story-page-look-a-train",
+    "kind": "line",
+    "pageText": "Look, a train!",
+    "use": "story-page",
+    "mustShow": [
+      "pat",
+      "1 train"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-boat-line-t1.png",
+    "id": "l2-w15-story-page-look-a-boat",
+    "kind": "line",
+    "pageText": "Look, a boat!",
+    "use": "story-page",
+    "mustShow": [
+      "lily",
+      "1 boat"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-a-plane-line-t1.png",
+    "id": "l2-w15-story-page-look-a-plane",
+    "kind": "line",
+    "pageText": "Look, a plane!",
+    "use": "story-page",
+    "mustShow": [
+      "nan",
+      "1 plane"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-look-pip-on-a-bike-line-t1.png",
+    "id": "l2-w15-story-page-look-pip-on-a-bike",
+    "kind": "line",
+    "pageText": "Look, Pip on a bike!",
+    "use": "story-page",
+    "mustShow": [
+      "grandpa",
+      "pip",
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily",
+      "nan",
+      "1 bike"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-pip-has-a-tag-line-t1.png",
+    "id": "l2-w15-story-page-pip-has-a-tag",
+    "kind": "line",
+    "pageText": "Pip has a tag.",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "1 tag"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-pip-has-no-tag-line-t1.png",
+    "id": "l2-w15-story-page-pip-has-no-tag",
+    "kind": "line",
+    "pageText": "Pip has no tag!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "tom"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-is-it-on-the-mat-line-t1.png",
+    "id": "l2-w15-story-page-is-it-on-the-mat",
+    "kind": "line",
+    "pageText": "Is it on the mat?",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "1 mat"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-no-it-is-not-line-t1.png",
+    "id": "l2-w15-story-page-no-it-is-not",
+    "kind": "line",
+    "pageText": "No, it is not.",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "pip"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-is-it-in-the-pot-line-t1.png",
+    "id": "l2-w15-story-page-is-it-in-the-pot",
+    "kind": "line",
+    "pageText": "Is it in the pot?",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "1 pot"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-no-it-is-not-b-line-t1.png",
+    "id": "l2-w15-story-page-no-it-is-not-b",
+    "kind": "line",
+    "pageText": "No, it is not.",
+    "use": "story-page",
+    "mustShow": [
+      "tom"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-it-is-on-a-peg-line-t1.png",
+    "id": "l2-w15-story-page-it-is-on-a-peg",
+    "kind": "line",
+    "pageText": "It is on a peg!",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "mom",
+      "1 peg"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-story-page-pip-got-his-tag-line-t1.png",
+    "id": "l2-w15-story-page-pip-got-his-tag",
+    "kind": "line",
+    "pageText": "Pip got his tag!",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "pip"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-cover-the-tag-line-t1.png",
+    "id": "l2-w15-cover-the-tag",
+    "kind": "line",
+    "pageText": "The Tag",
+    "use": "cover",
+    "mustShow": [
+      "pip"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-check-row-goat-line-t1.png",
+    "id": "l2-w15-check-row-goat",
+    "kind": "line",
+    "pageText": "goat",
+    "use": "check-row",
+    "mustShow": [
+      "goat"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-check-row-girl-line-t1.png",
+    "id": "l2-w15-check-row-girl",
+    "kind": "line",
+    "pageText": "girl",
+    "use": "check-row",
+    "mustShow": [
+      "girl"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-card-garden-line-t1.png",
+    "id": "l2-w15-card-garden",
+    "kind": "line",
+    "pageText": "garden",
+    "use": "card",
+    "mustShow": [
+      "garden"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-card-helicopter-line-t1.png",
+    "id": "l2-w15-card-helicopter",
+    "kind": "line",
+    "pageText": "helicopter",
+    "use": "card",
+    "mustShow": [
+      "helicopter"
+    ]
+  }
+]
