@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "asset_storytime_l2_unit2_pictures_20261108",
+  "phase": "Phase 2: Book pictures (paid)",
+  "baseline_sha": "ac23e9e299383dccbf82b6e4b4e1369ef061f423",
+  "audited_head_sha": "ac23e9e299383dccbf82b6e4b4e1369ef061f423",
+  "phase_base_sha": "d99aa896d31d86b336c63026d7821115ecdba8bb",
+  "status": "pass",
+  "summary": "Phase 2 accepted at ac23e9e2. Book spend is 4.32 USD of the 18.33 stop (445 cost rows, 15 files, highest call 0.01 USD, no family-words spend), and it matches spend-record.txt and pm-report.md. Both calibration controls failed. All 173 approved rows have a judge pass for both the approved color print and the approved line print (346 of 346 mapped, 0 without a pass); the 3 despeckled prints are the same try as the judged print with the largest changed area under 0.018 percent. The delivery manifest holds 220 rows and 440 PNG files at the class size, 8-bit, no alpha, line grayscale; the 9 rows out are the rows named in pm-report.md. The hand-off folder gives 468 OK and 0 FAILED, every file except MANIFEST.txt is listed, and the 440 delivered PNGs equal the delivery files by hash. Spec edits after d99aa896 touch only docs/storytime/l2-unit2 row specs, the generator, and its test; no PNG or JPG entered git; the guard, the judge kit, unit 1 paths, assets, and measure/tracks.md are unchanged. GREEN evidence is the orchestrator jr-green role gate PASS at ac23e9e2.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] measure/tracks/asset_storytime_l2_unit2_pictures_20261108/plan.md Phase 2 Task 7 text: the round 11 paragraph records an approval list of 181 entries and 23 refused rows, while the delivered state is 173 approvals and 9 rows out; the later Delivery paragraph of the same task gives the real numbers, so the stale count sits above the correct one and can mislead a reader.",
+    "F2 [Nit] measure/runs/asset_storytime_l2_unit2_pictures_20261108/pm-report.md status line: the file opens with 'Status: in progress' as spec D8 expects 'Status: done.' for the final report; this is correct for Phase 2 because the app family-word item is next, and Task 11 owns the final status line. Route to the maker for Task 11.",
+    "F3 [Nit] measure/runs/asset_storytime_l2_unit2_pictures_20261108/approvals-u2.json version field: the version is the color try while the line print names the color attempt and the same-color retry, so a reader cannot get the line try from the approval alone; the checker resolved every line try from the costs.tsv call order. Noted for reuse in Phase 3."
+  ],
+  "evidence": [
+    "HEAD check: git rev-parse HEAD gives ac23e9e299383dccbf82b6e4b4e1369ef061f423, the audited HEAD and role_base_sha; the working tree holds no uncommitted change to a path this phase owns.",
+    "Check 1 spend: 15 costs.tsv files under out/storytime/l2/unit2 (8 muse and 7 muse/elements), 445 rows, total 4.32 USD; 218 color and 227 line. The total equals the book total in spend-record.txt and pm-report.md (4.32 USD), stays at or under the 18.33 USD stop, and no row costs above 0.01 USD against the 0.03 USD limit. The min row time 2026-11-08T15:05:05Z is later than U2_RUN.startTime 2026-11-08T05:21:00Z, so every row is newer than the start time.",
+    "Check 1 app item: out/storytime/l2/unit2/family-words does not exist, so it holds no costs.tsv and the app item is 0 USD. spend-record.txt logs the app item start at 0.00 USD.",
+    "Check 1 guard: git diff d99aa896 ac23e9e2 -- scripts/storytime-muse-guards.mjs is empty, so the guard values are unchanged since the phase base. The file holds U2_RUN capUsd 18.33, reportAtUsd 14.66, and U2_FW_RUN capUsd 0.29, reportAtUsd 0.23, startTime 2026-11-08T13:39:00Z.",
+    "Check 2 calibration: measure/runs/asset_storytime_l2_unit2_pictures_20261108/calibration-record.json holds 2 files, 0 pass and 2 fail, so both controls failed (FR-10). The judge kit paths are unchanged in the phase diff.",
+    "Check 2 judge coverage: 40 judge-u2-*.json files, 469 entries parsed with 0 unparsed, every file carries model claude-code/claude-sonnet-5-5#high, judge-prompt.md v6, and status complete. Each of the 173 approved rows maps to a pass judge for its color print and its line print: 346 of 346 prints mapped, 0 approved prints without a pass. The line try is the ordinal of the row's line call in costs.tsv, because the judge copy name counts line calls while the print name carries the color attempt and the same-color retry. l2-w15-cover-look-a-bus clears at color try 3 after a first fail and a cleared second fail; l2-w13-d4-prompt-jump clears its line at try 3.",
+    "Check 2 despeckle: despeckle-record.txt names 3 rows and shows the largest changed connected area at 0.010267, 0.017850, and 0.004783 percent, each under the 0.05 percent limit and 1 to 2 px wide. Each despeckled print is the same line try as the judged print (l2-w12-cover-open-your-book line try 1, l2-w12-story-page-open-your-book-pip line try 2, l2-w13-cover-look-at-me line try 1).",
+    "Check 3 delivery: out/storytime/l2/unit2/delivery-muse-v1/manifest.json holds 220 jobs (173 approved plus 47 reuse) and 16 batches; 440 files on disk equal the 440 files in the batches, with 0 absent and 0 extra. Every file is 8-bit with no alpha, color RGB and line grayscale, at the class size 4000 x 3000 for story and cover and 1500 x 1500 for small. The 440 file hashes match the manifest with 0 mismatches. The 9 rows with no delivery entry are exactly the rows named with reasons in pm-report.md.",
+    "Check 3 hand-off: /home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures gives 468 OK and 0 FAILED over its hash lines. Every file except MANIFEST.txt is listed in MANIFEST.txt. The 440 delivered PNG files equal the delivery files by SHA-256 with 0 mismatches; the only extra root PNG files are the 8 contact sheets. The folder holds 466 PNG files total (440 delivered, 8 contact sheets, and 18 prints in not-delivered/).",
+    "Check 4 process: git diff d99aa896 ac23e9e2 --name-only lists only measure/runs/asset_storytime_l2_unit2_pictures_20261108/, docs/storytime/l2-unit2/, scripts/storytime-u2-specs.mjs with tests/storytime-u2-specs.test.ts, and measure/tracks/asset_storytime_l2_unit2_pictures_20261108/plan.md. No PNG or JPG entered git since d99aa896. No change to the judge kit, unit 1 paths, assets, scripts/storytime-muse-guards.mjs, or measure/tracks.md.",
+    "Check 4 plan: Tasks 3 to 8 are [x], each with a SHA on its first line (9ba5f0e1, 01b97374, d7f5672d, d34d9e91, a6052181, ed40d429). The Phase 2 gate is [b] with deferred:checker. The plan records the real maker models, including the silent fallback to claude-code/claude-haiku-5-5 at 22:41, 22:44, and 23:40 ICT on 2026-11-08, and the later MiniMax runs.",
+    "Check 4 FR-12: pm-report.md states that the pictures are model evidence and not acceptance and that no file of the track says Daniel, the PM, or Workbooks accepted a picture. No text claims such an acceptance.",
+    "GREEN: the orchestrator ran the jr-green role gate at ac23e9e2 at 04:06 ICT with the result 'PASS: jr-green gate passed'; that gate runs the 13-file GREEN command of the phase test strategy. This acceptance cites it as the GREEN evidence and does not rerun it.",
+    "A5 plan-claim check: the plan and pm-report.md claim 'PASS' only through the orchestrator jr-green gate above; no phase file claims a GREEN command result that this checker could not match to evidence."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff d99aa896 ac23e9e2 --stat -- scripts/storytime-muse-guards.mjs scripts/storytime-muse-guards.d.mts",
+    "git diff d99aa896 ac23e9e2 --name-only",
+    "git diff d99aa896 ac23e9e2 --stat",
+    "git status --short",
+    "python3 measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p2-accept.py",
+    "python3 measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p2-judge.py",
+    "python3 measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p2-judge2.py",
+    "python3 measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p2-delivery.py",
+    "python3 measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p2-handoff.py",
+    "python3 -m json.tool measure/runs/asset_storytime_l2_unit2_pictures_20261108/approvals-u2.json",
+    "sha256sum -c MANIFEST.txt (hand-off folder, hashed in probe-p2-handoff.py)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p2-accept.py",
+    "measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p2-judge.py",
+    "measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p2-judge2.py",
+    "measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p2-delivery.py",
+    "measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p2-handoff.py",
+    "measure/runs/asset_storytime_l2_unit2_pictures_20261108/acceptance-p2-ac23e9e.json",
+    "measure/runs/asset_storytime_l2_unit2_pictures_20261108/acceptance-p2-ac23e9e.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high"
+}

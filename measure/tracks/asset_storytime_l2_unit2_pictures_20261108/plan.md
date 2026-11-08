@@ -77,7 +77,7 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     recheck at concurrency 4: ACCEPT as an operating rule: when item total + planned calls x the
     highest call cost + 0.03 USD passes the item stop, the pool runs at concurrency 1.
 
-## Phase 2: Book pictures (paid)
+## Phase 2: Book pictures (paid) [checkpoint: ac23e9e]
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`). The orchestrator
 runs the frozen judge and the calibration controls. The stop is 18.33 USD.
@@ -121,13 +121,13 @@ runs the frozen judge and the calibration controls. The stop is 18.33 USD.
   `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures/` with the PNG files, `manifest.json`,
   `MANIFEST.txt`, and one contact sheet for each week (sharp; Chrome only through `heavy-run.sh`).
   Run `sha256sum -c MANIFEST.txt` (0 FAILED).
-  - Round 11 (0 USD): the approval list and the runner are ready (`approvals-u2.json`, 181 entries;
-    `deliver-u2.mts`). `deliverMuseUnit2` refused 23 of the 181 rows: 19 line prints have lines of
-    8 to 11 px against the 12 px minimum, and 4 fail the white edge frame. The writer wrote nothing.
-    The 47 reuse rows and the other 158 approved rows pass. The per-row record is `delivery-gate.txt`.
-    Three rows pass with the despeckled print of the same try. The round stops for the PM decision:
-    accept the thin lines, accept the despeckled prints, regenerate the lines in a later paid round,
-    or deliver the 205 rows that pass. No delivery folder exists.
+  - Round 11 (0 USD): the approval list and the runner are ready (`approvals-u2.json`;
+    `deliver-u2.mts`). `deliverMuseUnit2` refused the rows whose line prints have lines of 8 to 11 px
+    against the 12 px minimum, and the rows that fail the white edge frame. The writer wrote nothing.
+    The per-row record is `delivery-gate.txt`. Three rows pass with the despeckled print of the same
+    try. The round stops for the PM decision: accept the thin lines, accept the despeckled prints,
+    regenerate the lines in a later paid round, or deliver the rows that pass. No delivery folder
+    exists. The delivered counts are in the Delivery paragraph below.
   - Delivery (commit a6052181): `out/storytime/l2/unit2/delivery-muse-v1/` holds 220 rows and 440 PNG
     files plus `manifest.json`. 173 approved rows and 47 reuse rows. `onSkip` named exactly the 9
     rows out. File checks: 440 files, 0 problems (class size, 8-bit, no alpha, line grayscale).
@@ -138,9 +138,10 @@ runs the frozen judge and the calibration controls. The stop is 18.33 USD.
     and `MANIFEST.txt`. `sha256sum -c MANIFEST.txt`: 468 OK, 0 FAILED.
 - [x] Task 8 (ed40d429): Book part of the PM report (D8). Write the book lines of `pm-report.md`: spend, calls,
   the stop, rows done, failures with the best try, and the folders. deferred:maker
-- [b] Phase 2 gate: phase acceptance by the checker at an immutable HEAD. The checker compares the
-  `costs.tsv` totals with the spend record, the calibration record, the judge files, and the delivery
-  manifest, and runs `sha256sum -c` on the hand-off folder. deferred:checker
+- [x] Phase 2 gate (ac23e9e2): phase acceptance by the checker passed at ac23e9e2. Evidence:
+  measure/runs/asset_storytime_l2_unit2_pictures_20261108/acceptance-p2-ac23e9e.json. Checker model:
+  nvidia/stepfun-ai/step-5-preview#high.
+  - Checker findings and orchestrator dispositions: F1 [Nit] stale round 11 counts under Task 7: FIX now (the Task 7 lines name 173 approved rows, 47 reuse rows, 220 delivered, 9 out); F2 [Nit] pm-report.md status line: DECLINE, the final status line belongs to Task 11; F3 [Nit] approvals name the color try only: ACCEPT as a note, the line try comes from the call order, and the app item is color only.
 
 ## Phase 3: App family-word pictures
 
