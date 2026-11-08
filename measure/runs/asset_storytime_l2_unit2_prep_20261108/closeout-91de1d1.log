@@ -1,0 +1,72 @@
+Closeout log — asset_storytime_l2_unit2_prep_20261108
+Date: 2026-11-08 (ICT)
+Role base SHA: 91de1d16922ed9f132cdd16ae4654f04c39d45c8
+Archive commit SHA: 65bf84a1c169b2d06af39d98e710db543775f3c4
+
+1. Provenance check
+   git rev-parse HEAD -> 91de1d16922ed9f132cdd16ae4654f04c39d45c8
+   This equals the audited_head_sha of measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-91de1d1.json. PASS.
+
+2. Plan state before closeout
+   grep -nE '^- \[(~| |b)\]' measure/tracks/.../plan.md -> exit 1, no line.
+   7 lines start with '- [x] Task'; each carries an 8-character commit SHA on its first line.
+   Phase 1 gate line: '- [x] Phase 1 gate (91de1d16): phase acceptance by the checker passed at 91de1d16.'
+   Closeout line: '- [x] Closeout (91de1d16): archive the track, update the registry, and run the doctor.'
+
+3. Plan, metadata, and manifest edits
+   Plan status: 'Status: delivered (2026-11-08). Unpaid prep for the unit 2 pictures is in the hand-off folder; the paid run waits for Daniel's Go.'
+   metadata.json: status done, completed 2026-11-08, updated_at 2026-11-08T05:07:00Z, actual_tasks 7, deviation notes extended.
+   Description collapsed to one line and used in the registry entry, word for word.
+   automation-supervisor-closeout-manifest.json: written, python3 -m json.tool gives exit 0.
+
+4. Archive move
+   git mv measure/tracks/asset_storytime_l2_unit2_prep_20261108 measure/archive/asset_storytime_l2_unit2_prep_20261108
+   git add at the archive paths; the five spec, plan, index, metadata, and manifest files are in the commit.
+
+5. Registry through a blob
+   git show HEAD:measure/tracks.md > /tmp/opencode/tracks.base.md
+   Two edits only: remove the active entry with its Link line and one blank line; add the archive entry with its Link line and one blank line after '## Archived Tracks'.
+   git hash-object -w -> blob 751a97b61b28357c52d76362862b1f58a9b62356
+   git update-index --cacheinfo 100644,751a97b6...,measure/tracks.md
+   git diff --cached measure/tracks.md -> two hunks only (active entry removal, archive entry addition)
+   git diff measure/tracks.md -> the foreign '## Contents' hunk only. It stays unstaged.
+
+6. Secret scan and run folder
+   grep -rnE 'sk-[A-Za-z0-9]{20}|Bearer [A-Za-z0-9]{20}|OPENROUTER_API_KEY=' measure/runs/asset_storytime_l2_unit2_prep_20261108 -> exit 1, no hit.
+   find of PNG, JPG, and JPEG files -> count 0.
+
+7. Archive commit
+   Paths: measure/archive/asset_storytime_l2_unit2_prep_20261108 (6 files), measure/runs/asset_storytime_l2_unit2_prep_20261108 (16 checker files), measure/tracks.md.
+   22 files changed. Message: measure(storytime_l2_unit2_prep): archive the track and commit the run records.
+   SHA: 65bf84a1c169b2d06af39d98e710db543775f3c4
+
+8. Doctor
+   bash measure/doctor.sh -> exit 1 with 11 structural errors: 6 'new track has started tasks' and 5 'missing registry link'. Every error names another track.
+   grep for asset_storytime_l2_unit2_prep_20261108 in the doctor output -> exit 1, no line.
+
+9. Test rerun
+   HEAVY_MIN_AVAIL_MB=1500 heavy-run.sh with the Task 3 vitest command -> no slot within 120 s. The heavy lock was held by two other sessions' jobs (a storytime browser gate and a quest-cover vitest).
+   The last real run is the checker's at 91de1d16: 1 file, 16 tests passed, exit 0.
+   git diff --name-only 91de1d16..HEAD holds measure/ paths only, so no test or script file changed after that run.
+
+10. A9 check
+   grep for measure/tracks/asset_storytime_l2_unit2_prep in tests/, scripts/, src/, and docs/ -> no hit. The test file names the track id in a comment only. The archive move breaks no test path.
+
+11. Result
+   A5: the plan names 16 tests, 257 checksums, and the counts; the checker measured each value.
+   A6: the registry entry says delivered for the hand-off folder and names the paid run as waiting for Daniel's Go. It names no acceptance.
+   No bulky artifact was deleted. The orchestrator identified none. measure/lessons-learned.md and measure/tech-debt.md stay unchanged. The generator did not run.
+
+MEASURE_AGENT_RESULT
+role: closeout
+status: complete
+track: asset_storytime_l2_unit2_prep_20261108
+phase: track closeout
+commits: 65bf84a1
+tests_run: not rerun at closeout (heavy lock held by other jobs); last real run at 91de1d16: vitest tests/storytime-u2-specs.test.ts 16 of 16 passed, exit 0
+files_changed: measure/archive/asset_storytime_l2_unit2_prep_20261108/ (6 files), measure/runs/asset_storytime_l2_unit2_prep_20261108/ (checker records plus closeout JSON and log), measure/tracks.md (two hunks)
+plan_updates: status delivered; Phase 1 gate [x] at 91de1d16 with checker evidence paths and dispositions; Closeout [x] at 91de1d16
+known_failures: none
+dispositions: none
+handoff: The track is archived at 65bf84a1. The paid run of the 229 unit 2 pictures waits for Daniel's Go; the hand-off folder and the 14.58 USD estimate are unchanged. The foreign Contents hunk in measure/tracks.md stays unstaged.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "audited_head_sha": "65bf84a1c169b2d06af39d98e710db543775f3c4",
+  "role_base_sha": "91de1d16922ed9f132cdd16ae4654f04c39d45c8",
+  "track_base_sha": "e010c5f62cb5765b0c888a9ba1949b1a2801e00e",
+  "summary": "Pass. The track is archived at 65bf84a1; the phase acceptance result of 91de1d16 is the only gate. The registry holds the archive entry and no active entry. The plan holds no [~], [ ], or [b] task; every [x] task line carries a commit SHA on its first line. The doctor gives 11 structural errors and none names this track. The secret scan finds no hit and the run folder holds no PNG or JPG file.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F8 [Nit] of the Phase 1 checker, DECLINE: the animal and doll line prompts reuse the cat ear sentences. The paid-run track fixes the sentence before the first line call, and the judge checks each line picture",
+    "F9 [Nit] of the Phase 1 checker, DECLINE: the maker ran one GREEN test at HEAVY_MIN_AVAIL_MB=1200. The checker ran the same test at 1500 and got 16 of 16 passed"
+  ],
+  "evidence": [
+    "git rev-parse HEAD at start = 91de1d16922ed9f132cdd16ae4654f04c39d45c8, equal to role_base_sha",
+    "measure/runs/asset_storytime_l2_unit2_prep_20261108/acceptance-p1-91de1d1.json: status pass, audited_head_sha 91de1d16, 16 tests passed, MANIFEST 257 OK and 0 FAILED, costs equal, counts 229 rows, 181 new, 48 reuse, 10 element sheets, 14.58 USD",
+    "archive commit 65bf84a1 moves measure/tracks/asset_storytime_l2_unit2_prep_20261108 to measure/archive/, adds the closeout manifest, commits the checker results, and edits the registry in two hunks",
+    "git diff --cached measure/tracks.md before the commit held two hunks only: the active entry removal and the archive entry addition; the worktree diff held the foreign Contents hunk only",
+    "plan.md: 7 [x] Task lines, each with a 8-character commit SHA on its first line; 0 [~], 0 [ ], 0 [b] lines",
+    "metadata.json: status done, completed 2026-11-08, actual_tasks 7, deviation notes extended with the light lane record",
+    "bash measure/doctor.sh: exit 1 with 11 structural errors, all naming other tracks; grep for asset_storytime_l2_unit2_prep_20261108 gives exit 1 with no line",
+    "grep -rnE 'sk-[A-Za-z0-9]{20}|Bearer [A-Za-z0-9]{20}|OPENROUTER_API_KEY=' measure/runs/asset_storytime_l2_unit2_prep_20261108 gives exit 1 with no hit; find of PNG and JPG files gives count 0",
+    "grep for measure/tracks/asset_storytime_l2_unit2_prep in tests/, scripts/, src/, and docs/ gives no hit, so the archive move breaks no test (A9)",
+    "git diff --name-only 91de1d16..HEAD holds measure/ paths only; no src/, scripts/, or tests/ file changed after the checker ran"
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "python3 -m json.tool measure/archive/asset_storytime_l2_unit2_prep_20261108/automation-supervisor-closeout-manifest.json",
+    "grep -rnE 'sk-[A-Za-z0-9]{20}|Bearer [A-Za-z0-9]{20}|OPENROUTER_API_KEY=' measure/runs/asset_storytime_l2_unit2_prep_20261108",
+    "find measure/runs/asset_storytime_l2_unit2_prep_20261108 -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg'",
+    "bash measure/doctor.sh",
+    "git diff --cached --stat; git diff measure/tracks.md; git show --name-status --format='' HEAD"
+  ],
+  "changed_files": [
+    "measure/archive/asset_storytime_l2_unit2_prep_20261108/automation-supervisor-closeout-manifest.json",
+    "measure/archive/asset_storytime_l2_unit2_prep_20261108/index.md",
+    "measure/archive/asset_storytime_l2_unit2_prep_20261108/metadata.json",
+    "measure/archive/asset_storytime_l2_unit2_prep_20261108/plan.md",
+    "measure/archive/asset_storytime_l2_unit2_prep_20261108/spec-review.md",
+    "measure/archive/asset_storytime_l2_unit2_prep_20261108/spec.md",
+    "measure/runs/asset_storytime_l2_unit2_prep_20261108/",
+    "measure/tracks.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high"
+}
