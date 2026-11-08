@@ -1,0 +1,69 @@
+{
+  "group": "u2-r7-line-t3",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T20:21:43Z",
+  "results": [
+    {
+      "id": "l2-w09-card-rice",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-rice-line-t3.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the whole mound in the bowl: the grains are drawn as large irregular blobs",
+      "notes": "Question page: no. Items: rice (1 bowl of rice). Action: none. Seen: a deep bowl with a foot ring; a heaped mound of large, lumpy, kidney-shaped blobs with a ragged top edge and no small grain marks. Bowl is clear. The blobs read as beans, popcorn, or stew, not as rice, to a young child at book size. Black lines on white, no gray, no gaps, no text. mustShow 'rice': drawn but reads as a different food."
+    },
+    {
+      "id": "l2-w12-card-ruler",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-ruler-line-t3.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a ruler (1). Action: none. Seen: a long flat rounded rectangle with evenly spaced short tick marks along the top and bottom edges, no numbers. Reads as a ruler to a child. Black lines on white, closed outline, no gray, no text. mustShow 'ruler': yes."
+    },
+    {
+      "id": "l2-w13-card-clap",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-clap-line-t3.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a girl (1), both hands (2). Action: clapping (note only). Seen: a smiling girl, full body, shoulder-length hair with a small bow at the side, round eyes, short-sleeved top, overalls with a chest pocket, rolled cuffs, sneakers; both hands held together in front of the chest. Matches the Mia note in hair, bow, and overalls (colors cannot be checked in line art). Both hands drawn and visible. Black lines on white, no gray, no gaps, no text. mustShow 'clap': both hands together, yes."
+    },
+    {
+      "id": "l2-w13-card-throw",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-throw-line-t3.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a girl (1), a ball (1), one throwing hand (1). Action: throwing (note only). Seen: a girl, full body, bob hair with a straight fringe and a small clip/bow at the side, short-sleeved dress with a small collar, socks and shoes; right arm stretched out with an open hand toward a plain round ball on the right. Matches the Lily note in hair, fringe, bow, and dress (colors cannot be checked). Ball drawn, separate, reads as a ball. Small mark: thick eyebrows and an odd ear line on the left side of the head. Black lines on white, no gray, no gaps, no text. mustShow 'throw': thrower, hand, and ball drawn."
+    },
+    {
+      "id": "l2-w14-card-cold",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-cold-line-t3.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: cold (abstract). Action: none. Seen: a wooden chair with a knit hat with a pom-pom and a folded cuff, a long scarf hanging over the back, and a folded mitten or glove on the seat. Winter clothes read as cold weather to a child. Small mark: no person shows the feeling, and the folded item is a little unclear. Black lines on white, closed lines, no gray, no text. mustShow 'cold': winter clothes drawn and visible."
+    },
+    {
+      "id": "l2-w14-card-windy",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-windy-line-t3.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: windy (abstract). Action: blowing (note only). Seen: a tree with a trunk bent to the right, leaves streaming to the right and away from the crown, some leaf shapes outlined. Reads as wind to a child. Small mark: many small leaf outlines are simplified. Black lines on white, no gray, no gap that hurts coloring, no text. mustShow 'windy': yes."
+    }
+  ],
+  "summary": {
+    "files": 6,
+    "pass": 5,
+    "fail": 1
+  }
+}

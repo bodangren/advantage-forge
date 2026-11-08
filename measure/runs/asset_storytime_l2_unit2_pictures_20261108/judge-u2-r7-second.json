@@ -1,0 +1,34 @@
+{
+  "group": "u2-r7-second",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T20:22:40Z",
+  "mode": "second judge, each file alone",
+  "results": [
+    {
+      "id": "l2-w09-story-page-tom-can-see-the-mop",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-tom-can-see-the-mop-line-t3.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "Dad on the left, seated on the sofa: round glasses over his eyes and a larger chibi-style head and eyes than the cast Dad",
+      "notes": "Question page: no. Items: Tom (1), Dad (1, from mustShow), a mop (1). Action: Tom can see (note only; he points at the mop). Seen: a boy with short side-swept hair, T-shirt, shorts, pointing right; a man seated on a sofa in a polo shirt and trousers with a clear double-ring round-glasses look on his face; a mop with a long handle and a floppy head on the floor, beside a toy box with blocks and a duck. Tom matches the cast. The mop is drawn, visible, and reads as a mop. Dad has glasses and the cast note for Dad has none, so his face is changed. Black lines on white; no gray, no text, no line gaps. Small marks: extra toy box and rugs, a simplified window and curtains. The fail is the glasses on Dad."
+    },
+    {
+      "id": "l2-w09-card-rice",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-rice-line-t3.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "the food in the bowl: large lumpy blobs with wavy streaks instead of small rice grains",
+      "notes": "Question page: no. Items: rice (1, in a bowl). Action: none. Seen: a deep bowl on a foot ring, filled with a heaped mound of large, irregular, rounded lumps and a few wavy streaks. The bowl is clear. The food reads as beans, chickpeas, porridge, or popcorn, not as rice to a young child at book size, because it has no small grain shapes. This is an uncommon form of rice. Black lines on white; no gray, no text, no line gaps."
+    }
+  ],
+  "summary": {
+    "files": 2,
+    "pass": 0,
+    "fail": 2
+  }
+}

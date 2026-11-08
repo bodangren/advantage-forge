@@ -87,12 +87,6 @@
    "linePrint": "l2-w09-story-page-dad-is-sad-m1-line-print.png"
   },
   {
-   "rowId": "l2-w09-story-page-tom-can-see-the-mop",
-   "version": 1,
-   "colorPrint": "l2-w09-story-page-tom-can-see-the-mop-m1-color-print.png",
-   "linePrint": "l2-w09-story-page-tom-can-see-the-mop-m1-line-print-2.png"
-  },
-  {
    "rowId": "l2-w09-story-page-pip-has-the-mop",
    "version": 1,
    "colorPrint": "l2-w09-story-page-pip-has-the-mop-m1-color-print.png",
@@ -885,12 +879,6 @@
    "linePrint": "l2-w09-card-dinosaur-m1-line-print-2.png"
   },
   {
-   "rowId": "l2-w09-card-rice",
-   "version": 1,
-   "colorPrint": "l2-w09-card-rice-m1-color-print.png",
-   "linePrint": "l2-w09-card-rice-m1-line-print.png"
-  },
-  {
    "rowId": "l2-w09-card-banana",
    "version": 1,
    "colorPrint": "l2-w09-card-banana-m1-color-print.png",
@@ -981,12 +969,6 @@
    "linePrint": "l2-w12-card-hop-m1-line-print.png"
   },
   {
-   "rowId": "l2-w12-card-hippo",
-   "version": 1,
-   "colorPrint": "l2-w12-card-hippo-m1-color-print.png",
-   "linePrint": "l2-w12-card-hippo-m1-line-print-2.png"
-  },
-  {
    "rowId": "l2-w12-card-crayon",
    "version": 1,
    "colorPrint": "l2-w12-card-crayon-m1-color-print.png",
@@ -997,12 +979,6 @@
    "version": 1,
    "colorPrint": "l2-w12-card-eraser-m1-color-print.png",
    "linePrint": "l2-w12-card-eraser-m1-line-print.png"
-  },
-  {
-   "rowId": "l2-w12-card-ruler",
-   "version": 1,
-   "colorPrint": "l2-w12-card-ruler-m1-color-print.png",
-   "linePrint": "l2-w12-card-ruler-m1-line-print.png"
   },
   {
    "rowId": "l2-w13-card-run",
@@ -1017,22 +993,10 @@
    "linePrint": "l2-w13-card-walk-m1-line-print.png"
   },
   {
-   "rowId": "l2-w13-card-clap",
-   "version": 1,
-   "colorPrint": "l2-w13-card-clap-m1-color-print.png",
-   "linePrint": "l2-w13-card-clap-m1-line-print.png"
-  },
-  {
    "rowId": "l2-w13-card-kick",
    "version": 1,
    "colorPrint": "l2-w13-card-kick-m1-color-print.png",
    "linePrint": "l2-w13-card-kick-m1-line-print.png"
-  },
-  {
-   "rowId": "l2-w13-card-throw",
-   "version": 1,
-   "colorPrint": "l2-w13-card-throw-m1-color-print.png",
-   "linePrint": "l2-w13-card-throw-m1-line-print.png"
   },
   {
    "rowId": "l2-w13-card-catch",
@@ -1053,12 +1017,6 @@
    "linePrint": "l2-w14-card-cloudy-m1-line-print.png"
   },
   {
-   "rowId": "l2-w14-card-windy",
-   "version": 1,
-   "colorPrint": "l2-w14-card-windy-m1-color-print.png",
-   "linePrint": "l2-w14-card-windy-m1-line-print.png"
-  },
-  {
    "rowId": "l2-w14-card-rainy",
    "version": 1,
    "colorPrint": "l2-w14-card-rainy-m1-color-print.png",
@@ -1069,12 +1027,6 @@
    "version": 1,
    "colorPrint": "l2-w14-card-hot-m1-color-print.png",
    "linePrint": "l2-w14-card-hot-m1-line-print.png"
-  },
-  {
-   "rowId": "l2-w14-card-cold",
-   "version": 1,
-   "colorPrint": "l2-w14-card-cold-m1-color-print.png",
-   "linePrint": "l2-w14-card-cold-m1-line-print.png"
   },
   {
    "rowId": "l2-w15-card-garden",

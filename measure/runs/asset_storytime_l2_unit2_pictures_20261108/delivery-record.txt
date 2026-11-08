@@ -1,0 +1,13 @@
+time: 2026-11-08T20:25:14.582Z
+picture list SHA-256: 63d415000eca9d6be1a6ad533c12ff81e127cd2c76ffac339697f91b99f754ec (pin checked)
+approval entries: 173
+staged hard links: 346
+delivered rows: 220
+delivered color files: 220
+delivered line files: 220
+delivered PNG files: 440
+manifest.json sha256: 1c143699896edc9199c68dd061f807373821cc922af515885b638d2053018135
+skipped rows: 9 (l2-w09-story-page-tom-can-see-the-mop, l2-w10-story-page-put-on-your-hat-pip, l2-w09-card-rice, l2-w12-card-hippo, l2-w12-card-ruler, l2-w13-card-clap, l2-w13-card-throw, l2-w14-card-windy, l2-w14-card-cold)
+file checks: 440 files; problems: 0
+every color file is PNG 8-bit, no alpha, srgb, 3 channels, at the class size (A and B 4000 x 3000, C 1500 x 1500)
+every line file is PNG 8-bit, no alpha, grayscale, at the class size
