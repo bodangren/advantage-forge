@@ -2,6 +2,12 @@ Closeout log — asset_storytime_l2_unit2_prep_20261108
 Date: 2026-11-08 (ICT)
 Role base SHA: 91de1d16922ed9f132cdd16ae4654f04c39d45c8
 Archive commit SHA: 65bf84a1c169b2d06af39d98e710db543775f3c4
+Registry description commit SHA: 4e5423169f9a83c9241ae42e1b9d175a26e2e649
+
+Registry fix (round 2): the closeout gate needs a description line right after the Link line of the archive entry.
+The line has two spaces, an asterisk, the description of metadata.json with white space collapsed, and an asterisk.
+Staged through a blob: git show HEAD:measure/tracks.md, one insert, git hash-object -w (blob 330019b6), git update-index --cacheinfo.
+git diff --cached showed one added line only; the foreign '## Contents' hunk stayed unstaged.
 
 1. Provenance check
    git rev-parse HEAD -> 91de1d16922ed9f132cdd16ae4654f04c39d45c8
@@ -62,7 +68,7 @@ role: closeout
 status: complete
 track: asset_storytime_l2_unit2_prep_20261108
 phase: track closeout
-commits: 65bf84a1
+commits: 65bf84a1, 4e542316
 tests_run: not rerun at closeout (heavy lock held by other jobs); last real run at 91de1d16: vitest tests/storytime-u2-specs.test.ts 16 of 16 passed, exit 0
 files_changed: measure/archive/asset_storytime_l2_unit2_prep_20261108/ (6 files), measure/runs/asset_storytime_l2_unit2_prep_20261108/ (checker records plus closeout JSON and log), measure/tracks.md (two hunks)
 plan_updates: status delivered; Phase 1 gate [x] at 91de1d16 with checker evidence paths and dispositions; Closeout [x] at 91de1d16
