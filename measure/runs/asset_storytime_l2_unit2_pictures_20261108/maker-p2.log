@@ -230,3 +230,28 @@ Spec edits in commit b9ed6043 (the orchestrator brief lists the reasons):
     13. l2-w14-story-page-a-fan-for-you-pip
     14. l2-w14-story-page-mom-has-a-fan
   - The 12 judge files are copied into measure/runs/asset_storytime_l2_unit2_pictures_20261108/ and committed with this step.
+
+- Step N (spec edits, 0 USD; orchestrator decision 2026-11-09 01:30 ICT). 20 spec files changed. Each file changed exactly one named field.
+  - colorPrompt, 5 rows of N.A. l2-w11-story-page-here and l2-w11-story-page-ten-men-in-the-den are the two color rows with 1 try left; their new colors are m3. l2-w10-story-page-dad-has-a-pan, l2-w11-story-page-where-is-lily-on-the-chair, and l2-w14-cover-hot-and-cold are the 3 rows of the 14 standing line fails whose color passed; their new colors are m2.
+    - l2-w11-story-page-here: the seven children in one line sentence inserted before "Exactly the characters".
+    - l2-w11-story-page-ten-men-in-the-den: the round 5 men sentence replaced with the one-row peg men sentence.
+    - l2-w10-story-page-dad-has-a-pan: the frying pan sentence inserted.
+    - l2-w11-story-page-where-is-lily-on-the-chair: the one plain chair sentence inserted.
+    - l2-w14-cover-hot-and-cold: the hot and cold sentence inserted, with the second Nan sentence. The row shows one girl in two halves, so the sentence says the same girl Nan is shown twice, once in each half. Recorded as the orchestrator asked.
+  - linePrompt, 19 rows of N.B. The glasses sentence went to the 8 named rows, to the 4 rows of step O2 whose cast names Dad, Mom, May, or Teacher Kim, and not to the other 4 rows of step O2, because their cast has no such character. The cast check on the 8 rows of step O2 gave l2-w15-cover-look-a-bus (may, teacher-kim), l2-w11-story-page-the-den-is-on-dad (mom), l2-w13-cover-look-at-me (may, teacher-kim), and l2-w10-story-page-put-on-your-hat-pip (may, teacher-kim). The animal face sentence went to l2-w09-card-dinosaur and l2-w12-card-hippo. The trousers sentence went to l2-w10-card-trousers.
+  - Commit 0e1f8452, message `fix(storytime_l2_unit2_pictures): retry sentences for 5 color rows and the line rows`.
+- Step O1 (color pool, paid). Command: `node scripts/storytime-muse.mjs color <5 rows of N.A> --concurrency 4`.
+  - Result: 5 ok, 0 failed, 0 refused. Every call cost 0.01 USD. Highest call 0.01 USD.
+  - New colors: l2-w11-story-page-here m3, l2-w11-story-page-ten-men-in-the-den m3, l2-w10-story-page-dad-has-a-pan m2, l2-w11-story-page-where-is-lily-on-the-chair m2, l2-w14-cover-hot-and-cold m2.
+  - D5 worst case before the pool: 24 calls x 0.01 USD + 3.74 USD + 0.03 USD = 4.01 USD, under the book stop 18.33 USD.
+- Step O2 (line pool, paid). Command: `node scripts/storytime-muse.mjs line <19 rows of O2> --tries 1 --concurrency 4`.
+  - Result: 19 ok, 0 failed, 0 refused. Every call cost 0.01 USD. Highest call 0.01 USD.
+  - The 11 rows of N.B took their line try 2 from m1. The 8 rows whose color passed at try 2 or 3 took their line try 1 from m2.
+  - No row had a 0-cost error, so no retry was needed.
+- Step O3 (spend). Book total 3.98 USD, left 14.35 USD against the 18.33 USD stop. Highest call 0.01 USD, under the 0.03 USD limit.
+- Step O4 (judge batches). 4 batches, 24 entries.
+  - u2-r3-color-t2: 3 entries, the new m2 colors of l2-w10-story-page-dad-has-a-pan, l2-w11-story-page-where-is-lily-on-the-chair, l2-w14-cover-hot-and-cold.
+  - u2-r3-color-t3: 2 entries, the new m3 colors of l2-w11-story-page-here and l2-w11-story-page-ten-men-in-the-den.
+  - u2-r3-line-t1: 8 entries, the new m2 lines of the 8 rows whose color passed at try 2 or 3.
+  - u2-r3-line-t2: 11 entries, the new m1 lines of the 11 rows of N.B.
+  - Check: a sharp script compared every judge copy against the newest source file of its row. All 24 entries have pixel distance 0.00 to the newest file. Result: 24 ok, 0 failures.

@@ -23,3 +23,5 @@ utc_time	item	calls	pool_usd	item_total_usd	item_stop_usd	left_usd	note
 2026-11-08T17:54:49.759Z	book	21	0.21	3.72	18.33	14.61	row line pool w15: 21 ok, 0 failed, 0 refused
 2026-11-08T17:55:10.708Z	book	1	0.01	3.73	18.33	14.60	row line pool w16: 1 ok, 0 failed, 0 refused
 2026-11-08T17:57:50.379Z	book	1	0.01	3.74	18.33	14.59	row line retry at concurrency 1: l2-w10-story-page-put-on-your-jacket, 1 ok, 0 failed, 0 refused
+2026-11-08T18:58:49.586Z	book	5	0.05	3.79	18.33	14.54	row color pool, 5 rows of N.A: 5 ok, 0 failed, 0 refused
+2026-11-08T19:01:30.390Z	book	19	0.19	3.98	18.33	14.35	row line pool, 19 rows of O2: 19 ok, 0 failed, 0 refused

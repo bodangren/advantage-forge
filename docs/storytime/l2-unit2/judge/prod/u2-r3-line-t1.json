@@ -1,0 +1,107 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-check-row-ten-line-t1.png",
+    "id": "l2-w10-check-row-ten",
+    "kind": "line",
+    "pageText": "ten",
+    "use": "check-row",
+    "mustShow": [
+      "ten"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-line-t1.png",
+    "id": "l2-w10-story-page-put-on-your-hat-pip",
+    "kind": "line",
+    "pageText": "Put on your hat, Pip!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily",
+      "nan",
+      "teacher-kim"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-story-page-the-den-is-on-dad-line-t1.png",
+    "id": "l2-w11-story-page-the-den-is-on-dad",
+    "kind": "line",
+    "pageText": "The den is on Dad!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "tom",
+      "mom",
+      "1 den"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-nan-line-t1.png",
+    "id": "l2-w12-story-page-open-your-book-nan",
+    "kind": "line",
+    "pageText": "Open your book, Nan.",
+    "use": "story-page",
+    "mustShow": [
+      "nan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-check-row-dot-line-t1.png",
+    "id": "l2-w13-check-row-dot",
+    "kind": "line",
+    "pageText": "dot",
+    "use": "check-row",
+    "mustShow": [
+      "dot"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-d4-prompt-jump-line-t1.png",
+    "id": "l2-w13-d4-prompt-jump",
+    "kind": "line",
+    "pageText": "jump",
+    "use": "d4-prompt",
+    "mustShow": [
+      "jump"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-cover-look-at-me-line-t1.png",
+    "id": "l2-w13-cover-look-at-me",
+    "kind": "line",
+    "pageText": "Look at Me!",
+    "use": "cover",
+    "mustShow": [
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily",
+      "nan",
+      "teacher-kim"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-cover-look-a-bus-line-t1.png",
+    "id": "l2-w15-cover-look-a-bus",
+    "kind": "line",
+    "pageText": "Look, a Bus!",
+    "use": "cover",
+    "mustShow": [
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily",
+      "nan",
+      "teacher-kim"
+    ]
+  }
+]

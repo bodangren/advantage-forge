@@ -94,13 +94,16 @@ runs the frozen judge and the calibration controls. The stop is 18.33 USD.
 - [~] Task 5: Color pools and judges (D4, D5). Run color try 1 for the 182 new rows at concurrency 4,
   then the judge for each week. Retry a failed row up to 3 color tries in total, with a second judge
   before a fail stands. Log each pool in the spend record. At 14.66 USD record the total and the
-  projection once. The task may span rounds. Round 3 (a24f3558 generator): the 7 HTTP 400 group rows reran as color try 2 (7 ok, 0.07 USD). Judge batch u2-r1-color-group-t2 is built, not judged. deferred:maker
+  projection once. The task may span rounds. Round 3 (a24f3558 generator): the 7 HTTP 400 group rows reran as color try 2 (7 ok, 0.07 USD). Judge batch u2-r1-color-group-t2 is built, not judged. Round 8 (0e1f8452 base): the color try 2 and 3 judge gave 8 of 10 pass, and l2-w11-story-page-here and l2-w11-story-page-ten-men-in-the-den fail again with 1 color try left each. The 5 rows of N.A ran a new color pool (5 ok, 0.05 USD). Judge batches u2-r3-color-t2 and u2-r3-color-t3 are built, not judged. deferred:maker
   - Real maker models (orchestrator, from the OpenCode session store model-switched rows, 2026-11-09): the requested route opencode/deepseek-v4.1-flash-free#high fell back silently to claude-code/claude-haiku-5-5 at 22:41, 22:44, and 23:40 ICT on 2026-11-08. Commits on DeepSeek: 9ba5f0e1, a1b63217, 01b97374, ff245b58. Commits made fully or partly on Haiku: 9718baa5, a24f3558, f7138831, bd741797, b9ed6043, 179f438a. Phase 1 (57fe034e to d99aa896) ran fully on DeepSeek. From round 6 the maker runs on minimax-cn-coding-plan/MiniMax-M3.1-Flash. The light lane has no Red. The Phase 2 checker runs on a family other than Anthropic, DeepSeek, and MiniMax. The frozen judge stays claude-code/claude-sonnet-5-5#high by the judge kit rule of 2026-11-04; it judges the Muse pictures, not the maker code.
 - [~] Task 6: Line pools and judges (D4, D5). Run line calls with `--tries 1` from each passing color,
   then the judge. Retry up to 3 line tries in total, with a second judge before a fail stands. Name
   each row with no pass and its best try. Round 7 (b42008b3 base): the line pool ran for the 172
   rows that passed the color judge (1.72 USD, 172 ok, 1 retry). Judge batches u2-w09-r1-line to
-  u2-w16-r1-line and u2-w10-r2-line are built, not judged. deferred:maker
+  u2-w16-r1-line and u2-w10-r2-line are built, not judged. Round 8 (0e1f8452 base): the color pool
+  ran for the 5 rows of N.A (5 ok, 0.05 USD) and the line pool for the 19 rows of O2 (19 ok, 0.19 USD).
+  Judge batches u2-r3-color-t2, u2-r3-color-t3, u2-r3-line-t1, and u2-r3-line-t2 are built, not
+  judged. deferred:maker
 - [b] Task 7: Delivery and hand-off (D7). Run `deliverMuseUnit2` into
   `out/storytime/l2/unit2/delivery-muse-v1/` with the list pin. Build the hand-off folder
   `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures/` with the PNG files, `manifest.json`,

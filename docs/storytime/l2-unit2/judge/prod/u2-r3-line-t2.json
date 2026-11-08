@@ -1,0 +1,123 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-dad-can-mop-the-mat-line-t2.png",
+    "id": "l2-w09-story-page-dad-can-mop-the-mat",
+    "kind": "line",
+    "pageText": "Dad can mop the mat.",
+    "use": "story-page",
+    "mustShow": [
+      "dad",
+      "1 mat"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-tom-can-see-the-mop-line-t2.png",
+    "id": "l2-w09-story-page-tom-can-see-the-mop",
+    "kind": "line",
+    "pageText": "Tom can see the mop.",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "dad",
+      "1 mop"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-pip-can-mop-line-t2.png",
+    "id": "l2-w09-story-page-pip-can-mop",
+    "kind": "line",
+    "pageText": "Pip can mop!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "dad",
+      "tom"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-dinosaur-line-t2.png",
+    "id": "l2-w09-card-dinosaur",
+    "kind": "line",
+    "pageText": "dinosaur",
+    "use": "card",
+    "mustShow": [
+      "dinosaur"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-card-trousers-line-t2.png",
+    "id": "l2-w10-card-trousers",
+    "kind": "line",
+    "pageText": "trousers",
+    "use": "card",
+    "mustShow": [
+      "trousers"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-may-line-t2.png",
+    "id": "l2-w12-story-page-open-your-book-may",
+    "kind": "line",
+    "pageText": "Open your book, May.",
+    "use": "story-page",
+    "mustShow": [
+      "may"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-open-your-book-pip-line-t2.png",
+    "id": "l2-w12-story-page-open-your-book-pip",
+    "kind": "line",
+    "pageText": "Open your book, Pip!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "nan",
+      "teacher-kim"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-story-page-dad-is-hot-line-t2.png",
+    "id": "l2-w12-story-page-dad-is-hot",
+    "kind": "line",
+    "pageText": "Dad is hot.",
+    "use": "story-page",
+    "mustShow": [
+      "dad"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-hippo-line-t2.png",
+    "id": "l2-w12-card-hippo",
+    "kind": "line",
+    "pageText": "hippo",
+    "use": "card",
+    "mustShow": [
+      "hippo"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-mom-has-a-fan-line-t2.png",
+    "id": "l2-w14-story-page-mom-has-a-fan",
+    "kind": "line",
+    "pageText": "Mom has a fan.",
+    "use": "story-page",
+    "mustShow": [
+      "mom",
+      "1 fan"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-story-page-a-fan-for-you-pip-line-t2.png",
+    "id": "l2-w14-story-page-a-fan-for-you-pip",
+    "kind": "line",
+    "pageText": "A fan for you, Pip!",
+    "use": "story-page",
+    "mustShow": [
+      "mom",
+      "pip",
+      "dad",
+      "1 fan"
+    ]
+  }
+]
