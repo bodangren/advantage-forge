@@ -154,18 +154,26 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   - The 18 specs: commit 5ae7e8f8. The judge option `--unit2-family-words`: commit 19a0a8f4. The
     writer `deliverMuseUnit2FamilyWords`: commit b20c9ff9. GREEN: 14 files and 232 tests passed.
     Typecheck: 0 errors in src/storytime, scripts/storytime-*, and tests/storytime-*.
-- [~] Task 10: Color pool, judges, delivery, and hand-off (D5, D6). Run color try 1 for the 18 words
+- [x] Task 10 (eef37a5e): Color pool, judges, delivery, and hand-off (D5, D6). Run color try 1 for the 18 words
   (concurrency 4), then the judge at 360 px. Retry a failed word up to 3 color tries in total, with a
   second judge before a fail stands. Log each pool in the spend record. At 0.23 USD record the total
   and the projection once. Deliver to `out/storytime/l2/unit2/family-words/delivery-muse-v1/` and
   build `/home/daniebo/Desktop/handoff/storytime-l2u2-family-word-pictures/` with the PNG files,
   `manifest.json`, `MANIFEST.txt`, and a contact sheet. Run `sha256sum -c MANIFEST.txt` (0 FAILED).
-  - Round 1 (0.18 USD): the color pool ran for the 18 app words at concurrency 4: 18 ok, 0 failed,
-    0 refused, and 0.18 USD of the 0.29 stop. Every word has its first ok row at color try 1, so
-    no word needs a retry yet. The judge batch is
-    `docs/storytime/l2-unit2/judge/prod/u2-fw-r1-color.json` with 18 entries. Every judge copy has
-    a 360 px long side and equals a downscale of the m1 color file of its id, with a pixel distance
-    of 0. The frozen judge has not run yet.
+  - Round 1 (0.18 USD): the color pool ran for the 18 app words at concurrency 4: 18 calls, 18 ok,
+    0 failed, 0 refused, and 0.18 USD of the 0.29 stop (commit 2d3a2314). Every word has its first
+    ok row at color try 1. The judge batch is
+    `docs/storytime/l2-unit2/judge/prod/u2-fw-r1-color.json` with 18 entries, and every judge copy
+    has a 360 px long side and equals a downscale of the m1 color file of its id, with a pixel
+    distance of 0.
+  - The judge file `measure/runs/asset_storytime_l2_unit2_pictures_20261108/judge-u2-fw-r1-color.json`
+    gives 18 of 18 pass at color try 1. No word needed a retry.
+  - The delivery folder `out/storytime/l2/unit2/family-words/delivery-muse-v1/` holds 18 PNG files
+    `<id>-v1.png` and `manifest.json`, with 18 manifest jobs and 6 color batches. The file checks:
+    18 files checked, 0 problems; every file is 1500 x 1500 px, 8-bit, and free of alpha.
+  - The hand-off folder `/home/daniebo/Desktop/handoff/storytime-l2u2-family-word-pictures/` holds
+    18 hard links of the delivered PNG files, a copy of `manifest.json`, `contact-sheet.png`, and
+    `MANIFEST.txt`. `sha256sum -c` on the 20 hash lines gives 20 OK and 0 FAILED.
 - [b] Task 11: Final PM report (D8). Complete `pm-report.md`: the first line `Status: done.` (or
   `Status: blocked.`), the spend for each item with calls and stop, the rows done, the failures with
   the best try, the delivery and hand-off folders, and `Facts changed:`. deferred:maker
