@@ -1,0 +1,12 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-check-row-dot-line-t3.png",
+    "id": "l2-w13-check-row-dot",
+    "kind": "line",
+    "pageText": "dot",
+    "use": "check-row",
+    "mustShow": [
+      "dot"
+    ]
+  }
+]

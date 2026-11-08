@@ -106,7 +106,9 @@ runs the frozen judge and the calibration controls. The stop is 18.33 USD.
   judged. Round 9 (1f3a76d7 base): the round 3 judge gave 5 of 5 colors pass and 16 of 19 lines
   pass. The line pool ran for the 7 rows of step R (6 ok, 1 HTTP 502, then 1 retry at concurrency 1).
   Judge batches u2-r4-line-t1, u2-r4-line-t2, and u2-r4-line-t3 are built, not judged.
-  deferred:maker
+  Round 10 (b1420a85 base): the round 4 judge gave 6 of 7 lines pass. The last line try of
+  l2-w13-check-row-dot ran at line try 3 (1 ok, 0.01 USD). Judge batch u2-r5-line-t3 is built,
+  not judged. deferred:maker
 - [b] Task 7: Delivery and hand-off (D7). Run `deliverMuseUnit2` into
   `out/storytime/l2/unit2/delivery-muse-v1/` with the list pin. Build the hand-off folder
   `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures/` with the PNG files, `manifest.json`,

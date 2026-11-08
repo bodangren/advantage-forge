@@ -292,3 +292,11 @@ Spec edits in commit b9ed6043 (the orchestrator brief lists the reasons):
   - Passing rows, 6: l2-w11-story-page-here, l2-w11-story-page-ten-men-in-the-den, l2-w10-story-page-dad-has-a-pan, l2-w11-story-page-where-is-lily-on-the-chair, l2-w14-cover-hot-and-cold, and l2-w13-d4-prompt-jump at line try 3.
   - Standing line fail, 1 row: l2-w13-check-row-dot at line try 2. The second judge confirms the same defect: a wide empty oval reads as an oval or a ring, not a dot. The row has 1 line try left.
   - The 4 judge files are copied into measure/runs/asset_storytime_l2_unit2_pictures_20261108/ and committed with this step.
+- Step T (dot, last line try; orchestrator decision 2026-11-09 02:30 ICT).
+  - The round 9 dot sentence in the linePrompt was replaced with the one perfect circle sentence. Only the linePrompt field changed, and the old prompt stayed as a prefix.
+  - Commit b1420a85, message `fix(storytime_l2_unit2_pictures): dot line sentence for the last line try`.
+  - D5 worst case before the call: 1 call x 0.01 USD + 4.05 USD + 0.03 USD = 4.09 USD, under the book stop 18.33 USD. The guard accepted the call: 2 line tries were used and 3 is the cap, so the row has 1 try left.
+  - Call: `node scripts/storytime-muse.mjs line docs/storytime/l2-unit2/w13/muse/l2-w13-check-row-dot.json --tries 1`. Result: ok 1600x1600, cost 0.01 USD. The new file is l2-w13-check-row-dot-m2-line-3.png, from the passing color m2. The call did not fail, so no stop was needed.
+  - Book total 4.06 USD, left 14.27 USD against the 18.33 USD stop. Highest call 0.01 USD, under the 0.03 USD limit.
+  - Judge batch u2-r5-line-t3: 1 entry, the line try 3 picture of l2-w13-check-row-dot.
+  - Check: a sharp script compared the judge copy against the newest line file of the row. Pixel distance 0.00. Result: 1 ok, 0 failures.
