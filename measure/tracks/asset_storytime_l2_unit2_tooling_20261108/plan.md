@@ -35,13 +35,13 @@ runs. The maker writes the code and the tests. The checker checks the phase at a
 blocked, with a trailing `deferred:<owner>` field. The owner changes `[b]` to `[~]` when the
 blocker clears and the task starts. The doctor counts only `[ ]`, `[~]`, and `[x]`.
 
-## Phase 0: Authoring
+## Phase 0: Authoring [checkpoint: f11c0c2]
 
-- [ ] Task 0: Author the track: specification, plan, metadata, index, spec review note, and the
+- [x] Task 0 (f11c0c24): Author the track: specification, plan, metadata, index, spec review note, and the
   registry entry. The creation commit has the message
   `measure(storytime_l2_unit2_tooling): create the track`.
 
-The light lane has no spec review gate. A second small commit marks Task 0 and puts the
+The light lane has no spec review gate. The second small commit marked Task 0 and put the
 checkpoint on this heading.
 
 ## Phase 1: Guard, judge option, delivery writer, and line sentence
