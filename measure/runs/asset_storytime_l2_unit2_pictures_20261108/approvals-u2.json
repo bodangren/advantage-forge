@@ -420,13 +420,13 @@
    "rowId": "l2-w12-story-page-open-your-book-pip",
    "version": 1,
    "colorPrint": "l2-w12-story-page-open-your-book-pip-m1-color-print.png",
-   "linePrint": "l2-w12-story-page-open-your-book-pip-m1-line-print-2.png"
+   "linePrint": "l2-w12-story-page-open-your-book-pip-m1-line-print-2-despeckled.png"
   },
   {
    "rowId": "l2-w12-cover-open-your-book",
    "version": 1,
    "colorPrint": "l2-w12-cover-open-your-book-m1-color-print.png",
-   "linePrint": "l2-w12-cover-open-your-book-m1-line-print.png"
+   "linePrint": "l2-w12-cover-open-your-book-m1-line-print-despeckled.png"
   },
   {
    "rowId": "l2-w12-story-page-dad-has-a-hat",
@@ -552,7 +552,7 @@
    "rowId": "l2-w13-cover-look-at-me",
    "version": 2,
    "colorPrint": "l2-w13-cover-look-at-me-m2-color-print.png",
-   "linePrint": "l2-w13-cover-look-at-me-m2-line-print.png"
+   "linePrint": "l2-w13-cover-look-at-me-m2-line-print-despeckled.png"
   },
   {
    "rowId": "l2-w13-story-page-tom-has-a-pot",

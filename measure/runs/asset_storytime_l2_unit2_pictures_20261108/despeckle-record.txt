@@ -1,0 +1,17 @@
+# Despeckled prints for 3 rows (round 12, Step X, 0 USD)
+
+The judged print is the non-despeckled print of the same line try. The despeckled print is made
+from the same line art after speck removal, then printed with the same pipeline. The pixel diff is
+a sharp raw grayscale compare at the printed size. The largest changed connected area is 4-connected.
+
+| row | judged print | despeckled print | differing px | largest area px | largest area % | limit (0.05%) px |
+| --- | --- | --- | --- | --- | --- | --- |
+| l2-w12-cover-open-your-book | l2-w12-cover-open-your-book-m1-line-print.png | l2-w12-cover-open-your-book-m1-line-print-despeckled.png | 108898 | 1232 | 0.010267 | 6000 |
+| l2-w12-story-page-open-your-book-pip | l2-w12-story-page-open-your-book-pip-m1-line-print-2.png | l2-w12-story-page-open-your-book-pip-m1-line-print-2-despeckled.png | 92909 | 2142 | 0.017850 | 6000 |
+| l2-w13-cover-look-at-me | l2-w13-cover-look-at-me-m2-line-print.png | l2-w13-cover-look-at-me-m2-line-print-despeckled.png | 86237 | 574 | 0.004783 | 6000 |
+
+Result: every largest changed area is below 0.05 percent of its picture, so the change passes the
+round rule. The count of differing pixels is high because the despeckled print is re-thresholded,
+so the outline edges move by about one pixel. The largest changed areas are thin edge slivers, not
+blobs: 947 x 2 px on l2-w12-cover-open-your-book, 2142 x 1 px on l2-w12-story-page-open-your-book-pip,
+and 1 x 574 px on l2-w13-cover-look-at-me. Every sliver is 1 to 2 px wide.

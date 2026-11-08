@@ -349,3 +349,18 @@ known_failures: 23 of 181 approved line prints fail the v1 print gate (19 below 
 handoff: Product decision for the PM. `deliverMuseUnit2` refuses 23 of the 181 approved rows at the printed size: 19 have line prints of 8 to 11 px against the 12 px minimum, and 4 fail the white edge frame. Three of the 23 pass with the despeckled print of the same try, but that file is not the file the judge saw; 20 have no passing variant. Question: which option does the PM choose? A. Accept the thin lines with a recorded writer exception (delivery 228 rows). B. Accept the 3 despeckled prints plus an exception for the 20 (delivery 228 rows). C. Regenerate the 23 lines in a later paid round (about 0.23 USD plus judge calls, and a try-cap exception). D. Deliver the 205 rows that pass the gate and name the 23 in pm-report.md with their passing try and the gate error. No default; the round stops. Book spend unchanged at 4.06 USD of 18.33 USD. Authoritative files: measure/runs/asset_storytime_l2_unit2_pictures_20261108/delivery-gate.txt (per-row errors) and the writer src/storytime/muse-delivery-u2.ts.
 END_MEASURE_AGENT_RESULT
 ```
+
+## Delivery round (Green · P2 T7 · storytime_l2_unit2_pictures · r12, 0 USD)
+
+- 2026-11-09: start. HEAD 624dd5e1. Model: deepseek/deepseek-flash#high. No Muse call.
+- Step X (despeckled prints, 0 USD; orchestrator decision 03:10 ICT). Three rows that the writer
+  refused now name the despeckled print of the same line try in `approvals-u2.json`:
+  - l2-w12-cover-open-your-book: `-m1-line-print-despeckled.png`.
+  - l2-w12-story-page-open-your-book-pip: `-m1-line-print-2-despeckled.png`.
+  - l2-w13-cover-look-at-me: `-m2-line-print-despeckled.png`.
+  - Pixel diff at the printed size: 108898, 92909, and 86237 differing pixels. Largest changed
+    4-connected area: 1232 px (947 x 2), 2142 px (2142 x 1), and 574 px (1 x 574). As a share of the
+    picture: 0.0103, 0.0179, and 0.0048 percent, all under the 0.05 percent limit.
+  - The high differing count comes from the re-threshold: the outline edges move by about one
+    pixel. The largest changed areas are 1 to 2 px wide edge slivers, not blobs.
+  - Record: `despeckle-record.txt`.
