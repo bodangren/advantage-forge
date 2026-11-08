@@ -116,7 +116,7 @@ runs the frozen judge and the calibration controls. The stop is 18.33 USD.
     color try left, so it gets no delivery entry and goes to `onSkip`; the PM decides on one try exception.
     The judge files are the same 36 `judge-u2-*.json` files. The last try judged is
     `judge-u2-r5-line-t3.json` (l2-w13-check-row-dot line try 3 passes).
-- [~] Task 7: Delivery and hand-off (D7). Run `deliverMuseUnit2` into
+- [x] Task 7 (a6052181): Delivery and hand-off (D7). Run `deliverMuseUnit2` into
   `out/storytime/l2/unit2/delivery-muse-v1/` with the list pin. Build the hand-off folder
   `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures/` with the PNG files, `manifest.json`,
   `MANIFEST.txt`, and one contact sheet for each week (sharp; Chrome only through `heavy-run.sh`).
@@ -128,6 +128,14 @@ runs the frozen judge and the calibration controls. The stop is 18.33 USD.
     Three rows pass with the despeckled print of the same try. The round stops for the PM decision:
     accept the thin lines, accept the despeckled prints, regenerate the lines in a later paid round,
     or deliver the 205 rows that pass. No delivery folder exists.
+  - Delivery (commit a6052181): `out/storytime/l2/unit2/delivery-muse-v1/` holds 220 rows and 440 PNG
+    files plus `manifest.json`. 173 approved rows and 47 reuse rows. `onSkip` named exactly the 9
+    rows out. File checks: 440 files, 0 problems (class size, 8-bit, no alpha, line grayscale).
+    The 3 despeckled prints are delivered (l2-w12-cover-open-your-book,
+    l2-w12-story-page-open-your-book-pip, l2-w13-cover-look-at-me).
+  - Hand-off `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures/`: 440 hard links,
+    `manifest.json`, 8 contact sheets (sharp), `not-delivered/` with 18 hard links and `README.md`,
+    and `MANIFEST.txt`. `sha256sum -c MANIFEST.txt`: 468 OK, 0 FAILED.
 - [b] Task 8: Book part of the PM report (D8). Write the book lines of `pm-report.md`: spend, calls,
   the stop, rows done, failures with the best try, and the folders. deferred:maker
 - [b] Phase 2 gate: phase acceptance by the checker at an immutable HEAD. The checker compares the

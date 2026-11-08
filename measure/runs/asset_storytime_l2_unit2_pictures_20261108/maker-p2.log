@@ -410,3 +410,25 @@ END_MEASURE_AGENT_RESULT
     l2-w14-card-windy 9. They are at their last line try.
   - Judge batch u2-r7-line-t3: 6 entries. Check: every judge copy has pixel distance 0 to the
     downscale of the newest line file of its row. Result: 6 ok, 0 failures.
+- Step AC (delivery, 0 USD; round 14). Judge files committed: u2-r7-line-t3 (5 of 6 pass;
+  l2-w09-card-rice fails: the food reads as beans) and u2-r7-second (both alone: tom and rice fail).
+  The delivery keeps the rows that pass both the judge and the print gate.
+  - 8 entries removed from `approvals-u2.json` (tom, rice, hippo, ruler, clap, throw, cold, windy);
+    173 entries stay. The 9 rows out are those 8 plus l2-w10-story-page-put-on-your-hat-pip.
+  - `deliver-u2.mts` wrote `out/storytime/l2/unit2/delivery-muse-v1/`: 220 rows, 440 PNG files, plus
+    `manifest.json` (sha256 1c143699896edc9199c68dd061f807373821cc922af515885b638d2053018135).
+    173 approved rows and 47 reuse rows. `onSkip` named exactly the 9 rows.
+  - File checks: 440 files, 0 problems. Every file has the class size, 8-bit, no alpha; every line
+    file is grayscale. Record: `delivery-record.txt`.
+  - Commit a6052181.
+- Step AD (hand-off, 0 USD). One script built `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures/`:
+  - 440 hard links of the delivered PNG files and a copy of `manifest.json`.
+  - 8 contact sheets with sharp (w09 to w16), small cells with the row id under each picture.
+  - `not-delivered/` with 18 hard links (color and best line print of the 9 rows) and `README.md`
+    that names each row, its files, and why it is out. The best line print is the judge-passing one
+    where it exists: tom and rice line try 2; hippo, ruler, clap, throw, cold, and windy line try 3;
+    pip line try 1.
+  - `MANIFEST.txt`: the SHA-256 of 468 files, then the spend, row counts, the 9 rows out, and the
+    model-evidence line. `sha256sum -c MANIFEST.txt`: 468 OK, 0 FAILED.
+  - Inode check: the hand-off delivered file and its delivery source have the same inode, so the
+    files are hard links, not copies.
