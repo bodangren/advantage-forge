@@ -1,7 +1,8 @@
 # Storytime Level 2 unit 2 paid pictures (book rows, element sheets, app family words)
 
 Status: in progress (2026-11-08). Phase 1 is done and accepted at d99aa896 (caps and the ten row,
-0 USD). Phase 2 starts at Task 3.
+0 USD). Phase 2: Task 3 is done. Task 4 has 10 element color sheets (0.10 USD) and waits for the
+frozen judge.
 
 The track writes the unit 2 caps into the guard, fixes the ten row, makes 182 new book rows and 10
 element sheets, and makes 18 app family-word pictures. The [specification](./spec.md) owns the
@@ -86,7 +87,7 @@ runs the frozen judge and the calibration controls. The stop is 18.33 USD.
   orchestrator runs the two calibration controls of `calibration-set.json` through the frozen judge
   once. Both must fail. Write `calibration-record.json` in the run folder. If one control passes,
   stop and report to the PM. deferred:maker
-- [b] Task 4: Element sheets (D3). Run the color calls for the 10 element sheets, then the judge at
+- [~] Task 4: Element sheets (D3). Run the color calls for the 10 element sheets, then the judge at
   900 px with the use `element`. At most 3 tries for each sheet. If a sheet passes at `m<n>` with n
   above 1, change the references of the rows that use it, and record the change. Log the pool in the
   spend record. deferred:maker

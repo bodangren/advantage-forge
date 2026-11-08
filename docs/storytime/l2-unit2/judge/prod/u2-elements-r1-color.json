@@ -1,0 +1,92 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/set-classroom-lunch-table-color-t1.png",
+    "id": "set-classroom-lunch-table",
+    "kind": "color",
+    "pageText": "",
+    "use": "element",
+    "mustShow": [
+      "set-classroom-lunch-table"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/set-classroom-dress-up-corner-color-t1.png",
+    "id": "set-classroom-dress-up-corner",
+    "kind": "color",
+    "pageText": "",
+    "use": "element",
+    "mustShow": [
+      "set-classroom-dress-up-corner"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/set-tom-kitchen-color-t1.png",
+    "id": "set-tom-kitchen",
+    "kind": "color",
+    "pageText": "",
+    "use": "element",
+    "mustShow": [
+      "set-tom-kitchen"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/prop-hen-sheet-color-t1.png",
+    "id": "prop-hen-sheet",
+    "kind": "color",
+    "pageText": "",
+    "use": "element",
+    "mustShow": [
+      "prop-hen-sheet"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/set-classroom-tables-color-t1.png",
+    "id": "set-classroom-tables",
+    "kind": "color",
+    "pageText": "",
+    "use": "element",
+    "mustShow": [
+      "set-classroom-tables"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/set-farmyard-color-t1.png",
+    "id": "set-farmyard",
+    "kind": "color",
+    "pageText": "",
+    "use": "element",
+    "mustShow": [
+      "set-farmyard"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/set-tom-garden-color-t1.png",
+    "id": "set-tom-garden",
+    "kind": "color",
+    "pageText": "",
+    "use": "element",
+    "mustShow": [
+      "set-tom-garden"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/set-nan-front-garden-color-t1.png",
+    "id": "set-nan-front-garden",
+    "kind": "color",
+    "pageText": "",
+    "use": "element",
+    "mustShow": [
+      "set-nan-front-garden"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/set-town-street-bridge-color-t1.png",
+    "id": "set-town-street-bridge",
+    "kind": "color",
+    "pageText": "",
+    "use": "element",
+    "mustShow": [
+      "set-town-street-bridge"
+    ]
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/set-nan-bedroom-color-t3.png",
+    "id": "set-nan-bedroom",
+    "kind": "color",
+    "pageText": "",
+    "use": "element",
+    "mustShow": [
+      "set-nan-bedroom"
+    ]
+  }
+]

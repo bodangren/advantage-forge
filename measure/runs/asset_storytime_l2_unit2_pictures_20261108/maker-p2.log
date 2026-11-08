@@ -28,3 +28,42 @@ role_base_sha: d99aa896d31d86b336c63026d7821115ecdba8bb (confirmed equal to HEAD
 ## Step C, Task 4 element sheets color try 1 (paid)
 
 (pending)
+
+## Step C detail, Task 4 element sheet color pool
+
+- 2026-11-08T15:05Z: Task 4 marked [~] in plan.md before the first paid call.
+- D5 worst case before the pool: 10 planned calls x 0.01 USD highest seen call cost = 0.10 USD.
+  Item total 0.00 + 0.10 + 0.03 = 0.13 USD, under the book stop 18.33 USD. The pool runs.
+  The F2 operating rule does not apply: 0.13 is far below the stop.
+- Command: `node scripts/storytime-muse.mjs color docs/storytime/l2-unit2/w*/muse-elements/*.json --concurrency 4`
+  (light role: node, no heavy-run.sh).
+- 2026-11-08T15:05:59Z: element color pool done (10 specs, concurrency 4).
+  - paid run start (first new costs.tsv row): 2026-11-08T15:05:05.028Z = 2026-11-08 22:05 ICT.
+  - refused lines: 0. failed calls: 1 (set-nan-bedroom-m1, network error UND_ERR_CONNECT_TIMEOUT, cost 0).
+  - calls: 10 (9 paid at 0.01, 1 at 0). pool spend 0.09 USD. item total 0.09 USD.
+  - highest call cost: 0.01 USD. No call above 0.03 USD.
+  - 9 color files exist at 1920x1280; set-nan-bedroom has no file (its costs.tsv row says output none).
+  - spend-record.txt line appended for book.
+- Default taken (recorded): the failed sheet is a network error and not a picture fail. The try
+  numbering makes a 10-id try 1 batch fail, because the failed row is try 1 of that id. The maker
+  retries set-nan-bedroom once (worst case 0.01, item 0.09 + 0.01 + 0.03 = 0.13 under 18.33) and
+  builds a second batch for it at try 2. The other 9 ids keep try 1 in one batch.
+- 2026-11-08T15:07:10Z: retry 1 of set-nan-bedroom failed again (network error, cost 0).
+- 2026-11-08T15:07:58Z: retry 2 of set-nan-bedroom ok, 1920x1280, cost 0.01. The sheet uses 3 of its
+  3 color tries. File set-nan-bedroom-m1-color.png exists. Its costs.tsv holds 3 rows, so the first
+  picture is try 3 of that id for the judge batch.
+- element pool total: calls 12 rows (9 ok, 3 rows of set-nan-bedroom: 2 failed at 0 cost and 1 ok),
+  spend 0.10 USD. item total 0.10 USD. highest call cost 0.01 USD. No call above 0.03 USD.
+- 10 color files exist, each 1920x1280.
+
+### Judge batches (built, not judged)
+
+- 2026-11-08T15:09Z: batch 1 docs/storytime/l2-unit2/judge/prod/u2-elements-r1-color.json
+  (9 ids, kind color, try 1). Judge copies under out/storytime-review/judge/prod-u2/, each 900x600.
+- 2026-11-08T15:09Z: batch 2 docs/storytime/l2-unit2/judge/prod/u2-elements-r1-color-bedroom-t3.json
+  (set-nan-bedroom, kind color, try 3, the first row of that id that holds a picture).
+  Judge copy out/storytime-review/judge/prod-u2/set-nan-bedroom-color-t3.png at 900x600.
+- The 10 judge copies exist. No judge call ran here; the orchestrator runs the frozen judge.
+- Task 4 stays [~] until the judge returns a pass for each sheet.
+- Spend: book 0.10 USD of 18.33 USD, 12 costs.tsv rows, 0 refused, 3 failed call rows (all
+  set-nan-bedroom, all at 0 cost). No call above 0.03 USD.
