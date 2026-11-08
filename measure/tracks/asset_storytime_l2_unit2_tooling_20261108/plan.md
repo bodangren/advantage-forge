@@ -64,7 +64,7 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   the specs and the prompt list, add the check to `tests/storytime-u2-specs.test.ts`, rebuild the
   hand-off folder with `make-handoff.mjs`, and run `sha256sum -c MANIFEST.txt` (0 failures).
   Commit with explicit paths.
-- [~] Task 5: Zero-spend proof and report (D5). The `costs.tsv` hashes equal the
+- [x] Task 5 (395c573e): Zero-spend proof and report (D5). The `costs.tsv` hashes equal the
   hashes before the work. Run the GREEN test command and the typecheck. Write
   `measure/runs/asset_storytime_l2_unit2_tooling_20261108/pm-report.md`: the first line is
   `Status: done.`; then the hand-off MANIFEST count; then the guard state

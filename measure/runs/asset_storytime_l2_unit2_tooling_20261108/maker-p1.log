@@ -87,3 +87,19 @@ Base HEAD check: `git rev-parse HEAD` gave 26fee64e925df82e53633b39cb8a15169318c
   pass, exit 0. The typecheck gave exit 2 with 38 old errors and 0 errors in src/storytime,
   scripts/storytime-*, or tests/storytime-*.
 - The 16 costs.tsv hashes equal the prep costs-after lines. Track costs-after.txt written.
+- Task 5 commit 395c573edef846d61ca94116453037af91756e49 holds the plan markers for Tasks 3 and
+  4, pm-report.md, costs-after.txt, and the round 2 log. This evidence commit flips Task 5 to [x]
+  with that SHA.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_unit2_tooling_20261108
+phase: Phase 1: Guard, judge option, delivery writer, and line sentence
+commits: 580bc970 58f4ee10 294953ca 7ee4757f 4c7e2b11 395c573e and this evidence commit (HEAD)
+tests_run: the GREEN command (13 files, 205 tests) passed with exit 0; tsc --noEmit -p . with NODE_OPTIONS=--max-old-space-size=2560 gave exit 2, 38 known old errors, and 0 errors in src/storytime, scripts/storytime-*, or tests/storytime-*; sha256sum -c MANIFEST.txt in the hand-off folder gave 257 OK and 0 FAILED; the 16 costs.tsv hashes equal the prep costs-after lines
+files_changed: scripts/storytime-muse-guards.mjs and .d.mts, scripts/storytime-muse.mjs, scripts/storytime-judge-batch.mjs and .d.mts, scripts/storytime-u2-specs.mjs, src/storytime/muse-delivery.ts (exports only), src/storytime/muse-delivery-u2.ts (new), tests/storytime-u2-{guards,judge-batch,delivery,specs}.test.ts, 24 docs/storytime/l2-unit2/w*/muse check-row specs (linePrompt line only), plan.md, maker-p1.log, pm-report.md, costs-after.txt
+plan_updates: Task 1 (580bc970), Task 2 (58f4ee10), Task 3 (7ee4757f), Task 4 (4c7e2b11), and Task 5 (395c573e) are [x]; the Phase 1 gate stays [b] deferred:checker
+known_failures: none. The first typecheck attempt in round 1 died from the 3G scope memory limit with no type error; the retries completed. No PNG or JPG is in git. U2_RUN.capUsd is null. No unit 1 file, judge kit file, asset, or Workbooks file changed.
+handoff: phase_base_sha 26fee64e925df82e53633b39cb8a15169318c0d0; final HEAD is this evidence commit. The checker runs the GREEN command and the typecheck at this HEAD, probes the guard (every u2 call refused with the empty cap; unit 1 and card calls unchanged), runs sha256sum -c MANIFEST.txt in /home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep/ (257 OK, 0 FAILED), compares the 16 costs.tsv hashes with the track costs-after.txt, and greps FR-8. The paid run stays closed until Daniel's Go and the PM cap write.
+END_MEASURE_AGENT_RESULT
