@@ -148,9 +148,12 @@ runs the frozen judge and the calibration controls. The stop is 18.33 USD.
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`). The stop is
 0.29 USD.
 
-- [~] Task 9: The 18 specs, the judge option `--unit2-family-words`, the delivery support
+- [x] Task 9 (b20c9ff9): The 18 specs, the judge option `--unit2-family-words`, the delivery support
   (`deliverMuseColorSet` or the wrapper `deliverMuseUnit2FamilyWords`), and the tests (D6). Unpaid.
   Spend 0 USD. Commit with explicit paths.
+  - The 18 specs: commit 5ae7e8f8. The judge option `--unit2-family-words`: commit 19a0a8f4. The
+    writer `deliverMuseUnit2FamilyWords`: commit b20c9ff9. GREEN: 14 files and 232 tests passed.
+    Typecheck: 0 errors in src/storytime, scripts/storytime-*, and tests/storytime-*.
 - [b] Task 10: Color pool, judges, delivery, and hand-off (D5, D6). Run color try 1 for the 18 words
   (concurrency 4), then the judge at 360 px. Retry a failed word up to 3 color tries in total, with a
   second judge before a fail stands. Log each pool in the spend record. At 0.23 USD record the total
