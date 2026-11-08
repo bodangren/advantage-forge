@@ -10,11 +10,12 @@ Status: done.
 - Unit 1 element files reused (not copied): 23, with SHA-256 in `elements-reused.tsv`.
 - Cost estimate for the paid run: 181 x 0.080 USD plus 9 x 0.01 USD = 14.57 USD.
 - Spend now: 0 USD. `costs-after.txt` equals `costs-before.txt`.
-- Spec test: 10 tests pass (round r2 adds the R1 to R8 checks).
+- Spec test: 11 tests pass (round r2 adds the R1 to R8 checks, round r3 adds R9).
 
 ## Round r2
 
-Orchestrator findings R1 to R8 are fixed, all FIX. The counts do not change except the unit 1
+Orchestrator findings R1 to R8 are fixed, all FIX. Round r3 fixes R9: an adult person-form
+row keeps the adult proportions of the picture, and a child keeps the chibi sentence. The counts do not change except the unit 1
 element files reused (23 now). The hand-off folder is rebuilt.
 
 ## Open questions with defaults

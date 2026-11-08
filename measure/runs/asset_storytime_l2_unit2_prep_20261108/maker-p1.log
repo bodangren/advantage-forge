@@ -68,3 +68,26 @@ known_failures: none
 handoff: Hand-off folder rebuilt with 258 files. Rows: 229, 181 new, 48 reuse. 9 new element sheets. 0 renders made, 14 Forge view files reused, 23 unit 1 element files reused. Cost estimate 14.57 USD, 0 USD spent. The checker reruns the 10-test command, sha256sum -c MANIFEST.txt, the costs comparison, and the FR-4, FR-10, FR-12 greps.
 dispositions: R1=FIX; R2=FIX; R3=FIX; R4=FIX; R5=FIX; R6=FIX; R7=FIX; R8=FIX
 END_MEASURE_AGENT_RESULT
+
+## Round r3 (remediation)
+
+- Finding R9: FIX. A person-form row of an adult (dad, mom, grandma, grandpa, teacher-kim,
+  nans-dad) says "<Name> keeps the adult proportions of his (or her) picture." A child keeps the
+  chibi sentence.
+- Test: 11 tests pass, exit 0 (heavy-run).
+- Hand-off rebuilt: 257 files OK, 0 FAILED. Costs equal.
+- Commit: 887021c7.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_unit2_prep_20261108
+phase: Phase 1: Prompt drafts, renders, and hand-off (round r3)
+commits: 887021c7 and the plan and run-record commit after it
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-u2-specs.test.ts --maxWorkers=1' -> 1 file, 11 tests, pass (exit 0); sha256sum -c MANIFEST.txt -> 257 OK, 0 FAILED
+files_changed: scripts/storytime-u2-specs.mjs; tests/storytime-u2-specs.test.ts; docs/storytime/l2-unit2/**; measure/runs/asset_storytime_l2_unit2_prep_20261108/costs-after.txt, pm-report.md, maker-p1.log; measure/tracks/asset_storytime_l2_unit2_prep_20261108/plan.md
+plan_updates: Task 3 gains "Orchestrator finding R9 (2026-11-08): FIX in round r3, commit 887021c7."
+known_failures: none
+handoff: The hand-off folder is rebuilt with 258 files. Rows unchanged: 229, 181 new, 48 reuse, 9 element sheets, estimate 14.57 USD, 0 USD spent. The checker reruns the 11-test command and the manifest check.
+dispositions: R9=FIX
+END_MEASURE_AGENT_RESULT
