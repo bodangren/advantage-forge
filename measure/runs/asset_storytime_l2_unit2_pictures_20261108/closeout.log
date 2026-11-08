@@ -1,0 +1,51 @@
+# Closeout log: asset_storytime_l2_unit2_pictures_20261108
+
+Role: closeout (measure-closeout), light lane.
+Accepted HEAD before closeout: 179365e98ecaa66ae8a4c816321e3a2776fd43eb.
+Track base: 677ecaa0d190849c1752a09e84c595e980157a0f.
+
+Step 1 plan.md: the Phase 3 heading took [checkpoint: 179365e]; the Phase 3 gate became [x] with the
+evidence file acceptance-p3-179365e.json, the checker model deepseek/deepseek-flash#high, and no
+finding; the Closeout line became [x] with the archive, the registry, and the doctor. The status line
+now reads that 220 of 229 book rows and 18 of 18 app words are delivered and that 9 book rows wait
+for a PM decision. No [ ], [~], or [b] line remains.
+
+Step 2 metadata.json: status done, completed 2026-11-09, updated_at 2026-11-08T23:27:52Z,
+actual_tasks 12, and deviation_notes extended with the maker models, the checker models, the spend,
+the delivered rows, and the PM defaults. The description field is unchanged.
+
+Step 3 registry: the active entry moved to the archived section next to
+asset_storytime_l2_unit2_prep_20261108 as three lines. The entry was staged through the blob
+4b3c262fd943d08162642bd54f888e9aa59fc1f5, so the foreign Contents hunk stays in the working tree
+and out of the commit. git diff --cached -- measure/tracks.md holds only that entry.
+
+Step 4 archive: git mv to measure/archive/asset_storytime_l2_unit2_pictures_20261108.
+automation-supervisor-closeout-manifest.json was written in the precedent form with the three
+acceptance results, the three phase checkpoints, the gates, the anti-pattern notes, the deferred
+items, TD-30, the artifact cleanup, and the evidence classes.
+
+Step 5 lessons: two entries were appended to measure/lessons-learned.md under Recurring failures.
+The judge does not check the delivery print gate, and a provider HTTP 400 for more than 10
+references costs 0 USD but uses a try under the guard.
+
+Step 6 doctor: bash measure/doctor.sh gives exit 1 with 13 structural errors of other tracks (6 new
+track has started tasks, 5 missing registry link, 2 stale generated fact). grep for
+asset_storytime_l2_unit2_pictures_20261108 in the doctor output gives exit 1 with no line.
+measure/generate.sh did not run because measure/generated holds foreign changes.
+
+Gates: GREEN gives 14 files and 232 tests passed at 179365e9 (/tmp/opencode/green-step4.log). tsc
+gives 38 error lines and 0 in src/storytime, scripts/storytime-*, and tests/storytime-*. The secret
+scan of the run folder gives 0 hits. The run folder holds 80 files and no PNG or JPG.
+
+MEASURE_AGENT_RESULT
+role: closeout
+status: complete
+track: asset_storytime_l2_unit2_pictures_20261108
+phase: track closeout
+commits: the archive commit
+tests_run: bash measure/doctor.sh (exit 1; 13 errors of other tracks; no line names this track); GREEN from /tmp/opencode/green-step4.log (Test Files 14 passed (14), Tests 232 passed (232), GREEN_EXIT=0); tsc from the same log (38 error lines, 0 in the storytime paths); secret scan of the run folder (0 hits); find for PNG or JPG in the run folder (0)
+files_changed: measure/archive/asset_storytime_l2_unit2_pictures_20261108/ (plan.md, metadata.json, index.md, spec.md, spec-review.md, automation-supervisor-closeout-manifest.json) and the removal of measure/tracks/asset_storytime_l2_unit2_pictures_20261108/; measure/runs/asset_storytime_l2_unit2_pictures_20261108/ (80 files, including the untracked acceptance-p3-179365e.json and the probe-p3 files); measure/tracks.md (the staged blob); measure/lessons-learned.md
+plan_updates: the Phase 3 checkpoint, the Phase 3 gate, the Closeout line, and the status line of the archived plan
+known_failures: none in this track; 13 doctor errors of other tracks and 38 tsc errors of other tracks stay open
+handoff: the track is archived and the registry entry sits in the archived section. The PM holds two decisions: the 9 book rows (default option d, the rows stay out with their best tries in not-delivered/) and the hat-pip try exception (default, no extra try). Final acceptance did not run under the PM light lane of 2026-11-03.
+END_MEASURE_AGENT_RESULT

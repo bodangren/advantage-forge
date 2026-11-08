@@ -1,0 +1,48 @@
+# Phase 3 acceptance: App family-word pictures
+
+Role: phase-acceptance (measure-phase-acceptance), light lane.
+Track: asset_storytime_l2_unit2_pictures_20261108.
+Audited HEAD and role_base_sha: 179365e98ecaa66ae8a4c816321e3a2776fd43eb.
+Phase base: ac23e9e299383dccbf82b6e4b4e1369ef061f423.
+Verdict: pass. No blocking finding and no nonblocking finding.
+
+## Checks
+
+1. Spend. The app costs.tsv holds 18 rows and 18 distinct ids, all at or after
+   U2_FW_RUN.startTime. The sum is 0.180000 USD, equal to the spend record and the report and
+   under the 0.29 USD stop. The highest row is 0.010000 USD; no row is above 0.03 USD. The book
+   total is 4.320000 USD over 445 rows in 15 cost files. The guard script has no diff since
+   ac23e9e2.
+2. Judge. judge-u2-fw-r1-color.json holds 18 results: 18 pass, 0 fail, model
+   claude-code/claude-sonnet-5-5#high, prompt v6. A sharp check gives pixel distance 0 between
+   each of the 18 judge copies and a 360 px downscale of the m1 color file of its approval. The
+   print is a resize of that same file: I rebuilt all 18 prints and got byte-identical bytes.
+3. Delivery. The delivery folder holds 18 PNG files of 1500 x 1500 px, 8 bits per sample, no
+   alpha, and manifest.json with 18 jobs and 6 color batches. Every file hash equals the manifest
+   hash and the approved print bytes. The app hand-off gives 20 OK and 0 FAILED on 20 hash lines,
+   and only MANIFEST.txt is unlisted. The book hand-off gives 468 OK and 0 FAILED.
+4. Report. pm-report.md starts with "Status: done." and holds the spend per item with calls and
+   stops, the rows done, the 9 rows out with best tries, the two PM questions with defaults, the
+   four folders, and "Facts changed:".
+5. Process. The phase diff holds 39 track paths and no other path. No PNG or JPG is in it. No
+   unit 1 path, assets/** path, or src/storytime/muse-delivery.ts change is in it. Plan Task 9,
+   Task 10, and Task 11 are [x] with a SHA, and the Phase 3 gate is [b] deferred:checker. The
+   FR-12 grep gives 5 hits; each one is a negation, a rule text, a phase acceptance by the
+   checker, or a non-picture PM decision.
+
+GREEN: the orchestrator jr-green gate passed at 179365e9. The maker run shows 14 files and 232
+tests passed, with tsc errors only outside the storytime paths.
+
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: asset_storytime_l2_unit2_pictures_20261108
+phase: Phase 3: App family-word pictures
+commits: none (gate-only role; accepted HEAD 179365e)
+tests_run: app spend probe (18 rows, 0.180000 USD, highest 0.01 USD), book spend probe (445 rows, 4.320000 USD), sharp judge mapping (18 of 18 at pixel distance 0), delivery manifest and file probe (18 files, 0 problems, 18 rebuilt prints identical), hand-off checks (app 20 OK and 0 FAILED, book 468 OK and 0 FAILED), ancestry of 11 SHAs, FR-12 grep (5 hits, none a picture acceptance); GREEN by the orchestrator gate at 179365e9
+files_changed: measure/runs/asset_storytime_l2_unit2_pictures_20261108/acceptance-p3-179365e.json, measure/runs/asset_storytime_l2_unit2_pictures_20261108/acceptance-p3-179365e.log, measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p3-spend.py, measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p3-headers.py, measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p3-judge-map.mjs, measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p3-delivery.mjs, measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p3-handoff.py, measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p3-bookcalls.py, measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p3-ancestry.py
+plan_updates: none
+known_failures: none
+handoff: PASS at 179365e9. No blocking finding and no nonblocking finding. The app spend is 0.18 USD of the 0.29 stop; the book total stays 4.32 USD. The judge gives 18 of 18 pass and each copy maps to its approved m1 color file. The app hand-off gives 20 OK and 0 FAILED and the book hand-off 468 OK and 0 FAILED. Closeout may archive the track.
+dispositions: none
+END_MEASURE_AGENT_RESULT

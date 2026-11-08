@@ -22,6 +22,8 @@ Keep this working memory within 50 lines. Evidence links retain the detailed his
 - The forge tint mask is an image that no material uses. In the avatar pack, lossless WebP (no `exact`), a full `prune()`, and a lookup in `textures` each lost it. Keep it PNG, prune only nodes and meshes, read it from `images`, and check the packed GLB.
 - Synchronous CPU work blocks the event loop, so the vitest test timeout cannot stop it. A recursive credential scan on a hostile deep answer held one CPU for 27 minutes inside a single test while its 120000 ms limit never fired. Move hostile scans into a worker thread with a test-owned wall clock, or keep the scan loop-free of call-stack recursion (found 2026-10-27).
 
+- The judge does not check the delivery print gate (12 px line width, white edge frame). On unit 2 the writer refused 23 judged line prints at the delivery round. Run the print gate on each line print before the judge.
+- A provider HTTP 400 for more than 10 references costs 0 USD but uses a try under the guard. Keep each call at 10 references or less (use a group sheet).
 ## Effective practices
 
 - Build a shared material reference before producing a kit.

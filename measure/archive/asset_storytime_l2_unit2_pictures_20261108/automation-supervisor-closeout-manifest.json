@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "track": "asset_storytime_l2_unit2_pictures_20261108",
+  "archived_at": "2026-11-08T23:27:44Z",
+  "track_base_sha": "677ecaa0d190849c1752a09e84c595e980157a0f",
+  "track_final_sha": "179365e98ecaa66ae8a4c816321e3a2776fd43eb",
+  "phase_acceptance_results": [
+    "measure/runs/asset_storytime_l2_unit2_pictures_20261108/acceptance-p1-d99aa89.json",
+    "measure/runs/asset_storytime_l2_unit2_pictures_20261108/acceptance-p2-ac23e9e.json",
+    "measure/runs/asset_storytime_l2_unit2_pictures_20261108/acceptance-p3-179365e.json"
+  ],
+  "completed_phases": [
+    {
+      "id": "Phase 1",
+      "title": "Caps and the ten row (unpaid)",
+      "checkpoint": "d99aa896"
+    },
+    {
+      "id": "Phase 2",
+      "title": "Book pictures (paid)",
+      "checkpoint": "ac23e9e2"
+    },
+    {
+      "id": "Phase 3",
+      "title": "App family-word pictures",
+      "checkpoint": "179365e9"
+    }
+  ],
+  "final_acceptance": "not run: PM light lane. The PM put the whole track on the light lane on 2026-11-03 (one maker and one checker per phase, then closeout). PM rule 3 of 2026-11-03 gives no final acceptance under the light lane. The plan records the rule in the line 'The light lane has no final acceptance role.'",
+  "gates": {
+    "PROJECT_LINT": "pass — bash measure/doctor.sh gives exit 1 with 13 structural errors (6 'new track has started tasks', 5 'missing registry link', and 2 'stale generated fact' lines); every error names another track or a generated fact. grep for asset_storytime_l2_unit2_pictures_20261108 in the doctor output gives exit 1 with no line",
+    "PROJECT_CHECKS": "pass — tsc --noEmit in /tmp/opencode/green-step4.log gives 38 error lines and 0 of them sit in src/storytime, scripts/storytime-*, or tests/storytime-*; the other errors sit in assets/*.ts, tests/games/castle-defense, and tests/part.test.ts",
+    "PROJECT_TESTS": "pass — GREEN at 179365e9 in /tmp/opencode/green-step4.log: Test Files 14 passed (14), Tests 232 passed (232), GREEN_EXIT=0. The orchestrator ran the jr-green role gate at ac23e9e2 (PASS: jr-green gate passed) and at 179365e9 (PASS: jr-green gate passed). The phase 3 checker did not rerun the suite; it cites that gate",
+    "SECRET_SCAN": "pass — grep -rnE 'sk-[A-Za-z0-9]{8}|Bearer [A-Za-z0-9]|OPENROUTER_API_KEY=' over measure/runs/asset_storytime_l2_unit2_pictures_20261108 gives exit 1 with 0 hits; a stricter credential-shape scan (sk-ant-, sk-or-, AIza, AKIA, ghp_, and an eyJ token shape) gives 0 hits. The run folder holds no key and no token",
+    "source": "measure/runs/asset_storytime_l2_unit2_pictures_20261108/acceptance-p3-179365e.json"
+  },
+  "antipatterns_clean": [
+    "A2 consent-blind publish gate — the registry entry, the metadata, the plan, the PM report, and this manifest name model evidence only; the FR-12 grep over plan.md, spec.md, pm-report.md, and maker-p3.log gives 5 hits, and each one is a negation, a rule text, a checker phase acceptance, or a PM decision about a row. No text says that Daniel, the PM, or Workbooks accepted a picture",
+    "A3 digit-only count — every gate reads a labeled value (Test Files 14 passed (14), Tests 232 passed (232), 38 tsc error lines and 0 owned, 445 book calls and 4.32 USD of the 18.33 USD stop, 18 app calls and 0.18 USD of the 0.29 USD stop, 220 of 229 book rows, 18 of 18 app family words)",
+    "A4 vacuous pass — the calibration record holds 2 controls and both verdicts are fail, and the three phase checkers read the files and the numbers, not only the exit codes",
+    "A5 false claim — each pass above quotes its command and its exit code, and the plan and the PM report repeat the recorded spend, the row counts, and the file counts",
+    "A6 registry overstatement — the archived registry entry keeps the words 'model evidence, not acceptance', names the 9 rows that wait for a PM decision, and gives the spend per item",
+    "A7 over-broad filter — the repo-wide checks quote their scope, and the secret scan names the shapes it looks for and gives 0 hits",
+    "A9 archived track paths — grep for asset_storytime_l2_unit2_pictures_20261108 in tests/, scripts/, and src/ gives no hit, so no test hardcodes the archived path",
+    "A10 generated-facts drift — the generator does not run while measure/generated holds foreign changes, the closeout commit holds no generated fact, and the registry entry is staged through a blob",
+    "A11 doc-to-code drift — the spec files, the judge files, the delivery manifests, and the checksums agree; the phase 3 checker rebuilt the 18 app prints with the printColor pipeline and got byte-identical output"
+  ],
+  "antipatterns_known_limitations": [
+    "docs/storytime/l2-unit2/prompt-list.md was not regenerated after the round 5 spec edits, so the specs are the truth. The file still holds its 7c53c29a content and its draft banner, while the spec files changed in b1420a85, 2ed04885, and 307d75f6",
+    "13 structural doctor errors of other tracks and stale generated facts: 6 'new track has started tasks', 5 'missing registry link', and 2 'stale generated fact' lines. The doctor adds no error for this track",
+    "38 tsc error lines of other tracks, in assets/*.ts, tests/games/castle-defense, and tests/part.test.ts. The storytime paths hold 0 errors",
+    "9 book rows have no delivery entry and wait for a PM decision: l2-w10-story-page-put-on-your-hat-pip, l2-w09-story-page-tom-can-see-the-mop, l2-w09-card-rice, l2-w12-card-hippo, l2-w12-card-ruler, l2-w13-card-clap, l2-w13-card-throw, l2-w14-card-cold, and l2-w14-card-windy. Their best prints sit in not-delivered/ and README.md names each file",
+    "measure/generated holds foreign uncommitted changes, so the generator did not run and no generated fact is committed"
+  ],
+  "deferred": [
+    "PM decision on the 9 book rows (deferred:PM, default option d: the rows stay out and their best tries go to Workbooks in not-delivered/)",
+    "PM decision on the hat-pip try exception for l2-w10-story-page-put-on-your-hat-pip (deferred:PM, default: the row stays out and gets no extra try)",
+    "Final acceptance did not run under the PM light lane of 2026-11-03 (deferred:PM)"
+  ],
+  "deferred_note": "No plan task stays open. All 12 plan tasks are [x] with a commit SHA, the Phase 3 gate and the Closeout line are [x] with the checkpoint SHA, and no [b] line remains in the archived plan.",
+  "tech_debt": [
+    "TD-30 — RB12-01 and RB12-03, PA3-N1 — a parent symlink under out/ can redirect mkdir, and lstat with mkdir is not atomic (Low, Open); deliverMuseUnit2 and deliverMuseUnit2FamilyWords wrote under out/storytime/l2/unit2/delivery-muse-v1/ and out/storytime/l2/unit2/family-words/delivery-muse-v1/"
+  ],
+  "tech_debt_note": "No new debt entry is warranted. The track added no debt beyond TD-30, which stays Open. TD-29 does not apply, because this track never ran the coverCalmTopReport --print path. measure/tech-debt.md is unchanged by this closeout.",
+  "lessons_learned": "Two entries were added to measure/lessons-learned.md: the judge does not check the delivery print gate, and a provider HTTP 400 for more than 10 references costs 0 USD but uses a try.",
+  "generated_facts": "not committed: measure/generated holds foreign uncommitted changes; the registry entry in measure/tracks.md is staged through a blob so the foreign Contents hunk stays out",
+  "artifact_cleanup": "no bulky run artifact was deleted; the orchestrator identified none. The run folder holds 80 files of json, log, txt, md, mts, py, mjs, and ts, and no PNG or JPG file (find count 0). The three phase acceptance results and the probe files stay in the folder",
+  "evidence_classes": {
+    "person_reviewed": "none recorded for the 220 delivered book rows and the 18 app family words",
+    "model_evidence_not_acceptance": "The delivered files carry Sonnet judge results (claude-code/claude-sonnet-5-5#high, prompt v6), a calibration record with 2 controls that both fail, and print, manifest, and hand-off checks. This is model evidence, not acceptance. Daniel, the PM, and Workbooks gave no approval of a picture",
+    "workbooks_acceptance": "none recorded"
+  }
+}

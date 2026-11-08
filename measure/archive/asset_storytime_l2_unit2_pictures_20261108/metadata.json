@@ -1,0 +1,31 @@
+{
+  "track_id": "asset_storytime_l2_unit2_pictures_20261108",
+  "type": "feature",
+  "status": "done",
+  "created_at": "2026-11-08T13:30:00Z",
+  "updated_at": "2026-11-08T23:27:52Z",
+  "completed": "2026-11-09",
+  "description": "Storytime Level 2 unit 2 paid pictures: 182 new book rows and 10 element sheets (expected 14.66 USD, stop 18.33 USD) and 18 app family words (expected 0.23 USD, stop 0.29 USD) with Muse, the frozen Sonnet judge, and two hand-off folders",
+  "estimated_tasks": 11,
+  "actual_tasks": 12,
+  "deviation_notes": "Created from the PM message of 2026-11-08 about 20:15 ICT (Daniel's Go on the unit 2 paid media list). Follows the archived tracks asset_storytime_l2_unit2_prep_20261108 and asset_storytime_l2_unit2_tooling_20261108, which are not dependency ids because they are archived. Whole track on the PM light lane of 2026-11-03: one maker (measure-jr-green) and one checker (measure-phase-acceptance) per phase, then closeout; no spec review, Red, Review A, B, or C, adversarial, or final acceptance role. Phase 1 and the unpaid part of Phase 3 write the caps, the ten row, the app specs, and the delivery support. Phase 2 and the paid part of Phase 3 spend. The registry entry is staged through a blob because measure/tracks.md holds a foreign uncommitted hunk. The generator is not run because measure/generated/ holds foreign changes. Defaults are in the section Open questions answered by default of the specification. Risk: the OpenRouter key had 18.69 of 20.00 USD left on 2026-11-08 20:2x ICT, and the two stops sum to 18.62 USD. Real maker models: Phase 1 DeepSeek (opencode/deepseek-v4.1-flash-free#high); Phase 2 DeepSeek, Claude Haiku (claude-code/claude-haiku-5-5) by silent fallback from 9718baa5 to 179f438a, MiniMax (minimax-cn-coding-plan/MiniMax-M3.1-Flash) from round 6, and DeepSeek for the delivery rounds; Phase 3 MiniMax. Real checker models: Phase 1 claude-code/claude-sonnet-5-5#high, Phase 2 nvidia/stepfun-ai/step-5-preview#high, Phase 3 deepseek/deepseek-flash#high. Spend: book 4.32 USD of the 18.33 USD stop in 445 calls; app 0.18 USD of the 0.29 USD stop in 18 calls; the Forge total is 4.50 USD. Delivered: 220 of 229 book rows (440 files) and 18 of 18 app family words; the judge evidence is model evidence, not acceptance. The 9 book rows and the hat-pip try exception wait for the PM with the recorded defaults: the 9 rows stay out (option d) and l2-w10-story-page-put-on-your-hat-pip gets no extra try. Final acceptance was not run under the PM light lane of 2026-11-03.",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [
+    "scripts/storytime-muse-guards.mjs",
+    "scripts/storytime-judge-batch.mjs",
+    "src/storytime/muse-delivery-u2.ts",
+    "scripts/storytime-u2-specs.mjs",
+    "docs/storytime/l2-unit2/",
+    "tests/storytime-u2-guards.test.ts",
+    "tests/storytime-u2-judge-batch.test.ts",
+    "tests/storytime-u2-delivery.test.ts",
+    "tests/storytime-u2-specs.test.ts",
+    "out/storytime/l2/unit2/delivery-muse-v1/",
+    "out/storytime/l2/unit2/family-words/delivery-muse-v1/",
+    "/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures/MANIFEST.txt",
+    "/home/daniebo/Desktop/handoff/storytime-l2u2-family-word-pictures/MANIFEST.txt",
+    "measure/runs/asset_storytime_l2_unit2_pictures_20261108/"
+  ],
+  "dependencies": []
+}

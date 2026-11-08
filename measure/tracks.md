@@ -2,6 +2,13 @@
 
 This registry gives each historical, current, and planned work item one Measure owner.
 
+## Contents
+
+- [Foundation and history](#foundation-and-history)
+- [Asset production](#asset-production)
+- [Games](#games)
+- [Riven Lands pack](#riven-lands-pack)
+
 ## Foundation and history
 
 - [x] **Track: History: Add rigging, animation, and clearance checks**
@@ -134,9 +141,6 @@ This registry gives each historical, current, and planned work item one Measure 
 
 - [~] **Track: Chibi Sprouts, release 1 art**
   *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
-
-- [~] **Track: Storytime Level 2 unit 2 paid pictures (book rows, element sheets, app family words)**
-  *Link: [./tracks/asset_storytime_l2_unit2_pictures_20261108/](./tracks/asset_storytime_l2_unit2_pictures_20261108/)*
 
 ## Games
 
@@ -357,6 +361,10 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
 - [x] Storytime Level 2 unit 2 picture prep (unpaid), completed 2026-11-08; one Muse spec for each of the 229 unit 2 rows (unit 1 look, hair and clothes only), the element map, 10 new element sheet specs with 13 reused Forge element views and 24 reused unit 1 element files, and a hand-off folder with a prompt list, specs, and a MANIFEST with checksums; spend 0 USD
   *Link: [./archive/asset_storytime_l2_unit2_prep_20261108/](./archive/asset_storytime_l2_unit2_prep_20261108/)*
   *Storytime Level 2 unit 2 picture prep (unpaid): one Muse spec for each of the 229 unit 2 rows (unit 1 look, hair and clothes only), the element map, 10 new element sheet specs with 13 reused Forge element views and 24 reused unit 1 element files, and a hand-off folder with a prompt list, specs, and a MANIFEST with checksums; spend 0 USD*
+
+- [x] Storytime Level 2 unit 2 paid pictures, completed 2026-11-09; 220 of 229 book rows (440 files) and 18 of 18 app family words delivered with Sonnet judge evidence (model evidence, not acceptance); 9 book rows wait for a PM decision; spend 4.50 USD (book 4.32, app 0.18).
+  *Link: [./archive/asset_storytime_l2_unit2_pictures_20261108/](./archive/asset_storytime_l2_unit2_pictures_20261108/)*
+  *Storytime Level 2 unit 2 paid pictures: 182 new book rows and 10 element sheets (expected 14.66 USD, stop 18.33 USD) and 18 app family words (expected 0.23 USD, stop 0.29 USD) with Muse, the frozen Sonnet judge, and two hand-off folders*
 
 - [x] Storytime Level 2 card line-art retry (ham and family), completed 2026-11-07; family line art delivered (try 4, 12 px) with Sonnet judge evidence (model evidence, not acceptance); ham line art failed after 2 more tries, best try named, ham color file added for the greyscale fallback; spend 0.03 USD.
   *Link: [./archive/asset_storytime_l2_card_line_retry_20261107/](./archive/asset_storytime_l2_card_line_retry_20261107/)*
