@@ -5,7 +5,7 @@
 // provider call: it copies local picture files and writes one JSON batch file.
 //
 //   node scripts/storytime-judge-batch.mjs --ids <id,id,...> --kind color|line --try <n> \
-//        [--out <batch name>] [--cards | --family-words]
+//        [--out <batch name>] [--cards | --family-words | --unit2]
 //
 // The ids are the row ids of the A-48 specs in docs/storytime/l2-unit1/a48/. The script reads
 // the spec of each id for the page text, the use, and the mustShow phrases. With `--cards` the
@@ -14,6 +14,15 @@
 // docs/storytime/l2-unit1/family-words/, and the tries start at `CARD_RUN.startTime`. The two
 // flags cannot run together. Without either one the A-48 folder and the restart start time
 // apply.
+//
+// With `--unit2` (2026-11-08) the ids are unit 2 row ids or element ids. The spec folder of a row
+// id is docs/storytime/l2-unit2/w<nn>/muse; the spec folder of an element id is
+// docs/storytime/l2-unit2/w<nn>/muse-elements, found by a scan of the 8 week folders. The tries
+// start at `U2_RUN.startTime`, and the script reads the unit 2 cost files only. The batch files go
+// to docs/storytime/l2-unit2/judge/prod/ and the judge copies to
+// out/storytime-review/judge/prod-u2/. `--unit2` cannot run with `--cards` or `--family-words`.
+// The mustShow phrases of a unit 2 row are the cast names of rows.json plus the object counts of
+// the picture list, or the row word for class C.
 //
 // The source file of a try is the Muse version that the restart call made. The script reads the
 // top-level costs.tsv of the week folder of the spec (spec.outDir). A try is a row of that id
@@ -36,14 +45,26 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import sharp from 'sharp';
-import { CARD_RUN } from './storytime-muse-guards.mjs';
+import { CARD_RUN, U2_RUN, U2_WEEKS } from './storytime-muse-guards.mjs';
 
 const ROOT = resolve(new URL('..', import.meta.url).pathname);
 const SPEC_DIR = join(ROOT, 'docs/storytime/l2-unit1/a48');
 const CARD_SPEC_DIR = 'docs/storytime/l2-unit1/cards';
 const FAMILY_WORDS_SPEC_DIR = 'docs/storytime/l2-unit1/family-words';
 const BATCH_DIR = join(ROOT, 'docs/storytime/l2-unit1/judge/prod');
-const JUDGE_DIR = join(ROOT, 'out/storytime-review/judge/prod');
+/** The unit 2 spec root below the repository root. It holds the 8 week folders. */
+const UNIT2_SPEC_ROOT = 'docs/storytime/l2-unit2';
+/** The unit 2 rows file: the cast names of every row. */
+const UNIT2_ROWS_FILE = 'docs/storytime/l2-unit2/rows.json';
+/** The unit 2 batch folder and judge copy folder. */
+const UNIT2_BATCH_DIR = 'docs/storytime/l2-unit2/judge/prod';
+export const UNIT2_JUDGE_DIR = 'out/storytime-review/judge/prod-u2';
+/**
+ * The unit 2 picture list. The Workbooks repository owns it; this script only reads it for the
+ * object counts. The spec pins its SHA-256
+ * 63d415000eca9d6be1a6ad533c12ff81e127cd2c76ffac339697f91b99f754ec.
+ */
+const UNIT2_LIST_FILE = '/home/daniebo/Desktop/Workbooks/content/storytime/drafts/l2/print/pictures-u2.json';
 const LONG_SIDE_STORY = 900;
 const LONG_SIDE_CARD = 360;
 const KINDS = ['color', 'line'];
@@ -52,6 +73,12 @@ export const RESTART_START = '2026-11-04T07:54:00Z';
 
 /** The printed long side of a use: 900 px for a story page, 360 px for every other card. */
 export const longSideOf = (use) => (use === 'story-page' ? LONG_SIDE_STORY : LONG_SIDE_CARD);
+
+/** The printed long side of a unit 2 picture: 900 px for class A and B, 360 px for class C. */
+export const unit2LongSide = (sizeClass) => (sizeClass === 'C' ? LONG_SIDE_CARD : LONG_SIDE_STORY);
+
+/** The batch folder of a mode. The unit 2 batch files go to the unit 2 folder. */
+export const batchDirOf = (options) => (options?.unit2 ? join(ROOT, UNIT2_BATCH_DIR) : BATCH_DIR);
 
 /** A time as a number of milliseconds. A time without a zone is UTC. */
 export const utcMs = (time) => Date.parse(/(Z|[+-]\d\d:?\d\d)$/.test(time) ? time : `${time}Z`);
@@ -138,6 +165,75 @@ export function readSpec(specDir, id) {
   return spec;
 }
 
+/** The unit 2 week folder of a row id: the `w<nn>` part of `l2-w<nn>-...`. Null for an element id. */
+export const unit2WeekOf = (id) => {
+  const hit = /^l2-w(\d\d)-/.exec(id);
+  return hit ? `w${hit[1]}` : null;
+};
+
+/**
+ * The unit 2 spec file of one id below a root. A row id lives in `<root>/w<nn>/muse`. An element
+ * id has no week in its name, so the function finds its `muse-elements` folder in the 8 weeks.
+ */
+export function unit2SpecFile(root, id) {
+  const week = unit2WeekOf(id);
+  if (week) return join(root, UNIT2_SPEC_ROOT, week, 'muse', `${id}.json`);
+  for (const candidate of U2_WEEKS) {
+    const file = join(root, UNIT2_SPEC_ROOT, candidate, 'muse-elements', `${id}.json`);
+    if (existsSync(file)) return file;
+  }
+  return join(root, UNIT2_SPEC_ROOT, U2_WEEKS[0], 'muse-elements', `${id}.json`);
+}
+
+/** Reads one unit 2 spec. It needs the id, the text, and the outDir; an element has no `use`. */
+export function readUnit2Spec(file, id) {
+  if (!existsSync(file)) throw new Error(`no unit 2 spec for ${id}: ${file} is missing.`);
+  const spec = JSON.parse(readFileSync(file, 'utf8'));
+  if (spec.id !== id) throw new Error(`the spec ${file} holds the id ${spec.id}, not ${id}.`);
+  for (const field of ['text', 'outDir']) {
+    if (spec[field] === undefined) throw new Error(`the spec ${file} has no ${field}.`);
+  }
+  return spec;
+}
+
+/** Reads the unit 2 rows file into an id map. */
+export function readUnit2Rows(root, rowsFile = join(root, UNIT2_ROWS_FILE)) {
+  if (!existsSync(rowsFile)) throw new Error(`no unit 2 rows file: ${rowsFile} is missing.`);
+  const doc = JSON.parse(readFileSync(rowsFile, 'utf8'));
+  const rows = Array.isArray(doc) ? doc : doc.rows;
+  if (!Array.isArray(rows)) throw new Error(`the unit 2 rows file ${rowsFile} holds no rows.`);
+  return new Map(rows.map((row) => [row.id, row]));
+}
+
+/** Reads the unit 2 picture list into an id map. The Workbooks repository owns the file. */
+export function readUnit2List(root, listFile = UNIT2_LIST_FILE) {
+  if (!existsSync(listFile)) throw new Error(`no unit 2 picture list: ${listFile} is missing.`);
+  const doc = JSON.parse(readFileSync(listFile, 'utf8'));
+  const rows = Array.isArray(doc) ? doc : doc.rows;
+  if (!Array.isArray(rows)) throw new Error(`the unit 2 picture list ${listFile} holds no rows.`);
+  return new Map(rows.map((row) => [row.id, row]));
+}
+
+/**
+ * The mustShow phrases of one unit 2 row: the cast names of `rows.json` plus `<count> <object>`
+ * for each object count of the picture list. A class C row gives its word. A row with no cast
+ * name and no object count gives its page text.
+ */
+export function unit2MustShow(row, listRow) {
+  const cast = Array.isArray(row?.cast) ? row.cast.filter((name) => typeof name === 'string' && name) : [];
+  if (listRow?.sizeClass === 'C') {
+    const word = listRow.text || row?.text;
+    if (!word) throw new Error(`no class C word for ${row?.id ?? listRow?.id}.`);
+    return [word];
+  }
+  const counts = Object.entries(listRow?.objectCounts ?? {}).map(([word, count]) => `${count} ${word}`);
+  const mustShow = [...cast, ...counts];
+  if (mustShow.length) return mustShow;
+  const fallback = listRow?.text || row?.text;
+  if (!fallback) throw new Error(`no mustShow phrases for ${row?.id ?? listRow?.id}.`);
+  return [fallback];
+}
+
 /**
  * Builds the batch entries and writes the judge copies. One entry per id. The judge copy is the
  * source file at the printed size. The function makes no provider call.
@@ -146,19 +242,57 @@ export function readSpec(specDir, id) {
  * `CARD_RUN.startTime`. With `familyWords: true` the spec folder is
  * `docs/storytime/l2-unit1/family-words` and the tries start at `CARD_RUN.startTime`. Without
  * either one the A-48 spec folder and `RESTART_START` apply.
+ *
+ * With `unit2: true` the spec folder of a row id is `docs/storytime/l2-unit2/w<nn>/muse` and the
+ * spec folder of an element id is `<root>/w<nn>/muse-elements`. The tries start at
+ * `U2_RUN.startTime`, the judge copies go to `UNIT2_JUDGE_DIR`, and the unit 2 rows file and
+ * picture list give the mustShow phrases. `rowsFile` and `listFile` are test paths.
+ *
+ * A judge copy always goes below `root`, at its `judgeFile` path. The older `judgeDir` option
+ * stays in the type file only, so a caller can pass its options object without a change.
  */
 export async function buildBatch(options) {
-  const { ids, kind, tryNo, cards = false, familyWords = false, specDir, judgeDir = JUDGE_DIR, root = ROOT } = options;
+  const {
+    ids,
+    kind,
+    tryNo,
+    cards = false,
+    familyWords = false,
+    unit2 = false,
+    specDir,
+    root = ROOT,
+    rowsFile,
+    listFile,
+  } = options;
   if (!KINDS.includes(kind)) throw new Error(`the kind must be ${KINDS.join(' or ')}; got ${kind}.`);
   if (!Number.isInteger(tryNo) || tryNo < 1) throw new Error(`the try number must be 1 or more; got ${tryNo}.`);
   if (!ids.length) throw new Error('the batch needs at least one id.');
+  if (unit2 && (cards || familyWords)) {
+    throw new Error('the option --unit2 cannot run with --cards or --family-words; use --unit2 alone.');
+  }
   const resolvedSpecDir = specDir ?? (familyWords
     ? join(root, FAMILY_WORDS_SPEC_DIR)
     : cards ? join(root, CARD_SPEC_DIR) : SPEC_DIR);
-  const startTime = cards || familyWords ? CARD_RUN.startTime : RESTART_START;
+  const startTime = unit2 ? U2_RUN.startTime : cards || familyWords ? CARD_RUN.startTime : RESTART_START;
+  const judgeRelDir = unit2 ? UNIT2_JUDGE_DIR : 'out/storytime-review/judge/prod';
+  const rows = unit2 ? readUnit2Rows(root, rowsFile) : null;
+  const list = unit2 ? readUnit2List(root, listFile) : null;
   const entries = [];
   for (const id of ids) {
-    const spec = readSpec(resolvedSpecDir, id);
+    let spec;
+    let mustShow;
+    let side;
+    if (unit2) {
+      spec = readUnit2Spec(unit2SpecFile(root, id), id);
+      const row = rows.get(id);
+      const listRow = list.get(id);
+      mustShow = row || listRow ? unit2MustShow(row, listRow) : [id];
+      side = unit2LongSide(spec.sizeClass ?? listRow?.sizeClass);
+    } else {
+      spec = readSpec(resolvedSpecDir, id);
+      mustShow = spec.mustShow;
+      side = longSideOf(spec.use);
+    }
     const weekDir = resolve(root, spec.outDir);
     const costFile = join(weekDir, 'costs.tsv');
     if (!existsSync(costFile)) {
@@ -168,10 +302,9 @@ export async function buildBatch(options) {
     const name = trySourceName(tries, tryNo, kind, id);
     const source = join(weekDir, name);
     if (!existsSync(source)) throw new Error(`no source file for ${id} ${kind} try ${tryNo}: ${source} is missing.`);
-    const judgeFile = `out/storytime-review/judge/prod/${judgeFileName(id, kind, tryNo)}`;
+    const judgeFile = `${judgeRelDir}/${judgeFileName(id, kind, tryNo)}`;
     const target = join(resolve(root), judgeFile);
     mkdirSync(dirname(target), { recursive: true });
-    const side = longSideOf(spec.use);
     const resized = await sharp(source)
       .resize({ width: side, height: side, fit: 'inside', withoutEnlargement: false })
       .png({ compressionLevel: 9 })
@@ -181,9 +314,9 @@ export async function buildBatch(options) {
       judgeFile,
       id,
       kind,
-      pageText: spec.pageText,
-      use: spec.use,
-      mustShow: spec.mustShow,
+      pageText: spec.pageText ?? spec.text,
+      use: spec.use ?? 'element',
+      mustShow,
     });
   }
   return entries;
@@ -198,6 +331,7 @@ export function parseArgs(argv) {
     out: undefined,
     cards: undefined,
     familyWords: undefined,
+    unit2: undefined,
   };
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
@@ -207,10 +341,14 @@ export function parseArgs(argv) {
     else if (arg === '--out') options.out = argv[++i];
     else if (arg === '--cards') options.cards = true;
     else if (arg === '--family-words') options.familyWords = true;
+    else if (arg === '--unit2') options.unit2 = true;
     else throw new Error(`unknown option: ${arg}`);
   }
   if (options.cards && options.familyWords) {
     throw new Error('the options --cards and --family-words cannot run together; use one of them.');
+  }
+  if (options.unit2 && (options.cards || options.familyWords)) {
+    throw new Error('the option --unit2 cannot run with --cards or --family-words; use --unit2 alone.');
   }
   if (!options.ids.length) throw new Error('the command needs --ids <id,id,...>.');
   if (!options.kind) throw new Error('the command needs --kind color or --kind line.');
@@ -223,8 +361,9 @@ export function parseArgs(argv) {
 const main = async () => {
   const options = parseArgs(process.argv.slice(2));
   const entries = await buildBatch(options);
-  mkdirSync(BATCH_DIR, { recursive: true });
-  const batchFile = join(BATCH_DIR, `${options.out}.json`);
+  const batchDir = batchDirOf(options);
+  mkdirSync(batchDir, { recursive: true });
+  const batchFile = join(batchDir, `${options.out}.json`);
   if (existsSync(batchFile)) {
     console.log(`refused: the batch file ${batchFile} already exists; use a new --out name.`);
     process.exit(1);
