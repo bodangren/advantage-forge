@@ -92,3 +92,33 @@ known_failures: none
 handoff: The hand-off folder is rebuilt with 258 files. Rows unchanged: 229, 181 new, 48 reuse, 9 element sheets, estimate 14.57 USD, 0 USD spent. The checker reruns the 11-test command and the manifest check.
 dispositions: F9=FIX
 END_MEASURE_AGENT_RESULT
+
+## Round r5 (checker fixes)
+
+- F1: the check-row line prompt follows the word: an object without a face keeps the object text
+  with its own closed-shape sentence; a face-bearing animal or toy uses the unit 1 cat line rules
+  with eyes and pupils; a person uses the card person line rules; the body part uses the person
+  rules plus one pointed foot. No check-row line prompt holds the bus sentence.
+- F2: the hen gets a new prop sheet spec (w12/muse-elements/prop-hen-sheet.json) and the hen rows
+  reference its output, not the white Forge chicken. A one-view Forge render is called ONE view,
+  not "three times". The pot says "draw the pot only, empty, without the plant".
+- F3: the report counts match elements-reused.tsv.
+- F4: a card line prompt names no other cast member; an outdoor page says "in the place".
+- F5: the Pat cast render is in elements-reused.tsv with its SHA-256.
+- Test: 14 tests pass, exit 0.
+- Hand-off rebuilt: 257 files OK, 0 FAILED. 10 element sheets. Estimate 14.58 USD.
+- Commit: 5dcd760d.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_storytime_l2_unit2_prep_20261108
+phase: Phase 1: Prompt drafts, renders, and hand-off (round r5)
+commits: 5dcd760d and the plan and run-record commit after it
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-u2-specs.test.ts --maxWorkers=1' -> 1 file, 14 tests, pass (exit 0); sha256sum -c MANIFEST.txt -> 257 OK, 0 FAILED
+files_changed: scripts/storytime-u2-specs.mjs; tests/storytime-u2-specs.test.ts; docs/storytime/l2-unit2/**; measure/runs/asset_storytime_l2_unit2_prep_20261108/build-maps.mjs, make-handoff.mjs, costs-after.txt, pm-report.md, maker-p1.log; measure/tracks/asset_storytime_l2_unit2_prep_20261108/plan.md
+plan_updates: Task 3 gains "Checker findings F1 to F5 of acceptance-p1-ab68f98 (2026-11-08): FIX in round r5, commit 5dcd760d."
+known_failures: none
+handoff: The hand-off folder is rebuilt: 258 files, 257 OK and 0 FAILED, 229 rows (181 new, 48 reuse), 10 element sheets, 13 Forge view files reused, 24 unit 1 and cast element files reused, estimate 14.58 USD, 0 USD spent. The checker reruns the 14-test command, the manifest check, and the costs comparison.
+dispositions: F1=FIX; F2=FIX; F3=FIX; F4=FIX; F5=FIX
+END_MEASURE_AGENT_RESULT

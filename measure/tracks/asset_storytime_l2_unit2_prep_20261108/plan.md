@@ -68,6 +68,7 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-u2-specs.test.ts --maxWorkers=1'`.
   Orchestrator findings R1 to R8 (2026-11-08): FIX in round r2, commit 71c310c7.
   Orchestrator finding R9 (2026-11-08): FIX in round r3, commit 887021c7.
+  Checker findings F1 to F5 of acceptance-p1-ab68f98 (2026-11-08): FIX in round r5, commit 5dcd760d.
 - [x] Task 4 (7ff505ef): Local 3D renders by D6, one at a time, only for an asset with no views file. Write
   `render-log.txt` (command, exit code, time, the file made, no `warning:` line).
 - [x] Task 5 (7ff505ef): Hand-off folder `/home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep/`:
