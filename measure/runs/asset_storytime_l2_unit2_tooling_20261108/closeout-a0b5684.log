@@ -80,9 +80,14 @@ Home: measure/runs/asset_storytime_l2_unit2_tooling_20261108/
 
 MEASURE_AGENT_RESULT
 role: closeout
+status: complete
 track: asset_storytime_l2_unit2_tooling_20261108
-status: pass
-commits: 30b097fece58d8fc69949a21db525d020daf0f02 473b6ff3e2262258e55b079f2978dd3f69c31b97
-audited_head_sha: 473b6ff3e2262258e55b079f2978dd3f69c31b97
-gate: GREEN 13 files / 209 tests pass; doctor 13 errors, 0 lines name this track
+phase: track closeout
+commits: 30b097fe, 473b6ff3
+tests_run: GREEN command through heavy-run.sh at 14:56 ICT: 13 files, 209 tests passed, exit 0
+files_changed: measure/archive/asset_storytime_l2_unit2_tooling_20261108/ (6 files), measure/runs/asset_storytime_l2_unit2_tooling_20261108/ (checker records plus closeout JSON and log), measure/tracks.md (two hunks)
+plan_updates: status delivered; Phase 1 gate [x] at a0b56846 with checker evidence and dispositions; Closeout [x] at a0b56846
+known_failures: none
 dispositions: none
+handoff: The track is archived at 30b097fe. F6 (10 px unit 1 ten line) is escalated to the PM with a default. The paid run waits for Daniel's Go and the PM cap write; U2_RUN.capUsd stays null.
+END_MEASURE_AGENT_RESULT
