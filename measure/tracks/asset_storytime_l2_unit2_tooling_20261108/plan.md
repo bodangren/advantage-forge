@@ -48,13 +48,13 @@ checkpoint on this heading.
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`).
 
-- [b] Task 1 deferred:maker: Guard (D1). Add `U2_RUN`, the kind `u2` in `classifyOutDir`, and the
+- [x] Task 1 (580bc970): Guard (D1). Add `U2_RUN`, the kind `u2` in `classifyOutDir`, and the
   empty-cap refusal in `runGuards`. Route unit 2 specs to the unit 2 root in the muse tool, with
   no other change. Write `tests/storytime-u2-guards.test.ts`: a `u2` call is refused while the cap
   is null, 0, negative, or a string; a test-only cap value lets a `u2` call pass the cap check;
   a mixed call is refused; the unit 1 and card tests pass without change. Set `startTime` to the
   real UTC time of this task, cut to the minute. Commit with explicit paths.
-- [b] Task 2 deferred:maker: Judge option (D2). Add `--unit2` to
+- [x] Task 2 (58f4ee10): Judge option (D2). Add `--unit2` to
   `scripts/storytime-judge-batch.mjs` (and its `.d.mts`). Write
   `tests/storytime-u2-judge-batch.test.ts`. Commit with explicit paths.
 - [b] Task 3 deferred:maker: Delivery writer (D3). Write `deliverMuseUnit2` and

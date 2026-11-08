@@ -1,0 +1,58 @@
+# Maker log, Phase 1, Tasks 1 and 2 (light lane)
+
+Track: asset_storytime_l2_unit2_tooling_20261108
+Role: measure-jr-green (maker). Model: deepseek/deepseek-flash (route of `ra-quota pick green`).
+phase_base_sha: 26fee64e925df82e53633b39cb8a15169318c0d0
+Base HEAD check: `git rev-parse HEAD` gave 26fee64e925df82e53633b39cb8a15169318c0d0.
+
+## Task 1, D1 guard
+
+- Start time of the task (UTC, cut to the minute): 2026-11-08T05:21:00Z. This value goes into U2_RUN.startTime.
+- U2_RUN.capUsd stays null. This track writes no cap value.
+- Spend: 0 USD so far. No Muse call, no OpenRouter call.
+
+## Defaults taken (no question tool)
+
+- Element mustShow: an element id has no row in rows.json and no row in the picture list.
+  Its mustShow is `[<element id>]`.
+- Class A/B row with no cast name and no object count: mustShow falls back to the list page text.
+- The test-only cap path is `opts.u2CapUsd` of runGuards. The CLI never sets it.
+- The u2 cost scan reads only the 8 week folders w09 to w16 below the root it is given.
+
+## Log
+
+- 05:21Z Task 1 started.
+
+## Task 1, done
+
+- Commit 580bc9703b20ad2fcad35659e2e23c8095756608: unit 2 guard entry with an empty cap.
+- Files: scripts/storytime-muse-guards.mjs, scripts/storytime-muse-guards.d.mts,
+  scripts/storytime-muse.mjs, tests/storytime-u2-guards.test.ts.
+- Tests: tests/storytime-u2-guards.test.ts, tests/storytime-card-guards.test.ts,
+  tests/storytime-card-line-retry.test.ts, tests/storytime-muse-attempts.test.ts,
+  tests/storytime-card-adversarial.test.ts: 5 files passed, 83 tests passed.
+
+## Task 2, in progress
+
+- Files: scripts/storytime-judge-batch.mjs, scripts/storytime-judge-batch.d.mts,
+  tests/storytime-u2-judge-batch.test.ts.
+- The u2 build reads rows.json and the picture list for mustShow, and the cost rows since
+  U2_RUN.startTime in time order. Judge copies go to out/storytime-review/judge/prod-u2/ and
+  batch files to docs/storytime/l2-unit2/judge/prod/.
+- Element use default: 'element' (a real element spec has no use field).
+- Test command: vitest on tests/storytime-u2-judge-batch.test.ts, tests/storytime-judge-batch.test.ts,
+  tests/storytime-family-word-judge.test.ts.
+- Typecheck command: ./node_modules/.bin/tsc --noEmit -p . . Target: 0 new errors in
+  scripts/storytime-* and tests/storytime-u2-*.
+- Judge tests at 2026-11-08T13:26Z: tests/storytime-u2-judge-batch.test.ts,
+  tests/storytime-judge-batch.test.ts, tests/storytime-family-word-judge.test.ts:
+  3 files passed, 27 tests passed.
+- A judge copy always goes below the build root at its judgeFile path. The older judgeDir option is
+  ignored, as it was before; the types keep it for older callers.
+- Commit 58f4ee10041cc4a89a63bc8c676936411ab9383e: judge batch unit 2 option.
+- First typecheck try: the Node heap hit the 3G scope limit (exit 134, no type error line).
+  Second try with NODE_OPTIONS=--max-old-space-size=2560 through heavy-run.
+- Typecheck at 2026-11-08T13:4xZ with NODE_OPTIONS=--max-old-space-size=2560: exit 2,
+  38 error lines, all in old asset files and tests/games or tests/part; 0 error lines in
+  scripts/storytime-*, tests/storytime-u2-*, or any other storytime test. The count matches the
+  known old repository errors.
