@@ -1,0 +1,33 @@
+{
+  "group": "unit2-calibration",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-08T15:01:58Z",
+  "results": [
+    {
+      "id": "l2-w01-story-page-a-nose",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w01/l2-w01-story-page-a-nose-line-v1.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "at the center of the face, where the nose belongs: the girl's pointing fingertip covers the place of the nose and no separate nose mark is drawn",
+      "notes": "Question page: no. Items: a nose (1). Action: none named (the pointing finger is a note). Seen: Nan (two buns, star T-shirt, matches the cast) with one finger raised to the middle of her face, between the eyes and the smiling mouth. The fingertip sits exactly where the nose should be, and no nose line, dot, or bump shows next to or under it. Decision: the named body part is covered by the hand and nothing of it is drawn, so it is missing (rules 5 and 7). Small marks: the pointing arm is a soft sausage shape; the ears are plain. Lines are black on white, no gray, no gaps, no text."
+    },
+    {
+      "id": "l2-w03-story-page-nan-can-get-a-pan",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/cal/w03/l2-w03-story-page-nan-can-get-a-pan-m3-line.png",
+      "verdict": "fail",
+      "defectClass": "wrong-or-missing-prop",
+      "where": "in Nan's right hand at the left of the picture: the held object is a ring with a thin handle that reads as a magnifying glass, not a pan",
+      "notes": "Question page: no. Items: Nan (1), a pan (1). Action: get (note only; she reaches toward the shelf). Seen: Nan (two buns, star T-shirt, matches the cast) smiling, and holding a small round ring with a thin handle and a diagonal glint line, held up at a low shelf. The shelf holds three cups on top and flat oval dishes on the lower shelf. A play kitchen with a sink and burners stands on the right, with no pan on the burners. Decision: no object reads as a pan to a young child. The held item reads as a magnifying glass, so the pan is wrong or missing. Small marks: a short line beside her right eye. Lines are black on white, no gray, no gaps, no text."
+    }
+  ],
+  "summary": {
+    "files": 2,
+    "pass": 0,
+    "fail": 2
+  }
+}

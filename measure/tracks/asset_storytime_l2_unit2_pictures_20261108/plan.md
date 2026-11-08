@@ -1,7 +1,7 @@
 # Storytime Level 2 unit 2 paid pictures (book rows, element sheets, app family words)
 
-Status: in progress (2026-11-08). Phase 1 is done (caps and the ten row, 0 USD). The phase
-acceptance gate waits for the checker.
+Status: in progress (2026-11-08). Phase 1 is done and accepted at d99aa896 (caps and the ten row,
+0 USD). Phase 2 starts at Task 3.
 
 The track writes the unit 2 caps into the guard, fixes the ten row, makes 182 new book rows and 10
 element sheets, and makes 18 app family-word pictures. The [specification](./spec.md) owns the
@@ -50,7 +50,7 @@ blocker clears and the task starts. The doctor counts only `[ ]`, `[~]`, and `[x
 The light lane has no spec review gate. The second small commit marked Task 0 and put the checkpoint
 on this heading.
 
-## Phase 1: Caps and the ten row (unpaid)
+## Phase 1: Caps and the ten row (unpaid) [checkpoint: d99aa89]
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`). Spend 0 USD.
 
@@ -67,10 +67,14 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   test counts (182 new, 47 reuse: 45 and 2), rebuild the prep hand-off folder with `make-handoff.mjs`,
   and run `sha256sum -c MANIFEST.txt` (0 FAILED). Run the GREEN test command and the typecheck (0 new
   errors in the storytime paths). Commit with explicit paths.
-- [b] Phase 1 gate: phase acceptance by the checker at an immutable HEAD. The checker probes both
-  caps with fixture cost files at 18.32 USD and 0.28 USD (the next call is refused), checks that book
-  spend does not count for the app and the reverse, checks that a mixed call is refused, checks that a
-  CLI option cannot set a cap, and checks that the unit 1 and card constants are byte equal. deferred:checker
+- [x] Phase 1 gate (d99aa896): phase acceptance by the checker passed at d99aa896.
+  - Evidence: measure/runs/asset_storytime_l2_unit2_pictures_20261108/acceptance-p1-d99aa89.json
+    (status pass, 73 probe cases, 0 FAIL; GREEN 13 files and 213 tests; tsc 38 old errors and 0 in
+    the storytime paths; prep hand-off 257 OK and 0 FAILED).
+  - Checker findings and orchestrator dispositions: F1 [Nit] stale "48 reuse rows" comment in
+    src/storytime/muse-delivery-u2.ts: DEFER to Task 9, which changes that file; F2 [Nit] pool
+    recheck at concurrency 4: ACCEPT as an operating rule: when item total + planned calls x the
+    highest call cost + 0.03 USD passes the item stop, the pool runs at concurrency 1.
 
 ## Phase 2: Book pictures (paid)
 

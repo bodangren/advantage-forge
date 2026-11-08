@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "asset_storytime_l2_unit2_pictures_20261108",
+  "phase": "Phase 1: Caps and the ten row (unpaid)",
+  "baseline_sha": "d99aa896d31d86b336c63026d7821115ecdba8bb",
+  "phase_base_sha": "5ebb3db1594e2378a888130f9852464fab2f6d09",
+  "audited_head_sha": "d99aa896d31d86b336c63026d7821115ecdba8bb",
+  "status": "pass",
+  "summary": "Phase 1 passes at d99aa896. The guard holds U2_RUN 18.33/14.66 and U2_FW_RUN 0.29/0.23 with separate scans. A probe of 73 cases found no defect: the 18.32 USD book fixture and the 0.28 USD app fixture each refuse the next call of their own kind, the scopes stay apart, rows before each startTime do not count, every mixed call is refused, every other unit 2 path is invalid, every bad cap refuses, and the CLI cannot set a cap. The CARD_RUN, CARD_LINE_RETRY, and restart constants are byte-equal to 5ebb3db1. The ten row is new in week 10 and reused in week 11 (182 new, 47 reuse: 45 and 2). The GREEN command passed (13 files, 213 tests) and tsc has 38 old errors and none in the storytime paths. The hand-off folder has 0 non-OK lines. Two Nits remain; neither blocks the paid run.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] src/storytime/muse-delivery-u2.ts:26: the header comment still says \"The 48 reuse rows\"; the row model now has 47 reuse rows (45 unit 1 and 2 earlier-row). The maker fixed the same stale count in the test comment only. Comment text only; no behavior effect.",
+    "F2 [Nit] scripts/storytime-muse.mjs pool recheck (runGuards before each call): the recheck reads only the costs.tsv rows of finished calls, so with concurrency 4 a pool can start up to 3 calls beyond the last checked spend. Overshoot is below 0.03 USD at 0.01 USD per call, and it grows with the call cost. The design is the same as the unit 1 and card runs, and the D5 worst-case rule (planned calls times the highest call cost must fit the stop) controls it. The key margin is 0.07 USD. Size each pool near a stop with the D5 worst case, or run it at concurrency 1."
+  ],
+  "evidence": [
+    "git rev-parse HEAD gave d99aa896d31d86b336c63026d7821115ecdba8bb before and after the probes; the working tree has no tracked change in scripts, src, tests, docs/storytime, or the track folder. The light lane has no other prerequisite role result; the three commits in 5ebb3db1..d99aa896 are 57fe034e (caps), 7c53c29a (ten row), d99aa896 (maker evidence, plan.md and measure/runs only). No test-only commit is involved.",
+    "Caps probe measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p1-accept.mjs: 73 cases, 0 FAIL. U2_RUN is capUsd 18.33, reportAtUsd 14.66, startTime 2026-11-08T05:21:00Z, margin 0.01, maxTries 3. U2_FW_RUN is capUsd 0.29, reportAtUsd 0.23, startTime 2026-11-08T13:39:00Z, outDir out/storytime/l2/unit2/family-words/muse.",
+    "A book fixture of 18.32 USD (week folder and elements folder) refuses the next u2 call with code 3 (spend 18.3200 plus 0.01 over cap 18.33). A book fixture of 5.00 USD and an empty root pass. An app fixture of 0.28 USD refuses the next u2fw call (spend 0.2800 plus 0.01 over cap 0.29). An app fixture of 0.05 USD passes.",
+    "Scope probe: book spend 18.32 gives spend 0 and no refusal for a u2fw call; app spend 0.28 gives spend 0 and no refusal for a u2 call; a book elements-folder cost row does not count for u2fw.",
+    "Start time probe: a row at 05:20:59Z does not count for the book and a row at 05:21:00Z counts; a row at 13:38:59Z does not count for the app and a row at 13:39:00Z counts.",
+    "Mixed probe: u2fw with u2, with a unit 1 spec, and with a card spec, in both orders, gives refused code 3 with run mixed (6 of 6).",
+    "Path probe: 17 other unit 2 paths (family-words, family-words/muse/elements, family-words/muse/sub, a ../ traversal, family-words/delivery-muse-v1, w08, w17, w09/muse/sub, w09, unit2 root, delivery-muse-v1, family-words-x, Family-Words, unit2-x, an outside path) are invalid and refuse. Exactly one folder is u2fw (a trailing slash, a ./ prefix, and an absolute path resolve to it). Eight week folders and their elements folders are u2.",
+    "Cap probe: null, 0, -1, NaN, the string \"5\", Infinity, and undefined refuse for u2 (through u2CapUsd) and for u2fw (through u2FwCapUsd) with the exact messages. cliGuardOptions removes both keys; a stripped u2CapUsd or u2FwCapUsd and a __proto__ key cannot lift a stop. A pool of 40 calls at 18.00 USD is refused by the projection (18.41 over 18.33). A fourth u2fw color try is refused (count 3, max 3).",
+    "CLI probe with HOME set to an empty folder and no key: node scripts/storytime-muse.mjs color <book spec> --u2CapUsd 99 (and with --u2FwCapUsd 99 --tries 9) gave no cap refusal and stopped at the key read (ENOENT, exit 1), so the CLI option set no cap. A spec with an outside outDir and both flags gave exit 3 with the outside-folder refusal and no key error. In scripts/storytime-muse.mjs runGuards (line 409) comes before readKey (line 416). No key was set and no Muse call ran.",
+    "Byte-equal check against 5ebb3db1: RESTART_START, MAX_TRIES, SPEND_CAP_USD, SPEND_MARGIN_USD, REPORT_AT_USD, CARD_RUN, CARD_LINE_RETRY_START, TRY_EXCEPTIONS, and PICTURE_IDS are EQUAL by text extraction. The diff of the guard file removes no line of CARD_RUN, CARD_LINE_RETRY, or the restart constants (removed lines are the old U2_RUN comment and null caps, the cliGuardOptions comment, the runGuards u2 selection lines, and the old empty-cap test).",
+    "Ten row probe measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p1-ten.ts: rows.json has l2-w10-check-row-ten reuse null and l2-w11-check-row-ten reuse docs/storytime/l2-unit2/w10/muse/l2-w10-check-row-ten.json with kind unit2-earlier-row; 229 rows, 47 reuse (45 unit1-delivery, 2 unit2-earlier-row), 182 new. The list SHA-256 equals the pin. deliverMuseUnit2 with the real rows.json, the pinned list cut to the two ten rows, and fixture prints for the week 10 row delivered both rows, the week 11 files equal the week 10 prints, and no row was skipped. Without a week 10 approval the write stops, names both rows, and writes nothing (U2D11 behavior). Contrast with the rows.json of 5ebb3db1: the delivery stopped on both ten rows (line thickness 10 px, minimum 12 px).",
+    "git diff --stat 5ebb3db1..d99aa896 -- docs/storytime/l2-unit2 shows 5 files: prompt-list.md, prompt-list.tsv, rows.json, w10/muse/l2-w10-check-row-ten.json, w11/muse/l2-w11-check-row-ten.json; the hunks hold only the two ten rows and their derived count and row lines (181 to 182 new, 48 to 47 reuse).",
+    "scripts/storytime-u2-specs.mjs holds a named rule REUSE_EXCLUSIONS that cites the PM decision of 2026-11-08 and the 10 px line file; the script writes rows.json only when a value changes.",
+    "Hand-off /home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep/: sha256sum -c MANIFEST.txt gave 257 OK and 0 lines that do not end in ': OK'; the 257 files other than MANIFEST.txt equal the 257 listed names (diff empty).",
+    "GREEN command through heavy-run.sh (HEAVY_MIN_AVAIL_MB=1500, --maxWorkers=1): Test Files 13 passed (13), Tests 213 passed (213). This equals the maker log (213 tests) and the orchestrator jr-green role gate.",
+    "tsc --noEmit -p . through heavy-run.sh with NODE_OPTIONS=--max-old-space-size=2560: 38 errors (assets/rowboat.ts 8, airship 7, plank 6, waterskin 3, storytime-nut 3, mushroom-cap 3, tests/games/castle-defense 2, and 1 each in tests/part.test.ts, assets/wool.ts, storytime-picture-book.ts, storytime-crayon-box.ts, merchant-cart.ts, longship.ts). 0 errors in src/storytime, scripts/storytime-*, or tests/storytime-*. This matches the plan claim (38 old, 0 in the storytime paths).",
+    "0 USD: the 16 costs.tsv hashes (find out/storytime -name costs.tsv, sort, sha256sum) equal measure/runs/asset_storytime_l2_unit2_pictures_20261108/costs-p1.txt (diff empty). out/storytime/l2/unit2 holds 0 costs.tsv files. git diff --name-only 5ebb3db1 d99aa896 lists 15 files and 0 PNG or JPG. git diff --stat for src, assets, docs/storytime/l2-unit1, and scripts/storytime-judge-batch.mjs is empty; no judge kit, unit 1, asset, Workbooks, or fireball file changed.",
+    "Plan claims: Task 1 is [x] with (57fe034e) on its first line and Task 2 is [x] with (7c53c29a); the Phase 1 gate is [b] ... deferred:checker; Phase 2 and 3 tasks are [b]. The Status line says the gate waits for the checker. The plan and the maker log claim only passes that the checker reproduced (GREEN 213, tsc 38/0, 257 OK). The grep for accepted/approved with Daniel, PM, or Workbooks finds only the FR-12 rule text, the Human gate text, and the PM decision of the ten row (a decision, not a picture acceptance).",
+    "A3, A4, A6, A7 not applicable: the exact phase diff changes no framework contract test, filter, or tracks registry. A5 verified against the plan claims above.",
+    "Probe files in measure/runs/asset_storytime_l2_unit2_pictures_20261108/ (probe-p1-accept.mjs, probe-p1-ten.ts, probe-spec-invalid.json); all temp fixtures and probe output sit under /tmp/opencode/. No cap value was written to any file other than quoted in this result and the log."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff 5ebb3db1..d99aa896 -- scripts tests docs/storytime/l2-unit2",
+    "node measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p1-accept.mjs",
+    "./node_modules/.bin/tsx measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p1-ten.ts",
+    "env -i PATH=$PATH HOME=<empty temp folder> node scripts/storytime-muse.mjs color <spec> --u2CapUsd 99 --u2FwCapUsd 99",
+    "sha256sum -c MANIFEST.txt (in /home/daniebo/Desktop/handoff/storytime-l2u2-picture-prep)",
+    "find out/storytime -name costs.tsv -print0 | sort -z | xargs -0 sha256sum | diff - measure/runs/asset_storytime_l2_unit2_pictures_20261108/costs-p1.txt",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run <13 storytime test files> --maxWorkers=1'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=2560 ./node_modules/.bin/tsc --noEmit -p .'"
+  ],
+  "changed_files": [
+    "measure/runs/asset_storytime_l2_unit2_pictures_20261108/acceptance-p1-d99aa89.json",
+    "measure/runs/asset_storytime_l2_unit2_pictures_20261108/acceptance-p1-d99aa89.log",
+    "measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p1-accept.mjs",
+    "measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-p1-ten.ts",
+    "measure/runs/asset_storytime_l2_unit2_pictures_20261108/probe-spec-invalid.json"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high"
+}

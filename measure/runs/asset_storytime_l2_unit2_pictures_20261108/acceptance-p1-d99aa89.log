@@ -1,0 +1,82 @@
+# Phase acceptance log, Phase 1 (light lane)
+
+Track: asset_storytime_l2_unit2_pictures_20261108
+Phase: Phase 1: Caps and the ten row (unpaid)
+Role: measure-phase-acceptance (checker). Model: claude-code/claude-sonnet-5-5#high.
+Session: Phase Accept · P1 · storytime_l2_unit2_pictures
+phase_base_sha: 5ebb3db1594e2378a888130f9852464fab2f6d09
+role_base_sha and audited_head_sha: d99aa896d31d86b336c63026d7821115ecdba8bb
+HEAD check: `git rev-parse HEAD` gave d99aa896d31d86b336c63026d7821115ecdba8bb, before and after the probes.
+Spend: 0 USD. No Muse call, no OpenRouter call, no key set or read (every CLI probe ran with an empty HOME).
+
+## Verdict: pass
+
+No Blocker. Two Nits. The paid run may open under the committed caps.
+
+## Check 1: caps
+
+- Constants: U2_RUN capUsd 18.33, reportAtUsd 14.66, startTime 2026-11-08T05:21:00Z. U2_FW_RUN capUsd 0.29,
+  reportAtUsd 0.23, startTime 2026-11-08T13:39:00Z, outDir out/storytime/l2/unit2/family-words/muse.
+- Probe `probe-p1-accept.mjs`: 73 cases, 0 FAIL.
+  - Book fixture 18.32 USD refuses the next u2 call (code 3). Book 5.00 USD and an empty root pass.
+  - App fixture 0.28 USD refuses the next u2fw call (code 3). App 0.05 USD passes.
+  - Book spend does not count for u2fw. App spend does not count for u2. A book elements row does not count for u2fw.
+  - A row one second before each startTime does not count. A row at the startTime counts.
+  - Mixed u2fw calls (with u2, unit 1, card; both orders) are refused with run mixed.
+  - 17 other unit 2 paths are invalid. One folder is u2fw. Eight weeks and their elements folders are u2.
+  - null, 0, -1, NaN, "5", Infinity, undefined refuse for both kinds (test-only options).
+  - cliGuardOptions strips both test-only keys. A __proto__ key does not lift a stop.
+  - A 40-call pool at 18.00 USD is refused by the projection. A fourth u2fw try is refused.
+- CLI (HOME empty, no key): `--u2CapUsd 99` and `--u2FwCapUsd 99` gave no cap refusal and stopped at the key
+  read (ENOENT). An outside outDir gave exit 3 and no key error. In scripts/storytime-muse.mjs, runGuards
+  (line 409) comes before readKey (line 416).
+- Byte-equal to 5ebb3db1: RESTART_START, MAX_TRIES, SPEND_CAP_USD, SPEND_MARGIN_USD, REPORT_AT_USD, CARD_RUN,
+  CARD_LINE_RETRY_START, TRY_EXCEPTIONS, PICTURE_IDS (text extraction). The diff removes no line of CARD_RUN,
+  CARD_LINE_RETRY, or the restart constants.
+- Defect that would let a call pass a stop: none found in the guard logic. One residual risk (F2): the pool recheck
+  counts only finished calls, so up to 3 calls in flight at concurrency 4 can pass the last checked spend. The D5
+  worst-case rule controls it. This is a Nit.
+
+## Check 2: the ten row
+
+- rows.json: l2-w10-check-row-ten reuse null. l2-w11-check-row-ten reuses
+  docs/storytime/l2-unit2/w10/muse/l2-w10-check-row-ten.json (kind unit2-earlier-row).
+- Counts: 229 rows, 182 new, 47 reuse (45 unit1-delivery, 2 unit2-earlier-row). The list SHA-256 equals the pin.
+- The diff of docs/storytime/l2-unit2 holds 5 files and only the two ten rows and their derived lines.
+- Probe `probe-p1-ten.ts`: deliverMuseUnit2 with the real rows.json delivers both ten rows from one week 10
+  approval (week 11 files equal week 10 prints, 0 skipped). Without the week 10 approval the write stops, names
+  both rows, and writes nothing. With the rows.json of 5ebb3db1 the delivery stopped on both ten rows (10 px lines).
+- Hand-off storytime-l2u2-picture-prep: 257 OK, 0 non-OK lines; the 257 files equal the 257 listed names.
+
+## Check 3: gates
+
+- GREEN command through heavy-run.sh: 13 files passed, 213 tests passed.
+- tsc --noEmit: 38 errors, 0 in src/storytime, scripts/storytime-*, tests/storytime-*. Matches the plan claim.
+- The 16 costs.tsv hashes equal costs-p1.txt. out/storytime/l2/unit2 has 0 costs.tsv. 0 PNG or JPG in git
+  since 5ebb3db1. No change to the judge kit, unit 1 paths, src, assets, fireball, or Workbooks.
+
+## Check 4: plan and claims
+
+- Task 1 [x] (57fe034e) and Task 2 [x] (7c53c29a) with the SHA on the first line. The gate is [b] ... deferred:checker.
+- No text says Daniel, the PM, or Workbooks accepted a picture. The only "accepted" text is the PM decision of the ten row.
+- A5 verified. A3, A4, A6, A7 do not apply to this diff.
+
+## Findings
+
+- F1 [Nit] src/storytime/muse-delivery-u2.ts:26: the header comment says "The 48 reuse rows"; the count is 47 now.
+- F2 [Nit] scripts/storytime-muse.mjs pool recheck: concurrency 4 can start up to 3 calls beyond the last checked
+  spend. Size each pool near a stop with the D5 worst case, or run it at concurrency 1.
+
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: asset_storytime_l2_unit2_pictures_20261108
+phase: Phase 1: Caps and the ten row (unpaid)
+commits: none (gate-only role; accepted HEAD d99aa896d31d86b336c63026d7821115ecdba8bb; no test-only commit allowed or needed)
+tests_run: probe-p1-accept.mjs 73 cases 0 FAIL; probe-p1-ten.ts PASS A and B; GREEN command through heavy-run.sh -> 13 files passed, 213 tests passed; tsc --noEmit -> 38 old errors, 0 in the storytime paths; sha256sum -c MANIFEST.txt -> 257 OK, 0 non-OK; costs.tsv hashes equal costs-p1.txt
+files_changed: measure/runs/asset_storytime_l2_unit2_pictures_20261108/acceptance-p1-d99aa89.json, acceptance-p1-d99aa89.log, probe-p1-accept.mjs, probe-p1-ten.ts, probe-spec-invalid.json
+plan_updates: none (gate-only role; the orchestrator marks the Phase 1 gate)
+known_failures: none
+handoff: Verdict pass at d99aa896. Blockers: none. Nits: F1 stale "48 reuse rows" comment in src/storytime/muse-delivery-u2.ts:26 (comment only); F2 pool concurrency can pass the last checked spend by up to 3 calls, so size each pool near a stop with the D5 worst case. Retry recommendation none. The orchestrator marks the Phase 1 gate and may open the paid run after the Phase 2 preconditions (Task 3). Any later commit that changes a guard, a spec, or rows.json needs a new acceptance run at the new HEAD.
+dispositions: none
+END_MEASURE_AGENT_RESULT
