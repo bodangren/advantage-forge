@@ -81,7 +81,7 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`). The orchestrator
 runs the frozen judge and the calibration controls. The stop is 18.33 USD.
 
-- [b] Task 3: Preconditions and calibration (D4, D5). Check the SHA-256 of the book list (the pin of
+- [x] Task 3 (9ba5f0e1): Preconditions and calibration (D4, D5). Check the SHA-256 of the book list (the pin of
   D7). Record the state of the `w09` to `w16` cost files and the first spend line (0.00 USD). The
   orchestrator runs the two calibration controls of `calibration-set.json` through the frozen judge
   once. Both must fail. Write `calibration-record.json` in the run folder. If one control passes,

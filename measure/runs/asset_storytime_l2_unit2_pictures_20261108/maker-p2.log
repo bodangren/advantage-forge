@@ -1,0 +1,30 @@
+# Maker log, Phase 2 (book pictures), track asset_storytime_l2_unit2_pictures_20261108
+
+Role: measure-jr-green (light lane maker). Model: opencode/deepseek-v4.1-flash-free#high.
+role_base_sha: d99aa896d31d86b336c63026d7821115ecdba8bb (confirmed equal to HEAD at start).
+
+## Step A, records (0 USD)
+
+- 2026-11-08T15:03:07Z (22:03 ICT): start. HEAD d99aa896. Working tree holds foreign changes
+  from other agents; this log records only the staged paths of this track.
+- Phase 1 gate set to pass at d99aa896 with the acceptance evidence
+  measure/runs/asset_storytime_l2_unit2_pictures_20261108/acceptance-p1-d99aa89.json.
+- Checker finding F1 [Nit] defers to Task 9. F2 [Nit] becomes the operating rule of F2.
+- Calibration record read: 2 controls, 0 pass, 2 fail, as required by D4 and FR-10.
+
+## Step B, Task 3 preconditions (0 USD)
+
+- 2026-11-08T15:03Z: book list SHA-256 check.
+  - path /home/daniebo/Desktop/Workbooks/content/storytime/drafts/l2/print/pictures-u2.json
+  - SHA-256 63d415000eca9d6be1a6ad533c12ff81e127cd2c76ffac339697f91b99f754ec
+  - expected 63d415000eca9d6be1a6ad533c12ff81e127cd2c76ffac339697f91b99f754ec: equal. D7 pin holds.
+- 2026-11-08T15:03Z: unit 2 cost state.
+  - `find out/storytime/l2/unit2 -name costs.tsv` gives no path (count 0).
+  - book spend 0.00 USD, app spend 0.00 USD.
+- Calibration: measure/runs/asset_storytime_l2_unit2_pictures_20261108/calibration-record.json
+  gives status complete, 2 files, 0 pass, 2 fail. Both controls failed, as D4 requires.
+- spend-record.txt created with the D5 header and the first book and app lines at 0.00 USD.
+
+## Step C, Task 4 element sheets color try 1 (paid)
+
+(pending)
