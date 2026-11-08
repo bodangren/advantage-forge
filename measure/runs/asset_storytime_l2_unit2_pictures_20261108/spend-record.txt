@@ -30,3 +30,4 @@ utc_time	item	calls	pool_usd	item_total_usd	item_stop_usd	left_usd	note
 2026-11-08T19:23:57.093Z	book	1	0.01	4.06	18.33	14.27	row line pool, l2-w13-check-row-dot at line try 3: 1 ok, 0 failed, 0 refused; last line try of the row
 2026-11-08T20:15:30Z	book	20	0.20	4.26	18.33	14.07	row line pool, 20 rows of the print gate: 20 ok, 0 failed, 0 refused; highest call 0.01 USD; 13 rows pass the print gate
 2026-11-08T20:20:26Z	book	6	0.06	4.32	18.33	14.01	row line pool, 6 thin cards at line try 3: 6 ok, 0 failed, 0 refused; highest call 0.01 USD; 1 row passes the print gate
+2026-11-08T23:05:29Z	app	18	0.18	0.18	0.29	0.11	app color pool, color try 1 for the 18 app words at concurrency 4: 18 ok, 0 failed, 0 refused; highest call 0.01 USD

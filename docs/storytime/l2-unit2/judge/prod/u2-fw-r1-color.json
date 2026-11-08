@@ -1,0 +1,182 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-family-egg-color-t1.png",
+    "id": "l2-w09-family-egg",
+    "kind": "color",
+    "pageText": "egg",
+    "use": "family-word",
+    "mustShow": [
+      "egg"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-family-milk-color-t1.png",
+    "id": "l2-w09-family-milk",
+    "kind": "color",
+    "pageText": "milk",
+    "use": "family-word",
+    "mustShow": [
+      "milk"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-family-cake-color-t1.png",
+    "id": "l2-w09-family-cake",
+    "kind": "color",
+    "pageText": "cake",
+    "use": "family-word",
+    "mustShow": [
+      "cake"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-family-hat-color-t1.png",
+    "id": "l2-w10-family-hat",
+    "kind": "color",
+    "pageText": "hat",
+    "use": "family-word",
+    "mustShow": [
+      "hat"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-family-bed-color-t1.png",
+    "id": "l2-w11-family-bed",
+    "kind": "color",
+    "pageText": "bed",
+    "use": "family-word",
+    "mustShow": [
+      "bed"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-family-table-color-t1.png",
+    "id": "l2-w11-family-table",
+    "kind": "color",
+    "pageText": "table",
+    "use": "family-word",
+    "mustShow": [
+      "table"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-family-sofa-color-t1.png",
+    "id": "l2-w11-family-sofa",
+    "kind": "color",
+    "pageText": "sofa",
+    "use": "family-word",
+    "mustShow": [
+      "sofa"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-family-box-color-t1.png",
+    "id": "l2-w11-family-box",
+    "kind": "color",
+    "pageText": "box",
+    "use": "family-word",
+    "mustShow": [
+      "box"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w11-family-chair-color-t1.png",
+    "id": "l2-w11-family-chair",
+    "kind": "color",
+    "pageText": "chair",
+    "use": "family-word",
+    "mustShow": [
+      "chair"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-family-book-color-t1.png",
+    "id": "l2-w12-family-book",
+    "kind": "color",
+    "pageText": "book",
+    "use": "family-word",
+    "mustShow": [
+      "book"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-family-bag-color-t1.png",
+    "id": "l2-w12-family-bag",
+    "kind": "color",
+    "pageText": "bag",
+    "use": "family-word",
+    "mustShow": [
+      "bag"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-family-pencil-color-t1.png",
+    "id": "l2-w12-family-pencil",
+    "kind": "color",
+    "pageText": "pencil",
+    "use": "family-word",
+    "mustShow": [
+      "pencil"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-family-pen-color-t1.png",
+    "id": "l2-w12-family-pen",
+    "kind": "color",
+    "pageText": "pen",
+    "use": "family-word",
+    "mustShow": [
+      "pen"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-family-jump-color-t1.png",
+    "id": "l2-w13-family-jump",
+    "kind": "color",
+    "pageText": "jump",
+    "use": "family-word",
+    "mustShow": [
+      "a child jumping with both feet off the ground"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-family-bus-color-t1.png",
+    "id": "l2-w15-family-bus",
+    "kind": "color",
+    "pageText": "bus",
+    "use": "family-word",
+    "mustShow": [
+      "bus"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-family-bike-color-t1.png",
+    "id": "l2-w15-family-bike",
+    "kind": "color",
+    "pageText": "bike",
+    "use": "family-word",
+    "mustShow": [
+      "bike"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-family-truck-color-t1.png",
+    "id": "l2-w15-family-truck",
+    "kind": "color",
+    "pageText": "truck",
+    "use": "family-word",
+    "mustShow": [
+      "truck"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w15-family-plane-color-t1.png",
+    "id": "l2-w15-family-plane",
+    "kind": "color",
+    "pageText": "plane",
+    "use": "family-word",
+    "mustShow": [
+      "plane"
+    ]
+  }
+]

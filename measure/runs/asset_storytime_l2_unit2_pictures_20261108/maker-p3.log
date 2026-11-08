@@ -84,3 +84,13 @@ out/storytime/l2/unit2/family-words/ does not exist, so it holds no costs.tsv an
 U2_FW_RUN.startTime: the app spend is 0.00 USD of the 0.29 stop.
 The worst case of the pool: 18 calls x 0.01 USD + 0.00 USD + 0.03 USD margin = 0.21 USD. That is
 under the 0.23 USD report point and under the 0.29 USD stop, so the pool runs.
+Step B (paid, 0.18 USD): the color pool ran for the 18 app words at concurrency 4: 18 ok, 0 failed,
+0 refused. Every call cost 0.01 USD, and the app spend is 0.18 USD of the 0.29 stop, under the
+0.23 USD report point. No id needs a retry, because every id has one ok row at color try 1. The
+cost file is out/storytime/l2/unit2/family-words/muse/costs.tsv with 18 rows. The pool output is
+/tmp/opencode/u2-fw-color-r1.out.
+Step C (0 USD): the judge batch docs/storytime/l2-unit2/judge/prod/u2-fw-r1-color.json holds 18
+entries, one per app word, with the use family-word and the mustShow phrase of the word. The jump
+entry holds the phrase "a child jumping with both feet off the ground". Every judge copy in
+out/storytime-review/judge/prod-u2/ has a 360 px long side and equals a downscale of the m1 color
+file of its id with a pixel distance of 0.

@@ -160,6 +160,12 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   and the projection once. Deliver to `out/storytime/l2/unit2/family-words/delivery-muse-v1/` and
   build `/home/daniebo/Desktop/handoff/storytime-l2u2-family-word-pictures/` with the PNG files,
   `manifest.json`, `MANIFEST.txt`, and a contact sheet. Run `sha256sum -c MANIFEST.txt` (0 FAILED).
+  - Round 1 (0.18 USD): the color pool ran for the 18 app words at concurrency 4: 18 ok, 0 failed,
+    0 refused, and 0.18 USD of the 0.29 stop. Every word has its first ok row at color try 1, so
+    no word needs a retry yet. The judge batch is
+    `docs/storytime/l2-unit2/judge/prod/u2-fw-r1-color.json` with 18 entries. Every judge copy has
+    a 360 px long side and equals a downscale of the m1 color file of its id, with a pixel distance
+    of 0. The frozen judge has not run yet.
 - [b] Task 11: Final PM report (D8). Complete `pm-report.md`: the first line `Status: done.` (or
   `Status: blocked.`), the spend for each item with calls and stop, the rows done, the failures with
   the best try, the delivery and hand-off folders, and `Facts changed:`. deferred:maker
