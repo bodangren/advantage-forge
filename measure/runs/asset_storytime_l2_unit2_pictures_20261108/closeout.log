@@ -26,7 +26,9 @@ items, TD-30, the artifact cleanup, and the evidence classes.
 
 Step 5 lessons: two entries were appended to measure/lessons-learned.md under Recurring failures.
 The judge does not check the delivery print gate, and a provider HTTP 400 for more than 10
-references costs 0 USD but uses a try under the guard.
+references costs 0 USD but uses a try under the guard. The doctor caps the memory file at 50 lines,
+so two pairs of existing lines were merged and the file stays at 50 lines. The doctor adds no error
+for this file.
 
 Step 6 doctor: bash measure/doctor.sh gives exit 1 with 13 structural errors of other tracks (6 new
 track has started tasks, 5 missing registry link, 2 stale generated fact). grep for

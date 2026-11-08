@@ -39,14 +39,12 @@ Keep this working memory within 50 lines. Evidence links retain the detailed his
 
 - Start status discovery at the Measure index. Map existing plans and every catalog row to an owning track.
 - Preserve historical delivery evidence without inventing past estimates, tests, or approvals.
-- Update the plan, metadata, registry, debt, and lessons before closing a track.
-- Keep generated facts separate from design intent and acceptance judgments.
+- Update the plan, metadata, registry, debt, and lessons before closing a track. Keep generated facts separate from design intent and acceptance judgments.
 
 ## Evidence
 
 - Reconcile mutable delivery records by pinned hashes. Run mutations on copies and keep read-only sources unchanged.
-- [Overnight production record](../bench/overnight/PLAN.md)
-- [Dungeon fit and assembly review](../docs/dungeon-mockups/fit-check.md)
+- [Overnight production record](../bench/overnight/PLAN.md), [Dungeon fit and assembly review](../docs/dungeon-mockups/fit-check.md)
 - [Forge art direction](../.agents/skills/forge-assets/SKILL.md)
 - [Game program](../docs/apk-2d3d-program.md)
 - [Verification baseline](./evidence/baseline-20260928.md)
