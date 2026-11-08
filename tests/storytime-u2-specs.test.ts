@@ -232,4 +232,32 @@ describe('unit 2 Muse specs', () => {
       expect(existsSync(resolve(REPO, row.reuse.source)), `${row.id}: ${row.reuse.source}`).toBe(true);
     }
   });
+
+  it('D2: the ten row is new in week 10 and week 11 reuses it', () => {
+    const reuse = specs.filter((x: any) => x.spec.reuse);
+    const kinds = reuse.map((x: any) => x.spec.reuse.kind);
+    expect(reuse).toHaveLength(47);
+    expect(kinds.filter((k: string) => k === 'unit1-delivery')).toHaveLength(45);
+    expect(kinds.filter((k: string) => k === 'unit2-earlier-row')).toHaveLength(2);
+    expect(specs.length - reuse.length).toBe(182);
+
+    const w10 = specs.find((x: any) => x.row.id === 'l2-w10-check-row-ten')!;
+    expect(w10.spec.reuse).toBeNull();
+    const w11 = specs.find((x: any) => x.row.id === 'l2-w11-check-row-ten')!;
+    expect(w11.spec.reuse).toEqual({
+      word: 'ten',
+      source: 'docs/storytime/l2-unit2/w10/muse/l2-w10-check-row-ten.json',
+      kind: 'unit2-earlier-row',
+    });
+
+    // The named rule cites the PM decision and the excluded line file.
+    const source = readFileSync(resolve(REPO, 'scripts/storytime-u2-specs.mjs'), 'utf8');
+    expect(source).toContain('l2-w06-check-row-ten-line-v2.png');
+    expect(source).toContain('PM, 2026-11-08');
+
+    // The row model holds the same values, so the delivery writer reads the corrected rows.
+    const rowsDoc = read('docs/storytime/l2-unit2/rows.json');
+    expect(rowsDoc.rows.filter((r: any) => r.reuse)).toHaveLength(47);
+    expect(rowsDoc.rows.filter((r: any) => !r.reuse)).toHaveLength(182);
+  });
 });

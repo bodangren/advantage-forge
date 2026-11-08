@@ -12,7 +12,7 @@
 // race, or ethnicity appears in a prompt. FR-4 removes the unit 1 clause "Do not change anyone's
 // skin tone, hair, or clothes."; the copy keeps "Do not change anyone's hair or clothes." 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { basename, dirname, join, resolve } from 'node:path';
 
 const [picturesPath, elementsPath, rowsPath, outRoot] = process.argv.slice(2);
 if (!picturesPath || !elementsPath || !rowsPath || !outRoot) {
@@ -20,12 +20,54 @@ if (!picturesPath || !elementsPath || !rowsPath || !outRoot) {
   process.exit(2);
 }
 const REPO = process.cwd();
+const rowsAbsPath = resolve(REPO, rowsPath);
+const rowsText = readFileSync(rowsAbsPath, 'utf8');
 const read = (p) => JSON.parse(readFileSync(resolve(REPO, p), 'utf8'));
 const pictures = read(picturesPath);
 const elements = read(elementsPath);
-const rowsDoc = read(rowsPath);
+const rowsDoc = JSON.parse(rowsText);
 const E = elements.elements;
 const outRootAbs = resolve(REPO, outRoot);
+
+// ---- D2: the unit 1 ten reuse source is excluded (PM, 2026-11-08) ---------
+// The unit 1 picture out/storytime/l2/unit1/w06/delivery-muse-v2/l2-w06-check-row-ten-line-v2.png
+// has 10 px lines, below the 12 px minimum of a book picture. The PM decided on 2026-11-08 that
+// the first unit 2 ten row is a new paid row and each later ten row reuses the earlier unit 2 row.
+// The excluded line file and the color file of the same picture share a name stem.
+const REUSE_EXCLUSIONS = [
+  {
+    line: 'out/storytime/l2/unit1/w06/delivery-muse-v2/l2-w06-check-row-ten-line-v2.png',
+    reason: 'PM, 2026-11-08: the unit 1 ten picture has 10 px lines, below the 12 px minimum.',
+  },
+];
+const lineToColor = (linePath) => linePath.replace(/-line-v2\.png$/, '-v2.png');
+const exclusionFor = (row) => {
+  if (!row.reuse || row.reuse.kind !== 'unit1-delivery') return null;
+  return REUSE_EXCLUSIONS.find((e) => row.reuse.source.endsWith(`/${basename(lineToColor(e.line))}`)) || null;
+};
+let rowsChanged = false;
+{
+  // The first excluded row of a word becomes new; each later row of that word reuses the row
+  // before it, in the form of l2-w14-check-row-fan.
+  const earlier = new Map();
+  for (const row of rowsDoc.rows) {
+    if (!exclusionFor(row)) continue;
+    const word = row.reuse.word;
+    const prev = earlier.get(word);
+    if (!prev) {
+      row.reuse = null;
+    } else {
+      row.reuse = {
+        word,
+        source: `docs/storytime/l2-unit2/w${String(prev.week).padStart(2, '0')}/muse/${prev.id}.json`,
+        kind: 'unit2-earlier-row',
+      };
+    }
+    earlier.set(word, row);
+    rowsChanged = true;
+  }
+  if (rowsChanged) writeFileSync(rowsAbsPath, JSON.stringify(rowsDoc, null, 2) + '\n');
+}
 
 function block(file, kind) {
   const j = read(file);

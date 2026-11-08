@@ -1,7 +1,7 @@
 # Unit 2 picture prompt list (draft, not a "Go")
 
-Rows: 229. New rows: 181.
-Reuse rows (D3, same word and same use): 48.
+Rows: 229. New rows: 182.
+Reuse rows (D3, same word and same use): 47.
 Cost estimate: 0.080 USD for each new row, 0.01 USD for each new element sheet, 0 for a reuse row.
 
 | Row | Week | Use | Class | Pixels | Text | Mode | Reuse source |
@@ -60,7 +60,7 @@ Cost estimate: 0.080 USD for each new row, 0.01 USD for each new element sheet, 
 | `l2-w10-check-row-sun` | 10 | check-row | C | 1500x1500 | sun | reuse | unit1-delivery:out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-sun-v1.png |
 | `l2-w10-check-row-sock` | 10 | check-row | C | 1500x1500 | sock | reuse | unit1-delivery:out/storytime/l2/unit1/w05/delivery-muse-v1/l2-w05-check-row-sock-v1.png |
 | `l2-w10-check-row-dad` | 10 | check-row | C | 1500x1500 | dad | new |  |
-| `l2-w10-check-row-ten` | 10 | check-row | C | 1500x1500 | ten | reuse | unit1-delivery:out/storytime/l2/unit1/w06/delivery-muse-v2/l2-w06-check-row-ten-v2.png |
+| `l2-w10-check-row-ten` | 10 | check-row | C | 1500x1500 | ten | new |  |
 | `l2-w11-story-page-where-is-sam-under-the-table` | 11 | story-page | A | 4000x3000 | Where is Sam? Under the table. | new |  |
 | `l2-w11-story-page-where-is-may-in-the-box` | 11 | story-page | A | 4000x3000 | Where is May? In the box. | new |  |
 | `l2-w11-story-page-where-is-ben-under-the-bed` | 11 | story-page | A | 4000x3000 | Where is Ben? Under the bed. | new |  |
@@ -87,7 +87,7 @@ Cost estimate: 0.080 USD for each new row, 0.01 USD for each new element sheet, 
 | `l2-w11-check-row-fish` | 11 | check-row | C | 1500x1500 | fish | reuse | unit1-delivery:out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-fish-v1.png |
 | `l2-w11-check-row-cat-b` | 11 | check-row | C | 1500x1500 | cat | reuse | unit1-delivery:out/storytime/l2/unit1/w07/delivery-muse-v1/l2-w07-check-row-cat-v1.png |
 | `l2-w11-check-row-dog-b` | 11 | check-row | C | 1500x1500 | dog | reuse | unit1-delivery:out/storytime/l2/unit1/w06/delivery-muse-v1/l2-w06-check-row-dog-v1.png |
-| `l2-w11-check-row-ten` | 11 | check-row | C | 1500x1500 | ten | reuse | unit1-delivery:out/storytime/l2/unit1/w06/delivery-muse-v2/l2-w06-check-row-ten-v2.png |
+| `l2-w11-check-row-ten` | 11 | check-row | C | 1500x1500 | ten | reuse | unit2-earlier-row:docs/storytime/l2-unit2/w10/muse/l2-w10-check-row-ten.json |
 | `l2-w12-story-page-open-your-book-sam` | 12 | story-page | A | 4000x3000 | Open your book, Sam. | new |  |
 | `l2-w12-story-page-open-your-book-may` | 12 | story-page | A | 4000x3000 | Open your book, May. | new |  |
 | `l2-w12-story-page-open-your-book-ben` | 12 | story-page | A | 4000x3000 | Open your book, Ben. | new |  |

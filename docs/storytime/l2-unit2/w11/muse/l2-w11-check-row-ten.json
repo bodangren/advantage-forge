@@ -18,8 +18,8 @@
   "props": [],
   "reuse": {
     "word": "ten",
-    "source": "out/storytime/l2/unit1/w06/delivery-muse-v2/l2-w06-check-row-ten-v2.png",
-    "kind": "unit1-delivery"
+    "source": "docs/storytime/l2-unit2/w10/muse/l2-w10-check-row-ten.json",
+    "kind": "unit2-earlier-row"
   },
   "donorFiles": {
     "rule": "docs/storytime/l2-unit1/w07/muse/l2-w07-check-row-bus.json",

@@ -2,8 +2,8 @@
 //
 // deliverMuseUnit2 copies the approved Muse prints of the unit 2 run to one delivery folder
 // under the picture list names and writes one manifest.json in the StorytimeManifest shape of
-// unit 1. The 48 reuse rows copy the color file of their unit 1 source and its line twin. The
-// tests cover:
+// unit 1. The 47 reuse rows copy the color file of their unit 1 source and its line twin: 45 rows
+// reuse a unit 1 delivery, and 2 rows reuse an earlier unit 2 row. The tests cover:
 //   - a normal approval entry: the color and line copy, the manifest job, and the batches;
 //   - a reuse copy: the color file and the line twin under the new row names;
 //   - a missing reuse source, a wrong size, an alpha channel, a gray line file, and a wrong list
@@ -372,5 +372,19 @@ describe('the unit 2 delivery writer (U2D)', () => {
     expect(await readUnit2List(listFile).catch((error: Error) => error.message)).toContain('differs from the pin');
     expect(reuseSourcesOf(ROWS_DOC.rows).get(REUSE)?.source).toBe(REUSE_SOURCE);
     await expect(readUnit2List(path.join(root, 'missing.json'), pin)).rejects.toThrow(/cannot read the unit 2 picture list/);
+  });
+
+  it('U2D12 reads the unit 2 row model: 47 reuse rows, 45 unit 1 and 2 earlier-row', async () => {
+    const text = await readFile(path.join(process.cwd(), 'docs/storytime/l2-unit2/rows.json'), 'utf8');
+    const doc = JSON.parse(text) as { rows: Unit2Row[] };
+    const map = reuseSourcesOf(doc.rows);
+    expect(map.size).toBe(47);
+    const kinds = [...map.values()].map((entry) => entry.kind);
+    expect(kinds.filter((kind) => kind === 'unit1-delivery')).toHaveLength(45);
+    expect(kinds.filter((kind) => kind === 'unit2-earlier-row')).toHaveLength(2);
+    expect(map.has('l2-w10-check-row-ten')).toBe(false);
+    expect(map.get('l2-w11-check-row-ten')?.source).toBe(
+      'docs/storytime/l2-unit2/w10/muse/l2-w10-check-row-ten.json',
+    );
   });
 });
