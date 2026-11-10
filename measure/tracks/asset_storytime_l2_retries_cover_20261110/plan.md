@@ -453,9 +453,9 @@ hat-pip line call is the only paid call of this phase.
     R5 and R6 check the version that the verifier reads. The type error of
     `tests/storytime-cover-guards.test.ts` line 227 came from commit 3b22a6af of this track, so the
     maker added the non-null assertion on that line only.
-- [~] Task 11: Hat-pip line call of D20. Edit the `linePrompt` of the hat-pip spec. Run the network
+- [x] Task 11 (4fb32729c5090fbfd1b69e1a7d7d08fe72186484): Hat-pip line call of D20. Edit the `linePrompt` of the hat-pip spec. Run the network
   check, then the line call `--from 3 --tries 1`, then the print gate, then build the judge batch.
-  The orchestrator runs the frozen judge and the second judge. deferred:maker
+  The orchestrator runs the frozen judge and the second judge.
   - Step D (this step, paid 0.01 USD). The `linePrompt` of the hat-pip spec gained the sentence of
     D20 at its end. The old SHA-256 of the spec file is
     `76302e4d58342b4675fe39eca6b3dc2248f1857d6e4fd9c7c3979857ff294668` and the new one is
@@ -473,7 +473,14 @@ hat-pip line call is the only paid call of this phase.
     `docs/storytime/l2-unit2/judge/prod/u2rc-p3-line-t3.json` with 1 entry, and its judge copy is
     `out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-line-t3.png`. The
     orchestrator runs the frozen judge and the second judge next.
-- [b] Task 12: Repair delivery of D21. Write `approvals-repair1.json`, run `deliver-repair1.mts`, do
+  - The judge result. The frozen judge and the second judge both fail the hat-pip line try 3. The
+    defect class of both is wrong-character, and both name the same 2 faults. Teacher Kim at the top
+    center wears round glasses, and the cast note has no glasses. Pip in the box has no collar and no
+    tag, and the cast note has a red collar with a gold tag. The hair fault of line try 2 is gone:
+    both judges find smooth hair. All 9 mustShow items show, and the count of 7 children is correct.
+    The row has used its 3 line tries, so hat-pip gets no delivery job in the repair1 delivery of
+    D21. The 2 judge files are `judge-u2rc-p3-line-t3.json` and `judge-u2rc-p3-line-t3-second.json`.
+- [~] Task 12: Repair delivery of D21. Write `approvals-repair1.json`, run `deliver-repair1.mts`, do
   the pixel check, build the hand-off folder with its MANIFEST, and write the report addendum.
   deferred:maker
 - [x] Task 13 (b0386c75ffd69940625a7ff86be9937cb306bb72): Cover README title fix of D22 (FR-19).

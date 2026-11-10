@@ -1,0 +1,24 @@
+{
+  "group": "u2rc-p3-line-t3",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-10T18:48:24Z",
+  "results": [
+    {
+      "id": "l2-w10-story-page-put-on-your-hat-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-line-t3.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "Teacher Kim at the top center (round glasses on her face); Pip at the front in the box (no collar and no tag at the neck)",
+      "notes": "Question page: no. Items: Pip (1) with a hat on its head, 7 children (Sam, May, Ben, Mia, Pat, Lily, Nan), Teacher Kim (1), a box with clothes. Action: put on a hat (note only). mustShow: pip drawn, hat on its head, reads as a brimmed hat; sam drawn (striped shirt, shorts); may drawn (ponytail behind head); ben drawn (messy hair); mia drawn (bow, overall straps, shoulder-length hair); pat drawn (tufts, shorts with pocket); lily drawn (bob, bow, dress); nan drawn (two buns, star shirt); teacher-kim drawn behind the children. All nine are drawn and visible, and the count of seven children is correct. Fail reasons (character, class wrong-character): Teacher Kim wears round glasses, and the cast note has no glasses. Pip has no red collar and no tag at the neck, and the cast note has a red collar with a gold tag. Small marks: Sam's shirt has four bands instead of two stripes; May's ponytail stands up like a stick and her star clip is not clear; a small bow shape sits at the left edge of the hat. Line art is black on white with no gray, no text, and no line gap that makes coloring hard."
+    }
+  ],
+  "summary": {
+    "files": 1,
+    "pass": 0,
+    "fail": 1
+  }
+}

@@ -384,6 +384,11 @@ questions answered by default" lists. The PM can change each default.
     folder of the retry1 delivery: hippo line try 4 at 9 px, ruler line try 4 at 8 px, clap line try
     3 at 11 px, and cold line try 4 at 10 px;
   - the hat-pip entry, only if its new line passes.
+  - Orchestrator default (2026-11-11): the hat-pip line try 3 failed the frozen judge and the
+    second judge, so hat-pip has no delivery job. The repair1 hand-off folder holds a
+    `not-delivered/` folder. That folder holds the hat-pip m3 color print, the line try 3 print, and
+    a README.md with both judge results. By default, the best hat-pip try stays line try 2 at 13 px.
+    That print is in the `not-delivered/` folder of the retry1 hand-off.
   - The runner `deliver-repair1.mts` runs `deliverMuseUnit2` with `approvalsOnly`, `versionFromList`,
     and `lineWidthExceptions` for the 4 cards. The output folder is
     `out/storytime/l2/unit2/delivery-muse-v1-repair1/`.

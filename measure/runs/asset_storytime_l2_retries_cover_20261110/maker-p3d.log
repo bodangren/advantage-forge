@@ -135,7 +135,7 @@ role: measure-jr-green
 status: complete
 track: asset_storytime_l2_retries_cover_20261110
 phase: Phase 3: Version repair, card jobs, and the hat-pip line (repair1), Task 11, the hat-pip line call of D20
-commits: the hat-pip line try commit (this commit, HEAD), after 43a21f41ce20777e6b98c0d1f2448578d486bd78
+commits: the hat-pip line try commit 4fb32729c5090fbfd1b69e1a7d7d08fe72186484, after 43a21f41ce20777e6b98c0d1f2448578d486bd78
 tests_run: the spec tests in the heavy job gate, `./node_modules/.bin/vitest run tests/storytime-u2-specs.test.ts tests/storytime-u2-extra-try.test.ts --maxWorkers=1`, with 2 test files and 44 tests passed and the exit status 0; the print gate with `inspectLineArtPng` on 2 prints (the new line print and its despeckled print) at the class size; the judge batch build with 1 entry; the network check with curl before the call; no tsc in this step
 files_changed: docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-hat-pip.json; docs/storytime/l2-unit2/judge/prod/u2rc-p3-line-t3.json; measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md; measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv; measure/runs/asset_storytime_l2_retries_cover_20261110/line-gate-p3d.txt; measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p3d.log
 plan_updates: Task 11 keeps the marker `[~]` and gains the sub-bullet "Step D" with the spec edit and its 2 SHA-256 values, the network check of 200, the line call and its cost of 0.01 USD, the print gate result of 12 px and 12 px, the batch name, and the fact that the orchestrator runs the frozen judge and the second judge next
