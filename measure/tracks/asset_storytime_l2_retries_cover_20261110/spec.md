@@ -387,7 +387,7 @@ questions answered by default" lists. The PM can change each default.
   - Orchestrator default (2026-11-11): the hat-pip line try 3 failed the frozen judge and the
     second judge, so hat-pip has no delivery job. The repair1 hand-off folder holds a
     `not-delivered/` folder. That folder holds the hat-pip m3 color print, the line try 3 print, and
-    a README.md with both judge results. By default, the best hat-pip try stays line try 2 at 13 px.
+    a README.md with both judge results. By default 7 (the best try of a fail row), the best hat-pip try stays line try 2 at 13 px.
     That print is in the `not-delivered/` folder of the retry1 hand-off.
   - The runner `deliver-repair1.mts` runs `deliverMuseUnit2` with `approvalsOnly`, `versionFromList`,
     and `lineWidthExceptions` for the 4 cards. The output folder is

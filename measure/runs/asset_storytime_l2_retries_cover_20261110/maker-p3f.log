@@ -1,0 +1,31 @@
+# maker-p3f.log — Green Part 2 (Task 12: hand-off folder + report), track asset_storytime_l2_retries_cover_20261110
+phase_base_sha (role_base_sha): 70364b1ef90026cba2bfe73d81734127a4ad2e47 (confirmed = git rev-parse HEAD at start)
+Model substitution: this Phase 3 maker step runs on volcengine-agent-plan/glm-5.3-flash#high; earlier Phase 3 maker steps ran on minimax-cn-coding-plan/MiniMax-M3-Flash, whose plan hit its 5-hour limit at 02:02 ICT (error 2056). Role-table model per orchestrator handoff.
+This step spends 0 USD: no Muse call, no network call, no API key read, no test, no tsc.
+
+start: 2026-11-11T02:06:23
+
+step 0: HEAD confirmed = role_base_sha. Proceeding.
+step 1: spec.md D21 line fixed. Old sentence 'By default, the best hat-pip try stays line try 2 at 13 px.' is now 'By default 7 (the best try of a fail row), the best hat-pip try stays line try 2 at 13 px.' (default 7 = the default of the best-try number in the spec defaults section). No other spec line changed.
+step 2 prep: facts gathered from manifests. 9 repaired rows: old v1 version/selectedVersion = ten 2/2, here 3/3, ten-men 3/3, den-on-dad 2/2, open-nan 2/2, look-at-me 2/2, dot 2/2, jump 2/2, look-a-bus 2/2; approvals-u2.json Muse versions = 2,3,3,2,2,2,2,2,2 in the same order; all repair1 values now 1. 4 card jobs: hippo 9 px, ruler 8 px, clap 11 px, cold 10 px, each with lineWidthException{measuredPx,requiredPx:12,reason,wavedError->waivedError}. Line try 3 print found by SHA-256 14746802...: out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-hat-pip-m3-line-print-2.png.
+repair1 delivery folder holds 27 files (26 PNG + manifest.json). Hand-off folder /home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-repair1/ does not exist. Disk 97 percent full: PNGs go in as hard links.
+step 2: built /home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-repair1/ with make-handoff-repair1.mjs. Folder did not exist before; script refuses if it exists. 26 PNG hard links (link count 2 on disk, no copies), manifest.json copy (35700 bytes), spend-log.tsv copy, not-delivered/ with the m3 color print and the line try 3 print (l2-w10-story-page-put-on-your-hat-pip-m3-line-print-2.png, SHA-256 verified in-script against 1474680276aa160dd972cd78b8559039a765032e703323cdb1ff41f0583aa9e1) + README.md, root README.md, MANIFEST.txt.
+step 4 checks, run in the folder:
+  sha256sum --quiet -c MANIFEST.txt: no FAILED line, exit status 0
+  sha256sum -c MANIFEST.txt | grep -c ': OK$': 32
+  sha256sum MANIFEST.txt: 09dfa9f03b12c2042c70fc4a63970e23e7fe15ebb84cd7dfd25993691732de7e  MANIFEST.txt
+  file count: 33 total including MANIFEST.txt (32 listed + MANIFEST.txt itself): 26 PNG hard links, manifest.json, spend-log.tsv, README.md, MANIFEST.txt, and 3 not-delivered/ files.
+step 5: recomputed the 4 unchanged-folder states with folder-state-p3e.py, output to /tmp/opencode/l2rc3/folder-state-p3f.txt (folder-state-p3e-after.txt not overwritten). All 4 counts and state SHA-256 equal folder-state-p3e-before.txt: v1 delivery 441 / a64ddf5f..., retry1 delivery 9 / ca4cc92f..., v1 hand-off 469 / 1146c9a4..., retry1 hand-off 23 / 9ade5c1e.... PASS.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green (maker, light lane)
+status: complete
+track: asset_storytime_l2_retries_cover_20261110
+phase: Phase 3: Version repair, card jobs, and the hat-pip line (repair1)
+commits after 70364b1ef90026cba2bfe73d81734127a4ad2e47: [pending commit 1]
+tests_run: 0 paid or project tests by design; this step spends 0 USD, no Muse call, no network call, no test, no tsc. Checks run: sha256sum --quiet -c MANIFEST.txt in the repair1 hand-off (no FAILED line, exit 0); sha256sum -c MANIFEST.txt | grep -c ': OK$' = 32; sha256sum MANIFEST.txt = 09dfa9f03b12c2042c70fc4a63970e23e7fe15ebb84cd7dfd25993691732de7e; folder-state-p3e.py recomputation of the 4 unchanged folders equals folder-state-p3e-before.txt.
+files_changed: measure/tracks/asset_storytime_l2_retries_cover_20261110/spec.md (1 line, D21 default-7 sentence); measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md (Task 12 [x] sha pending + Part 2 sub-bullet); measure/runs/asset_storytime_l2_retries_cover_20261110/make-handoff-repair1.mjs (new); measure/runs/asset_storytime_l2_retries_cover_20261110/pm-report.md (addendum); measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p3f.log (new). Outside git: /home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-repair1/ built (33 files; PNGs are hard links, no disk cost).
+plan_updates: Task 12 flipped to [x] (sha pending) with a Part 2 sub-bullet holding the folder, the 33-file count, the MANIFEST.txt SHA-256, and the OK count 32. Phase 3 gate stays [b] deferred:checker.
+known_failures: hat-pip stays a fail row: no line try passed the judge (try 3 fails both judges, class wrong-character) and the row used its 3 line tries. Best try by default 7 stays the color m3 and the line try 2 print at 13 px. The Phase 3 gate awaits the checker.
+handoff: To the checker (phase acceptance). Evidence: hand-off folder /home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-repair1/ (33 files, MANIFEST.txt SHA-256 09dfa9f03b12c2042c70fc4a63970e23e7fe15ebb84cd7dfd25993691732de7e, 32 OK); pm-report.md addendum 'Addendum 2026-11-11: Phase 3 repair1 (D17 to D21)'; the 4 unchanged folders keep their state SHA-256 (folder-state-p3e-before = after = recomputation in /tmp/opencode/l2rc3/folder-state-p3f.txt, deleted after this step). Model note: this maker step ran on volcengine-agent-plan/glm-5.3-flash#high; earlier Phase 3 maker steps ran on minimax-cn-coding-plan/MiniMax-M3-Flash, whose plan hit its 5-hour limit at 02:02 ICT (error 2056).
+END_MEASURE_AGENT_RESULT

@@ -480,9 +480,8 @@ hat-pip line call is the only paid call of this phase.
     both judges find smooth hair. All 9 mustShow items show, and the count of 7 children is correct.
     The row has used its 3 line tries, so hat-pip gets no delivery job in the repair1 delivery of
     D21. The 2 judge files are `judge-u2rc-p3-line-t3.json` and `judge-u2rc-p3-line-t3-second.json`.
-- [~] Task 12: Repair delivery of D21. Write `approvals-repair1.json`, run `deliver-repair1.mts`, do
+- [x] Task 12 (sha pending): Repair delivery of D21. Write `approvals-repair1.json`, run `deliver-repair1.mts`, do
   the pixel check, build the hand-off folder with its MANIFEST, and write the report addendum.
-  deferred:maker
   - Part 1 (this step, 0 USD). The delivery folder is
     `out/storytime/l2/unit2/delivery-muse-v1-repair1/`. It holds 27 files. They are 26 PNG files of
     13 rows and the file `manifest.json`. The approval list `approvals-repair1.json` holds 13
@@ -500,6 +499,16 @@ hat-pip line call is the only paid call of this phase.
     not change is the same before and after. The v1 delivery folder holds 441 files, the retry1
     delivery folder holds 9, the v1 hand-off folder holds 469, and the retry1 hand-off folder holds
     23. The 4 state SHA-256 values are the same. The hand-off folder is not built in this part.
+  - Part 2 (this step, 0 USD). The hand-off folder is
+    `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-repair1/`. It holds 33 files: 26 PNG
+    hard links of the repair1 delivery, `manifest.json`, `spend-log.tsv`, a root `README.md`,
+    `MANIFEST.txt`, and 3 `not-delivered/` files (the hat-pip m3 color print, the line try 3 print,
+    and a README.md with both judge results). The builder is `make-handoff-repair1.mjs`. The
+    SHA-256 of `MANIFEST.txt` is
+    `09dfa9f03b12c2042c70fc4a63970e23e7fe15ebb84cd7dfd25993691732de7e`. In the folder,
+    `sha256sum --quiet -c MANIFEST.txt` gives no FAILED line, and
+    `sha256sum -c MANIFEST.txt | grep -c ': OK$'` gives 32. The 4 unchanged folders keep their
+    state SHA-256 before and after. The report addendum is at the end of `pm-report.md`.
 - [x] Task 13 (b0386c75ffd69940625a7ff86be9937cb306bb72): Cover README title fix of D22 (FR-19).
   - The folder is `/home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/`. The cost is
     0 USD. Line 1 of the README becomes `# Teacher front cover art, Storytime Level 2 unit 1`, and
