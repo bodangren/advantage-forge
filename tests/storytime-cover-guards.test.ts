@@ -16,8 +16,10 @@
 // Every test uses a temp folder and a fixture cost file. The classification resolves a
 // repo-relative outDir against the repository root, like the muse tool does. A temp unit root
 // outside the repository holds the fixture in its `muse` folder. No test makes a provider call.
+// CVG9 reads the real cover cost file of the repository and writes nothing under the real out/
+// folder.
 
-import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -39,6 +41,12 @@ const AFTER_COVER = new Date(Date.parse(guards.COVER_RUN.startTime) + 60_000).to
 
 const costRow = (id: string, cost = 0.01, kind = 'color', time = AFTER_COVER) =>
   `${time}\t${id}\tm1\t${kind}\tin\t${id}-m1-${kind}.png\t1500x1500\t${cost}\tok`;
+/** The row id of the fixture of CVG9. It never appears in the real cost file. */
+const FIXTURE_ID = 'l2-u1-cover-quest-teacher-front-fixture';
+/** The time of a row as the guard reads it: a time without a zone is UTC. */
+const utcMs = (t: string) => Date.parse(/(Z|[+-]\d\d:?\d\d)$/.test(t) ? t : `${t}Z`);
+/** True when a row time is at or after the cover start time, like the guard reads it. */
+const sinceCoverStart = (t: string) => utcMs(t) >= utcMs(COVER_START);
 const temp = () => mkdtempSync(path.join(os.tmpdir(), 'storytime-cover-guards-'));
 const writeCosts = (root: string, rel: string, rows: string[]) => {
   const file = path.join(root, rel);
@@ -190,19 +198,37 @@ describe('the separate scans of the cover class (CVG8 to CVG10)', () => {
   });
 
   it('CVG9 reads the cost file of the exact cover folder in the repository', () => {
-    const folder = path.join(ROOT, COVER_DIR);
-    const file = path.join(folder, 'costs.tsv');
-    const created = !existsSync(folder);
+    // The test reads the real cost file. It never writes, changes, or deletes a file or a folder
+    // under the real out/ folder. The old form wrote a fixture row into the real cover cost file
+    // and deleted that file after the check. That run of 2026-11-10 at 19:02:10 ICT deleted the
+    // real file with its 6 cover rows, so the guard counted 0 cover tries.
+    // The check has two parts. The production path reads the real cost file of the repository. The
+    // fixture path reads the muse folder of a unit root outside the repository.
+    const file = path.join(ROOT, COVER_DIR, 'costs.tsv');
+    const realRows = existsSync(file)
+      ? guards.parseCostsTsv(readFileSync(file, 'utf8')).filter((r) => sinceCoverStart(r.time))
+      : [];
+    const unitRoot = path.join(ROOT, 'out/storytime/l2/unit1');
+    const scanned = guards.scanCoverCostFiles(unitRoot);
+    expect(scanned.pictureRows.length).toBe(realRows.length);
+    expect(scanned.allRows.length).toBe(realRows.length);
+    expect(guards.spendTotal(scanned.pictureRows, COVER_START)).toBeCloseTo(
+      guards.spendTotal(realRows, COVER_START),
+    );
+    const result = guards.runGuards(unitRoot, [coverSpec()], 'color');
+    expect(result.run).toBe('cover');
+    expect(result.spend).toBeCloseTo(guards.spendTotal(realRows, COVER_START));
+
+    const root = temp();
     try {
-      mkdirSync(folder, { recursive: true });
-      writeFileSync(file, `${HEADER}\n${costRow(COVER_ID, 0.095)}\n`);
-      const result = guards.runGuards(path.join(ROOT, 'out/storytime/l2/unit1'), [coverSpec()], 'color');
-      expect(result.refused).toBe(true);
-      expect(result.run).toBe('cover');
-      expect(result.spend).toBeCloseTo(0.095);
+      writeCosts(root, 'muse/costs.tsv', [costRow(FIXTURE_ID, 0.073)]);
+      const fixture = guards.scanCoverCostFiles(root);
+      expect(fixture.pictureRows.length).toBe(1);
+      expect(fixture.pictureRows[0].row).toBe(FIXTURE_ID);
+      // The production path never reads the fixture folder of a unit root outside the repository.
+      expect(scanned.pictureRows.map((r) => r.row)).not.toContain(FIXTURE_ID);
     } finally {
-      rmSync(file, { force: true });
-      if (created) rmSync(folder, { recursive: true, force: true });
+      rmSync(root, { recursive: true, force: true });
     }
   });
 

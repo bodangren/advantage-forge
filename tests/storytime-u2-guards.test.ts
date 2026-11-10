@@ -18,7 +18,7 @@
 // Every test uses a temp unit root. The classification resolves a repo-relative outDir against
 // the repository root, like the muse tool does. No test makes a provider call.
 
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import os from 'node:os';
 import path from 'node:path';
@@ -29,7 +29,6 @@ import { describe, expect, it } from 'vitest';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const U2_DIR = 'out/storytime/l2/unit2';
 const FW_DIR = 'out/storytime/l2/unit2/family-words/muse';
-const FW_PARENT = 'out/storytime/l2/unit2/family-words';
 const U2_ID = 'l2-w09-story-page-i-like-rice-yum';
 const FW_ID = 'l2-w10-family-hat';
 const HEADER = 'time\trow\tversion\tkind\tinputs\toutput\tsize\tusage_cost\tnote';
@@ -52,6 +51,26 @@ const APP_CAP = 0.29;
 const costRow = (id = U2_ID, cost = 0.01, kind = 'color', time = START) =>
   `${time}\t${id}\tm1\t${kind}\tin\t${id}-m1-${kind}.png\t1500x1500\t${cost}\tok`;
 const temp = () => mkdtempSync(path.join(os.tmpdir(), 'storytime-u2-guards-'));
+/**
+ * A temporary repository with the two scripts. The muse tool and the guard resolve their root
+ * from the path of the script, so a copy in a temp folder keeps every write of the CLI out of the
+ * real repository. The old form ran the CLI in the real repository and deleted the real unit 2
+ * folder and the real family-word folder when the run had created them.
+ */
+const tempRepo = () => {
+  const repo = temp();
+  mkdirSync(path.join(repo, 'scripts'), { recursive: true });
+  for (const file of ['storytime-muse.mjs', 'storytime-muse-guards.mjs']) {
+    copyFileSync(path.join(ROOT, 'scripts', file), path.join(repo, 'scripts', file));
+  }
+  symlinkSync(path.join(ROOT, 'node_modules'), path.join(repo, 'node_modules'), 'dir');
+  return repo;
+};
+/** Remove a temp repository. The link to node_modules goes first, so the real folder stays. */
+const removeRepo = (repo: string) => {
+  rmSync(path.join(repo, 'node_modules'), { force: true });
+  rmSync(repo, { recursive: true, force: true });
+};
 const writeCosts = (root: string, rel: string, rows: string[]) => {
   const file = path.join(root, rel);
   mkdirSync(path.dirname(file), { recursive: true });
@@ -334,8 +353,7 @@ describe('unit 2 mixed calls and the unchanged unit 1 and card behavior (U2G7 to
 
     const home = temp();
     const specDir = temp();
-    const createdRoot = !existsSync(path.join(ROOT, U2_DIR));
-    const createdFw = !existsSync(path.join(ROOT, FW_PARENT));
+    const repo = tempRepo();
     const u2File = path.join(specDir, 'u2-cap-option.json');
     const fwFile = path.join(specDir, 'fw-cap-option.json');
     writeFileSync(
@@ -350,7 +368,7 @@ describe('unit 2 mixed calls and the unchanged unit 1 and card behavior (U2G7 to
       ];
       for (const [specFile, flag] of cases) {
         const run = spawnSync(process.execPath, ['scripts/storytime-muse.mjs', 'color', specFile, flag, '99'], {
-          cwd: ROOT,
+          cwd: repo,
           env: { PATH: process.env.PATH ?? '', HOME: home },
           encoding: 'utf8',
         });
@@ -365,8 +383,7 @@ describe('unit 2 mixed calls and the unchanged unit 1 and card behavior (U2G7 to
       expect(guards.U2_RUN.capUsd).toBe(BOOK_CAP);
       expect(guards.U2_FW_RUN.capUsd).toBe(APP_CAP);
     } finally {
-      if (createdRoot) rmSync(path.join(ROOT, U2_DIR), { recursive: true, force: true });
-      if (createdFw) rmSync(path.join(ROOT, FW_PARENT), { recursive: true, force: true });
+      removeRepo(repo);
       rmSync(specDir, { recursive: true, force: true });
       rmSync(home, { recursive: true, force: true });
     }
@@ -375,12 +392,12 @@ describe('unit 2 mixed calls and the unchanged unit 1 and card behavior (U2G7 to
   it('U2G10 routes a unit 2 family-word CLI spec to the guard before key access', () => {
     const home = temp();
     const specDir = temp();
-    const createdFw = !existsSync(path.join(ROOT, FW_PARENT));
+    const repo = tempRepo();
     const specFile = path.join(specDir, 'fw-spec.json');
     writeFileSync(specFile, JSON.stringify({ id: FW_ID, outDir: FW_DIR, colorPrompt: 'a card picture' }));
     try {
       const run = spawnSync(process.execPath, ['scripts/storytime-muse.mjs', 'color', specFile], {
-        cwd: ROOT,
+        cwd: repo,
         env: { PATH: process.env.PATH ?? '', HOME: home },
         encoding: 'utf8',
       });
@@ -390,7 +407,7 @@ describe('unit 2 mixed calls and the unchanged unit 1 and card behavior (U2G7 to
       expect(output).not.toContain('outside the scanned cost folders');
       expect(output).not.toContain(guards.U2_FW_CAP_MESSAGE);
     } finally {
-      if (createdFw) rmSync(path.join(ROOT, FW_PARENT), { recursive: true, force: true });
+      removeRepo(repo);
       rmSync(specDir, { recursive: true, force: true });
       rmSync(home, { recursive: true, force: true });
     }

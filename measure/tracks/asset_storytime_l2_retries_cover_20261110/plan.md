@@ -223,13 +223,18 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
   - Step E, the judge batch (built, not judged).
     `docs/storytime/l2-unit2/judge/prod/u2rc-e-line-t2.json` holds 1 entry, the line try 2 picture
     of hat-pip. The orchestrator runs the frozen judge on it.
+  - Judge of step E (2026-11-10). The first judge (`judge-u2rc-e-line-t2.json`) and the second judge
+    (`judge-u2rc-e-line-t2-second.json`) fail the hat-pip line try 2 with the class wrong-character.
+    Teacher Kim has big curly hair. The cast gives smooth hair in a low ponytail. The count of 7
+    children, Teacher Kim, and Pip is correct. Hat-pip is a fail row now, with no more tries
+    (PM 2026-11-10).
 - [b] Task 5: Retry delivery and hand-off (D4). Write `approvals-retry1.json` for the passing rows. Run
   `deliverMuseUnit2` with `approvalsOnly` into `out/storytime/l2/unit2/delivery-muse-v1-retry1/`. Build
   `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-retry1/` with the hard links,
   `manifest.json`, `contact-sheet.png`, `not-delivered/` with its `README.md`, the spend log copy, and
   `MANIFEST.txt`. Run `sha256sum -c MANIFEST.txt` (0 FAILED). Check that the v1 files have the same
   SHA-256 as before. deferred:maker
-- [b] Task 6: Cover rounds and judge copies (D5, D8, D9, D11). Write the worst case. Run round 1: 3 color
+- [~] Task 6: Cover rounds and judge copies (D5, D8, D9, D11). Write the worst case. Run round 1: 3 color
   calls, one after another. Make the judge copies for each version. The orchestrator runs the frozen
   judge and the second judge. Run round 2 only if no version passes. Log each paid call. Stop at 6 calls
   or at 0.10 USD. deferred:maker
