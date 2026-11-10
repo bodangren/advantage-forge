@@ -1,0 +1,58 @@
+# maker-p3a log — Green · P3 T9 · storytime_l2_retries_cover
+start: role_base_sha 10af09151548070983d415d3b7c9afc22dd38f5d (git rev-parse HEAD confirmed)
+task 9: Phase 3 plan + D20 guard rule. 0 USD. No Muse call.
+2026-11-10: created the log. reading spec/plan/guards next.
+
+2026-11-11: Task 9 continues. The maker writes D17 to D21 and FR-17 and FR-18 into the
+specification, and the Phase 3 section of the plan with Task 9 [~], Task 10, Task 11, and Task 12
+[b] with deferred:maker, and the Phase 3 gate [b] with deferred:checker. The maker also writes the
+Phase 2 gate as [x] at 10af0915 and puts the checkpoint on the Phase 2 heading.
+2026-11-11: the guard rule of D20. The hat-pip line row of U2_EXTRA_TRY gets the field
+allowedTries 2 and the PM words of D17 in its source. The rule reads the field with the default 1,
+so a row without the field keeps the once rule of D1. The netRetry rule of D15 has no change.
+The maker adds the tests U2X20 to U2X24 and changes 2 old assertions of the owned test file, because
+D20 changes the hat-pip line row itself: U2X10 now allows the second exception line try and refuses
+the third, and U2X19 keeps the values of U2_EXTRA_TRY as at commit 10af0915 with the hat-pip line
+row as the documented exception.
+2026-11-11: the GREEN command of the specification passes with 19 test files and 285 tests, and the
+exit status is 0. The 33 costs.tsv files under out/storytime have the same SHA-256 before and after
+the run. The maker made no Muse call and read no API key.
+2026-11-11: the PM order of 2026-11-11 arrives. It becomes D22 and FR-19 in the specification, and
+Task 13 in the plan. The maker does not do Task 13 in this session and does not touch the hand-off
+folder.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green (maker), light lane
+status: complete
+track: asset_storytime_l2_retries_cover_20261110
+phase: Phase 3: Version repair, card jobs, and the hat-pip line (repair1)
+commits after 10af09151548070983d415d3b7c9afc22dd38f5d:
+- a86d4913ffeaaa7bfb6b2585d4f00dd4eb3a95f6 feat(storytime_l2_retries_cover): Phase 3 plan and the
+  second hat-pip line try
+- the plan-evidence commit of this log and plan.md follows that commit. Its SHA is not in this
+  file, because a commit cannot hold its own SHA.
+tests_run: the GREEN command of the specification, 19 test files, 285 tests, 0 failures, exit
+  status 0, 61.63 s. The targeted file tests/storytime-u2-extra-try.test.ts holds 24 tests,
+  0 failures, exit status 0. The maker made no Muse call and read no API key.
+files_changed: measure/tracks/asset_storytime_l2_retries_cover_20261110/spec.md,
+  measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md,
+  scripts/storytime-muse-guards.mjs, scripts/storytime-muse-guards.d.mts,
+  tests/storytime-u2-extra-try.test.ts, this log. The new files in git: this log. The hand-off
+  folder, the generator make-cover-handoff.mjs, the v1 and retry1 folders, and every file outside
+  the owned paths have no change.
+plan_updates: the Phase 2 gate is [x] at 10af0915, and the Phase 2 heading holds the checkpoint.
+  Phase 3 holds Task 9 [x] with the evidence sub-bullet, Task 10, Task 11, Task 12, and Task 13
+  [b] with deferred:maker, and the Phase 3 gate [b] with deferred:checker. The specification
+  holds D1 to D22 and FR-1 to FR-19.
+known_failures: none. The 33 costs.tsv files under out/storytime have the same SHA-256 before and
+  after the GREEN run. The 2 old assertions of the owned test file changed with the decision D20,
+  as the log records above.
+handoff: The checker checks the Phase 3 plan, the guard rule of D20, and the specification at
+  a86d4913. The maker of Task 10 writes the writer options of D19 with their tests. The maker of
+  Task 11 runs the hat-pip line call of D20 with the network check, the print gate, and the judge
+  batch. The maker of Task 12 writes the repair delivery of D21 with the pixel check and the
+  hand-off folder. The maker of Task 13 corrects the cover README title of D22 with 0 USD and
+  reports the new SHA-256 of MANIFEST.txt. The old SHA-256 of MANIFEST.txt is
+  50069dce22d85fc75bf833ac06538fdd3a17f295541ee8cefb72534ee106e128. The 2 PNG files of the cover
+  hand-off keep their bytes, their SHA-256, and their inode.
+END_MEASURE_AGENT_RESULT

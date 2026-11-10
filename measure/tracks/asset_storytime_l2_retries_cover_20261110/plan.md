@@ -429,7 +429,7 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
 runs the frozen judge. The stop is the open retry stop of item (a): 0.05 USD is left of 0.15 USD. The
 hat-pip line call is the only paid call of this phase.
 
-- [x] Task 9 (sha pending): Phase 3 plan and the guard rule of D20. Write D17 to D22 and FR-17 to
+- [x] Task 9 (a86d4913ffeaaa7bfb6b2585d4f00dd4eb3a95f6): Phase 3 plan and the guard rule of D20. Write D17 to D22 and FR-17 to
   FR-19 in the specification. Add the field `allowedTries` to the hat-pip line row of
   `U2_EXTRA_TRY`, with the PM words of D17 in its source. Add the tests of the guard rule. Make no
   Muse call.
