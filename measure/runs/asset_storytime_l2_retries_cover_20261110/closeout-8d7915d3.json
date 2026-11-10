@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "role": "closeout",
+  "track": "asset_storytime_l2_retries_cover_20261110",
+  "status": "pass",
+  "summary": "Closeout passes at the archive commit 8d7915d3, with the fix commit 6adfbb7b. The track folder moved to measure/archive/asset_storytime_l2_retries_cover_20261110/ with a git mv. The registry entry moved from the active Asset production section to the Archived Tracks section next to asset_storytime_l2_unit2_pictures_20261108, with the words model evidence, not acceptance, staged through blob 96c1d8f9. metadata.json holds status done and completed 2026-11-11. All 14 plan tasks (Task 0 to Task 13) are [x] with a commit SHA, and no [ ], no [~], and no [b] line remains. The three phase acceptance results passed (6ec8ef66, 10af0915, and 37bb0791); the light lane has no final acceptance role. The doctor gives exit 1 with 13 structural errors of other tracks and no line names this track. The closeout check measure_interphase_checks.py closeout gives PASS at 6adfbb7b.",
+  "audited_head_sha": "37bb07915a0b903908035f175707c8a9a1f5a0de",
+  "role_base_sha": "37bb07915a0b903908035f175707c8a9a1f5a0de",
+  "track_base_sha": "0d7d625a5b1a94f7c36701a2d81f8f8ed95b04b5",
+  "closeout_commits": [
+    "8d7915d3",
+    "6adfbb7b"
+  ],
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "The fail row l2-w10-story-page-put-on-your-hat-pip: the line try 3 print passes the 12 px gate but both judges fail it (wrong-character); the row has used its 3 line tries and sits in not-delivered/ (deferred:PM, default: the row stays out).",
+    "Final acceptance did not run: the PM light lane of 2026-11-03 gives no final acceptance role (deferred:PM).",
+    "verifyManifest of src/storytime/book-pictures.ts reports a layout failure for every flat unit 2 file name, so it cannot check a unit 2 delivery; recorded as tech debt TD-31 (found in Phase 3).",
+    "The Task 10 maker ran one full tsc --noEmit -p . outside heavy-run; the PM load-watch reported it (MemAvailable 2355 MB). No correctness impact.",
+    "13 structural doctor errors of other tracks stay open: 6 new track has started tasks, 5 missing registry link, and 2 stale generated fact. The doctor adds no error for this track.",
+    "measure/generated holds foreign uncommitted changes, so the generator did not run and no generated fact is committed; measure/tracks.md keeps the foreign ## Contents hunk unstaged.",
+    "The working-tree copy of measure/tracks.md first overwrote the foreign ## Contents hunk; it was restored in the working tree from the observed pattern (the same Contents block the foreign session added to AGENTS.md, listing the 5 section headings). The foreign session must confirm the restored text.",
+    "Model substitution: Task 12 part 2 and this closeout ran on volcengine-agent-plan/glm-5.3-flash#high because minimax-cn-coding-plan/MiniMax-M3.1-Flash hit its 5-hour limit until 04:05 ICT (error 2056); recorded in metadata.json and closeout.log."
+  ],
+  "evidence": [
+    "git rev-parse HEAD before the closeout = 37bb07915a0b903908035f175707c8a9a1f5a0de, the audited HEAD of the track",
+    "The closeout commits are 8d7915d3 (archive and run records, 32 files) and 6adfbb7b (the archive SHA on the Closeout plan line)",
+    "The track folder moved with git mv to measure/archive/asset_storytime_l2_retries_cover_20261110/, and the active folder is gone from measure/tracks/",
+    "measure/archive/asset_storytime_l2_retries_cover_20261110/metadata.json holds status done, completed 2026-11-11, actual_tasks 14, the 2 new evidence paths, and the model-route deviation note; python3 -m json.tool accepts it",
+    "measure/archive/asset_storytime_l2_retries_cover_20261110/plan.md holds 14 [x] task lines with commit SHAs, a Phase 3 gate of 37bb0791, a Closeout line of 8d7915d3, and no [ ], [~], or [b] line",
+    "acceptance-p1-6ec8ef6.json: status pass at 6ec8ef66; guard probes 17/17, spec probes 23/23, judge-copy probes 5/5",
+    "acceptance-p2-10af091.json: status pass at 10af0915; item a 13 calls and 0.10 USD, item b 6 calls and 0.06 USD, spend reconciles 1:1 with the provider cost rows",
+    "acceptance-p3-37bb079.json: status pass at 37bb0791, 293 tests, checker kimi-code-plan-cn/kimi-for-coding#high, 2 nonblocking findings; item a total 14 calls and 0.11 USD of the 0.15 USD cap",
+    "bash measure/doctor.sh gives exit 1 with 13 errors; no line names asset_storytime_l2_retries_cover_20261110",
+    "The secret scan of the run folder gives 0 hits (grep -rlE 'sk-[A-Za-z0-9]{8}|Bearer [A-Za-z0-9]|OPENROUTER_API_KEY='), and the folder holds 77 files with no PNG or JPG (find count 0)",
+    "git diff --cached -- measure/tracks.md holds only the entry move (blob 96c1d8f9ae63c1ed3ddb692e80f9d6946fc674d4); git diff -- measure/tracks.md holds only the foreign ## Contents hunk",
+    "python3 -I /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py closeout --repo . --track asset_storytime_l2_retries_cover_20261110 gives PASS at 6adfbb7b",
+    "A9: no test or script hardcodes measure/tracks/asset_storytime_l2_retries_cover_20261110; the archived track path needs no test fix",
+    "Worktrees other than the main checkout: advantage-forge-release (detached HEAD e01ac17b) and advantage-forge-shelf-sync (branch shelf-sync-20261030, 623e7b5d); branches other than master: shelf-sync-20261030; remote branches: origin/gh-pages and origin/master. Recorded, not changed"
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "python3 (plan.md marker edit: [x] Phase 3 gate (37bb0791), [x] Closeout)",
+    "python3 (metadata.json: status done, completed 2026-11-11, actual_tasks 14, evidence, deviation note)",
+    "git mv measure/tracks/asset_storytime_l2_retries_cover_20261110 measure/archive/asset_storytime_l2_retries_cover_20261110",
+    "python3 -m json.tool measure/archive/asset_storytime_l2_retries_cover_20261110/automation-supervisor-closeout-manifest.json (exit 0)",
+    "git show HEAD:measure/tracks.md + git hash-object -w /tmp/opencode/l2rc-close/tracks.md (blob 96c1d8f9) + git update-index --cacheinfo 100644,96c1d8f9...,measure/tracks.md",
+    "bash measure/doctor.sh (exit 1, 13 errors of other tracks, no line names this track)",
+    "git add measure/archive/asset_storytime_l2_retries_cover_20261110/ measure/runs/asset_storytime_l2_retries_cover_20261110/ measure/lessons-learned.md measure/tech-debt.md",
+    "git commit -m 'measure(storytime_l2_retries_cover): archive the track and commit the run records' (8d7915d3, 32 files)",
+    "git commit -m 'measure(storytime_l2_retries_cover): record the archive SHA on the Closeout plan line' (6adfbb7b, 2 files)",
+    "python3 -I /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py closeout --repo . --track asset_storytime_l2_retries_cover_20261110 (PASS: closeout checks passed)",
+    "grep -rlE 'sk-[A-Za-z0-9]{8}|Bearer [A-Za-z0-9]|OPENROUTER_API_KEY=' measure/runs/asset_storytime_l2_retries_cover_20261110 (0 hits)",
+    "find measure/runs/asset_storytime_l2_retries_cover_20261110 -type f \\( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' \\) (count 0)",
+    "git worktree list; git branch -a"
+  ],
+  "changed_files": [
+    "measure/archive/asset_storytime_l2_retries_cover_20261110/automation-supervisor-closeout-manifest.json",
+    "measure/archive/asset_storytime_l2_retries_cover_20261110/metadata.json",
+    "measure/archive/asset_storytime_l2_retries_cover_20261110/plan.md",
+    "measure/tracks/asset_storytime_l2_retries_cover_20261110/ (removed by the git mv: index.md, metadata.json, plan.md, spec-review.md, spec.md)",
+    "measure/runs/asset_storytime_l2_retries_cover_20261110/ (acceptance-p2 and acceptance-p3 json and log, 16 probe-p2 and probe-p3 files, closeout.log, closeout-8d7915d3.json)",
+    "measure/tracks.md",
+    "measure/lessons-learned.md",
+    "measure/tech-debt.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high"
+}
