@@ -447,7 +447,7 @@ hat-pip line call is the only paid call of this phase.
 - [b] Task 12: Repair delivery of D21. Write `approvals-repair1.json`, run `deliver-repair1.mts`, do
   the pixel check, build the hand-off folder with its MANIFEST, and write the report addendum.
   deferred:maker
-- [x] Task 13 (sha pending): Cover README title fix of D22 (FR-19).
+- [x] Task 13 (b0386c75ffd69940625a7ff86be9937cb306bb72): Cover README title fix of D22 (FR-19).
   - The folder is `/home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/`. The cost is
     0 USD. Line 1 of the README becomes `# Teacher front cover art, Storytime Level 2 unit 1`, and
     the title line of `MANIFEST.txt` becomes

@@ -86,7 +86,7 @@ status: complete
 track: asset_storytime_l2_retries_cover_20261110
 phase: Phase 3: Version repair, card jobs, and the hat-pip line (repair1)
 commits after 5cdb1ea12a4fdca38ed6ec86904b08ee90a91de3:
-- (sha pending: the implementation commit of Task 13 follows this log)
+- b0386c75ffd69940625a7ff86be9937cb306bb72 measure(storytime_l2_retries_cover): Task 13 cover README title fix
 - the plan-evidence commit of this log and plan.md follows that commit. Its SHA is not in this
   file, because a commit cannot hold its own SHA.
 tests_run: none. The task changes no code. The maker made no Muse call, read no API key, and ran
