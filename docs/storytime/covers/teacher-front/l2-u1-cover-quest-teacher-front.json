@@ -1,0 +1,20 @@
+{
+  "id": "l2-u1-cover-quest-teacher-front",
+  "references": [
+    "out/storytime/covers/teacher-front/refs/style-student-front-final.jpg",
+    "out/storytime/covers/teacher-front/refs/cast-teacher-kim.png",
+    "out/storytime/covers/teacher-front/refs/cast-nan.png",
+    "out/storytime/covers/teacher-front/refs/cast-sam.png",
+    "out/storytime-review/judge/cast/teacher-kim.png",
+    "out/storytime-review/judge/cast/nan.png",
+    "out/storytime-review/judge/cast/sam.png"
+  ],
+  "colorPrompt": "Compose one Teacher Book front picture from the 7 reference pictures. Picture 1 is the style reference: match its style, and do not copy its scene. Picture 2 is the cast group picture: copy only the woman, Teacher Kim. Picture 3 is the cast picture of Nan: copy only the girl, and not the puppy. Picture 4 is the cast picture of Sam: copy only the 3D figure of Sam, and not the small flat drawing. Picture 5 is the approved 3D cast picture of Teacher Kim. Picture 6 is the approved 3D cast picture of Nan. Picture 7 is the approved 3D cast picture of Sam. The style is bright painted anime fantasy key art. It has soft cel shading, clean line art, lush scenery, warm sunlight, vivid colors, and big expressive eyes. Not 3D. Not a render. Not clay. The scene is under a giant old tree. The tree stands in a sunny flower meadow of a storybook valley. A stream runs behind. Teacher Kim sits on a low tree stump. She shows the open book to the children. She holds one open picture book. Its open pages turn toward Nan and Sam, so the children see the pictures. She looks at the children and smiles. Nan and Sam sit on the grass in front of her. They look at the pictures in the book. They smile. The pages show simple pictures, for example a tree and a ball. Teacher Kim: a grown woman, about one and a half times as tall as the children, with medium-length dark-brown hair in a low ponytail, a soft green cardigan over a cream blouse, navy trousers, brown flat shoes, a gentle smile. Nan: black-brown hair in exactly two round buns with smooth red ring bands (no bun on top), large dark-brown eyes, an orange T-shirt with a white star, red shorts, white sneakers. Sam: a five-year-old boy with a chibi look (a big head and a small body), short brown hair with a side-swept fringe, big brown eyes, a big open-mouth smile, a red T-shirt with two white stripes across the chest, blue shorts, blue shoes. The picture shows exactly three people: Teacher Kim, Nan, and Sam. It shows no Pip. It shows no other person and no other animal. Sam's red T-shirt shows exactly two white stripes across the chest and nothing else. Nan's orange T-shirt shows one white star and no letters. Nan wears the orange T-shirt with the white star, and Sam wears the red T-shirt with the two white stripes, and each child keeps his or her own clothes. Teacher Kim shows the open book to the children, looks at them, and smiles, and the open pages face Nan and Sam and not the viewer. The top 30 percent of the height is sky and leaves only: calm, with no face, no hand, no book, and no key object. The faces, the hands, and the open book stay between 30 percent and 78 percent of the height. The bottom 22 percent holds only grass, flowers, and feet. The picture holds no letters, no words, and no numbers. The picture holds no signatures, no watermarks, no logos, no borders, no frames, and no rulers. The picture holds no flag-like shape. A flag-like shape is a single circle, star, cross, or stripe pattern on a plain field, alone on a book page, a banner, a cloth, or a sign. The white star on Nan's orange T-shirt and the two white stripes on Sam's red T-shirt are cast marks, not flags: keep them.",
+  "print": "crop",
+  "aspect": "3:4",
+  "printSize": [
+    2480,
+    3508
+  ],
+  "outDir": "out/storytime/covers/teacher-front/muse"
+}
