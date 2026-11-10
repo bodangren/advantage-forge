@@ -20,7 +20,8 @@
     "13 structural doctor errors of other tracks stay open: 6 new track has started tasks, 5 missing registry link, and 2 stale generated fact. The doctor adds no error for this track.",
     "measure/generated holds foreign uncommitted changes, so the generator did not run and no generated fact is committed; measure/tracks.md keeps the foreign ## Contents hunk unstaged.",
     "The working-tree copy of measure/tracks.md first overwrote the foreign ## Contents hunk; it was restored in the working tree from the observed pattern (the same Contents block the foreign session added to AGENTS.md, listing the 5 section headings). The foreign session must confirm the restored text.",
-    "Model substitution: Task 12 part 2 and this closeout ran on volcengine-agent-plan/glm-5.3-flash#high because minimax-cn-coding-plan/MiniMax-M3.1-Flash hit its 5-hour limit until 04:05 ICT (error 2056); recorded in metadata.json and closeout.log."
+    "Model substitution: Task 12 part 2 and this closeout ran on volcengine-agent-plan/glm-5.3-flash#high because minimax-cn-coding-plan/MiniMax-M3.1-Flash hit its 5-hour limit until 04:05 ICT (error 2056); recorded in metadata.json and closeout.log.",
+    "The closeout first overwrote the foreign '## Contents' hunk of measure/tracks.md in the working tree, rebuilt it with one extra line (- [Archived Tracks]), and the orchestrator restored the original 7 lines (without the Archived Tracks anchor) in the fix commit; the staged registry entry never held the foreign hunk, and the registry fact about the 9 retried rows was corrected in this fix commit (4 of the 9 passed and were delivered in retry1)."
   ],
   "evidence": [
     "git rev-parse HEAD before the closeout = 37bb07915a0b903908035f175707c8a9a1f5a0de, the audited HEAD of the track",

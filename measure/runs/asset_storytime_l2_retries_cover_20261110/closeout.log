@@ -23,4 +23,14 @@ files_changed: measure/archive/asset_storytime_l2_retries_cover_20261110/ (plan.
 plan_updates: the Phase 3 gate [x] (37bb0791) and the Closeout line [x] (8d7915d3) with sub-bullets; metadata status done, completed 2026-11-11, actual_tasks 14, 2 evidence paths, 1 model-route deviation note
 known_failures: none in this track; 13 doctor errors of other tracks stay open; the fail row hat-pip waits for the PM (default: the row stays out)
 handoff: the track is archived and the registry entry sits in the archived section with the words model evidence, not acceptance. The PM holds one decision: the fail row l2-w10-story-page-put-on-your-hat-pip (default: the row stays out of the delivery, 3 line tries used). Final acceptance did not run under the PM light lane of 2026-11-03. NOTE for the orchestrator: the working-tree copy of measure/tracks.md overwrote the foreign ## Contents hunk once; the hunk was restored from the observed pattern (same Contents block as the foreign AGENTS.md change, 5 section anchors). The foreign session should confirm the restored text.
+END_
+
+fix (post-closeout, PM note): the committed registry entry overcounted the retried rows; the fix says 4 of the 9 retried rows passed and were delivered in retry1 (the 4 card rows are repair1 jobs with a line-width exception, hat-pip has no job). The entry was staged through blob 33d7cad7. The working-tree foreign ## Contents hunk was rebuilt to the orchestrator's original 7 lines (no Archived Tracks anchor). The staged entry never held the foreign hunk.
+
+MEASURE_AGENT_RESULT
+role: closeout
+status: complete
+track: asset_storytime_l2_retries_cover_20261110
+phase: closeout fix (registry fact and foreign hunk)
+commits: see the fix commit of this date; closeout_commits in closeout-8d7915d3.json
 END_MEASURE_AGENT_RESULT
