@@ -228,12 +228,66 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
     Teacher Kim has big curly hair. The cast gives smooth hair in a low ponytail. The count of 7
     children, Teacher Kim, and Pip is correct. Hat-pip is a fail row now, with no more tries
     (PM 2026-11-10).
-- [b] Task 5: Retry delivery and hand-off (D4). Write `approvals-retry1.json` for the passing rows. Run
+- [x] Task 5 (PENDING_SHA): Retry delivery and hand-off (D4). Write `approvals-retry1.json` for the passing rows. Run
   `deliverMuseUnit2` with `approvalsOnly` into `out/storytime/l2/unit2/delivery-muse-v1-retry1/`. Build
   `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-retry1/` with the hard links,
   `manifest.json`, `contact-sheet.png`, `not-delivered/` with its `README.md`, the spend log copy, and
   `MANIFEST.txt`. Run `sha256sum -c MANIFEST.txt` (0 FAILED). Check that the v1 files have the same
-  SHA-256 as before. deferred:maker
+  SHA-256 as before.
+  - The approval list `approvals-retry1.json` holds 4 entries and the picture list pin
+    `63d415000eca9d6be1a6ad533c12ff81e127cd2c76ffac339697f91b99f754ec`. The 4 rows are
+    `l2-w13-card-throw`, `l2-w14-card-windy`, `l2-w09-story-page-tom-can-see-the-mop` and
+    `l2-w09-card-rice`. Each row names the color print of m1 and its passing line print.
+  - The m1 color of each of the 4 rows passed the judge in the archived track. The archived
+    approvals-u2.json holds no entry for these 4 rows, because they were among the 9 skipped rows.
+    The archived judge files name m1 as the passing color of each row:
+    `judge-u2-w13-r1-color.json` for the throw row, `judge-u2-w14-r1-color.json` for the windy row,
+    `judge-u2-w09-r1-color.json` for the rice row, and `judge-u2-w09-r1-color-mop-t2.json` for the
+    tom-can-see-the-mop row. The 2 color rows of the tom-can-see-the-mop row are a network error at
+    0 USD and the m1 call, so the m1 file is the color try 2 of that row.
+  - The line judge of each row is in the judge files of this track. The line try 4 of the throw row
+    and of the windy row pass in `judge-u2rc-a-line-t4.json`. The line try 5 of the
+    tom-can-see-the-mop row and of the rice row pass in `judge-u2rc-d-line-t5.json`. The print gate
+    files `line-gate-p2a.txt` and `line-gate-p2d.txt` give 13 px, 19 px, 16 px and 13 px.
+  - The runner `deliver-retry1.mts` is built on `deliver-u2.mts`. It links the 8 approved prints,
+    calls `deliverMuseUnit2` with `approvalsOnly`, and checks every delivered file. The delivery
+    folder `out/storytime/l2/unit2/delivery-muse-v1-retry1/` holds 9 files: 8 PNG files and
+    `manifest.json`. The manifest holds 4 jobs. The file checks give 0 problems, and the skip
+    callback stayed quiet. The runner made no paid call and no network call.
+  - The hand-off folder `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-retry1/` holds
+    23 files: 8 hard links of the delivered PNG files, `manifest.json`, `contact-sheet.png`,
+    `spend-log.tsv`, `MANIFEST.txt`, the `README.md` of `not-delivered/`, and 10 hard links in
+    `not-delivered/`. The contact sheet is 644 x 1416 px and holds the 4 rows, the color print beside
+    the line print and the row id under each pair. It was made with sharp and no browser.
+  - The check `sha256sum -c MANIFEST.txt` in the hand-off folder gives 22 OK and 0 FAILED, and no
+    warning. The MANIFEST.txt holds 22 hash lines and 22 size lines.
+  - The 5 fail rows keep their best try in `not-delivered/`, and the README.md names each row, its
+    tries, its best try and why, and the reason it failed:
+    - `l2-w12-card-hippo`: the color m1 of color try 1, and the line print of line try 4 at 9 px.
+      The prints of tries 2, 3 and 4 passed the judge and are all 9 px, so the later try wins the
+      tie. Every line print of the row is under the 12 px print gate.
+    - `l2-w12-card-ruler`: the color m1 of color try 1, and the line print of line try 4 at 8 px.
+      The prints of tries 3 and 4 are both 8 px, so the later try wins the tie. Every line print of
+      the row is under the 12 px print gate.
+    - `l2-w13-card-clap`: the color m1 of color try 1, and the line print of line try 3 at 11 px,
+      the widest of the judge-passing prints. Every line print of the row is under the 12 px print
+      gate.
+    - `l2-w14-card-cold`: the color m1 of color try 1, and the line print of line try 4 at 10 px,
+      the widest of the judge-passing prints. Every line print of the row is under the 12 px print
+      gate.
+    - `l2-w10-story-page-put-on-your-hat-pip`: the color m3 of color try 5, the latest color that
+      passed the judge, and the line print of line try 2, which is the m3 print at 13 px. No line
+      print of the row passed the judge, so the widest line print is the best one. The line try 2
+      fails the judge with the class wrong-character: Teacher Kim has big curly hair, and the cast
+      gives smooth hair in a low ponytail.
+  - The v1 hash check holds. The delivery folder `out/storytime/l2/unit2/delivery-muse-v1/` has 441
+    files and the combined hash `69025314d447dc1d6ec3920215ab6b3b0794f125bb240917a17c9ba3e498f2fc`.
+    The v1 hand-off folder has 469 files and the combined hash
+    `edc67a8d01477b91c0f333acf194332c2101c4d0ca7fb734050772f74c93a1ed`. Both values are the same
+    before and after this task, so the v1 delivery and the v1 hand-off have no change.
+  - The README.md of `not-delivered/` says that the judge result is model evidence, not acceptance.
+    A search of the hand-off folder and of the files of this task for a text that says that Daniel,
+    the PM, or Workbooks accepted a picture gave no hit.
 - [b] Task 6: Cover rounds and judge copies (D5, D8, D9, D11). Write the worst case. Run round 1: 3 color
   calls, one after another. Make the judge copies for each version. The orchestrator runs the frozen
   judge and the second judge. Run round 2 only if no version passes. Log each paid call. Stop at 6 calls

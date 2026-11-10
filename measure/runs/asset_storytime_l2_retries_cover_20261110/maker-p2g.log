@@ -1,0 +1,236 @@
+# maker-p2g.log
+
+Track: asset_storytime_l2_retries_cover_20261110
+Phase: Phase 2: Retries and cover (paid)
+Role: measure-jr-green (light lane), session Green · P2 T5 · storytime_l2_retries_cover
+Model: minimax-cn-coding-plan/MiniMax-M3.1-Flash (substitution; the family stays MiniMax)
+role_base_sha: 43dcb093fd41ca48018dcf4a9de94c01b818d030
+
+Task 5: the retry delivery and the hand-off of item (a). Cost 0 USD. No Muse call.
+No API key read. The judge was not run. The cover was not touched.
+
+## Defaults taken (recorded, not asked)
+
+- D7 (best try of a fail row): the latest color that passed the judge, and the passing line print
+  with the widest line. The widest line print is used when no line print passed. A tie goes to the
+  later try. Source: spec.md, "Open questions answered by default", default 7.
+- D8 (retry output folder): out/storytime/l2/unit2/delivery-muse-v1-retry1/. Source: default 8.
+- D9 (hand-off MANIFEST.txt): one hash line per file and one size line per file. Source: default 9.
+
+## Step log
+
+### Step 0: state check
+- git rev-parse HEAD = 43dcb093fd41ca48018dcf4a9de94c01b818d030. It matches role_base_sha.
+- Branch master. The worktree holds unrelated dirty files from other agents. They stay unstaged.
+- Task 5 marked `[~]` in plan.md before any file outside measure/ changed.
+
+### Step 1: the approval list of the 4 pass rows
+- The file is measure/runs/asset_storytime_l2_retries_cover_20261110/approvals-retry1.json. It has
+  the form of approvals-u2.json: version 1, the picture list pin, and a list of entries. Each entry
+  holds the row id, the Muse version, the color print, and the line print. 4 entries.
+- The pin is 63d415000eca9d6be1a6ad533c12ff81e127cd2c76ffac339697f91b99f754ec. It is the pin of
+  the unit 2 picture list, the same value as in approvals-u2.json.
+- The 4 rows and the m1 color of each. The archived approvals-u2.json holds no entry for these 4
+  rows, because the 9 open rows were skipped in the v1 delivery. The archived judge files name m1
+  as the passing color of each row:
+  - l2-w13-card-throw: judge-u2-w13-r1-color.json, color try 1, pass.
+  - l2-w14-card-windy: judge-u2-w14-r1-color.json, color try 1, pass.
+  - l2-w09-card-rice: judge-u2-w09-r1-color.json, color try 1, pass.
+  - l2-w09-story-page-tom-can-see-the-mop: judge-u2-w09-r1-color-mop-t2.json, color try 2, pass.
+    The 2 color rows of the row are a network error at 0 USD and the m1 call, so the m1 file is the
+    color try 2 of the row.
+- The line judge of each row, in the judge files of this track:
+  - l2-w13-card-throw: judge-u2rc-a-line-t4.json, line try 4, pass. The print gate file
+    line-gate-p2a.txt gives 13 px on the print and on the despeckled print.
+  - l2-w14-card-windy: judge-u2rc-a-line-t4.json, line try 4, pass. line-gate-p2a.txt gives 19 px
+    on the print and on the despeckled print.
+  - l2-w09-story-page-tom-can-see-the-mop: judge-u2rc-d-line-t5.json, line try 5, pass. The print
+    gate file line-gate-p2d.txt gives 16 px on the print and on the despeckled print.
+  - l2-w09-card-rice: judge-u2rc-d-line-t5.json, line try 5, pass. line-gate-p2d.txt gives 13 px on
+    the print and on the despeckled print.
+
+### Step 2: the mapping from try number to file name
+The try number of a line row is the number of its cost rows in costs.tsv, and the file name comes
+from the output column of that cost row. A call that failed at the transport level costs 0 USD and
+writes no file, so it still takes a try number and it still moves the file index forward only when
+a later call writes a file. The two numbers therefore differ for 2 rows. The mapping, from the
+cost rows of each row and the print files on disk:
+- l2-w13-card-throw: line try 4 gives l2-w13-card-throw-m1-line-4.png, and the print file is
+  l2-w13-card-throw-m1-line-print-4.png.
+- l2-w14-card-windy: line try 4 gives l2-w14-card-windy-m1-line-4.png, and the print file is
+  l2-w14-card-windy-m1-line-print-4.png.
+- l2-w09-story-page-tom-can-see-the-mop: line try 4 was a network timeout at 0 USD and wrote no
+  file, so line try 5 gives l2-w09-story-page-tom-can-see-the-mop-m1-line-4.png, and the print file
+  is l2-w09-story-page-tom-can-see-the-mop-m1-line-print-4.png.
+- l2-w09-card-rice: line try 4 was a network timeout at 0 USD and wrote no file, so line try 5
+  gives l2-w09-card-rice-m1-line-4.png, and the print file is l2-w09-card-rice-m1-line-print-4.png.
+- The 4 approval entries name the 4 print files of the list above.
+
+### Step 3: the widths of the candidate line prints
+The width of a line print is the measured median stroke width. The widths come from the print gate
+files of the archived track and of this track: delivery-gate.txt, line-gate-r6.txt, line-gate-r7.txt,
+line-gate-p2a.txt, line-gate-p2d.txt. The width of the hat-pip line prints of the archived track
+and of this track is not in any gate file, so a read-only probe called the writer check code
+`inspectLineArtPng` of src/storytime/book-pictures.ts on the 18 candidate prints at the class size
+of each row. The probe wrote nothing, made no provider call, no Muse call, and no judge call. The
+probe gave the same values as the gate files for the prints the gate files name.
+
+| row | print | try | width px | passes the 12 px gate |
+| --- | --- | --- | --- | --- |
+| l2-w12-card-hippo | -m1-line-print.png | 1 | 10 | no |
+| l2-w12-card-hippo | -m1-line-print-2.png | 2 | 9 | no |
+| l2-w12-card-hippo | -m1-line-print-3.png | 3 | 9 | no |
+| l2-w12-card-hippo | -m1-line-print-4.png | 4 | 9 | no |
+| l2-w12-card-ruler | -m1-line-print.png | 1 | 5 | no |
+| l2-w12-card-ruler | -m1-line-print-2.png | 2 | 7 | no |
+| l2-w12-card-ruler | -m1-line-print-3.png | 3 | 8 | no |
+| l2-w12-card-ruler | -m1-line-print-4.png | 4 | 8 | no |
+| l2-w13-card-clap | -m1-line-print.png | 1 | 8 | no |
+| l2-w13-card-clap | -m1-line-print-2.png | 2 | 10 | no |
+| l2-w13-card-clap | -m1-line-print-3.png | 3 | 11 | no |
+| l2-w13-card-clap | -m1-line-print-4.png | 4 | 10 | no |
+| l2-w14-card-cold | -m1-line-print.png | 1 | 8 | no |
+| l2-w14-card-cold | -m1-line-print-2.png | 2 | 9 | no |
+| l2-w14-card-cold | -m1-line-print-3.png | 3 | 9 | no |
+| l2-w14-card-cold | -m1-line-print-4.png | 4 | 10 | no |
+| l2-w10-story-page-put-on-your-hat-pip | -m2-line-print.png | 1 | 12 | yes |
+| l2-w10-story-page-put-on-your-hat-pip | -m3-line-print.png | 2 | 13 | yes |
+
+### Step 4: the best try of each of the 5 fail rows
+The rule of default 7 gave each choice.
+- l2-w12-card-hippo: the color m1 of color try 1. It is the only color of the row and it passed the
+  judge. The line print of line try 4, at 9 px. The line prints of tries 2, 3 and 4 passed the
+  judge, and all 3 are 9 px wide, so the later try wins the tie. The reason it failed: every line
+  print of the row is under the 12 px print gate.
+- l2-w12-card-ruler: the color m1 of color try 1. The line print of line try 4, at 8 px. The line
+  prints of tries 1 to 4 passed the judge, and tries 3 and 4 are both 8 px wide, so the later try
+  wins the tie. The reason it failed: every line print of the row is under the 12 px print gate.
+- l2-w13-card-clap: the color m1 of color try 1. The line print of line try 3, at 11 px. The line
+  prints of tries 1 to 4 passed the judge, and try 3 is the widest of them. The reason it failed:
+  every line print of the row is under the 12 px print gate.
+- l2-w14-card-cold: the color m1 of color try 1. The line print of line try 4, at 10 px. The line
+  prints of tries 1 to 4 passed the judge, and try 4 is the widest of them. The reason it failed:
+  every line print of the row is under the 12 px print gate.
+- l2-w10-story-page-put-on-your-hat-pip: the color m3 of color try 5. It is the latest color that
+  passed the judge, and judge-u2rc-d-color-t5.json gives the pass. The line print of line try 2,
+  which is the m3 print at 13 px. No line print of the row passed the judge, so the widest line
+  print is the best one, and the m3 print is wider than the m2 print at 12 px. The reason it
+  failed: judge-u2rc-e-line-t2.json and judge-u2rc-e-line-t2-second.json both fail the line try 2
+  with the class wrong-character. Teacher Kim has big curly hair, and the cast gives smooth hair
+  in a low ponytail.
+
+### Step 5: the v1 hash summary before the work
+- One count and one combined hash per folder. The combined hash is the SHA-256 of the sorted list
+  of the SHA-256 of every file of the folder.
+- out/storytime/l2/unit2/delivery-muse-v1: 441 files, combined
+  69025314d447dc1d6ec3920215ab6b3b0794f125bb240917a17c9ba3e498f2fc.
+- /home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures: 469 files, combined
+  edc67a8d01477b91c0f333acf194332c2101c4d0ca7fb734050772f74c93a1ed.
+
+### Step 6: the delivery runner
+- The file is measure/runs/asset_storytime_l2_retries_cover_20261110/deliver-retry1.mts. It is
+  built on deliver-u2.mts of the archived run. It links the 8 approved prints into a staging
+  folder, calls deliverMuseUnit2, and checks every delivered file.
+- The changes against deliver-u2.mts: the approval list is approvals-retry1.json, the output
+  folder is out/storytime/l2/unit2/delivery-muse-v1-retry1/, the staging folder sits under
+  /tmp/opencode/l2rc/ per D13, the call has the option approvalsOnly, and the runner stops when
+  the delivered rows differ from the approval rows or when the skip callback runs.
+- The run made no provider call, no Muse call, and no network call. It read no key.
+- The result:
+  - approval entries 4, staged hard links 8.
+  - delivered rows 4: l2-w09-card-rice, l2-w09-story-page-tom-can-see-the-mop, l2-w13-card-throw,
+    l2-w14-card-windy.
+  - delivered color files 4, delivered line files 4, delivered PNG files 8.
+  - manifest.json holds 4 jobs, and its SHA-256 is
+    7251384e24f6dd19d09178cc4aa2d15780a6168fc88cf14abef3fb829f99d584.
+  - skipped rows 0. The option approvalsOnly kept the 47 reuse rows and the 178 other rows of the
+    list out of the delivery, and it left the skip callback quiet.
+  - file checks 8 files, problems 0. Every color file is PNG 8-bit, no alpha, srgb, 3 channels, at
+    the class size. Every line file is PNG 8-bit, no alpha, grayscale, at the class size.
+  - the writer wrote nothing before the checks, so the folder holds only the 9 files it wrote.
+- The delivery folder out/storytime/l2/unit2/delivery-muse-v1-retry1/ holds 9 files: 8 PNG files
+  and manifest.json. The runner removed the staging folder at the end.
+
+### Step 7: the hand-off builder
+- The file is measure/runs/asset_storytime_l2_retries_cover_20261110/handoff-retry1.mjs. It links
+  the delivered PNG files, copies the manifest.json and the spend log, builds the contact sheet
+  with sharp, links the best try of each fail row into not-delivered/, writes the README.md of the
+  fail rows, and writes MANIFEST.txt. It made no provider call, no Muse call, and no network call.
+- The PNG files are hard links, so the hand-off and their source share every inode and the builder
+  costs no disk space. The builder checks the inode of every link. The link count of the sample
+  files is 2 for the delivered prints and 3 for the not-delivered prints.
+- The contact sheet is contact-sheet.png at 644 x 1416 px. It holds the 4 rows, the color print
+  beside the line print, and the row id under each pair. It was made with sharp and no browser.
+- The README.md of not-delivered/ holds one section per fail row with the id, the tries, the best
+  try and why, and the reason it failed. It says the judge result is model evidence, not
+  acceptance.
+- MANIFEST.txt holds 22 hash lines and 22 size lines, one pair per file of the folder other than
+  MANIFEST.txt itself. Every line that is not a hash line starts with #, so sha256sum -c reads the
+  file without a warning.
+- The hand-off folder /home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-retry1/ holds 23
+  files: 8 delivered PNG files, manifest.json, contact-sheet.png, spend-log.tsv, MANIFEST.txt, the
+  README.md of not-delivered/, and 10 prints in not-delivered/.
+- The check `sha256sum -c MANIFEST.txt` in the folder gives 22 OK and 0 FAILED, and no warning.
+
+### Step 8: the v1 hash summary after the work
+- out/storytime/l2/unit2/delivery-muse-v1: 441 files, combined
+  69025314d447dc1d6ec3920215ab6b3b0794f125bb240917a17c9ba3e498f2fc.
+- /home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures: 469 files, combined
+  edc67a8d01477b91c0f333acf194332c2101c4d0ca7fb734050772f74c93a1ed.
+- Both values are the same as in step 5. The v1 delivery and the v1 hand-off have no change.
+
+### Step 9: the claims check
+- A search of the hand-off folder and of the 5 files of this step for a text that says that Daniel,
+  the PM, or Workbooks accepted a picture gave no hit. The README.md of not-delivered/ says that
+  the judge result is model evidence, not acceptance, and that no person has accepted any picture
+  of the folder.
+
+### Step 10: the doctor
+- The command `bash measure/doctor.sh` ran and gave 14 errors. Every one of them names another
+  track: asset_filled_shelves_20261028, asset_p2_npcs_20260928, game_archers_revenge_rebuild_20261029,
+  game_castle_defense_rebuild_20261029, game_magic_defense_rebuild_20261029,
+  game_paladins_twin_soul_rebuild_20261029, the registry links of those tracks, and 3 stale
+  generated facts of measure/generated/. No error names the track of this step. The errors come from
+  the dirty files of other agents, and this step does not touch those paths.
+
+### Step 11: the scratch
+- The staging folder /tmp/opencode/l2rc/delivery-stage-retry1 was removed by the runner.
+- The probe /tmp/opencode/l2rc/measure-line-widths.mts was removed at the end of this step.
+- The v1 hash script /tmp/opencode/l2rc/v1-hash.sh stays under /tmp/opencode/l2rc/ until Task 8
+  deletes the folder, per D13.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green (light lane), the maker of Task 5
+status: complete
+track: asset_storytime_l2_retries_cover_20261110
+phase: Phase 2: Retries and cover (paid)
+commits after 43dcb093fd41ca48018dcf4a9de94c01b818d030:
+- the commit of approvals-retry1.json, deliver-retry1.mts, handoff-retry1.mjs, maker-p2g.log, and
+  plan.md follows this log. Its SHA is not in this file, because a commit cannot hold its own SHA.
+- the plan-evidence commit that writes the SHA of that commit into the Task 5 line of plan.md
+  follows it. Its SHA is not in this file for the same reason.
+tests_run: the delivery runner, 4 rows, 8 PNG files, 0 file problems, 0 skipped rows, exit status
+  0. sha256sum -c MANIFEST.txt in the hand-off folder, 22 OK, 0 FAILED, no warning. The v1 hash
+  summary before and after the work, the same 2 counts and the same 2 combined hashes. The read-only
+  width probe with inspectLineArtPng on 18 candidate line prints at the class size of each row. The
+  inode check of every hard link of the hand-off folder. No vitest and no tsc in this step.
+files_changed: measure/runs/asset_storytime_l2_retries_cover_20261110/approvals-retry1.json,
+  measure/runs/asset_storytime_l2_retries_cover_20261110/deliver-retry1.mts,
+  measure/runs/asset_storytime_l2_retries_cover_20261110/handoff-retry1.mjs,
+  measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p2g.log,
+  measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md. The new files outside git:
+  out/storytime/l2/unit2/delivery-muse-v1-retry1/ with 9 files, and
+  /home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-retry1/ with 23 files.
+plan_updates: Task 5 is [x] with the evidence sub-bullets of the 4 delivered rows, the delivery
+  folder, the hand-off folder, the check of MANIFEST.txt, the 5 fail rows with their best tries,
+  and the v1 hash check.
+known_failures: none. The 5 fail rows keep their judge result and their best try in the
+  not-delivered/ folder of the hand-off. The v1 delivery and the v1 hand-off have no change. The
+  spend of item (a) stays at 0.10 USD of the 0.15 USD stop, because this task made no paid call.
+handoff: The reviewer roles read this log, the 3 new files of this step, and the Task 5 line of
+  plan.md. The delivery folder is out/storytime/l2/unit2/delivery-muse-v1-retry1/ with 4 rows, 8
+  PNG files, and manifest.json. The hand-off folder is
+  /home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-retry1/ with 23 files, and
+  sha256sum -c MANIFEST.txt gives 22 OK and 0 FAILED. The judge result is model evidence, not
+  acceptance. Task 6 still waits for the PM decision on the cover layout. Task 7 and Task 8 follow.
+END_MEASURE_AGENT_RESULT
