@@ -234,7 +234,7 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
   `manifest.json`, `contact-sheet.png`, `not-delivered/` with its `README.md`, the spend log copy, and
   `MANIFEST.txt`. Run `sha256sum -c MANIFEST.txt` (0 FAILED). Check that the v1 files have the same
   SHA-256 as before. deferred:maker
-- [~] Task 6: Cover rounds and judge copies (D5, D8, D9, D11). Write the worst case. Run round 1: 3 color
+- [b] Task 6: Cover rounds and judge copies (D5, D8, D9, D11). Write the worst case. Run round 1: 3 color
   calls, one after another. Make the judge copies for each version. The orchestrator runs the frozen
   judge and the second judge. Run round 2 only if no version passes. Log each paid call. Stop at 6 calls
   or at 0.10 USD. deferred:maker
@@ -299,6 +299,34 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
     passes m6 against the PM layout, with the top 20 percent calm and the bottom 12 percent free.
     All 6 cover tries are used, and the item (b) spend is 0.06 USD of the 0.10 USD stop. Task 7
     waits for a PM decision on the layout.
+  - Step F (2026-11-10, 0 USD). The orchestrator found a defect. The test CVG9 of
+    `tests/storytime-cover-guards.test.ts` wrote a fixture row into the real cover cost file
+    `out/storytime/covers/teacher-front/muse/costs.tsv` and then deleted that file. The GREEN run of
+    step D1 ran at about 19:02 ICT, and the folder time of that run is 19:02:10 ICT. The file with
+    its 6 cover rows was gone, so the guard counted 0 cover spend and 0 tries and could not stop a
+    7th cover call.
+    - The restore. The file was restored on 2026-11-10 from `spend-log.tsv` and the 6 files
+      `l2-u1-cover-quest-teacher-front-m1.json` to `m6.json`, because the test CVG9 deleted the
+      original at 19:02:10 ICT. Each row was checked against its sidecar and its spend log row.
+      The file holds the header of `TSV_HEAD` and 6 rows, one per try m1 to m6. Every row has the
+      kind color, the cost 0.01, the note ok, and the size 1280x1920. The SHA-256 of the restored
+      file is `2ef0e1b15cce56ca2376695e688c5962259850cbbd6f29c410e16fd1ba02159c`.
+    - The dry guard check, with no call and no key. The run is cover, the refusal is true, the code
+      is 3, the spend is 0.06, and the message is `refused: l2-u1-cover-quest-teacher-front color
+      count 6 (max 6)`. The guard refuses a 7th cover call again.
+    - The test fixes. The commit `3b22a6af5f11ef6bb5bf70f05d16c7b0aa7a984a` holds them. The test
+      CVG9 now reads the real cost file and writes, changes, and deletes nothing under the real
+      `out/` folder. The check of the scan path has two parts: the production path compares the
+      rows of the real file with the rows of the scan, and the fixture path uses a unit root
+      outside the repository. The tests U2G11 and U2G10 of `tests/storytime-u2-guards.test.ts` ran
+      the CLI in the real repository and deleted the real unit 2 folder and the real family-word
+      folder when the run had created them. They now run the CLI in a temp repository, so the
+      guard root and every write of the CLI stay in the temp folder. The other 17 test files of the
+      GREEN command hold no write, delete, or mkdir of a path under the repository root.
+    - The hash check. The SHA-256 of the restored cover cost file and of each unit 2 cost file
+      were recorded before the GREEN run and again after it. The 18 values are the same. No file
+      and no folder under `out/` changed during the run. The GREEN command of the specification
+      passes with 19 test files, 280 tests, 0 failures, and the exit status 0.
 - [b] Task 7: Cover hand-off (D10). Deliver the passing picture as
   `l2-u1-cover-quest-teacher-front-forge-v1.png` (2480 x 3508 px, RGB, no alpha). Build
   `/home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/` with the PNG, the zone-line copy,

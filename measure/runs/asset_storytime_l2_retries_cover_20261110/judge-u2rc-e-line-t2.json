@@ -1,0 +1,24 @@
+{
+  "group": "u2rc-e-line-t2",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-10T12:38:58Z",
+  "results": [
+    {
+      "id": "l2-w10-story-page-put-on-your-hat-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-line-t2.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "Teacher Kim at the back, center top: her hair is a large curly cloud, not smooth hair in a low ponytail",
+      "notes": "Question page: no. Items: Pip (1) with a hat, Sam, May, Ben, Mia, Pat, Lily, Nan (7 children), Teacher Kim (1). Action: put on a hat (note only). Seen, counted left to right: 1 striped-shirt boy (Sam); 2 girl with a pleated skirt and a side hair tie (May); 3 boy with messy hair and fringe (Ben); 4 child with short hair, a small bow at the side, and overall straps (Mia); 5 boy with hair tufts (Pat); 6 girl with a bob, fringe, bow, and collared dress (Lily); 7 girl with two round buns, ring bands, and a star shirt (Nan). Total 7 children, plus Teacher Kim standing at the back, plus Pip, a puppy in a box with a hat on its head. The count of 9 is correct. All named items are drawn, visible, and read clearly. Line art: black lines on white, no gray or shading, no gap that makes coloring hard, no text. Small marks (notes only): Mia's hair looks short, not shoulder-length; May's hair tie looks like a stick. Fail: Teacher Kim's hair is a big round curly cloud. The cast sheet gives smooth, side-parted hair pulled into a low ponytail. The hairstyle is clearly different at book size, so the character is changed (rule 4)."
+    }
+  ],
+  "summary": {
+    "files": 1,
+    "pass": 0,
+    "fail": 1
+  }
+}

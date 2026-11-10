@@ -1,0 +1,25 @@
+{
+  "group": "u2rc-e-line-t2-second",
+  "second": true,
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-10T12:40:21Z",
+  "results": [
+    {
+      "id": "l2-w10-story-page-put-on-your-hat-pip",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-line-t2.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "Teacher Kim at the top center: curly voluminous hair instead of smooth medium-length hair in a low ponytail",
+      "notes": "Question page: no. Items from mustShow: Pip, Sam, May, Ben, Mia, Pat, Lily, Nan, Teacher Kim (9 figures). Page text: a call to Pip to put on a hat; action is a note only. Children counted one by one, left to right: 1 boy in a striped shirt and shorts, short side fringe = Sam; 2 girl in a pleated skirt with a fringe and a tied tuft or clip at the top left of her head = May (small mark: the ponytail is hard to read); 3 boy with messy spiky hair, T-shirt, shorts = Ben; 4 child with a smooth cap of hair, a small bow at the right side, body half hidden by the hat of Pip = Mia (small mark: hair short for shoulder-length); 5 boy with tufts on top, T-shirt, cargo shorts = Pat; 6 girl with a bob, straight fringe, a bow at the side, a collared dress = Lily; 7 girl with two round buns and a band, star on the T-shirt = Nan. That is 7 children, all drawn and clear. Pip: a puppy with floppy ears, a nose, sitting in a box and wearing a hat; reads as Pip (small mark: the collar is hard to see). Teacher Kim: a woman standing behind the children in an open cardigan over a blouse and trousers, but her hair is a big, voluminous curly shape around the face. The cast note gives medium-length hair in a low ponytail, smooth and tied back. The curly hair reads as a different woman (like Grandma), so this is a changed character. Line art: black lines on white, no gray, no gaps that make coloring hard, no text."
+    }
+  ],
+  "summary": {
+    "files": 1,
+    "pass": 0,
+    "fail": 1
+  }
+}

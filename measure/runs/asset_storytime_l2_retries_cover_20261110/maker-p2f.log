@@ -1,0 +1,169 @@
+Maker log, step F of Phase 2. Track asset_storytime_l2_retries_cover_20261110. Maker model
+minimax-cn-coding-plan/MiniMax-M3.1-Flash. Light lane. Paid 0 USD. No Muse call. No judge run.
+
+Start: 2026-11-10, after the machine restart at 19:42 ICT. role_base_sha 51077171.
+
+The defect. The orchestrator found it. The test CVG9 in tests/storytime-cover-guards.test.ts
+(lines 192 to 207) writes a fixture row into the real cover cost file
+out/storytime/covers/teacher-front/muse/costs.tsv and then deletes that file. The GREEN command of
+step D1 ran at about 19:02 ICT. The folder time of that run is 19:02:10 ICT. That run deleted the
+real cost file with its 6 cover rows. Without the file, the cover guard counts 0 cover spend and 0
+tries, so it cannot stop a 7th cover call.
+
+The steps of this step:
+1. Mark Task 6 [~] and add the sub-bullet "Judge of step E" to Task 4.
+2. Restore the cover cost file before any test run. Check each row against its m<n>.json file and the
+   spend log. Record the SHA-256 of the file. Run a dry guard check with no call.
+3. Fix CVG9 so that it never writes, changes, or deletes a file under the real out/ folder.
+4. Check the other 18 test files of the GREEN command for the same defect.
+5. Record the SHA-256 of the restored cover cost file and of each unit 2 cost file. Run the GREEN
+   command once. Record the SHA-256 values again. Every value must be the same.
+6. Commit the test fixes and plan.md.
+7. Set Task 6 back to [b] with the sub-bullet "Step F". Commit plan.md, this log, and the two judge
+   files of step E.
+
+## The state at the start of step F
+
+git rev-parse HEAD: 51077171669d6a6758e2ff882354d48328311747. That is the role_base_sha.
+git log --oneline -3: 51077171 step E hat-pip line, 93515275 step D2 network retries,
+4e201544 step D1 evidence.
+git status --short: the work of other agents in the repository. The files of this step are
+measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md,
+measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p2f.log, and the 2 test files.
+
+Done before the restart of the machine: Task 6 marked [~], the sub-bullet "Judge of step E" in
+Task 4, the rewrite of the test CVG9, the restore of the cover cost file, the dry guard check,
+and the check of the other 18 test files.
+
+## The restore of the cover cost file
+
+The file out/storytime/covers/teacher-front/muse/costs.tsv was missing. The test CVG9 of the
+GREEN run of step D1 wrote a fixture row into it and deleted it. The folder time of that run was
+19:02:10 ICT on 2026-11-10.
+
+The scratch script /tmp/opencode/l2rc/restore-cover-costs.mjs rebuilt the file. It read the header
+TSV_HEAD of scripts/storytime-muse.mjs, the 6 spend log rows of the cover tries (lines 18 to 20
+and 22 to 24 of spend-log.tsv), the 6 sidecar files l2-u1-cover-quest-teacher-front-m1.json to
+m6.json, and the sharp metadata of the 6 color files. Each row was checked against its sidecar
+and its spend log row. The script made no Muse call and read no key.
+
+The SHA-256 of the restored file: 2ef0e1b15cce56ca2376695e688c5962259850cbbd6f29c410e16fd1ba02159c
+The size of the restored file: 3021 bytes. It holds the header and 6 rows, one per try m1 to m6.
+The kind of every row is color, the cost of every row is 0.01, the note of every row is ok, and the
+size of every row is 1280x1920.
+
+The file was restored on 2026-11-10 from spend-log.tsv and the 6 m<n>.json files, because the test
+CVG9 deleted the original at 19:02:10 ICT.
+
+## The dry guard check
+
+The scratch script /tmp/opencode/l2rc/dry-guard-cover.mjs called runGuards of
+scripts/storytime-muse-guards.mjs with the cover spec of the production run and the command
+color. It made no call and read no key.
+
+cover folder out/storytime/covers/teacher-front/muse
+rows 6, tries 6, spend 0.06
+run cover
+refused true
+code 3
+spend 0.06
+message refused: l2-u1-cover-quest-teacher-front color count 6 (max 6)
+
+The guard refuses a 7th cover call again.
+
+## The check of the other 18 test files of the GREEN command
+
+Each of the 18 other test files was read for a write, a delete, or a mkdir of a path under the
+repository ROOT that is not a temp folder. The grep names were writeFileSync, rmSync, mkdirSync,
+copyFileSync, unlinkSync, and appendFileSync.
+
+One file carried the defect. tests/storytime-u2-guards.test.ts, tests U2G11 and U2G10, ran the
+muse CLI in the real repository. The CLI creates the output folder of the spec. The test then
+deleted the real unit 2 folder and the real family-word folder when the run had created them.
+
+The other 17 files hold no such call. Every write and every delete sits in a temp folder.
+tests/storytime-u2-delivery.test.ts, tests/storytime-u2-specs.test.ts,
+tests/storytime-muse-delivery.test.ts, tests/storytime-muse-delivery-adversarial.test.ts,
+tests/storytime-family-word-delivery.test.ts, tests/storytime-u2-retry-delivery.test.ts,
+tests/storytime-cover-judge-copy.test.ts, and tests/storytime-cover-specs.test.ts hold no file
+call at all. tests/storytime-u2-judge-batch.test.ts, tests/storytime-card-guards.test.ts,
+tests/storytime-card-line-retry.test.ts, tests/storytime-muse-attempts.test.ts,
+tests/storytime-judge-batch.test.ts, tests/storytime-card-adversarial.test.ts,
+tests/storytime-family-word-judge.test.ts, tests/storytime-u2-family-words.test.ts, and
+tests/storytime-u2-extra-try.test.ts write only in temp folders.
+
+## The fixed tests
+
+1. tests/storytime-cover-guards.test.ts, test CVG9. The form chosen: a read-only check of the
+   scan path. The test reads the real cover cost file with parseCostsTsv and keeps the rows at or
+   after the cover start time. It compares the count and the spend of those rows with the rows of
+   scanCoverCostFiles of the unit root of the repository, and the guard decision of the real cover
+   spec gives the run cover and the same spend. The second part of the test uses a unit root
+   outside the repository. That root holds a fixture row with its own row id, and the production
+   path never sees that row. The test creates, writes, changes, and deletes nothing under the
+   real out/ folder.
+2. tests/storytime-u2-guards.test.ts, tests U2G11 and U2G10. The form chosen: a temp ROOT. The
+   test copies scripts/storytime-muse.mjs and scripts/storytime-muse-guards.mjs into a temp
+   repository, links the node_modules folder, and runs the CLI there with a temp HOME. The CLI
+   and the guard resolve their root from the path of the script, so every write of the CLI stays
+   in the temp folder. The test deletes only temp folders. The two deletes of the real unit 2
+   folder and the real family-word folder are gone. This file is not in the owned paths of the
+   specification. The change stays in the harness of the 2 tests.
+
+## The GREEN run and the hash check
+
+The command of the specification ran once:
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c
+'./node_modules/.bin/vitest run tests/storytime-u2-guards.test.ts
+tests/storytime-u2-judge-batch.test.ts tests/storytime-u2-delivery.test.ts
+tests/storytime-u2-specs.test.ts tests/storytime-card-guards.test.ts
+tests/storytime-card-line-retry.test.ts tests/storytime-muse-attempts.test.ts
+tests/storytime-judge-batch.test.ts tests/storytime-muse-delivery.test.ts
+tests/storytime-muse-delivery-adversarial.test.ts tests/storytime-card-adversarial.test.ts
+tests/storytime-family-word-judge.test.ts tests/storytime-family-word-delivery.test.ts
+tests/storytime-u2-family-words.test.ts tests/storytime-u2-extra-try.test.ts
+tests/storytime-cover-guards.test.ts tests/storytime-u2-retry-delivery.test.ts
+tests/storytime-cover-judge-copy.test.ts tests/storytime-cover-specs.test.ts --maxWorkers=1'
+
+The result: 19 test files passed, 280 tests passed, 0 failures. The exit status was 0. The run
+took 63.75 s.
+
+The hash check. The SHA-256 of the restored cover cost file and of each unit 2 cost file were
+recorded before the run and again after the run. The 18 values are the same. The cover cost file
+keeps the SHA-256 2ef0e1b15cce56ca2376695e688c5962259850cbbd6f29c410e16fd1ba02159c. The file
+out/storytime/l2/unit2/w16/muse/elements/costs.tsv does not exist, before and after the run. No
+file and no folder under out/ changed during the run.
+
+## The end of step F
+
+The scratch files /tmp/opencode/l2rc/restore-cover-costs.mjs and /tmp/opencode/l2rc/dry-guard-cover.mjs
+are deleted. Their results are in this log. The scratch files of the hash check stay under
+/tmp/opencode/l2rc/ until Task 8 deletes them.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green (maker), light lane
+status: complete
+track: asset_storytime_l2_retries_cover_20261110
+phase: Phase 2: Retries and cover (paid), step F
+commits after 51077171669d6a6758e2ff882354d48328311747:
+- 3b22a6af5f11ef6bb5bf70f05d16c7b0aa7a984a fix(storytime_l2_retries_cover): the cover guard test
+  reads the real cost file only
+- the plan-evidence commit of this log and plan.md follows that commit. Its SHA is not in this
+  file, because a commit cannot hold its own SHA.
+tests_run: the GREEN command of the specification, 19 test files, 280 tests, 0 failures, exit
+  status 0, 63.75 s. The dry guard check of the cover class with no call: run cover, refused true,
+  code 3, spend 0.06, message refused: l2-u1-cover-quest-teacher-front color count 6 (max 6).
+files_changed: tests/storytime-cover-guards.test.ts, tests/storytime-u2-guards.test.ts,
+  measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md, this log. The restored file
+  out/storytime/covers/teacher-front/muse/costs.tsv is outside git, with the SHA-256
+  2ef0e1b15cce56ca2376695e688c5962259850cbbd6f29c410e16fd1ba02159c. The new files in git: none.
+plan_updates: Task 4 holds the sub-bullet "Judge of step E". Task 6 holds the sub-bullet "Step F"
+  and is back to [b] with deferred:maker.
+known_failures: none. The hash check of the 18 cost files gives the same values before and after
+  the GREEN run. No file and no folder under out/ changed during the run.
+handoff: The checker and the review roles read this log and the sub-bullet "Step F" of Task 6. The
+  cover cost file is back, so the guard refuses a 7th cover call. The PM still owes the decision on
+  the cover layout for Task 7. The test file tests/storytime-u2-guards.test.ts is not in the owned
+  paths of the specification. Its change stays in the harness of the tests U2G11 and U2G10, and it
+  removes the last 2 deletes of a real folder of the repository from the GREEN command.
+END_MEASURE_AGENT_RESULT
