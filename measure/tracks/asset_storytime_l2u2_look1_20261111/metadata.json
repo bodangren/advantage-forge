@@ -1,0 +1,22 @@
+{
+  "track_id": "asset_storytime_l2u2_look1_20261111",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-11-10T23:44:29Z",
+  "updated_at": "2026-11-10T23:44:29Z",
+  "description": "Storytime Level 2 unit 2 look1: a hat-pip delivery job on Daniel's words (0 USD) and the redo of the \"Put on your T-shirt\" picture with Muse (stop 0.10 USD), with the frozen Sonnet judge plus an action check, a new delivery folder, and a new hand-off folder",
+  "estimated_tasks": 5,
+  "actual_tasks": 0,
+  "deviation_notes": "Created from the PM order of Daniel's look at Task 2.8 of Workbooks unit 2 (2026-11-11). It is not a dependency on the archived tracks asset_storytime_l2_unit2_pictures_20261108 and asset_storytime_l2_retries_cover_20261110, because they are archived. Whole track on the PM light lane of 2026-11-03: one maker (measure-jr-green) and one checker (measure-phase-acceptance), then closeout; no spec review, Red, Review A, B, or C, adversarial, UX, or final acceptance role. Phase 1 holds one unpaid task (the prompt edit, the guard exception U2_LOOK_TRY, the tests, and the owner record), two paid tasks (the T-shirt color tries and line tries, stop 0.10 USD), and one unpaid task (delivery, hand-off, and report). The registry entry is staged through a blob because measure/tracks.md holds a foreign uncommitted hunk. The generator is not run because measure/generated/ holds foreign changes. Defaults are in the section Open questions answered by default of the specification. The author model is claude-code/claude-sonnet-5-5#high.",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [
+    "scripts/storytime-muse-guards.mjs",
+    "docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt.json",
+    "tests/storytime-u2-look1.test.ts",
+    "out/storytime/l2/unit2/delivery-muse-v1-look1/",
+    "/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-look1/MANIFEST.txt",
+    "measure/runs/asset_storytime_l2u2_look1_20261111/"
+  ],
+  "dependencies": []
+}

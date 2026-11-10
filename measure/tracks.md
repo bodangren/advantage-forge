@@ -135,6 +135,9 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Chibi Sprouts, release 1 art**
   *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
 
+- [ ] **Track: Storytime Level 2 unit 2 look1: hat-pip owner job and the t-shirt redo**
+  *Link: [./tracks/asset_storytime_l2u2_look1_20261111/](./tracks/asset_storytime_l2u2_look1_20261111/)*
+
 
 ## Games
 
