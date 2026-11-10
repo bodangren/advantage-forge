@@ -62,11 +62,14 @@ const STYLE_A =
 const STYLE_B = 'Not 3D. Not a render. Not clay.';
 const STYLE = `${STYLE_A} ${STYLE_B}`;
 const SCENE =
-  'The scene is under a giant old tree. The tree stands in a sunny flower meadow of a storybook valley. A stream ' +
-  'runs behind. Teacher Kim sits on a low tree stump. She shows the open book to the children. She holds one open ' +
-  'picture book. Its open pages turn toward Nan and Sam, so the children see the pictures. She looks at the ' +
-  'children and smiles. Nan and Sam sit on the grass in front of her. They look at the pictures in the book. They ' +
-  'smile. The pages show simple pictures, for example a tree and a ball.';
+  'The scene is under a giant old tree. The tree stands in a sunny flower meadow of a storybook valley. A ' +
+  'stream runs behind. Teacher Kim sits on a low tree stump. She shows the open book to the children. She holds ' +
+  'one open picture book. Its open pages turn toward Nan and Sam, so the children see the pictures. She looks ' +
+  'at the children and smiles. Nan and Sam kneel upright on the grass close in front of her and lean toward the ' +
+  'book. Each child holds both hands up at chest height: one hand on the lower edge of the open book and one ' +
+  'hand pointing at it. Every hand stays at chest height, above the knees. They look at the pictures in the ' +
+  'book. They smile. The book turns toward Nan and Sam, so the viewer sees the back of its plain warm brown ' +
+  'cover and the edges of its cream pages, and no page picture.';
 const KIM =
   'Teacher Kim: a grown woman, about one and a half times as tall as the children, with medium-length dark-brown ' +
   'hair in a low ponytail, a soft green cardigan over a cream blouse, navy trousers, brown flat shoes, a gentle smile';
