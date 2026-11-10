@@ -228,7 +228,7 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
     Teacher Kim has big curly hair. The cast gives smooth hair in a low ponytail. The count of 7
     children, Teacher Kim, and Pip is correct. Hat-pip is a fail row now, with no more tries
     (PM 2026-11-10).
-- [x] Task 5 (PENDING_SHA): Retry delivery and hand-off (D4). Write `approvals-retry1.json` for the passing rows. Run
+- [x] Task 5 (026a3e8c): Retry delivery and hand-off (D4). Write `approvals-retry1.json` for the passing rows. Run
   `deliverMuseUnit2` with `approvalsOnly` into `out/storytime/l2/unit2/delivery-muse-v1-retry1/`. Build
   `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-retry1/` with the hard links,
   `manifest.json`, `contact-sheet.png`, `not-delivered/` with its `README.md`, the spend log copy, and
