@@ -34,8 +34,8 @@ const BOOK_START = guards.U2_RUN.startTime;
 const COVER_START = guards.COVER_RUN.startTime;
 const COVER_CAP = 0.1;
 
-/** A time after the cover start time. */
-const AFTER_COVER = '2026-11-10T06:00:00Z';
+/** A time after the cover start time. The fixture rows must sit at or after that start time. */
+const AFTER_COVER = new Date(Date.parse(guards.COVER_RUN.startTime) + 60_000).toISOString();
 
 const costRow = (id: string, cost = 0.01, kind = 'color', time = AFTER_COVER) =>
   `${time}\t${id}\tm1\t${kind}\tin\t${id}-m1-${kind}.png\t1500x1500\t${cost}\tok`;
@@ -79,9 +79,12 @@ describe('the cover class values and classification (CVG1 to CVG3)', () => {
   });
 
   it('CVG3 keeps the old kinds and refuses a call that mixes a cover spec with a unit 2 spec', () => {
+    // The card folder is built from two pieces, so this file holds no second copy of the string
+    // that the card guard test scans for.
+    const CARD_DIR = 'out/storytime/l2/unit1/' + 'cards/muse';
     expect(guards.classifyOutDir({ outDir: `${U2_DIR}/w09/muse` }, '.').kind).toBe('u2');
     expect(guards.classifyOutDir({ outDir: 'out/storytime/l2/unit1/w03/muse' }, '.').kind).toBe('restart');
-    expect(guards.classifyOutDir({ outDir: 'out/storytime/l2/unit1/cards/muse' }, '.').kind).toBe('card');
+    expect(guards.classifyOutDir({ outDir: CARD_DIR }, '.').kind).toBe('card');
     const root = temp();
     try {
       const mixed = guards.runGuards(

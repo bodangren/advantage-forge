@@ -40,7 +40,8 @@ let outDir: string;
 async function rowColor(file: string, row: number): Promise<number[]> {
   const { data, info } = await sharp(file).raw().toBuffer({ resolveWithObject: true });
   const offset = row * info.width * info.channels;
-  return [data[offset], data[offset + 1], data[offset + 2]];
+  const pixel = (index: number) => data[index] ?? 0;
+  return [pixel(offset), pixel(offset + 1), pixel(offset + 2)];
 }
 
 /** The RGB triple of a hex color. */
@@ -49,6 +50,13 @@ const rgbOf = (hex: string) => [
   parseInt(hex.slice(3, 5), 16),
   parseInt(hex.slice(5, 7), 16),
 ];
+
+/** The color of one zone line. The script holds a color for every zone. */
+const zoneColor = (percent: number): string => {
+  const hex = ZONE_COLORS[percent];
+  if (!hex) throw new Error(`the zone ${percent} has no color`);
+  return hex;
+};
 
 beforeEach(async () => {
   root = await mkdtemp(path.join(os.tmpdir(), 'cover-judge-copy-'));
@@ -99,7 +107,7 @@ describe('the cover judge copy helper (JC1 to JC5)', () => {
     const written = await makeCoverJudgeCopies(sourceFile, outDir, ID, 1);
     for (const percent of COVER_ZONES) {
       const color = await rowColor(written.zones, zoneRow(percent));
-      expect.soft(color, `zone ${percent}`).toEqual(rgbOf(ZONE_COLORS[percent]));
+      expect.soft(color, `zone ${percent}`).toEqual(rgbOf(zoneColor(percent)));
     }
     // The row above the first zone line still holds the picture.
     const plain = await rowColor(written.zones, zoneRow(20) - 3);
