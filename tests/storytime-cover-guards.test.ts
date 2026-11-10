@@ -224,7 +224,7 @@ describe('the separate scans of the cover class (CVG8 to CVG10)', () => {
       writeCosts(root, 'muse/costs.tsv', [costRow(FIXTURE_ID, 0.073)]);
       const fixture = guards.scanCoverCostFiles(root);
       expect(fixture.pictureRows.length).toBe(1);
-      expect(fixture.pictureRows[0].row).toBe(FIXTURE_ID);
+      expect(fixture.pictureRows[0]!.row).toBe(FIXTURE_ID);
       // The production path never reads the fixture folder of a unit root outside the repository.
       expect(scanned.pictureRows.map((r) => r.row)).not.toContain(FIXTURE_ID);
     } finally {

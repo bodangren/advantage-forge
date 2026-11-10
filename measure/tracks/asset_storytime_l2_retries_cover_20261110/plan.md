@@ -438,9 +438,21 @@ hat-pip line call is the only paid call of this phase.
     after the run. The guard change gives the hat-pip line row the field `allowedTries: 2`, so the
     row allows 2 exception line tries and refuses a third. The specification holds D17 to D22 and
     FR-17 to FR-19, with D22 added for the PM order of 2026-11-11. The maker made no Muse call.
-- [b] Task 10: Writer options of D19 and their tests (FR-17). Add `versionFromList` and
+- [x] Task 10 (sha pending): Writer options of D19 and their tests (FR-17). Add `versionFromList` and
   `lineWidthExceptions` to `MuseUnit2DeliveryOptions`. Add the tests of both options. Make no Muse
-  call. deferred:maker
+  call.
+  - The writer gets the 2 options of D19. `versionFromList` takes the version of a candidate and
+    the version of its review from the picture list. `lineWidthExceptions` waives the line width
+    error of a listed row, and the candidate records the exception with the removed error text.
+    The tests R5 to R12 sit in `tests/storytime-u2-retry-delivery.test.ts`. The GREEN command passes
+    with 19 test files and 293 tests, and the exit status is 0. The typecheck gives 38 errors, all
+    in `assets/**` and in old test files, and 0 errors in `src/storytime/` and in `tests/storytime-`.
+    The maker made no Muse call. The limit of `verifyManifest` for the unit 2 writer stays: the
+    writer writes flat list names, so the verifier keeps a layout failure for every candidate. The
+    v1 delivery manifest has 440 such failures. The maker does not fix this limit, and the tests of
+    R5 and R6 check the version that the verifier reads. The type error of
+    `tests/storytime-cover-guards.test.ts` line 227 came from commit 3b22a6af of this track, so the
+    maker added the non-null assertion on that line only.
 - [b] Task 11: Hat-pip line call of D20. Edit the `linePrompt` of the hat-pip spec. Run the network
   check, then the line call `--from 3 --tries 1`, then the print gate, then build the judge batch.
   The orchestrator runs the frozen judge and the second judge. deferred:maker

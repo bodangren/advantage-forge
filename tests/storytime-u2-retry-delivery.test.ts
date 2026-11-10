@@ -16,9 +16,13 @@ import os from 'node:os';
 import path from 'node:path';
 import sharp from 'sharp';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { PICTURE_SIZES } from '../src/storytime/book-pictures.js';
-import type { MuseApprovalList } from '../src/storytime/muse-delivery.js';
-import { deliverMuseUnit2, type Unit2Row } from '../src/storytime/muse-delivery-u2.js';
+import { PICTURE_SIZES, verifyManifest } from '../src/storytime/book-pictures.js';
+import type { MuseApprovalEntry, MuseApprovalList } from '../src/storytime/muse-delivery.js';
+import {
+  deliverMuseUnit2,
+  type LineWidthException,
+  type Unit2Row,
+} from '../src/storytime/muse-delivery-u2.js';
 
 const STORY = 'l2-w09-story-page-a-show';
 const CARD = 'l2-w09-card-banana';
@@ -209,5 +213,221 @@ describe('the approvalsOnly option of the retry delivery (R1 to R4)', () => {
       }),
     ).rejects.toThrow(/differs from the pin/);
     expect(existsSync(deliveryRoot)).toBe(false);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// The repair options of D19 (2026-11-11). The writer takes the version of a candidate from the
+// picture list, and it waives the line width error of a listed row. The tests cover:
+//   - `versionFromList`: the version of the candidate, the selected version, and the version that
+//     the manifest verifier reads;
+//   - the same fixture without the option: the old Muse version;
+//   - the review version of the review mapping;
+//   - `lineWidthExceptions`: a waived width error, a wrong measured width, one more line error,
+//     and a row without an exception;
+//   - both options absent: the manifest bytes stay the same.
+//
+// The unit 2 writer writes flat list names, so `verifyManifest` keeps a layout failure for every
+// candidate of every unit 2 delivery. That limit is old and the maker does not fix it. The tests
+// below check the version that the verifier reads, and the line art errors of the job.
+//
+// The tests use temp folders and small generated PNG fixtures. No test makes a provider call.
+// ---------------------------------------------------------------------------
+
+/** The frame of the line print fixtures sits this far inside the image, so the edge check passes. */
+const FRAME_INSET = 100;
+
+/**
+ * A black frame line print of the given thickness, in pixels. The frame sits inside the image, so
+ * the edge frame check passes. The measured line width is the thickness of the frame. One grey
+ * pixel marks a print with one more line error.
+ */
+async function frameLinePng(width: number, height: number, thickness: number, grey = false): Promise<Buffer> {
+  const key = `frame:${width}x${height}:${thickness}:${grey}`;
+  const hit = pngCache.get(key);
+  if (hit) return hit;
+  const pixels = Buffer.alloc(width * height, 255);
+  const left = FRAME_INSET;
+  const right = width - FRAME_INSET;
+  for (let y = FRAME_INSET; y < height - FRAME_INSET; y += 1) {
+    if (y < FRAME_INSET + thickness || y >= height - FRAME_INSET - thickness) {
+      pixels.fill(0, y * width + left, y * width + right);
+    } else {
+      pixels.fill(0, y * width + left, y * width + left + thickness);
+      pixels.fill(0, y * width + right - thickness, y * width + right);
+    }
+  }
+  if (grey) pixels[Math.floor(height / 2) * width + Math.floor(width / 2)] = 128;
+  const png = await sharp(pixels, { raw: { width, height, channels: 1 } }).toColourspace('b-w').png().toBuffer();
+  pngCache.set(key, png);
+  return png;
+}
+
+/** One approval entry whose line print has a frame of the given thickness, in pixels. */
+async function writeMuseEntryWithLine(rowId: string, version: number, thickness: number, grey = false) {
+  const row = ROWS.find((candidate) => candidate.id === rowId)!;
+  const size = row.sizeClass === 'C' ? PICTURE_SIZES.small : PICTURE_SIZES.story;
+  const colorPrint = `${rowId}-m${version}-color-print.png`;
+  const linePrint = `${rowId}-m${version}-line-print.png`;
+  await writeFile(path.join(museRoot, colorPrint), await colorPng(size.width, size.height));
+  await writeFile(path.join(museRoot, linePrint), await frameLinePng(size.width, size.height, thickness, grey));
+  return { rowId, version, colorPrint, linePrint };
+}
+
+/** The delivery folder of the repair tests. Each test uses its own folder. */
+let repairRoot: string;
+
+/** The writer of the repair tests. It takes the two options of D19. */
+const runRepair = (options: {
+  approvals: MuseApprovalList;
+  approvalsOnly?: boolean;
+  versionFromList?: boolean;
+  lineWidthExceptions?: Record<string, LineWidthException>;
+  deliveryRoot?: string;
+}) =>
+  deliverMuseUnit2({
+    listFile,
+    pictureListPin: pin,
+    approvals: options.approvals,
+    ...(options.approvalsOnly === undefined ? {} : { approvalsOnly: options.approvalsOnly }),
+    ...(options.versionFromList === undefined ? {} : { versionFromList: options.versionFromList }),
+    ...(options.lineWidthExceptions === undefined ? {} : { lineWidthExceptions: options.lineWidthExceptions }),
+    rows: { rows: ROWS_DOC.rows },
+    repoRoot: root,
+    museRoot,
+    deliveryRoot: options.deliveryRoot ?? repairRoot,
+  });
+
+describe('the repair options of D19 (R5 to R12)', () => {
+  beforeEach(() => {
+    repairRoot = path.join(root, 'out/storytime/l2/unit2/w09/delivery-muse-v1-repair1');
+  });
+
+  it('R5 gives the candidate and the selected version the version of the picture list', async () => {
+    const card = await writeMuseEntry(CARD, 2);
+    const manifest = await runRepair({ approvals: approvals([card]), approvalsOnly: true, versionFromList: true });
+    const job = manifest.jobs.find((item) => item.id === CARD)!;
+    const candidate = job.candidates[0]!;
+    expect(candidate.version).toBe(1);
+    expect(job.selectedVersion).toBe(1);
+    expect(candidate.file).toBe(`${CARD}-v1.png`);
+    // The verifier reads the candidate at the version of the candidate. The layout failure of the
+    // flat unit 2 names stays, and it names the version of the candidate. So no failure of this
+    // job names version 2.
+    const failures = verifyManifest(manifest, { release: false, jobId: CARD });
+    expect(failures.length).toBeGreaterThan(0);
+    expect(failures.filter((failure) => failure.includes(' v2'))).toEqual([]);
+  });
+
+  it('R6 keeps the Muse version without the option', async () => {
+    const card = await writeMuseEntry(CARD, 2);
+    const manifest = await runRepair({ approvals: approvals([card]), approvalsOnly: true });
+    const job = manifest.jobs.find((item) => item.id === CARD)!;
+    expect(job.candidates[0]!.version).toBe(2);
+    expect(job.selectedVersion).toBe(2);
+    const failures = verifyManifest(manifest, { release: false, jobId: CARD });
+    expect(failures.some((failure) => failure.includes('candidate filename does not match its job'))).toBe(true);
+    expect(failures.some((failure) => failure.includes(' v2'))).toBe(true);
+  });
+
+  it('R7 gives the review of the approval entry the version of the picture list', async () => {
+    const card = await writeMuseEntry(CARD, 2);
+    const entry: MuseApprovalEntry = {
+      rowId: CARD,
+      version: 2,
+      colorPrint: card.colorPrint,
+      linePrint: card.linePrint,
+      reviews: {
+        kimi: {
+          provider: 'kimi',
+          model: 'kimi-k2',
+          verdict: 'pass',
+          reason: 'The picture matches the text.',
+          checkedAt: '2026-11-11T00:00:00Z',
+        },
+      },
+    };
+    const manifest = await runRepair({ approvals: approvals([entry]), approvalsOnly: true, versionFromList: true });
+    const job = manifest.jobs.find((item) => item.id === CARD)!;
+    const candidate = job.candidates[0]!;
+    expect(candidate.version).toBe(1);
+    expect(candidate.reviews.kimi?.version).toBe(1);
+    // The release check compares the version of a review with the version of the candidate.
+    const failures = verifyManifest(manifest, { release: true, jobId: CARD });
+    expect(failures.filter((failure) => failure.includes('does not match the selected candidate'))).toEqual([]);
+  });
+
+  it('R8 waives the line width error of a listed row', async () => {
+    const card = await writeMuseEntryWithLine(CARD, 1, 8);
+    const reason = 'The owner accepts the 8 px line of this card row.';
+    const manifest = await runRepair({
+      approvals: approvals([card]),
+      approvalsOnly: true,
+      lineWidthExceptions: { [CARD]: { measuredPx: 8, requiredPx: 12, reason } },
+    });
+    const job = manifest.jobs.find((item) => item.id === CARD)!;
+    const candidate = job.candidates[0]!;
+    expect(candidate.lineWidthException).toEqual({
+      measuredPx: 8,
+      requiredPx: 12,
+      reason,
+      waivedError: 'Line-art twin lines must be at least 12 px thick; measured 8 px.',
+    });
+    expect(candidate.lineArt?.structural.errors).toEqual([]);
+    expect(candidate.lineArt?.structural.valid).toBe(true);
+    const failures = verifyManifest(manifest, { release: false, jobId: CARD });
+    expect(failures.length).toBeGreaterThan(0);
+    expect(failures.filter((failure) => failure.includes('line-art structural check failed'))).toEqual([]);
+  });
+
+  it('R9 stops the delivery when the measured width of the exception differs', async () => {
+    const card = await writeMuseEntryWithLine(CARD, 1, 8);
+    await expect(
+      runRepair({
+        approvals: approvals([card]),
+        approvalsOnly: true,
+        lineWidthExceptions: { [CARD]: { measuredPx: 9, requiredPx: 12, reason: 'The owner accepts the 8 px line.' } },
+      }),
+    ).rejects.toThrow(/the line width exception measured 9 px, but the line print measured 8 px/);
+    expect(existsSync(repairRoot)).toBe(false);
+  });
+
+  it('R10 refuses a listed row with one more line error', async () => {
+    const card = await writeMuseEntryWithLine(CARD, 1, 8, true);
+    await expect(
+      runRepair({
+        approvals: approvals([card]),
+        approvalsOnly: true,
+        lineWidthExceptions: { [CARD]: { measuredPx: 8, requiredPx: 12, reason: 'The owner accepts the 8 px line.' } },
+      }),
+    ).rejects.toThrow(/grey pixels found/);
+    expect(existsSync(repairRoot)).toBe(false);
+  });
+
+  it('R11 refuses a narrow line of a row without an exception', async () => {
+    const card = await writeMuseEntryWithLine(CARD, 1, 8);
+    await expect(runRepair({ approvals: approvals([card]), approvalsOnly: true })).rejects.toThrow(
+      /Line-art twin lines must be at least 12 px thick; measured 8 px/,
+    );
+    expect(existsSync(repairRoot)).toBe(false);
+  });
+
+  it('R12 keeps the manifest bytes without the options', async () => {
+    const card = await writeMuseEntry(CARD, 2);
+    const first = await runRepair({ approvals: approvals([card]), approvalsOnly: true });
+    const bytes = await readFile(path.join(repairRoot, 'manifest.json'));
+    // The same fixture with the options at their default values gives the same bytes.
+    const second = await runRepair({
+      approvals: approvals([card]),
+      approvalsOnly: true,
+      versionFromList: false,
+      lineWidthExceptions: {},
+    });
+    expect(await readFile(path.join(repairRoot, 'manifest.json'))).toEqual(bytes);
+    expect(second).toEqual(first);
+    // The default output keeps the Muse version and holds no exception record.
+    const candidate = first.jobs[0]!.candidates[0]!;
+    expect(candidate.version).toBe(2);
+    expect(Object.keys(candidate)).not.toContain('lineWidthException');
   });
 });

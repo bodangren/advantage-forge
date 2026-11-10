@@ -9,6 +9,7 @@ import {
   planPictureRow,
   rowCaptureJob,
   type CandidateManifest,
+  type ManifestJob,
   type PictureListRow,
   type StorytimeJob,
   type StorytimeManifest,
@@ -55,6 +56,45 @@ export interface Unit2Row {
   reuse?: Unit2ReuseSource | null;
 }
 
+/**
+ * One line width exception of a row (D19, 2026-11-11). The writer waives the line width error of
+ * the line print of that row. Every other line error and every color error still refuses the row.
+ */
+export interface LineWidthException {
+  /** The measured width of the line print of the row, in pixels. */
+  measuredPx: number;
+  /** The required width of the line print of the row, in pixels. The writer accepts only 12 px. */
+  requiredPx: number;
+  /** Why the owner accepts the narrower line. */
+  reason: string;
+}
+
+/**
+ * One waived line width error of a row (D19). The record stays in the manifest of the delivery, so
+ * the exception of a row stays readable.
+ */
+export interface LineWidthExceptionRecord {
+  /** The measured width of the line print of the row, in pixels. */
+  measuredPx: number;
+  /** The required width of the line print of the row, in pixels. */
+  requiredPx: number;
+  /** Why the owner accepts the narrower line. */
+  reason: string;
+  /** The exact error text of the line print gate that the waiver removed. */
+  waivedError: string;
+}
+
+/** The candidate of one row of the unit 2 delivery. It adds the line width exception record. */
+export interface MuseUnit2Candidate extends CandidateManifest {
+  /** The waived line width error of the row. A row without an exception has no record. */
+  lineWidthException?: LineWidthExceptionRecord;
+}
+
+/** The unit 2 delivery manifest. Its candidates carry the line width exception record. */
+export interface MuseUnit2Manifest extends StorytimeManifest {
+  jobs: Array<ManifestJob & { candidates: MuseUnit2Candidate[] }>;
+}
+
 export interface MuseUnit2DeliveryOptions {
   /** The unit 2 picture list file. The writer reads it and checks the SHA-256 pin. */
   listFile?: string;
@@ -68,6 +108,18 @@ export interface MuseUnit2DeliveryOptions {
    * callback is not called. The checks of the list and of every file stay.
    */
   approvalsOnly?: boolean;
+  /**
+   * Take the version of a candidate from the picture list (D19). Default false. When it is true,
+   * the version of a candidate is `listVersion(row.fileName)`, and the same version goes to the
+   * review mapping. Without the option, the Muse version of the approval entry gives the version.
+   */
+  versionFromList?: boolean;
+  /**
+   * The line width exceptions of the rows (D19). Default none. The value is a map from a row id to
+   * the measured width, the required width, and the reason. The writer waives the line width error
+   * of a listed row and records the exception in the candidate of that row.
+   */
+  lineWidthExceptions?: Record<string, LineWidthException>;
   /** The unit 2 rows file, or an already parsed document. Default: `<repoRoot>/docs/storytime/l2-unit2/rows.json`. */
   rows?: Unit2Row[] | { rows: Unit2Row[] } | string;
   /** The repository root, for the reuse source paths of rows.json. */
@@ -96,7 +148,7 @@ interface DeliveryItem {
   lineBytes: Buffer;
   colorSha256: string;
   lineSha256: string;
-  candidate: CandidateManifest;
+  candidate: MuseUnit2Candidate;
 }
 
 function sha256(data: Buffer | string): string {
@@ -107,6 +159,56 @@ function sha256(data: Buffer | string): string {
 function listVersion(name: string): number {
   const match = /-v(\d+)\.png$/.exec(name);
   return match ? Number(match[1]) : 1;
+}
+
+/**
+ * The line width error text of the line print gate (D19). The first number is the required width,
+ * the second number is the measured width. A line width exception waives one error of this text.
+ */
+const LINE_WIDTH_ERROR_PATTERN = /^Line-art twin lines must be at least (\d+) px thick; measured (\d+) px\.$/;
+
+/**
+ * Removes the line width error of a row when the exception matches that error (D19). The function
+ * returns the removed error text. A failed match returns a problem that names the row, and the line
+ * errors of the row stay.
+ */
+function waiveLineWidthError(
+  rowId: string,
+  line: CandidateManifest['structural'],
+  exception: LineWidthException,
+): { ok: true; waivedError: string } | { ok: false; problem: string } {
+  const index = line.errors.findIndex((error) => LINE_WIDTH_ERROR_PATTERN.test(error));
+  if (index < 0) {
+    return {
+      ok: false,
+      problem:
+        `${rowId}: the line width exception has no line width error to waive; ` +
+        `the write stops with ${rowId}.`,
+    };
+  }
+  const match = LINE_WIDTH_ERROR_PATTERN.exec(line.errors[index]!)!;
+  const requiredPx = Number(match[1]);
+  const measuredPx = Number(match[2]);
+  if (measuredPx !== exception.measuredPx) {
+    return {
+      ok: false,
+      problem:
+        `${rowId}: the line width exception measured ${exception.measuredPx} px, ` +
+        `but the line print measured ${measuredPx} px; the write stops with ${rowId}.`,
+    };
+  }
+  if (exception.requiredPx !== 12 || exception.requiredPx !== requiredPx) {
+    return {
+      ok: false,
+      problem:
+        `${rowId}: the line width exception requires ${exception.requiredPx} px, ` +
+        `but the line print gate requires ${requiredPx} px; the write stops with ${rowId}.`,
+    };
+  }
+  const waivedError = line.errors[index]!;
+  line.errors.splice(index, 1);
+  line.valid = line.errors.length === 0;
+  return { ok: true, waivedError };
 }
 
 /**
@@ -235,7 +337,8 @@ function candidateOf(item: {
   color: CandidateManifest['structural'];
   line: CandidateManifest['structural'];
   reviews: CandidateManifest['reviews'];
-}): CandidateManifest {
+  lineWidthException?: LineWidthExceptionRecord;
+}): MuseUnit2Candidate {
   const { row, version, colorFile, lineFile, colorSha256, lineSha256, color, line, reviews } = item;
   return {
     jobId: row.id,
@@ -256,6 +359,8 @@ function candidateOf(item: {
       errors: [],
     },
     failures: [],
+    // The waived line width error of the row stays readable in the manifest (D19).
+    ...(item.lineWidthException ? { lineWidthException: item.lineWidthException } : {}),
   };
 }
 
@@ -268,8 +373,12 @@ function candidateOf(item: {
  * With the option `approvalsOnly` the writer delivers only the rows of the approval list. A row
  * without an entry gets no job, the reuse rows stay out of the delivery, and `onSkip` is not
  * called. The checks of the list and of every file stay.
+ *
+ * With the option `versionFromList` the version of a candidate comes from the picture list. With the
+ * option `lineWidthExceptions` a listed row keeps its line width error, and the candidate of that
+ * row records the exception. Every other line error and every color error still refuses the row.
  */
-export async function deliverMuseUnit2(options: MuseUnit2DeliveryOptions): Promise<StorytimeManifest> {
+export async function deliverMuseUnit2(options: MuseUnit2DeliveryOptions): Promise<MuseUnit2Manifest> {
   const repoRoot = path.resolve(options.repoRoot ?? process.cwd());
   const list = await readUnit2List(options.listFile ?? UNIT2_LIST_FILE, options.pictureListPin);
   const approvals = await parseApprovals(options.approvals);
@@ -371,12 +480,34 @@ export async function deliverMuseUnit2(options: MuseUnit2DeliveryOptions): Promi
     const size = { width: plan.width, height: plan.height };
     const color = await inspectColorPrint(colorBytes, size);
     const line = await inspectLineArtPng(lineBytes, size);
+    // The line width exception of the row waives its line width error (D19). The waiver removes
+    // that one error, so the other line errors of the row still refuse it.
+    const exception = options.lineWidthExceptions?.[row.id];
+    let lineWidthException: LineWidthExceptionRecord | undefined;
+    if (exception) {
+      const waiver = waiveLineWidthError(row.id, line, exception);
+      if (waiver.ok) {
+        lineWidthException = {
+          measuredPx: exception.measuredPx,
+          requiredPx: exception.requiredPx,
+          reason: exception.reason,
+          waivedError: waiver.waivedError,
+        };
+      } else {
+        problems.push(waiver.problem);
+      }
+    }
     for (const error of color.errors) problems.push(`${row.id}: color print: ${error}`);
     for (const error of line.errors) problems.push(`${row.id}: line print: ${error}`);
     if (!color.valid || !line.valid) continue;
     const colorSha256 = sha256(colorBytes);
     const lineSha256 = sha256(lineBytes);
-    const version = entry?.version ?? listVersion(row.fileName);
+    // The option takes the version of the delivered names from the picture list (D19). The same
+    // version goes to the review mapping, so a review never names another version than the
+    // candidate.
+    const version = options.versionFromList
+      ? listVersion(row.fileName)
+      : (entry?.version ?? listVersion(row.fileName));
     let reviews: CandidateManifest['reviews'];
     try {
       reviews = entry
@@ -404,8 +535,19 @@ export async function deliverMuseUnit2(options: MuseUnit2DeliveryOptions): Promi
         color,
         line,
         reviews,
+        ...(lineWidthException ? { lineWidthException } : {}),
       }),
     });
+  }
+  // A row id of the exception map that the delivery does not deliver stops the write (D19).
+  const delivered = new Set(items.map((item) => item.row.id));
+  for (const rowId of Object.keys(options.lineWidthExceptions ?? {})) {
+    if (!delivered.has(rowId)) {
+      problems.push(
+        `${rowId}: the line width exception names a row that the delivery does not deliver; ` +
+          `the write stops with ${rowId}.`,
+      );
+    }
   }
   if (problems.length) throw new Error(`The unit 2 delivery stopped; nothing was written:\n${problems.join('\n')}`);
 
@@ -414,7 +556,7 @@ export async function deliverMuseUnit2(options: MuseUnit2DeliveryOptions): Promi
     // The files sit at the delivery root; the directory only groups the batch hash by week.
     directory: `w${String(item.row.week).padStart(2, '0')}`,
   }));
-  const manifest = assembleManifest(jobs, items.map((item) => item.candidate));
+  const manifest = assembleManifest(jobs, items.map((item) => item.candidate)) as MuseUnit2Manifest;
   const copies: DeliveryCopy[] = [];
   for (const item of items) {
     copies.push(

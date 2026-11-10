@@ -347,13 +347,21 @@ questions answered by default" lists. The PM can change each default.
 - **D19 Writer options (Task 10).** `MuseUnit2DeliveryOptions` in `src/storytime/muse-delivery-u2.ts`
   gets 2 options. With both absent, the behavior has no change.
   - `versionFromList` (default false). When it is true, the manifest version of a candidate is
-    `listVersion(row.fileName)`. The Muse version of the approval entry still feeds the review
-    mapping.
+    `listVersion(row.fileName)`. The same version goes to the candidate and to the review mapping.
+    - Orchestrator default (2026-11-11): the review mapping takes the list version too. Reason:
+      `verifyManifest` refuses a review whose version differs from the candidate version
+      (book-pictures.ts:2176). The Muse version stays in the approval list and in the README of Task 12.
   - `lineWidthExceptions` (default none). The value is a map from a row id to
     `{ measuredPx, requiredPx: 12, reason }`. For a listed row, the writer accepts only the line-width
     error of the line print gate. Every other line error and every color error still refuses the row.
     The manifest candidate of that row records
     `lineWidthException: { measuredPx, requiredPx, reason }`.
+    - Orchestrator default (2026-11-11): the record holds `waivedError` too, the exact removed error
+      text. Reason: the record of the exception stays in manifest.json. The waiver needs three facts.
+      The width error must be in `line.errors`. The measured value of the error must equal
+      `measuredPx`. The `requiredPx` must be 12 and must equal the required width of the error. The
+      writer removes that one error and sets `line.valid`. A failed condition stops the delivery and
+      writes nothing. A listed row id that the delivery does not deliver also stops it.
   - The maker adds the tests of FR-17.
 - **D20 Hat-pip line (Task 11).** The hat-pip line row of `U2_EXTRA_TRY` gets `allowedTries: 2` and
   the PM words of D17 in its `source`. The row then allows 2 exception line tries since
@@ -473,10 +481,10 @@ questions answered by default" lists. The PM can change each default.
 - **FR-17 The writer options and the hat-pip guard.** Tests show:
   - `versionFromList` absent: the manifest version of a candidate is the Muse version of the approval
     entry. `versionFromList` true: the manifest version of a candidate is `listVersion(row.fileName)`,
-    and the review mapping still uses the Muse version.
+    and the review mapping uses the list version too.
   - `lineWidthExceptions` absent: a row with a line print under 12 px is refused. With an exception
     for that row: the row is delivered, and the manifest candidate records `lineWidthException` with
-    the measured width, the required width, and the reason.
+    the measured width, the required width, the reason, and the removed error text.
   - a row without an exception still refuses its line print. A color error of a row with an exception
     still refuses the row.
   - the hat-pip line row allows a second exception line try, and a third is refused.
