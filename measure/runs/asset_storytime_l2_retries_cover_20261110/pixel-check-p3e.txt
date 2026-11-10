@@ -1,0 +1,51 @@
+pixel check of FR-18, the repair1 delivery
+
+check 1, the 9 repaired rows against the v1 delivery folder
+  l2-w10-check-row-ten-v1.png: same=True sha256=c77c2db06122ca30968c55277673c002eaf36ff8d521d651271616982326e734
+  l2-w10-check-row-ten-line-v1.png: same=True sha256=cc5e7916d1c703989289c474c0ccb2af3a9a2b7b2d329a795e87c54e3ca633ce
+  l2-w11-story-page-here-v1.png: same=True sha256=2e71fa31c5c7f4e3faf1961dd58260948c0d593d8eb6eab36ef9a79886a70a3b
+  l2-w11-story-page-here-line-v1.png: same=True sha256=46fd03b520ecde750f6170020ca4f02e6affaaea9d499833d6f8cad1a9eba9ef
+  l2-w11-story-page-ten-men-in-the-den-v1.png: same=True sha256=36a078f6177e4e87b8a578b28834a8e2c7ca822e2ae1ee56f945f95cc7e4bbe2
+  l2-w11-story-page-ten-men-in-the-den-line-v1.png: same=True sha256=4f8792f3a39fd1e8e0a4de3400cd3e33df7158594332f6d47031757d017223de
+  l2-w11-story-page-the-den-is-on-dad-v1.png: same=True sha256=ed6d90a2538d021e627fae051ab7db10d050b993fb6b84131f95d467712c62ca
+  l2-w11-story-page-the-den-is-on-dad-line-v1.png: same=True sha256=3b4ce24e9c982bf59844575c1a4f4765736993c8e695706829b8ac04886b2b02
+  l2-w12-story-page-open-your-book-nan-v1.png: same=True sha256=9439e0376e46ac252d86db5ecbfbff360af1dda45295b08e58c54cd068201056
+  l2-w12-story-page-open-your-book-nan-line-v1.png: same=True sha256=4e0c1a5334d16e5d30e7a0470fc04f20a2675029fa388608c437d3b17ec484e3
+  l2-w13-cover-look-at-me-v1.png: same=True sha256=e54d466612ddb69e9e8318c76cb01cd7378cff2891119a48b3d1b21f236da131
+  l2-w13-cover-look-at-me-line-v1.png: same=True sha256=0f10a2f89cff53e7356d740a7f173c2ec4e438183bbb6d55862b826c6d3aff7c
+  l2-w13-check-row-dot-v1.png: same=True sha256=1882abb894357293296099fe9334b54140bd6b6d44c7e9a83532a1425b591db8
+  l2-w13-check-row-dot-line-v1.png: same=True sha256=c0229516ae37ec92b93cebb7702afad44d4c60b8c4d582f1b810bbb3f6a61659
+  l2-w13-d4-prompt-jump-v1.png: same=True sha256=7d2f1777d65c36f813587ef2ac697d6dec6115f8fac35a35167ce110417d69e5
+  l2-w13-d4-prompt-jump-line-v1.png: same=True sha256=f2450fccf9d8776c7e13ba377de5990691fc9ad0a43d437e2f6ce984cdd82bc1
+  l2-w15-cover-look-a-bus-v1.png: same=True sha256=b225cc34a8d6d9144ee27fd2ca7da56472478f94d8c1bf5a71e50a636181e445
+  l2-w15-cover-look-a-bus-line-v1.png: same=True sha256=c74ae36d26df35053328ae6f716468cc40cca37af4c26b982650b54edf31e055
+
+check 2, the 4 card rows against their source prints
+  l2-w12-card-hippo-v1.png: source=l2-w12-card-hippo-m1-color-print.png same=True sha256=10cffe865371198b0d6d1a5a3f8804eb6c04e8852c96c5781be38551914366e6
+  l2-w12-card-hippo-line-v1.png: source=l2-w12-card-hippo-m1-line-print-4.png same=True sha256=62c5ad550fe53ab0ed31e7f45ce72c437c1ad569c4391b964c0af059a7396bc6
+  l2-w12-card-ruler-v1.png: source=l2-w12-card-ruler-m1-color-print.png same=True sha256=32582d23b74f33c6aaffeccbf880b4fc313bdbddb8564f6353f09a46a4dca0e0
+  l2-w12-card-ruler-line-v1.png: source=l2-w12-card-ruler-m1-line-print-4.png same=True sha256=88f8c291d041b377318d4eb03d7af6c9a2eff7a411c62c6c1a8b6cb6344d596c
+  l2-w13-card-clap-v1.png: source=l2-w13-card-clap-m1-color-print.png same=True sha256=f5b85af7d9429aad8067c34d734a2f2815a715444176f20998902f39b95c5a22
+  l2-w13-card-clap-line-v1.png: source=l2-w13-card-clap-m1-line-print-3.png same=True sha256=9996736198d8d769978ec171b47b711acc9b04ac26dfbed3587a70cc1521e7a5
+  l2-w14-card-cold-v1.png: source=l2-w14-card-cold-m1-color-print.png same=True sha256=138c9760913310f6ee1b86b9f7f52f52a63aa4d7b9a09497eb4f583673443898
+  l2-w14-card-cold-line-v1.png: source=l2-w14-card-cold-m1-line-print-4.png same=True sha256=db4451e3f83b1d97a5a451393e39ec9e9a81df712bd71ff6fc8f4a3654af0ab7
+
+check 3, the manifest of the repair1 delivery
+  jobs: 13
+  l2-w10-check-row-ten: versions=[1] selectedVersion=1 lineWidthException=False
+  l2-w11-story-page-here: versions=[1] selectedVersion=1 lineWidthException=False
+  l2-w11-story-page-ten-men-in-the-den: versions=[1] selectedVersion=1 lineWidthException=False
+  l2-w11-story-page-the-den-is-on-dad: versions=[1] selectedVersion=1 lineWidthException=False
+  l2-w12-story-page-open-your-book-nan: versions=[1] selectedVersion=1 lineWidthException=False
+  l2-w13-cover-look-at-me: versions=[1] selectedVersion=1 lineWidthException=False
+  l2-w13-check-row-dot: versions=[1] selectedVersion=1 lineWidthException=False
+  l2-w13-d4-prompt-jump: versions=[1] selectedVersion=1 lineWidthException=False
+  l2-w15-cover-look-a-bus: versions=[1] selectedVersion=1 lineWidthException=False
+  l2-w12-card-hippo: versions=[1] selectedVersion=1 lineWidthException=True
+  l2-w12-card-ruler: versions=[1] selectedVersion=1 lineWidthException=True
+  l2-w13-card-clap: versions=[1] selectedVersion=1 lineWidthException=True
+  l2-w14-card-cold: versions=[1] selectedVersion=1 lineWidthException=True
+  hat-pip job present: False
+
+failures: 0
+result: pass

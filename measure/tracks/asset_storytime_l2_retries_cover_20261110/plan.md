@@ -483,6 +483,23 @@ hat-pip line call is the only paid call of this phase.
 - [~] Task 12: Repair delivery of D21. Write `approvals-repair1.json`, run `deliver-repair1.mts`, do
   the pixel check, build the hand-off folder with its MANIFEST, and write the report addendum.
   deferred:maker
+  - Part 1 (this step, 0 USD). The delivery folder is
+    `out/storytime/l2/unit2/delivery-muse-v1-repair1/`. It holds 27 files. They are 26 PNG files of
+    13 rows and the file `manifest.json`. The approval list `approvals-repair1.json` holds 13
+    entries. They are the 9 entries of `approvals-u2.json` for the rows of D17, and the 4 card
+    entries of hippo, ruler, clap, and cold. The list holds no hat-pip entry, because the line try
+    3 failed both judges. The runner `deliver-repair1.mts` ran once through the heavy job gate.
+    The exit status is 0. The writer took the options `approvalsOnly`, `versionFromList`, and
+    `lineWidthExceptions` for the 4 cards. The writer refused no measured width. The measured
+    widths of the 4 cards are 9 px, 8 px, 11 px, and 10 px, and they match the exception values.
+    The pixel check of FR-18 passes. The 9 repaired rows have the same SHA-256 as their files in
+    the v1 delivery folder. The 4 cards have the SHA-256 of their source prints. The manifest
+    holds 13 jobs, and every candidate version and every `selectedVersion` is 1. The 4 card
+    candidates hold a `lineWidthException` with a `waivedError`, and the 9 rows hold no
+    `lineWidthException`. No job is the hat-pip row. The folder state of the 4 folders that must
+    not change is the same before and after. The v1 delivery folder holds 441 files, the retry1
+    delivery folder holds 9, the v1 hand-off folder holds 469, and the retry1 hand-off folder holds
+    23. The 4 state SHA-256 values are the same. The hand-off folder is not built in this part.
 - [x] Task 13 (b0386c75ffd69940625a7ff86be9937cb306bb72): Cover README title fix of D22 (FR-19).
   - The folder is `/home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/`. The cost is
     0 USD. Line 1 of the README becomes `# Teacher front cover art, Storytime Level 2 unit 1`, and

@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "pictureListSha256": "63d415000eca9d6be1a6ad533c12ff81e127cd2c76ffac339697f91b99f754ec",
+  "entries": [
+    {
+      "rowId": "l2-w10-check-row-ten",
+      "version": 2,
+      "colorPrint": "l2-w10-check-row-ten-m2-color-print.png",
+      "linePrint": "l2-w10-check-row-ten-m2-line-print.png"
+    },
+    {
+      "rowId": "l2-w11-story-page-here",
+      "version": 3,
+      "colorPrint": "l2-w11-story-page-here-m3-color-print.png",
+      "linePrint": "l2-w11-story-page-here-m3-line-print.png"
+    },
+    {
+      "rowId": "l2-w11-story-page-ten-men-in-the-den",
+      "version": 3,
+      "colorPrint": "l2-w11-story-page-ten-men-in-the-den-m3-color-print.png",
+      "linePrint": "l2-w11-story-page-ten-men-in-the-den-m3-line-print.png"
+    },
+    {
+      "rowId": "l2-w11-story-page-the-den-is-on-dad",
+      "version": 2,
+      "colorPrint": "l2-w11-story-page-the-den-is-on-dad-m2-color-print.png",
+      "linePrint": "l2-w11-story-page-the-den-is-on-dad-m2-line-print.png"
+    },
+    {
+      "rowId": "l2-w12-story-page-open-your-book-nan",
+      "version": 2,
+      "colorPrint": "l2-w12-story-page-open-your-book-nan-m2-color-print.png",
+      "linePrint": "l2-w12-story-page-open-your-book-nan-m2-line-print.png"
+    },
+    {
+      "rowId": "l2-w13-cover-look-at-me",
+      "version": 2,
+      "colorPrint": "l2-w13-cover-look-at-me-m2-color-print.png",
+      "linePrint": "l2-w13-cover-look-at-me-m2-line-print-despeckled.png"
+    },
+    {
+      "rowId": "l2-w13-check-row-dot",
+      "version": 2,
+      "colorPrint": "l2-w13-check-row-dot-m2-color-print.png",
+      "linePrint": "l2-w13-check-row-dot-m2-line-print-3.png"
+    },
+    {
+      "rowId": "l2-w13-d4-prompt-jump",
+      "version": 2,
+      "colorPrint": "l2-w13-d4-prompt-jump-m2-color-print.png",
+      "linePrint": "l2-w13-d4-prompt-jump-m2-line-print-2.png"
+    },
+    {
+      "rowId": "l2-w15-cover-look-a-bus",
+      "version": 2,
+      "colorPrint": "l2-w15-cover-look-a-bus-m2-color-print.png",
+      "linePrint": "l2-w15-cover-look-a-bus-m2-line-print.png"
+    },
+    {
+      "rowId": "l2-w12-card-hippo",
+      "version": 1,
+      "colorPrint": "l2-w12-card-hippo-m1-color-print.png",
+      "linePrint": "l2-w12-card-hippo-m1-line-print-4.png"
+    },
+    {
+      "rowId": "l2-w12-card-ruler",
+      "version": 1,
+      "colorPrint": "l2-w12-card-ruler-m1-color-print.png",
+      "linePrint": "l2-w12-card-ruler-m1-line-print-4.png"
+    },
+    {
+      "rowId": "l2-w13-card-clap",
+      "version": 1,
+      "colorPrint": "l2-w13-card-clap-m1-color-print.png",
+      "linePrint": "l2-w13-card-clap-m1-line-print-3.png"
+    },
+    {
+      "rowId": "l2-w14-card-cold",
+      "version": 1,
+      "colorPrint": "l2-w14-card-cold-m1-color-print.png",
+      "linePrint": "l2-w14-card-cold-m1-line-print-4.png"
+    }
+  ]
+}

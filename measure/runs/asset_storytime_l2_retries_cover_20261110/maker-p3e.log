@@ -1,0 +1,178 @@
+# Maker log, Phase 3 part 2 (Task 12 part 1), the repair1 delivery
+
+Session: Green · P3 T12 · storytime_l2_retries_cover. Role: measure-jr-green, light lane.
+Date: 2026-11-11. Repository: /home/daniebo/Desktop/advantage-forge, branch master.
+
+## Preconditions
+
+- `git rev-parse HEAD` gives `4fb32729c5090fbfd1b69e1a7d7d08fe72186484`. This is the role base sha of
+  this step. The step starts at that commit.
+- The track is `asset_storytime_l2_retries_cover_20261110`. The phase heading is "Phase 3: Version
+  repair, card jobs, and the hat-pip line (repair1)".
+- This step spends 0 USD. It makes no Muse call and no network call. It reads no API key.
+- This step is part 1 of Task 12 and the close of Task 11. It does not build the hand-off folder.
+
+## Step 1, the close of Task 11
+
+- The `commits` line of `maker-p3d.log` holds the full sha of the hat-pip line try commit now:
+  `4fb32729c5090fbfd1b69e1a7d7d08fe72186484`. The log still ends with the `END_MEASURE_AGENT_RESULT`
+  line on its last line.
+- The judge result of the hat-pip line try 3. The frozen judge and the second judge both fail the
+  file. The defect class of both is wrong-character, and both name the same 2 faults.
+  - Teacher Kim at the top center wears round glasses. The cast note has no glasses.
+  - Pip in the box has no collar and no tag. The cast note has a red collar with a gold tag.
+- The hair fault of line try 2 is gone. Both judges find smooth hair. All 9 mustShow items show, and
+  the count of 7 children is correct.
+- The row has used its 3 line tries. The PM allowed 1 call, and the call ran. So hat-pip gets no
+  entry in `approvals-repair1.json`, and the row stays a fail row.
+- The plan marks Task 11 `[x]` with the sha, and it gains the sub-bullet "The judge result". Task 12
+  keeps its text and its `deferred:maker` field, and its marker becomes `[~]`.
+- The spec D21 gains the sub-bullet "Orchestrator default (2026-11-11)". The PM order had a stray
+  "7" after the words "by default". This log reads the order as "by default", and the sub-bullet
+  writes "By default, the best hat-pip try stays line try 2 at 13 px."
+- The commit holds 5 paths: the maker log of p3d, the 2 judge files, the plan, and the spec. No PNG
+  or JPG file enters the commit.
+
+## Step 2, the state of the 4 folders that must not change
+
+- The script `folder-state-p3e.py` walks each of the 4 folders. It sorts the relative paths and makes
+  one line per file: `<relative path>\t<size>\t<sha256>`. It records the file count of the folder and
+  the SHA-256 of the joined lines.
+- The 4 folders are the v1 delivery folder, the retry1 delivery folder, the v1 hand-off folder, and
+  the retry1 hand-off folder.
+- The result of the first run is `folder-state-p3e-before.txt`.
+
+| folder | files | state sha256 |
+| --- | --- | --- |
+| out/storytime/l2/unit2/delivery-muse-v1/ | 441 | a64ddf5f19a76542ee8806e16e872d23ef4a44308082fabee461f3ca9aec038c |
+| out/storytime/l2/unit2/delivery-muse-v1-retry1/ | 9 | ca4cc92ff5767edf23c299602b6dc25951c5a6a45f3157c62b2252c4993544b7 |
+| handoff/storytime-l2u2-book-pictures/ | 469 | 1146c9a48c77c39ac7ce67974a3f73a6d086d575bb21699f704c35f3c309c592 |
+| handoff/storytime-l2u2-book-pictures-retry1/ | 23 | 9ade5c1e3b968ca87d71ab0d6c40503157bc5b1bb4e9be5450178e71f4f03c8a |
+
+## Step 3, the approval list
+
+- The list `approvals-repair1.json` holds the same `version` and the same `pictureListSha256` as
+  `approvals-retry1.json`. The pin is `63d415000eca9d6be1a6ad533c12ff81e127cd2c76ffac339697f91b99f754ec`.
+- The list holds 13 entries. The first 9 are the entries of
+  `measure/runs/asset_storytime_l2_unit2_pictures_20261108/approvals-u2.json` for the rows of D17,
+  copied unchanged. The Muse version of these entries stays 2 or 3.
+- The last 4 are the card entries. They have version 1, the color m1 print, and the line print of
+  the best try of the retry1 `not-delivered/` folder.
+
+| row | color print | line print |
+| --- | --- | --- |
+| l2-w12-card-hippo | l2-w12-card-hippo-m1-color-print.png | l2-w12-card-hippo-m1-line-print-4.png |
+| l2-w12-card-ruler | l2-w12-card-ruler-m1-color-print.png | l2-w12-card-ruler-m1-line-print-4.png |
+| l2-w13-card-clap | l2-w13-card-clap-m1-color-print.png | l2-w13-card-clap-m1-line-print-3.png |
+| l2-w14-card-cold | l2-w14-card-cold-m1-color-print.png | l2-w14-card-cold-m1-line-print-4.png |
+
+- The list holds no hat-pip entry. The line try 3 failed both judges, so the row has no delivery job.
+- All 8 card files exist in the Muse folders. Each file has the same SHA-256 as its file in
+  `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-retry1/not-delivered/`. No file
+  differs, so the check passes.
+
+| file | sha256 |
+| --- | --- |
+| l2-w12-card-hippo-m1-color-print.png | 10cffe865371198b0d6d1a5a3f8804eb6c04e8852c96c5781be38551914366e6 |
+| l2-w12-card-hippo-m1-line-print-4.png | 62c5ad550fe53ab0ed31e7f45ce72c437c1ad569c4391b964c0af059a7396bc6 |
+| l2-w12-card-ruler-m1-color-print.png | 32582d23b74f33c6aaffeccbf880b4fc313bdbddb8564f6353f09a46a4dca0e0 |
+| l2-w12-card-ruler-m1-line-print-4.png | 88f8c291d041b377318d4eb03d7af6c9a2eff7a411c62c6c1a8b6cb6344d596c |
+| l2-w13-card-clap-m1-color-print.png | f5b85af7d9429aad8067c34d734a2f2815a715444176f20998902f39b95c5a22 |
+| l2-w13-card-clap-m1-line-print-3.png | 9996736198d8d769978ec171b47b711acc9b04ac26dfbed3587a70cc1521e7a5 |
+| l2-w14-card-cold-m1-color-print.png | 138c9760913310f6ee1b86b9f7f52f52a63aa4d7b9a09497eb4f583673443898 |
+| l2-w14-card-cold-m1-line-print-4.png | db4451e3f83b1d97a5a451393e39ec9e9a81df712bd71ff6fc8f4a3654af0ab7 |
+
+## Step 4, the runner
+
+- The file `deliver-repair1.mts` has the form of `deliver-retry1.mts`. It changes 4 things.
+  - The approval list is `approvals-repair1.json`.
+  - The delivery root is `out/storytime/l2/unit2/delivery-muse-v1-repair1/`.
+  - The stage folder is `/tmp/opencode/l2rc3/delivery-stage-repair1`. The runner removes it at the end.
+  - The writer takes the options `approvalsOnly: true`, `versionFromList: true`, and
+    `lineWidthExceptions` for the 4 cards.
+- The exception values are hippo at 9 px, ruler at 8 px, clap at 11 px, and cold at 10 px. The
+  `requiredPx` of each is 12. The reason is the same for the 4 cards, and it is the PM order of
+  2026-11-10, word for word.
+- The runner adds 2 lines to its report. They name the options `versionFromList` and
+  `lineWidthExceptions`. The other lines of the runner stay the same.
+
+## Step 5, the run of the runner
+
+- The command ran once through the heavy job gate:
+  `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c
+  './node_modules/.bin/tsx measure/runs/asset_storytime_l2_retries_cover_20261110/deliver-repair1.mts'`
+- The exit status is 0. The report of the runner:
+
+```
+time: 2026-11-10T18:57:52.666Z
+picture list SHA-256: 63d415000eca9d6be1a6ad533c12ff81e127cd2c76ffac339697f91b99f754ec (pin checked)
+approval entries: 13
+staged hard links: 26
+delivered rows: 13
+delivered row ids: l2-w10-check-row-ten, l2-w11-story-page-here, l2-w11-story-page-ten-men-in-the-den, l2-w11-story-page-the-den-is-on-dad, l2-w12-card-hippo, l2-w12-card-ruler, l2-w12-story-page-open-your-book-nan, l2-w13-card-clap, l2-w13-check-row-dot, l2-w13-cover-look-at-me, l2-w13-d4-prompt-jump, l2-w14-card-cold, l2-w15-cover-look-a-bus
+delivered color files: 13
+delivered line files: 13
+delivered PNG files: 26
+manifest.json sha256: 2388190d70bc24f4452312585bb5a1e286ce25b6b1f5cd8b6f52e2620fd4251b
+skipped rows: 0
+file checks: 26 files; problems: 0
+the option approvalsOnly kept every row without an approval entry out of the delivery and left the skip callback quiet
+the option versionFromList gave every candidate the version of the picture list, so the version field of the 9 repaired rows is 1
+the option lineWidthExceptions waived the line width error of the 4 card rows and recorded the exception with its removed error text
+every color file is PNG 8-bit, no alpha, srgb, 3 channels, at the class size (A and B 4000 x 3000, C 1500 x 1500)
+every line file is PNG 8-bit, no alpha, grayscale, at the class size
+```
+
+- The writer refused no measured width. The measured widths of the 4 card line prints are 9 px,
+  8 px, 11 px, and 10 px. They match the 4 exception values.
+- The delivery folder holds 27 files. They are 26 PNG files and the file `manifest.json`.
+- The stage folder is gone. The runner removed it at the end.
+
+## Step 6, the pixel check
+
+- The script `pixel-check-p3e.py` makes 3 checks. Its output is `pixel-check-p3e.txt`, and the exit
+  status is 0.
+- Check 1 holds. For each of the 9 repaired rows, the delivered color file and the delivered line
+  file have the same SHA-256 as the file of the same name in the v1 delivery folder. All 18 files
+  match.
+- Check 2 holds. For each of the 4 cards, the delivered color file has the SHA-256 of its m1 color
+  print, and the delivered line file has the SHA-256 of its best line print. All 8 files match.
+- Check 3 holds. The manifest holds 13 jobs. Every candidate version and every `selectedVersion` is
+  1. The 4 card candidates hold a `lineWidthException` with a `waivedError`. The 9 repaired rows
+  hold no `lineWidthException`. No job is the hat-pip row.
+- The result is `failures: 0` and `result: pass`.
+
+## Step 7, the state of the 4 folders after the run
+
+- The script `folder-state-p3e.py` ran again. The result is `folder-state-p3e-after.txt`.
+- The 4 folders give the same file count and the same state SHA-256 as the first run.
+
+| folder | files | state sha256 | same as before |
+| --- | --- | --- | --- |
+| out/storytime/l2/unit2/delivery-muse-v1/ | 441 | a64ddf5f19a76542ee8806e16e872d23ef4a44308082fabee461f3ca9aec038c | yes |
+| out/storytime/l2/unit2/delivery-muse-v1-retry1/ | 9 | ca4cc92ff5767edf23c299602b6dc25951c5a6a45f3157c62b2252c4993544b7 | yes |
+| handoff/storytime-l2u2-book-pictures/ | 469 | 1146c9a48c77c39ac7ce67974a3f73a6d086d575bb21699f704c35f3c309c592 | yes |
+| handoff/storytime-l2u2-book-pictures-retry1/ | 23 | 9ade5c1e3b968ca87d71ab0d6c40503157bc5b1bb4e9be5450178e71f4f03c8a | yes |
+
+## Step 8, the plan
+
+- Task 12 keeps the marker `[~]` and the field `deferred:maker`. It gains the sub-bullet "Part 1".
+
+## Step 9, the test gate
+
+- The GREEN test command of the specification ran through the heavy job gate. The result is 19 test
+  files and 293 tests passed, and the exit status is 0.
+- The maker ran no full tsc in this step. This step changes no file under `src/` and no test file.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: complete
+track: asset_storytime_l2_retries_cover_20261110
+phase: Phase 3: Version repair, card jobs, and the hat-pip line (repair1), Task 11 close and Task 12 part 1
+commits: after 4fb32729c5090fbfd1b69e1a7d7d08fe72186484, the Task 11 judge result commit afc902f4c789859ea931ec5af3123535f90d6579, and the repair1 delivery commit REPAIR1_SHA_PENDING
+tests_run: the runner `deliver-repair1.mts` through the heavy job gate, with the exit status 0, 13 delivered rows, 26 delivered PNG files, and 0 file problems; the pixel check `pixel-check-p3e.py`, with the exit status 0, 0 failures, and the result pass; the folder state script `folder-state-p3e.py`, run twice; the GREEN test command of the specification through the heavy job gate, with 19 test files and 293 tests passed and the exit status 0; no full tsc in this step, because the step changes no file under `src/` and no test file
+files_changed: measure/runs/asset_storytime_l2_retries_cover_20261110/approvals-repair1.json; measure/runs/asset_storytime_l2_retries_cover_20261110/deliver-repair1.mts; measure/runs/asset_storytime_l2_retries_cover_20261110/folder-state-p3e.py; measure/runs/asset_storytime_l2_retries_cover_20261110/folder-state-p3e-before.txt; measure/runs/asset_storytime_l2_retries_cover_20261110/folder-state-p3e-after.txt; measure/runs/asset_storytime_l2_retries_cover_20261110/pixel-check-p3e.py; measure/runs/asset_storytime_l2_retries_cover_20261110/pixel-check-p3e.txt; measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p3e.log; measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md
+plan_updates: Task 11 is `[x]` with the sha 4fb32729c5090fbfd1b69e1a7d7d08fe72186484, and it gains the sub-bullet "The judge result". Task 12 keeps the marker `[~]` and the field `deferred:maker`, and it gains the sub-bullet "Part 1". The spec D21 gains the sub-bullet "Orchestrator default (2026-11-11)". The commit afc902f4c789859ea931ec5af3123535f90d6579 holds the plan, the spec, the maker log of p3d, and the 2 judge files
+known_failures: the hat-pip row has no delivery job, because the line try 3 failed the frozen judge and the second judge with the defect class wrong-character; the row used its 3 line tries, so no more call is possible; the hand-off folder `storytime-l2u2-book-pictures-repair1` is not built yet, because this step is part 1 of Task 12; the maker made no Muse call and spent 0 USD; the maker changed no file under `src/`, `scripts/`, `tests/`, or `docs/`, and no PNG or JPG file enters git
+handoff: The Task 11 close and the repair1 delivery of Task 12 part 1 are done. The delivery folder is out/storytime/l2/unit2/delivery-muse-v1-repair1/, and it holds 27 files. They are 26 PNG files of 13 rows and the file manifest.json. The manifest sha256 is 2388190d70bc24f4452312585bb5a1e286ce25b6b1f5cd8b6f52e2620fd4251b. The approval list is measure/runs/asset_storytime_l2_retries_cover_20261110/approvals-repair1.json, and it holds 13 entries. The first 9 are the entries of approvals-u2.json for the rows of D17, unchanged, and the last 4 are the cards hippo, ruler, clap, and cold. The list holds no hat-pip entry. The pixel check of FR-18 passes. The 9 repaired rows have the same SHA-256 as their files in the v1 delivery folder, and the 4 cards have the SHA-256 of their source prints. Every candidate version and every selectedVersion of the manifest is 1. The 4 card candidates hold a lineWidthException with a waivedError, and the 9 rows hold no lineWidthException. The 4 folders that must not change have the same file count and the same state SHA-256 before and after. The state sha256 of the v1 delivery folder is a64ddf5f19a76542ee8806e16e872d23ef4a44308082fabee461f3ca9aec038c over 441 files. The state sha256 of the retry1 delivery folder is ca4cc92ff5767edf23c299602b6dc25951c5a6a45f3157c62b2252c4993544b7 over 9 files. The state sha256 of the v1 hand-off folder is 1146c9a48c77c39ac7ce67974a3f73a6d086d575bb21699f704c35f3c309c592 over 469 files. The state sha256 of the retry1 hand-off folder is 9ade5c1e3b968ca87d71ab0d6c40503157bc5b1bb4e9be5450178e71f4f03c8a over 23 files. The next role builds the hand-off folder /home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-repair1/. It holds hard links of the delivered PNG files, a copy of manifest.json, a README.md with the 9 repairs, the 4 card exceptions, the hat-pip result, and the text "model evidence, not acceptance", a copy of spend-log.tsv, a MANIFEST.txt in the form of the retry1 hand-off, and a not-delivered/ folder with the hat-pip m3 color print, the line try 3 print, and a README.md with both judge results. The maker did not build the hand-off folder in this part.
+END_MEASURE_AGENT_RESULT
