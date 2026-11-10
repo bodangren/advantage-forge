@@ -140,6 +140,15 @@ The scratch files /tmp/opencode/l2rc/restore-cover-costs.mjs and /tmp/opencode/l
 are deleted. Their results are in this log. The scratch files of the hash check stay under
 /tmp/opencode/l2rc/ until Task 8 deletes them.
 
+## The doctor of the repository
+
+The doctor gives 16 errors and the exit status 1. One error names this track:
+`in_progress track has no unchecked task`. That error is not new. The plan at the base commit
+51077171 holds 0 unchecked tasks, because every open task sits in a `[b] deferred:` marker. The
+other 15 errors name foreign tracks and the stale generated facts of other agents. The closeout
+role owns the doctor of the track. Step F changed no marker of a task other than the marker of
+Task 6, which was `[b]` before this step and is `[b]` after it.
+
 MEASURE_AGENT_RESULT
 role: measure-jr-green (maker), light lane
 status: complete
