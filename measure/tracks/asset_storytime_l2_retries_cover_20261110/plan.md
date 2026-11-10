@@ -55,7 +55,7 @@ this heading.
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`). Spend 0 USD.
 
-- [ ] Task 1: Guard blocks and tests (D1, D7). Add `U2_EXTRA_TRY` and `COVER_RUN` to
+- [x] Task 1 (d5f938b2): Guard blocks and tests (D1, D7). Add `U2_EXTRA_TRY` and `COVER_RUN` to
   `scripts/storytime-muse-guards.mjs` and the `.d.mts`. Add the kind `cover`, the exception rule in
   `runGuards`, and the test-only keys `u2ExtraCapUsd` and `coverCapUsd` (stripped by `cliGuardOptions`).
   Set both `startTime` values to the real UTC time of this commit, cut to the minute. Keep the values of
@@ -63,18 +63,61 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   `tests/storytime-u2-extra-try.test.ts` and `tests/storytime-cover-guards.test.ts` with the cases of
   FR-1 to FR-4. Run the GREEN command. Commit with explicit paths. The maker replies with the guard
   commit and the start time.
-- [ ] Task 2: The 9 spec edits, the cover spec, and the aspect check (D2, D5, D6). Edit only the named
+  - `U2_EXTRA_TRY` holds the cap of 0.15 USD, the report point of 0.12 USD, the margin of 0.01 USD, and
+    10 rows for 9 ids. Each row names its id, its kind, its `pastLimit` flag, and the PM words.
+  - `COVER_RUN` holds the cap of 0.10 USD, the report point of 0.08 USD, the margin of 0.01 USD, 6 tries,
+    and the folder `out/storytime/covers/teacher-front/muse`.
+  - Both start times are `2026-11-10T08:57:00Z`. That is the UTC minute of the commit `d5f938b2`.
+  - `classifyOutDir` gives the kind `cover` for exactly that folder. Every other folder below
+    `out/storytime/covers/` stays `invalid`.
+  - The 2 new test files hold 22 tests. They pass.
+- [x] Task 2 (82144c4b): The 9 spec edits, the cover spec, and the aspect check (D2, D5, D6). Edit only the named
   prompt field of each of the 9 specs. Write the cover spec and the cover prompt of D5 and D6. Copy the 4
   brief files into `out/storytime/covers/teacher-front/refs/` and check each SHA-256 against the brief
   MANIFEST. Check, with no paid call, that the model accepts `3:4` and that the crop is centered; record
   the ratio and the reason. Add `tests/storytime-cover-specs.test.ts`. Record each new sentence in this
   task's evidence. Commit with explicit paths.
-- [ ] Task 3: The writer option and the cover judge-copy helper (D4, D9). Add the option `approvalsOnly`
+  - The new sentence of the hat-pip `colorPrompt`:
+    "Count the people: exactly seven children (Sam, May, Ben, Mia, Pat, Lily, and Nan), Teacher Kim, and
+    Pip. Nan, in her orange T-shirt with the white star, is in full view. The seven children stand in one
+    line, side by side, each in full view, from left to right: Sam, May, Ben, Mia, Pat, Lily, and Nan; Pip
+    sits in the big open dress-up box in front of the line, and Teacher Kim stands once behind the line.
+    Each child shows exactly once, with his or her own hair and own clothes from the pictures. Exactly the
+    characters named here are in the picture, and no other person or animal."
+  - The new sentence of the tom-can-see-the-mop `linePrompt`:
+    "Dad has no glasses. His eyes are two simple dots. Keep the very thick lines."
+  - The new sentence of the rice `linePrompt`:
+    "The rice is many small separate closed ovals (grains) heaped in the bowl, with no big blobs."
+  - The new sentence of the `linePrompt` of the hippo, ruler, clap, throw, cold, and windy cards:
+    "Draw the object or the child large, filling most of the square, with few details. Every line is about
+    one fiftieth of the picture width (2 percent) thick, never thinner. This line width replaces any other
+    line width in this prompt."
+  - The 4 brief files are copied into `out/storytime/covers/teacher-front/refs/`. Each copy holds the
+    SHA-256 and the byte size of the brief MANIFEST: `style-student-front-final.jpg` 00498aea, 1258522
+    bytes; `cast-teacher-kim.png` 9b61d82e, 177248 bytes; `cast-nan.png` d6db81aa, 62018 bytes;
+    `cast-sam.png` 48a204da, 76232 bytes. The awk check of the brief MANIFEST gives 9 of 9 OK.
+  - The aspect check of D5, with no paid call: the muse script sends the value of the spec as
+    `aspect_ratio` with no change and no check. The OpenRouter image documentation of 2026-11-10 lists
+    `3:4` among the accepted values of `aspect_ratio`. The ratio `3:4` is 0.75, and the target ratio
+    2480 / 3508 is 0.7069, so the crop trims the sides at `left = floor((width - target width) / 2)`. The
+    fallback ratio, if the model refuses `3:4`, is `4:5` at 0.8. That ratio is at least 0.7069 too.
+  - The cover spec holds the id, the 7 references, the prompt, `crop`, `3:4`, the print size of
+    2480 x 3508 px, and the cover folder. It has no `linePrompt`. The 10 tests of
+    `tests/storytime-cover-specs.test.ts` pass.
+- [x] Task 3 (ded5d5ff): The writer option and the cover judge-copy helper (D4, D9). Add the option `approvalsOnly`
   to `deliverMuseUnit2` with `tests/storytime-u2-retry-delivery.test.ts`. Write
   `scripts/storytime-cover-judge-copy.mjs` (and its `.d.mts`) with
   `tests/storytime-cover-judge-copy.test.ts`, and the cover judge brief
   `docs/storytime/covers/teacher-front/judge-brief.md`. Run the GREEN command and the typecheck. Commit
   with explicit paths.
+  - The option `approvalsOnly` is false by default. When it is true, only the rows of the approval list
+    are delivered, the reuse rows stay out, a row without an entry gets no job, and `onSkip` stays quiet.
+    The pin check, the check of each entry against the list, and the file checks stay.
+  - The helper writes the clean copy at 1448 x 2048 px and the copy with the zone lines at 20, 29, 30,
+    78, 88, and 94 percent of the height. The rows are 410, 594, 614, 1597, 1802, and 1925.
+  - The judge brief lists the 12 checks of the cover judge and the form of its result.
+  - The 4 tests of `tests/storytime-u2-retry-delivery.test.ts` and the 5 tests of
+    `tests/storytime-cover-judge-copy.test.ts` pass.
 - [b] Phase 1 gate: phase acceptance by the checker at an immutable HEAD. The checker probes the
   exception and the cover class with fixture cost files, greps FR-12 and FR-14, and runs the GREEN
   command and the typecheck. deferred:checker
@@ -146,3 +189,16 @@ the PM and not to Daniel. The track records no acceptance of a picture by Daniel
 - Track creation commit: `699fb466` (message `measure(storytime_l2_retries_cover): create the track`).
 - Run records: `measure/runs/asset_storytime_l2_retries_cover_20261110/` (spend log, judge files, role
   logs, PM report, acceptance results).
+- Phase 1 commits, after the base `4c950a1d`:
+  - `d5f938b2` (message `feat(storytime_l2_retries_cover): U2_EXTRA_TRY exception, 0.15 USD for 9 rows`):
+    the guard exception, the cover class, and their 2 test files. The start time of both classes is
+    `2026-11-10T08:57:00Z`, the UTC minute of that commit.
+  - `82144c4b` (message `feat(storytime_l2_retries_cover): the 9 retry prompt edits and the cover spec`):
+    the 9 spec edits, the cover spec, and `tests/storytime-cover-specs.test.ts`.
+  - `ded5d5ff` (message `feat(storytime_l2_retries_cover): the approvalsOnly option and the cover judge
+    copies`): the writer option, the judge copy helper, the judge brief, and their 2 test files.
+  - `c386dbea` (message `fix(storytime_l2_retries_cover): the cover guard test fixtures and the judge copy
+    test types`): the test fixes found by the GREEN command and the typecheck.
+- The GREEN command of the specification passes at `c386dbea`: 19 test files, 273 tests, 0 failures.
+- The typecheck gives 38 errors. They all sit in `assets/**` and in 2 old test files. The paths
+  `src/storytime/`, `scripts/storytime-`, and `tests/storytime-` give 0 errors.

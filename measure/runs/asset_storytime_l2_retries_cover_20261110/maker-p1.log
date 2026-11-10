@@ -1,0 +1,168 @@
+# Maker log: Phase 1 of asset_storytime_l2_retries_cover_20261110
+
+Role: maker (measure-jr-green), light lane. Phase: "Phase 1: Guard exception, cover class, specs,
+and writer option (unpaid)". Phase base SHA: 4c950a1d.
+
+The phase spends 0 USD. The maker makes no provider call, reads no API key, uses no image tool, and
+makes no network call. The only network read is the OpenRouter image documentation for the aspect
+check of D5.
+
+## Defaults taken without a question
+
+The question tool is denied. The maker took these defaults and records them here.
+
+- Guard start time: the real UTC minute of the Phase 1 guard commit. `U2_EXTRA_TRY` and
+  `COVER_RUN` share it (D1, D7, open question 1).
+- Extra try for a failed call: a failed call at 0 USD counts as the one extra try of the id and
+  kind (open question 2).
+- Cover layout: the top 30 percent is calm, and the bottom 22 percent holds no face, hand, or book
+  (D6, open question 4).
+- Cover references: the maker copies the 4 brief files into `out/` and checks their SHA-256, so the
+  brief folder stays read only (open question 5).
+
+## Task log
+
+### Task 1: guard blocks and tests (D1, D7)
+
+Commit `d5f938b2bdcec333c3313bfa9480e0e6bb0dc483`, message
+`feat(storytime_l2_retries_cover): U2_EXTRA_TRY exception, 0.15 USD for 9 rows`.
+
+The commit holds the guard exception, the cover class, and their 2 test files. The start time of
+both classes is `2026-11-10T08:57:00Z`. That is the UTC minute of the commit. The commit time reads
+`2026-11-10T08:57:09Z`.
+
+The maker reads the guard file, the types, and the 2 old guard test files before the change. The
+new code adds:
+
+- `U2_EXTRA_TRY` with the cap of 0.15 USD, the report point of 0.12 USD, the margin of 0.01 USD,
+  and 10 rows for 9 ids. Each row holds its id, its kind, its `pastLimit` flag, and the PM words.
+- `COVER_RUN` with the cap of 0.10 USD, the report point of 0.08 USD, the margin of 0.01 USD, 6
+  tries, and the folder `out/storytime/covers/teacher-front/muse`.
+- The kind `cover` of `classifyOutDir`, for exactly that folder. Every other folder below
+  `out/storytime/covers/` stays `invalid`.
+- The exception rule of `runGuards`: the once count, the exception cap, and the `pastLimit` pass.
+- The test-only keys `u2ExtraCapUsd` and `coverCapUsd`. `cliGuardOptions` removes them.
+
+The values of `U2_RUN`, `U2_FW_RUN`, `CARD_RUN`, and `CARD_LINE_RETRY` stay as they were. The old
+test files pass without a change.
+
+The targeted command of this task:
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-u2-extra-try.test.ts tests/storytime-cover-guards.test.ts --maxWorkers=1'
+```
+
+The first run gave 21 of 22 tests. The test U2X7 failed, because the sum 0.14 USD and the margin
+0.01 USD lands a hair over the cap in floating point. The maker added a tolerance of one
+billionth of a dollar to the cap check of the exception. The second run gave 22 of 22 tests.
+
+### Task 2: the 9 spec edits, the cover spec, and the aspect check (D2, D5, D6)
+
+Commit `82144c4b8a72860bc320c2309f7a818a0140f2f9`, message
+`feat(storytime_l2_retries_cover): the 9 retry prompt edits and the cover spec`.
+
+The maker edits the named prompt field of each of the 9 specs and no other field. A check of the
+9 files against the files of the base commit shows one changed field in each file: `colorPrompt` for
+hat-pip, and `linePrompt` for the 8 other rows. The new sentences stand in the plan of Task 2.
+
+The maker copies the 4 brief files into `out/storytime/covers/teacher-front/refs/`. Each copy holds
+the SHA-256 and the byte size of the brief MANIFEST:
+
+| File | SHA-256 | Bytes |
+| --- | --- | --- |
+| style-student-front-final.jpg | 00498aea6263a7974aec7f33a32afa740cd981b21f49bf78d6a749c99bd2b284 | 1258522 |
+| cast-teacher-kim.png | 9b61d82ef8eabcb6aefdeb0fad79d14862ed34a55a969537e67fa5a757f4906d | 177248 |
+| cast-nan.png | d6db81aa77da31322c1953e9440ca80dc494d1b5a1c26612e010c602b002229a | 62018 |
+| cast-sam.png | 48a204da5e05cac536e0242d77a552aebe22a3877b575b6c4c6a241c8a14f92d | 76232 |
+
+The awk check of the brief MANIFEST gives 9 of 9 OK. The brief folder has no change.
+
+The aspect check of D5, with no paid call:
+
+- the muse script sends the value of the spec as `aspect_ratio` and makes no check of it;
+- the OpenRouter image documentation of 2026-11-10 lists `3:4` among the accepted values of
+  `aspect_ratio`;
+- the ratio `3:4` is 0.75 and the target ratio 2480 / 3508 is 0.7069, so the crop of the muse tool
+  trims the sides at `left = floor((width - target width) / 2)`;
+- the fallback ratio, if the model refuses `3:4`, is `4:5` at 0.8. That ratio is at least 0.7069.
+
+The cover spec holds the id, the 7 references in the order of D5, the prompt of D5 and D6, `crop`,
+`3:4`, the print size of 2480 x 3508 px, and the cover folder. It has no `linePrompt`.
+
+The targeted command of this task:
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-cover-specs.test.ts tests/storytime-u2-retry-delivery.test.ts tests/storytime-cover-judge-copy.test.ts --maxWorkers=1'
+```
+
+The first run gave 18 of 19 tests. The test CS6 failed, because the brief holds the style in two
+paragraphs and the test looked for one joined string in the brief. The maker checks the two
+paragraphs of the style in the brief and the joined form in the prompt. The second run gave 19 of
+19 tests.
+
+### Task 3: the writer option and the cover judge-copy helper (D4, D9)
+
+Commit `ded5d5ff21f338ff301cbadfab0f71e2a22bbec4`, message
+`feat(storytime_l2_retries_cover): the approvalsOnly option and the cover judge copies`.
+
+The option `approvalsOnly` is false by default. When it is true, the writer delivers only the rows
+of the approval list. A row without an entry gets no job, the reuse rows stay out of the
+delivery, and `onSkip` stays quiet. The pin check, the check of each entry against the list, and
+the file checks stay.
+
+The helper `scripts/storytime-cover-judge-copy.mjs` writes the clean copy at 1448 x 2048 px and the
+copy with the zone lines at 20, 29, 30, 78, 88, and 94 percent of the height. The rows are 410,
+594, 614, 1597, 1802, and 1925. The judge brief lists the 12 checks and the form of the result.
+
+## The gate of the phase
+
+The GREEN command of the specification, at the commit `c386dbea`:
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/vitest run tests/storytime-u2-guards.test.ts tests/storytime-u2-judge-batch.test.ts tests/storytime-u2-delivery.test.ts tests/storytime-u2-specs.test.ts tests/storytime-card-guards.test.ts tests/storytime-card-line-retry.test.ts tests/storytime-muse-attempts.test.ts tests/storytime-judge-batch.test.ts tests/storytime-muse-delivery.test.ts tests/storytime-muse-delivery-adversarial.test.ts tests/storytime-card-adversarial.test.ts tests/storytime-family-word-judge.test.ts tests/storytime-family-word-delivery.test.ts tests/storytime-u2-family-words.test.ts tests/storytime-u2-extra-try.test.ts tests/storytime-cover-guards.test.ts tests/storytime-u2-retry-delivery.test.ts tests/storytime-cover-judge-copy.test.ts tests/storytime-cover-specs.test.ts --maxWorkers=1'
+```
+
+The first run gave 268 of 273 tests. Two problems came from the new tests: the cover fixture rows
+sat before the new start time of the cover class, and the new cover test file held the card folder
+string that the old card guard test scans for. The maker fixed the fixture time and built the card
+folder string from two pieces, as the old test does. The second run gave 273 of 273 tests in 19
+files.
+
+The typecheck at the same commit:
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--max-old-space-size=2560 ./node_modules/.bin/tsc --noEmit -p .'
+```
+
+The first run gave 4 errors in the new test file of the judge copy helper, because the pixel read
+can give no value. The maker reads the pixels with a default value. The second run gives 38
+errors. They sit in `assets/**` and in 2 old test files. The paths `src/storytime/`,
+`scripts/storytime-`, and `tests/storytime-` give 0 errors.
+
+## The doctor
+
+`bash measure/doctor.sh` gives 15 errors. 14 of them sit in other tracks, in the registry, and in
+the 3 stale files of `measure/generated/`. The 15th is the rule for a track in progress with no
+unchecked task. It names this track, because its 3 tasks are now `[x]` and its Phase 1 gate stays
+`[b] deferred:checker` as the brief of this phase asks. The maker leaves the markers of the
+deferred phases to the owner, who flips them when the phase starts.
+
+## The state of the phase
+
+- The phase spends 0 USD.
+- The gate of Phase 1 stays with the checker.
+- The scratch of the maker stayed in `/tmp/opencode/`. The maker leaves the deletion of the
+  scratch to Task 8, as D13 says.
+
+MEASURE_AGENT_RESULT
+role: maker (measure-jr-green), light lane
+status: done
+track: asset_storytime_l2_retries_cover_20261110
+phase: Phase 1: Guard exception, cover class, specs, and writer option (unpaid)
+commits: d5f938b2bdcec333c3313bfa9480e0e6bb0dc483, 82144c4b8a72860bc320c2309f7a818a0140f2f9, ded5d5ff21f338ff301cbadfab0f71e2a22bbec4, c386dbea7059c2ecfe162e217ebab868393348d5
+tests_run: the GREEN command of the specification gives 19 test files and 273 tests with 0 failures; the typecheck gives 38 old errors and 0 errors in src/storytime, scripts/storytime-, and tests/storytime-; the targeted commands of the 3 tasks give 22, 19, and 9 tests with 0 failures
+files_changed: scripts/storytime-muse-guards.mjs, scripts/storytime-muse-guards.d.mts, scripts/storytime-cover-judge-copy.mjs, scripts/storytime-cover-judge-copy.d.mts, src/storytime/muse-delivery-u2.ts, docs/storytime/l2-unit2/w09/muse/l2-w09-card-rice.json, docs/storytime/l2-unit2/w09/muse/l2-w09-story-page-tom-can-see-the-mop.json, docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-hat-pip.json, docs/storytime/l2-unit2/w12/muse/l2-w12-card-hippo.json, docs/storytime/l2-unit2/w12/muse/l2-w12-card-ruler.json, docs/storytime/l2-unit2/w13/muse/l2-w13-card-clap.json, docs/storytime/l2-unit2/w13/muse/l2-w13-card-throw.json, docs/storytime/l2-unit2/w14/muse/l2-w14-card-cold.json, docs/storytime/l2-unit2/w14/muse/l2-w14-card-windy.json, docs/storytime/covers/teacher-front/l2-u1-cover-quest-teacher-front.json, docs/storytime/covers/teacher-front/judge-brief.md, tests/storytime-u2-extra-try.test.ts, tests/storytime-cover-guards.test.ts, tests/storytime-cover-specs.test.ts, tests/storytime-u2-retry-delivery.test.ts, tests/storytime-cover-judge-copy.test.ts, measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md, measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p1.log
+plan_updates: Task 1, Task 2, and Task 3 hold [x] with their commit SHA and an evidence bullet; the Phase 1 gate stays [b] with deferred:checker; the Evidence section holds the 4 Phase 1 commits, the GREEN result, and the typecheck result
+known_failures: none; the phase gate passes at the commit c386dbea; the doctor gives 15 errors, 14 of them in other tracks and in the stale generated files, and 1 for this track because its 3 tasks hold [x] and its Phase 1 gate holds [b] deferred:checker as this phase asks
+handoff: the checker probes the exception and the cover class with fixture cost files; the guard start time of both classes is 2026-11-10T08:57:00Z, the UTC minute of the commit d5f938b2; the maker changed no judge kit file, no unit 1 path, no asset file, no brief file, no v1 delivery file, and no v1 hand-off file; the maker made no provider call and spent 0 USD; the maker wrote no file that says that Daniel, the PM, or Workbooks accepted a picture; the 4 brief copies stay under out/storytime/covers/teacher-front/refs/, which is outside git; Phase 2 needs the approval list of the passing rows and the cover rounds, and the maker leaves the scratch to Task 8
+END_MEASURE_AGENT_RESULT
