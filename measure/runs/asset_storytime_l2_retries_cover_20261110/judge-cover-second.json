@@ -1,0 +1,78 @@
+{
+  "id": "l2-u1-cover-quest-teacher-front",
+  "round": 1,
+  "second": true,
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "judgePrompt": "judge-prompt.md v6",
+  "brief": "docs/storytime/covers/teacher-front/judge-brief.md",
+  "time": "2026-11-10T11:31:43Z",
+  "results": [
+    {
+      "try": 2,
+      "file": "l2-u1-cover-quest-teacher-front-m2-clean.png",
+      "verdict": "fail",
+      "checks": [
+        { "id": "AF-1", "verdict": "pass", "note": "Sam's red T-shirt shows two white stripes across the chest and nothing else" },
+        { "id": "AF-2", "verdict": "pass", "note": "Nan's orange T-shirt shows one white star and no letters" },
+        { "id": "AF-3", "verdict": "pass", "note": "Nan orange with star, Sam red with two stripes; each keeps own clothes" },
+        { "id": "AF-4", "verdict": "pass", "note": "Kim holds the open book out and looks at the children; the spread is tilted toward them (marginal, mostly frontal)" },
+        { "id": "no-text", "verdict": "pass", "note": "no letters, words, or numbers; small sparkle squiggles beside the red ball on the book page are marks, not letters" },
+        { "id": "cast", "verdict": "pass", "note": "Kim (green cardigan, ponytail), Nan (buns, red ties), Sam (brown hair) match the cast; no Pip" },
+        { "id": "count", "verdict": "pass", "note": "exactly three people" },
+        { "id": "free-band", "verdict": "fail", "note": "Nan's and Sam's hands on their knees sit below the green line (78 percent)" },
+        { "id": "calm-top", "verdict": "pass", "note": "above the yellow line only sky, leaves, and a tree branch" },
+        { "id": "bottom-band", "verdict": "fail", "note": "both children's hands on their knees reach below the green line" },
+        { "id": "no-flag", "verdict": "fail", "note": "a single red circle alone on the white right page of the book (small sparkles around it)" },
+        { "id": "style", "verdict": "pass", "note": "bright painted 2D storybook look with clean line; more watercolor than the student front, not 3D" }
+      ],
+      "lowestHandVsBlue": "above",
+      "anyAboveRed": false,
+      "notes": "Fails on hands below the green line and a lone red circle on the book page."
+    },
+    {
+      "try": 1,
+      "file": "l2-u1-cover-quest-teacher-front-m1-clean.png",
+      "verdict": "fail",
+      "checks": [
+        { "id": "AF-1", "verdict": "pass", "note": "Sam's red T-shirt shows two white stripes and nothing else" },
+        { "id": "AF-2", "verdict": "pass", "note": "Nan's orange T-shirt shows one white star and no letters" },
+        { "id": "AF-3", "verdict": "pass", "note": "Nan orange with star, Sam red with two stripes; each keeps own clothes" },
+        { "id": "AF-4", "verdict": "pass", "note": "Kim holds the open book out and looks toward the children; the spread is fairly frontal (marginal)" },
+        { "id": "no-text", "verdict": "pass", "note": "no letters, words, numbers, signature, or frame" },
+        { "id": "cast", "verdict": "pass", "note": "Kim, Nan, and Sam match the cast; no Pip or other animal; a spare pair of brown shoes lies in the grass (small mark)" },
+        { "id": "count", "verdict": "pass", "note": "exactly three people" },
+        { "id": "free-band", "verdict": "fail", "note": "Nan's hand on her knee sits below the green line (78 percent)" },
+        { "id": "calm-top", "verdict": "pass", "note": "above the yellow line only sky, leaves, and a tree branch" },
+        { "id": "bottom-band", "verdict": "fail", "note": "Nan's hand on her knee reaches below the green line" },
+        { "id": "no-flag", "verdict": "fail", "note": "a single red disc alone on the white right page; smile and shadow make it read as a ball, so marginal, but the brief names this case" },
+        { "id": "style", "verdict": "pass", "note": "bright painted anime key art with soft cel shading, clean line, warm light, big eyes; not 3D" }
+      ],
+      "lowestHandVsBlue": "above",
+      "anyAboveRed": false,
+      "notes": "Closest to the student front style; fails on one hand below the green line and a red disc alone on the book page."
+    },
+    {
+      "try": 3,
+      "file": "l2-u1-cover-quest-teacher-front-m3-clean.png",
+      "verdict": "fail",
+      "checks": [
+        { "id": "AF-1", "verdict": "pass", "note": "Sam's red T-shirt shows two white stripes and nothing else" },
+        { "id": "AF-2", "verdict": "pass", "note": "Nan's orange T-shirt shows one white star and no letters" },
+        { "id": "AF-3", "verdict": "pass", "note": "Nan orange with star, Sam red with two stripes; each keeps own clothes" },
+        { "id": "AF-4", "verdict": "pass", "note": "Kim holds the open book out and looks at the children; the spread is fairly frontal (marginal)" },
+        { "id": "no-text", "verdict": "pass", "note": "no letters, words, numbers, signature, or frame" },
+        { "id": "cast", "verdict": "pass", "note": "Kim, Nan, and Sam match the cast; no Pip or other animal" },
+        { "id": "count", "verdict": "pass", "note": "exactly three people" },
+        { "id": "free-band", "verdict": "fail", "note": "Sam's hand on his knee sits below the green line and Nan's hand touches it" },
+        { "id": "calm-top", "verdict": "pass", "note": "above the yellow line only sky, leaves, and tree branches" },
+        { "id": "bottom-band", "verdict": "fail", "note": "Sam's hand on his knee reaches below the green line" },
+        { "id": "no-flag", "verdict": "fail", "note": "a single plain red circle alone on the white right page of the book" },
+        { "id": "style", "verdict": "pass", "note": "bright painted 2D storybook look with clean line and warm light; not 3D" }
+      ],
+      "lowestHandVsBlue": "above",
+      "anyAboveRed": false,
+      "notes": "Fails on one hand below the green line and a plain red circle alone on the book page."
+    }
+  ],
+  "rank": [1, 3, 2]
+}

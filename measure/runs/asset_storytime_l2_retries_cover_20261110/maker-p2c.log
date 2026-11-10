@@ -1,0 +1,95 @@
+# Maker log, Phase 2 step C, track asset_storytime_l2_retries_cover_20261110
+
+Role: measure-jr-green (light lane maker). Model: minimax-cn-coding-plan/MiniMax-M3.1-Flash.
+role_base_sha: 1725dbb2956f17ab7d55ddf28b47fcba79caec9a (equal to HEAD at start).
+phase_base_sha: 1725dbb2956f17ab7d55ddf28b47fcba79caec9a.
+This step is step C of Task 6 only: cover round 2. It spends 0 USD, because the round stops at the
+prompt fix. It makes no book call and no cover call. The judge does not run here; the orchestrator
+runs the judge. Nothing is delivered here. No other test file runs, and no tsc runs.
+
+## Step 1, the plan records (0 USD)
+
+- Task 6 of plan.md becomes `[~]` for the prompt fix, then `[b] ... deferred:maker` again.
+- Task 6 gains the sub-bullet "Judge of round 1" with the faults of the 2 judges and the 2 result
+  files.
+
+## Step 2, the prompt fixes of D8 (0 USD)
+
+- The edit touches only the field `colorPrompt` of
+  `docs/storytime/covers/teacher-front/l2-u1-cover-quest-teacher-front.json`. The other keys stay as
+  they were.
+- E1 replaces `Nan and Sam sit on the grass in front of her.` with `Nan and Sam kneel upright on the
+  grass close in front of her and lean toward the book. Each child holds both hands up at chest
+  height: one hand on the lower edge of the open book and one hand pointing at it. Every hand stays
+  at chest height, above the knees.`
+- E2 replaces `The pages show simple pictures, for example a tree and a ball.` with `The book turns
+  toward Nan and Sam, so the viewer sees the back of its plain warm brown cover and the edges of its
+  cream pages, and no page picture.`
+- The python check reads the file of HEAD with `git show HEAD:<path>` and compares it with the edited
+  file. The check passes: each old sentence is gone, each new sentence is there once, the key set is
+  the same, the other keys are unchanged, and the prompt equals the prompt of HEAD with the same 2
+  replacements. The prompt grew from 3175 to 3473 characters.
+- The test run at HEAD passes 10 of 10. The command is
+  `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c
+  './node_modules/.bin/vitest run tests/storytime-cover-specs.test.ts --maxWorkers=1'`.
+- The test run after the edit fails 1 of 10. The failure is CS6 at
+  `tests/storytime-cover-specs.test.ts:147`. The test pins the old scene text in the constant SCENE.
+  The SCENE text holds both sentences of E1 and E2, so the required fix breaks the test.
+- The step says to stop and report when a test checks the old sentence, and to leave the test alone.
+  The maker stops here. The maker does not change the test, and the maker does not change the spec
+  file to keep the old sentences.
+- The edit stays in the working tree of the maker and is not committed. The reason is the failing
+  test CS6.
+
+## Step 3, the worst case of round 2 (D11, 0 USD)
+
+- Round 2 plans 3 color calls of the cover spec, one after another, at concurrency 1.
+- The highest cover cost seen is 0.01 USD, from the 3 calls of round 1. D8 names that cost for round
+  2. The worst case is 3 calls x 0.01 USD = 0.03 USD.
+- The spend of round 1 is 0.03 USD. The sum of the worst case and the spend of round 1 is 0.06 USD.
+  It is under the 0.10 USD stop of item (b), so the pool may run. The report point is 0.08 USD, and
+  the spend of 0.06 USD stays under it.
+- The worst case line is in
+  `measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv`.
+
+## Steps 4 to 6, what did not run (0 USD)
+
+- No network check ran. No cover call ran. The spend of item (b) stays 0.03 USD of the 0.10 USD stop.
+- No print file of m4, m5, or m6 exists. No judge copy of m4, m5, or m6 exists.
+- The spend log holds no new call line and no new total line for item (b). The total line of item (b)
+  still names 3 calls and 0.03 USD, which stays correct.
+
+## Step 7, the plan records of this step (0 USD)
+
+- Task 6 is `[b] ... deferred:maker` again. It holds the sub-bullet "Round 2", which records the 2
+  edits, the python check, the 2 test runs, the worst case, and the open items.
+
+## Defaults taken
+
+1. The worst case of round 2 uses the highest cover cost seen, 0.01 USD. D8 names that rule for round
+   2, and the step gives no other per-call cost.
+2. The edit stays in the working tree and is not committed. The step puts the commit of the spec
+   after the test run, and the test run failed.
+3. The maker reports the conflict instead of changing the test. The test file is a committed test of
+   Phase 1.
+
+## Open items of Task 6
+
+- The test CS6 needs an update. It must pin the new scene text of E1 and E2.
+- The maker then commits the spec with the message `feat(storytime_l2_retries_cover): cover prompt
+  fixes for round 2` and runs the 3 calls of round 2, with the network check before each call.
+- The judge of round 2 reads the zones copy of m4, m5, and m6.
+- Task 7 needs the verdict of the judge. If no version passes, Task 7 records the best try of round 1.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: blocked
+track: asset_storytime_l2_retries_cover_20261110
+phase: Phase 2: Retries and cover (paid), step C of Task 6, cover round 2
+commits: this step C commit (HEAD), the only commit after 1725dbb2956f17ab7d55ddf28b47fcba79caec9a
+tests_run: the baseline test run at HEAD passes 10 of 10; the test run after the prompt fix fails 1 of 10, CS6 at tests/storytime-cover-specs.test.ts:147; both runs use the heavy-run wrapper with the named test file; no other test file and no tsc
+files_changed: measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md; measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv; measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p2c.log; measure/runs/asset_storytime_l2_retries_cover_20261110/judge-cover-r1.json; measure/runs/asset_storytime_l2_retries_cover_20261110/judge-cover-second.json; the uncommitted edit of docs/storytime/covers/teacher-front/l2-u1-cover-quest-teacher-front.json stays in the working tree
+plan_updates: Task 6 is [b] deferred:maker, with the sub-bullet "Judge of round 1" of the 3 failed tries, the 3 faults, the 2 result files, and the 2 ranks; the sub-bullet "Round 2" of the 2 prompt edits, the python check, the 2 test runs, the worst case of 0.03 USD, and the open items
+known_failures: the test CS6 fails on the required prompt fix, because it pins the old scene text in the constant SCENE; the maker does not change the test and does not commit the spec edit; the item (b) spend stays 0.03 USD of the 0.10 USD stop; no cover call of round 2 ran, so no judge copy of m4, m5, or m6 exists
+handoff: Step C of Task 6 stops at the prompt fix, and this step spends 0 USD. The question is: the test CS6 of tests/storytime-cover-specs.test.ts pins the old scene text of the cover prompt, and the D8 prompt fix for round 2 needs that text changed. The step forbids a change of the test, so the maker stops. The options are: A, recommended, the orchestrator orders the update of CS6 in the next step, so that CS6 pins the new scene text of E1 and E2; then the maker commits the spec with the message feat(storytime_l2_retries_cover): cover prompt fixes for round 2 and runs the 3 calls of round 2 with the same brief; B, the orchestrator updates CS6 itself and then briefs the maker for the 3 calls; C, the orchestrator lets the maker commit the spec with the failing CS6, and the checker takes the failure as known until the test update; D, the PM drops round 2, the cover keeps the best try of round 1, and item (b) closes at 0.03 USD. The money is not the blocker: the worst case of round 2 is 0.03 USD, and the sum with the spend of round 1 is 0.06 USD, under the 0.10 USD stop. The edit of the spec file is ready in the working tree and passes the python check. The authoritative files are measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv, measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p2c.log, measure/runs/asset_storytime_l2_retries_cover_20261110/judge-cover-r1.json, and measure/runs/asset_storytime_l2_retries_cover_20261110/judge-cover-second.json.
+END_MEASURE_AGENT_RESULT

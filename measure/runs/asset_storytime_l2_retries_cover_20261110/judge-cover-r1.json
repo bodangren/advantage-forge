@@ -1,0 +1,219 @@
+{
+  "id": "l2-u1-cover-quest-teacher-front",
+  "round": 1,
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "judgePrompt": "judge-prompt.md v6",
+  "brief": "docs/storytime/covers/teacher-front/judge-brief.md",
+  "time": "2026-11-10T11:29:26Z",
+  "results": [
+    {
+      "try": 1,
+      "file": "l2-u1-cover-quest-teacher-front-m1-clean.png",
+      "verdict": "fail",
+      "checks": [
+        {
+          "id": "AF-1",
+          "verdict": "pass",
+          "note": "two white stripes across the chest and nothing else"
+        },
+        {
+          "id": "AF-2",
+          "verdict": "pass",
+          "note": "one white star on the orange T-shirt, no letters"
+        },
+        {
+          "id": "AF-3",
+          "verdict": "pass",
+          "note": "Nan orange star T-shirt, Sam red two-stripe T-shirt"
+        },
+        {
+          "id": "AF-4",
+          "verdict": "fail",
+          "note": "Kim holds the open book flat to the viewer; the pages face the viewer, not turned to Nan and Sam"
+        },
+        {
+          "id": "no-text",
+          "verdict": "pass",
+          "note": "no letters, words, numbers, signature, or frame seen"
+        },
+        {
+          "id": "cast",
+          "verdict": "pass",
+          "note": "Kim, Nan, and Sam match the cast; no Pip or other animal"
+        },
+        {
+          "id": "count",
+          "verdict": "pass",
+          "note": "three people"
+        },
+        {
+          "id": "free-band",
+          "verdict": "pass",
+          "note": "faces, hands, and book are below the yellow line and above the green line"
+        },
+        {
+          "id": "calm-top",
+          "verdict": "pass",
+          "note": "above the yellow line only sky, leaves, and tree"
+        },
+        {
+          "id": "bottom-band",
+          "verdict": "fail",
+          "note": "Nan's hands on her knees sit below the green line; Sam's hands touch the line"
+        },
+        {
+          "id": "no-flag",
+          "verdict": "pass",
+          "note": "no flag-like shape beyond the cast marks"
+        },
+        {
+          "id": "style",
+          "verdict": "pass",
+          "note": "bright painted anime-like key art, cel shading, line art, not 3D"
+        }
+      ],
+      "notes": "Clean cast and shirts; frontal book and hands in the bottom band. Small marks: a stray pair of brown shoes in the grass; the red ball has a smile face."
+    },
+    {
+      "try": 2,
+      "file": "l2-u1-cover-quest-teacher-front-m2-clean.png",
+      "verdict": "fail",
+      "checks": [
+        {
+          "id": "AF-1",
+          "verdict": "pass",
+          "note": "two white stripes across the chest and nothing else"
+        },
+        {
+          "id": "AF-2",
+          "verdict": "pass",
+          "note": "one white star on the orange T-shirt, no letters"
+        },
+        {
+          "id": "AF-3",
+          "verdict": "pass",
+          "note": "Nan orange star T-shirt, Sam red two-stripe T-shirt"
+        },
+        {
+          "id": "AF-4",
+          "verdict": "pass",
+          "note": "Kim looks at the children and shows the open book"
+        },
+        {
+          "id": "no-text",
+          "verdict": "pass",
+          "note": "no letters, words, numbers, signature, or frame seen"
+        },
+        {
+          "id": "cast",
+          "verdict": "pass",
+          "note": "Kim, Nan, and Sam match the cast; no Pip or other animal"
+        },
+        {
+          "id": "count",
+          "verdict": "pass",
+          "note": "three people"
+        },
+        {
+          "id": "free-band",
+          "verdict": "pass",
+          "note": "faces, hands, and book are below the yellow line and above the green line"
+        },
+        {
+          "id": "calm-top",
+          "verdict": "pass",
+          "note": "above the yellow line only sky, leaves, and tree"
+        },
+        {
+          "id": "bottom-band",
+          "verdict": "fail",
+          "note": "Nan's hands and Sam's hands on their knees sit below the green line"
+        },
+        {
+          "id": "no-flag",
+          "verdict": "pass",
+          "note": "no flag-like shape beyond the cast marks"
+        },
+        {
+          "id": "style",
+          "verdict": "pass",
+          "note": "bright painted anime-like key art, cel shading, line art, not 3D"
+        }
+      ],
+      "notes": "Clean cast, shirts, and a tilted book; only the child hands reach the bottom band. Small marks: tiny scribbles near the red ball; softer watercolor look."
+    },
+    {
+      "try": 3,
+      "file": "l2-u1-cover-quest-teacher-front-m3-clean.png",
+      "verdict": "fail",
+      "checks": [
+        {
+          "id": "AF-1",
+          "verdict": "pass",
+          "note": "two white stripes across the chest and nothing else"
+        },
+        {
+          "id": "AF-2",
+          "verdict": "pass",
+          "note": "one white star on the orange T-shirt, no letters"
+        },
+        {
+          "id": "AF-3",
+          "verdict": "pass",
+          "note": "Nan orange star T-shirt, Sam red two-stripe T-shirt"
+        },
+        {
+          "id": "AF-4",
+          "verdict": "fail",
+          "note": "the open book is held flat to the viewer; the pages face the viewer, not turned to Nan and Sam"
+        },
+        {
+          "id": "no-text",
+          "verdict": "pass",
+          "note": "no letters, words, numbers, signature, or frame seen"
+        },
+        {
+          "id": "cast",
+          "verdict": "pass",
+          "note": "Kim, Nan, and Sam match the cast; no Pip or other animal"
+        },
+        {
+          "id": "count",
+          "verdict": "pass",
+          "note": "three people"
+        },
+        {
+          "id": "free-band",
+          "verdict": "pass",
+          "note": "faces, hands, and book are below the yellow line and above the green line"
+        },
+        {
+          "id": "calm-top",
+          "verdict": "pass",
+          "note": "above the yellow line only sky, leaves, and tree"
+        },
+        {
+          "id": "bottom-band",
+          "verdict": "fail",
+          "note": "Nan's hands and Sam's hand on his knee sit below the green line"
+        },
+        {
+          "id": "no-flag",
+          "verdict": "fail",
+          "note": "one plain red circle alone on the right book page reads as a flag-like shape"
+        },
+        {
+          "id": "style",
+          "verdict": "pass",
+          "note": "bright painted anime-like key art, cel shading, line art, not 3D"
+        }
+      ],
+      "notes": "Cast and shirts are correct; frontal book, bottom-band hands, and a plain red circle on a plain page."
+    }
+  ],
+  "rank": [
+    2,
+    1,
+    3
+  ]
+}

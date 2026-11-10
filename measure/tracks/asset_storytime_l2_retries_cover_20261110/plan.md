@@ -192,6 +192,35 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
     `l2-u1-cover-quest-teacher-front-m1-zones.png`; `l2-u1-cover-quest-teacher-front-m2-clean.png`
     and `l2-u1-cover-quest-teacher-front-m2-zones.png`; `l2-u1-cover-quest-teacher-front-m3-clean.png`
     and `l2-u1-cover-quest-teacher-front-m3-zones.png`.
+  - Judge of round 1 (2026-11-10). The first judge and the second judge fail all 3 tries of round 1,
+    so the fails stand. The result files are `judge-cover-r1.json` and `judge-cover-second.json`. The
+    faults: hands on the knees below the 78 percent line, in the free band and in the bottom band, in
+    all 3 tries; a single red circle alone on a book page (no-flag), in the 3 tries of the second judge
+    and in m3 of the first judge; and the book flat to the viewer (AF-4), in m1 and m3 of the first
+    judge. Each hand is above the 88 percent line, and nothing sits above the 20 percent line. The
+    rank of the first judge puts m2 first, and the rank of the second judge puts m1 first.
+  - Round 2 (2026-11-10), blocked at the prompt fix. The 2 prompt edits of D8 are done in the spec file
+    and the python check passes. The test CS6 pins the old scene text, so the edit is not committed and
+    the calls of round 2 do not run.
+    - The edits. E1 replaces `Nan and Sam sit on the grass in front of her.` with `Nan and Sam kneel
+      upright on the grass close in front of her and lean toward the book. Each child holds both hands
+      up at chest height: one hand on the lower edge of the open book and one hand pointing at it.
+      Every hand stays at chest height, above the knees.` E2 replaces `The pages show simple pictures,
+      for example a tree and a ball.` with `The book turns toward Nan and Sam, so the viewer sees the
+      back of its plain warm brown cover and the edges of its cream pages, and no page picture.`
+    - The python check passes: each old sentence is gone, each new sentence is there once, the other
+      keys of the spec are unchanged, and the prompt equals the prompt of HEAD with the same 2
+      replacements. The edit sits in the working tree and is not committed.
+    - The test run at HEAD passes 10 of 10. The test run after the edit fails 1 of 10. The failure is
+      CS6 at `tests/storytime-cover-specs.test.ts:147`, which expects the old scene text. The maker
+      does not change the test.
+    - The worst case of round 2 was 3 calls x 0.01 USD = 0.03 USD, the highest cover cost seen. With
+      the spend of round 1 of 0.03 USD, the sum of 0.06 USD is under the 0.10 USD stop of item (b).
+      The money is not the blocker. The blocker is the test.
+    - No cover call of round 2 ran, so the spend of item (b) stays 0.03 USD of the 0.10 USD stop. No
+      network check ran, and no judge copy of m4, m5, or m6 exists.
+    - The next step needs the test update of CS6. Then the maker commits the spec with the message
+      `feat(storytime_l2_retries_cover): cover prompt fixes for round 2` and runs the 3 calls.
 - [b] Task 7: Cover hand-off (D10). Deliver the passing picture as
   `l2-u1-cover-quest-teacher-front-forge-v1.png` (2480 x 3508 px, RGB, no alpha). Build
   `/home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/` with the PNG, the zone-line copy,
