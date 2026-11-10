@@ -1,0 +1,144 @@
+# Maker log, Phase 3 step D, track asset_storytime_l2_retries_cover_20261110
+
+Role: measure-jr-green (light lane maker). Model: minimax-cn-coding-plan/MiniMax-M3.1-Flash.
+role_base_sha: 43a21f41ce20777e6b98c0d1f2448578d486bd78 (equal to HEAD at start).
+phase_base_sha: 43a21f41ce20777e6b98c0d1f2448578d486bd78.
+This step is Task 11 of the track: the hat-pip line call of D20. It makes exactly 1 paid call. It
+makes no other paid call, no color call, and no call for another row. The judge does not run here.
+Nothing is delivered here.
+
+## Step 1, the plan
+
+- Task 11 of plan.md becomes `[~]`. The marker changes from `[b]` to `[~]`. The text of the task
+  stays the same.
+- Task 11 is the only task of this step. Task 12 and the Phase 3 gate keep their own markers.
+
+## Step 2, the spec edit
+
+- The file is `docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-hat-pip.json`.
+- The edit adds one sentence at the end of `linePrompt`, after one space: `Teacher Kim keeps her
+  hair exactly as in the color picture: smooth, medium-length, dark-brown hair in a low ponytail.
+  Her hair is never curly.`
+- The file is written with python `json` and the indent of 2 spaces. A round trip of the file
+  without the change gives the same bytes, so only the one line of `linePrompt` changes. The key
+  order stays the order of the file.
+- The old SHA-256 of the file is `76302e4d58342b4675fe39eca6b3dc2248f1857d6e4fd9c7c3979857ff294668`.
+- The new SHA-256 of the file is `9191eb5dee24f59495ed3f8bbe5bdd7badb00b8ec46012aaeac59557f20b9eea`.
+- The git diff of the file holds 1 line changed. No other field of the spec changes.
+
+## Step 3, the spec tests
+
+- The command runs in the heavy job gate:
+  `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c
+  './node_modules/.bin/vitest run tests/storytime-u2-specs.test.ts
+  tests/storytime-u2-extra-try.test.ts --maxWorkers=1'`.
+- The result is 2 test files and 44 tests passed, and the exit status is 0. No test fails, so the
+  prompt edit does not stop the step. No test file changes.
+- No tsc runs in this step.
+
+## Step 4, the rows and the spend before the call
+
+- The hat-pip line rows of `out/storytime/l2/unit2/w10/muse/costs.tsv` before the call are 2:
+  - line 65: `2026-11-08T19:00:34.004Z l2-w10-story-page-put-on-your-hat-pip m2 line
+    out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-hat-pip-m2-color.png
+    l2-w10-story-page-put-on-your-hat-pip-m2-line.png 1920x1280 0.01 ok`
+  - line 70: `2026-11-10T12:29:37.385Z l2-w10-story-page-put-on-your-hat-pip m3 line
+    out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-hat-pip-m3-color.png
+    l2-w10-story-page-put-on-your-hat-pip-m3-line.png 1920x1280 0.01 ok`
+- The item (a) spend of `spend-log.tsv` before the call is 0.10 USD over 13 calls, and the stop is
+  0.15 USD. So 0.05 USD is left, as D20 says.
+- The guard rule of D20 allows the call: the row `l2-w10-story-page-put-on-your-hat-pip` of kind
+  `line` has `allowedTries: 2` and 1 exception try since the start time, so the second try passes.
+  The normal try cap of `U2_RUN.maxTries` is 3, and the row has 2 line tries since the start of the
+  unit 2 run, so the new call is line try 3.
+- The worst case of the call is 0.01 USD, the highest item (a) call cost seen. The sum of 0.10 USD
+  and 0.01 USD is 0.11 USD, under the 0.15 USD stop, so the call may run.
+
+## Step 5, the network check
+
+- The network check of the PM order runs before the paid call:
+  `curl -sS -m 20 -o /dev/null -w '%{http_code}\n' https://openrouter.ai/api/v1/models`. It sends no
+  key and it costs nothing. It gave 200 on the first check, so no second check ran.
+
+## Step 6, the call
+
+- The call ran once, with the command of D20:
+  `node scripts/storytime-muse.mjs line
+  docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-hat-pip.json --from 3 --tries 1`.
+- The guard refused no call. The print of the tool is
+  `l2-w10-story-page-put-on-your-hat-pip-m3 line try 2 ok 1920x1280 cost 0.01` and
+  `running total muse: 0.6700 USD`.
+- The call cost 0.01 USD, and no call was above 0.03 USD.
+- The new row of `out/storytime/l2/unit2/w10/muse/costs.tsv` is:
+  `2026-11-10T18:42:50.587Z	l2-w10-story-page-put-on-your-hat-pip	m3	line	out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-hat-pip-m3-color.png	l2-w10-story-page-put-on-your-hat-pip-m3-line-2.png	1920x1280	0.01	redo 2`
+- The row is the 3rd line row of the row, so the judge reads it as line try 3. The script names the
+  file with the suffix `-2`, because the file of line try 2 already exists and the tool never
+  overwrites a picture.
+- The files that the call wrote, all under `out/storytime/l2/unit2/w10/muse/`:
+  - `l2-w10-story-page-put-on-your-hat-pip-m3-line-2.png`, the new line file;
+  - `l2-w10-story-page-put-on-your-hat-pip-m3-line-raw-2.png`, the raw line file;
+  - `l2-w10-story-page-put-on-your-hat-pip-m3-line-print-2.png`, the print file;
+  - `l2-w10-story-page-put-on-your-hat-pip-m3-line-2-despeckled.png`, the despeckled line file;
+  - `l2-w10-story-page-put-on-your-hat-pip-m3-line-print-2-despeckled.png`, the despeckled print;
+  - the sidecar `l2-w10-story-page-put-on-your-hat-pip-m3.json` and the `costs.tsv` of the week.
+- The SHA-256 of the new line file is
+  `6a6088b7d55224456124ce72ca0e6d187ddd74323239859024fcbd414820981c`.
+
+## Step 7, the spend log
+
+- The spend line of the call goes into `spend-log.tsv` in the form of the other item (a) lines:
+  `2026-11-10T18:42:50.587Z	muse	l2-w10-story-page-put-on-your-hat-pip line	3	0.01	l2-w10-story-page-put-on-your-hat-pip-m3-line-2.png`
+- The total line of item (a) becomes
+  `total	item a	calls 14	stop 0.15 USD	spend 0.11`.
+- The item (a) spend is 0.11 USD over 14 calls. It is at most 0.15 USD, so the item (a) pool stays
+  under its stop, with 0.04 USD left.
+
+## Step 8, the print gate
+
+- The line call wrote the despeckled pair, so the despeckle tool did not run.
+- The print gate of D3 ran on the new line print and on its despeckled print, at the class size of
+  the row, which is class story: 4000 x 3000 px. It calls the writer check code `inspectLineArtPng`
+  of `src/storytime/book-pictures.ts`.
+
+| row | new line | try | print | width px | despeckled print | width px | passes |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| l2-w10-story-page-put-on-your-hat-pip | -m3-line-2.png | 3 | pass | 12 | pass | 12 | both |
+
+- The line print is 12 px and its despeckled print is 12 px. The minimum is 12 px, so both prints
+  pass. The record is
+  `measure/runs/asset_storytime_l2_retries_cover_20261110/line-gate-p3d.txt`.
+
+## Step 9, the judge batch (built, not judged)
+
+- `node scripts/storytime-judge-batch.mjs --unit2 --ids l2-w10-story-page-put-on-your-hat-pip
+  --kind line --try 3 --out u2rc-p3-line-t3` wrote
+  `docs/storytime/l2-unit2/judge/prod/u2rc-p3-line-t3.json` with 1 entry.
+- The judge copy is `out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-line-t3.png`.
+- The batch names the new line file of step 6, `l2-w10-story-page-put-on-your-hat-pip-m3-line-2.png`.
+- No judge call ran here. The orchestrator runs the frozen judge and the second judge.
+
+## Step 10, the plan
+
+- Task 11 keeps the marker `[~]`. It gains the sub-bullet "Step D" with the spec edit and its 2
+  SHA-256 values, the network check, the call and its cost, the print gate result, the batch name,
+  and the fact that the orchestrator runs the frozen judge and the second judge next.
+
+## Step 11, the commits
+
+- The commit of this step holds the 6 paths of the PM order: the spec file, the judge batch file,
+  the plan, the spend log, the print gate record, and this log. No PNG or JPG file enters the
+  commit. The files under `out/` stay out of the commit, because `out/` is in `.gitignore`.
+- The second commit holds this log alone, with the SHA of the first commit in the result block.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: complete
+track: asset_storytime_l2_retries_cover_20261110
+phase: Phase 3: Version repair, card jobs, and the hat-pip line (repair1), Task 11, the hat-pip line call of D20
+commits: the hat-pip line try commit (this commit, HEAD), after 43a21f41ce20777e6b98c0d1f2448578d486bd78
+tests_run: the spec tests in the heavy job gate, `./node_modules/.bin/vitest run tests/storytime-u2-specs.test.ts tests/storytime-u2-extra-try.test.ts --maxWorkers=1`, with 2 test files and 44 tests passed and the exit status 0; the print gate with `inspectLineArtPng` on 2 prints (the new line print and its despeckled print) at the class size; the judge batch build with 1 entry; the network check with curl before the call; no tsc in this step
+files_changed: docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-hat-pip.json; docs/storytime/l2-unit2/judge/prod/u2rc-p3-line-t3.json; measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md; measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv; measure/runs/asset_storytime_l2_retries_cover_20261110/line-gate-p3d.txt; measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p3d.log
+plan_updates: Task 11 keeps the marker `[~]` and gains the sub-bullet "Step D" with the spec edit and its 2 SHA-256 values, the network check of 200, the line call and its cost of 0.01 USD, the print gate result of 12 px and 12 px, the batch name, and the fact that the orchestrator runs the frozen judge and the second judge next
+known_failures: no call failed, no call was refused, and no call was above 0.03 USD; the item (a) spend is 0.11 USD of the 0.15 USD stop, so 0.04 USD is left; the judge of the new line file is not here, because the orchestrator runs the judge; the maker did not change a guard, a test, `src/`, or `scripts/`, and no PNG or JPG file enters git
+handoff: The hat-pip line call of D20 ran once, from the passing color m3, and cost 0.01 USD. The new line file is out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-hat-pip-m3-line-2.png, with the SHA-256 6a6088b7d55224456124ce72ca0e6d187ddd74323239859024fcbd414820981c. The costs.tsv row of the call is 2026-11-10T18:42:50.587Z, l2-w10-story-page-put-on-your-hat-pip, m3, line, the output l2-w10-story-page-put-on-your-hat-pip-m3-line-2.png, 1920x1280, 0.01 USD, redo 2. The spend line of spend-log.tsv is 2026-11-10T18:42:50.587Z, muse, l2-w10-story-page-put-on-your-hat-pip line, try 3, 0.01 USD, l2-w10-story-page-put-on-your-hat-pip-m3-line-2.png. The item (a) total is 14 calls and 0.11 USD of the 0.15 USD stop. The network check gave 200 before the call. The print gate of D3 passes: the line print is 12 px and its despeckled print is 12 px, at the class size of 4000 x 3000 px. The judge batch is docs/storytime/l2-unit2/judge/prod/u2rc-p3-line-t3.json with 1 entry, and the judge copy is out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-line-t3.png. The orchestrator runs the frozen judge on that batch, then the second judge on that file alone. The phase base sha is 43a21f41ce20777e6b98c0d1f2448578d486bd78. The new files of this step are line-gate-p3d.txt, maker-p3d.log, and u2rc-p3-line-t3.json.
+END_MEASURE_AGENT_RESULT

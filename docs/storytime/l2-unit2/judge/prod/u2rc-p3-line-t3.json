@@ -1,0 +1,20 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-line-t3.png",
+    "id": "l2-w10-story-page-put-on-your-hat-pip",
+    "kind": "line",
+    "pageText": "Put on your hat, Pip!",
+    "use": "story-page",
+    "mustShow": [
+      "pip",
+      "sam",
+      "may",
+      "ben",
+      "mia",
+      "pat",
+      "lily",
+      "nan",
+      "teacher-kim"
+    ]
+  }
+]

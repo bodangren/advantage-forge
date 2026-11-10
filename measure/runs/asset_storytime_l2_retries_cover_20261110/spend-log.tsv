@@ -13,7 +13,8 @@ worst-case	item a	step D2, calls 3	stop 0.15 USD, stop per call above 0.03 USD	i
 2026-11-10T12:19:04.203Z	muse	l2-w09-card-rice line	5	0.01	l2-w09-card-rice-m1-line-4.png
 worst-case	item a	step E, calls 1	stop 0.15 USD, stop per call above 0.03 USD	item (a) spend 0.09 USD	worst case 0.01 USD (1 call x 0.01 USD, the highest item (a) call cost seen); 0.09 USD + 0.01 USD = 0.10 USD, under the 0.15 USD stop; the pool ran
 2026-11-10T12:29:37.385Z	muse	l2-w10-story-page-put-on-your-hat-pip line	2	0.01	l2-w10-story-page-put-on-your-hat-pip-m3-line.png
-total	item a	calls 13	stop 0.15 USD	spend 0.10
+2026-11-10T18:42:50.587Z	muse	l2-w10-story-page-put-on-your-hat-pip line	3	0.01	l2-w10-story-page-put-on-your-hat-pip-m3-line-2.png
+total	item a	calls 14	stop 0.15 USD	spend 0.11
 worst-case	item b	calls 3	stop 0.10 USD, report point 0.08 USD, stop per call above 0.03 USD		worst case 0.09 USD (3 calls x 0.03 USD)
 2026-11-10T11:21:42.836Z	muse	l2-u1-cover-quest-teacher-front color	1	0.01	l2-u1-cover-quest-teacher-front-m1-color.png
 2026-11-10T11:22:36.962Z	muse	l2-u1-cover-quest-teacher-front color	2	0.01	l2-u1-cover-quest-teacher-front-m2-color.png

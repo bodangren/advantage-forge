@@ -453,9 +453,26 @@ hat-pip line call is the only paid call of this phase.
     R5 and R6 check the version that the verifier reads. The type error of
     `tests/storytime-cover-guards.test.ts` line 227 came from commit 3b22a6af of this track, so the
     maker added the non-null assertion on that line only.
-- [b] Task 11: Hat-pip line call of D20. Edit the `linePrompt` of the hat-pip spec. Run the network
+- [~] Task 11: Hat-pip line call of D20. Edit the `linePrompt` of the hat-pip spec. Run the network
   check, then the line call `--from 3 --tries 1`, then the print gate, then build the judge batch.
   The orchestrator runs the frozen judge and the second judge. deferred:maker
+  - Step D (this step, paid 0.01 USD). The `linePrompt` of the hat-pip spec gained the sentence of
+    D20 at its end. The old SHA-256 of the spec file is
+    `76302e4d58342b4675fe39eca6b3dc2248f1857d6e4fd9c7c3979857ff294668` and the new one is
+    `9191eb5dee24f59495ed3f8bbe5bdd7badb00b8ec46012aaeac59557f20b9eea`. The spec tests pass: 2 test
+    files and 44 tests, and the exit status is 0. The network check of the PM order gave 200
+    before the call, so no second check ran and no try was lost. The line call of D20 ran once,
+    from the passing color m3, with the command `node scripts/storytime-muse.mjs line
+    docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-hat-pip.json --from 3 --tries
+    1`. The guard refused no call. The cost is 0.01 USD, and the new line file is
+    `l2-w10-story-page-put-on-your-hat-pip-m3-line-2.png`. The costs.tsv row of the call is the 3rd
+    line row of the row, so the judge reads it as line try 3. The item (a) spend is 0.11 USD of the
+    0.15 USD stop, over 14 calls. The print gate of D3 passes: the line print is 12 px and its
+    despeckled print is 12 px, at the class size of 4000 x 3000 px. The record is
+    `measure/runs/asset_storytime_l2_retries_cover_20261110/line-gate-p3d.txt`. The judge batch is
+    `docs/storytime/l2-unit2/judge/prod/u2rc-p3-line-t3.json` with 1 entry, and its judge copy is
+    `out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-line-t3.png`. The
+    orchestrator runs the frozen judge and the second judge next.
 - [b] Task 12: Repair delivery of D21. Write `approvals-repair1.json`, run `deliver-repair1.mts`, do
   the pixel check, build the hand-off folder with its MANIFEST, and write the report addendum.
   deferred:maker
