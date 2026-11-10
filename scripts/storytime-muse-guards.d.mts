@@ -56,6 +56,16 @@ export interface GuardOptions {
    * use it the same way as `u2CapUsd`.
    */
   u2FwCapUsd?: number | string | null;
+  /**
+   * Test-only stand-in for `U2_EXTRA_TRY.capUsd`. The muse CLI never sets it. The extra try tests
+   * use it to check the empty-cap refusal and the exception cap with a small fixture spend.
+   */
+  u2ExtraCapUsd?: number | string | null;
+  /**
+   * Test-only stand-in for `COVER_RUN.capUsd`. The muse CLI never sets it. The cover tests use it
+   * to check the empty-cap refusal and the cover cap with a small fixture spend.
+   */
+  coverCapUsd?: number | string | null;
 }
 
 export interface RunGuardsResult {
@@ -63,13 +73,13 @@ export interface RunGuardsResult {
   code: number;
   spend: number;
   notice: boolean;
-  run: 'card' | 'restart' | 'u2' | 'u2fw' | 'mixed' | 'invalid';
+  run: 'card' | 'restart' | 'u2' | 'u2fw' | 'cover' | 'mixed' | 'invalid';
   reportAt: number | null;
   message: string;
 }
 
 export interface OutDirClass {
-  kind: 'card' | 'restart' | 'u2' | 'u2fw' | 'invalid';
+  kind: 'card' | 'restart' | 'u2' | 'u2fw' | 'cover' | 'invalid';
   raw: string;
   resolved: string;
 }
@@ -106,6 +116,33 @@ export interface U2FwRun {
   outDir: string;
 }
 
+/** One row of the unit 2 extra try exception. */
+export interface U2ExtraTryRow {
+  id: string;
+  kind: 'color' | 'line';
+  /** True when the try passes the normal limit of `U2_RUN.maxTries`. */
+  pastLimit: boolean;
+  /** The PM words that granted the try. */
+  source: string;
+}
+
+export interface U2ExtraTry {
+  startTime: string;
+  capUsd: number;
+  reportAtUsd: number;
+  marginUsd: number;
+  rows: U2ExtraTryRow[];
+}
+
+export interface CoverRun {
+  startTime: string;
+  capUsd: number;
+  reportAtUsd: number;
+  marginUsd: number;
+  maxTries: number;
+  outDir: string;
+}
+
 export declare const RESTART_START: string;
 export declare const MAX_TRIES: number;
 export declare const SPEND_CAP_USD: number;
@@ -116,9 +153,14 @@ export declare const CARD_LINE_RETRY_START: string;
 export declare const CARD_LINE_RETRY: CardLineRetry;
 export declare const U2_RUN: U2Run;
 export declare const U2_FW_RUN: U2FwRun;
+export declare const U2_EXTRA_TRY: U2ExtraTry;
+export declare const COVER_RUN: CoverRun;
 export declare const U2_WEEKS: string[];
 export declare const U2_CAP_MESSAGE: string;
 export declare const U2_FW_CAP_MESSAGE: string;
+export declare const U2_EXTRA_CAP_MESSAGE: string;
+export declare const COVER_CAP_MESSAGE: string;
+export declare const COVER_LINE_MESSAGE: string;
 export declare const TRY_EXCEPTIONS: TryException[];
 export declare const PICTURE_IDS: Record<string, string[]>;
 
@@ -126,6 +168,7 @@ export declare function isCardCall(ctxs: GuardContext[]): boolean;
 export declare function isMixedCardCall(ctxs: GuardContext[]): boolean;
 export declare function isUnit2OutDir(specOrPath: { outDir?: string } | string | undefined): boolean;
 export declare function isUnit2FwOutDir(specOrPath: { outDir?: string } | string | undefined): boolean;
+export declare function isCoverOutDir(specOrPath: { outDir?: string } | string | undefined): boolean;
 export declare function cliGuardOptions(opts?: Record<string, unknown>): Record<string, unknown>;
 export declare function classifyOutDir(spec: { outDir?: string } | undefined, unitRoot: string): OutDirClass;
 export declare function maxTriesFor(id: string, kind: string, maxTries?: number): number;
@@ -133,6 +176,14 @@ export declare function pictureKey(id: string): string;
 export declare function parseCostsTsv(text: string): CostRow[];
 export declare function isFailedZeroCost(r: CostRow): boolean;
 export declare function countTries(rows: CostRow[], id: string, kind: string, startTime?: string): number;
+export declare function countExceptionRows(
+  rows: CostRow[],
+  id: string,
+  kind: string,
+  startTime?: string,
+): number;
+export declare function exceptionSpendOf(rows: CostRow[], startTime?: string): number;
+export declare function exceptionEntryFor(id: string, kind: string): U2ExtraTryRow | null;
 export declare function spendTotal(rows: CostRow[], startTime?: string): number;
 export declare function tryGuard(
   rows: CostRow[],
@@ -154,6 +205,7 @@ export declare function scanCostFiles(unitRoot: string): ScanCostFilesResult;
 export declare function scanCardCostFiles(unitRoot: string): ScanCostFilesResult;
 export declare function scanU2CostFiles(unitRoot: string): ScanCostFilesResult;
 export declare function scanU2FwCostFiles(unitRoot: string): ScanCostFilesResult;
+export declare function scanCoverCostFiles(unitRoot: string): ScanCostFilesResult;
 export declare function runGuards(
   unitRoot: string,
   ctxs: GuardContext[],

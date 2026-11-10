@@ -98,6 +98,121 @@ export const U2_FW_RUN = {
   outDir: 'out/storytime/l2/unit2/family-words/muse',
 };
 
+/**
+ * Unit 2 extra try exception (2026-11-10, D1). The PM gave 9 unit 2 book rows one extra try each
+ * and wrote the exception into the track. This constant holds the cap, the report point, the
+ * margin, and the list of the rows. Each row names its id, its kind, whether its try passes the
+ * normal limit of `U2_RUN.maxTries`, and the PM words that granted it.
+ *
+ * The rule of the exception:
+ *   - a try past `U2_RUN.maxTries` is allowed only for a listed id and kind with `pastLimit` true,
+ *     only once, and only while the exception spend plus the planned calls stays at or under the
+ *     cap;
+ *   - the exception spend is the sum of the `usage_cost` rows of the 9 listed ids, of every kind,
+ *     at or after `startTime`, read from the unit 2 week cost files;
+ *   - the once count is the number of rows of the id and kind at or after `startTime`, and a
+ *     failed call at 0 USD counts;
+ *   - a call of a listed id inside the normal limit also passes the exception cap;
+ *   - a call of an id that is not listed keeps the normal rule of 3 tries.
+ *
+ * The value of `startTime` is the real UTC time of the Phase 1 guard commit, cut to the minute.
+ */
+export const U2_EXTRA_TRY = {
+  startTime: '2026-11-10T08:57:00Z',
+  capUsd: 0.15,
+  reportAtUsd: 0.12,
+  marginUsd: 0.01,
+  rows: [
+    {
+      id: 'l2-w10-story-page-put-on-your-hat-pip',
+      kind: 'color',
+      pastLimit: true,
+      source:
+        'PM 2026-11-10: "the spend guard gets a written exception for exactly these 9 rows, 1 extra try each, cap 0.15 USD for (a)"; PM 2026-11-09: "Hat-pip page: yes, one more try (about 0.02 USD)."',
+    },
+    {
+      id: 'l2-w10-story-page-put-on-your-hat-pip',
+      kind: 'line',
+      pastLimit: false,
+      source:
+        'PM 2026-11-10: "the spend guard gets a written exception for exactly these 9 rows, 1 extra try each, cap 0.15 USD for (a)"; PM 2026-11-09: "Hat-pip page: yes, one more try (about 0.02 USD)."; the line call follows the passing color try.',
+    },
+    {
+      id: 'l2-w09-story-page-tom-can-see-the-mop',
+      kind: 'line',
+      pastLimit: true,
+      source:
+        'PM 2026-11-10: "the spend guard gets a written exception for exactly these 9 rows, 1 extra try each, cap 0.15 USD for (a)"; PM 2026-11-09: "The other 8 open rows: option (a), one more try each (about 0.10 USD)."',
+    },
+    {
+      id: 'l2-w09-card-rice',
+      kind: 'line',
+      pastLimit: true,
+      source:
+        'PM 2026-11-10: "the spend guard gets a written exception for exactly these 9 rows, 1 extra try each, cap 0.15 USD for (a)"; PM 2026-11-09: "The other 8 open rows: option (a), one more try each (about 0.10 USD)."',
+    },
+    {
+      id: 'l2-w12-card-hippo',
+      kind: 'line',
+      pastLimit: true,
+      source:
+        'PM 2026-11-10: "the spend guard gets a written exception for exactly these 9 rows, 1 extra try each, cap 0.15 USD for (a)"; PM 2026-11-09: "The other 8 open rows: option (a), one more try each (about 0.10 USD)."',
+    },
+    {
+      id: 'l2-w12-card-ruler',
+      kind: 'line',
+      pastLimit: true,
+      source:
+        'PM 2026-11-10: "the spend guard gets a written exception for exactly these 9 rows, 1 extra try each, cap 0.15 USD for (a)"; PM 2026-11-09: "The other 8 open rows: option (a), one more try each (about 0.10 USD)."',
+    },
+    {
+      id: 'l2-w13-card-clap',
+      kind: 'line',
+      pastLimit: true,
+      source:
+        'PM 2026-11-10: "the spend guard gets a written exception for exactly these 9 rows, 1 extra try each, cap 0.15 USD for (a)"; PM 2026-11-09: "The other 8 open rows: option (a), one more try each (about 0.10 USD)."',
+    },
+    {
+      id: 'l2-w13-card-throw',
+      kind: 'line',
+      pastLimit: true,
+      source:
+        'PM 2026-11-10: "the spend guard gets a written exception for exactly these 9 rows, 1 extra try each, cap 0.15 USD for (a)"; PM 2026-11-09: "The other 8 open rows: option (a), one more try each (about 0.10 USD)."',
+    },
+    {
+      id: 'l2-w14-card-cold',
+      kind: 'line',
+      pastLimit: true,
+      source:
+        'PM 2026-11-10: "the spend guard gets a written exception for exactly these 9 rows, 1 extra try each, cap 0.15 USD for (a)"; PM 2026-11-09: "The other 8 open rows: option (a), one more try each (about 0.10 USD)."',
+    },
+    {
+      id: 'l2-w14-card-windy',
+      kind: 'line',
+      pastLimit: true,
+      source:
+        'PM 2026-11-10: "the spend guard gets a written exception for exactly these 9 rows, 1 extra try each, cap 0.15 USD for (a)"; PM 2026-11-09: "The other 8 open rows: option (a), one more try each (about 0.10 USD)."',
+    },
+  ],
+};
+
+/**
+ * Cover run (2026-11-10, D7). The Teacher Book front art of Storytime Level 2 unit 1 is one paid
+ * color picture with its own start time, stop, report point, margin, try cap, and output folder.
+ * This constant is the only owner of these values. A cover call reads only the cost file of its
+ * folder, so the book, app, and exception caps never count cover spend, and the cover cap never
+ * counts their spend. The value of `startTime` is the real UTC time of the Phase 1 guard commit,
+ * cut to the minute.
+ */
+export const COVER_RUN = {
+  startTime: '2026-11-10T08:57:00Z',
+  capUsd: 0.1,
+  reportAtUsd: 0.08,
+  marginUsd: 0.01,
+  maxTries: 6,
+  outDir: 'out/storytime/covers/teacher-front/muse',
+};
+
 /** The 8 unit 2 week folders. Only these folders hold unit 2 cost files. */
 export const U2_WEEKS = ['w09', 'w10', 'w11', 'w12', 'w13', 'w14', 'w15', 'w16'];
 
@@ -106,6 +221,16 @@ export const U2_CAP_MESSAGE = 'refused: the unit 2 cap is empty; the PM writes t
 
 /** The refusal message of a unit 2 family-word call while the app cap is empty. */
 export const U2_FW_CAP_MESSAGE = 'refused: the unit 2 family-word cap is empty; the PM writes the approved limit in U2_FW_RUN.capUsd';
+
+/** The refusal message of a listed unit 2 call while the exception cap is empty. */
+export const U2_EXTRA_CAP_MESSAGE =
+  'refused: the unit 2 extra try cap is empty; the PM writes the approved limit in U2_EXTRA_TRY.capUsd';
+
+/** The refusal message of a cover call while the cover cap is empty. */
+export const COVER_CAP_MESSAGE = 'refused: the cover cap is empty; the PM writes the approved limit in COVER_RUN.capUsd';
+
+/** The refusal message of a cover line call. The cover art is color only. */
+export const COVER_LINE_MESSAGE = 'refused: the cover class is color only; it has no line call';
 
 /** The card folder below a unit root: the last two parts of `CARD_RUN.outDir` (`cards/muse`). */
 const CARD_FOLDER_PARTS = CARD_RUN.outDir.split('/').filter(Boolean).slice(-2);
@@ -133,6 +258,15 @@ const U2_FW_ROOT = resolve(ROOT, U2_FW_RUN.outDir);
 
 /** The unit 2 week folder names, as a set for the classifier. */
 const U2_WEEK_SET = new Set(U2_WEEKS);
+
+/** The exact cover folder of the cover run. No other folder carries the kind `cover`. */
+const COVER_OUT_DIR = resolve(ROOT, COVER_RUN.outDir);
+
+/** The cover root: the folder that holds every cover folder. */
+const COVER_ROOT = resolve(ROOT, 'out/storytime/covers');
+
+/** The 9 ids of the extra try exception, as a set for the spend scan. */
+const U2_EXTRA_IDS = new Set(U2_EXTRA_TRY.rows.map((row) => row.id));
 
 /**
  * True when a resolved folder is a unit 2 output folder: `w09` to `w16` and then `muse` or
@@ -168,15 +302,27 @@ export const isUnit2FwOutDir = (specOrPath) => {
 };
 
 /**
- * The guard options of a CLI call. The test-only cap keys `u2CapUsd` and `u2FwCapUsd` never reach
- * `runGuards` from the CLI, so a future option-parser change cannot raise a cap. A JS caller keeps
- * its own options object.
+ * The guard options of a CLI call. The test-only cap keys `u2CapUsd`, `u2FwCapUsd`,
+ * `u2ExtraCapUsd`, and `coverCapUsd` never reach `runGuards` from the CLI, so a future
+ * option-parser change cannot raise a cap. A JS caller keeps its own options object.
  */
 export const cliGuardOptions = (opts = {}) => {
   const next = { ...opts };
   delete next.u2CapUsd;
   delete next.u2FwCapUsd;
+  delete next.u2ExtraCapUsd;
+  delete next.coverCapUsd;
   return next;
+};
+
+/**
+ * True when a spec (or a folder path) points at the exact cover folder of the cover run. The
+ * muse tool uses it to send a cover call to the cover guard.
+ */
+export const isCoverOutDir = (specOrPath) => {
+  const raw = typeof specOrPath === 'string' ? specOrPath : specOrPath?.outDir;
+  if (!raw) return false;
+  return resolve(ROOT, raw) === COVER_OUT_DIR;
 };
 
 /**
@@ -184,11 +330,14 @@ export const cliGuardOptions = (opts = {}) => {
  *   - `card` for the exact card folder of `CARD_RUN.outDir`;
  *   - `u2` for the unit 2 folder `w09` to `w16` and then `muse` or `muse/elements`;
  *   - `u2fw` for exactly the family-word folder of `U2_FW_RUN.outDir`;
+ *   - `cover` for exactly the cover folder of `COVER_RUN.outDir`;
  *   - `restart` for a week folder `<unit root>/<child>/muse` or its `elements` folder;
  *   - `invalid` for every other folder, including `..` escapes and mutated names.
  * Below the child folder `cards` only the exact card folder is valid. A card subfolder such as
  * `cards/muse/elements` or `cards/other/muse` is invalid, because the restart scan skips `cards`
  * and no scan would guard its spend.
+ * Every other folder below `out/storytime/covers/` is invalid, because only the exact cover
+ * folder has a cost scan.
  * The unit 2 test runs first and uses the fixed unit 2 root of `U2_RUN`, so a unit 2 folder is
  * `u2` even when the caller passes another unit root.
  * The path is resolved against the repository root, like the muse tool writes it. A spec without
@@ -202,6 +351,8 @@ export const classifyOutDir = (spec, unitRoot) => {
   if (cardDirs.includes(resolved)) return { kind: 'card', raw, resolved };
   if (resolved === U2_FW_ROOT) return { kind: 'u2fw', raw, resolved };
   if (isU2Folder(resolved)) return { kind: 'u2', raw, resolved };
+  if (resolved === COVER_OUT_DIR) return { kind: 'cover', raw, resolved };
+  if (isInside(relative(COVER_ROOT, resolved))) return { kind: 'invalid', raw, resolved };
   for (const anchor of [resolve(ROOT, ...UNIT_PARTS), resolve(unitRoot)]) {
     const rel = relative(anchor, resolved);
     if (!isInside(rel)) continue;
@@ -302,6 +453,29 @@ export const countTries = (rows, id, kind, startTime = RESTART_START) => {
 
 /** Spend: the usage_cost of every row since the restart start, in all cost files. */
 export const spendTotal = (rows, startTime = RESTART_START) => rows.filter((r) => sinceStart(r.time, startTime)).reduce((s, r) => s + r.cost, 0);
+
+/**
+ * The exception row of one id and kind, or null when the pair is not listed. The list of
+ * `U2_EXTRA_TRY.rows` holds one entry per id and kind.
+ */
+export const exceptionEntryFor = (id, kind) =>
+  U2_EXTRA_TRY.rows.find((row) => row.id === id && row.kind === kind) ?? null;
+
+/**
+ * The once count of one id and kind: the number of its rows at or after the exception start time.
+ * A failed call at 0 USD counts, so the rule of D1 holds for a failed call too.
+ */
+export const countExceptionRows = (rows, id, kind, startTime = U2_EXTRA_TRY.startTime) =>
+  rows.filter((r) => sinceStart(r.time, startTime) && r.kind === kind && r.row === id).length;
+
+/**
+ * The exception spend: the sum of the `usage_cost` rows of the 9 listed ids, of every kind, at or
+ * after the exception start time. The rows come from the unit 2 week cost files.
+ */
+export const exceptionSpendOf = (rows, startTime = U2_EXTRA_TRY.startTime) =>
+  rows
+    .filter((r) => sinceStart(r.time, startTime) && U2_EXTRA_IDS.has(r.row))
+    .reduce((s, r) => s + r.cost, 0);
 
 /** Try guard: refuses when the next call would pass the try cap of the picture and kind. */
 export const tryGuard = (rows, id, kind, requested = 1, startTime = RESTART_START, maxTries = MAX_TRIES) => {
@@ -417,18 +591,42 @@ export const scanU2FwCostFiles = (unitRoot) => {
 };
 
 /**
+ * Scan the cover cost file of the cover run. A cover call reads only the `costs.tsv` of the cover
+ * folder `COVER_RUN.outDir`, and only the rows at or after `COVER_RUN.startTime`. The caller sends
+ * the unit 1 root for a cover call, so the scan uses the fixed cover folder. A unit root outside
+ * the repository root is a test fixture root, and the scan reads its `muse` folder instead.
+ */
+export const scanCoverCostFiles = (unitRoot) => {
+  const rel = unitRoot ? relative(ROOT, resolve(unitRoot)) : '';
+  const outside = rel !== '' && !isInside(rel);
+  const base = outside ? join(resolve(unitRoot), 'muse') : COVER_OUT_DIR;
+  const pictureRows = [];
+  const allRows = [];
+  const top = join(base, 'costs.tsv');
+  if (existsSync(top)) {
+    const rows = parseCostsTsv(readFileSync(top, 'utf8')).filter((r) => sinceStart(r.time, COVER_RUN.startTime));
+    pictureRows.push(...rows);
+    allRows.push(...rows);
+  }
+  return { pictureRows, allRows };
+};
+
+/**
  * Run the guards for one invocation. Returns a decision; it makes no call and does not exit.
  * The caller prints the message and exits with code 3 when refused.
  *
  * The function is the one decision point for a restart call, a card call, a unit 2 call, a
- * family-word call, a mixed call, and an unknown output folder:
+ * family-word call, a cover call, a mixed call, and an unknown output folder:
  *   - a spec with an unknown output folder is refused before any cost scan;
  *   - a mixed call is refused before any cost scan;
  *   - a book call reads only the unit 2 week cost files and uses `U2_RUN`;
  *   - a family-word call reads only the family-word cost file and uses `U2_FW_RUN`;
  *   - a card call uses `CARD_RUN` and the card cost files;
+ *   - a cover call uses `COVER_RUN` and the cover cost file, and it has no line call;
  *   - every other call uses the restart values and the restart scan.
  * An empty or invalid cap of either unit 2 kind is refused.
+ * A unit 2 call of a row of the extra try exception also passes the exception cap and the once
+ * rule of `U2_EXTRA_TRY`. A row with `pastLimit` true passes the normal try limit once.
  * After the spend check of the current sum, the function projects the whole pool: one margin per
  * provider call, plus one margin for a color pool (the line picture that follows each passing
  * color). A projected sum over the cap is refused, so a pool cannot pass the cap by its own calls.
@@ -445,6 +643,18 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
       run: 'invalid',
       reportAt: CARD_RUN.reportAtUsd,
       message: `refused: outDir ${invalid.raw} of ${invalid.id} is outside the scanned cost folders`,
+    };
+  }
+  const coverFlags = classes.map((c) => c.kind === 'cover');
+  if (coverFlags.some(Boolean) && !coverFlags.every(Boolean)) {
+    return {
+      refused: true,
+      code: 3,
+      spend: 0,
+      notice: false,
+      run: 'mixed',
+      reportAt: COVER_RUN.reportAtUsd,
+      message: 'refused: the call mixes cover specs with other specs; run each group in its own call',
     };
   }
   const u2Flags = classes.map((c) => c.kind === 'u2');
@@ -473,8 +683,9 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
   }
   const u2 = ctxs.length > 0 && u2Flags.every(Boolean);
   const u2fw = ctxs.length > 0 && u2fwFlags.every(Boolean);
-  // The test-only `opts.u2CapUsd` and `opts.u2FwCapUsd` stand in for a cap in a test. The CLI
-  // never sets them; `cliGuardOptions` removes them.
+  // The test-only `opts.u2CapUsd`, `opts.u2FwCapUsd`, `opts.u2ExtraCapUsd`, and
+  // `opts.coverCapUsd` stand in for a cap in a test. The CLI never sets them; `cliGuardOptions`
+  // removes them.
   const u2Cap = u2 ? (Object.hasOwn(opts, 'u2CapUsd') ? opts.u2CapUsd : U2_RUN.capUsd) : null;
   const u2FwCap = u2fw ? (Object.hasOwn(opts, 'u2FwCapUsd') ? opts.u2FwCapUsd : U2_FW_RUN.capUsd) : null;
   const capOk = (cap) => typeof cap === 'number' && Number.isFinite(cap) && cap > 0;
@@ -513,14 +724,38 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
     };
   }
   const card = ctxs.length > 0 && cardFlags.every(Boolean);
-  const run = u2 ? 'u2' : u2fw ? 'u2fw' : card ? 'card' : 'restart';
-  const cap = u2 ? u2Cap : u2fw ? u2FwCap : card ? CARD_RUN.capUsd : SPEND_CAP_USD;
-  const margin = u2 ? U2_RUN.marginUsd : u2fw ? U2_FW_RUN.marginUsd : card ? CARD_RUN.marginUsd : SPEND_MARGIN_USD;
-  const reportAt = u2 ? (U2_RUN.reportAtUsd ?? Number.POSITIVE_INFINITY) : u2fw ? (U2_FW_RUN.reportAtUsd ?? Number.POSITIVE_INFINITY) : card ? CARD_RUN.reportAtUsd : REPORT_AT_USD;
-  const startTime = u2 ? U2_RUN.startTime : u2fw ? U2_FW_RUN.startTime : card ? CARD_RUN.startTime : RESTART_START;
-  const maxTries = u2 ? U2_RUN.maxTries : u2fw ? U2_FW_RUN.maxTries : card ? CARD_RUN.maxTries : MAX_TRIES;
-  const { pictureRows, allRows } = u2 ? scanU2CostFiles(unitRoot) : u2fw ? scanU2FwCostFiles(unitRoot) : card ? scanCardCostFiles(unitRoot) : scanCostFiles(unitRoot);
-  const s = u2 || u2fw || card ? spendGuard(allRows, startTime, cap, margin, reportAt) : spendGuard(allRows);
+  const cover = ctxs.length > 0 && coverFlags.every(Boolean);
+  const coverCap = cover ? (Object.hasOwn(opts, 'coverCapUsd') ? opts.coverCapUsd : COVER_RUN.capUsd) : null;
+  if (cover && !capOk(coverCap)) {
+    return {
+      refused: true,
+      code: 3,
+      spend: 0,
+      notice: false,
+      run: 'cover',
+      reportAt: COVER_RUN.reportAtUsd,
+      message: COVER_CAP_MESSAGE,
+    };
+  }
+  if (cover && cmd === 'line') {
+    return {
+      refused: true,
+      code: 3,
+      spend: 0,
+      notice: false,
+      run: 'cover',
+      reportAt: COVER_RUN.reportAtUsd,
+      message: COVER_LINE_MESSAGE,
+    };
+  }
+  const run = u2 ? 'u2' : u2fw ? 'u2fw' : card ? 'card' : cover ? 'cover' : 'restart';
+  const cap = u2 ? u2Cap : u2fw ? u2FwCap : card ? CARD_RUN.capUsd : cover ? coverCap : SPEND_CAP_USD;
+  const margin = u2 ? U2_RUN.marginUsd : u2fw ? U2_FW_RUN.marginUsd : card ? CARD_RUN.marginUsd : cover ? COVER_RUN.marginUsd : SPEND_MARGIN_USD;
+  const reportAt = u2 ? (U2_RUN.reportAtUsd ?? Number.POSITIVE_INFINITY) : u2fw ? (U2_FW_RUN.reportAtUsd ?? Number.POSITIVE_INFINITY) : card ? CARD_RUN.reportAtUsd : cover ? COVER_RUN.reportAtUsd : REPORT_AT_USD;
+  const startTime = u2 ? U2_RUN.startTime : u2fw ? U2_FW_RUN.startTime : card ? CARD_RUN.startTime : cover ? COVER_RUN.startTime : RESTART_START;
+  const maxTries = u2 ? U2_RUN.maxTries : u2fw ? U2_FW_RUN.maxTries : card ? CARD_RUN.maxTries : cover ? COVER_RUN.maxTries : MAX_TRIES;
+  const { pictureRows, allRows } = u2 ? scanU2CostFiles(unitRoot) : u2fw ? scanU2FwCostFiles(unitRoot) : card ? scanCardCostFiles(unitRoot) : cover ? scanCoverCostFiles(unitRoot) : scanCostFiles(unitRoot);
+  const s = u2 || u2fw || card || cover ? spendGuard(allRows, startTime, cap, margin, reportAt) : spendGuard(allRows);
   const spend = s.spend;
   if (!s.ok) {
     return { refused: true, code: 3, spend, notice: false, run, reportAt: u2 ? U2_RUN.reportAtUsd : reportAt, message: `refused: spend ${spend.toFixed(4)} USD plus ${margin} over cap ${cap}` };
@@ -528,18 +763,75 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
   const kind = cmd;
   const requested = cmd === 'line' ? Number(opts.tries ?? 1) : 1;
   const calls = cmd === 'line' ? ctxs.length * requested : ctxs.length;
-  const cushion = cmd === 'line' ? 0 : 1;
+  // The extra try exception of D1. A listed row passes the exception cap and the once rule. The
+  // notice of the exception uses the exception spend and its report point.
+  const listed = u2 ? ctxs.filter((ctx) => exceptionEntryFor(ctx.spec.id, kind)) : [];
+  let notice = s.notice;
+  let reportAtOut = reportAt;
+  let spendOut = spend;
+  if (listed.length) {
+    const extraCap = Object.hasOwn(opts, 'u2ExtraCapUsd') ? opts.u2ExtraCapUsd : U2_EXTRA_TRY.capUsd;
+    if (!capOk(extraCap)) {
+      return {
+        refused: true,
+        code: 3,
+        spend: 0,
+        notice: false,
+        run,
+        reportAt: U2_EXTRA_TRY.reportAtUsd,
+        message: U2_EXTRA_CAP_MESSAGE,
+      };
+    }
+    const exceptionSpend = exceptionSpendOf(allRows, U2_EXTRA_TRY.startTime);
+    const planned = calls * U2_EXTRA_TRY.marginUsd;
+    // The sum of the margins can land a hair over the cap in floating point, so the comparison
+    // keeps a tolerance of one billionth of a dollar.
+    if (exceptionSpend + planned > extraCap + 1e-9) {
+      return {
+        refused: true,
+        code: 3,
+        spend: exceptionSpend,
+        notice: exceptionSpend >= U2_EXTRA_TRY.reportAtUsd,
+        run,
+        reportAt: U2_EXTRA_TRY.reportAtUsd,
+        message: `refused: the exception spend ${exceptionSpend.toFixed(4)} USD plus ${planned.toFixed(4)} over cap ${extraCap}`,
+      };
+    }
+    for (const ctx of listed) {
+      const once = countExceptionRows(pictureRows, ctx.spec.id, kind, U2_EXTRA_TRY.startTime);
+      if (once >= 1) {
+        return {
+          refused: true,
+          code: 3,
+          spend: exceptionSpend,
+          notice: exceptionSpend >= U2_EXTRA_TRY.reportAtUsd,
+          run,
+          reportAt: U2_EXTRA_TRY.reportAtUsd,
+          message: `refused: ${ctx.spec.id} ${kind} already has ${once} try since ${U2_EXTRA_TRY.startTime}; the exception grants one extra try`,
+        };
+      }
+    }
+    notice = s.notice || exceptionSpend >= U2_EXTRA_TRY.reportAtUsd;
+    reportAtOut = U2_EXTRA_TRY.reportAtUsd;
+    spendOut = exceptionSpend;
+  }
+  // The cover art is color only, so its pool has no line picture after the color.
+  const cushion = cmd === 'line' || cover ? 0 : 1;
   const projected = spend + (calls + cushion) * margin;
   if (projected > cap) {
     return { refused: true, code: 3, spend, notice: s.notice, run, reportAt: u2 ? U2_RUN.reportAtUsd : reportAt, message: `refused: projected spend ${projected.toFixed(4)} USD over cap ${cap}` };
   }
   for (const ctx of ctxs) {
+    // A listed row with `pastLimit` true passes the normal try limit once. The once rule above
+    // keeps the extra try to one.
+    const entry = u2 ? exceptionEntryFor(ctx.spec.id, kind) : null;
+    if (entry?.pastLimit) continue;
     const retry = card && kind === 'line' ? lineRetryGuard(pictureRows, ctx.spec.id, requested) : null;
     const g = retry ?? tryGuard(pictureRows, ctx.spec.id, kind, requested, startTime, maxTries);
     if (!g.ok) {
       return { refused: true, code: 3, spend, notice: s.notice, run, reportAt: u2 ? U2_RUN.reportAtUsd : reportAt, message: `refused: ${ctx.spec.id} ${kind} count ${g.count} (max ${g.max})` };
     }
   }
-  return { refused: false, code: 0, spend, notice: s.notice, run, reportAt: u2 ? U2_RUN.reportAtUsd : reportAt, message: '' };
+  return { refused: false, code: 0, spend: spendOut, notice, run, reportAt: reportAtOut, message: '' };
 };
 
