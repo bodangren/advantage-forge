@@ -10,7 +10,9 @@
 //   - an exception spend that passes the cap with the next call: the exception refuses it;
 //   - rows before the start time: they count against neither the exception cap nor the once rule;
 //   - the book cap of 18.33 USD: it still refuses a call of a listed row;
-//   - the hat-pip line call after the new color: it is allowed once and it counts against the cap.
+//   - the hat-pip line call after the new color: it is allowed once and it counts against the cap;
+//   - the second exception of D15: the 3 rows with the field `netRetry` allow one more try when
+//     their first exception try cost 0 USD, and they refuse a third try.
 //
 // Every test uses a temp unit root and a fixture cost file. The classification resolves a
 // repo-relative outDir against the repository root, like the muse tool does. No test makes a
@@ -28,10 +30,37 @@ const HAT_PIP = 'l2-w10-story-page-put-on-your-hat-pip';
 const RICE = 'l2-w09-card-rice';
 const TOM_MOP = 'l2-w09-story-page-tom-can-see-the-mop';
 const UNLISTED = 'l2-w09-story-page-i-like-rice-yum';
+const HIPPO = 'l2-w12-card-hippo';
 const BOOK_START = guards.U2_RUN.startTime;
 const EXTRA_START = guards.U2_EXTRA_TRY.startTime;
 const EXTRA_CAP = 0.15;
 const BOOK_CAP = 18.33;
+
+/** The 3 rows of the second exception of D15. Each row has the field `netRetry` true. */
+const NET_RETRY_ROWS = [
+  { id: HAT_PIP, kind: 'color' as const, week: 'w10' },
+  { id: TOM_MOP, kind: 'line' as const, week: 'w09' },
+  { id: RICE, kind: 'line' as const, week: 'w09' },
+];
+
+/** The source text of the 8 line rows at commit 22ec70dc. */
+const SOURCE_OTHER =
+  'PM 2026-11-10: "the spend guard gets a written exception for exactly these 9 rows, 1 extra try each, cap 0.15 USD for (a)"; PM 2026-11-09: "The other 8 open rows: option (a), one more try each (about 0.10 USD)."';
+
+/** The source text of the hat-pip color row at commit 22ec70dc. */
+const SOURCE_HAT_PIP_COLOR =
+  'PM 2026-11-10: "the spend guard gets a written exception for exactly these 9 rows, 1 extra try each, cap 0.15 USD for (a)"; PM 2026-11-09: "Hat-pip page: yes, one more try (about 0.02 USD)."';
+
+/** The source text of the hat-pip line row at commit 22ec70dc. */
+const SOURCE_HAT_PIP_LINE =
+  'PM 2026-11-10: "the spend guard gets a written exception for exactly these 9 rows, 1 extra try each, cap 0.15 USD for (a)"; PM 2026-11-09: "Hat-pip page: yes, one more try (about 0.02 USD)."; the line call follows the passing color try.';
+
+/** The start of the PM words of the second exception, which the 3 rows add to their source. */
+const PM_SECOND =
+  'PM 2026-11-10 (second exception): "DECISION on your question: YES, one more try for the 3 timed-out rows only.';
+
+/** The note of a call that failed on a network fault at 0 USD. */
+const FAULT = 'network error: UND_ERR_CONNECT_TIMEOUT';
 
 /** The day before the exception start, inside the book run. */
 const BEFORE_EXTRA = '2026-11-09T08:00:00Z';
@@ -253,6 +282,145 @@ describe('the test-only cap keys of the exception (U2X11, U2X12)', () => {
       }
     } finally {
       rmSync(root, { recursive: true, force: true });
+    }
+  });
+});
+
+describe('the second exception of D15 (U2X13 to U2X19)', () => {
+  it('U2X13 allows one more try of each netRetry row after a first exception try at 0 USD', () => {
+    for (const row of NET_RETRY_ROWS) {
+      const root = temp();
+      try {
+        writeCosts(root, `${row.week}/muse/costs.tsv`, [costRow(row.id, 0, row.kind, EXTRA_START, FAULT)]);
+        const result = u2Call(root, row.id, row.week, row.kind);
+        expect.soft(result.refused, row.id).toBe(false);
+        expect.soft(result.code, row.id).toBe(0);
+        expect.soft(result.run, row.id).toBe('u2');
+        expect.soft(result.spend, row.id).toBeCloseTo(0);
+      } finally {
+        rmSync(root, { recursive: true, force: true });
+      }
+    }
+  });
+
+  it('U2X14 refuses a third try of each netRetry row after 2 exception tries', () => {
+    for (const row of NET_RETRY_ROWS) {
+      const root = temp();
+      try {
+        writeCosts(root, `${row.week}/muse/costs.tsv`, [
+          costRow(row.id, 0, row.kind, EXTRA_START, FAULT),
+          costRow(row.id, 0.01, row.kind, EXTRA_START),
+        ]);
+        const result = u2Call(root, row.id, row.week, row.kind);
+        expect.soft(result.refused, row.id).toBe(true);
+        expect.soft(result.code, row.id).toBe(3);
+        expect.soft(result.message, row.id).toContain(`${row.id} ${row.kind} already has 2 tries`);
+      } finally {
+        rmSync(root, { recursive: true, force: true });
+      }
+    }
+  });
+
+  it('U2X15 refuses the second try of a netRetry row whose first exception try cost more than 0 USD', () => {
+    const root = temp();
+    try {
+      writeCosts(root, 'w10/muse/costs.tsv', [costRow(HAT_PIP, 0.02, 'color', EXTRA_START)]);
+      const result = u2Call(root, HAT_PIP, 'w10', 'color');
+      expect(result.refused).toBe(true);
+      expect(result.code).toBe(3);
+      expect(result.message).toContain(`${HAT_PIP} color already has 1 try`);
+      expect(result.message).toContain('the network retry needs a first try at 0 USD');
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('U2X16 refuses a second try of a row without netRetry', () => {
+    const root = temp();
+    try {
+      writeCosts(root, 'w12/muse/costs.tsv', [costRow(HIPPO, 0.01, 'line', EXTRA_START)]);
+      const result = u2Call(root, HIPPO, 'w12', 'line');
+      expect(result.refused).toBe(true);
+      expect(result.code).toBe(3);
+      expect(result.message).toContain(`${HIPPO} line already has 1 try`);
+      expect(result.message).toContain('the exception grants one extra try');
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('U2X17 refuses a line try 5 of hat-pip past the normal limit', () => {
+    const root = temp();
+    try {
+      writeCosts(root, 'w10/muse/costs.tsv', [
+        costRow(HAT_PIP, 0.01, 'line', BEFORE_EXTRA),
+        costRow(HAT_PIP, 0.01, 'line', BEFORE_EXTRA),
+        costRow(HAT_PIP, 0.01, 'line', BEFORE_EXTRA),
+        costRow(HAT_PIP, 0.01, 'line', BEFORE_EXTRA),
+        costRow(HAT_PIP, 0.01, 'line', BEFORE_EXTRA),
+      ]);
+      const result = u2Call(root, HAT_PIP, 'w10', 'line');
+      expect(result.refused).toBe(true);
+      expect(result.code).toBe(3);
+      expect(result.message).toContain(`${HAT_PIP} line count 5 (max 3)`);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('U2X18 refuses the next call when the exception spend is at the 0.15 USD cap', () => {
+    const root = temp();
+    try {
+      writeCosts(root, 'w09/muse/costs.tsv', [costRow(RICE, 0.15, 'line', EXTRA_START)]);
+      const result = u2Call(root, HAT_PIP, 'w10', 'color');
+      expect(result.refused).toBe(true);
+      expect(result.code).toBe(3);
+      expect(result.message).toContain('over cap 0.15');
+      expect(result.reportAt).toBe(0.12);
+      expect(result.spend).toBeCloseTo(0.15);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('U2X19 keeps every value of U2_EXTRA_TRY as at commit 22ec70dc', () => {
+    const rows = guards.U2_EXTRA_TRY.rows;
+    expect(guards.U2_EXTRA_TRY.startTime).toBe('2026-11-10T08:57:00Z');
+    expect(guards.U2_EXTRA_TRY.capUsd).toBe(EXTRA_CAP);
+    expect(guards.U2_EXTRA_TRY.reportAtUsd).toBe(0.12);
+    expect(guards.U2_EXTRA_TRY.marginUsd).toBe(0.01);
+    expect(rows).toHaveLength(10);
+    expect(rows.map((row) => `${row.id} ${row.kind} ${row.pastLimit}`)).toEqual([
+      `${HAT_PIP} color true`,
+      `${HAT_PIP} line false`,
+      `${TOM_MOP} line true`,
+      `${RICE} line true`,
+      `${HIPPO} line true`,
+      'l2-w12-card-ruler line true',
+      'l2-w13-card-clap line true',
+      'l2-w13-card-throw line true',
+      'l2-w14-card-cold line true',
+      'l2-w14-card-windy line true',
+    ]);
+    const net = rows.filter((row) => row.netRetry === true);
+    expect(net.map((row) => `${row.id} ${row.kind}`)).toEqual([
+      `${HAT_PIP} color`,
+      `${TOM_MOP} line`,
+      `${RICE} line`,
+    ]);
+    for (const row of rows) {
+      if (row.netRetry === true) continue;
+      expect.soft(row.netRetry, `${row.id} ${row.kind}`).toBeUndefined();
+      const old = row.id === HAT_PIP ? SOURCE_HAT_PIP_LINE : SOURCE_OTHER;
+      expect.soft(row.source, `${row.id} ${row.kind}`).toBe(old);
+    }
+    const hatPipColor = rows.find((row) => row.id === HAT_PIP && row.kind === 'color')!;
+    expect(hatPipColor.source.startsWith(SOURCE_HAT_PIP_COLOR)).toBe(true);
+    expect(hatPipColor.source).toContain(PM_SECOND);
+    for (const id of [TOM_MOP, RICE]) {
+      const row = rows.find((r) => r.id === id && r.kind === 'line')!;
+      expect.soft(row.source.startsWith(SOURCE_OTHER), id).toBe(true);
+      expect.soft(row.source, id).toContain(PM_SECOND);
     }
   });
 });

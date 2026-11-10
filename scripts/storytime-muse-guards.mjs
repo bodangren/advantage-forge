@@ -112,6 +112,9 @@ export const U2_FW_RUN = {
  *     at or after `startTime`, read from the unit 2 week cost files;
  *   - the once count is the number of rows of the id and kind at or after `startTime`, and a
  *     failed call at 0 USD counts;
+ *   - a row with `netRetry` true (D15) allows one more try past the once rule, so 2 exception
+ *     tries in total for that id and kind. The second try is allowed only when the first exception
+ *     try of that pair cost 0 USD. A third try is refused;
  *   - a call of a listed id inside the normal limit also passes the exception cap;
  *   - a call of an id that is not listed keeps the normal rule of 3 tries.
  *
@@ -127,8 +130,9 @@ export const U2_EXTRA_TRY = {
       id: 'l2-w10-story-page-put-on-your-hat-pip',
       kind: 'color',
       pastLimit: true,
+      netRetry: true,
       source:
-        'PM 2026-11-10: "the spend guard gets a written exception for exactly these 9 rows, 1 extra try each, cap 0.15 USD for (a)"; PM 2026-11-09: "Hat-pip page: yes, one more try (about 0.02 USD)."',
+        'PM 2026-11-10: "the spend guard gets a written exception for exactly these 9 rows, 1 extra try each, cap 0.15 USD for (a)"; PM 2026-11-09: "Hat-pip page: yes, one more try (about 0.02 USD)."; PM 2026-11-10 (second exception): "DECISION on your question: YES, one more try for the 3 timed-out rows only. They failed on a network fault at 0 USD, so no real try happened. Write the new guard exception (3 rows, 1 try each), inside the same 0.15 USD cap (spent 0.06). Use the same network check before each call that you plan for step B."',
     },
     {
       id: 'l2-w10-story-page-put-on-your-hat-pip',
@@ -141,15 +145,17 @@ export const U2_EXTRA_TRY = {
       id: 'l2-w09-story-page-tom-can-see-the-mop',
       kind: 'line',
       pastLimit: true,
+      netRetry: true,
       source:
-        'PM 2026-11-10: "the spend guard gets a written exception for exactly these 9 rows, 1 extra try each, cap 0.15 USD for (a)"; PM 2026-11-09: "The other 8 open rows: option (a), one more try each (about 0.10 USD)."',
+        'PM 2026-11-10: "the spend guard gets a written exception for exactly these 9 rows, 1 extra try each, cap 0.15 USD for (a)"; PM 2026-11-09: "The other 8 open rows: option (a), one more try each (about 0.10 USD)."; PM 2026-11-10 (second exception): "DECISION on your question: YES, one more try for the 3 timed-out rows only. They failed on a network fault at 0 USD, so no real try happened. Write the new guard exception (3 rows, 1 try each), inside the same 0.15 USD cap (spent 0.06). Use the same network check before each call that you plan for step B."',
     },
     {
       id: 'l2-w09-card-rice',
       kind: 'line',
       pastLimit: true,
+      netRetry: true,
       source:
-        'PM 2026-11-10: "the spend guard gets a written exception for exactly these 9 rows, 1 extra try each, cap 0.15 USD for (a)"; PM 2026-11-09: "The other 8 open rows: option (a), one more try each (about 0.10 USD)."',
+        'PM 2026-11-10: "the spend guard gets a written exception for exactly these 9 rows, 1 extra try each, cap 0.15 USD for (a)"; PM 2026-11-09: "The other 8 open rows: option (a), one more try each (about 0.10 USD)."; PM 2026-11-10 (second exception): "DECISION on your question: YES, one more try for the 3 timed-out rows only. They failed on a network fault at 0 USD, so no real try happened. Write the new guard exception (3 rows, 1 try each), inside the same 0.15 USD cap (spent 0.06). Use the same network check before each call that you plan for step B."',
     },
     {
       id: 'l2-w12-card-hippo',
@@ -467,6 +473,18 @@ export const exceptionEntryFor = (id, kind) =>
  */
 export const countExceptionRows = (rows, id, kind, startTime = U2_EXTRA_TRY.startTime) =>
   rows.filter((r) => sinceStart(r.time, startTime) && r.kind === kind && r.row === id).length;
+
+/**
+ * The cost of the first exception try of one id and kind: the cost of its earliest row at or after
+ * the exception start time. It is null when the pair has no row since the start time. The rule of
+ * D15 reads this cost: the second try of a `netRetry` row needs a first try at 0 USD.
+ */
+export const firstExceptionTryCost = (rows, id, kind, startTime = U2_EXTRA_TRY.startTime) => {
+  const tries = rows
+    .filter((r) => sinceStart(r.time, startTime) && r.kind === kind && r.row === id)
+    .sort((a, b) => utcMs(a.time) - utcMs(b.time));
+  return tries.length ? tries[0].cost : null;
+};
 
 /**
  * The exception spend: the sum of the `usage_cost` rows of the 9 listed ids, of every kind, at or
@@ -798,7 +816,39 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
       };
     }
     for (const ctx of listed) {
+      const entry = exceptionEntryFor(ctx.spec.id, kind);
       const once = countExceptionRows(pictureRows, ctx.spec.id, kind, U2_EXTRA_TRY.startTime);
+      // The rule of D15. A row with `netRetry` true allows one more try past the once rule, so 2
+      // exception tries in total for that id and kind. The second try is allowed only when the
+      // first exception try of that pair cost 0 USD. A third try is refused.
+      if (entry?.netRetry === true) {
+        if (once >= 2) {
+          return {
+            refused: true,
+            code: 3,
+            spend: exceptionSpend,
+            notice: exceptionSpend >= U2_EXTRA_TRY.reportAtUsd,
+            run,
+            reportAt: U2_EXTRA_TRY.reportAtUsd,
+            message: `refused: ${ctx.spec.id} ${kind} already has ${once} tries since ${U2_EXTRA_TRY.startTime}; the network retry grants 2 tries`,
+          };
+        }
+        if (once === 1) {
+          const firstCost = firstExceptionTryCost(pictureRows, ctx.spec.id, kind, U2_EXTRA_TRY.startTime);
+          if (firstCost === null || firstCost > 0) {
+            return {
+              refused: true,
+              code: 3,
+              spend: exceptionSpend,
+              notice: exceptionSpend >= U2_EXTRA_TRY.reportAtUsd,
+              run,
+              reportAt: U2_EXTRA_TRY.reportAtUsd,
+              message: `refused: ${ctx.spec.id} ${kind} already has 1 try since ${U2_EXTRA_TRY.startTime}; the network retry needs a first try at 0 USD`,
+            };
+          }
+        }
+        continue;
+      }
       if (once >= 1) {
         return {
           refused: true,

@@ -74,7 +74,7 @@ and 0.10 USD for item (b), so 0.25 USD in total. The maker makes no balance call
 
 ## Decisions
 
-The PM and the owner order set D1 to D14. The author set the defaults that the section "Open
+The PM and the owner order set D1 to D15. The author set the defaults that the section "Open
 questions answered by default" lists. The PM can change each default.
 
 - **D1 Retry exception (item a).** The guard gets a written exception for exactly 9 rows. The source
@@ -283,6 +283,29 @@ questions answered by default" lists. The PM can change each default.
   - the cover file with its SHA-256;
   - the folders with their MANIFEST OK counts;
   - a `Facts changed:` list.
+- **D15 Second exception (PM 2026-11-10).** The PM order of 2026-11-10, word for word:
+
+  > DECISION on your question: YES, one more try for the 3 timed-out rows only. They failed on a network fault at 0 USD, so no real try happened. Write the new guard exception (3 rows, 1 try each), inside the same 0.15 USD cap (spent 0.06). Use the same network check before each call that you plan for step B.
+
+  - The guard gets a second exception for 3 rows. Each row of step A that failed on a network fault
+    at 0 USD gets one more try.
+  - Add the field `netRetry` with the value `true` to 3 rows of `U2_EXTRA_TRY`, these id and kind
+    pairs:
+    - `l2-w10-story-page-put-on-your-hat-pip`, kind `color`;
+    - `l2-w09-story-page-tom-can-see-the-mop`, kind `line`;
+    - `l2-w09-card-rice`, kind `line`.
+  - Add the PM words of 2026-11-10 to the `source` of each of the 3 rows. No other row gets the
+    field `netRetry`, and no other field of any row changes.
+  - A row with `netRetry` true allows exactly one more try past the once rule of D1. That gives 2
+    exception tries in total for that id and kind.
+  - The second try is allowed only when the first exception try of that id and kind cost 0 USD. The
+    first exception try is the first cost row of that id and kind since `U2_EXTRA_TRY.startTime`.
+    A third try of that id and kind is refused.
+  - The spend of these tries counts with the other exception spend against the same 0.15 USD cap,
+    because the start time is the same. The cap, the report point, and the margin keep their values.
+  - The hat-pip line row (`pastLimit` false) keeps its rule of D1: one line call after a passing
+    color, inside the normal line limit, and inside the cap.
+  - The maker makes no Muse call in the step that writes this exception.
 
 ## Functional Requirements
 
@@ -334,6 +357,17 @@ questions answered by default" lists. The PM can change each default.
   brief folder, the v1 book delivery, and the v1 hand-off have no change. `src/storytime/muse-delivery.ts`
   has no behavior change.
 - **FR-15 Scratch.** The scratch of D13 is gone at the end of Task 8. The kept files of D13 remain.
+- **FR-16 The second exception.** Tests with fixture cost files in temp folders show:
+  - each of the 3 `netRetry` rows: after one exception try at 0 USD, one more try is allowed;
+  - each of the 3 `netRetry` rows: after one exception try at 0 USD and one more try, a third try is
+    refused;
+  - a `netRetry` row whose first exception try cost more than 0 USD: a second try is refused;
+  - a row without `netRetry`, for example `l2-w12-card-hippo` line, after its exception try: a
+    second try is refused;
+  - the wrong kind, for example a line try 5 of hat-pip past the normal limit: refused;
+  - an exception spend of 0.15 USD with the next call over the cap: refused;
+  - the values of `U2_EXTRA_TRY` other than the 3 `netRetry` fields and their source text are the
+    same as at commit `22ec70dc`.
 
 ## Non-Functional Requirements
 

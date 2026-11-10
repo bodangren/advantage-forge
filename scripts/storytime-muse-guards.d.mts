@@ -122,6 +122,8 @@ export interface U2ExtraTryRow {
   kind: 'color' | 'line';
   /** True when the try passes the normal limit of `U2_RUN.maxTries`. */
   pastLimit: boolean;
+  /** True when the row allows one more try past the once rule (D15). */
+  netRetry?: boolean;
   /** The PM words that granted the try. */
   source: string;
 }
@@ -182,6 +184,12 @@ export declare function countExceptionRows(
   kind: string,
   startTime?: string,
 ): number;
+export declare function firstExceptionTryCost(
+  rows: CostRow[],
+  id: string,
+  kind: string,
+  startTime?: string,
+): number | null;
 export declare function exceptionSpendOf(rows: CostRow[], startTime?: string): number;
 export declare function exceptionEntryFor(id: string, kind: string): U2ExtraTryRow | null;
 export declare function spendTotal(rows: CostRow[], startTime?: string): number;
