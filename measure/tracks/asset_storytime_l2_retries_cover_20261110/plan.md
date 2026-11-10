@@ -447,13 +447,17 @@ hat-pip line call is the only paid call of this phase.
 - [b] Task 12: Repair delivery of D21. Write `approvals-repair1.json`, run `deliver-repair1.mts`, do
   the pixel check, build the hand-off folder with its MANIFEST, and write the report addendum.
   deferred:maker
-- [b] Task 13: Cover README title fix of D22 (FR-19). deferred:maker
+- [x] Task 13 (sha pending): Cover README title fix of D22 (FR-19).
   - The folder is `/home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/`. The cost is
     0 USD. Line 1 of the README becomes `# Teacher front cover art, Storytime Level 2 unit 1`, and
     the title line of `MANIFEST.txt` becomes
     `# Teacher front cover art, Storytime Level 2 unit 1 (model evidence, not acceptance)`. The
     generator `make-cover-handoff.mjs` gets the same 2 title changes and is not run again. The
     report names the new SHA-256 of `MANIFEST.txt`. The 2 PNG files do not change.
+  - The new SHA-256 of `MANIFEST.txt` is `b63708b128e0b9593005986a18baf57b21b0a83b7715b63564c6be85ad4409a7`. The check
+    `sha256sum --quiet -c MANIFEST.txt` in the folder gives no FAILED line and the exit status is 0. The
+    2 PNG files keep their SHA-256 and their inode: `c91719903d3803bc02498f8e097528c9a64ddae263102ebf28d06d8d37f11a53` with inode 14332129 and
+    `41e290053869085734f926b165ca252944260443f030db837a1837e22994c678` with inode 14332161.
 - [b] Phase 3 gate: phase acceptance by the checker at an immutable HEAD. The checker compares the
   pixel hashes of the 9 repaired rows, the MANIFEST check of the hand-off folder, the v1 and retry1
   folders, and the spend line of the hat-pip call. deferred:checker

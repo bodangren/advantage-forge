@@ -1,0 +1,111 @@
+# maker-p3b log - Green - P3 T13 - storytime_l2_retries_cover
+start: role_base_sha 5cdb1ea12a4fdca38ed6ec86904b08ee90a91de3 (git rev-parse HEAD confirmed)
+task 13: Cover README title fix of D22 (FR-19). 0 USD. No Muse call. No API key read. No test run.
+
+2026-11-11: created the log. The maker read spec.md D22 and FR-19 and plan.md Task 13.
+The maker made no Muse call, read no API key, and ran no test.
+
+2026-11-11: Task 13 starts. The maker marked Task 13 [~] in plan.md.
+
+## Before state of the hand-off folder
+
+Folder: /home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/
+
+- `l2-u1-cover-quest-teacher-front-forge-v1.png`
+  - sha256: `c91719903d3803bc02498f8e097528c9a64ddae263102ebf28d06d8d37f11a53`
+  - inode: 14332129
+  - bytes: 17794058
+- `l2-u1-cover-quest-teacher-front-forge-v1-zones-review-only.png`
+  - sha256: `41e290053869085734f926b165ca252944260443f030db837a1837e22994c678`
+  - inode: 14332161
+  - bytes: 7588529
+- `MANIFEST.txt`
+  - sha256: `50069dce22d85fc75bf833ac06538fdd3a17f295541ee8cefb72534ee106e128`
+- `README.md` line 1: `# Teacher front cover art, Storytime Level 2 unit 2`
+
+The 3 sha256 values match the expected values of the task. The maker goes on.
+
+## The README fix
+
+2026-11-11: line 1 of README.md was `# Teacher front cover art, Storytime Level 2 unit 2`. The maker
+replaced it with `# Teacher front cover art, Storytime Level 2 unit 1`. Every other byte of the file
+stayed the same. The file is 4741 bytes before and after.
+The grep for `unit 2` in README.md gives 0 hits.
+The new SHA-256 of README.md is `f0278bab5ecd95f67945d96f176654ae820160a69226572ab4f462433e10e1f1`.
+
+## The MANIFEST rebuild
+
+2026-11-11: the maker changed 3 lines of MANIFEST.txt and kept every other line.
+- The README.md hash line is now `f0278bab5ecd95f67945d96f176654ae820160a69226572ab4f462433e10e1f1  README.md`.
+- The bytes line is `# 4741 README.md`.
+- The title comment line is now
+  `# Teacher front cover art, Storytime Level 2 unit 1 (model evidence, not acceptance)`.
+
+The old SHA-256 of MANIFEST.txt was `50069dce22d85fc75bf833ac06538fdd3a17f295541ee8cefb72534ee106e128`.
+The new SHA-256 of MANIFEST.txt is `b63708b128e0b9593005986a18baf57b21b0a83b7715b63564c6be85ad4409a7`.
+
+## The check of the folder
+
+2026-11-11: the maker ran the check in the folder.
+
+    sha256sum --quiet -c MANIFEST.txt
+    exit status 0, no output, no FAILED line
+
+    sha256sum -c MANIFEST.txt
+    l2-u1-cover-quest-teacher-front-forge-v1.png: OK
+    l2-u1-cover-quest-teacher-front-forge-v1-zones-review-only.png: OK
+    README.md: OK
+    exit status 0
+
+    sha256sum MANIFEST.txt README.md
+    b63708b128e0b9593005986a18baf57b21b0a83b7715b63564c6be85ad4409a7  MANIFEST.txt
+    f0278bab5ecd95f67945d96f176654ae820160a69226572ab4f462433e10e1f1  README.md
+
+## The after state
+
+The 2 PNG files keep their SHA-256, their inode, and their bytes.
+
+- `l2-u1-cover-quest-teacher-front-forge-v1.png`
+  - sha256: `c91719903d3803bc02498f8e097528c9a64ddae263102ebf28d06d8d37f11a53` (same as before)
+  - inode: 14332129 (same as before)
+  - bytes: 17794058
+- `l2-u1-cover-quest-teacher-front-forge-v1-zones-review-only.png`
+  - sha256: `41e290053869085734f926b165ca252944260443f030db837a1837e22994c678` (same as before)
+  - inode: 14332161 (same as before)
+  - bytes: 7588529
+
+## The generator and the report
+
+2026-11-11: the maker changed the title at the lines 86 and 168 of make-cover-handoff.mjs. The maker did
+not run the generator. The maker added the section
+`## Addendum 2026-11-11: cover README title (D22)` at the end of pm-report.md.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green (maker), light lane
+status: complete
+track: asset_storytime_l2_retries_cover_20261110
+phase: Phase 3: Version repair, card jobs, and the hat-pip line (repair1)
+commits after 5cdb1ea12a4fdca38ed6ec86904b08ee90a91de3:
+- (sha pending: the implementation commit of Task 13 follows this log)
+- the plan-evidence commit of this log and plan.md follows that commit. Its SHA is not in this
+  file, because a commit cannot hold its own SHA.
+tests_run: none. The task changes no code. The maker made no Muse call, read no API key, and ran
+  no test. The check `sha256sum --quiet -c MANIFEST.txt` in the hand-off folder gives no FAILED
+  line, and the exit status is 0.
+files_changed: /home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/README.md,
+  /home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/MANIFEST.txt,
+  measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md,
+  measure/runs/asset_storytime_l2_retries_cover_20261110/make-cover-handoff.mjs,
+  measure/runs/asset_storytime_l2_retries_cover_20261110/pm-report.md, and this log. The new files
+  in git: this log. The 2 PNG files of the hand-off folder have no change. The maker ran no
+  generator, and the delivery folders and the v1 and retry1 hand-off folders have no change.
+plan_updates: Task 13 is [x] with the evidence sub-bullet. The plan holds the Phase 3 heading, and
+  the Phase 3 gate stays [b] with deferred:checker.
+known_failures: none.
+handoff: The checker reads Task 13 at the commit SHA of this log. The new SHA-256 of `MANIFEST.txt`
+  is b63708b128e0b9593005986a18baf57b21b0a83b7715b63564c6be85ad4409a7. The old SHA-256 of `MANIFEST.txt` was
+  50069dce22d85fc75bf833ac06538fdd3a17f295541ee8cefb72534ee106e128. The 2 PNG files keep their bytes,
+  their SHA-256, and their inode. The cost is 0 USD. The maker of Task 10, Task 11, and Task 12
+  continues in the same phase. The maker does not move the track to archive and does not update the
+  registry, the metadata, or the generated files.
+END_MEASURE_AGENT_RESULT

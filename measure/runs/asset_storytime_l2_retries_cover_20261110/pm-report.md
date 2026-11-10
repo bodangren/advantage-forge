@@ -115,3 +115,23 @@ Facts changed:
 - Unit 2 book rows delivered 220 to 224 of 229.
 - 5 rows to Workbooks as fail rows.
 - The teacher front art m6 delivered under the 20/12 layout.
+
+## Addendum 2026-11-11: cover README title (D22)
+
+The PM order of 2026-11-11 corrected the title of the cover hand-off folder.
+
+- Folder: `/home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/`
+- Old title: `# Teacher front cover art, Storytime Level 2 unit 2`
+- New title: `# Teacher front cover art, Storytime Level 2 unit 1`
+- Old SHA-256 of `MANIFEST.txt`: `50069dce22d85fc75bf833ac06538fdd3a17f295541ee8cefb72534ee106e128`
+- New SHA-256 of `MANIFEST.txt`: `b63708b128e0b9593005986a18baf57b21b0a83b7715b63564c6be85ad4409a7`
+- New SHA-256 of `README.md`: `f0278bab5ecd95f67945d96f176654ae820160a69226572ab4f462433e10e1f1`
+- `sha256sum --quiet -c MANIFEST.txt` in the folder gives no FAILED line. The exit status is 0.
+  The 3 files give OK: the cover picture, the zones picture, and the README.
+- The 2 PNG files keep their SHA-256 and their inode:
+  - `l2-u1-cover-quest-teacher-front-forge-v1.png`: `c91719903d3803bc02498f8e097528c9a64ddae263102ebf28d06d8d37f11a53`
+  - `l2-u1-cover-quest-teacher-front-forge-v1-zones-review-only.png`: `41e290053869085734f926b165ca252944260443f030db837a1837e22994c678`
+- The cost is 0 USD. The maker made no Muse call and read no API key.
+- The generator `make-cover-handoff.mjs` gets the same title change at its lines 86 and 168. The maker did not run the generator.
+
+Facts changed: the cover README title says unit 1; the cover MANIFEST.txt SHA-256 changed; no picture changed.

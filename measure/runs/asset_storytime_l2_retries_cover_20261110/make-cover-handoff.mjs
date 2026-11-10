@@ -83,7 +83,7 @@ const spendTable = coverLines.map((l) => {
   return `| ${c[0]} | ${c[1]} | ${c[2]} | ${c[3]} | ${Number(c[4]).toFixed(2)} | \`${c[5]}\` |`;
 }).join('\n');
 
-const readme = `# Teacher front cover art, Storytime Level 2 unit 2
+const readme = `# Teacher front cover art, Storytime Level 2 unit 1
 
 ## What this folder holds
 
@@ -165,7 +165,7 @@ const manifest = [
   ...shaLines,
   ...sizeLines,
   '',
-  '# Teacher front cover art, Storytime Level 2 unit 2 (model evidence, not acceptance)',
+  '# Teacher front cover art, Storytime Level 2 unit 1 (model evidence, not acceptance)',
   '# The judge files of the track hold the judge result of every cover try.',
   '# The picture is cover try m6. The PM decision D16 sets the 20/12 layout for this cover.',
   '',
