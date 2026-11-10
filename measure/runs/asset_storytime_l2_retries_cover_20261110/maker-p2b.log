@@ -99,12 +99,19 @@ here. No vitest and no tsc run in this step.
 - Task 7 needs the verdict of the judge. It delivers the passing picture, or it records the best try
   when no version passes.
 
+## Step 8, the evidence commit (0 USD)
+
+- The commit b01148bcda7a7bd5d4bebc414a4abb6e8b1177e4 holds this plan, the spend log, this maker log,
+  and the judge file of step A. It is the step B commit.
+- The plan evidence follows in a separate commit, because a commit cannot hold its own SHA. The plan
+  names the step B commit under the sub-bullet "Round 1".
+
 MEASURE_AGENT_RESULT
 role: measure-jr-green
 status: complete
 track: asset_storytime_l2_retries_cover_20261110
 phase: Phase 2: Retries and cover (paid), step B of Task 6, cover round 1
-commits: this step B commit (HEAD), the only commit after 9f875baf90bb3e6f6f54087eb2937923248fffe6
+commits: b01148bcda7a7bd5d4bebc414a4abb6e8b1177e4, and this step B plan evidence commit (HEAD)
 tests_run: the print check with sharp metadata on 3 color files and 3 print files; the judge copy build with 3 tries and 6 files; the network check with curl before each call; no vitest and no tsc in this step
 files_changed: measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md; measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv; measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p2b.log; measure/runs/asset_storytime_l2_retries_cover_20261110/judge-u2rc-a-line-t4.json (the file of the orchestrator's judge, staged here and not written by the maker)
 plan_updates: Task 6 is [b] deferred:maker again, with the sub-bullet "Round 1" of the 3 calls, the cost of each call, the native size of each, the print check, the 3 network checks, and the 6 judge copy paths; Task 4 holds the sub-bullet "Judge of step A" with the 6 of 6 judge passes, the pass of the rows throw and windy, the fail rows hippo, ruler, clap, and cold, the hat-pip line call that did not run, and the PM order for one more try of the 3 rows with a network timeout

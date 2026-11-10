@@ -182,6 +182,8 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
     0.01 USD, native 1280 x 1920 px; color try 3 (m3) at 2026-11-10T11:23:36Z, 0.01 USD, native
     1280 x 1920 px. The item (b) spend is 0.03 USD of the 0.10 USD stop. No call was above 0.03 USD.
     The spend log is `measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv`.
+  - Round 1, the evidence: the commit b01148bcda7a7bd5d4bebc414a4abb6e8b1177e4 holds this plan, the
+    spend log, the maker log of step B, and the judge file of step A.
   - Round 1, the print check: each print file `<id>-m<n>-color-print.png` holds 2480 x 3508 px, RGB,
     with no alpha. The native ratio 0.6667 is under the target 0.7069, so the crop does not trim the
     sides. The resize trims 2.85 percent of the height at the top and 2.85 percent at the bottom.
