@@ -1,0 +1,48 @@
+# Line pool and print gate, Phase 2 step A (paid 0.06 USD)
+
+One line call for each of the 8 open rows of the archived unit 2 run, at line try 4, from each row's
+m1 color. 6 ok, 2 failed, 0 refused. Highest call 0.01 USD. Pool spend 0.06 USD. Item (a) total
+0.06 USD of the 0.15 USD stop.
+
+The gate check calls the writer check code (`inspectLineArtPng` of src/storytime/book-pictures.ts,
+the code that src/storytime/muse-delivery.ts uses for a delivered line print) on the new print file
+and on its despeckled print, at the class size. The line width is the measured median stroke width.
+
+| row | new line | try | print | width px | despeckled print | width px | passes |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| l2-w12-card-hippo | -m1-line-4.png | 4 | fail | 9 | fail | 9 | none |
+| l2-w12-card-ruler | -m1-line-4.png | 4 | fail | 8 | fail | 7 | none |
+| l2-w13-card-clap | -m1-line-4.png | 4 | fail | 10 | fail | 10 | none |
+| l2-w13-card-throw | -m1-line-4.png | 4 | pass | 13 | pass | 13 | both |
+| l2-w14-card-cold | -m1-line-4.png | 4 | fail | 10 | fail | 10 | none |
+| l2-w14-card-windy | -m1-line-4.png | 4 | pass | 19 | pass | 19 | both |
+
+Result: 2 of 6 rows pass the print gate: l2-w13-card-throw at 13 px and l2-w14-card-windy at
+19 px. 4 rows stay below the 12 px minimum: hippo 9, ruler 8, clap 10, and cold 10. The ruler
+print is 8 px and its despeckled print is 7 px. The other 3 failing rows have the same width in
+both prints.
+
+The gate ran on the class size of every row of this pool, which is class C: 1500 x 1500 px.
+
+## The 3 calls that failed at the transport level (0 USD)
+
+| row | kind | try | result | note |
+| --- | --- | --- | --- | --- |
+| l2-w10-story-page-put-on-your-hat-pip | color | 4 | no picture | network error: UND_ERR_CONNECT_TIMEOUT |
+| l2-w09-story-page-tom-can-see-the-mop | line | 4 | no picture | network error: UND_ERR_CONNECT_TIMEOUT |
+| l2-w09-card-rice | line | 4 | no picture | network error: ETIMEDOUT |
+
+These 3 calls cost 0 USD and wrote no picture file. Each of the 3 rows has one cost row since the
+exception start time, so the exception of D1 grants no further try to them. They have no new print
+and no despeckled print, so the print gate does not run on them.
+
+## Judge batches (built, not judged)
+
+- `docs/storytime/l2-unit2/judge/prod/u2rc-a-line-t4.json`: 6 entries, the line try 4 pictures of
+  the 6 rows above. The judge copies are `out/storytime-review/judge/prod-u2/<id>-line-t4.png`.
+- The color batch has no file. The hat-pip color try 4 call failed, so the batch tool refuses it
+  with `the color try 4 of l2-w10-story-page-put-on-your-hat-pip has no picture file (the call
+  failed)`.
+- The line batch with the 8 ids of the pool is refused for the same reason: the tom line try 4 call
+  failed, so the tool refuses the row. The batch holds the 6 rows with a new line file.
+- No judge call ran here. The orchestrator runs the frozen judge.

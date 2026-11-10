@@ -132,11 +132,32 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`). The orchestrator
 runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item (b).
 
-- [~] Task 4: Retry pool, print gate, and judge batches (D1, D2, D3, D11). Write the worst case. Run
+- [b] Task 4: Retry pool, print gate, and judge batches (D1, D2, D3, D11). Write the worst case. Run
   hat-pip color try 4 (once). If the orchestrator's judge passes it, run the hat-pip line call (line
   try 2). Run line try 4 once for each of the 8 other rows, from its m1 color. Run the print gate before
   the judge on each new line print and its despeckled print. The orchestrator runs the judge batches and
   the second judge. Log each paid call in `spend-log.tsv`. deferred:maker
+  - Step A (this step, paid 0.06 USD). The 9 calls of the pool ran. The D11 worst case was 9 calls
+    x 0.01 USD = 0.09 USD, under the 0.15 USD cap of item (a), so the pool ran. The guard refused no
+    call. The calls and their cost: l2-w10-story-page-put-on-your-hat-pip color try 4, 0.00 USD;
+    l2-w09-story-page-tom-can-see-the-mop line try 4, 0.00 USD; l2-w09-card-rice line try 4,
+    0.00 USD; l2-w12-card-hippo line try 4, 0.01 USD; l2-w12-card-ruler line try 4, 0.01 USD;
+    l2-w13-card-clap line try 4, 0.01 USD; l2-w13-card-throw line try 4, 0.01 USD;
+    l2-w14-card-cold line try 4, 0.01 USD; l2-w14-card-windy line try 4, 0.01 USD. The item (a)
+    spend is 0.06 USD of the 0.15 USD stop. No call was above 0.03 USD.
+  - Step A, the 3 calls that failed at the transport level: the hat-pip color try 4, the
+    tom-can-see-the-mop line try 4, and the rice line try 4. Each cost 0 USD and wrote no picture.
+    Each is recorded and none was repeated, by the once rule of D1 and default 2. These 3 rows have
+    no new picture, no print, and no judge entry.
+  - Step A, the print gate (D3) on each new line print and on its despeckled print, with the writer
+    check code `inspectLineArtPng` at the class size: l2-w13-card-throw passes at 13 px and
+    l2-w14-card-windy passes at 19 px. l2-w12-card-hippo fails at 9 px, l2-w12-card-ruler fails at
+    8 px and 7 px after despeckling, l2-w13-card-clap fails at 10 px, and l2-w14-card-cold fails at
+    10 px. The record is `measure/runs/asset_storytime_l2_retries_cover_20261110/line-gate-p2a.txt`.
+  - Step A, the judge batch `u2rc-a-line-t4` (6 entries) is built, not judged. Its file is
+    `docs/storytime/l2-unit2/judge/prod/u2rc-a-line-t4.json`. No color batch exists, because the
+    hat-pip color try 4 call failed. The spend log is
+    `measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv`.
 - [b] Task 5: Retry delivery and hand-off (D4). Write `approvals-retry1.json` for the passing rows. Run
   `deliverMuseUnit2` with `approvalsOnly` into `out/storytime/l2/unit2/delivery-muse-v1-retry1/`. Build
   `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-retry1/` with the hard links,

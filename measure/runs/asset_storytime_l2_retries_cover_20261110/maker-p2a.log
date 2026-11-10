@@ -1,0 +1,155 @@
+# Maker log, Phase 2 step A, track asset_storytime_l2_retries_cover_20261110
+
+Role: measure-jr-green (light lane maker). Model: opencode/minimax-m3.1-flash-free#high.
+role_base_sha: 6ec8ef66ed814e5b4c29c7bbfdaebf5961ed4e35 (equal to HEAD at start).
+phase_base_sha: 6ec8ef66ed814e5b4c29c7bbfdaebf5961ed4e35.
+This step is step A of Task 4 only. It spends item (a) money. It makes no cover call. The judge
+does not run here; the orchestrator runs the judge after this step. Nothing is delivered here.
+
+## Step 1, Phase 1 acceptance commit (0 USD)
+
+- The staged index of the Phase 1 checker held exactly the 7 expected files in
+  measure/runs/asset_storytime_l2_retries_cover_20261110/: acceptance-p1-6ec8ef6.json,
+  acceptance-p1-6ec8ef6.log, probe-p1-constants.mjs, probe-p1-guards.mjs, probe-p1-judge-copy.mjs,
+  probe-p1-scan-debug.mjs, probe-p1-specs.mjs. The list matched, so the step ran.
+- Commit 69b217a0, message `measure(storytime_l2_retries_cover): Phase 1 acceptance result`.
+- The orchestrator ran the phase-acceptance role gate on these files. Result: pass, exit 0.
+
+## Step 2, plan records (0 USD)
+
+- The Phase 1 gate line of plan.md becomes a pass at 6ec8ef66 with the result file, the status, the
+  test count, the finding count, and the checker model.
+- Task 4 becomes `[~]` before the first paid call.
+
+## Step 3, the worst case of the pool (D11, 0 USD)
+
+- The pool of this step has 9 planned provider calls: 1 color call for
+  l2-w10-story-page-put-on-your-hat-pip (color try 4) and 8 line calls (line try 4) for
+  l2-w09-story-page-tom-can-see-the-mop, l2-w09-card-rice, l2-w12-card-hippo, l2-w12-card-ruler,
+  l2-w13-card-clap, l2-w13-card-throw, l2-w14-card-cold, and l2-w14-card-windy.
+- The highest call cost seen in the unit 2 cost files is 0.01 USD. The D11 worst case is
+  9 calls x 0.01 USD = 0.09 USD.
+- The item (a) exception spend at the start of this step is 0.00 USD. The exception cap is
+  0.15 USD and the report point is 0.12 USD. The worst case 0.09 USD is under the cap, so the pool
+  runs. The PM estimate of the same 9 rows is about 0.12 USD, also under the cap.
+- A call above 0.03 USD stops the run. A refused call stops the pool.
+- The guard adds one margin of 0.01 USD per planned call. Each call runs as its own command, so the
+  check before the 9th call is 0.08 USD spent plus 0.01 USD = 0.09 USD, under the cap of 0.15 USD.
+
+## Step 4, the 8 line rows and their color version (0 USD)
+
+- The archived approval records of measure/runs/asset_storytime_l2_unit2_pictures_20261108/
+  (approvals-u2.json with 173 entries and approvals-u2-fw.json with 18 entries) hold no entry for
+  any of the 8 rows. These 8 rows are the open rows of the archived run, so they have no approval.
+- The out folder of each of the 8 rows holds one color version only, m1. The line files of each row
+  are line try 1, 2, and 3, so the new call is line try 4.
+- Every line call of this step uses m1, because m1 is the only color version of each of the 8 rows.
+  The defaults of this step are listed at the end of this log.
+
+## Step 5, the paid calls (item a)
+
+- 2026-11-10T10:21:19Z: the hat-pip color try 4 call started.
+  `node scripts/storytime-muse.mjs color docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-hat-pip.json`.
+  Result at 2026-11-10T10:21:31.630Z: FAILED, network error UND_ERR_CONNECT_TIMEOUT, cost 0.00 USD.
+  No picture file. The costs.tsv row of the call is in out/storytime/l2/unit2/w10/muse/costs.tsv.
+- 2026-11-10T10:21:53.468Z: the tom-can-see-the-mop line try 4 call. Result: FAILED, network error
+  UND_ERR_CONNECT_TIMEOUT, cost 0.00 USD. No picture file.
+- 2026-11-10T10:23:42.029Z: the rice line try 4 call. Result: FAILED, network error ETIMEDOUT,
+  cost 0.00 USD. No picture file.
+- A connectivity check with no provider call showed the path to openrouter.ai slow and unsteady: the
+  first TCP connect took 11.1 s, the next 0.8 s, and later first connects took 5.8 s and 1.8 s.
+  The undici connect timeout of 10 s explains the 3 transport failures.
+- 2026-11-10T10:25:57Z: the 6 remaining line calls ran in one node process at concurrency 1, so the
+  rows ran one after another in the named order and shared one warm connection. Command:
+  `node scripts/storytime-muse.mjs line <6 specs of w12, w13, and w14> --from 1 --tries 1 --concurrency 1`.
+  All 6 calls returned ok at 0.01 USD each, 1600x1600 px, at 10:26:40Z to 10:29:05Z. 0 refused.
+- The 3 failed calls were not repeated. D1 counts every cost row of a listed id and kind since the
+  start time, including a failed call at 0 USD, so each of the 3 rows has no try left under the
+  exception.
+
+| row | kind | try | cost USD | result file | result |
+| --- | --- | --- | --- | --- | --- |
+| l2-w10-story-page-put-on-your-hat-pip | color | 4 | 0.00 | none | failed, UND_ERR_CONNECT_TIMEOUT |
+| l2-w09-story-page-tom-can-see-the-mop | line | 4 | 0.00 | none | failed, UND_ERR_CONNECT_TIMEOUT |
+| l2-w09-card-rice | line | 4 | 0.00 | none | failed, ETIMEDOUT |
+| l2-w12-card-hippo | line | 4 | 0.01 | l2-w12-card-hippo-m1-line-4.png | ok, 1600x1600 |
+| l2-w12-card-ruler | line | 4 | 0.01 | l2-w12-card-ruler-m1-line-4.png | ok, 1600x1600 |
+| l2-w13-card-clap | line | 4 | 0.01 | l2-w13-card-clap-m1-line-4.png | ok, 1600x1600 |
+| l2-w13-card-throw | line | 4 | 0.01 | l2-w13-card-throw-m1-line-4.png | ok, 1600x1600 |
+| l2-w14-card-cold | line | 4 | 0.01 | l2-w14-card-cold-m1-line-4.png | ok, 1600x1600 |
+| l2-w14-card-windy | line | 4 | 0.01 | l2-w14-card-windy-m1-line-4.png | ok, 1600x1600 |
+
+- The item (a) spend is 0.06 USD of the 0.15 USD stop. The report point of 0.12 USD is not reached.
+  The highest call cost is 0.01 USD. No call was above the 0.03 USD stop. The guard refused no call.
+- The spend log is measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv. It holds 9
+  call rows and the total line `total item a calls 9 stop 0.15 USD spend 0.06`. The file holds only
+  the D11 rows, because FR-11 asks that the sums of the log equal the sums of the costs.tsv rows.
+  The D11 worst case stays in this log, as D11 states.
+
+## Step 6, the despeckle tool and the print gate (0 USD)
+
+- The despeckle tool ran on each of the 6 new line tries:
+  `node scripts/storytime-muse.mjs despeckle <spec> --from 1 --try 4`. The tool refused to write,
+  because the line call had already written the despeckled pair and the tool never overwrites a
+  file. Both files of every row exist: `-line-4-despeckled.png` and `-line-print-4-despeckled.png`.
+- The print gate ran on the 6 new line prints and on their 6 despeckled prints. It calls the writer
+  check code `inspectLineArtPng` of src/storytime/book-pictures.ts, the code that
+  src/storytime/muse-delivery.ts uses for a delivered line print, at the class size of each row.
+  Every row of this pool is class C: 1500 x 1500 px. The line width is the measured median stroke
+  width. The record is measure/runs/asset_storytime_l2_retries_cover_20261110/line-gate-p2a.txt.
+
+| row | new line | try | print | width px | despeckled print | width px | passes |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| l2-w12-card-hippo | -m1-line-4.png | 4 | fail | 9 | fail | 9 | none |
+| l2-w12-card-ruler | -m1-line-4.png | 4 | fail | 8 | fail | 7 | none |
+| l2-w13-card-clap | -m1-line-4.png | 4 | fail | 10 | fail | 10 | none |
+| l2-w13-card-throw | -m1-line-4.png | 4 | pass | 13 | pass | 13 | both |
+| l2-w14-card-cold | -m1-line-4.png | 4 | fail | 10 | fail | 10 | none |
+| l2-w14-card-windy | -m1-line-4.png | 4 | pass | 19 | pass | 19 | both |
+
+- 2 of the 6 rows pass the print gate: l2-w13-card-throw and l2-w14-card-windy. 4 rows stay below
+  the 12 px minimum: hippo 9, ruler 8, clap 10, and cold 10. The 3 rows with no picture have no
+  print and no despeckled print, so the gate does not run on them.
+
+## Step 7, the judge batches (0 USD, built, not judged)
+
+- `node scripts/storytime-judge-batch.mjs --unit2 --ids <6 ids> --kind line --try 4 --out u2rc-a-line-t4`
+  wrote docs/storytime/l2-unit2/judge/prod/u2rc-a-line-t4.json with 6 entries. The judge copies are
+  out/storytime-review/judge/prod-u2/<id>-line-t4.png.
+- The color batch has no file. The tool refuses it with `the color try 4 of
+  l2-w10-story-page-put-on-your-hat-pip has no picture file (the call failed)`.
+- The line batch with the 8 ids of the pool is refused for the same reason on the tom row. The batch
+  holds the 6 rows with a new line file.
+- No judge call ran here. The orchestrator runs the frozen judge.
+
+## Defaults taken
+
+1. The 8 line rows use m1 as their color version. The archived approval records name no entry for
+   these 8 rows, and m1 is the only color version of each of them.
+2. A failed call at 0 USD is recorded and not repeated. D1 counts the row in the once count, so the
+   guard refuses a second call of the same id and kind.
+3. The 6 remaining line calls ran in one node process at concurrency 1. The rows ran one after
+   another in the named order, and the process shared one warm connection to the provider.
+
+## Open items of Task 4
+
+- The orchestrator runs the frozen judge on u2rc-a-line-t4 (6 entries) and the second judge on each
+  file alone.
+- The hat-pip row has no new color. Its line call of D1 waits for a judge pass of a color that does
+  not exist, so it stays open.
+- The PM must decide about the 3 rows whose only extra try ended in a transport failure: the hat-pip
+  color, the tom line, and the rice line. Their exceptions are spent.
+- Task 5 needs the approval list of the rows that pass both the judge and the print gate.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: complete
+track: asset_storytime_l2_retries_cover_20261110
+phase: Phase 2: Retries and cover (paid), step A of Task 4
+commits: 69b217a03a6bd5ec7f1dbda958c23032bced4374, b6d67bebea78ffe4226515174863b142eb6bae6d, and this step A commit (HEAD)
+tests_run: the print gate with `inspectLineArtPng` on 12 prints (6 new line prints and their 6 despeckled prints) at the class size; the despeckle tool on 6 tries; the judge batch build with 6 entries; no vitest and no tsc in this step
+files_changed: measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md; measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv; measure/runs/asset_storytime_l2_retries_cover_20261110/line-gate-p2a.txt; measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p2a.log; docs/storytime/l2-unit2/judge/prod/u2rc-a-line-t4.json
+plan_updates: the Phase 1 gate is [x] at 6ec8ef66 with the result file, the status, 273 tests, 0 findings, and the checker model volcengine-agent-plan/glm-latest#high (a substitution: ra-quota gave the metered deepseek route); Task 4 is [b] deferred:maker with the Step A sub-bullet of the 9 calls, the 0.06 USD of 0.15 USD item (a) spend, the 3 transport failures, the print gate results, and the batch u2rc-a-line-t4 built, not judged
+known_failures: 3 of the 9 calls failed at the transport level at 0 USD and wrote no picture: the hat-pip color try 4, the tom-can-see-the-mop line try 4, and the rice line try 4; their exceptions are spent; 4 of the 6 new line prints fail the print gate: hippo 9 px, ruler 8 px and 7 px after despeckling, clap 10 px, cold 10 px; no color batch exists; the hat-pip line call of D1 waits for a judge pass of a color that does not exist
+handoff: Step A of Task 4 is done. The item (a) spend is 0.06 USD of the 0.15 USD stop, and the guard refused no call. The orchestrator runs the frozen judge on docs/storytime/l2-unit2/judge/prod/u2rc-a-line-t4.json (6 entries) and the second judge on each file alone; 2 of the 6 rows, l2-w13-card-throw and l2-w14-card-windy, already pass the print gate. The open items of Task 4 are these: the judge pass of the 6 line rows, the hat-pip line call that waits for a color that does not exist, and a PM decision about the 3 rows whose one extra try ended in a transport failure, because D1 spent their exception. Task 4 stays [b] deferred:maker until the judge result and the PM decision arrive. The authoritative files are measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv, measure/runs/asset_storytime_l2_retries_cover_20261110/line-gate-p2a.txt, and measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p2a.log.
+END_MEASURE_AGENT_RESULT
