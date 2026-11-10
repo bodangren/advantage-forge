@@ -1,0 +1,48 @@
+# Line pool and print gate, Phase 2 step E (paid 0.01 USD)
+
+The hat-pip line call of D1. The judge of step D2 passed the new color m3, so the line call runs
+on that color. 1 ok, 0 failed, 0 refused. Highest call 0.01 USD. Pool spend 0.01 USD. Item (a)
+total 0.10 USD of the 0.15 USD stop.
+
+The gate check calls the writer check code (`inspectLineArtPng` of src/storytime/book-pictures.ts,
+the code that src/storytime/muse-delivery.ts uses for a delivered line print) on the new print file
+and on its despeckled print, at the class size. The line width is the measured median stroke width.
+
+| row | new line | try | print | width px | despeckled print | width px | passes |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| l2-w10-story-page-put-on-your-hat-pip | -m3-line.png | 2 | pass | 13 | pass | 12 | both |
+
+Result: the hat-pip line row passes the print gate. The line print is 13 px and its despeckled
+print is 12 px. The minimum is 12 px, and the despeckled print sits at that minimum.
+
+The gate ran on the class size of the row. The hat-pip row is a story row of class story:
+4000 x 3000 px.
+
+## The despeckle tool
+
+The line call wrote the despeckled pair, so the despeckle tool did not run. The files exist:
+`l2-w10-story-page-put-on-your-hat-pip-m3-line-despeckled.png` and
+`l2-w10-story-page-put-on-your-hat-pip-m3-line-print-despeckled.png`.
+
+## The network check
+
+The network check of the PM order of 2026-11-10 ran before the paid call:
+`curl -sS -m 20 -o /dev/null -w '%{http_code}\n' https://openrouter.ai/api/v1/models`. It sends no
+key and it costs nothing. The check gave 200. A failed check uses no try.
+
+## The call
+
+| row | kind | try | cost USD | result file |
+| --- | --- | --- | --- | --- |
+| l2-w10-story-page-put-on-your-hat-pip | line | 2 | 0.01 | l2-w10-story-page-put-on-your-hat-pip-m3-line.png |
+
+The call ran on the Muse version m3, because the judge passed that color. The costs.tsv row of the
+call is the 2nd line row of the row, so the judge reads it as line try 2.
+
+## Judge batch (built, not judged)
+
+- `docs/storytime/l2-unit2/judge/prod/u2rc-e-line-t2.json`: 1 entry, the line try 2 picture of
+  hat-pip. The judge copy is
+  `out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-line-t2.png`. The batch
+  names the new line file of this step, `l2-w10-story-page-put-on-your-hat-pip-m3-line.png`.
+- No judge call ran here. The orchestrator runs the frozen judge.

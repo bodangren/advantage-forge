@@ -1,0 +1,33 @@
+{
+  "group": "u2rc-d-line-t5",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-10T12:24:02Z",
+  "results": [
+    {
+      "id": "l2-w09-story-page-tom-can-see-the-mop",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-tom-can-see-the-mop-line-t5.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Tom (1), Dad (1), a mop (1). Action: see (note only; Tom points toward the mop). Seen: a boy with swept hair and short sleeves points at a mop that leans in a toy box at the right: a long pole and a rounded mop head; a man with short hair and a polo shirt sits on an armchair at the left. Dad's eyes are single round eyes with a pupil, the same style as Tom's: no bridge, no temple arms, no lens rings, so Dad wears no glasses. 1 mop, clearly drawn. Black lines on white, no gray, closed lines, no text. Small marks: the toy box with blocks and a duck is extra scenery."
+    },
+    {
+      "id": "l2-w09-card-rice",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-rice-line-t5.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: rice (1 portion). Action: none. Seen: a round bowl heaped with many small oval grains. It reads as a bowl of rice to a young child. Black lines on white, no gray, closed outlines, no text."
+    }
+  ],
+  "summary": {
+    "files": 2,
+    "pass": 2,
+    "fail": 0
+  }
+}

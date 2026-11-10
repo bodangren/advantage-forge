@@ -201,6 +201,28 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
     picture of hat-pip. `docs/storytime/l2-unit2/judge/prod/u2rc-d-line-t5.json` holds 2 entries,
     the line try 5 pictures of tom-can-see-the-mop and of rice. The orchestrator runs the frozen
     judge on both batches.
+  - Judge of step D2 (2026-11-10). The orchestrator's frozen judge passed all 3 files. The color
+    batch `u2rc-d-color-t5` holds 1 file and 1 pass: the hat-pip color try 5 shows 7 children,
+    Teacher Kim, and Pip, each once. The line batch `u2rc-d-line-t5` holds 2 files and 2 passes:
+    the line try 5 of tom-can-see-the-mop and the line try 5 of rice. The result files are
+    `judge-u2rc-d-color-t5.json` and `judge-u2rc-d-line-t5.json`. The hat-pip line call of D1 runs
+    now, because the judge passes the new color.
+  - Step E (this step, paid 0.01 USD). The hat-pip line call of D1 ran on the passing color m3. The
+    D11 worst case was 1 call x 0.01 USD = 0.01 USD, the highest item (a) call cost seen. With the
+    item (a) spend of 0.09 USD, the sum of 0.10 USD is under the 0.15 USD stop, so the pool ran. The
+    guard refused no call. The call: the hat-pip line try 2 at 2026-11-10T12:29:37Z, 0.01 USD, the
+    file `l2-w10-story-page-put-on-your-hat-pip-m3-line.png`. The item (a) spend is 0.10 USD of the
+    0.15 USD stop, over 13 calls. No call was above 0.03 USD.
+  - Step E, the network check. The check of the PM order ran before the paid call:
+    `curl -sS -m 20 -o /dev/null -w '%{http_code}\n' https://openrouter.ai/api/v1/models`. It gave
+    200. A failed check uses no try.
+  - Step E, the print gate (D3). The gate calls the writer check code `inspectLineArtPng` at the
+    class size of the row, which is class story: 4000 x 3000 px. The hat-pip line try 2 passes at
+    13 px, and its despeckled print passes at 12 px. The line row passes the gate. The record is
+    `measure/runs/asset_storytime_l2_retries_cover_20261110/line-gate-p2e.txt`.
+  - Step E, the judge batch (built, not judged).
+    `docs/storytime/l2-unit2/judge/prod/u2rc-e-line-t2.json` holds 1 entry, the line try 2 picture
+    of hat-pip. The orchestrator runs the frozen judge on it.
 - [b] Task 5: Retry delivery and hand-off (D4). Write `approvals-retry1.json` for the passing rows. Run
   `deliverMuseUnit2` with `approvalsOnly` into `out/storytime/l2/unit2/delivery-muse-v1-retry1/`. Build
   `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-retry1/` with the hard links,

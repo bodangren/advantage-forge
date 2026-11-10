@@ -1,0 +1,77 @@
+# Maker log, Phase 2 step E, track asset_storytime_l2_retries_cover_20261110
+
+Role: measure-jr-green (light lane maker). Model: minimax-cn-coding-plan/MiniMax-M3.1-Flash.
+role_base_sha: 935152750b33179b22acc0f97d9fbee5d4720a10 (equal to HEAD at start).
+phase_base_sha: 935152750b33179b22acc0f97d9fbee5d4720a10.
+This step is step E of Task 4: the hat-pip line call of D1. It spends item (a) money. It makes no
+other call. The judge does not run here. Nothing is delivered here. No vitest and no tsc run in this
+step.
+
+## Step 1, the plan, the judge facts, and the worst case
+
+- Task 4 of plan.md becomes `[~]`, then `[b] ... deferred:maker` again in the evidence commit.
+- Task 4 gains the sub-bullet "Judge of step D2": the orchestrator's frozen judge passed all 3
+  files. The color batch holds 1 file and 1 pass: the hat-pip color try 5 shows 7 children,
+  Teacher Kim, and Pip, each once. The line batch holds 2 files and 2 passes: the line try 5 of
+  tom-can-see-the-mop and the line try 5 of rice. The result files are
+  `judge-u2rc-d-color-t5.json` and `judge-u2rc-d-line-t5.json`.
+- The worst case of D11 goes into spend-log.tsv before the call: 1 call, the item (a) spend of
+  0.09 USD, the guard stop of 0.15 USD, and the stop per call above 0.03 USD. The highest call cost
+  seen in item (a) is 0.01 USD, so the worst case is 0.01 USD. The sum of 0.09 USD and 0.01 USD is
+  0.10 USD, under the 0.15 USD stop, so the pool runs.
+
+## Step 2, the network check and the call
+
+- The network check of the PM order runs before the paid call:
+  `curl -sS -m 20 -o /dev/null -w '%{http_code}\n' https://openrouter.ai/api/v1/models`. It sends no
+  key and it costs nothing. It gave 200. A failed check uses no try.
+- The call ran under the hat-pip line row of `U2_EXTRA_TRY`, from the passing color m3:
+  `node scripts/storytime-muse.mjs line docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-hat-pip.json --from 3 --tries 1`.
+- The guard refused no call. The call cost 0.01 USD, and no call was above 0.03 USD. The result file
+  is `l2-w10-story-page-put-on-your-hat-pip-m3-line.png`. The costs.tsv row of the call is the 2nd
+  line row of the row, so the judge reads it as line try 2.
+- The item (a) spend is 0.10 USD of the 0.15 USD stop, over 13 calls.
+
+## Step 3, the despeckle tool and the print gate
+
+- The line call wrote the despeckled pair, so the despeckle tool did not run. The files exist:
+  `l2-w10-story-page-put-on-your-hat-pip-m3-line-despeckled.png` and
+  `l2-w10-story-page-put-on-your-hat-pip-m3-line-print-despeckled.png`.
+- The print gate ran on the new line print and on its despeckled print. It calls the writer check
+  code `inspectLineArtPng` of src/storytime/book-pictures.ts at the class size of the row, which is
+  class story: 4000 x 3000 px. The record is
+  measure/runs/asset_storytime_l2_retries_cover_20261110/line-gate-p2e.txt.
+
+| row | new line | try | print | width px | despeckled print | width px | passes |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| l2-w10-story-page-put-on-your-hat-pip | -m3-line.png | 2 | pass | 13 | pass | 12 | both |
+
+- The line row passes the print gate. The despeckled print sits at the minimum of 12 px.
+
+## Step 4, the judge batch (built, not judged)
+
+- `node scripts/storytime-judge-batch.mjs --unit2 --ids l2-w10-story-page-put-on-your-hat-pip --kind
+  line --try 2 --out u2rc-e-line-t2` wrote docs/storytime/l2-unit2/judge/prod/u2rc-e-line-t2.json
+  with 1 entry. The judge copy is
+  out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-line-t2.png. The batch
+  names the new line file of this step, `l2-w10-story-page-put-on-your-hat-pip-m3-line.png`.
+- No judge call ran here. The orchestrator runs the frozen judge.
+
+## Step 5, the commits
+
+- The plan, the spend log, the print gate record, this log, the batch file, and the 2 judge files
+  of step D2 are in the evidence commit of this step. The gate script of the scratch folder was
+  deleted after the run.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: complete
+track: asset_storytime_l2_retries_cover_20261110
+phase: Phase 2: Retries and cover (paid), step E of Task 4, the hat-pip line call
+commits: this evidence commit (HEAD), after 935152750b33179b22acc0f97d9fbee5d4720a10
+tests_run: no vitest and no tsc in this step; the print gate with inspectLineArtPng on 2 prints (the new line print and its despeckled print) at the class size; the judge batch build with 1 entry; the network check with curl before the call
+files_changed: measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md; measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv; measure/runs/asset_storytime_l2_retries_cover_20261110/line-gate-p2e.txt; measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p2e.log; docs/storytime/l2-unit2/judge/prod/u2rc-e-line-t2.json; measure/runs/asset_storytime_l2_retries_cover_20261110/judge-u2rc-d-color-t5.json; measure/runs/asset_storytime_l2_retries_cover_20261110/judge-u2rc-d-line-t5.json
+plan_updates: Task 4 is [b] deferred:maker again, with the sub-bullet "Step E" of the call and its cost, the network check, the print gate result, and the batch name; the sub-bullet "Judge of step D2" holds the judge facts of the 2 batches
+known_failures: no call failed, no call was refused, and no call was above 0.03 USD; the item (a) spend is 0.10 USD of the 0.15 USD stop, so 5 calls of 0.01 USD remain inside the cap; the judge of the new line file is not here, because the orchestrator runs the judge
+handoff: The hat-pip line call of D1 ran on the passing color m3. It cost 0.01 USD and wrote l2-w10-story-page-put-on-your-hat-pip-m3-line.png. The item (a) spend is 0.10 USD of the 0.15 USD stop, over 13 calls. The network check gave 200 before the call. The hat-pip line row passes the print gate: the line print is 13 px and its despeckled print is 12 px. The orchestrator runs the frozen judge on docs/storytime/l2-unit2/judge/prod/u2rc-e-line-t2.json (1 entry, the line try 2 of hat-pip), then the second judge on that file alone. The judge of step D2 passed all 3 files, and its 2 result files are in this commit. With the hat-pip row, 4 rows of item (a) now have a passing judge and a passing print gate: hat-pip, tom-can-see-the-mop, rice, and the 2 rows of step A (throw and windy). The 4 print-gate fails of step A go to Workbooks as fail rows with their best earlier tries in not-delivered/, in Task 5. Task 7 waits for a PM decision on the cover layout. The phase base sha is 935152750b33179b22acc0f97d9fbee5d4720a10. The new files of this step are line-gate-p2e.txt, maker-p2e.log, and u2rc-e-line-t2.json.
+END_MEASURE_AGENT_RESULT

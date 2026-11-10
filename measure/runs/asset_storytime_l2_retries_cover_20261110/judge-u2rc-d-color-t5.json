@@ -1,0 +1,24 @@
+{
+  "group": "u2rc-d-color-t5",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-10T12:24:02Z",
+  "results": [
+    {
+      "id": "l2-w10-story-page-put-on-your-hat-pip",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-color-t5.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: Pip (1) with a hat, 7 children, Teacher Kim (1). Action: put on a hat (note only). Seen: a puppy with golden-brown fur and a cream chest wears a purple straw hat with a red bow; 7 children counted one by one, left to right: boy in red striped shirt (Sam), girl in yellow shirt and blue skirt with a hair clip (May), boy in light-blue shirt (Ben), light-brown-haired girl in pink shirt and denim overalls behind Pip (Mia), boy in green shirt (Pat), girl in lilac dress (Lily), girl in orange star shirt with two buns (Nan); one woman in a green cardigan at the back (Teacher Kim). Total 7 children, Teacher Kim, Pip: all drawn, visible, and match the cast. Small marks: the red collar on Pip is not clearly seen under the hat and head tilt; Mia is partly behind Pip; Kim's legs are hidden by the children. No text in the picture."
+    }
+  ],
+  "summary": {
+    "files": 1,
+    "pass": 1,
+    "fail": 0
+  }
+}
