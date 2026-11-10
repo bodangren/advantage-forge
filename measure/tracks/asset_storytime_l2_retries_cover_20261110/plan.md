@@ -438,7 +438,7 @@ hat-pip line call is the only paid call of this phase.
     after the run. The guard change gives the hat-pip line row the field `allowedTries: 2`, so the
     row allows 2 exception line tries and refuses a third. The specification holds D17 to D22 and
     FR-17 to FR-19, with D22 added for the PM order of 2026-11-11. The maker made no Muse call.
-- [x] Task 10 (sha pending): Writer options of D19 and their tests (FR-17). Add `versionFromList` and
+- [x] Task 10 (ebea15be64cb89d805b434909276f6a1144e1624): Writer options of D19 and their tests (FR-17). Add `versionFromList` and
   `lineWidthExceptions` to `MuseUnit2DeliveryOptions`. Add the tests of both options. Make no Muse
   call.
   - The writer gets the 2 options of D19. `versionFromList` takes the version of a candidate and
