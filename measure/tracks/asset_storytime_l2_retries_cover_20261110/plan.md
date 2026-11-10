@@ -199,9 +199,11 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
     and in m3 of the first judge; and the book flat to the viewer (AF-4), in m1 and m3 of the first
     judge. Each hand is above the 88 percent line, and nothing sits above the 20 percent line. The
     rank of the first judge puts m2 first, and the rank of the second judge puts m1 first.
-  - Round 2 (2026-11-10), blocked at the prompt fix. The 2 prompt edits of D8 are done in the spec file
-    and the python check passes. The test CS6 pins the old scene text, so the edit is not committed and
-    the calls of round 2 do not run.
+  - Round 2 (2026-11-10). The 2 prompt edits of D8 are in the spec file, and the python check passes.
+    The test CS6 pinned the old scene text, so the step stopped and reported. The orchestrator chose
+    option A: update CS6 to pin the new scene text. The test update and the spec are in the commit
+    55f7613babf63fe6add8421f2301448c6baadd6b, with the message `feat(storytime_l2_retries_cover):
+    cover prompt fixes for round 2`. The test run after the update passes 10 of 10.
     - The edits. E1 replaces `Nan and Sam sit on the grass in front of her.` with `Nan and Sam kneel
       upright on the grass close in front of her and lean toward the book. Each child holds both hands
       up at chest height: one hand on the lower edge of the open book and one hand pointing at it.
@@ -209,18 +211,24 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
       for example a tree and a ball.` with `The book turns toward Nan and Sam, so the viewer sees the
       back of its plain warm brown cover and the edges of its cream pages, and no page picture.`
     - The python check passes: each old sentence is gone, each new sentence is there once, the other
-      keys of the spec are unchanged, and the prompt equals the prompt of HEAD with the same 2
-      replacements. The edit sits in the working tree and is not committed.
-    - The test run at HEAD passes 10 of 10. The test run after the edit fails 1 of 10. The failure is
-      CS6 at `tests/storytime-cover-specs.test.ts:147`, which expects the old scene text. The maker
-      does not change the test.
+      keys of the spec are unchanged, and the prompt equals the prompt of the old HEAD with the same 2
+      replacements.
+    - The test update changes only the constant SCENE of CS6. No other test, no assertion, and no
+      other line changed. The new constant pins the new scene text, and that text is in the prompt.
     - The worst case of round 2 was 3 calls x 0.01 USD = 0.03 USD, the highest cover cost seen. With
       the spend of round 1 of 0.03 USD, the sum of 0.06 USD is under the 0.10 USD stop of item (b).
-      The money is not the blocker. The blocker is the test.
-    - No cover call of round 2 ran, so the spend of item (b) stays 0.03 USD of the 0.10 USD stop. No
-      network check ran, and no judge copy of m4, m5, or m6 exists.
-    - The next step needs the test update of CS6. Then the maker commits the spec with the message
-      `feat(storytime_l2_retries_cover): cover prompt fixes for round 2` and runs the 3 calls.
+    - The 3 color calls ran one after another. Each call had a network check before it, and each check
+      gave 200. The calls: color try 4 (m4) at 2026-11-10T11:44:02Z, 0.01 USD, native 1280 x 1920 px;
+      color try 5 (m5) at 2026-11-10T11:45:08Z, 0.01 USD, native 1280 x 1920 px; color try 6 (m6) at
+      2026-11-10T11:46:45Z, 0.01 USD, native 1280 x 1920 px. The guard refused no call. The item (b)
+      spend is 0.06 USD of the 0.10 USD stop, over 6 calls. No call was above 0.03 USD.
+    - The print check: each print file `<id>-m<n>-color-print.png` of m4, m5, and m6 holds
+      2480 x 3508 px, RGB, with no alpha. The native ratio 0.6667 is under the target 0.7069, so the
+      crop trims the top and the bottom, not the sides.
+    - The judge copies of D9, built, not judged. The 6 files sit in `out/storytime-review/judge/cover/`:
+      `l2-u1-cover-quest-teacher-front-m4-clean.png` and `l2-u1-cover-quest-teacher-front-m4-zones.png`;
+      `l2-u1-cover-quest-teacher-front-m5-clean.png` and `l2-u1-cover-quest-teacher-front-m5-zones.png`;
+      `l2-u1-cover-quest-teacher-front-m6-clean.png` and `l2-u1-cover-quest-teacher-front-m6-zones.png`.
 - [b] Task 7: Cover hand-off (D10). Deliver the passing picture as
   `l2-u1-cover-quest-teacher-front-forge-v1.png` (2480 x 3508 px, RGB, no alpha). Build
   `/home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/` with the PNG, the zone-line copy,

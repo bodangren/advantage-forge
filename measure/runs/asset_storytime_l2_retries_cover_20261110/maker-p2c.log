@@ -93,3 +93,77 @@ plan_updates: Task 6 is [b] deferred:maker, with the sub-bullet "Judge of round 
 known_failures: the test CS6 fails on the required prompt fix, because it pins the old scene text in the constant SCENE; the maker does not change the test and does not commit the spec edit; the item (b) spend stays 0.03 USD of the 0.10 USD stop; no cover call of round 2 ran, so no judge copy of m4, m5, or m6 exists
 handoff: Step C of Task 6 stops at the prompt fix, and this step spends 0 USD. The question is: the test CS6 of tests/storytime-cover-specs.test.ts pins the old scene text of the cover prompt, and the D8 prompt fix for round 2 needs that text changed. The step forbids a change of the test, so the maker stops. The options are: A, recommended, the orchestrator orders the update of CS6 in the next step, so that CS6 pins the new scene text of E1 and E2; then the maker commits the spec with the message feat(storytime_l2_retries_cover): cover prompt fixes for round 2 and runs the 3 calls of round 2 with the same brief; B, the orchestrator updates CS6 itself and then briefs the maker for the 3 calls; C, the orchestrator lets the maker commit the spec with the failing CS6, and the checker takes the failure as known until the test update; D, the PM drops round 2, the cover keeps the best try of round 1, and item (b) closes at 0.03 USD. The money is not the blocker: the worst case of round 2 is 0.03 USD, and the sum with the spend of round 1 is 0.06 USD, under the 0.10 USD stop. The edit of the spec file is ready in the working tree and passes the python check. The authoritative files are measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv, measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p2c.log, measure/runs/asset_storytime_l2_retries_cover_20261110/judge-cover-r1.json, and measure/runs/asset_storytime_l2_retries_cover_20261110/judge-cover-second.json.
 END_MEASURE_AGENT_RESULT
+
+## Step 8, the decision of the orchestrator and the test update (0 USD)
+
+- The orchestrator chose option A. The update touches only the constant SCENE of CS6 in
+  tests/storytime-cover-specs.test.ts. The new constant pins the new scene text, with the sentences
+  of E1 and E2 in the place of the 2 old sentences. No other test, no assertion, and no other line
+  changed. The diff of the test file holds 5 lines of the constant and nothing else.
+- The python check of the new constant passes: the value of the constant is the new scene text, the
+  old sentences are gone, and the new scene text is in the colorPrompt of the spec.
+- The test run passes 10 of 10. The command is the same as before, with the heavy-run wrapper.
+- The commit 55f7613babf63fe6add8421f2301448c6baadd6b holds the spec and the test, with the message
+  `feat(storytime_l2_retries_cover): cover prompt fixes for round 2`.
+- The note above about the uncommitted edit is out of date. The edit is committed in 55f7613b.
+
+## Steps 4 to 6, the calls of round 2 (0.03 USD)
+
+- Each call ran `node scripts/storytime-muse.mjs color
+  docs/storytime/covers/teacher-front/l2-u1-cover-quest-teacher-front.json`, one after another, at
+  concurrency 1.
+- The network check before call 1 at 2026-11-10T11:41:42Z gave 200. The check before call 2 at
+  2026-11-10T11:44:12Z gave 200. The check before call 3 at 2026-11-10T11:45:29Z gave 200. No check
+  failed, so no call waited and no call was skipped.
+- Call 1 at 2026-11-10T11:44:02Z wrote m4, native 1280 x 1920 px, cost 0.01 USD. The result file is
+  `l2-u1-cover-quest-teacher-front-m4-color.png`.
+- Call 2 at 2026-11-10T11:45:08Z wrote m5, native 1280 x 1920 px, cost 0.01 USD. The result file is
+  `l2-u1-cover-quest-teacher-front-m5-color.png`.
+- Call 3 at 2026-11-10T11:46:45Z wrote m6, native 1280 x 1920 px, cost 0.01 USD. The result file is
+  `l2-u1-cover-quest-teacher-front-m6-color.png`.
+- The guard refused no call. The item (b) spend is 0.06 USD of the 0.10 USD stop, over 6 calls. No
+  call was above 0.03 USD. The cover class allows 6 tries, so no more cover call is left.
+- The print check reads the sharp metadata of each file. All 3 print files hold 2480 x 3508 px, RGB,
+  with 3 channels and no alpha. The check passes. The native ratio 0.6667 is under the target 0.7069,
+  so the crop trims the top and the bottom, not the sides, as in round 1.
+- The judge copies of D9 run `node scripts/storytime-cover-judge-copy.mjs --id
+  l2-u1-cover-quest-teacher-front --try <n>` for the tries 4, 5, and 6. Each call writes a clean copy
+  and a zones copy in `out/storytime-review/judge/cover/`. The 6 files are:
+  - out/storytime-review/judge/cover/l2-u1-cover-quest-teacher-front-m4-clean.png
+  - out/storytime-review/judge/cover/l2-u1-cover-quest-teacher-front-m4-zones.png
+  - out/storytime-review/judge/cover/l2-u1-cover-quest-teacher-front-m5-clean.png
+  - out/storytime-review/judge/cover/l2-u1-cover-quest-teacher-front-m5-zones.png
+  - out/storytime-review/judge/cover/l2-u1-cover-quest-teacher-front-m6-clean.png
+  - out/storytime-review/judge/cover/l2-u1-cover-quest-teacher-front-m6-zones.png
+- Each clean copy holds 1448 x 2048 px, RGB, with no alpha. Each zones copy holds 1448 x 2048 px with
+  the 6 zone lines. No judge call ran here.
+- The spend log holds 3 new call lines and 1 new total line for item (b). The old total line of item
+  (b) is replaced, so the file holds 1 total line for item (b): 6 calls, stop 0.10 USD, spend 0.06 USD.
+
+## Step 7, the plan records of this step (0 USD)
+
+- Task 6 is `[b] ... deferred:maker` again. Its sub-bullet "Round 2" holds the 2 edits, the commit
+  of the spec and the test, the 3 calls, their cost, the native sizes, the print check, the 3 network
+  checks, and the 6 judge copy paths.
+
+## Open items of Task 6
+
+- The orchestrator runs the frozen judge on m4, m5, and m6, and writes judge-cover-r2.json. The judge
+  reads the zones copy of each version.
+- The second judge runs on each file alone before a fail stands.
+- Task 7 needs the verdict of the judge. It delivers the passing picture. If no version passes, it
+  records the best try of round 1 or of round 2, and the report names it.
+- The cover class allows 6 tries, and all 6 are spent. No more cover call is left.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: complete
+track: asset_storytime_l2_retries_cover_20261110
+phase: Phase 2: Retries and cover (paid), step C of Task 6, cover round 2
+commits: 38fc0fb40c73f94bae6c93c16c02377684f37f7f, 55f7613babf63fe6add8421f2301448c6baadd6b, and this step C calls commit (HEAD)
+tests_run: the test run after the update of the constant SCENE passes 10 of 10, with the heavy-run wrapper and the named test file; the print check with sharp metadata on 3 color files and 3 print files; the judge copy build with 3 tries and 6 files; the network check with curl before each call; no other test file and no tsc
+files_changed: docs/storytime/covers/teacher-front/l2-u1-cover-quest-teacher-front.json; tests/storytime-cover-specs.test.ts; measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md; measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv; measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p2c.log
+plan_updates: Task 6 is [b] deferred:maker, with the sub-bullet "Round 2" of the 2 prompt edits, the commit 55f7613babf63fe6add8421f2301448c6baadd6b of the spec and the test, the python check, the test result of 10 of 10, the worst case of 0.03 USD, the 3 calls with their cost and native size, the print check, the 3 network checks, and the 6 judge copy paths; the sub-bullet "Judge of round 1" stays as it was
+known_failures: no call failed in this step, and no print failed the check; the judge result of m4, m5, and m6 is not here, because the orchestrator runs the judge; the cover class allows 6 tries and all 6 are spent, so no cover call is left
+handoff: Cover round 2 is done. The orchestrator chose option A, so the constant SCENE of CS6 now pins the new scene text, and the spec and the test are in the commit 55f7613babf63fe6add8421f2301448c6baadd6b. The test run passes 10 of 10. The 3 network checks gave 200, 200, and 200. The 3 calls wrote m4, m5, and m6, each at the native size 1280 x 1920 px and at the cost 0.01 USD. Each print file holds 2480 x 3508 px, RGB, with no alpha. The 6 judge copies are built, not judged, in out/storytime-review/judge/cover/. The item (b) spend is 0.06 USD of the 0.10 USD stop, over 6 calls, and no call was above 0.03 USD. The orchestrator runs the frozen judge on the 3 versions, uses the zones copy of each version, writes judge-cover-r2.json, and runs the second judge on each file alone. Task 7 needs the verdict. The authoritative files are measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv and measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p2c.log.
+END_MEASURE_AGENT_RESULT
