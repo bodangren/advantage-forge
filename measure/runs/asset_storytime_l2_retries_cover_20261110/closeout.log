@@ -32,5 +32,5 @@ role: closeout
 status: complete
 track: asset_storytime_l2_retries_cover_20261110
 phase: closeout fix (registry fact and foreign hunk)
-commits: see the fix commit of this date; closeout_commits in closeout-8d7915d3.json
+commits: 8d7915d3, 6adfbb7b, a9f3bd28, 5e79dc86 (the registry fact fix)
 END_MEASURE_AGENT_RESULT
