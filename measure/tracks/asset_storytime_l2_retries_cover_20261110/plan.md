@@ -158,6 +158,13 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
     `docs/storytime/l2-unit2/judge/prod/u2rc-a-line-t4.json`. No color batch exists, because the
     hat-pip color try 4 call failed. The spend log is
     `measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv`.
+  - Judge of step A (2026-11-10). The orchestrator's frozen judge passed 6 of 6 lines in the batch
+    `u2rc-a-line-t4`. The result file is `judge-u2rc-a-line-t4.json`. The rows throw and windy pass
+    on all four checks: color m1, line try 4, judge pass, and print gate pass. The rows hippo, ruler,
+    clap, and cold fail the print gate. They are fail rows now (PM 2026-11-10). Their best earlier try
+    goes to `not-delivered/`. The hat-pip line call did not run, because color try 4 has no picture.
+    PM 2026-11-10: one more try for the 3 rows with a network timeout. That work comes in a later
+    step.
 - [b] Task 5: Retry delivery and hand-off (D4). Write `approvals-retry1.json` for the passing rows. Run
   `deliverMuseUnit2` with `approvalsOnly` into `out/storytime/l2/unit2/delivery-muse-v1-retry1/`. Build
   `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-retry1/` with the hard links,
@@ -168,6 +175,21 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
   calls, one after another. Make the judge copies for each version. The orchestrator runs the frozen
   judge and the second judge. Run round 2 only if no version passes. Log each paid call. Stop at 6 calls
   or at 0.10 USD. deferred:maker
+  - Round 1 (2026-11-10). The worst case was 3 calls x 0.03 USD = 0.09 USD, under the 0.10 USD stop of
+    item (b). The guard refused no call. The 3 color calls of the cover spec ran one after another.
+    Each call had a network check before it, and each check gave 200. The calls: color try 1 (m1) at
+    2026-11-10T11:21:42Z, 0.01 USD, native 1280 x 1920 px; color try 2 (m2) at 2026-11-10T11:22:36Z,
+    0.01 USD, native 1280 x 1920 px; color try 3 (m3) at 2026-11-10T11:23:36Z, 0.01 USD, native
+    1280 x 1920 px. The item (b) spend is 0.03 USD of the 0.10 USD stop. No call was above 0.03 USD.
+    The spend log is `measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv`.
+  - Round 1, the print check: each print file `<id>-m<n>-color-print.png` holds 2480 x 3508 px, RGB,
+    with no alpha. The native ratio 0.6667 is under the target 0.7069, so the crop does not trim the
+    sides. The resize trims 2.85 percent of the height at the top and 2.85 percent at the bottom.
+  - Round 1, the judge copies of D9, built, not judged. The 6 files sit in
+    `out/storytime-review/judge/cover/`: `l2-u1-cover-quest-teacher-front-m1-clean.png` and
+    `l2-u1-cover-quest-teacher-front-m1-zones.png`; `l2-u1-cover-quest-teacher-front-m2-clean.png`
+    and `l2-u1-cover-quest-teacher-front-m2-zones.png`; `l2-u1-cover-quest-teacher-front-m3-clean.png`
+    and `l2-u1-cover-quest-teacher-front-m3-zones.png`.
 - [b] Task 7: Cover hand-off (D10). Deliver the passing picture as
   `l2-u1-cover-quest-teacher-front-forge-v1.png` (2480 x 3508 px, RGB, no alpha). Build
   `/home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/` with the PNG, the zone-line copy,

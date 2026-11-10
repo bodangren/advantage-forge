@@ -1,0 +1,113 @@
+# Maker log, Phase 2 step B, track asset_storytime_l2_retries_cover_20261110
+
+Role: measure-jr-green (light lane maker). Model: minimax-cn-coding-plan/MiniMax-M3.1-Flash.
+The session is a substitution: opencode/minimax-m3.1-flash-free had reached its free limit on
+2026-11-11 17:16, so the orchestrator named minimax-cn-coding-plan/MiniMax-M3.1-Flash. The family
+stays MiniMax.
+role_base_sha: 9f875baf90bb3e6f6f54087eb2937923248fffe6 (equal to HEAD at start).
+phase_base_sha: 9f875baf90bb3e6f6f54087eb2937923248fffe6.
+This step is step B of Task 6 only: cover round 1. It spends item (b) money. It makes no book call.
+The judge does not run here; the orchestrator runs the judge after this step. Nothing is delivered
+here. No vitest and no tsc run in this step.
+
+## Step 1, the plan records of this step (0 USD)
+
+- Task 6 of plan.md becomes `[~]` before the first paid cover call.
+- Task 4 of plan.md gains the sub-bullet "Judge of step A" with the result of the orchestrator's
+  frozen judge on the batch u2rc-a-line-t4.
+
+## Step 2, the worst case of round 1 (D11, 0 USD)
+
+- Round 1 plans 3 color calls of the cover spec, one after another, at concurrency 1.
+- No cover cost is known yet, so the maker uses 0.03 USD for each call. The worst case is
+  3 calls x 0.03 USD = 0.09 USD. This is under the 0.10 USD stop of item (b), so the round runs.
+- The guard of the cover run reads COVER_RUN: cap 0.10 USD, report point 0.08 USD, margin 0.01 USD,
+  max 6 tries. A call above 0.03 USD stops the run, by D11 and by the brief of this step.
+- The worst case line is in measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv.
+
+## Step 3, the network checks (0 USD)
+
+- The check is `curl -sS -m 20 -o /dev/null -w '%{http_code}\n' https://openrouter.ai/api/v1/models`.
+  It sends no key and costs nothing.
+- Check 1 at 2026-11-10T11:20:40Z gave 200. Check 2 at 2026-11-10T11:21:55Z gave 200. Check 3 at
+  2026-11-10T11:22:48Z gave 200. No check failed, so no call waited and no call was skipped.
+
+## Step 4, the cover calls of round 1 (0.03 USD)
+
+- Each call ran `node scripts/storytime-muse.mjs color
+  docs/storytime/covers/teacher-front/l2-u1-cover-quest-teacher-front.json`, one after another, at
+  concurrency 1.
+- Call 1 at 2026-11-10T11:21:42Z wrote m1, native 1280 x 1920 px, cost 0.01 USD. The result file is
+  `l2-u1-cover-quest-teacher-front-m1-color.png`.
+- Call 2 at 2026-11-10T11:22:36Z wrote m2, native 1280 x 1920 px, cost 0.01 USD. The result file is
+  `l2-u1-cover-quest-teacher-front-m2-color.png`.
+- Call 3 at 2026-11-10T11:23:36Z wrote m3, native 1280 x 1920 px, cost 0.01 USD. The result file is
+  `l2-u1-cover-quest-teacher-front-m3-color.png`.
+- The guard refused no call. The item (b) spend is 0.03 USD of the 0.10 USD stop. No call was above
+  0.03 USD. The 3 rows sit in the cost file `out/storytime/covers/teacher-front/muse/costs.tsv`.
+
+## Step 5, the print check and the judge copies (0 USD)
+
+- The print check reads the sharp metadata of each file. All 3 print files hold 2480 x 3508 px, RGB,
+  with 3 channels and no alpha. The check passes.
+- The native color file holds 1280 x 1920 px, with a ratio of 0.6667. The target ratio 2480 / 3508 is
+  0.7069. The reframe function of the muse tool returns the buffer unchanged, because the native
+  width is under the target width. The resize then uses the default fit `cover`. It scales by 1.9375
+  to 2480 x 3720 px and trims 212 px from the top and 212 px from the bottom of the scaled picture.
+  That is 2.85 percent of the height at each end. The crop does not trim the sides. D5 expected a
+  side trim, so the judge reads the print as it is.
+- The judge copies of D9 run `node scripts/storytime-cover-judge-copy.mjs --id
+  l2-u1-cover-quest-teacher-front --try <n>` for the tries 1, 2, and 3. Each call writes a clean copy
+  and a zones copy in `out/storytime-review/judge/cover/`. The 6 files are:
+  - out/storytime-review/judge/cover/l2-u1-cover-quest-teacher-front-m1-clean.png
+  - out/storytime-review/judge/cover/l2-u1-cover-quest-teacher-front-m1-zones.png
+  - out/storytime-review/judge/cover/l2-u1-cover-quest-teacher-front-m2-clean.png
+  - out/storytime-review/judge/cover/l2-u1-cover-quest-teacher-front-m2-zones.png
+  - out/storytime-review/judge/cover/l2-u1-cover-quest-teacher-front-m3-clean.png
+  - out/storytime-review/judge/cover/l2-u1-cover-quest-teacher-front-m3-zones.png
+- Each clean copy holds 1448 x 2048 px, RGB, with no alpha. Each zones copy holds 1448 x 2048 px with
+  the 6 zone lines. No judge call ran here.
+
+## Step 6, the spend log (0 USD)
+
+- The log `measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv` holds 3 new call
+  lines and the item (b) total line. The worst case line of step 2 sits before the call lines.
+- The item (b) total: 3 calls, stop 0.10 USD, spend 0.03 USD.
+
+## Step 7, the plan records of this step (0 USD)
+
+- Task 6 is `[b] ... deferred:maker` again. It holds the sub-bullet "Round 1" with the calls, the
+  cost of each call, the native size of each, the print check, the network checks, and the judge copy
+  paths.
+- Task 4 holds the sub-bullet "Judge of step A" with the result of the orchestrator's frozen judge.
+
+## Defaults taken
+
+1. The attempt number of a cover call is its order in the round, from 1 to 3. Each order matches its
+   version m1 to m3.
+2. The worst case line of the spend log keeps the 6 fields of D11. Its first field is `worst-case`
+   and its cost field is empty, so a reader of the call rows does not add it to the spend.
+3. The maker records the side trim of D5 as it happened. The maker does not change the crop, the
+   spec, or the judge copies.
+
+## Open items of Task 6
+
+- The orchestrator runs the frozen judge on the 3 versions of the cover. The judge reads the zones
+  copy of each version.
+- Round 2 needs a PM decision. It runs only when no version passes, and it needs prompt fixes for the
+  judge faults.
+- Task 7 needs the verdict of the judge. It delivers the passing picture, or it records the best try
+  when no version passes.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: complete
+track: asset_storytime_l2_retries_cover_20261110
+phase: Phase 2: Retries and cover (paid), step B of Task 6, cover round 1
+commits: this step B commit (HEAD), the only commit after 9f875baf90bb3e6f6f54087eb2937923248fffe6
+tests_run: the print check with sharp metadata on 3 color files and 3 print files; the judge copy build with 3 tries and 6 files; the network check with curl before each call; no vitest and no tsc in this step
+files_changed: measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md; measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv; measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p2b.log; measure/runs/asset_storytime_l2_retries_cover_20261110/judge-u2rc-a-line-t4.json (the file of the orchestrator's judge, staged here and not written by the maker)
+plan_updates: Task 6 is [b] deferred:maker again, with the sub-bullet "Round 1" of the 3 calls, the cost of each call, the native size of each, the print check, the 3 network checks, and the 6 judge copy paths; Task 4 holds the sub-bullet "Judge of step A" with the 6 of 6 judge passes, the pass of the rows throw and windy, the fail rows hippo, ruler, clap, and cold, the hat-pip line call that did not run, and the PM order for one more try of the 3 rows with a network timeout
+known_failures: no call failed in this step, and no print failed the check; D5 expected a side trim, but the model returned the ratio 0.6667, so the print trims 2.85 percent of the height at the top and at the bottom; the judge result of the 3 versions is not here, because the orchestrator runs the judge
+handoff: Cover round 1 is done. The item (b) spend is 0.03 USD of the 0.10 USD stop, and no call was above 0.03 USD. The 3 network checks gave 200, 200, and 200. The 3 calls wrote m1, m2, and m3, each at the native size 1280 x 1920 px and at the cost 0.01 USD. Each print file holds 2480 x 3508 px, RGB, with no alpha. The 6 judge copies are built, not judged, in out/storytime-review/judge/cover/. The orchestrator runs the frozen judge on the 3 versions, using the zones copy of each version, and writes judge-cover-r1.json. Round 2 runs only when no version passes, and it needs a PM decision on the prompt fixes. The authoritative files are measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv and measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p2b.log.
+END_MEASURE_AGENT_RESULT

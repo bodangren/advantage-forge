@@ -1,0 +1,69 @@
+{
+  "group": "u2rc-a-line-t4",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-10T10:34:51Z",
+  "results": [
+    {
+      "id": "l2-w12-card-hippo",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-hippo-line-t4.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a hippo (1). Action: none. Seen: a sitting smiling hippo with round ears, wide muzzle with two nostrils, and a round body with front feet. Reads as a hippo to a child. Black lines on white, no gray, outline closed, no text. Cast: not applicable."
+    },
+    {
+      "id": "l2-w12-card-ruler",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w12-card-ruler-line-t4.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a ruler (1). Action: none. Seen: a long rounded rectangle with evenly spaced tick marks along the top and bottom edges. Reads as a ruler at book size. Small mark: no numbers, which is correct. Black lines on white, no gray, outline closed, no text."
+    },
+    {
+      "id": "l2-w13-card-clap",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-clap-line-t4.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a person (1), two hands (2). Action: clapping (note only). Seen: a smiling girl with shoulder-length hair, a bow, and overalls; both hands are drawn together in front of her chest. Hands and arms are drawn and visible. Looks like Mia from the cast (bow, overalls). Black lines on white, no gray, outline closed, no text."
+    },
+    {
+      "id": "l2-w13-card-throw",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w13-card-throw-line-t4.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: a person (1), a ball (1), an arm and hand (1 each). Action: throwing (note only). Seen: a smiling girl with a bob and a small flower clip, in a dress with a collar; one arm reaches out toward a round ball drawn apart from her. Hand with fingers is drawn and visible; the ball reads as a ball. Small mark: the eyes have big pupils. Black lines on white, no gray, outline closed, no text."
+    },
+    {
+      "id": "l2-w14-card-cold",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-cold-line-t4.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: the idea cold, shown by cold-weather things. Action: none. Seen: a chair with a knitted bobble hat on the seat and a long scarf hanging over the back and seat. Hat and scarf read as winter clothes, so the picture says cold to a child. Black lines on white, no gray, outline closed, no text."
+    },
+    {
+      "id": "l2-w14-card-windy",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w14-card-windy-line-t4.png",
+      "verdict": "pass",
+      "defectClass": null,
+      "where": null,
+      "notes": "Question page: no. Items: the idea windy, shown by wind effects. Action: blowing (note only). Seen: a tree with a bent trunk and leaves, with many small leaves flying to the right. Bent tree and flying leaves read as wind to a child. Small mark: the small leaves are simple shapes. Black lines on white, no gray, no gaps that stop coloring, no text."
+    }
+  ],
+  "summary": {
+    "files": 6,
+    "pass": 6,
+    "fail": 0
+  }
+}
