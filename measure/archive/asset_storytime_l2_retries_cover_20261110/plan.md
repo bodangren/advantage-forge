@@ -527,7 +527,7 @@ hat-pip line call is the only paid call of this phase.
 
 ## Track-level roles
 
-- [x] Closeout: archive the track, update the registry, and run the doctor. The generator does not run
+- [x] Closeout (8d7915d3): archive the track, update the registry, and run the doctor. The generator does not run
   while `measure/generated/` holds foreign changes. The run records in
   `measure/runs/asset_storytime_l2_retries_cover_20261110/` are committed. Foreign changes stay out of
   the closeout commit.
