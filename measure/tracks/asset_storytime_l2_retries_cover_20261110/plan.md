@@ -118,16 +118,21 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
   - The judge brief lists the 12 checks of the cover judge and the form of its result.
   - The 4 tests of `tests/storytime-u2-retry-delivery.test.ts` and the 5 tests of
     `tests/storytime-cover-judge-copy.test.ts` pass.
-- [b] Phase 1 gate: phase acceptance by the checker at an immutable HEAD. The checker probes the
+- [x] Phase 1 gate (6ec8ef66): phase acceptance by the checker passed at 6ec8ef66. The checker probes the
   exception and the cover class with fixture cost files, greps FR-12 and FR-14, and runs the GREEN
-  command and the typecheck. deferred:checker
+  command and the typecheck.
+  - The result file is `measure/runs/asset_storytime_l2_retries_cover_20261110/acceptance-p1-6ec8ef6.json`.
+    Its status is `pass`. The GREEN command gives 19 test files and 273 tests with 0 failures. The
+    checker holds 0 blocking findings and 0 nonblocking findings. The checker model is
+    `volcengine-agent-plan/glm-latest#high`. This model is a substitution: ra-quota gave the
+    metered deepseek route.
 
 ## Phase 2: Retries and cover (paid)
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`). The orchestrator
 runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item (b).
 
-- [b] Task 4: Retry pool, print gate, and judge batches (D1, D2, D3, D11). Write the worst case. Run
+- [~] Task 4: Retry pool, print gate, and judge batches (D1, D2, D3, D11). Write the worst case. Run
   hat-pip color try 4 (once). If the orchestrator's judge passes it, run the hat-pip line call (line
   try 2). Run line try 4 once for each of the 8 other rows, from its m1 color. Run the print gate before
   the judge on each new line print and its despeckled print. The orchestrator runs the judge batches and
