@@ -7,7 +7,11 @@
 2026-11-10T10:27:49.846Z	muse	l2-w13-card-throw line	4	0.01	l2-w13-card-throw-m1-line-4.png
 2026-11-10T10:28:19.553Z	muse	l2-w14-card-cold line	4	0.01	l2-w14-card-cold-m1-line-4.png
 2026-11-10T10:29:05.454Z	muse	l2-w14-card-windy line	4	0.01	l2-w14-card-windy-m1-line-4.png
-total	item a	calls 9	stop 0.15 USD	spend 0.06
+worst-case	item a	step D2, calls 3	stop 0.15 USD, stop per call above 0.03 USD	item (a) spend 0.06 USD	worst case 0.03 USD (3 calls x 0.01 USD, the highest item (a) call cost seen); 0.06 USD + 0.03 USD = 0.09 USD, under the 0.15 USD stop; the pool ran
+2026-11-10T12:17:28.528Z	muse	l2-w10-story-page-put-on-your-hat-pip color	5	0.01	l2-w10-story-page-put-on-your-hat-pip-m3-color.png
+2026-11-10T12:18:17.760Z	muse	l2-w09-story-page-tom-can-see-the-mop line	5	0.01	l2-w09-story-page-tom-can-see-the-mop-m1-line-4.png
+2026-11-10T12:19:04.203Z	muse	l2-w09-card-rice line	5	0.01	l2-w09-card-rice-m1-line-4.png
+total	item a	calls 12	stop 0.15 USD	spend 0.09
 worst-case	item b	calls 3	stop 0.10 USD, report point 0.08 USD, stop per call above 0.03 USD		worst case 0.09 USD (3 calls x 0.03 USD)
 2026-11-10T11:21:42.836Z	muse	l2-u1-cover-quest-teacher-front color	1	0.01	l2-u1-cover-quest-teacher-front-m1-color.png
 2026-11-10T11:22:36.962Z	muse	l2-u1-cover-quest-teacher-front color	2	0.01	l2-u1-cover-quest-teacher-front-m2-color.png

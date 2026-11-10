@@ -1,0 +1,88 @@
+# Maker log, Phase 2 step D2, track asset_storytime_l2_retries_cover_20261110
+
+Role: measure-jr-green (light lane maker). Model: minimax-cn-coding-plan/MiniMax-M3.1-Flash.
+role_base_sha: 4e20154495c86e1736e3959af12597eb259f12d4 (equal to HEAD at start).
+phase_base_sha: 4e20154495c86e1736e3959af12597eb259f12d4.
+This step is step D2 of Task 4: the 3 network retry calls of the PM order of 2026-11-10. It spends
+item (a) money. It makes no cover call. The judge does not run here. Nothing is delivered here. No
+vitest and no tsc run in this step.
+
+## Step 1, the plan and the worst case
+
+- Task 4 of plan.md becomes `[~]`, then `[b] ... deferred:maker` again in the evidence commit.
+- The worst case of D11 goes into spend-log.tsv before the calls: 3 calls, the item (a) spend of
+  0.06 USD, the guard stop of 0.15 USD, and the stop per call above 0.03 USD. The highest call cost
+  seen in item (a) is 0.01 USD, so the worst case is 0.03 USD for the 3 calls. The sum of 0.06 USD
+  and 0.03 USD is 0.09 USD, under the 0.15 USD stop, so the pool ran.
+
+## Step 2, the network check and the 3 calls
+
+- The network check of the PM order runs before each paid call:
+  `curl -sS -m 20 -o /dev/null -w '%{http_code}\n' https://openrouter.ai/api/v1/models`. It sends no
+  key and it costs nothing. A call runs only when the check gives 200. A failed check waits 60 s and
+  checks again, up to 5 times. A failed check uses no try.
+- The first check failed with a DNS timeout and gave the code 000. The retry after 60 s gave 200.
+  The 3 checks before the 3 calls gave 200, 200, and 200.
+- The 3 calls ran one after another. The guard refused no call. Each call cost 0.01 USD, and no
+  call was above 0.03 USD.
+
+| row | kind | try | time | cost USD | result file |
+| --- | --- | --- | --- | --- | --- |
+| l2-w10-story-page-put-on-your-hat-pip | color | 5 | 2026-11-10T12:17:28Z | 0.01 | l2-w10-story-page-put-on-your-hat-pip-m3-color.png |
+| l2-w09-story-page-tom-can-see-the-mop | line | 5 | 2026-11-10T12:18:17Z | 0.01 | l2-w09-story-page-tom-can-see-the-mop-m1-line-4.png |
+| l2-w09-card-rice | line | 5 | 2026-11-10T12:19:04Z | 0.01 | l2-w09-card-rice-m1-line-4.png |
+
+- The item (a) spend is 0.09 USD of the 0.15 USD stop, over 12 calls.
+- The Muse version of the hat-pip color is m3, because no m3 file of that row exists. The costs.tsv
+  row of that call is the 5th color row of the row, so the judge reads it as color try 5.
+- The hat-pip line call did not run, because the line call comes only after the judge passes the new
+  color.
+
+## Step 3, the despeckle tool and the print gate
+
+- The despeckle tool ran on each of the 2 new line tries:
+  `node scripts/storytime-muse.mjs despeckle <spec> --from 1 --try 4`. The tool refused to write,
+  because the line call had already written the despeckled pair and the tool never overwrites a
+  file. Both files of every row exist: `-line-4-despeckled.png` and `-line-print-4-despeckled.png`.
+- The print gate ran on the 2 new line prints and on their 2 despeckled prints. It calls the writer
+  check code `inspectLineArtPng` of src/storytime/book-pictures.ts at the class size of the row.
+  The record is measure/runs/asset_storytime_l2_retries_cover_20261110/line-gate-p2d.txt.
+
+| row | new line | try | print | width px | despeckled print | width px | passes |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| l2-w09-story-page-tom-can-see-the-mop | -m1-line-4.png | 5 | pass | 16 | pass | 16 | both |
+| l2-w09-card-rice | -m1-line-4.png | 5 | pass | 13 | pass | 13 | both |
+
+- Both line rows pass the print gate. The hat-pip color try 5 has no line print, so the gate does
+  not run on it.
+
+## Step 4, the judge batches (built, not judged)
+
+- `node scripts/storytime-judge-batch.mjs --unit2 --ids l2-w10-story-page-put-on-your-hat-pip --kind
+  color --try 5 --out u2rc-d-color-t5` wrote
+  docs/storytime/l2-unit2/judge/prod/u2rc-d-color-t5.json with 1 entry. The judge copy is
+  out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-color-t5.png.
+- `node scripts/storytime-judge-batch.mjs --unit2 --ids l2-w09-story-page-tom-can-see-the-mop,l2-w09-card-rice
+  --kind line --try 5 --out u2rc-d-line-t5` wrote
+  docs/storytime/l2-unit2/judge/prod/u2rc-d-line-t5.json with 2 entries. The judge copies are
+  out/storytime-review/judge/prod-u2/l2-w09-story-page-tom-can-see-the-mop-line-t5.png and
+  out/storytime-review/judge/prod-u2/l2-w09-card-rice-line-t5.png.
+- No judge call ran here. The orchestrator runs the frozen judge.
+
+## Step 5, the commits
+
+- The plan, the spend log, the print gate record, this log, and the 2 batch files are in the
+  evidence commit of this step. The gate script of the scratch folder was deleted after the run.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: complete
+track: asset_storytime_l2_retries_cover_20261110
+phase: Phase 2: Retries and cover (paid), step D2 of Task 4, the 3 network retry calls
+commits: this evidence commit (HEAD), after 4e20154495c86e1736e3959af12597eb259f12d4
+tests_run: no vitest and no tsc in this step; the print gate with inspectLineArtPng on 4 prints (2 new line prints and their 2 despeckled prints) at the class size; the despeckle tool on 2 tries; the judge batch build with 1 entry and 2 entries; the network check with curl before each call
+files_changed: measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md; measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv; measure/runs/asset_storytime_l2_retries_cover_20261110/line-gate-p2d.txt; measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p2d2.log; docs/storytime/l2-unit2/judge/prod/u2rc-d-color-t5.json; docs/storytime/l2-unit2/judge/prod/u2rc-d-line-t5.json
+plan_updates: Task 4 is [b] deferred:maker again, with the sub-bullet "Step D2" of the 3 calls and their cost, the network checks, the print gate results, and the 2 batch names; the sub-bullet "Step D1" stays as it was
+known_failures: the first network check failed with a DNS timeout and gave the code 000, and the retry after 60 s gave 200; no call failed, no call was refused, and no call was above 0.03 USD; the hat-pip line call waits for a judge pass of the new color; the item (a) spend is 0.09 USD of the 0.15 USD stop, so 3 calls of 0.01 USD remain inside the cap
+handoff: The 3 network retry calls of the PM order ran. The hat-pip color try 5 cost 0.01 USD and wrote l2-w10-story-page-put-on-your-hat-pip-m3-color.png. The tom-can-see-the-mop line try 5 cost 0.01 USD and wrote l2-w09-story-page-tom-can-see-the-mop-m1-line-4.png. The rice line try 5 cost 0.01 USD and wrote l2-w09-card-rice-m1-line-4.png. The item (a) spend is 0.09 USD of the 0.15 USD stop, over 12 calls. The network checks gave 200 before each call, and the first check before the retry failed with a DNS timeout. Both line rows pass the print gate: tom-can-see-the-mop at 16 px and rice at 13 px, with the same width in the despeckled prints. The orchestrator runs the frozen judge on docs/storytime/l2-unit2/judge/prod/u2rc-d-color-t5.json (1 entry, the color try 5 of hat-pip) and on docs/storytime/l2-unit2/judge/prod/u2rc-d-line-t5.json (2 entries, the line try 5 of tom-can-see-the-mop and of rice), then the second judge on each file alone. The hat-pip line call of D1 runs only after the judge passes the new color. The 4 print-gate fails of step A go to Workbooks as fail rows with their best earlier tries in not-delivered/, in Task 5. The phase base sha is 4e20154495c86e1736e3959af12597eb259f12d4. The new files of this step are line-gate-p2d.txt, maker-p2d2.log, u2rc-d-color-t5.json, and u2rc-d-line-t5.json.
+END_MEASURE_AGENT_RESULT

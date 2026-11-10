@@ -176,6 +176,31 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
     The typecheck gives 38 errors, and the paths `src/storytime/`, `scripts/storytime-`, and
     `tests/storytime-` give 0 errors. This step made no Muse call and spent 0 USD. The 3 calls of
     the pool wait for the next step.
+  - Step D2 (this step, paid 0.03 USD). The 3 network retry calls of the PM order of 2026-11-10 ran,
+    one after another, and each one cost 0.01 USD. The D11 worst case was 3 calls x 0.01 USD =
+    0.03 USD, the highest item (a) call cost seen. With the item (a) spend of 0.06 USD, the sum of
+    0.09 USD is under the 0.15 USD stop, so the pool ran. The guard refused no call. The calls: the
+    hat-pip color try 5 at 2026-11-10T12:17:28Z, 0.01 USD, the file
+    `l2-w10-story-page-put-on-your-hat-pip-m3-color.png`; the tom-can-see-the-mop line try 5 at
+    2026-11-10T12:18:17Z, 0.01 USD, the file
+    `l2-w09-story-page-tom-can-see-the-mop-m1-line-4.png`; the rice line try 5 at
+    2026-11-10T12:19:04Z, 0.01 USD, the file `l2-w09-card-rice-m1-line-4.png`. The item (a) spend
+    is 0.09 USD of the 0.15 USD stop, over 12 calls. No call was above 0.03 USD. The hat-pip line
+    call did not run, because the line call comes only after the judge passes the new color.
+  - Step D2, the network checks. The check of the PM order ran before each paid call:
+    `curl -sS -m 20 -o /dev/null -w '%{http_code}\n' https://openrouter.ai/api/v1/models`. The first
+    check failed with a DNS timeout and gave the code 000, and the retry after 60 s gave 200. The 3
+    checks before the 3 calls gave 200, 200, and 200. A failed check uses no try.
+  - Step D2, the print gate (D3). The gate calls the writer check code `inspectLineArtPng` at the
+    class size of each row. The tom-can-see-the-mop line try 5 passes at 16 px, and its despeckled
+    print passes at 16 px. The rice line try 5 passes at 13 px, and its despeckled print passes at
+    13 px. Both line rows pass the gate. The record is
+    `measure/runs/asset_storytime_l2_retries_cover_20261110/line-gate-p2d.txt`.
+  - Step D2, the judge batches (built, not judged).
+    `docs/storytime/l2-unit2/judge/prod/u2rc-d-color-t5.json` holds 1 entry, the color try 5
+    picture of hat-pip. `docs/storytime/l2-unit2/judge/prod/u2rc-d-line-t5.json` holds 2 entries,
+    the line try 5 pictures of tom-can-see-the-mop and of rice. The orchestrator runs the frozen
+    judge on both batches.
 - [b] Task 5: Retry delivery and hand-off (D4). Write `approvals-retry1.json` for the passing rows. Run
   `deliverMuseUnit2` with `approvalsOnly` into `out/storytime/l2/unit2/delivery-muse-v1-retry1/`. Build
   `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-retry1/` with the hard links,

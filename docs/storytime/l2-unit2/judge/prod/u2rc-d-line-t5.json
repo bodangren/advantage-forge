@@ -1,0 +1,24 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-story-page-tom-can-see-the-mop-line-t5.png",
+    "id": "l2-w09-story-page-tom-can-see-the-mop",
+    "kind": "line",
+    "pageText": "Tom can see the mop.",
+    "use": "story-page",
+    "mustShow": [
+      "tom",
+      "dad",
+      "1 mop"
+    ]
+  },
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w09-card-rice-line-t5.png",
+    "id": "l2-w09-card-rice",
+    "kind": "line",
+    "pageText": "rice",
+    "use": "card",
+    "mustShow": [
+      "rice"
+    ]
+  }
+]

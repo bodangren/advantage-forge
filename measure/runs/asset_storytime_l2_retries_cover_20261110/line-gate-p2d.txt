@@ -1,0 +1,59 @@
+# Line pool and print gate, Phase 2 step D2 (paid 0.03 USD)
+
+The 3 network retry calls of the PM order of 2026-11-10: the hat-pip color try 5, the
+tom-can-see-the-mop line try 5, and the rice line try 5. 3 ok, 0 failed, 0 refused. Highest call
+0.01 USD. Pool spend 0.03 USD. Item (a) total 0.09 USD of the 0.15 USD stop.
+
+The gate check calls the writer check code (`inspectLineArtPng` of src/storytime/book-pictures.ts,
+the code that src/storytime/muse-delivery.ts uses for a delivered line print) on the new print file
+and on its despeckled print, at the class size. The line width is the measured median stroke width.
+
+| row | new line | try | print | width px | despeckled print | width px | passes |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| l2-w09-story-page-tom-can-see-the-mop | -m1-line-4.png | 5 | pass | 16 | pass | 16 | both |
+| l2-w09-card-rice | -m1-line-4.png | 5 | pass | 13 | pass | 13 | both |
+
+Result: both line rows pass the print gate. The tom-can-see-the-mop print is 16 px and its
+despeckled print is 16 px. The rice print is 13 px and its despeckled print is 13 px. The minimum
+is 12 px.
+
+The gate ran on the class size of each row. The tom-can-see-the-mop row is a story row of class
+story: 4000 x 3000 px. The rice row is a card row of class small: 1500 x 1500 px.
+
+The hat-pip color try 5 has no line print, so the gate does not run on it. Its line call comes only
+after the judge passes the new color.
+
+## The despeckle tool
+
+The despeckle tool ran on each of the 2 new line tries:
+`node scripts/storytime-muse.mjs despeckle <spec> --from 1 --try 4`. The tool refused to write,
+because the line call had already written the despeckled pair and the tool never overwrites a file.
+Both files of every row exist: `-line-4-despeckled.png` and `-line-print-4-despeckled.png`.
+
+## The network checks
+
+The network check of the PM order of 2026-11-10 ran before each paid call:
+`curl -sS -m 20 -o /dev/null -w '%{http_code}\n' https://openrouter.ai/api/v1/models`. It sends no
+key and it costs nothing. The first check failed with a DNS timeout and gave the code 000. The
+retry gave 200. The 3 checks before the 3 calls gave 200, 200, and 200. A failed check uses no try.
+
+## The 3 calls
+
+| row | kind | try | cost USD | result file |
+| --- | --- | --- | --- | --- |
+| l2-w10-story-page-put-on-your-hat-pip | color | 5 | 0.01 | l2-w10-story-page-put-on-your-hat-pip-m3-color.png |
+| l2-w09-story-page-tom-can-see-the-mop | line | 5 | 0.01 | l2-w09-story-page-tom-can-see-the-mop-m1-line-4.png |
+| l2-w09-card-rice | line | 5 | 0.01 | l2-w09-card-rice-m1-line-4.png |
+
+The Muse version of the hat-pip color is m3, because no m3 file of that row exists. The costs.tsv
+row of that call is the 5th color row of the row, so the judge reads it as color try 5.
+
+## Judge batches (built, not judged)
+
+- `docs/storytime/l2-unit2/judge/prod/u2rc-d-color-t5.json`: 1 entry, the color try 5 picture of
+  hat-pip. The judge copy is `out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-hat-pip-color-t5.png`.
+- `docs/storytime/l2-unit2/judge/prod/u2rc-d-line-t5.json`: 2 entries, the line try 5 pictures of
+  tom-can-see-the-mop and of rice. The judge copies are
+  `out/storytime-review/judge/prod-u2/l2-w09-story-page-tom-can-see-the-mop-line-t5.png` and
+  `out/storytime-review/judge/prod-u2/l2-w09-card-rice-line-t5.png`.
+- No judge call ran here. The orchestrator runs the frozen judge.
