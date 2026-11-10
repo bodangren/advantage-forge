@@ -1,0 +1,91 @@
+# Maker log, Phase 2 step D1, track asset_storytime_l2_retries_cover_20261110
+
+Role: measure-jr-green (light lane maker). Model: minimax-cn-coding-plan/MiniMax-M3.1-Flash.
+role_base_sha: 22ec70dc47d5e3742077d78632abeed0e609cadc (equal to HEAD at start).
+phase_base_sha: 22ec70dc47d5e3742077d78632abeed0e609cadc.
+This step is step D1 of Task 4: the second exception, code and tests only. It spends 0 USD. It makes
+no Muse call and reads no API key. The judge does not run here. Nothing is delivered here.
+
+## The defaults I took
+
+The PM order of 2026-11-10 gives the rule of the second exception. The prompt named the default: the
+first exception try of the id and kind must cost 0 USD, and the second try of that pair is the last
+one. I read the rule this way and wrote it in D15:
+
+- the second try is allowed when the first exception try of that id and kind cost 0 USD;
+- the second try is refused when the first exception try cost more than 0 USD;
+- a third try of that id and kind is refused;
+- the try of the second exception counts against the same 0.15 USD cap, because it shares the start
+  time.
+
+The prompt did not name the cost of a failed call. I used the cost of the `usage_cost` column, so a
+network fault at 0 USD gives 0.
+
+## Step 1, the plan and the spec (0 USD)
+
+- Task 4 of plan.md becomes `[~]`, then `[b] ... deferred:maker` again in the evidence commit.
+- spec.md gains D15 "Second exception (PM 2026-11-10)" after D14. It holds the PM order word for
+  word and the rule of the second try.
+- spec.md gains FR-16 for the tests of D15. No other D item and no other FR changes.
+
+## Step 2, the code (0 USD)
+
+- `scripts/storytime-muse-guards.mjs` holds the field `netRetry` on 3 rows of `U2_EXTRA_TRY`: the
+  color row of hat-pip, the line row of tom-can-see-the-mop, and the line row of rice. The other 7
+  rows have no such field.
+- The guard allows the second try of a netRetry row when the first exception try cost 0 USD. It
+  refuses a third try of that pair, and it refuses the second try when the first one cost more than
+  0 USD.
+- The cap, the report point, the margin, and the other values of `U2_EXTRA_TRY` stay as they were.
+- `scripts/storytime-muse-guards.d.mts` holds the new field in `U2ExtraTryRow`.
+
+## Step 3, the tests (0 USD)
+
+- `tests/storytime-u2-extra-try.test.ts` holds the tests of FR-16. Every test writes its fixture cost
+  file in a temp folder. No test makes a provider call.
+- The GREEN command of the specification runs once through `heavy-run.sh`. The result is in the
+  result block at the end of this log.
+
+## Step 4, the test run (0 USD)
+
+- The GREEN command of the specification ran once through `heavy-run.sh`. It gives 19 test files,
+  280 tests, 0 failures, and the exit code 0. The 7 new tests are U2X13 to U2X19 in
+  `tests/storytime-u2-extra-try.test.ts`. No old test of the once rule fails.
+- The typecheck ran through `heavy-run.sh`. The first run ran out of the Node heap. The second run
+  with a heap of 2560 MB gives 38 errors, the same count as the evidence of Phase 1. All 38 sit in
+  `assets/**` and in 2 old test files. The paths `src/storytime/`, `scripts/storytime-`, and
+  `tests/storytime-` give 0 errors.
+
+## Step 5, the commits
+
+- The code, the tests, and the specification are in the commit
+  8a4819c62468aa9df2bf0928021b3bf5ef37e5da, with the message
+  `feat(storytime_l2_retries_cover): the network retry exception for 3 rows`.
+- The plan, this log, and the 2 judge files of round 2 are in the evidence commit of this step.
+
+## The state of the track after this step
+
+- Task 4 is `[b] ... deferred:maker` again. Its sub-bullet "Step D1" holds the commit, the 3 rows
+  with the field `netRetry`, the rule of the second try, the test result, and the typecheck result.
+- Task 6 gains the sub-bullet "Judge of round 2". It holds the verdict of the 2 judges, the rank of
+  m6, the faults of m6, the pass of m6 against the PM layout, the 6 tries, the spend of item (b),
+  and the wait of Task 7 for a PM decision on the layout.
+- The 3 calls of the pool wait for the next step: the hat-pip color try 5, the
+  tom-can-see-the-mop line try 5, and the rice line try 5. Each needs a network check before the
+  call, like the cover calls of step B.
+- The 4 print-gate fails go to Workbooks as fail rows, with their best earlier tries in
+  `not-delivered/`. That is the work of Task 5.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: complete
+track: asset_storytime_l2_retries_cover_20261110
+phase: Phase 2: Retries and cover (paid), step D1 of Task 4, the second exception
+commits: 8a4819c62468aa9df2bf0928021b3bf5ef37e5da (the code, the tests, and spec.md) and this evidence commit (HEAD), both after 22ec70dc47d5e3742077d78632abeed0e609cadc
+tests_run: the GREEN command of the specification, 19 test files, 280 tests, 0 failures, exit code 0, through the heavy-run wrapper; the typecheck through the same wrapper, 38 errors, 0 errors in the paths src/storytime/, scripts/storytime-/, and tests/storytime-
+files_changed: scripts/storytime-muse-guards.mjs; scripts/storytime-muse-guards.d.mts; tests/storytime-u2-extra-try.test.ts; measure/tracks/asset_storytime_l2_retries_cover_20261110/spec.md; measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md; measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p2d.log
+plan_updates: Task 4 is [b] deferred:maker again, with the sub-bullet "Step D1" of the commit, the 3 rows with the field netRetry, the rule of the second try, the test result, and the typecheck result; Task 6 gains the sub-bullet "Judge of round 2" of the verdicts of the 2 judges, the rank of m6, the faults of m6, the pass of m6 against the PM layout, the 6 tries, the spend of item (b), and the wait of Task 7
+known_failures: no test fails and no type error sits in a storytime path; the first run of the typecheck ran out of the Node heap, so it ran again with a heap of 2560 MB; no Muse call ran in this step and the spend of 0 USD; the 3 calls of the pool wait for the next step
+handoff: The second exception of D15 is in the guard. The field netRetry is true on the color row of hat-pip, the line row of tom-can-see-the-mop, and the line row of rice. Each of them allows one more try when its first exception try cost 0 USD, and each of them refuses a third try. The other 7 rows keep the rule of one try, and the caps keep their values. The spec gains D15 and FR-16, and the commit is 8a4819c62468aa9df2bf0928021b3bf5ef37e5da. The GREEN command passes 19 files and 280 tests, and the storytime paths give 0 type errors. The next step runs the 3 calls: the hat-pip color try 5, the tom-can-see-the-mop line try 5, and the rice line try 5, each with a network check before the call, inside the 0.15 USD cap of item (a) that has 0.06 USD. The judge of round 2 fails all 6 cover tries against D6, and both judges rank m6 best; the second judge passes m6 against the PM layout. Task 7 waits for a PM decision on the layout. The 4 print-gate fails go to Workbooks as fail rows with their best earlier tries in not-delivered/, in Task 5. The phase base sha is 22ec70dc47d5e3742077d78632abeed0e609cadc. The new files of this step are maker-p2d.log, judge-cover-r2.json, and judge-cover-second-r2.json.
+END_MEASURE_AGENT_RESULT
+

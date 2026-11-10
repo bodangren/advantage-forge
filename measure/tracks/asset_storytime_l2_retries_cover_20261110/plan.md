@@ -165,6 +165,17 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
     goes to `not-delivered/`. The hat-pip line call did not run, because color try 4 has no picture.
     PM 2026-11-10: one more try for the 3 rows with a network timeout. That work comes in a later
     step.
+  - Step D1 (this step, 0 USD). The second exception of D15 is in the guard, and its 7 tests are in
+    `tests/storytime-u2-extra-try.test.ts`. The commit is
+    8a4819c62468aa9df2bf0928021b3bf5ef37e5da, with the message
+    `feat(storytime_l2_retries_cover): the network retry exception for 3 rows`. The field `netRetry`
+    is true on 3 rows of `U2_EXTRA_TRY`: the color row of hat-pip, the line row of
+    tom-can-see-the-mop, and the line row of rice. The guard allows their second try when their
+    first exception try cost 0 USD, and it refuses a third try. The other 7 rows keep their rule of
+    one try. The GREEN command of the specification passes: 19 test files, 280 tests, 0 failures.
+    The typecheck gives 38 errors, and the paths `src/storytime/`, `scripts/storytime-`, and
+    `tests/storytime-` give 0 errors. This step made no Muse call and spent 0 USD. The 3 calls of
+    the pool wait for the next step.
 - [b] Task 5: Retry delivery and hand-off (D4). Write `approvals-retry1.json` for the passing rows. Run
   `deliverMuseUnit2` with `approvalsOnly` into `out/storytime/l2/unit2/delivery-muse-v1-retry1/`. Build
   `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-retry1/` with the hard links,
@@ -229,6 +240,13 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
       `l2-u1-cover-quest-teacher-front-m4-clean.png` and `l2-u1-cover-quest-teacher-front-m4-zones.png`;
       `l2-u1-cover-quest-teacher-front-m5-clean.png` and `l2-u1-cover-quest-teacher-front-m5-zones.png`;
       `l2-u1-cover-quest-teacher-front-m6-clean.png` and `l2-u1-cover-quest-teacher-front-m6-zones.png`.
+  - Judge of round 2 (2026-11-10). The first judge (`judge-cover-r2.json`) and the second judge
+    (`judge-cover-second-r2.json`) fail m4, m5, and m6, so all 6 cover tries fail against D6. Both
+    judges rank m6 best, with the rank 6, 5, 4. Its only faults are the free band and the bottom
+    band: a corner of the open book crosses the 78 percent line by about 60 px. The second judge
+    passes m6 against the PM layout, with the top 20 percent calm and the bottom 12 percent free.
+    All 6 cover tries are used, and the item (b) spend is 0.06 USD of the 0.10 USD stop. Task 7
+    waits for a PM decision on the layout.
 - [b] Task 7: Cover hand-off (D10). Deliver the passing picture as
   `l2-u1-cover-quest-teacher-front-forge-v1.png` (2480 x 3508 px, RGB, no alpha). Build
   `/home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/` with the PNG, the zone-line copy,

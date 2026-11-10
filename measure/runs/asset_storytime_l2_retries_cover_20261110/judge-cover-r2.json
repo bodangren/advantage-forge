@@ -1,0 +1,77 @@
+{
+  "id": "l2-u1-cover-quest-teacher-front",
+  "round": 2,
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "judgePrompt": "judge-prompt.md v6",
+  "brief": "docs/storytime/covers/teacher-front/judge-brief.md",
+  "time": "2026-11-10T11:52:02Z",
+  "results": [
+    {
+      "try": 4,
+      "file": "l2-u1-cover-quest-teacher-front-m4-clean.png",
+      "verdict": "fail",
+      "checks": [
+        { "id": "AF-1", "verdict": "pass", "note": "Sam's red T-shirt shows two white stripes at the lower chest and nothing else" },
+        { "id": "AF-2", "verdict": "fail", "note": "the open book covers Nan's chest; only a small white sliver of the star shows, no star reads" },
+        { "id": "AF-3", "verdict": "pass", "note": "Nan wears the orange T-shirt, Sam wears the red T-shirt with stripes" },
+        { "id": "AF-4", "verdict": "pass", "note": "Kim holds the book with its cover toward the viewer, so the pages face the children, and she looks at them; the children hold a second open book" },
+        { "id": "no-text", "verdict": "pass", "note": "no letters, words, numbers, signature, logo, or frame" },
+        { "id": "cast", "verdict": "pass", "note": "Kim, Nan, and Sam match the cast; no Pip and no other animal" },
+        { "id": "count", "verdict": "pass", "note": "exactly three people" },
+        { "id": "free-band", "verdict": "fail", "note": "the lower edge of the children's book and Sam's hand under it sit below the green line" },
+        { "id": "calm-top", "verdict": "pass", "note": "above the yellow line only sky, leaves, and tree trunk" },
+        { "id": "bottom-band", "verdict": "fail", "note": "the bottom of the children's book and a holding hand dip below the green line" },
+        { "id": "no-flag", "verdict": "pass", "note": "no single circle, star, cross, or stripe pattern alone on a page, banner, cloth, or sign" },
+        { "id": "style", "verdict": "pass", "note": "bright painted storybook anime look with clean line art, lush scenery, and warm sunlight; not 3D" }
+      ],
+      "lowestHandVsBlue": "above",
+      "anyAboveRed": false,
+      "notes": "Star on Nan hidden by the book; book and a hand reach below the green line."
+    },
+    {
+      "try": 5,
+      "file": "l2-u1-cover-quest-teacher-front-m5-clean.png",
+      "verdict": "fail",
+      "checks": [
+        { "id": "AF-1", "verdict": "pass", "note": "Sam's red T-shirt shows two white stripes at the lower chest and nothing else" },
+        { "id": "AF-2", "verdict": "fail", "note": "the star on Nan's chest is covered by the open book and Sam's hand; at most a tiny white sliver shows" },
+        { "id": "AF-3", "verdict": "pass", "note": "Nan wears the orange T-shirt, Sam wears the red T-shirt with stripes" },
+        { "id": "AF-4", "verdict": "pass", "note": "Kim shows the cover to the viewer, so her pages face the children, and she looks at them; the children have a second open book between them" },
+        { "id": "no-text", "verdict": "pass", "note": "no letters, words, numbers, signature, logo, or frame; the pages are blank" },
+        { "id": "cast", "verdict": "pass", "note": "Kim, Nan, and Sam match the cast; no Pip and no other animal" },
+        { "id": "count", "verdict": "pass", "note": "exactly three people" },
+        { "id": "free-band", "verdict": "pass", "note": "faces, hands, and both books sit between the yellow and green lines; the book bottom touches just above the green line" },
+        { "id": "calm-top", "verdict": "pass", "note": "above the yellow line only sky, leaves, tree, and hill" },
+        { "id": "bottom-band", "verdict": "pass", "note": "below the green line only grass, flowers, shoes, and knees" },
+        { "id": "no-flag", "verdict": "pass", "note": "no flag-like shape; the blank book pages hold no mark" },
+        { "id": "style", "verdict": "pass", "note": "bright painted storybook anime look with clean line art, lush scenery, and warm sunlight; not 3D" }
+      ],
+      "lowestHandVsBlue": "above",
+      "anyAboveRed": false,
+      "notes": "All checks pass except the missing star on Nan; the layout is clean."
+    },
+    {
+      "try": 6,
+      "file": "l2-u1-cover-quest-teacher-front-m6-clean.png",
+      "verdict": "fail",
+      "checks": [
+        { "id": "AF-1", "verdict": "pass", "note": "Sam's red T-shirt shows two white stripes at the lower chest and nothing else" },
+        { "id": "AF-2", "verdict": "pass", "note": "Nan's orange T-shirt shows one clear white star and no letters" },
+        { "id": "AF-3", "verdict": "pass", "note": "Nan wears the orange T-shirt with the star, Sam wears the red T-shirt with stripes" },
+        { "id": "AF-4", "verdict": "pass", "note": "Kim holds her book with the cover toward the viewer, so the pages face the children, and she looks at them; the children touch a second open book" },
+        { "id": "no-text", "verdict": "pass", "note": "no letters, words, numbers, signature, logo, or frame; the pages are blank" },
+        { "id": "cast", "verdict": "pass", "note": "Kim, Nan, and Sam match the cast; no Pip and no other animal" },
+        { "id": "count", "verdict": "pass", "note": "exactly three people" },
+        { "id": "free-band", "verdict": "fail", "note": "the lower right corner of the open book dips below the green line" },
+        { "id": "calm-top", "verdict": "pass", "note": "above the yellow line only sky, leaves, and tree trunk" },
+        { "id": "bottom-band", "verdict": "fail", "note": "the lower right corner of the open book reaches below the green line" },
+        { "id": "no-flag", "verdict": "pass", "note": "no flag-like shape; the blank book pages hold no mark" },
+        { "id": "style", "verdict": "pass", "note": "bright painted storybook anime look with clean line art, lush scenery, and warm sunlight; not 3D" }
+      ],
+      "lowestHandVsBlue": "above",
+      "anyAboveRed": false,
+      "notes": "Cast marks all read; only a small book corner crosses the green line."
+    }
+  ],
+  "rank": [6, 5, 4]
+}
