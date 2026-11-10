@@ -43,9 +43,9 @@ maker, runs the frozen judge.
 with a trailing `deferred:<owner>` field. The owner changes `[b]` to `[~]` when the blocker clears and the
 task starts. The doctor counts only `[ ]`, `[~]`, and `[x]`.
 
-## Phase 0: Authoring
+## Phase 0: Authoring [checkpoint: 699fb46]
 
-- [ ] Task 0: Author the track: specification, plan, metadata, index, spec review note, and the registry
+- [x] Task 0 (699fb466): Author the track: specification, plan, metadata, index, spec review note, and the registry
   entry. The creation commit has the message `measure(storytime_l2_retries_cover): create the track`.
 
 The light lane has no spec review gate. A second small commit marks Task 0 and puts the checkpoint on
@@ -143,7 +143,6 @@ the PM and not to Daniel. The track records no acceptance of a picture by Daniel
 
 ## Evidence
 
-- Track creation commit: recorded at creation (message
-  `measure(storytime_l2_retries_cover): create the track`).
+- Track creation commit: `699fb466` (message `measure(storytime_l2_retries_cover): create the track`).
 - Run records: `measure/runs/asset_storytime_l2_retries_cover_20261110/` (spend log, judge files, role
   logs, PM report, acceptance results).
