@@ -124,6 +124,8 @@ export interface U2ExtraTryRow {
   pastLimit: boolean;
   /** True when the row allows one more try past the once rule (D15). */
   netRetry?: boolean;
+  /** The number of exception tries since the start time (D20). The default is 1. */
+  allowedTries?: number;
   /** The PM words that granted the try. */
   source: string;
 }

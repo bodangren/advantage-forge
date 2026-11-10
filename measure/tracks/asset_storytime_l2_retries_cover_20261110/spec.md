@@ -74,7 +74,7 @@ and 0.10 USD for item (b), so 0.25 USD in total. The maker makes no balance call
 
 ## Decisions
 
-The PM and the owner order set D1 to D15. The author set the defaults that the section "Open
+The PM and the owner order set D1 to D22. The author set the defaults that the section "Open
 questions answered by default" lists. The PM can change each default.
 
 - **D1 Retry exception (item a).** The guard gets a written exception for exactly 9 rows. The source
@@ -322,6 +322,92 @@ questions answered by default" lists. The PM can change each default.
   - The zone-line copy of the hand-off is named
     `l2-u1-cover-quest-teacher-front-forge-v1-zones-review-only.png`, because the file is for review
     only.
+- **D17 PM order of Phase 3 (PM 2026-11-10).** The PM sent 2 messages on 2026-11-10, after the
+  acceptance of Phase 2. The first message, word for word:
+
+  > PM order (Workbooks → PM → Forge, after your Phase 2 acceptance, same light track, 1 role): (1) MANIFEST/version repair, 0 USD, NO render: Workbooks PICTURE_CHECK_U2 selects version 2 or 3 for 9 main rows, but the delivered files are named -v1: l2-w10-check-row-ten, l2-w11-story-page-here, l2-w11-story-page-ten-men-in-the-den, l2-w11-story-page-the-den-is-on-dad, l2-w12-story-page-open-your-book-nan, l2-w13-cover-look-at-me, l2-w13-check-row-dot, l2-w13-d4-prompt-jump, l2-w15-cover-look-a-bus. A probe with those 9 version fields set to 1 gives 224 of 229. Fix the manifest version fields (or the names, whichever matches the delivered pixels) in a NEW hand-off folder with a MANIFEST; the v1 folders stay unchanged. (2) hat-pip: 1 line-only retry from its passing color m3, inside the open retry stop (0.05 USD left of 0.15 USD); 1 call; no other paid call. Report the folder path, the MANIFEST sha256, the spend line, and the hat-pip result. Facts changed list at the end.
+
+  The second message, word for word:
+
+  > PM addition to the repair order (same new hand-off folder, 0 USD, no render): also package the 4 card fail rows as delivery jobs from their best try: hippo, ruler, clap, cold = color m1 + the widest judge-passing line print, each with the line width recorded as an exception in manifest.json (Workbooks prints only the color file of a card row, card-kit.ts:584). So the folder holds: the 9 version-field repairs, the 4 card delivery jobs, and the hat-pip line retry (1 call, in the 0.05 USD left). One MANIFEST for the folder.
+
+  - Phase 3 has 4 steps. The version repair, the card jobs, and the hand-off cost 0 USD. The hat-pip
+    line call is the only paid call of Phase 3, and it uses the 0.05 USD left of the 0.15 USD stop of
+    item (a).
+  - No step of Phase 3 makes a render.
+- **D18 The version defect.** The v1 manifest (`out/storytime/l2/unit2/delivery-muse-v1/manifest.json`)
+  gives each of the 9 rows of D17 a candidate with `version` 2 or 3. That value is the Muse version of
+  the row in the approval list `approvals-u2.json`. The file of the candidate is `<id>-v1.png`, the
+  name in the picture list.
+  - The cause is the line `version = entry?.version ?? listVersion(row.fileName)` in
+    `src/storytime/muse-delivery-u2.ts` (line 379).
+  - The delivered name and the delivered pixels are the v1 picture of the list. The repair sets the
+    version field of these 9 candidates to 1 and keeps the names.
+  - The Muse version stays in the approval list and in the README of the hand-off.
+- **D19 Writer options (Task 10).** `MuseUnit2DeliveryOptions` in `src/storytime/muse-delivery-u2.ts`
+  gets 2 options. With both absent, the behavior has no change.
+  - `versionFromList` (default false). When it is true, the manifest version of a candidate is
+    `listVersion(row.fileName)`. The Muse version of the approval entry still feeds the review
+    mapping.
+  - `lineWidthExceptions` (default none). The value is a map from a row id to
+    `{ measuredPx, requiredPx: 12, reason }`. For a listed row, the writer accepts only the line-width
+    error of the line print gate. Every other line error and every color error still refuses the row.
+    The manifest candidate of that row records
+    `lineWidthException: { measuredPx, requiredPx, reason }`.
+  - The maker adds the tests of FR-17.
+- **D20 Hat-pip line (Task 11).** The hat-pip line row of `U2_EXTRA_TRY` gets `allowedTries: 2` and
+  the PM words of D17 in its `source`. The row then allows 2 exception line tries since
+  `U2_EXTRA_TRY.startTime`. A third exception line try is refused.
+  - The spend counts against the same 0.15 USD cap. The spend of item (a) is 0.10 USD, so 0.05 USD
+    is left.
+  - `U2_RUN.maxTries` 3 still applies. The hat-pip line has 2 line tries, so the new call is line
+    try 3.
+  - The `linePrompt` of `docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-hat-pip.json`
+    gets at the end: `Teacher Kim keeps her hair exactly as in the color picture: smooth,
+    medium-length, dark-brown hair in a low ponytail. Her hair is never curly.`
+  - The call is `node scripts/storytime-muse.mjs line <spec> --from 3 --tries 1`. The network check of
+    step B runs before it: `curl -sS -m 20 -o /dev/null -w '%{http_code}\n'
+    https://openrouter.ai/api/v1/models` must give 200. A failed check uses no try.
+  - Then the print gate of D3 runs, and the orchestrator runs the frozen judge and the second judge.
+- **D21 The repair delivery (Task 12).** The approval list
+  `measure/runs/asset_storytime_l2_retries_cover_20261110/approvals-repair1.json` holds:
+  - the 9 entries of `approvals-u2.json`, unchanged;
+  - the 4 card entries, each with color m1 and the line print of the best try of the `not-delivered/`
+    folder of the retry1 delivery: hippo line try 4 at 9 px, ruler line try 4 at 8 px, clap line try
+    3 at 11 px, and cold line try 4 at 10 px;
+  - the hat-pip entry, only if its new line passes.
+  - The runner `deliver-repair1.mts` runs `deliverMuseUnit2` with `approvalsOnly`, `versionFromList`,
+    and `lineWidthExceptions` for the 4 cards. The output folder is
+    `out/storytime/l2/unit2/delivery-muse-v1-repair1/`.
+  - The delivered PNG file of each of the 9 rows has the same SHA-256 as its file in
+    `out/storytime/l2/unit2/delivery-muse-v1/`.
+  - The hand-off folder `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-repair1/` holds:
+    - hard links of the delivered PNG files;
+    - a copy of `manifest.json`;
+    - a `README.md` with the 9 repairs and their old and new version, the 4 card exceptions, the
+      hat-pip result, and the text "model evidence, not acceptance";
+    - a copy of `spend-log.tsv`;
+    - a `MANIFEST.txt` in the form of the retry1 hand-off.
+  - The v1 delivery folder and the v1 hand-off folder stay unchanged. The retry1 delivery folder and
+    the retry1 hand-off folder stay unchanged.
+
+- **D22 Cover README title (PM 2026-11-11).** The PM receipt of 2026-11-11, word for word:
+
+  > PM receipt: teacher front cover folder storytime-cover-teacher-front-forge received, MANIFEST 50069dce22d8… 3/3 OK, passed to Workbooks as HAND-OFF TC1. One fix at your closeout, 0 USD: the README title says "Storytime Level 2 unit 2", but the files and the spec are l2-u1 (unit 1). Correct the title, rebuild MANIFEST.txt, and report the new MANIFEST sha256. Do not change the PNG files.
+
+  - In `/home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/`, line 1 of `README.md`
+    becomes `# Teacher front cover art, Storytime Level 2 unit 1`.
+  - The title comment line of `MANIFEST.txt` becomes
+    `# Teacher front cover art, Storytime Level 2 unit 1 (model evidence, not acceptance)`.
+  - No other README line changes.
+  - `MANIFEST.txt` keeps its form. Only the README hash line and the README bytes line change.
+  - The 2 PNG files keep their bytes, their SHA-256, and their inode.
+  - The generator `measure/runs/asset_storytime_l2_retries_cover_20261110/make-cover-handoff.mjs` gets
+    the same 2 title changes, at its lines 86 and 168. The generator is not run again.
+  - The old SHA-256 of `MANIFEST.txt` is
+    `50069dce22d85fc75bf833ac06538fdd3a17f295541ee8cefb72534ee106e128`.
+  - The log and the PM report addendum record the old and the new SHA-256.
+  - The cost is 0 USD.
 
 ## Functional Requirements
 
@@ -384,6 +470,28 @@ questions answered by default" lists. The PM can change each default.
   - an exception spend of 0.15 USD with the next call over the cap: refused;
   - the values of `U2_EXTRA_TRY` other than the 3 `netRetry` fields and their source text are the
     same as at commit `22ec70dc`.
+- **FR-17 The writer options and the hat-pip guard.** Tests show:
+  - `versionFromList` absent: the manifest version of a candidate is the Muse version of the approval
+    entry. `versionFromList` true: the manifest version of a candidate is `listVersion(row.fileName)`,
+    and the review mapping still uses the Muse version.
+  - `lineWidthExceptions` absent: a row with a line print under 12 px is refused. With an exception
+    for that row: the row is delivered, and the manifest candidate records `lineWidthException` with
+    the measured width, the required width, and the reason.
+  - a row without an exception still refuses its line print. A color error of a row with an exception
+    still refuses the row.
+  - the hat-pip line row allows a second exception line try, and a third is refused.
+  - a row without `allowedTries` still refuses its second exception try.
+  - the `netRetry` rule has no change. The 0.15 USD cap still refuses a call over the cap.
+  - the other rows and the other values of `U2_EXTRA_TRY` are the same as at commit `10af0915`.
+- **FR-18 The pixel check and the old folders.** The delivered PNG file of each of the 9 repaired rows
+  has the same SHA-256 as its file in `out/storytime/l2/unit2/delivery-muse-v1/`. The v1 delivery
+  folder and the v1 hand-off folder have no change in Phase 3. The retry1 delivery folder and the
+  retry1 hand-off folder have no change in Phase 3.
+
+- **FR-19 The cover README title.** The title of the README and the title of the MANIFEST say unit
+  1. `sha256sum --quiet -c MANIFEST.txt` gives no FAILED line. The SHA-256 values of the 2 PNG
+  files are `c91719903d3803bc02498f8e097528c9a64ddae263102ebf28d06d8d37f11a53` and
+  `41e290053869085734f926b165ca252944260443f030db837a1837e22994c678`.
 
 ## Non-Functional Requirements
 

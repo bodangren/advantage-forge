@@ -2,10 +2,11 @@
 
 Status: new (2026-11-10). Phase 0 authors the track. Phase 1 writes the guard exception, the cover
 class, the specs, and the writer option (0 USD). Phase 2 runs the paid retries and the cover.
+Phase 3 repairs the manifest version of 9 rows, packages 4 card rows, and runs the hat-pip line call.
 
 The track gives 9 unit 2 book rows one extra try each (item a, cap 0.15 USD) and makes one color
 picture for the Teacher Book front (item b, stop 0.10 USD). The [specification](./spec.md) owns the
-scope, the decisions D1 to D14, and the acceptance gates.
+scope, the decisions D1 to D22, and the acceptance gates.
 
 ## Method and ownership
 
@@ -127,7 +128,7 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
     `volcengine-agent-plan/glm-latest#high`. This model is a substitution: ra-quota gave the
     metered deepseek route.
 
-## Phase 2: Retries and cover (paid)
+## Phase 2: Retries and cover (paid) [checkpoint: 10af0915]
 
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`). The orchestrator
 runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item (b).
@@ -415,9 +416,47 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
     `/tmp/opencode/l2rc-sumtest/` (2 files), and `/tmp/judge-u2rc/` (1 file) are gone. The staging folders
     under `out/storytime/covers/` and `out/storytime/l2/unit2/` are none. The kept files of D13 are in
     place. The record is `scratch-delete-p2h.txt`.
-- [b] Phase 2 gate: phase acceptance by the checker at an immutable HEAD. The checker compares the
-  `costs.tsv` sums with the spend log, runs the `sha256sum -c` checks of both hand-off folders, checks the
-  v1 hashes, the PNG size and mode, and greps FR-12 and FR-14. deferred:checker
+- [x] Phase 2 gate (10af0915): phase acceptance by the checker passed at 10af0915.
+  - The acceptance file is `measure/runs/asset_storytime_l2_retries_cover_20261110/acceptance-p2-10af091.json`.
+    Its status is pass. The GREEN command passed 19 test files and 280 tests. The checker model was
+    `kimi-code-plan-cn/kimi-for-coding#high`. It holds 2 nonblocking findings: the hardening of
+    `tests/storytime-u2-guards.test.ts` is safe, and the v1 combined-hash form was not reproducible,
+    but the counts and the mtimes match.
+
+## Phase 3: Version repair, card jobs, and the hat-pip line (repair1)
+
+Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`). The orchestrator
+runs the frozen judge. The stop is the open retry stop of item (a): 0.05 USD is left of 0.15 USD. The
+hat-pip line call is the only paid call of this phase.
+
+- [x] Task 9 (sha pending): Phase 3 plan and the guard rule of D20. Write D17 to D22 and FR-17 to
+  FR-19 in the specification. Add the field `allowedTries` to the hat-pip line row of
+  `U2_EXTRA_TRY`, with the PM words of D17 in its source. Add the tests of the guard rule. Make no
+  Muse call.
+  - The GREEN command of the specification passes with 19 test files and 285 tests, and the exit
+    status is 0. The 33 `costs.tsv` files under `out/storytime` have the same SHA-256 before and
+    after the run. The guard change gives the hat-pip line row the field `allowedTries: 2`, so the
+    row allows 2 exception line tries and refuses a third. The specification holds D17 to D22 and
+    FR-17 to FR-19, with D22 added for the PM order of 2026-11-11. The maker made no Muse call.
+- [b] Task 10: Writer options of D19 and their tests (FR-17). Add `versionFromList` and
+  `lineWidthExceptions` to `MuseUnit2DeliveryOptions`. Add the tests of both options. Make no Muse
+  call. deferred:maker
+- [b] Task 11: Hat-pip line call of D20. Edit the `linePrompt` of the hat-pip spec. Run the network
+  check, then the line call `--from 3 --tries 1`, then the print gate, then build the judge batch.
+  The orchestrator runs the frozen judge and the second judge. deferred:maker
+- [b] Task 12: Repair delivery of D21. Write `approvals-repair1.json`, run `deliver-repair1.mts`, do
+  the pixel check, build the hand-off folder with its MANIFEST, and write the report addendum.
+  deferred:maker
+- [b] Task 13: Cover README title fix of D22 (FR-19). deferred:maker
+  - The folder is `/home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/`. The cost is
+    0 USD. Line 1 of the README becomes `# Teacher front cover art, Storytime Level 2 unit 1`, and
+    the title line of `MANIFEST.txt` becomes
+    `# Teacher front cover art, Storytime Level 2 unit 1 (model evidence, not acceptance)`. The
+    generator `make-cover-handoff.mjs` gets the same 2 title changes and is not run again. The
+    report names the new SHA-256 of `MANIFEST.txt`. The 2 PNG files do not change.
+- [b] Phase 3 gate: phase acceptance by the checker at an immutable HEAD. The checker compares the
+  pixel hashes of the 9 repaired rows, the MANIFEST check of the hand-off folder, the v1 and retry1
+  folders, and the spend line of the hat-pip call. deferred:checker
 
 ## Track-level roles
 
