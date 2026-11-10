@@ -62,6 +62,12 @@ export interface MuseUnit2DeliveryOptions {
   pictureListPin?: string;
   /** The approval list, or the path of its JSON file. */
   approvals: MuseApprovalList | string;
+  /**
+   * Deliver only the rows of the approval list (D4). Default false. When it is true, a row
+   * without an approval entry gets no job, the reuse rows stay out of the delivery, and the skip
+   * callback is not called. The checks of the list and of every file stay.
+   */
+  approvalsOnly?: boolean;
   /** The unit 2 rows file, or an already parsed document. Default: `<repoRoot>/docs/storytime/l2-unit2/rows.json`. */
   rows?: Unit2Row[] | { rows: Unit2Row[] } | string;
   /** The repository root, for the reuse source paths of rows.json. */
@@ -258,6 +264,10 @@ function candidateOf(item: {
  * delivery folder unchanged. An approval entry copies its Muse prints; a row without an entry
  * and with a reuse source copies the source color file and its line twin; every other row gets
  * no job and goes to `onSkip`.
+ *
+ * With the option `approvalsOnly` the writer delivers only the rows of the approval list. A row
+ * without an entry gets no job, the reuse rows stay out of the delivery, and `onSkip` is not
+ * called. The checks of the list and of every file stay.
  */
 export async function deliverMuseUnit2(options: MuseUnit2DeliveryOptions): Promise<StorytimeManifest> {
   const repoRoot = path.resolve(options.repoRoot ?? process.cwd());
@@ -308,6 +318,10 @@ export async function deliverMuseUnit2(options: MuseUnit2DeliveryOptions): Promi
         problems.push(error instanceof Error ? error.message : String(error));
         continue;
       }
+    } else if (options.approvalsOnly) {
+      // The option delivers only the rows of the approval list. A row without an entry gets no
+      // job. It does not use its reuse source, and the skip callback stays quiet.
+      continue;
     } else if (source && source.kind === 'unit2-earlier-row') {
       // The source is the spec of an earlier unit 2 row. Its approved prints are the reuse files,
       // so the earlier row needs an approval entry in this same run.
