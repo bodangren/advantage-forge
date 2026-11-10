@@ -480,7 +480,7 @@ hat-pip line call is the only paid call of this phase.
     both judges find smooth hair. All 9 mustShow items show, and the count of 7 children is correct.
     The row has used its 3 line tries, so hat-pip gets no delivery job in the repair1 delivery of
     D21. The 2 judge files are `judge-u2rc-p3-line-t3.json` and `judge-u2rc-p3-line-t3-second.json`.
-- [x] Task 12 (sha pending): Repair delivery of D21. Write `approvals-repair1.json`, run `deliver-repair1.mts`, do
+- [x] Task 12 (b5fae31bd0c56de5d141e6116e72b2b45be10a05): Repair delivery of D21. Write `approvals-repair1.json`, run `deliver-repair1.mts`, do
   the pixel check, build the hand-off folder with its MANIFEST, and write the report addendum.
   - Part 1 (this step, 0 USD). The delivery folder is
     `out/storytime/l2/unit2/delivery-muse-v1-repair1/`. It holds 27 files. They are 26 PNG files of

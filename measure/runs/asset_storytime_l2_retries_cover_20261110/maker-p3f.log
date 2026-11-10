@@ -22,7 +22,7 @@ role: measure-jr-green (maker, light lane)
 status: complete
 track: asset_storytime_l2_retries_cover_20261110
 phase: Phase 3: Version repair, card jobs, and the hat-pip line (repair1)
-commits after 70364b1ef90026cba2bfe73d81734127a4ad2e47: [pending commit 1]
+commits after 70364b1ef90026cba2bfe73d81734127a4ad2e47: b5fae31bd0c56de5d141e6116e72b2b45be10a05 (implementation and plan evidence); evidence commit follows this commit in the second git commit of step 9
 tests_run: 0 paid or project tests by design; this step spends 0 USD, no Muse call, no network call, no test, no tsc. Checks run: sha256sum --quiet -c MANIFEST.txt in the repair1 hand-off (no FAILED line, exit 0); sha256sum -c MANIFEST.txt | grep -c ': OK$' = 32; sha256sum MANIFEST.txt = 09dfa9f03b12c2042c70fc4a63970e23e7fe15ebb84cd7dfd25993691732de7e; folder-state-p3e.py recomputation of the 4 unchanged folders equals folder-state-p3e-before.txt.
 files_changed: measure/tracks/asset_storytime_l2_retries_cover_20261110/spec.md (1 line, D21 default-7 sentence); measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md (Task 12 [x] sha pending + Part 2 sub-bullet); measure/runs/asset_storytime_l2_retries_cover_20261110/make-handoff-repair1.mjs (new); measure/runs/asset_storytime_l2_retries_cover_20261110/pm-report.md (addendum); measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p3f.log (new). Outside git: /home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-repair1/ built (33 files; PNGs are hard links, no disk cost).
 plan_updates: Task 12 flipped to [x] (sha pending) with a Part 2 sub-bullet holding the folder, the 33-file count, the MANIFEST.txt SHA-256, and the OK count 32. Phase 3 gate stays [b] deferred:checker.
