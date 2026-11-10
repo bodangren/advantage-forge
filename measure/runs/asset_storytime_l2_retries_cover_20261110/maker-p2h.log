@@ -109,8 +109,9 @@ track: asset_storytime_l2_retries_cover_20261110
 phase: Phase 2: Retries and cover (paid)
 commits after 7acac8415a02ba0d60e3699d8fd3516704229c33:
 - the commit of spec.md, plan.md, pm-report.md, maker-p2h.log, make-cover-handoff.mjs,
-  delete-scratch.mjs, and scratch-delete-p2h.txt follows this log. Its SHA is not in this file,
-  because a commit cannot hold its own SHA.
+  delete-scratch.mjs, and scratch-delete-p2h.txt follows this log. Its SHA is
+  c92fba04d704f5d46db47dc3f086cfa45b82d4be. A commit cannot hold its own SHA, so the plan-evidence
+  commit writes that SHA into the Task 7 line and the Task 8 line of plan.md.
 - the plan-evidence commit that writes the SHA of that commit into the Task 7 line and the Task 8 line
   of plan.md follows it. Its SHA is not in this file for the same reason.
 tests_run: the sharp metadata check of the m6 print file, PNG, 2480 x 3508 px, 3 channels, no alpha.

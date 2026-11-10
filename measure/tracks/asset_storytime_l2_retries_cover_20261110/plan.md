@@ -390,7 +390,7 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
       were recorded before the GREEN run and again after it. The 18 values are the same. No file
       and no folder under `out/` changed during the run. The GREEN command of the specification
       passes with 19 test files, 280 tests, 0 failures, and the exit status 0.
-- [x] Task 7 (sha pending): Cover hand-off (D10). Deliver the passing picture as
+- [x] Task 7 (c92fba04d704f5d46db47dc3f086cfa45b82d4be): Cover hand-off (D10). Deliver the passing picture as
   `l2-u1-cover-quest-teacher-front-forge-v1.png` (2480 x 3508 px, RGB, no alpha). Build
   `/home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/` with the PNG, the zone-line copy,
   `README.md`, and `MANIFEST.txt`. Run `sha256sum -c MANIFEST.txt` (0 FAILED). If no try passes, skip
@@ -404,7 +404,7 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
     PM decision D16 word for word, the judge result of m6 in both judges, the native size, the upscale,
     the cut, and the 6 spend lines of item (b). It says that the judge result is model evidence, not
     acceptance. No line of the folder says that Daniel, the PM, or Workbooks accepted the picture.
-- [x] Task 8 (sha pending): Report and scratch delete (D13, D14). Write `pm-report.md`. List, then delete,
+- [x] Task 8 (c92fba04d704f5d46db47dc3f086cfa45b82d4be): Report and scratch delete (D13, D14). Write `pm-report.md`. List, then delete,
   `/tmp/opencode/l2rc/` and any staging folder this track made under `out/`. Keep the files that D13
   names.
   - The report is `measure/runs/asset_storytime_l2_retries_cover_20261110/pm-report.md`. Its first line is
