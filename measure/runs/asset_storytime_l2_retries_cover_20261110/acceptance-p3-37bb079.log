@@ -1,0 +1,36 @@
+acceptance-p3-37bb079.log — phase acceptance audit, final.
+role: measure-phase-acceptance (light lane)
+track: asset_storytime_l2_retries_cover_20261110
+phase: Phase 3: Version repair, card jobs, and the hat-pip line (repair1)
+baseline_sha: 10af09151548070983d415d3b7c9afc22dd38f5d
+audited_head_sha: 37bb07915a0b903908035f175707c8a9a1f5a0de (matches HEAD at audit start)
+
+All 12 check items ran. Every check passes. Details live in acceptance-p3-37bb079.json.
+
+- Spend: 1 paid call (hat-pip line try 3, 0.01 USD). Item (a): 14 calls, 0.11 USD of 0.15.
+- D20 guard: only the hat-pip row got allowedTries 2; live probe 7/7.
+- D19 options: match the spec; R5 to R12 are meaningful.
+- Task 11: try 3 print 12 px pass at 4000x3000; both judges fail wrong-character; no delivery job.
+- Task 12: 13 jobs, version 1, exceptions 9/8/11/10 px re-measured; pixels match v1.
+- Hand-offs: repair1 32 OK, cover 3 OK; MANIFEST SHAs match; PNG links >= 2.
+- FR-18: the 4 old folders unchanged (state SHAs match).
+- FR-12, FR-13, FR-14: hold.
+- Scope: 30 changed files, all in Owned paths or established artifact locations.
+- GREEN: 19 files, 293 tests passed, exit 0. Cover costs.tsv SHA unchanged after.
+- tsc: 38 pre-existing errors, 0 in src/storytime/ and tests/storytime-.
+
+MEASURE_AGENT_RESULT
+role: measure-phase-acceptance
+status: complete
+track: asset_storytime_l2_retries_cover_20261110
+phase: Phase 3: Version repair, card jobs, and the hat-pip line (repair1)
+audited_head_sha: 37bb07915a0b903908035f175707c8a9a1f5a0de
+verdict: pass
+blocking_findings: none
+nonblocking_findings:
+- verifyManifest reports a layout failure for every flat unit 2 file name, also in the v1 manifest (pre-existing, not a Phase 3 regression).
+- The Task 10 maker ran a full tsc once outside heavy-run (MemAvailable fell to 2355 MB); process finding only.
+tests_run: the GREEN command of the spec through heavy-run, 19 test files, 293 tests passed, exit 0; the cover costs.tsv SHA-256 2ef0e1b15cce56ca2376695e688c5962259850cbbd6f29c410e16fd1ba02159c before and after; full tsc through heavy-run, exit 2, 38 pre-existing error lines, 0 in src/storytime/ and tests/storytime-
+files_changed: none (gate-only role; result files and probes left untracked for the closeout role)
+handoff: Phase 3 passes acceptance at 37bb0791. The closeout role can flip the Phase 3 gate and commit measure/runs/.
+END_MEASURE_AGENT_RESULT

@@ -21,9 +21,11 @@ Keep this working memory within 50 lines. Evidence links retain the detailed his
 - The answer audio controller notifies its listeners inside its own calls. A gate view that played a clip from a listener started nested plays, and each play cancelled the one before it. Unit tests passed, but the browser QC run gave more than 200 attempts per question, and the mount dropped the result. Deliver controller changes to a view in a microtask, and test a listener that plays.
 - The forge tint mask is an image that no material uses. In the avatar pack, lossless WebP (no `exact`), a full `prune()`, and a lookup in `textures` each lost it. Keep it PNG, prune only nodes and meshes, read it from `images`, and check the packed GLB.
 - Synchronous CPU work blocks the event loop, so the vitest test timeout cannot stop it. A recursive credential scan on a hostile deep answer held one CPU for 27 minutes inside a single test while its 120000 ms limit never fired. Move hostile scans into a worker thread with a test-owned wall clock, or keep the scan loop-free of call-stack recursion (found 2026-10-27).
+- The judge does not check the delivery print gate (12 px line width, white edge frame); on unit 2 the writer refused 23 judged line prints at the delivery round, so run the print gate on each line print before the judge. A provider HTTP 400 for more than 10 references costs 0 USD but uses a try under the guard; keep each call at 10 references or less (use a group sheet).
+- A test must never write into a real cost file: run the CLI in a temp repository (the CVG9 defect, fix 3b22a6af).
+- A delivered manifest version must follow the delivered file name, not the Muse try number (D18).
+- Every role brief gives the full tsc and vitest only through heavy-run (PM load rule 2026-11-11).
 
-- The judge does not check the delivery print gate (12 px line width, white edge frame). On unit 2 the writer refused 23 judged line prints at the delivery round. Run the print gate on each line print before the judge.
-- A provider HTTP 400 for more than 10 references costs 0 USD but uses a try under the guard. Keep each call at 10 references or less (use a group sheet).
 ## Effective practices
 
 - Build a shared material reference before producing a kit.
@@ -36,9 +38,7 @@ Keep this working memory within 50 lines. Evidence links retain the detailed his
 - Build worn equipment from the avatar body it covers. Keep it solid there: skin in a closed bore counts as show-through. Check that the display stands on y = 0.
 
 ## Planning practices
-
-- Start status discovery at the Measure index. Map existing plans and every catalog row to an owning track.
-- Preserve historical delivery evidence without inventing past estimates, tests, or approvals.
+- Start status discovery at the Measure index. Map existing plans and every catalog row to an owning track. Preserve historical delivery evidence without inventing past estimates, tests, or approvals.
 - Update the plan, metadata, registry, debt, and lessons before closing a track. Keep generated facts separate from design intent and acceptance judgments.
 
 ## Evidence

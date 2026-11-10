@@ -1,0 +1,9 @@
+closeout.log — asset_storytime_l2_retries_cover_20261110
+2026-11-11T03:12:59 provisional closeout start; HEAD 37bb0791; role closeout (light lane), model volcengine-agent-plan/glm-5.3-flash#high (substitution for minimax-cn-coding-plan/MiniMax-M3.1-Flash, MiniMax 5-hour limit until 04:05 ICT; recorded per substitution rule)
+step1 HEAD verified: git rev-parse HEAD = 37bb07915a0b903908035f175707c8a9a1f5a0de = audited_head_sha. Form track read: archive/asset_storytime_l2_unit2_pictures_20261108 (metadata, manifest, closeout.log, closeout-179365e.json).
+step2 plan.md: [x] Phase 3 gate (37bb0791) with the acceptance sub-bullet, [x] Closeout with the closeout sub-bullet; no [ ], [~], or [b] line remains.
+step3 metadata.json: status done, completed 2026-11-11, updated_at 2026-11-11T00:00:00Z, actual_tasks 14, 2 evidence paths added, 1 deviation note (model routes) added.
+step4 git mv to measure/archive/asset_storytime_l2_retries_cover_20261110 done; automation-supervisor-closeout-manifest.json written (json.tool exit 0).
+step5 registry: entry moved to the Archived Tracks section after asset_storytime_l2_unit2_pictures_20261108, staged through blob 96c1d8f9ae63c1ed3ddb692e80f9d6946fc674d4. NOTE: the first working-tree copy overwrote the foreign ## Contents hunk; it was restored in the working tree from the observed pattern (the same Contents block the foreign session added to AGENTS.md, listing the 5 section headings of measure/tracks.md). The orchestrator must confirm the restored hunk matches the foreign session's text.
+step6 lessons-learned.md: 3 lessons added under Recurring failures; 3 pairs of existing lines merged to hold the 50-line cap (judge print gate + HTTP 400; planning status discovery + historical evidence; none removed). File stays at 50 lines.
+step7 tech-debt.md: TD-31 added (verifyManifest flat unit 2 layout limit, Low, Open).

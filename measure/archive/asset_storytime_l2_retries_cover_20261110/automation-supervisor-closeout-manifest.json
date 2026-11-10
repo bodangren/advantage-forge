@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "track": "asset_storytime_l2_retries_cover_20261110",
+  "archived_at": "2026-11-10T20:14:58Z",
+  "track_base_sha": "0d7d625a5b1a94f7c36701a2d81f8f8ed95b04b5",
+  "track_final_sha": "37bb07915a0b903908035f175707c8a9a1f5a0de",
+  "phase_acceptance_results": [
+    "measure/runs/asset_storytime_l2_retries_cover_20261110/acceptance-p1-6ec8ef6.json",
+    "measure/runs/asset_storytime_l2_retries_cover_20261110/acceptance-p2-10af091.json",
+    "measure/runs/asset_storytime_l2_retries_cover_20261110/acceptance-p3-37bb079.json"
+  ],
+  "completed_phases": [
+    {
+      "id": "Phase 1",
+      "title": "Guards, spec edits, and the cover tooling (unpaid)",
+      "checkpoint": "6ec8ef66"
+    },
+    {
+      "id": "Phase 2",
+      "title": "The 9-row retry pool and the cover rounds (paid)",
+      "checkpoint": "10af0915"
+    },
+    {
+      "id": "Phase 3",
+      "title": "Version repair, card jobs, and the hat-pip line (repair1)",
+      "checkpoint": "37bb0791"
+    }
+  ],
+  "final_acceptance": "not run: PM light lane. The PM put the track on the light lane of 2026-11-03 (one maker and one checker per phase, then closeout). The plan records the rule in the line 'The light lane has no final acceptance role.'",
+  "gates": {
+    "PROJECT_LINT": "pending recheck after archive: bash measure/doctor.sh runs once after the registry move; the result is recorded in closeout.log. Expected: errors of other tracks only, no line names this track",
+    "PROJECT_CHECKS": "pass — the Phase 3 checker ran tsc in the storytime paths at 37bb0791 and found 0 errors (acceptance-p3-37bb079.json); the repo-wide tsc holds errors of other tracks only",
+    "PROJECT_TESTS": "pass — the Phase 3 acceptance ran 293 tests at 37bb0791 (acceptance-p3-37bb079.json, status pass)",
+    "SECRET_SCAN": "pass — grep -rlE 'sk-[A-Za-z0-9]{8}|Bearer [A-Za-z0-9]|OPENROUTER_API_KEY=' over measure/runs/asset_storytime_l2_retries_cover_20261110 gives 0 files; the folder holds 77 files and no PNG or JPG (find count 0)",
+    "source": "measure/runs/asset_storytime_l2_retries_cover_20261110/acceptance-p3-37bb079.json"
+  },
+  "antipatterns_clean": [
+    "A2 consent-blind publish gate — the registry entry, the metadata, the plan, the pm-report, and this manifest name model evidence only. The hand-off MANIFEST title carries the words 'model evidence, not acceptance'. No text says that Daniel, the PM, or Workbooks accepted a picture",
+    "A3 digit-only count — every gate reads a labeled value (293 tests, item a 14 calls and 0.11 USD of the 0.15 USD cap, item b 6 calls and 0.06 USD of the 0.10 USD stop, 228 of 229 unit 2 rows with a delivery job, 4 line-width exceptions at 9/8/11/10 px)",
+    "A4 vacuous pass — each phase checker read the files and the numbers, and Phase 2 reconciled the spend 1:1 with the provider cost rows",
+    "A5 false claim — each pass above quotes its result file, and the plan holds no pass claim without a SHA or a result file",
+    "A6 registry overstatement — the archived registry entry keeps the words 'model evidence, not acceptance' and gives the spend and the 1 fail row (hat-pip)",
+    "A7 over-broad filter — the checks above name their scope (the run folder, the storytime tsc paths)",
+    "A9 archived track paths — no test or script under tests/, scripts/, or src/ hardcodes measure/tracks/asset_storytime_l2_retries_cover_20261110; a grep after the archive confirms it",
+    "A10 generated-facts drift — the generator does not run while measure/generated holds foreign changes; the closeout commits hold no generated fact, and the registry entry is staged through a blob",
+    "A11 doc-to-code drift — the repair1 manifest, the pixel check (pixel-check-p3e.txt, failures: 0), and the folder state SHA-256 checks agree; the 9 repaired rows keep the v1 pixels with manifest version 1"
+  ],
+  "antipatterns_known_limitations": [
+    "verifyManifest in src/storytime/book-pictures.ts reports a layout failure for every flat unit 2 file name, so it cannot check a unit 2 delivery; recorded as tech debt (found in Phase 3 of this track)",
+    "the Task 10 maker ran one full tsc --noEmit -p . outside heavy-run; the PM load-watch reported it (MemAvailable 2355 MB). No correctness impact",
+    "structural doctor errors of other tracks stay open; the doctor adds no error for this track",
+    "measure/generated holds foreign uncommitted changes, so the generator did not run and no generated fact is committed; measure/tracks.md keeps the foreign '## Contents' hunk unstaged"
+  ],
+  "deferred": [
+    "PM decision on the fail row l2-w10-story-page-put-on-your-hat-pip: the line try 3 print passes the 12 px gate but both judges fail it (wrong-character); it has used its 3 line tries and sits in not-delivered/ (deferred:PM, default: the row stays out)",
+    "Final acceptance did not run under the PM light lane of 2026-11-03 (deferred:PM)"
+  ],
+  "deferred_note": "No plan task stays open. All 14 plan tasks (Task 0 to Task 13) are [x] with a commit SHA, the Phase 3 gate and the Closeout line are [x], and no [b], [~], or [ ] line remains in the archived plan.",
+  "tech_debt": [
+    "verifyManifest of src/storytime/book-pictures.ts reports a layout failure for every flat unit 2 file name (440 in the v1 manifest), so it cannot check a unit 2 delivery; found in Phase 3 of this track (new entry in measure/tech-debt.md)"
+  ],
+  "tech_debt_note": "One debt entry was added to measure/tech-debt.md for the verifyManifest layout limit. No other new debt is warranted.",
+  "lessons_learned": "Three short entries were added to measure/lessons-learned.md: a test must never write into a real cost file (run the CLI in a temp repository; the CVG9 defect, fix 3b22a6af); a delivered manifest version must follow the delivered file name, not the Muse try number (D18); every role brief gives the full tsc and vitest only through heavy-run (PM load rule 2026-11-11).",
+  "generated_facts": "not committed: measure/generated holds foreign uncommitted changes; the registry entry in measure/tracks.md is staged through a blob so the foreign '## Contents' hunk stays out",
+  "artifact_cleanup": "no bulky run artifact was deleted; the orchestrator identified none. The run folder holds 77 files of json, log, txt, md, mts, py, and mjs, and no PNG or JPG file (find count 0). Task 8 already ran its own scratch delete (delete-scratch.mjs, scratch-delete-p2h.txt)",
+  "evidence_classes": {
+    "person_reviewed": "none recorded for the 9 retried rows, the 9 version repairs, the 4 card jobs, and the Teacher Book cover front art",
+    "model_evidence_not_acceptance": "The delivered files carry Sonnet judge results (claude-code/claude-sonnet-5-5#high), print and manifest checks, the MANIFEST checksums, and the pixel-identity check of the 9 repairs. This is model evidence, not acceptance. Daniel, the PM, and Workbooks gave no approval of a picture",
+    "workbooks_acceptance": "none recorded"
+  },
+  "model_substitution": "The role-table model minimax-cn-coding-plan/MiniMax-M3.1-Flash was marked until 04:05 ICT (5-hour limit, error 2056). Task 12 part 2 and this closeout ran on volcengine-agent-plan/glm-5.3-flash#high as a substitution; recorded in metadata.json and closeout.log."
+}

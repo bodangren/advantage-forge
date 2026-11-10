@@ -135,8 +135,6 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Chibi Sprouts, release 1 art**
   *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
 
-- [~] **Track: Storytime Level 2 unit 2 picture retries and the teacher cover front art**
-  *Link: [./tracks/asset_storytime_l2_retries_cover_20261110/](./tracks/asset_storytime_l2_retries_cover_20261110/)*
 
 ## Games
 
@@ -361,6 +359,10 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
 - [x] Storytime Level 2 unit 2 paid pictures, completed 2026-11-09; 220 of 229 book rows (440 files) and 18 of 18 app family words delivered with Sonnet judge evidence (model evidence, not acceptance); 9 book rows wait for a PM decision; spend 4.50 USD (book 4.32, app 0.18).
   *Link: [./archive/asset_storytime_l2_unit2_pictures_20261108/](./archive/asset_storytime_l2_unit2_pictures_20261108/)*
   *Storytime Level 2 unit 2 paid pictures: 182 new book rows and 10 element sheets (expected 14.66 USD, stop 18.33 USD) and 18 app family words (expected 0.23 USD, stop 0.29 USD) with Muse, the frozen Sonnet judge, and two hand-off folders*
+
+- [x] Storytime Level 2 unit 2 picture retries and the teacher cover front art, completed 2026-11-11; the 9 retried rows delivered after 1 extra try each under the guard exception (cap 0.15 USD), the 9 version repairs give manifest version 1 with v1 pixels, 4 card line-art jobs delivered with line-width exceptions, the Teacher Book cover front art delivered (stop 0.10 USD), and the hat-pip line try 3 re-run (passes the 12 px gate, fails both judges; no delivery job); 228 of 229 unit 2 rows have a delivery job; Sonnet judge evidence (model evidence, not acceptance); spend 0.17 USD (item a 0.11, cover 0.06).
+  *Link: [./archive/asset_storytime_l2_retries_cover_20261110/](./archive/asset_storytime_l2_retries_cover_20261110/)*
+  *Storytime Level 2 unit 2 picture retries and the teacher cover front art: one extra try for 9 unit 2 book rows under a written guard exception (cap 0.15 USD) and one color front picture for the Teacher Book cover (stop 0.10 USD), with Muse, the frozen Sonnet judge, a retry delivery folder, and two hand-off folders*
 
 - [x] Storytime Level 2 card line-art retry (ham and family), completed 2026-11-07; family line art delivered (try 4, 12 px) with Sonnet judge evidence (model evidence, not acceptance); ham line art failed after 2 more tries, best try named, ham color file added for the greyscale fallback; spend 0.03 USD.
   *Link: [./archive/asset_storytime_l2_card_line_retry_20261107/](./archive/asset_storytime_l2_card_line_retry_20261107/)*

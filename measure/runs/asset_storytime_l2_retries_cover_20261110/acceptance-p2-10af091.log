@@ -1,0 +1,115 @@
+# Phase acceptance log, Phase 2: Retries and cover (paid)
+# Track: asset_storytime_l2_retries_cover_20261110
+# Role: measure-phase-acceptance (light lane). HEAD: 10af09151548070983d415d3b7c9afc22dd38f5d
+# Status: provisional
+
+## Check 0: HEAD and commits
+- git rev-parse HEAD = 10af09151548070983d415d3b7c9afc22dd38f5d. It matches the audited HEAD.
+- Phase commits: 69b217a0 .. 10af0915 (17 commits).
+
+## Check 1: spend (spend-log.tsv vs provider costs.tsv) — CLEAN
+- probe-p2-spend.py and probe-p2-spend2.py.
+- 19 provider rows at/after 2026-11-10T08:57:00Z in the 5 week folders and the cover folder; 19 spend log call lines; 1:1 match by time, row, kind, cost.
+- Item (a): 13 calls, 0.10 USD, stop 0.15 USD. Item (b): 6 calls, 0.06 USD, stop 0.10 USD.
+- No call above 0.03 USD. No call for a row or kind outside U2_EXTRA_TRY. Every call has one spend-log line.
+
+## Check 2: restored cover cost file — CLEAN
+- out/storytime/covers/teacher-front/muse/costs.tsv: SHA-256 2ef0e1b15cce56ca2376695e688c5962259850cbbd6f29c410e16fd1ba02159c, 3021 bytes, 6 rows.
+- probe-p2-covercost.py: each row matches m1.json..m6.json and the spend log.
+- probe-p2-cover-guard.mjs (dry, no call, no key): runGuards refuses a 7th cover call: refused true, code 3, spend 0.06, message "refused: l2-u1-cover-teacher-front color count 6 (max 6)".
+
+## Check 3: exceptions and constants — CLEAN
+- probe-p2-consts.py: CARD_RUN, CARD_LINE_RETRY, U2_RUN, U2_FW_RUN, COVER_RUN byte-identical to 6ec8ef66.
+- U2_EXTRA_TRY changed only by the 3 netRetry fields and the extended source texts (D15).
+- Guard code lines ~821-848 implement D15: third try refused, second try requires first exception try at 0 USD.
+- D16 PM words quoted word for word in spec.md and pm-report.md.
+
+## Check 4: item (a) results — CLEAN
+- 4 pass rows: throw, windy (line t4 judge pass + gate 13/19 px), tom-can-see-the-mop, rice (line t5 judge pass + gate 16/13 px); color judge pass in the archived files (probe-p2-archjudge.py).
+- 5 fail rows: hippo, ruler, clap, cold (gate fail 9/8/11/10 px), hat-pip (line t2 judge fail, both judges).
+- not-delivered/README.md gives each reason; best tries follow default 7.
+
+## Check 5: hand-off folders — CLEAN
+- sha256sum --quiet -c MANIFEST.txt exit 0 in both hand-off folders.
+- Retry1 delivery manifest.json lists the 4 pass rows only.
+
+## Check 5 (rest): cover PNG — CLEAN
+- probe-p2-cover-png.mjs (sharp): 2480 x 3508 px, channels 3, hasAlpha false.
+- SHA-256 c91719903d3803bc02498f8e097528c9a64ddae263102ebf28d06d8d37f11a53, equal to the m6 print file.
+
+## Check 6: v1 folders unchanged — PASS (corroborated)
+- The exact combined-hash form of maker-p2g.log could not be reproduced: the maker script
+  /tmp/opencode/l2rc/v1-hash.sh lived in scratch and Task 8 deleted it per D13. 42 variants
+  (probes probe-p2-combined*.py) gave no match.
+- Corroboration 1: file counts match the recorded counts exactly (441 and 469).
+- Corroboration 2: the newest file mtime in both v1 folders is 2026-11-08 (delivery-muse-v1
+  20:25:09Z, hand-off 20:27:26Z), two days before this track started. Nothing wrote there.
+- Corroboration 3: maker-p2g.log records the same combined hashes before and after its Task 5 work.
+- Verdict: the v1 delivery and the v1 hand-off are unchanged. The recorded combined hashes stand
+  as maker evidence; the form reproduction failure is recorded here and is not a change signal.
+
+## Check 7: FR-12, FR-13, FR-14 — CLEAN
+- probe-p2-scope.py.
+- FR-12: every grep hit is a negation ("no claim", "No person has accepted", "No line ... says"),
+  a risk-table row, a gate-name message, or the aspect-ratio "accepted values". No acceptance claim.
+- FR-13: no PNG/JPG (or other image) enters git in 6ec8ef66..10af0915.
+- FR-14: no frozen path in the changed list; src/storytime/muse-delivery.ts diff is 0 bytes.
+
+## Check 8: scope — see findings
+- Changed files: 4 judge batch lists under docs/storytime/l2-unit2/judge/prod/ (not named in Owned
+  paths, but the archived track d0a1ebde used the same folder for its judge batches, and D3 mandates
+  these batch files; treated as in-scope workflow files, not a fault).
+- tests/storytime-u2-guards.test.ts changed by 3b22a6af (item 8 verdict below).
+- All other changed files sit inside Owned paths.
+
+## Check 9: scratch — CLEAN
+- /tmp/opencode/l2rc, /tmp/opencode/l2rc-sumtest, /tmp/judge-u2rc: all gone.
+
+## Item 8 verdict on commit 3b22a6af
+- The change rewrites tests U2G10 and U2G11 of tests/storytime-u2-guards.test.ts so the CLI runs
+  in a temp repository (scripts copied, node_modules symlinked) instead of the real repository.
+- The file is outside the Owned paths of the spec.
+- Verdict: SAFE TEST HARDENING, not a scope fault. Reason: the old form ran the muse CLI with the
+  real repository as cwd and then deleted the real unit 2 and family-word folders when the run had
+  created them. Step F proved this pattern was a live hazard: the test CVG9 wrote into the real
+  cover cost file and deleted it. The change keeps every assertion and test name, changes no
+  production code, and removes a real data-loss risk to the cost files this track's guard reads.
+  Recorded as a nonblocking finding for the record.
+
+## Check 10: GREEN command — CLEAN
+- Before the run, the SHA-256 of out/storytime/covers/teacher-front/muse/costs.tsv:
+  2ef0e1b15cce56ca2376695e688c5962259850cbbd6f29c410e16fd1ba02159c.
+- The GREEN command of the spec ran once through heavy-run in the foreground (63 s, no hold):
+  19 test files passed, 280 tests passed, 0 failures, exit 0. It matches the maker claim.
+- After the run, the SHA-256 of the cover cost file is unchanged; the 5 unit 2 week cost files are
+  unchanged too (all 6 hashes identical before and after).
+- The typecheck of step D1 stays maker evidence only (38 errors, all in assets/** and 2 old test
+  files; the storytime paths give 0 new errors), per the role instruction not to run tsc.
+
+MEASURE_AGENT_RESULT
+role: measure-phase-acceptance (light lane), the checker of the Phase 2 gate
+status: pass
+track: asset_storytime_l2_retries_cover_20261110
+phase: Phase 2: Retries and cover (paid)
+audited_head: 10af09151548070983d415d3b7c9afc22dd38f5d (matches git HEAD)
+blocking_findings: none
+nonblocking_findings:
+- Commit 3b22a6af changes tests/storytime-u2-guards.test.ts, outside the Owned paths. Verdict:
+  safe test hardening, not a scope fault. The rewrite runs the CLI of U2G10 and U2G11 in a temp
+  repository and removes the old cleanup that deleted the real unit 2 and family-word folders.
+  The step F defect (CVG9 destroyed the real cover cost file) proved the old pattern was a live
+  hazard. No assertion, test name, or production code changed.
+- The exact combined-hash form of maker-p2g.log could not be reproduced (42 variants failed; the
+  maker script lived in scratch and was deleted per D13). Check 6 passes on three corroborations:
+  exact file counts (441 and 469), newest file mtime 2026-11-08 in both v1 folders (two days
+  before the track), and the maker record of equal hashes before and after its Task 5 work.
+tests_run: probe-p2-spend.py, probe-p2-spend2.py, probe-p2-covercost.py, probe-p2-cover-guard.mjs,
+probe-p2-consts.py, probe-p2-judges.py, probe-p2-manifest.py, probe-p2-archjudge.py,
+probe-p2-cover-png.mjs, probe-p2-scope.py, probe-p2-combined.py, probe-p2-combined2.py,
+probe-p2-combined3.py. The GREEN command: 19 test files, 280 tests, 0 failures, exit 0.
+spend: 0 USD by this role. No Muse call, no key read, no image tool, no network.
+handoff: Phase 2 is accepted at 10af09151548070983d415d3b7c9afc22dd38f5d. The phase gate marker
+in plan.md can flip to [x]. The closeout role can archive the track and commit measure/runs/.
+Result files: measure/runs/asset_storytime_l2_retries_cover_20261110/acceptance-p2-10af091.json
+and acceptance-p2-10af091.log, left untracked on purpose.
+END_MEASURE_AGENT_RESULT

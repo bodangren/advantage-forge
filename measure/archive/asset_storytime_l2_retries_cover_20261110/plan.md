@@ -520,16 +520,18 @@ hat-pip line call is the only paid call of this phase.
     `sha256sum --quiet -c MANIFEST.txt` in the folder gives no FAILED line and the exit status is 0. The
     2 PNG files keep their SHA-256 and their inode: `c91719903d3803bc02498f8e097528c9a64ddae263102ebf28d06d8d37f11a53` with inode 14332129 and
     `41e290053869085734f926b165ca252944260443f030db837a1837e22994c678` with inode 14332161.
-- [b] Phase 3 gate: phase acceptance by the checker at an immutable HEAD. The checker compares the
+- [x] Phase 3 gate (37bb0791): phase acceptance by the checker at an immutable HEAD. The checker compares the
   pixel hashes of the 9 repaired rows, the MANIFEST check of the hand-off folder, the v1 and retry1
-  folders, and the spend line of the hat-pip call. deferred:checker
+  folders, and the spend line of the hat-pip call.
+  - Gate PASS: acceptance-p3-37bb079.json, status pass at 37bb0791, 293 tests, checker kimi-code-plan-cn/kimi-for-coding#high; 2 nonblocking findings: the verifyManifest layout limit for flat unit 2 names, and one full tsc outside heavy-run in Task 10.
 
 ## Track-level roles
 
-- [b] Closeout: archive the track, update the registry, and run the doctor. The generator does not run
+- [x] Closeout: archive the track, update the registry, and run the doctor. The generator does not run
   while `measure/generated/` holds foreign changes. The run records in
   `measure/runs/asset_storytime_l2_retries_cover_20261110/` are committed. Foreign changes stay out of
-  the closeout commit. deferred:closeout
+  the closeout commit.
+  - Closeout done 2026-11-11: the track moved to measure/archive/asset_storytime_l2_retries_cover_20261110/, the registry entry moved with the words model evidence, not acceptance, and the doctor names no line for this track.
 
 The light lane has no final acceptance role.
 
