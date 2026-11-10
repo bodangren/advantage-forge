@@ -1,0 +1,156 @@
+# maker-p2h.log — Green (light lane), Tasks 7 and 8
+
+Session: Green · P2 T7-T8 · storytime_l2_retries_cover
+Role: maker (measure-jr-green)
+Model: minimax-cn-coding-plan/MiniMax-M3.1-Flash
+role_base_sha: 7acac8415a02ba0d60e3699d8fd3516704229c33
+phase_base_sha: 7acac8415a02ba0d60e3699d8fd3516704229c33
+Track: asset_storytime_l2_retries_cover_20261110
+Phase: Phase 2: Retries and cover (paid)
+Date: 2026-11-10
+
+## Spend
+This step spends 0 USD. No Muse call. No API key read. The judge does not run here.
+
+## Defaults taken
+- The PM decision of 2026-11-10, about 22:20 ICT, becomes D16 in spec.md.
+- D6 keeps its text and names D16 in one added line.
+- The 20/12 layout of D16 is the rule for the teacher front cover.
+- The hand-off folder is /home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/.
+- The zone copy keeps the name of the step: l2-u1-cover-quest-teacher-front-forge-v1-zones-review-only.png.
+
+## Step 1, the spec and the plan marks (0 USD)
+
+- Task 7 was marked [~] before the work outside measure/.
+- D16 was added to spec.md with the PM words of 2026-11-10, about 22:20 ICT, word for word.
+- D6 got one added line that names D16.
+
+## Step 2, the cover hand-off (0 USD)
+
+The script measure/runs/asset_storytime_l2_retries_cover_20261110/make-cover-handoff.mjs built the
+folder /home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/. It made no Muse call and
+read no key.
+
+The metadata check of the source print file passed: PNG, 2480 x 3508 px, 3 channels, no alpha.
+
+The files of the folder:
+- l2-u1-cover-quest-teacher-front-forge-v1.png, 17794058 bytes, a hard link of
+  out/storytime/covers/teacher-front/muse/l2-u1-cover-quest-teacher-front-m6-color-print.png.
+  SHA-256 c91719903d3803bc02498f8e097528c9a64ddae263102ebf28d06d8d37f11a53.
+- l2-u1-cover-quest-teacher-front-forge-v1-zones-review-only.png, 7588529 bytes, a hard link of
+  out/storytime-review/judge/cover/l2-u1-cover-quest-teacher-front-m6-zones.png.
+  SHA-256 41e290053869085734f926b165ca252944260443f030db837a1837e22994c678.
+- README.md, 4741 bytes. SHA-256 d6f7f2264554ed46658ffc69a8c9114ee5d54bb50b079802ba7b96a736a0c2e0.
+- MANIFEST.txt, 808 bytes. SHA-256 50069dce22d85fc75bf833ac06538fdd3a17f295541ee8cefb72534ee106e128.
+
+The check `sha256sum -c MANIFEST.txt` in the folder gave 3 OK and no FAILED line, with the exit
+status 0. The check `sha256sum --quiet -c MANIFEST.txt` gave no output and the exit status 0.
+
+The brief check gave 9 of 9 OK. The brief MANIFEST.txt SHA-256 is
+fbd0a3c5f040ec6de505abf33f3ecd7b490b451eefc63269a04f63eced2bd7bc.
+
+The size facts of the README: the native picture is 1280 x 1920 px, the 2:3 ratio. The spec asked
+for the 3:4 ratio. The print file is 2480 x 3508 px, an upscale of about 1.94 times in width and
+about 1.83 times in height. The cut is 106 px at the top and 106 px at the bottom, which is about
+2.85 percent of the scaled height on each side.
+
+The item (b) spend of the README: 6 calls, 0.06 USD of the 0.10 USD stop. The 6 lines are the
+lines 18 to 20 and 22 to 24 of spend-log.tsv.
+
+No sentence of the README says that Daniel, the PM, or Workbooks accepted the picture. The two
+lines with the word "acceptance" are the PM quote and the required line "The judge result is model
+evidence, not acceptance. Daniel's look gate covers the final cover."
+
+The name of the zone copy is l2-u1-cover-quest-teacher-front-forge-v1-zones-review-only.png. The
+name says that the file is for review only. D16 names this file.
+
+## Step 3, the plan marks (0 USD)
+
+- Task 4 is [x] with the SHA 51077171. Its sub-bullet gives the 13 calls, the 0.10 USD of the 0.15 USD
+  stop, the 4 rows that pass, and the 5 fail rows.
+- Task 6 is [x] with the SHA 22ec70dc, the last cover round commit. Its sub-bullets give the 6 calls,
+  the 0.06 USD of the 0.10 USD stop, the 6 spend lines, and the PM decision D16.
+- Task 7 is [x]. Its sub-bullets give the files of the hand-off folder, the SHA-256 of the cover PNG,
+  the check of MANIFEST.txt, and the SHA-256 of MANIFEST.txt.
+- Task 8 is [x]. Its sub-bullets give the report and the scratch delete.
+- The Phase 2 gate stays [b] with deferred:checker.
+
+## Step 4, the report (0 USD)
+
+The report is measure/runs/asset_storytime_l2_retries_cover_20261110/pm-report.md. Its first line is
+`Status: done.` It holds the spend of both items, the 4 rows of item (a), the 5 fail rows with their
+best try and their reason, the cover file with its SHA-256, the PM decision D16, both hand-off folders
+with their MANIFEST OK counts and their MANIFEST.txt SHA-256, the defect of CVG9 and its fix, the 3
+network timeouts, the second exception D15, the scratch delete, and the `Facts changed:` list.
+
+The facts of the `Facts changed:` list: Forge spend 0.16 USD. Unit 2 book rows delivered 220 to 224 of
+229. 5 rows to Workbooks as fail rows. The teacher front art m6 delivered under the 20/12 layout.
+
+## Step 5, the scratch delete (0 USD)
+
+The script measure/runs/asset_storytime_l2_retries_cover_20261110/delete-scratch.mjs listed the
+scratch, then deleted it. The record is
+measure/runs/asset_storytime_l2_retries_cover_20261110/scratch-delete-p2h.txt.
+
+The list:
+- /tmp/opencode/l2rc/, 11 files, 12599 bytes. The scratch folder of D13.
+- /tmp/opencode/l2rc-sumtest/, 2 files, 88 bytes. The scratch of the MANIFEST check of this step.
+- /tmp/judge-u2rc/, 1 file, 3196 bytes. The judge scratch of the PM of 2026-11-10.
+- The staging folders under out/storytime/covers/ and out/storytime/l2/unit2/: none.
+
+The delete: the 3 folders are gone. The kept files are in place: the cover costs.tsv, the m6 print
+file, the m6 zones copy, the spend log, the 2 judge files, the retry1 hand-off folder, and the cover
+hand-off folder.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green (light lane), the maker of Tasks 7 and 8
+status: complete
+track: asset_storytime_l2_retries_cover_20261110
+phase: Phase 2: Retries and cover (paid)
+commits after 7acac8415a02ba0d60e3699d8fd3516704229c33:
+- the commit of spec.md, plan.md, pm-report.md, maker-p2h.log, make-cover-handoff.mjs,
+  delete-scratch.mjs, and scratch-delete-p2h.txt follows this log. Its SHA is not in this file,
+  because a commit cannot hold its own SHA.
+- the plan-evidence commit that writes the SHA of that commit into the Task 7 line and the Task 8 line
+  of plan.md follows it. Its SHA is not in this file for the same reason.
+tests_run: the sharp metadata check of the m6 print file, PNG, 2480 x 3508 px, 3 channels, no alpha.
+  sha256sum -c MANIFEST.txt in the cover hand-off folder, 3 OK, 0 FAILED, exit status 0.
+  sha256sum --quiet -c MANIFEST.txt in the same folder, no output, exit status 0. The brief check
+  awk '{print $1"  "$3}' MANIFEST.txt | sha256sum -c in the brief folder, 9 of 9 OK.
+  sha256sum -c MANIFEST.txt in the retry1 hand-off folder, 22 OK, 0 FAILED, exit status 0. The
+  scratch delete list and the check of the kept files, 3 folders gone and 8 kept files in place.
+  No vitest and no tsc in this step. No Muse call and no key read in this step.
+files_changed: measure/tracks/asset_storytime_l2_retries_cover_20261110/spec.md,
+  measure/tracks/asset_storytime_l2_retries_cover_20261110/plan.md,
+  measure/runs/asset_storytime_l2_retries_cover_20261110/pm-report.md,
+  measure/runs/asset_storytime_l2_retries_cover_20261110/maker-p2h.log,
+  measure/runs/asset_storytime_l2_retries_cover_20261110/make-cover-handoff.mjs,
+  measure/runs/asset_storytime_l2_retries_cover_20261110/delete-scratch.mjs,
+  measure/runs/asset_storytime_l2_retries_cover_20261110/scratch-delete-p2h.txt. The new files
+  outside git: /home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/ with 4 files, of
+  which 2 PNG files are hard links.
+plan_updates: Task 7 is [x] with the evidence of the hand-off folder, the SHA-256 of the cover PNG, the
+  check of MANIFEST.txt, and the SHA-256 of MANIFEST.txt. Task 8 is [x] with the evidence of the
+  report and the scratch delete. Task 6 is [x] with the SHA 22ec70dc and the evidence of the 6 calls
+  and the PM decision D16. Task 4 is [x] with the SHA 51077171 and the evidence of the 13 calls, the
+  4 passing rows, and the 5 fail rows. The Phase 2 gate stays [b] with deferred:checker.
+known_failures: none. The judge result of m6 fails the free band and the bottom band at the green
+  line of 78 percent, and D16 withdraws that line for the teacher front cover. The 5 fail rows of
+  item (a) keep their judge result and their best try in the not-delivered/ folder of the retry
+  hand-off. The spend of item (a) stays at 0.10 USD of the 0.15 USD stop, and the spend of item (b)
+  stays at 0.06 USD of the 0.10 USD stop, because this step made no paid call.
+handoff: The reviewer roles read this log, the report, the D16 section of spec.md, and the Task 7 and
+  Task 8 lines of plan.md. The cover hand-off folder is
+  /home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/ with 4 files:
+  l2-u1-cover-quest-teacher-front-forge-v1.png (17794058 bytes, SHA-256
+  c91719903d3803bc02498f8e097528c9a64ddae263102ebf28d06d8d37f11a53),
+  l2-u1-cover-quest-teacher-front-forge-v1-zones-review-only.png (7588529 bytes, SHA-256
+  41e290053869085734f926b165ca252944260443f030db837a1837e22994c678), README.md (4741 bytes, SHA-256
+  d6f7f2264554ed46658ffc69a8c9114ee5d54bb50b079802ba7b96a736a0c2e0), and MANIFEST.txt (808 bytes,
+  SHA-256 50069dce22d85fc75bf833ac06538fdd3a17f295541ee8cefb72534ee106e128). The check
+  sha256sum -c MANIFEST.txt in that folder gives 3 OK and 0 FAILED. The retry1 hand-off folder is
+  /home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-retry1/ with 22 OK and 0 FAILED, and its
+  MANIFEST.txt SHA-256 is 0e7a5223ac4c238bd1d84e025835f9443bc825a871e5668c5407398fcb0be748. The
+  judge result is model evidence, not acceptance. Daniel's look gate covers the final cover. The
+  scratch of D13 is gone, and the kept files are in place. The Phase 2 gate waits for the checker.
+END_MEASURE_AGENT_RESULT

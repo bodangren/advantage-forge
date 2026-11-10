@@ -1,0 +1,19 @@
+## The list
+/tmp/opencode/l2rc	11 files	12599 bytes	the scratch folder of D13
+/tmp/opencode/l2rc-sumtest	2 files	88 bytes	the scratch of the MANIFEST check of this step
+/tmp/judge-u2rc	1 files	3196 bytes	the judge scratch of the PM of 2026-11-10
+## The staging folders under out/
+none
+## The delete
+/tmp/opencode/l2rc	deleted	gone
+/tmp/opencode/l2rc-sumtest	deleted	gone
+/tmp/judge-u2rc	deleted	gone
+## The kept files
+kept	out/storytime/covers/teacher-front/muse/costs.tsv
+kept	out/storytime/covers/teacher-front/muse/l2-u1-cover-quest-teacher-front-m6-color-print.png
+kept	out/storytime-review/judge/cover/l2-u1-cover-quest-teacher-front-m6-zones.png
+kept	measure/runs/asset_storytime_l2_retries_cover_20261110/spend-log.tsv
+kept	measure/runs/asset_storytime_l2_retries_cover_20261110/judge-cover-r2.json
+kept	measure/runs/asset_storytime_l2_retries_cover_20261110/judge-cover-second-r2.json
+kept	/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-retry1
+kept	/home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge

@@ -132,11 +132,14 @@ Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptan
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`). The orchestrator
 runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item (b).
 
-- [b] Task 4: Retry pool, print gate, and judge batches (D1, D2, D3, D11). Write the worst case. Run
+- [x] Task 4 (51077171): Retry pool, print gate, and judge batches (D1, D2, D3, D11). Write the worst case. Run
   hat-pip color try 4 (once). If the orchestrator's judge passes it, run the hat-pip line call (line
   try 2). Run line try 4 once for each of the 8 other rows, from its m1 color. Run the print gate before
   the judge on each new line print and its despeckled print. The orchestrator runs the judge batches and
-  the second judge. Log each paid call in `spend-log.tsv`. deferred:maker
+  the second judge. Log each paid call in `spend-log.tsv`.
+  - The pool of item (a) is done. The spend is 0.10 USD of the 0.15 USD stop, over 13 calls. 4 rows pass
+    the judge and the print gate, and they go to the retry delivery. 5 rows are fail rows, and each one
+    keeps its best try in the `not-delivered/` folder of the retry hand-off.
   - Step A (this step, paid 0.06 USD). The 9 calls of the pool ran. The D11 worst case was 9 calls
     x 0.01 USD = 0.09 USD, under the 0.15 USD cap of item (a), so the pool ran. The guard refused no
     call. The calls and their cost: l2-w10-story-page-put-on-your-hat-pip color try 4, 0.00 USD;
@@ -288,10 +291,16 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
   - The README.md of `not-delivered/` says that the judge result is model evidence, not acceptance.
     A search of the hand-off folder and of the files of this task for a text that says that Daniel,
     the PM, or Workbooks accepted a picture gave no hit.
-- [b] Task 6: Cover rounds and judge copies (D5, D8, D9, D11). Write the worst case. Run round 1: 3 color
+- [x] Task 6 (22ec70dc): Cover rounds and judge copies (D5, D8, D9, D11). Write the worst case. Run round 1: 3 color
   calls, one after another. Make the judge copies for each version. The orchestrator runs the frozen
   judge and the second judge. Run round 2 only if no version passes. Log each paid call. Stop at 6 calls
-  or at 0.10 USD. deferred:maker
+  or at 0.10 USD.
+  - The 6 cover tries are done, in 2 rounds of 3 calls. Each call cost 0.01 USD. The item (b) spend is
+    0.06 USD of the 0.10 USD stop. No call was above 0.03 USD. The 6 spend lines are the lines 18 to 20
+    and 22 to 24 of `spend-log.tsv`.
+  - The PM decision D16 (2026-11-10, about 22:20 ICT) sets the 20/12 layout for the teacher front and
+    withdraws the 78 percent line of D6 for that cover. The deliverable is m6. The hand-off folder is
+    `/home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/`.
   - Round 1 (2026-11-10). The worst case was 3 calls x 0.03 USD = 0.09 USD, under the 0.10 USD stop of
     item (b). The guard refused no call. The 3 color calls of the cover spec ran one after another.
     Each call had a network check before it, and each check gave 200. The calls: color try 1 (m1) at
@@ -381,14 +390,31 @@ runs the frozen judge. The stops are 0.15 USD for item (a) and 0.10 USD for item
       were recorded before the GREEN run and again after it. The 18 values are the same. No file
       and no folder under `out/` changed during the run. The GREEN command of the specification
       passes with 19 test files, 280 tests, 0 failures, and the exit status 0.
-- [b] Task 7: Cover hand-off (D10). Deliver the passing picture as
+- [x] Task 7 (sha pending): Cover hand-off (D10). Deliver the passing picture as
   `l2-u1-cover-quest-teacher-front-forge-v1.png` (2480 x 3508 px, RGB, no alpha). Build
   `/home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/` with the PNG, the zone-line copy,
   `README.md`, and `MANIFEST.txt`. Run `sha256sum -c MANIFEST.txt` (0 FAILED). If no try passes, skip
-  this task and record the best try for the report. deferred:maker
-- [b] Task 8: Report and scratch delete (D13, D14). Write `pm-report.md`. List, then delete,
+  this task and record the best try for the report.
+  - The hand-off folder holds 4 files: the cover PNG, the zone copy for review only, the README, and the
+    MANIFEST. The cover PNG is a hard link of the m6 print file, and its SHA-256 is
+    `c91719903d3803bc02498f8e097528c9a64ddae263102ebf28d06d8d37f11a53`. The check
+    `sha256sum -c MANIFEST.txt` gives 3 OK and 0 FAILED. The SHA-256 of MANIFEST.txt is
+    `50069dce22d85fc75bf833ac06538fdd3a17f295541ee8cefb72534ee106e128`.
+  - The README names the source try m6, the SHA-256 of the print file, the brief check of 9 of 9 OK, the
+    PM decision D16 word for word, the judge result of m6 in both judges, the native size, the upscale,
+    the cut, and the 6 spend lines of item (b). It says that the judge result is model evidence, not
+    acceptance. No line of the folder says that Daniel, the PM, or Workbooks accepted the picture.
+- [x] Task 8 (sha pending): Report and scratch delete (D13, D14). Write `pm-report.md`. List, then delete,
   `/tmp/opencode/l2rc/` and any staging folder this track made under `out/`. Keep the files that D13
-  names. deferred:maker
+  names.
+  - The report is `measure/runs/asset_storytime_l2_retries_cover_20261110/pm-report.md`. Its first line is
+    `Status: done.` It holds the spend of both items, the 4 rows of item (a), the 5 fail rows, the cover
+    file, both hand-off folders, the defect of CVG9 and its fix, the 3 network timeouts, and the
+    `Facts changed:` list.
+  - The scratch delete: the list came first, then the delete. `/tmp/opencode/l2rc/` (11 files),
+    `/tmp/opencode/l2rc-sumtest/` (2 files), and `/tmp/judge-u2rc/` (1 file) are gone. The staging folders
+    under `out/storytime/covers/` and `out/storytime/l2/unit2/` are none. The kept files of D13 are in
+    place. The record is `scratch-delete-p2h.txt`.
 - [b] Phase 2 gate: phase acceptance by the checker at an immutable HEAD. The checker compares the
   `costs.tsv` sums with the spend log, runs the `sha256sum -c` checks of both hand-off folders, checks the
   v1 hashes, the PNG size and mode, and greps FR-12 and FR-14. deferred:checker

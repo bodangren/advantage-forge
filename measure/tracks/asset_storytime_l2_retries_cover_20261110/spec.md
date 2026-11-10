@@ -206,6 +206,8 @@ questions answered by default" lists. The PM can change each default.
   - The brief puts the frame at 0 to 29 percent and the plaque at 78 to 94 percent. Daniel's notes put
     the logo tile in the top 20 percent and the plaque in the bottom 12 percent. The default covers
     both: the top 30 percent is calm, and the bottom 22 percent has no face, hand, or book.
+  - D16 (PM 2026-11-10) sets the layout of the teacher front cover and withdraws the 78 percent line
+    for that cover.
 - **D7 Cover guard.** A cover class in the guard for exactly the folder
   `out/storytime/covers/teacher-front/muse`.
   - Add the constant `COVER_RUN` with `startTime` (the real UTC time of the Phase 1 guard commit, cut to
@@ -306,6 +308,20 @@ questions answered by default" lists. The PM can change each default.
   - The hat-pip line row (`pastLimit` false) keeps its rule of D1: one line call after a passing
     color, inside the normal line limit, and inside the cap.
   - The maker makes no Muse call in the step that writes this exception.
+- **D16 Cover layout (PM 2026-11-10).** The PM decision of 2026-11-10, about 22:20 ICT, word for word:
+
+  > COVER LAYOUT (PM decision): option 1. The 20/12 layout is the rule for the teacher front; D6's 78 % line is withdrawn for this cover. Deliver m6 to ~/Desktop/handoff/storytime-cover-teacher-front-forge/ with a MANIFEST, marked "model evidence, not acceptance" (Daniel's look gate covers the final cover).
+
+  - The 20/12 layout is the rule for the teacher front cover. The top 20 percent holds the logo tile
+    and calm sky, and the bottom 12 percent holds the plaque.
+  - The 78 percent line of D6 is withdrawn for this cover. The judge files of round 2 keep the zone
+    lines of the judge brief, so the free band and the bottom band checks of the first judge fail m6
+    at the green line.
+  - The deliverable is try m6, the sixth cover try of the cover spec.
+  - The hand-off folder is `/home/daniebo/Desktop/handoff/storytime-cover-teacher-front-forge/`.
+  - The zone-line copy of the hand-off is named
+    `l2-u1-cover-quest-teacher-front-forge-v1-zones-review-only.png`, because the file is for review
+    only.
 
 ## Functional Requirements
 
