@@ -45,9 +45,9 @@ not the maker, runs the frozen judge and the action check.
 with a trailing `deferred:<owner>` field. The owner changes `[b]` to `[~]` when the blocker clears and the
 task starts. The doctor counts only `[ ]`, `[~]`, and `[x]`.
 
-## Phase 0: Authoring
+## Phase 0: Authoring [checkpoint: 53a110b]
 
-- [ ] Task 0: Author the track: specification, plan, metadata, index, spec review note, and the registry
+- [x] Task 0 (53a110bc): Author the track: specification, plan, metadata, index, spec review note, and the registry
   entry. The creation commit has the message `measure(storytime_l2u2_look1): create the track`.
 
 The light lane has no spec review gate. A second small commit marks Task 0 and puts the checkpoint on
