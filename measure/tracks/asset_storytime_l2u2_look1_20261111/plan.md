@@ -82,13 +82,26 @@ runs the frozen judge and the action check between the paid calls. The stop is 0
     object, the SHA-256 `1a2748085b89afdb0968d2cc6ae394b891bad8779f48817d8fd543186bf7a403` of its
     JSON form. The 2 split literals are gone, and the scan of CG3 finds no card constant in the new
     test file.
-- [b] Task 2: The T-shirt color tries (D5, D6). Paid, at most 3 calls. Before each call, write the worst
+- [~] Task 2: The T-shirt color tries (D5, D6). Paid, at most 3 calls. Before each call, write the worst
   case and run the network check. Run one color call: `node scripts/storytime-muse.mjs color <spec>`
   (versions m2, m3, m4). Make the judge batch for the try. The orchestrator runs the frozen judge, the
   action check, and the second judge if the first judge fails. Stop at the first pass. After a failed
   try, the orchestrator may give the maker at most 1 added sentence that names the defect, and the
   maker records it. A row with no passing color after 3 tries is a fail row: no line call, no more
-  spend. Log each call in `spend-log.tsv`. deferred:maker
+  spend. Log each call in `spend-log.tsv`.
+  - Color try 2 (m2): the network check answered 200 on the first try. The worst case was 1 call
+    times 0.01 USD = 0.01 USD, under the 0.10 USD stop. The maker ran 1 paid call,
+    `node scripts/storytime-muse.mjs color docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt.json`,
+    and it wrote the row of 2026-11-11T00:23:46.646Z in costs.tsv with the cost 0.01 USD. The m2
+    color print is `out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt-m2-color-print.png`
+    (4000x3000) with the SHA-256
+    `8e1baee103a536b26071781754118ff757072a75a5a13837ada6439c2dc406b2`. The maker made the judge
+    batch `u2l1-color-t2` (docs/storytime/l2-unit2/judge/prod/u2l1-color-t2.json), and its judge copy
+    is out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-color-t2.png. The
+    judge copy holds 900x600 pixels and its SHA-256
+    `c0b65c778a0a8abc7267575581e844bfa2f3792f2f9f307cad2eeb35f63bff53` is the SHA-256 of the same
+    resize of the m2 color file, so the copy comes from the m2 call. The orchestrator runs the frozen
+    judge and the action check next.
 - [b] Task 3: The T-shirt line tries (D5, D6). Paid, at most 3 calls. Run only if Task 2 gives a
   passing color m<n>. Before each call, write the worst case and run the network check. Run one line
   call: `node scripts/storytime-muse.mjs line <spec> --from <n> --tries 1`. Run the print gate on the

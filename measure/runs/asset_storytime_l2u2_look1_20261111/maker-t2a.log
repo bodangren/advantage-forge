@@ -1,0 +1,95 @@
+Maker log for Task 2, color try 2 of the T-shirt row.
+Track: asset_storytime_l2u2_look1_20261111
+Phase: Phase 1: Hat-pip owner job and the t-shirt redo (look1)
+Role: measure-jr-green (light lane). Session: Green · P1 T2 · storytime_l2u2_look1.
+Model: minimax-cn-coding-plan/MiniMax-M3.1-Flash. The role table names
+volcengine-agent-plan/glm-5.3-flash#high. The orchestrator records this substitution under the
+ra-quota pick for green.
+role_base_sha: 269fe94ffa90a91ce524154ea8f60535591b30e0. HEAD at the start: the same SHA.
+Task 2 was [b] with deferred:maker. The maker changed it to [~] and removed the deferred field.
+
+Step 1, the state of the row before the call.
+The t-shirt rows of out/storytime/l2/unit2/w10/muse/costs.tsv: 3 rows.
+- 2026-11-08T15:18:26.796Z  l2-w10-story-page-put-on-your-t-shirt  m1  color  0.01  ok
+- 2026-11-08T17:37:46.647Z  l2-w10-story-page-put-on-your-t-shirt  m1  line   0.01  ok
+- 2026-11-08T20:13:20.464Z  l2-w10-story-page-put-on-your-t-shirt  m1  line   0.01  redo 2
+The look spend since 2026-11-10T23:50:00Z: 0 USD. The scan of costs.tsv holds no row with a time
+at or after the start time of the guard.
+The worst case of D9 for this step: 1 call times 0.01 USD = 0.01 USD. The worst case is under the
+0.10 USD stop of the track. The maker runs the call.
+
+Step 3, the network check.
+Command: curl -sS -m 20 -o /dev/null -w '%{http_code}\n' https://openrouter.ai/api/v1/models
+Answer: 200. The check passed on the first try. The maker runs 1 paid call.
+
+Step 4, the paid call.
+Command: node scripts/storytime-muse.mjs color docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt.json
+Output of the tool: l2-w10-story-page-put-on-your-t-shirt-m2 color ok 1920x1280 cost 0.01
+The new row of out/storytime/l2/unit2/w10/muse/costs.tsv, line 72:
+2026-11-11T00:23:46.646Z	l2-w10-story-page-put-on-your-t-shirt	m2	color	out/storytime/l2/unit1/w01/muse/elements/ben-ref-clean-2.png;out/storytime/l2/unit2/w10/muse/elements/set-classroom-dress-up-corner-m1-color.png	l2-w10-story-page-put-on-your-t-shirt-m2-color.png	1920x1280	0.01	ok
+The cost of the call: 0.01 USD. The cost is under the 0.03 USD limit of D9. The run goes on.
+The look spend since 2026-11-10T23:50:00Z after the call: 0.01 USD.
+The files the call wrote under out/storytime/l2/unit2/w10/muse/:
+- l2-w10-story-page-put-on-your-t-shirt-m2-color.png (1920x1280)
+  SHA-256 7c26837ddd33d7aa07ed996276f060229468e04fb9286a20017aedef9d1a04e9
+- l2-w10-story-page-put-on-your-t-shirt-m2-color-print.png (4000x3000)
+  SHA-256 8e1baee103a536b26071781754118ff757072a75a5a13837ada6439c2dc406b2
+- l2-w10-story-page-put-on-your-t-shirt-m2.json
+The maker ran no other call. The maker did not read the API key.
+
+Step 5, the spend log.
+The file measure/runs/asset_storytime_l2u2_look1_20261111/spend-log.tsv is new. Its 2 lines:
+2026-11-11T00:23:46.646Z	muse	l2-w10-story-page-put-on-your-t-shirt color	2	0.01	l2-w10-story-page-put-on-your-t-shirt-m2-color.png
+total	look1	calls 1	stop 0.10 USD	spend 0.01
+
+Step 6, the judge batch.
+Command: node scripts/storytime-judge-batch.mjs --unit2 --ids l2-w10-story-page-put-on-your-t-shirt --kind color --try 2 --out u2l1-color-t2
+Output of the tool: 1 file.
+The batch file: docs/storytime/l2-unit2/judge/prod/u2l1-color-t2.json
+The SHA-256 of the batch file: d6aae89f2a29528a60fdb9469fe2ffac92378462e84a09de625e965dbb50c27c
+The judge copy the batch names: out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-color-t2.png
+The source file the batch tool used: l2-w10-story-page-put-on-your-t-shirt-m2-color.png, the color
+file of the m2 call of step 4. The tool takes the source from the output column of the costs.tsv row
+of the try.
+The check of the source. The judge copy holds 900x600 pixels and its SHA-256 is
+c0b65c778a0a8abc7267575581e844bfa2f3792f2f9f307cad2eeb35f63bff53. The maker resized the m2 color
+file of step 4 with the same sharp call and got the same SHA-256 and the same size. The byte
+comparison passes, so the judge copy comes from the m2 color file of step 4.
+The maker also resized the m2 color print of step 4 with the same call. The result holds 900x675
+pixels and its SHA-256 is 2671e73847c6b523600f05d3784634fc3f186b445b549bff30b026aafa97ea69. That
+SHA-256 is not the SHA-256 of the judge copy. The judge copy comes from the color file, not from the
+print. Both files come from the same m2 call. The frozen batch tool names the color file, so the
+maker does not change it.
+The maker ran no judge.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: done
+track: asset_storytime_l2u2_look1_20261111
+phase: Phase 1: Hat-pip owner job and the t-shirt redo (look1)
+commits:
+  - PLACEHOLDER_COMMIT_SHA feat(storytime_l2u2_look1): t-shirt color try 2
+  - the plan-evidence commit follows this log
+tests_run:
+  - no test run in this step. The step makes 1 paid call and writes records. No file of src/, scripts/, or tests/ changed.
+  - the network check curl -sS -m 20 -o /dev/null -w '%{http_code}\n' https://openrouter.ai/api/v1/models: 200 on the first try
+  - the source check of the judge copy: the resize of the m2 color file gave the same SHA-256 as the judge copy, 900x600, c0b65c778a0a8abc7267575581e844bfa2f3792f2f9f307cad2eeb35f63bff53
+files_changed:
+  - docs/storytime/l2-unit2/judge/prod/u2l1-color-t2.json
+  - measure/tracks/asset_storytime_l2u2_look1_20261111/plan.md
+  - measure/runs/asset_storytime_l2u2_look1_20261111/spend-log.tsv
+  - measure/runs/asset_storytime_l2u2_look1_20261111/maker-t2a.log
+plan_updates:
+  - plan.md: Task 2 changed from [b] with deferred:maker to [~], and it keeps the [~] marker
+  - plan.md: the sub-bullet "Color try 2 (m2)" holds the network check, the call, the cost 0.01 USD, the SHA-256 of the m2 color print, and the batch name u2l1-color-t2
+known_failures:
+  - none of the step. The call passed and the judge copy came from the m2 call.
+  - the judge copy is the resize of the m2 color file, not the resize of the m2 color print. The frozen batch tool names the color file from the output column of the costs.tsv row. The maker did not change the tool.
+handoff:
+  - The maker spent 0.01 USD in this step. The guard U2_LOOK_TRY held the call. The look spend since 2026-11-10T23:50:00Z is 0.01 USD, and the stop is 0.10 USD.
+  - The role_base_sha is 269fe94ffa90a91ce524154ea8f60535591b30e0. The phase_base_sha is the same SHA, and the Green HEAD is the commit of this step, listed in the commits field.
+  - Task 2 keeps the marker [~]. The orchestrator runs the frozen judge and the action check next, on the batch u2l1-color-t2 and the judge copy out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-color-t2.png.
+  - The judge result file name for this try is judge-u2l1-color-t2.json, with the actionCheck object of D6. The action item g is n/a for a color print.
+  - The m2 files for the audit scope are out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt-m2-color.png, out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt-m2-color-print.png, and out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt-m2.json. They stay under out/ and stay out of git.
+  - The maker ran 1 paid call only. It ran no other call, no line call, and no judge.
+END_MEASURE_AGENT_RESULT
