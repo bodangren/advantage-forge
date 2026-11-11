@@ -156,6 +156,36 @@ runs the frozen judge and the action check between the paid calls. The stop is 0
   `manifest.json`, the spend log copy, `contact-sheet.png`, `README.md`, `not-delivered/` (only when the
   T-shirt fails), and `MANIFEST.txt`. Run `sha256sum --quiet -c MANIFEST.txt`. Write `pm-report.md`
   (D8). List, then delete, `/tmp/opencode/l2look1/` and any staging folder this track made.
+  - Part 1, the delivery (D7). The maker wrote `approvals-look1.json` in the form of
+    `approvals-repair1.json`. It holds the `version` 1 and the picture list pin
+    `63d415000eca9d6be1a6ad533c12ff81e127cd2c76ffac339697f91b99f754ec`. It holds 2 entries: the
+    hat-pip row with the version 3, the color print `l2-w10-story-page-put-on-your-hat-pip-m3-color-print.png`
+    and the line print `l2-w10-story-page-put-on-your-hat-pip-m3-line-print-2.png`, and the T-shirt
+    row with the version 2, the color print `l2-w10-story-page-put-on-your-t-shirt-m2-color-print.png`
+    and the line print `l2-w10-story-page-put-on-your-t-shirt-m2-line-print.png`. The 4 prints sit in
+    `out/storytime/l2/unit2/w10/muse/`, and their SHA-256 values are
+    `6db86851b359760ea88e9feb67cf2bc784720ac4466abc5419af6f1dfff6bdff` (hat-pip color),
+    `1474680276aa160dd972cd78b8559039a765032e703323cdb1ff41f0583aa9e1` (hat-pip line),
+    `8e1baee103a536b26071781754118ff757072a75a5a13837ada6439c2dc406b2` (T-shirt color), and
+    `675a7ef4d25dcc22f7533c1caf0296c9fdd5abf1773972b5531a4c8403f514d7` (T-shirt line). The maker ran
+    `deliver-look1.mts` through heavy-run.sh. It wrote the delivery folder
+    `out/storytime/l2/unit2/delivery-muse-v1-look1/` with 5 files: the 4 PNG files and
+    `manifest.json`. The manifest SHA-256 is
+    `0341b4f939d1b644da587431565ec82fc644bafa6fe0aa0a8a0cdacbcbbf3d84`. The runner reported 2
+    delivered rows, 2 color files, 2 line files, 0 skipped rows, and 0 file problems. The staging
+    folder `/tmp/opencode/l2look1/delivery-stage-look1` held hard links and the runner removed it.
+    The pixel check `measure/runs/asset_storytime_l2u2_look1_20261111/pixel-check-look1.txt` gives
+    `result: pass` with 0 failures: the 4 delivered files have the SHA-256 of their Muse prints,
+    the manifest holds 2 jobs, every candidate version and every `selectedVersion` is 1, no
+    candidate holds a `lineWidthException`, and the delivered names are the `-v1` names of the
+    picture list. The T-shirt values changed against the old v1 values: the color is
+    `8e1baee103a536b26071781754118ff757072a75a5a13837ada6439c2dc406b2` and the old value is
+    `9e207c3c72db52d323fd8ef64c9565588f853460ec7abcfa0fda5a053bd925e4`, and the line is
+    `675a7ef4d25dcc22f7533c1caf0296c9fdd5abf1773972b5531a4c8403f514d7` and the old value is
+    `71e2ba056c09ad66a1beecb565941616becfdecf4fccd107e86bbbe0b9e1ca7e`. The folder-state check
+    `measure/runs/asset_storytime_l2u2_look1_20261111/folder-state-look1-before.txt` and
+    `folder-state-look1-after.txt` give the same file count and the same state SHA-256 for the 6
+    old folders of D8, so no old folder changed. Spend 0 USD.
 - [b] Phase 1 gate: phase acceptance by the checker at an immutable HEAD. The checker runs the GREEN
   command and the typecheck, probes `U2_LOOK_TRY` with fixture cost files, compares the `costs.tsv`
   sum with the spend log, checks the hat-pip SHA-256 values, the pixel check, the MANIFEST check, and the

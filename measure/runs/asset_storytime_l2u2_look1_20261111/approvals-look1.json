@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "pictureListSha256": "63d415000eca9d6be1a6ad533c12ff81e127cd2c76ffac339697f91b99f754ec",
+  "entries": [
+    {
+      "rowId": "l2-w10-story-page-put-on-your-hat-pip",
+      "version": 3,
+      "colorPrint": "l2-w10-story-page-put-on-your-hat-pip-m3-color-print.png",
+      "linePrint": "l2-w10-story-page-put-on-your-hat-pip-m3-line-print-2.png"
+    },
+    {
+      "rowId": "l2-w10-story-page-put-on-your-t-shirt",
+      "version": 2,
+      "colorPrint": "l2-w10-story-page-put-on-your-t-shirt-m2-color-print.png",
+      "linePrint": "l2-w10-story-page-put-on-your-t-shirt-m2-line-print.png"
+    }
+  ]
+}

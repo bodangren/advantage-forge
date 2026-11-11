@@ -1,0 +1,206 @@
+Maker log, task 4a of the look1 track. Session: Green · P1 T4 · storytime_l2u2_look1.
+
+Model note: the role table names volcengine-agent-plan/glm-5.3-flash#high. The orchestrator picked
+minimax-cn-coding-plan/MiniMax-M3.1-Flash as a quota-backed substitute. The maker records the
+substitution and runs on it.
+
+role_base_sha: 86c003cc20fd240a4075d624d046487601e23302. The HEAD at the start of this step was that
+SHA, so the base matched.
+
+This step closes Task 3 and does Part 1 of Task 4. It spends 0 USD. It makes no Muse call and no
+network call, and it reads no API key. It does not build the hand-off folder.
+
+## Part A. The judge result of the line try 3, and the close of Task 3
+
+The orchestrator ran the judges of the line try 3. The result file is
+`measure/runs/asset_storytime_l2u2_look1_20261111/judge-u2l1-line-t3.json`, untracked in the run
+folder. The maker read it.
+
+- The v6 verdict is `pass` and the defect class is `none`. The judge saw no action prompt.
+- The action check reads a yes, b yes, c yes, d yes, e yes, f yes, g yes. The judge note says the
+  vest is a simple band, and item g covers the pose, the hands, and the T-shirt.
+- The summary reads 1 file, 1 pass, 0 fail.
+
+So the line try 3 passes both parts of D6 on one judge, and no second judge ran. The T-shirt has a
+passing color (m2) and a passing line (try 3). The T-shirt is not a fail row.
+
+The maker marks Task 3 `[x]` with the SHA of the base commit and moves Task 4 to `[~]`.
+
+Spend of this part: 0 USD. The maker ran no call.
+
+Commit of Part A: `measure(storytime_l2u2_look1): line try 3 judge result, the t-shirt passes`. It
+holds the judge file and plan.md. 2 files. Its SHA is
+3aefd96af6a9f477dd69093fa5f78d64b039520b.
+
+## Part B. The delivery of the 2 rows (D7)
+
+### B1 The folder state before
+
+The maker wrote `measure/runs/asset_storytime_l2u2_look1_20261111/folder-state-look1.py` in the form
+of `folder-state-p3e.py`. It walks the 6 folders of D8, sorts the relative paths, and records one
+line per file with the size and the SHA-256. It records the file count of the folder and the
+SHA-256 of the joined lines. The argument `before` writes
+`folder-state-look1-before.txt`, and the argument `after` writes `folder-state-look1-after.txt`.
+The script reads the 6 folders only.
+
+The maker ran it with the argument `before`. The result:
+
+| folder | files | state SHA-256 |
+| --- | --- | --- |
+| out/storytime/l2/unit2/delivery-muse-v1/ | 441 | a64ddf5f19a76542ee8806e16e872d23ef4a44308082fabee461f3ca9aec038c |
+| out/storytime/l2/unit2/delivery-muse-v1-retry1/ | 9 | ca4cc92ff5767edf23c299602b6dc25951c5a6a45f3157c62b2252c4993544b7 |
+| out/storytime/l2/unit2/delivery-muse-v1-repair1/ | 27 | c1105932782a2ccbbcc0ab8cec3c0d9bc354c047a5f2161db8fa4d717955c564 |
+| handoff/storytime-l2u2-book-pictures/ | 469 | 1146c9a48c77c39ac7ce67974a3f73a6d086d575bb21699f704c35f3c309c592 |
+| handoff/storytime-l2u2-book-pictures-retry1/ | 23 | 9ade5c1e3b968ca87d71ab0d6c40503157bc5b1bb4e9be5450178e71f4f03c8a |
+| handoff/storytime-l2u2-book-pictures-repair1/ | 33 | 490fa8f24e1bd8e0ff069243be6531a5913cb38145807e80e924311cda0d4b08 |
+
+### B2 The approval list
+
+The maker wrote `measure/runs/asset_storytime_l2u2_look1_20261111/approvals-look1.json` in the
+form of `approvals-repair1.json`. It holds the `version` 1 and the picture list pin
+`63d415000eca9d6be1a6ad533c12ff81e127cd2c76ffac339697f91b99f754ec`. The maker checked the pin
+against `UNIT2_LIST_SHA256` of `src/storytime/muse-delivery-u2.ts`, and the two values agree.
+
+It holds 2 entries:
+
+- the hat-pip row, the version 3, the color print
+  `l2-w10-story-page-put-on-your-hat-pip-m3-color-print.png` and the line print
+  `l2-w10-story-page-put-on-your-hat-pip-m3-line-print-2.png`;
+- the T-shirt row, the version 2, the color print
+  `l2-w10-story-page-put-on-your-t-shirt-m2-color-print.png` and the line print
+  `l2-w10-story-page-put-on-your-t-shirt-m2-line-print.png`.
+
+The 4 prints sit in `out/storytime/l2/unit2/w10/muse/`. The maker read their SHA-256 values:
+
+| print | SHA-256 | expected |
+| --- | --- | --- |
+| l2-w10-story-page-put-on-your-hat-pip-m3-color-print.png | 6db86851b359760ea88e9feb67cf2bc784720ac4466abc5419af6f1dfff6bdff | same |
+| l2-w10-story-page-put-on-your-hat-pip-m3-line-print-2.png | 1474680276aa160dd972cd78b8559039a765032e703323cdb1ff41f0583aa9e1 | same |
+| l2-w10-story-page-put-on-your-t-shirt-m2-color-print.png | 8e1baee103a536b26071781754118ff757072a75a5a13837ada6439c2dc406b2 | same |
+| l2-w10-story-page-put-on-your-t-shirt-m2-line-print.png | 675a7ef4d25dcc22f7533c1caf0296c9fdd5abf1773972b5531a4c8403f514d7 | same |
+
+All 4 values agree with the expected values of the step. The maker wrote no Muse file.
+
+### B3 The delivery runner
+
+The maker wrote `measure/runs/asset_storytime_l2u2_look1_20261111/deliver-look1.mts` in the form
+of `deliver-repair1.mts`. It reads the approval list, links the 4 approved prints into the staging
+folder with hard links, calls the writer `deliverMuseUnit2`, and writes
+`out/storytime/l2/unit2/delivery-muse-v1-look1/`. The staging folder is
+`/tmp/opencode/l2look1/delivery-stage-look1`, and the runner removes it at the end. The writer
+options are `approvalsOnly` true and `versionFromList` true. The runner passes no
+`lineWidthException`.
+
+The maker ran it once, in the foreground, through the load rule:
+
+`HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/tsx measure/runs/asset_storytime_l2u2_look1_20261111/deliver-look1.mts'`
+
+The runner printed:
+
+```
+Line-art line width: 22 px (minimum 12 px).
+Line-art ink coverage: 8.46% (1015774 of 12000000 pixels black).
+Line-art line width: 12 px (minimum 12 px).
+Line-art ink coverage: 10.12% (1214415 of 12000000 pixels black).
+time: 2026-11-11T01:07:31.905Z
+picture list SHA-256: 63d415000eca9d6be1a6ad533c12ff81e127cd2c76ffac339697f91b99f754ec (pin checked)
+approval entries: 2
+staged hard links: 4
+delivered rows: 2
+delivered row ids: l2-w10-story-page-put-on-your-hat-pip, l2-w10-story-page-put-on-your-t-shirt
+delivered color files: 2
+delivered line files: 2
+delivered PNG files: 4
+manifest.json sha256: 0341b4f939d1b644da587431565ec82fc644bafa6fe0aa0a8a0cdacbcbbf3d84
+skipped rows: 0
+file checks: 4 files; problems: 0
+```
+
+The writer refused no row and skipped no row. The delivery folder holds 5 files: the 4 PNG files
+and `manifest.json`. The 2 line widths are 22 px and 12 px, and the minimum is 12 px, so both
+pass. The staging folder holds nothing now, because the runner removed it.
+
+### B4 The pixel check
+
+The maker wrote `measure/runs/asset_storytime_l2u2_look1_20261111/pixel-check-look1.py` in the
+form of `pixel-check-p3e.py`. It checks 4 things: the SHA-256 of each delivered file against its
+Muse print, the manifest, the delivered names against the picture list, and the T-shirt values
+next to the old v1 values. It writes `pixel-check-look1.txt`.
+
+The result is `result: pass` with 0 failures.
+
+| delivered file | Muse print | same | SHA-256 |
+| --- | --- | --- | --- |
+| l2-w10-story-page-put-on-your-hat-pip-v1.png | l2-w10-story-page-put-on-your-hat-pip-m3-color-print.png | yes | 6db86851b359760ea88e9feb67cf2bc784720ac4466abc5419af6f1dfff6bdff |
+| l2-w10-story-page-put-on-your-hat-pip-line-v1.png | l2-w10-story-page-put-on-your-hat-pip-m3-line-print-2.png | yes | 1474680276aa160dd972cd78b8559039a765032e703323cdb1ff41f0583aa9e1 |
+| l2-w10-story-page-put-on-your-t-shirt-v1.png | l2-w10-story-page-put-on-your-t-shirt-m2-color-print.png | yes | 8e1baee103a536b26071781754118ff757072a75a5a13837ada6439c2dc406b2 |
+| l2-w10-story-page-put-on-your-t-shirt-line-v1.png | l2-w10-story-page-put-on-your-t-shirt-m2-line-print.png | yes | 675a7ef4d25dcc22f7533c1caf0296c9fdd5abf1773972b5531a4c8403f514d7 |
+
+The manifest holds 2 jobs: the hat-pip row and the T-shirt row. Every candidate version is 1 and
+every `selectedVersion` is 1. No candidate holds a `lineWidthException`. The delivered names are
+the `-v1` names of the picture list.
+
+The T-shirt values changed against the old v1 values of the hand-off folder. The color is
+`8e1baee103a536b26071781754118ff757072a75a5a13837ada6439c2dc406b2` and the old color is
+`9e207c3c72db52d323fd8ef64c9565588f853460ec7abcfa0fda5a053bd925e4`. The line is
+`675a7ef4d25dcc22f7533c1caf0296c9fdd5abf1773972b5531a4c8403f514d7` and the old line is
+`71e2ba056c09ad66a1beecb565941616becfdecf4fccd107e86bbbe0b9e1ca7e`.
+
+### B5 The folder state after
+
+The maker ran the folder-state script with the argument `after`. All 6 folders give the same file
+count and the same state SHA-256 as the run before. The 2 files hold the same text. No old folder
+changed.
+
+### B6 The plan state
+
+Task 3 is `[x]`. Task 4 is `[~]`. The maker added the sub-bullet "Part 1, the delivery (D7)" to
+the plan.
+
+### B7 The files of this step
+
+The maker wrote 8 files in the run folder and changed plan.md. No PNG or JPG enters git. The
+delivery folder stays under `out/`.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: done
+track: asset_storytime_l2u2_look1_20261111
+phase: Phase 1: Hat-pip owner job and the t-shirt redo (look1)
+commits:
+  - 3aefd96af6a9f477dd69093fa5f78d64b039520b measure(storytime_l2u2_look1): line try 3 judge result, the t-shirt passes
+  - the commit of this log follows
+tests_run:
+  - the delivery runner measure/runs/asset_storytime_l2u2_look1_20261111/deliver-look1.mts through heavy-run.sh: exit status 0, 2 delivered rows, 4 PNG files, 0 skipped rows, 0 file problems
+  - the pixel check measure/runs/asset_storytime_l2u2_look1_20261111/pixel-check-look1.py: result pass, 0 failures, exit status 0
+  - the folder state script measure/runs/asset_storytime_l2u2_look1_20261111/folder-state-look1.py before and after: the 6 folders give the same count and the same SHA-256
+  - no vitest run and no typecheck ran in this step. The step changes no file of src/, scripts/, tests/, or docs/.
+files_changed:
+  - measure/runs/asset_storytime_l2u2_look1_20261111/judge-u2l1-line-t3.json
+  - measure/tracks/asset_storytime_l2u2_look1_20261111/plan.md
+  - measure/runs/asset_storytime_l2u2_look1_20261111/approvals-look1.json
+  - measure/runs/asset_storytime_l2u2_look1_20261111/deliver-look1.mts
+  - measure/runs/asset_storytime_l2u2_look1_20261111/folder-state-look1.py
+  - measure/runs/asset_storytime_l2u2_look1_20261111/folder-state-look1-before.txt
+  - measure/runs/asset_storytime_l2u2_look1_20261111/folder-state-look1-after.txt
+  - measure/runs/asset_storytime_l2u2_look1_20261111/pixel-check-look1.py
+  - measure/runs/asset_storytime_l2u2_look1_20261111/pixel-check-look1.txt
+  - measure/runs/asset_storytime_l2u2_look1_20261111/maker-t4a.log
+plan_updates:
+  - plan.md: Task 3 changed from [~] to [x] and holds the SHA 86c003cc20fd240a4075d624d046487601e23302. Its new sub-bullet holds the v6 verdict, the action check, and the rule of D6.
+  - plan.md: Task 4 changed from [b] with deferred:maker to [~]. Its new sub-bullet "Part 1, the delivery (D7)" holds the delivery folder, the file count, the manifest SHA-256, the pixel check result, and the folder-state result.
+known_failures:
+  - none of the step. The runner refused no row, the pixel check passes, and no old folder changed.
+  - the maker made no Muse call and no network call, and it read no API key. The step spends 0 USD.
+handoff:
+  - The role_base_sha is 86c003cc20fd240a4075d624d046487601e23302. The commits of this step follow it.
+  - Task 3 is [x] and Task 4 is [~]. The maker closed Task 3 and did Part 1 of Task 4.
+  - The maker did not build the hand-off folder. Part 2 of Task 4 holds the hand-off folder /home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-look1/, the pm-report.md, and the deletion of /tmp/opencode/l2look1/.
+  - The delivery folder is out/storytime/l2/unit2/delivery-muse-v1-look1/. It holds 5 files: 4 PNG files and manifest.json.
+  - The manifest SHA-256 is 0341b4f939d1b644da587431565ec82fc644bafa6fe0aa0a8a0cdacbcbbf3d84.
+  - The delivered T-shirt values are the color 8e1baee103a536b26071781754118ff757072a75a5a13837ada6439c2dc406b2 and the line 675a7ef4d25dcc22f7533c1caf0296c9fdd5abf1773972b5531a4c8403f514d7. The old v1 values are the color 9e207c3c72db52d323fd8ef64c9565588f853460ec7abcfa0fda5a053bd925e4 and the line 71e2ba056c09ad66a1beecb565941616becfdecf4fccd107e86bbbe0b9e1ca7e.
+  - The delivered hat-pip values are the color 6db86851b359760ea88e9feb67cf2bc784720ac4466abc5419af6f1dfff6bdff and the line 1474680276aa160dd972cd78b8559039a765032e703323cdb1ff41f0583aa9e1.
+  - The 6 old folders give the same file count and the same state SHA-256 before and after: 441, 9, 27, 469, 23, and 33 files.
+  - The maker wrote no file of src/, scripts/, tests/, or docs/. It changed no guard and no Muse file. It wrote nothing in the 6 old folders.
+END_MEASURE_AGENT_RESULT
+

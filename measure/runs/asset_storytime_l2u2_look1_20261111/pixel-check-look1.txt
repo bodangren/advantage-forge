@@ -1,0 +1,32 @@
+pixel check of FR-7, the look1 delivery
+
+check 1, the 4 delivered files against their Muse prints
+  l2-w10-story-page-put-on-your-hat-pip-v1.png: print=l2-w10-story-page-put-on-your-hat-pip-m3-color-print.png same=True sha256=6db86851b359760ea88e9feb67cf2bc784720ac4466abc5419af6f1dfff6bdff
+  l2-w10-story-page-put-on-your-hat-pip-line-v1.png: print=l2-w10-story-page-put-on-your-hat-pip-m3-line-print-2.png same=True sha256=1474680276aa160dd972cd78b8559039a765032e703323cdb1ff41f0583aa9e1
+  l2-w10-story-page-put-on-your-t-shirt-v1.png: print=l2-w10-story-page-put-on-your-t-shirt-m2-color-print.png same=True sha256=8e1baee103a536b26071781754118ff757072a75a5a13837ada6439c2dc406b2
+  l2-w10-story-page-put-on-your-t-shirt-line-v1.png: print=l2-w10-story-page-put-on-your-t-shirt-m2-line-print.png same=True sha256=675a7ef4d25dcc22f7533c1caf0296c9fdd5abf1773972b5531a4c8403f514d7
+
+check 2, the manifest of the look1 delivery
+  jobs: 2
+  l2-w10-story-page-put-on-your-t-shirt: versions=[1] selectedVersion=1 lineWidthException=False
+  l2-w10-story-page-put-on-your-hat-pip: versions=[1] selectedVersion=1 lineWidthException=False
+  hat-pip job present: True
+  t-shirt job present: True
+
+check 3, the delivered names against the picture list
+  l2-w10-story-page-put-on-your-hat-pip-v1.png: present=True
+  l2-w10-story-page-put-on-your-hat-pip-line-v1.png: present=True
+  l2-w10-story-page-put-on-your-t-shirt-v1.png: present=True
+  l2-w10-story-page-put-on-your-t-shirt-line-v1.png: present=True
+  delivered PNG files: 4
+
+check 4, the T-shirt SHA-256 values, the new and the old
+  color: old=9e207c3c72db52d323fd8ef64c9565588f853460ec7abcfa0fda5a053bd925e4
+  color: new=8e1baee103a536b26071781754118ff757072a75a5a13837ada6439c2dc406b2
+  color: changed=True
+  line: old=71e2ba056c09ad66a1beecb565941616becfdecf4fccd107e86bbbe0b9e1ca7e
+  line: new=675a7ef4d25dcc22f7533c1caf0296c9fdd5abf1773972b5531a4c8403f514d7
+  line: changed=True
+
+failures: 0
+result: pass
