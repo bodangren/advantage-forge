@@ -1,0 +1,25 @@
+{
+  "group": "u2l1-color-t2-second-r2",
+  "second": true,
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-11T00:30:23Z",
+  "results": [
+    {
+      "id": "l2-w10-story-page-put-on-your-t-shirt",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-color-t2.png",
+      "verdict": "pass",
+      "defectClass": "none",
+      "where": "",
+      "notes": "Question page: no. Items: Ben (1), a T-shirt (1). Action: putting on (note only). Seen: a boy with messy light-brown hair, brown eyes, and a big open smile. He wears dark-blue shorts and grey sneakers. He holds the hem of a yellow T-shirt with both fists, and the shirt is on his body. A white under-layer shows below the yellow hem. A wooden box with folded clothes, a bench, and a mirror are in the room. Ben matches the cast note for hair, face, shorts, and shoes. The yellow T-shirt is the page prop, so the shirt color is not a changed character. The T-shirt is drawn, visible, and reads as a T-shirt to a young child. Hands and limbs are normal. No text in the picture. Small mark: the white under-layer is a little odd, but it reads as an undershirt. mustShow ben: shown and clear."
+    }
+  ],
+  "summary": {
+    "files": 1,
+    "pass": 1,
+    "fail": 0
+  }
+}

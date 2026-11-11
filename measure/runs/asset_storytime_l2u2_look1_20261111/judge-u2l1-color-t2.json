@@ -1,0 +1,35 @@
+{
+  "group": "u2l1-color-t2",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "actionCheckPrompt": "measure/runs/asset_storytime_l2u2_look1_20261111/action-check-prompt.md",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-11T00:27:47Z",
+  "results": [
+    {
+      "id": "l2-w10-story-page-put-on-your-t-shirt",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-color-t2.png",
+      "verdict": "fail",
+      "defectClass": "wrong-character",
+      "where": "Ben's clothes on the body: a yellow T-shirt instead of light blue, and a white vest-like garment under it",
+      "notes": "Question page: no. Items: Ben (1), a T-shirt (1). Action: putting on (note only; a still picture cannot show it). mustShow ben: Ben is drawn and visible, full body, front view. Seen: a boy with messy light-brown hair, big brown eyes, and an open happy smile; he holds the hem of a yellow T-shirt with both hands. Under the yellow shirt a white or cream garment shows, with open front flaps that look like a vest. He wears dark-blue shorts and grey sneakers. Both hands are drawn and read as normal hands. The face is good. The hair and face match Ben. Decision on the T-shirt: it is drawn and reads as a T-shirt to a child. Decision on the character: the cast note says Ben wears a light-blue T-shirt. This picture shows a yellow T-shirt and an extra white vest-like garment. That is changed clothes and changed color (rule 4). Small marks: the room is plain, the box holds folded clothes, no text. Hair, face, shorts, and shoes match the cast.",
+      "actionCheck": {
+        "a": "yes",
+        "b": "yes",
+        "c": "no",
+        "d": "yes",
+        "e": "yes",
+        "f": "yes",
+        "g": "n/a",
+        "note": "a: The head sits above a round neckline, and the collar rings the neck. b: Both short sleeves cover the upper arms, and the forearms and hands come out below them. c: Both hands grip the hem at chest height and pull it out to the sides, so the hem sags in a curve between the hands. The shirt is not pulled down over the belly. This is a borderline case. d: A white vest shows under the hem down to the shorts, and no bare skin of the body shows. e: One yellow T-shirt only. No hood, no cap, and no second cloth over it; the white vest is the expected one. f: The yellow T-shirt is the brightest and biggest color area and draws the eye first. g: Not applicable, because this is a color print."
+      }
+    }
+  ],
+  "summary": {
+    "files": 1,
+    "pass": 0,
+    "fail": 1
+  }
+}

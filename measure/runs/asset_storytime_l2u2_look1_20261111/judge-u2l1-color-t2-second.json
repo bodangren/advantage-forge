@@ -1,0 +1,36 @@
+{
+  "group": "u2l1-color-t2-second",
+  "second": true,
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "actionCheckPrompt": "measure/runs/asset_storytime_l2u2_look1_20261111/action-check-prompt.md",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-11T00:29:27Z",
+  "results": [
+    {
+      "id": "l2-w10-story-page-put-on-your-t-shirt",
+      "kind": "color",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-color-t2.png",
+      "verdict": "pass",
+      "defectClass": "none",
+      "where": "",
+      "notes": "Question page: no. Items: Ben (1), a T-shirt (1). Action: putting on (note only; a still picture shows no motion). Seen: a boy with messy light-brown hair, big brown eyes, and an open smile; he wears a yellow T-shirt and pulls its hem with both hands. A white vest shows under the shirt, with blue shorts and grey sneakers. Ben is drawn and matches the cast: hair, face, age, chibi look, shorts, and sneakers. The shirt is yellow, not light blue, but it is the T-shirt of the page, so it is a prop of the page and not a changed character. The T-shirt is drawn, visible, and reads as a T-shirt to a child. mustShow 'ben': yes, Ben is drawn and visible. Small marks: the white vest has an odd open-front shape; the hem makes a loose swag between the hands. Face, hands, and arms are clean. No text in the picture.",
+      "actionCheck": {
+        "a": "yes",
+        "b": "yes",
+        "c": "yes",
+        "d": "yes",
+        "e": "yes",
+        "f": "yes",
+        "g": "n/a",
+        "note": "(a) The head is above the round neck opening and the collar sits at the neck. (b) Both short sleeves cover the upper arms, and both forearms come out of them. (c) The left hand and the right hand each hold the hem and pull it down and out over the belly. (d) A white vest shows under the hem, and the only bare skin at the body is at the neck. (e) There is one yellow T-shirt; the swag between the hands joins the shirt at both sides, so it is the hem, and there is no hood or cap. (f) The yellow shirt is the brightest large shape in the middle of the picture. (g) n/a for a color print."
+      }
+    }
+  ],
+  "summary": {
+    "files": 1,
+    "pass": 1,
+    "fail": 0
+  }
+}

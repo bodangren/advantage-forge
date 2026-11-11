@@ -82,7 +82,7 @@ runs the frozen judge and the action check between the paid calls. The stop is 0
     object, the SHA-256 `1a2748085b89afdb0968d2cc6ae394b891bad8779f48817d8fd543186bf7a403` of its
     JSON form. The 2 split literals are gone, and the scan of CG3 finds no card constant in the new
     test file.
-- [~] Task 2: The T-shirt color tries (D5, D6). Paid, at most 3 calls. Before each call, write the worst
+- [x] Task 2 (05e0e46092bd2e34ed8bd0b5fc746b51033ebb27): The T-shirt color tries (D5, D6). Paid, at most 3 calls. Before each call, write the worst
   case and run the network check. Run one color call: `node scripts/storytime-muse.mjs color <spec>`
   (versions m2, m3, m4). Make the judge batch for the try. The orchestrator runs the frozen judge, the
   action check, and the second judge if the first judge fails. Stop at the first pass. After a failed
@@ -102,14 +102,26 @@ runs the frozen judge and the action check between the paid calls. The stop is 0
     `c0b65c778a0a8abc7267575581e844bfa2f3792f2f9f307cad2eeb35f63bff53` is the SHA-256 of the same
     resize of the m2 color file, so the copy comes from the m2 call. The orchestrator runs the frozen
     judge and the action check next.
-- [b] Task 3: The T-shirt line tries (D5, D6). Paid, at most 3 calls. Run only if Task 2 gives a
+  - Color try 2 (m2) passes by the second-judge rule of D6. The orchestrator ran 3 judges, and the
+    maker read all 3 result files. The first judge, `judge-u2l1-color-t2.json`, gave the v6 verdict
+    `fail` with the defect class `wrong-character`: the yellow T-shirt and the white vest differ
+    from the light-blue top of the cast note. Its action check reads a yes, b yes, c no, d yes, e
+    yes, f yes, g n/a. The note of item c says the hands hold the hem out at chest height, and the
+    judge calls that a borderline case. The second judge, `judge-u2l1-color-t2-second.json`, gave
+    the v6 verdict `pass` and the action check a yes, b yes, c yes, d yes, e yes, f yes, g n/a.
+    That judge read the action-check prompt before it finished its v6 part. That order fault voided
+    its v6 verdict, and the orchestrator kept its action check. The clean second v6 judge,
+    `judge-u2l1-color-t2-second-r2.json`, saw no action prompt and gave the v6 verdict `pass` with
+    the defect class `none`. By D6, the second judge passes both parts: the v6 verdict comes from the
+    clean file and the action check comes from the second judge. So m2 passes by the second-judge
+    rule of D6. The color tries stop at m2. The maker ran no call in this step. Spend 0 USD.
+- [~] Task 3: The T-shirt line tries (D5, D6). Paid, at most 3 calls. Run only if Task 2 gives a
   passing color m<n>. Before each call, write the worst case and run the network check. Run one line
   call: `node scripts/storytime-muse.mjs line <spec> --from <n> --tries 1`. Run the print gate on the
   line print and its despeckled print BEFORE the judge, and write
   `line-gate-look1-<try>.txt`. The orchestrator runs the frozen judge, the action check (item g shows
   the passing color as a second picture), and the second judge if the first judge fails. Stop at the
   first pass. A row with no passing line after 3 tries is a fail row. Log each call in `spend-log.tsv`.
-  deferred:maker
 - [b] Task 4: Delivery, hand-off, and PM report (D7, D8). Spend 0 USD. Write `approvals-look1.json`
   (the hat-pip entry, and the T-shirt entry only if it passes). Write `deliver-look1.mts` and run it
   through `heavy-run.sh` into `out/storytime/l2/unit2/delivery-muse-v1-look1/`. Run the pixel check and
