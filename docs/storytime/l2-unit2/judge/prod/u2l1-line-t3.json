@@ -1,0 +1,12 @@
+[
+  {
+    "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-line-t3.png",
+    "id": "l2-w10-story-page-put-on-your-t-shirt",
+    "kind": "line",
+    "pageText": "Put on your T-shirt.",
+    "use": "story-page",
+    "mustShow": [
+      "ben"
+    ]
+  }
+]

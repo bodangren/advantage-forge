@@ -122,6 +122,24 @@ runs the frozen judge and the action check between the paid calls. The stop is 0
   `line-gate-look1-<try>.txt`. The orchestrator runs the frozen judge, the action check (item g shows
   the passing color as a second picture), and the second judge if the first judge fails. Stop at the
   first pass. A row with no passing line after 3 tries is a fail row. Log each call in `spend-log.tsv`.
+  - Line try 3 (from m2): the network check answered 200 on the first try. The worst case was 1 call
+    times 0.01 USD = 0.01 USD. The look spend was 0.01 USD before the call and 0.02 USD after it,
+    under the 0.10 USD stop. The maker ran 1 paid call,
+    `node scripts/storytime-muse.mjs line docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt.json --from 2 --tries 1`,
+    and it wrote the row of 2026-11-11T00:34:37.068Z in costs.tsv with the cost 0.01 USD. The new
+    line file is `out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt-m2-line.png`
+    and the print is `out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt-m2-line-print.png`.
+    The print gate passes both prints at the class size of the row, 4000x3000: the line print is
+    22 px wide with an ink coverage of 8.46 percent and the SHA-256
+    `675a7ef4d25dcc22f7533c1caf0296c9fdd5abf1773972b5531a4c8403f514d7`, and the despeckled print is
+    22 px wide with an ink coverage of 8.45 percent and the SHA-256
+    `b265e5f7f81b42a2f1fcd6f866ebc9aba11746806573631d4383fb2af1ca06eb`. The minimum is 12 px, so
+    both prints pass. The record is
+    `measure/runs/asset_storytime_l2u2_look1_20261111/line-gate-look1-3.txt`. The maker made the
+    judge batch `u2l1-line-t3` (docs/storytime/l2-unit2/judge/prod/u2l1-line-t3.json), and its
+    judge copy is out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-line-t3.png.
+    The batch names the new line file. The maker ran no judge. The orchestrator runs the frozen
+    judge and the action check next.
 - [b] Task 4: Delivery, hand-off, and PM report (D7, D8). Spend 0 USD. Write `approvals-look1.json`
   (the hat-pip entry, and the T-shirt entry only if it passes). Write `deliver-look1.mts` and run it
   through `heavy-run.sh` into `out/storytime/l2/unit2/delivery-muse-v1-look1/`. Run the pixel check and

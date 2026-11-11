@@ -1,0 +1,58 @@
+# Line pool and print gate, look1 Task 3, line try 3 (paid 0.01 USD)
+
+The T-shirt line call of D5 (Task 3). It is the line try 3 from the passing color m2.
+1 ok, 0 failed, 0 refused. Highest call 0.01 USD. Look spend 0.02 USD. Item (a) total 0.11 USD of
+the 0.15 USD stop, over 14 calls.
+
+The gate check calls the writer check code (`inspectLineArtPng` of src/storytime/book-pictures.ts,
+the code that src/storytime/muse-delivery.ts uses for a delivered line print) on the new print file
+and on its despeckled print, at the class size. The line width is the measured median stroke width.
+
+| row | new line | try | print | width px | despeckled print | width px | passes |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| l2-w10-story-page-put-on-your-t-shirt | -m2-line.png | 3 | pass | 22 | pass | 22 | both |
+
+Result: the T-shirt line row passes the print gate. The line print is 22 px and its despeckled
+print is 22 px. The minimum is 12 px, so both prints sit above the minimum. The ink coverage is
+8.46 percent for the line print and 8.45 percent for the despeckled print.
+
+The SHA-256 of the line print is
+`675a7ef4d25dcc22f7533c1caf0296c9fdd5abf1773972b5531a4c8403f514d7`. The SHA-256 of the despeckled
+print is `b265e5f7f81b42a2f1fcd6f866ebc9aba11746806573631d4383fb2af1ca06eb`.
+
+The gate ran on the class size of the row. The T-shirt row is a story row of size class A:
+4000 x 3000 px. The gate script is
+`measure/runs/asset_storytime_l2u2_look1_20261111/line-gate-look1.mjs`. It runs with
+`./node_modules/.bin/tsx` through heavy-run.sh. It makes no provider call and it needs no key.
+
+## The despeckle tool
+
+The line call wrote the despeckled pair, so the despeckle tool did not run. The files exist:
+`l2-w10-story-page-put-on-your-t-shirt-m2-line-despeckled.png` and
+`l2-w10-story-page-put-on-your-t-shirt-m2-line-print-despeckled.png`.
+
+## The network check
+
+The network check of the PM order of 2026-11-11 ran before the paid call:
+`curl -sS -m 20 -o /dev/null -w '%{http_code}\n' https://openrouter.ai/api/v1/models`. It sends no
+key and it costs nothing. The check gave 200 on the first check. A failed check uses no try.
+
+## The call
+
+| row | kind | try | cost USD | result file |
+| --- | --- | --- | --- | --- |
+| l2-w10-story-page-put-on-your-t-shirt | line | 3 | 0.01 | l2-w10-story-page-put-on-your-t-shirt-m2-line.png |
+
+The call ran on the Muse version m2, because the judge passed that color. The costs.tsv row of the
+call is the 3rd line row of the row, so the judge reads it as line try 3. The row of
+`out/storytime/l2/unit2/w10/muse/costs.tsv` is:
+
+`2026-11-11T00:34:37.068Z	l2-w10-story-page-put-on-your-t-shirt	m2	line	out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt-m2-color.png	l2-w10-story-page-put-on-your-t-shirt-m2-line.png	1920x1280	0.01	ok`
+
+## Judge batch (built, not judged)
+
+- `docs/storytime/l2-unit2/judge/prod/u2l1-line-t3.json`: 1 entry, the line try 3 picture of the
+  T-shirt. The judge copy is
+  `out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-line-t3.png`. The batch
+  names the new line file of this step, `l2-w10-story-page-put-on-your-t-shirt-m2-line.png`.
+- No judge call ran here. The orchestrator runs the frozen judge.

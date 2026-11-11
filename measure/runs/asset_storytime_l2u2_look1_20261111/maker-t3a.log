@@ -1,0 +1,170 @@
+Maker log, task 3a of the look1 track. Session: Green · P1 T3 · storytime_l2u2_look1.
+
+Model note: the role table names volcengine-agent-plan/glm-5.3-flash#high. The orchestrator picked
+minimax-cn-coding-plan/MiniMax-M3.1-Flash as a quota-backed substitute. The maker records the
+substitution and runs on it.
+
+role_base_sha: 05e0e46092bd2e34ed8bd0b5fc746b51033ebb27. The HEAD at the start of this step was that
+SHA, so the base matched.
+
+## Part A. Close Task 2, the color try 2 result
+
+The orchestrator ran the judges of the color try 2 (m2). The 3 result files sit untracked in this
+run folder. The maker read all 3.
+
+1. `judge-u2l1-color-t2.json`, the first judge. The v6 verdict is `fail` and the defect class is
+   `wrong-character`. Its action check reads a yes, b yes, c no, d yes, e yes, f yes, g n/a. The
+   judge note says the hands hold the hem out at chest height, so the hem sags. The judge calls
+   this a borderline case for item c.
+2. `judge-u2l1-color-t2-second.json`, the second judge. The v6 verdict is `pass` with the defect
+   class `none`. Its action check reads a yes, b yes, c yes, d yes, e yes, f yes, g n/a. This
+   judge read the action-check prompt before it finished its v6 part. That is an order fault, so
+   the orchestrator voided its v6 verdict and kept its action check.
+3. `judge-u2l1-color-t2-second-r2.json`, a clean second v6 judge that saw no action prompt. The
+   v6 verdict is `pass` with the defect class `none`. This file holds no action check.
+
+The second-judge rule of D6 says a second judge pass of both parts clears a fail. The v6 verdict
+comes from the clean file 3 and the action check comes from file 2. Both parts pass, so color try
+2 (m2) passes. Color tries stop at m2.
+
+Spend of this part: 0 USD. The maker ran no call.
+
+The maker marks Task 2 `[x]` and moves Task 3 to `[~]`.
+
+Commit of Part A: `measure(storytime_l2u2_look1): color try 2 judge result, m2 passes`. It holds
+the 3 judge files and plan.md. 4 files.
+
+## Part B. Line try 3, the T-shirt line call
+
+### B1 The worst case and the old rows
+
+The t-shirt line rows of `out/storytime/l2/unit2/w10/muse/costs.tsv` before the look start time
+2026-11-10T23:50:00Z are 2 old rows:
+
+- `2026-11-08T17:37:46.647Z  l2-w10-story-page-put-on-your-t-shirt  m1  line  l2-w10-story-page-put-on-your-t-shirt-m1-color.png  l2-w10-story-page-put-on-your-t-shirt-m1-line.png  1920x1280  0.01  ok`
+- `2026-11-08T20:13:20.464Z  l2-w10-story-page-put-on-your-t-shirt  m1  line  l2-w10-story-page-put-on-your-t-shirt-m1-color.png  l2-w10-story-page-put-on-your-t-shirt-m1-line-2.png  1920x1280  0.01  redo 2`
+
+The look spend since 2026-11-10T23:50:00Z is 0.01 USD. That row is the color m2 call of the
+previous step.
+
+The worst case of this step is 1 call times 0.01 USD = 0.01 USD. The total worst case is
+0.02 USD, under the 0.10 USD stop of the look guard.
+
+### B2 The network check
+
+The check of D5 ran before the paid call:
+`curl -sS -m 20 -o /dev/null -w '%{http_code}\n' https://openrouter.ai/api/v1/models`. It sends no
+key and it costs nothing. The check gave 200 on the first check. No try was used by a check.
+
+### B3 The call
+
+The maker ran 1 paid call and only 1:
+`node scripts/storytime-muse.mjs line docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt.json --from 2 --tries 1`.
+
+The tool printed `l2-w10-story-page-put-on-your-t-shirt-m2 line try 1 ok 1920x1280 cost 0.01`. The
+guard did not refuse the call.
+
+The cost row of the call in `out/storytime/l2/unit2/w10/muse/costs.tsv` is:
+
+`2026-11-11T00:34:37.068Z	l2-w10-story-page-put-on-your-t-shirt	m2	line	out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt-m2-color.png	l2-w10-story-page-put-on-your-t-shirt-m2-line.png	1920x1280	0.01	ok`
+
+The cost is 0.01 USD. That is under the 0.03 USD stop of this step. The look spend is now 0.02 USD
+of the 0.10 USD stop.
+
+The call wrote 4 new files under `out/storytime/l2/unit2/w10/muse/`. It also rewrote the sidecar
+`l2-w10-story-page-put-on-your-t-shirt-m2.json`.
+
+| file | size | SHA-256 |
+| --- | --- | --- |
+| l2-w10-story-page-put-on-your-t-shirt-m2-line.png | 22076 bytes | b4c927ac403a12d807929a4d1bf7d11fdb3c8e8abf3723812af54eff7450cf61 |
+| l2-w10-story-page-put-on-your-t-shirt-m2-line-raw.png | 515445 bytes | ebaa7b0faaa95d7120a25beeb5dcea887359516562e0d13f5414462c015063e6 |
+| l2-w10-story-page-put-on-your-t-shirt-m2-line-print.png | 59977 bytes | 675a7ef4d25dcc22f7533c1caf0296c9fdd5abf1773972b5531a4c8403f514d7 |
+| l2-w10-story-page-put-on-your-t-shirt-m2-line-despeckled.png | 22052 bytes | ee49209cf1f95271de114331b82875d965dee6cbc089984ede25c16119bf844a |
+| l2-w10-story-page-put-on-your-t-shirt-m2-line-print-despeckled.png | 60025 bytes | b265e5f7f81b42a2f1fcd6f866ebc9aba11746806573631d4383fb2af1ca06eb |
+
+The call wrote the despeckled pair, so the despeckle tool did not run.
+
+### B4 The spend log
+
+The spend log of the run folder holds the 2 call rows and the total row:
+
+```
+2026-11-11T00:23:46.646Z	muse	l2-w10-story-page-put-on-your-t-shirt color	2	0.01	l2-w10-story-page-put-on-your-t-shirt-m2-color.png
+2026-11-11T00:34:37.068Z	muse	l2-w10-story-page-put-on-your-t-shirt line	3	0.01	l2-w10-story-page-put-on-your-t-shirt-m2-line.png
+total	look1	calls 2	stop 0.10 USD	spend 0.02
+```
+
+### B5 The print gate
+
+The gate script is `measure/runs/asset_storytime_l2u2_look1_20261111/line-gate-look1.mjs`. It calls
+`inspectLineArtPng` of src/storytime/book-pictures.ts on the new line print and on its despeckled
+print, at the class size of the row. The row is size class A, so the class size is story:
+4000 x 3000 px. The script ran with `./node_modules/.bin/tsx` through heavy-run.sh. It made no
+provider call and it needed no key.
+
+| print | size | width px | ink coverage | result | SHA-256 |
+| --- | --- | --- | --- | --- | --- |
+| l2-w10-story-page-put-on-your-t-shirt-m2-line-print.png | 4000x3000 | 22 | 8.46 percent | pass | 675a7ef4d25dcc22f7533c1caf0296c9fdd5abf1773972b5531a4c8403f514d7 |
+| l2-w10-story-page-put-on-your-t-shirt-m2-line-print-despeckled.png | 4000x3000 | 22 | 8.45 percent | pass | b265e5f7f81b42a2f1fcd6f866ebc9aba11746806573631d4383fb2af1ca06eb |
+
+The minimum line width is 12 px. Both prints are 22 px, so both pass. The record is
+`measure/runs/asset_storytime_l2u2_look1_20261111/line-gate-look1-3.txt`.
+
+### B6 The judge batch
+
+The maker ran 1 batch and no judge:
+`node scripts/storytime-judge-batch.mjs --unit2 --ids l2-w10-story-page-put-on-your-t-shirt --kind line --try 3 --out u2l1-line-t3`.
+
+- The batch file is `docs/storytime/l2-unit2/judge/prod/u2l1-line-t3.json`. It holds 1 entry.
+- The judge copy is `out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-line-t3.png`.
+  It holds 900x600 pixels and its SHA-256 is
+  `3134abe6502a03da893cd584e9d571bd03ed780bfe919e43871ecff709581b7c`. That value is the SHA-256 of
+  the same resize of the new line file, so the copy comes from the call of this step.
+- The batch names the new line file of the call,
+  `l2-w10-story-page-put-on-your-t-shirt-m2-line.png`.
+- No judge call ran here.
+
+### B7 The plan state
+
+Task 3 keeps the marker `[~]`. The maker added the sub-bullet "Line try 3 (from m2)" to the plan
+and marked Task 2 `[x]`.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: done
+track: asset_storytime_l2u2_look1_20261111
+phase: Phase 1: Hat-pip owner job and the t-shirt redo (look1)
+commits:
+  - 4984bf3d87151ef84ae97d0bdbdf76b880c72bc3 measure(storytime_l2u2_look1): color try 2 judge result, m2 passes
+  - the commit of the line try 3 follows this log
+tests_run:
+  - no provider test ran in this step. The step makes 1 paid call and writes records. No file of src/, scripts/, or tests/ changed.
+  - the network check curl -sS -m 20 -o /dev/null -w '%{http_code}\n' https://openrouter.ai/api/v1/models: 200 on the first check
+  - the print gate script measure/runs/asset_storytime_l2u2_look1_20261111/line-gate-look1.mjs through heavy-run.sh: the line print 22 px and 8.46 percent ink, pass; the despeckled print 22 px and 8.45 percent ink, pass; both at 4000x3000
+  - vitest run tests/storytime-u2-look1.test.ts: 1 file passed, 15 tests passed, exit status 0
+files_changed:
+  - measure/runs/asset_storytime_l2u2_look1_20261111/judge-u2l1-color-t2.json
+  - measure/runs/asset_storytime_l2u2_look1_20261111/judge-u2l1-color-t2-second.json
+  - measure/runs/asset_storytime_l2u2_look1_20261111/judge-u2l1-color-t2-second-r2.json
+  - docs/storytime/l2-unit2/judge/prod/u2l1-line-t3.json
+  - measure/tracks/asset_storytime_l2u2_look1_20261111/plan.md
+  - measure/runs/asset_storytime_l2u2_look1_20261111/spend-log.tsv
+  - measure/runs/asset_storytime_l2u2_look1_20261111/line-gate-look1.mjs
+  - measure/runs/asset_storytime_l2u2_look1_20261111/line-gate-look1-3.txt
+  - measure/runs/asset_storytime_l2u2_look1_20261111/maker-t3a.log
+plan_updates:
+  - plan.md: Task 2 changed from [~] to [x] and holds the SHA 05e0e46092bd2e34ed8bd0b5fc746b51033ebb27. Its new sub-bullet holds the 3 judge results, the order fault of the second judge, and the second-judge rule of D6.
+  - plan.md: Task 3 changed from [b] with deferred:maker to [~]. Its new sub-bullet "Line try 3 (from m2)" holds the network check, the call, the cost, the gate widths, and the batch name.
+known_failures:
+  - none of the step. The call ran, the guard allowed it, the print gate passes, and the batch names the new line file.
+  - the maker ran no judge. The judge result file for this try is judge-u2l1-line-t3.json, and the orchestrator runs the frozen judge and the action check.
+handoff:
+  - The maker spent 0.01 USD in this step and 0.02 USD in the look since 2026-11-10T23:50:00Z. The stop is 0.10 USD.
+  - The role_base_sha is 05e0e46092bd2e34ed8bd0b5fc746b51033ebb27. The commits of this step follow it.
+  - Task 2 is [x] and Task 3 is [~]. The orchestrator runs the frozen judge and the action check next, on the batch u2l1-line-t3 and the judge copy out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-line-t3.png.
+  - The costs.tsv row of the call is the row of 2026-11-11T00:34:37.068Z and the cost is 0.01 USD.
+  - The line print SHA-256 is 675a7ef4d25dcc22f7533c1caf0296c9fdd5abf1773972b5531a4c8403f514d7 and the despeckled print SHA-256 is b265e5f7f81b42a2f1fcd6f866ebc9aba11746806573631d4383fb2af1ca06eb.
+  - The new files under out/ are out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt-m2-line.png, out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt-m2-line-raw.png, out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt-m2-line-print.png, out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt-m2-line-despeckled.png, out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt-m2-line-print-despeckled.png, and the judge copy out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-line-t3.png. They stay under out/ and stay out of git.
+  - The maker ran 1 paid call only. It ran no second call, no color call, and no call for another row.
+  - The maker wrote no file of src/, scripts/, tests/, or a spec file. It changed no guard.
+END_MEASURE_AGENT_RESULT
