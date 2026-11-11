@@ -148,7 +148,7 @@ runs the frozen judge and the action check between the paid calls. The stop is 0
     0 fail. So both parts of D6 pass on one judge, and no second judge ran. The T-shirt has a passing
     color (m2) and a passing line (try 3), so it is not a fail row. The maker ran no call in this
     step. Spend 0 USD.
-- [x] Task 4 (sha pending): Delivery, hand-off, and PM report (D7, D8). Spend 0 USD. Write `approvals-look1.json`
+- [x] Task 4 (cbc80b86235d2acec74b11517a567240c0e67353): Delivery, hand-off, and PM report (D7, D8). Spend 0 USD. Write `approvals-look1.json`
   (the hat-pip entry, and the T-shirt entry only if it passes). Write `deliver-look1.mts` and run it
   through `heavy-run.sh` into `out/storytime/l2/unit2/delivery-muse-v1-look1/`. Run the pixel check and
   the folder-state check (before and after). Build the hand-off folder

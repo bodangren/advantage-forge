@@ -82,6 +82,7 @@ status: done
 track: asset_storytime_l2u2_look1_20261111
 phase: Phase 1: Hat-pip owner job and the t-shirt redo (look1)
 commits:
+  - cbc80b86235d2acec74b11517a567240c0e67353 measure(storytime_l2u2_look1): the look1 hand-off and the PM report, ready for the checker
   - the commit of this log follows
   - the base of this step is 8a82401c32d49b2c3d84c6159429fa38d4daca4a
 tests_run:
