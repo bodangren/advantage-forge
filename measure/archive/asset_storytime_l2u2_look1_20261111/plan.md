@@ -208,11 +208,11 @@ runs the frozen judge and the action check between the paid calls. The stop is 0
 
 ## Track-level roles
 
-- [x] Closeout (26cec278, archive SHA pending): archive the track, update the registry, and run the doctor. The generator does not run
+- [x] Closeout (4c5760e4): archive the track, update the registry, and run the doctor. The generator does not run
   while `measure/generated/` holds foreign changes. The run records in
   `measure/runs/asset_storytime_l2u2_look1_20261111/` are committed. Foreign changes stay out of the
   closeout commit.
-  - Closeout started 2026-11-11 at the audited HEAD 26cec278. The follow-up commit puts the archive commit SHA on this line.
+  - Closeout done 2026-11-11: the track moved to measure/archive/asset_storytime_l2u2_look1_20261111/ with the archive commit 4c5760e4, the registry entry moved to the Archived Tracks section with the words model evidence, not acceptance, and the doctor names no line for this track.
 
 The light lane has no final acceptance role.
 
