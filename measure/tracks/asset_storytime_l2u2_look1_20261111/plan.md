@@ -115,7 +115,7 @@ runs the frozen judge and the action check between the paid calls. The stop is 0
     the defect class `none`. By D6, the second judge passes both parts: the v6 verdict comes from the
     clean file and the action check comes from the second judge. So m2 passes by the second-judge
     rule of D6. The color tries stop at m2. The maker ran no call in this step. Spend 0 USD.
-- [~] Task 3: The T-shirt line tries (D5, D6). Paid, at most 3 calls. Run only if Task 2 gives a
+- [x] Task 3 (86c003cc20fd240a4075d624d046487601e23302): The T-shirt line tries (D5, D6). Paid, at most 3 calls. Run only if Task 2 gives a
   passing color m<n>. Before each call, write the worst case and run the network check. Run one line
   call: `node scripts/storytime-muse.mjs line <spec> --from <n> --tries 1`. Run the print gate on the
   line print and its despeckled print BEFORE the judge, and write
@@ -140,14 +140,22 @@ runs the frozen judge and the action check between the paid calls. The stop is 0
     judge copy is out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-line-t3.png.
     The batch names the new line file. The maker ran no judge. The orchestrator runs the frozen
     judge and the action check next.
-- [b] Task 4: Delivery, hand-off, and PM report (D7, D8). Spend 0 USD. Write `approvals-look1.json`
+  - Line try 3 passes on one judge. The orchestrator ran the frozen judge and the action check. The
+    result file is `measure/runs/asset_storytime_l2u2_look1_20261111/judge-u2l1-line-t3.json`. The v6
+    verdict is `pass` and the defect class is `none`. That judge saw no action prompt. Its action
+    check reads a yes, b yes, c yes, d yes, e yes, f yes, g yes. The note says the vest is a simple
+    band, and item g covers the pose, the hands, and the T-shirt. The summary reads 1 file, 1 pass,
+    0 fail. So both parts of D6 pass on one judge, and no second judge ran. The T-shirt has a passing
+    color (m2) and a passing line (try 3), so it is not a fail row. The maker ran no call in this
+    step. Spend 0 USD.
+- [~] Task 4: Delivery, hand-off, and PM report (D7, D8). Spend 0 USD. Write `approvals-look1.json`
   (the hat-pip entry, and the T-shirt entry only if it passes). Write `deliver-look1.mts` and run it
   through `heavy-run.sh` into `out/storytime/l2/unit2/delivery-muse-v1-look1/`. Run the pixel check and
   the folder-state check (before and after). Build the hand-off folder
   `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-look1/` with the hard links,
   `manifest.json`, the spend log copy, `contact-sheet.png`, `README.md`, `not-delivered/` (only when the
   T-shirt fails), and `MANIFEST.txt`. Run `sha256sum --quiet -c MANIFEST.txt`. Write `pm-report.md`
-  (D8). List, then delete, `/tmp/opencode/l2look1/` and any staging folder this track made. deferred:maker
+  (D8). List, then delete, `/tmp/opencode/l2look1/` and any staging folder this track made.
 - [b] Phase 1 gate: phase acceptance by the checker at an immutable HEAD. The checker runs the GREEN
   command and the typecheck, probes `U2_LOOK_TRY` with fixture cost files, compares the `costs.tsv`
   sum with the spend log, checks the hat-pip SHA-256 values, the pixel check, the MANIFEST check, and the

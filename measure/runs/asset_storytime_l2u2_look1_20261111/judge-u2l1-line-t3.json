@@ -1,0 +1,35 @@
+{
+  "group": "u2l1-line-t3",
+  "judgePrompt": "docs/storytime/l2-unit1/judge/judge-prompt.md v6",
+  "cast": "cast.json 2eb4a6a1",
+  "actionCheckPrompt": "measure/runs/asset_storytime_l2u2_look1_20261111/action-check-prompt.md",
+  "model": "claude-code/claude-sonnet-5-5#high",
+  "status": "complete",
+  "time": "2026-11-11T01:00:51Z",
+  "results": [
+    {
+      "id": "l2-w10-story-page-put-on-your-t-shirt",
+      "kind": "line",
+      "judgeFile": "out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-line-t3.png",
+      "verdict": "pass",
+      "defectClass": "none",
+      "where": "",
+      "notes": "Question page: no. Items: Ben (1), a T-shirt (1). Action: put on (note only). mustShow ben: yes. Seen: a boy with a big head, short messy hair with a fringe, big eyes, and an open smile. He wears a short-sleeve T-shirt with a round neck and a hem band. His two hands, with fingers, pull the hem out wide. A bench, a wall board, and an open box with folded clothes are in the room. Ben matches the cast sheet in shape and face. Line art cannot show color. The T-shirt is drawn, visible, and reads as a T-shirt to a child. Small mark: the stretched hem looks a little odd. Black lines on white. No gray, no gap, no text.",
+      "actionCheck": {
+        "a": "yes",
+        "b": "yes",
+        "c": "yes",
+        "d": "yes",
+        "e": "yes",
+        "f": "yes",
+        "g": "yes",
+        "note": "(a) The head sits in a round neck opening with a collar line. (b) Both arms come out of short sleeves at the shoulders. (c) Both hands hold the hem and pull it down and out over the body. (d) A banded white shape shows under the hem and no bare skin shows at the body. (e) One T-shirt only, with no hood, cap, or second cloth. (f) The T-shirt is the largest shape and the focus of the figure. (g) The pose, both hands on the hem, and the sleeves and hem match picture 2; the vest is a simple band."
+      }
+    }
+  ],
+  "summary": {
+    "files": 1,
+    "pass": 1,
+    "fail": 0
+  }
+}
