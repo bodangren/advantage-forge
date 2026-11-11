@@ -1,0 +1,23 @@
+{
+  "track": "asset_storytime_l2u2_look1_20261111",
+  "rowId": "l2-w10-story-page-put-on-your-hat-pip",
+  "version": 3,
+  "files": [
+    {
+      "kind": "color",
+      "name": "l2-w10-story-page-put-on-your-hat-pip-m3-color-print.png",
+      "sha256": "6db86851b359760ea88e9feb67cf2bc784720ac4466abc5419af6f1dfff6bdff"
+    },
+    {
+      "kind": "line",
+      "name": "l2-w10-story-page-put-on-your-hat-pip-m3-line-print-2.png",
+      "sha256": "1474680276aa160dd972cd78b8559039a765032e703323cdb1ff41f0583aa9e1"
+    }
+  ],
+  "folder": "out/storytime/l2/unit2/w10/muse",
+  "handoffFolder": "/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-repair1/not-delivered",
+  "source": "Daniel, Tasks, 2026-11-11 06:27 ICT",
+  "ownerWords": "Hat-pip image passes, but the w10 put on your t shirt image doesn't pass.",
+  "waiver": "The owner waives the 2 judge results judge-u2rc-p3-line-t3.json and judge-u2rc-p3-line-t3-second.json of the archived track measure/archive/asset_storytime_l2_retries_cover_20261110/ for this row only. The 2 judge files stay as the record of the model result.",
+  "scope": "The acceptance covers the hat-pip row only. The T-shirt row has no acceptance."
+}

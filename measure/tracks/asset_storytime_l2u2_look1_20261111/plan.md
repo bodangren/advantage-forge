@@ -58,18 +58,26 @@ this heading.
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`). The orchestrator
 runs the frozen judge and the action check between the paid calls. The stop is 0.10 USD.
 
-- [ ] Task 1: Prompt edit, guard, tests, and owner record (D2, D3, D4, D6). Spend 0 USD. Make no Muse
-  call.
-  - Edit the 3 fields of the T-shirt spec with the exact text of D3. Record the old and the new SHA-256
-    of the spec file and each new sentence here.
-  - Add `U2_LOOK_TRY`, its message constant, and its rule to `scripts/storytime-muse-guards.mjs` and the
-    `.d.mts`. Set `startTime` to the real UTC time of this commit, cut to the minute. Add the test-only
-    key `u2LookCapUsd` and strip it in `cliGuardOptions`. Keep the other constants as they are.
-  - Add `tests/storytime-u2-look1.test.ts` with the tests LK1 to LK15.
-  - Write `measure/runs/asset_storytime_l2u2_look1_20261111/owner-look1.json` (D2) and
-    `action-check-prompt.md` (D6).
-  - Run the GREEN command and the typecheck, both through `heavy-run.sh`. Commit with explicit paths.
-    The maker replies with the commit and the start time.
+- [x] Task 1 (sha pending): Prompt edit, guard, tests, and owner record (D2, D3, D4, D6). Spend 0 USD.
+  Make no Muse call.
+  - The T-shirt spec file `docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt.json`:
+    the old SHA-256 is `6867f62f4e52c0de12a259df7e21bc9242fa852e981f6c08f3b5ec4a82fd42d6` and the new
+    SHA-256 is `7ca606f4a0139af89f9c1f38f9a77b4e640dd9d7dca39141d751ab01c16a461a`. The changed fields
+    are `goal`, `colorPrompt`, and `linePrompt` only.
+  - The new sentences and their SHA-256: the goal
+    `3b8284fb9c007a2958392a4d230e8dfcfdbbda4ced3baf99e1e8567b274c365f`; the first color text
+    `0a76ff3e73d5f0c3879f39faf9e6e31d951a2b94f887d86066047f838b534c0e`; the second color text
+    `c32467776d4decebc5700414aa89f1a52ae53173f3b452b44704bca4a2868c62`; the third color text
+    `4d19a3b9ee31e9d65482fe9827baa4f00e95fa90f3c76bad5c65053526f32339`; the line sentence
+    `2ded4f073123c8f277e749e05aa864a92b84fb2649671110fad1c5ca88718833`. The test LK15 holds them.
+  - The guard `U2_LOOK_TRY` in `scripts/storytime-muse-guards.mjs` and the `.d.mts`: `startTime`
+    `2026-11-10T23:50:00Z`, `capUsd` 0.10, `reportAtUsd` 0.08, `marginUsd` 0.01, and 2 rows with
+    `allowedTries` 3. The other constants keep their values.
+  - The GREEN command: 20 test files passed, 308 tests passed, exit status 0.
+  - The typecheck: 38 error lines in the whole project, and 0 error lines in `src/storytime/`,
+    `scripts/storytime-`, and `tests/storytime-`.
+  - The run files: `measure/runs/asset_storytime_l2u2_look1_20261111/owner-look1.json` and
+    `measure/runs/asset_storytime_l2u2_look1_20261111/action-check-prompt.md`.
 - [b] Task 2: The T-shirt color tries (D5, D6). Paid, at most 3 calls. Before each call, write the worst
   case and run the network check. Run one color call: `node scripts/storytime-muse.mjs color <spec>`
   (versions m2, m3, m4). Make the judge batch for the try. The orchestrator runs the frozen judge, the

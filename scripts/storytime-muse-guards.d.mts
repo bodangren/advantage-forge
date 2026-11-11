@@ -62,6 +62,11 @@ export interface GuardOptions {
    */
   u2ExtraCapUsd?: number | string | null;
   /**
+   * Test-only stand-in for `U2_LOOK_TRY.capUsd`. The muse CLI never sets it. The look tests use it
+   * to check the empty-cap refusal and the look cap with a small fixture spend.
+   */
+  u2LookCapUsd?: number | string | null;
+  /**
    * Test-only stand-in for `COVER_RUN.capUsd`. The muse CLI never sets it. The cover tests use it
    * to check the empty-cap refusal and the cover cap with a small fixture spend.
    */
@@ -138,6 +143,24 @@ export interface U2ExtraTry {
   rows: U2ExtraTryRow[];
 }
 
+/** One row of the unit 2 look exception. */
+export interface U2LookTryRow {
+  id: string;
+  kind: 'color' | 'line';
+  /** The number of look tries of the id and kind since the start time (D4). */
+  allowedTries: number;
+  /** The PM words that granted the tries. */
+  source: string;
+}
+
+export interface U2LookTry {
+  startTime: string;
+  capUsd: number;
+  reportAtUsd: number;
+  marginUsd: number;
+  rows: U2LookTryRow[];
+}
+
 export interface CoverRun {
   startTime: string;
   capUsd: number;
@@ -158,11 +181,13 @@ export declare const CARD_LINE_RETRY: CardLineRetry;
 export declare const U2_RUN: U2Run;
 export declare const U2_FW_RUN: U2FwRun;
 export declare const U2_EXTRA_TRY: U2ExtraTry;
+export declare const U2_LOOK_TRY: U2LookTry;
 export declare const COVER_RUN: CoverRun;
 export declare const U2_WEEKS: string[];
 export declare const U2_CAP_MESSAGE: string;
 export declare const U2_FW_CAP_MESSAGE: string;
 export declare const U2_EXTRA_CAP_MESSAGE: string;
+export declare const U2_LOOK_CAP_MESSAGE: string;
 export declare const COVER_CAP_MESSAGE: string;
 export declare const COVER_LINE_MESSAGE: string;
 export declare const TRY_EXCEPTIONS: TryException[];
@@ -194,6 +219,9 @@ export declare function firstExceptionTryCost(
 ): number | null;
 export declare function exceptionSpendOf(rows: CostRow[], startTime?: string): number;
 export declare function exceptionEntryFor(id: string, kind: string): U2ExtraTryRow | null;
+export declare function countLookRows(rows: CostRow[], id: string, kind: string, startTime?: string): number;
+export declare function lookSpendOf(rows: CostRow[], startTime?: string): number;
+export declare function lookEntryFor(id: string, kind: string): U2LookTryRow | null;
 export declare function spendTotal(rows: CostRow[], startTime?: string): number;
 export declare function tryGuard(
   rows: CostRow[],

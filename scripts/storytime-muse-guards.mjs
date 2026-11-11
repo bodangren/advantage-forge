@@ -206,6 +206,51 @@ export const U2_EXTRA_TRY = {
 };
 
 /**
+ * Unit 2 look1 exception (2026-11-11, D4). The PM gave the T-shirt row of the look1 track 3 color
+ * tries and 3 line tries, with its own cap of 0.10 USD. This constant holds the cap, the report
+ * point, the margin, the start time, and the list of the rows.
+ *
+ * The rule of the exception:
+ *   - a try of a listed id and kind counts against the `allowedTries` of its row since `startTime`;
+ *   - a failed call at 0 USD counts as a try;
+ *   - the normal limit of `U2_RUN.maxTries` does not refuse a try of a listed id and kind;
+ *   - the row gets 3 tries of each kind;
+ *   - the exception spend is the sum of the `usage_cost` rows of the listed id, of every kind, at
+ *     or after `startTime`;
+ *   - the rows come from the unit 2 week cost files;
+ *   - a call is refused when the exception spend plus one margin per planned call passes the cap;
+ *   - the book cap of `U2_RUN.capUsd` still applies to every call;
+ *   - the look spend does not count against `U2_EXTRA_TRY`, and the `U2_EXTRA_TRY` spend does not
+ *     count against this exception;
+ *   - the notice prints at 0.08 USD of exception spend.
+ *
+ * The value of `startTime` is the real UTC time of the Phase 1 guard commit, cut to the minute.
+ */
+export const U2_LOOK_TRY = {
+  startTime: '2026-11-10T23:50:00Z',
+  capUsd: 0.1,
+  reportAtUsd: 0.08,
+  marginUsd: 0.01,
+  rows: [
+    {
+      id: 'l2-w10-story-page-put-on-your-t-shirt',
+      kind: 'color',
+      allowedTries: 3,
+      source:
+        'PM ORDER (Daniel look, Task 2.8 of Workbooks unit 2; Daniel\'s words, Tasks 2026-11-11 06:27 ICT: "Hat-pip image passes, but the w10 put on your t shirt image doesn\'t pass."). One small light task, 1 role (slot wait first), paid stop 0.10 USD inside the unit 2 budget (Daniel\'s Go, hard stop 25.21 USD; unit 2 spend about 17.5 USD): (1) HAT-PIP, 0 USD: make a delivery job for l2-w10-story-page-put-on-your-hat-pip from color m3 + line try 3 (the files in storytime-l2u2-book-pictures-repair1/not-delivered/), with Daniel\'s words above as the recorded acceptance (the judges\' wrong-character fail is waived by the owner). (2) REDO l2-w10-story-page-put-on-your-t-shirt (v1 in storytime-l2u2-book-pictures/, color 9e207c3c…, line 71e2ba05…). PM diagnosis: the action does not read as "Put on your T-shirt": in the color print the boy already wears a yellow T-shirt and pulls a second yellow cloth over his head like a hood; the line print shows a cap and waving hands, so color and line do not match. Target: the same boy and room, mid-action: his head and both arms are through a yellow T-shirt, and he pulls it down over his body (a white vest under it, so no bare skin); the T-shirt is the clear focus. Color first (up to 3 tries), then the line art from the passing color (up to 3 tries), with your calibrated judge; the line print must show the same action. Deliver both jobs in a NEW folder ~/Desktop/handoff/storytime-l2u2-book-pictures-look1/ with MANIFEST.txt and a contact sheet; old folders unchanged. Report the path, the MANIFEST sha256, the spend lines, and the judge results. Facts changed list at the end.',
+    },
+    {
+      id: 'l2-w10-story-page-put-on-your-t-shirt',
+      kind: 'line',
+      allowedTries: 3,
+      source:
+        'PM ORDER (Daniel look, Task 2.8 of Workbooks unit 2; Daniel\'s words, Tasks 2026-11-11 06:27 ICT: "Hat-pip image passes, but the w10 put on your t shirt image doesn\'t pass."). One small light task, 1 role (slot wait first), paid stop 0.10 USD inside the unit 2 budget (Daniel\'s Go, hard stop 25.21 USD; unit 2 spend about 17.5 USD): (1) HAT-PIP, 0 USD: make a delivery job for l2-w10-story-page-put-on-your-hat-pip from color m3 + line try 3 (the files in storytime-l2u2-book-pictures-repair1/not-delivered/), with Daniel\'s words above as the recorded acceptance (the judges\' wrong-character fail is waived by the owner). (2) REDO l2-w10-story-page-put-on-your-t-shirt (v1 in storytime-l2u2-book-pictures/, color 9e207c3c…, line 71e2ba05…). PM diagnosis: the action does not read as "Put on your T-shirt": in the color print the boy already wears a yellow T-shirt and pulls a second yellow cloth over his head like a hood; the line print shows a cap and waving hands, so color and line do not match. Target: the same boy and room, mid-action: his head and both arms are through a yellow T-shirt, and he pulls it down over his body (a white vest under it, so no bare skin); the T-shirt is the clear focus. Color first (up to 3 tries), then the line art from the passing color (up to 3 tries), with your calibrated judge; the line print must show the same action. Deliver both jobs in a NEW folder ~/Desktop/handoff/storytime-l2u2-book-pictures-look1/ with MANIFEST.txt and a contact sheet; old folders unchanged. Report the path, the MANIFEST sha256, the spend lines, and the judge results. Facts changed list at the end.',
+    },
+  ],
+};
+
+
+/**
  * Cover run (2026-11-10, D7). The Teacher Book front art of Storytime Level 2 unit 1 is one paid
  * color picture with its own start time, stop, report point, margin, try cap, and output folder.
  * This constant is the only owner of these values. A cover call reads only the cost file of its
@@ -234,6 +279,10 @@ export const U2_FW_CAP_MESSAGE = 'refused: the unit 2 family-word cap is empty; 
 /** The refusal message of a listed unit 2 call while the exception cap is empty. */
 export const U2_EXTRA_CAP_MESSAGE =
   'refused: the unit 2 extra try cap is empty; the PM writes the approved limit in U2_EXTRA_TRY.capUsd';
+
+/** The refusal message of a listed unit 2 look call while the look cap is empty. */
+export const U2_LOOK_CAP_MESSAGE =
+  'refused: the unit 2 look cap is empty; the PM writes the approved limit in U2_LOOK_TRY.capUsd';
 
 /** The refusal message of a cover call while the cover cap is empty. */
 export const COVER_CAP_MESSAGE = 'refused: the cover cap is empty; the PM writes the approved limit in COVER_RUN.capUsd';
@@ -277,6 +326,9 @@ const COVER_ROOT = resolve(ROOT, 'out/storytime/covers');
 /** The 9 ids of the extra try exception, as a set for the spend scan. */
 const U2_EXTRA_IDS = new Set(U2_EXTRA_TRY.rows.map((row) => row.id));
 
+/** The ids of the unit 2 look exception. Each row of the list names one of them. */
+const U2_LOOK_IDS = new Set(U2_LOOK_TRY.rows.map((row) => row.id));
+
 /**
  * True when a resolved folder is a unit 2 output folder: `w09` to `w16` and then `muse` or
  * `muse/elements`. Every other unit 2 folder, including a mutated name or a `..` escape, is false.
@@ -312,14 +364,15 @@ export const isUnit2FwOutDir = (specOrPath) => {
 
 /**
  * The guard options of a CLI call. The test-only cap keys `u2CapUsd`, `u2FwCapUsd`,
- * `u2ExtraCapUsd`, and `coverCapUsd` never reach `runGuards` from the CLI, so a future
- * option-parser change cannot raise a cap. A JS caller keeps its own options object.
+ * `u2ExtraCapUsd`, `u2LookCapUsd`, and `coverCapUsd` never reach `runGuards` from the CLI, so a
+ * future option-parser change cannot raise a cap. A JS caller keeps its own options object.
  */
 export const cliGuardOptions = (opts = {}) => {
   const next = { ...opts };
   delete next.u2CapUsd;
   delete next.u2FwCapUsd;
   delete next.u2ExtraCapUsd;
+  delete next.u2LookCapUsd;
   delete next.coverCapUsd;
   return next;
 };
@@ -498,6 +551,29 @@ export const exceptionSpendOf = (rows, startTime = U2_EXTRA_TRY.startTime) =>
     .filter((r) => sinceStart(r.time, startTime) && U2_EXTRA_IDS.has(r.row))
     .reduce((s, r) => s + r.cost, 0);
 
+/**
+ * The look row of one id and kind, or null when the pair is not listed. The list of
+ * `U2_LOOK_TRY.rows` holds one entry per id and kind.
+ */
+export const lookEntryFor = (id, kind) =>
+  U2_LOOK_TRY.rows.find((row) => row.id === id && row.kind === kind) ?? null;
+
+/**
+ * The try count of one id and kind since the look start time. A failed call at 0 USD counts, so a
+ * failed call uses a try of the row.
+ */
+export const countLookRows = (rows, id, kind, startTime = U2_LOOK_TRY.startTime) =>
+  rows.filter((r) => sinceStart(r.time, startTime) && r.kind === kind && r.row === id).length;
+
+/**
+ * The look spend: the sum of the `usage_cost` rows of the listed ids, of every kind, at or after
+ * the look start time. The rows come from the unit 2 week cost files.
+ */
+export const lookSpendOf = (rows, startTime = U2_LOOK_TRY.startTime) =>
+  rows
+    .filter((r) => sinceStart(r.time, startTime) && U2_LOOK_IDS.has(r.row))
+    .reduce((s, r) => s + r.cost, 0);
+
 /** Try guard: refuses when the next call would pass the try cap of the picture and kind. */
 export const tryGuard = (rows, id, kind, requested = 1, startTime = RESTART_START, maxTries = MAX_TRIES) => {
   const limit = maxTriesFor(id, kind, maxTries);
@@ -648,6 +724,8 @@ export const scanCoverCostFiles = (unitRoot) => {
  * An empty or invalid cap of either unit 2 kind is refused.
  * A unit 2 call of a row of the extra try exception also passes the exception cap and the once
  * rule of `U2_EXTRA_TRY`. A row with `pastLimit` true passes the normal try limit once.
+ * A unit 2 call of a row of the look exception also passes the look cap and the try rule of
+ * `U2_LOOK_TRY`. The normal limit of `U2_RUN.maxTries` does not refuse a listed look row.
  * After the spend check of the current sum, the function projects the whole pool: one margin per
  * provider call, plus one margin for a color pool (the line picture that follows each passing
  * color). A projected sum over the cap is refused, so a pool cannot pass the cap by its own calls.
@@ -875,6 +953,57 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
     reportAtOut = U2_EXTRA_TRY.reportAtUsd;
     spendOut = exceptionSpend;
   }
+  // The look exception of D4. A listed row passes the look cap and the try rule of its row. The
+  // notice of the exception uses the look spend and its report point.
+  const lookListed = u2 ? ctxs.filter((ctx) => lookEntryFor(ctx.spec.id, kind)) : [];
+  if (lookListed.length) {
+    const lookCap = Object.hasOwn(opts, 'u2LookCapUsd') ? opts.u2LookCapUsd : U2_LOOK_TRY.capUsd;
+    if (!capOk(lookCap)) {
+      return {
+        refused: true,
+        code: 3,
+        spend: 0,
+        notice: false,
+        run,
+        reportAt: U2_LOOK_TRY.reportAtUsd,
+        message: U2_LOOK_CAP_MESSAGE,
+      };
+    }
+    const lookSpend = lookSpendOf(allRows, U2_LOOK_TRY.startTime);
+    const planned = calls * U2_LOOK_TRY.marginUsd;
+    // The sum of the margins can land a hair over the cap in floating point, so the comparison
+    // keeps a tolerance of one billionth of a dollar.
+    if (lookSpend + planned > lookCap + 1e-9) {
+      return {
+        refused: true,
+        code: 3,
+        spend: lookSpend,
+        notice: lookSpend >= U2_LOOK_TRY.reportAtUsd,
+        run,
+        reportAt: U2_LOOK_TRY.reportAtUsd,
+        message: `refused: the look spend ${lookSpend.toFixed(4)} USD plus ${planned.toFixed(4)} over cap ${lookCap}`,
+      };
+    }
+    for (const ctx of lookListed) {
+      const entry = lookEntryFor(ctx.spec.id, kind);
+      const count = countLookRows(pictureRows, ctx.spec.id, kind, U2_LOOK_TRY.startTime);
+      const allowedTries = entry?.allowedTries ?? 1;
+      if (count >= allowedTries) {
+        return {
+          refused: true,
+          code: 3,
+          spend: lookSpend,
+          notice: lookSpend >= U2_LOOK_TRY.reportAtUsd,
+          run,
+          reportAt: U2_LOOK_TRY.reportAtUsd,
+          message: `refused: ${ctx.spec.id} ${kind} already has ${count} tries since ${U2_LOOK_TRY.startTime}; the look grants ${allowedTries} tries`,
+        };
+      }
+    }
+    notice = notice || lookSpend >= U2_LOOK_TRY.reportAtUsd;
+    reportAtOut = U2_LOOK_TRY.reportAtUsd;
+    spendOut = lookSpend;
+  }
   // The cover art is color only, so its pool has no line picture after the color.
   const cushion = cmd === 'line' || cover ? 0 : 1;
   const projected = spend + (calls + cushion) * margin;
@@ -886,6 +1015,10 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
     // keeps the extra try to one.
     const entry = u2 ? exceptionEntryFor(ctx.spec.id, kind) : null;
     if (entry?.pastLimit) continue;
+    // A listed look row keeps the try rule of its own exception, so the normal limit of
+    // `U2_RUN.maxTries` does not refuse it.
+    const lookEntry = u2 ? lookEntryFor(ctx.spec.id, kind) : null;
+    if (lookEntry) continue;
     const retry = card && kind === 'line' ? lineRetryGuard(pictureRows, ctx.spec.id, requested) : null;
     const g = retry ?? tryGuard(pictureRows, ctx.spec.id, kind, requested, startTime, maxTries);
     if (!g.ok) {
