@@ -22,8 +22,9 @@ Keep this working memory within 50 lines. Evidence links retain the detailed his
 - The forge tint mask is an image that no material uses. In the avatar pack, lossless WebP (no `exact`), a full `prune()`, and a lookup in `textures` each lost it. Keep it PNG, prune only nodes and meshes, read it from `images`, and check the packed GLB.
 - Synchronous CPU work blocks the event loop, so the vitest test timeout cannot stop it. A recursive credential scan on a hostile deep answer held one CPU for 27 minutes inside a single test while its 120000 ms limit never fired. Move hostile scans into a worker thread with a test-owned wall clock, or keep the scan loop-free of call-stack recursion (found 2026-10-27).
 - The judge does not check the delivery print gate (12 px line width, white edge frame); on unit 2 the writer refused 23 judged line prints at the delivery round, so run the print gate on each line print before the judge. A provider HTTP 400 for more than 10 references costs 0 USD but uses a try under the guard; keep each call at 10 references or less (use a group sheet).
-- A test must never write into a real cost file: run the CLI in a temp repository (the CVG9 defect, fix 3b22a6af).
-- A delivered manifest version must follow the delivered file name, not the Muse try number (D18).
+- The frozen v6 judge treats the action of a page as a note only, so a page whose text is an action needs a separate action check (look1 D6). Run the v6 judge and the action check in separate sessions: a judge that reads the action prompt first can bias its v6 verdict (the order fault of color try 2).
+- Never split a string literal to pass a scan test: pin a SHA-256 of the object instead (F1, LK13).
+- A test must never write into a real cost file: run the CLI in a temp repository (the CVG9 defect, fix 3b22a6af). A delivered manifest version must follow the delivered file name, not the Muse try number (D18).
 - Every role brief gives the full tsc and vitest only through heavy-run (PM load rule 2026-11-11).
 
 ## Effective practices
@@ -38,8 +39,7 @@ Keep this working memory within 50 lines. Evidence links retain the detailed his
 - Build worn equipment from the avatar body it covers. Keep it solid there: skin in a closed bore counts as show-through. Check that the display stands on y = 0.
 
 ## Planning practices
-- Start status discovery at the Measure index. Map existing plans and every catalog row to an owning track. Preserve historical delivery evidence without inventing past estimates, tests, or approvals.
-- Update the plan, metadata, registry, debt, and lessons before closing a track. Keep generated facts separate from design intent and acceptance judgments.
+- Start status discovery at the Measure index. Map existing plans and every catalog row to an owning track. Preserve historical delivery evidence without inventing past estimates, tests, or approvals. Update the plan, metadata, registry, debt, and lessons before closing a track. Keep generated facts separate from design intent and acceptance judgments.
 
 ## Evidence
 

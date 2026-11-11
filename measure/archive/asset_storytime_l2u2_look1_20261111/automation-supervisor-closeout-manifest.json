@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "track": "asset_storytime_l2u2_look1_20261111",
+  "archived_at": "2026-11-11T01:50:17Z",
+  "track_base_sha": "7b346f437e35964cd94b5a39619db390b23dcfc1",
+  "track_final_sha": "26cec27810bdf3b4a280bd9d4656ac7c793e8f7c",
+  "phase_acceptance_results": [
+    "measure/runs/asset_storytime_l2u2_look1_20261111/acceptance-p1-26cec27.json"
+  ],
+  "completed_phases": [
+    {
+      "id": "Phase 1",
+      "title": "Hat-pip owner job and the t-shirt redo (look1)",
+      "checkpoint": "26cec278"
+    }
+  ],
+  "final_acceptance": "not run: PM light lane. The PM put the track on the light lane of 2026-11-03 (one maker and one checker per phase, then closeout). The plan records the rule in the line \"The light lane has no final acceptance role.\"",
+  "gates": {
+    "PROJECT_LINT": "fail for other tracks only: bash measure/doctor.sh gives exit 1 with 13 structural errors of other tracks (6 new track has started tasks, 5 missing registry link, 2 stale generated fact). No line names asset_storytime_l2u2_look1_20261111.",
+    "PROJECT_CHECKS": "pass - the Phase 1 checker ran tsc in the storytime paths at 26cec278 and found 0 error lines (acceptance-p1-26cec27.json). The whole project holds 38 error lines of other tracks only.",
+    "PROJECT_TESTS": "pass - the Phase 1 acceptance ran 308 tests in 20 files at 26cec278 (acceptance-p1-26cec27.json, status pass).",
+    "SECRET_SCAN": "pass - grep -rlE \"sk-[A-Za-z0-9]{8}|Bearer [A-Za-z0-9]|OPENROUTER_API_KEY=\" over measure/runs/asset_storytime_l2u2_look1_20261111 gives 0 files; the folder holds 35 files and no PNG or JPG (find count 0).",
+    "source": "measure/runs/asset_storytime_l2u2_look1_20261111/acceptance-p1-26cec27.json"
+  },
+  "antipatterns_clean": [
+    "A2 consent-blind publish gate - the registry entry, the metadata, the plan, the PM report, and this manifest name model evidence only. The one acceptance claim is the words of D2 for the hat-pip row. No text says that the PM or Workbooks accepted the T-shirt picture",
+    "A3 digit-only count - every gate reads a labeled value (308 tests in 20 files, 2 Muse calls and 0.02 USD of the 0.10 USD stop, a line print of 22 px against the 12 px minimum, 6 old folders unchanged)",
+    "A4 vacuous pass - the Phase 1 checker read the files and the numbers, compared the costs.tsv sum with the spend log, and re-measured the line print",
+    "A5 false claim - each pass above quotes its result file, and the plan holds no pass claim without a SHA or a result file",
+    "A6 registry overstatement - the archived registry entry keeps the words \"model evidence, not acceptance\" and gives the spend of 2 Muse calls and 0.02 USD",
+    "A7 over-broad filter - the checks above name their scope (the run folder, the storytime tsc paths, the 6 old folders)",
+    "A9 archived track paths - no test or script under tests/, scripts/, or src/ hardcodes measure/tracks/asset_storytime_l2u2_look1_20261111; a grep after the archive gives 0 hits, so no test fix is needed",
+    "A10 generated-facts drift - the generator does not run while measure/generated holds foreign changes; the closeout commits hold no generated fact, and the registry entry is staged through a blob",
+    "A11 doc-to-code drift - the delivery manifest, the pixel check (pixel-check-look1.txt, failures: 0), the MANIFEST check (8 OK, 0 FAILED), and the folder-state SHA-256 checks agree"
+  ],
+  "antipatterns_known_limitations": [
+    "the T-shirt picture is model evidence; Daniel has not looked at it. Only the hat-pip row carries owner words (D2)",
+    "the final acceptance role did not run under the PM light lane of 2026-11-03 (deferred:PM)",
+    "the maker model was minimax-cn-coding-plan/MiniMax-M3.1-Flash by ra-quota pick, in place of the role-table GLM route (acceptance finding P5). The build session wrote 2 track files with a shell redirect (P1) and the first build dispatch ran on the wrong agent (P2). Process findings only",
+    "the second color judge read the action prompt before it finished its v6 part, so the orchestrator voided that v6 verdict and a clean r2 judge ran (P3). The remedy is sound",
+    "13 structural doctor errors of other tracks stay open; the doctor adds no error for this track",
+    "measure/generated holds foreign uncommitted changes, so the generator did not run and no generated fact is committed; measure/tracks.md keeps the foreign \"## Contents\" hunk unstaged"
+  ],
+  "deferred": [
+    "Final acceptance did not run under the PM light lane of 2026-11-03 (deferred:PM)",
+    "the T-shirt picture waits for the look of Daniel; it stays model evidence until then (deferred:PM)"
+  ],
+  "deferred_note": "No plan task stays open. All 5 plan tasks (Task 0 to Task 4) are [x] with a commit SHA, the Phase 1 gate and the Closeout line are [x], and no [b], [~], or [ ] line remains in the archived plan.",
+  "tech_debt": [],
+  "tech_debt_note": "No new debt is warranted. The verifyManifest flat unit 2 layout limit stays as TD-31 of the archived track asset_storytime_l2_retries_cover_20261110.",
+  "lessons_learned": "Two short entries were added to measure/lessons-learned.md: the frozen v6 judge treats the action of a page as a note only, so a page whose text is an action needs a separate action check and the judge and the action check run in separate sessions (look1 D6, the order fault of color try 2); never split a string literal to pass a scan test, pin a SHA-256 of the object instead (F1, LK13). Two pairs of existing lines were merged to hold the 50-line cap.",
+  "generated_facts": "not committed: measure/generated holds foreign uncommitted changes, so the generator did not run and no generated fact is committed; the registry entry in measure/tracks.md is staged through blob 71270ed7ca13429f7109a939c6e3546c632f2b46 so the foreign \"## Contents\" hunk stays out",
+  "artifact_cleanup": "no bulky run artifact was deleted; the orchestrator identified none. The run folder holds 35 files of json, log, txt, md, mts, py, and mjs, and no PNG or JPG file (find count 0)",
+  "evidence_classes": {
+    "person_reviewed": "the words of D2 for the hat-pip row only: \"Hat-pip image passes, but the w10 put on your t shirt image doesn't pass.\" (Daniel, Tasks, 2026-11-11 06:27 ICT). Nothing else was person-reviewed",
+    "model_evidence_not_acceptance": "the T-shirt redo carries the frozen judge results (claude-code/claude-sonnet-5-5#high), the line print gate (22 px), the pixel check, the MANIFEST checksums, and the action check. This is model evidence, not acceptance. The PM and Workbooks gave no approval of the T-shirt picture",
+    "workbooks_acceptance": "none recorded"
+  },
+  "model_routes": "the track author ran claude-code/claude-sonnet-5-5#high in a build session; the maker ran minimax-cn-coding-plan/MiniMax-M3.1-Flash by ra-quota pick, in place of the role-table GLM route; the checker ran kimi-code-plan-cn/kimi-for-coding#high; the judges ran claude-code/claude-sonnet-5-5#high. This closeout ran on minimax-cn-coding-plan/MiniMax-M3.1-Flash, the role-table model."
+}

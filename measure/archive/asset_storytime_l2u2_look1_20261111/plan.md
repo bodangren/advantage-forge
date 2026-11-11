@@ -200,17 +200,19 @@ runs the frozen judge and the action check between the paid calls. The stop is 0
     count, the 2 spend lines, the judge results of each try, the words of D2, the old and new SHA-256
     values of the T-shirt, the 6 unchanged folders, and the Facts changed list. The maker listed and
     deleted `/tmp/opencode/l2look1/`. Spend 0 USD.
-- [b] Phase 1 gate: phase acceptance by the checker at an immutable HEAD. The checker runs the GREEN
+- [x] Phase 1 gate (26cec278): phase acceptance by the checker at an immutable HEAD. The checker runs the GREEN
   command and the typecheck, probes `U2_LOOK_TRY` with fixture cost files, compares the `costs.tsv`
   sum with the spend log, checks the hat-pip SHA-256 values, the pixel check, the MANIFEST check, and the
-  folder state of the 6 old folders, and greps FR-11 and FR-12. deferred:checker
+  folder state of the 6 old folders, and greps FR-11 and FR-12.
+  - The result file `measure/runs/asset_storytime_l2u2_look1_20261111/acceptance-p1-26cec27.json` holds status pass at 26cec278. The checker model is kimi-code-plan-cn/kimi-for-coding#high. The GREEN run gave 20 test files and 308 tests, and the typecheck gave 0 error lines in the storytime paths. The result holds 0 blocking findings and 6 nonblocking process findings.
 
 ## Track-level roles
 
-- [b] Closeout: archive the track, update the registry, and run the doctor. The generator does not run
+- [x] Closeout (26cec278, archive SHA pending): archive the track, update the registry, and run the doctor. The generator does not run
   while `measure/generated/` holds foreign changes. The run records in
   `measure/runs/asset_storytime_l2u2_look1_20261111/` are committed. Foreign changes stay out of the
-  closeout commit. deferred:closeout
+  closeout commit.
+  - Closeout started 2026-11-11 at the audited HEAD 26cec278. The follow-up commit puts the archive commit SHA on this line.
 
 The light lane has no final acceptance role.
 

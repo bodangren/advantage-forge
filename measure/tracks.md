@@ -135,9 +135,6 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Chibi Sprouts, release 1 art**
   *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
 
-- [ ] **Track: Storytime Level 2 unit 2 look1: hat-pip owner job and the t-shirt redo**
-  *Link: [./tracks/asset_storytime_l2u2_look1_20261111/](./tracks/asset_storytime_l2u2_look1_20261111/)*
-
 
 ## Games
 
@@ -366,6 +363,10 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
 - [x] Storytime Level 2 unit 2 picture retries and the teacher cover front art, completed 2026-11-11; 4 of the 9 retried rows passed and were delivered in retry1 after 1 extra try each under the guard exception (cap 0.15 USD), the 9 version repairs give manifest version 1 with v1 pixels, 4 card line-art jobs delivered with line-width exceptions, the Teacher Book cover front art delivered (stop 0.10 USD), and the hat-pip line try 3 re-run (passes the 12 px gate, fails both judges; no delivery job); 228 of 229 unit 2 rows have a delivery job; Sonnet judge evidence (model evidence, not acceptance); spend 0.17 USD (item a 0.11, cover 0.06).
   *Link: [./archive/asset_storytime_l2_retries_cover_20261110/](./archive/asset_storytime_l2_retries_cover_20261110/)*
   *Storytime Level 2 unit 2 picture retries and the teacher cover front art: one extra try for 9 unit 2 book rows under a written guard exception (cap 0.15 USD) and one color front picture for the Teacher Book cover (stop 0.10 USD), with Muse, the frozen Sonnet judge, a retry delivery folder, and two hand-off folders*
+
+- [x] Storytime Level 2 unit 2 look1: hat-pip owner job and the t-shirt redo, completed 2026-11-11; the hat-pip row is delivered on Daniel's words "Hat-pip image passes"; the T-shirt redo (color m2, line try 3) passed the frozen judge and the action check (model evidence, not acceptance); 2 Muse calls, 0.02 USD of the 0.10 USD stop.
+  *Link: [./archive/asset_storytime_l2u2_look1_20261111/](./archive/asset_storytime_l2u2_look1_20261111/)*
+  *Storytime Level 2 unit 2 look1: a hat-pip delivery job on Daniel's words (0 USD) and the redo of the "Put on your T-shirt" picture with Muse (stop 0.10 USD), with the frozen Sonnet judge plus an action check, a new delivery folder, and a new hand-off folder*
 
 - [x] Storytime Level 2 card line-art retry (ham and family), completed 2026-11-07; family line art delivered (try 4, 12 px) with Sonnet judge evidence (model evidence, not acceptance); ham line art failed after 2 more tries, best try named, ham color file added for the greyscale fallback; spend 0.03 USD.
   *Link: [./archive/asset_storytime_l2_card_line_retry_20261107/](./archive/asset_storytime_l2_card_line_retry_20261107/)*

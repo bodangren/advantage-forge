@@ -1,0 +1,124 @@
+Acceptance log, Phase 1 of asset_storytime_l2u2_look1_20261111, checker role (light lane).
+Audited HEAD: 26cec27810bdf3b4a280bd9d4656ac7c793e8f7c (confirmed with git rev-parse HEAD).
+Phase base: 942fb4364f730ac160776e0c53416860173d49a2. This role spent 0 USD.
+
+## The probes
+
+1. Scope: the 9 changed files outside measure/runs/ are all inside the Owned paths of the spec
+   (2 judge batch files, the T-shirt spec, metadata.json, plan.md, the 2 guard files, the new
+   test file). No frozen path changed. No existing test file changed. No PNG or JPG entered git.
+2. Guard diff vs 7b346f43: only additions for U2_LOOK_TRY, U2_LOOK_CAP_MESSAGE, lookEntryFor,
+   countLookRows, lookSpendOf, the runGuards rule, and the u2LookCapUsd strip. Removed lines: 2
+   comment lines of cliGuardOptions only. probe-p1-guards.mjs with fixture cost files in a temp
+   dir: the 4th look try is refused; spend 0.095 + margin 0.01 over the 0.10 cap is refused; the
+   exact cap is allowed; an unlisted id keeps the normal rule (its own network-retry refusal);
+   cliGuardOptions strips u2LookCapUsd; no split CARD_RUN literal remains.
+3. Spec edit: only goal, colorPrompt, linePrompt differ from 7b346f43; the D3 sentences hold;
+   the banned phrases are absent.
+4. Spend: 2 paid rows at/after 2026-11-10T23:44:00Z across all 10 costs.tsv files, total 0.02
+   USD; spend-log.tsv matches exactly.
+5. Judges: color t2 first judge fail (action c no); second judge v6 pass voided for the order
+   fault, its action check all yes kept; clean r2 v6 pass; line t3 v6 pass with action a-g all
+   yes. The D6 rule gives a pass for m2 and line try 3. The void plus r2 remedy is sound.
+6. Line gate re-measure (inspectLineArtPng, class A 4000x3000): line print 22 px pass
+   (675a7ef4...), despeckled print 22 px pass (b265e5f7...).
+7. Hat-pip: both delivered files hold the D2 SHA-256 values; the D2 words are in
+   owner-look1.json, the hand-off README.md, and pm-report.md.
+8. Delivery: 4 PNGs plus manifest.json (0341b4f9...), 2 jobs, every candidate version and
+   selectedVersion is 1, no lineWidthException, delivered SHA-256 values equal the Muse prints.
+9. Hand-off: sha256sum -c MANIFEST.txt gives 8 OK and 0 FAILED; MANIFEST.txt sha256 6ae4e14f...;
+   the 4 delivered PNGs have link count 2; contact-sheet.png is 644x724 px, 2 rows.
+10. Folder-state probe (probe-p1-state.py): all 6 old folders have the same file counts and state
+    SHA-256 as folder-state-look1-before.txt; the before and after files are identical
+    (2589812f...).
+11. FR-11 grep: 13 regex hits, all false positives (the spec rule sentence, the role name
+    measure-phase-acceptance, "the PM writes the approved limit", the D2 quote). No real
+    acceptance claim outside D2.
+12. GREEN run through heavy-run.sh: 20 test files passed, 308 tests passed, exit 0. The SHA-256
+    of costs.tsv is b957c477... before and after the run (unchanged).
+13. tsc --noEmit -p . through heavy-run.sh: the plain run died with a JavaScript heap out of
+    memory (exit 134), as the maker recorded in maker-t1.log. The run with
+    NODE_OPTIONS=--max-old-space-size=2560 completed: 38 error lines in total and 0 error lines
+    in src/storytime/, scripts/storytime-, and tests/storytime-. The 38 errors are 35 in
+    assets/, 2 in tests/games/castle-defense/, and 1 in tests/part.test.ts. Matches the maker
+    evidence.
+
+## Nonblocking process findings
+
+- P1: the build session wrote 2 track files with a shell redirect against its brief; the content
+  is correct.
+- P2: the first build dispatch ran on the wrong agent and changed no file.
+- P3: the second color judge read the action prompt before it finished v6; voided; clean r2 ran.
+- P4: the maker split 2 card literals to pass CG3 (F1); fixed with a SHA-256 pin of CARD_RUN in
+  LK13 before commit b9e00eca; no split literal remains.
+- P5: the maker model was MiniMax by ra-quota pick, a substitution for the role-table GLM route.
+- P6: the registry entry of measure/tracks.md is [ ] while metadata is in_progress; the closeout
+  moves the entry.
+
+## Verdict
+
+status: pass. No blocking finding. No test strategy, live contract, prod wiring, or route
+parity violation. Retry recommendation: none. Confidence: high.
+
+MEASURE_AGENT_RESULT
+schema_version: 1
+role: phase-acceptance
+track: asset_storytime_l2u2_look1_20261111
+phase: "Phase 1: Hat-pip owner job and the t-shirt redo (look1)"
+baseline_sha: 942fb4364f730ac160776e0c53416860173d49a2
+audited_head_sha: 26cec27810bdf3b4a280bd9d4656ac7c793e8f7c
+status: pass
+summary: >
+  Phase 1 acceptance passes at 26cec278. All 10 acceptance criteria hold. The guard probe
+  refuses a 4th look try and an over-cap call and keeps the normal rule for unlisted ids. The
+  spec edit differs only in the 3 D3 fields. The spend is 2 calls and 0.02 USD. The judge
+  records meet D6 with a sound void plus r2 remedy. The line gate re-measures 22 px pass. The
+  delivery, the hand-off, the hat-pip job, and the 6 old folders all hold. FR-11 and FR-12 are
+  clean. The GREEN run gives 308 passed tests in 20 files. tsc gives 38 error lines in total
+  and 0 in the storytime paths.
+blocking_findings: []
+nonblocking_findings:
+  - P1 shell redirect in the build session against its brief (content correct).
+  - P2 first build dispatch ran on the wrong agent and changed no file.
+  - P3 second color judge order fault; voided; clean r2 ran.
+  - P4 the split card literals (F1); fixed in b9e00eca with the LK13 SHA-256 pin.
+  - P5 the maker model was MiniMax by ra-quota pick, a substitution for the GLM route.
+  - P6 the registry entry of measure/tracks.md is [ ] while metadata is in_progress.
+evidence:
+  - "F1-F15: the probe evidence of the acceptance JSON (scope, guard diff and probe, spec edit,
+    spend, judges, line gate, hat-pip, delivery, hand-off, folder-state, FR-11, FR-12,
+    costs.tsv pins)."
+  - "F16: GREEN run 20 files passed, 308 tests passed, exit 0."
+  - "F17: costs.tsv sha256 b957c477... unchanged before and after the tests."
+  - "F18: tsc heap OOM without the heap flag (exit 134); with
+    NODE_OPTIONS=--max-old-space-size=2560, 38 error lines in total, 0 in src/storytime/,
+    scripts/storytime-, and tests/storytime/."
+commands:
+  - git rev-parse HEAD
+  - git diff 7b346f43..26cec278 -- scripts/storytime-muse-guards.mjs scripts/storytime-muse-guards.d.mts docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt.json
+  - node measure/runs/asset_storytime_l2u2_look1_20261111/probe-p1-guards.mjs
+  - python3 measure/runs/asset_storytime_l2u2_look1_20261111/probe-p1-spend.py
+  - python3 measure/runs/asset_storytime_l2u2_look1_20261111/probe-p1-files.py
+  - python3 measure/runs/asset_storytime_l2u2_look1_20261111/probe-p1-state.py
+  - heavy-run.sh tsx probe-p1-line-gate.mjs
+  - heavy-run.sh vitest run (the 20 GREEN files) --maxWorkers=1
+  - heavy-run.sh tsc --noEmit -p . (heap OOM, exit 134)
+  - heavy-run.sh NODE_OPTIONS=--max-old-space-size=2560 tsc --noEmit -p .
+changed_files:
+  - the acceptance JSON and log of the run folder (this artifact), plus the probe scripts
+    probe-p1-spend.py, probe-p1-guards.mjs, probe-p1-guards-debug.mjs, probe-p1-line-gate.mjs,
+    probe-p1-files.py, probe-p1-sheet.mjs, probe-p1-state.py, probe-p1-update1.py,
+    probe-p1-update2.py. Nothing staged, nothing committed.
+test_strategy_violations: []
+live_contract_violations: []
+prod_wiring_violations: []
+route_parity_violations: []
+retry_recommendation: none
+confidence: high
+handoff:
+  - The phase passes acceptance at HEAD 26cec27810bdf3b4a280bd9d4656ac7c793e8f7c. The closeout
+    role runs next.
+  - The result files are acceptance-p1-26cec27.json and acceptance-p1-26cec27.log of the run
+    folder. They stay untracked; the closeout commits measure/runs/.
+  - The scratch folder /tmp/opencode/l2look1-p1c/ is deleted.
+END_MEASURE_AGENT_RESULT
