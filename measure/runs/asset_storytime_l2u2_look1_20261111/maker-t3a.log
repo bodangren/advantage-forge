@@ -136,7 +136,8 @@ track: asset_storytime_l2u2_look1_20261111
 phase: Phase 1: Hat-pip owner job and the t-shirt redo (look1)
 commits:
   - 4984bf3d87151ef84ae97d0bdbdf76b880c72bc3 measure(storytime_l2u2_look1): color try 2 judge result, m2 passes
-  - the commit of the line try 3 follows this log
+  - 8f6d832ffeeb157daf0fa97de8195b40b6ded7b6 feat(storytime_l2u2_look1): t-shirt line try 3 from m2
+  - the commit of this log follows
 tests_run:
   - no provider test ran in this step. The step makes 1 paid call and writes records. No file of src/, scripts/, or tests/ changed.
   - the network check curl -sS -m 20 -o /dev/null -w '%{http_code}\n' https://openrouter.ai/api/v1/models: 200 on the first check
