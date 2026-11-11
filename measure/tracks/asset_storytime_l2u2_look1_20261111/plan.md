@@ -148,7 +148,7 @@ runs the frozen judge and the action check between the paid calls. The stop is 0
     0 fail. So both parts of D6 pass on one judge, and no second judge ran. The T-shirt has a passing
     color (m2) and a passing line (try 3), so it is not a fail row. The maker ran no call in this
     step. Spend 0 USD.
-- [~] Task 4: Delivery, hand-off, and PM report (D7, D8). Spend 0 USD. Write `approvals-look1.json`
+- [x] Task 4 (sha pending): Delivery, hand-off, and PM report (D7, D8). Spend 0 USD. Write `approvals-look1.json`
   (the hat-pip entry, and the T-shirt entry only if it passes). Write `deliver-look1.mts` and run it
   through `heavy-run.sh` into `out/storytime/l2/unit2/delivery-muse-v1-look1/`. Run the pixel check and
   the folder-state check (before and after). Build the hand-off folder
@@ -186,6 +186,20 @@ runs the frozen judge and the action check between the paid calls. The stop is 0
     `measure/runs/asset_storytime_l2u2_look1_20261111/folder-state-look1-before.txt` and
     `folder-state-look1-after.txt` give the same file count and the same state SHA-256 for the 6
     old folders of D8, so no old folder changed. Spend 0 USD.
+  - Part 2, the hand-off and the PM report (D8). The maker wrote
+    `measure/runs/asset_storytime_l2u2_look1_20261111/make-handoff-look1.mjs` and ran it once with
+    node. It built the hand-off folder `/home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-look1/`
+    with 9 files: the 4 PNG files as hard links of the delivered files, `contact-sheet.png`,
+    `manifest.json`, `spend-log.tsv`, `README.md`, and `MANIFEST.txt`. The MANIFEST.txt SHA-256 is
+    `6ae4e14f0f37914eb542596a5d756c5a41a2de6abfc728f176bbd0d09aa6c077`. The check
+    `sha256sum --quiet -c MANIFEST.txt` gives no FAILED line, and
+    `sha256sum -c MANIFEST.txt | grep -c ': OK$'` gives 8 OK lines. The contact sheet has 2 rows: the
+    hat-pip row and the T-shirt row, each with the color print beside the line print and the row id
+    under the pair. The maker wrote `measure/runs/asset_storytime_l2u2_look1_20261111/pm-report.md`.
+    Its first line is `Status: done.`. It holds the folder path, the MANIFEST.txt SHA-256, the OK
+    count, the 2 spend lines, the judge results of each try, the words of D2, the old and new SHA-256
+    values of the T-shirt, the 6 unchanged folders, and the Facts changed list. The maker listed and
+    deleted `/tmp/opencode/l2look1/`. Spend 0 USD.
 - [b] Phase 1 gate: phase acceptance by the checker at an immutable HEAD. The checker runs the GREEN
   command and the typecheck, probes `U2_LOOK_TRY` with fixture cost files, compares the `costs.tsv`
   sum with the spend log, checks the hat-pip SHA-256 values, the pixel check, the MANIFEST check, and the

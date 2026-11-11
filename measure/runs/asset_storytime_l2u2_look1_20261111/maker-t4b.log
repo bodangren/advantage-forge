@@ -1,0 +1,119 @@
+Maker log, task 4b of the look1 track. Session: Green · P1 T4 · storytime_l2u2_look1 · r2.
+
+Model note: the role table names volcengine-agent-plan/glm-5.3-flash#high. The orchestrator picked
+minimax-cn-coding-plan/MiniMax-M3.1-Flash as a quota-backed substitute. The maker records the
+substitution and runs on it.
+
+role_base_sha: 8a82401c32d49b2c3d84c6159429fa38d4daca4a. The HEAD at the start of this step was that
+SHA, so the base matched.
+
+This step is Part 2 of Task 4. It spends 0 USD. It makes no Muse call and no network call, and it
+reads no API key. It runs no test and no typecheck.
+
+## Part B. The hand-off folder, the PM report, and the plan evidence
+
+The maker builds the hand-off folder with one node script,
+`measure/runs/asset_storytime_l2u2_look1_20261111/make-handoff-look1.mjs`. The script makes hard
+links of the 4 delivered PNG files, copies manifest.json and the spend log, writes the contact
+sheet with sharp, writes README.md, and writes MANIFEST.txt last.
+
+### The defaults of this step
+
+The brief leaves some choices open. The maker takes these defaults and records them here.
+
+1. The contact sheet uses the form of handoff-retry1.mjs: a cell of 300 px, a pad of 16 px, a gap of
+   12 px, a label band of 30 px, and the row id under the pair, centered.
+2. The row order of the contact sheet is hat-pip first and the T-shirt second, as the brief names.
+3. The MANIFEST.txt comment block holds the title of the folder, a line on the 2 delivery jobs, a
+   line on the owner acceptance of the hat-pip row, and the check command. It names no acceptance of
+   the T-shirt picture.
+4. The README.md and the pm-report.md quote the PM order and the owner words word for word. They
+   keep the other sentences in the voice of the maker.
+5. The builder refuses to run when the hand-off folder exists. It never writes into the 6 old
+   folders, the cover folder, or the delivery folder.
+
+### The build
+
+The maker wrote the script and ran it once with node. The run gave exit status 0. It linked the 4
+delivered PNG files, copied manifest.json and spend-log.tsv, wrote contact-sheet.png at 644 x 724
+with 2 pairs, wrote README.md, and wrote MANIFEST.txt last.
+
+The folder /home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-look1/ holds 9 files: the 4
+PNG files, contact-sheet.png, manifest.json, spend-log.tsv, README.md, and MANIFEST.txt. The 4 PNG
+files are hard links of the delivered files, so the folder costs no disk space. The SHA-256 of
+MANIFEST.txt is 6ae4e14f0f37914eb542596a5d756c5a41a2de6abfc728f176bbd0d09aa6c077.
+
+### The checks in the folder
+
+- `sha256sum --quiet -c MANIFEST.txt` gives no line and exit status 0. There is no FAILED line.
+- `sha256sum -c MANIFEST.txt | grep -c ': OK$'` gives 8.
+- `sha256sum MANIFEST.txt` gives
+  `6ae4e14f0f37914eb542596a5d756c5a41a2de6abfc728f176bbd0d09aa6c077  MANIFEST.txt`.
+- `find /home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-look1 -name '*.png' -links 1`
+  names only contact-sheet.png. Each of the 4 delivered PNG files has 2 links.
+
+### The README.md and the PM report
+
+The README.md quotes the PM order of D1 word for word from the spec, the owner words of D2 word for
+word from owner-look1.json, and the 2 spend lines word for word from spend-log.tsv. The script
+reads those 3 texts from their source files, so no text was typed by hand. The README holds the
+old and new SHA-256 values of the T-shirt files, the judge result of each try, the print gate, the
+spend, and the 6 unchanged folders. It ends with the text "The judge results of the t-shirt are
+model evidence, not acceptance. Daniel's look gate and the Workbooks checks decide."
+
+The pm-report.md starts with `Status: done.` and holds the folder path, the MANIFEST.txt SHA-256,
+the OK count, the 2 spend lines, the judge results of each try, the words of D2, the old and new
+SHA-256 values of the T-shirt, the 6 unchanged folders, and the Facts changed list. No other
+sentence of either file says that Daniel, the PM, or Workbooks accepted a picture.
+
+### The plan
+
+The maker changed the Task 4 line of plan.md from `[~]` to `[x] Task 4 (sha pending):` and added
+the sub-bullet "Part 2, the hand-off and the PM report (D8)". The Phase 1 gate stays `[b]` with
+`deferred:checker`.
+
+### The clean-up
+
+The maker listed /tmp/opencode/l2look1/ and deleted it. The folder held no file.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: done
+track: asset_storytime_l2u2_look1_20261111
+phase: Phase 1: Hat-pip owner job and the t-shirt redo (look1)
+commits:
+  - the commit of this log follows
+  - the base of this step is 8a82401c32d49b2c3d84c6159429fa38d4daca4a
+tests_run:
+  - the node builder measure/runs/asset_storytime_l2u2_look1_20261111/make-handoff-look1.mjs: exit status 0, 4 hard links, 2 copies, 1 contact sheet, 1 README.md, 1 MANIFEST.txt
+  - sha256sum --quiet -c MANIFEST.txt in the hand-off folder: exit status 0, no line, no FAILED line
+  - sha256sum -c MANIFEST.txt | grep -c ': OK$' in the hand-off folder: 8
+  - find on the hand-off folder with -name '*.png' -links 1: only contact-sheet.png has 1 link
+  - no vitest run and no typecheck ran in this step. The step changes no file of src/, scripts/, tests/, or docs/.
+files_changed:
+  - measure/runs/asset_storytime_l2u2_look1_20261111/make-handoff-look1.mjs
+  - measure/runs/asset_storytime_l2u2_look1_20261111/pm-report.md
+  - measure/runs/asset_storytime_l2u2_look1_20261111/maker-t4b.log
+  - measure/tracks/asset_storytime_l2u2_look1_20261111/plan.md
+  - the hand-off folder /home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-look1/ with 9 files, outside git
+plan_updates:
+  - plan.md: Task 4 changed from [~] to [x] and holds (sha pending). Its new sub-bullet "Part 2, the hand-off and the PM report (D8)" holds the hand-off folder, its file count, the MANIFEST.txt SHA-256, and the OK count.
+  - plan.md: the Phase 1 gate stays [b] with deferred:checker.
+known_failures:
+  - none of the step. The builder refused no row, the MANIFEST check gives 0 FAILED lines and 8 OK lines, and no old folder changed.
+  - the maker made no Muse call and no network call, and it read no API key. The step spends 0 USD.
+handoff:
+  - The role_base_sha is 8a82401c32d49b2c3d84c6159429fa38d4daca4a. The commits of this step follow it.
+  - Task 4 is [x]. The Phase 1 gate stays [b] with deferred:checker. The checker runs next at an immutable HEAD.
+  - The hand-off folder is /home/daniebo/Desktop/handoff/storytime-l2u2-book-pictures-look1/. It holds 9 files: 4 PNG files, contact-sheet.png, manifest.json, spend-log.tsv, README.md, and MANIFEST.txt.
+  - The SHA-256 of MANIFEST.txt is 6ae4e14f0f37914eb542596a5d756c5a41a2de6abfc728f176bbd0d09aa6c077. The check sha256sum --quiet -c MANIFEST.txt gives no FAILED line, and sha256sum -c MANIFEST.txt | grep -c ': OK$' gives 8.
+  - The new files for the audit scope are measure/runs/asset_storytime_l2u2_look1_20261111/make-handoff-look1.mjs, measure/runs/asset_storytime_l2u2_look1_20261111/pm-report.md, measure/runs/asset_storytime_l2u2_look1_20261111/maker-t4b.log, and the 9 files of the hand-off folder. The last 9 files stay outside git.
+  - The PM report is measure/runs/asset_storytime_l2u2_look1_20261111/pm-report.md. Its first line is Status: done.
+  - The spend is 2 calls and 0.02 USD of the 0.10 USD stop. The 2 spend lines are in spend-log.tsv and in the copy of the hand-off folder.
+  - The judge results of the T-shirt color try 2 (m2): the first judge fails with the class wrong-character, and its action check reads c no. The second judge passes with the class none, and its v6 part is void because it read the action-check prompt first. A clean second v6 judge passes with the class none. The color m2 passes by the second-judge rule of D6.
+  - The judge results of the T-shirt line try 3: the print gate passes at 22 px, the judge passes with the class none, and the action check reads a yes to g yes. The note says the vest is a simple band.
+  - The owner words of D2 for the hat-pip row are "Hat-pip image passes, but the w10 put on your t shirt image doesn't pass." The source is Daniel, Tasks, 2026-11-11 06:27 ICT. The 2 files hold the color m3 at 6db86851b359760ea88e9feb67cf2bc784720ac4466abc5419af6f1dfff6bdff and the line try 3 at 1474680276aa160dd972cd78b8559039a765032e703323cdb1ff41f0583aa9e1.
+  - The T-shirt old values are the color 9e207c3c72db52d323fd8ef64c9565588f853460ec7abcfa0fda5a053bd925e4 and the line 71e2ba056c09ad66a1beecb565941616becfdecf4fccd107e86bbbe0b9e1ca7e. The new values are the color 8e1baee103a536b26071781754118ff757072a75a5a13837ada6439c2dc406b2 and the line 675a7ef4d25dcc22f7533c1caf0296c9fdd5abf1773972b5531a4c8403f514d7.
+  - The 6 old folders give the same file count and the same state SHA-256 before and after: 441, 9, 27, 469, 23, and 33 files.
+  - The maker deleted /tmp/opencode/l2look1/. The maker wrote no file of src/, scripts/, tests/, or docs/. It changed no guard and no Muse file. It wrote nothing in the 6 old folders and nothing in the delivery folder.
+END_MEASURE_AGENT_RESULT
