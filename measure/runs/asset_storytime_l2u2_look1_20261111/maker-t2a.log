@@ -68,7 +68,7 @@ status: done
 track: asset_storytime_l2u2_look1_20261111
 phase: Phase 1: Hat-pip owner job and the t-shirt redo (look1)
 commits:
-  - PLACEHOLDER_COMMIT_SHA feat(storytime_l2u2_look1): t-shirt color try 2
+  - 78355c5ad680d48cfa88e204cd99f5b83316fd71 feat(storytime_l2u2_look1): t-shirt color try 2
   - the plan-evidence commit follows this log
 tests_run:
   - no test run in this step. The step makes 1 paid call and writes records. No file of src/, scripts/, or tests/ changed.
@@ -87,7 +87,7 @@ known_failures:
   - the judge copy is the resize of the m2 color file, not the resize of the m2 color print. The frozen batch tool names the color file from the output column of the costs.tsv row. The maker did not change the tool.
 handoff:
   - The maker spent 0.01 USD in this step. The guard U2_LOOK_TRY held the call. The look spend since 2026-11-10T23:50:00Z is 0.01 USD, and the stop is 0.10 USD.
-  - The role_base_sha is 269fe94ffa90a91ce524154ea8f60535591b30e0. The phase_base_sha is the same SHA, and the Green HEAD is the commit of this step, listed in the commits field.
+  - The role_base_sha is 269fe94ffa90a91ce524154ea8f60535591b30e0. The phase_base_sha is the same SHA, and the Green HEAD is 78355c5ad680d48cfa88e204cd99f5b83316fd71, the commit of this step.
   - Task 2 keeps the marker [~]. The orchestrator runs the frozen judge and the action check next, on the batch u2l1-color-t2 and the judge copy out/storytime-review/judge/prod-u2/l2-w10-story-page-put-on-your-t-shirt-color-t2.png.
   - The judge result file name for this try is judge-u2l1-color-t2.json, with the actionCheck object of D6. The action item g is n/a for a color print.
   - The m2 files for the audit scope are out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt-m2-color.png, out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt-m2-color-print.png, and out/storytime/l2/unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt-m2.json. They stay under out/ and stay out of git.
