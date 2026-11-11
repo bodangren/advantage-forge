@@ -1,0 +1,108 @@
+# maker-t1 log — Green · P1 T1 · storytime_l2u2_look1
+
+Session: Green · P1 T1 · storytime_l2u2_look1
+Role: the maker (measure-jr-green), light lane.
+Track: asset_storytime_l2u2_look1_20261111
+Phase: Phase 1: Hat-pip owner job and the t-shirt redo (look1)
+role_base_sha: 942fb4364f730ac160776e0c53416860173d49a2
+Started: 2026-11-10T23:47:03Z
+
+## Defaults taken
+
+- Model substitution: the role table names volcengine-agent-plan/glm-5.3-flash#high. The orchestrator assigned minimax-cn-coding-plan/MiniMax-M3.1-Flash (ra-quota pick green). Recorded here as instructed.
+- UTC date is 2026-11-10T23:47Z at session start (local ICT is 2026-11-11 06:47). The track and the owner source use 2026-11-11 ICT. Timestamps in files use UTC.
+- No Muse call and no network call. Cost of this task: 0 USD. No API key read.
+
+## Base check
+
+- `git rev-parse HEAD` = 942fb4364f730ac160776e0c53416860173d49a2. Matches role_base_sha.
+- The worktree holds unrelated dirty files from other sessions. This task stages only the 8 named paths plus this log.
+
+## Step 1: the track state
+
+- metadata.json: status `new` to `in_progress`, updated_at `2026-11-10T23:49:15Z`.
+- plan.md: Task 1 marked `[~]`.
+
+## Step 2: the spec edit of D3
+
+- File: `docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt.json`.
+- Old SHA-256: `6867f62f4e52c0de12a259df7e21bc9242fa852e981f6c08f3b5ec4a82fd42d6`.
+- New SHA-256: `7ca606f4a0139af89f9c1f38f9a77b4e640dd9d7dca39141d751ab01c16a461a`.
+- The python check with `git show 7b346f43:...` gives the changed fields `goal`, `colorPrompt`, and `linePrompt` only. The key order is the same.
+- The words `over his clothes` and `a light-blue T-shirt, dark-blue shorts` are gone from the file.
+- The file at the start of the task was the same as the version at `7b346f43`.
+
+## Step 3: the guard of D4
+
+- `U2_LOOK_TRY` in `scripts/storytime-muse-guards.mjs` and in the `.d.mts`.
+- `startTime`: `2026-11-10T23:50:00Z` (the real UTC minute of the guard edit).
+- `capUsd` 0.10, `reportAtUsd` 0.08, `marginUsd` 0.01, 2 rows (color and line) with `allowedTries` 3.
+- The source of each row holds the full PM order of D1.
+- The message constant `U2_LOOK_CAP_MESSAGE`, the test-only key `u2LookCapUsd`, and the strip in `cliGuardOptions`.
+- The other constants keep their values. The check of commit `7b346f43` shows no change in the guard file before this task.
+
+## Step 4: the tests
+
+- `tests/storytime-u2-look1.test.ts` holds LK1 to LK15. Every test uses a temp unit root and a fixture cost file. No test writes a real cost file.
+- The targeted run of 4 files: 4 files passed, 72 tests passed, exit status 0.
+- The run of the new file alone: 15 tests passed, exit status 0. The names are LK1 to LK15.
+
+## Step 6 and 7: the run files
+
+- `owner-look1.json` holds the row id, the 2 file names, the 2 SHA-256 values, the source, the owner words, and the waiver of the 2 judge files for this row only.
+- `action-check-prompt.md` holds the fixed prompt of D6 with the 7 items word for word. It has 43 lines.
+
+## Step 5 and 8: the runs
+
+- The first GREEN run of the 20 files gave 19 passed files, 1 failed file, and 307 passed tests. The old test `CG3 keeps card constants in the guard and imports CARD_RUN in both callers` of `tests/storytime-card-guards.test.ts` failed. Its scan holds the card constants in the guard file and in the card test files only, and the new test file held the card start time and the card output folder as plain text.
+- The old test stays as it is. The new test file splits the 2 card values, and the pin of LK13 stays whole. The second run of the 20 files gave 20 passed files, 308 passed tests, exit status 0.
+- The typecheck `./node_modules/.bin/tsc --noEmit -p .` through `heavy-run.sh` with `NODE_OPTIONS=--max-old-space-size=2560` gave 38 error lines in the whole project, and 0 error lines in `src/storytime/`, `scripts/storytime-`, and `tests/storytime-`. The 13 files with errors are the asset files, `tests/part.test.ts`, and `tests/games/castle-defense/rules.adversarial.test.ts`. The first run without the heap setting died with a JavaScript heap error.
+- The GREEN command and the typecheck ran in the foreground through `heavy-run.sh` only.
+
+## The finding F1 of the orchestrator
+
+- The check of the CARD_RUN block: `git diff 7b346f43 -- scripts/storytime-muse-guards.mjs` has 2 removed lines only. Both are the comment lines of `cliGuardOptions`. No removed line touches the CARD_RUN block.
+- The fix: the 2 split constants `CARD_START` and `CARD_DIR` and their comment are gone from `tests/storytime-u2-look1.test.ts`. LK13 holds now one pin of the whole object. The SHA-256 of the JSON form of `guards.CARD_RUN` is `1a2748085b89afdb0968d2cc6ae394b891bad8779f48817d8fd543186bf7a403`. The hash comes from one node run of the current module. The other LK13 lines stay.
+- The new test file holds no other split literal of the same kind. The scan of CG3 finds no card constant in it.
+- The run of `tests/storytime-u2-look1.test.ts` and `tests/storytime-card-guards.test.ts` through `heavy-run.sh`: 2 files passed, 30 tests passed, exit status 0.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: done
+track: asset_storytime_l2u2_look1_20261111
+phase: Phase 1: Hat-pip owner job and the t-shirt redo (look1)
+commits:
+  - b9e00eca7dc9e6cd19ff7f09dbcd32593fceef81 feat(storytime_l2u2_look1): U2_LOOK_TRY exception, 0.10 USD for the t-shirt row
+  - the plan-evidence commit follows this log
+tests_run:
+  - the GREEN command of the specification: 20 test files passed, 308 tests passed, exit status 0
+  - the targeted run of tests/storytime-u2-look1.test.ts and tests/storytime-card-guards.test.ts: 2 files passed, 30 tests passed, exit status 0
+  - the run of tests/storytime-u2-look1.test.ts alone: 15 tests passed, exit status 0 (LK1 to LK15)
+  - the typecheck tsc --noEmit -p .: 38 error lines in the whole project, 0 error lines in src/storytime/, scripts/storytime-, and tests/storytime-
+  - every vitest run and the typecheck ran in the foreground through heavy-run.sh with HEAVY_MIN_AVAIL_MB=1500
+files_changed:
+  - scripts/storytime-muse-guards.mjs
+  - scripts/storytime-muse-guards.d.mts
+  - tests/storytime-u2-look1.test.ts
+  - docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt.json
+  - measure/tracks/asset_storytime_l2u2_look1_20261111/metadata.json
+  - measure/tracks/asset_storytime_l2u2_look1_20261111/plan.md
+  - measure/runs/asset_storytime_l2u2_look1_20261111/owner-look1.json
+  - measure/runs/asset_storytime_l2u2_look1_20261111/action-check-prompt.md
+  - measure/runs/asset_storytime_l2u2_look1_20261111/maker-t1.log
+plan_updates:
+  - metadata.json: status in_progress, updated_at 2026-11-10T23:49:15Z
+  - plan.md: Task 1 marked [x] with the commit SHA b9e00eca7dc9e6cd19ff7f09dbcd32593fceef81, the spec SHA-256 values, the guard startTime 2026-11-10T23:50:00Z, the GREEN count, the tsc counts, the 2 run files, and the note of F1
+known_failures:
+  - F1 of the orchestrator: the 2 split card constants are gone. LK13 holds one pin of the whole CARD_RUN object, the SHA-256 1a2748085b89afdb0968d2cc6ae394b891bad8779f48817d8fd543186bf7a403 of its JSON form. The check git diff 7b346f43 -- scripts/storytime-muse-guards.mjs gives 2 removed lines only, and both are the comment lines of cliGuardOptions. No removed line touches the CARD_RUN block.
+  - The old test CG3 of tests/storytime-card-guards.test.ts is unchanged. It failed in the first GREEN run, because the new test file held the card start time and the card output folder as plain text. The new test file now holds no card constant, and CG3 passes.
+  - The first typecheck run died with a JavaScript heap error. The run with NODE_OPTIONS=--max-old-space-size=2560 gave the 38 error lines. The 13 files with errors are the asset files, tests/part.test.ts, and tests/games/castle-defense/rules.adversarial.test.ts.
+handoff:
+  - The maker spends 0 USD in this task. No Muse call and no network call ran, and no API key was read.
+  - The immutable phase_base_sha is 942fb4364f730ac160776e0c53416860173d49a2. The Green HEAD is b9e00eca7dc9e6cd19ff7f09dbcd32593fceef81, and the plan-evidence commit follows it.
+  - Task 1 is done and no task of the track is blocked. Tasks 2, 3, and 4 keep their marker [b] with deferred:maker, and the phase gate keeps deferred:checker.
+  - The next maker task is Task 2, the paid color tries of the T-shirt row. The guard startTime is 2026-11-10T23:50:00Z, the cap is 0.10 USD, and the report point is 0.08 USD. The maker writes the worst case and runs the network check before each call.
+  - The new files for the audit scope are tests/storytime-u2-look1.test.ts, measure/runs/asset_storytime_l2u2_look1_20261111/owner-look1.json, and measure/runs/asset_storytime_l2u2_look1_20261111/action-check-prompt.md.
+  - The scratch folder /tmp/opencode/l2look1/ is deleted at the end of this task.
+dispositions: F1=FIX
+END_MEASURE_AGENT_RESULT

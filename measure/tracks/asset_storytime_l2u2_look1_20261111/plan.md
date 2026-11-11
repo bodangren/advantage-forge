@@ -58,8 +58,8 @@ this heading.
 Light lane. One maker (`measure-jr-green`). One checker (`measure-phase-acceptance`). The orchestrator
 runs the frozen judge and the action check between the paid calls. The stop is 0.10 USD.
 
-- [x] Task 1 (sha pending): Prompt edit, guard, tests, and owner record (D2, D3, D4, D6). Spend 0 USD.
-  Make no Muse call.
+- [x] Task 1 (b9e00eca7dc9e6cd19ff7f09dbcd32593fceef81): Prompt edit, guard, tests, and owner
+  record (D2, D3, D4, D6). Spend 0 USD. Make no Muse call.
   - The T-shirt spec file `docs/storytime/l2-unit2/w10/muse/l2-w10-story-page-put-on-your-t-shirt.json`:
     the old SHA-256 is `6867f62f4e52c0de12a259df7e21bc9242fa852e981f6c08f3b5ec4a82fd42d6` and the new
     SHA-256 is `7ca606f4a0139af89f9c1f38f9a77b4e640dd9d7dca39141d751ab01c16a461a`. The changed fields
@@ -78,6 +78,10 @@ runs the frozen judge and the action check between the paid calls. The stop is 0
     `scripts/storytime-`, and `tests/storytime-`.
   - The run files: `measure/runs/asset_storytime_l2u2_look1_20261111/owner-look1.json` and
     `measure/runs/asset_storytime_l2u2_look1_20261111/action-check-prompt.md`.
+  - F1 of the orchestrator: the card constants of LK13 are now one pin of the whole `CARD_RUN`
+    object, the SHA-256 `1a2748085b89afdb0968d2cc6ae394b891bad8779f48817d8fd543186bf7a403` of its
+    JSON form. The 2 split literals are gone, and the scan of CG3 finds no card constant in the new
+    test file.
 - [b] Task 2: The T-shirt color tries (D5, D6). Paid, at most 3 calls. Before each call, write the worst
   case and run the network check. Run one color call: `node scripts/storytime-muse.mjs color <spec>`
   (versions m2, m3, m4). Make the judge batch for the try. The orchestrator runs the frozen judge, the
