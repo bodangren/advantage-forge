@@ -1,0 +1,76 @@
+maker-r1-1 — Hy4 maker, arm 1, try round 1
+Track: asset_hy4_maker_trial_20261116
+Phase: Phase 1: The trial, Task 1 (try round 1), arm 1
+Role base SHA: ee7bf509400021fe8f9eeed036261e192198c8b1 (HEAD at task start)
+Phase base SHA: 8d045c1d538a18a4c653d6ceca05fdf09689bb59 (Phase 0 checkpoint)
+Immutable bases: the light lane has no Red role, so there is no committed Red
+  change inside phase_base..HEAD to verify. The role base equals the start HEAD.
+Assigned sources: assets/towel-stack-a.ts, assets/wash-basin-a.ts, assets/towel-rack-b.ts
+Reference rule: the brief wins where the mockup differs. The stack order is
+  cream (bottom), teal (middle), terracotta (top), as the brief states.
+
+Status: complete for arm 1 round 1. All three sources build cleanly and pass
+  the mechanical check. Cards are at out/hy4-trial/cards/r1/.
+
+Forge and check commands ran only through heavy-run.sh with HEAVY_MIN_AVAIL_MB=1500.
+  No lock wait (exit 75) occurred. No browser install ran. No other arm's file
+  was opened. One heavy job ran at a time.
+
+Targeted Red command: none. This is a light lane with no Red role, so the
+  orchestrator's GREEN_TEST_COMMAND is the three mechanical checks listed below.
+
+MECHANICAL CHECK OUTPUT (each line exited 0)
+{"asset":"towel-stack-a","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":940,"bottomY":0,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":1365220},"typecheckExit":0,"failures":[]}
+{"asset":"wash-basin-a","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":3854,"bottomY":-0.001,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":1868228},"typecheckExit":0,"failures":[]}
+{"asset":"towel-rack-b","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":2776,"bottomY":0,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":1281692},"typecheckExit":0,"failures":[]}
+
+FAST RENDER AND INSPECT
+Each asset: ./forge render <name> --fast, read out/<name>/render.png, then
+  ./forge inspect <name> --fast. Every inspect ended with "Warnings - none".
+Iteration counts (successful --fast renders):
+- towel-stack-a: 3. Fixed a box-radius build error, a detached folded corner,
+  inactive dents, and a distorted stitch band. Final bounds 0.308 x 0.227 x
+  0.257 m; bottom y = 0; 1,126 fast triangles.
+- wash-basin-a: 3. Fixed a scalloped rim, a hidden pale rim, and low water.
+  Final bounds 0.419 x 0.199 x 0.494 m; bottom y = -0.001 m; 4,136 fast
+  triangles. Inspect: water 51.9% from top, 5.7% from three-quarter, hidden
+  from the side. This is normal for a shallow bowl.
+- towel-rack-b: 1. Final bounds 0.689 x 0.829 x 0.34 m; bottom y = 0; 2,901
+  fast triangles. Inspect: no floating or buried part; the towel touches the
+  top rail and stays clear of the legs.
+
+CARDS
+python3 scripts/review-cards.py out/hy4-trial/cards/r1 <name> ran once per name.
+  Each card and out/<name>/sprites/preview.png were read once. At 128 px the
+  three towel colors stay apart, the basin water stays apart from the rim,
+  and the rack towel stays apart from the wood frame.
+
+KNOWN WEAK POINTS (self-observed, not a rating)
+- towel-stack-a: the overhanging corner is a simple flat flap. The rolled
+  fold ends read as small round nubs in side sprites. The cream base is a
+  little slab-like.
+- wash-basin-a: the water is faint in the front view and hidden in the side
+  view. The dipper knob lifts total height to 0.199 m, above the 0.17 m brief.
+- towel-rack-b: only one iteration. The wood frame reads mid-value, not dark
+  at the legs. The peg and rope ties are tiny at 128 px. Total width 0.689 m
+  exceeds the 0.62 m brief because the peg sticks out on +X.
+
+GATE NOTE
+bash measure/doctor.sh exited 1. Every error names another track's plan or a
+  stale generated file with a foreign hunk. The doctor reports no error for
+  asset_hy4_maker_trial_20261116. This failure predates this role and is not
+  caused by the three sources. The plan forbids running generate.sh while
+  measure/generated/ holds foreign changes.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: complete
+track: asset_hy4_maker_trial_20261116
+phase: Phase 1: The trial, Task 1 (try round 1), arm 1
+commits: implementation commit "feat(asset_hy4_maker_trial): round 1 arm 1 props"; its SHA is recorded in the Task 1 sub-bullet of plan.md
+tests_run: 3 mechanical checks, each ok:true exit 0 — towel-stack-a (940 tris, bottomY 0, typecheck 0); wash-basin-a (3854 tris, bottomY -0.001, typecheck 0); towel-rack-b (2776 tris, bottomY 0, typecheck 0); forge all exit 0 with 0 warnings for each; doctor.sh exited 1 on pre-existing foreign dirt only, no error for this track
+files_changed: assets/towel-stack-a.ts, assets/wash-basin-a.ts, assets/towel-rack-b.ts, measure/runs/asset_hy4_maker_trial_20261116/maker-r1-1.log, measure/tracks/asset_hy4_maker_trial_20261116/plan.md (sub-bullet only)
+plan_updates: Task 1 marked [~] before asset edits; one sub-bullet added with implementation SHA, mech-check result for the 3 names, and card path; Task 1 deliberately not marked [x]
+known_failures: doctor.sh fails on other tracks and stale generated files; unrelated to this track; no mech-check failure
+handoff: Arm 1 round 1 is done. phase_base_sha 8d045c1d, role_base_sha ee7bf509, and the three mech-checks pass. Fast render iterations: towel-stack-a 3, wash-basin-a 3, towel-rack-b 1. Weak points: the stack corner is a flat flap and its rolled ends read as nubs; the basin water is faint from the front and hidden from the side, and its height is 0.199 m against a 0.17 m brief; the rack has mid-value wood, tiny peg and rope, and a 0.689 m width against a 0.62 m brief. Cards are at out/hy4-trial/cards/r1/. No Red command exists in this light lane; the GREEN_TEST_COMMAND is the three mech-checks. Rated G; this role does not rate its own work.
+END_MEASURE_AGENT_RESULT
