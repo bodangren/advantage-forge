@@ -202,10 +202,10 @@ HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/hea
 
 ## Functional Requirements
 
-- **FR-1 Track files.** The track holds `spec.md`, `plan.md`, and `metadata.json` with `"lane": "light"`.
-  The track folder holds 3 briefs. `measure/runs/asset_hy4_maker_trial_20261116/` holds `arm-key.json`,
-  `judge-brief.md`, `mech-check.mjs`, `mech-check-test.txt`, and the judge files. The registry
-  `measure/tracks.md` holds one entry for the track.
+- **FR-1 Track files.** The track holds `spec.md`, `plan.md`, `metadata.json` with `"lane": "light"`,
+  and `index.md`. The track folder holds 3 briefs. `measure/runs/asset_hy4_maker_trial_20261116/` holds
+  `arm-key.json`, `judge-brief.md`, `mech-check.mjs`, `mech-check-test.txt`, and the judge files. The
+  registry `measure/tracks.md` holds one entry for the track.
 - **FR-2 Mockups.** Each asset has one mockup at `docs/bathhouse-mockups/<name>-mock.jpg`. The file is a
   JPG image of one prop. The maker log records each prompt and the quota use. A failed `mmx` run twice
   for one asset gives a text-only brief, and the plan records it.

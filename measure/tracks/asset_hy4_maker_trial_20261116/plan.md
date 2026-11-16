@@ -60,9 +60,9 @@ doctor counts only `[ ]`, `[~]`, and `[x]`.
 
 ## Phase 0: Authoring [checkpoint: 8d045c1d]
 
-- [x] Task 0 (8d045c1d): Author the track: specification, plan, metadata, 3 briefs, 3 mockups, the arm
-  key, the judge brief, and the mechanical check with its test on `bucket`. Add the registry entry. The
-  creation commit has the message `measure(asset_hy4_maker_trial): create the track`.
+- [x] Task 0 (8d045c1d): Author the track: specification, plan, metadata, index, 3 briefs, 3 mockups,
+  the arm key, the judge brief, and the mechanical check with its test on `bucket`. Add the registry
+  entry. The creation commit has the message `measure(asset_hy4_maker_trial): create the track`.
   - The 3 assets are `towel-stack`, `wash-basin`, and `towel-rack` (specification D1). The bar is 7.0.
   - Mockups: `docs/bathhouse-mockups/<name>-mock.jpg`. The prompts, the SHA-256 values, and the quota
     use are in `measure/runs/asset_hy4_maker_trial_20261116/mockups.md`. All 3 `mmx` calls answered.
