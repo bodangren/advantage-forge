@@ -1,7 +1,7 @@
 # Trial Hy4 Flash as the maker of simple 3D asset files
 
-Status: new (2026-11-16). Phase 0 authors the track. Phase 1 makes 3 props twice from one brief, judges
-the cards blind, and promotes the winner.
+Status: new (2026-11-16). Phase 0 authors the track (8d045c1d). Phase 1 makes 3 props twice from one
+brief, judges the cards blind, and promotes the winner.
 
 The track follows Daniel's order of 2026-11-16: a small trial of `opencode/hy4-flash-free` as the maker
 of asset TypeScript files. The [specification](./spec.md) owns the scope, decisions D1 to D10, and the
@@ -58,11 +58,11 @@ The route models:
 with a trailing `deferred:<owner>` field. The owner changes `[b]` to `[~]` when the blocker clears. The
 doctor counts only `[ ]`, `[~]`, and `[x]`.
 
-## Phase 0: Authoring
+## Phase 0: Authoring [checkpoint: 8d045c1d]
 
-- [~] Task 0: Author the track: specification, plan, metadata, 3 briefs, 3 mockups, the arm key, the
-  judge brief, and the mechanical check with its test on `bucket`. Add the registry entry. The creation
-  commit has the message `measure(asset_hy4_maker_trial): create the track`.
+- [x] Task 0 (8d045c1d): Author the track: specification, plan, metadata, 3 briefs, 3 mockups, the arm
+  key, the judge brief, and the mechanical check with its test on `bucket`. Add the registry entry. The
+  creation commit has the message `measure(asset_hy4_maker_trial): create the track`.
   - The 3 assets are `towel-stack`, `wash-basin`, and `towel-rack` (specification D1). The bar is 7.0.
   - Mockups: `docs/bathhouse-mockups/<name>-mock.jpg`. The prompts, the SHA-256 values, and the quota
     use are in `measure/runs/asset_hy4_maker_trial_20261116/mockups.md`. All 3 `mmx` calls answered.
