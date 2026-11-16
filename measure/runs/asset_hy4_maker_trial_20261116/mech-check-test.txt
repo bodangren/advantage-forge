@@ -1,0 +1,33 @@
+Test of `measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs` on the existing prop `bucket`
+(2026-11-16).
+
+Command:
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs bucket'
+```
+
+Result: exit 0.
+
+```
+{"asset":"bucket","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":2456,"bottomY":0,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":1781944},"typecheckExit":0,"failures":[]}
+```
+
+The first run of the day failed for 2 environment reasons, not for the asset:
+
+1. `node_modules` held no packages, so `forge` could not load `tsx`. `pnpm install
+   --frozen-lockfile` installed them again (3 min 12 s).
+2. Playwright 1.62.0 needed `chromium_headless_shell-1234`, and the cache held only build 1228. The
+   `npx playwright install chromium` run added build 1234.
+
+The first failed run gave this line:
+
+```
+{"asset":"bucket","ok":false,"forgeAll":{"exitCode":1,"warnings":[]},"triangles":2456,"bottomY":0,"files":{"glb":true,"stats":true,"render":true,"sprites":false,"glbBytes":1781944},"typecheckExit":0,"failures":["forge all exited 1","missing out/bucket/sprites/preview.png"]}
+```
+
+A defect was also found and fixed. With `node_modules` empty, the typecheck helper
+`scripts/typecheck-asset.mjs` could not start `tsc`. It still printed `typecheck ok` and exited 0,
+because it saw no error line. The script now also requires the cut `typecheck ok:` line in the
+helper output. The helper itself is a frozen path and does not change. The passing run above holds a
+real typecheck.

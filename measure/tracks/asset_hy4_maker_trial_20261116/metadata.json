@@ -1,0 +1,24 @@
+{
+  "track_id": "asset_hy4_maker_trial_20261116",
+  "type": "chore",
+  "lane": "light",
+  "status": "in_progress",
+  "created_at": "2026-11-16T09:50:00Z",
+  "updated_at": "2026-11-16T10:05:00Z",
+  "description": "Trial of opencode/hy4-flash-free as the maker of simple 3D asset files: 3 bathhouse props, each made twice from one brief, blind judge with vision, and a promotion of the winning arm",
+  "estimated_tasks": 7,
+  "actual_tasks": 1,
+  "deviation_notes": "Created from Daniel's order of 2026-11-16 16:32 ICT through the PM. Light lane (PM rule 2026-11-03): one maker role per arm per try round, one checker (measure-phase-acceptance), then closeout; no spec review, Red, Reviews A to C, adversarial review, UX review, or final acceptance role. Defaults of the author: the queue holds no open simple prop row, so the 3 assets are new bathhouse props from the towel follow-up of asset_filled_shelves_20261028 (towel-stack, wash-basin, towel-rack); bar 7.0; rating G. Both arms get one brief file and one mmx mockup, byte for byte. The arm key uses seed 20261116 and puts Hy4 on label a for towel-stack, a for wash-basin, and b for towel-rack. The judge runs on kimi-code-plan-cn/kimi-for-coding#high. Spend: 0 USD metered; the 3 mmx mockups use the MiniMax Token Plan quota. Phase 0 also installed the packages again and added Playwright browser build 1234, because the tools were absent. The author stages measure/tracks.md through a blob, because the file holds a foreign hunk. The generator does not run while measure/generated/ holds foreign changes.",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [
+    "measure/tracks/asset_hy4_maker_trial_20261116/spec.md",
+    "measure/tracks/asset_hy4_maker_trial_20261116/briefs/towel-stack.md",
+    "measure/runs/asset_hy4_maker_trial_20261116/arm-key.json",
+    "measure/runs/asset_hy4_maker_trial_20261116/judge-brief.md",
+    "measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs",
+    "measure/runs/asset_hy4_maker_trial_20261116/mech-check-test.txt",
+    "docs/bathhouse-mockups/"
+  ],
+  "dependencies": ["asset_filled_shelves_20261028"]
+}

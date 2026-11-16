@@ -1,0 +1,19 @@
+{
+  "track": "asset_hy4_maker_trial_20261116",
+  "created_at": "2026-11-16T09:50:00Z",
+  "seed": 20261116,
+  "command": "python3 -c \"import random; random.seed(20261116); print([random.choice(['a','b']) for _ in range(3)])\"",
+  "asset_order": ["towel-stack", "wash-basin", "towel-rack"],
+  "draw": ["a", "a", "b"],
+  "hy4": {
+    "model": "opencode/hy4-flash-free#high",
+    "role": "measure-jr-green",
+    "labels": { "towel-stack": "a", "wash-basin": "a", "towel-rack": "b" }
+  },
+  "current": {
+    "model": "minimax-cn-coding-plan/MiniMax-M3.1-Flash",
+    "role": "measure-jr-green",
+    "labels": { "towel-stack": "b", "wash-basin": "b", "towel-rack": "a" }
+  },
+  "note": "The judge never reads this file. The pin keeps the labels blind to the route."
+}
