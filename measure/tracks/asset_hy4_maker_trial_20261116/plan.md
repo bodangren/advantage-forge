@@ -81,7 +81,7 @@ doctor counts only `[ ]`, `[~]`, and `[x]`.
 
 ### Task 1: Try round 1
 
-- [ ] Task 1: Try round 1 for the 3 assets. Run the Hy4 maker role, then the current maker role, then
+- [~] Task 1: Try round 1 for the 3 assets. Run the Hy4 maker role, then the current maker role, then
   the judge.
   - The Hy4 maker covers the 3 assets that `arm-key.json` assigns to label `a` or `b` for the Hy4 arm.
     The current maker covers the other 3 sources. Roles run one at a time.
@@ -95,6 +95,7 @@ doctor counts only `[ ]`, `[~]`, and `[x]`.
     writes `measure/runs/asset_hy4_maker_trial_20261116/judge-r1.json` (a provisional file first, then
     the final one).
   - Record the rating of each card, the pass or fail, and the findings.
+  - Arm 1 round 1: commit 37769535; mech-check ok for towel-stack-a, wash-basin-a, towel-rack-b; cards at out/hy4-trial/cards/r1/.
 
 ### Task 2: Try round 2
 
