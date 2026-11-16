@@ -28,6 +28,6 @@ The first failed run gave this line:
 
 A defect was also found and fixed. With `node_modules` empty, the typecheck helper
 `scripts/typecheck-asset.mjs` could not start `tsc`. It still printed `typecheck ok` and exited 0,
-because it saw no error line. The script now also requires the cut `typecheck ok:` line in the
-helper output. The helper itself is a frozen path and does not change. The passing run above holds a
-real typecheck.
+because it saw no error line. The check script now also requires the exact `typecheck ok:` line in the
+helper output. A second run after that change passed with the same line as the passing run above. The
+helper itself is a frozen path and does not change.
