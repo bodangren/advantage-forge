@@ -84,6 +84,11 @@ f. `python3 scripts/review-cards.py out/prop-cards paint-pot` — wrote
   same crop. This run did not change that script.
 - `out/` is not tracked. Only `assets/paint-pot.ts`, the plan sub-bullet, and this log are
   committed.
+- `bash measure/doctor.sh` at f252da5c reports errors only for other tracks
+  (asset_filled_shelves_20261028, asset_p2_npcs_20260928, four game_*_rebuild_20261029 tracks,
+  their registry links) and three stale generated facts. No error names a file of this track. The
+  brief forbids `generate.sh` and registry edits, so this run did not touch them. The orchestrator
+  owns the phase gate.
 
 MEASURE_AGENT_RESULT
 role: jr-green
@@ -94,6 +99,6 @@ commits: b51f0ae7 (implementation); plan and log evidence in the next commit
 tests_run: typecheck-asset.mjs paint-pot = 0 errors; forge render --fast = 3,263 tris, looked ok; forge inspect --fast = warnings none; mech-check.mjs paint-pot = exit 0, ok true, 2,218 tris, bottomY 0; forge render --preset all = 5 distinct files, blue recolours; forge cutout + cutout-check = result ok; review-cards = out/prop-cards/paint-pot.png
 files_changed: assets/paint-pot.ts; measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md (one sub-bullet); measure/runs/asset_chibi_sprouts_r1_20261022/maker-p5-paint-pot-r2.log
 plan_updates: props task got the sub-bullet "paint-pot r2 (audit 2026-11-17 item 2): commit b51f0ae7; mech-check ok; cutout-check result ok; card out/prop-cards/paint-pot.png"; no task marked [x]
-known_failures: none
+known_failures: asset checks: none. `bash measure/doctor.sh` fails on other tracks' plans and their registry links plus three stale generated facts; no doctor error names this track, and this run may not edit those paths
 handoff: Implementation commit b51f0ae7 is on master. phase_base_sha 663162cc, role_base_sha 663162cc, final Green HEAD is the evidence commit that carries this log. New files: none in the asset tree; the changed asset is assets/paint-pot.ts. out/ is untracked. The next reviewer reads out/paint-pot/render.png (default red), out/paint-pot/render.blue.png, and out/prop-cards/paint-pot.png. Do not rate the work in this role. The plan task stays [~].
 END_MEASURE_AGENT_RESULT
