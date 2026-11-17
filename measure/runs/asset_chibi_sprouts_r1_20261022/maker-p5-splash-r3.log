@@ -1,0 +1,260 @@
+# Maker log: paint-splash r3 (fix round 3, PM order 2026-11-18, item 3)
+
+## Identity
+
+- Role: measure-jr-green, bounded fix round. Route: opencode-go/deepseek-v4.1-flash.
+- Track: asset_chibi_sprouts_r1_20261022. Phase 5: The rest of the inventory (after the look check).
+  Step: paint-splash r3, the remediation of N1, N2 and N6 of
+  acceptance-splash-8211459.json.
+- phase_base_sha: f3cc544d. role_base_sha: f3cc544d. The two are equal, as in the earlier Phase 5
+  step logs (maker-p5-lily-pad.log records the same rule). The order names no separate
+  phase_base_sha.
+- HEAD at the start: f3cc544d. Implementation commit: 2514a96a. The plan and this log are in the
+  next commit, which is the evidence commit.
+- The Red artifact of this round: there is no red test. The order is a fix round of a pass-with-
+  findings acceptance result, and finding N1 is a visual defect. The targeted mechanical command
+  passed before the change (see below), so this round has no failing test to turn green. The
+  order fixed the geometry instead. The committed change 2514a96a lies inside
+  phase_base_sha..HEAD.
+- git status --short at the start held many modifications of unrelated paths (`.claude/skills/`,
+  `AGENTS.md`, `bench/trials/`, `measure/generated/`, `measure/tracks.md`, `measure/workflow.md`,
+  the plans of seven other tracks, many untracked bench and run files). None was touched, staged,
+  or committed. The staged paths are listed under "The commits".
+
+## The order (items A to D)
+
+- A: change assets/paint-splash.ts so the face is one smooth lens: the extruded outline (depth
+  0.04 m, centred on z = 0) intersected with one ellipsoid of radii [0.23, 0.23, 0.0165] m, and
+  no part of the rim above the centre. Keep the outline, the flat foot, the dark rim band
+  (0.015 m, k.tint('paint', -0.25)), roughness 0.25, the 3 presets, standing on y = 0, facing +Z.
+- B: correct the code header and briefs/paint-splash.md (r2 section and Known differences) to the
+  measured geometry, with the measured numbers.
+- C: add the stage-preset note to the Known differences.
+- D: copy the SHA of every [x] task to the end of the task's first line, because the role gate reads
+  a SHA only on the first line.
+
+## The accepted deviations (orchestrator, 2026-11-18)
+
+The orchestrator accepted both deviations, and the third edit, after the first look:
+
+1. `detail` 0.0035 changed to 0.0025. The sharp rim edge facets showed at 4x zoom without it.
+2. The ellipsoid clip and the flat bottom cut take a 0.005 m smooth roll (`smoothIntersect`). The
+   gate needs this: cutout-check.mjs reports a dark halo when the rim edge is a sharp coin edge.
+   First count: 308 of 885 edge pixels on the red front, worst drop 71 %. After the rim roll only
+   the yellow three-quarter failed, on 89 of 796 edge pixels (10 % is the limit).
+3. The flat bottom cut takes the same 0.005 m roll. This cleared the last 89 pixels. The flat
+   contact stays: the bottom face is flat over the middle, and stats.json gives bottomY -0.001 m.
+
+The roll lowers the measured centre thickness from 0.033 m to 0.0326 m. The lens keeps the order's
+values (0.23 m radius, 0.0165 m half thickness).
+
+## The targeted command before the change
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh \
+  -c 'node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs paint-splash'
+{"asset":"paint-splash","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":1968,
+ "bottomY":-0.001,"files":{"glb":true,"stats":true,"render":true,"sprites":true},
+ "glbBytes":354628,"typecheckExit":0,"failures":[]}
+EXIT=0
+```
+
+So the mechanical gate passed on the old geometry. It measures build health, not the ring. The
+finding lives in the pictures, and the order names the pictures as the check.
+
+## Item A: what changed in assets/paint-splash.ts
+
+- New `silhouette(depth)` function: the round blob (r 0.12), the 7 lobes, the 3 droplets and the
+  3 necks, each a cylinder of `depth` turned to face +Z, joined by one `smoothUnion` of 0.006 m.
+  The necks are part of the outline now, so each droplet joins the rim on a thin tab.
+- The solid is `silhouette(0.04).smoothIntersect(0.005, ellipsoid([0.23, 0.23, 0.0165]))`. The
+  prism is 0.04 m deep and centred on z = 0; the lens is the thinner limit, so the face is one
+  lens. The 0.005 m roll rounds the rim edge.
+- The flat bottom cut takes the same 0.005 m roll. The foot box (0.06 x 0.02 x 0.02 m) and its
+  0.004 m union stay. The paint is 0.030 m thick at the bottom edge, so the foot shows no tab.
+- The dark band keeps its rule: the same outline made tall (`TALL` 0.3 m), a shell of 0.015 m,
+  `k.tint('paint', -0.25)`.
+- Removed: the slab cylinder with its rounded edge, the dome ellipsoid, the lobe and drop
+  ellipsoids, the separate neck cylinders, and the constants `T`, `DOME` and `FILLET`.
+- Kept: the outline and its values (R, LOBES, DROPS, the neck length), the foot, the band,
+  roughness 0.25, metalness 0, the 3 presets, standing on y = 0, facing +Z.
+
+## The looks (two looks, then the gate)
+
+- Look 1, `forge render paint-splash --fast` and `forge inspect paint-splash --fast`: the face was
+  one lens already and showed no ring in the front view. The rim was faceted at 4x zoom (`--focus
+  0,0.2,0.016,0.075`), because detail 0.0035 is coarse for a sharp crease. Fix 1: detail 0.0025.
+- Look 2, focused render at 0.0025: the rim was smooth. Then the first gate call failed on the
+  dark halo of the coin rim. Fix 2: the 0.005 m roll on the lens clip. Fix 3: the same roll on the
+  bottom cut.
+- Final look, `out/paint-splash/render.png` after `forge render --preset all`: the face is one
+  smooth dome from the centre to every edge, with no ring and no raised rim. The rim is a rounded
+  roll. The three-quarter view reads as a wet paint blob, not as a wax seal. The dark band shows
+  as a soft deeper edge on the front and the back.
+- `out/prop-cards/paint-splash.png` shows the four views and the eight sprites.
+
+## The measured geometry
+
+Measured on out/paint-splash/paint-splash.glb (positions parsed with python3, radius from the
+outline centre at y = 0.1 m in the built frame):
+
+| Radius | Thickness |
+| --- | --- |
+| centre (2 x max abs z) | 0.0326 m |
+| 0.02 to 0.05 m | 0.0320 m |
+| 0.05 to 0.08 m | 0.0317 m |
+| 0.10 to 0.12 m | 0.0294 m |
+| 0.12 to 0.14 m | 0.0281 m |
+| 0.15 m (band 0.145 to 0.155) | 0.0248 m |
+
+The face falls from the centre to every edge, so no part of the rim stands above the centre.
+Bounds 0.29 x 0.251 x 0.033 m, 2,292 triangles, bottom y = -0.001 m (stats.json).
+
+## The gate (one chained call, exit 0)
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'node .../mech-check.mjs paint-splash &&
+  ./forge render paint-splash --preset all &&
+  ./forge cutout paint-splash --out out/chibi-sprouts/r1/props --ppm 1024 --canvas 1024x1024
+    --views front,three-quarter &&
+  for p in blue yellow; do ./forge cutout paint-splash --preset $p
+    --out out/chibi-sprouts/r1/props/presets/$p --ppm 1024 --canvas 1024x1024
+    --views front,three-quarter; done &&
+  node scripts/cutout-check.mjs out/chibi-sprouts/r1/props &&
+  node scripts/cutout-check.mjs out/chibi-sprouts/r1/props/presets/blue &&
+  node scripts/cutout-check.mjs out/chibi-sprouts/r1/props/presets/yellow &&
+  python3 scripts/review-cards.py out/prop-cards paint-splash'
+```
+
+mech-check (the GREEN_TEST_COMMAND, run again after the gate call):
+
+```
+{"asset":"paint-splash","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":2292,
+ "bottomY":-0.001,"files":{"glb":true,"stats":true,"render":true,"sprites":true},
+ "glbBytes":372464,"typecheckExit":0,"failures":[]}
+EXIT=0
+```
+
+cutout-check, the three folders (read again from the final PNGs):
+
+```
+out/chibi-sprouts/r1/props
+ok   paint-splash/front.png  1024x1024 soft 1073 edge 892 worstDrop 51%
+ok   paint-splash/three-quarter.png  1024x1024 soft 956 edge 804 worstDrop 36%
+result ok
+out/chibi-sprouts/r1/props/presets/blue
+ok   paint-splash/front.png  1024x1024 soft 1073 edge 892 worstDrop 43%
+ok   paint-splash/three-quarter.png  1024x1024 soft 956 edge 804 worstDrop 35%
+result ok
+out/chibi-sprouts/r1/props/presets/yellow
+ok   paint-splash/front.png  1024x1024 soft 1073 edge 892 worstDrop 36%
+ok   paint-splash/three-quarter.png  1024x1024 soft 956 edge 804 worstDrop 32%
+result ok
+```
+
+`review-cards.py out/prop-cards paint-splash` wrote out/prop-cards/paint-splash.png (md5
+9acb814d55be3f5ca909c85f26595e3a). No `--fast` command and no `forge inspect` ran after the last
+mech-check. This round ran no `measure/doctor.sh`; the order named the mech-check as the gate, and
+the previous round's log records the doctor errors of other tracks.
+
+## Item B and C: the text
+
+- assets/paint-splash.ts, header: the Size line now reads "0.033 m thick at the centre and 0.025 m
+  at r 0.15 m". The false r2 paragraph is replaced by two paragraphs:
+  - r2 (B1): the foot is no deeper than the paint (0.02 m), and the outer 0.015 m is painted
+    25 % darker through the `paint` slot.
+  - r3 (N1 and N2): the face is one smooth lens; the solid is the extruded outline clipped by the
+    ellipsoid, with a 0.005 m roll on the clip and on the bottom cut; measured 0.0326 m at the
+    centre and 0.0248 m at r 0.15 m; the outline joins use one fillet of 0.006 m.
+- briefs/paint-splash.md: the section title is now "r2 (B1, 2026-11-18) and r3 (N1 and N2,
+  2026-11-18)". The five changes and the evidence block carry the measured geometry: the lens, the
+  0.006 m outline fillet, the 0.005 m roll, the 0.0326 / 0.0248 m thickness, 0.29 x 0.251 x
+  0.033 m, 2,292 triangles, and the mean front-cutout colours #ef5c54 (red), #568acb (blue) and
+  #f4c856 (yellow).
+- The Known differences no longer claim a 0.025 m rim, a 0.05 m box, 1,968 triangles, a 25 mm
+  fillet that swallows the necks, or the old mean colours. The inspect warning is named as the
+  warning of the r3 build.
+- Item C is in the Known differences, word for word: "The blue and yellow cutouts are in
+  out/chibi-sprouts/r1/props/presets/<preset>/paint-splash. A stage prop has no preset field; the
+  stage contract is shared with Storytime, so the field waits for a Storytime request (PM default
+  2026-11-18)."
+
+## Item D: the SHA on the first line of every [x] task
+
+22 [x] tasks had their SHA on a later line. Each first line now ends with "(<sha>)" or
+"(<sha>, <sha>)": the 4 tasks of Phase 1, the 2 of Phase 2, the 8 of Phase 3, the 7 of Phase 4, and
+the 1 of Phase 5. No other text changed and no marker changed. The SHAs are the ones already in each
+task: f9879c55, 96cfd025, 124f0276, cdeae0e6, b786231f, d866bab1, 88b68946, c64fee4d, 020baa34,
+43c96d3c, c6e1b13b, 37c22171, e43ccce0, 8370c263, 46342fe9, 0a425ef7, 0bb18f6e, fdcc0957, 697ae4a9,
+5955458d, e7816ae8.
+
+## The status check
+
+```
+python3 -I /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py \
+  status --repo .
+EXIT=0
+```
+
+The output names the worktree as dirty (the unrelated paths above) and lists the phase line:
+"[3] asset_chibi_sprouts_r1_20261022 -- Phase 5: The rest of the inventory (after the look check)
+(3/4 remaining)". The status command prints no "lacks commit SHA" line for this track. A parse with
+the same rule as the script (status "x" and a 7 to 40 character hex run on the task line) confirms
+it: Phase 1 4 of 4, Phase 2 2 of 2, Phase 3 8 of 8, Phase 4 7 of 7, Phase 5 1 of 1. No [x] task of
+this track is without a SHA.
+
+## The plan
+
+One sub-bullet under the props task:
+"fix round 3 (PM 2026-11-18): splash lens commit 2514a96a; mech-check ok; cutout-check result ok in
+3 folders; SHA on the first line of every [x] task". The props task keeps its [~] marker; no task
+moved to [x] or [b].
+
+## The commits
+
+1. 2514a96a, "fix(chibi_sprouts_r1): paint splash face is one smooth lens (N1, N2)": assets/paint-
+   splash.ts and measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/paint-splash.md (93
+   insertions, 79 deletions).
+2. The evidence commit: measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md (item D and the
+   sub-bullet) and this log. Both staged by explicit path; no `git add -A`, no `git commit -- <path>`.
+
+## Files added
+
+- measure/runs/asset_chibi_sprouts_r1_20261022/maker-p5-splash-r3.log (this file).
+- out/ is not tracked. The new outputs are the four renders, the sprites, the textures,
+  out/chibi-sprouts/r1/props/paint-splash/ (front, three-quarter, manifest.json),
+  out/chibi-sprouts/r1/props/presets/blue/paint-splash/,
+  out/chibi-sprouts/r1/props/presets/yellow/paint-splash/, and
+  out/prop-cards/paint-splash.png.
+
+## Handoff to the review roles
+
+- The reviewer reads out/paint-splash/render.png, render.blue.png and render.yellow.png, the three
+  front and three-quarter cutouts, and out/prop-cards/paint-splash.png. The face must read as one
+  smooth dome with no ring. The rim is a 0.005 m roll; the bottom edge takes the same roll.
+- The thickness claims are measured on the GLB: 0.0326 m at the centre, 0.0248 m at r 0.15 m. The
+  brief and the header say these numbers. The order asked for "about 0.033 and 0.025 m"; the roll
+  takes 0.4 mm at the centre, and the orchestrator accepted it.
+- N3 of the earlier result (the droplets as rim bumps) changes shape: the outline carries the
+  necks now, so each droplet joins the rim on a thin tab. The drops still stand proud of the lobes,
+  and the tab is short at 128 px. The orchestrator decides whether that closes N3.
+- N6 (the stage preset field) is a note in the brief, not a code change. The plan task stays open.
+- This role did not rate the work.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check)
+phase_base_sha: f3cc544d
+role_base_sha: f3cc544d
+head: 2514a96a (implementation); the evidence commit carries this log
+commits: 2514a96a (assets/paint-splash.ts and the brief); the evidence commit (plan.md item D, the plan sub-bullet and this log)
+tasks: no task moved to [x] or [b]; item D added the SHA to the first line of 22 existing [x] tasks; the props task keeps [~]
+targeted_command: mech-check.mjs paint-splash before the change = exit 0, ok true, 1,968 tris (the gate passed; this round has no red test); after the change = exit 0, ok true, 2,292 tris, bottomY -0.001, typecheckExit 0, no warning line
+tests_run: mech-check.mjs paint-splash = exit 0, ok true, warnings [], typecheck exit 0; forge render --preset all = render.png, render.red.png, render.blue.png, render.yellow.png; forge cutout + cutout-check = result ok in out/chibi-sprouts/r1/props, presets/blue and presets/yellow; review-cards = out/prop-cards/paint-splash.png; GLB thickness parse = 0.0326 m at the centre, 0.0248 m at r 0.15 m; measure_interphase_checks.py status = exit 0, no [x] task of this track without a SHA
+files_changed: assets/paint-splash.ts; measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/paint-splash.md; measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md (item D and one sub-bullet); measure/runs/asset_chibi_sprouts_r1_20261022/maker-p5-splash-r3.log (new)
+plan_updates: sub-bullet under the props task "fix round 3 (PM 2026-11-18): splash lens commit 2514a96a; mech-check ok; cutout-check result ok in 3 folders; SHA on the first line of every [x] task"; SHA added to the first line of 22 [x] tasks
+known_failures: none in the asset checks. cutout-check needed the 0.005 m roll on the clip and on the bottom cut; the first two attempts are recorded above. This round ran no measure/doctor.sh, as the order named the mech-check as the gate.
+handoff: Implementation commit 2514a96a is on master, not pushed. phase_base_sha and role_base_sha are f3cc544d; the evidence commit carries this log. New committed file: this log. New untracked outputs: out/chibi-sprouts/r1/props/presets/blue and presets/yellow, the re-cut props cutouts, the four renders, and out/prop-cards/paint-splash.png. The reviewers read the renders and the three cutouts; the face must read as one smooth dome with no ring. Two design points for the orchestrator: the 0.005 m roll lowers the measured centre to 0.0326 m, and the droplet necks are in the outline now (N3). Do not rate the work in this role.
+END_MEASURE_AGENT_RESULT

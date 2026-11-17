@@ -21,65 +21,65 @@ after the start" wins where it differs from the rest. Art is due 2026-11-15.
 
 ## Phase 1: Design and contract
 
-- [x] Task: Record the brief, the owner decisions (S18, S19), the Storytime answers, the inventory
+- [x] Task: Record the brief, the owner decisions (S18, S19), the Storytime answers, the inventory (f9879c55)
   change, and the week 1 format in the specification (2026-10-22). Commit: f9879c55.
-- [x] Task: Delivery folder: `out/chibi-sprouts/r1/` with a JSON manifest (Storytime, 2026-10-22).
+- [x] Task: Delivery folder: `out/chibi-sprouts/r1/` with a JSON manifest (Storytime, 2026-10-22). (f9879c55)
   Week 1 layout and manifest keys: `bench/sonnet/sprouts/method.md`. Storytime and Workbooks got the
   folder on 2026-10-22 (session chibi-sprouts). Prompts and the run log: `bench/sonnet/sprouts/`.
   Commit: f9879c55.
-- [x] Task: Age-5 proportion table: `HERO` and `AGE5` in `assets/parts/humanoid-kind.ts`
+- [x] Task: Age-5 proportion table: `HERO` and `AGE5` in `assets/parts/humanoid-kind.ts` (96cfd025)
   (`proportions` option; AGE5 = leg 1.05, torso 0.84, arm 0.8, shoe 0.72, forearm turn, bob 1.0).
   Proof: `bench/sonnet/sprouts/mesh-same-batch.sh` prints SAME for 9 kind users and 4 hair assets
   (2026-10-22). Commit: 96cfd025.
-- [x] Task: Skeleton contract test `tests/sprout-base.test.ts` (bones, parents, clips, sockets equal
+- [x] Task: Skeleton contract test `tests/sprout-base.test.ts` (bones, parents, clips, sockets equal (96cfd025)
   avatar-base; the head equals HERO) (2026-10-22). Commit: 96cfd025.
 
 ## Phase 2: Tools
 
-- [x] Task: `./forge cutout <name> --out <dir> --ppm --canvas --clip --at` renders straight soft
+- [x] Task: `./forge cutout <name> --out <dir> --ppm --canvas --clip --at` renders straight soft (96cfd025)
   alpha with no shadow at one scale (`src/render/cutout.ts`, `src/png.ts`, `tests/cutout.test.ts`);
   the sprite pass keeps binary alpha (2026-10-22). Commit: 96cfd025.
-- [x] Task: Delivery step: the cutout command writes `manifest.json` (ppm, canvas, footPoint, files);
+- [x] Task: Delivery step: the cutout command writes `manifest.json` (ppm, canvas, footPoint, files); (96cfd025)
   `scripts/cutout-check.mjs <dir>` checks size, alpha, halo, and foot row. Week 1 scale: 1080 px/m
   on 1024 x 1200, foot point (512, 1184) (2026-10-22). Commit: 96cfd025.
 
 ## Phase 3: Week 1 test set (owner direction: first)
 
-- [x] Task: `sprout-base` built and accepted at 7.5 after three passes and three independent
+- [x] Task: `sprout-base` built and accepted at 7.5 after three passes and three independent (96cfd025)
   reviews (7.0, 7.0, 7.5; `bench/sonnet/sprouts/cards/b1*/review.json`, 2026-10-22). Open notes:
   stiff upper body in the walk; the shared avatar face reads older than five.
   Commit: 96cfd025.
-- [x] Task: `sprout-pip` built; three passes, three reviews (6.5, 7.0, 7.0): the stop rule applies.
+- [x] Task: `sprout-pip` built; three passes, three reviews (6.5, 7.0, 7.0): the stop rule applies. (124f0276)
   Rated 7.0, on the follow-up list: replace the two crown spikes with one soft cream tuft; ears
   golden with dark tips only; a larger chest bib; round paws (2026-10-22). Ships in week 1 for the
   owner's look check.
   Commit: 124f0276.
-- [x] Task: Nan 7.5, Sam 7.5, Mia 7.5 (first review), Pat 7.5 (second), May 7.5 (third, after a
+- [x] Task: Nan 7.5, Sam 7.5, Mia 7.5 (first review), Pat 7.5 (second), May 7.5 (third, after a (cdeae0e6, b786231f, d866bab1, 88b68946, c64fee4d)
   waist clash) on `sprout-base`; cut-outs in `out/chibi-sprouts/r1/week1/cast/` (2026-10-23). Ben 7.0 after three
   reviews (stop rule), on the follow-up list: soft fluffy hair instead of clay-like locks (two point up
   in the side view), a clearer smile at 128 px, a visible sole band. Reviews: `bench/sonnet/sprouts/cards/b3*`, `b4*`.
   Debt: two builders wrapped `k.animation` for per-character motion (Ben's removed; May's ponytail
   swing kept); the kind needs an extra-pose hook for a character's own bones.
   Commits: cdeae0e6 (Nan), b786231f (Sam, Mia), d866bab1 (Pat), 88b68946 (May), c64fee4d (Ben).
-- [x] Task: `sprout-adventurer` 7.5 (third review) with the shared gesture module
+- [x] Task: `sprout-adventurer` 7.5 (third review) with the shared gesture module (020baa34, 43c96d3c)
   `assets/parts/sprout-gestures.ts` (clips `gesture-<slug>`, key frames at 0.5 and 1.0 s); ten key
   frames in `out/chibi-sprouts/r1/week1/gestures/adventurer/` (2026-10-23). Limit: the wave hand
   reaches the jaw, not the eye (the age-5 arm reach). Commits: 020baa34, 43c96d3c.
-- [x] Task: Classroom scene `scenes/maps/classroom.ts` (generator `scripts/design-classroom.mjs`,
+- [x] Task: Classroom scene `scenes/maps/classroom.ts` (generator `scripts/design-classroom.mjs`, (96cfd025)
   `bright` interior mode in `src/scene/main.ts`, `FORGE_SHOT_SIZE` in `scripts/shoot-map.mjs`);
   `out/chibi-sprouts/r1/week1/scenes/classroom.png` and `rug.png` (450 px/m) (2026-10-22). Look
   check items: dark window panes, half-timber walls. Commit: 96cfd025.
-- [x] Task: Delivered 2026-10-23: `out/chibi-sprouts/r1/week1/manifest.json`, 8 cast x 2 views
+- [x] Task: Delivered 2026-10-23: `out/chibi-sprouts/r1/week1/manifest.json`, 8 cast x 2 views (43c96d3c)
   (plus Pip's sit), 10 gesture frames, classroom and rug, `cast-sheet.png` and `gesture-sheet.png`;
   `scripts/cutout-check.mjs` result ok on cast and gestures; Storytime and Workbooks told.
   Workbooks (2026-10-23, commit 7213f4e): the set works in the compositor with no change to the
   canvas, the scale, or the foot point; the week 1 test video is rendered (actors at 556 screen
   px/m, from the rug in classroom.png; the gesture inset box is x 222 to 799, y 240 to 1183).
   Storytime: the set is on the owner's page as F1 to F4. Commit: 43c96d3c.
-- [x] Task: The owner's look check. Passed 2026-10-23 04:51 (via Storytime): F1 cast sheet, F2
+- [x] Task: The owner's look check. Passed 2026-10-23 04:51 (via Storytime): F1 cast sheet, F2 (c6e1b13b)
   Pip and Ben close up, F3 gesture sheet, F4 classroom and rug, no comments. The age-5 base and
   the cast style are approved. Commit: c6e1b13b.
-- [x] Task: F5, the owner's pass on the week 1 test video (2026-10-23 04:55, via Storytime). Pass
+- [x] Task: F5, the owner's pass on the week 1 test video (2026-10-23 04:55, via Storytime). Pass (37c22171)
   on the video plan, with two comments: the video is not engaging because the static assets do
   not move much ("We should rethink static assets"), and F7: the characters do not appear on the
   rug but in front of a screen ("We really should rethink our entire model").
@@ -106,13 +106,13 @@ The owner approved S27: full in-scene renders. Forge renders the silent song vid
 on the classroom rug; Workbooks muxes the audio and overlays lyrics, the inset, and the screens.
 Contract and commands: `docs/storytime-song.md`.
 
-- [x] Task: The timeline tool: `src/song/timeline.ts` (pure: spec.json + stage.json to actor
+- [x] Task: The timeline tool: `src/song/timeline.ts` (pure: spec.json + stage.json to actor (e43ccce0)
   paths, clip cues, camera keys; `tests/song-timeline.test.ts`, 9 tests), `song.html` +
   `src/song/main.ts` (the classroom with the scene page's lighting, skinned actors, a mixer,
   `__song.load/seek`), `scripts/song-record.ts` (sheet, stills, record to H.264 through ffmpeg).
   The six children got the gesture clips (`sproutGestures` in `extra`) and were rebuilt (2026-10-23).
   Commit: e43ccce0.
-- [x] Task: Test cut 1 of week 1 ("Hello, I Am Pip", 78.4 s): `out/chibi-sprouts/r1/week1/song/`
+- [x] Task: Test cut 1 of week 1 ("Hello, I Am Pip", 78.4 s): `out/chibi-sprouts/r1/week1/song/` (e43ccce0, 8370c263)
   sheet.png (12 stills) and song.mp4 (1920x1080, 24 fps, no sound, 35 MB). Storytime's stage.json:
   Pip and Nan front, five children in a row behind, 31 camera keys, yaw 0. Cost: page load 46 s,
   1881 frames in 344 s (0.18 s per frame), 1 GB RSS. Pointer sent to Storytime 2026-10-23 17:00.
@@ -122,14 +122,14 @@ Contract and commands: `docs/storytime-song.md`.
   later), then cut 2 with Storytime's framing fix (the back row moves in to x ±1.2, ±0.6, 0: Ben
   was cut by the right edge in the singles on Nan at 17.5 s and 33 s), then the portrait cut (F9, on hold:
   Workbooks keeps the 16:9 video as a band) and stage.json for weeks 2 to 7.
-- [x] Task: Tonight's order (owner, 2026-10-23 night, via Storytime: develop Storytime as far as
+- [x] Task: Tonight's order (owner, 2026-10-23 night, via Storytime: develop Storytime as far as (46342fe9, 0a425ef7)
   possible until 05:00). Cut 2 of week 1 (back row at x ±1.2, ±0.6, 0; `song-cut2.mp4`, 10 min).
   The singing face: kind option `sing` (open mouth on a `mouth` bone, eyelids on an `eyelids`
   bone, hidden 3 cm inside the head at rest; the page moves them per word and per blink;
   `SING_OUT` 0.046 / 0.038 m; commits 46342fe9, 0a425ef7). Seven Sprouts rebuilt twice. Cut 3
   of week 1 with the singing face (`song-cut3.mp4`). Render script
   `bench/sonnet/sprouts/render-week.sh <week> <cut>`.
-- [x] Task: 13 new gesture clips for weeks 2 to 6 (point up, reach, count fingers, sway, look,
+- [x] Task: 13 new gesture clips for weeks 2 to 6 (point up, reach, count fingers, sway, look, (0bb18f6e)
   hop, stretch up, eat, hug self, bow, listen, stamp, march) on the shared module (0bb18f6e):
   three builder passes (b7, b7r2, b7r3) and three Opus reviews (6.2, 7.0, 7.2; stop rule). At the
   bar: hop 8.0, bow 8.0, stretch-up, sway, hug-self 7.5. Under it: point-up, look, listen, eat,
@@ -138,7 +138,7 @@ Contract and commands: `docs/storytime-song.md`.
   skin weights on the age-5 base, then restore the taller march and stamp lifts (the stamp shows
   a shoe notch for 0.15 s at the peaks); reach reads as "paws up" in the front view; point-up has
   no visible finger at video size; count-fingers reads as a fist pump; look reads as "airplane".
-- [x] Task: Cut 1 of weeks 2, 3, 5, 6 from Storytime's drafts
+- [x] Task: Cut 1 of weeks 2, 3, 5, 6 from Storytime's drafts (fdcc0957)
   (`~/Desktop/primary-parity-progress/storytime-stage/l2/w0N/stage.json`, all in the classroom):
   `out/chibi-sprouts/r1/week{2,3,5,6}/song/song-cut1.mp4` + sheets, 5 to 6 min each (2026-10-24
   00:21). Notes to Storytime: Pip hidden behind Pat in week 2; the week 5 solo needs a closer camera.
@@ -163,14 +163,14 @@ Contract and commands: `docs/storytime-song.md`.
   back to `jaw`, then `head`; `bone` names one); the GLTF loader strips dots from bone names
   (`hand.R` is `handR` in the page); the outdoor sun offset is in stage space so a set facing
   180 keeps lit faces. Not built (pictures for now): duck, kite, ball, grape, sun, cloud, easel.
-- [x] Task: Full renders on contract v2 (2026-10-24): week 2 cut 3 (09:16), week 3 cut 2 (11:38,
+- [x] Task: Full renders on contract v2 (2026-10-24): week 2 cut 3 (09:16), week 3 cut 2 (11:38, (697ae4a9, 5955458d)
   re-rendered 11:54 after Storytime moved the board pictures in front of the board face and set a
   closer classroom camera), week 6 cut 2 (11:48; re-rendered 12:30 after Storytime's lake camera fix, which
   framed the cast close and took the boulder out). Paths `out/chibi-sprouts/r1/week{2,3,6}/song/song-cut<N>.mp4` with `-sheet.png`.
   Storytime muxed the song audio and put weeks 2, 3, 6 on the owner's page (C1W2, C1W3, C1W6).
   A 74 s song renders in about 6 minutes (0.20 s per frame) after a page load of 8 to 60 s.
   Commits: 697ae4a9, 5955458d.
-- [x] Task: Adventurer gesture stills for weeks 2 to 7 (Workbooks request through the Forge
+- [x] Task: Adventurer gesture stills for weeks 2 to 7 (Workbooks request through the Forge (697ae4a9, e7816ae8)
   session, 2026-10-24; the owner's order of 2026-10-23 item 3 covers it): 22 frames of 14 gestures
   (set 2 plus the new `gesture-turn`, a spin for week 7 "Is it a top?") at the week 1 scale in
   `out/chibi-sprouts/r1/week2-7/gestures/` with a manifest in the Workbooks shape
@@ -206,7 +206,7 @@ Workbooks does not wait for it.
 - [ ] Task: The owner confirms the cast beyond 8 (Lily, Mom, Dad, Grandma, Grandpa, Tom) and the
   cost.
 - [ ] Task: The remaining cast (an adult base for Mom, Dad, Grandma, Grandpa; Tom at about eight).
-- [x] Task: The remaining gesture key frames (20 gestures in use, inventory section 3): the
+- [x] Task: The remaining gesture key frames (20 gestures in use, inventory section 3): the (0bb18f6e, 697ae4a9)
   week 2 to 7 set above covers set 2 and `turn`; only the week 4 family cast gestures wait for S26.
   Commits: 0bb18f6e (set 2), 697ae4a9 (`turn`).
 - [~] Task: Scenes (inventory section 4) and the 30 props and animals (section 5): fit-check reused
@@ -219,6 +219,7 @@ Workbooks does not wait for it.
   - paint-splash r2 (B1 of acceptance-week3-03d1114): commit e5e2350c; mech-check ok; cutout-check result ok; preset cutouts done
   - lily pad (PM order 2026-11-17): commit f8e89036; mech-check ok; cutout-check result ok; card out/prop-cards/lily-pad.png; brief briefs/lily-pad.md
   - fix round 1 and 2 (PM 2026-11-18): seam cause one lost row in the whole-buffer readPixels (now read in strips); commits a330434d, 51fee130, b3460c68; all props re-cut, cutout-check result ok with the seam check; lily pad high cutout at props/high
+  - fix round 3 (PM 2026-11-18): splash lens commit 2514a96a; mech-check ok; cutout-check result ok in 3 folders; SHA on the first line of every [x] task
 
 ## Phase 6: Delivery and close
 
