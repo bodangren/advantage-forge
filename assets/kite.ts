@@ -86,17 +86,13 @@ const makeSailPaint =
   (k: AssetContext) =>
   (x: number, y: number) => {
     const slot = sailSlot(x, y);
-    const cream = rgb(k.tint(slot, { color: CREAM, follow: 0 }));
-    let c = rgb(k.tint(slot, 0));
-    c = mixRgb(c, rgb(k.tint(slot, -0.18)), 0.3 * clamp01((0.14 - y) / 0.14)); // the lower sail's shadow
-    c = mixRgb(c, rgb(k.tint(slot, 0.10)), clamp01((y - 0.14) / 0.32)); // the lit upper sail
-    // Cream edge binding all round the outline.
-    c = mixRgb(c, cream, 1 - smoothstep(0.016, 0.022, edgeDist(x, y)));
-    // Cream tape cross: over the spine, then over the spreader.
-    const spine = 1 - smoothstep(0.013, 0.017, Math.abs(x));
-    const spreader = 1 - smoothstep(0.011, 0.015, Math.abs(y - SPREADER_Y));
-    c = mixRgb(c, cream, Math.max(spine, spreader));
-    return c;
+    // The cream edge binding and the cream tape cross have a crisp edge. A soft edge would leave
+    // slot texels that hold a little cream, and the recolour rule would then drift: the cream is
+    // far from the slot colour in green, and the rule multiplies that gap by the option ratio.
+    const binding = edgeDist(x, y) < 0.019;
+    const cross = Math.abs(x) < 0.015 || Math.abs(y - SPREADER_Y) < 0.013;
+    // The sail keeps the pure slot colour. The render light gives the shading.
+    return binding || cross ? rgb(k.tint(slot, { color: CREAM, follow: 0 })) : rgb(k.tint(slot, 0));
   };
 
 const paperBump = (x: number, y: number, z: number): number =>

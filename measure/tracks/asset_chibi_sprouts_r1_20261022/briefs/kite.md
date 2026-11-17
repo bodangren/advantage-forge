@@ -52,12 +52,38 @@ The sail outline, the spars, the binding cross and the string loop stay. The cha
 
 The kite measures 0.359 x 0.930 x 0.041 m and holds 5,150 triangles.
 
+## r3 (preset colour fix, PM 2026-11-18)
+
+PM order 2026-11-18: the Red of the preset colour gate found the drift in the stored texels. The
+lit upper sail used a positive shade, `k.tint(slot, 0.10)`, and the lower sail used a negative
+shade, `k.tint(slot, -0.18)`. A positive shade mixes toward white in linear light, so the stored
+texel was not the slot colour. The recolour rule multiplies each channel by option over default,
+and the lighter texel then drifts.
+
+The sail now keeps the pure slot colour. The render light gives the shading. The lower-sail
+shadow is gone as well: the PM decided this on 2026-11-18, because the shade still left the
+stored texel away from the slot colour.
+
+The cream edge binding and the cream tape cross have a crisp edge. A soft edge would leave slot
+texels that hold a little cream. The recolour rule multiplies that cream gap by the option
+ratio, and the red to yellow ratio in green is 9.33, so a texel 6 of 255 away from the default
+landed 15 of 255 away from the option. The crisp edge keeps every slot texel at the exact slot
+colour. The band widths are the same as before: the binding covers the rim within 19 mm of the
+outline, the spine tape within 15 mm of the spine, the spreader tape within 13 mm of the
+spreader.
+
+`scripts/preset-colour-check.mjs kite` exits 0. Every preset slot lands on its option with an
+anchor error of 0, a mean error of 0 and a formula residual of 0.
+
 ## Known differences
 
 - The inventory wants the kite in the sky. The kite now flies: the sail floats upright at 0.42 m
   and only the lowest tail bow touches the ground at y = 0.
 - The inventory wants two kites for W2, one red and one yellow. One source serves both through
   the `red` and the `yellow` presets. Placing two kites in the sky is the scene's job.
+- The sail has no painted shading. The lower-sail shadow and the lit upper sail are gone, so the
+  sail reads as flat paper colour with the render light on it.
+- The cream binding and the cream tape cross have a crisp edge, not a soft one.
 - The built kite measures 0.359 m wide, 0.930 m tall with the tail, and 0.041 m deep. It matches
   the brief for the sail and the tail length.
 - The inspect still reports the warning "the side silhouette is very thin compared with the
