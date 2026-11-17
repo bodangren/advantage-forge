@@ -36,6 +36,11 @@ export interface CatKind {
   readonly pupilScale?: number;
   /** Two short dark lashes at the outer top corner of each eye (default false). */
   readonly lashes?: boolean;
+  /**
+   * True: an open oval mouth in place of the tiny closed smile (the grey song cat). Default false:
+   * the shared cat and familiar cat keep the closed line and their geometry.
+   */
+  readonly openMouth?: boolean;
   /** True: a `sit` clip (see the wolf kind). */
   readonly sit?: boolean;
   /** The head size as a share of the default (see the wolf kind; default 1). */
@@ -133,6 +138,23 @@ export function catAsset(kind: CatKind): AssetDefinition {
             )
             .mirror('x');
           k.body('lashes', lashes.bone('head'), { color: '#1a100a', roughness: 0.6, detail: 0.002 });
+        }
+        if (kind.openMouth) {
+          // The open mouth (`openMouth`): an oval 0.22 x 0.16 of the 0.2 m head radius, at the mouth
+          // line the wolf kind paints (`GRIN_Y` in wolf-kind.ts), its lower third a pink tongue. A
+          // shell of the head surface lifts the oval 2 mm above the cream muzzle (grown 4 mm), so it
+          // covers the tiny closed smile line painted underneath and reads at rest and in a cutout;
+          // a singing cat needs no clip.
+          const mouthY = 0.39;
+          const at = w.faceHit(0, mouthY);
+          const shell = w.head.round(0.006).subtract(w.head.round(-0.004));
+          const oval = sdf.ellipsoid([0.022, 0.016, 0.05]).at(at[0], at[1], at[2] - 0.012);
+          const tongue = sdf.ellipsoid([0.016, 0.0055, 0.05]).at(at[0], at[1] - 0.0105, at[2] - 0.012);
+          k.body('mouth-open', shell.intersect(oval).paintWhere(tongue, '#e88a9a', 0.0015).bone('head'), {
+            color: '#4a2224',
+            roughness: 0.6,
+            detail: 0.002,
+          });
         }
         kind.extra?.(k, w);
       },
