@@ -62,7 +62,9 @@ const makeBallPaint =
   (x: number, y: number, z: number) => {
     const slot = slotFor(x, z);
     const sheen = 0.5 + 0.5 * noise.fbm(x * 26, y * 26, z * 26, 2);
-    let c = rgb(k.tint(slot, 0.03 + 0.05 * sheen)); // the lit leather
+    // The leather keeps the slot colour and darkens by 6 % where the sheen is low. A positive
+    // shade would add white to the stored texel and the recolour rule would then drift.
+    let c = rgb(k.tint(slot, -0.06 * (1 - sheen)));
     // The dark stitched seam: a crisp line with a soft edge.
     const seam = 1 - smoothstep(0.0042, 0.0078, seamArc(x, z));
     c = mixRgb(c, rgb(k.tint(slot, { color: SEAM, follow: 0 })), seam);

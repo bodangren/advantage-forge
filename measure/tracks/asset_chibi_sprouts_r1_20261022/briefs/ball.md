@@ -50,11 +50,27 @@ colour slots, `panelA` (2 gores) and `panelB` (the other 2). The presets (the fi
 The seam #5a4030 and the floor shadow #6f503a keep a fixed colour in every preset. The ball
 measures 0.16 x 0.16 x 0.159 m and holds 1,184 triangles.
 
+## r3 (preset colour fix, PM 2026-11-18)
+
+PM order 2026-11-18: the Red of the preset colour gate found the drift in the stored texels. The
+leather used a positive shade, `k.tint(slot, 0.03 + 0.05 * sheen)`. A positive shade mixes toward
+white in linear light, so the stored texel was not the slot colour. The recolour rule then
+multiplies each channel by option over default, and the lighter texel drifts.
+
+The leather now keeps the slot colour and darkens by 6 % where the sheen is low:
+`k.tint(slot, -0.06 * (1 - sheen))`. A negative shade is a multiply, and the recolour rule keeps
+it. The shape, the four gores, the dent, the seam, the floor shadow and the presets do not change.
+
+`scripts/preset-colour-check.mjs ball` exits 0. Every preset slot lands on its option within
+8/255. The anchor error is 5 to 7 of 255 and the formula residual is 0 or 1.
+
 ## Known differences
 
 - The inventory wants five colourful balls in a row for W2. One ball asset serves the row through
   its five presets. Placing the five balls in a row is the scene's job.
 - The inventory wants a red-and-yellow ball for W7. The default preset is red #d9443a with yellow
   #f2c230.
+- The leather shade is darker only. A positive shade (a lift toward white) made the recolour rule
+  drift. The lit leather is now the slot colour and the shaded leather is 6 % darker.
 - The built ball measures 0.16 m across and 0.16 m tall. It stands on y = 0. It matches the brief.
 - The built ball holds 1,184 triangles. It is under the limit of 8,000.
