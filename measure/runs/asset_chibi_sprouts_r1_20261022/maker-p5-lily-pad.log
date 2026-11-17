@@ -1,0 +1,81 @@
+# maker log — Phase 5, the lily pad (asset_chibi_sprouts_r1_20261022)
+
+Role: measure-jr-green (bounded maker), model opencode-go/deepseek-v4.1-flash.
+Date: 2026-11-18. Repo: /home/daniebo/Desktop/advantage-forge, master.
+phase_base_sha: 82114591. role_base_sha: 82114591. No Red role, so no Red commit sits in
+phase_base_sha..HEAD (821145915dde23a7cab82151d95048fe55e8e4cf).
+
+## What I did
+
+- Read the track spec, plan and the props task, AGENTS.md, the forge-assets skill, and the
+  neighbour assets assets/paint-splash.ts and measure/tracks/.../briefs/duck.md.
+- Read the frog's size from out/frog/stats.json (bounds 0.347 m x 0.222 m at the feet). I did not
+  rebuild the frog.
+- Wrote assets/lily-pad.ts: one revolved body (one cross-section profile), a V notch cut by two
+  half-planes, and nine painted radial veins. Size 0.400 x 0.032 x 0.393 m, 3,812 triangles.
+- Wrote measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/lily-pad.md with the brief word for
+  word and a Sources table (one row per size and colour; "PM default, check against the book").
+- Kept the shared index clean: I staged four explicit paths only.
+
+## Checks
+
+Red (before the asset existed), exit 1:
+
+```
+{"asset":"lily-pad","ok":false,"forgeAll":{"exitCode":1,...},"failures":["forge all exited 1","missing out/lily-pad/lily-pad.glb",...]}
+```
+
+Look pass (check a), one call, `./forge render lily-pad --fast && ./forge inspect lily-pad --fast`:
+the first profile (7.5 mm cells, 12 mm top samples) showed a wavy top surface and a soft rim roll.
+Fix 1 sampled the dish and the curl every 3 mm, used a smoothstep curl that tops out at 0.032 m,
+and set detail 0.0045. inspect then reported no warnings and no buried or floating part.
+Fix 2 was the required `sdf.intersect` arity (the type check failed; the notch now nests two
+binary intersects). I did not change the design in fix 2.
+
+Green gate, `mech-check lily-pad`, exit 0:
+
+```
+{"asset":"lily-pad","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":3812,"bottomY":0,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":788960},"typecheckExit":0,"failures":[]}
+```
+
+Check b, one call: mech-check ok, then `./forge cutout ... --views front,three-quarter`, then
+`node scripts/cutout-check.mjs out/chibi-sprouts/r1/props` (last line "result ok"), then
+`python3 scripts/review-cards.py out/prop-cards lily-pad` (wrote out/prop-cards/lily-pad.png).
+cutout-check for the new files:
+
+```
+ok   lily-pad/front.png  1024x1024 soft 502 edge 483 worstDrop 27% rows 974..1007 cols 307..716
+ok   lily-pad/three-quarter.png  1024x1024 soft 494 edge 477 worstDrop 24% rows 974..1007 cols 307..716
+```
+
+## Known weak points
+
+- The front cutout of a flat ground prop is a 34 px sliver (rows 974..1008 of 1024) because the
+  cutout camera frames the model's height. The veins do not show in the cutout. The forge
+  turnaround and the 8-direction sprite sheet do show them. The scene needs a top-down or a high
+  three-quarter camera to see the vein fan.
+- The frog's feet (0.347 m x 0.222 m) leave about 26 mm of leaf at the widest point and reach the
+  notch edge. The brief fixes the 0.40 m width, so I did not change it. No frog-on-pad render
+  exists yet.
+- The vein colour #4f8f5a on #5fa364 is a low contrast pair. At the 128 px sprite size the veins
+  read as faint lines; in the 1024 cutout they read.
+- The V notch edges are sharp (a cut, not a bevel). The mesh cells are 4.5 mm, so the notch edge
+  steps by about one cell.
+- The rim curl adds 12 mm over the outer 30 mm. In the front view it reads as a thickened end, not
+  as a tall lip, because the pad is only 20 mm thick.
+- Width, thickness, notch angle, greens, and vein count are PM defaults: the book gives no size and
+  no colour. The brief marks each one "PM default, check against the book".
+- I did not rate my own work.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: complete
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check), the lily pad
+commits: f8e89036 (asset, brief, splash r2 acceptance files); the plan-evidence commit follows this log
+tests_run: mech-check.mjs lily-pad red exit 1 (missing asset) -> green exit 0, "ok":true, 3812 triangles, bottomY 0, typecheckExit 0; forge render/inspect lily-pad --fast exit 0, inspect warnings none; cutout-check.mjs out/chibi-sprouts/r1/props last line "result ok"; review-cards.py wrote out/prop-cards/lily-pad.png
+files_changed: assets/lily-pad.ts (new); measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/lily-pad.md (new); measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-splash-8211459.json and .log (added unchanged); measure/runs/asset_chibi_sprouts_r1_20261022/maker-p5-lily-pad.log (new); measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md (one sub-bullet)
+plan_updates: added the sub-bullet under the props task "lily pad (PM order 2026-11-17): commit f8e89036; mech-check ok; cutout-check result ok; card out/prop-cards/lily-pad.png; brief briefs/lily-pad.md". The props task stays [~]: Phase 5 has open tasks.
+known_failures: none. Weak points: the flat pad gives a 34 px front cutout that hides the veins; the frog leaves about 26 mm of leaf at the widest point; the vein contrast is low at 128 px; the notch edges are sharp.
+handoff: no task was flipped to [x] and none to [b]; the phase-acceptance role reads the sub-bullet, not a task flip. Size, thickness, notch, greens, and vein count are PM defaults (the book gives no size or colour), so a look against the book may change them. The scene needs a top-down or high three-quarter camera: the front cutout cannot show the veins. The new files for review scope are assets/lily-pad.ts and briefs/lily-pad.md. phase_base_sha 82114591; Green HEAD after commit 1 is f8e89036, and the plan-evidence commit is the child of f8e89036.
+END_MEASURE_AGENT_RESULT
