@@ -86,8 +86,7 @@ Role gate: the jr-green role gate fails while this phase has open tasks (2026-11
 
 ### Task 1: Try round 1
 
-- [~] Task 1: Try round 1 for the 3 assets. Run the Hy4 maker role, then the current maker role, then
-  the judge.
+- [x] Task 1: Try round 1 for the 3 assets. Run the Hy4 maker role, then the current maker role, then the judge. Commits: 37769535, 3dfd1518, 6a03ea7e, 38f93cb5, dcb269f3.
   - The Hy4 maker covers the 3 assets that `arm-key.json` assigns to label `a` or `b` for the Hy4 arm.
     The current maker covers the other 3 sources. Roles run one at a time.
   - A maker role base: read `AGENTS.md`, `.claude/skills/forge-assets/SKILL.md` with
@@ -103,11 +102,13 @@ Role gate: the jr-green role gate fails while this phase has open tasks (2026-11
   - Arm 1 round 1: commit 37769535; mech-check ok for towel-stack-a, wash-basin-a, towel-rack-b; cards at out/hy4-trial/cards/r1/.
   - Known misses of arm 1 round 1 (maker log, commit 37769535): wash-basin-a is 0.199 m tall against the 0.17 m brief; towel-rack-b is 0.689 m wide against the 0.62 m brief. The judge gets both; a try 2 fixes them if the judge fails the asset.
   - Arm 2 round 1: commits 3dfd1518, 6a03ea7e, 38f93cb5; mech-check ok for towel-stack-b, wash-basin-b, towel-rack-a; cards at out/hy4-trial/cards/r1/.
+  - Judge round 1: `judge-r1.json`, model `opencode-go/muse-spark-1.3-contributor#high`, blind, bar 7.0. It holds 5 passes and 1 fail; the judge log is `judge-r1.log`.
+  - Try continuity: arm 1 continued once after a service outage, and arm 2 continued once after a step limit. Both continuations stayed inside try 1, so every asset has one try per arm.
 
 ### Task 2: Try round 2
 
-- [ ] Task 2: Try round 2 for each arm and each asset that did not pass in round 1. Run only when a card
-  fails.
+- [x] Task 2: Try round 2 for each arm and each asset that did not pass in round 1. Run only when a card fails. Trial records: dcb269f3 and the plan-evidence commit; not run: the round 1 results fix every D8 outcome (orchestrator, 2026-11-18).
+  - The one failing card is towel-stack-a. A pass beats a fail, so a round 2 pass for Hy4 would still lose on tries.
   - A maker of round 2 gets only the judge findings for its own arm and asset. It iterates, runs
     `forge all`, the mechanical check, and card `<name>-<label>` at `out/hy4-trial/cards/r2/`.
   - One judge session rates the open cards of round 2 and writes `judge-r2.json`.
@@ -115,19 +116,22 @@ Role gate: the jr-green role gate fails while this phase has open tasks (2026-11
 
 ### Task 3: Try round 3
 
-- [ ] Task 3: Try round 3 for each arm and each asset that still has no pass and has fewer than 3 tries.
+- [x] Task 3: Try round 3 for each arm and each asset that still has no pass and has fewer than 3 tries. Trial records: dcb269f3 and the plan-evidence commit; not run: the round 1 results fix every D8 outcome (orchestrator, 2026-11-18).
   - Same shape as Task 2, with cards at `out/hy4-trial/cards/r3/` and `judge-r3.json`.
   - An asset with no pass after 3 tries of an arm is a fail for that arm. It gets no more tries.
 
 ### Task 4: Results and promotion
 
-- [ ] Task 4: Apply the win rule of D8 to each asset and promote the passing winner to
-  `assets/<name>.ts` (D9).
+- [x] Task 4: Apply the win rule of D8 to each asset and promote the passing winner to `assets/<name>.ts` (D9). Commits: dcb269f3.
   - Run `./forge all <name>` and the mechanical check on each promoted source.
   - Delete both trial sources of the asset and their `out/<name>-a` and `out/<name>-b` folders.
   - Write the results table in this plan: route, asset, pass or fail, tries, rating per try, and the
     reason. Write the route result.
   - Add one lesson to `measure/lessons-learned.md`.
+  - Promoted sources: `assets/towel-stack.ts` from `towel-stack-b` (current route), `assets/wash-basin.ts` from `wash-basin-a` (Hy4), and `assets/towel-rack.ts` from `towel-rack-b` (Hy4). Each file changes only the `name` field and the design note line that named the trial label.
+  - Mechanical check on the 3 promoted sources, each line exit 0: towel-stack 1052 triangles, bottom y 0; wash-basin 3854 triangles, bottom y -0.001; towel-rack 2776 triangles, bottom y 0. `forge all` exited 0 with 0 warnings for each, and the type check exited 0 for each. The triangle counts equal the counts of the judged trial sources, so the promotion changed no geometry.
+  - Final cards: `out/hy4-trial/cards/final/towel-stack.png`, `out/hy4-trial/cards/final/wash-basin.png`, and `out/hy4-trial/cards/final/towel-rack.png`.
+  - Deleted: the 6 trial sources and their 6 `out/<name>-<label>/` folders. `out/hy4-trial/cards/` stays, with the round 1 cards and the final cards.
 
 ### Phase 1 gate and closeout
 
@@ -138,6 +142,31 @@ Role gate: the jr-green role gate fails while this phase has open tasks (2026-11
   `./measure/doctor.sh`. The generator does not run while `measure/generated/` holds foreign changes.
 
 The light lane has no final acceptance role.
+
+## Results
+
+Try round 1. The judge ran on `opencode-go/muse-spark-1.3-contributor#high`, blind, at the bar 7.0. It read the 6 cards of `out/hy4-trial/cards/r1/` against the 3 briefs and the 3 mockups.
+
+| Route | Asset | Label | Result | Tries | Rating per try | Main reason from the judge |
+| --- | --- | --- | --- | --- | --- | --- |
+| Hy4 | towel-stack | a | fail | 1 | 6.0 | The middle slab hovers at its edges, and the stack reads as 4 layers. |
+| Hy4 | wash-basin | a | pass | 1 | 8.0 | Very close to the mockup. The dipper handle reaches past the rim. |
+| Hy4 | towel-rack | b | pass | 1 | 8.0 | Very close to the mockup. The rope ties and the hem fringe are missing. |
+| Current | towel-stack | b | pass | 1 | 7.0 | The hanging corner flap reads as a stiff tab. |
+| Current | wash-basin | b | pass | 1 | 7.0 | The stave tops stand too proud and read as knobs. |
+| Current | towel-rack | a | pass | 1 | 7.5 | The lower legs read thicker than the mockup frame. |
+
+The route names: Hy4 is `opencode/hy4-flash-free#high`. Current is `minimax-cn-coding-plan/MiniMax-M3.1-Flash`.
+
+D8 per asset:
+
+- wash-basin: both arms pass at try 1. Hy4 scores 8.0 against 7.0, so Hy4 wins by 1.0.
+- towel-rack: both arms pass at try 1. Hy4 scores 8.0 against 7.5, so Hy4 wins by 0.5.
+- towel-stack: the current route passes at try 1, and Hy4 fails at try 1. A pass beats a fail, so the current route wins. A Hy4 pass at try 2 would still lose on tries, so round 2 changes no outcome.
+
+Try continuity: arm 1 continued once after a service outage, and arm 2 continued once after a step limit. Both continuations stayed inside try 1, so every asset has one try per arm.
+
+Route result: Hy4 wins 2 of 3 assets. Hy4 Flash (`opencode/hy4-flash-free#high`) is the first maker route for simple assets until the free window ends, about 2026-11-30. The current route (`minimax-cn-coding-plan/MiniMax-M3.1-Flash`) is the fallback. Hero assets stay on the current route (PM order 2026-11-16). This is a recommendation from model evidence; Daniel owns the route decision.
 
 ## Human gate
 
@@ -162,3 +191,9 @@ recommendation from the judge evidence. A card rating is model evidence, not own
   track`).
 - Run records: `measure/runs/asset_hy4_maker_trial_20261116/` (arm key, mockup log, judge brief,
   mechanical check, check test, judge files).
+- Round 1 judge files: `judge-r1.json` and `judge-r1.log` in the run folder. The judge model is
+  `opencode-go/muse-spark-1.3-contributor#high`.
+- Task 4 records: `maker-t4.log` in the run folder, and the commit `dcb269f3` (message
+  `feat(asset_hy4_maker_trial): promote the winning props`). The promoted sources are
+  `assets/towel-stack.ts`, `assets/wash-basin.ts`, and `assets/towel-rack.ts`. Their final cards sit
+  at `out/hy4-trial/cards/final/`.

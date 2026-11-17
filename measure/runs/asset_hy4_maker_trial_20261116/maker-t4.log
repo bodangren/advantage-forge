@@ -1,0 +1,96 @@
+maker-t4 log — Task 4, results and promotion
+Track: asset_hy4_maker_trial_20261116
+Phase: Phase 1: The trial, Task 4 (results and promotion)
+Role: measure-jr-green on minimax-cn-coding-plan/MiniMax-M3.1-Flash
+Role base SHA: c5c7b670 (HEAD at task start)
+Phase base SHA: 8d045c1d (Phase 0 checkpoint)
+Immutable bases: the light lane has no Red role, so no committed Red change exists
+  inside phase_base..HEAD to verify. The role base equals the start HEAD.
+
+Facts read from the run files (not re-decided here):
+- judge-r1.json, model opencode-go/muse-spark-1.3-contributor#high, blind, bar 7.0.
+  wash-basin-b 7.0 pass, towel-rack-a 7.5 pass, towel-stack-a 6.0 fail,
+  towel-rack-b 8.0 pass, wash-basin-a 8.0 pass, towel-stack-b 7.0 pass.
+- arm-key.json: Hy4 (opencode/hy4-flash-free#high) holds towel-stack-a,
+  wash-basin-a, towel-rack-b. The current route
+  (minimax-cn-coding-plan/MiniMax-M3.1-Flash) holds towel-stack-b,
+  wash-basin-b, towel-rack-a.
+- D8 per asset: wash-basin Hy4 8.0 vs current 7.0, both pass at try 1, Hy4 wins.
+  towel-rack Hy4 8.0 vs current 7.5, both pass at try 1, Hy4 wins. towel-stack:
+  current passes at try 1 and Hy4 fails at try 1, so the current route wins; a
+  Hy4 pass at try 2 would still lose on tries, so round 2 changes no outcome.
+- Orchestrator decision (2026-11-18): Tasks 2 and 3 do not run. The round 1
+  results fix every D8 outcome.
+
+Status: complete. The 3 winners are promoted, the mechanical check passes for
+all 3, the trial sources are deleted, and the plan holds the results table and
+the route result.
+
+PROMOTION (D9)
+- assets/towel-stack.ts from assets/towel-stack-b.ts (current route wins).
+- assets/wash-basin.ts from assets/wash-basin-a.ts (Hy4 wins).
+- assets/towel-rack.ts from assets/towel-rack-b.ts (Hy4 wins).
+- Each file changes only the name field and the design note line that named the
+  trial label. The geometry, the paint, and the reference path stay unchanged.
+  The plain names did not exist in assets/ and do not appear in
+  docs/fantasy-world-asset-catalog.tsv before the promotion.
+- git mv was not used. Other agents share the git index. The commit stages the 3
+  new paths and the 6 deleted paths by name.
+
+GREEN_TEST_COMMAND (one heavy job, 3 mechanical checks and the final cards)
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<loop over the 3 names, then review-cards>'
+Exit 0. The 3 lines of output:
+{"asset":"towel-stack","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":1052,"bottomY":0,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":1352708},"typecheckExit":0,"failures":[]}
+{"asset":"wash-basin","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":3854,"bottomY":-0.001,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":1868224},"typecheckExit":0,"failures":[]}
+{"asset":"towel-rack","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":2776,"bottomY":0,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":1281688},"typecheckExit":0,"failures":[]}
+out/hy4-trial/cards/final/towel-stack.png
+out/hy4-trial/cards/final/wash-basin.png
+out/hy4-trial/cards/final/towel-rack.png
+
+The triangle counts equal the counts of the judged trial sources (towel-stack-b
+1052, wash-basin-a 3854, towel-rack-b 2776). The promotion changed no geometry.
+No lock wait (exit 75) occurred and no browser install ran.
+
+DELETED
+- assets/towel-stack-a.ts, assets/towel-stack-b.ts, assets/wash-basin-a.ts,
+  assets/wash-basin-b.ts, assets/towel-rack-a.ts, assets/towel-rack-b.ts.
+- out/towel-stack-a/, out/towel-stack-b/, out/wash-basin-a/, out/wash-basin-b/,
+  out/towel-rack-a/, out/towel-rack-b/.
+- out/hy4-trial/cards/ stays. It holds the round 1 cards and the final cards.
+
+PLAN UPDATES (measure/tracks/asset_hy4_maker_trial_20261116/plan.md)
+- Task 1 [x] with the commits 37769535, 3dfd1518, 6a03ea7e, 38f93cb5 and
+  dcb269f3 on the first line, plus the judge round 1 file and the try continuity.
+- Task 2 [x] and Task 3 [x] with the note "not run: the round 1 results fix every
+  D8 outcome (orchestrator, 2026-11-18)".
+- Task 4 [x] with dcb269f3 on the first line, plus the promotion, the mechanical
+  check numbers, the final card paths, and the deleted paths.
+- A new "Results" section holds the table of the 6 rows, the D8 line per asset,
+  the try continuity, and the route result.
+- The Evidence section names the judge files, the log, and the promotion commit.
+
+LESSON (measure/lessons-learned.md)
+- One lesson in "Effective practices": a blind a/b trial of maker routes on
+  simple props, Hy4 Flash winning 2 of 3 at the bar 7.0, the miss being a
+  floating slab in a stacked-cloth prop, and the rule to give stacked props an
+  explicit contact rule.
+
+GATE NOTE
+bash measure/doctor.sh reports errors from other tracks and from stale generated
+files with foreign hunks. The doctor names no error for
+asset_hy4_maker_trial_20261116. The generator does not run while
+measure/generated/ holds foreign changes. The role owns no path in
+measure/tracks.md, and no registry hunk was staged.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: complete
+track: asset_hy4_maker_trial_20261116
+phase: Phase 1: The trial, Task 4 (results and promotion)
+commits: dcb269f3 (implementation, message "feat(asset_hy4_maker_trial): promote the winning props"); the plan-evidence commit holds plan.md, lessons-learned.md, judge-r1.json, judge-r1.log, and this log
+tests_run: GREEN_TEST_COMMAND exit 0. 3 mechanical checks, each ok:true and exit 0 — towel-stack (1052 triangles, bottomY 0, typecheck 0); wash-basin (3854 triangles, bottomY -0.001, typecheck 0); towel-rack (2776 triangles, bottomY 0, typecheck 0). forge all exited 0 with 0 warnings for each. The final cards wrote to out/hy4-trial/cards/final/.
+files_changed: assets/towel-stack.ts, assets/wash-basin.ts, assets/towel-rack.ts (new); assets/towel-stack-a.ts, assets/towel-stack-b.ts, assets/wash-basin-a.ts, assets/wash-basin-b.ts, assets/towel-rack-a.ts, assets/towel-rack-b.ts (deleted); measure/tracks/asset_hy4_maker_trial_20261116/plan.md; measure/lessons-learned.md; measure/runs/asset_hy4_maker_trial_20261116/judge-r1.json; measure/runs/asset_hy4_maker_trial_20261116/judge-r1.log; measure/runs/asset_hy4_maker_trial_20261116/maker-t4.log
+plan_updates: Task 1 [x] with SHAs 37769535, 3dfd1518, 6a03ea7e, 38f93cb5, dcb269f3; Task 2 [x] and Task 3 [x] with the note "not run: the round 1 results fix every D8 outcome (orchestrator, 2026-11-18)"; Task 4 [x]; a new Results section with the table of 6 rows, the D8 line per asset, the try continuity, and the route result; the Evidence section names the judge files, the log, and dcb269f3
+known_failures: none. doctor.sh exits non-zero on other tracks and on stale generated files, which no path of this role touches. No mech-check failure.
+handoff: The 3 winners are promoted and the gate passes. assets/towel-stack.ts comes from towel-stack-b (current route), assets/wash-basin.ts from wash-basin-a (Hy4), assets/towel-rack.ts from towel-rack-b (Hy4); each file changes only the name field and the design note line. The 6 trial sources and their 6 out folders are deleted; out/hy4-trial/cards/ stays with the round 1 cards and the final cards. Tasks 2 and 3 do not run, so the phase holds only the Phase 1 gate and the closeout as open tasks; the orchestrator owns the green gate at phase end. The route result is a recommendation: Hy4 Flash is the first maker route for simple assets until the free window ends (about 2026-11-30), the current route is the fallback, and hero assets stay on the current route (PM order 2026-11-16). Daniel owns the route decision. phase_base_sha 8d045c1d, role_base_sha c5c7b670, implementation commit dcb269f3.
+END_MEASURE_AGENT_RESULT
