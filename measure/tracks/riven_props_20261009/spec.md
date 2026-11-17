@@ -51,7 +51,7 @@ The game set builds 27 props, 7 of them kit pieces with no catalog row.
 ## Sources
 
 - `docs/fantasy-world-asset-catalog.tsv` (family `props`)
-- `measure/tracks/asset_p1_props_20260928/` (the Chibi Quest plan and evidence)
+- `measure/archive/asset_p1_props_20260928/` (the Chibi Quest plan and evidence)
 - `docs/pack-layout.md` and `measure/riven-lands-roadmap.md`
 
 ## Out of scope

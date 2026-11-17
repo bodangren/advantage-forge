@@ -13,7 +13,7 @@
   "pack": "riven-lands",
   "evidence": [
     "docs/fantasy-world-asset-catalog.tsv",
-    "measure/tracks/asset_p1_props_20260928/plan.md",
+    "measure/archive/asset_p1_props_20260928/plan.md",
     "measure/riven-lands-roadmap.md"
   ],
   "dependencies": [

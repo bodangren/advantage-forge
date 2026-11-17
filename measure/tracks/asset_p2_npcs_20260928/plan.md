@@ -16,7 +16,7 @@ Status: in progress (2026-10-09, owner goal: complete the P2 NPCs with Sonnet su
 
 - [ ] Task: Build missing sources and review existing sources in the batch.
 - [ ] Task: Run forge all for each accepted source after visual correction.
-- Note (2026-10-09): `baker` is at 7.2 after two reviews in the [Haiku trial](../asset_p2_npc_haiku_trial_20261009/), below the 7.5 character bar; one more pass under the stop rule. NPCs that carry an item in both hands can use the humanoid kind's `hold` option.
+- Note (2026-10-09): `baker` is at 7.2 after two reviews in the [Haiku trial](../../archive/asset_p2_npc_haiku_trial_20261009/), below the 7.5 character bar; one more pass under the stop rule. NPCs that carry an item in both hands can use the humanoid kind's `hold` option.
 
 ## Phase 4: Documentation and verification
 

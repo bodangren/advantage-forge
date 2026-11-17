@@ -52,7 +52,7 @@ The game set builds the lantern and the 142 ready avatar pieces, 72 of which are
 ## Sources
 
 - `docs/fantasy-world-asset-catalog.tsv` (family `equipment`)
-- `measure/tracks/asset_p1_equipment_20260928/` (the Chibi Quest plan and evidence)
+- `measure/archive/asset_p1_equipment_20260928/` (the Chibi Quest plan and evidence)
 - `docs/pack-layout.md` and `measure/riven-lands-roadmap.md`
 
 ## Out of scope

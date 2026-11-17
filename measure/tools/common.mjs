@@ -30,6 +30,11 @@ const STATUSES = new Set(['new', 'in_progress', 'completed']);
 const WORKSTREAMS = new Set(['assets', 'games', 'foundation']);
 const MARKERS = { ' ': 'new', '~': 'in_progress', x: 'completed' };
 
+export const TRACKS_DIR = 'measure/tracks';
+export const ARCHIVE_DIR = 'measure/archive';
+export const ARCHIVED_STATUS = 'done';
+export const ARCHIVED_SECTION = '## Archived Tracks';
+
 export function projectRoot(value) {
   return resolve(value ?? process.env.MEASURE_ROOT ?? process.cwd());
 }
@@ -114,31 +119,45 @@ export function countPlanTasks(plan) {
   return counts;
 }
 
-export function collectTracks(root) {
-  const tracks = [];
-  for (const directory of directoriesUnder(root, 'measure/tracks')) {
-    const base = join(root, 'measure', 'tracks', directory);
-    const metadataPath = join(base, 'metadata.json');
-    const planPath = join(base, 'plan.md');
-    let metadata;
-    let metadataError;
-    try {
-      metadata = existsSync(metadataPath) ? readJson(metadataPath) : undefined;
-    } catch (error) {
-      metadataError = error instanceof Error ? error.message : String(error);
-    }
-    let plan = '';
-    if (existsSync(planPath)) plan = text(planPath);
-    tracks.push({
-      directory,
-      base: rootPath(root, base),
-      metadata,
-      metadataError,
-      plan,
-      tasks: countPlanTasks(plan),
-    });
+function readTrackFolder(root, parent, directory) {
+  const base = join(root, 'measure', parent, directory);
+  const metadataPath = join(base, 'metadata.json');
+  const planPath = join(base, 'plan.md');
+  let metadata;
+  let metadataError;
+  try {
+    metadata = existsSync(metadataPath) ? readJson(metadataPath) : undefined;
+  } catch (error) {
+    metadataError = error instanceof Error ? error.message : String(error);
   }
-  return tracks;
+  let plan = '';
+  if (existsSync(planPath)) plan = text(planPath);
+  return {
+    directory,
+    base: rootPath(root, base),
+    metadata,
+    metadataError,
+    plan,
+    tasks: countPlanTasks(plan),
+  };
+}
+
+export function collectTracks(root) {
+  return directoriesUnder(root, TRACKS_DIR).map((directory) => ({
+    ...readTrackFolder(root, 'tracks', directory),
+    archived: false,
+  }));
+}
+
+export function collectArchivedTracks(root) {
+  return directoriesUnder(root, ARCHIVE_DIR).map((directory) => ({
+    ...readTrackFolder(root, 'archive', directory),
+    archived: true,
+  }));
+}
+
+export function collectKnownTracks(root) {
+  return [...collectTracks(root), ...collectArchivedTracks(root)];
 }
 
 export function validateMetadata(track) {
@@ -208,6 +227,28 @@ export function parseRegistry(root) {
   const linesWithTrack = source.split('\n').filter((line) => line.includes('**Track:'));
   if (entries.length !== linesWithTrack.length) {
     errors.push('measure/tracks.md: registry entries must use the standard Track and Link format');
+  }
+  return { entries, errors };
+}
+
+export function parseArchivedRegistry(root) {
+  const path = join(root, 'measure', 'tracks.md');
+  if (!existsSync(path)) return { entries: [], errors: [] };
+  const source = text(path);
+  const heading = new RegExp(`^${ARCHIVED_SECTION}$`, 'm').exec(source);
+  if (!heading) return { entries: [], errors: [] };
+  const rest = source.slice(heading.index + heading[0].length);
+  const nextHeading = rest.search(/^## /m);
+  const section = nextHeading < 0 ? rest : rest.slice(0, nextHeading);
+  const entries = [];
+  const errors = [];
+  const pattern = /\*Link: \[\.\/archive\/([a-z0-9_-]+)\/]\(\.\/archive\/([a-z0-9_-]+)\/\)\*/g;
+  for (const match of section.matchAll(pattern)) {
+    if (match[1] !== match[2]) {
+      errors.push(`measure/tracks.md: archived registry link target differs for ${match[1]}`);
+      continue;
+    }
+    entries.push({ id: match[1] });
   }
   return { entries, errors };
 }

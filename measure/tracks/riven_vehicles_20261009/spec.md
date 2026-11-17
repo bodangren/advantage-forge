@@ -51,7 +51,7 @@ No game loads a vehicle today. The Chibi Quest vehicles are accepted (15 of 15).
 ## Sources
 
 - `docs/fantasy-world-asset-catalog.tsv` (family `vehicles`)
-- `measure/tracks/asset_p3_vehicles_20260928/` (the Chibi Quest plan and evidence)
+- `measure/archive/asset_p3_vehicles_20260928/` (the Chibi Quest plan and evidence)
 - `docs/pack-layout.md` and `measure/riven-lands-roadmap.md`
 
 ## Out of scope

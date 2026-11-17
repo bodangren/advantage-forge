@@ -62,7 +62,7 @@ practice than recognition. Each correct word is a hit by the student's own avata
 ## Evidence
 
 - Design document (Phase 1): `docs/game-typing-duel.md`
-- [Flashcard input track](../game_flashcard_input_20261004/)
+- [Flashcard input track](../../archive/game_flashcard_input_20261004/)
 - [Game program](../../../docs/apk-2d3d-program.md)
 
 ## Path policy

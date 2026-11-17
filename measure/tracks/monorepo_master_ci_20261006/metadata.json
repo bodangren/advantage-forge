@@ -12,7 +12,7 @@
   "retrospective": false,
   "evidence": [
     "measure/tracks/monorepo_master_ci_20261006/spec.md",
-    "measure/tracks/apk_pack_release_20261006/plan.md",
+    "measure/archive/apk_pack_release_20261006/plan.md",
     "measure/tech-debt.md"
   ],
   "dependencies": []

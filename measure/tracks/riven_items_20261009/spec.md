@@ -51,7 +51,7 @@ No game loads an item model today. Items are shop and reward icons. Keep the pot
 ## Sources
 
 - `docs/fantasy-world-asset-catalog.tsv` (family `items`)
-- `measure/tracks/asset_p2_items_20260928/` (the Chibi Quest plan and evidence)
+- `measure/archive/asset_p2_items_20260928/` (the Chibi Quest plan and evidence)
 - `docs/pack-layout.md` and `measure/riven-lands-roadmap.md`
 
 ## Out of scope

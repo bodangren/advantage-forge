@@ -12,7 +12,7 @@
   "retrospective": false,
   "evidence": [
     "docs/apk-2d3d-program.md",
-    "measure/tracks/game_flashcard_input_20261004/spec.md"
+    "measure/archive/game_flashcard_input_20261004/spec.md"
   ],
   "dependencies": [
     "game_platform_port_20260928",

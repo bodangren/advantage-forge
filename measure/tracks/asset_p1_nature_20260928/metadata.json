@@ -15,8 +15,8 @@
     "docs/fantasy-world-asset-catalog.md",
     "bench/overnight/PLAN.md",
     "bench/sonnet/log.tsv",
-    "measure/tracks/asset_p0p1_completion_20261002/evidence.md",
-    "measure/tracks/asset_p0p1_completion_20261002/rebuilds.tsv"
+    "measure/archive/asset_p0p1_completion_20261002/evidence.md",
+    "measure/archive/asset_p0p1_completion_20261002/rebuilds.tsv"
   ],
   "dependencies": []
 }

@@ -3,13 +3,17 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import {
+  ARCHIVED_STATUS,
   collectTracks,
+  collectArchivedTracks,
+  collectKnownTracks,
   catalogEntries,
   blueprintEntries,
   exists,
   fileLineCount,
   freshnessErrors,
   localMarkdownLinkErrors,
+  parseArchivedRegistry,
   parseRegistry,
   projectRoot,
   readScopeMap,
@@ -63,6 +67,41 @@ function coreContextErrors(root) {
   return errors;
 }
 
+function archivedTrackErrors(root) {
+  const errors = [];
+  const archivedTracks = collectArchivedTracks(root);
+  const registry = parseArchivedRegistry(root);
+  errors.push(...registry.errors);
+  const registryIds = new Map();
+  for (const entry of registry.entries) {
+    if (registryIds.has(entry.id)) errors.push(`measure/tracks.md: duplicate archived registry track ${entry.id}`);
+    else registryIds.set(entry.id, entry);
+  }
+  const ids = new Map();
+  for (const track of archivedTracks) {
+    if (track.metadataError) {
+      errors.push(`${track.base}/metadata.json: invalid JSON (${track.metadataError})`);
+    } else if (!track.metadata || typeof track.metadata !== 'object' || Array.isArray(track.metadata)) {
+      errors.push(`${track.base}/metadata.json: metadata must be an object`);
+    } else if (track.metadata.status !== ARCHIVED_STATUS) {
+      errors.push(`${track.base}/metadata.json: archived track status must be ${ARCHIVED_STATUS}`);
+    }
+    const id = track.metadata?.track_id;
+    if (typeof id === 'string') {
+      if (ids.has(id)) errors.push(`${track.base}: duplicate track_id ${id}`);
+      else ids.set(id, track);
+      if (track.directory !== id) errors.push(`${track.base}: directory must match track_id ${id}`);
+    }
+    if (!registryIds.has(track.directory)) {
+      errors.push(`measure/tracks.md: missing archived registry link for ${track.directory}`);
+    }
+  }
+  for (const id of registryIds.keys()) {
+    if (!ids.has(id)) errors.push(`measure/tracks.md: archived registry track ${id} has no archive folder`);
+  }
+  return { errors, ids };
+}
+
 function trackErrors(root) {
   const errors = [];
   if (!exists(root, 'measure/tracks')) {
@@ -70,6 +109,8 @@ function trackErrors(root) {
     return errors;
   }
   const tracks = collectTracks(root);
+  const archived = archivedTrackErrors(root);
+  errors.push(...archived.errors);
   const ids = new Map();
   for (const track of tracks) {
     errors.push(...requiredTrackFileErrors(root, track), ...validateMetadata(track));
@@ -90,6 +131,12 @@ function trackErrors(root) {
     if (track.metadata?.status === 'in_progress' && track.tasks.total > 0 && track.tasks.completed === track.tasks.total) {
       errors.push(`${track.base}/plan.md: in_progress track has no unchecked task`);
     }
+  }
+  const known = new Map();
+  for (const [id, track] of ids) known.set(id, { status: track.metadata?.status, archived: false });
+  for (const [id] of archived.ids) {
+    if (ids.has(id)) errors.push(`measure/archive/${id}: track_id ${id} is also an active track`);
+    known.set(id, { status: 'completed', archived: true });
   }
   const registry = parseRegistry(root);
   errors.push(...registry.errors);
@@ -117,9 +164,9 @@ function trackErrors(root) {
       if (seen.has(dependency)) errors.push(`${track.base}/metadata.json: duplicate dependency ${dependency}`);
       seen.add(dependency);
       if (dependency === id) errors.push(`${track.base}/metadata.json: track cannot depend on itself`);
-      const dependencyTrack = ids.get(dependency);
+      const dependencyTrack = known.get(dependency);
       if (!dependencyTrack) errors.push(`${track.base}/metadata.json: unknown dependency ${dependency}`);
-      else if (track.metadata.status === 'completed' && dependencyTrack.metadata.status !== 'completed') {
+      else if (track.metadata.status === 'completed' && dependencyTrack.status !== 'completed') {
         errors.push(`${track.base}/metadata.json: completed track depends on unfinished ${dependency}`);
       }
     }
@@ -156,7 +203,7 @@ function scopeMapErrors(root) {
     return errors;
   }
   const trackIds = new Set(
-    collectTracks(root)
+    collectKnownTracks(root)
       .map((track) => track.metadata?.track_id)
       .filter((id) => typeof id === 'string'),
   );
