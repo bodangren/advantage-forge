@@ -125,3 +125,16 @@ ends with "result ok" for all eight props in the folder.
 
 - The props task stays as it is. The maker role does not rate the work and does not close the
   task.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: complete
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check)
+commits: 2f8ee4a6, f098d5b9, 6df0d874, 6057feaa, 9863c547, 34249914, d6e0414e, ca63c3de
+tests_run: "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs <name>' for sun, cloud, flower, grape-bunch, paint-splash and duck: every line ok:true, exit 0, no warning lines; node scripts/cutout-check.mjs out/chibi-sprouts/r1/props: result ok for all eight props; python3 scripts/review-cards.py out/prop-cards <name> for each prop: cards written; ./forge render paint-splash --preset all: three renders differ in colour"
+files_changed: "assets/sun.ts, assets/cloud.ts, assets/flower.ts, assets/grape-bunch.ts, assets/paint-splash.ts, scripts/review-cards.py, measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/sun.md, briefs/cloud.md, briefs/flower.md, briefs/grape-bunch.md, briefs/paint-splash.md, briefs/duck.md, measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md, measure/runs/asset_chibi_sprouts_r1_20261022/wing-probe.ts, measure/runs/asset_chibi_sprouts_r1_20261022/maker-p5-week3.log, measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-duck-7c95ea9.json, measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-duck-7c95ea9.log"
+plan_updates: "One sub-bullet under the props task of Phase 5: week 3 set and duck fixes (PM order 2026-11-17), with the eight SHAs, the mech-check names, the cutout-check result, the card folder and the review-cards F7 SHA. The task keeps its [~] marker; the maker role does not close it."
+known_failures: none
+handoff: "Seven items are done and committed. F7 (review-cards): 2f8ee4a6 shows the whole render and a no mockup panel when the asset has no reference; the card for an asset with a reference is byte-identical to the old one. Duck F1 and F2: f098d5b9; the wings lie flat with a measured worst protrusion of 5.8 mm against the 8 mm limit, and one glint shows on each eye; the measuring tool is measure/runs/asset_chibi_sprouts_r1_20261022/wing-probe.ts. Week 3 props: sun 6df0d874, cloud 6057feaa, flower 9863c547, grape-bunch 34249914, paint-splash d6e0414e; each has a brief with the Sources table. Evidence: ca63c3de. Weak points for the reviewers: the duck wings are subtle (coverts at 0.9% of the side silhouette); the cloud is 0.56 m wide and 0.25 m tall against the brief's 0.50 x 0.26 m; the grape leaf reads as a five-pointed star; the paint splash is all mid-value and thin from the side. New files for the audit: assets/sun.ts, assets/cloud.ts, assets/flower.ts, assets/grape-bunch.ts, assets/paint-splash.ts and the five new briefs. The review cards are at out/prop-cards/. The maker role does not rate its own work."
+END_MEASURE_AGENT_RESULT
