@@ -197,8 +197,9 @@ Workbooks does not wait for it.
 - [ ] Task: The remaining cast (an adult base for Mom, Dad, Grandma, Grandpa; Tom at about eight).
 - [x] Task: The remaining gesture key frames (20 gestures in use, inventory section 3): the
   week 2 to 7 set above covers set 2 and `turn`; only the week 4 family cast gestures wait for S26.
-- [ ] Task: Scenes (inventory section 4) and the 30 props and animals (section 5): fit-check reused
+- [~] Task: Scenes (inventory section 4) and the 30 props and animals (section 5): fit-check reused
   assets, build the new ones, and review in batches. Week 7 waits for its new song.
+  - First prop batch (5 of the 15 new): commit 1dcca329; cutout-check "result ok"; cards at out/prop-cards/
 
 ## Phase 6: Delivery and close
 
