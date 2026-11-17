@@ -102,6 +102,7 @@ Role gate: the jr-green role gate fails while this phase has open tasks (2026-11
   - Record the rating of each card, the pass or fail, and the findings.
   - Arm 1 round 1: commit 37769535; mech-check ok for towel-stack-a, wash-basin-a, towel-rack-b; cards at out/hy4-trial/cards/r1/.
   - Known misses of arm 1 round 1 (maker log, commit 37769535): wash-basin-a is 0.199 m tall against the 0.17 m brief; towel-rack-b is 0.689 m wide against the 0.62 m brief. The judge gets both; a try 2 fixes them if the judge fails the asset.
+  - Arm 2 round 1: commits 3dfd1518, 6a03ea7e, 38f93cb5; mech-check ok for towel-stack-b, wash-basin-b, towel-rack-a; cards at out/hy4-trial/cards/r1/.
 
 ### Task 2: Try round 2
 

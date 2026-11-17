@@ -1,0 +1,97 @@
+# Maker log — asset_hy4_maker_trial_20261116, arm 2, round 1
+
+Role: measure-jr-green (maker, light lane), current maker route `minimax-cn-coding-plan/MiniMax-M3.1-Flash`.
+Base SHA: 26719fa9. Branch: master. Track: asset_hy4_maker_trial_20261116, Phase 1 Task 1.
+
+## Assigned sources (arm 2, label set by the arm key)
+
+| Asset | File | Mockup |
+| --- | --- | --- |
+| towel-stack | `assets/towel-stack-b.ts` | `docs/bathhouse-mockups/towel-stack-mock.jpg` |
+| wash-basin | `assets/wash-basin-b.ts` | `docs/bathhouse-mockups/wash-basin-mock.jpg` |
+| towel-rack | `assets/towel-rack-a.ts` | `docs/bathhouse-mockups/towel-rack-mock.jpg` |
+
+The briefs are `measure/tracks/asset_hy4_maker_trial_20261116/briefs/<name>.md`. The brief wins over the mockup.
+
+## Rules followed
+
+- Load rule: every forge command, the mechanical check and every typecheck ran as
+  `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'`.
+- Only the 3 asset sources, this log, and one sub-bullet under Task 1 of the track plan were written.
+- No file of arm 1 was opened: no `towel-stack-a`, `wash-basin-a`, `towel-rack-b` source, output, card or log.
+  The arm 1 sub-bullet of the plan was not read before this log was written.
+- Commits use explicit paths only: `git add <one path> && git diff --cached --stat && git commit`.
+- The role never rated its own work. The judge rates the cards.
+
+## Status
+
+complete — all 3 sources written, the mechanical check passed for all 3, and the 3 round 1 cards are written.
+
+## Work log
+
+### towel-stack-b — commit 3dfd1518
+
+- 5 `./forge render --fast` passes and 1 `./forge inspect --fast`.
+- The first pass read as three flat plates. The passes after it rounded the fold edges, rebuilt
+  the hanging corner as a two-part flap (one on the top surface, one over the front edge), moved
+  the stitch band to the top surface, deepened the press dent, and set the stack height to 0.22 m.
+- Inspect: no floating part, no buried part, lowest point y = 0.
+- Mech-check: `{"asset":"towel-stack-b","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":1052,"bottomY":0,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":1352712},"typecheckExit":0,"failures":[]}`
+- Card: `out/hy4-trial/cards/r1/towel-stack-b.png`. The card and the sprite preview were read once.
+
+### wash-basin-b — commit 6a03ea7e
+
+- 6 `./forge render --fast` passes and 2 `./forge inspect --fast` runs.
+- The first pass showed a lumpy rim. The passes after it widened the cavity so the water reads,
+  moved the sawn stave tops from wide blocks to a scalloped crown with small pegs, faded the
+  stave lobes under the rim, and gave the basin a finer mesh (detail 0.0065, 4200 triangles)
+  because the rim tube was only two cells across and the reduction lumped it.
+- The first mech-check failed on the type check (4 errors: `noUncheckedIndexedAccess` on the
+  `wallRadius` table). The table reads changed; the geometry did not. The mech-check then passed.
+- Inspect: no floating part, no buried part, lowest point y = 0.
+- Mech-check: `{"asset":"wash-basin-b","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":5910,"bottomY":0,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":2716880},"typecheckExit":0,"failures":[]}`
+- Card: `out/hy4-trial/cards/r1/wash-basin-b.png`. The card and the sprite preview were read once.
+
+### towel-rack-a — commit 38f93cb5
+
+- 4 `./forge render --fast` passes and 4 `./forge inspect --fast` runs.
+- The passes fixed the stretcher length (it floated between the legs), the peg (it was hidden
+  by the hand towel), the leg thickness, and the wide towel (the front panel became an extruded
+  cloth outline with uneven sides and a wavy hem instead of a flat box).
+- Inspect: no floating part, no buried part, lowest point y = -0.004 m. The iron peg was under
+  0.3% of the silhouette in the last inspect, so the peg grew a longer shaft and a bigger head.
+- Mech-check: `{"asset":"towel-rack-a","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":4804,"bottomY":-0.004,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":1773764},"typecheckExit":0,"failures":[]}`
+- Card: `out/hy4-trial/cards/r1/towel-rack-a.png`. The card and the sprite preview were read once.
+
+## Step limit
+
+The role hit its step limit after `wash-basin-b` and the orchestrator continued the same try
+(round 1, not a new try) with the same rules and the same base. The work order after the
+continuation was: 2 more `--fast` passes and the mech-check for `wash-basin-b`, then 4 passes
+and the mech-check for `towel-rack-a`, then this plan sub-bullet and this log block in one
+commit. The render and the inspect ran as one heavy job per asset; the mech-check and the card
+ran as one heavy job per asset.
+
+## Known misses of arm 2 round 1
+
+- towel-stack-b: the press dent in the top of the stack reads weakly; the stitch band edge is
+  slightly ragged; the hanging corner reads as a narrow tab rather than a wide folded corner.
+- wash-basin-b: the pale rim band still reads a little wavy; the staves read more as a basket
+  weave than as separate blocks; the front view alone can read as a planter; the water shows in
+  the three-quarter and top views but not from a level camera.
+- towel-rack-a: the teal hem is one band where the mockup has three; the legs are slimmer than
+  the mockup's; the hand towel is small; the wide towel still reads partly as a flat panel above
+  its wavy hem.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_hy4_maker_trial_20261116
+phase: Phase 1: The trial
+commits: 3dfd1518, 6a03ea7e, 38f93cb5
+tests_run: node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs towel-stack-b -> {"asset":"towel-stack-b","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":1052,"bottomY":0,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":1352712},"typecheckExit":0,"failures":[]} (pass); node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs wash-basin-b -> {"asset":"wash-basin-b","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":5910,"bottomY":0,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":2716880},"typecheckExit":0,"failures":[]} (pass; the first run failed only on 4 type-check errors in wallRadius, fixed without a geometry change); node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs towel-rack-a -> {"asset":"towel-rack-a","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":4804,"bottomY":-0.004,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":1773764},"typecheckExit":0,"failures":[]} (pass)
+files_changed: assets/towel-stack-b.ts, assets/wash-basin-b.ts, assets/towel-rack-a.ts, measure/runs/asset_hy4_maker_trial_20261116/maker-r1-2.log, measure/tracks/asset_hy4_maker_trial_20261116/plan.md
+plan_updates: one sub-bullet under Task 1 of measure/tracks/asset_hy4_maker_trial_20261116/plan.md: "Arm 2 round 1: commits 3dfd1518, 6a03ea7e, 38f93cb5; mech-check ok for towel-stack-b, wash-basin-b, towel-rack-a; cards at out/hy4-trial/cards/r1/." Task 1 stays [~].
+known_failures: none
+handoff: The judge reads the 3 cards at out/hy4-trial/cards/r1/towel-stack-b.png, wash-basin-b.png and towel-rack-a.png against the 3 briefs and the 3 mockups. towel-stack-b: 5 --fast iterations, measured 0.301 x 0.222 x 0.229 m against the brief 0.30 wide x 0.24 deep x 0.22 tall, all within 8%; weak: the press dent in the top of the stack reads weakly, the stitch band edge is slightly ragged, the hanging corner reads as a narrow tab. wash-basin-b: 6 --fast iterations, measured 0.419 x 0.181 x 0.399 m against the brief 0.42 x 0.17 x 0.40, the height is 11 mm over because the dipper cup rests above the rim; weak: the pale rim band reads a little wavy, the staves read more as a basket weave than as separate blocks, the front view alone can read as a planter, the water shows only in the three-quarter and top views. towel-rack-a: 4 --fast iterations, measured 0.620 x 0.824 x 0.345 m against the brief 0.62 x 0.82 x 0.34, within 1%; weak: one teal hem band where the mockup has three, slimmer legs than the mockup, a small hand towel, the wide towel still reads partly as a flat panel above its wavy hem. The role continued after a step limit inside the same try; no arm 1 file was opened.
+END_MEASURE_AGENT_RESULT
