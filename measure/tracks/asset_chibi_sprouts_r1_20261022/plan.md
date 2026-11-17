@@ -221,6 +221,7 @@ Workbooks does not wait for it.
   - fix round 1 and 2 (PM 2026-11-18): seam cause one lost row in the whole-buffer readPixels (now read in strips); commits a330434d, 51fee130, b3460c68; all props re-cut, cutout-check result ok with the seam check; lily pad high cutout at props/high
   - fix round 3 (PM 2026-11-18): splash lens commit 2514a96a; mech-check ok; cutout-check result ok in 3 folders; SHA on the first line of every [x] task
   - group 2 reworks (PM 2026-11-18): ball 2da0e605, kite 757a6948, brush 2901d092; mech-check ok; cutout-check result ok in props and presets folders
+  - preset colour gate (PM order 2026-11-18, N1 and N2): commit 6a04c63e adds scripts/preset-colour-check.mjs, scripts/make-preset-pin.mjs, tests/preset-colour.test.ts, and tests/fixtures/preset-pin.json (387 assets, 902 presets, 3166 preset slots); the check exits 1 on 10 ball slots and kite/yellow/sailA; the formula tests and the pin test pass; log measure/runs/asset_chibi_sprouts_r1_20261022/red-p5-preset.log
 
 ## Phase 6: Delivery and close
 

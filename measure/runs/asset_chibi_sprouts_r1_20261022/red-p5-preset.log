@@ -1,0 +1,221 @@
+# Red: preset colour drift at Phase 5 (PM order 2026-11-18)
+
+Role: measure-mid-red. Track: asset_chibi_sprouts_r1_20261022. Phase 5: the rest of the inventory.
+
+## 1. Identity and scope
+
+- phase_base_sha: 6b9f5f557aafd482262ba5b90e55a274c0b16685 (supplied as 6b9f5f55; resolves).
+- role_base_sha: 6b9f5f55 (same object; resolves). HEAD at start equals both.
+- Dirty work at start: generated files, bench and reference images, and other track plans. All are
+  unrelated user work. I changed no dirty path.
+- Owned paths this round: scripts/preset-colour-check.mjs, scripts/make-preset-pin.mjs,
+  tests/preset-colour.test.ts, tests/fixtures/preset-pin.json, this log, and one plan evidence line.
+- I changed no production source (src/, assets/).
+
+## 2. What the Red test file holds
+
+tests/preset-colour.test.ts has four tests.
+
+1. The recolour formula on a saturated default. Slot default #d9443a, options #f2c230, #e8892c,
+   #4f9a4a, #7b4a9e, #3f6fa8, #f4f1ea. A texel equal to the default must become the option
+   within 3/255. Result: PASS.
+2. The same slot with k.tint shade -0.25. The recoloured shade must equal the option shade within
+   6/255. Result: PASS.
+3. The baked preset atlases. It runs scripts/preset-colour-check.mjs on ball, kite, paint-splash,
+   and paint-pot and expects exit 0. Result: FAIL (exit 1). This is the Red.
+4. The pin. Every asset under assets/*.ts that declares variants and presets must keep its pinned
+   ratio, recoloured default, and recoloured -0.25 shade within 1/255. Result: PASS. The test
+   compares 387 assets, 902 presets, and 3166 preset slots. The allow-list INTENDED_CHANGES is
+   empty. Green fills it only with entries the fix must move, each with a reason.
+
+So the formula is not the cause. Tests 1 and 2 pass at HEAD. Test 4 passes because the pin records
+today's code. Test 3 fails because the baked texels of ball and kite drift.
+
+## 3. RED_TEST_COMMAND
+
+Command (one heavy-run call, exit 1, no exit 75):
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh \
+  -c './node_modules/.bin/vitest run tests/preset-colour.test.ts --maxWorkers=1'
+```
+
+Result: `Test Files 1 failed (1)`, `Tests 1 failed | 3 passed (4)`, duration 7.36 s.
+The only failure is test 3, with status 1 from the measuring script.
+
+## 4. Measuring script output (ground truth)
+
+Command (one heavy-run call, exit 1):
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c \
+  'node scripts/preset-colour-check.mjs ball kite paint-splash paint-pot'
+```
+
+Columns: the option hex, the mean default hex, the mean preset hex over fully masked texels, the
+texel count, the anchor count (default texel within 6/255 of the slot default per channel), the
+anchor error (max channel error of the preset against the option over anchors), the mean error
+(preset mean against the option), and the formula residual (preset against the formula applied to
+the default texel).
+
+```
+## ball preset "redyellow" (2 slots)
+panelA     red      #d9443a  #db5e58       #db5e58       62257        0           0  29.63   0  DRIFT (no anchors; mean error)
+panelB     yellow   #f2c230  #f3c652       #f3c652       63752        0           0  33.72   0  DRIFT (no anchors; mean error)
+
+## ball preset "bluewhite" (2 slots)
+panelA     blue     #3f6fa8  #db5e58       #4096f3       62257        0           0  74.78   1  DRIFT (no anchors; mean error)
+panelB     white    #f4f1ea  #f3c652       #f5f6ff       63752        0           0  21.00   0  DRIFT (no anchors; mean error)
+
+## ball preset "greenyellow" (2 slots)
+panelA     green    #4f9a4a  #db5e58       #50cf6e       62257        0           0  52.53   1  DRIFT (no anchors; mean error)
+panelB     yellow   #f2c230  #f3c652       #f3c652       63752        0           0  33.72   0  DRIFT (no anchors; mean error)
+
+## ball preset "orangewhite" (2 slots)
+panelA     orange   #e8892c  #db5e58       #eab944       62257        0           0  47.50   0  DRIFT (no anchors; mean error)
+panelB     white    #f4f1ea  #f3c652       #f5f6ff       63752        0           0  21.00   0  DRIFT (no anchors; mean error)
+
+## ball preset "purplewhite" (2 slots)
+panelA     purple   #7b4a9e  #db5e58       #7c66e5       62257        0           0  70.67   0  DRIFT (no anchors; mean error)
+panelB     white    #f4f1ea  #f3c652       #f5f6ff       63752        0           0  21.00   0  DRIFT (no anchors; mean error)
+
+ball: 10 drifting slots over 8/255
+
+## kite preset "redyellow" (2 slots)
+sailA      red      #d9443a  #d94e46       #d94e46      151946    71095           6  11.50   0  ok (anchor error 6)
+sailB      yellow   #f2c230  #f2c33e       #f2c33e      151957    66463           6  13.50   0  ok (anchor error 6)
+
+## kite preset "red" (2 slots)
+sailA      red      #d9443a  #d94e46       #d94e46      151946    71095           6  11.50   0  ok (anchor error 6)
+sailB      red      #d9443a  #f2c33e       #d9444a      151957    66463           7  15.69   1  ok (anchor error 7)
+
+## kite preset "yellow" (2 slots)
+sailA      yellow   #f2c230  #d94e46       #f2da3a      151946    71095          15  23.97   1  DRIFT (anchor error 15)
+sailB      yellow   #f2c230  #f2c33e       #f2c33e      151957    66463           6  13.50   0  ok (anchor error 6)
+
+kite: 1 drifting slot over 8/255: kite/yellow/sailA
+
+## paint-splash: 3 presets, 1 slot
+red        #d9443a  #cb3f36  #cb3f36  217580  102376  6   13.69  0  ok
+blue       #3f6fa8  #cb3f36  #3a689d  217580  102376  8   10.54  0  ok
+yellow     #f2c230  #cb3f36  #e3b62c  217580  102376  8   15.27  0  ok
+paint-splash: every preset slot lands on its option within 8/255
+
+## paint-pot: 4 presets, 1 slot
+red        #c0503c  #c0503c  #c0503c  24977  24977  0   0     0  ok
+blue       #3f6fa8  #c0503c  #3f6fa8  24977  24977  0   0     0  ok
+yellow     #e0b23c  #c0503c  #e0b23c  24977  24977  0   0     0  ok
+green      #4f8f5a  #c0503c  #4f8f5a  24977  24977  0   0     0  ok
+paint-pot: every preset slot lands on its option within 8/255
+
+DRIFT: ball/redyellow/panelA, ball/redyellow/panelB, ball/bluewhite/panelA, ball/bluewhite/panelB,
+ball/greenyellow/panelA, ball/greenyellow/panelB, ball/orangewhite/panelA, ball/orangewhite/panelB,
+ball/purplewhite/panelA, ball/purplewhite/panelB, kite/yellow/sailA
+```
+
+The 10 ball rows fold into one cause. The check prints each row in full on every run.
+
+## 5. Root cause: the texels, not the formula
+
+- The formula residual is 0 or 1 of 255 on every eligible texel of all four assets. The code of
+  src/variants.ts recolor reproduces the baked preset atlas exactly. The formula is correct.
+- The ball has zero anchor texels in every slot and every preset. The whole leather surface is
+  lifted by `k.tint(slot, 0.03 + 0.05 * sheen)` in assets/ball.ts. The stored default texel is
+  therefore not the slot default. The mean default is #db5e58, not #d9443a. The default preset
+  (redyellow) already drifts by 29.6/255. A lighter texel multiplied by a saturation ratio gives
+  gold. Red to orange has ratios (1.16, 4.33, 0.60). The stored lit red (linear 0.711, 0.108,
+  0.093) becomes (0.827, 0.467, 0.055), about #e9b642. That is the gold in N1. The measured
+  orangewhite panel A mean is #eab944 against the option #e8892c.
+- The kite lifts its upper sail by `k.tint(slot, 0.10)` in assets/kite.ts. The lift is a mix
+  toward white in linear light, so it adds blue to yellow and green to red. The ratio then
+  amplifies the lift. Yellow to red has a blue ratio of 1.43; the lit yellow becomes rose. Red to
+  yellow has a green ratio of 9.33; the lit red becomes lemon. The anchor set holds only the
+  mid-sail texels that are exactly the default, so the check catches sailA/yellow (15/255) and
+  not sailB/red (7/255). The sailB/red mean error is 15.7/255; the lit quarter is the rose part.
+- Test 1 and test 2 pass because an exact default and a -0.25 shade follow the contract. A -0.25
+  shade is a multiply, so it is safe. A positive shade is an add toward white, so it is not.
+- paint-pot is clean: every texel is the exact default (anchors 24977 of 24977, error 0). Its
+  paint colour is not lifted.
+- The mask is stored as an sRGB byte of the linear coverage (src/asset.ts composeAtlas), and
+  recolor reads the byte as linear coverage. This overweights soft-mask texels. It is not the
+  cause of N1 or N2: those texels are fully masked (mask 250 to 255) and the residual is 0 or 1.
+  Green should keep it in view, but the 11 failing slots do not need it.
+
+A fix on the formula cannot keep tests 1 and 2 green and remove this drift. The visible cause is
+the positive shade baked into the base atlas. Green either removes the positive shade from the
+ball and kite (and rebuilds the textures), or changes the bake so a positive shade does not add
+white to the stored slot texel. A change to the formula would also move the pin, which is empty
+today.
+
+## 6. Pin
+
+tests/fixtures/preset-pin.json: 387 assets, 902 presets, 3166 preset slots. Generated once with
+`./node_modules/.bin/tsx scripts/make-preset-pin.mjs` (2.5 minutes under heavy-run). The pin is a
+snapshot, not a repair.
+
+## 7. Typecheck
+
+`NODE_OPTIONS=--max-old-space-size=8192 tsc --noEmit` runs out of memory below 8 GB. At 8 GB it
+prints repo errors that exist before this round (assets/storytime-*.ts, assets/waterskin.ts,
+assets/wool.ts, tests/games/castle-defense/*, tests/part.test.ts). No error names
+tests/preset-colour.test.ts, scripts/make-preset-pin.mjs, or src/variants.ts.
+
+## 8. Commands
+
+- `git rev-parse HEAD` and `git rev-parse 6b9f5f55`: both 6b9f5f557aafd482262ba5b90e55a274c0b16685.
+- `git status --short`: dirty paths are generated, bench, reference, or other-track work.
+- `node scripts/preset-colour-check.mjs ball kite paint-splash paint-pot` (heavy-run): exit 1, 11
+  drifting slots, see section 4.
+- `./node_modules/.bin/tsx scripts/make-preset-pin.mjs` (heavy-run): wrote 387 assets, 902 presets,
+  3166 slots.
+- `./node_modules/.bin/vitest run tests/preset-colour.test.ts --maxWorkers=1` (heavy-run): 1 failed,
+  3 passed.
+- `NODE_OPTIONS=--max-old-space-size=8192 ./node_modules/.bin/tsc --noEmit` (heavy-run): repo
+  errors before this round; none in the new files.
+
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check)
+status: complete
+baseline_sha: 6b9f5f557aafd482262ba5b90e55a274c0b16685
+phase_base_sha: 6b9f5f557aafd482262ba5b90e55a274c0b16685
+role_base_sha: 6b9f5f557aafd482262ba5b90e55a274c0b16685
+head_sha: 6a04c63e
+commits:
+  - 6a04c63e test(variants): preset colour against the option, and a pin of every preset
+  - records commit: this log and the plan line (see the orchestrator handoff)
+files_changed:
+  - scripts/preset-colour-check.mjs
+  - scripts/make-preset-pin.mjs
+  - tests/preset-colour.test.ts
+  - tests/fixtures/preset-pin.json
+  - measure/runs/asset_chibi_sprouts_r1_20261022/red-p5-preset.log
+  - measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md (one evidence line)
+plan_updates: one evidence line under the Phase 5 scene and prop task.
+tests_run:
+  - vitest run tests/preset-colour.test.ts --maxWorkers=1 -> 1 failed, 3 passed
+  - node scripts/preset-colour-check.mjs ball kite paint-splash paint-pot -> exit 1,
+    11 drifting slots (10 ball, kite/yellow/sailA)
+known_failures:
+  - test 3 (baked preset atlas) fails on ball/redyellow/panelA, ball/redyellow/panelB,
+    ball/bluewhite/panelA, ball/bluewhite/panelB, ball/greenyellow/panelA, ball/greenyellow/panelB,
+    ball/orangewhite/panelA, ball/orangewhite/panelB, ball/purplewhite/panelA,
+    ball/purplewhite/panelB, kite/yellow/sailA
+handoff:
+  - Formula tests 1 and 2 pass. The formula is correct. The formula residual is 0 to 1 of 255.
+  - The drift is in the stored texels: the positive shade in assets/ball.ts
+    (`k.tint(slot, 0.03 + 0.05 * sheen)`) and assets/kite.ts (`k.tint(slot, 0.10)`). A positive
+    shade adds white in linear light, and the ratio amplifies the near-zero channel.
+  - Suggested Green fix: remove the positive shade from the shop-tint texels (keep the -0.25
+    darkening, which follows the option exactly), then rebuild ball and kite textures and renders
+    and the preset cutouts. The pin allow-list stays empty for a texel-only fix.
+  - If Green changes src/variants.ts or the bake instead, add each moved pin entry to
+    INTENDED_CHANGES with a reason and keep tests 1 and 2 green.
+  - The kite red preset shows the defect on the lit upper sail (mean error 15.7/255), but the
+    anchor rule does not flag it (anchor error 7/255). Add sailB/red to the look check.
+  - The mask is stored as an sRGB byte of the linear coverage and read as linear in recolor. This
+    is a separate engine defect on soft-mask texels. It is not the cause of N1 or N2.
+  - Question for the orchestrator, default answer is "texel-only fix": should the ball and kite
+    positive shades be removed, or should the bake stop writing a white lift into a slot texel?
+END_MEASURE_AGENT_RESULT
