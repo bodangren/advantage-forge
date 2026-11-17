@@ -80,7 +80,7 @@ f. `python3 scripts/review-cards.py out/prop-cards duck=walk`.
 - No duck mockup exists in `docs/wildlife-mockups/`, so the asset carries no `reference` image. The
   bird kind declares `reference` as required, so `assets/duck.ts` gives the kind without that field
   and records the reason in a comment.
-- The eye catch-light is one white sphere of radius 0.004 m on each eye (the owner's decision of
+- The eye catch-light is one white sphere of radius 0.0025 m on each eye (the owner's decision of
   2026-11-17): the kind's painted glint does not survive the coarse vertex-color mesh at this size.
   `forge inspect duck` reports the part as "barely visible (under 0.3% of the silhouette in every
   view)" at its 512 px views. It is not floating and not buried; the owner fixed the radius.
@@ -88,4 +88,24 @@ f. `python3 scripts/review-cards.py out/prop-cards duck=walk`.
   fell on the neck, not the skull.
 - The wings use the kind's paddle at `wingRest -45`, `wingTurn 68`, `wingOut 0.03`. They read as
   folded wings at 1024 px; at 128 px they are a smooth pale mass (a weak point in the handoff).
+
+## F1 and F2 (PM order 2026-11-17)
+
+F1, F2 fixed (2026-11-17, PM).
+
+- F1, the wings stood 34 mm out from the body and read as arms in the front and back views. The
+  wing options changed: `wingTurn 68 -> 95`, `wingScale 0.62 -> 0.26`, `wingOut 0.03 -> 0.05`,
+  `wingRest -45` kept. The wing now lies flat on the body's side with its tip toward the tail. The
+  measured protrusion beyond the body's surface is 5.8 mm at the worst point; the limit is 8 mm.
+  The measuring tool is `measure/runs/asset_chibi_sprouts_r1_20261022/wing-probe.ts`: it rebuilds
+  the kind's trunk, raycasts its real smooth-union surface, and reports the worst protrusion for
+  each set of options.
+- F2, the catch-light was doubled and too large. The kind's painted glint is off (`glint: 0`) and
+  the white sphere radius is 0.0025 m (was 0.004 m). One glint shows on each eye.
+- The dot sits on the merged body's surface, not on the skull: the kind's smooth union pulls the
+  surface in from the skull by up to 5.5 mm, so the ray hits `sdf.smoothUnion(0.05, b.trunk,
+  b.skull)`. The dot's mesh cells are 0.002 m, because a 0.0025 m sphere needs cells under its
+  radius.
+- The wings are subtle: `forge inspect duck` reports `coverts` at 0.9% of the silhouette in the
+  side view and `flight` as "barely visible". The wing reads as a fold, not as an arm.
 

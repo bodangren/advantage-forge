@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "asset_chibi_sprouts_r1_20261022",
+  "phase": "Phase 5: The rest of the inventory (after the look check) - step: duck (song-video prop, PM order 2026-11-17)",
+  "baseline_sha": "08f32c29964270512cbb13bb921b3c103f20f0c4",
+  "audited_head_sha": "7c95ea9a0d546f88abc9e9d34d8ef01550509caf",
+  "status": "pass",
+  "summary": "PASS. The duck reads as a white duck at 128 px and in the 4 views: a flat orange bill, no comb, orange webbed feet, friendly eyes, rated G. The asset rating is 7.0 out of 10, which meets the bar of 7.0. The mech-check and the cutout-check pass at HEAD 7c95ea9a, both commits touch only the paths they name, and the 5 plan claims are true. The largest difference from the brief is the wings: they stand out from the body and read as small arms or fins, not as folded wings. All 10 findings are nonblocking.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] phase-acceptance: The wings stand out from the body. The brief asks for wings folded flat on the sides. This is the largest difference and the reason the rating stays at 7.0. The paddles stand about 3 cm out (assets/duck.ts:84-86, wingOut 0.03). In the front and back views they read as small flippers, in the S sprite as raised arms, and in the SW, NW, NE, and SE sprites as a fin at the back. They lie flat only in the side views (W, E). briefs/duck.md lines 89-90 say they read as folded wings at 1024 px; that is true only for the side view. Suggested change: lower wingOut toward 0 and turn the paddle so the tip lies along the flank, then check the front cutout.",
+    "F2 [Nit] phase-acceptance: The catch-light is large, and it is probably doubled in the textured build. The brief asks for a small catch-light. In the 1024 px front cutout the 0.004 m sphere projects to 8 px on an eye 19 px wide (left eye centre 482.5, 744.1). The white blob measures 9 x 10 px and sits about 3 px outward and 2.5 px above that centre. The kind also paints a glint (assets/parts/bird-kind.ts:345-358, sized by the glint option), and assets/duck.ts:78 keeps glint 1.9. The Known-differences text says the painted glint does not survive the coarse vertex-color mesh. That holds for --fast builds, not for the textured build that the deliverables use. I ran no --fast build, so I could not compare. The eyes still read as friendly, glossy eyes at 128 px (a white dot inside a dark dot). The owner fixed the sphere radius, so this is a note for the owner, not a maker fault.",
+    "F3 [Nit] phase-acceptance: The tail is faint and rough. The brief asks for a short upturned tail point. The tail-fan body (426 triangles) is a small tuft with a jagged, cut-paper edge (render.png side and back panels). It does not read in the S sprite, and it reads only as a small bump or grey curve in the other sprites. Suggested change: a larger tail with a smooth edge (tailPose scale above 0.7).",
+    "F4 [Nit] phase-acceptance: The wing edge contrast is low. The grey-white #dcd8cf against the white #f4f1ea separates the wing only by a soft shade edge in the renders. At 128 px the wing reads through the 1 px dark sprite outline, not through colour (sprites S and N). This matches the maker weak point.",
+    "F5 [Nit] phase-acceptance: The walk is small and stiff but usable. The feet step about 4 to 5 cm and alternate, the feet stay on the ground in all 8 frames, and the body bobs a little. There is no body roll, and the head stays still (stillNeck). In 3 of the 8 side frames (t=0.09, 0.44, 0.52) a soft dark shadow shows under the lower front corner of the wing. The three-quarter frames at t=0.44 and 0.52 show a dark patch at the top of the far leg. These are shadows in the strip renders, not holes. Rationale: this keeps the motion score at 3.5.",
+    "F6 [Nit] phase-acceptance: The jaw bone has no geometry. The build wrapper drops the kind beak and jawBeak bodies (assets/duck.ts:142-157), so the bill moves rigidly with the head. The fly, attack, hit, and death clips move a jaw that shows nothing. The idle and walk clips, the two that the brief names, are not affected. This matches the maker record.",
+    "F7 [Nit] phase-acceptance: The review card hides the head. scripts/review-cards.py:25 crops the lower half of render.png because it expects a reference row on top. The duck has no reference image, so row 1 of out/prop-cards/duck.png shows only feet and lower bodies. This is the same defect as F6 of the paint-pot acceptance. plan.md line 217 cites the card as evidence. A reviewer who reads only the card cannot judge the face, the bill, or the eyes. The fix belongs to the owner of the script and is outside this step.",
+    "F8 [Nit] phase-acceptance: The cutouts are older than the last source edit, and the maker log lists its commands in an order that differs from the file times. The cutouts were written at 22:04:45. assets/duck.ts changed at 22:07:27, and commit 4549de51 is at 22:07:37. The evidence commit 7c95ea9a is at 22:10:08; the final build files (22:10:48) and the card (22:11:00) are later than that commit. I compared the 2 delivered cutouts with the final GLB. A perspective projection of the final triangles (camera about 6 to 6.5 m away, at ground height) gives the same bounding box (front 381,699,643,1008; three-quarter 388,699,692,1008). Only 17 and 19 pixels differ by more than half alpha, and no residue survives a 1 px erosion. The 22:05:25 inspect and the final build both report 7,526 triangles. The silhouettes therefore match the final build. I could not compare the detail inside the silhouette (eye paint) without a second build. If the owner wants proof, run ./forge cutout and cutout-check again at the next HEAD.",
+    "F9 [Nit] phase-acceptance: Two statements in briefs/duck.md are loose. (a) Lines 73-76 say white is on body and tail-fan. The GLB has 8 bodies (legs, body, tail-fan, coverts, flight, bill, eye-glint, webs), and the wing bodies coverts and flight are not named. (b) Lines 89-90 say the wings read as folded at 1024 px (see F1). The wording is wrong and the results are right; no asset change is needed.",
+    "F10 [Info] phase-acceptance: The book holds two duck statements. Section 5 line 207 of forge-inventory.md at monorepo commit 9255c2711 says white in both weeks, with one render. An older note at line 249 says the duck is yellow in W2 and that Forge should not reuse one asset. The PM rule makes the section 5 table authoritative, so this is not a fail. The monorepo owner can remove the older note."
+  ],
+  "evidence": [
+    "Identity: role_base_sha is 08f32c29964270512cbb13bb921b3c103f20f0c4. The audited HEAD 7c95ea9a0d546f88abc9e9d34d8ef01550509caf equaled git rev-parse HEAD at the start and after the mech-check. git log lists exactly 2 commits after the role base: 4549de51 and 7c95ea9a. No test-only commit is in the range.",
+    "Scope: git show --stat 4549de51 lists assets/duck.ts (161 lines) and briefs/duck.md (91 lines), 252 insertions, which matches the title (the white duck). git show --stat 7c95ea9a lists acceptance-paint-pot-08f32c2.json and .log, maker-p5-duck.log, briefs/paint-pot.md, and plan.md (1 added line): 5 files, 389 insertions, 6 deletions, which matches the title (duck evidence and paint-pot r2 records). No commit touches assets/parts/, src/, a test, measure/tracks.md, or another track. No [x] marker changed. The plan task stays [~].",
+    "Scoped step: no Review A, B, C, adversarial, or UX result exists for this step, because the orchestrator scoped this run to the duck. reviewer_ratings is empty.",
+    "Brief against pictures and GLB: white plump body #f4f1ea (assets/duck.ts:46) met; round head on a short thick neck met; flat broad orange closed bill met (bill mesh 0.075 m wide, 0.068 m long, 634 triangles); black eyes with a catch-light met but large (F2); wings folded flat with a pale edge partly met (F1, F4); short upturned tail point weak (F3); short orange legs and webbed feet with 3 toes met; no comb and no wattle met (the GLB has 8 meshes: legs, body, tail-fan, coverts, flight, bill, eye-glint, webs); 0.300 m tall and 0.327 m long met (stats.json size 0.259 x 0.300 x 0.327); on y = 0 and facing +Z met (bounds.min y = 0; the bill points to +Z in the side views); under 8,000 triangles met (7,526); the smile line is removed by owner decision and recorded in briefs/duck.md.",
+    "Pictures looked at: out/duck/render.png (4 views), sprites/preview.png and the 8 sprites enlarged 4 times, anim/walk.png (both rows, enlarged), out/prop-cards/duck.png, and the 2 cutouts in out/chibi-sprouts/r1/props/duck/ (enlarged 3 and 8 times). Identity at 128 px: a white duck with an orange flat bill and orange feet reads in S, SW, W, NW, NE, E, and SE. The back sprite N reads as a white blob with 2 wings and no clear tail.",
+    "Mechanical check: HEAVY_MIN_AVAIL_MB=1500 bash heavy-run.sh -c 'node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs duck' returned exit 0 on the first try (no exit 75). Line: {\"asset\":\"duck\",\"ok\":true,\"forgeAll\":{\"exitCode\":0,\"warnings\":[]},\"triangles\":7526,\"bottomY\":0,\"files\":{\"glb\":true,\"stats\":true,\"render\":true,\"sprites\":true,\"glbBytes\":1276960},\"typecheckExit\":0,\"failures\":[]}. The line equals the line in maker-p5-duck.log.",
+    "Cutout check: node scripts/cutout-check.mjs out/chibi-sprouts/r1/props returned exit 0 and the last line result ok. ok duck/front.png 1024x1024 soft 1228 edge 1038 worstDrop 32% rows 699..1007 cols 381..642; ok duck/three-quarter.png 1024x1024 soft 1332 edge 1139 worstDrop 28% rows 699..1007 cols 388..691. The numbers equal the maker log.",
+    "Determinism: the md5 sums before and after my mech-check run are equal for out/duck/duck.glb (31ea40db), render.png (dbb3f5a6), sprites/preview.png (d773f326), anim/walk.png (54cfbe93), out/prop-cards/duck.png (f3c8bcda), and both cutouts (a0fd1996 and 603da704). stats.json changed its md5 (a69fd8fa to 047ffaef); the triangle count, the bounds, and the per-body triangles equal the earlier printout, so only timing fields changed. The pictures I judged are the pictures of the final build.",
+    "Cutout holes: the front cutout has 4 interior pixels with alpha below 255 (alpha 234 to 248) and alpha 255 everywhere under the bill. Both cutouts differ from the filled projection of the final GLB in at most 19 pixels, so neither has an interior hole.",
+    "A5: plan.md line 217 makes 5 claims and all 5 are true at HEAD. Commit 4549de51 is the commit that adds assets/duck.ts. mech-check is ok (exit 0, ok true). cutout-check ends with result ok (exit 0) and both duck files are ok. out/prop-cards/duck.png exists (it crops the head, F7). briefs/duck.md exists and holds the Sources table. The step marks no task [x].",
+    "A3, A4, A6, and A7 do not apply: the exact diff changes no contract test, no filter, and no measure/tracks.md registry entry.",
+    "Book: forge-inventory.md at monorepo commit 9255c2711 line 207 reads: duck, weeks 2 and 6, count 5 (3), white with an orange beak in both weeks since Workbooks b32ffed (one render; W2: three walking in a row; W6: one by a pond, one with the cat and frog). The quote in briefs/duck.md Sources equals it. Line 16 holds the rule that ducks and birds have one look across weeks. Line 249 is an older note (F10).",
+    "Mockup and kind claims: docs/wildlife-mockups holds 63 files, and the only name that matches duck, chick, goose, or swan is chicken_001.jpg, so no duck mockup exists. assets/parts/bird-kind.ts:66 declares reference as required. Both statements in briefs/duck.md are true.",
+    "Rating: asset rating 7.0 out of 10 against the bar of 7.0 (static prop with a walk clip; no mockup, so the brief is the target). Criteria scores from 1 to 5: brief match 3.5, silhouette 3.5, proportion and appeal 3.5, shape language 3.5, value and colour 4, materials 3.5, detail hierarchy 4, technical quality 3.5, game readiness 4, readability at 128 px 3.5, motion 3.5. The anchor for 7.0 is the same animal with one or more clear differences: F1 is the clear difference, and F2 and F3 add to it. No cap applies, because I found no hole, no poke-through, and no floating part.",
+    "Side effects and limits: my mech-check run rebuilt out/duck/ with equal md5 sums. I wrote enlarged crops only to /tmp/opencode/duck-acc/. The write tool refused a scratch script outside the 2 result files (gate-only role), so I used python3 -I -c one-liners. I ran no ./forge inspect, no --fast command, no ./forge check, no second build, and no measure/doctor.sh. The 24 times eye enlargement was not completed, so F2 rests on pixel measurements and the kind source, not on a picture of the 2 glints."
+  ],
+  "commands": [
+    "git rev-parse HEAD -> 7c95ea9a0d546f88abc9e9d34d8ef01550509caf (start and after the mech-check)",
+    "git log --oneline -8; git show --stat 4549de51; git show --stat 7c95ea9a; git show 7c95ea9a -- plan.md briefs/paint-pot.md",
+    "git show -s --format=%ci 4549de51 7c95ea9a 08f32c29 -> 22:07:37, 22:10:08, 20:41:21 (+0700); git diff --quiet 4549de51 HEAD -- assets/duck.ts -> identical",
+    "md5sum of the render, sprite preview, walk strip, card, GLB, 2 cutouts, and stats.json before and after the mech-check -> equal except stats.json timing",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs duck' -> exit 0; ok true; 7,526 triangles; bottomY 0; typecheck 0",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/cutout-check.mjs out/chibi-sprouts/r1/props' -> exit 0; last line result ok",
+    "python3 -I -c (GLB JSON and accessor parse; perspective projection of the final GLB against both cutouts; eye pixel grid; alpha checks; sprite, strip, and cutout enlargements) -> see evidence",
+    "git -C /home/daniebo/Desktop/reading-advantage-monorepo show 9255c2711:measure/tracks/storytime_advantage_program_20261021/forge-inventory.md | grep -n -i -E 'duck|b32ffed' -> lines 16, 47, 100, 106, 200, 207, 218, 249, 252",
+    "ls docs/wildlife-mockups | grep -i -E 'duck|chick|goose|swan' -> chicken_001.jpg only; grep -n reference assets/parts/bird-kind.ts -> line 66 (required)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-duck-7c95ea9.json",
+    "measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-duck-7c95ea9.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "medium",
+  "route": "claude-code/claude-sonnet-5-5#max",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "assets/duck.ts:36-137 and the pictures meet the brief items (white body, flat orange bill, webbed orange feet, no comb, 0.300 m, 7,526 triangles); the wings stand out (F1) and the catch-light is large (F2)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 2,
+      "evidence": "mech-check.mjs duck proves build health only (exit 0, no warning, triangles above 0, bottom within 5 mm) and cutout-check proves file format; no automated check asserts no comb, the 8,000 triangle cap, the 0.30 m height, or a flat bill, and no Red test exists."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git show --stat of 4549de51 and 7c95ea9a lists only assets/duck.ts, briefs/duck.md, the maker log, the 2 paint-pot result files, briefs/paint-pot.md, and one added plan line, all named in the commit titles."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "The maker log gives a command and a result for each check and my re-runs of mech-check and cutout-check reproduced them exactly, but the card crops the head (F7) and the brief text overstates the wings and the glint premise (F1, F2, F9)."
+    }
+  ],
+  "reviewer_ratings": []
+}

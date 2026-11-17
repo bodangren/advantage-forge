@@ -75,16 +75,22 @@ const DUCK: Omit<BirdKind, 'reference'> = {
   eyeScale: 1.0,
   eyeSpread: 1.0,
   eyeLift: 0.02,
-  glint: 1.9,
+  // The kind's painted glint is off: it doubled the catch-light, which the small white sphere in
+  // `extra` already draws (F2, PM order 2026-11-17).
+  glint: 0,
   talons: false,
   walkBob: 1.2,
   stillNeck: true,
   wingStyle: 'paddle',
   wingTips: 'smooth',
+  // The wings lie flat on the body's side, with the tip along the body toward the tail (F1, PM
+  // order 2026-11-17). The measured protrusion beyond the body's surface is 5.8 mm at the worst
+  // point; the limit is 8 mm. The old pose (turn 68, scale 0.62, out 0.03) stood 34 mm out and
+  // read as arms. Measured with measure/runs/asset_chibi_sprouts_r1_20261022/wing-probe.ts.
   wingRest: -45,
-  wingTurn: 68,
-  wingOut: 0.03,
-  wingScale: 0.62,
+  wingTurn: 95,
+  wingOut: 0.05,
+  wingScale: 0.26,
   wingThick: 1.1,
   wingSlim: 0.95,
   legLength: 0.5,
@@ -103,18 +109,20 @@ const DUCK: Omit<BirdKind, 'reference'> = {
     const bill = sdf.smoothUnion(0.015, upper, tip, lower);
     k.body('bill', bill.bone('head'), { color: '#e8892c', roughness: 0.5, detail: 0.006, textureDensity: 1.5 });
 
-    // The eye catch-light: one small white dot on each eye, upper and toward the front, slightly
-    // proud of the surface. The final radius is 0.004 m; the kind's painted glint is too fine to
-    // survive the coarse vertex-color mesh at this size, so the dot is a small white sphere.
+    // The eye catch-light: one small white dot on each eye, upper and toward the front. The radius
+    // is 0.0025 m and the kind's painted glint is off, so one dot shows on each eye (F2, PM order
+    // 2026-11-17). The dot sits on the merged body's surface: the kind's smooth union pulls the
+    // surface in from the skull, so the ray must hit that surface and not the skull.
     const eye = b.eye.at;
-    // The visible face point at the eye: the skull alone can sit behind the neck's rounded top.
-    const face = sdf.raycast(sdf.union(b.skull, b.trunk), [eye[0], eye[1], 2], [0, 0, -1]) ?? eye;
+    const lift = 0.004;
+    const surface = sdf.smoothUnion(0.05, b.trunk, b.skull);
+    const face = sdf.raycast(surface, [eye[0], eye[1] + lift, 2], [0, 0, -1]) ?? eye;
     const dot = sdf
-      .sphere(0.004 / SCALE)
-      .at(eye[0], eye[1] + 0.004, face[2] + 0.001)
+      .sphere(0.0025 / SCALE)
+      .at(eye[0], eye[1] + lift, face[2] + 0.0015)
       .bone('head')
       .mirror('x');
-    k.body('eye-glint', dot, { color: '#ffffff', roughness: 0.35, detail: 0.004 });
+    k.body('eye-glint', dot, { color: '#ffffff', roughness: 0.35, detail: 0.002 });
 
     // The feet: a thin orange web flat on the ground between the three forward toes.
     const outline = profile.polygon(

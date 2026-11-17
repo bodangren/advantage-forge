@@ -1,0 +1,149 @@
+# acceptance · Chibi Sprouts r1 · Phase 5 · duck (song-video prop, PM order 2026-11-17)
+
+- Role: phase-acceptance, scoped to one step. Route: claude-code/claude-sonnet-5-5#max.
+- Date: 2026-11-17.
+- Track: asset_chibi_sprouts_r1_20261022, Phase 5 ("The rest of the inventory (after the look check)").
+- role_base_sha: 08f32c29964270512cbb13bb921b3c103f20f0c4.
+- audited_head_sha: 7c95ea9a0d546f88abc9e9d34d8ef01550509caf. HEAD equaled it at the start and after the mech-check.
+- Maker commits: 4549de51 (assets/duck.ts and briefs/duck.md), 7c95ea9a (evidence, plan line, paint-pot records).
+  Maker route: opencode-go/deepseek-v4.1-flash.
+- Scope: this run judges the duck only. No Review A, B, C, adversarial, or UX result exists for this step, so
+  `reviewer_ratings` is empty.
+- Result JSON: acceptance-duck-7c95ea9.json (same folder).
+- Verdict: PASS. Asset rating 7.0 out of 10 (bar 7.0). Retry recommendation: none. 10 nonblocking findings.
+
+## Inputs read
+
+- briefs/duck.md, plan.md (Phase 5 and the diff of 7c95ea9a), maker-p5-duck.log, assets/duck.ts, the bird kind
+  (assets/parts/bird-kind.ts lines 66 and 345-358), scripts/review-cards.py, scripts/cutout-check.mjs,
+  measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs, the reviewer brief
+  (measure/tracks/asset_review_audit_20261005/reviewer-brief.md), and the earlier acceptance of the paint-pot.
+- Book: forge-inventory.md at monorepo commit 9255c2711 (lines 16, 47, 106, 200, 207, 218, 249).
+- Pictures: out/duck/render.png, sprites/preview.png and the 8 sprites (enlarged 4 times), anim/walk.png
+  (both rows, enlarged), out/prop-cards/duck.png, and the cutouts front.png and three-quarter.png in
+  out/chibi-sprouts/r1/props/duck/ (enlarged 3 and 8 times).
+
+## Item 1: does it read as a white duck?
+
+Result: yes. It reads as a white duck, friendly, rated G, at 128 px and in the 4 views.
+
+- The bill is flat, broad, orange, and closed. There is no comb and no wattle. The GLB has 8 meshes: legs, body,
+  tail-fan, coverts, flight, bill, eye-glint, webs.
+- The feet are orange and webbed (3 toes). They read as orange blobs at 128 px.
+- The eyes are black with a white catch-light. They read at 128 px as a white dot inside a dark dot (S, SW).
+- The back sprite N reads as a white blob with 2 wings and no clear tail (F3).
+- The wings stand out from the body and read as small arms or fins (F1). This is the largest difference from the brief.
+
+## Item 2: the brief against the build
+
+| Brief item | Result | Proof |
+| --- | --- | --- |
+| White plump body #f4f1ea | met | assets/duck.ts:46; render |
+| Round head on a short thick neck | met | render, cutouts |
+| Flat broad orange closed bill | met | bill mesh 0.075 m x 0.068 m; front cutout |
+| Smile line | removed by owner decision | briefs/duck.md Known differences |
+| Black eyes with a small catch-light | met, but the light is large | F2 |
+| Wings folded flat, pale edge | partly met | F1, F4 |
+| Short upturned tail point | weak | F3 |
+| Short orange legs, webbed feet | met | cutouts, sprites |
+| No comb, no wattle | met | GLB mesh list |
+| 0.30 m tall, about 0.32 m long | met | stats.json 0.259 x 0.300 x 0.327 m |
+| On y = 0, faces +Z | met | bounds.min y = 0; side views |
+| Under 8,000 triangles | met | 7,526 |
+| One body per material | not literal; recorded | briefs/duck.md Known differences; F9 |
+
+## Item 3: rating
+
+Rating: 7.0 out of 10, which meets the bar of 7.0. No mockup exists, so the brief is the target. Criteria scores
+(1 to 5): brief match 3.5, silhouette 3.5, proportion and appeal 3.5, shape language 3.5, value and colour 4,
+materials 3.5, detail hierarchy 4, technical quality 3.5, game readiness 4, readability at 128 px 3.5, motion 3.5.
+The anchor for 7.0 is the same animal with one or more clear differences. F1 is the clear difference. No cap
+applies: I found no hole, no poke-through, and no floating part.
+
+The weak points that the orchestrator named:
+
+- Catch-light size: the sphere is 8 px on a 19 px eye, and the visible white blob is 9 x 10 px (F2).
+- Wing edge contrast: low; at 128 px the 1 px sprite outline carries the wing (F4).
+- Tail tuft: faint and rough (F3).
+- Jaw bone without geometry: true; it affects only the fly, attack, hit, and death clips (F6).
+
+## Findings (all nonblocking; full text in the JSON)
+
+- F1 The wings stand out from the body; the brief asks for folded wings. Largest difference.
+- F2 The catch-light is large and probably doubled in the textured build (sphere plus the kind painted glint).
+- F3 The tail is faint and has a jagged edge.
+- F4 The wing edge contrast is low.
+- F5 The walk is small and stiff but usable; soft dark shadows under the wing and at the far leg top in some frames.
+- F6 The jaw bone has no geometry.
+- F7 The review card hides the head (scripts/review-cards.py:25 crops the lower half).
+- F8 The cutouts are older than the last source edit; they match the final GLB silhouette at pixel level.
+- F9 Two loose statements in briefs/duck.md (body list, wing wording).
+- F10 The book holds an older note (line 249) that conflicts with the section 5 row; the PM rule settles it.
+
+## Item 4: mechanical checks
+
+Every build command ran through
+`HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'`.
+No run returned exit 75.
+
+a. `node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs duck` -> exit 0. Line:
+   `{"asset":"duck","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":7526,"bottomY":0,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":1276960},"typecheckExit":0,"failures":[]}`
+   The line equals the line in maker-p5-duck.log.
+b. `node scripts/cutout-check.mjs out/chibi-sprouts/r1/props` -> exit 0, last line `result ok`. Both duck files
+   are `ok` (front: soft 1228, edge 1038, worstDrop 32%; three-quarter: soft 1332, edge 1139, worstDrop 28%).
+c. md5 before and after (a): equal for the GLB, render.png, sprites/preview.png, anim/walk.png, the card, and both
+   cutouts. stats.json changed only in timing fields. The pictures I judged are the pictures of the final build.
+d. Cutout against the final GLB: a perspective projection of the final triangles (camera about 6 to 6.5 m, at
+   ground height) gives the same bounding box as each cutout. Only 17 (front) and 19 (three-quarter) pixels differ
+   by more than half alpha, and nothing survives a 1 px erosion. So both cutouts show the final silhouette and have
+   no interior hole (F8).
+
+Commit scope (`git show --stat`; `git log --oneline 08f32c29..HEAD` lists exactly 2 commits):
+
+- 4549de51: assets/duck.ts (161 lines) and briefs/duck.md (91 lines). Title: the white duck.
+- 7c95ea9a: acceptance-paint-pot-08f32c2.json and .log, maker-p5-duck.log, briefs/paint-pot.md, and plan.md
+  (1 added line, line 217). Title: duck evidence and paint-pot r2 records.
+
+Every path is named by a title. No commit touches assets/parts/, src/, a test, measure/tracks.md, or another track.
+No [x] marker changed.
+
+## Specific checks (A3 to A7)
+
+- A5 (false-claim text): applies. plan.md line 217 says "commit 4549de51; mech-check ok; cutout-check result ok;
+  card out/prop-cards/duck.png; brief briefs/duck.md". All claims are true at HEAD. The card exists, but it crops
+  the head (F7).
+- A3, A4, A6, A7: do not apply. The exact diff changes no contract test, no filter, and no registry entry.
+- Plan and SHA match: 4549de51 is the commit that adds the asset. The cutouts are older than the last source edit,
+  but they match the final silhouette (F8).
+
+## Item 5: the book
+
+forge-inventory.md at monorepo commit 9255c2711, section 5 line 207: duck, weeks 2 and 6, count 5 (3), "white with an
+orange beak in both weeks since Workbooks b32ffed (one render; W2: three walking in a row; W6: one by a pond, one with
+the cat and frog)". The quote in briefs/duck.md equals it. Line 16 gives the rule that ducks and birds have one look
+across weeks. An older note at line 249 says the duck is yellow in W2. The PM rule makes the section 5 table
+authoritative, so this is not a fail (F10).
+
+## Notes for the orchestrator
+
+- All findings are nonblocking. If the owner wants a duck with folded wings, F1 is a small change in assets/duck.ts
+  (wingOut). It needs a new run of this acceptance.
+- F2 is a decision for the owner: the textured build most likely shows the painted glint and the sphere together.
+- F7 belongs to the owner of scripts/review-cards.py. F10 belongs to the monorepo owner. This role may not edit them.
+- Limits: I ran no ./forge inspect, no --fast command, no ./forge check, and no second build. The 24 times eye
+  enlargement was not completed, so F2 rests on pixel measurements and the kind source.
+- Side effect: my mech-check run rebuilt out/duck/ with equal md5 sums. I wrote crops only to /tmp/opencode/duck-acc/.
+- The plan task stays `[~]`. This run marks nothing.
+
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check) - step duck
+commits: none
+tests_run: mech-check.mjs duck = exit 0, ok true, 7,526 tris, bottomY 0, typecheck 0 (pass); cutout-check.mjs = result ok, exit 0 (pass); md5 before and after the rebuild = equal (pass); cutout against final GLB projection = same bounding boxes, 17 and 19 px differ (pass); git show --stat of 2 commits = only the named paths (pass)
+files_changed: measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-duck-7c95ea9.json; measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-duck-7c95ea9.log
+plan_updates: none
+known_failures: none blocking. 10 nonblocking findings F1 to F10; the largest is F1 (the wings stand out from the body)
+handoff: PASS at HEAD 7c95ea9a0d546f88abc9e9d34d8ef01550509caf. Asset rating 7.0 out of 10 (bar 7.0). The duck reads as a white duck at 128 px and in the views; the wings are the largest difference from the brief. Retry recommendation none. Optional follow-ups: F1 (wingOut), F2 (one catch-light, not two), F7 (card crop). Rerun this acceptance on any new HEAD that changes assets/duck.ts.
+END_MEASURE_AGENT_RESULT
