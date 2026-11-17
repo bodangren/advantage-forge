@@ -49,9 +49,11 @@ route.
   route for its model is `minimax-cn-coding-plan/MiniMax-M3.1-Flash` (ra-quota pick, 2026-11-16). The
   role-table route `volcengine-agent-plan/glm-5.3-flash#high` is marked until 2026-11-22. The old
   `forge-sonnet` route sits on a Claude weekly hold at 92 percent.
-- **The judge.** Kimi reviewed the environment kits (`bench/trials/*/reviews-kimi-*.json`). It has
-  vision and it is a family other than Hy, MiniMax, and DeepSeek. The model is
-  `kimi-code-plan-cn/kimi-for-coding#high`.
+- **The judge.** The judge model changed on 2026-11-17 after the PM model rule of 2026-11-16. The
+  model is `opencode-go/muse-spark-1.3-contributor#high` (ra-quota pick review-c --not-family
+  deepseek --not-family minimax, 2026-11-17). Its family is muse. Its family is not hy, deepseek, or
+  minimax. Kimi left the route table on that date. `ra-quota` cannot exclude family `hy`, so the
+  orchestrator checks by hand that the judge is not on `hy`.
 - **The reviewer brief.** `measure/tracks/asset_review_audit_20261005/reviewer-brief.md` holds the
   11-criterion form for characters. It gives the anchors and the caps.
 - **The review card tool.** `scripts/review-cards.py` writes one PNG per asset. Row 1 holds the mockup
@@ -152,8 +154,11 @@ output in `measure/runs/asset_hy4_maker_trial_20261116/mech-check-test.txt`.
 
 ### D7 Judge
 
-One judge session runs per try round on `kimi-code-plan-cn/kimi-for-coding#high`. Kimi has vision. Its
-family is not Hy, MiniMax, or DeepSeek.
+One judge session runs per try round on `opencode-go/muse-spark-1.3-contributor#high` (ra-quota pick
+review-c --not-family deepseek --not-family minimax, 2026-11-17). Its family is muse. Its family is
+not hy, deepseek, or minimax. Kimi left the route table on that date, after the PM model rule of
+2026-11-16. `ra-quota` cannot exclude family `hy`, so the orchestrator checks by hand that the judge
+is not on `hy`.
 
 - The judge brief is `measure/runs/asset_hy4_maker_trial_20261116/judge-brief.md`. It adapts
   `reviewer-brief.md` for static props. It has no face criterion and no motion criterion. The bar is

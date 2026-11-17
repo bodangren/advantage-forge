@@ -47,10 +47,13 @@ The route models:
 | Role | Model |
 | --- | --- |
 | Hy4 maker | `measure-jr-green` on `opencode/hy4-flash-free#high` |
-| Current maker | `measure-jr-green` on `minimax-cn-coding-plan/MiniMax-M3.1-Flash` |
-| Judge | `kimi-code-plan-cn/kimi-for-coding#high` |
-| Phase checker | `measure-phase-acceptance` on `nvidia/stepfun-ai/step-5-preview#high` |
+| Current maker | `measure-jr-green` on `minimax-cn-coding-plan/MiniMax-M3.1-Flash` (back on the PM allowed list 2026-11-17) |
+| Judge | `opencode-go/muse-spark-1.3-contributor#high` (ra-quota pick review-c --not-family deepseek --not-family minimax, 2026-11-17; family muse, not hy, deepseek, or minimax) |
+| Phase checker | `measure-phase-acceptance` on `opencode-go/mimo-v2.6-flash` (ra-quota pick acceptance --not-family deepseek --not-family minimax --not-family claude --not-family muse) |
 | Closeout | `measure-closeout` on `minimax-cn-coding-plan/MiniMax-M3.1-Flash` |
+
+Note (2026-11-17): Kimi and NVIDIA left the table after the PM model rule of 2026-11-16. `ra-quota`
+cannot exclude family `hy`, so the orchestrator checks by hand that no judge or checker is on `hy`.
 
 ### Task markers
 
@@ -96,6 +99,7 @@ doctor counts only `[ ]`, `[~]`, and `[x]`.
     the final one).
   - Record the rating of each card, the pass or fail, and the findings.
   - Arm 1 round 1: commit 37769535; mech-check ok for towel-stack-a, wash-basin-a, towel-rack-b; cards at out/hy4-trial/cards/r1/.
+  - Known misses of arm 1 round 1 (maker log, commit 37769535): wash-basin-a is 0.199 m tall against the 0.17 m brief; towel-rack-b is 0.689 m wide against the 0.62 m brief. The judge gets both; a try 2 fixes them if the judge fails the asset.
 
 ### Task 2: Try round 2
 
