@@ -1,0 +1,18 @@
+# acceptance · Chibi Sprouts r1 · Phase 5 · preset colour fix and re-bake of 2026-11-18 (PROVISIONAL)
+
+- Role: phase-acceptance, scoped to one step. Route: claude-code/claude-sonnet-5-5#max.
+- audited_head_sha: 26719fa9ed3281342b9ec6f0a3bb7ebb66d947f7 (HEAD at the start of the run).
+- Verdict: PROVISIONAL. The audit is not finished. The final text replaces this file in this turn.
+
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: incomplete
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check) - step preset colour fix
+commits: none
+tests_run: none yet
+files_changed: measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-preset-26719fa.json; measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-preset-26719fa.log
+plan_updates: none
+known_failures: PROVISIONAL file. The audit has not run.
+handoff: PROVISIONAL. Wait for the final text of this file.
+END_MEASURE_AGENT_RESULT
