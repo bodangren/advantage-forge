@@ -1,5 +1,5 @@
 // Format check for cut-out PNGs: node scripts/cutout-check.mjs <dir>
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { inflateSync } from 'node:zlib';
 
@@ -50,14 +50,20 @@ function decode(buf) {
 function* walk(d) {
   for (const f of readdirSync(d).sort()) {
     const p = join(d, f);
-    if (statSync(p).isDirectory()) yield* walk(p);
-    else if (f.endsWith('.png')) yield p;
+    if (statSync(p).isDirectory()) {
+      // A nested folder with its own manifest has its own scale, canvas and elevation:
+      // check it on its own (props/presets/blue, props/high), not against this manifest.
+      if (existsSync(join(p, 'manifest.json'))) continue;
+      yield* walk(p);
+    } else if (f.endsWith('.png')) yield p;
   }
 }
 
 const manifest = JSON.parse(readFileSync(join(dir, 'manifest.json'), 'utf8'));
 const canvas = Array.isArray(manifest.canvas) ? manifest.canvas : [manifest.canvas?.width, manifest.canvas?.height];
 const foot = manifest.footPoint;
+// A look-down folder (--el) drops the near edge below the foot row; a level folder does not.
+const elevation = Number(manifest.elevation ?? 0);
 let ok = true;
 
 for (const file of walk(dir)) {
@@ -126,7 +132,14 @@ for (const file of walk(dir)) {
         `seam at row ${seamRow} (alpha ${Math.round(seamMean)} of 255 in ${seamCols} columns where rows ${seamRow - 1} and ${seamRow + 1} are opaque)`,
       );
     const exempt = /hop|jump|stretch/.test(file.split('/').pop());
-    if (!exempt && foot && Math.abs(low - foot.row) > 4) problems.push(`lowest opaque row ${low}, foot row ${foot.row}`);
+    if (!exempt && foot) {
+      if (elevation !== 0) {
+        // The camera looks down: the model must still reach the foot row (nothing floats above
+        // it) and the canvas must hold the near edge.
+        if (low >= h - 1) problems.push(`cut off at the bottom edge (lowest opaque row ${low} of ${h})`);
+        else if (low < foot.row - 4) problems.push(`lowest opaque row ${low} is above the foot row ${foot.row}`);
+      } else if (Math.abs(low - foot.row) > 4) problems.push(`lowest opaque row ${low}, foot row ${foot.row}`);
+    }
     note = `${w}x${h} soft ${soft} edge ${edge} worstDrop ${(worst * 100).toFixed(0)}% rows ${high}..${low} cols ${left}..${right}`;
   }
   if (problems.length) ok = false;

@@ -64,7 +64,9 @@ cutout options
   --views front,three-quarter,side   named views (default: those three)
   --ppm 900            pixels per meter at the standing plane x = 0, z = 0 (one scale for every asset)
   --canvas 1024x1200   canvas size; the ground origin lands at column width / 2, row height - margin
-  --el 0               camera elevation in degrees (default 0: feet stay on the foot row)
+  --el 0               camera elevation in degrees (default 0: feet stay on the foot row; a
+                       look-down view drops the near edge below it, and the folder records the
+                       elevation in its manifest)
   --margin 16          pixels between the ground origin and the bottom edge (and the top limit)
   --clip walk --at 0.3 pose of a clip at a time in seconds; --stem walk-03 names the file
   --ss 3               supersample factor (straight alpha, soft edges, no shadow, no background)
@@ -376,15 +378,17 @@ async function main(): Promise<void> {
         const at = num(values.at, 0);
         const stem = values.stem ?? (clipName ? `${clipName}-${at}` : undefined);
         const viewNames = (values.views ?? (stem ? 'front' : 'front,three-quarter,side')).split(',').map((v) => v.trim()).filter(Boolean);
+        // Elevation 0 (or --el): the feet stay on the foot row; a look-down shifts the near edge
+        // below it, so the folder records its elevation for the compositor and for the checker.
+        const elevation = values.el !== undefined ? num(values.el, 0) : 0;
         const views = viewNames.map((v) => {
           const spec = NAMED_VIEWS[v];
           if (!spec) throw new Error(`Unknown view '${v}'. Views: ${Object.keys(NAMED_VIEWS).join(', ')}.`);
-          // Elevation 0 (or --el): the feet stay on the foot row; a look-down shifts toes below it.
-          return { name: v, azimuth: spec.azimuth, elevation: values.el !== undefined ? num(values.el, 0) : 0 };
+          return { name: v, azimuth: spec.azimuth, elevation };
         });
         const root = resolve(values.out!);
         const manifestPath = join(root, 'manifest.json');
-        let manifest: { ppm?: number; canvas?: number[]; footPoint?: unknown; files?: Record<string, boolean>; [k: string]: unknown } = {};
+        let manifest: { ppm?: number; canvas?: number[]; elevation?: number; footPoint?: unknown; files?: Record<string, boolean>; [k: string]: unknown } = {};
         try {
           manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
         } catch {
@@ -392,6 +396,10 @@ async function main(): Promise<void> {
         }
         if (manifest.ppm !== undefined && (manifest.ppm !== ppm || manifest.canvas?.[0] !== cw || manifest.canvas?.[1] !== ch))
           throw new Error(`${rel(manifestPath)} has ppm ${manifest.ppm} and canvas ${manifest.canvas?.join('x')}: one folder keeps one scale. Use the same options or a new folder.`);
+        if (manifest.elevation !== undefined && manifest.elevation !== elevation)
+          throw new Error(
+            `${rel(manifestPath)} has camera elevation ${manifest.elevation}: one folder keeps one elevation. Use the same options or a new folder.`,
+          );
         const req: CutoutsRequest = {
           glbUrl: `/__forge/asset.glb?t=${Date.now()}`,
           views,
@@ -413,7 +421,7 @@ async function main(): Promise<void> {
           files[`${outName}/${fileStem}`] = true;
           console.log(`cutout   ${rel(join(dir, `${fileStem}.png`))}`);
         }
-        manifest = { ...manifest, ppm, canvas: [cw, ch], footPoint: { col: cw / 2, row: ch - margin }, files };
+        manifest = { ...manifest, ppm, canvas: [cw, ch], elevation, footPoint: { col: cw / 2, row: ch - margin }, files };
         writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
         console.log(`cutout   ${rel(manifestPath)}  (${ppm} px/m, ${cw}x${ch}, ss ${res.supersample}, ${Math.round(performance.now() - t1)} ms)`);
         return;
