@@ -2,6 +2,8 @@
 """Review cards for an independent reviewer: one PNG per asset.
 
 Row 1: the mockup (the reference panel of out/<name>/render.png) and the four turnaround views.
+An asset without a mockup shows a dark "no mockup" panel in the mockup slot and the whole sheet
+as the views.
 Row 2: the 8-direction sprite preview at 128 px, and the three-quarter row of one motion strip
 (sit, then walk, swim, fly, hop, idle, or the first strip found; strips older than the GLB are skipped).
 An asset with a `sit` clip has a sitting mockup and a standing rest pose; the card shows the sit.
@@ -17,14 +19,49 @@ import sys
 from PIL import Image, ImageDraw
 
 H = 360  # the height of one view panel
+GAP = 4  # the gap between the panels of the render sheet
+
+
+def views_height(name: str) -> int | None:
+    """The height of the view rows of the render sheet, or None when it cannot be read."""
+    view_dir = f'out/{name}/views'
+    if not os.path.isdir(view_dir):
+        return None
+    views = sorted(f for f in os.listdir(view_dir) if f.endswith('.png'))
+    if not views:
+        return None
+    with Image.open(os.path.join(view_dir, views[0])) as first:
+        size = first.width
+    cols = min(4, len(views))
+    rows = -(-len(views) // cols)
+    return rows * size + (rows - 1) * GAP
+
+
+def no_mockup_panel() -> Image.Image:
+    """A dark panel for the mockup slot of an asset without a reference image."""
+    panel = Image.new('RGB', (H, H), (30, 30, 34))
+    draw = ImageDraw.Draw(panel)
+    box = draw.textbbox((0, 0), 'no mockup')
+    draw.text(
+        ((H - (box[2] - box[0])) // 2, (H - (box[3] - box[1])) // 2),
+        'no mockup',
+        fill=(235, 235, 235),
+    )
+    return panel
 
 
 def card(name: str, out_dir: str, pose_clip: str | None = None) -> str:
     render = Image.open(f'out/{name}/render.png').convert('RGB')
     w, h = render.size
-    views = render.crop((0, h // 2, w, h))
-    ref = render.crop((w * 3 // 8, 0, w * 5 // 8, h // 2))
-    ref = ref.resize((H, H))
+    rows = views_height(name)
+    if rows is not None and h <= rows:
+        # The sheet holds no reference row, so the whole sheet is the views.
+        views = render
+        ref = no_mockup_panel()
+    else:
+        views = render.crop((0, h // 2, w, h))
+        ref = render.crop((w * 3 // 8, 0, w * 5 // 8, h // 2))
+        ref = ref.resize((H, H))
     views = views.resize((int(views.width * H / views.height), H))
     row1 = Image.new('RGB', (H + views.width, H), (30, 30, 34))
     row1.paste(ref, (0, 0))
