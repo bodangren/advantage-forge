@@ -1,7 +1,7 @@
 import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
- * Design note — A-frame towel stand (trial arm 1, towel-rack-b).
+ * Design note — A-frame towel stand (bathhouse prop).
  *
  * Role: bathhouse prop that stands on the floor; must read at 128 px.
  * Size: 0.62 m wide (X), 0.34 m deep (Z), 0.82 m tall (Y). Stands on y = 0,
@@ -73,7 +73,7 @@ const cloth = {
 } as const;
 
 export default defineAsset({
-  name: 'towel-rack-b',
+  name: 'towel-rack',
   description:
     'Light wooden A-frame towel stand with a thick top rail, one large cream towel with a teal hem stripe draped over it, a small hand towel on an iron side peg, and rope ties at the joints.',
   detail: 0.012,

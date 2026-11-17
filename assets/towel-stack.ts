@@ -61,7 +61,7 @@ const MID_C = { x: 0.006, y: 0.1185, z: -0.012 };
 const TOP_C = { x: -0.008, y: 0.179, z: -0.004 };
 
 export default defineAsset({
-  name: 'towel-stack-b',
+  name: 'towel-stack',
   description:
     'Stack of three folded bath towels: a linen cream slab with two rolled folds, a teal towel turned against it, and a small terracotta towel whose corner folds over the edge.',
   detail: 0.011,

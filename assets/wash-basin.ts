@@ -1,7 +1,7 @@
 import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
- * Design note — staved wooden wash basin (trial arm 1, wash-basin-a).
+ * Design note — staved wooden wash basin (bathhouse prop).
  *
  * Role: bathhouse prop for a bench or floor; reads at 128 px.
  * Size: 0.42 m across (X), 0.40 m deep (Z), 0.17 m tall (Y). Stands on y = 0,
@@ -104,7 +104,7 @@ const waterPaint = (x: number, y: number, z: number) => {
 };
 
 export default defineAsset({
-  name: 'wash-basin-a',
+  name: 'wash-basin',
   description:
     'Wide shallow staved wooden wash basin: ten fat staves, a pale cut rim, two dark iron hoops, bright water, and a chunky dipper resting across the front rim.',
   detail: 0.011,
