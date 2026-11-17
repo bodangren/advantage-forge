@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { GIFEncoder, applyPalette as gifPalette, quantize } from 'gifenc';
 import { Studio } from './studio.js';
-import { resolveStraight } from './cutout.js';
+import { readStrips, resolveStraight } from './cutout.js';
 import {
   applyPalette,
   buildPalette,
@@ -857,8 +857,11 @@ async function renderCutouts(req: CutoutsRequest): Promise<{ views: Record<strin
           `with margin ${req.margin}.`,
       );
     studio.render(cam, req.width * ss, req.height * ss);
-    const buf = new Uint8Array(req.width * ss * req.height * ss * 4);
-    gl.readPixels(0, 0, req.width * ss, req.height * ss, gl.RGBA, gl.UNSIGNED_BYTE, buf);
+    // Strips, not one read of the whole buffer: one big readPixels loses a row on this GPU
+    // (see readStrips in cutout.ts).
+    const buf = readStrips(req.width * ss, req.height * ss, (x, y, w, h, dst) =>
+      gl.readPixels(x, y, w, h, gl.RGBA, gl.UNSIGNED_BYTE, dst),
+    );
     const rgba = resolveStraight(buf, req.width, req.height, ss, true);
     let bin = '';
     for (let i = 0; i < rgba.length; i += 0x8000) bin += String.fromCharCode(...rgba.subarray(i, i + 0x8000));

@@ -5,6 +5,29 @@
  * samples only (sum of premultiplied color / sum of alpha). No matte and no halo.
  */
 
+/** Read a block of the supersampled render buffer (the signature of `gl.readPixels`). */
+export type ReadStrip = (x: number, y: number, width: number, height: number, dst: Uint8Array) => void;
+
+/**
+ * Read the supersampled render buffer in horizontal strips and join them into one buffer.
+ *
+ * One read of the whole buffer can lose a row: on this machine a 3072 x 3072 read of a sun
+ * cut-out returned the row at 1364 empty, while a short read of the same row returned its
+ * pixels. The PNG then showed a 1 px row of alpha 170 of 255 across the model (2 of the 3
+ * supersample rows). Strips of `stripRows` rows keep each read short.
+ */
+export function readStrips(width: number, height: number, read: ReadStrip, stripRows = 64): Uint8Array {
+  const out = new Uint8Array(width * height * 4);
+  const step = Math.max(1, Math.floor(stripRows));
+  for (let y = 0; y < height; y += step) {
+    const rows = Math.min(step, height - y);
+    const strip = new Uint8Array(width * rows * 4);
+    read(0, y, width, rows, strip);
+    out.set(strip, y * width * 4);
+  }
+  return out;
+}
+
 /**
  * Resolve a premultiplied supersampled RGBA buffer to a straight-alpha RGBA buffer.
  * @param src premultiplied RGBA, `width * ss` by `height * ss`
