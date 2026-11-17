@@ -1,0 +1,99 @@
+# maker · Chibi Sprouts r1 · Phase 5 · paint-pot r2
+
+- Role: jr-green (bounded maker), model DeepSeek V4.1 Flash 1017 (opencode-go/deepseek-v4.1-flash).
+- Date: 2026-11-17.
+- Track: asset_chibi_sprouts_r1_20261022, Phase 5 ("The rest of the inventory (after the look check)").
+- Task: props task, sub-item "paint-pot r2 (audit 2026-11-17 item 2)".
+- role_base_sha: 663162cc. No Red role in this step; no committed Red test exists, because the
+  deliverable is an asset render, not a unit test. The phase baseline and the role baseline are the
+  same commit: 663162cc. HEAD equalled it at the start, and no commit of another track was in
+  `663162cc..HEAD` because the range was empty before this run.
+- Log status: complete.
+
+## Inputs read
+
+- AGENTS.md (repo rules: Measure workflow, explicit-path staging, no push, no generate.sh).
+- measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/paint-pot.md.
+- measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md, Phase 5 props task.
+- assets/paint-pot.ts at 663162cc; `out/paint-pot/render.png` of that build.
+
+## Fault (from the orchestrator brief)
+
+The asset read as a cream pot with a red rim band, not as a pot of paint. The paint was a mound
+above the rim. The red band had the paint colour. The render camera sits near rim height, so a pool
+inside the cup is not seen.
+
+## Changes made (exact, as briefed)
+
+1. `assets/paint-pot.ts`:
+   - Removed the red body band and its `BAND`/`BAND_Y`/`smoothstep` code. The body is cream
+     #efe6d2, matte, roughness 0.85. The ear stays cream.
+   - Added one foot body: a brown #8a5a35 ring (`sdf.torus(0.0252, 0.003)` at y = 0.003), 0.006 m
+     tall, about 1.2 mm proud of the base flare, bottom on y = 0.
+   - Removed the paint mound. Added a flat paint surface at `RIM_TOP - 0.003` (0.0768 m), a
+     cylinder of radius 0.0252 that fills the inner radius, roughness 0.3.
+   - Added three paint runs (`paintRun`), measured from the rim top: front 0 degrees, 0.040 m;
+     50 degrees toward +X, 0.028 m; 200 degrees, 0.034 m. Each run is a chain of radius 0.0026 at
+     the lip up to 0.006 on the wall: a 0.0108 m wide band that stands 0.003 m proud of the
+     0.0313 m wall, with a rounded 0.0044 m end. A flattened ellipsoid on the rim top makes the
+     lip: 11 mm wide, 9 mm deep, 3 mm thick.
+   - The surface, the lips, and the drips are one `paint` body with `color: k.tint('paint')`, so
+     every preset recolours all of them. The 4 presets and their colours are unchanged.
+   - Size kept: 0.072 x 0.084 x 0.069 m, bottom on y = 0, centred, facing +Z, 2,218 triangles in
+     the final build (3,263 before reduction).
+2. `measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md`: one sub-bullet under the props task.
+3. This log.
+
+Nothing else changed. No committed Red test exists or was touched. No Measure plan task was marked
+`[x]`; the orchestrator owns that.
+
+## Checks, in order
+
+Every command below ran through
+`HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'`.
+No run returned exit 75.
+
+a. `./forge render paint-pot --fast` — printed `3,263 triangles, 0.072 x 0.084 x 0.069 m`.
+   Looked at `out/paint-pot/render.png`: front and three-quarter views show the three red drips
+   down the cream wall and the red lip over the rim at each drip. Pass.
+b. `./forge inspect paint-pot --fast` — warnings: none. Visible share of the silhouette: paint
+   15.1% front, 15.8% three-quarter, 48.2% top. Foot 0.2% (visible line at the base). No floating
+   part, no buried part. Pass.
+c. `node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs paint-pot` — exit 0,
+   `{"asset":"paint-pot","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":2218,"bottomY":0,"typecheckExit":0,"failures":[]}`.
+   Pass.
+d. `./forge render paint-pot --preset all` — wrote `render.png` (default red), `render.red.png`,
+   `render.blue.png`, `render.yellow.png`, `render.green.png`; the five files have five different
+   md5 sums. Looked at the blue file: the drips and lips recolour to #3f6fa8. Pass.
+e. `./forge cutout paint-pot --out out/chibi-sprouts/r1/props --ppm 1024 --canvas 1024x1024 --views front,three-quarter`
+   then `node scripts/cutout-check.mjs out/chibi-sprouts/r1/props` — `ok paint-pot/front.png`,
+   `ok paint-pot/three-quarter.png`, last line `result ok`. Pass.
+f. `python3 scripts/review-cards.py out/prop-cards paint-pot` — wrote
+   `out/prop-cards/paint-pot.png`. The 128 px sprites read as a cream pot with red paint on the
+   rim and a red drip. Pass.
+
+`node scripts/typecheck-asset.mjs paint-pot` — `typecheck ok: 0 errors in assets/paint-pot.ts`.
+
+## Notes for the reviewer
+
+- The pot is 0.084 m tall and 0.072 m across with the ear. The paint surface sits inside the cup
+  and is only visible from above (48.2% of the top view). The colour reads at rim height through
+  the three lips and drips, which is the briefed fix.
+- The review card crops the lower half of every render panel. `scripts/review-cards.py` does this
+  for every prop without a reference image; the other props' cards in `out/prop-cards/` show the
+  same crop. This run did not change that script.
+- `out/` is not tracked. Only `assets/paint-pot.ts`, the plan sub-bullet, and this log are
+  committed.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check)
+commits: b51f0ae7 (implementation); plan and log evidence in the next commit
+tests_run: typecheck-asset.mjs paint-pot = 0 errors; forge render --fast = 3,263 tris, looked ok; forge inspect --fast = warnings none; mech-check.mjs paint-pot = exit 0, ok true, 2,218 tris, bottomY 0; forge render --preset all = 5 distinct files, blue recolours; forge cutout + cutout-check = result ok; review-cards = out/prop-cards/paint-pot.png
+files_changed: assets/paint-pot.ts; measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md (one sub-bullet); measure/runs/asset_chibi_sprouts_r1_20261022/maker-p5-paint-pot-r2.log
+plan_updates: props task got the sub-bullet "paint-pot r2 (audit 2026-11-17 item 2): commit b51f0ae7; mech-check ok; cutout-check result ok; card out/prop-cards/paint-pot.png"; no task marked [x]
+known_failures: none
+handoff: Implementation commit b51f0ae7 is on master. phase_base_sha 663162cc, role_base_sha 663162cc, final Green HEAD is the evidence commit that carries this log. New files: none in the asset tree; the changed asset is assets/paint-pot.ts. out/ is untracked. The next reviewer reads out/paint-pot/render.png (default red), out/paint-pot/render.blue.png, and out/prop-cards/paint-pot.png. Do not rate the work in this role. The plan task stays [~].
+END_MEASURE_AGENT_RESULT

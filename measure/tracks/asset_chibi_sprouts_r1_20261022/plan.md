@@ -213,6 +213,7 @@ Workbooks does not wait for it.
   assets, build the new ones, and review in batches. Week 7 waits for its new song.
   - First prop batch (5 of the 15 new): commit 1dcca329; cutout-check "result ok"; cards at out/prop-cards/
   - Briefs: briefs/<name>.md (sources per value; audit 2026-11-17 F-D5).
+  - paint-pot r2 (audit 2026-11-17 item 2): commit b51f0ae7; mech-check ok; cutout-check result ok; card out/prop-cards/paint-pot.png
 
 ## Phase 6: Delivery and close
 
