@@ -111,6 +111,20 @@ for (const file of walk(dir)) {
     // A halo darkens the whole outline; a few pixels beside a real dark detail are not a halo.
     // A halo covers most edge pixels; dark detail at the outline (ear undersides, a mouth) covers a few percent.
     if (dark > 0.1 * edge) problems.push(`dark halo on ${dark} of ${edge} edge pixels (worst drop ${(worst * 100).toFixed(0)} %)`);
+    // A seam: the read of the render buffer dropped one supersampled sample row, so an output row
+    // that crosses the model loses alpha in every pixel (a third of it at --ss 3) while the rows
+    // above and below keep theirs. Columns where both neighbours are fully opaque are the test:
+    // a soft pixel there means the model is thin, and a thin row leaves no such column.
+    let seamRow = -1, seamCols = 0, seamMean = 0;
+    for (let y = Math.max(1, high); y <= Math.min(h - 2, low); y++) {
+      let sum = 0, cols = 0;
+      for (let x = left; x <= right; x++) if (A(x, y - 1) === 255 && A(x, y + 1) === 255) { sum += A(x, y); cols++; }
+      if (cols >= 8 && sum / cols < 0.9 * 255) { seamRow = y; seamCols = cols; seamMean = sum / cols; break; }
+    }
+    if (seamRow >= 0)
+      problems.push(
+        `seam at row ${seamRow} (alpha ${Math.round(seamMean)} of 255 in ${seamCols} columns where rows ${seamRow - 1} and ${seamRow + 1} are opaque)`,
+      );
     const exempt = /hop|jump|stretch/.test(file.split('/').pop());
     if (!exempt && foot && Math.abs(low - foot.row) > 4) problems.push(`lowest opaque row ${low}, foot row ${foot.row}`);
     note = `${w}x${h} soft ${soft} edge ${edge} worstDrop ${(worst * 100).toFixed(0)}% rows ${high}..${low} cols ${left}..${right}`;

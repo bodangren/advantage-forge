@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { resolveStraight } from '../src/render/cutout.js';
+import { resolveStraight, readStrips } from '../src/render/cutout.js';
 import { encodePngRgba } from '../src/png.js';
 
 /** A supersampled buffer (premultiplied RGBA, ss x ss samples for each output pixel). */
@@ -38,5 +38,45 @@ describe('cut-out alpha path', () => {
     const png = encodePngRgba(1, 1, new Uint8Array([1, 2, 3, 4]));
     expect(png.subarray(1, 4).toString('latin1')).toBe('PNG');
     expect(png[25]).toBe(6);
+  });
+});
+
+describe('cut-out readback', () => {
+  it('reads every row once, in strips no taller than the limit, top to bottom', () => {
+    const width = 4;
+    const height = 10;
+    const strips: number[][] = [];
+    const out = readStrips(
+      width,
+      height,
+      (_x, y, w, rows, dst) => {
+        strips.push([y, rows]);
+        for (let r = 0; r < rows; r++) for (let i = 0; i < w * 4; i++) dst[r * w * 4 + i] = (y + r) & 255;
+      },
+      4,
+    );
+    expect(strips).toEqual([
+      [0, 4],
+      [4, 4],
+      [8, 2],
+    ]);
+    for (let y = 0; y < height; y++) expect(Array.from(out.subarray(y * width * 4, y * width * 4 + 2))).toEqual([y, y]);
+  });
+
+  it('keeps the row that one whole-buffer read loses', () => {
+    const width = 2;
+    const height = 6;
+    const lost = 3;
+    // The driver bug: one read of the whole buffer returns row 3 empty; a short read keeps it.
+    const read = (_x: number, y: number, w: number, rows: number, dst: Uint8Array) => {
+      const whole = rows === height;
+      for (let r = 0; r < rows; r++)
+        for (let i = 0; i < w * 4; i++) dst[r * w * 4 + i] = whole && y + r === lost ? 0 : 255;
+    };
+    const big = new Uint8Array(width * height * 4);
+    read(0, 0, width, height, big);
+    expect(big[lost * width * 4 + 3]).toBe(0);
+    const out = readStrips(width, height, read, 2);
+    for (let y = 0; y < height; y++) expect(out[y * width * 4 + 3]).toBe(255);
   });
 });
