@@ -1,0 +1,138 @@
+maker-p5-props — Chibi Sprouts r1, Phase 5, first prop batch
+Track: asset_chibi_sprouts_r1_20261022
+Phase: Phase 5: The rest of the inventory (after the look check)
+Role: measure-jr-green (maker, serial step)
+Role base SHA: 90b669b7 (HEAD at task start)
+Phase base SHA: 90b669b7 (default; see the open question below)
+Immutable bases: this phase has no Red role. The handoff names no Red model and
+  no phase base SHA, so no committed Red change exists inside the range to
+  verify. The role base equals the start HEAD.
+
+Status: complete. All five props pass the shared mechanical check, the cut-out
+  check, and the card pass.
+
+Assigned sources (5): assets/ball.ts, assets/kite.ts, assets/easel.ts,
+  assets/paint-pot.ts, assets/brush.ts
+Not mine: the 19 reused props, the fit check, the review, the other plan tasks,
+  src/, scripts/, scenes/, the week 1 to 7 delivery folders.
+
+Load rule: every forge, mech-check, cutout, or node command ran only as
+  HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'.
+  One heavy job at a time. No playwright install ran. No paid generation ran.
+  Nothing was pushed.
+
+Open question for the orchestrator
+  The handoff gives role_base_sha 90b669b7 and says this phase has no Red role,
+  but it names no phase_base_sha. Question: what is the immutable phase_base_sha
+  for Phase 5? Default taken: 90b669b7, the same commit as the role base,
+  because a phase without a Red role has no Red change to place inside the
+  range. The orchestrator can correct this line in a follow-up.
+
+## What changed in the inherited work
+
+- paint-pot: the inherited build measured 0.095 m tall and showed spikes at the
+  rim and the foot. The cause was profile.polygon(..., { smooth: true }): a closed
+  Catmull-Rom spline overshoots at the two sharp corners of the wall section.
+  The profile now uses a dense explicit point list, the pattern of assets/barrel.ts.
+  The model measures 0.072 x 0.084 x 0.067 m and stands on y = 0.
+- paint-pot: the inherited paint disc was wider than the cavity and poked through
+  the wall. The paint is now a mound that fills the mouth of the cup.
+- paint-pot: the cup is scaled by CUP_HEIGHT = 0.94. The render camera sits below
+  the rim, so a pool inside the cup stays hidden in every delivery view. The
+  ceramic body is 0.0798 m tall and the paint mound reaches 0.0845 m.
+- paint-pot: the four colour presets stay red, blue, yellow, and green.
+- brush: a new source. It is 0.17 m long, stands on its bristle tip, leans 8
+  degrees toward +X, and is shifted along X so the mesh straddles the Y axis.
+- brush: the grip band is real geometry (a cylinder of radius 0.0142 m from local
+  y 0.126 to 0.154) on the handle body, not a painted band.
+- brush: one body per material. The handle is wood, the ferrule is iron, and the
+  bristles are cream with a red tip.
+- ball, kite, and easel: unchanged from the inherited work.
+
+## Mechanical check, one line per name
+
+node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs <name>
+
+{"asset":"ball","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":1184,"bottomY":0,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":337620},"typecheckExit":0,"failures":[]}
+EXIT ball 0
+{"asset":"kite","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":5632,"bottomY":0,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":1175596},"typecheckExit":0,"failures":[]}
+EXIT kite 0
+{"asset":"easel","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":4068,"bottomY":0,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":1561560},"typecheckExit":0,"failures":[]}
+EXIT easel 0
+{"asset":"paint-pot","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":1328,"bottomY":0,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":756444},"typecheckExit":0,"failures":[]}
+EXIT paint-pot 0
+{"asset":"brush","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":1510,"bottomY":0,"files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":237328},"typecheckExit":0,"failures":[]}
+EXIT brush 0
+
+## Cut-outs
+
+./forge cutout <name> --out out/chibi-sprouts/r1/props --ppm 1024 --canvas 1024x1024 --views front,three-quarter
+
+ok   ball/front.png  1024x1024 soft 568 edge 460 worstDrop 9% rows 844..1007 cols 430..593
+ok   ball/three-quarter.png  1024x1024 soft 557 edge 458 worstDrop 52% rows 844..1007 cols 430..593
+ok   brush/front.png  1024x1024 soft 382 edge 358 worstDrop 20% rows 835..1008 cols 487..531
+ok   brush/three-quarter.png  1024x1024 soft 380 edge 358 worstDrop 33% rows 835..1008 cols 489..530
+ok   easel/front.png  1024x1024 soft 5063 edge 4782 worstDrop 28% rows 32..1007 cols 223..800
+ok   easel/three-quarter.png  1024x1024 soft 3982 edge 3747 worstDrop 79% rows 33..1007 cols 191..718
+ok   kite/front.png  1024x1024 soft 1914 edge 1501 worstDrop 43% rows 497..1008 cols 330..694
+ok   kite/three-quarter.png  1024x1024 soft 1859 edge 1511 worstDrop 45% rows 495..1008 cols 381..707
+ok   paint-pot/front.png  1024x1024 soft 246 edge 228 worstDrop 37% rows 921..1007 cols 477..551
+ok   paint-pot/three-quarter.png  1024x1024 soft 257 edge 245 worstDrop 42% rows 921..1007 cols 477..546
+result ok
+
+## Cards
+
+python3 scripts/review-cards.py out/prop-cards ball kite easel paint-pot brush
+
+out/prop-cards/ball.png
+out/prop-cards/kite.png
+out/prop-cards/easel.png
+out/prop-cards/paint-pot.png
+out/prop-cards/brush.png
+
+## Paint pot presets
+
+./forge render paint-pot --preset all wrote four preset files. Their md5 sums
+differ, and the four preset renders show four different paint colours at the
+mound.
+
+out/paint-pot/textures/baseColor.red.png
+out/paint-pot/textures/baseColor.blue.png
+out/paint-pot/textures/baseColor.yellow.png
+out/paint-pot/textures/baseColor.green.png
+out/paint-pot/render.red.png
+out/paint-pot/render.blue.png
+out/paint-pot/render.yellow.png
+out/paint-pot/render.green.png
+
+## Weak points for the reviewer
+
+- The brush grip band is a raised ring with a painted colour. The paint region is
+  a cylinder of radius 0.015 m, so a thin ring of the handle above and below the
+  band can read as part of the band.
+- The paint pot shows faint vertical streaks on the cream wall. They come from the
+  mesh grid, and the inherited build showed the same streaks.
+- The kite keeps the inspect warning "the side silhouette is very thin". The brief
+  allows a 14 mm sail.
+- The paint pot ear is small. It reads in the front view and hides in the side
+  view.
+- The paint pot is a mound, not a flat pool. The owner may want a flat pool that
+  sits deeper in the cup.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: measure-jr-green
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check)
+phase_base_sha: 90b669b7
+role_base_sha: 90b669b7
+implementation_commit: PENDING_IMPLEMENTATION_COMMIT
+plan_evidence_commit: PENDING_PLAN_COMMIT
+log_commit: this commit carries the final log and is the final Green HEAD
+files_added: assets/brush.ts, measure/runs/asset_chibi_sprouts_r1_20261022/maker-p5-props.log
+files_changed: assets/ball.ts, assets/kite.ts, assets/easel.ts, assets/paint-pot.ts
+tasks_flipped: none. The plan's props task stays [~]; this batch is one step of it.
+targeted_red_command: not applicable. This phase has no Red role.
+gates: mech-check ok for 5 of 5 names, cutout-check "result ok", cards for 5 names
+deferred: none
+END_MEASURE_AGENT_RESULT
