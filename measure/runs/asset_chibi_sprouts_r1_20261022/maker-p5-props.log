@@ -3,7 +3,8 @@ Track: asset_chibi_sprouts_r1_20261022
 Phase: Phase 5: The rest of the inventory (after the look check)
 Role: measure-jr-green (maker, serial step)
 Role base SHA: 90b669b7 (HEAD at task start)
-Phase base SHA: 90b669b7 (default; see the open question below)
+Phase base SHA: 90b669b7, a default taken by the maker; the phase has no Red role and no recorded
+  phase base (audit 2026-11-17)
 Immutable bases: this phase has no Red role. The handoff names no Red model and
   no phase base SHA, so no committed Red change exists inside the range to
   verify. The role base equals the start HEAD.
@@ -124,13 +125,13 @@ status: complete
 role: measure-jr-green
 track: asset_chibi_sprouts_r1_20261022
 phase: Phase 5: The rest of the inventory (after the look check)
-phase_base_sha: 90b669b7
+phase_base_sha: 90b669b7, a default taken by the maker; the phase has no Red role and no recorded phase base (audit 2026-11-17)
 role_base_sha: 90b669b7
 implementation_commit: 1dcca3297c4ce815a10ce51145a6770df5df9def
 plan_evidence_commit: 71ec72587181ce75d32467f526955d147015de83
 log_commit: this commit carries the final log and is the final Green HEAD
 files_added: assets/brush.ts, measure/runs/asset_chibi_sprouts_r1_20261022/maker-p5-props.log
-files_changed: assets/ball.ts, assets/kite.ts, assets/easel.ts, assets/paint-pot.ts
+files_changed: assets/ball.ts, assets/kite.ts, assets/easel.ts, assets/paint-pot.ts, assets/brush.ts
 tasks_flipped: none. The plan's props task stays [~]; this batch is one step of it.
 targeted_red_command: not applicable. This phase has no Red role.
 gates: mech-check ok for 5 of 5 names, cutout-check "result ok", cards for 5 names
