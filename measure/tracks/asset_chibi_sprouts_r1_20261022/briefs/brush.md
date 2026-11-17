@@ -30,10 +30,26 @@ body per material.
 | Colour | red #c0503c paint tip | PM default, check against the book. The inventory fixes pink and purple paint, not red. Nearest Chibi Quest palette entry: the accent "flowers #e0533d" in the same file |
 | Part | the brush rests on the bristle tip | PM default, check against the book |
 
+## r2 (book colours, 2026-11-18)
+
+PM order 2026-11-18: the group 2 reworks to match the book (Storytime inventory section 5,
+monorepo 9255c2711). Book line: W3 "held by children; pink and purple paint".
+
+The brush stays. The red bristle tip became one colour slot, `paint`, with two presets:
+
+| Preset | Colour | Use |
+| --- | --- | --- |
+| pink (default) | #e87fb0 | W3 pink paint |
+| purple | #8e5bb5 | W3 purple paint |
+
+Nothing else on the brush is red. The cream bristles, the wood handle, the grip band and the iron
+ferrule keep their colours in every preset. The brush measures 0.043 x 0.169 x 0.029 m and holds
+1,510 triangles.
+
 ## Known differences
 
-- The inventory wants pink and purple paint on the brush for W3. The built brush has a red tip. It
-  has no pink and no purple.
+- The inventory wants pink and purple paint on the brush for W3. The tip is the `paint` colour
+  slot: pink #e87fb0 by default, purple #8e5bb5 in the second preset. The red tip is gone.
 - The built brush measures 0.169 m long. It stands on the bristle tip and leans 8 degrees toward +X.
   It matches the brief.
 - The built grip band is real geometry. The maker log names the risk: a thin ring of the handle can

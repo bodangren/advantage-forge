@@ -1,4 +1,5 @@
 import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
+import type { AssetContext } from '../src/index.js';
 
 /**
  * Design note — a fat wooden paint brush standing on its bristle tip (Chibi Sprouts props).
@@ -8,21 +9,22 @@ import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
  *   and the body leans 8 degrees toward +X, so the mesh shifts along X to straddle the
  *   Y axis.
  * One idea: a chunky varnished handle with a dark grip band, a bright iron ferrule,
- *   and cream bristles stained red at the tip.
+ *   and cream bristles stained with paint at the tip. The book gives pink and purple paint,
+ *   so the tip colour is a colour slot.
  * Shape language: round (a lathe shape) with one sharp tapered bristle tip.
  * Palette: wood #b5814a (dominant), grip #8a5a35 (mid), iron #4a4f55 (dark accent),
- *   bristles #d8ccb2 (light), tip #c0503c (the focal accent).
+ *   bristles #d8ccb2 (light), tip: the `paint` slot, pink #e87fb0 (default) or purple #8e5bb5
+ *   (the focal accent).
  * Materials: varnished wood (0.75), iron (0.35, 0.85), dry bristles (0.7).
  * Detail list: primary the handle and the bristle cone; secondary the ferrule and its
- *   crimp band; tertiary the grip band, the wood grain, and the red tip wash.
+ *   crimp band; tertiary the grip band, the wood grain, and the paint tip wash.
  * Rig/animation: none (static prop).
  */
 
 const WOOD = rgb('#b5814a');
 const WOOD_DARK = rgb('#8a5a35');
-const BRISTLE = rgb('#d8ccb2');
-const BRISTLE_SHADE = rgb('#b9ad94');
-const TIP = rgb('#c0503c');
+const BRISTLE = '#d8ccb2';
+const BRISTLE_SHADE = '#b9ad94';
 
 const LEAN = (8 * Math.PI) / 180;
 const SIN = Math.sin(LEAN);
@@ -51,20 +53,35 @@ const handlePaint = (x: number, y: number, z: number) => {
   return mixRgb(WOOD_DARK, WOOD, 0.4 + 0.5 * grain);
 };
 
-/** Cream bristles with a red wash on the lower 10 mm. */
-const bristlePaint = (x: number, y: number, z: number) => {
-  const t = along(x, y);
-  const fibre = 0.5 + 0.5 * noise.fbm(x * 120, t * 40, z * 120, 2);
-  const cream = mixRgb(BRISTLE, BRISTLE_SHADE, 0.25 + 0.5 * fibre);
-  return mixRgb(TIP, cream, smoothstep(0.009, 0.0125, t));
-};
+/** Cream bristles with a paint wash on the lower 10 mm; the paint is the `paint` slot. */
+const makeBristlePaint =
+  (k: AssetContext) =>
+  (x: number, y: number, z: number) => {
+    const t = along(x, y);
+    const fibre = 0.5 + 0.5 * noise.fbm(x * 120, t * 40, z * 120, 2);
+    const cream = mixRgb(
+      rgb(k.tint('paint', { color: BRISTLE, follow: 0 })),
+      rgb(k.tint('paint', { color: BRISTLE_SHADE, follow: 0 })),
+      0.25 + 0.5 * fibre,
+    );
+    return mixRgb(rgb(k.tint('paint')), cream, smoothstep(0.009, 0.0125, t));
+  };
 
 export default defineAsset({
   name: 'brush',
   description:
-    'A 0.17 m paint brush standing on its bristle tip and leaning 8 degrees: a varnished wood handle with a dark grip band, an iron ferrule, and cream bristles with a red tip.',
+    'A 0.17 m paint brush standing on its bristle tip and leaning 8 degrees: a varnished wood handle with a dark grip band, an iron ferrule, and cream bristles with a pink or purple paint tip.',
   detail: 0.003,
   texture: { size: 512 },
+
+  variants: {
+    paint: { pink: '#e87fb0', purple: '#8e5bb5' },
+  },
+  presets: {
+    // W3 "held by children; pink and purple paint". The first option is the default look.
+    pink: { paint: 'pink' },
+    purple: { paint: 'purple' },
+  },
 
   build(k) {
     // The bristles: a tapered cone with a round tip that rests on the ground.
@@ -74,11 +91,11 @@ export default defineAsset({
         sdf.cone([0, TIP_Y, 0], [0, BRISTLE_TOP, 0], 0.0032, 0.0128),
         sdf.sphere(0.0032).at(0, TIP_Y, 0),
       )
-      .paintFn(bristlePaint)
+      .paintFn(makeBristlePaint(k))
       .rotateZ(-8)
       .at(SHIFT_X, 0, 0);
     k.body('bristles', bristles, {
-      color: '#d8ccb2',
+      color: k.tint('paint', { color: BRISTLE, follow: 0 }),
       roughness: 0.7,
       metalness: 0,
       detail: 0.0016,
