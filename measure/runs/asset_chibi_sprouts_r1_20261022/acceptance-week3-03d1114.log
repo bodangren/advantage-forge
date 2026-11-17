@@ -1,0 +1,180 @@
+# acceptance · Chibi Sprouts r1 · Phase 5 · week 3 props, duck F1/F2, review-cards F7 (PM order 2026-11-17)
+
+- Role: phase-acceptance, scoped to one step. Route: claude-code/claude-sonnet-5-5#max.
+- Date: 2026-11-18.
+- Track: asset_chibi_sprouts_r1_20261022, Phase 5 ("The rest of the inventory (after the look check)").
+- role_base_sha: 7c95ea9a0d546f88abc9e9d34d8ef01550509caf.
+- audited_head_sha: 03d1114dd26716bdf62881a1ab68d5c30074ef98. HEAD equaled it at the start and after the mechanical run.
+- Maker route: minimax-cn-coding-plan/MiniMax-M3.1-Flash. Maker commits: 2f8ee4a6, f098d5b9, 6df0d874, 6057feaa,
+  9863c547, 34249914, d6e0414e, ca63c3de, 03d1114d (exactly the 9 commits after the role base).
+- Scope: this run judges the five week 3 props, the duck F1 and F2 fixes, and the review-cards F7 fix. It does not
+  judge the whole Phase 5. No Review A, B, C, adversarial, or UX result exists for this step, so `reviewer_ratings` is empty.
+- Result JSON: acceptance-week3-03d1114.json (same folder).
+- Verdict: FAIL. One item is below the bar: paint-splash 6.5 out of 10 (bar 7.0). Retry recommendation: retry_same
+  (the maker fixes the paint-splash; rerun this acceptance at the new HEAD). 1 blocking finding, 11 nonblocking findings.
+
+## Result table (rating out of 10, bar 7.0)
+
+| Item | Rating | Result | Main finding |
+| --- | --- | --- | --- |
+| sun | 7.0 | pass | Reads as a smiling sun at 128 px; a 1 px alpha seam crosses the front cutout (row 569, tool artefact), which caps the rating at 7.0 |
+| cloud | 7.0 | pass | Reads as a cloud; 0.56 m wide against 0.50 m (documented); the shaded underside is faint |
+| flower | 7.0 | pass | Reads as a pink flower; the base mound is a full ball, and the brief says hemisphere (false); a seam on the top petals |
+| grape-bunch | 7.0 | pass | Reads as grapes; the leaf reads as a star; the bunch is a column, not a cone |
+| paint-splash | 6.5 | FAIL | Reads as a scalloped badge: ring seams on the face, a foot tab, flat mid-value colour, thin side |
+| duck (re-rated) | 7.5 | pass | F1 and F2 fixed: wings 3.7 mm out (GLB), one small glint per eye; wings now almost invisible |
+| review-cards F7 | n/a | pass | towel-stack-a card byte-equal to the stored card; duck and paint-pot cards show the head and the paint |
+| mechanical | n/a | pass | 6 mech-check lines ok, cutout-check result ok, 9 commits in scope, plan claims true |
+
+## Item 1: sun (commit 6df0d874) - 7.0, pass
+
+Brief: briefs/sun.md. Book row (section 5 line 220): 'W2: one, big, bright, blue sky, happy face. W3: big, bright,
+yellow, happy face'. Section 5 rules over section 6, so one yellow sun serves both weeks.
+
+- The sun shows a yellow disc (0.666 x 0.699 x 0.122 m with the rays), 10 conical rays, brown oval eyes, a smile, and
+  two pink cheeks. The face reads at 128 px (sprites S, SW, SE). The back is a plain disc. The side is a thin slab.
+- Criteria scores (1 to 5): brief match 4, silhouette 3.5, proportion and appeal 4, shape language 3.5 (the rays are
+  thorn-like), value and colour 3.5, materials 3, detail hierarchy 4 (the face is the focal point), technical quality 3,
+  game readiness 4, readability at 128 px 4. The mean gives 7.3.
+- Defect: the front cutout has a 1 px seam at row 569 across 600 px of the disc, at alpha 170 of 255. On a sky blue
+  backdrop it shows as a grey hairline above the eyes. A visible defect caps the rating at 7.0 (reviewer brief). See N1.
+- The maker's weak point (a ragged smile in the --fast render) does not show in the textured build or in the cutout.
+
+## Item 2: cloud (commit 6057feaa) - 7.0, pass
+
+Book row (line 203): 'one small white cloud'.
+
+- The cloud is a white, smooth mound of five merged lumps with a flat bottom and no face. It reads as a cloud at
+  128 px in S and N, and as a plain blob in the side views.
+- The width is 0.56 m against the summary 0.50 m. The brief's own sphere positions give 0.56 m, and briefs/cloud.md
+  records it. This is a documented choice, not a fault. The cloud is 0.25 m tall and 0.24 m deep.
+- The shaded underside (#d9dee6) shows only as a faint gradient. The lumps are soft and low in contrast.
+- Criteria scores: brief match 3.5, silhouette 3.5, proportion and appeal 3.5, shape language 3.5, value and colour 3.5,
+  materials 3, detail hierarchy 3, technical quality 4, game readiness 4, readability at 128 px 3.5.
+
+## Item 3: flower (commit 9863c547) - 7.0, pass
+
+Book row (line 210): 'one big pink flower'.
+
+- A pink six-petal head with deeper pink tips, a yellow centre, a green stem, and two leaves. It reads clearly at
+  128 px. The head is 0.15 m across on a 0.436 m flower (the brief asks 0.45 m; the stem must reach the head).
+- Defect (N2): the base mound is a full ball. assets/flower.ts:57 puts the sphere at y 0.04 m, so the half-space cut at
+  y 0 removes nothing. briefs/flower.md says 'a hemisphere of r 0.04 m, flat at y = 0'. That is false. The ball reads
+  as a lollipop base.
+- Small defects: the round top of the stem shows as a tiny green blip under the yellow centre; the front cutout has the
+  row 569 seam over 66 px at the top of the petals (N1).
+- Criteria scores: brief match 3.5, silhouette 3.5, proportion and appeal 3.5, shape language 3.5, value and colour 4,
+  materials 3.5, detail hierarchy 3.5, technical quality 3, game readiness 3.5, readability at 128 px 4.
+
+## Item 4: grape-bunch (commit 34249914) - 7.0, pass
+
+Book row (line 212): 'a bunch, purple'.
+
+- Sixteen glossy purple grapes with a value variation, a brown stem, and one green leaf. 7,552 triangles (limit 8,000).
+  The bunch reads as grapes at 128 px in every direction.
+- The leaf is a five-pointed star, so it reads as a star on a stick. The maker says so in the brief. The bunch is a
+  straight column (rows 4, 4, 3, 3, 2), not the cone of the brief. Both are clear differences; they hold the rating
+  at 7.0 (N4).
+- Criteria scores: brief match 3, silhouette 3.5, proportion and appeal 3.5, shape language 3, value and colour 4,
+  materials 4, detail hierarchy 3.5, technical quality 4, game readiness 4, readability at 128 px 3.5.
+
+## Item 5: paint-splash (commit d6e0414e) - 6.5, FAIL
+
+Book row (line 216): 'three big round splashes in a row: red, blue, yellow'.
+
+- Preset renders: out/paint-splash/render.png (red), render.blue.png, and render.yellow.png differ in colour: saturated
+  red, blue, and yellow. This part of the brief is met.
+- The shape is a thick disc with 7 lobes and 3 droplets on necks (0.289 x 0.251 x 0.04 m). It reads as a scalloped
+  badge more than as wet paint.
+- Defects: (1) the foot box is 0.04 m deep in 0.025 m paint, so it shows as a rectangular tab on the front and the back
+  (assets/paint-splash.ts:92-93); (2) each lobe leaves a ring on the face (smoothUnion k 0.004, line 72), and the
+  studio light turns the rings into bubble-like highlights in the front cutout; (3) one flat mid-value colour, and the
+  front cutout mean #f3635c (pale coral) against the preset #d9443a; (4) a 0.04 m slab from the side.
+- Criteria scores: brief match 4, silhouette 3, proportion and appeal 3, shape language 3, value and colour 3,
+  materials 3, detail hierarchy 3, technical quality 3, game readiness 4, readability at 128 px 3.5. The mean gives 6.5.
+- Pipeline gap (N3, outside this step): a stage prop has no colour or preset field, and only the red cutouts exist, so a
+  scene places three red splashes today.
+- Suggested change for the maker: foot no deeper than 0.025 m or inside the paint; lobe join k 0.02 to 0.03; a darker
+  rim or vertex shade for value; rebuild the GLB, the cutouts, and the card.
+
+## Item 6: duck, F1 and F2 (commit f098d5b9) - re-rated 7.5, pass
+
+- F1 (wings flat, no part more than 8 mm out): pass. I measured the built GLB. For each vertex of the coverts (282) and
+  the flight (147) meshes I cast a ray along -X against the body mesh (2452 triangles). The worst protrusion is
+  3.67 mm (coverts) and 3.32 mm (flight); the 95th percentile is 2.8 mm. The maker measured 5.8 mm with
+  wing-probe.ts. The earlier pose stood 34 mm out. In the front cutout, the 128 px sprite S, and the back view, the
+  wings no longer read as arms or fins. They show as a faint fold on the flank.
+- F2 (one small glint per eye, sphere 0.0025 m): pass. assets/duck.ts:80 sets glint 0 and line 121 sets the sphere
+  radius. The enlarged front cutout shows a black eye with one small white dot and no second highlight.
+- Rating again: 7.5 (was 7.0). The largest earlier difference is fixed. Remaining differences are small: the wings
+  are almost invisible and the pale wing edge does not show, the tail fan is a grey scalloped crescent in the back
+  view, the jaw bone has no geometry, the walk is small and stiff (N6). Criteria scores: brief match 4, silhouette 4,
+  proportion and appeal 4, shape language 3.5, value and colour 4, materials 3.5, detail hierarchy 4, technical
+  quality 3.5, game readiness 4, readability at 128 px 4, motion 3.5 (unchanged clip).
+- briefs/duck.md keeps a stale wing bullet (N7).
+
+## Item 7: review-cards F7 (commit 2f8ee4a6) - pass
+
+- The fix reads out/<name>/views/ to decide whether the render sheet holds a reference row. With none, the whole sheet is
+  the views and a dark 'no mockup' panel fills the mockup slot. With one, the old crop stays.
+- python3 -I scripts/review-cards.py /tmp/opencode/cardcheck-acc towel-stack-a duck=walk paint-pot:
+  - towel-stack-a: md5 d7d9a0ac, equal to out/hy4-trial/cards/r1/towel-stack-a.png. The reference layout is kept byte
+    for byte (the card shows the yellow reference photo and the four views).
+  - duck: md5 4555c633, equal to out/prop-cards/duck.png. The card shows the whole render: head, bill, and eyes.
+  - paint-pot: md5 7af67962, equal to out/prop-cards/paint-pot.png. The card shows the red paint and the drips.
+- A comparison against the old script (git show 2f8ee4a6^) was denied by the shell rules of this role. I compared with
+  the stored card, as the order asks. No automated test covers the change (N11).
+
+## Item 8: mechanical checks
+
+One call (exit 75 would mean wait; it did not occur):
+`HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'for n in sun cloud flower grape-bunch paint-splash duck; do node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs $n; done; node scripts/cutout-check.mjs out/chibi-sprouts/r1/props | tail -1'`
+
+- sun: ok true, 2662 triangles, bottomY 0, typecheck 0.
+- cloud: ok true, 2248 triangles, bottomY 0.
+- flower: ok true, 3280 triangles, bottomY 0.
+- grape-bunch: ok true, 7552 triangles, bottomY 0.
+- paint-splash: ok true, 2026 triangles, bottomY -0.001.
+- duck: ok true, 6550 triangles, bottomY 0.
+- Every line has forgeAll exit 0 and no warnings. The lines equal the lines in maker-p5-week3.log.
+- cutout-check: last line result ok. A second run without tail shows 22 ok lines for 11 props.
+- md5 of 36 output files is equal before and after the rebuild, so the pictures I judged are the final ones.
+
+Commit scope (git show --stat; git diff --name-only 7c95ea9a..HEAD lists 16 paths):
+
+- 2f8ee4a6: scripts/review-cards.py.
+- f098d5b9: assets/duck.ts, briefs/duck.md, wing-probe.ts, and the 2 earlier acceptance-duck files (the last 2 are
+  not named by the title, N8).
+- 6df0d874, 6057feaa, 9863c547, 34249914, d6e0414e: one asset and its brief each.
+- ca63c3de: maker-p5-week3.log and 1 line in plan.md. 03d1114d: the result block of the maker log.
+- No path is in assets/parts/, src/, tests/, measure/tracks.md, or another track. No task marker changed.
+
+## Specific checks (A3 to A7)
+
+- A5 (false-claim text): applies. The plan sub-bullet (plan.md:218) makes 4 claims; all 4 are true at HEAD. Two other
+  texts are not true: briefs/flower.md ('hemisphere', N2) and the maker log ('eight props', N9).
+- A3, A4, A6, A7: do not apply. The exact diff changes no contract test, no filter, and no registry entry.
+
+## Notes for the orchestrator
+
+- Route the paint-splash fix (B1) to the maker, then rerun this acceptance at the new HEAD. The sun, cloud, flower,
+  grape-bunch, and duck results hold for any new HEAD that does not change their sources.
+- N1 (the row 569 seam) and N3 (no preset field on a stage prop) need an owner outside this step: the cutout command
+  and the song stage code. N1 also asks for a seam test in cutout-check and a re-cut of sun, flower, and easel before
+  Phase 6.
+- The plan task stays `[~]`. This run marks nothing and edits no source, test, plan, or registry file.
+- Side effects: my mech-check run rebuilt out/<n>/ for the six assets with equal md5 sums. Scratch files are in
+  /tmp/opencode/acc-w3/ and /tmp/opencode/cardcheck-acc/. I ran no ./forge inspect and no --fast command.
+
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check) - step week 3 props, duck F1/F2, review-cards F7
+commits: none
+tests_run: mech-check.mjs for sun, cloud, flower, grape-bunch, paint-splash, duck = all exit 0, ok true (pass); cutout-check.mjs = result ok, 22 ok lines (pass); md5 of 36 output files before and after the rebuild = equal (pass); review-cards.py on towel-stack-a, duck, paint-pot = md5 equal to the stored cards (pass); GLB ray cast of duck wing vertices = 3.67 mm worst, limit 8 mm (pass); git show --stat of 9 commits = only the named paths except 2 earlier acceptance files in f098d5b9 (pass with nit)
+files_changed: measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-week3-03d1114.json; measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-week3-03d1114.log
+plan_updates: none
+known_failures: VERDICT FAIL. B1: paint-splash rated 6.5, below the bar of 7.0 (foot tab, ring seams, flat value). 11 nonblocking findings N1 to N11; the largest are N1 (1 px alpha seam at row 569 in the sun and flower front cutouts, invisible to cutout-check), N2 (flower base is a full ball; the brief says hemisphere), and N3 (a stage prop has no preset field; only red splash cutouts exist)
+handoff: VERDICT FAIL at HEAD 03d1114dd26716bdf62881a1ab68d5c30074ef98. Ratings: sun 7.0, cloud 7.0, flower 7.0, grape-bunch 7.0, paint-splash 6.5 (below the bar), duck 7.5 (F1 and F2 pass). review-cards F7 passes. Mechanical checks pass. Retry recommendation retry_same: the maker fixes the paint-splash (B1) and the orchestrator opens tasks for N1 and N3. Rerun this acceptance at the new HEAD.
+END_MEASURE_AGENT_RESULT
