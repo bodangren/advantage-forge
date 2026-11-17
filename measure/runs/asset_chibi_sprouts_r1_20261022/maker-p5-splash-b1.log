@@ -1,0 +1,111 @@
+# Maker log — the paint splash r2 (finding B1)
+
+Track: asset_chibi_sprouts_r1_20261022
+Phase: Phase 5: The rest of the inventory (after the look check), the props task
+Role: jr-green, a bounded remediation of one acceptance finding
+Date: 2026-11-18
+role_base_sha: 03d1114d (the HEAD that carried the finding)
+phase_base_sha: 03d1114d
+Finding: measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-week3-03d1114.json, B1.
+  "paint-splash: rating 6.5 out of 10, below the bar of 7.0 ... reads as a scalloped badge, not
+  wet paint; ring seams on the face; a foot tab on both faces; one flat mid-value".
+Scope: assets/paint-splash.ts and its brief. No other asset, no file in src/ and no script
+  changed. The two checker files of the finding were added to the repository unchanged.
+
+## The five changes, in the order the task gave them
+
+1. The foot is 0.02 m deep, not 0.04 m. The paint is 0.025 m thick at the rim, so the foot now
+   sits inside the thickness of the blob and shows no tab in front of or behind the faces. The
+   width stays 0.06 m and the height stays 0.02 m.
+2. Every lobe, drop and neck joins the disc with one smoothUnion of k 0.025 m. The old joins used
+   k 0.004 m for the lobes and k 0.01 m for the drops, and each left a ring on the face. The
+   lobes and the drops are soft domes now, so the face carries no ring seam.
+3. The faces curve. A dome ellipsoid lifts the centre of the blob 0.008 m above the rim: 0.033 m
+   thick at the centre, 0.025 m at the rim. The roughness is 0.25, so the paint reads wet.
+4. The outer 0.015 m of the outline is painted 25 % darker than the paint colour, through the
+   `paint` slot (k.tint('paint', -0.25)). The band follows the silhouette on the front face, the
+   back face and the rim. A preset recolours the whole slot, so each preset keeps its own dark rim.
+5. The splash keeps 0.30 m across, stands on y = 0, faces +Z, and holds under 8,000 triangles.
+
+The dark band is cut from the footprint of the outline: the same outline, made tall, so its shell
+keeps the front face, the back face and the rim. The band measures 0.015 m (probed at 0.000 m at
+15 mm inside the silhouette and -0.005 m at the foot).
+
+## The checks
+
+a. `./forge render paint-splash --fast && ./forge inspect paint-splash --fast`, first call:
+   2,082 triangles, 0.291 x 0.252 x 0.05 m, the lowest point y = -0.001 m. The inspect warned that
+   almost everything is mid-value and that the side silhouette is thin. The render showed no dark
+   band: the cylinders of the footprint were tall in Y instead of Z, so the band fell outside the
+   blob. The maker fixed that (the first of two allowed fixes) and rendered again: 2,106
+   triangles, the dark rim band, the soft dome and no ring seam on the face. The same two warnings
+   stayed. The maker looked at the render once and at a crop of its bottom edge.
+b. `node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs paint-splash`:
+   `{"asset":"paint-splash","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":1968,
+   "bottomY":-0.001,"files":{"glb":true,"stats":true,"render":true,"sprites":true,
+   "glbBytes":354628},"typecheckExit":0,"failures":[]}`. Pass.
+   `./forge render paint-splash --preset all` wrote render.png, render.red.png, render.blue.png and
+   render.yellow.png. The three preset files carry the three colours.
+   `./forge cutout paint-splash --out out/chibi-sprouts/r1/props --ppm 1024 --canvas 1024x1024
+   --views front,three-quarter` wrote the front and the three-quarter cutouts.
+   `node scripts/cutout-check.mjs out/chibi-sprouts/r1/props` printed 22 ok lines and the last
+   line "result ok". The splash front shows worstDrop 28 % and the three-quarter worstDrop 48 %.
+   `python3 scripts/review-cards.py out/prop-cards paint-splash` wrote out/prop-cards/paint-splash.png.
+c. The cutout command takes --preset (src/cli/forge.ts:404 passes it, src/render/page.ts:799
+   applies it), so the blue and yellow cutouts are done:
+   `./forge cutout paint-splash --preset blue --out out/chibi-sprouts/r1/props/presets/blue --ppm 1024
+   --canvas 1024x1024 --views front,three-quarter`, then cutout-check on that folder: the last line
+   "result ok" (the front worstDrop 30 %, the three-quarter 49 %). The same for yellow: the last
+   line "result ok" (the front 33 %, the three-quarter 39 %). The files are
+   out/chibi-sprouts/r1/props/presets/blue/paint-splash/ and .../yellow/paint-splash/.
+d. The green gate of this role,
+   `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c
+   'node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs paint-splash'`, printed the same
+   ok:true line. Pass.
+e. `bash measure/doctor.sh` printed 14 errors: 6 plans of other tracks, 5 missing registry links
+   and 3 stale generated facts. No error names a file of this track. The order forbids
+   generate.sh and registry edits, so this run left them alone.
+
+## Notes for the reviewer
+
+- The built splash measures 0.291 x 0.252 x 0.05 m and holds 1,968 triangles in the textured build
+  (out/paint-splash/stats.json). The bottom sits at y = -0.001 m. The paint is 0.025 m thick at the
+  rim and 0.033 m at the centre; the wide fillet adds about 7 mm at the lobe joins, so the
+  bounding box is 0.05 m deep.
+- The mean colour of the front cutout is #e74f45. The old build read #f3635c, a pale coral. The
+  three preset cutouts read #e74f45 (red), #487fbf (blue) and #f0c447 (yellow).
+- The dark rim is a soft deeper edge, not a hard outline: the studio light lifts the rim, so the
+  mean of the outer band is #e04e44 against #f15147 inside it. The centre stays mid-value, because
+  the order put the darker paint only on the outer 0.015 m. `forge inspect` still warns that almost
+  everything is mid-value.
+- The three droplets now read as round bumps on the rim. The fillet of 0.025 m swallows a 0.01 m
+  neck, so the brief's thin necks are gone. The maker followed the order and did not choose a
+  different fillet.
+
+## The open design questions for the orchestrator
+
+- The three droplets keep no thin neck. A smaller fillet on the necks alone, or a longer neck,
+  would keep them. The order fixed one fillet for the lobes, the drops and the necks.
+- The foot lies inside the dark band, so the foot is dark. A band cut from the outline without the
+  foot would leave the foot in the mid-value.
+- The centre of the splash stays mid-value. A darker centre needs another value than the order
+  gave.
+- The cutout command takes --preset, so the blue and yellow cutouts exist. The stage prop field of
+  the acceptance finding N3 stays open for the owner of the song stage files.
+
+- out/ is not tracked. The committed paths are assets/paint-splash.ts, the brief, the two checker
+  files of the finding, the plan sub-bullet and this log.
+- The maker does not rate its own work.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check)
+commits: e5e2350c (implementation); plan and log evidence in the next commit
+tests_run: forge render --fast = 2,106 tris, 0.291 x 0.252 x 0.05 m, the lowest point y = -0.001; forge inspect --fast = two warnings (mid-value, thin side); mech-check.mjs paint-splash = exit 0, ok true, 1,968 tris, bottomY -0.001, typecheck exit 0, no warning line; forge render --preset all = render.png, render.red.png, render.blue.png, render.yellow.png; forge cutout + cutout-check on out/chibi-sprouts/r1/props = result ok (22 ok lines); the preset cutouts for blue and yellow = result ok in both folders; review-cards = out/prop-cards/paint-splash.png; measure/doctor.sh = 14 errors, none on this track
+files_changed: assets/paint-splash.ts; measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/paint-splash.md; measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-week3-03d1114.json (added unchanged); measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-week3-03d1114.log (added unchanged); measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md (one sub-bullet); measure/runs/asset_chibi_sprouts_r1_20261022/maker-p5-splash-b1.log
+plan_updates: props task got the sub-bullet "paint-splash r2 (B1 of acceptance-week3-03d1114): commit e5e2350c; mech-check ok; cutout-check result ok; preset cutouts done"; no task marked [x]
+known_failures: asset checks: none. `bash measure/doctor.sh` fails on 6 plans of other tracks, 5 missing registry links and 3 stale generated facts; no doctor error names this track, and this run may not edit those paths
+handoff: The implementation commit e5e2350c is on master. phase_base_sha 03d1114d, role_base_sha 03d1114d, final Green HEAD is the evidence commit that carries this log. New files in the asset tree: none; the changed asset is assets/paint-splash.ts, and out/chibi-sprouts/r1/props/presets/blue and out/chibi-sprouts/r1/props/presets/yellow hold the new preset cutouts (out/ is untracked). The next reviewer reads out/paint-splash/render.png, out/paint-splash/render.blue.png, out/paint-splash/render.yellow.png, out/chibi-sprouts/r1/props/paint-splash/front.png, out/chibi-sprouts/r1/props/presets/blue/paint-splash/front.png, out/chibi-sprouts/r1/props/presets/yellow/paint-splash/front.png and out/prop-cards/paint-splash.png. Do not rate the work in this role. The plan task stays [~]. Four open design questions are in the log: the thin necks, the dark foot, the mid-value centre and the stage prop field.
+END_MEASURE_AGENT_RESULT

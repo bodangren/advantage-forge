@@ -216,6 +216,7 @@ Workbooks does not wait for it.
   - paint-pot r2 (audit 2026-11-17 item 2): commit b51f0ae7; mech-check ok; cutout-check result ok; card out/prop-cards/paint-pot.png
   - duck (song video, PM order 2026-11-17): commit 4549de51; mech-check ok; cutout-check result ok; card out/prop-cards/duck.png; brief briefs/duck.md
   - week 3 set and duck fixes (PM order 2026-11-17): commits 2f8ee4a6 (review-cards F7), f098d5b9 (duck F1 and F2), 6df0d874 (sun), 6057feaa (cloud), 9863c547 (flower), 34249914 (grape-bunch), d6e0414e (paint-splash); mech-check ok for duck, sun, cloud, flower, grape-bunch, paint-splash; cutout-check result ok; cards at out/prop-cards/; review-cards F7 fixed 2f8ee4a6
+  - paint-splash r2 (B1 of acceptance-week3-03d1114): commit e5e2350c; mech-check ok; cutout-check result ok; preset cutouts done
 
 ## Phase 6: Delivery and close
 
