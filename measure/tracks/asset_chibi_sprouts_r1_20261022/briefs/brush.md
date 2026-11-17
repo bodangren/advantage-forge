@@ -46,12 +46,26 @@ Nothing else on the brush is red. The cream bristles, the wood handle, the grip 
 ferrule keep their colours in every preset. The brush measures 0.043 x 0.169 x 0.029 m and holds
 1,510 triangles.
 
+## r3 (paint tip, PM 2026-11-18)
+
+PM order 2026-11-18: the acceptance finding N3 of the group 2 rework. The paint tip was 76 px at
+1024 px/m and the brush read as a fat pencil.
+
+The paint now covers the bristles from the tip up to the ferrule edge. Every bristle surface
+below the ferrule is the `paint` slot colour, and no cream is left. The bristle radius grows by
+20 %: the cone goes from 3.2 mm to 3.84 mm at the tip and from 12.8 mm to 15.36 mm at the
+ferrule edge, and the round tip grows from 3.2 mm to 3.84 mm. The length of 0.17 m, the handle,
+the ferrule, the lean of 8 degrees and the two presets stay. The brush measures 0.046 x 0.169 x
+0.031 m and holds 1,588 triangles.
+
 ## Known differences
 
 - The inventory wants pink and purple paint on the brush for W3. The tip is the `paint` colour
   slot: pink #e87fb0 by default, purple #8e5bb5 in the second preset. The red tip is gone.
+- The bristles carry the paint from the tip up to the ferrule edge. The cream bristles of the
+  first brief are gone, so the whole bristle is the paint colour in every preset.
 - The built brush measures 0.169 m long. It stands on the bristle tip and leans 8 degrees toward +X.
   It matches the brief.
 - The built grip band is real geometry. The maker log names the risk: a thin ring of the handle can
   read as part of the band.
-- The built brush holds 1,510 triangles. It is under the limit of 8,000.
+- The built brush holds 1,588 triangles. It is under the limit of 8,000.

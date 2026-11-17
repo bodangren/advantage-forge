@@ -9,22 +9,19 @@ import type { AssetContext } from '../src/index.js';
  *   and the body leans 8 degrees toward +X, so the mesh shifts along X to straddle the
  *   Y axis.
  * One idea: a chunky varnished handle with a dark grip band, a bright iron ferrule,
- *   and cream bristles stained with paint at the tip. The book gives pink and purple paint,
- *   so the tip colour is a colour slot.
+ *   and bristles loaded with paint from the tip up to the ferrule edge. The book gives pink and
+ *   purple paint, so the bristle colour is a colour slot.
  * Shape language: round (a lathe shape) with one sharp tapered bristle tip.
  * Palette: wood #b5814a (dominant), grip #8a5a35 (mid), iron #4a4f55 (dark accent),
- *   bristles #d8ccb2 (light), tip: the `paint` slot, pink #e87fb0 (default) or purple #8e5bb5
- *   (the focal accent).
- * Materials: varnished wood (0.75), iron (0.35, 0.85), dry bristles (0.7).
+ *   bristles: the `paint` slot, pink #e87fb0 (default) or purple #8e5bb5 (the focal accent).
+ * Materials: varnished wood (0.75), iron (0.35, 0.85), paint-loaded bristles (0.7).
  * Detail list: primary the handle and the bristle cone; secondary the ferrule and its
- *   crimp band; tertiary the grip band, the wood grain, and the paint tip wash.
+ *   crimp band; tertiary the grip band and the wood grain.
  * Rig/animation: none (static prop).
  */
 
 const WOOD = rgb('#b5814a');
 const WOOD_DARK = rgb('#8a5a35');
-const BRISTLE = '#d8ccb2';
-const BRISTLE_SHADE = '#b9ad94';
 
 const LEAN = (8 * Math.PI) / 180;
 const SIN = Math.sin(LEAN);
@@ -39,13 +36,6 @@ const HANDLE_TOP = 0.17;
 /** The lean moves the brush to one side; this shift puts it back on the Y axis. */
 const SHIFT_X = -0.0167;
 
-const clamp01 = (v: number): number => (v < 0 ? 0 : v > 1 ? 1 : v);
-
-const smoothstep = (a: number, b: number, v: number): number => {
-  const t = clamp01((v - a) / (b - a));
-  return t * t * (3 - 2 * t);
-};
-
 /** Varnished wood with a grain that runs along the handle. */
 const handlePaint = (x: number, y: number, z: number) => {
   const t = along(x, y);
@@ -53,24 +43,14 @@ const handlePaint = (x: number, y: number, z: number) => {
   return mixRgb(WOOD_DARK, WOOD, 0.4 + 0.5 * grain);
 };
 
-/** Cream bristles with a paint wash on the lower 10 mm; the paint is the `paint` slot. */
-const makeBristlePaint =
-  (k: AssetContext) =>
-  (x: number, y: number, z: number) => {
-    const t = along(x, y);
-    const fibre = 0.5 + 0.5 * noise.fbm(x * 120, t * 40, z * 120, 2);
-    const cream = mixRgb(
-      rgb(k.tint('paint', { color: BRISTLE, follow: 0 })),
-      rgb(k.tint('paint', { color: BRISTLE_SHADE, follow: 0 })),
-      0.25 + 0.5 * fibre,
-    );
-    return mixRgb(rgb(k.tint('paint')), cream, smoothstep(0.009, 0.0125, t));
-  };
+/** The bristles carry the paint from the tip up to the ferrule edge, so the whole bristle below
+ * the ferrule is the `paint` slot colour. */
+const makeBristlePaint = (k: AssetContext) => () => rgb(k.tint('paint'));
 
 export default defineAsset({
   name: 'brush',
   description:
-    'A 0.17 m paint brush standing on its bristle tip and leaning 8 degrees: a varnished wood handle with a dark grip band, an iron ferrule, and cream bristles with a pink or purple paint tip.',
+    'A 0.17 m paint brush standing on its bristle tip and leaning 8 degrees: a varnished wood handle with a dark grip band, an iron ferrule, and pink or purple painted bristles.',
   detail: 0.003,
   texture: { size: 512 },
 
@@ -84,18 +64,19 @@ export default defineAsset({
   },
 
   build(k) {
-    // The bristles: a tapered cone with a round tip that rests on the ground.
+    // The bristles: a tapered cone with a round tip that rests on the ground. The radius grows
+    // by 20 % over the old cone, so the paint tip reads at 128 px.
     const bristles = sdf
       .smoothUnion(
         0.0012,
-        sdf.cone([0, TIP_Y, 0], [0, BRISTLE_TOP, 0], 0.0032, 0.0128),
-        sdf.sphere(0.0032).at(0, TIP_Y, 0),
+        sdf.cone([0, TIP_Y, 0], [0, BRISTLE_TOP, 0], 0.00384, 0.01536),
+        sdf.sphere(0.00384).at(0, TIP_Y, 0),
       )
       .paintFn(makeBristlePaint(k))
       .rotateZ(-8)
       .at(SHIFT_X, 0, 0);
     k.body('bristles', bristles, {
-      color: k.tint('paint', { color: BRISTLE, follow: 0 }),
+      color: k.tint('paint'),
       roughness: 0.7,
       metalness: 0,
       detail: 0.0016,
