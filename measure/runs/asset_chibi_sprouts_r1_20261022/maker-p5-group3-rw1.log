@@ -1,0 +1,231 @@
+Chibi Sprouts, release 1 art — Phase 5, props task, group 3 rework 1
+Track: measure/tracks/asset_chibi_sprouts_r1_20261022
+Role: measure-jr-green (bounded; two items)
+Phase base sha: 55a3be88
+Role base sha: 3934cb4a
+HEAD when this round started: 3934cb4aecf40b83b7e9880c7cb06f76a3ee7cb9
+Order: PM 2026-11-18, group 3 rework 1, from the fit check in maker-p5-group3-fit.log
+Source of the book rows: Storytime inventory section 5, monorepo 9255c2711.
+
+## Scope
+
+Item 1: the new songbird assets/storytime-bird.ts and its brief. Item 2: look-down cutouts of the
+flat props pond and rug at elevation 35. The cat waits for rework 2. No change to
+assets/messenger-bird.ts, assets/parts/bird-kind.ts, the registry, or the closeout metadata. No
+push. No generate.sh. The builder does not rate its own work.
+
+## Base check
+
+`git rev-parse 3934cb4a` = 3934cb4aecf40b83b7e9880c7cb06f76a3ee7cb9 = HEAD at the start.
+The Red artifact is the fit-check log commit 3934cb4a. That commit sits inside 55a3be88..HEAD,
+which holds one commit: 3934cb4a "measure(chibi_sprouts_r1): group 3 fit check of the reused song
+props". This round implements against the finding table of that commit. The table is the Red
+contract and it is unchanged.
+
+## Red command, first run (before the implementation)
+
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c \
+  'node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs storytime-bird'
+Result: exit 1.
+
+{"asset":"storytime-bird","ok":false,"forgeAll":{"exitCode":1,"warnings":[]},"triangles":0,
+"bottomY":null,"files":{"glb":false,"stats":false,"render":false,"sprites":false,"glbBytes":0},
+"typecheckExit":2,"failures":["forge all exited 1","missing out/storytime-bird/storytime-bird.glb",
+"missing out/storytime-bird/stats.json","missing out/storytime-bird/render.png",
+"missing out/storytime-bird/sprites/preview.png","stats.json names 0 triangles",
+"stats.json names no bounds.min[1]","typecheck-asset.mjs exited 2","typecheck-asset.mjs printed no
+\"typecheck ok:\" line"]}
+
+Cause: assets/storytime-bird.ts did not exist and out/storytime-bird/ held no files. The Red state
+is the absent asset and the absent blue-and-open-beak look.
+
+## Item 1: storytime-bird
+
+File: assets/storytime-bird.ts, new. The bird kind of assets/parts/bird-kind.ts at 0.4 of its size,
+copied from assets/messenger-bird.ts. Same body, same options, same size, same clips.
+
+Changes from the source, and nothing else:
+
+- `name`: 'storytime-bird'. `description`: a plain blue songbird, no collar and no tube.
+- Slots: `body`, `head`, and `wings` hold one option each, `blue: '#3f6fa8'`; `eyes` holds the
+  source `dark: '#2a1a12'`. No presets. The kind requires the four slots, so they stay with one
+  option each.
+- `colors`: `belly: '#a9c8e8'` (light blue breast) and `flight: '#2f5584'` (the darker shade, on
+  the wing tips where the source used its darker wing colour `#a87444`). The feet (`#e88a8a`,
+  `#d47878`), the talon colour, and the beak colours `#7a7680` stay as in the source. The eyes are
+  unchanged.
+- `beakOpen: 18` added: the lower beak turns down about the jaw joint (bird-kind.ts line 445).
+- `extra` removed: the leather collar, the brass buckle, the message tube, the rolled letter, and
+  the red wax seal are gone. The collar imports are gone with it.
+- The cheek paint, the clay surface, the feather bump on the wings, the wing pose, the tail, and
+  the six clips stay as in the source.
+
+Build, one call: ./forge render storytime-bird --fast && ./forge inspect storytime-bird --fast.
+Result: 12,871 triangles with vertex colours, 0.199 x 0.27 x 0.23 m, lowest point y = 0. No
+warning line. The inspect warning "Almost everything is mid-value" names the flat blue palette.
+Looked at the render once: blue body, back, head, and wings; light blue breast; darker blue wing
+tips; grey beak held open; pink feet; rosy cheek patches; no collar and no tube. No fix round was
+needed (0 of the 2 allowed).
+
+The book's W6 row asks for an open beak. The halves are 1.5 % of the front silhouette at 1024 px/m.
+The gap reads in the side and three-quarter views. In the front view the lower half sits behind the
+upper one.
+
+Checks, one call:
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c \
+  'node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs storytime-bird &&
+   ./forge cutout storytime-bird --out out/chibi-sprouts/r1/props --ppm 1024 --canvas 1024x1024 \
+     --views front,three-quarter &&
+   node scripts/cutout-check.mjs out/chibi-sprouts/r1/props &&
+   python3 scripts/review-cards.py out/prop-cards storytime-bird'
+Results:
+- mech-check: {"asset":"storytime-bird","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},
+  "triangles":12258,"bottomY":0,"typecheckExit":0,"failures":[]}. Textured build: 12,258
+  triangles, 1024x1024 atlas, GLB 1,634,440 bytes.
+- cutout: out/chibi-sprouts/r1/props/storytime-bird/{front,three-quarter}.png.
+- cutout-check: `result ok` for the whole props folder, 39 files; storytime-bird front 1024x1024,
+  soft 1074, edge 928, worstDrop 88 %, rows 730..1007, cols 410..613 (278 px tall).
+- card: out/prop-cards/storytime-bird.png.
+Looked at the front cutout and the card once. The blue body, the light breast, and the darker wing
+tips read at 277 px. The pink cheeks read as an accent.
+
+Brief: measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/storytime-bird.md, with the book row
+in the Sources table and a PM-default note on every value the book does not fix.
+
+Commit: 393a2854 "feat(chibi_sprouts_r1): the blue song bird with an open beak" (2 files:
+assets/storytime-bird.ts, the brief).
+
+assets/messenger-bird.ts and assets/parts/ are unchanged: `git diff 3934cb4a..HEAD -- assets/`
+lists only assets/storytime-bird.ts.
+
+## Item 2: look-down cutouts of the pond and the rug
+
+Ordered call, one call:
+./forge cutout pond --out out/chibi-sprouts/r1/props-high-xl --ppm 192 --canvas 1024x1024 \
+  --views three-quarter --el 35 &&
+./forge cutout rug --out out/chibi-sprouts/r1/props-high-xl --ppm 192 --canvas 1024x1024 \
+  --views three-quarter --el 35 &&
+node scripts/cutout-check.mjs out/chibi-sprouts/r1/props-high-xl
+
+Result: exit 1, both cut off at the bottom edge.
+
+FAIL pond/three-quarter.png  1024x1024 soft 689 edge 567 worstDrop 52% rows 882..1023 cols 282..751
+  cut off at the bottom edge (lowest opaque row 1023 of 1024)
+FAIL rug/three-quarter.png  1024x1024 soft 851 edge 694 worstDrop 34% rows 916..1023 cols 328..698
+  cut off at the bottom edge (lowest opaque row 1023 of 1024)
+
+The water and the rug face did show in both images; the near edge was outside the frame.
+
+Fallback from the order, one call (--ppm 160, folder props-high-xl160): exit 1, both cut off again.
+
+FAIL pond/three-quarter.png  soft 594 edge 480 rows 903..1023  cut off at the bottom edge
+FAIL rug/three-quarter.png   soft 721 edge 589 rows 931..1023  cut off at the bottom edge
+
+Cause, measured: a look-down cut sets the ground point on the foot row and the near ground edge
+falls below it. The foot row is `canvas height - margin`, and the default margin is 16 px, so 15 px
+stay below the ground point. The near edge of a flat prop falls much further. Probe runs:
+
+- /tmp/opencode/probe-m400 (192 px/m, el 35, margin 400): foot row 624; pond rows 498..772, so the
+  near edge is 148 px below the ground point; rug rows 532..733, so 109 px below.
+- At ppm 160 the same near edge falls 123 px below (118 px for the rug). A lower ppm does not
+  remove the cut at the default margin, because the margin does not change with the ppm.
+
+The order cited the lily pad ("as the lily pad"). The lily pad look-down folder is
+out/chibi-sprouts/r1/props/high: canvas 1024x1024, elevation 35, footPoint row 874, so a margin of
+150 px. A look-down folder stores the foot point in its manifest and the compositor reads it, so
+the margin is a framing value of the folder, not a change to the asset or the scale.
+
+Action within the order's fixed values: the rug is cut again at 192 px/m, el 35, canvas 1024x1024,
+with `--margin 150` (the lily pad's margin). One call, with the check:
+
+./forge cutout rug --out out/chibi-sprouts/r1/props-high-xl --ppm 192 --canvas 1024x1024 \
+  --views three-quarter --el 35 --margin 150 &&
+node scripts/cutout-check.mjs out/chibi-sprouts/r1/props-high-xl
+
+Result: exit 0. ok rug/three-quarter.png 1024x1024 soft 1595 edge 1301 worstDrop 39% rows
+782..983 cols 328..703; `result ok`. The manifest records footPoint row 874, canvas 1024x1024,
+elevation 35, ppm 192. Looked at it once: the red field, the cream border, the medallion, and the
+tassels read; the whole rug sits inside the frame.
+
+The pond does not pass at el 35, and the ppm is not the cause. Probe evidence:
+
+- /tmp/opencode/probe-m150 (192 px/m, el 35, margin 150): the pond fits the frame (rows 748..1022)
+  but the check fails: `dark halo on 210 of 1118 edge pixels (worst drop 52 %)`.
+- The dark edge pixels sit in rows 852..1022, that is, the near rim only. Sample soft pixels hold
+  #304513, #3f5a1c, #324715 next to an inner mean of 103..136. These are dark green surface
+  colours, not a blend with black, so the cause is the unlit underside of the bank at el 35, not
+  the cutout compositing. At el 0 the same asset reported worstDrop 8 %.
+- A halo fix needs a change to the pond asset (the bank's underside colour or roughness) or a
+  different elevation. The order fixes el 35 and says the pond geometry needs no change.
+
+The pond look-down cutout is therefore not delivered. props-high-xl holds the rug only. The failed
+attempts stay as evidence in out/chibi-sprouts/r1/props-high-xl160/ (ppm 160, margin 16) and in
+/tmp/opencode/probe-m150 and /tmp/opencode/probe-m400 (scratch).
+
+Tool note for the owner of src/render/page.ts: the cutout fit check tests `minY < 0`, `minX < 0`,
+and `maxX > width`, but not `maxY > height`. A look-down cut can lose its near edge without a
+"does not fit" message; only cutout-check catches it. This round did not change src/.
+
+## Open question for the orchestrator (blocks the pond cutout)
+
+The pond look-down cutout fails at the ordered settings, and the ordered fallback (ppm 160) does
+not fix it. Two decisions belong to the PM:
+
+1. The near rim of the bank is unlit dark green at el 35 (210 of 1118 edge pixels, worst drop
+   52 %). Options: (a) a pond asset change (a lighter or rougher bank underside, or a fill light)
+   as a new item; (b) a different elevation for the pond look-down only, for example 55, in its
+   own folder, which the folder manifest records; (c) accept the halo for this prop and record it.
+2. The look-down folder needs `--margin 150` (the lily pad's value), or about 160 px at 192 px/m,
+   because the ordered command did not name a margin. The rug is cut at 150. Confirm the value for
+   the delivery folder, and confirm that the pond folder uses the same one.
+
+## Gates
+
+GREEN_TEST_COMMAND, one call:
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c \
+  'node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs storytime-bird &&
+   node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs messenger-bird &&
+   node scripts/cutout-check.mjs out/chibi-sprouts/r1/props &&
+   node scripts/cutout-check.mjs out/chibi-sprouts/r1/props-high-xl'
+Result: exit 0.
+- storytime-bird: ok, 12,258 triangles, bottomY 0, typecheck 0, no warning line.
+- messenger-bird: ok, 19,250 triangles, bottomY 0, typecheck 0, no warning line. The source bird
+  still passes after the new file.
+- props: `result ok`, 39 files (the 35 of the fit check plus storytime-bird and three-quarter
+  files that the earlier round did not list).
+- props-high-xl: `result ok`, 1 file (the rug).
+
+measure/doctor.sh was not run: the order names no doctor run, and the phase strategy's live gate
+is GREEN_TEST_COMMAND. No generate.sh run.
+
+## New files added by this round
+
+- assets/storytime-bird.ts (commit 393a2854)
+- measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/storytime-bird.md (commit 393a2854)
+- measure/runs/asset_chibi_sprouts_r1_20261022/maker-p5-group3-rw1.log (this file)
+- out/storytime-bird/ (GLB, stats, render, sprites, views, atlas)
+- out/chibi-sprouts/r1/props/storytime-bird/{front,three-quarter}.png; manifest.json updated
+- out/chibi-sprouts/r1/props-high-xl/{manifest.json, rug/three-quarter.png}
+- out/chibi-sprouts/r1/props-high-xl160/{manifest.json, pond/three-quarter.png,
+  rug/three-quarter.png} (the failed 160 fallback, kept as evidence)
+- out/prop-cards/storytime-bird.png
+- /tmp/opencode/probe-lookdown, /tmp/opencode/probe-m400, /tmp/opencode/probe-m150,
+  /tmp/opencode/halo-probe.mjs (scratch)
+out/ is git-ignored; these are working renders. No delivery manifest was moved.
+
+MEASURE_AGENT_RESULT
+status: blocked
+role: measure-jr-green
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check)
+task: group 3 rework 1 (storytime-bird; pond and rug look-down cutouts)
+phase_base_sha: 55a3be88
+role_base_sha: 3934cb4a
+head: 393a2854
+implementation_commit: 393a2854
+tasks_flipped: none (the props task stays [~]; the cat waits for rework 2)
+deferred: none
+files: assets/storytime-bird.ts, measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/storytime-bird.md, measure/runs/asset_chibi_sprouts_r1_20261022/maker-p5-group3-rw1.log, measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md
+gate: GREEN_TEST_COMMAND exit 0 (storytime-bird ok, messenger-bird ok, props result ok, props-high-xl result ok)
+result: storytime-bird delivered and committed; rug look-down cutout delivered; pond look-down cutout blocked on a PM decision (dark near rim at el 35)
+END_MEASURE_AGENT_RESULT
