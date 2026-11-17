@@ -126,8 +126,8 @@ track: asset_chibi_sprouts_r1_20261022
 phase: Phase 5: The rest of the inventory (after the look check)
 phase_base_sha: 90b669b7
 role_base_sha: 90b669b7
-implementation_commit: PENDING_IMPLEMENTATION_COMMIT
-plan_evidence_commit: PENDING_PLAN_COMMIT
+implementation_commit: 1dcca3297c4ce815a10ce51145a6770df5df9def
+plan_evidence_commit: 71ec72587181ce75d32467f526955d147015de83
 log_commit: this commit carries the final log and is the final Green HEAD
 files_added: assets/brush.ts, measure/runs/asset_chibi_sprouts_r1_20261022/maker-p5-props.log
 files_changed: assets/ball.ts, assets/kite.ts, assets/easel.ts, assets/paint-pot.ts
