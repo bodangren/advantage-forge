@@ -1,0 +1,247 @@
+# Green log — Phase 5 preset colour fix (PM order 2026-11-18)
+
+Role: measure-jr-green. Track: asset_chibi_sprouts_r1_20261022.
+Phase: Phase 5: The rest of the inventory (after the look check).
+Order: PM 2026-11-18. The Red of the preset colour gate found the drift in the stored texels.
+Assets: ball, kite, brush. Also re-baked: paint-splash, paint-pot.
+Model: minimax-cn-coding-plan/MiniMax-M3.1-Flash. The Red model of this phase was
+opencode-go/deepseek-v4.1-flash, a different family. No coder subagent was spawned.
+
+phase_base_sha = 6b9f5f55 (the base the Red names). role_base_sha = 4c8b7727. HEAD at the start =
+4c8b7727, so the committed Red change (6a04c63e and 4c8b7727) is inside phase_base_sha..HEAD.
+`git status --short` was read before the first edit. The tree held unrelated modified and
+untracked work from other sessions. This round staged explicit paths only, and never used -A,
+`.` or `commit -- paths`. No push. No `measure/generate.sh`.
+
+## 1. The targeted Red command, before the change
+
+Command (one heavy-run call, exit 1, no exit 75):
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh \
+  -c './node_modules/.bin/vitest run tests/preset-colour.test.ts --maxWorkers=1'
+```
+
+Result: `Test Files 1 failed (1)`, `Tests 1 failed | 3 passed (4)`, duration 8.04 s. The only
+failure is test 3, the baked preset atlases. The measuring script named 11 drifting slots:
+ball/redyellow/panelA, ball/redyellow/panelB, ball/bluewhite/panelA, ball/bluewhite/panelB,
+ball/greenyellow/panelA, ball/greenyellow/panelB, ball/orangewhite/panelA,
+ball/orangewhite/panelB, ball/purplewhite/panelA, ball/purplewhite/panelB, kite/yellow/sailA.
+
+The Red test file, the pin fixture and `INTENDED_CHANGES` were not touched. The pin holds 387
+assets, 902 presets and 3166 preset slots. The allow-list stays empty: the fix moves no texel of
+a slot default, so the pinned ratios, defaults and shades do not move.
+
+## 2. What changed
+
+No file under `src/`, no file under `docs/`, the recolour formula and the bake stay as they are.
+The change is in three asset sources only.
+
+### Ball (commit de94485e)
+
+`assets/ball.ts`, the lit leather:
+
+```
+-    let c = rgb(k.tint(slot, 0.03 + 0.05 * sheen)); // the lit leather
++    let c = rgb(k.tint(slot, -0.06 * (1 - sheen)));
+```
+
+The leather keeps the slot colour and darkens by 6 % where the sheen is low. A positive shade
+mixes toward white in linear light, so the stored texel was not the slot colour, and the recolour
+rule multiplied that gap by the option ratio. A negative shade is a multiply, and the recolour
+rule keeps it. The seam #5a4030 and the floor shadow #6f503a keep their fixed colours. The
+shape, the four gores, the dent and the five presets do not change.
+
+Result: `node scripts/preset-colour-check.mjs ball` exits 0. Every slot lands on its option. The
+anchor error is 5 to 7 of 255 and the formula residual is 0 or 1. The mean default texel is now
+#d64339 against the slot default #d9443a, and the redyellow preset mean moved from #db5e58 (a
+drift of 29.6) to #d64339 (a drift of 2.7). The ball measures 0.16 x 0.16 x 0.159 m and holds
+1,184 triangles, the same as before.
+
+### Kite (commit 86debd54)
+
+`assets/kite.ts`, the sail paint. Two deviations from the first brief. Both are recorded here
+and in `briefs/kite.md`.
+
+1. The lower-sail shadow is gone, on the PM decision of 2026-11-18. The lit upper sail was
+   already changed from `k.tint(slot, 0.10)` to `k.tint(slot, 0)`. The sail is now the pure slot
+   colour everywhere, and the render light gives the shading.
+2. The cream edge binding and the cream tape cross have a crisp edge. The soft edge is gone.
+
+Deviation 2 came from the first kite build of this round. After the shadow was removed, the
+check still named kite/yellow/sailA with an anchor error of 15 of 255, and the mean error was
+only 0.16. A probe over the baked atlas (the stored default texel, the stored preset texel and
+the mask byte of every eligible texel) showed the cause. 149,366 anchor texels hold the exact
+default 217,68,58. About 600 anchor texels hold a colour up to 6 of 255 away from it, and the
+worst ones hold 217,74,64 with the mask byte 253. The stored green is 6 above the default
+because the soft cream edge had mixed about 1.4 % of cream into that texel, and the cream
+#efe6d2 is far from the slot colour in green. The recolour rule multiplies that gap by the
+option ratio, and the red to yellow ratio in green is 9.33, so a texel 6 of 255 from the
+default landed 15 of 255 from the option.
+
+A soft edge always leaves texels in that band, because the cream fraction rises from 0 to 1
+along the edge. The engine ties the colour mix to the tint mask, so no blend can move the cream
+out of the band while the texel stays eligible. The crisp edge keeps every slot texel at the
+exact slot colour: the cream texels have a mask of 0 and the slot texels a mask of 1. The band
+widths are the same as before: the binding covers the rim within 19 mm of the outline, the
+spine tape within 15 mm of the spine and the spreader tape within 13 mm of the spreader.
+
+Result: `node scripts/preset-colour-check.mjs kite` exits 0. Every slot of every preset lands
+on its option with an anchor error of 0, a mean error of 0 and a formula residual of 0. The
+yellow preset no longer has a lemon quarter and the red preset no longer has a rose quarter.
+The kite measures 0.359 x 0.930 x 0.041 m and holds 5,150 triangles, the same as before.
+
+### Brush (commit 2cff4c97)
+
+`assets/brush.ts`, the acceptance finding N3 of the group 2 rework. The paint tip was 76 px at
+1024 px/m and the brush read as a fat pencil.
+
+- The paint covers the bristles from the tip up to the ferrule edge. Every bristle surface below
+  the ferrule is the `paint` slot colour, and no cream is left. The cream constants
+  `BRISTLE` and `BRISTLE_SHADE` are gone.
+- The bristle radius grows by 20 %: the cone goes from 3.2 mm to 3.84 mm at the tip and from
+  12.8 mm to 15.36 mm at the ferrule edge, and the round tip grows from 3.2 mm to 3.84 mm.
+- The length of 0.17 m, the handle, the grip band, the iron ferrule, the lean of 8 degrees and
+  the two presets (pink #e87fb0, purple #8e5bb5) stay.
+
+Result: the pink tip reads at 128 px on the sprite sheet. The brush measures 0.046 x 0.169 x
+0.031 m and holds 1,588 triangles. mech-check: exit 0, ok true, bottomY -0.001, no warning line.
+
+### Paint-splash and paint-pot
+
+Their sources did not change. Their textures were re-baked (mech-check runs `forge all`, and
+`forge render --preset all` follows) so that the measuring script reads current atlases, and
+their preset cutouts were cut again: paint-splash blue and yellow, paint-pot blue, yellow and
+green (the last one in the new folder out/chibi-sprouts/r1/props/presets/green).
+
+## 3. The gate after the change
+
+One heavy-run call with three steps.
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh \
+  -c 'bash /tmp/opencode/green-gate.sh'
+```
+
+Step 1, `node scripts/preset-colour-check.mjs ball kite paint-splash paint-pot`: exit 0.
+
+```
+ball: every preset slot lands on its option within 8/255
+kite: every preset slot lands on its option within 8/255
+paint-splash: every preset slot lands on its option within 8/255
+paint-pot: every preset slot lands on its option within 8/255
+result ok: every checked preset slot lands on its option
+```
+
+The worst slot of each asset:
+
+| Asset | Slot | Option | Anchor err | Mean err | Residual |
+| --- | --- | --- | --- | --- | --- |
+| ball | bluewhite/panelA | blue | 7 | 2.9 | 0 |
+| ball | greenyellow/panelA | green | 5 | 2.0 | 1 |
+| ball | purplewhite/panelA | purple | 6 | 1.9 | 0 |
+| kite | every slot | every option | 0 | 0 | 0 |
+| paint-splash | blue, yellow | blue, yellow | 8 | 10.5, 15.3 | 0 |
+| paint-pot | every slot | every option | 0 | 0 | 0 |
+
+Step 2, the GREEN_TEST_COMMAND, `./node_modules/.bin/vitest run tests/preset-colour.test.ts
+--maxWorkers=1`: exit 0, `Test Files 1 passed (1)`, `Tests 4 passed (4)`, duration 7.06 s. The
+pin test passed over 387 assets, 902 presets and 3166 preset slots with an empty allow-list.
+
+Step 3, the typecheck, `NODE_OPTIONS=--max-old-space-size=8192 ./node_modules/.bin/tsc --noEmit
+-p .`: exit 2 with 38 error lines. The limit is 38, so the count did not rise. No error names
+assets/ball.ts, assets/kite.ts or assets/brush.ts. The errors sit in the known repo files:
+assets/rowboat.ts (8), assets/airship.ts (7), assets/plank.ts (6), assets/waterskin.ts (3),
+assets/storytime-nut.ts (3), assets/mushroom-cap.ts (3), tests/games/castle-defense/
+rules.adversarial.test.ts (2), and one each in tests/part.test.ts, assets/wool.ts,
+assets/storytime-picture-book.ts, assets/storytime-crayon-box.ts, assets/merchant-cart.ts and
+assets/longship.ts.
+
+The gate result: `GATE PASS: preset-colour-check 0, vitest 0, type errors 38 (limit 38)`.
+
+## 4. The asset calls
+
+One heavy-run call per asset, then one for the splash and the pot.
+
+Ball and kite: `node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs <asset> &&
+./forge render <asset> --preset all && ./forge cutout <asset> --out out/chibi-sprouts/r1/props
+--ppm 1024 --canvas 1024x1024 --views front,three-quarter &&` the preset cutouts into
+out/chibi-sprouts/r1/props/presets/<p> && `node scripts/cutout-check.mjs` on the props folder and
+on each preset folder && `python3 scripts/review-cards.py out/prop-cards <asset>` && the
+preset-colour-check for that asset.
+
+Brush: the same call with the purple preset only. Splash and pot: `mech-check`, `forge render
+--preset all` and the preset cutouts, then the cutout-check on the props folder and on the
+blue, yellow and green preset folders.
+
+Results: every call exited 0. mech-check: exit 0, ok true, no warning line, typecheck exit 0, for
+ball (1,184 triangles, bottomY 0), kite (5,150, bottomY 0), brush (1,588, bottomY -0.001),
+paint-splash (2,292, bottomY -0.001) and paint-pot (2,218, bottomY 0). cutout-check: `result ok`
+in out/chibi-sprouts/r1/props and in presets/bluewhite, presets/greenyellow,
+presets/orangewhite, presets/purplewhite (ball), presets/red and presets/yellow (kite),
+presets/purple (brush), presets/blue and presets/yellow (paint-splash), and presets/blue,
+presets/yellow and presets/green (paint-pot). Cards: out/prop-cards/ball.png, kite.png,
+brush.png.
+
+The renders and the cards were read. The ball reads as red and yellow gores with dark seams.
+The bluewhite preset reads blue and cream. The kite reads as clean red and yellow quarters with
+a crisp cream binding and a cream cross; the yellow preset reads as one clean yellow. The brush
+reads as a wood handle, an iron ferrule and a pink painted bristle cone, and the pink tip is
+clear at 128 px.
+
+## 5. The records
+
+- Plan: one sub-bullet under the `[~]` props task. The props task keeps `[~]`, because the phase
+  inventory is still open. No task moved to `[x]` and no task moved to `[b]`.
+- Debt: `measure/tech-debt.md` holds the new row TD-33 (Medium, Open). The file holds 46 lines.
+  The row names the mask defect the Red found: `composeAtlas` stores the tint mask as an sRGB
+  byte of the linear coverage and `recolor` reads it as linear coverage, so soft-mask texels
+  are over-weighted. The fix of this round does not need it: the drifted texels were fully
+  masked.
+- Commits: de94485e (ball), 86debd54 (kite), 2cff4c97 (brush), then the records commit with
+  this log, the debt row and the plan sub-bullet.
+- New committed files: this log. New untracked outputs: the re-cut ball, kite and brush
+  cutouts, the paint-splash and paint-pot preset cutouts, the new folder
+  out/chibi-sprouts/r1/props/presets/green, the ten renders of the five assets, and the three
+  prop cards.
+- This role did not rate the work.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check)
+status: complete
+baseline_sha: 6b9f5f557aafd482262ba5b90e55a274c0b16685
+phase_base_sha: 6b9f5f557aafd482262ba5b90e55a274c0b16685
+role_base_sha: 4c8b7727a6bb99b82518ae497cf8bf79cc24e69d
+head_sha: 2cff4c97
+commits:
+  - de94485e fix(chibi_sprouts_r1): ball preset colours exact (darker-only shade)
+  - 86debd54 fix(chibi_sprouts_r1): kite preset colours exact (darker-only shade)
+  - 2cff4c97 fix(chibi_sprouts_r1): brush paint covers the bristles (N3)
+  - records commit: this log, measure/tech-debt.md (TD-33) and the plan sub-bullet
+files_changed:
+  - assets/ball.ts
+  - assets/kite.ts
+  - assets/brush.ts
+  - measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/ball.md
+  - measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/kite.md
+  - measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/brush.md
+  - measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md (one sub-bullet)
+  - measure/tech-debt.md (TD-33)
+  - measure/runs/asset_chibi_sprouts_r1_20261022/green-p5-preset.log (new)
+plan_updates: one sub-bullet under the props task: "preset colour fix (PM 2026-11-18): Red 6a04c63e; Green de94485e, 86debd54, 2cff4c97; preset-colour-check exit 0 on ball kite paint-splash paint-pot; pin unchanged (387 assets); N3 brush".
+tasks: no task moved to [x] and no task moved to [b]. The props task keeps [~] because the phase inventory is open.
+targeted_command: the GREEN_TEST_COMMAND vitest run of tests/preset-colour.test.ts exited 1 before the change (1 failed, 3 passed, 11 drifting slots) and exits 0 after it (4 passed of 4). The pin test passes over 387 assets, 902 presets and 3166 preset slots; INTENDED_CHANGES stays empty.
+tests_run:
+  - vitest run tests/preset-colour.test.ts --maxWorkers=1 -> before: 1 failed, 3 passed; after: 4 passed (4)
+  - node scripts/preset-colour-check.mjs ball kite paint-splash paint-pot -> exit 0, every slot within 8/255
+  - node scripts/preset-colour-check.mjs ball -> exit 0 (anchor error 5 to 7); kite -> exit 0 (anchor error 0)
+  - tsc --noEmit -p . with NODE_OPTIONS=--max-old-space-size=8192 -> exit 2, 38 error lines (limit 38), none in the three changed assets
+  - mech-check.mjs ball, kite, brush, paint-splash, paint-pot -> exit 0, ok true, no warning line, typecheck exit 0
+  - forge render --preset all for ball, kite, brush, paint-splash, paint-pot -> the default render and every preset render
+  - forge cutout + cutout-check -> result ok in props and in 10 preset folders
+  - review-cards.py out/prop-cards -> ball.png, kite.png, brush.png
+known_failures: none in the gate. The typecheck still prints the repo errors that exist before this round, 38 of them, and the count did not rise. The kite keeps its inspect warning "the side silhouette is very thin", which a flat paper sail causes.
+handoff: The three implementation commits de94485e (ball), 86debd54 (kite) and 2cff4c97 (brush) are on master, not pushed. phase_base_sha = 6b9f5f55; role_base_sha = 4c8b7727; final Green HEAD = 2cff4c97 plus the records commit that carries this log. New committed file: this log. New untracked outputs: the re-cut ball, kite and brush cutouts, the paint-splash and paint-pot preset cutouts, the new folder out/chibi-sprouts/r1/props/presets/green, the renders of the five assets and the three prop cards. Two deviations from the first brief, both recorded in briefs/kite.md and in this log: the kite's lower-sail shadow is gone on the PM decision of 2026-11-18, and the cream binding and the cream tape cross now have a crisp edge instead of a soft one. The crisp edge is the price of the colour gate: a soft cream edge leaves slot texels that hold about 1 % cream, and the red to yellow ratio in green is 9.33, so such a texel landed 15 of 255 from the option. The reviewers should read the kite render and the yellow preset render, and they should judge the crisp band edge. The brush has no cream bristles left: the paint covers the bristles up to the ferrule edge (N3). The debt row TD-33 names the mask defect, which this fix does not touch. Do not rate the work in this role.
+END_MEASURE_AGENT_RESULT

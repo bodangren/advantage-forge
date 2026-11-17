@@ -222,6 +222,7 @@ Workbooks does not wait for it.
   - fix round 3 (PM 2026-11-18): splash lens commit 2514a96a; mech-check ok; cutout-check result ok in 3 folders; SHA on the first line of every [x] task
   - group 2 reworks (PM 2026-11-18): ball 2da0e605, kite 757a6948, brush 2901d092; mech-check ok; cutout-check result ok in props and presets folders
   - preset colour gate (PM order 2026-11-18, N1 and N2): commit 6a04c63e adds scripts/preset-colour-check.mjs, scripts/make-preset-pin.mjs, tests/preset-colour.test.ts, and tests/fixtures/preset-pin.json (387 assets, 902 presets, 3166 preset slots); the check exits 1 on 10 ball slots and kite/yellow/sailA; the formula tests and the pin test pass; log measure/runs/asset_chibi_sprouts_r1_20261022/red-p5-preset.log
+  - preset colour fix (PM 2026-11-18): Red 6a04c63e; Green de94485e (ball), 86debd54 (kite), 2cff4c97 (brush); preset-colour-check exit 0 on ball kite paint-splash paint-pot; pin unchanged (387 assets); N3 brush
 
 ## Phase 6: Delivery and close
 
