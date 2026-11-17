@@ -220,6 +220,7 @@ Workbooks does not wait for it.
   - lily pad (PM order 2026-11-17): commit f8e89036; mech-check ok; cutout-check result ok; card out/prop-cards/lily-pad.png; brief briefs/lily-pad.md
   - fix round 1 and 2 (PM 2026-11-18): seam cause one lost row in the whole-buffer readPixels (now read in strips); commits a330434d, 51fee130, b3460c68; all props re-cut, cutout-check result ok with the seam check; lily pad high cutout at props/high
   - fix round 3 (PM 2026-11-18): splash lens commit 2514a96a; mech-check ok; cutout-check result ok in 3 folders; SHA on the first line of every [x] task
+  - group 2 reworks (PM 2026-11-18): ball 2da0e605, kite 757a6948, brush 2901d092; mech-check ok; cutout-check result ok in props and presets folders
 
 ## Phase 6: Delivery and close
 

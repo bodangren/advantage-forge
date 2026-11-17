@@ -1,0 +1,110 @@
+# Maker log — Phase 5 group 2 reworks (PM order 2026-11-18)
+
+Role: measure-jr-green (bounded reworks).
+Track: asset_chibi_sprouts_r1_20261022, Phase 5 "The rest of the inventory (after the look check)".
+Order: PM 2026-11-18, the group 2 reworks to match the book (Storytime inventory section 5,
+monorepo 9255c2711). Assets: ball, kite, brush.
+Model: opencode-go/deepseek-v4.1-flash. No coder subagent was spawned.
+
+phase_base_sha = 78876c1a. role_base_sha = 78876c1a. HEAD at the start = 78876c1a, so the
+committed Red change (the Red brief and its brief files) is inside phase_base_sha..HEAD.
+`git status --short` was read before the first edit. The tree held unrelated modified and
+untracked work from other sessions. This round staged explicit paths only.
+
+## 1. The targeted Red command, before the change
+
+Command (GREEN_TEST_COMMAND):
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'for n in ball kite brush; do node .../mech-check.mjs $n; done'
+```
+
+Result before the change: exit 0, three lines `ok true`:
+ball 1,184 tris, kite 5,632 tris, brush 1,510 tris, bottomY 0 for each, no warning line, typecheck
+exit 0.
+
+The command does not fail, and here is why. For this rework the Red contract is a set of design
+values in the order: the panel colours, the sail quarters, the flying pose, the paint slot. The
+mech-check reads build warnings, exported files, triangles, ground contact and the asset typecheck.
+It cannot see a colour or a pose. The Red evidence is therefore the order itself and the brief
+sections written at phase_base_sha. No committed Red test exists to edit, and none was edited.
+
+## 2. Ball (commit 2da0e605)
+
+- Two colour slots, `panelA` (2 gores) and `panelB` (the other 2). Five presets: redyellow
+  (#d9443a / #f2c230, default), bluewhite, greenyellow, orangewhite, purplewhite.
+- The seam #5a4030 and the floor shadow #6f503a keep a fixed colour. They use
+  `k.tint(slot, { color, follow: 0 })`, so the tint mask stays tagged and the seam does not recolour.
+- Look check: front view shows a red gore with yellow at both edges, dark seams, one soft dent.
+  The bluewhite preset render recolours both panels and leaves the seams dark.
+- mech-check: exit 0, ok true, 1,184 tris, bottomY 0, typecheck exit 0, no warning line.
+- cutout-check: `result ok` in out/chibi-sprouts/r1/props and in presets/bluewhite,
+  presets/greenyellow, presets/orangewhite, presets/purplewhite. Card out/prop-cards/ball.png.
+
+## 3. Kite (commit 757a6948)
+
+- Four sail quarters from the spine and the spreader. Two slots, `sailA` (top-left and
+  bottom-right) and `sailB`. Presets redyellow (default), red, yellow. The edge band, the binding
+  cross and the bow knots stay cream and red.
+- The front view looks at +Z, so world -X is the viewer's left. The first probe used +X and put the
+  red quarters at the viewer's top-right and bottom-left. The second probe flips it. The final
+  front render shows red at the viewer's top-left and bottom-right, as the order names.
+- Flying pose: the 10 degree backward tilt is gone. The tail hangs 0.45 m down from the bottom
+  notch in a gentle S curve, with 3 cloth bows face on to the viewer. The lowest bow touches y = 0.
+- Two probe failures, both real:
+  1. The first hanging bow kept the flat bow design and added `rotateX(90)`. The in-plane loop tilt
+     then became depth, and the lowest point fell to -0.008 m. The bow is now built in the XY plane
+     with in-plane `rotateZ` tilts.
+  2. With the new bow the lowest point sat at +0.014 m. The tail's last two points moved down.
+     The final inspect reports lowest point y = 0 m.
+- mech-check: exit 0, ok true, 5,150 tris, bottomY 0, typecheck exit 0, no warning line.
+- cutout-check: `result ok` in out/chibi-sprouts/r1/props and in presets/red and presets/yellow.
+  Card out/prop-cards/kite.png.
+- The inspect warning "the side silhouette is very thin" stays. A paper sail 14 mm thick has a thin
+  side view; the brief allows 10 mm.
+
+## 4. Brush (commit 2901d092)
+
+- The red tip became one colour slot, `paint`, with pink #e87fb0 (default) and purple #8e5bb5.
+  The cream bristles use follow-0 cream, so only the tip recolours. Nothing else on the brush is red.
+- Look check: pink tip on the default render, purple tip on the preset render, the rest unchanged.
+- mech-check: exit 0, ok true, 1,510 tris, bottomY 0, typecheck exit 0, no warning line.
+- cutout-check: `result ok` in out/chibi-sprouts/r1/props and in presets/purple. Card
+  out/prop-cards/brush.png.
+
+## 5. The gate after the change
+
+Command: the same GREEN_TEST_COMMAND. Result: exit 0, three lines `ok true`:
+ball 1,184 tris, kite 5,150 tris, brush 1,510 tris, bottomY 0 for each, no warning line, typecheck
+exit 0.
+
+This round ran no `measure/generate.sh`, as the order forbids it. It ran no `measure/doctor.sh`,
+because the order and the track strategy name the mech-check loop as the live gate. The earlier
+rounds of this phase record the same choice.
+
+## 6. Records
+
+- Plan: one sub-bullet under the `[~]` props task. The props task keeps `[~]`; this phase still has
+  open inventory work. No task moved to `[x]` and no task moved to `[b]`.
+- New files: this log, and the two checker files
+  `measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-fixround-78876c1.json` and `.log`. The
+  checker files came from the acceptance round; this commit adds them unchanged.
+- This role did not rate the work.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check)
+phase_base_sha: 78876c1a
+role_base_sha: 78876c1a
+head: 2901d092 (implementation); the evidence commit carries this log
+commits: 2da0e605 (assets/ball.ts and briefs/ball.md), 757a6948 (assets/kite.ts and briefs/kite.md), 2901d092 (assets/brush.ts and briefs/brush.md); the evidence commit (plan sub-bullet, this log, the two acceptance files)
+tasks: no task moved to [x] or [b]. The props task keeps [~] because the phase inventory is open. The plan gained one sub-bullet with the three SHAs.
+targeted_command: the GREEN_TEST_COMMAND mech-check loop for ball, kite, brush = exit 0 before the change (1,184 / 5,632 / 1,510 tris) and exit 0 after it (1,184 / 5,150 / 1,510 tris, bottomY 0 each, typecheck exit 0, no warning line). It does not fail because mech-check cannot see a colour or a pose; the Red evidence is the PM order and the brief sections at phase_base_sha.
+tests_run: mech-check.mjs ball, kite, brush = exit 0, ok true, warnings [], typecheck exit 0; forge render --preset all = ball 5 renders, kite 3 renders, brush 2 renders; forge cutout + cutout-check = result ok in out/chibi-sprouts/r1/props, ball presets bluewhite, greenyellow, orangewhite, purplewhite, kite presets red and yellow, brush preset purple; review-cards = out/prop-cards/ball.png, kite.png, brush.png; preset recolour read on render.bluewhite.png, render.purple.png and the kite front render
+files_changed: assets/ball.ts; assets/kite.ts; assets/brush.ts; measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/ball.md; briefs/kite.md; briefs/brush.md; measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md (one sub-bullet); measure/runs/asset_chibi_sprouts_r1_20261022/maker-p5-group2.log (new); measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-fixround-78876c1.json and .log (added unchanged)
+plan_updates: sub-bullet under the props task "group 2 reworks (PM 2026-11-18): ball 2da0e605, kite 757a6948, brush 2901d092; mech-check ok; cutout-check result ok in props and presets folders"
+known_failures: none in the asset checks. The kite has one inspect warning, "the side silhouette is very thin", which a flat paper sail causes; the brief allows it. Two kite probes failed on the ground contact (-0.008 m, then +0.014 m) and are recorded above. This round ran no measure/generate.sh (forbidden by the order) and no measure/doctor.sh (the mech-check loop is the named gate).
+handoff: Implementation commits 2da0e605, 757a6948, 2901d092 are on master, not pushed. phase_base_sha = 78876c1a; final Green HEAD = 2901d092; the evidence commit carries this log. New committed files: this log and the two acceptance-fixround files. New untracked outputs: out/chibi-sprouts/r1/props/presets/{bluewhite,greenyellow,orangewhite,purplewhite,red,yellow,purple}, the re-cut ball, kite and brush cutouts, the 10 renders, and the 3 prop cards. Reviewers should read the three default cutouts and check two design points: the kite sail quarter orientation (viewer's top-left is sailA) and the kite flying pose, where only the lowest bow touches y = 0. Do not rate the work in this role.
+END_MEASURE_AGENT_RESULT

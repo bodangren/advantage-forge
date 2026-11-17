@@ -1,0 +1,105 @@
+# acceptance · Chibi Sprouts r1 · Phase 5 · fix round of 2026-11-18 (items 1 to 3)
+
+- Role: phase-acceptance, scoped to one step. Route: claude-code/claude-sonnet-5-5#max.
+- Date: 2026-11-18.
+- Track: asset_chibi_sprouts_r1_20261022, Phase 5 ("The rest of the inventory (after the look check)").
+- role_base_sha: 1adac67666cd586be27ad9ca03c9d1ed524c546e. The maker logs name no separate phase_base_sha.
+- audited_head_sha: 78876c1aab68e0e4a2c3b0cccdb73572b8cc3bec (HEAD at the start of the run).
+- Maker route: opencode-go/deepseek-v4.1-flash. Maker commits: a330434d, 51fee130, b3460c68 (code), f3cc544d (evidence), 2514a96a (splash), 78876c1a (evidence).
+- Scope: this run judges items 1 to 3 of the fix round. No Review A, B, C, adversarial, or UX result exists for this step, so `reviewer_ratings` is empty.
+- Result JSON: acceptance-fixround-78876c1.json (same folder).
+- Verdict: PASS. The paint splash is rated 7.0 out of 10 (bar 7.0). No blocking finding. 9 nonblocking findings. retry_recommendation: none.
+  The splash sits at the bar with no margin: the ten criteria give a mean of exactly 3.5 of 5.
+
+## Result table
+
+| Item | Result | Main finding |
+| --- | --- | --- |
+| 1 seam fix | pass | 0 seam rows in 29 delivered props PNGs; sun, splash, and lily pad re-cuts at HEAD are byte-identical; 6 of 6 unit tests pass |
+| 2 manifest elevation field | pass | sound; no check of a level folder is weakened; the look-down rule has an unavoidable gap (N3) |
+| 3 lily pad from above | pass | round dish, V notch, 9 veins, and rim read in the 411 x 257 px cutout |
+| 4 paint splash r3 | pass at the bar, 7.0 | smooth lens by geometry; a painted ring and lobe ovals remain (N1) |
+| 5 records | pass | scope clean; both plan sub-bullets true; 22 of 22 [x] tasks have a first-line SHA that is a commit |
+
+## Item 1: the seam
+
+- Cause: plausible. The maker probe (maker-p5-fix-cutout.log lines 20-33) shows raw row 1364 empty in one 3072 x 3072 read and full in a strip read. SwiftShader shows no empty row.
+  I did not re-run the probe. What I checked agrees with it: the 4 RED assets show the same row 569 with 596, 58, 440, and 30 solid columns, and the delivered files show the same column counts now with alpha 255.0.
+- The loss is size specific. My detector finds 0 seam rows in 52 older PNGs cut at 1024 x 1200 (week1/cast, week1/gestures, week2-7/gestures). A fault in the row arithmetic would hit every size.
+- Fix: correct and local. `readStrips` (src/render/cutout.ts) reads strips of at most 64 rows and joins them in the layout of one whole read. src/render/page.ts replaces one call. `resolveStraight` is unchanged.
+- Proof: my detector (every row; at least 8 columns whose neighbours above and below are alpha 255; mean alpha below 229.5) finds 0 seam rows in all 29 props PNGs. It is not vacuous:
+  a copy of each real alpha with row 569 set to 170 is flagged for the sun, flower, easel, and kite. The real checker prints the same words as the maker RED log for the injected sun.
+  A seam of alpha 240 passes by design. The 8x picture on magenta shows no line at row 569 of the sun or the flower.
+- Re-cut at HEAD into /tmp: sun front, sun three-quarter, splash front, splash three-quarter, and lily pad high are md5-equal to the delivered files (5 of 5). The build is deterministic.
+- Test meaning: the second new test simulates the fault and asserts it in a control line, so it fails if the function reads the buffer whole. The first test pins the strip order.
+  The Red was a missing export ('readStrips is not a function'). No unit test sees the wiring in page.ts or the 64 row default (N2). The seam rule in cutout-check is the live guard, and it works only on a GPU that shows the fault.
+
+## Item 2: the manifest elevation field (b3460c68)
+
+- The field is additive. The CLI writes it and throws when a folder already has another elevation. The checker reads it (a missing key is 0).
+- The level rule is the same expression as before. The look-down rule asks that the model reaches the foot row and does not touch the bottom edge. The old rule fails every valid look-down cutout (the near rim falls 116 px below the foot row), so a new rule was needed.
+- Synthetic folders on the real script (elevation 35, foot row 874): delivered pad ok; 130 px higher FAIL ('above the foot row'); 40 px lower FAIL ('cut off at the bottom edge'); 20 px lower ok (the rule cannot see a small shift).
+  The same PNG in a level folder (foot row 1008) FAIL ('lowest opaque row 990, foot row 1008'). So no level check is weakened (N3).
+- The CLI fit check ignores the bottom edge, so the brief command (margin 16) wrote a clipped PNG with no error (N4). The nested manifest skip needs four calls and has no wrapper (N5).
+
+## Item 3: the lily pad from above
+
+- out/chibi-sprouts/r1/props/high/lily-pad/three-quarter.png: 1024 x 1024, pad in cols 306..716 and rows 734..990, foot row 874, elevation 35.
+- The 2x picture on pond blue shows a round pale-green dish, the V notch with its cut wall, 9 veins from the centre, and the rolled rim. The veins are faint (7 percent luma) and clear at 2x. This closes N1 of acceptance-lily-pad-1adac67.
+- The file is older than the fix commits (01:30:11 against 01:39:21), and my re-cut at HEAD is byte-identical, so it is current.
+
+## Item 4: the paint splash r3
+
+- Geometry: one smooth lens. 1658 vertices, 2292 triangles, bounds 0.29 x 0.251 x 0.033 m. The thickness proxy falls 0.0326, 0.0324, 0.0318, 0.0307, 0.0291, 0.0280, 0.0259 m from the centre to r 0.16 m. No bump stands above the centre.
+- Pictures: the face has a thin painted ring at r 0.103 to 0.110 m and lobe ovals. Peak to trough luma: red 6.6 of 125, blue 10.8 of 135, yellow 3.5 of 200. The ring crosses the lobes (red, theta 15 to 210 degrees: 5.6 to 12.6 levels).
+  The baseColor atlas shows the dark band along the rim of the central disc through the lobes. The normal map shows no ring. So the words 'no ring' hold for the relief only (N1).
+  The three-quarter cutouts read as a plate inside a rim (a button or a seal), and at 128 px the ring shows as a faint circle with lobe outlines.
+- N2 of the earlier result is closed: the header and the brief give the measured numbers (0.0326 and 0.0248 m, 2292 triangles, 0.29 m). The mean colours are true within 1 level (#ef5c54, #568acb, #f4c856).
+- Rating 7.0 (bar 7.0): brief match 4, silhouette 3.5, proportion and appeal 3, shape language 3.5, value and colour 3.5, materials 3.5, detail hierarchy 3, technical quality 3.5, game readiness 4, readability at 128 px 3.5.
+  The sum is 35.0, the mean is 3.5, and that gives 7.0. The painted ring is a visible defect and holds the rating at 7.0. A drop of 0.5 in any one criterion gives 6.9.
+
+## Item 5: records
+
+- Commit scope: 6 commits, 13 paths, all fix-round paths. No path is in assets/parts/, measure/tracks.md, or another track. No task marker changed.
+- Plan sub-bullets (plan.md:221 and 222): all claims are true. The 12 props were re-cut at 01:46 to 01:47, after the code commits at 01:39. cutout-check is result ok in 4 folders on my run. mech-check is ok.
+- Every [x] task: 22 found, 0 without a first-line SHA. Each first-line SHA is a commit object and also appears in the body of its task. Two body-only SHAs (7213f4e, bc025fb) are monorepo commits that I did not check.
+- A3, A4, A6, A7 do not apply (no count assertion, marker check, registry entry, or banned-term filter in the diff). A5 passes.
+
+## Findings (all nonblocking)
+
+- N1 [Medium] A painted ring and lobe ovals remain on the splash face (the geometric ring is closed). The code comment 'no ring shows' holds for the relief only. Optional r4: paint the band from the outer silhouette only. | owner: maker, the PM decides
+- N2 [Low] The unit tests do not pin the page.ts wiring or the 64 row default. Only the GPU dependent seam rule guards them. | owner: maker
+- N3 [Low] The look-down rule is weaker by necessity (a pad 20 px too low passes) and trusts the manifest. No level check is weakened. | owner: maker
+- N4 [Low] The CLI fit check ignores the bottom edge for a look-down view; the brief command wrote a clipped PNG with no error. | owner: maker
+- N5 [Nit] cutout-check skips nested folders that have a manifest. Four calls are needed for props, presets/blue, presets/yellow, and high. No caller loses coverage. | owner: orchestrator
+- N6 [Nit] Header says '0.30 m across' (built 0.29 m); the log says rows read 254 of 255 (they read 255.0); the 'come from the code of HEAD' claim for the lily pad high file needed my re-cut. | owner: maker
+- N7 [Nit] The SHA edits split sentences in several plan task lines; the title of f3cc544d omits the 2 acceptance files. | owner: orchestrator
+- N8 [Nit] Hatching in the highlights of the top lobes of the splash (3x) and a faint stair-step on the lily pad rim (2x). Neither shows at 1x.
+- N9 [Info] The props manifest lists the 2 edge-on lily-pad slabs and not the look-down file (props/high has its own manifest). The elevation key is not in the manifest key lists. | owner: orchestrator (Phase 6)
+
+## Mechanical call (one heavy-run call, exit 0, no exit 75)
+
+- vitest run tests/cutout.test.ts: 1 file passed, 6 tests passed.
+- cutout-check: result ok for props, presets/blue, presets/yellow, and high.
+- mech-check paint-splash: ok:true, forgeAll exitCode 0, warnings [], triangles 2292, bottomY -0.001, glbBytes 372464, typecheckExit 0, failures [].
+- Extra in the same call: 3 forge cutout re-cuts (lily pad high, paint-splash, sun) into /tmp/opencode/acc-fix/recut. 19 of 19 md5 sums of rebuilt or delivered outputs are equal to the pre-call sums.
+  The re-cut builds rewrote out/lily-pad and out/sun (GLB, textures, stats.json). I took pre-call sums of the lily pad files only.
+
+## Limits
+
+- No ./forge inspect and no --fast command ran. I did not re-run the maker probe, tsc, measure/doctor.sh, or the interphase status script.
+- The three-quarter cutout composite, the 128 px composite, and the splash card did not attach at first. They attached after the first write, and I looked at them. They agree with N1 and with the scores.
+- This role wrote only the 2 result files, plus scratch files in /tmp/opencode/acc-fix/ and the rebuilt out/ files named above.
+
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check) - step fix round of 2026-11-18 (items 1 to 3)
+commits: none
+tests_run: vitest run tests/cutout.test.ts = 6 of 6 passed (pass); cutout-check on props, presets/blue, presets/yellow, high = result ok x4 (pass); mech-check paint-splash = ok:true, 2292 tris, bottomY -0.001, typecheck 0, no warning (pass); re-cut at HEAD of sun front, sun three-quarter, splash front, splash three-quarter, lily pad high = md5-equal to delivered 5 of 5 (pass); own seam detector over 29 props PNGs = 0 seam rows, injected seams flagged (pass); same detector over 52 older PNGs = 0 seam rows (pass); synthetic elevation folders on the real checker = look-down rule works, level rule intact, 20 px sunk passes (finding N3); radial and angular luma profiles of the splash cutouts = painted ring at r 0.103-0.110 m (finding N1); plan parse = 22 [x] tasks, 0 without first-line SHA, all commit objects (pass); md5 before and after = 19 of 19 equal (pass)
+files_changed: measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-fixround-78876c1.json; measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-fixround-78876c1.log
+plan_updates: none
+known_failures: none blocking. VERDICT PASS: paint-splash rated 7.0 (bar 7.0, mean exactly 3.5 of 5, no margin). Nonblocking: N1 a painted ring and lobe ovals remain on the face (the relief is a smooth lens; the dark band follows the central disc rim through the lobes; luma swing 6.6 red, 10.8 blue, 3.5 yellow); N2 the unit tests do not pin the page.ts wiring; N3 the look-down rule passes a pad 20 px too low; N4 the CLI does not check the bottom edge for a look-down view; N5 to N9 nits and info
+handoff: VERDICT PASS at HEAD 78876c1aab68e0e4a2c3b0cccdb73572b8cc3bec. Items 1 to 3 pass: the seam is fixed (0 seam rows in 29 props PNGs, byte-identical re-cuts), the elevation field is sound and weakens no level check, and the lily pad from above reads (dish, V notch, 9 veins, rim). The splash is one smooth lens and is rated 7.0, at the bar with no margin. A painted ring remains on its face (N1), so the brief word 'no ring' holds for the relief only. The orchestrator decides if an optional r4 (band from the outer silhouette only) is worth ordering. Open for Phase 6: the props manifest lists the edge-on lily-pad slabs and not props/high (N9). retry_recommendation none.
+END_MEASURE_AGENT_RESULT
