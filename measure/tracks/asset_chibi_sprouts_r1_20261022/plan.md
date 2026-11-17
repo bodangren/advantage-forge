@@ -200,6 +200,7 @@ Workbooks does not wait for it.
 - [~] Task: Scenes (inventory section 4) and the 30 props and animals (section 5): fit-check reused
   assets, build the new ones, and review in batches. Week 7 waits for its new song.
   - First prop batch (5 of the 15 new): commit 1dcca329; cutout-check "result ok"; cards at out/prop-cards/
+  - Briefs: briefs/<name>.md (sources per value; audit 2026-11-17 F-D5).
 
 ## Phase 6: Delivery and close
 
