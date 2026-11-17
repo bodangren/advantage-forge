@@ -30,11 +30,31 @@ body per material.
 | Detail | a soft dent | PM default, check against the book |
 | Check | the seams read at 128 px | PM default, check against the book |
 
+## r2 (book colours, 2026-11-18)
+
+PM order 2026-11-18: the group 2 reworks to match the book (Storytime inventory section 5,
+monorepo 9255c2711). Book lines: W2 "five colorful balls in a row, bouncing on green grass"; W7
+"one red-and-yellow ball bouncing".
+
+The shape, the 4 gores, the dark seams and the dent stay. The fixed cream and red gores became two
+colour slots, `panelA` (2 gores) and `panelB` (the other 2). The presets (the first is the default):
+
+| Preset | panelA | panelB | Use |
+| --- | --- | --- | --- |
+| redyellow (default) | #d9443a | #f2c230 | W7 "one red-and-yellow ball bouncing" |
+| bluewhite | #3f6fa8 | #f4f1ea | one of the W2 row of five |
+| greenyellow | #4f9a4a | #f2c230 | one of the W2 row |
+| orangewhite | #e8892c | #f4f1ea | one of the W2 row |
+| purplewhite | #7b4a9e | #f4f1ea | one of the W2 row |
+
+The seam #5a4030 and the floor shadow #6f503a keep a fixed colour in every preset. The ball
+measures 0.16 x 0.16 x 0.159 m and holds 1,184 triangles.
+
 ## Known differences
 
-- The inventory wants five colorful balls in a row for W2. The built asset is one ball. It serves the
-  W2 and the W7 line.
-- The inventory wants a red-and-yellow ball for W7. The built ball has two cream panels and two red
-  panels. It has no yellow.
+- The inventory wants five colourful balls in a row for W2. One ball asset serves the row through
+  its five presets. Placing the five balls in a row is the scene's job.
+- The inventory wants a red-and-yellow ball for W7. The default preset is red #d9443a with yellow
+  #f2c230.
 - The built ball measures 0.16 m across and 0.16 m tall. It stands on y = 0. It matches the brief.
 - The built ball holds 1,184 triangles. It is under the limit of 8,000.
