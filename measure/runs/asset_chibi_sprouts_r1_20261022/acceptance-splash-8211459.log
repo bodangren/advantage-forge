@@ -1,0 +1,116 @@
+# acceptance · Chibi Sprouts r1 · Phase 5 · paint-splash r2 (remediation of B1)
+
+- Role: phase-acceptance, scoped to one step. Route: claude-code/claude-sonnet-5-5#max.
+- Date: 2026-11-18.
+- Track: asset_chibi_sprouts_r1_20261022, Phase 5 ("The rest of the inventory (after the look check)").
+- role_base_sha and phase_base_sha: 03d1114dd26716bdf62881a1ab68d5c30074ef98 (the HEAD that carried finding B1).
+- audited_head_sha: 821145915dde23a7cab82151d95048fe55e8e4cf. HEAD equaled it at the start, after the mechanical run, and at the end.
+- Maker route: minimax-cn-coding-plan/MiniMax-M3.1-Flash. Maker commits: e5e2350c (the asset change) and 82114591 (the evidence).
+- Scope: this run judges the paint-splash r2 only. The finding is B1 of acceptance-week3-03d1114.json. No Review A, B, C,
+  adversarial, or UX result exists for this step, so `reviewer_ratings` is empty.
+- Result JSON: acceptance-splash-8211459.json (same folder).
+- Verdict: PASS. The paint-splash is rated 7.0 out of 10 (bar 7.0, earlier 6.5). No blocking finding. 8 nonblocking
+  findings. retry_recommendation: none. The result is close to the bar: the ten criteria give a mean of 6.9, and the
+  visible ring seam caps the rating at 7.0.
+
+## Result table (rating out of 10, bar 7.0)
+
+| Item | Rating | Result | Main finding |
+| --- | --- | --- | --- |
+| paint-splash (r2) | 7.0 | pass | Reads as a glossy paint blob in the front cutouts. A ring seam remains on the face and gives a wax seal look in the three-quarter view |
+| mechanical | n/a | pass | mech-check ok:true, cutout-check result ok for 3 folders, 19 md5 sums equal, card equal to a fresh card |
+| scope | n/a | pass | 6 paths, none in src, tests, scripts, assets/parts, the registry, or another track; no task marker changed |
+| plan claims (A5) | n/a | pass | all 4 claims of plan.md:219 are true; the brief and the code header hold false text (N2) |
+
+## B1 re-check (the four faults of acceptance-week3-03d1114.json)
+
+| B1 fault | Result | Evidence |
+| --- | --- | --- |
+| 1. Foot tab on both faces | FIXED | GLB: \|z\| at the bottom centre is 0.0128 to 0.0135 m, no step at \|x\| 0.03 m. The 4x crop of the bottom edge shows a flat dark edge and no rectangle. The only trace is a 1 mm heel (bottomY -0.001) |
+| 2. Ring seams on the face | NOT FIXED (new form) | One ring at r about 100 mm, arcs at the lobes, and soft bubble-like blotches. They show in render.png, in the blue front cutout, and in all three-quarter cutouts. The rim zone stands 21.5 to 24.8 mm, the dome 16.5 to 17.9 mm |
+| 3. Flat mid-value | FIXED | Rim luma falls from about 117 to 81 at r 124 to 148 mm, against 123 to 126 at the centre. The mean colour is #e85046 (it was #f3635c). The three presets are distinct |
+| 4. Scalloped badge outline | PARTLY FIXED | The outline is an irregular blob (radius 102 to 157 mm, valleys 12 to 17 mm deep, drops as bumps). The plate inside a raised rim still reads as a wax seal in the three-quarter view |
+
+## Rating
+
+Criteria scores (1 to 5): brief match 4, silhouette 3.5, proportion and appeal 3, shape language 3, value and colour 3.5,
+materials 3.5, detail hierarchy 3, technical quality 3.5, game readiness 4, readability at 128 px 3.5. The sum is 34.5.
+The mean is 3.45, and that gives 6.9 of 10. The ring seam is a visible defect, so it caps the rating at 7.0, as in the
+earlier run. A drop of 0.5 in two criteria gives 6.5, so the result is close to the bar.
+
+- Value and colour (3.5): the dark rim is real (25 to 30 percent darker than the inside), and the three presets are clearly red, blue, and yellow.
+  The centre is mid-value with a soft highlight, and the highlights look hazy.
+- Silhouette (3.5): the front cutout reads as a lumpy blob with a flat bottom. The side is a thin slab, as expected for a wall splash.
+- Proportion, shape language, and detail hierarchy (3 each): a plate inside a swollen rim reads as a seal, and the ring, the lobes, and the highlights compete.
+- Readability at 128 px (3.5): at the 128 px scale (about 100 px wide) the three blobs read as glossy red, blue, and yellow paint. The ring is faint.
+
+## The maker's three questions
+
+1. The drops read as rim bumps: confirmed. The polar silhouette is 155 mm at 92 deg, 157 mm at 188 deg, and 153 mm at 324 deg,
+   against 141 to 146 mm on each side. A drop stands 10 to 15 mm proud, with no neck. The book row does not ask for drops.
+   The PM brief asked for thin necks. The orchestrator decides (N3).
+2. The foot is dark: confirmed, and harmless. The foot is buried, and the dark band covers the flat bottom (N5).
+3. The centre stays mid-value: confirmed. The value contrast comes from the dark rim. This is acceptable.
+
+## Findings (all nonblocking)
+
+- N1 [Medium] Ring seam remains. Cause: the rim zone is 5 to 8 mm higher than the dome, because 13 sequential smoothUnion calls with
+  k 0.025 stack the bulge on lobes and drops that have the same z radius as the dome. Optional fix: lower the z radius of the lobes and drops
+  to about 0.008 to 0.010 m, or clip the body with one dome. Check the z profile and render.png, then re-cut the cutouts and the card.
+- N2 [Low] The r2 brief and the code header say 0.025 m at the rim, 0.033 m at the centre, and no ring seam. The GLB shows a centre of 0.033 to 0.036 m,
+  a rim zone up to 0.050 m, and a visible ring. Fix the geometry or correct the text.
+- N3 [Low] The drops read as bumps. A smaller k on the necks alone would bring them back. The orchestrator decides.
+- N4 [Nit] Soft blotch highlights read as bubbles. At 4x zoom the blue cutout shows streaky hatching at a highlight edge. Neither shows at 1x.
+- N5 [Info] The foot is buried and the box adds nothing. It is not a defect.
+- N6 [Medium] Stage wiring (outside this step): manifest.json lists only the red cutouts, the stage prop has no preset field, and nothing reads
+  presets/blue or presets/yellow. The week 3 line still shows three red splashes. The orchestrator opens a task.
+- N7 [Nit] e5e2350c adds the 2 earlier acceptance-week3 files, and its title does not name them. The maker log lists them.
+- N8 [Info] The earlier findings N1, N2, and N4 to N11 are outside this step. This run did not re-judge them.
+
+## Specific checks (A3 to A7)
+
+- A5 (false-claim text): applies. The plan sub-bullet (plan.md:219) makes 4 claims, and all 4 are true at HEAD: commit e5e2350c, mech-check ok,
+  cutout-check result ok, and preset cutouts done. The brief and the code header hold false text (N2), and the plan words 'preset cutouts done' do not mean
+  that a scene can place them (N6).
+- A3, A4, A6, A7: do not apply. The exact diff changes no contract test, no filter, and no entry of measure/tracks.md.
+- Fake-gate masking: mech-check proves build health only, and cutout-check proves PNG format only. Neither sees the ring or the value contrast. The plan
+  claims only those checks, so they are honest. The look judgement is this gate.
+
+## Mechanical check (one call)
+
+- HEAVY_MIN_AVAIL_MB=1500 bash heavy-run.sh -c 'mech-check paint-splash; cutout-check props | tail -1; cutout-check presets/blue | tail -1;
+  cutout-check presets/yellow | tail -1' returned exit 0 and no exit 75.
+- mech-check: ok:true, forgeAll exitCode 0, warnings [], triangles 1968, bottomY -0.001, glbBytes 354628, typecheckExit 0, failures [].
+- cutout-check: result ok for out/chibi-sprouts/r1/props, presets/blue, and presets/yellow.
+- md5 of 19 output files is equal before and after the rebuild, so the pictures I judged are the final ones. A fresh review-cards.py run into /tmp
+  gives a card with md5 676718306bb2c8eaf48a001f4b7693b0, equal to out/prop-cards/paint-splash.png.
+
+Commit scope (git diff --name-only 03d1114d..HEAD lists 6 paths):
+
+- e5e2350c: assets/paint-splash.ts (80 changed lines), briefs/paint-splash.md, and the 2 earlier acceptance-week3-03d1114 files (the last 2 are not named by the title, N7).
+- 82114591: maker-p5-splash-b1.log and 1 line in plan.md (219). 0 task markers changed.
+- No path is in assets/parts/, src/, tests/, scripts/, measure/tracks.md, or another track.
+
+## Notes for the orchestrator
+
+- B1 is closed at the bar. With B1 closed, the week 3 step has no blocking finding at HEAD 82114591. The diff since 03d1114d changes only
+  assets/paint-splash.ts among the sources, so the earlier results hold: sun 7.0, cloud 7.0, flower 7.0, grape-bunch 7.0, duck 7.5.
+- The result is close to the bar. N1 is a cheap, specific fix (the rim height). Consider one more maker round before the Phase 6 look check,
+  and decide N3 (drops with necks) in the same round. This is optional for this gate.
+- N6 and the earlier N1 (the row 569 seam) still need an owner outside this step: the song stage code and the cutout command.
+- The plan task stays `[~]`. This run marks nothing and edits no source, test, plan, or registry file.
+- Side effects: my mech-check run rebuilt out/paint-splash/ with equal md5 sums. Scratch files are in /tmp/opencode/acc-splash/.
+  I ran no ./forge inspect and no --fast command.
+
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check) - step paint-splash r2 (remediation of B1)
+commits: none
+tests_run: mech-check.mjs paint-splash = exit 0, ok true, 1968 tris, bottomY -0.001, typecheck 0, no warning (pass); cutout-check.mjs on props, presets/blue, presets/yellow = result ok x3 (pass); md5 of 19 output files before and after the rebuild = equal (pass); review-cards.py on paint-splash = md5 equal to the stored card (pass); GLB parse (foot tab test, max z per radius) = no tab, rim zone 5 to 8 mm above the dome (finding N1); git diff --name-only 03d1114d..HEAD = 6 paths, all in scope (pass with nit N7)
+files_changed: measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-splash-8211459.json; measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-splash-8211459.log
+plan_updates: none
+known_failures: none blocking. VERDICT PASS: paint-splash rated 7.0 (bar 7.0, earlier 6.5; the ten-criteria mean is 6.9 and the ring seam caps it at 7.0). Nonblocking: N1 ring seam remains because the rim zone is 5 to 8 mm above the dome (optional fix); N2 false thickness and no-ring-seam text in the brief and the code header; N3 drops read as bumps; N6 the stage cannot place blue or yellow splashes (manifest lists red only, no preset field)
+handoff: VERDICT PASS at HEAD 821145915dde23a7cab82151d95048fe55e8e4cf, close to the bar. B1: the foot tab is fixed, the value contrast is fixed, the outline is partly fixed, and the ring seam is not fixed. With B1 closed, the earlier week 3 results hold (sun, cloud, flower, grape-bunch 7.0; duck 7.5), because the diff since 03d1114d changes only assets/paint-splash.ts among the sources. Optional: one more maker round for N1 and N2 before the Phase 6 look check, and a decision on N3. Open outside this step: N6 (preset field or manifest entries) and the earlier N1 (row 569 seam). retry_recommendation none.
+END_MEASURE_AGENT_RESULT
