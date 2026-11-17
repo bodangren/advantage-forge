@@ -1,0 +1,127 @@
+# Maker log: Phase 5, week 3 props (PM order 2026-11-17)
+
+Track: asset_chibi_sprouts_r1_20261022, Phase 5, the props task (song video props).
+Role: measure-jr-green (bounded maker). Route: minimax-cn-coding-plan/MiniMax-M3.1-Flash.
+role_base_sha: 7c95ea9a. Red role: none for this phase.
+Date: 2026-11-17.
+
+## Status: complete
+
+## Item 1: F7, scripts/review-cards.py (commit 2f8ee4a6)
+
+- The fault: the card cut the lower half of out/<name>/render.png as the views. That crop is only
+  right when the sheet holds a reference row on top.
+- The finding: src/render/page.ts draws the reference row only when the request carries a
+  referenceUrl, and src/cli/forge.ts (line 322) sends it only when the asset declares
+  `reference`. A sheet without one holds the views only.
+- The fix: the script reads out/<name>/views/*.png, computes the height of the view rows
+  (GAP = 4, cols = min(4, count)) and compares it with the sheet height. With no reference row,
+  the whole sheet becomes the views and a dark panel with the text "no mockup" fills the mockup
+  slot. With a reference, the old crop stays.
+- The check: out/prop-cards/duck.png shows the whole duck with its head, and
+  out/prop-cards/paint-pot.png shows the paint in the pot. The card for towel-stack-a, which has
+  a reference, is byte-identical to the card before the fix.
+- Weak: none known.
+
+## Item 2: the duck fixes (commit f098d5b9)
+
+- F1, the wings stood 34 mm out and read as arms. The wing options changed: wingTurn 68 -> 95,
+  wingScale 0.62 -> 0.26, wingOut 0.03 -> 0.05, wingRest -45 kept. The wing now lies flat on the
+  body's side with its tip toward the tail.
+- The measuring tool: measure/runs/asset_chibi_sprouts_r1_20261022/wing-probe.ts rebuilds the
+  kind's trunk, raycasts its real smooth-union surface, and reports the worst protrusion for
+  each set of options. The worst protrusion is 5.8 mm; the limit is 8 mm.
+- F2, the catch-light was doubled and too large. The kind's painted glint is off (glint: 0) and
+  the white sphere radius is 0.0025 m (was 0.004 m). One glint shows on each eye.
+- The dot sits on the merged body's surface: the kind's smooth union pulls the surface in from the
+  skull by up to 5.5 mm, so the ray hits sdf.smoothUnion(0.05, b.trunk, b.skull).
+- The check: the mech-check line is
+  {"asset":"duck","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":6550,"bottomY":0,
+  "files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":1164936},
+  "typecheckExit":0,"failures":[]}. cutout-check prints "result ok". The card is
+  out/prop-cards/duck.png.
+- Weak: the wings are subtle. `forge inspect duck` reports coverts at 0.9% of the silhouette in
+  the side view and flight as barely visible. The wing reads as a fold, not as an arm.
+- The duck brief holds the F1 and F2 record in its Known differences.
+
+## Items 3 to 7: the week 3 props
+
+Each prop: a source file, a brief with the Sources table, the mech-check, the cut-out, and a
+card.
+
+### 3. sun (commit 6df0d874)
+
+- A thick yellow disc 0.50 m across with ten rounded rays and a happy face painted on the front.
+- The mech-check line:
+  {"asset":"sun","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":2662,"bottomY":0,
+  "files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":683772},
+  "typecheckExit":0,"failures":[]}. The card is out/prop-cards/sun.png.
+- Weak: the smile looks ragged in the --fast vertex-colour render, because the mesh cells
+  (0.008 m) are wider than the 0.016 m stroke. The textured build paints it smooth.
+
+### 4. cloud (commit 6057feaa)
+
+- Five soft white lumps with a cool shaded underside, flat on the ground.
+- The mech-check line:
+  {"asset":"cloud","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":2248,"bottomY":0,
+  "files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":199744},
+  "typecheckExit":0,"failures":[]}. The card is out/prop-cards/cloud.png.
+- Weak: the built cloud is 0.56 m wide, 0.25 m tall and 0.24 m deep. The brief asks for 0.50 x
+  0.26 x 0.22 m; its own sphere positions make the cloud wider and deeper.
+
+### 5. flower (commit 9863c547)
+
+- One big pink flower on a green stem, with two leaves, a yellow centre and a base mound.
+- The mech-check line:
+  {"asset":"flower","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":3280,"bottomY":0,
+  "files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":930452},
+  "typecheckExit":0,"failures":[]}. The card is out/prop-cards/flower.png.
+- Weak: the base mound reads as a small ball at the foot of the stem. The built flower is 0.436 m
+  tall; the brief asks for 0.45 m.
+
+### 6. grape-bunch (commit 34249914)
+
+- Sixteen purple grapes in five rows, with a brown stem and one green leaf.
+- The mech-check line:
+  {"asset":"grape-bunch","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":7552,
+  "bottomY":0,"files":{"glb":true,"stats":true,"render":true,"sprites":true,
+  "glbBytes":1489300},"typecheckExit":0,"failures":[]}. The card is
+  out/prop-cards/grape-bunch.png.
+- Weak: the leaf's five-point profile reads as a star and not as a rounded grape leaf. The built
+  bunch is 0.257 m tall with the stem and the leaf; the bunch of grapes alone is 0.196 m.
+
+### 7. paint-splash (commit d6e0414e)
+
+- A glossy round splash with seven lobes, three droplets on thin necks and a small foot. One
+  asset with the red, blue and yellow presets.
+- The mech-check line:
+  {"asset":"paint-splash","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":2026,
+  "bottomY":-0.001,"files":{"glb":true,"stats":true,"render":true,"sprites":true,
+  "glbBytes":371096},"typecheckExit":0,"failures":[]}. The card is
+  out/prop-cards/paint-splash.png.
+- The three preset renders differ in colour: the dominant colour of the front view is #f24a3f
+  (red), #3d80c9 (blue) and #f7c849 (yellow).
+- Weak: `forge inspect paint-splash` warns that the asset is all mid-value and that the side
+  view is thin. Both follow from a flat splash in one colour.
+
+## The final gate
+
+The GREEN_TEST_COMMAND ran the mech-check for each of sun, cloud, flower, grape-bunch,
+paint-splash and duck under the heavy-run rule. Every line says "ok":true with no failures and
+no warning lines from `forge all`. `node scripts/cutout-check.mjs out/chibi-sprouts/r1/props`
+ends with "result ok" for all eight props in the folder.
+
+## Files added
+
+- assets/sun.ts, assets/cloud.ts, assets/flower.ts, assets/grape-bunch.ts, assets/paint-splash.ts
+- measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/sun.md, cloud.md, flower.md,
+  grape-bunch.md, paint-splash.md
+- measure/runs/asset_chibi_sprouts_r1_20261022/wing-probe.ts (the F1 measuring tool)
+- measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-duck-7c95ea9.json and .log (the duck
+  checker files, unchanged)
+- scripts/review-cards.py (changed)
+
+## Not done
+
+- The props task stays as it is. The maker role does not rate the work and does not close the
+  task.
