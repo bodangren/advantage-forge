@@ -2,22 +2,22 @@
 
 The 2D and 3D program owns local game design and the monorepo integration sequence.
 The current platform uses one rules core with a three.js view and a Phaser view.
-The [platform port](./tracks/game_platform_port_20260928/) and [model-pack generator](./tracks/game_model_packs_20260928/) unblock application integration.
+The [platform port](./tracks/game_platform_port_20260928/) and [model-pack generator](./archive/game_model_packs_20260928/) unblock application integration.
 
 **Audit of 3 October 2026.** A code, test, and git audit replaced the earlier track counts. All eight demo games (the six initial games, Labyrinth, and Rune Match) have a rules core, a three.js view, a Phaser view, a QC bot, and a registry entry in `src/host/registry.ts`. Their tests pass (Potion Rush, Monster Encounters, Dragon Flight, and Dungeon Liberator: 188; Devourer Slime 40, Hero vs. Zombie 43, Labyrinth 89, Rune Match 140). No agent ran a browser for the audit. No game has a Thai strings file; Thai read-aloud lives in `src/host/reader.ts`.
 
 The sibling `reading-advantage-monorepo` is on `apk3d-port`. It holds all 29 games as 2D Phaser cartridges in `packages/game-cartridges`. It has no three.js code, no model-pack package, and no renderer selection. The uncommitted edits there add a Primary story input mode (`GameInput`, `story-input.ts`). They are not 3D port work. The 12 commits of the branch are www work. The port must keep those edits isolated and coordinate with their owners.
 
-The 3D model pack generator was missing at the audit. Games loaded 87 simplified GLBs from `demo/public/models/` by path. The [model pack track](./tracks/game_model_packs_20260928/) records the generator work.
+The 3D model pack generator was missing at the audit. Games loaded 87 simplified GLBs from `demo/public/models/` by path. The [model pack track](./archive/game_model_packs_20260928/) records the generator work.
 
 ## Phase position
 
 | Phase | Status | Measure owner |
 | --- | --- | --- |
-| A: dual-renderer platform | Local implementation delivered. | [Historical platform](./tracks/history_dual_renderer_20260928/) |
+| A: dual-renderer platform | Local implementation delivered. | [Historical platform](./archive/history_dual_renderer_20260928/) |
 | A′: shared 2D art | Delivered for the initial pack. | [Asset delivery](./tracks/asset_delivery_20260928/) |
-| B: six local 2D views | Complete. The audit confirmed 2D and 3D views and passing tests. | [Six-game history](./tracks/history_six_games_20260928/) |
-| C: monorepo port | Built on a local branch (`apk3d-games-port`, worktree `reading-advantage-monorepo-3d`, not pushed): kit package `advantage-play-kit-3d`, games package `game-cartridges-3d` with 28 student games (Monster Encounters left for a teacher-led lesson game), the Primary Advantage game route, and the completion mapping. The games read the student's saved vocabulary and sentences in FSRS due order (2026-10-04). Open: rebase, pull request, deployment, device checks. | [Platform port](./tracks/game_platform_port_20260928/), [flashcard input](./tracks/game_flashcard_input_20261004/), and the monorepo track `apk3d_games_port_20261003` |
+| B: six local 2D views | Complete. The audit confirmed 2D and 3D views and passing tests. | [Six-game history](./archive/history_six_games_20260928/) |
+| C: monorepo port | Built on a local branch (`apk3d-games-port`, worktree `reading-advantage-monorepo-3d`, not pushed): kit package `advantage-play-kit-3d`, games package `game-cartridges-3d` with 28 student games (Monster Encounters left for a teacher-led lesson game), the Primary Advantage game route, and the completion mapping. The games read the student's saved vocabulary and sentences in FSRS due order (2026-10-04). Open: rebase, pull request, deployment, device checks. | [Platform port](./tracks/game_platform_port_20260928/), [flashcard input](./archive/game_flashcard_input_20261004/), and the monorepo track `apk3d_games_port_20261003` |
 | D: legacy rewrites | All 21 games are built locally and ported into the monorepo package on 3 October 2026. The phone QC of 4 October 2026 (3D and 2D, portrait and landscape) led to kit layout rules for every game (`docs/apk3d-cartridge.md` section 9.1). Open: a real touch-device check and the pull request (owner). `babel-architect` has no cartridge. | Individual tracks below. |
 
 ## Initial six games

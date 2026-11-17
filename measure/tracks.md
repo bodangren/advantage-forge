@@ -4,37 +4,13 @@ This registry gives each historical, current, and planned work item one Measure 
 
 ## Foundation and history
 
-- [x] **Track: History: Add rigging, animation, and clearance checks**
-  *Link: [./tracks/history_animation_clearance_20260928/](./tracks/history_animation_clearance_20260928/)*
-
-- [x] **Track: History: Build the Forge Bench trial and review system**
-  *Link: [./tracks/history_bench_trials_20260928/](./tracks/history_bench_trials_20260928/)*
-
-- [x] **Track: History: Rebuild Forge as a code-first SDF asset engine**
-  *Link: [./tracks/history_forge_engine_20260928/](./tracks/history_forge_engine_20260928/)*
-
-- [x] **Track: History: Add color variants and shared sprite output**
-  *Link: [./tracks/history_recolors_sprites_20260928/](./tracks/history_recolors_sprites_20260928/)*
-
 - [~] **Track: Rename the repository to advantage-forge and plan the pack layout**
   *Link: [./tracks/repo_rename_advantage_forge_20261002/](./tracks/repo_rename_advantage_forge_20261002/)*
 
 - [~] **Track: Resolve dependency launcher reconciliation**
   *Link: [./tracks/measure_dependency_launcher_20260928/](./tracks/measure_dependency_launcher_20260928/)*
 
-- [x] **Track: Migrate project management to Measure**
-  *Link: [./tracks/measure_migration_20260928/](./tracks/measure_migration_20260928/)*
-
 ## Asset production
-
-- [x] **Track: History: Expand the reusable fantasy asset catalog**
-  *Link: [./tracks/history_asset_catalog_20260928/](./tracks/history_asset_catalog_20260928/)*
-
-- [x] **Track: History: Rebuild the chibi character and creature cast**
-  *Link: [./tracks/history_character_cast_20260928/](./tracks/history_character_cast_20260928/)*
-
-- [x] **Track: History: Build reusable scene kits and environment layouts**
-  *Link: [./tracks/history_environment_kits_20260928/](./tracks/history_environment_kits_20260928/)*
 
 - [ ] **Track: Define companion media production**
   *Link: [./tracks/asset_companion_backlog_20260928/](./tracks/asset_companion_backlog_20260928/)*
@@ -45,17 +21,11 @@ This registry gives each historical, current, and planned work item one Measure 
 - [ ] **Track: Plan deferred Forge capabilities**
   *Link: [./tracks/asset_engine_backlog_20260928/](./tracks/asset_engine_backlog_20260928/)*
 
-- [x] **Track: Accept the P0 asset set**
-  *Link: [./tracks/asset_p0_acceptance_20260928/](./tracks/asset_p0_acceptance_20260928/)*
-
 - [x] **Track: Complete P1 structures**
   *Link: [./tracks/asset_p1_architecture_20260928/](./tracks/asset_p1_architecture_20260928/)*
 
 - [x] **Track: Complete P1 enemies**
   *Link: [./tracks/asset_p1_enemies_20260928/](./tracks/asset_p1_enemies_20260928/)*
-
-- [x] **Track: Complete P1 equipment**
-  *Link: [./tracks/asset_p1_equipment_20260928/](./tracks/asset_p1_equipment_20260928/)*
 
 - [x] **Track: Reusable equipment parts**
   *Link: [./tracks/asset_equipment_parts_20260930/](./tracks/asset_equipment_parts_20260930/)*
@@ -63,32 +33,17 @@ This registry gives each historical, current, and planned work item one Measure 
 - [x] **Track: Bring P0 and P1 world assets to their bars**
   *Link: [./tracks/asset_world_catchup_20261001/](./tracks/asset_world_catchup_20261001/)*
 
-- [x] **Track: Close the remaining P0 and P1 rows**
-  *Link: [./tracks/asset_p0p1_closeout_20261002/](./tracks/asset_p0p1_closeout_20261002/)*
-
-- [x] **Track: Complete P0 and P1 assets and maps**
-  *Link: [./tracks/asset_p0p1_completion_20261002/](./tracks/asset_p0p1_completion_20261002/)*
-
 - [x] **Track: Complete P1 heroes**
   *Link: [./tracks/asset_p1_heroes_20260928/](./tracks/asset_p1_heroes_20260928/)*
 
 - [x] **Track: Complete P1 nature**
   *Link: [./tracks/asset_p1_nature_20260928/](./tracks/asset_p1_nature_20260928/)*
 
-- [x] **Track: Complete P1 props**
-  *Link: [./tracks/asset_p1_props_20260928/](./tracks/asset_p1_props_20260928/)*
-
-- [x] **Track: Produce P2 items**
-  *Link: [./tracks/asset_p2_items_20260928/](./tracks/asset_p2_items_20260928/)*
-
 - [x] **Track: Produce P2 monsters**
   *Link: [./tracks/asset_p2_monsters_20260928/](./tracks/asset_p2_monsters_20260928/)*
 
 - [ ] **Track: Produce P2 npcs**
   *Link: [./tracks/asset_p2_npcs_20260928/](./tracks/asset_p2_npcs_20260928/)*
-
-- [x] **Track: P2 NPC Haiku trial (baker)**
-  *Link: [./tracks/asset_p2_npc_haiku_trial_20261009/](./tracks/asset_p2_npc_haiku_trial_20261009/)*
 
 - [~] **Track: Produce P2 wildlife**
   *Link: [./tracks/asset_p2_wildlife_20260928/](./tracks/asset_p2_wildlife_20260928/)*
@@ -98,9 +53,6 @@ This registry gives each historical, current, and planned work item one Measure 
 
 - [~] **Track: Produce P3 fx-geometry**
   *Link: [./tracks/asset_p3_fx_geometry_20260928/](./tracks/asset_p3_fx_geometry_20260928/)*
-
-- [x] **Track: Produce P3 vehicles**
-  *Link: [./tracks/asset_p3_vehicles_20260928/](./tracks/asset_p3_vehicles_20260928/)*
 
 - [ ] **Track: Harden production coordination**
   *Link: [./tracks/asset_production_controls_20260928/](./tracks/asset_production_controls_20260928/)*
@@ -143,36 +95,6 @@ This registry gives each historical, current, and planned work item one Measure 
 
 - [x] **Track: Player avatar system: base, equipment fit, pack, composer**
   *Link: [./tracks/avatar_system_20261001/](./tracks/avatar_system_20261001/)*
-
-- [x] **Track: History: Build the local APK 3D cartridge platform**
-  *Link: [./tracks/history_apk3d_platform_20260928/](./tracks/history_apk3d_platform_20260928/)*
-
-- [x] **Track: History: Deliver the reading game demo and story loop**
-  *Link: [./tracks/history_demo_story_game_20260928/](./tracks/history_demo_story_game_20260928/)*
-
-- [x] **Track: History: Add the Phaser fallback and dual renderer platform**
-  *Link: [./tracks/history_dual_renderer_20260928/](./tracks/history_dual_renderer_20260928/)*
-
-- [x] **Track: History: Deliver the six 3D game cartridges**
-  *Link: [./tracks/history_six_games_20260928/](./tracks/history_six_games_20260928/)*
-
-- [x] **Track: Release APK packs and games to the monorepo**
-  *Link: [./tracks/apk_pack_release_20261006/](./tracks/apk_pack_release_20261006/)*
-
-- [x] **Track: Monorepo sync workflow: handoff, delivery, and record of Forge changes**
-  *Link: [./tracks/apk_monorepo_sync_workflow_20261020/](./tracks/apk_monorepo_sync_workflow_20261020/)*
-
-- [x] **Track: Avatar pack and RPG skin: an identical rebuild keeps its version**
-  *Link: [./tracks/apk_skin_identical_rebuild_20261021/](./tracks/apk_skin_identical_rebuild_20261021/)*
-
-- [x] **Track: Game page dev server: serve the test story fixtures**
-  *Link: [./tracks/qc_story_fixture_serve_20261021/](./tracks/qc_story_fixture_serve_20261021/)*
-
-- [x] **Track: The avatar in the games**
-  *Link: [./tracks/avatar_in_games_20261006/](./tracks/avatar_in_games_20261006/)*
-
-- [x] **Track: Reward pieces on the avatar**
-  *Link: [./tracks/avatar_reward_pieces_20261006/](./tracks/avatar_reward_pieces_20261006/)*
 
 - [~] **Track: Remove the legacy games from the monorepo**
   *Link: [./tracks/legacy_games_removal_20261006/](./tracks/legacy_games_removal_20261006/)*
@@ -234,9 +156,6 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Rewrite Magic Defense as a dual renderer game**
   *Link: [./tracks/game_magic_defense_20260928/](./tracks/game_magic_defense_20260928/)*
 
-- [x] **Track: Generate and validate model packs**
-  *Link: [./tracks/game_model_packs_20260928/](./tracks/game_model_packs_20260928/)*
-
 - [~] **Track: Port Monster Encounters to the monorepo**
   *Link: [./tracks/game_monster_encounters_port_20260928/](./tracks/game_monster_encounters_port_20260928/)*
 
@@ -248,12 +167,6 @@ This registry gives each historical, current, and planned work item one Measure 
 
 - [~] **Track: Port the dual renderer into the monorepo**
   *Link: [./tracks/game_platform_port_20260928/](./tracks/game_platform_port_20260928/)*
-
-- [x] **Track: Games read the student's saved flashcards**
-  *Link: [./tracks/game_flashcard_input_20261004/](./tracks/game_flashcard_input_20261004/)*
-
-- [x] **Track: The griffin replaces the tinted fire dragon in the griffin games**
-  *Link: [./tracks/game_griffin_mount_20261004/](./tracks/game_griffin_mount_20261004/)*
 
 - [~] **Track: Port Potion Rush to the monorepo**
   *Link: [./tracks/game_potion_rush_port_20260928/](./tracks/game_potion_rush_port_20260928/)*
@@ -290,9 +203,6 @@ This registry gives each historical, current, and planned work item one Measure 
 
 - [ ] **Track: Typing Duel: a typing game for saved words and sentences (keyboard and touch)**
   *Link: [./tracks/game_typing_duel_20261009/](./tracks/game_typing_duel_20261009/)*
-
-- [x] **Track: Game XP: the end card shows the XP that the server awards, and no game shows XP**
-  *Link: [./tracks/game_xp_end_card_20261020/](./tracks/game_xp_end_card_20261020/)*
 
 ## Riven Lands pack
 
@@ -382,3 +292,123 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
 
 - [x] Storytime Level 2 unit 1 book pictures and cover render, completed 2026-11-05; weeks 1 to 7 and the cover delivered and person-reviewed by Daniel; the 24 A-48 restart pictures (including week 8) delivered with Sonnet judge evidence (model evidence, not acceptance); restart spend 0.57 USD.
   *Link: [./archive/asset_storytime_l2_unit1_pictures_20261025/](./archive/asset_storytime_l2_unit1_pictures_20261025/)*
+
+- [x] Game page dev server: serve the test story fixtures, completed 2026-10-21
+  *Link: [./archive/qc_story_fixture_serve_20261021/](./archive/qc_story_fixture_serve_20261021/)*
+  *Game page dev server: serve the test story fixtures*
+
+- [x] Game XP: the end card shows the XP that the server awards, and no game shows XP, completed 2026-10-21
+  *Link: [./archive/game_xp_end_card_20261020/](./archive/game_xp_end_card_20261020/)*
+  *Game XP: the end card shows the XP that the server awards, and no game shows XP*
+
+- [x] Avatar pack and RPG skin: an identical rebuild keeps its version, completed 2026-10-21
+  *Link: [./archive/apk_skin_identical_rebuild_20261021/](./archive/apk_skin_identical_rebuild_20261021/)*
+  *Avatar pack and RPG skin: an identical rebuild keeps its version*
+
+- [x] Monorepo sync workflow: handoff, delivery, and record of Forge changes, completed 2026-10-20
+  *Link: [./archive/apk_monorepo_sync_workflow_20261020/](./archive/apk_monorepo_sync_workflow_20261020/)*
+  *Monorepo sync workflow: handoff, delivery, and record of Forge changes*
+
+- [x] Compare six parallel Haiku 5.5 agents, one Sonnet high agent, and the orchestrator on one NPC (baker), completed 2026-10-09
+  *Link: [./archive/asset_p2_npc_haiku_trial_20261009/](./archive/asset_p2_npc_haiku_trial_20261009/)*
+  *Compare six parallel Haiku 5.5 agents, one Sonnet high agent, and the orchestrator on one NPC (baker)*
+
+- [x] The three reward emblems become avatar pieces (reward-only), with a content-based avatar pack version (TD-24), completed 2026-10-06
+  *Link: [./archive/avatar_reward_pieces_20261006/](./archive/avatar_reward_pieces_20261006/)*
+  *The three reward emblems become avatar pieces (reward-only), with a content-based avatar pack version (TD-24)*
+
+- [x] The student's avatar replaces the fixed hero in the games (3D: the composed avatar; 2D: the portrait), completed 2026-10-06
+  *Link: [./archive/avatar_in_games_20261006/](./archive/avatar_in_games_20261006/)*
+  *The student's avatar replaces the fixed hero in the games (3D: the composed avatar; 2D: the portrait)*
+
+- [x] Release APK packs and games to the monorepo, completed 2026-10-06
+  *Link: [./archive/apk_pack_release_20261006/](./archive/apk_pack_release_20261006/)*
+  *Release APK packs and games to the monorepo*
+
+- [x] Generate and validate model packs, completed 2026-10-04
+  *Link: [./archive/game_model_packs_20260928/](./archive/game_model_packs_20260928/)*
+  *Generate and validate model packs*
+
+- [x] The griffin replaces the tinted fire dragon as the mount of the three griffin games, completed 2026-10-04
+  *Link: [./archive/game_griffin_mount_20261004/](./archive/game_griffin_mount_20261004/)*
+  *The griffin replaces the tinted fire dragon as the mount of the three griffin games*
+
+- [x] Games read the student's saved vocabulary and sentences, chosen by memory state, instead of fixed stories, completed 2026-10-04
+  *Link: [./archive/game_flashcard_input_20261004/](./archive/game_flashcard_input_20261004/)*
+  *Games read the student's saved vocabulary and sentences, chosen by memory state, instead of fixed stories*
+
+- [x] Migrate project management to Measure, completed 2026-10-02
+  *Link: [./archive/measure_migration_20260928/](./archive/measure_migration_20260928/)*
+  *Migrate project management to Measure*
+
+- [x] History: Deliver the six 3D game cartridges, completed 2026-10-02
+  *Link: [./archive/history_six_games_20260928/](./archive/history_six_games_20260928/)*
+  *History: Deliver the six 3D game cartridges*
+
+- [x] History: Add color variants and shared sprite output, completed 2026-10-02
+  *Link: [./archive/history_recolors_sprites_20260928/](./archive/history_recolors_sprites_20260928/)*
+  *History: Add color variants and shared sprite output*
+
+- [x] History: Rebuild Forge as a code-first SDF asset engine, completed 2026-10-02
+  *Link: [./archive/history_forge_engine_20260928/](./archive/history_forge_engine_20260928/)*
+  *History: Rebuild Forge as a code-first SDF asset engine*
+
+- [x] History: Build reusable scene kits and environment layouts, completed 2026-10-02
+  *Link: [./archive/history_environment_kits_20260928/](./archive/history_environment_kits_20260928/)*
+  *History: Build reusable scene kits and environment layouts*
+
+- [x] History: Add the Phaser fallback and dual renderer platform, completed 2026-10-02
+  *Link: [./archive/history_dual_renderer_20260928/](./archive/history_dual_renderer_20260928/)*
+  *History: Add the Phaser fallback and dual renderer platform*
+
+- [x] History: Deliver the reading game demo and story loop, completed 2026-10-02
+  *Link: [./archive/history_demo_story_game_20260928/](./archive/history_demo_story_game_20260928/)*
+  *History: Deliver the reading game demo and story loop*
+
+- [x] History: Rebuild the chibi character and creature cast, completed 2026-10-02
+  *Link: [./archive/history_character_cast_20260928/](./archive/history_character_cast_20260928/)*
+  *History: Rebuild the chibi character and creature cast*
+
+- [x] History: Build the Forge Bench trial and review system, completed 2026-10-02
+  *Link: [./archive/history_bench_trials_20260928/](./archive/history_bench_trials_20260928/)*
+  *History: Build the Forge Bench trial and review system*
+
+- [x] History: Expand the reusable fantasy asset catalog, completed 2026-10-02
+  *Link: [./archive/history_asset_catalog_20260928/](./archive/history_asset_catalog_20260928/)*
+  *History: Expand the reusable fantasy asset catalog*
+
+- [x] History: Build the local APK 3D cartridge platform, completed 2026-10-02
+  *Link: [./archive/history_apk3d_platform_20260928/](./archive/history_apk3d_platform_20260928/)*
+  *History: Build the local APK 3D cartridge platform*
+
+- [x] History: Add rigging, animation, and clearance checks, completed 2026-10-02
+  *Link: [./archive/history_animation_clearance_20260928/](./archive/history_animation_clearance_20260928/)*
+  *History: Add rigging, animation, and clearance checks*
+
+- [x] Produce P3 vehicles, completed 2026-10-02
+  *Link: [./archive/asset_p3_vehicles_20260928/](./archive/asset_p3_vehicles_20260928/)*
+  *Produce P3 vehicles*
+
+- [x] Produce P2 items, completed 2026-10-02
+  *Link: [./archive/asset_p2_items_20260928/](./archive/asset_p2_items_20260928/)*
+  *Produce P2 items*
+
+- [x] Complete P1 props, completed 2026-10-02
+  *Link: [./archive/asset_p1_props_20260928/](./archive/asset_p1_props_20260928/)*
+  *Complete P1 props*
+
+- [x] Complete P1 equipment, completed 2026-10-02
+  *Link: [./archive/asset_p1_equipment_20260928/](./archive/asset_p1_equipment_20260928/)*
+  *Complete P1 equipment*
+
+- [x] Complete every P0 and P1 asset row and the five P0 maps with Sonnet 5.5 agents, then report the P2 status, completed 2026-10-02
+  *Link: [./archive/asset_p0p1_completion_20261002/](./archive/asset_p0p1_completion_20261002/)*
+  *Complete every P0 and P1 asset row and the five P0 maps with Sonnet 5.5 agents, then report the P2 status*
+
+- [x] Close the remaining P0 and P1 rows below their bars, and the deferred assets, completed 2026-10-02
+  *Link: [./archive/asset_p0p1_closeout_20261002/](./archive/asset_p0p1_closeout_20261002/)*
+  *Close the remaining P0 and P1 rows below their bars, and the deferred assets*
+
+- [x] Accept the P0 asset set, completed 2026-10-02
+  *Link: [./archive/asset_p0_acceptance_20260928/](./archive/asset_p0_acceptance_20260928/)*
+  *Accept the P0 asset set*

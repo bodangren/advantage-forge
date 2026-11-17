@@ -1,0 +1,141 @@
+measure closeout batch log - 2026-11-18
+
+Role: measure-closeout (batch archive of finished tracks)
+Order: PM order of Daniel, 2026-11-18 ("Done must not get too long")
+Repo: /home/daniebo/Desktop/advantage-forge (master)
+HEAD at the start: 7d2c530a measure(asset_hy4_maker_trial): trial results and route recommendation
+Model: minimax-cn-coding-plan/MiniMax-M3.1-Flash
+
+Scope: 30 tracks. Every plan task of every one of them is [x]. No track of the
+batch has an uncommitted change at the start of the run.
+
+  apk_monorepo_sync_workflow_20261020 apk_pack_release_20261006
+  apk_skin_identical_rebuild_20261021 asset_p0_acceptance_20260928
+  asset_p0p1_closeout_20261002 asset_p0p1_completion_20261002 asset_p1_equipment_20260928
+  asset_p1_props_20260928 asset_p2_items_20260928 asset_p2_npc_haiku_trial_20261009
+  asset_p3_vehicles_20260928 avatar_in_games_20261006 avatar_reward_pieces_20261006
+  game_flashcard_input_20261004 game_griffin_mount_20261004 game_model_packs_20260928
+  game_xp_end_card_20261020 history_animation_clearance_20260928
+  history_apk3d_platform_20260928 history_asset_catalog_20260928 history_bench_trials_20260928
+  history_character_cast_20260928 history_demo_story_game_20260928
+  history_dual_renderer_20260928 history_environment_kits_20260928 history_forge_engine_20260928
+  history_recolors_sprites_20260928 history_six_games_20260928 measure_migration_20260928
+  qc_story_fixture_serve_20261021
+
+Not touched (foreign uncommitted edits or another owner): asset_equipment_parts_20260930
+  asset_p1_architecture_20260928 asset_p1_enemies_20260928 asset_p1_heroes_20260928
+  asset_p1_nature_20260928 asset_p2_monsters_20260928 asset_world_catchup_20261001
+  avatar_system_20261001 asset_filled_shelves_20261028, and every other track.
+
+Pre-check of the batch (before the move):
+  - git status --short measure/tracks/<id> is empty for all 30 tracks.
+  - Every plan task line is [x]. No [~], [ ], or [b] line remains in the 30 plans.
+  - No track of the batch holds measure/runs/<id>/final-acceptance-*.json. The 30
+    tracks predate the final-acceptance role, so the deviation note applies to all 30.
+  - A5 check over the 30 plans (PASS=[0-9]+.*FAIL=0|all checks pass): 0 hits.
+  - A6 check over the 30 metadata descriptions: 0 hits.
+
+Doctor baseline before the batch (./measure/doctor.sh --structural-only, exit 1):
+  15 errors, none of them names a track of the batch. The errors are 6 "new track
+  has started tasks" rows, 5 "missing registry link" rows, 1 lessons-learned file
+  over the 50-line cap, and 3 stale generated facts.
+
+Tooling: the batch runs with one script, /tmp/opencode/closeout-batch.py. The
+script moves the tracks, updates the metadata, writes the closeout manifest,
+rebuilds the registry from the HEAD version, stages the registry through a blob,
+and fixes the links. The commit is separate and verified before it runs.
+
+Result of the batch (script /tmp/opencode/closeout-batch.py, one run):
+  - moved: 30 tracks. skipped: 0. No track of the batch had an uncommitted
+    change, no plan task was open, and no archive folder existed.
+  - metadata.json of every track: status "done", completed and completed_at set
+    to the last commit date of the track, updated_at 2026-11-18T00:00:00Z, and
+    the deviation note of the batch appended.
+  - automation-supervisor-closeout-manifest.json written in every archive
+    folder, in the shape of asset_storytime_l2u2_look1_20261111.
+  - sibling links inside the archived tracks repaired:
+    ../asset_world_catchup_20261001 -> ../../tracks/asset_world_catchup_20261001
+    in asset_p0_acceptance_20260928, asset_p1_equipment_20260928 and
+    asset_p1_props_20260928; ../game_platform_port_20260928 ->
+    ../../tracks/game_platform_port_20260928 in game_flashcard_input_20261004;
+    the own-path evidence entries of asset_p0p1_completion_20261002 now name
+    measure/archive/asset_p0p1_completion_20261002.
+  - registry: the 30 entries left the active sections, and 30 entries joined
+    "## Archived Tracks" in the archived format. The file was built from
+    git show HEAD:measure/tracks.md and staged through blob 0b881f282a22 with
+    git hash-object -w and git update-index --cacheinfo. The working-tree file
+    holds the same moves and keeps the foreign "## Contents" hunk unstaged.
+  - links updated in the clean files: measure/tech-debt.md,
+    measure/asset-roadmap.md, measure/game-roadmap.md, measure/history.md and
+    measure/plan-crosswalk.md.
+
+Files that could not be updated, and the reason:
+  - measure/generated/status.md: it holds a foreign uncommitted change, and the
+    generator did not run. It holds 30 links to ../tracks/<id>/ that the
+    archive move breaks.
+  - measure/tracks/riven_equipment_20261009/spec.md,
+    measure/tracks/riven_props_20261009/spec.md,
+    measure/tracks/riven_items_20261009/spec.md and
+    measure/tracks/riven_vehicles_20261009/spec.md: the files belong to other
+    tracks, and the batch closeout leaves other tracks alone.
+  - AGENTS.md and measure/workflow.md: no link of the 30 tracks is named in
+    them, and both hold a foreign uncommitted change.
+  - the plan and spec files of the other active tracks: the batch closeout
+    leaves other tracks alone. Eight sibling links of other tracks now point to
+    a moved track and need ../../archive/<id>/: asset_p1_architecture_20260928
+    (2), asset_p1_enemies_20260928 (2), asset_p1_nature_20260928 (2),
+    asset_p2_npcs_20260928 (1), game_typing_duel_20261009 (1).
+
+KNOWN FAILURE for the orchestrator: the doctor error count rises from 15 to 395.
+Cause: measure/tools/common.mjs resolves track ids against measure/tracks only.
+The doctor therefore reads an archived id as an unknown id. The new 380 errors
+are 330 rows of measure/scope-map.tsv with an unknown track_id, 12 unknown
+dependency rows in the active tracks, 30 broken links in
+measure/generated/status.md, and 8 broken sibling links in the plans of other
+tracks. Every new error names a moved track. The batch commit holds no tool
+change and no change in another track, so the fix needs its own role: teach
+measure/tools/common.mjs the ids of measure/archive, point the scope map rows
+and the eight sibling links at the archive paths, and run the generator once
+the foreign changes of measure/generated are resolved.
+
+Closeout checks (python3 -I ~/.agents/skills/measure-orchestrator/scripts/
+measure_interphase_checks.py closeout --repo . --track <id>), run on the batch
+working tree before the commit. The archive, the registry entry, the metadata
+status, the completion date, the registry description and the manifest pass for
+the three samples. The two failures below are the same for every track of the
+batch.
+  - history_forge_engine_20260928 (exit 1): 3 lines "completed plan task lacks
+    commit SHA" and "missing final acceptance: measure/runs/
+    history_forge_engine_20260928/final-acceptance-*.json".
+  - asset_p0_acceptance_20260928 (exit 1): 9 lines "completed plan task lacks
+    commit SHA" and "missing final acceptance: measure/runs/
+    asset_p0_acceptance_20260928/final-acceptance-*.json".
+  - game_model_packs_20260928 (exit 1): 8 lines "completed plan task lacks
+    commit SHA" and "missing final acceptance: measure/runs/
+    game_model_packs_20260928/final-acceptance-*.json".
+  - the missing final acceptance is the expected gap: the 30 tracks predate the
+    final-acceptance role, and the metadata declares no light lane because the
+    tracks ran before that lane.
+  - the plan task lines without a commit SHA are the legacy plan text of 2026:
+    202 lines over the 30 tracks carry their evidence in the section body and
+    not as a SHA on the task line. The batch closeout does not rewrite the plan
+    text of a closed track.
+
+Commit: one commit for the batch, message "measure: archive 30 finished tracks
+(batch closeout 2026-11-18)". The commit holds the 30 deletions under
+measure/tracks, the 30 additions under measure/archive, the five link files,
+measure/tracks.md and this log. No other path is staged. No push. The generator
+did not run.
+
+MEASURE_AGENT_RESULT
+role: measure-closeout
+status: complete
+track: batch closeout of 2026-11-18 (30 tracks)
+phase: track closeout
+commits: 1 commit, message "measure: archive 30 finished tracks (batch closeout 2026-11-18)"; the sha is the new HEAD of master and is in the role reply
+tests_run: "git status --short per track, marker check per plan, A5 and A6 recipes over the 30 plans and descriptions (0 hits each), ./measure/doctor.sh --structural-only (exit 1, 15 errors before the batch, 395 after, 380 new and all of them name a moved track), measure_interphase_checks.py closeout for history_forge_engine_20260928, asset_p0_acceptance_20260928 and game_model_packs_20260928 (exit 1 each, only the final acceptance and the legacy SHA findings)"
+files_changed: "measure/archive/<30 tracks>, measure/tracks.md, measure/tech-debt.md, measure/asset-roadmap.md, measure/game-roadmap.md, measure/history.md, measure/plan-crosswalk.md, measure/runs/closeout-batch-20261118.log"
+plan_updates: "no plan task changed; every plan task of the 30 tracks was already [x]"
+known_failures: "the closeout check reports the missing final acceptance and the legacy plan task lines without a commit SHA; the doctor error count rises from 15 to 395 because measure/tools/common.mjs resolves track ids against measure/tracks only; a separate role fixes the tool, the scope map rows and the eight sibling links of other tracks"
+handoff: "the 30 tracks are archived and committed; the doctor rise of 380 errors is a known failure for the orchestrator and needs its own role; the next role runs the generator once measure/generated holds no foreign change, then teaches measure/tools/common.mjs the ids of measure/archive; the audit subagent re-runs ./measure/doctor.sh --structural-only and the closeout check on three archived tracks"
+END_MEASURE_AGENT_RESULT

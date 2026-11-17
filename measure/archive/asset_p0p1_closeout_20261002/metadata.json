@@ -1,0 +1,23 @@
+{
+  "track_id": "asset_p0p1_closeout_20261002",
+  "type": "feature",
+  "status": "done",
+  "created_at": "2026-10-02T00:00:00Z",
+  "updated_at": "2026-11-18T00:00:00Z",
+  "description": "Close the remaining P0 and P1 rows below their bars, and the deferred assets",
+  "estimated_tasks": 14,
+  "actual_tasks": 14,
+  "deviation_notes": "Owner decisions of 2026-10-02: characters at 7.5 are acceptable; the three deferred assets get one more pass; cliff-face must reach its bar. Archived in the batch closeout of 2026-11-18 (PM order). The track predates the final-acceptance role, so no final-acceptance result exists.",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [
+    "bench/sonnet/log.tsv",
+    "docs/character-reviews.json",
+    "docs/avatar-catalog.tsv"
+  ],
+  "dependencies": [
+    "asset_world_catchup_20261001"
+  ],
+  "completed": "2026-10-02",
+  "completed_at": "2026-10-02"
+}

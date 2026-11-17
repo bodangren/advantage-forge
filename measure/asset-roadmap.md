@@ -9,17 +9,17 @@ Source coverage by priority: P0 54/54, P1 450/450, P2 67/304, and P3 15/48.
 Review scores against the bars (P0 7.5, P1 and later 7.0, characters 7.5): P0 54/54, P1 450/450, P2 66/67, and P3 15/15.
 The one row below its bar is iron-ore (P2, 6.0).
 P0 and P1 are complete since 2026-10-02: all 504 rows have current textured outputs, sprites, and clip strips, the last builds have no warnings,
-the sources have no compiler errors, and the five P0 maps are accepted at 7.5 ([evidence](./tracks/asset_p0p1_completion_20261002/evidence.md); TD-08 resolved for P0 and P1).
+the sources have no compiler errors, and the five P0 maps are accepted at 7.5 ([evidence](./archive/asset_p0p1_completion_20261002/evidence.md); TD-08 resolved for P0 and P1).
 For P2 and P3, a score at the bar is not full acceptance: export and sprite acceptance is a separate state (TD-04).
 The migration baseline of 2026-09-28 contained 426 source files.
 
 ## P2 status (2026-10-04)
 
-P0 and P1 are complete (track [asset_p0p1_completion_20261002](./tracks/asset_p0p1_completion_20261002/)), so P2 is the next production level.
+P0 and P1 are complete (track [asset_p0p1_completion_20261002](./archive/asset_p0p1_completion_20261002/)), so P2 is the next production level.
 
 | Family | Rows | With a source | At the bar | Open | Track |
 | --- | ---: | ---: | ---: | ---: | --- |
-| Items | 56 | 56 | 55 (iron-ore 6.0) | 0 | [items](./tracks/asset_p2_items_20260928/), completed |
+| Items | 56 | 56 | 55 (iron-ore 6.0) | 0 | [items](./archive/asset_p2_items_20260928/), completed |
 | Monsters | 80 | 80 | 80 (giant-bat 8.1, giant-rat 8.1, imp 8.2, mimic 8.7; batch 1: griffin 7.7, four element slimes 7.6 to 7.8, dragon-wyrmling 7.6; batch 2: four element dragons 7.7 to 8.0; batch 3: ten elementals 7.5 to 7.9; batch 4: nine on existing bases 7.5 to 8.0; batch 5: twelve on six kinds 7.6 to 8.0; batch 6: five on dragon, wolf, and spider kinds 7.6 to 7.8; batch 7: eight on six kinds 7.5 to 7.7; batch 8: three on a bird kind 7.6 to 7.7; batch 9: four on a serpent kind and a hydra 7.5 to 7.7; batch 10: nine on toad, octopus, and four existing kinds 7.5 to 7.7; batch 11: five fey and small monsters 7.6) | 0 | [monsters](./tracks/asset_p2_monsters_20260928/), completed |
 | NPCs | 107 | 7 | 7 (cultist, healer, hunter, priest, pilgrim, sailor, scout, all 8.0) | 100 | [NPCs](./tracks/asset_p2_npcs_20260928/), new |
 | Wildlife | 61 | 61 | 50 (independent review, bar 7.0, 2026-10-08: 13 at 7.5 or higher; 8 below the bar on the follow-up list; 3 mounts in rework) | 0 | [wildlife](./tracks/asset_p2_wildlife_20260928/), in progress |
@@ -35,7 +35,7 @@ P0 and P1 are complete (track [asset_p0p1_completion_20261002](./tracks/asset_p0
 
 ## Completion (2026-10-02)
 
-The [completion track](./tracks/asset_p0p1_completion_20261002/) closed P0 and P1 and the five P0 maps with Sonnet 5.5 agents.
+The [completion track](./archive/asset_p0p1_completion_20261002/) closed P0 and P1 and the five P0 maps with Sonnet 5.5 agents.
 Maps: blacksmith shop, forest, tavern, village, and dungeon went from 5.5 to 6.5 to 7.5 each (five medium agents, two feedback passes).
 Types: 46 sources corrected with identical meshes (`scripts/mesh-same.mjs`); the compiler went from 297 to 32 errors (TD-01).
 Outputs: 211 `forge all` builds with 0 failures and 0 warnings; 526 outputs pass the final check.
@@ -43,7 +43,7 @@ The six P0 and P1 family tracks are closed.
 
 ## Closeout (2026-10-02)
 
-The [closeout track](./tracks/asset_p0p1_closeout_20261002/) reworked the P0 and P1 rows below their bars and the three deferred assets.
+The [closeout track](./archive/asset_p0p1_closeout_20261002/) reworked the P0 and P1 rows below their bars and the three deferred assets.
 Owner decisions: a character at 7.5 is acceptable, with the rating recorded so that games use it less; the deferred assets get one more pass; cliff-face must reach its bar.
 Accepted: long-sword, shortbow, staff, iron-helmet, stone-golem, wraith, and wood-golem at 7.5; key-skeleton, belt-pouch, horned-helmet, steel-helmet, and cliff-face at 7.2; halberd, gauntlets, and cloth-hood at 7.0.
 Five characters reached the bar by the 7.5 rule with their earlier reviews: farmer 7.6, quest-giver, horse, bone-golem, and bandit-archer 7.5.
@@ -62,7 +62,7 @@ The owner decision of 2026-10-01: finish all P0 and P1 assets, including the equ
 | Order | Work | Owning track |
 | --- | --- | --- |
 | 1 | Repair type errors and import gates | [Asset quality](./tracks/asset_quality_20260928/) |
-| 2 | Accept the existing P0 set | [P0 acceptance](./tracks/asset_p0_acceptance_20260928/) |
+| 2 | Accept the existing P0 set | [P0 acceptance](./archive/asset_p0_acceptance_20260928/) |
 | 3 | Finish P1 by family | The six P1 tracks in the registry |
 | 4 | Reconcile exports and game packs | [Asset delivery](./tracks/asset_delivery_20260928/) |
 | 5 | Produce P2 batches by demand | Items, monsters, NPCs, and wildlife tracks |

@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "track": "game_griffin_mount_20261004",
+  "archived_at": "2026-11-18T00:00:00Z",
+  "track_base_sha": "b23efc3d321d364bb1a37cc9543c17e4304ea076",
+  "track_final_sha": "b23efc3d321d364bb1a37cc9543c17e4304ea076",
+  "phase_acceptance_results": [],
+  "completed_phases": [
+    {
+      "id": "Phase 1",
+      "title": "Phase 1: Forge",
+      "checkpoint": "b23efc3d"
+    },
+    {
+      "id": "Phase 2",
+      "title": "Phase 2: Monorepo port",
+      "checkpoint": "b23efc3d"
+    },
+    {
+      "id": "Phase 3",
+      "title": "Phase 3: Records",
+      "checkpoint": "b23efc3d"
+    }
+  ],
+  "final_acceptance": "not run: the track predates the final-acceptance role. No measure/runs/game_griffin_mount_20261004/final-acceptance-*.json exists, and the metadata does not declare the light lane, because the track ran before that lane.",
+  "gates": {
+    "PROJECT_LINT": "not rerun in the batch closeout: the track closed in 2026 and the batch moves files only. The doctor structural run of 2026-11-18 names no error for game_griffin_mount_20261004.",
+    "PROJECT_CHECKS": "not rerun in the batch closeout: the track closed in 2026 and the batch moves files only. The plan holds the check record of the closing run.",
+    "PROJECT_TESTS": "not rerun in the batch closeout: the track closed in 2026 and the batch moves files only. The plan holds the test record of the closing run.",
+    "SECRET_SCAN": "pass: the secret scan over measure/archive/game_griffin_mount_20261004 gives 0 files with a secret pattern.",
+    "source": "measure/runs/closeout-batch-20261118.log"
+  },
+  "antipatterns_clean": [
+    "A5 false claim - the plan text holds no PASS= count or all-checks-pass claim (the detection recipe gives 0 hits) and the archived registry entry states the metadata description and the completion date only",
+    "A6 registry overstatement - the archived registry entry holds no resolved or fully-solved claim (the detection recipe gives 0 hits on the description) and it names no acceptance that did not happen",
+    "A9 archived track paths - no test or script under tests/, scripts/, src/, or .github/ hardcodes measure/tracks/game_griffin_mount_20261004; the archive move keeps the paths of the other tracks",
+    "A10 generated-facts drift - the generator did not run because measure/generated holds foreign uncommitted changes; the registry entry is staged through a blob"
+  ],
+  "antipatterns_known_limitations": [
+    "the final acceptance role did not run: the track predates the role (deferred:PM)",
+    "7 completed plan task lines carry no commit SHA on the task line; the plan records the evidence of the task in the section body, not as a SHA"
+  ],
+  "deferred": [
+    "Final acceptance did not run: the track predates the final-acceptance role (deferred:PM)"
+  ],
+  "deferred_note": "No plan task stays open. Every plan task is [x] and no [b], [~], or [ ] line remains in the archived plan.",
+  "tech_debt": [],
+  "tech_debt_note": "No new debt is warranted. The open debt rows of the batch stay in measure/tech-debt.md.",
+  "lessons_learned": "No new lesson is warranted. The batch closeout adds no lesson to measure/lessons-learned.md.",
+  "generated_facts": "not committed: measure/generated holds foreign uncommitted changes, so the generator did not run and no generated fact is committed; the registry entry in measure/tracks.md is staged through a blob",
+  "artifact_cleanup": "no bulky run artifact was deleted; the orchestrator identified none. The archived track folder holds the plan, the spec, the metadata, the index, and the evidence files of the track",
+  "evidence_classes": {
+    "person_reviewed": "the owner words of the plan and the closeout records of the track; no person review ran in this batch closeout",
+    "model_evidence_not_acceptance": "the check and review records of the plan, written by the agents of the track in 2026",
+    "workbooks_acceptance": "none recorded"
+  },
+  "model_routes": "the track author and the agents of the track ran in 2026 with the role models of that period. This batch closeout ran on minimax-cn-coding-plan/MiniMax-M3.1-Flash."
+}

@@ -1,0 +1,28 @@
+{
+  "track_id": "avatar_reward_pieces_20261006",
+  "type": "feature",
+  "status": "done",
+  "created_at": "2026-10-06T00:00:00Z",
+  "updated_at": "2026-11-18T00:00:00Z",
+  "description": "The three reward emblems become avatar pieces (reward-only), with a content-based avatar pack version (TD-24)",
+  "estimated_tasks": 10,
+  "actual_tasks": 10,
+  "deviation_notes": "None in count. The independent review took two rounds (6.5, then 7.5 for both staffs). The dependency changed from avatar_in_games_20261006 to avatar_system_20261001: the reward pieces need the avatar pack and its release path, not the open TD-27 work (the story page avatar). Archived in the batch closeout of 2026-11-18 (PM order). The track predates the final-acceptance role, so no final-acceptance result exists.",
+  "workstream": "games",
+  "retrospective": false,
+  "evidence": [
+    "docs/avatar-catalog.tsv",
+    "scripts/avatar-pack.ts",
+    "scripts/rpg-skin.ts",
+    "src/apk3d/avatar/pack.ts",
+    "src/apk3d/avatar/pack-version.ts",
+    "scripts/avatar-version.ts",
+    "assets/graveyard-staff.ts",
+    "assets/echo-staff.ts"
+  ],
+  "dependencies": [
+    "avatar_system_20261001"
+  ],
+  "completed": "2026-10-06",
+  "completed_at": "2026-10-06"
+}

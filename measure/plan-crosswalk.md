@@ -36,7 +36,7 @@ The [game roadmap](./game-roadmap.md) maps every initial game and all 23 legacy 
 | [2D and 3D program](../docs/apk-2d3d-program.md) | [Game roadmap](./game-roadmap.md) | Preserve phases A, A′, B, C, and D. |
 | [Progression program](../docs/chibi-quest-progression.md) | [Avatar system track](./tracks/avatar_system_20261001/) | Program plan: XP, GP, avatars, Guild Mode, the battle. |
 | [Avatar system spec](../docs/avatar-system.md) | [Avatar system track](./tracks/avatar_system_20261001/) | Phase 1 scope; monorepo and Guild Mode phases get their own tracks. |
-| [APK platform design](../docs/apk3d-cartridge.md) | [Platform port](./tracks/game_platform_port_20260928/) and [model packs](./tracks/game_model_packs_20260928/) | Separate delivered contracts from remaining integration. |
+| [APK platform design](../docs/apk3d-cartridge.md) | [Platform port](./tracks/game_platform_port_20260928/) and [model packs](./archive/game_model_packs_20260928/) | Separate delivered contracts from remaining integration. |
 | [Monorepo port](../docs/apk-port.md) | [Platform port](./tracks/game_platform_port_20260928/) | Preserve package paths, dependency order, and verification scope. |
 | [Monster Encounters](../docs/demo-monster-encounters.md) | [Monster Encounters port](./tracks/game_monster_encounters_port_20260928/) and historical tracks | Preserve learning rules and demo evidence. |
 | [Potion Rush design](../docs/game-potion-rush-3d.md) | [Potion Rush port](./tracks/game_potion_rush_port_20260928/) | Preserve sorting rules and score distinctions. |
