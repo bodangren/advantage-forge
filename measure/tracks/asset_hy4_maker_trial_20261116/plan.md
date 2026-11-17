@@ -82,6 +82,8 @@ doctor counts only `[ ]`, `[~]`, and `[x]`.
 
 ## Phase 1: The trial
 
+Role gate: the jr-green role gate fails while this phase has open tasks (2026-11-16: 6 open; 2026-11-17: 3 open and [x] tasks without SHA). A failed gate is a failed gate; the orchestrator owns a green gate at phase end.
+
 ### Task 1: Try round 1
 
 - [~] Task 1: Try round 1 for the 3 assets. Run the Hy4 maker role, then the current maker role, then
