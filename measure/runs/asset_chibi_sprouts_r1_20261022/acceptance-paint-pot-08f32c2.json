@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "asset_chibi_sprouts_r1_20261022",
+  "phase": "Phase 5: The rest of the inventory (after the look check) - step: paint-pot redo (audit 2026-11-17 item 2)",
+  "baseline_sha": "663162cc281276eeb4755a641217001b2d5b3de4",
+  "audited_head_sha": "08f32c29964270512cbb13bb921b3c103f20f0c4",
+  "status": "pass",
+  "summary": "PASS. The pot now reads as a pot of paint at 128 px and in the 4 views, and the red band is gone. The asset rating is 7.0 out of 10, which meets the bar of 7.0. The mechanical check passes at HEAD 08f32c29, and the 3 commits touch only the named paths. The largest difference is the foot ring: the geometry exists, but the pictures show only a ragged brown line. All 8 findings are nonblocking.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] phase-acceptance: The foot ring does not read as a ring. This is the largest difference and the reason the rating stays at 7.0. The brown torus (assets/paint-pot.ts:178, R 0.0252 m, r 0.003 m, centre y 0.003 m) lies inside the pot wall above y = 2.5 mm. It is proud of the flare only for y <= 2 mm (1.44 mm at y = 0.2 mm, 0.19 mm at y = 1 mm). The cutouts and the 4 views show a ragged brown line (0.2% of the silhouette, about 1 px at 128 px). The comment at line 177 (a bead 0.006 m tall, 1.2 mm proud of the flare) is true only at the lowest 1 mm. Rationale: the redo brief asks for a warm brown foot ring; the body exists, but no ring shows. Suggested change: move the ring outward so that 1.5 mm or more shows over 4 mm of height, and mesh it at detail 0.002 m or less.",
+    "F2 [Nit] phase-acceptance: The paint surface shows only in the 30 degree sprites. The cutouts (forge cutout, default elevation 0, src/cli/forge.ts:67) and the 4 renders (elevation 6 to 12) hide it, because the surface sits 3 mm below the rim as the brief asks. There the paint reads through the drips and the rim lips only. The front cutout shows 2 drips (0 and 50 degrees), the 200 degree drip shows only a lip, and the back view shows 1 drip. Rationale: the brief fixes this geometry, so the maker did not fail; the owner may choose a cutout elevation of 15 to 20 degrees for this prop if the fill level must read.",
+    "F3 [Nit] phase-acceptance: The drips are stiff. Each run is a bar about 11 mm wide with an even wave (assets/paint-pot.ts:125-137), the front run is half the pot height (0.040 m), and the rim lips stand 2.8 mm above the rim as round knobs (the far rim in the S sprite). They read as thick goo more than as thin paint runs. Rationale: this lowers the shape language and appeal scores to 3 to 3.5; the paint still reads. Suggested change: narrow each run near the rim and lower the lip crest to 1.5 mm or less.",
+    "F4 [Nit] phase-acceptance: The jug ear is a nub, not a handle. The half torus (assets/paint-pot.ts:162-166, R 0.0065 m) shows no hole in the side view (panel 3 of out/paint-pot/render.png), and the silhouette stays a plain cylinder. The ear comes from the original brief, not from the redo brief. Rationale: this keeps the proportion score at 3.",
+    "F5 [Nit] phase-acceptance: In the sprites N and E the glossy flat paint surface glares to a pale tint (pale pink for red, pale blue for blue, pale yellow for yellow). The preset colour is weak in 2 of 8 directions. Rationale: this follows roughness 0.3 from the brief and the sprite light; no change requested.",
+    "F6 [Nit] phase-acceptance: The review card out/prop-cards/paint-pot.png hides the paint. scripts/review-cards.py:25 crops the lower half of render.png (render.crop((0, h // 2, w, h))) because it expects a reference row on top. The paint-pot render has no reference row, so row 1 of the card shows only the lower half of each view; out/prop-cards/brush.png shows the same crop. Plan line 216 cites the card as evidence. Rationale: a reviewer who reads only the card cannot judge the paint; the fix belongs to the owner of review-cards.py and is outside this step.",
+    "F7 [Nit] phase-acceptance: The maker log has 4 loose statements. (a) It says the front and three-quarter views show the three red drips; they show 2 drips and the lip of the third. (b) It says 3,263 triangles before reduction; 3,263 is the --fast build count, and stats.json shows 10,468 raw and 2,218 final triangles. (c) The quoted mech-check line omits the files key of the real line. (d) The design note and the description string say 0.083 m tall; the bounds are 0.0843 m with the lips (the pot is 0.0798 m). Rationale: the wording is wrong and the results are right; no asset change.",
+    "F8 [Nit] phase-acceptance: measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/paint-pot.md is stale. It holds the first brief (red band, handle, paint two thirds high). Its Known differences lines 41 to 43, 45, and 46 no longer match the build: the band is gone, the paint is a flat surface with drips, the paint roughness is 0.3, and the triangle count is 2,218 (the file says 1,328). The redo brief is in no track file. Rationale: audit F-D5 asked for a brief file with sources; the orchestrator owns this file and this step may not edit it."
+  ],
+  "evidence": [
+    "Identity: phase_base_sha and role_base_sha are 663162cc281276eeb4755a641217001b2d5b3de4. The audited HEAD 08f32c29964270512cbb13bb921b3c103f20f0c4 equaled git rev-parse HEAD at the start and at the end of the run. No test-only commit is in the range.",
+    "Scope: git log --oneline 663162cc..HEAD lists 3 commits, b51f0ae7, f252da5c, and 08f32c29. b51f0ae7 changes assets/paint-pot.ts only. f252da5c changes the maker log and adds one line to plan.md. 08f32c29 changes the maker log only. No commit of another track is in the range.",
+    "Scoped step: no Review A, B, C, adversarial, or UX result exists for this step, because the orchestrator scoped this run to the paint-pot redo. reviewer_ratings is empty.",
+    "Fault (item 1): no red band remains. out/paint-pot/render.png shows 3 separate glossy drips with rim lips on a cream pot, with no horizontal band. out/paint-pot/sprites/preview.png (128 px, elevation 30) shows a flat paint surface inside the rim plus the drips, and it reads as a pot of paint. The 4 views show the drips and lips only, because the surface sits 3 mm below the rim; they read as paint on a pot (see F2).",
+    "Cutouts: out/chibi-sprouts/r1/props/paint-pot/front.png and three-quarter.png (1024 x 1024, pot at cols 477..551 and rows 921..1007, 75 x 87 px) show a cream pot with 2 red drips and rim lips, a ragged brown line at the base, and the ear nub. No band shows.",
+    "Presets: render.blue.png, render.yellow.png, render.green.png, and sprites/presets/blue and yellow recolour the surface, the drips, and the lips; the cream pot stays cream. Yellow and green read against the cream. The 5 render files have 5 different md5 sums.",
+    "GLB: a python3 parse of out/paint-pot/paint-pot.glb shows 3 meshes (pot, foot, paint), one slot paint (channel R, default red, 4 options), and 4 presets. textures/tint-mask.png covers 24,977 px. The blue, yellow, and green baseColor files each differ from the default in exactly 24,977 px, and red differs in 0 px. The paint is one body on the variant slot.",
+    "Brief (item 2) in assets/paint-pot.ts: body #efe6d2, roughness 0.85 (lines 169-170); no band code (git show b51f0ae7 removes BAND, BAND_Y, and smoothstep); foot body #8a5a35 (lines 178-183); pool top at RIM_TOP - 0.003 = 0.0768 m (lines 92 and 187); 3 runs at 0, 50, and 200 degrees with lips (lines 121-124 and 191-193); paint roughness 0.3 (line 197). GLB bounds: pot y 0 to 0.0798 m, paint top 0.0843 m, size 0.072 x 0.084 x 0.069 m, bottom y = 0, 2,218 triangles (stats.json).",
+    "A5: plan.md line 216 makes 3 claims and all 3 are true. Commit b51f0ae7 is the commit that changes assets/paint-pot.ts. mech-check is ok (exit 0, ok true). cutout-check ends with result ok (exit 0), and both paint-pot files are ok. The card file exists. The step marks no task [x].",
+    "A3, A4, A6, and A7 do not apply: the exact diff of this step changes no contract test, no filter, and no measure/tracks.md registry entry.",
+    "Item 5: forge-inventory.md at monorepo commit 9255c2711 has 0 matches for paint pot. Section 5 (line 192) lists paint splash (line 216) and paintbrush (line 217). This is not a fail of this step.",
+    "doctor: bash measure/doctor.sh exits 1 with 14 error lines. They name asset_filled_shelves_20261028, asset_p2_npcs_20260928, four game_*_rebuild_20261029 tracks, their registry links, and 3 stale generated facts. No line names asset_chibi_sprouts_r1_20261022. This matches the maker log of 08f32c29.",
+    "Side effect of this run: my ./forge inspect paint-pot --fast overwrote out/paint-pot/paint-pot.glb (vertex colours, 100 KB) and stats.json, and removed out/paint-pot/textures/. I restored them with ./forge all paint-pot (exit 0). The GLB md5 is again 25692820d1b60169fcd56a279c48b518, the value before my run. The md5 sums of the renders, sprite preview, cutouts, and card did not change.",
+    "The fresh inspect on the final source matches the maker log: paint 15.1% front, 15.8% three-quarter, 6.9% side, 8.5% back, 48.2% top; foot 0.2%, 0.2%, 0.3%, 0.1%; warnings none.",
+    "Determinism: the md5 sums of the 5 renders, the sprite preview, the GLB, the card, and the 2 cutouts were the same before and after the mech-check rebuild. The pictures I judged are the pictures of the final build.",
+    "Asset rating 7.0 out of 10 against the bar 7.0 (static prop; no mockup, so the brief is the target). Criteria scores from 1 to 5: brief match 3.5, silhouette 3.5, proportion and appeal 3, shape language 3.5, value and colour 4, materials 4, detail hierarchy 3.5, technical quality 3, game readiness 4, readability at 128 px 4. The jagged foot ring through the flare caps the rating at 7.0 (reviewer-brief cap for a visible defect). F1 to F4 explain the scores below 4."
+  ],
+  "commands": [
+    "git rev-parse HEAD -> 08f32c29964270512cbb13bb921b3c103f20f0c4 (start and end of the run)",
+    "git log --oneline 663162cc..HEAD; git show --stat b51f0ae7 f252da5c 08f32c29; git diff --name-only 663162cc..08f32c29 -> 3 commits, 3 paths",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs paint-pot' -> exit 0 (no exit 75); {\"asset\":\"paint-pot\",\"ok\":true,\"forgeAll\":{\"exitCode\":0,\"warnings\":[]},\"triangles\":2218,\"bottomY\":0,\"files\":{\"glb\":true,\"stats\":true,\"render\":true,\"sprites\":true,\"glbBytes\":802472},\"typecheckExit\":0,\"failures\":[]}",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/cutout-check.mjs out/chibi-sprouts/r1/props' -> exit 0; last line: result ok",
+    "bash measure/doctor.sh -> exit 1; 14 error lines, none names asset_chibi_sprouts_r1_20261022",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './forge inspect paint-pot --fast' -> exit 0; warnings none (side effect: see evidence)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './forge all paint-pot' -> exit 0; 2,218 triangles; the textured build is restored",
+    "python3 -I -c (GLB JSON chunk and accessor parse; tint mask and baseColor diff; foot ring radius table; image crops) -> see evidence",
+    "git -C /home/daniebo/Desktop/reading-advantage-monorepo show 9255c2711:measure/tracks/storytime_advantage_program_20261021/forge-inventory.md | grep -c -i 'paint pot' -> 0"
+  ],
+  "changed_files": [
+    "measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-paint-pot-08f32c2.json",
+    "measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-paint-pot-08f32c2.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "medium",
+  "route": "claude-code/claude-sonnet-5-5#max",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "assets/paint-pot.ts:169-197 holds every briefed item and the GLB confirms the single paint slot with 4 presets, but the foot ring at line 178 does not read as a ring (F1)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 2,
+      "evidence": "mech-check.mjs paint-pot proves build health only (exit 0, no warning, triangles above 0, bottom within 5 mm); no automated check asserts the 0.085 m height, the 8,000 triangle cap, the one paint slot, or the preset recolour, and no Red test exists."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git show --stat of b51f0ae7, f252da5c, and 08f32c29 lists only assets/paint-pot.ts, the maker log, and one added line in plan.md."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "The maker log gives a command and a result for each check and my re-run of mech-check reproduced the result, but F7 lists 4 loose statements and F6 shows the card crops the paint."
+    }
+  ],
+  "reviewer_ratings": []
+}

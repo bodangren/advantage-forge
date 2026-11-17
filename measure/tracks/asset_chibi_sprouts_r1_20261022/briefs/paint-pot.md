@@ -34,14 +34,37 @@ body per material.
 | Finish | the paint is flat and glossy, roughness 0.3 | PM default, check against the book |
 | Finish | the pot is matte | PM default, check against the book |
 
+## r2 brief (2026-11-17, commit b51f0ae7)
+
+The redo brief, from the audit of 2026-11-17 item 2:
+
+- Cream #efe6d2 matte body.
+- No red band.
+- A warm brown #8a5a35 foot ring, 0.006 m.
+- Flat paint 0.003 m below the rim.
+- Three drips: front 0.040 m, 50 degrees 0.028 m, 200 degrees 0.034 m; 0.010 to 0.014 m wide;
+  0.003 m proud; with rim lips.
+- All paint one body on the variant slot.
+
+The r2 build supersedes the first-brief numbers below where they differ: the band is gone, the
+paint is a flat surface with drips, and the paint roughness is 0.3.
+
 ## Known differences
 
 - The orchestrator review note of 2026-11-17 reads: "paint-pot reads weak: a red rim band, not
   paint". The red band does not read as paint.
-- The brief wants a flat pool at two thirds of the height. The built paint is a mound. It clears the
-  rim of the pot. The maker log states the reason: a pool inside the cup stays hidden in every
-  delivery view.
-- The built pot measures 0.084 m tall and 0.072 m across. The brief says 0.085 m and 0.075 m.
-- The built paint has roughness 0.25. The brief says 0.3.
-- The built pot holds 1,328 triangles. It is under the limit of 8,000.
+- The first build's paint was a mound. The r2 build is a flat pool 0.003 m below the rim, with 3
+  drips and rim lips, as the r2 brief asks. The pool stays hidden in the delivery views; the drips
+  and the lips carry the colour.
+- The built pot measures 0.084 m tall with the lips (the pot body is 0.080 m) and 0.072 m across.
+  The first brief asked for 0.085 m and 0.075 m; the r2 brief sets no height.
+- The built paint has roughness 0.3. The first build used 0.25.
+- The built pot holds 2,218 triangles. It is under the limit of 8,000.
 - The maker log records faint vertical streaks on the cream wall. They come from the mesh grid.
+- The checker (Sonnet max, PASS 7.0) found the foot ring does not read as a ring (F1). The brown
+  torus exists at `assets/paint-pot.ts:178`, but the pot flare covers it; the pictures show a ragged
+  brown line about 1 px tall at 128 px. This is the largest remaining difference and the reason the
+  rating stays at 7.0. Source:
+  `measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-paint-pot-08f32c2.json`.
+- The r2 measured facts above (height, diameter, roughness, triangles) come from the same
+  acceptance file and `out/paint-pot/stats.json` at audited HEAD 08f32c29.

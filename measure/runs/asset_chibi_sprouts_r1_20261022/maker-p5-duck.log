@@ -1,0 +1,133 @@
+# Maker log — Phase 5, props, the white duck (song videos weeks 2 and 6)
+
+Role: measure-jr-green (bounded maker), route opencode-go/deepseek-v4.1-flash
+Track: asset_chibi_sprouts_r1_20261022
+Phase: Phase 5: The rest of the inventory (after the look check)
+Task: props (the 30 props and animals, inventory section 5); this unit: the duck
+Date: 2026-11-17
+Status: complete
+
+## Starting state
+
+- `role_base_sha`: 08f32c29. No Red role in this step, so there is no committed Red change to
+  inspect and no Red test to preserve.
+- `HEAD` at start: 08f32c29. The phase base is the same commit.
+- The work tree held foreign modifications and untracked files. This role staged only its own
+  explicit paths.
+
+## Brief
+
+`measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/duck.md` holds the brief word for word,
+the six ordered checks, and the Sources table (one row per size and colour). The inventory row is
+from monorepo commit 9255c2711, `forge-inventory.md` section 5: "white with an orange beak in both
+weeks since Workbooks b32ffed (one render; W2: three walking in a row; W6: one by a pond, one with
+the cat and frog)".
+
+## Owner decisions taken (2026-11-17, orchestrator handoff)
+
+1. Catch-light: the kind's painted bead glint does not survive vertex-color meshing at duck size.
+   The owner fixed the replacement: one small white sphere of radius 0.004 m per eye, upper-front,
+   slightly proud, bone `head`, built in the duck's own wrapper. No edit to `assets/parts/`.
+2. Smile line: looked once at the textured bill close-up. The line does not read. The owner fixed
+   removal and a Known-differences record.
+3. "One body per material": accept the bird kind's body split and record it. Also record the
+   missing reference image and the dropped kind beak bodies.
+
+## Work
+
+- Saved the brief with its Sources table.
+- Built `assets/duck.ts` on the bird kind, copying `assets/chicken.ts`:
+  - 0.437 of the kind's size, `extra` adds the broad flat bill, the two eye catch-lights, and the
+    webbed feet;
+  - `neckScale 1.15` gives a short thick neck that still shows a head (2.0 swallowed the head and
+    put the painted eyes on the neck, not the skull);
+  - `headLift 0.025` raises the head to 0.300 m;
+  - `detail 0.0038` with the bill and web cells of its own brings the mesh under 8,000 triangles;
+  - a build wrapper drops the kind's pointed `beak` and `jawBeak` bodies (they were buried under
+    the broad bill) and keeps every other body.
+- Paint-pot records: added the r2 brief section and the F1 Known difference, and committed the
+  checker's two result files unchanged.
+- Ran every ordered check and the final gate.
+
+## Commands and results
+
+Every forge command ran through the heavy wrapper:
+`HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'`.
+
+- `node scripts/typecheck-asset.mjs duck` → `typecheck ok: 0 errors in assets/duck.ts`.
+- `./forge render duck --fast` → a duck in the front, three-quarter, side, and back views: a flat
+  broad orange bill, black eye dots with catch-lights, folded wings, webbed orange feet, no comb.
+- `./forge inspect duck` (textured, final) → 7,526 triangles, size 0.259 x 0.300 x 0.327 m,
+  lowest point y = 0. Warnings: one, "Part 'eye-glint' is barely visible (under 0.3% of the
+  silhouette in every view)". No floating part, no buried part.
+- `./forge check duck` → held items none; head parts body, bill, eye-glint; body parts body;
+  `result no held items to check`; `ground ok: no clip sinks more than 1.5 cm below the rest pose
+  (rest lowest 0.0 cm)`. The command does not print the words "result ok" because the duck holds
+  nothing; it reports "no held items to check" and its ground line is ok.
+- `node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs duck` → exit 0:
+  `{"asset":"duck","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":7526,"bottomY":0,
+  "files":{"glb":true,"stats":true,"render":true,"sprites":true,"glbBytes":1276960},
+  "typecheckExit":0,"failures":[]}`
+- `./forge cutout duck --out out/chibi-sprouts/r1/props --ppm 1024 --canvas 1024x1024 --views
+  front,three-quarter` + `node scripts/cutout-check.mjs out/chibi-sprouts/r1/props` → last line
+  `result ok`; `ok duck/front.png 1024x1024 soft 1228 edge 1038 worstDrop 32% rows 699..1007 cols
+  381..642` and `ok duck/three-quarter.png ... rows 699..1007 cols 388..691`.
+- `python3 scripts/review-cards.py out/prop-cards duck=walk` → `out/prop-cards/duck.png`.
+- `bash measure/doctor.sh` → exit 1. The errors name other tracks (4 game_*_rebuild_20261029
+  registry links, asset_filled_shelves_20261028, asset_p2_npcs_20260928) and 3 stale generated
+  facts. No line names asset_chibi_sprouts_r1_20261022. The paint-pot acceptance of 08f32c29
+  recorded the same doctor state. This role does not run `generate.sh` (brief rule).
+
+## Files changed
+
+- `assets/duck.ts` (new)
+- `measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/duck.md` (new)
+- `measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/paint-pot.md` (r2 section, F1 record)
+- `measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-paint-pot-08f32c2.json` (added unchanged)
+- `measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-paint-pot-08f32c2.log` (added unchanged)
+- `measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md` (one sub-bullet under the props task)
+- this log
+
+## Commits
+
+- Implementation: `4549de51` — `feat(chibi_sprouts_r1): the white duck for the week 2 and 6 song
+  videos`. Files: `assets/duck.ts`, `briefs/duck.md`.
+- Plan evidence: the commit that contains this log, the plan sub-bullet with 4549de51, the
+  paint-pot brief update, and the two checker result files.
+
+## Known weak points
+
+- The eye catch-light is 8 mm across on a 21 mm eye dot, so it covers about 38% of each eye. It
+  reads as a cartoon catch-light at 1024 px but is large for a "small" light. The owner fixed the
+  0.004 m radius.
+- `forge inspect` warns that `eye-glint` is "barely visible (under 0.3% of the silhouette in every
+  view)" at its 512 px views. It is not floating and not buried. The warning is a consequence of
+  the fixed 0.004 m radius; a larger dot would pass the threshold.
+- The wings are the kind's smooth paddles. At 1024 px they read as folded wings; at 128 px the
+  pale grey-white edge `#dcd8cf` against `#f4f1ea` is subtle, so the wing shape may not read in the
+  smallest sprite.
+- The tail is a small upturned tuft (`tailPose` scale 0.7). It reads in the side and back views
+  only faintly.
+- "One body per material" is not literal: the kind puts white on `body` and `tail-fan`, orange on
+  `legs`, `bill`, and `webs`. The owner accepted the split.
+- The kind's `jaw` bone now has no geometry (the beak bodies are dropped). The jaw motion in the
+  fly, attack, hit, and death clips is invisible. The skeleton and the clips are the kind's, as the
+  brief asks, but the duck does not show a jaw.
+- There is no duck mockup, so the asset has no reference image and nobody compared it against a
+  drawn duck. The brief is the target.
+- The head and neck were retuned late (neckScale 1.15, headLift 0.025) after the first look; the
+  final review is from 512 and 1024 px stills, not from a moving clip.
+- The plan task stays `[~]`; this role does not mark it `[x]`.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: complete
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check)
+commits: 4549de51 (implementation); this log's plan-evidence commit holds the plan bullet and the paint-pot records
+tests_run: typecheck-asset duck = pass; forge inspect duck = 7,526 tris, 0.259 x 0.300 x 0.327 m, no floating or buried part, one "barely visible" warning for eye-glint; forge check duck = no held items, ground ok; mech-check.mjs duck = exit 0, ok true, warnings []; cutout + cutout-check = result ok; review-cards = out/prop-cards/duck.png; measure/doctor.sh = exit 1 on other tracks only
+files_changed: assets/duck.ts; briefs/duck.md; briefs/paint-pot.md; plan.md; maker-p5-duck.log; acceptance-paint-pot-08f32c2.json and .log (added unchanged)
+plan_updates: one sub-bullet under the props task: duck commit 4549de51, mech-check ok, cutout-check result ok, card out/prop-cards/duck.png, brief briefs/duck.md. The task stays [~]
+known_failures: forge inspect warns "Part 'eye-glint' is barely visible (under 0.3% of the silhouette in every view)" at 512 px; the part is not floating or buried and its 0.004 m radius is the owner's decision. measure/doctor.sh is red on other tracks and 3 stale generated facts
+handoff: The duck is committed at 4549de51. Re-run the GREEN_TEST_COMMAND on this HEAD. Review scopes: assets/duck.ts, briefs/duck.md, briefs/paint-pot.md, plan.md, this log. Weak points for review: the large catch-light and its inspect warning, the subtle wing edge at 128 px, the faint tail, the accepted body split, the absent duck reference, and the invisible jaw. No Red tests were changed. No assets/parts/ file was edited. The plan task is not [x]
+END_MEASURE_AGENT_RESULT
