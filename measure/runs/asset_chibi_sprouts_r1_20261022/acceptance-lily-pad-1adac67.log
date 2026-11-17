@@ -1,0 +1,126 @@
+# acceptance · Chibi Sprouts r1 · Phase 5 · lily pad (PM order 2026-11-17)
+
+- Role: phase-acceptance, scoped to one step. Route: claude-code/claude-sonnet-5-5#max.
+- Date: 2026-11-18.
+- Track: asset_chibi_sprouts_r1_20261022, Phase 5 ("The rest of the inventory (after the look check)").
+- role_base_sha: 821145915dde23a7cab82151d95048fe55e8e4cf. The maker log gives the same phase_base_sha.
+- audited_head_sha: 1adac67666cd586be27ad9ca03c9d1ed524c546e. HEAD equaled it at the start, after the mechanical run, and at the end.
+- Maker route: opencode-go/deepseek-v4.1-flash. Maker commits: f8e89036 (asset, brief, 2 earlier acceptance files) and 1adac676 (maker log, 1 plan line).
+- Scope: this run judges the lily pad only. No Review A, B, C, adversarial, or UX result exists for this step, so `reviewer_ratings` is empty.
+- Result JSON: acceptance-lily-pad-1adac67.json (same folder).
+- Verdict: PASS. The lily pad is rated 7.0 out of 10 (bar 7.0). No blocking finding. 7 nonblocking findings. retry_recommendation: none.
+  The result sits at the bar with no margin: the ten criteria give a mean of exactly 3.5 of 5.
+
+## Result table (rating out of 10, bar 7.0)
+
+| Item | Rating | Result | Main finding |
+| --- | --- | --- | --- |
+| lily-pad | 7.0 | pass | The 3D model and the 128 px sprites read as a lily pad. The 2 delivered cutouts are the same edge-on slab and do not |
+| mechanical | n/a | pass | mech-check ok:true, cutout-check result ok, 23 of 24 md5 sums equal (stats.json differs in timing only) |
+| scope | n/a | pass | 6 paths, none in src, tests, scripts, assets/parts, the registry, or another track; no task marker changed |
+| plan claims (A5) | n/a | pass | all 5 claims of plan.md:220 are true; the brief states the frog depth wrongly (N4) |
+
+## Does it read as a lily pad at 128 px, and does the frog fit?
+
+- Sprites (128 px, elevation 30, 8 directions): YES. At 1x on a pond blue backdrop all 8 read as a green dish with a V notch and faint radial veins.
+  The sprite is 80 to 82 px wide and 45 to 46 px high (sprites/metrics.json).
+- 3D renders (out/lily-pad/render.png, the card): YES. A round pale mint dish, a dark green wall, a crisp V.
+- Cutouts (front, three-quarter): NO. Both have the same box, cols 307..716 and rows 974..1007 (410 x 34 px). Each is an edge-on green slab.
+  At the 128 px scale (1/8) the pad would be about 51 x 4 px. The cause is the tool: `./forge cutout` sets elevation 0 for every view unless
+  `--el` is given (src/cli/forge.ts:383). The maker log names the front cutout only. The three-quarter cutout is also a sliver (N1).
+- Frog fit: YES, with no spare room (N2). The feet footprint of the frog is 0.347 x 0.166 m. Its smallest enclosing circle has radius 0.1736 m.
+  The pad radius is 0.200 m, so the leaf margin is 26 mm at the haunch feet. The frog is 0.346 m tall and 87 percent of the pad width.
+
+## The maker's four weak points
+
+| Weak point | Result | Evidence |
+| --- | --- | --- |
+| 34 px front cutout | confirmed, and wider than stated | The three-quarter cutout has the same 410 x 34 px box (N1) |
+| faint veins | confirmed | Vein green luminance 125.6 against 144.0 for the leaf: 18.4 of 255, 7.2 percent (N3) |
+| sharp notch edges | confirmed, acceptable | A plain cut, one 4.5 mm cell of stepping; a real notch is a slit (N5) |
+| rim curl reads as a thick end | confirmed, within the brief | 12 mm on a 20 mm slab; 32 mm of 400 mm; reads as a rolled edge or tray (N5) |
+
+The maker disclosed all four in the log, and that no frog-on-pad render exists. I made no such render either. I measured the fit on the GLB files instead.
+
+## What the song scene (W6 line 9, "I can see a frog. Hop, hop!", set "lily pad", props "frog, lily pad") needs
+
+Book row: "lily pad | 6 | 1 (1) | frog hops from it" (monorepo forge-inventory.md section 5). The row gives no size and no colour.
+
+1. The route decides. A 3D stage (src/song) loads the GLB as a prop, so the pad works as built. A 2D compositor needs a look-down cutout.
+   Order one cutout at about `--el 35` in a separate folder (one folder keeps one ppm, canvas, and foot point). The near rim falls about 117 px below the foot row,
+   so the margin must be about 135 px or more. I did not run this (N1).
+2. The pad and the frog need a size change in the stage. The pad scaled 1.3 to 1.5 gives 86 to 126 mm of leaf around the feet. The frog at about 0.7 gives about 78 mm (N2).
+3. The frog stands on the pad top at y about 0.018 and about 0.03 m back of the centre. The centred frog overhangs the V by up to 9 mm at the inner front feet (N2).
+4. The camera for the shot needs an elevation of 30 degrees or more. The stage example key uses el 12, which shows the pad as an ellipse 0.083 m high (N2).
+5. The pond asset has its own pads in a yellow green (#7cc23c, #5a9a2a). This pad is blue green (#5fa364, #4f8f5a). Align them if both show (N2).
+6. The frog has no hop clip (idle, walk, attack, hit, death). The hop is stage work or a new clip, outside this step (N2).
+
+## Rating
+
+Criteria scores (1 to 5): brief match 4, silhouette 3.5, proportion and appeal 3.5, shape language 3.5, value and colour 3, materials 3.5,
+detail hierarchy 3, technical quality 4, game readiness 3, readability at 128 px 4. The sum is 35.0. The mean is 3.5, and that gives 7.0 of 10.
+
+- Brief match (4): every measured value agrees with the brief: 0.400 m wide, top at 0.0319 m, dish 0.004 m, notch 30 degrees, 9 veins of 0.006 m, 3812 triangles.
+  The veins start 15 mm from the centre and not at the centre.
+- Technical quality (4): mech-check ok, 3812 triangles, bottomY 0, no warning, typecheck 0, a deterministic build.
+- Value and colour (3) and detail hierarchy (3): the veins are faint (N3), and the notch cut face reads as a blocky step in the cutout.
+- Game readiness (3): the cutouts cannot serve a 2D pond scene, and the frog fills the pad (N1, N2).
+- Readability at 128 px (4): the sprites read clearly. The cutouts do not, and this keeps the score at 4.
+- A drop of 0.5 in any one criterion gives a mean of 6.9, so the result is at the bar and not above it.
+
+## Findings (all nonblocking)
+
+- N1 [Medium] The 2 delivered cutouts are the same edge-on slab (410 x 34 px). The tool sets elevation 0 for every view. They show no veins and no dish.
+  The route decides if this matters (see above). Suggested change: one look-down cutout in a separate folder. | owner: orchestrator, then maker
+- N2 [Medium] The frog fits with 26 mm of leaf, and it fills 87 percent of the pad width. The scene needs a bigger pad or a smaller frog, a placement, a higher camera,
+  a colour match, and a hop. See the list above. | owner: orchestrator
+- N3 [Low] The veins are faint: 7.2 percent luminance difference, about 1.2 px at 128 px. They do not carry the read. The PM chose the colours. Optional: a darker vein or 0.010 m width.
+- N4 [Low] The brief says the frog is 0.347 m x 0.222 m "at the feet" and that the feet "touch the rim at the notch". Measured: 0.222 m is the body depth with the head. The feet depth is 0.166 m.
+  The front toes near the V stand about 0.09 m from the centre, not at the rim. Suggested change: correct the text. | owner: maker
+- N5 [Nit] Sharp notch edges, a thick rolled rim, and a ten-fold vein fan with 1 vein cut by the notch (the notch sits 6 degrees off the centre of the 72 degree gap). All are within the brief. No change needed now.
+- N6 [Info] Commit scope is clean. f8e89036 adds the 2 acceptance-splash files, and its title names them. The working tree holds other modified files that no commit in the range contains.
+- N7 [Info] docs/storytime-song.md:80-83 does not name the lily pad and still says "Not built: duck, kite, ball, grape, sun, cloud, easel". The doc owner updates it after the look check.
+
+## Specific checks (A3 to A7)
+
+- A5 (false-claim text): applies. The plan sub-bullet (plan.md:220) makes 5 claims, and all 5 are true at HEAD: commit f8e89036, mech-check ok, cutout-check result ok, the card exists,
+  and the brief exists. The brief holds two imprecise frog details (N4). The plan says nothing about the cutout views, so the plan has no false claim.
+- A3, A4, A6, A7: do not apply. The exact diff changes no contract test, no filter, and no entry of measure/tracks.md.
+- Fake-gate masking: mech-check proves build health only, and cutout-check proves PNG format only. Neither sees the pad look, the veins, the fit, or the sliver.
+  The plan claims only those checks, so the claims are honest. The look judgement is this gate.
+
+## Mechanical check (one call)
+
+- HEAVY_MIN_AVAIL_MB=1500 bash heavy-run.sh -c 'mech-check lily-pad; cutout-check props | tail -1' returned exit 0 and no exit 75.
+- mech-check: ok:true, forgeAll exitCode 0, warnings [], triangles 3812, bottomY 0, glbBytes 788960, typecheckExit 0, failures [].
+- cutout-check: result ok.
+- md5 of 24 files before and after the call: 23 equal. stats.json differs in timing fields only (2546 to 2576 ms). The call does not rebuild the card or the 2 cutouts.
+  The asset source is older than the cutouts and the card, and the build is deterministic, so I judge them as delivered.
+
+Commit scope (git diff --name-only 82114591..HEAD lists 6 paths):
+
+- f8e89036: assets/lily-pad.ts, briefs/lily-pad.md, and the 2 acceptance-splash-8211459 files (the title names them).
+- 1adac676: maker-p5-lily-pad.log and 1 line in plan.md (220). 0 task markers changed. The props task stays `[~]`.
+- No path is in assets/parts/, src/, tests/, scripts/, measure/tracks.md, or another track.
+
+## Notes for the orchestrator
+
+- The pad passes at the bar. No maker round is needed for the 3D route.
+- Decide the route for the week 6 pad shot. If the Workbooks compositor places it, order the look-down cutout (N1). If the 3D stage places it, set the scale, the height, and the camera (N2).
+- Any other flat ground prop cut with the default elevation 0 gives the same edge-on slab. I did not check which props in the batch are flat.
+- The plan task stays `[~]`. This run marks nothing and edits no source, test, plan, or registry file.
+- Side effects: my mech-check run rebuilt out/lily-pad/ with equal md5 sums. Scratch pictures are in /tmp/opencode/acc-lily/.
+  I ran no ./forge inspect and no --fast command. I did not look at frog-fit-plan.png, because the viewer stopped.
+
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check) - step lily pad
+commits: none
+tests_run: mech-check.mjs lily-pad = exit 0, ok true, 3812 tris, bottomY 0, typecheck 0, no warning (pass); cutout-check.mjs on props = result ok (pass); md5 of 24 files before and after = 23 equal, stats.json timing only (pass); GLB parse of lily-pad.glb and frog.glb = feet circle 0.1736 m, leaf margin 26 mm, 5 foot vertices overhang the V by up to 9 mm (finding N2); PIL cutout box = 410 x 34 px for both cutouts (finding N1); git diff --name-only 82114591..HEAD = 6 paths, all in scope (pass)
+files_changed: measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-lily-pad-1adac67.json; measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-lily-pad-1adac67.log
+plan_updates: none
+known_failures: none blocking. VERDICT PASS: lily-pad rated 7.0 (bar 7.0, mean exactly 3.5 of 5, no margin). Nonblocking: N1 both delivered cutouts are the same edge-on 410 x 34 px slab (tool elevation 0), so a 2D scene needs a look-down cutout; N2 the frog fits with 26 mm of leaf and fills 87 percent of the pad, so the scene needs a pad scale of 1.3 to 1.5 or a frog at 0.7, a placement, a camera of 30 degrees or more, and a hop; N3 faint veins (7.2 percent luminance difference); N4 the brief states the frog depth 0.222 m "at the feet" (the feet depth is 0.166 m)
+handoff: VERDICT PASS at HEAD 1adac67666cd586be27ad9ca03c9d1ed524c546e, at the bar (7.0). The 3D model, the sprites, and the card read as a lily pad at 128 px. The two cutouts do not (edge-on slab). The frog fits (26 mm of leaf). The orchestrator decides the route for the week 6 pad shot: the 3D stage works as built with a stage scale, a height, and a higher camera; the 2D compositor needs one look-down cutout in a separate folder. Open outside this step: the frog has no hop clip, and docs/storytime-song.md:80-83 is stale. retry_recommendation none.
+END_MEASURE_AGENT_RESULT

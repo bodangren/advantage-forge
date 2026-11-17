@@ -66,3 +66,11 @@ b. ONE call: `mech-check lily-pad && ./forge cutout lily-pad --out out/chibi-spr
 - The veins are painted, so they do not show in the vertex-color `--fast` render; they show in
   the textured build and in the cutout.
 - The pad holds 3,812 triangles, under the 8,000 limit, in one body.
+
+## Delivery
+
+2D scenes use out/chibi-sprouts/r1/props/high/lily-pad (elevation 35).
+The folder holds `lily-pad/three-quarter.png`, 1024 x 1024 px at 1024 px/m. The look-down camera
+puts the near rim 117 px below the foot row, so the folder uses `--margin 150` (foot row 874) and
+records `elevation: 35` in its manifest. The level front and three-quarter cutouts stay in
+out/chibi-sprouts/r1/props/lily-pad.

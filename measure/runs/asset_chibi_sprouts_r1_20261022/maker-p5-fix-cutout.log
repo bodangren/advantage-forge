@@ -1,0 +1,177 @@
+# Maker · Phase 5 · fix round 1 and 2 · asset_chibi_sprouts_r1_20261022
+
+Role: measure-jr-green (bounded fix with a test first).
+Track: asset_chibi_sprouts_r1_20261022.
+Phase: Phase 5: The rest of the inventory (after the look check).
+PM order: 2026-11-18, fix round items 1 and 2.
+Role base: 1adac676 (HEAD at the start). The orchestrator handoff gave no separate phase_base_sha.
+The base of this fix round is 1adac676 for all three commits.
+Branch: master. No push. No generate.sh. No asset source changed.
+
+Load rule: every vitest, tsc, forge, and cutout command ran through
+`HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'`.
+
+## Item 1: the 1 px alpha seam
+
+### Cause
+
+The cause is one lost row in the GPU read of the cut-out buffer. It is not in the row arithmetic.
+
+- The cut-out renders the view at `width * ss` by `height * ss` (3072 x 3072 at `--ppm 1024
+  --ss 3`) into the multisampled default framebuffer (`antialias: true`, src/render/studio.ts:24-27).
+- The old code read the whole buffer in one call: `gl.readPixels(0, 0, req.width * ss, req.height *
+  ss, gl.RGBA, gl.UNSIGNED_BYTE, buf)` at src/render/page.ts:861 (base 1adac676).
+- That one call returned raw row 1364 empty (row 0 is the bottom of the WebGL buffer): the alpha
+  sum of row 1364 was 0, against 150 for row 1363 and 150 for row 1365. The probe read the same
+  row again after the big read: `pixel1364=255 strip1360..1370=255,255,255,255,255,255,255,255,255,255,255`.
+  The drawing buffer is 3072 x 3072 and `gl.SAMPLES` is 4.
+- With `FORGE_GL=software` (SwiftShader) the same cut-out had no empty row (row 1364 was 150, and
+  the empty-row count was 923 against 924 on the GPU). The row loss is in the GPU path of the big
+  read. It is not in `resolveStraight` (src/render/cutout.ts:38-79) and not in the supersample
+  arithmetic.
+- Output row 569 is `(3071 - 1364) / 3` = 569. Its three sample rows lose one, so its alpha is
+  2/3 x 255 = 170 where the rows above and below are 255. That is the seam of the acceptance N1.
+
+Probe files (not committed): /tmp/opencode/seam-probe.mjs, /tmp/opencode/seam-scan.mjs.
+The temporary probe code in src/render/page.ts was removed before commit 51fee130.
+
+### Test first, RED
+
+`./node_modules/.bin/vitest run tests/cutout.test.ts --maxWorkers=1` (base 1adac676 plus the new
+test):
+
+```
+ FAIL  tests/cutout.test.ts > cut-out readback > reads every row once, in strips no taller than the limit, top to bottom
+TypeError: readStrips is not a function
+ ❯ tests/cutout.test.ts:49:17
+ FAIL  tests/cutout.test.ts > cut-out readback > keeps the row that one whole-buffer read loses
+TypeError: readStrips is not a function
+ ❯ tests/cutout.test.ts:79:17
+ Test Files  1 failed (1)
+      Tests  2 failed | 4 passed (6)
+```
+
+`node scripts/cutout-check.mjs out/chibi-sprouts/r1/props` with the new seam check:
+
+```
+FAIL easel/front.png  1024x1024 ... seam at row 569 (alpha 170 of 255 in 440 columns where rows 568 and 570 are opaque)
+FAIL flower/front.png  1024x1024 ... seam at row 569 (alpha 170 of 255 in 58 columns where rows 568 and 570 are opaque)
+FAIL kite/front.png  1024x1024 ... seam at row 569 (alpha 170 of 255 in 30 columns where rows 568 and 570 are opaque)
+FAIL sun/front.png  1024x1024 ... seam at row 569 (alpha 170 of 255 in 596 columns where rows 568 and 570 are opaque)
+result fail
+```
+
+The check names sun, flower, and easel, as the brief asks, and kite as well.
+
+### The seam rule in the checker
+
+A row is a seam when at least 8 columns have both neighbours at alpha 255 and the row's mean alpha
+over those columns is below 0.9 x 255 (scripts/cutout-check.mjs, in the per-file loop).
+
+The brief suggests "a row below half of the mean of the row above and the row below". That form
+was not used. A row of a one-row-wide silhouette fails it without a fault: cloud/front row 1008
+has a ratio of 0.49 and is real geometry. The solid-column form separates the two: the four seam
+rows give exactly 170 over every solid column, and the thin rows give no solid column at all.
+
+### Fix, GREEN
+
+- `readStrips` in src/render/cutout.ts:9-29 joins the buffer from strips of at most 64 raw rows.
+  src/render/page.ts:861-866 reads the cut-out through it, one `gl.readPixels` per strip.
+- The DEFERRED work: none.
+
+`GREEN_TEST_COMMAND`
+(`./node_modules/.bin/vitest run tests/cutout.test.ts --maxWorkers=1 && node
+scripts/cutout-check.mjs out/chibi-sprouts/r1/props`):
+
+```
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+result ok
+```
+
+24 PNG lines `ok` and no `FAIL` in out/chibi-sprouts/r1/props. Each of the seam rows is now 254 of
+255. The two new tests are green: one checks that strips cover every row once and in order, the
+other keeps the row that one whole-buffer read loses.
+
+All props were re-cut in one heavy-run call, twice: once with the fix in the working tree, and
+again after the three commits (12 props x front,three-quarter, plus the blue and the yellow
+paint-splash presets). The final PNGs are stamped 01:47 and 01:47 UTC+7, and the commits a330434d,
+51fee130, and b3460c68 are stamped 01:24 to 01:39 (`git log --format='%h %ci'`). The delivered
+PNGs therefore come from the code of HEAD.
+
+### Typecheck
+
+`NODE_OPTIONS=--max-old-space-size=6144 ./node_modules/.bin/tsc --noEmit -p .`:
+
+- Before the change (src/render/cutout.ts, src/render/page.ts, src/cli/forge.ts, and
+  tests/cutout.test.ts at 1adac676): exit 2, 38 `error TS` lines.
+- After the change: exit 2, 38 `error TS` lines.
+- The change adds no error. None of the 38 names a file of this change. The 38 are older:
+  tests/part.test.ts, tests/games/castle-defense/rules.adversarial.test.ts, and
+  assets/storytime-*.ts among them.
+- The first attempt with the default heap ran out of memory. The retry used the heap option above.
+  Logs: /tmp/opencode/tsc-before.log, /tmp/opencode/tsc-after.log.
+
+## Item 2: the lily pad cutout from above
+
+- The command of the brief as given (`--canvas 1024x1024 --views three-quarter --el 35`, margin 16)
+  fails: `FAIL lily-pad/three-quarter.png ... lowest opaque row 1023, foot row 1008`. A look-down
+  camera puts the near rim 117 px below the foot row (acceptance N1), so the pad runs off the
+  bottom edge of a margin-16 canvas.
+- Final command: `./forge cutout lily-pad --out out/chibi-sprouts/r1/props/high --ppm 1024 --canvas
+  1024x1024 --views three-quarter --el 35 --margin 150`.
+- Result: `ok lily-pad/three-quarter.png 1024x1024 soft 1357 edge 1142 worstDrop 29% rows
+  734..990 cols 306..716`, last line `result ok`. Manifest: ppm 1024, canvas 1024x1024, elevation
+  35, footPoint (512, 874).
+- I looked at the PNG once. The pad reads as a round green dish with the V notch toward the
+  viewer, 9 veins, and the curled rim. The veins are visible, as the brief asks.
+
+## Why commit b3460c68 adds an elevation field to the cutout manifest
+
+The brief did not ask for this field. The check of item 2 cannot pass without it:
+
+1. The cut-out manifest is per folder ("one folder keeps one scale", src/cli/forge.ts:396-400). The
+   folder now also records the camera elevation, and one folder keeps one elevation.
+2. scripts/cutout-check.mjs reads the elevation. At elevation 0 the rule stays as before: the
+   lowest opaque row is the foot row, within 4 px. At elevation above 0 the rule fits the geometry:
+   the model must reach the foot row (nothing floats above it) and must not touch the bottom edge
+   (the canvas holds the near edge). The old rule cannot hold for a level foot point and a camera
+   above it, because the near rim is 117 px below the foot row by geometry.
+3. The folder walk now skips a nested folder that has its own manifest. props/high and
+   props/presets/* are checked against their own manifest, not against the props manifest.
+
+The change adds a clipping rule. It does not remove a check.
+
+## Records
+
+- a330434d test(cutout): detect a 1 px alpha seam (scripts/cutout-check.mjs,
+  tests/cutout.test.ts).
+- 51fee130 fix(cutout): read the buffer in strips, so no row is lost (src/render/cutout.ts,
+  src/render/page.ts).
+- b3460c68 fix(cutout): a look-down folder records its elevation (src/cli/forge.ts,
+  scripts/cutout-check.mjs).
+- Next: this log, briefs/lily-pad.md, the two acceptance-lily-pad files (added unchanged), and one
+  plan sub-bullet.
+
+## Known weak points
+
+- The strip height is 64 raw rows. The fix is proven on 27 PNGs in 4 folders on this GPU (ANGLE
+  over gl). A much larger canvas could still lose a row inside a strip. The new seam check would
+  report it.
+- The seam check needs columns where both neighbours are fully opaque. A seam in a part that is
+  only soft on both sides would pass. The check caught 4 of the 4 seams in the old folders.
+- The elevated foot rule is new. A later viewer of the gate saw only the level form.
+- I did not rate my own work.
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: complete
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check), fix round items 1 and 2 (PM 2026-11-18)
+commits: a330434d (seam test), 51fee130 (strip read), b3460c68 (folder elevation); the record commit follows this log
+tests_run: RED vitest tests/cutout.test.ts "2 failed | 4 passed (6)", readStrips is not a function; RED cutout-check props "result fail", seam at row 569 in easel, flower, kite, sun; GREEN vitest "6 passed (6)" exit 0; GREEN cutout-check out/chibi-sprouts/r1/props "result ok" (24 ok, 0 FAIL); cutout-check props/presets/blue "result ok", props/presets/yellow "result ok", props/high "result ok"; tsc --noEmit -p . 38 errors before and 38 after, none in the changed files
+files_changed: src/render/cutout.ts (readStrips), src/render/page.ts (strip read), src/cli/forge.ts (manifest elevation, one elevation per folder), scripts/cutout-check.mjs (seam check, elevated foot rule, nested folder walk), tests/cutout.test.ts (2 readback tests), measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/lily-pad.md (delivery line), measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-lily-pad-1adac67.json and .log (added unchanged), measure/runs/asset_chibi_sprouts_r1_20261022/maker-p5-fix-cutout.log (new), measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md (one sub-bullet)
+plan_updates: one sub-bullet under the props task: "fix round 1 and 2 (PM 2026-11-18): seam cause one lost row in the whole-buffer readPixels (now read in strips); commits a330434d, 51fee130, b3460c68; all props re-cut, cutout-check result ok with the seam check; lily pad high cutout at props/high". The task stays [~]: Phase 5 has open tasks.
+known_failures: none of the gates. Weak points: the strip height is 64 raw rows; the seam check can miss a seam in a part that is soft on both sides; the elevated foot rule and the manifest elevation field are new and need review.
+handoff: no task was flipped to [x] and none to [b]. The seam cause is one lost row in the GPU read of the whole 3072 x 3072 buffer; the fix reads the buffer in strips of 64 rows. New files for the review scope: measure/runs/asset_chibi_sprouts_r1_20261022/maker-p5-fix-cutout.log. The checker gained the seam rule, the elevated foot rule, and the nested folder walk; b3460c68 is the commit to review against the brief, because the brief did not ask for the manifest elevation field. The lily pad high cutout is out/chibi-sprouts/r1/props/high/lily-pad at elevation 35 with margin 150; the briefs/lily-pad.md line names it. phase_base_sha was not given in the handoff; role_base_sha 1adac676 is the base of the three commits; final Green HEAD is the record commit, the child of b3460c68.
+END_MEASURE_AGENT_RESULT
