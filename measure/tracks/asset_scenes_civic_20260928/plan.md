@@ -2,101 +2,96 @@
 
 Status: in_progress. This plan owns execution status. Source documents retain design details.
 
-Decisions taken 2026-11-19 under Daniel's primary directive of 2026-11-18. The PM may reverse each one. Details are in `spec.md` and `spec-review.md`.
+Decisions taken 2026-11-19 under Daniel's primary directive of 2026-11-18. The PM may reverse each one.
 
-- Next scene: `locations/civic/bathhouse` (P2). Order after it: market-square, general-store, inn, then TSV order.
-- Mockup route: `mmx image generate` on the MiniMax Token Plan at 0 USD metered. PM approval comes before any metered or paid call.
-- Bar: 7.0 for a P2 row, 7.5 for a P0 row.
-- Gate: `mockup-needed` to `mockup-ready` to `assembled` to `accepted`.
+- The 30 civic P2 maps exist in `scenes/maps/`. The track reconciles them and reviews them.
+- Judge bar: 7.0 for a P2 row. The judge family differs from the maker family.
+- Rework: one rework by a maker on "ra-quota pick coder", then one rerate.
+- Final TSV value: `accepted` or `follow-up`. IDs do not change.
 
-## Phase 1: Mockup and inventory
+## Phase 1: Inventory
 
-- [ ] Task: Reconcile the `locations/civic/bathhouse` row with its sources.
-  Read the TSV row, `assets/towel-stack.ts`, `assets/wash-basin.ts`, `assets/towel-rack.ts`, and `docs/bathhouse-mockups/README.md`.
-  Record the P2 priority, the `mockup-needed` status, and the three existing props.
-- [ ] Task: Make the bathhouse scene mockup with `mmx image generate` at 0 USD metered.
-  Write `docs/bathhouse-mockups/bathhouse-mock.jpg` in the `docs/item-mockups/` style: one room, a three-quarter view from slightly above, a warm palette.
-  Record the spend in the file README as "0 USD metered".
-- [ ] Task: Advance the row to `mockup-ready`.
-  Update `docs/fantasy-world-scene-blueprints.tsv` status for `locations/civic/bathhouse`. Cite the commit in `plan.md`.
-
-Gate:
-
-```bash
-ls -l docs/bathhouse-mockups/bathhouse-mock.jpg
-grep 'locations/civic/bathhouse' docs/fantasy-world-scene-blueprints.tsv
-```
-
-## Phase 2: Fit checks
-
-- [ ] Task: Write the component list `measure/tracks/asset_scenes_civic_20260928/scenes/bathhouse.md`.
-  Give each component a catalog ID or an explicit addition, a quantity, and transform notes.
-  Take the fit values from `docs/dungeon-mockups/fit-check.md`: a 1.0 m median character, an opening at least the character plus 0.09 m, 1.2 m walls.
-  Apply the main-body rule in `.claude/skills/forge-assets/references/review.md` to every prop: the main body stays within 20 percent of the brief on every axis.
-- [ ] Task: Pin the camera and game-layer values before production.
-  Set the camera at 45 to 50 degrees for the three-quarter view and at about 86 degrees for the top view.
-  Give the room its floor, wall, and door dimensions in meters.
+- [ ] Task: Write `measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md`.
+  Give one row to each of the 30 civic P2 rows.
+  Record the map source in `scenes/maps/`, the design note in `docs/map-mockups/`, and the shots `<slug>-3q.png` and `<slug>-top.png`.
+  Record the MAPS rating and note from `docs/map-review.html`, and whether an independent judge rated the map.
+  Record the maker family where it is known. The default for the 2026-10 map batch is Anthropic Sonnet.
+- [ ] Task: Mark a row `missing` when it has no source in `scenes/maps/`.
+  Leave the TSV unchanged in this phase.
 
 Gate:
 
 ```bash
-grep -n 'Bathhouse' measure/tracks/asset_scenes_civic_20260928/scenes/bathhouse.md
+grep -c 'scenes/maps/' measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md
+ls scenes/maps/bathhouse.ts docs/map-mockups/bathhouse.md docs/map-mockups/bathhouse-3q.png docs/map-mockups/bathhouse-top.png
 ```
 
-## Phase 3: Assembly
+The inventory has 30 source paths.
 
-- [~] Task: Review existing examples and complete missing components.
-  Use `scenes/blacksmith-shop.ts` and `scenes/tavern-interior.ts` as the pattern: one `places()` export, a grid of floors and walls, then props by zone.
-  Cite catalog IDs from `docs/fantasy-world-asset-catalog.md`.
-  A missing component becomes an explicit addition. Build it in `assets/` through the normal asset loop, then add it to the component list.
-- [ ] Task: Assemble the bathhouse in `scenes/bathhouse.ts`.
-  Export `bathhousePlaces(): Place[]`. Place the floor and wall tiles first, then the washing, drying, and rest zones.
-  Reuse the three existing props. Do not duplicate a source that exists.
-- [ ] Task: Register the scene for the render path like the tavern.
-  Add a `sceneName === 'bathhouse'` branch in `src/scene/main.ts` that calls `bathhousePlaces()`.
-  Keep the branch before the fallback. A file at `scenes/maps/bathhouse.ts` would win, so do not create one.
+## Phase 2: Independent review
+
+- [ ] Task: Send the shots of each existing civic map to an independent judge.
+  Use the route from "ra-quota pick vision-review". Work in batches of about 8 maps.
+  The judge rates each map out of 10 against its design note. The bar is 7.0.
+  Use a judge family that differs from the maker family. The default maker for this batch is Anthropic Sonnet.
+  Write one JSON and one log per batch in `measure/runs/asset_scenes_civic_20260928/` as `vision-review-<batch>.json` and `.log`.
+- [ ] Task: Copy each rating and note into the inventory row, and mark the row `rated`.
 
 Gate:
 
 ```bash
-npx tsc --noEmit
-./forge build towel-stack   # and each new component, once per asset
+ls measure/runs/asset_scenes_civic_20260928/vision-review-*.json
 ```
 
-The build output has no `warning:` lines.
+Four batches cover the 30 maps, and each JSON gives one rating per map.
 
-## Phase 4: Verification
+## Phase 3: Rework
 
-- [ ] Task: Render the two comparison views into `docs/bathhouse-mockups/`.
-  Start the dev server, then run the scene shot command:
+- [ ] Task: Rework each map below 7.0 or with a critical error, once.
+  Give the job to a maker on "ra-quota pick coder".
+  Regenerate the map with `scripts/design-<slug>.mjs` or edit `scenes/maps/<slug>.ts`.
+  Then shoot the two views into `docs/map-mockups/`:
 
 ```bash
 node_modules/.bin/vite --port 5199
-FORGE_SHOT_BASE=http://127.0.0.1:5199/hamlet.html node scripts/shoot-map.mjs docs/bathhouse-mockups \
-  'render-3q=scene=bathhouse&clean&az=35&el=47&dist=16&tx=0&tz=0' \
-  'render-top=scene=bathhouse&clean&az=0&el=86&dist=14&tx=0&tz=0'
+FORGE_SHOT_BASE=http://127.0.0.1:5199/hamlet.html node scripts/shoot-map.mjs docs/map-mockups \
+  'bathhouse-3q=scene=bathhouse&clean&az=35&el=47&dist=16&tx=0&tz=0' \
+  'bathhouse-top=scene=bathhouse&clean&az=0&el=86&dist=14&tx=0&tz=0'
 ```
 
-  Set `dist` from the final room size. Keep the three-quarter camera at 45 to 50 degrees.
-- [ ] Task: Compare the assembled views with the mockup.
-  List the three largest differences, then fix the largest one first.
-  Repeat until the silhouette, proportions, and palette match.
-- [ ] Task: Score the scene with an independent judge.
-  Use the route from "ra-quota pick vision-review" with a family different from the maker family.
-  The judge rates out of 10 against `review.md`. The bar is 7.0 for this P2 row.
-- [ ] Task: Record acceptance and refresh the blueprint status without changing IDs.
-  Add the row to the civic acceptance table below. Set the TSV status to `accepted`. Cite the commit.
-- [ ] Task: Refresh Measure facts and run the doctor.
+  Set `dist` from the room size of each map. Keep the three-quarter camera at 45 to 50 degrees.
+- [ ] Task: Rerate each reworked map once with an independent judge.
+- [ ] Task: Apply the stop rule.
+  After the third rating below the bar, put the map on the follow-up list.
+  Do not start a fourth rating.
+
+Gate:
+
+```bash
+ls -l docs/map-mockups/bathhouse-3q.png docs/map-mockups/bathhouse-top.png
+```
+
+Each reworked map has a fresh pair of shots and a newer rating.
+
+## Phase 4: Records
+
+- [ ] Task: Update the TSV status column for each reviewed map.
+  Use `accepted` or `follow-up`. Do not change any ID. Cite the commit in this plan.
+- [ ] Task: Decide the `docs/map-review.html` note.
+  `scripts/map-review-page.mjs` generates that page from `bench/sonnet/log.tsv`. No tool reads the page.
+  Leave the page alone unless the PM names it as the record.
+- [ ] Task: Run the doctor.
 
 ```bash
 ./measure/doctor.sh
 ```
 
-## Civic P2 acceptance
+## Civic review record
 
-| Row | Scene | Source | Shots | Score | Result |
-| --- | --- | --- | --- | ---: | --- |
-| bathhouse | bathhouse | `scenes/bathhouse.ts` | `docs/bathhouse-mockups/render-3q.png`, `render-top.png` |  | `mockup-needed` |
+Add one row per map when its final rating is known. The TSV is the acceptance record.
+
+| Map | Source | Final rating | Judge family | Result |
+| --- | --- | ---: | --- | --- |
 
 ## P0 map acceptance (2026-10-02, track `asset_p0p1_completion_20261002`)
 

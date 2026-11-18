@@ -114,5 +114,5 @@ The PM may reverse each default.
   rule from `review.md` for every prop: the main body stays within 20 percent of the brief on
   every axis.
 
-The plan now has Phase 1 to Phase 4 for the bathhouse scene, with concrete tasks and gate
-commands. The "P0 map acceptance" section is unchanged. No task is marked done.
+Round 1 amendment 2 (orchestrator, 2026-11-19): the civic maps exist in scenes/maps/; the track changes from build to reconcile and independent review.
+That line supersedes the build-path parts of F1, F3, F5, and F6 above. Phase 1 to Phase 4 now reconcile, rate, rework, and record the 30 existing civic maps. The "P0 map acceptance" section is unchanged. No task is marked done.
