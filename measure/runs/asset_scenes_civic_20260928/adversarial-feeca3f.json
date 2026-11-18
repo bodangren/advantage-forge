@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "role": "measure-adversarial-testing",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "## Phase 1: Inventory",
+  "status": "fail",
+  "summary": "Phase 1 adversarial probes confirm both review nits as live checker defects that must be fixed before acceptance. The probe harness (measure/runs/asset_scenes_civic_20260928/adversarial-p1.sh) builds full fixture trees under /tmp/opencode/adv-p1-civic from the committed inventory, TSV, and unmodified checker, stubs the 150 named files, and proves fidelity first: the unmutated control passes 9 of 9. ADV-P1-01 proves P1-c is presence-only: an inventory with the apothecary row changed to MAPS rating: 9.9 and a fabricated note passes the phase gate exit 0. ADV-P1-02 proves the maker family value is never validated: maker: Claude Sonnet 4.5 (claude family) passes exit 0. ADV-P1-03 proves the F2 substring defect: with scenes/maps/inn.ts removed and the inn state cell still inventoried, the checker prints PASS: P1-d row for inn is missing because the note holds the word missing; the exit 1 comes only from the P1-b path FAIL. The strength probes hold: duplicate rows (watchtower replaced by a second apothecary row) fail with 11 FAILs, a full slug mutation to apothecarie fails with 11 FAILs, a rated state cell fails with 2 FAILs, and a claude-family judge claim fails P1-c. One new informational gap: ADV-P1-06 mutates only the Slug cell (apothecarie) while keeping the paths, and the checker passes exit 0 because no check parses the Slug cell against the TSV scene_id. The committed inventory itself is faithful: the control passes, and a spot check agrees with bench/sonnet/log.tsv line 634 (apothecary 7.0, not re-viewed by orchestrator); reviews A and C verified all 30 rows word for word. The defects are in the Red checker, not in the inventory: route the fix to Red per the orchestrator brief.",
+  "blocking_findings": [
+    "ADV-1 [Blocker] adversarial-testing: check-inventory.sh P1-c (measure/runs/asset_scenes_civic_20260928/check-inventory.sh:80-99) tests only the labeled presence of MAPS rating:, judge: no, and maker:, so a fabricated MAPS rating, a fabricated note, and a claude-family maker value all pass the phase gate. Fixture proof: ADV-P1-01 (apothecary row changed to MAPS rating: 9.9 and MAPS note: totally fabricated by the maker) passes 9 of 9 with exit 0, and ADV-P1-02 (maker: Claude Sonnet 4.5, a claude-family value) passes 9 of 9 with exit 0. Rationale: test-strategy.md section 5 P1-c (lines 115-116) claims each row records the MAPS rating and note from bench/sonnet/log.tsv and the maker family, and section 2 counts the recorded MAPS rating as the first rating of the stop rule, so the phase gate must fail on a wrong value, not only on a missing label; the fix routes to Red, the checker owner, and this role fixed nothing itself. The stated P1-c falsifier (a judge-claim row) is enforced and holds (ADV-P1-08), but the value claim has no automated falsifier today."
+  ],
+  "nonblocking_findings": [
+    "ADV-2 [Nit] adversarial-testing: check-inventory.sh P1-d absent-source branch (measure/runs/asset_scenes_civic_20260928/check-inventory.sh:110-114) matches the substring missing anywhere in the row instead of in the state cell. Fixture proof: ADV-P1-03 removes scenes/maps/inn.ts while the inn row keeps state inventoried and its committed note missing hanging lantern; the checker prints PASS: P1-d row for inn is missing (source absent), and the run exits 1 only because of the P1-b path-existence FAIL, so the mislabeled state itself is accepted. Rationale: latent in Phase 1 only while all 30 sources exist; the second P1-d loop (lines 127-145) already parses the state cell exactly, so the absent-source branch should reuse that parse. Red owns this fix together with ADV-1; the probe ADV-P1-03 stays red until the state cell, not the note, satisfies the branch.",
+    "ADV-3 [Nit] adversarial-testing: no check parses the inventory Slug cell against the TSV scene_id. Fixture proof: ADV-P1-06 mutates only the Slug cell (apothecary to apothecarie) while keeping all five paths, and the checker passes 9 of 9 with exit 0, because every slug grep matches the row through its intact paths. Rationale: the Slug column is the human-facing key that Phase 2 batch records and the plan gate cite; a slug cell that disagrees with the TSV would pass the gate today. The full slug mutation (slug and paths renamed, ADV-P1-05) is caught with 11 FAILs, so only the cell-value check is missing.",
+    "ADV-4 [Nit] adversarial-testing: the P1-b disk-existence check makes the missing state unreachable in a passing run. Evidence: in ADV-P1-03 the only FAIL for the absent source is P1-b named path absent on disk, and test-strategy.md section 5 P1-b lists any absent named path as its falsifier, so a legitimately missing map always fails the gate through P1-b even when its row is correctly labeled missing. Rationale: no action is required while all 30 sources exist; Red should decide while fixing ADV-2 whether a correctly labeled missing row needs a P1-b exemption, so the gate and the strategy stay consistent if a source is ever absent."
+  ],
+  "evidence": [
+    "Provenance: HEAD equals role_base_sha and the audited head feeca3f30ea3027f87648c83c92ffcca06d0a9b1 (git rev-parse HEAD); phase_base_sha db2053f2 resolves to db2053f2190ef0af3c24d6a149e70ee4bcb8f493. This role changed only measure/runs/asset_scenes_civic_20260928 files and removed the untracked review-a-fixture scratch directory that review-a-feeca3f.json evidence asked the orchestrator to delete.",
+    "Harness fidelity: ADV-P1-00 control fixture (committed inventory copy, stub files for the 150 named paths) passes the unmodified checker copy with exit 0 and === Total: 9 checks (PASS=9, FAIL=0) ===, so every probe result below measures the checker, not the harness.",
+    "ADV-P1-01 (confirms review-a F1): fixture with the apothecary row changed to MAPS rating: 9.9 and MAPS note: totally fabricated by the maker passes exit 0, PASS=9 FAIL=0. The gate cannot catch a fabricated MAPS rating or note.",
+    "ADV-P1-02 (maker slice of F1, family rule): fixture with maker: Claude Sonnet 4.5 on the apothecary row passes exit 0, PASS=9 FAIL=0. The Phase 1 record never validates the maker family value, so a claude-family maker passes P1-c.",
+    "ADV-P1-03 (confirms review-a F2): fixture with scenes/maps/inn.ts removed and the inn state cell unchanged (inventoried) prints PASS: P1-d row for inn is missing (source absent) because the committed note missing hanging lantern satisfies the substring; total 10 checks (PASS=9, FAIL=1) where the single FAIL is P1-b named path absent on disk: scenes/maps/inn.ts.",
+    "ADV-P1-04 (duplicate rows): fixture where the watchtower row is replaced by a second apothecary row (30 rows total) fails exit 1 with 11 FAILs, first line FAIL: P1-a slug absent from inventory: watchtower. Caught.",
+    "ADV-P1-05 (slug ID mutation, full): fixture where apothecary is renamed apothecarie in the slug cell and all five paths fails exit 1 with 11 FAILs, first line FAIL: P1-a slug absent from inventory: apothecary. Caught.",
+    "ADV-P1-06 (slug ID mutation, cell only): fixture where only the Slug cell reads apothecarie while the paths stay apothecary passes exit 0, PASS=9 FAIL=0. New gap: no check parses the Slug cell against the TSV scene_id.",
+    "ADV-P1-07 (rated state in Phase 1): fixture with the apothecary state cell changed to rated fails exit 1 with 2 FAILs (P1-d row for apothecary carries rated in its state cell). Caught, matching review-a fixture F3.",
+    "ADV-P1-08 (claude-family judge claim in Phase 1): fixture with the judge cell changed to judge: Claude Sonnet 4.5 rated 9.5 fails exit 1 on FAIL: P1-c row for apothecary lacks independent-judge field judge: no. Caught: the judge-claim falsifier is real and the filter preserves the hit.",
+    "Committed inventory spot check: bench/sonnet/log.tsv line 634 (apothecary, map-p2) reads 7.0 / not re-viewed by orchestrator, agreeing with the inventory apothecary row; the committed tree still passes the live checker (PASS=9 FAIL=0) and grep -c 'scenes/maps/' prints 30.",
+    "Probe script exit: bash measure/runs/asset_scenes_civic_20260928/adversarial-p1.sh exits 1 with gate verdict FAIL because the three gate probes (01 rating fraud, 02 family fraud, 03 state fraud) each pass a bad inventory; the script exits 0 once Red fixes the checker so every gate probe is caught, and it exits 2 on a harness failure, so it works as the regression gate for the fix.",
+    "Cleanup done: rm -rf measure/runs/asset_scenes_civic_20260928/review-a-fixture removed the audit scratch directory that review-a-feeca3f.json listed as safe to delete; it was untracked, so no git change records it."
+  ],
+  "commands": [
+    "bash measure/runs/asset_scenes_civic_20260928/adversarial-p1.sh | tee measure/runs/asset_scenes_civic_20260928/adversarial-p1-feeca3f.log (exit 1; control OK; 3 gate probes DEFECT, 4 probes CAUGHT, 1 informational DEFECT)",
+    "git rev-parse HEAD (feeca3f30ea3027f87648c83c92ffcca06d0a9b1, equals role_base_sha and the audited head)",
+    "git rev-parse db2053f2 (db2053f2190ef0af3c24d6a149e70ee4bcb8f493)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh (exit 0, PASS=9 FAIL=0, committed tree)",
+    "grep -c 'scenes/maps/' measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md (30)",
+    "grep -n apothecary bench/sonnet/log.tsv (line 634: 7.0, not re-viewed by orchestrator)",
+    "rm -rf measure/runs/asset_scenes_civic_20260928/review-a-fixture (untracked scratch removed)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p1.sh (added, the probe harness)",
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p1-feeca3f.log (added, the probe run log)",
+    "measure/runs/asset_scenes_civic_20260928/adversarial-feeca3f.json (added, this result; a provisional inconclusive verdict was written first per the brief and replaced by this final verdict)",
+    "measure/runs/asset_scenes_civic_20260928/review-a-fixture/ (untracked audit scratch deleted; no git path)"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "baseline_sha": "db2053f2190ef0af3c24d6a149e70ee4bcb8f493",
+  "role_base_sha": "feeca3f30ea3027f87648c83c92ffcca06d0a9b1",
+  "audited_head_sha": "feeca3f30ea3027f87648c83c92ffcca06d0a9b1",
+  "route": "opencode-go/glm-5.3#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The committed inventory is faithful (control passes 9/9; log.tsv line 634 agrees with the apothecary row; reviews A and C verified all 30 rows word for word), but the record values have no gate defense at the edges: probes ADV-P1-01 and ADV-P1-02 pass fabricated values through check-inventory.sh."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 2,
+      "evidence": "The checker passes a fabricated MAPS rating 9.9, a fabricated note, a claude-family maker, and a mislabeled missing state (adversarial-p1-feeca3f.log, probes 01 to 03), while the duplicate, slug-path, rated-state, and judge-claim probes are real and fail as designed (probes 04, 05, 07, 08)."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "This role touched only measure/runs/asset_scenes_civic_20260928 paths and removed the untracked review-a-fixture scratch; no checker, inventory, TSV, or product file was edited."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every probe verdict in adversarial-p1-feeca3f.log carries the mutated row, the checker exit code, the Total line, and the exact FAIL or PASS line that proves the outcome, preceded by a control fixture that passes 9 of 9."
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+ADV-P1 adversarial probes for check-inventory.sh (asset_scenes_civic_20260928, Phase 1)
+repo: /home/daniebo/Desktop/advantage-forge
+work: /tmp/opencode/adv-p1-civic
+
+=== ADV-P1-00 control: unmutated fixture must pass ===
+checker exit: 0; === Total: 9 checks (PASS=9, FAIL=0) ===
+verdict: CONTROL OK (stub files and copied records reproduce Green; probes below count)
+
+=== ADV-P1-01: fabricated MAPS rating and note (review-a F1) ===
+mutated row: | apothecary | `scenes/maps/apothecary.ts` | `docs/map-mockups/apothecary.md` | `docs/map-mockups/apothecary.jpg` | `docs/map-mockups/apothecary-3q.png` | `docs/map-mockups/apothecary-top.png` | MAPS rating: 9.9 | MAPS note: totally fabricated by the maker | judge: no | maker: Anthropic Sonnet | inventoried |
+checker exit: 0; === Total: 9 checks (PASS=9, FAIL=0) ===
+verdict: DEFECT CONFIRMED -- the phase gate passes a fabricated MAPS rating and note (P1-c tests label presence only)
+
+=== ADV-P1-02: maker value moved to the claude family (review-a F1, family rule) ===
+mutated row: | apothecary | `scenes/maps/apothecary.ts` | `docs/map-mockups/apothecary.md` | `docs/map-mockups/apothecary.jpg` | `docs/map-mockups/apothecary-3q.png` | `docs/map-mockups/apothecary-top.png` | MAPS rating: 7.0 | MAPS note: not re-viewed by orchestrator | judge: no | maker: Claude Sonnet 4.5 | inventoried |
+checker exit: 0; === Total: 9 checks (PASS=9, FAIL=0) ===
+verdict: DEFECT CONFIRMED -- the maker family value is never validated; a claude-family maker passes P1-c
+
+=== ADV-P1-03: absent source, note holds the word missing, state cell inventoried (review-a F2) ===
+inn row (unchanged, note holds the word missing): | inn | `scenes/maps/inn.ts` | `docs/map-mockups/inn.md` | `docs/map-mockups/inn.jpg` | `docs/map-mockups/inn-3q.png` | `docs/map-mockups/inn-top.png` | MAPS rating: 7.0 | MAPS note: missing hanging lantern | judge: no | maker: Anthropic Sonnet | inventoried |
+checker exit: 1; === Total: 10 checks (PASS=9, FAIL=1) ===
+P1-b and P1-d lines for inn:
+FAIL: P1-b named path absent on disk: scenes/maps/inn.ts
+PASS: P1-d row for inn is missing (source absent)
+verdict: DEFECT CONFIRMED -- the absent-source branch matched the substring missing in the
+  MAPS note while the state cell reads inventoried. Exit 1 comes from the P1-b
+  path-existence FAIL, not from the state check; the mislabeled row itself passes P1-d.
+
+=== ADV-P1-04: duplicate rows (watchtower row replaced by a second apothecary row) ===
+rows naming scenes/maps/apothecary.ts: 2 (want 2)
+rows naming scenes/maps/watchtower.ts: 0 (want 0)
+checker exit: 1; === Total: 15 checks (PASS=4, FAIL=11) ===
+verdict: CAUGHT -- the slug-set and path checks reject the dropped watchtower row
+FAIL: P1-a slug absent from inventory: watchtower
+FAIL: P1-b inventory row for watchtower does not name scenes/maps/watchtower.ts
+FAIL: P1-b inventory row for watchtower does not name docs/map-mockups/watchtower.md
+FAIL: P1-b inventory row for watchtower does not name docs/map-mockups/watchtower.jpg
+FAIL: P1-b inventory row for watchtower does not name docs/map-mockups/watchtower-3q.png
+FAIL: P1-b inventory row for watchtower does not name docs/map-mockups/watchtower-top.png
+
+=== ADV-P1-05: slug ID mutation, slug cell and paths renamed to apothecarie ===
+mutated row: | apothecarie | `scenes/maps/apothecarie.ts` | `docs/map-mockups/apothecarie.md` | `docs/map-mockups/apothecarie.jpg` | `docs/map-mockups/apothecarie-3q.png` | `docs/map-mockups/apothecarie-top.png` | MAPS rating: 7.0 | MAPS note: not re-viewed by orchestrator | judge: no | maker: Anthropic Sonnet | inventoried |
+checker exit: 1; === Total: 15 checks (PASS=4, FAIL=11) ===
+verdict: CAUGHT -- the slug-set and path-existence checks reject the mutated ID
+FAIL: P1-a slug absent from inventory: apothecary
+FAIL: P1-b inventory row for apothecary does not name scenes/maps/apothecary.ts
+FAIL: P1-b inventory row for apothecary does not name docs/map-mockups/apothecary.md
+FAIL: P1-b inventory row for apothecary does not name docs/map-mockups/apothecary.jpg
+FAIL: P1-b inventory row for apothecary does not name docs/map-mockups/apothecary-3q.png
+FAIL: P1-b inventory row for apothecary does not name docs/map-mockups/apothecary-top.png
+
+=== ADV-P1-06: slug cell mutated to apothecarie, paths untouched (informational) ===
+mutated row: | apothecarie | `scenes/maps/apothecary.ts` | `docs/map-mockups/apothecary.md` | `docs/map-mockups/apothecary.jpg` | `docs/map-mockups/apothecary-3q.png` | `docs/map-mockups/apothecary-top.png` | MAPS rating: 7.0 | MAPS note: not re-viewed by orchestrator | judge: no | maker: Anthropic Sonnet | inventoried |
+checker exit: 0; === Total: 9 checks (PASS=9, FAIL=0) ===
+verdict: DEFECT CONFIRMED (informational) -- no check parses the Slug cell against the TSV
+  scene_id; the slug grep matches the row through the intact paths, so a mutated Slug cell passes
+
+=== ADV-P1-07: rated state cell in Phase 1 ===
+mutated row: | apothecary | `scenes/maps/apothecary.ts` | `docs/map-mockups/apothecary.md` | `docs/map-mockups/apothecary.jpg` | `docs/map-mockups/apothecary-3q.png` | `docs/map-mockups/apothecary-top.png` | MAPS rating: 7.0 | MAPS note: not re-viewed by orchestrator | judge: no | maker: Anthropic Sonnet | rated |
+checker exit: 1; === Total: 9 checks (PASS=7, FAIL=2) ===
+verdict: CAUGHT -- the state-cell parse rejects rated in Phase 1
+FAIL: P1-d row for apothecary lacks inventoried state
+FAIL: P1-d row for apothecary carries rated in its state cell; rated belongs to Phase 2
+
+=== ADV-P1-08: judge cell claims a claude-family judge rating in Phase 1 ===
+mutated row: | apothecary | `scenes/maps/apothecary.ts` | `docs/map-mockups/apothecary.md` | `docs/map-mockups/apothecary.jpg` | `docs/map-mockups/apothecary-3q.png` | `docs/map-mockups/apothecary-top.png` | MAPS rating: 7.0 | MAPS note: not re-viewed by orchestrator | judge: Claude Sonnet 4.5 rated 9.5 | maker: Anthropic Sonnet | inventoried |
+checker exit: 1; === Total: 9 checks (PASS=8, FAIL=1) ===
+verdict: CAUGHT -- P1-c rejects the claude-family judge claim because the row lacks judge: no
+FAIL: P1-c row for apothecary lacks independent-judge field judge: no
+
+=== ADV-P1 summary ===
+ADV-P1-00 control:               CONTROL OK
+ADV-P1-01 rating fraud:          DEFECT CONFIRMED (gate)
+ADV-P1-02 maker family fraud:    DEFECT CONFIRMED (gate)
+ADV-P1-03 state fraud (F2):      DEFECT CONFIRMED (gate)
+ADV-P1-04 duplicate rows:        CAUGHT
+ADV-P1-05 slug mutation (full):  CAUGHT
+ADV-P1-06 slug cell fraud:       DEFECT CONFIRMED (informational)
+ADV-P1-07 rated in Phase 1:      CAUGHT
+ADV-P1-08 judge claim:           CAUGHT
+gate verdict: FAIL -- at least one bad inventory passed the phase gate; fix routes to Red
