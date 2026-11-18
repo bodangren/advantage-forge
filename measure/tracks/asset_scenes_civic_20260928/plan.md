@@ -16,7 +16,7 @@ Decisions taken 2026-11-19 under Daniel's primary directive of 2026-11-18. The P
   Record the map source in `scenes/maps/`, the design note in `docs/map-mockups/`, and the shots `<slug>-3q.png` and `<slug>-top.png`.
   Record the MAPS rating and note from `docs/map-review.html`, and whether an independent judge rated the map.
   Record the maker family where it is known. The default for the 2026-10 map batch is Anthropic Sonnet.
-- [x] Task: Mark a row `missing` when it has no source in `scenes/maps/`. (no row is `missing`: all 30 sources exist; state `inventoried` on every row)
+- [x] Task: Mark a row `missing` when it has no source in `scenes/maps/`. (`db233e01`: no row is `missing`; all 30 sources exist, and every row holds state `inventoried`)
   Leave the TSV unchanged in this phase.
 
 Gate:
