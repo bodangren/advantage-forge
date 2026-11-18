@@ -39,7 +39,7 @@ Red evidence under the Phase 2 gate).
   "phase": "Phase 2: Independent review",
   "baseline_sha": "3e8d29e8",
   "role_base_sha": "3e8d29e8",
-  "result_head_sha": "<HEAD after commit>",
+  "result_head_sha": "19decdb9 (checker + plan + this log; HEAD advances only if this follow-up note commits)",
   "red_command": "bash measure/runs/asset_scenes_civic_20260928/check-review.sh",
   "red_exit_code": 1,
   "tests": [
