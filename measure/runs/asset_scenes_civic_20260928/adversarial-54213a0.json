@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "role": "measure-adversarial-testing",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "## Phase 1: Inventory",
+  "status": "pass",
+  "summary": "Phase 1 adversarial re-audit at 54213a00: PASS. Red's fix closes all four routed findings and survives every probe. The full regression gate (bash measure/runs/asset_scenes_civic_20260928/adversarial-p1.sh) exits 0 with the control OK and all nine probes CAUGHT, including the three gate probes that passed fabricated data at feeca3f3: the fabricated MAPS rating 9.9 and note now fail, the claude-family maker now fails, and the absent-source inn row now fails on the state cell, not on a note substring. The real tree still passes the fixed checker (exit 0, PASS=9 FAIL=0). Five new probes against the value checks behave correctly: a one-word note drift is caught, an emptied note cell is caught, a rating of 7.00 is accepted because the rating is enforced as a number equal to the recorded value (judged not a defect; 9.9, 6.5, and non-numeric cells fail), a slug cell with a trailing space is accepted because cell parses trim surrounding whitespace by the checker's own normalization (judged not a defect; the trimmed value must still equal the TSV slug, and probe 06 shows a real slug drift fails), and a correctly labeled missing row now passes the gate as ADV-4 designed while its mislabeled variant still fails. The embedded expected-values table was verified against the final bench/sonnet/log.tsv rows for all 30 civic P2 slugs: 30 of 30 equal. One Nit stays open: the expected values are pinned inside the checker, so a later edit of bench/sonnet/log.tsv would not be caught by the gate.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "ADV-5 [Nit] adversarial-testing: check-inventory.sh pins the expected MAPS ratings, notes, and maker family inside the script (measure/runs/asset_scenes_civic_20260928/check-inventory.sh:29-70, maps_expected) instead of parsing them live from bench/sonnet/log.tsv. Rationale: Red's comment names the reason (adversarial fixtures carry the checker but not the log), and this re-audit verified the pinned table equals the final live log rows 30 of 30, so the record is faithful today; the exposure is a future edit of the log or of docs/map-review.html that the gate would not notice, because nothing ties the pinned table to the live file. test-strategy.md section 5 P1-c words the claim as from bench/sonnet/log.tsv. No action is required for Phase 1 acceptance; a later phase that regenerates the log or the page should re-diff the pinned table, and this JSON records the coupling."
+  ],
+  "evidence": [
+    "Provenance: HEAD equals the audited fix 54213a00d2d03581060a0ee72bbd4852e8067ee6; phase_base_sha db2053f2 resolves to db2053f2190ef0af3c24d6a149e70ee4bcb8f493; the fix range 0355d23c..54213a00 touches only measure/runs/asset_scenes_civic_20260928/check-inventory.sh (+103/-12) and red-p1.log (Red's own run artifact).",
+    "Regression gate: bash measure/runs/asset_scenes_civic_20260928/adversarial-p1.sh exits 0; summary in adversarial-p1-54213a0.log: control OK, probes 01 to 08 all CAUGHT, gate verdict PASS. At feeca3f3 the same run exited 1 with probes 01, 02, 03 DEFECT CONFIRMED, so the fix is failing-first verified.",
+    "ADV-1 verified fixed: probe ADV-P1-01 (fabricated MAPS rating 9.9 and note) now fails P1-c with FAIL: P1-c row for apothecary holds MAPS rating [9.9], want [7.0] from bench/sonnet/log.tsv; probe ADV-P1-02 (maker: Claude Sonnet 4.5) now fails with FAIL: P1-c row for apothecary holds unknown maker family.",
+    "ADV-2 verified fixed: probe ADV-P1-03 (inn source removed, state cell inventoried, note holding the word missing) now fails with FAIL: P1-d source absent but the state cell of inn reads [inventoried], want [missing]; the old PASS: P1-d row for inn is missing line is gone.",
+    "ADV-3 verified fixed: probe ADV-P1-06 (slug cell mutated to apothecarie, paths untouched) now fails with FAIL: P1-a row for apothecary holds slug cell [apothecarie], want [apothecary].",
+    "ADV-4 verified fixed: new probe ADV-P1-13 (inn source removed, state cell missing) passes exit 0 with PASS=10 FAIL=0, so a correctly labeled missing row is no longer blocked by the P1-b disk-existence check, while the mislabeled variant (probe 03) still fails.",
+    "New probe ADV-P1-09 (one changed word in the note, orchestrator to orchestrators) fails P1-c with the note-differs FAIL; new probe ADV-P1-12 (emptied note cell where the log holds none recorded, guild-hall) fails the same check. The value checks read cell contents, not label presence.",
+    "New probe ADV-P1-10 (rating 7.00 against the recorded 7.0) passes: the checker compares ratings numerically (awk -v a=7.00 -v b=7.0 equality prints 1), the cell pattern rejects non-numeric text, and probes 01 shows 9.9 fails, so no stray digit or date passes; judged value-correct, not a defect.",
+    "New probe ADV-P1-11 (slug cell with a trailing space) passes: the slug cell parse trims surrounding whitespace, the same normalization state_cell applies, and the trimmed value must still equal the TSV slug (probe 06 shows a real drift fails); judged parse normalization, not a defect.",
+    "Embedded table fidelity: the 30 maps_expected rows parsed from check-inventory.sh equal the final bench/sonnet/log.tsv rows for all 30 civic P2 slugs (awk over the TSV slug set and the log, diff empty, 30 of 30); the first comparison attempt that showed extra rows was an extraction bug in this audit (it did not filter to civic slugs) and was corrected before the committed log was written.",
+    "Real-tree gate: bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh on the committed tree exits 0 with === Total: 9 checks (PASS=9, FAIL=0) ===.",
+    "The committed log measure/runs/asset_scenes_civic_20260928/adversarial-p1-54213a0.log holds the full probe output and ends with the MEASURE_AGENT_RESULT block, per the role-gate requirement."
+  ],
+  "commands": [
+    "bash measure/runs/asset_scenes_civic_20260928/adversarial-p1.sh > adversarial-p1-54213a0.log (exit 0; control OK; probes 01-08 all CAUGHT)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh (exit 0, PASS=9 FAIL=0, real tree)",
+    "git diff 0355d23c..54213a00 -- measure/runs/asset_scenes_civic_20260928/check-inventory.sh (value checks, state-cell parse, slug-cell check, P1-b missing exemption)",
+    "awk over docs/fantasy-world-scene-blueprints.tsv and bench/sonnet/log.tsv vs the parsed maps_expected rows (30 of 30 equal, diff empty)",
+    "re-audit supplement script /tmp/opencode/adv-p1-re-audit.sh (five new probes ADV-P1-09 to ADV-P1-13, output appended to the committed log)",
+    "awk -v a=7.00 -v b=7.0 BEGIN equality (prints 1: numeric rating comparison confirmed before the probe)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_scenes_civic_20260928/adversarial-54213a0.json (added, final verdict; a provisional inconclusive verdict was written first per the brief and replaced by this verdict)",
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p1-54213a0.log (added; full probe output plus the MEASURE_AGENT_RESULT block)"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "baseline_sha": "db2053f2190ef0af3c24d6a149e70ee4bcb8f493",
+  "role_base_sha": "0355d23c",
+  "audited_head_sha": "54213a00d2d03581060a0ee72bbd4852e8067ee6",
+  "route": "opencode-go/glm-5.3#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The fixed checker fails every fabricated-value fixture (probes 01, 02, 09, 12) and the mislabeled missing state (probe 03), passes the real tree 9 of 9, and its pinned expected table equals the live log 30 of 30."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "Each routed finding now has a failing-first probe in adversarial-p1.sh (exit 1 at feeca3f3, exit 0 with all CAUGHT at 54213a00), and the five new probes pin the value-check semantics: word drift and emptied notes fail, while value-equal and whitespace-normalized forms pass as designed."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The fix range 0355d23c..54213a00 touches only the checker and Red's own red-p1.log; this re-audit commits only the two named artifacts and edits no checker, inventory, TSV, or product file."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every probe in adversarial-p1-54213a0.log shows the mutated row, the checker exit code, the Total line, and the exact FAIL line that proves the outcome, and the awk table comparison shows 30 of 30 with an empty diff."
+    }
+  ]
+}

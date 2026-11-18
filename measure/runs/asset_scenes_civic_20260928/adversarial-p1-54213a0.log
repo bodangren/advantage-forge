@@ -1,0 +1,142 @@
+ADV-P1 adversarial probes for check-inventory.sh (asset_scenes_civic_20260928, Phase 1)
+repo: /home/daniebo/Desktop/advantage-forge
+work: /tmp/opencode/adv-p1-civic
+
+=== ADV-P1-00 control: unmutated fixture must pass ===
+checker exit: 0; === Total: 9 checks (PASS=9, FAIL=0) ===
+verdict: CONTROL OK (stub files and copied records reproduce Green; probes below count)
+
+=== ADV-P1-01: fabricated MAPS rating and note (review-a F1) ===
+mutated row: | apothecary | `scenes/maps/apothecary.ts` | `docs/map-mockups/apothecary.md` | `docs/map-mockups/apothecary.jpg` | `docs/map-mockups/apothecary-3q.png` | `docs/map-mockups/apothecary-top.png` | MAPS rating: 9.9 | MAPS note: totally fabricated by the maker | judge: no | maker: Anthropic Sonnet | inventoried |
+checker exit: 1; === Total: 10 checks (PASS=8, FAIL=2) ===
+verdict: CAUGHT -- the checker now rejects the fabricated rating and note
+FAIL: P1-c row for apothecary holds MAPS rating [9.9], want [7.0] from bench/sonnet/log.tsv
+FAIL: P1-c row for apothecary holds a MAPS note that differs from bench/sonnet/log.tsv
+
+=== ADV-P1-02: maker value moved to the claude family (review-a F1, family rule) ===
+mutated row: | apothecary | `scenes/maps/apothecary.ts` | `docs/map-mockups/apothecary.md` | `docs/map-mockups/apothecary.jpg` | `docs/map-mockups/apothecary-3q.png` | `docs/map-mockups/apothecary-top.png` | MAPS rating: 7.0 | MAPS note: not re-viewed by orchestrator | judge: no | maker: Claude Sonnet 4.5 | inventoried |
+checker exit: 1; === Total: 9 checks (PASS=8, FAIL=1) ===
+verdict: CAUGHT -- the checker now rejects the claude-family maker value
+FAIL: P1-c row for apothecary holds unknown maker family: [Claude Sonnet 4.5]; want Anthropic Sonnet
+
+=== ADV-P1-03: absent source, note holds the word missing, state cell inventoried (review-a F2) ===
+inn row (unchanged, note holds the word missing): | inn | `scenes/maps/inn.ts` | `docs/map-mockups/inn.md` | `docs/map-mockups/inn.jpg` | `docs/map-mockups/inn-3q.png` | `docs/map-mockups/inn-top.png` | MAPS rating: 7.0 | MAPS note: missing hanging lantern | judge: no | maker: Anthropic Sonnet | inventoried |
+checker exit: 1; === Total: 9 checks (PASS=7, FAIL=2) ===
+P1-b and P1-d lines for inn:
+FAIL: P1-b named path absent on disk: scenes/maps/inn.ts
+FAIL: P1-d source absent but the state cell of inn reads [inventoried], want [missing]
+verdict: CAUGHT -- the state check rejects the mislabeled row
+
+=== ADV-P1-04: duplicate rows (watchtower row replaced by a second apothecary row) ===
+rows naming scenes/maps/apothecary.ts: 2 (want 2)
+rows naming scenes/maps/watchtower.ts: 0 (want 0)
+checker exit: 1; === Total: 13 checks (PASS=4, FAIL=9) ===
+verdict: CAUGHT -- the slug-set and path checks reject the dropped watchtower row
+FAIL: P1-a slug absent from inventory: watchtower
+FAIL: P1-b inventory row for watchtower does not name scenes/maps/watchtower.ts
+FAIL: P1-b inventory row for watchtower does not name docs/map-mockups/watchtower.md
+FAIL: P1-b inventory row for watchtower does not name docs/map-mockups/watchtower.jpg
+FAIL: P1-b inventory row for watchtower does not name docs/map-mockups/watchtower-3q.png
+FAIL: P1-b inventory row for watchtower does not name docs/map-mockups/watchtower-top.png
+
+=== ADV-P1-05: slug ID mutation, slug cell and paths renamed to apothecarie ===
+mutated row: | apothecarie | `scenes/maps/apothecarie.ts` | `docs/map-mockups/apothecarie.md` | `docs/map-mockups/apothecarie.jpg` | `docs/map-mockups/apothecarie-3q.png` | `docs/map-mockups/apothecarie-top.png` | MAPS rating: 7.0 | MAPS note: not re-viewed by orchestrator | judge: no | maker: Anthropic Sonnet | inventoried |
+checker exit: 1; === Total: 13 checks (PASS=4, FAIL=9) ===
+verdict: CAUGHT -- the slug-set and path-existence checks reject the mutated ID
+FAIL: P1-a slug absent from inventory: apothecary
+FAIL: P1-b inventory row for apothecary does not name scenes/maps/apothecary.ts
+FAIL: P1-b inventory row for apothecary does not name docs/map-mockups/apothecary.md
+FAIL: P1-b inventory row for apothecary does not name docs/map-mockups/apothecary.jpg
+FAIL: P1-b inventory row for apothecary does not name docs/map-mockups/apothecary-3q.png
+FAIL: P1-b inventory row for apothecary does not name docs/map-mockups/apothecary-top.png
+
+=== ADV-P1-06: slug cell mutated to apothecarie, paths untouched (informational) ===
+mutated row: | apothecarie | `scenes/maps/apothecary.ts` | `docs/map-mockups/apothecary.md` | `docs/map-mockups/apothecary.jpg` | `docs/map-mockups/apothecary-3q.png` | `docs/map-mockups/apothecary-top.png` | MAPS rating: 7.0 | MAPS note: not re-viewed by orchestrator | judge: no | maker: Anthropic Sonnet | inventoried |
+checker exit: 1; === Total: 9 checks (PASS=8, FAIL=1) ===
+verdict: CAUGHT -- the checker now validates the Slug cell against the TSV
+FAIL: P1-a row for apothecary holds slug cell [apothecarie], want [apothecary]
+
+=== ADV-P1-07: rated state cell in Phase 1 ===
+mutated row: | apothecary | `scenes/maps/apothecary.ts` | `docs/map-mockups/apothecary.md` | `docs/map-mockups/apothecary.jpg` | `docs/map-mockups/apothecary-3q.png` | `docs/map-mockups/apothecary-top.png` | MAPS rating: 7.0 | MAPS note: not re-viewed by orchestrator | judge: no | maker: Anthropic Sonnet | rated |
+checker exit: 1; === Total: 9 checks (PASS=7, FAIL=2) ===
+verdict: CAUGHT -- the state-cell parse rejects rated in Phase 1
+FAIL: P1-d row for apothecary lacks inventoried state
+FAIL: P1-d row for apothecary carries rated in its state cell; rated belongs to Phase 2
+
+=== ADV-P1-08: judge cell claims a claude-family judge rating in Phase 1 ===
+mutated row: | apothecary | `scenes/maps/apothecary.ts` | `docs/map-mockups/apothecary.md` | `docs/map-mockups/apothecary.jpg` | `docs/map-mockups/apothecary-3q.png` | `docs/map-mockups/apothecary-top.png` | MAPS rating: 7.0 | MAPS note: not re-viewed by orchestrator | judge: Claude Sonnet 4.5 rated 9.5 | maker: Anthropic Sonnet | inventoried |
+checker exit: 1; === Total: 9 checks (PASS=8, FAIL=1) ===
+verdict: CAUGHT -- P1-c rejects the claude-family judge claim because the row lacks judge: no
+FAIL: P1-c row for apothecary lacks independent-judge field judge: no
+
+=== ADV-P1 summary ===
+ADV-P1-00 control:               CONTROL OK
+ADV-P1-01 rating fraud:          CAUGHT
+ADV-P1-02 maker family fraud:    CAUGHT
+ADV-P1-03 state fraud (F2):      CAUGHT
+ADV-P1-04 duplicate rows:        CAUGHT
+ADV-P1-05 slug mutation (full):  CAUGHT
+ADV-P1-06 slug cell fraud:       CAUGHT
+ADV-P1-07 rated in Phase 1:      CAUGHT
+ADV-P1-08 judge claim:           CAUGHT
+gate verdict: PASS -- every gate probe is caught; the informational probes are listed above
+
+=== Re-audit at 54213a00: real-tree checker rerun ===
+real tree: checker exit 0; === Total: 9 checks (PASS=9, FAIL=0) ===
+
+=== Re-audit: embedded maps_expected table vs live bench/sonnet/log.tsv ===
+embedded expected rows: 30; live final map-p2 rows: 30
+verdict: TABLE FAITHFUL -- every embedded rating and note equals the final live log row (30 of 30)
+
+=== ADV-P1-09: one changed word in the MAPS note (new value-check probe) ===
+mutated row: | apothecary | `scenes/maps/apothecary.ts` | `docs/map-mockups/apothecary.md` | `docs/map-mockups/apothecary.jpg` | `docs/map-mockups/apothecary-3q.png` | `docs/map-mockups/apothecary-top.png` | MAPS rating: 7.0 | MAPS note: not re-viewed by orchestrators | judge: no | maker: Anthropic Sonnet | inventoried |
+checker exit: 1; === Total: 9 checks (PASS=8, FAIL=1) ===
+verdict: CAUGHT -- the note value check rejects a one-word drift from the log record
+
+=== ADV-P1-10: rating 7.00 where the log holds 7.0 (new value-check probe) ===
+mutated row: | apothecary | `scenes/maps/apothecary.ts` | `docs/map-mockups/apothecary.md` | `docs/map-mockups/apothecary.jpg` | `docs/map-mockups/apothecary-3q.png` | `docs/map-mockups/apothecary-top.png` | MAPS rating: 7.00 | MAPS note: not re-viewed by orchestrator | judge: no | maker: Anthropic Sonnet | inventoried |
+checker exit: 0; === Total: 9 checks (PASS=9, FAIL=0) ===
+verdict: ACCEPTED, judged NOT A DEFECT -- the rating is enforced as a number equal to the log
+  value (awk compares 7.00 and 7.0 numerically); every value drift (9.9, 6.5, 7.1) fails, and the
+  cell pattern still rejects non-numeric text, so no stray digit passes
+
+=== ADV-P1-11: slug cell with a trailing space (new value-check probe) ===
+mutated row: | apothecary  | `scenes/maps/apothecary.ts` | `docs/map-mockups/apothecary.md` | `docs/map-mockups/apothecary.jpg` | `docs/map-mockups/apothecary-3q.png` | `docs/map-mockups/apothecary-top.png` | MAPS rating: 7.0 | MAPS note: not re-viewed by orchestrator | judge: no | maker: Anthropic Sonnet | inventoried |
+checker exit: 0; === Total: 9 checks (PASS=9, FAIL=0) ===
+verdict: ACCEPTED, judged NOT A DEFECT -- the slug cell parse trims surrounding whitespace,
+  the same normalization the checker applies to its own state cells; the trimmed value must still
+  equal the TSV slug exactly, so any real slug drift (probe 06) fails
+
+=== ADV-P1-12: empty MAPS note where the log holds none recorded (guild-hall) ===
+mutated row: | guild-hall | `scenes/maps/guild-hall.ts` | `docs/map-mockups/guild-hall.md` | `docs/map-mockups/guild-hall.jpg` | `docs/map-mockups/guild-hall-3q.png` | `docs/map-mockups/guild-hall-top.png` | MAPS rating: 7.0 | MAPS note: | judge: no | maker: Anthropic Sonnet | inventoried |
+checker exit: 1; === Total: 9 checks (PASS=8, FAIL=1) ===
+verdict: CAUGHT -- an emptied note cell cannot stand in for the recorded none recorded
+
+=== ADV-P1-13: legitimate missing row (state cell missing, source absent) ===
+mutated row: | inn | `scenes/maps/inn.ts` | `docs/map-mockups/inn.md` | `docs/map-mockups/inn.jpg` | `docs/map-mockups/inn-3q.png` | `docs/map-mockups/inn-top.png` | MAPS rating: 7.0 | MAPS note: missing hanging lantern | judge: no | maker: Anthropic Sonnet | missing |
+checker exit: 0; === Total: 10 checks (PASS=10, FAIL=0) ===
+verdict: ACCEPTED AS DESIGNED -- the ADV-4 P1-b exemption lets a correctly labeled missing row
+  pass the gate (exit 0, see the Total line above), while the mislabeled variant of the same fixture
+  (probe 03, state inventoried) still fails on both P1-b and the P1-d state cell
+
+=== Re-audit probe summary (54213a00) ===
+real-tree checker:             exit 0 (want 0)
+embedded table vs live log:     see TABLE verdict above
+ADV-P1-09 note word drift:      CAUGHT
+ADV-P1-10 rating 7.00:          ACCEPTED (value-equal, not a defect)
+ADV-P1-11 slug trailing space:  ACCEPTED (parse normalization, not a defect)
+ADV-P1-12 emptied note cell:    CAUGHT
+ADV-P1-13 legitimate missing:   ACCEPTED AS DESIGNED (ADV-4 exemption works)
+
+MEASURE_AGENT_RESULT
+role: measure-adversarial-testing
+status: complete
+track: asset_scenes_civic_20260928
+phase: ## Phase 1: Inventory
+commits: this re-audit commit (message: test(asset_scenes_civic): Phase 1 adversarial re-audit); audited HEAD 54213a00 (Red fix), baseline phase_base_sha db2053f2, prior role commit 0355d23c
+tests_run: bash measure/runs/asset_scenes_civic_20260928/adversarial-p1.sh -> exit 0, control OK, probes 01 to 08 all CAUGHT (gate verdict PASS); real-tree bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh -> exit 0, PASS=9 FAIL=0; embedded maps_expected table vs live bench/sonnet/log.tsv final rows -> 30 of 30 equal; new probes: ADV-P1-09 note word drift CAUGHT, ADV-P1-10 rating 7.00 ACCEPTED (value-equal, judged not a defect), ADV-P1-11 slug trailing space ACCEPTED (parse normalization, judged not a defect), ADV-P1-12 emptied note cell CAUGHT, ADV-P1-13 legitimate missing row ACCEPTED AS DESIGNED (ADV-4 exemption works; mislabeled variant still fails)
+files_changed: measure/runs/asset_scenes_civic_20260928/adversarial-54213a0.json, measure/runs/asset_scenes_civic_20260928/adversarial-p1-54213a0.log (both committed with explicit paths; probe fixtures under /tmp/opencode/adv-p1-re)
+plan_updates: none
+known_failures: none
+handoff: verdict PASS. Red's fix at 54213a00 closes all four routed findings: ADV-1 (P1-c now compares rating, note, and maker values; probes 01 and 02 now fail), ADV-2 (the absent-source branch parses the state cell; probe 03 now fails on the state cell), ADV-3 (P1-a validates the Slug cell; probe 06 now fails), ADV-4 (P1-b exempts a missing-state row; probe 13 shows a correctly labeled missing row passes). Two accepted-value semantics are judged not defects and recorded for the orchestrator: the rating compares numerically (7.00 equals 7.0; every real value drift fails) and cell parses trim surrounding whitespace (a trailing-space slug cell still must equal the TSV slug after trim). One Nit stays open in the JSON: the expected MAPS values are pinned inside the checker instead of read from bench/sonnet/log.tsv, so a future edit of that log would not be caught; verified equal 30 of 30 today. Phase 1 adversarial gate passes at 54213a00.
+END_MEASURE_AGENT_RESULT
