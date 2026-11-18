@@ -34,7 +34,7 @@ Green evidence: the checker exits 0 with `=== Total: 9 checks (PASS=9, FAIL=0) =
 
 ## Phase 2: Independent review
 
-- [ ] Task: Send the shots of each existing civic map to an independent judge.
+- [~] Task: Send the shots of each existing civic map to an independent judge.
   Use the route from "ra-quota pick vision-review". Work in batches of about 8 maps.
   The judge rates each map out of 10 against its design note. The bar is 7.0.
   Use a judge family that differs from the maker family. The default maker for this batch is Anthropic Sonnet.
@@ -48,6 +48,12 @@ ls measure/runs/asset_scenes_civic_20260928/vision-review-*.json
 ```
 
 Four batches cover the 30 maps, and each JSON gives one rating per map.
+
+Red evidence: `bash measure/runs/asset_scenes_civic_20260928/check-review.sh` exits 1 on HEAD
+`3e8d29e8`: no `vision-review-b<N>.json` file exists (8 FAILs on P2-a). The run log is
+`measure/runs/asset_scenes_civic_20260928/red-p2.log`. Smoke fixtures (since removed) showed
+P2-a to P2-c pass on well-formed batches, P2-d fail while rows read `inventoried`, P2-c reject
+an Anthropic Sonnet judge, and P2-b reject a date string as a rating.
 
 ## Phase 3: Rework
 

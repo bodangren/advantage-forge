@@ -1,0 +1,68 @@
+# Phase 2 Red run (track asset_scenes_civic_20260928)
+
+Red command: bash measure/runs/asset_scenes_civic_20260928/check-review.sh
+Exit code: 1 (expected Red state: no vision-review batch files exist yet)
+
+## Output
+
+Civic P2 TSV slug count: 30
+=== P2-a: four batch JSON files and four batch logs exist ===
+FAIL: P2-a batch file absent: measure/runs/asset_scenes_civic_20260928/vision-review-b1.json does not exist
+FAIL: P2-a batch file absent: measure/runs/asset_scenes_civic_20260928/vision-review-b1.log does not exist
+FAIL: P2-a batch file absent: measure/runs/asset_scenes_civic_20260928/vision-review-b2.json does not exist
+FAIL: P2-a batch file absent: measure/runs/asset_scenes_civic_20260928/vision-review-b2.log does not exist
+FAIL: P2-a batch file absent: measure/runs/asset_scenes_civic_20260928/vision-review-b3.json does not exist
+FAIL: P2-a batch file absent: measure/runs/asset_scenes_civic_20260928/vision-review-b3.log does not exist
+FAIL: P2-a batch file absent: measure/runs/asset_scenes_civic_20260928/vision-review-b4.json does not exist
+FAIL: P2-a batch file absent: measure/runs/asset_scenes_civic_20260928/vision-review-b4.log does not exist
+=== Total: 8 checks (PASS=0, FAIL=8) ===
+
+## Smoke controls (temporary fixtures, removed after the run)
+
+- Well-formed batches (model_family "Smoke Family Model", ratings 7.5): P2-a, P2-b, P2-c
+  pass; P2-d fails while inventory rows read `inventoried`. Total 59 checks, 29 pass.
+- Judge family "Anthropic Sonnet": P2-c rejects the batch as maker/claude family.
+- Rating string "2026-11-19": P2-b rejects it as a non-numeric rating (A3 defense holds).
+
+## Commits
+
+Checker: measure/runs/asset_scenes_civic_20260928/check-review.sh (new, executable).
+Plan: measure/tracks/asset_scenes_civic_20260928/plan.md (first Phase 2 task marked [~],
+Red evidence under the Phase 2 gate).
+
+## MEASURE_AGENT_RESULT
+
+```json
+{
+  "role": "measure-mid-red",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "Phase 2: Independent review",
+  "baseline_sha": "3e8d29e8",
+  "role_base_sha": "3e8d29e8",
+  "result_head_sha": "<HEAD after commit>",
+  "red_command": "bash measure/runs/asset_scenes_civic_20260928/check-review.sh",
+  "red_exit_code": 1,
+  "tests": [
+    {
+      "path": "measure/runs/asset_scenes_civic_20260928/check-review.sh",
+      "checks": "P2-a to P2-d plus A9: 8 checks in the true Red state (PASS=0, FAIL=8); 59 checks with smoke fixtures (P2-a to P2-c pass, P2-d fails as expected)"
+    }
+  ],
+  "files_changed": [
+    "measure/runs/asset_scenes_civic_20260928/check-review.sh",
+    "measure/tracks/asset_scenes_civic_20260928/plan.md",
+    "measure/runs/asset_scenes_civic_20260928/red-p2.log"
+  ],
+  "remaining_failures": [
+    "P2-a: no vision-review-b1..b4.json files exist (8 missing-file FAILs)",
+    "P2-b: no ratings to parse (blocked on P2-a)",
+    "P2-c: no judge families to verify (blocked on P2-a)",
+    "P2-d: all 30 inventory rows hold state inventoried, want rated (blocked on judge batches)"
+  ],
+  "handoff": {
+    "question": "Phase 2 Red is complete. May Green proceed to dispatch the four independent judge batches (vision-review-b1..b4) and copy ratings into the inventory?",
+    "options": ["Green may proceed", "Hold for changes"]
+  },
+  "status": "red-complete"
+}
+```
