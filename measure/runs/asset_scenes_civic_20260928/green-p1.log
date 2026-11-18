@@ -97,3 +97,7 @@ plan_updates: Phase 1 task 1 [x] with db233e01; Phase 1 task 2 [x] with the 30 e
 known_failures: none in this phase; the aggregate suites are baseline debt and are not phase gates
 handoff: Phase 1 is complete; the inventory is faithful to docs/map-review.html and the TSV is unchanged. Phase 2 starts with the independent judge batches (four batches, about 8 maps each, judge family outside the claude family). Do not treat the word "rated" inside a quoted MAPS note as a state label.
 END_MEASURE_AGENT_RESULT
+
+## Follow-up commit
+
+`2e8e4f01` adds the inventory SHA `db233e01` to the Phase 1 task 2 line, so both completed tasks carry SHA evidence.
