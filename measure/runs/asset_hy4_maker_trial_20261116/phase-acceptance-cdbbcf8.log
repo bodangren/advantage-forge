@@ -1,0 +1,68 @@
+phase-acceptance log, run 2, track asset_hy4_maker_trial_20261116, Phase 1: The trial
+Role: measure-phase-acceptance (light lane checker). Route: claude-code/claude-sonnet-5-5#max.
+Audited HEAD: cdbbcf8db5e5c15637640dd852ee6f20a8ab223f. Baseline: 0538f7dc. Run 1 was at f0a6fdaa5988 (FAIL on F1).
+HEAD matched at the start of the run and again at the end.
+Verdict: PASS. No blocker. F1 is resolved by the documented size ruling. Eight nonblocking findings remain (F2, F3, F5 to F10).
+Result JSON: measure/runs/asset_hy4_maker_trial_20261116/phase-acceptance-cdbbcf8.json
+
+WHAT CHANGED SINCE RUN 1
+- One commit, cdbbcf8d. It adds judge-r1-sizes.log and my two run 1 files, and it changes plan.md of this track (10 lines added, 4 removed).
+- No asset, src, docs, scripts, tests, other track, measure/tracks.md, or measure/generated path changed. metadata.json, spec.md, and the registry are unchanged.
+- Run 1 files are committed unchanged, and they hold the final version (the judge-brief.md:78 correction).
+- I did not rerun the heavy mechanical check, because no asset changed. The run 1 check of wash-basin (exit 0, ok true) stays valid.
+
+F1 CHECK
+The plan now holds a ruling (plan.md:106-109, from judge-r1-sizes.log:57-59): the size in the brief applies to the main body, and an appendage that extends the bounding box does not make the scale wrong while the main body stays within 20 percent on every axis. The text equals the log word for word.
+1. Documented: yes. The plan names the judge route, the date, the effect, and the note that the PM may reverse the default.
+2. Same way for all 6 cards: yes in effect. Five cards pass on full bounds (the largest deviation is +11.1 percent, towel-rack-b x). Wash-basin-a passes on the main body only. One rule gives one verdict for every card. The record applies the ruling to z of wash-basin-a but not to its y (nit F8).
+3. Consistent with judge-brief.md: yes. judge-brief.md:66 and :81 use the term 'wrong scale' and do not say what is measured, and judge-brief.md:14 says only that the brief holds 'the size'. No line contradicts the ruling. wash-basin.md:11 (centred on the Y axis) and :12 (dipper on the +Z side) support the main-body reading, and wash-basin.md:72 uses 'whole asset' only for the triangle budget.
+4. D8 result: unchanged and correct. The 6 ratings of judge-r1.json stand. Hy4 wins wash-basin (8.0 against 7.0) and towel-rack (8.0 against 7.5, exactly 0.5), and the current arm wins towel-stack (a pass beats a fail). Hy4 wins 2 of 3.
+Source check of the premise (the only card that needs the ruling is wash-basin-a):
+- Bowl x and z: the wood and iron bodies span -0.21 to 0.21 m (iron hoop radius 0.21 at assets/wash-basin.ts:187; stats.json min x -0.21, max x 0.21, min z -0.21). The bowl is 0.42 m deep, +5.0 percent.
+- Bowl y: 0.172 m (RIM_Y 0.17 at assets/wash-basin.ts:41; rim torus top 0.155 + 0.017 at :162), +1.2 percent.
+- Dipper: the knob (assets/wash-basin.ts:230, sphere 0.014 at 0.09, 0.185, 0.27) sets the top of the box (y 0.199) and its front (z 0.284), as stats.json shows. The handle cone is at line 229, from z 0.115 to z 0.27. The dipper block is lines 212-243.
+- maker-r1-1.log:53 and :56 name the same causes of the two overruns: the dipper knob and the rack peg.
+F1 is withdrawn.
+
+RECORD CHECK
+- Every percent in plan.md:107 equals judge-r1-sizes.log:63-115. I recomputed all of them from the bounds in the maker logs and stats.json. Each agrees to 0.1 percent.
+- The judge route, the 'no new visual rating' statement, and the ruling text equal judge-r1-sizes.log:3, :6-11, and :57-59.
+- plan.md:114, :123, and :129 now name 7d2c530a. F4 is withdrawn. The 'not run' entries of Tasks 2 and 3 stay by orchestrator decision.
+- plan.md:145-146 records run 1 correctly.
+- Task markers: Tasks 0 to 4 are [x]. The Phase 1 gate (plan.md:142) and the Closeout (plan.md:147) stay [ ].
+
+CONDITION OF THIS PASS
+The pass depends on the default ruling. It changes the verdict of one card only, wash-basin-a, which is a Hy4 card. The rerate judge did not know the routes (judge-r1-sizes.log:46-51), and plan.md:109 says the PM may reverse the default. If the PM reverses it, wash-basin-a fails (z +23.5 percent, cap 7.0, critical error 4), the current arm wins wash-basin, Hy4 wins 1 of 3, and the route result changes. Then assets/wash-basin.ts must come again from wash-basin-b (git show 6a03ea7e:assets/wash-basin-b.ts), and acceptance must rerun at the new HEAD.
+
+NONBLOCKING FINDINGS
+F2 [Nit] (carried): judge-r1.json shape differs from judge-brief.md; towel-stack-a lists no critical error for its hovering slab (judge-brief.md:78). No outcome changes.
+F3 [Nit] (carried): plan.md:110 and :173 cite an arm 1 service outage with no record in maker-r1-1.log.
+F5 [Nit] (carried): metadata.json is stale (kimi judge, actual_tasks 1, updated_at 2026-11-16), and plan.md:3 reads 'Status: new'.
+F6 [Nit] (carried): TD-32. The type check can pass with no check when tsc cannot start (mech-check.mjs:63, scripts/typecheck-asset.mjs:41). It was real in this trial.
+F7 [Nit] (carried): mockups.md records one quota pair for the 3 mmx calls, not one per call (spec.md:100).
+F8 [Nit]: plan.md:107 labels y +17.1 percent as the bowl. The bowl is 0.172 m (+1.2 percent). The dipper knob (assets/wash-basin.ts:230) gives the +17.1 percent. Owner: the Measure orchestrator (build session).
+F9 [Nit]: four record gaps in the new plan text: plan.md:103 'The judge gets all three' has no record for the round 1 judge; plan.md:109 names no owner and no date; plan.md:175 and plan.md:194-205 do not point to the ruling or the sizes log; the ruling does not define 'main body' or 'appendage'. Owner: the Measure orchestrator (build session).
+F10 [Nit]: the route result is sensitive to ratings given without sizes. Towel-rack goes to Hy4 by exactly 0.5. Owner: the PM and Daniel read it with the route result.
+
+NOT VERIFIED BY ME
+- AC 10: measure/doctor.sh is not on my command list. Closeout must run it.
+- The seed draw of arm-key.json: python3 -c is not on my command list.
+- The text of Daniel's primary directive: I read only its citation at plan.md:109 and in the run 2 brief.
+
+VALIDATORS (python3 -I measure_interphase_checks.py)
+- audit-result on the JSON file: PASS. The JSON is valid.
+- role-gate: FAIL for one reason only: the phase has 2 open tasks, the Phase 1 gate and the Closeout, which the brief names as expected. The audit status is pass, and the log block raised no gate error.
+
+MEASURE_AGENT_RESULT
+role: measure-phase-acceptance
+status: complete
+track: asset_hy4_maker_trial_20261116
+phase: Phase 1: The trial
+commits: none
+tests_run: no heavy rerun (no asset changed since f0a6fdaa; the run 1 mechanical check of wash-basin, exit 0, ok true, stays valid); audit-result check on the result JSON -> PASS; role-gate check -> FAIL for one reason only (2 open tasks, the Phase 1 gate and the Closeout, which the brief names as expected); all other commands were read-only git, grep, sed, and file reads
+files_changed: measure/runs/asset_hy4_maker_trial_20261116/phase-acceptance-cdbbcf8.json, measure/runs/asset_hy4_maker_trial_20261116/phase-acceptance-cdbbcf8.log
+plan_updates: none
+known_failures: none blocking. Nonblocking: F2, F3, F5, F6, F7 (carried from run 1) and F8, F9, F10 (new); see the JSON file
+handoff: Phase 1 gate passes at cdbbcf8db5e5 with no blocker; F1 is withdrawn because the documented size ruling (plan.md:106-109) holds on all four conditions. The orchestrator may mark the Phase 1 gate done and start closeout. Closeout should run measure/doctor.sh (AC 10, not verified by me), fix F8 (plan.md:107 bowl y), F9 (plan.md:103, :109, :175, :194-205), and F5 (metadata.json, plan.md:3) where it agrees, and add the PM note below to the route result. PM NOTE: the route result depends on the default size ruling. If the PM reverses it, wash-basin-a fails (z +23.5 percent), Hy4 wins 1 of 3, assets/wash-basin.ts must be promoted again from wash-basin-b (git show 6a03ea7e:assets/wash-basin-b.ts), and Phase 1 acceptance must rerun at the new HEAD. Rerun acceptance also if any asset, any plan.md result line, or any run file changes before closeout. Daniel owns the route decision.
+retry_recommendation: none
+END_MEASURE_AGENT_RESULT

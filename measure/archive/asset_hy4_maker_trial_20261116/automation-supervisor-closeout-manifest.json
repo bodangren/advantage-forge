@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "track": "asset_hy4_maker_trial_20261116",
+  "archived_at": "2026-11-18T14:45:00Z",
+  "track_base_sha": "8d045c1d538a18a4c653d6ceca05fdf09689bb59",
+  "track_final_sha": "cdbbcf8db5e5c15637640dd852ee6f20a8ab223f",
+  "lane": "light",
+  "phase_acceptance_results": [
+    {
+      "phase": "Phase 1: The trial",
+      "run": 1,
+      "audited_head_sha": "f0a6fdaa",
+      "status": "fail",
+      "route": "claude-code/claude-sonnet-5-5#max",
+      "file": "measure/runs/asset_hy4_maker_trial_20261116/phase-acceptance-f0a6fda.json"
+    },
+    {
+      "phase": "Phase 1: The trial",
+      "run": 2,
+      "audited_head_sha": "cdbbcf8db5e5c15637640dd852ee6f20a8ab223f",
+      "status": "pass",
+      "route": "claude-code/claude-sonnet-5-5#max",
+      "file": "measure/runs/asset_hy4_maker_trial_20261116/phase-acceptance-cdbbcf8.json",
+      "note": "The pass is bound to cdbbcf8d, which was the pre-closeout HEAD. F1 (wash-basin depth) is withdrawn on the size ruling at the plan. The eight nonblocking findings F2, F3, and F5 to F10 stay open at their owners."
+    }
+  ],
+  "completed_phases": [
+    {
+      "id": "Phase 0",
+      "title": "Phase 0: Authoring",
+      "checkpoint": "8d045c1d"
+    },
+    {
+      "id": "Phase 1",
+      "title": "Phase 1: The trial",
+      "checkpoint": "cdbbcf8d"
+    }
+  ],
+  "final_acceptance": "not run: the light lane has no final acceptance role (plan.md, line 153, and the PM light-lane rule of 2026-11-03). No measure/runs/asset_hy4_maker_trial_20261116/final-acceptance-*.json exists.",
+  "gates": {
+    "TASK_MARKERS": "pass: the archived plan holds no [~] and no [ ] line. Tasks 0 to 4, the Phase 1 gate, and the Closeout are [x]. It holds no [b] line, so no deferred owner field is needed.",
+    "PHASE_ACCEPTANCE": "pass at cdbbcf8d (run 2, claude-code/claude-sonnet-5-5#max). Run 1 at f0a6fdaa failed on F1; the size ruling of judge-r1-sizes.log resolves F1.",
+    "MECHANICAL_CHECK": "not rerun in the closeout: the check ran on the 3 promoted sources in Task 4 (exit 0 for each, no build warning) and the phase checker ran it again on one promoted asset at cdbbcf8d. The trial sources are deleted, so a rerun of the 6 labelled cards is not possible.",
+    "DOCTOR": "ran: ./measure/doctor.sh names no line with asset_hy4_maker_trial_20261116. The doctor holds pre-existing errors about measure/generated and about 4 other tracks; they are not of this track.",
+    "GENERATED_FACTS": "not regenerated: measure/generated/ holds foreign uncommitted changes, so ./measure/generate.sh did not run. The registry entry in measure/tracks.md went in through a blob, because that file holds a foreign hunk.",
+    "source": "this closeout session"
+  },
+  "antipatterns_clean": [
+    "A5 false claim - the plan holds no PASS= count and no all-checks-pass claim. Each gate line names its run, its route, its date, and its file. The one PASS claim (run 2 at cdbbcf8d) equals phase-acceptance-cdbbcf8.json.",
+    "A6 registry overstatement - the archived registry entry states the completion date and the metadata description only. It names no adversarial test, because the light lane runs none, and it claims no state that a test did not show.",
+    "A9 archived track paths - no test under tests/ names measure/tracks/asset_hy4_maker_trial_20261116, so no test broke on the move. measure/tech-debt.md TD-32 and docs/bathhouse-mockups/README.md pointed at the old path; this commit repoints both to measure/archive/.",
+    "A10 generated-facts drift - the generator did not run, because measure/generated holds foreign uncommitted changes. measure/tracks.md holds a foreign hunk, so the registry entry went in through a blob."
+  ],
+  "record_fixes_this_closeout": [
+    "F8: the plan named the +17.1 percent y deviation as the bowl. The bowl is +1.2 percent; the dipper knob sets the full-bounds top at 0.199 m. The plan now reads 'bowl -0.2, +1.2, +5.0, and full bounds y +17.1, z +23.5'. judge-r1-sizes.log stays unchanged, because it is a judge record.",
+    "F9 (1): the plan said 'The judge gets all three'. It now states that no record shows the round 1 judge got the known misses, and that only the size rerate judge saw the sizes.",
+    "F9 (2): the default now names the owner (Measure orchestrator) and the date (2026-11-18).",
+    "F9 (3): the route result and the Evidence section now point at judge-r1-sizes.log and hold the PM note on a ruling reversal.",
+    "F9 (4): the plan now defines the main body and the appendage for wash-basin and towel-rack.",
+    "F5: metadata.json names judge opencode-go/muse-spark-1.3-contributor#high, status done, completed and completed_at 2026-11-18, updated_at 2026-11-18, and actual_tasks 7. plan.md line 3 now reads 'Status: done (2026-11-18)'."
+  ],
+  "record_findings_carried": [
+    "F2 (nit): judge-r1.json keeps an array shape and no order key, and the towel-stack-a card lists no critical error for its floating slab. The card fails on 6.0, so no outcome changes. Owner: the Measure orchestrator.",
+    "F3 (nit): the plan still says arm 1 continued once after a service outage, and maker-r1-1.log holds no record of it. Owner: the Measure orchestrator.",
+    "F6 (nit): the type check of mech-check.mjs can pass when tsc cannot start (TD-32). Owner: the light-lane track named in TD-32.",
+    "F7 (nit): mockups.md records one quota pair for the 3 mmx calls instead of one pair for each call. Owner: the Measure orchestrator.",
+    "F10 (nit): the towel-rack verdict rests on a 0.5 rating margin. The PM and Daniel read it with the route result. Owner: the PM."
+  ],
+  "deferred": [
+    "F2, F3, F6, F7, and F10 stay open as nit findings at their owners above (deferred:Measure orchestrator)",
+    "The PM decision on the default size ruling stays with the PM and Daniel: a reversal fails wash-basin-a and makes Hy4 win 1 of 3 (deferred:PM)"
+  ],
+  "deferred_note": "No plan task stays open, no [b] line exists, and every [x] task names a commit SHA or a run record. The carried findings are record nits, not tasks.",
+  "tech_debt": [
+    "TD-32 stays open in measure/tech-debt.md. The closeout repoints its track link to measure/archive/asset_hy4_maker_trial_20261116/ and adds no new debt row."
+  ],
+  "tech_debt_note": "No new debt is warranted. The trial added TD-32 in Phase 0, and the fix belongs to a later light-lane track.",
+  "lessons_learned": "No new lesson is warranted. The trial lesson is already in measure/lessons-learned.md (the Hy4 a/b trial line: 2 of 3 assets at the 7.0 bar, and stacked props need a contact rule).",
+  "generated_facts": "not committed: measure/generated holds foreign uncommitted changes, so the generator did not run. The registry entry in measure/tracks.md is staged through a blob.",
+  "artifact_cleanup": "no bulky run artifact was deleted; the orchestrator identified none. The run folder keeps every log: the judge files, judge-r1-sizes.log, the maker logs, the mech-check and its test, the mockups log, and the two phase-acceptance pairs. The 6 trial sources and their out/ folders were deleted in Task 4 (commit dcb269f3). out/hy4-trial/cards/ keeps the round 1 and final cards, and the final cards are the acceptance evidence.",
+  "evidence_classes": {
+    "person_reviewed": "Daniel ordered the trial (2026-11-16) and owns the route decision; no card rating is owner acceptance. The PM set the light lane rule and the model rule of 2026-11-16.",
+    "model_evidence_not_acceptance": "the judge ratings of judge-r1.json (opencode-go/muse-spark-1.3-contributor#high), the size rerate of judge-r1-sizes.log (opencode-go/glm-5.3#high), the maker logs, and the phase acceptance of claude-code/claude-sonnet-5-5#max",
+    "workbooks_acceptance": "none recorded"
+  },
+  "retained_evidence": [
+    "measure/runs/asset_hy4_maker_trial_20261116/phase-acceptance-cdbbcf8.json",
+    "measure/runs/asset_hy4_maker_trial_20261116/phase-acceptance-cdbbcf8.log",
+    "measure/runs/asset_hy4_maker_trial_20261116/phase-acceptance-f0a6fda.json",
+    "measure/runs/asset_hy4_maker_trial_20261116/phase-acceptance-f0a6fda.log",
+    "measure/runs/asset_hy4_maker_trial_20261116/judge-r1.json",
+    "measure/runs/asset_hy4_maker_trial_20261116/judge-r1.log",
+    "measure/runs/asset_hy4_maker_trial_20261116/judge-r1-sizes.log",
+    "measure/runs/asset_hy4_maker_trial_20261116/arm-key.json",
+    "measure/runs/asset_hy4_maker_trial_20261116/judge-brief.md",
+    "measure/runs/asset_hy4_maker_trial_20261116/mockups.md",
+    "measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs",
+    "measure/runs/asset_hy4_maker_trial_20261116/mech-check-test.txt",
+    "measure/runs/asset_hy4_maker_trial_20261116/maker-r1-1.log",
+    "measure/runs/asset_hy4_maker_trial_20261116/maker-r1-2.log",
+    "measure/runs/asset_hy4_maker_trial_20261116/maker-t4.log",
+    "assets/towel-stack.ts",
+    "assets/wash-basin.ts",
+    "assets/towel-rack.ts",
+    "out/hy4-trial/cards/final/"
+  ],
+  "commands": [
+    "git rev-parse HEAD (cdbbcf8db5e5c15637640dd852ee6f20a8ab223f, equal to audited_head_sha)",
+    "git mv measure/tracks/asset_hy4_maker_trial_20261116 measure/archive/asset_hy4_maker_trial_20261116",
+    "git show :measure/tracks.md, edit, git hash-object -w, git update-index --cacheinfo (the foreign ## Contents hunk stays unstaged)",
+    "./measure/doctor.sh (no line names asset_hy4_maker_trial_20261116)"
+  ],
+  "model_routes": "the track ran on opencode/hy4-flash-free#high (Hy4 arm), minimax-cn-coding-plan/MiniMax-M3.1-Flash (current arm and orchestrator), opencode-go/muse-spark-1.3-contributor#high (judge), opencode-go/glm-5.3#high (size rerate), claude-code/claude-sonnet-5-5#max (phase acceptance), and minimax-cn-coding-plan/MiniMax-M3.1-Flash (closeout, per the plan role table)."
+}

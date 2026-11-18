@@ -87,10 +87,6 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Chibi Sprouts, release 1 art**
   *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
 
-- [~] **Track: Trial Hy4 Flash as the maker of simple 3D assets**
-  *Link: [./tracks/asset_hy4_maker_trial_20261116/](./tracks/asset_hy4_maker_trial_20261116/)*
-
-
 ## Games
 
 - [x] **Track: Player avatar system: base, equipment fit, pack, composer**
@@ -260,6 +256,10 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
   *Link: [./tracks/riven_fx_geometry_20261009/](./tracks/riven_fx_geometry_20261009/)*
 
 ## Archived Tracks
+
+- [x] Trial Hy4 Flash as the maker of simple 3D assets, completed 2026-11-18; 3 bathhouse props, each made twice from one brief, blind judge with vision, and a promotion of the winning arm; Hy4 won 2 of 3 assets under the default size ruling; spend 0 USD
+  *Link: [./archive/asset_hy4_maker_trial_20261116/](./archive/asset_hy4_maker_trial_20261116/)*
+  *Trial of opencode/hy4-flash-free as the maker of simple 3D asset files: 3 bathhouse props, each made twice from one brief, blind judge with vision, and a promotion of the winning arm*
 
 - [x] Storytime Level 2 unit 2 run tooling (unpaid), completed 2026-11-08; Storytime Level 2 unit 2 run tooling (unpaid): the unit 2 guard entry with an empty cap, the judge batch unit 2 option, the unit 2 delivery writer, and the fix to the animal line-art sentence; spend 0 USD
   *Link: [./archive/asset_storytime_l2_unit2_tooling_20261108/](./archive/asset_storytime_l2_unit2_tooling_20261108/)*

@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "asset_hy4_maker_trial_20261116",
+  "phase": "Phase 1: The trial",
+  "baseline_sha": "0538f7dc",
+  "audited_head_sha": "cdbbcf8db5e5c15637640dd852ee6f20a8ab223f",
+  "status": "pass",
+  "summary": "Phase 1 passes acceptance at cdbbcf8db5e5 with no blocker. F1 is resolved by the size ruling at plan.md:106-109, which applies the brief size to the main body. The ruling gives the same verdict on all 6 cards, contradicts no brief line, and leaves the D8 result unchanged. Nothing else changed since f0a6fdaa: no asset, no src, and no other track. The pass depends on the default ruling, and a PM reversal makes wash-basin-a fail and Hy4 win 1 of 3. Eight nonblocking findings remain for closeout.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F2 [Nit] phase-acceptance: Carried from run 1, unchanged. judge-r1.json does not follow the Output example of judge-brief.md: it holds an array of cards with a name field, and it has no asset field, label field, order key, or scores array. FR-7 holds in substance. Card towel-stack-a lists critical as empty, but its first finding says the middle slab hovers, and a floating part is critical error 1 (judge-brief.md:78). The card fails on rating 6.0, so no outcome changes. Rationale: record shape drift and one missing critical entry. Owner: the Measure orchestrator (build session) notes it at closeout.",
+    "F3 [Nit] phase-acceptance: Carried from run 1, unchanged. plan.md:110 and plan.md:173 say arm 1 continued once after a service outage. maker-r1-1.log holds no record of an outage or a continuation, while maker-r1-2.log records its step limit. Rationale: a process claim without a run record. Owner: the Measure orchestrator (build session) adds the record or removes the claim at closeout.",
+    "F5 [Nit] phase-acceptance: Carried from run 1, unchanged. metadata.json still names the judge as kimi-code-plan-cn/kimi-for-coding#high, but the judge was opencode-go/muse-spark-1.3-contributor#high (plan.md:51). It still shows actual_tasks 1 and updated_at 2026-11-16, and plan.md:3 still reads 'Status: new'. Rationale: record drift of volatile facts. Owner: the Measure orchestrator (build session) updates them at closeout.",
+    "F6 [Nit] phase-acceptance: Carried from run 1, unchanged. The type check of mech-check.mjs can pass with no check when tsc cannot start (TD-32, measure/tech-debt.md:42): scripts/typecheck-asset.mjs:41 then prints 'typecheck ok: 0 errors', and mech-check.mjs:63 accepts that line. The check was real in this trial, because wash-basin-b failed 4 real type errors (maker-r1-2.log:49). Rationale: known open debt with no false pass shown. Owner: the light-lane track named in TD-32 (Green) fixes the helper.",
+    "F7 [Nit] phase-acceptance: Carried from run 1, unchanged. spec.md:100 says the maker log records the quota before and after each mmx call, but mockups.md records one pair for the 3 calls (39 percent before, 36 percent after). The spend rule holds. Rationale: the record is coarser than D2. Owner: the Measure orchestrator (build session) accepts it or notes it at closeout.",
+    "F8 [Nit] phase-acceptance: plan.md:107 labels the wash-basin-a y deviation (+17.1 percent) as the bowl, and judge-r1-sizes.log:106-107 says the bowl is 2.9 cm taller than the brief. The bowl is 0.172 m tall (assets/wash-basin.ts:41 and :162), which is +1.2 percent. The +17.1 percent is the full bounds: the dipper knob (assets/wash-basin.ts:230) sets the top at 0.199 m, and maker-r1-1.log:53 says the same. The ruling was applied to z (bowl 0.42 m) but not to y, so its application is mixed. The verdict does not change, because the wrong value is the stricter one. Rationale: a wrong label in the record of the ruling. Owner: the Measure orchestrator (build session) corrects plan.md:107 to 'bowl -0.2, +1.2, +5.0; full bounds y +17.1, z +23.5'.",
+    "F9 [Nit] phase-acceptance: The new plan text has four record gaps. (1) plan.md:103 says 'The judge gets all three'. No record shows that the round 1 judge got the known misses, because judge-r1.log:2-4 lists only the brief, the 3 briefs, and the cards. Only the rerate judge saw the sizes (judge-r1-sizes.log:53). (2) plan.md:109 says 'Default taken under the primary directive'. It names neither the orchestrator nor the directive date (2026-11-18, per the run 2 brief). (3) The route result (plan.md:175) and the Evidence section (plan.md:194-205) do not point to the ruling or to judge-r1-sizes.log. (4) The ruling does not define 'main body' or 'appendage', and it lives only in plan.md and the sizes log, not in judge-brief.md. For wash-basin, the stats.json bodies wood, iron, and water are the main body, and the dipper body is the appendage. Rationale: a later reader cannot re-apply the ruling from the plan alone. Owner: the Measure orchestrator (build session) adds these lines at closeout.",
+    "F10 [Nit] phase-acceptance: The route result is sensitive to the round 1 ratings. Both Hy4 passes (8.0 each, judge-r1.json) came from a judge that saw no sizes, and the size rerate issued no visual rating (judge-r1-sizes.log:6-11 and :124). Towel-rack goes to Hy4 by exactly 0.5 under D8 rule 3, so a rating of 7.0 for towel-rack-b would give that asset to the current route. The sizes log calls the towel-rack-b width overrun 'a clear difference' (judge-r1-sizes.log:93-94), but maker-r1-1.log:56 attributes it to the peg, which the ruling treats as an appendage. Rationale: a sensitivity note for the route decision, not an error. Owner: the PM and Daniel read it with the route result (plan.md:175)."
+  ],
+  "evidence": [
+    "HEAD check: git rev-parse HEAD printed cdbbcf8db5e5c15637640dd852ee6f20a8ab223f at the start of the run and again at the end. The baseline 0538f7dc and the run 1 HEAD f0a6fdaa are ancestors of HEAD.",
+    "Scope since run 1: git diff --name-status f0a6fdaa HEAD lists 4 paths. They are judge-r1-sizes.log (added), phase-acceptance-f0a6fda.json and .log (added), and the plan.md of this track (changed). No asset, src, docs, scripts, tests, other track, measure/tracks.md, or measure/generated path changed. metadata.json, spec.md, and the registry are unchanged. git diff HEAD on the two run 1 files is empty, and the committed run 1 JSON holds the judge-brief.md:78 correction.",
+    "Run 1 evidence carried over, because no asset and no run file changed apart from the paths above: the D8 inputs and result, the Task 4 state, the promotion diff of dcb269f3, the lesson of 7d2c530a, the spend rule, the foreign-hunk rule for the 11 earlier track commits, the blind rule for judge-r1.json, the SHA-256 values of the briefs and mockups, and the mechanical check of wash-basin (exit 0, ok true, 3854 triangles, bottomY -0.001). I did not rerun the heavy check, because git shows no asset change since f0a6fdaa.",
+    "F1 withdrawn: plan.md:106-109 records a size ruling that equals judge-r1-sizes.log:57-59 word for word. The ruling says that the brief size applies to the main body, and that an appendage which extends the bounding box does not make the scale wrong while the main body stays within 20 percent on every axis. The plan also names the judge route, the date, the effect, and the note that the PM may reverse the default (plan.md:109). The four conditions of the brief hold, as the next entries show.",
+    "Condition 2, same way for all 6 cards: yes in effect. Five cards pass on full bounds, and the largest deviation is +11.1 percent (towel-rack-b, x). Wash-basin-a passes on the main body only. So one rule gives one verdict for every card. The record applies the ruling to the z axis of wash-basin-a but not to its y axis, which is nit F8.",
+    "Condition 3, consistent with judge-brief.md: yes. judge-brief.md:66 and judge-brief.md:81 use the term 'wrong scale' and do not say what is measured. judge-brief.md:14 says only that the brief holds 'the size'. The ruling contradicts none of these lines.",
+    "Brief support for the main-body reading: wash-basin.md:11 says the prop is centred on the Y axis. wash-basin.md:12 puts the dipper on the +Z side, so a box that holds the dipper cannot stay centred. wash-basin.md:26 says the dipper rests across the rim. wash-basin.md:72 uses 'whole asset' only for the triangle budget. maker-r1-1.log:53 and :56 name the same two causes of the overruns: the dipper knob and the rack peg.",
+    "Condition 4, D8 result: no card has a wrong scale, so the 6 ratings of judge-r1.json stand. The ratings are towel-stack a 6.0 fail and b 7.0 pass, wash-basin a 8.0 pass and b 7.0 pass, and towel-rack a 7.5 pass and b 8.0 pass. arm-key.json still gives Hy4 the labels towel-stack a, wash-basin a, and towel-rack b. D8 gives towel-stack to the current arm because a pass beats a fail, and it gives wash-basin to Hy4 by 1.0. It gives towel-rack to Hy4 by exactly 0.5, and rule 3 says 0.5 or more wins. The Results table (plan.md:158-163), the D8 lines (plan.md:169-171), and the route result (plan.md:175) match, so Hy4 wins 2 of 3.",
+    "Source check of the ruling premise for wash-basin-a, the only card that needs the ruling: the wood and iron bodies span x and z from -0.21 to 0.21 m. The iron hoop radius is 0.21 (assets/wash-basin.ts:187), and stats.json gives min x -0.21, max x 0.21, and min z -0.21. So the bowl is 0.42 m deep, which is +5.0 percent against the brief depth of 0.40 m.",
+    "Source check of the height and the dipper: the bowl is 0.172 m tall (RIM_Y 0.17 at assets/wash-basin.ts:41, and the rim torus top at 0.155 + 0.017 at assets/wash-basin.ts:162), which is +1.2 percent. The dipper knob (assets/wash-basin.ts:230, sphere 0.014 at 0.09, 0.185, 0.27) sets the top (y 0.199) and the front (z 0.284) of the bounding box, as stats.json shows. So the main body stays within 20 percent on every axis, and only the dipper body extends the box. The dipper block is assets/wash-basin.ts:212-243, with the handle cone at line 229.",
+    "Record check, plan against the sizes log: every percent in plan.md:107 equals judge-r1-sizes.log:63-115 (6 cards, same order). The judge route, the 'no new visual rating' statement, and the ruling text equal judge-r1-sizes.log:3, :6-11, and :57-59. I recomputed the percentages from the bounds in the maker logs and stats.json, and each agrees to 0.1 percent. The sizes log cites judge-brief.md:34 as method step 1, and that line is method step 1.",
+    "F4 withdrawn: plan.md:114, plan.md:123, and plan.md:129 now name 7d2c530a, the plan-evidence commit. The 'not run' entries of Tasks 2 and 3 stay by orchestrator decision, and no try 2 result changes a D8 outcome. plan.md:145-146 records run 1 correctly: FAIL on F1, with F2 to F7 in phase-acceptance-f0a6fda.json.",
+    "Task markers at HEAD: Tasks 0 to 4 are [x] (plan.md:66, :89, :114, :123, :129). The Phase 1 gate (plan.md:142) and the Closeout (plan.md:147) stay [ ], as the brief says.",
+    "Foreign-hunk rule for cdbbcf8d: git show --name-status lists no change to measure/tracks.md, measure/generated/, or an image file, and the commit subject names the track. The 11 earlier track commits were checked in run 1. A5: the new plan claims (plan.md:106-109 and :145-146) match the sizes log and run 1, and I found no false 'all checks pass' claim. A3, A4, A6, and A7 do not apply, because cdbbcf8d changes no contract test, filter, or tracks registry.",
+    "Condition of this pass: it depends on the default ruling (plan.md:109). The ruling changes the verdict of one card only, wash-basin-a, which is a Hy4 card. The rerate judge did not know the routes (judge-r1-sizes.log:46-51), and the plan records that the PM may reverse the default. judge-r1-sizes.log:103-105 says a full-bounds ruling flips wash-basin-a (z +23.5 percent, cap 7.0, critical error 4).",
+    "If the PM reverses the ruling, wash-basin-a fails and the current arm wins wash-basin. Then Hy4 wins 1 of 3, and the route result changes. assets/wash-basin.ts must come again from wash-basin-b (git show 6a03ea7e:assets/wash-basin-b.ts), and acceptance must rerun at the new HEAD.",
+    "Not verified by me: AC 10 (measure/doctor.sh is not on my command list, so closeout must run it), the seed draw of arm-key.json (python3 -c is not on my command list), and the text of Daniel's primary directive (I read only its citation at plan.md:109 and in the run 2 brief). I made no commit, and I did not edit plan.md.",
+    "Validators: the audit-result check on this file prints PASS, so the JSON is valid. The role-gate check prints FAIL for one reason only: the phase has 2 open tasks, the Phase 1 gate and the Closeout, which the brief names as expected. The audit status is pass, and the log block raised no gate error."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git log --format='%h %ad %s' f0a6fdaa..HEAD; git merge-base --is-ancestor f0a6fdaa HEAD; git diff --name-status f0a6fdaa HEAD",
+    "git show --stat cdbbcf8d; git show --name-status -M cdbbcf8d",
+    "git diff f0a6fdaa cdbbcf8d -- measure/tracks/asset_hy4_maker_trial_20261116/plan.md",
+    "read of measure/runs/asset_hy4_maker_trial_20261116/judge-r1-sizes.log and of plan.md lines 83-205",
+    "read of assets/wash-basin.ts lines 1-66 and 112-245",
+    "git diff --stat f0a6fdaa HEAD -- assets src docs scripts tests; git diff --stat f0a6fdaa HEAD -- measure/tracks.md metadata.json spec.md measure/generated; git diff HEAD --stat on the two run 1 files; git status --short on the track paths, the promoted sources, and src",
+    "git show HEAD:measure/tracks/asset_hy4_maker_trial_20261116/plan.md | grep -n for the task markers",
+    "grep -n for size and position words in the 3 briefs and judge-brief.md; sed -n for judge-brief.md lines 30-36 and 72-92; grep -n for the dipper knob and the peg in maker-r1-1.log",
+    "python3 -I /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py audit-result --role phase-acceptance --file <this json> (PASS)",
+    "python3 -I /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py role-gate --role measure-phase-acceptance --track asset_hy4_maker_trial_20261116 --phase 'Phase 1: The trial' --baseline 0538f7dc (FAIL for one reason only: 2 open tasks, the Phase 1 gate and the Closeout)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_hy4_maker_trial_20261116/phase-acceptance-cdbbcf8.json",
+    "measure/runs/asset_hy4_maker_trial_20261116/phase-acceptance-cdbbcf8.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "medium",
+  "route": "claude-code/claude-sonnet-5-5#max",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "After the ruling, stats.json and assets/wash-basin.ts:41, :162, :187, and :230 show the bowl within 5 percent on every axis, and plan.md:158-163 matches judge-r1.json."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "mech-check.mjs:53 still holds the only size test and compares no size to the brief, and mech-check.mjs:63 keeps the TD-32 false-ok path."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff --name-status f0a6fdaa HEAD lists only the plan.md of this track and 3 run files, with no asset, src, or registry path."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "Most new plan claims trace to judge-r1-sizes.log or the source, but the bowl y label at plan.md:107 and the claim at plan.md:103 do not."
+    }
+  ],
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "opencode-go/muse-spark-1.3-contributor#high",
+      "agreed": true,
+      "score": 4,
+      "evidence": "I agree with all 6 verdicts of judge-r1.json under the ruling, but towel-stack-a lists no critical error for its floating slab."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 3,
+      "evidence": "The sizes and the ruling check out against the source, but the log calls the dipper-knob height (+17.1 percent) the bowl."
+    }
+  ]
+}

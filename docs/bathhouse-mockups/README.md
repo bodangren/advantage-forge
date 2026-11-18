@@ -1,7 +1,7 @@
 # Bathhouse mockups
 
 Concept mockups for the 3 bathhouse props of the trial track
-`measure/tracks/asset_hy4_maker_trial_20261116/`.
+`measure/archive/asset_hy4_maker_trial_20261116/`.
 
 | File | Prop | Size |
 | --- | --- | --- |

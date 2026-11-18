@@ -1,7 +1,8 @@
 # Trial Hy4 Flash as the maker of simple 3D asset files
 
-Status: new (2026-11-16). Phase 0 authors the track (8d045c1d). Phase 1 makes 3 props twice from one
-brief, judges the cards blind, and promotes the winner.
+Status: done (2026-11-18). Phase 0 authored the track (8d045c1d). Phase 1 made 3 props twice from one
+brief, judged the cards blind, and promoted the winner. The Phase 1 acceptance passed at cdbbcf8d, and
+the closeout archived the track.
 
 The track follows Daniel's order of 2026-11-16: a small trial of `opencode/hy4-flash-free` as the maker
 of asset TypeScript files. The [specification](./spec.md) owns the scope, decisions D1 to D10, and the
@@ -80,7 +81,7 @@ doctor counts only `[ ]`, `[~]`, and `[x]`.
     ran again. Playwright 1.62.0 needed browser build 1234, so `npx playwright install chromium` added
     it. Both steps are tools, not spend.
 
-## Phase 1: The trial
+## Phase 1: The trial [checkpoint: cdbbcf8d]
 
 Role gate: the jr-green role gate fails while this phase has open tasks (2026-11-16: 6 open; 2026-11-17: 3 open and [x] tasks without SHA). A failed gate is a failed gate; the orchestrator owns a green gate at phase end.
 
@@ -100,13 +101,14 @@ Role gate: the jr-green role gate fails while this phase has open tasks (2026-11
     the final one).
   - Record the rating of each card, the pass or fail, and the findings.
   - Arm 1 round 1: commit 37769535; mech-check ok for towel-stack-a, wash-basin-a, towel-rack-b; cards at out/hy4-trial/cards/r1/.
-  - Known misses of arm 1 round 1 (maker log, commit 37769535): wash-basin-a is 0.199 m tall against the 0.17 m brief; towel-rack-b is 0.689 m wide against the 0.62 m brief. Wash-basin-a is 0.494 m deep against the 0.40 m brief, because the dipper handle extends past the rim; the bowl is 0.42 m. The judge gets all three; a try 2 fixes them if the judge fails the asset.
+  - Known misses of arm 1 round 1 (maker log, commit 37769535): wash-basin-a is 0.199 m tall against the 0.17 m brief; towel-rack-b is 0.689 m wide against the 0.62 m brief. Wash-basin-a is 0.494 m deep against the 0.40 m brief, because the dipper handle extends past the rim; the bowl is 0.42 m. No record shows that the round 1 judge got these known misses: `judge-r1.log` lists only the brief, the 3 briefs, and the cards. Only the size rerate judge saw the sizes. A try 2 fixes a miss if the judge fails the asset.
   - Arm 2 round 1: commits 3dfd1518, 6a03ea7e, 38f93cb5; mech-check ok for towel-stack-b, wash-basin-b, towel-rack-a; cards at out/hy4-trial/cards/r1/.
   - Judge round 1: `judge-r1.json`, model `opencode-go/muse-spark-1.3-contributor#high`, blind, bar 7.0. It holds 5 passes and 1 fail; the judge log is `judge-r1.log`.
   - Size rerate of round 1 (2026-11-18): the phase check at `f0a6fdaa` failed F1, the wash-basin depth. Judge route `opencode-go/glm-5.3#high` wrote `judge-r1-sizes.log`. It could not view images, so it issued no new visual rating. It measured every card and set one ruling for all 6 cards: "The size in the brief applies to the main body; an appendage that extends the bounding box does not make the scale wrong when the main body stays within 20 percent on every axis."
-    - Size deviation per card, in percent of the brief on x, y, z: wash-basin-b -0.2, +6.5, -0.3; towel-rack-a +0.0, +0.5, +1.5; towel-stack-a +2.7, +3.2, +7.1; towel-rack-b +11.1, +1.1, +0.0; wash-basin-a bowl -0.2, +17.1, +5.0, and full bounds z +23.5; towel-stack-b +0.3, +0.9, -4.6.
+    - Size deviation per card, in percent of the brief on x, y, z: wash-basin-b -0.2, +6.5, -0.3; towel-rack-a +0.0, +0.5, +1.5; towel-stack-a +2.7, +3.2, +7.1; towel-rack-b +11.1, +1.1, +0.0; wash-basin-a bowl -0.2, +1.2, +5.0, and full bounds y +17.1, z +23.5; towel-stack-b +0.3, +0.9, -4.6. The dipper knob sets the top at 0.199 m, so it gives the full-bounds y value.
+    - Scope of the ruling: for wash-basin, the main body is the wood, iron, and water bodies, and the dipper body is the appendage. For towel-rack, the peg is an appendage.
     - Result: no card has a wrong scale. The round 1 ratings and the D8 results stand.
-    - Default taken under the primary directive; the PM may reverse it. A full-bounds ruling makes wash-basin-a fail, and then Hy4 wins 1 of 3.
+    - Default taken under the primary directive of 2026-11-18 by the Measure orchestrator; the PM may reverse it. A full-bounds ruling makes wash-basin-a fail, and then Hy4 wins 1 of 3.
   - Try continuity: arm 1 continued once after a service outage, and arm 2 continued once after a step limit. Both continuations stayed inside try 1, so every asset has one try per arm.
 
 ### Task 2: Try round 2
@@ -139,13 +141,16 @@ Role gate: the jr-green role gate fails while this phase has open tasks (2026-11
 
 ### Phase 1 gate and closeout
 
-- [ ] Phase 1 gate: phase acceptance by the checker at an immutable HEAD. The checker reads the spec,
-  the plan, the run files, the mockups, the mech-check output, and the judge files. It runs the
-  mechanical check on one promoted asset and greps for the spend rule and the foreign-hunk rule.
+- [x] Phase 1 gate: phase acceptance by the checker at an immutable HEAD (cdbbcf8d). The checker reads
+  the spec, the plan, the run files, the mockups, the mech-check output, and the judge files. It runs
+  the mechanical check on one promoted asset and greps for the spend rule and the foreign-hunk rule.
   - Run 1 at f0a6fdaa (claude-code/claude-sonnet-5-5#max): FAIL on F1 (wash-basin depth). The size
     rerate above resolves F1. Nonblocking findings F2 to F7 are in `phase-acceptance-f0a6fda.json`.
-- [ ] Closeout: archive the track, move the registry entry to the Archived Tracks section, and run
-  `./measure/doctor.sh`. The generator does not run while `measure/generated/` holds foreign changes.
+  - Run 2 at cdbbcf8d (claude-code/claude-sonnet-5-5#max): PASS; F1 withdrawn; nonblocking F2, F3, F5
+    to F10 in phase-acceptance-cdbbcf8.json.
+- [x] Closeout: archived the track to `measure/archive/asset_hy4_maker_trial_20261116/`, moved the
+  registry entry to the Archived Tracks section, and ran `./measure/doctor.sh`. Commit: this commit.
+  The generator did not run, because `measure/generated/` holds foreign changes.
 
 The light lane has no final acceptance role.
 
@@ -174,6 +179,8 @@ Try continuity: arm 1 continued once after a service outage, and arm 2 continued
 
 Route result: Hy4 wins 2 of 3 assets. Hy4 Flash (`opencode/hy4-flash-free#high`) is the first maker route for simple assets until the free window ends, about 2026-11-30. The current route (`minimax-cn-coding-plan/MiniMax-M3.1-Flash`) is the fallback. Hero assets stay on the current route (PM order 2026-11-16). This is a recommendation from model evidence; Daniel owns the route decision.
 
+The route result depends on the default size ruling of the round 1 rerate (`judge-r1-sizes.log`, section 3; see Evidence). The PM note in the Evidence section gives the effect of a reversal.
+
 ## Human gate
 
 Daniel ordered the trial and owns the route decision. The author writes the route result as a
@@ -199,6 +206,15 @@ recommendation from the judge evidence. A card rating is model evidence, not own
   mechanical check, check test, judge files).
 - Round 1 judge files: `judge-r1.json` and `judge-r1.log` in the run folder. The judge model is
   `opencode-go/muse-spark-1.3-contributor#high`.
+- Round 1 size rerate: `judge-r1-sizes.log` in the run folder, judge route `opencode-go/glm-5.3#high`,
+  dated 2026-11-18. It holds the measured sizes of all 6 cards, the appendage ruling of section 3 used
+  by this plan, and the full-bounds alternative that fails wash-basin-a. The ruling lives only in that
+  log and in this plan; `judge-brief.md` does not define "main body".
+- Phase acceptance: `phase-acceptance-f0a6fda.json` (run 1, FAIL) and `phase-acceptance-cdbbcf8.json`
+  with its `.log` (run 2, PASS) in the run folder.
+- PM note on the size ruling (2026-11-18): "The route result depends on the default size ruling. If the
+  PM reverses it, wash-basin-a fails (z +23.5 percent), Hy4 wins 1 of 3, `assets/wash-basin.ts` is
+  promoted again from `6a03ea7e:assets/wash-basin-b.ts`, and Phase 1 acceptance runs again."
 - Task 4 records: `maker-t4.log` in the run folder, and the commit `dcb269f3` (message
   `feat(asset_hy4_maker_trial): promote the winning props`). The promoted sources are
   `assets/towel-stack.ts`, `assets/wash-basin.ts`, and `assets/towel-rack.ts`. Their final cards sit
