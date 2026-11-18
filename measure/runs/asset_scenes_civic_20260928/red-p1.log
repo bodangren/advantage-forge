@@ -1,0 +1,38 @@
+# Mid Red Phase 1 log: asset_scenes_civic_20260928
+
+Role: measure-mid-red. Phase: "## Phase 1: Inventory".
+phase_base_sha: db2053f2. role_base_sha: db2053f2. Both resolve to commits.
+
+Red command: `bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh`
+Exit code: 1. Result: FAIL (expected Red state).
+Output: `FAIL: P1-a inventory file absent:
+measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md does not exist`
+(`=== Total: 1 checks (PASS=0, FAIL=1) ===`).
+
+Evidence: the 30 civic P2 slugs read from `docs/fantasy-world-scene-blueprints.tsv`
+all have their 5 paths on disk (`scenes/maps/<slug>.ts`, `<slug>.md`, `<slug>.jpg`,
+`<slug>-3q.png`, `<slug>-top.png`) and a MAPS record in `bench/sonnet/log.tsv`
+or `docs/map-review.html`, so Green can inventory all 30 rows with state
+`inventoried` and no `missing` label. The TSV is untouched.
+
+Checker contract for Green (one single-line markdown table row per slug):
+source, note, both shots, `MAPS rating:`, `judge: no`, `maker:`, and
+`inventoried` (or `missing` when the source is absent). No `rated` label in
+Phase 1. The checker reads the live track path, never an archive path.
+
+No production source changed. No inventory.md written. No TSV change.
+Next role: Green writes `scenes/inventory.md` to the checker contract.
+
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: complete
+track: asset_scenes_civic_20260928
+phase: ## Phase 1: Inventory
+baseline_sha: db2053f2
+commits: test(asset_scenes_civic): Phase 1 inventory checker (red) (single role commit on master; see chat result block for final HEAD)
+tests_run: bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh -> FAIL (exit 1, inventory.md absent, expected Red)
+files_changed: measure/runs/asset_scenes_civic_20260928/check-inventory.sh (new); measure/tracks/asset_scenes_civic_20260928/plan.md ([~] + Red evidence); measure/runs/asset_scenes_civic_20260928/red-p1.log (new)
+plan_updates: Phase 1 task 1 marked [~]; Red evidence line added under the Phase 1 gate
+known_failures: P1-a inventory file absent (all other P1 checks untested until inventory.md exists)
+handoff: Green writes measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md with 30 single-line rows per the checker contract; judge field must read `judge: no` and no row may carry `rated`; run the checker to verify
+END_MEASURE_AGENT_RESULT

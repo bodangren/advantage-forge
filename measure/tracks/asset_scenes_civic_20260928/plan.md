@@ -11,7 +11,7 @@ Decisions taken 2026-11-19 under Daniel's primary directive of 2026-11-18. The P
 
 ## Phase 1: Inventory
 
-- [ ] Task: Write `measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md`.
+- [~] Task: Write `measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md`.
   Give one row to each of the 30 civic P2 rows.
   Record the map source in `scenes/maps/`, the design note in `docs/map-mockups/`, and the shots `<slug>-3q.png` and `<slug>-top.png`.
   Record the MAPS rating and note from `docs/map-review.html`, and whether an independent judge rated the map.
@@ -27,6 +27,8 @@ ls scenes/maps/bathhouse.ts docs/map-mockups/bathhouse.md docs/map-mockups/bathh
 ```
 
 The inventory has 30 source paths.
+
+Red evidence: `bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh` exits 1; `scenes/inventory.md` is absent.
 
 ## Phase 2: Independent review
 
