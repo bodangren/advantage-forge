@@ -1,0 +1,79 @@
+# acceptance · Chibi Sprouts r1 · Phase 5 · group 2 reworks of 2026-11-18 (ball, kite, brush in the book colours)
+
+- Role: phase-acceptance, scoped to one step. Route: claude-code/claude-sonnet-5-5#max.
+- Date: 2026-11-18.
+- Track: asset_chibi_sprouts_r1_20261022, Phase 5 ("The rest of the inventory (after the look check)").
+- role_base_sha: 78876c1aab68e0e4a2c3b0cccdb73572b8cc3bec. The maker log names the same value as phase_base_sha.
+- audited_head_sha: 6b9f5f557aafd482262ba5b90e55a274c0b16685 (HEAD at the start of the run).
+- Maker route: opencode-go/deepseek-v4.1-flash. Maker commits: 2da0e605 (ball), 757a6948 (kite), 2901d092 (brush), 6b9f5f55 (records).
+- Scope: this run judges the three reworks against the order and the book. No Review A, B, C, adversarial, or UX result exists for this step, so `reviewer_ratings` is empty.
+- Result JSON: acceptance-group2-6b9f5f5.json (same folder).
+- Verdict: PASS. Ball 7.1, kite 7.0, brush 7.0 out of 10 (bar 7.0). No blocking finding. 4 nonblocking findings. retry_recommendation: none.
+  The kite and the brush sit at the bar with no margin.
+
+## Result table
+
+| Asset | Rating | Result | Main finding |
+| --- | --- | --- | --- |
+| ball | 7.1 | pass | The default red-and-yellow ball and the seams are right. The orangewhite panel reads gold (hue 41, not 30), and the green and purple presets drift (N1). |
+| kite | 7.0 | pass | The pose, the S tail, the 3 bows, the quarters, and the ground contact are right. The red preset has a rose quarter and the yellow preset has a lemon quarter (N2). |
+| brush | 7.0 | pass | The pink #e37dad and purple #925ab9 tips are right and nothing is red. The tip is 76 px at 1024 px/m, and the brush reads as a fat pencil (N3). |
+
+## Mechanical call (one heavy-run call, exit 0, no exit 75)
+
+- mech-check ball: ok:true, forgeAll exit 0, warnings [], 1184 triangles, bottomY 0, typecheckExit 0, failures [].
+- mech-check kite: ok:true, 5150 triangles, bottomY 0, typecheckExit 0, failures [].
+- mech-check brush: ok:true, 1510 triangles, bottomY 0, typecheckExit 0, failures [].
+- cutout-check: result ok for out/chibi-sprouts/r1/props and for presets/blue, bluewhite, greenyellow, orangewhite, purple, purplewhite, red, and yellow (9 of 9).
+- Determinism: I hashed 274 delivered files before the call. After the call 271 are byte-equal. Only the 3 stats.json differ, in timing fields.
+  So the GLBs, renders, sprites, textures, cutouts, and cards are what the code of HEAD builds.
+
+## Checks against the order and the book
+
+- Book rows (monorepo 9255c2711, forge-inventory.md lines 199, 213, 217): equal to the order text.
+- Ball: 2 slots (panelA, panelB) and 5 presets with the order hexes (assets/ball.ts:87-99). The shape, the 4 gores, the dark seams, and the dent are kept. Size 0.16 x 0.16 x 0.159 m.
+- Kite: 4 quarters. The default cutout means are top-left #f46862, top-right #f8cd63, bottom-left #f8ca54, bottom-right #f4574e. Red sits top-left and bottom-right, as ordered. The tilt is gone.
+  The tail hangs 0.452 m below the notch in an S with 3 bows face on. Min y is 0, so only the lowest bow touches the ground. The cream edge band shows in every view.
+- Brush: the tip is the slot `paint` (pink first, purple second). The red #c0503c is gone. The cutout tip means are pink #e37dad and purple #925ab9. 0 reddish pixels in 4 cutouts.
+- Commit scope: 10 paths in 78876c1a..6b9f5f55, all planned. No path in src, scripts, tests, assets/parts, measure/tracks.md, or another track.
+- Plan: the sub-bullet at plan.md:223 is true (3 commits exist, mech-check ok, result ok in 9 folders). 22 of 22 [x] tasks keep a first-line SHA that is a commit. No marker changed.
+
+## Ratings (ten criteria, 1 to 5 each; the mean times 2 gives the rating out of 10)
+
+- Ball 7.1: brief match 3.5, silhouette 3.5, proportion and appeal 3.5, shape language 4, value and colour 3, materials 3, detail hierarchy 3.5, technical quality 4, game readiness 4, readability at 128 px 4. Mean 3.55.
+- Kite 7.0: brief match 3.5, silhouette 3.5, proportion and appeal 4, shape language 4, value and colour 3, materials 3.5, detail hierarchy 4, technical quality 3.5, game readiness 4, readability at 128 px 3.5. Mean 3.65 (7.3); the visible quarter defects in 2 of 3 presets cap it at 7.0.
+- Brush 7.0: brief match 4, silhouette 3, proportion and appeal 3.5, shape language 3, value and colour 3.5, materials 3.5, detail hierarchy 3.5, technical quality 4, game readiness 4, readability at 128 px 3. Mean 3.5. A drop of 0.5 in any one criterion gives 6.9.
+
+## Findings (all nonblocking)
+
+- N1 [Medium] The orangewhite ball reads gold. Panel A averages #f6c55f (hue 41) against the brief #e8892c (hue 30), and the default yellow panel B averages #dfb649 (hue 44).
+  greenyellow A is #65ee85 (hue 134, V 93) against #4f9a4a (hue 116, V 60). purplewhite A is #8e7af5 (hue 250) against #7b4a9e (hue 275). The unlit atlases show the same drift.
+  The cause fits the recolour rule in docs/color-variants.md (option over default per channel, linear light; the red default has G 0.058 and B 0.042). The row of five still reads colourful, so W2 holds. The PM orange does not.
+  Suggested change: pick the option values so the baked panel means land on the target hues, then re-cut 4 preset folders. | owner: maker; the PM decides
+- N2 [Medium] The red kite has a rose top-right quarter (#f45769, hue 353; the others hue 3). The yellow kite has a lemon top-left quarter (#f7f460, hue 59; the others hue 43 to 45) and a thin lime line on two quarter edges.
+  The cause fits the same rule (G ratio 9.3 for sailA, B ratio 1.4 for sailB). The default kite is clean. Suggested change: tune the option values with measured quarter means, or cut the red and the yellow kite from sources whose default equals the preset. | owner: maker; the PM decides
+- N3 [Low] The brush paint tip is 76 px (9 by 12 px at 1024 px/m, about 1 percent of the 45 by 174 px bounding box, about 5 by 6 px at the stage scale). The brush also reads as a fat pencil in the renders. The geometry is unchanged from the first batch.
+  Suggested change (optional): extend the paint wash to about 25 mm, or give the bristles a belly. | owner: maker; the PM decides
+- N4 [Low] The gate cannot see a colour, a quarter, or a pose (the maker log says so). The maker look check covered the bluewhite ball, the purple brush, and the default kite only.
+  Suggested change: a small PIL check per preset (mean colour of named boxes, hue tolerance) in the Phase 6 delivery step. | owner: orchestrator
+
+## Limits
+
+- I ran no ./forge inspect and no --fast command. I did not re-run measure/doctor.sh, measure/generate.sh, tsc, or the interphase status script.
+- The brush composites (3x pair, tip at 6x, stage scale at 6x) did not attach, because the image tool stopped at the step limit. I measured the brush with PIL (N3) and looked at out/brush/render.png, render.purple.png, and the card.
+- The cause named in N1 and N2 fits the numbers. I did not instrument the bake.
+- Shell rules denied commands with redirection characters, so the Python checks avoid them.
+- This role wrote only the 2 result files, plus scratch files and composites in /tmp/opencode/acc-g2/. The mech-check call rebuilt out/ball, out/kite, and out/brush (byte-equal except stats.json timing).
+
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check) - step group 2 reworks of 2026-11-18 (ball, kite, brush)
+commits: none
+tests_run: heavy-run of mech-check ball, kite, brush = exit 0, ok:true x3 (1184, 5150, 1510 triangles, bottomY 0, typecheck 0, no warning) (pass); cutout-check on props and 8 preset folders = result ok x9 (pass); md5 of 274 delivered files before and after = 271 equal, 3 stats.json timing differences (pass); PIL panel and quarter means of the ball, kite, and brush cutouts = finding N1, N2, N3; plan parse = 33 tasks, 22 [x], 0 without a first-line commit SHA (pass); monorepo book rows at 9255c2711 = equal to the order (pass)
+files_changed: measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-group2-6b9f5f5.json; measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-group2-6b9f5f5.log
+plan_updates: none
+known_failures: none blocking. VERDICT PASS: ball 7.1, kite 7.0, brush 7.0 (bar 7.0). Nonblocking: N1 the orangewhite ball reads gold and the green and purple presets drift; N2 the red kite has a rose quarter and the yellow kite has a lemon quarter; N3 the brush paint tip is 76 px and the brush reads as a fat pencil; N4 the gate cannot see a colour, a quarter, or a pose
+handoff: VERDICT PASS at HEAD 6b9f5f557aafd482262ba5b90e55a274c0b16685. The default look of each asset matches the order and the book, the mechanical call exited 0, and the commit scope and plan claims are true. The kite and the brush sit at the bar with no margin. The preset hues drift because the recolour rule multiplies each channel by option over default (N1, N2). The PM decides if a maker round that fixes N1 and N2 should run before the Phase 6 delivery. retry_recommendation none.
+END_MEASURE_AGENT_RESULT

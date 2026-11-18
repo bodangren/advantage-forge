@@ -1,0 +1,36 @@
+Chibi Sprouts group 3 acceptance: fit check plus two reworks (Sprouts song props, PM order 2026-11-18)
+Track: measure/tracks/asset_chibi_sprouts_r1_20261022
+Role: measure-phase-acceptance, scoped to group 3 only
+Phase base sha: 55a3be88
+Role base sha: 55a3be88
+Audited HEAD: 4b85bf40bb12415db6417d86e787e64bee60e6c, current, verified by git rev-parse
+Maker route: opencode-go/deepseek-v4.1-flash
+
+Scope: the fit-check table (3934cb4a), storytime-bird (393a2854), rug look-down el 35 (evidence 4c6c9ff7), storytime-cat plus cat-kind openMouth (0227972e), pond look-down el 55 (evidence 168f618c, result block 4b85bf40). No test-only commits sit between any prerequisite HEAD and the audited HEAD.
+
+Verdict: PASS. Both new assets meet the 7.0 bar (bird 7.5, cat 7.0). The kind change is opt-in with equal hashes. Checks pass except the accepted pond halo exception.
+
+Evidence:
+1. Fit table: 7 OK rows match inventory section 5 at monorepo 9255c2711 (apple red #d92b1f, dog default tan for book brown, fish goldfish orange at assets/fish.ts:30, frog default green, branch, fence, oak-tree). Cutouts for apple, dog, fish, and oak-tree exist in out/chibi-sprouts/r1/props, props-large, props-xl.
+2. storytime-bird: blue #3f6fa8 body, #a9c8e8 breast, #2f5584 wing tips, beak open 18 degrees, no collar or tube. Checks: mech-check ok, 12,258 triangles, bottomY 0. Rating 7.5.
+3. storytime-cat: grey #9a9a9e, white #fff6ec markings, amber #d89a20 eyes, no cyan, open oval mouth #4a2224 with pink tongue #e88a9a, sit clip named in out/storytime-cat/stats.json animations and on the prop card. Checks: mech-check ok, 28,138 triangles. Rating 7.0.
+4. cat-kind openMouth is opt-in (readonly, default off, guarded body). sha256sum recheck: out/cat/cat.glb e9e7c6db...3930ebb and out/familiar-cat/familiar-cat.glb a5e4a19e...b6e00eba equal the rw2 baseline.
+5. Rug look-down (props-high-xl, el 35, margin 150): full face shows, cutout-check ok. Pond look-down (props-high55-xl, el 55, margin 220): whole pond in frame, only the halo flag fails. PIL sampling of the flagged edge pixels shows dark greens (48,64,16), (48,80,16), (64,96,16): the bank surface, not a blend. The exception is sound.
+6. Mechanical ONE call: mech-check ok for storytime-bird, storytime-cat, cat, familiar-cat, messenger-bird; cutout-check result ok for props, props-large, props-xl, props-high-xl; result fail only for props-high55-xl on the accepted halo.
+7. Commit scope: the range holds exactly 6 commits, each touching only its named paths. Every [x] task in plan.md keeps a first-line SHA.
+
+Numbered findings, ratings, route, and retry_recommendation none are in acceptance-group3-4b85bf4.json.
+
+MEASURE_AGENT_RESULT
+status: pass
+role: measure-phase-acceptance
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check)
+phase_base_sha: 55a3be88
+role_base_sha: 55a3be88
+head: 4b85bf40bb12415db6417d86e787e64bee60e6c
+tasks_flipped: none
+files: measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-group3-4b85bf4.json, measure/runs/asset_chibi_sprouts_r1_20261022/acceptance-group3-4b85bf4.log
+gate: mech-check ok (5 assets); cutout-check ok except the accepted pond halo exception
+result: PASS - bird 7.5, cat 7.0, kind change opt-in with equal hashes, checks pass except the accepted pond exception
+END_MEASURE_AGENT_RESULT
