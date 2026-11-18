@@ -1,0 +1,118 @@
+# Spec Review log: asset_scenes_civic_20260928 (round 1)
+
+Role: measure-spec-review (opencode-go/hy4-flash-free)
+Phase: track setup
+Date: 2026-11-19
+Author model to record: anthropic (migration 6b70d6f5)
+Baseline SHA: 64f815392f3cc1e018835736b866bb49d857e33f
+Audited head SHA: 64f815392f3cc1e018835736b866bb49d857e33f (equal to HEAD, confirmed with git rev-parse HEAD)
+Result: measure/runs/asset_scenes_civic_20260928/spec-review-64f8153.json
+
+## Standard and inputs
+
+Read ~/.agents/skills/measure/references/spec-review.md and
+~/.agents/skills/measure-orchestrator/references/contracts.md.
+measure/anti-patterns.md does not exist in this repository. The review ran the standard's
+paraphrase, zoom-out, and zero-decision checks without it.
+
+Inputs: spec.md, plan.md, metadata.json, index.md, measure/workflow.md,
+docs/fantasy-world-scene-blueprints.tsv (civic rows), docs/dungeon-mockups/fit-check.md,
+.claude/skills/forge-assets/references/review.md, and AGENTS.md.
+The source presence facts came from `ls scenes/` and `ls docs/*mockups*`.
+No file outside the two run artifacts changed. No commit was made.
+
+## What this track proposes
+
+The track plans and accepts the civic group of scene blueprints. It claims all 32 civic rows in
+the 100-scene list. Two rows, blacksmith-shop and tavern, are already accepted at 7.5; the other
+30 are mockup-needed. The track will reconcile existing mockups and scene sources, pick a next
+scene, define shared fit rules, assemble one scene from catalog assets, compare renders with the
+mockup, and refresh the blueprint status.
+
+## How the current system works, per this spec
+
+The file docs/fantasy-world-scene-blueprints.tsv holds one row per scene with a group, priority,
+and status. Two civic rows are accepted and 30 are mockup-needed. Two civic scene sources exist
+at scenes/blacksmith-shop.ts and scenes/tavern-interior.ts with comparison renders in
+docs/blacksmith-mockups/ and docs/tavern-mockups/. The fit sheet docs/dungeon-mockups/fit-check.md
+fixes dungeon verticals for a 1.0 m character. The catalog docs/fantasy-world-asset-catalog.md
+defines asset IDs, and the rubric in review.md scores assets out of 10 with a priority-based bar.
+Mockups need image generation, and paid generation needs PM approval.
+
+## Zoom-out check
+
+1. Root problem: FAIL. The purpose claims all 32 civic rows. The tasks reconcile two accepted
+   rows and leave the next scene, the mockup supply, and the path to acceptance open.
+2. Speculative feature: PASS. No extra feature appears.
+3. Premature optimization: PASS. No optimization appears.
+4. Reuse: FAIL. The plan says "without duplicating reusable sources" but cites no file or symbol.
+   The two accepted scene sources and the catalog IDs are the reuse base.
+5. Correct place: PASS. Scene sources live in scenes/ and mockups live in docs/.
+6. Requirement level: PASS. The spec stays at the requirement level.
+
+Missing items that the orchestrator named are all present as gaps: which scene comes next (F1),
+how mockups are made at 0 USD (F2), a review bar (F4), and a phase gate per scene (F5).
+
+## Zero-decision check
+
+A Red or Green role would decide alone:
+
+- schema: the shape and path of the scene record and the component list (F3).
+- API or CLI shape: no command names for the mockup or render steps; reuse the forge CLI and name it (F3).
+- dependency: the image tool and whether to spend; paid calls need PM approval (F2).
+- edge-case behavior: the numeric bar, the per-scene advance rule, and the scale and clearance values (F4, F5, F7).
+- file location: the source, mockup folder, component record, comparison renders, and acceptance record (F3).
+
+Each phase names no file to create or change and no normal or edge test case. No phase names the
+artifact that makes the repository testable at the end of the phase.
+
+## Findings
+
+- F1 [Blocker] plan.md Phase 1 'Select the next scene': The task says to select the next scene from game demand and catalog priorities but names no scene and no selection rule. 30 civic rows are mockup-needed. Rationale: The standard treats a design choice left to the implementer as a Blocker. The user must name the next scene before Red starts.
+- F2 [Blocker] plan.md Phase 1 'Reconcile existing mockups': P2 civic rows have no mockup, and the plan names no 0 USD mockup route. Paid image generation needs PM approval. Rationale: Green cannot create a needed input or spend money alone. The user must set the mockup route and the approval gate.
+- F3 [Blocker] plan.md Phases 1 to 4: No phase names a file path for the scene source, the mockup, the component list, the comparison renders, or the acceptance record. Rationale: File location is a Blocker choice in the standard. A role would invent paths that callers and tools depend on.
+- F4 [Major] spec.md Acceptance criteria and plan.md Phase 4: No numeric review bar and no named scoring role. The rubric in review.md sets 7.5 for P0 maps and 7.0 for the lowest priority. Later picture checks go to a vision model. Rationale: An unpinned bar lets the acceptance role decide alone.
+- F5 [Major] plan.md Phases 1 to 4: No per-scene phase gate moves a row from mockup-needed to assembly to accepted. Rationale: The spec requires the three states, but no plan task enforces the advance or names its evidence. A phase without a check is a Major.
+- F6 [Major] plan.md Phase 3 'without duplicating reusable sources': The task claims reuse but cites no file or symbol. scenes/blacksmith-shop.ts, scenes/tavern-interior.ts, and catalog IDs exist. Rationale: Zoom-out check 4 requires a reuse finding to cite a file and symbol. The claim is otherwise unverifiable.
+- F7 [Major] plan.md Phase 2 'shared scale, palette, passage clearance': No source values. fit-check.md gives dungeon verticals of a 1.0 m median character, an opening at least the character plus 0.09 m, 1.2 m walls, and a 45 to 50 degree camera. Rationale: Edge-case behavior is left open, and the main-body 20 percent scale rule is not pinned.
+
+## Plan amendments and defaults
+
+Each item needs a user decision. The default applies only when the user accepts it.
+
+1. F1 next scene. Default: market-square, a generic civic hub with game demand. Options:
+   apothecary, general-store, guild-hall. Order rule: game demand first, then TSV order.
+2. F2 mockup route. Default: draw the mockup from existing reference images and existing mockup
+   folders at 0 USD. Require PM approval before any paid image generation. No spend without it.
+3. F3 file locations. Default: mirror the two accepted rows at scenes/<scene-id>.ts,
+   docs/<scene-id>-mockups/render-3q.png and render-top.png, a component record in the run folder,
+   and the Phase 4 acceptance line in plan.md.
+4. F4 bar. Default: 7.0 for P2 civic scenes and 7.5 for P0 civic scenes. A vision model scores the
+   comparison renders in the acceptance role.
+5. F5 phase gate. Default: advance a row only when its mockup, component list, and comparison
+   renders exist and its score meets the bar. Record the status change in the TSV without new IDs.
+6. F6 reuse. Default: cite scenes/blacksmith-shop.ts and scenes/tavern-interior.ts as patterns and
+   cite catalog IDs from docs/fantasy-world-asset-catalog.md in the Phase 3 task.
+7. F7 fit values. Default: adopt fit-check.md numbers and the main-body 20 percent scale rule, then
+   let a vision model verify each scene. Write a civic fit sheet before prompts.
+
+## Verdict
+
+status: fail
+blocking_findings: F1, F2, F3
+nonblocking_findings: F4, F5, F6, F7
+retry_recommendation: escalate_human
+confidence: high
+
+MEASURE_AGENT_RESULT
+role: spec-review
+status: complete
+track: asset_scenes_civic_20260928
+phase: track setup
+commits: none
+tests_run: none (report-only role; no test command ran)
+files_changed: measure/runs/asset_scenes_civic_20260928/spec-review-64f8153.json, measure/runs/asset_scenes_civic_20260928/spec-review-64f8153.log
+plan_updates: none
+known_failures: none
+handoff: Round 1 fails with 3 Blockers and 4 Majors. Question 1: which civic scene comes next? Options and default: market-square (default), apothecary, general-store, guild-hall; order by game demand, then TSV order. Question 2: how are 0 USD mockups made, and who approves paid generation? Default: draw mockups from existing references and folders at 0 USD; require PM approval before any paid image generation. Question 3: which output paths apply? Default: scenes/<scene-id>.ts, docs/<scene-id>-mockups/, a run-folder component record, and the Phase 4 acceptance line. Defaults for F4 to F7 are in the log under Plan amendments and defaults. The requested measure/tracks/asset_scenes_civic_20260928/spec-review.md could not be written: the agent permission denies edit outside measure/runs/**. Author model line for that file: Author model: anthropic (migration 6b70d6f5). The orchestrator should write that file from the log. measure/anti-patterns.md is absent; the review ran without it. No commit was made.
+END_MEASURE_AGENT_RESULT

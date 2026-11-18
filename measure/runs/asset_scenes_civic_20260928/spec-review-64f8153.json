@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "summary": "Round 1 spec review at 64f8153. The spec paraphrases cleanly, but the imported plan template leaves three product or funding decisions and four pinning items open. Blockers F1 to F3 concern the next scene, a 0 USD mockup route with a paid-generation approval gate, and file locations. Majors F4 to F7 concern the review bar, a per-scene phase gate, cited reuse, and source values for fit. The plan does not yet deliver the stated purpose, which is to own all 32 civic rows. Retry requires human decisions. measure/anti-patterns.md does not exist; the reviewer ran the standard's checks without it.",
+  "blocking_findings": [
+    "F1 [Blocker] plan.md Phase 1 'Select the next scene': The task says to select the next scene from game demand and catalog priorities but names no scene and no selection rule. 30 civic rows are mockup-needed. Rationale: The standard treats a design choice left to the implementer as a Blocker. The user must name the next scene before Red starts.",
+    "F2 [Blocker] plan.md Phase 1 'Reconcile existing mockups': P2 civic rows have no mockup, and the plan names no 0 USD mockup route. Paid image generation needs PM approval. Rationale: Green cannot create a needed input or spend money alone. The user must set the mockup route and the approval gate.",
+    "F3 [Blocker] plan.md Phases 1 to 4: No phase names a file path for the scene source, the mockup, the component list, the comparison renders, or the acceptance record. Rationale: File location is a Blocker choice in the standard. A role would invent paths that callers and tools depend on."
+  ],
+  "nonblocking_findings": [
+    "F4 [Major] spec.md Acceptance criteria and plan.md Phase 4: No numeric review bar and no named scoring role. The rubric in review.md sets 7.5 for P0 maps and 7.0 for the lowest priority. Later picture checks go to a vision model. Rationale: An unpinned bar lets the acceptance role decide alone.",
+    "F5 [Major] plan.md Phases 1 to 4: No per-scene phase gate moves a row from mockup-needed to assembly to accepted. Rationale: The spec requires the three states, but no plan task enforces the advance or names its evidence. A phase without a check is a Major.",
+    "F6 [Major] plan.md Phase 3 'without duplicating reusable sources': The task claims reuse but cites no file or symbol. scenes/blacksmith-shop.ts, scenes/tavern-interior.ts, and catalog IDs exist. Rationale: Zoom-out check 4 requires a reuse finding to cite a file and symbol. The claim is otherwise unverifiable.",
+    "F7 [Major] plan.md Phase 2 'shared scale, palette, passage clearance': No source values. fit-check.md gives dungeon verticals of a 1.0 m median character, an opening at least the character plus 0.09 m, 1.2 m walls, and a 45 to 50 degree camera. Rationale: Edge-case behavior is left open, and the main-body 20 percent scale rule is not pinned."
+  ],
+  "evidence": [
+    "HEAD equals the audited head 64f815392f3cc1e018835736b866bb49d857e33f, confirmed with git rev-parse HEAD on branch master.",
+    "docs/fantasy-world-scene-blueprints.tsv holds 32 civic rows. Two are accepted (locations/civic/blacksmith-shop and locations/civic/tavern) and 30 are mockup-needed.",
+    "plan.md 'P0 map acceptance' records 7.5 for both accepted maps. It names scenes/blacksmith-shop.ts and scenes/tavern-interior.ts with render-3q.png and render-top.png in docs/blacksmith-mockups/ and docs/tavern-mockups/. The section states that P2 civic rows remain mockup-needed.",
+    "Both source files exist in scenes/. Both mockup folders exist. docs/bathhouse-mockups also exists although the bathhouse row is mockup-needed, so a reusable mockup pattern may already be present.",
+    ".claude/skills/forge-assets/references/review.md sets the bar at 7.5 for P0 heroes and maps and 7.0 for the lowest priority. It states the main-body scale rule: an appendage may extend the box while the main body stays within 20 percent of the brief on every axis.",
+    "docs/dungeon-mockups/fit-check.md fixes the dungeon verticals and the camera rule. It states that the numbers belong to the dungeon kit and that the next kit must write its own sheet with real character bounds before prompts.",
+    "Zoom-out check: the plan does not deliver the purpose. The purpose claims all 32 civic rows, but the tasks reconcile two accepted rows and leave selection, mockup supply, file locations, the bar, the per-scene gate, cited reuse, and fit values unstated. No speculative feature or premature optimization appears.",
+    "Zero-decision check: a Red or Green role would decide alone the next scene, the 0 USD mockup route, whether to spend on image generation, every output path, the numeric bar and scoring role, the artifact that advances a row, which existing sources to reuse, and which scale and clearance values apply.",
+    "Agent permission for measure-spec-review denies edit outside measure/runs/**. The requested measure/tracks/asset_scenes_civic_20260928/spec-review.md could not be written by this role. Its full content, including the Author model line, is in the final reply for the orchestrator to write.",
+    "measure/anti-patterns.md does not exist in this repository. The reviewer ran the standard's paraphrase, zoom-out, and zero-decision checks without it.",
+    "The shell ran read-only commands only. No file outside the two run artifacts changed. No commit was made."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short; git branch --show-current (read-only)",
+    "cat measure/tracks/asset_scenes_civic_20260928/{spec.md,plan.md,metadata.json,index.md} (read-only)",
+    "cat measure/workflow.md; cat docs/dungeon-mockups/fit-check.md; cat .claude/skills/forge-assets/references/review.md (read-only)",
+    "grep civic rows in docs/fantasy-world-scene-blueprints.tsv; ls scenes/ and docs/*mockups* (read-only)",
+    "cat ~/.agents/skills/measure/references/spec-review.md and ~/.agents/skills/measure-orchestrator/references/contracts.md (read-only)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_scenes_civic_20260928/spec-review-64f8153.json",
+    "measure/runs/asset_scenes_civic_20260928/spec-review-64f8153.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "paraphrase": {
+    "proposes": "The track plans and accepts the civic group of scene blueprints. It claims all 32 civic rows in the 100-scene list. Two rows, blacksmith-shop and tavern, are already accepted at 7.5; the other 30 are mockup-needed. The track will reconcile existing mockups and scene sources, pick a next scene, define shared fit rules, assemble one scene from catalog assets, compare renders with the mockup, and refresh the blueprint status.",
+    "current_system": "The file docs/fantasy-world-scene-blueprints.tsv holds one row per scene with a group, priority, and status. Two civic rows are accepted and 30 are mockup-needed. Two civic scene sources exist at scenes/blacksmith-shop.ts and scenes/tavern-interior.ts with comparison renders in docs/blacksmith-mockups/ and docs/tavern-mockups/. The fit sheet docs/dungeon-mockups/fit-check.md fixes dungeon verticals for a 1.0 m character. The catalog docs/fantasy-world-asset-catalog.md defines asset IDs, and the rubric in review.md scores assets out of 10 with a priority-based bar. Mockups need image generation, and paid generation needs PM approval."
+  },
+  "role": "spec-review",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "track setup",
+  "baseline_sha": "64f815392f3cc1e018835736b866bb49d857e33f",
+  "audited_head_sha": "64f815392f3cc1e018835736b866bb49d857e33f"
+}
