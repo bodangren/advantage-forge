@@ -11,12 +11,12 @@ Decisions taken 2026-11-19 under Daniel's primary directive of 2026-11-18. The P
 
 ## Phase 1: Inventory
 
-- [~] Task: Write `measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md`.
+- [x] Task: Write `measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md`. (`db233e01`: 30 rows; 150 paths checked with `ls`; MAPS rating 7.0 and the source note on every row; `judge: no`; `maker: Anthropic Sonnet`)
   Give one row to each of the 30 civic P2 rows.
   Record the map source in `scenes/maps/`, the design note in `docs/map-mockups/`, and the shots `<slug>-3q.png` and `<slug>-top.png`.
   Record the MAPS rating and note from `docs/map-review.html`, and whether an independent judge rated the map.
   Record the maker family where it is known. The default for the 2026-10 map batch is Anthropic Sonnet.
-- [ ] Task: Mark a row `missing` when it has no source in `scenes/maps/`.
+- [x] Task: Mark a row `missing` when it has no source in `scenes/maps/`. (no row is `missing`: all 30 sources exist; state `inventoried` on every row)
   Leave the TSV unchanged in this phase.
 
 Gate:
@@ -28,7 +28,9 @@ ls scenes/maps/bathhouse.ts docs/map-mockups/bathhouse.md docs/map-mockups/bathh
 
 The inventory has 30 source paths.
 
-Red evidence: `bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh` exits 1; `scenes/inventory.md` is absent.
+Red evidence: `bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh` exited 1 before `scenes/inventory.md` existed (commit `8e20f73d`).
+Red fixed two checker defects in `e964238a`: A9 tests the track directory values, and P1-d reads the state cell only.
+Green evidence: the checker exits 0 with `=== Total: 9 checks (PASS=9, FAIL=0) ===`; the plan gate prints `30`. Commit `db233e01` holds the inventory.
 
 ## Phase 2: Independent review
 
