@@ -31,6 +31,11 @@ Useful views:
 An asset is done when every criterion is 4 or more. If one is below 3, fix it before adding
 anything new.
 
+Scale rule (PM, 2026-11-18): the size in the brief applies to the main body. An appendage, such
+as a handle, a dipper, or a hanging strap, can extend the bounding box. It does not make the
+scale wrong while the main body stays within 20 percent of the brief on every axis. A judge that
+rates scale gets the measured bounds and the main-body bounds.
+
 ## Final checks
 
 - [ ] `./forge all <name>` ran with no `warning:` lines.
