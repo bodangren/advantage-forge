@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "asset_hy4_maker_trial_20261116",
+  "phase": "Phase 1: The trial",
+  "baseline_sha": "0538f7dc",
+  "audited_head_sha": "f0a6fdaa5988381466d69be59f1df3237f02aa96",
+  "status": "fail",
+  "summary": "Phase 1 fails acceptance at f0a6fdaa5988 on one blocker, F1. The D8 rule, the Results table, and the route result match judge-r1.json and arm-key.json. Task 4, the spend rule, the foreign-hunk rule, and the wash-basin mechanical check also hold. F1: the promoted Hy4 wash-basin is 0.494 m deep against a 0.40 m brief, which is 23.5 percent over. The judge brief sets the wrong-scale line at 20 percent, the judge saw no sizes, and no gate checks size. The pass of this card decides the route result, so the owner must rule or the judge must rerate.",
+  "blocking_findings": [
+    "F1 [Blocker] phase-acceptance: The promoted wash-basin (source wash-basin-a, Hy4 arm) measures 0.419 x 0.199 x 0.494 m (out/wash-basin/stats.json, rebuilt by my rerun). The brief size is 0.42 x 0.17 x 0.40 m (measure/tracks/asset_hy4_maker_trial_20261116/briefs/wash-basin.md:10). The depth is 23.5 percent over. The other three horizontal extents are 0.21 m from the centre (stats.json: min x -0.21, max x 0.21, min z -0.21). Only the dipper reaches z 0.284 m (handle cone: assets/wash-basin.ts:229, from z 0.115 to z 0.27). Rule broken: measure/runs/asset_hy4_maker_trial_20261116/judge-brief.md:66 caps a card at 7.0 for a wrong scale, which is a size more than 20 percent away from the brief. judge-brief.md:81 lists a wrong scale as critical error 4, and a critical error fails a card whatever its rating. Spec D6 (spec.md:138) passes a card only with no critical model error. The judge gave this card 8.0 with pass true and critical empty (judge-r1.json, card wash-basin-a). Rationale: the judge could not measure, because the cards show no sizes. mech-check.mjs:53 holds the only size test, the bottom y, so no gate compares size to the brief. The plan lists the height overrun (17 percent) and the rack width overrun (11 percent) as known misses (plan.md:103), but not this depth. This card decides the route result. If wrong scale is a critical error, wash-basin-a fails and the current arm wins wash-basin. Then Hy4 wins 1 of 3, and the route result at plan.md:169 changes. If only the 7.0 cap applies, the new rating is 7.0 or less: a tie at 7.0, and a fail below 7.0. A tie changes plan.md:163 and plan.md:169, keeps the route rule, and keeps the promotion (arm a wins the D9 tie-break). Owner of the fix: the user decides the ruling (ESCALATE). The Measure orchestrator (build session) records the ruling in plan.md and reruns the judge with measured sizes. measure-jr-green (Green) re-promotes assets/wash-basin.ts from wash-basin-b (commit 6a03ea7e) only if wash-basin-a fails. Rerun this acceptance at the new HEAD."
+  ],
+  "nonblocking_findings": [
+    "F2 [Nit] phase-acceptance: judge-r1.json does not follow the Output example of judge-brief.md. It holds an array of cards with a name field, and it has no asset field, no label field, no order key, and no scores array. FR-7 holds in substance, because the name field is asset-label. Card towel-stack-a lists critical as empty, but its first finding says the middle slab hovers, and a floating part is critical error 1 (judge-brief.md:78). The card fails on rating 6.0, so no outcome changes. Rationale: record shape drift and one missing critical entry. Owner: the Measure orchestrator (build session) notes the shape in the plan or accepts it at closeout.",
+    "F3 [Nit] phase-acceptance: plan.md:106 and plan.md:167 say arm 1 continued once after a service outage. measure/runs/asset_hy4_maker_trial_20261116/maker-r1-1.log holds no record of an outage or a continuation, while maker-r1-2.log records its step limit. Rationale: a process claim without a run record. Owner: the Measure orchestrator (build session) adds the record or removes the claim at closeout.",
+    "F4 [Nit] phase-acceptance: Task 2 and Task 3 carry [x] with 'not run' (plan.md:110, plan.md:119), although Task 2 runs when a card fails and towel-stack-a failed. The orchestrator decision of 2026-11-18 skips them, and no try 2 result changes a D8 outcome. Both tasks name 'the plan-evidence commit' without a SHA. Task 4 (plan.md:125) names only dcb269f3, while the results table, the lesson, and maker-t4.log sit in 7d2c530a. Rationale: SHA evidence gap in three plan lines. Owner: the Measure orchestrator (build session) adds 7d2c530a to these lines at closeout.",
+    "F5 [Nit] phase-acceptance: metadata.json is stale. deviation_notes names the judge as kimi-code-plan-cn/kimi-for-coding#high, but the judge was opencode-go/muse-spark-1.3-contributor#high (judge-r1.json, plan.md:51). actual_tasks is 1 and updated_at is 2026-11-16, and plan.md:3 still reads 'Status: new'. Rationale: record drift of volatile facts. Owner: the Measure orchestrator (build session) updates metadata.json and the header at closeout.",
+    "F6 [Nit] phase-acceptance: The type check of mech-check.mjs can pass with no check when tsc cannot start (TD-32, measure/tech-debt.md:42). scripts/typecheck-asset.mjs:41 then prints 'typecheck ok: 0 errors', and mech-check.mjs:63 accepts that line. The Phase 0 note in mech-check-test.txt does not close this path. Here the check was real: wash-basin-b failed 4 real type errors in the same session (maker-r1-2.log:49), node_modules/.bin/tsc exists, and my rerun of wash-basin passes. Rationale: known open debt with no false pass shown. Owner: the light-lane track named in TD-32 (Green) fixes the helper.",
+    "F7 [Nit] phase-acceptance: spec.md:100 says the maker log records the quota before and after each mmx call. mockups.md records one pair for the 3 calls (general quota 39 percent before, 36 percent after). The spend rule holds, because every spend line reads 0 USD metered. Rationale: the record is coarser than D2. Owner: the Measure orchestrator (build session) accepts it or notes it at closeout."
+  ],
+  "evidence": [
+    "HEAD check: git rev-parse HEAD printed f0a6fdaa5988381466d69be59f1df3237f02aa96 at the start of the run and again after the mechanical check. The baseline 0538f7dc is the commit 'mark Phase 0 done', and it is an ancestor of HEAD.",
+    "Scope: the range 0538f7dc..HEAD holds 11 commits of the track: c07a2ae4, ee7bf509, 37769535, 90b669b7, c39e26c0, 3dfd1518, 6a03ea7e, 38f93cb5, c5c7b670, dcb269f3, and 7d2c530a. The other commits name chibi_sprouts_r1 or measure-tools. Commit 663162cc (chibi_sprouts_r1) adds the Role gate note at plan.md:85, and its message says so. The light lane applies, so no Red, Review A to C, adversarial, UX, or final acceptance result exists.",
+    "D8 inputs: arm-key.json gives Hy4 the labels towel-stack a, wash-basin a, and towel-rack b. judge-r1.json gives towel-stack a 6.0 fail and b 7.0 pass, wash-basin a 8.0 pass and b 7.0 pass, and towel-rack a 7.5 pass and b 8.0 pass. Every arm has 1 try.",
+    "D8 result: the current arm wins towel-stack, because a pass beats a fail. Hy4 wins wash-basin by 1.0 and towel-rack by exactly 0.5, and rule 3 says 0.5 or more wins. The Results table (plan.md:152-157), the D8 lines (plan.md:163-165), and the route result (plan.md:169) match this. On the judge file, Hy4 wins 2 of 3, so the route rule holds, subject to F1.",
+    "Tasks 2 and 3: a Hy4 pass at try 2 on towel-stack-a still loses to the current pass at try 1 under D8 rule 2, so no try 2 result changes a D8 outcome. The skip is an orchestrator decision of 2026-11-18 (plan.md:110, plan.md:119).",
+    "Task 4 state: git ls-files lists assets/towel-stack.ts, assets/wash-basin.ts, and assets/towel-rack.ts, with the name fields towel-stack, wash-basin, and towel-rack. No tracked file has a -a or -b trial name. The command ls -d out/towel* out/wash-basin* shows only out/towel-rack, out/towel-stack, and out/wash-basin, so the 6 trial folders are gone. The 3 promoted sources equal HEAD in the working tree.",
+    "Promotion diff: git show dcb269f3 -M shows towel-stack-b.ts renamed to towel-stack.ts with 1 changed line. wash-basin-a.ts and towel-rack-b.ts are renamed with 2 changed lines each. The changes are the name field and one design-note line. The geometry is unchanged, and the triangle counts equal the judged counts: 1052, 3854, and 2776.",
+    "Commits: dcb269f3 'promote the winning props' holds the 3 new sources and the deletion of the 6 trial sources. 7d2c530a 'trial results and route recommendation' holds plan.md, the lesson in measure/lessons-learned.md, judge-r1.json, judge-r1.log, and maker-t4.log. The lesson names the 2 of 3 result and the floating slab.",
+    "Mechanical check, rerun by me through heavy-run.sh on wash-basin: exit 0, ok true, forge all exit 0 with no warning line, 3854 triangles, bottomY -0.001, typecheck exit 0. This equals the claim at plan.md:132. I did not rerun towel-stack and towel-rack, because the brief allows one asset. Their out/<name>/stats.json files read 1052 triangles with bottom y 0, and 2776 triangles with bottom y 0, as the plan says. My rerun rebuilt out/wash-basin, which git ignores (.gitignore:2).",
+    "A5: the plan claims 5 passes and 1 fail for round 1 (plan.md:105), and judge-r1.json holds 5 pass true and 1 pass false. The mechanical-check claims at plan.md:132 match my rerun and the stats files. I found no false 'all checks pass' claim. A3, A4, A6, and A7 do not apply, because no Phase 1 commit of the track changes a contract test, a filter, or measure/tracks.md.",
+    "Spend rule: grep -rn -i for usd, metered, and spend over the track folder and the run folder finds only '0 USD' and 'no metered charge' lines (spec.md:15, 100, 238, 327; plan.md:22; mockups.md:4). A grep for a non-zero amount finds none. mockups.md records the 3 mmx calls on the MiniMax Token Plan quota (general quota 39 percent before, 36 percent after).",
+    "Foreign-hunk rule: git show --name-status of each of the 11 track commits shows no change to measure/tracks.md, measure/generated/, or an image file. The Phase 0 commit 8d045c1d, before the baseline, added the registry entry as 3 lines with no foreign hunk, and added the 3 mockups once. measure/tracks.md at HEAD holds one entry for the track (line 91, marker [~]).",
+    "Blind rule: a grep of judge-r1.json for hy4, minimax, flash, maker, arm 1, arm 2, and route finds no match. judge-r1.log names only the route of the judge. The 6 trial sources had a name field equal to the file name, the one shared reference path of the asset, and no text naming the other label. The SHA-256 values of the 3 briefs and 3 mockups equal mockups.md, and only 8d045c1d changed them.",
+    "Card check: I viewed the 6 round-1 cards and the 3 mockups. My look agrees with the judge on 5 of 6 cards. wash-basin-a looks clean, but the cards show no sizes, so the scale of its dipper handle cannot be judged by eye. towel-stack-a shows the middle slab above the base with a gap.",
+    "Sizes (maker logs and stats.json, metres, X x Y x Z): towel-stack-a 0.308 x 0.227 x 0.257; towel-stack-b 0.301 x 0.222 x 0.229; wash-basin-a 0.419 x 0.199 x 0.494; wash-basin-b 0.419 x 0.181 x 0.399; towel-rack-b 0.689 x 0.829 x 0.340; towel-rack-a 0.620 x 0.824 x 0.345. Against the brief sizes, only the wash-basin-a depth (+23.5 percent) exceeds 20 percent. The wash-basin-a height is +17.1 percent, and the towel-rack-b width is +11.1 percent.",
+    "Dipper source lines (grep, assets/wash-basin.ts): line 212 opens the dipper block, line 213 says the cup rests on the water with a tapered handle that leans, line 229 defines the handle cone from [0.035, 0.17, 0.115] to [0.09, 0.185, 0.27] with radii 0.012 and 0.009, line 231 unions cup, handle, and knob, and line 235 adds the dipper body. I did not read line 230, the knob line.",
+    "Not verified by me: AC 10 (measure/doctor.sh is not on my command list, so closeout must run it), the seed draw of arm-key.json (python3 -c is not on my command list), and mechanical-check reruns of towel-stack and towel-rack. I did not edit plan.md, and I made no commit.",
+    "Validators: the audit-result check on this file prints PASS, so the JSON is valid. The role-gate check prints FAIL for two reasons: the audit status is fail because of F1, and the phase has 2 open tasks, the Phase 1 gate and the Closeout, which the brief names as expected. The log block raised no gate error."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git log --format='%h %ad %s' 0538f7dc..HEAD; git cat-file -t 0538f7dc; git merge-base --is-ancestor 0538f7dc HEAD",
+    "git show --stat for each of the 11 track commits; git show --name-status -M over every commit that touches the track paths",
+    "git show dcb269f3 -M -- assets/towel-stack.ts assets/wash-basin.ts assets/towel-rack.ts and the 3 judged sources",
+    "git show 8d045c1d --stat; git show 8d045c1d -- measure/tracks.md; git show 663162cc -- the track paths",
+    "git show HEAD:measure/tracks.md | grep -n hy4_maker_trial",
+    "git diff --stat 7d2c530a HEAD -- the track paths and the 3 promoted sources; git status --short; git check-ignore -v",
+    "git show <commit>:assets/<name>.ts | grep for name, reference, and trial names (6 sources); git diff --numstat blob blob (3 pairs)",
+    "sha256sum of 3 mockups and 3 briefs, compared with mockups.md",
+    "grep over judge-r1.json and judge-r1.log for route words; grep -rn -i usd|metered|spend over the track and run folders",
+    "git show 7d2c530a -- measure/lessons-learned.md",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs wash-basin' (exit 0, ok true)",
+    "cat out/towel-stack/stats.json out/wash-basin/stats.json out/towel-rack/stats.json; ls -d out/towel* out/wash-basin*; find out/hy4-trial -type f",
+    "read of the 6 round-1 cards and the 3 mockups; read of measure_interphase_checks.py (audit-result and role-gate rules)",
+    "python3 -I /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py audit-result --role phase-acceptance --file <this json> (PASS)",
+    "python3 -I /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py role-gate --role measure-phase-acceptance --track asset_hy4_maker_trial_20261116 --phase 'Phase 1: The trial' --baseline 0538f7dc (FAIL: status fail, and 2 open tasks)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_hy4_maker_trial_20261116/phase-acceptance-f0a6fda.json",
+    "measure/runs/asset_hy4_maker_trial_20261116/phase-acceptance-f0a6fda.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "medium",
+  "route": "claude-code/claude-sonnet-5-5#max",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "out/wash-basin/stats.json after my rerun shows 0.419 x 0.199 x 0.494 m against the brief 0.42 x 0.17 x 0.40 m, while plan.md:152-157 matches judge-r1.json."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "mech-check.mjs:53 tests only the bottom y for size, mech-check.mjs:63 accepts the TD-32 false-ok line, and no test compares size to the brief."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git show dcb269f3 -M shows only name-field and design-note changes, and no Phase 1 commit touches tracks.md, generated files, or images."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "Most claims have a command or a file, but plan.md:106 cites an arm 1 outage that maker-r1-1.log does not record."
+    }
+  ],
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "opencode-go/muse-spark-1.3-contributor#high",
+      "agreed": false,
+      "score": 2,
+      "evidence": "The judge (route picked as review-c; no Review A to C exists in the light lane) matched my look on 5 of 6 cards, but passed wash-basin-a with no size data (0.494 m deep against 0.40 m)."
+    }
+  ]
+}

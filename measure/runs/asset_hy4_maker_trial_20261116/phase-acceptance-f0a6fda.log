@@ -1,0 +1,55 @@
+phase-acceptance log, track asset_hy4_maker_trial_20261116, Phase 1: The trial
+Role: measure-phase-acceptance (light lane checker). Route: claude-code/claude-sonnet-5-5#max.
+Audited HEAD: f0a6fdaa5988381466d69be59f1df3237f02aa96. Baseline: 0538f7dc.
+HEAD matched at the start of the run and again after the mechanical check.
+Verdict: FAIL. One blocker (F1) and six nits (F2 to F7).
+Result JSON: measure/runs/asset_hy4_maker_trial_20261116/phase-acceptance-f0a6fda.json
+
+WHAT HOLDS
+- D8 is applied correctly. Hy4 wins wash-basin (8.0 against 7.0) and towel-rack (8.0 against 7.5, exactly 0.5, and rule 3 says 0.5 or more wins). The current arm wins towel-stack (a pass beats a fail).
+- The Results table (plan.md:152-157), the D8 lines (plan.md:163-165), and the route result (plan.md:169) match judge-r1.json and arm-key.json.
+- Task 4 holds. The 3 promoted sources exist, the 6 trial sources and the 6 trial out folders are gone, and dcb269f3 and 7d2c530a hold the promotion and the results. The promotion changed only the name field and one design-note line per file.
+- The mechanical check of wash-basin, run by me through heavy-run.sh, exits 0 with ok true (3854 triangles, bottomY -0.001, no warning, typecheck exit 0).
+- The spend rule holds (0 USD metered, mmx on the MiniMax Token Plan quota). The foreign-hunk rule holds: no Phase 1 commit of the track touches measure/tracks.md, measure/generated/, or an image.
+- The blind rule holds: judge-r1.json names no maker route and no label-to-route map.
+
+BLOCKING FINDING
+F1 [Blocker] phase-acceptance: The promoted wash-basin (source wash-basin-a, Hy4 arm) is 0.419 x 0.199 x 0.494 m (out/wash-basin/stats.json after my rerun). The brief size is 0.42 x 0.17 x 0.40 m (measure/tracks/asset_hy4_maker_trial_20261116/briefs/wash-basin.md:10). The depth is 23.5 percent over. Only the dipper reaches z 0.284 m; the other three horizontal extents are 0.21 m from the centre.
+  File:line of the cause: assets/wash-basin.ts:229, the handle cone from [0.035, 0.17, 0.115] to [0.09, 0.185, 0.27] with radii 0.012 and 0.009.
+  Dipper source lines (grep): line 212 opens the dipper block; line 213 says the cup rests on the water with a tapered handle that leans; line 229 defines the handle cone; line 231 unions cup, handle, and knob; line 235 adds the dipper body. I did not read line 230, the knob line.
+  Rule broken: judge-brief.md:66 caps a card at 7.0 for a wrong scale (a size more than 20 percent away from the brief). judge-brief.md:81 lists a wrong scale as critical error 4, and a critical error fails a card whatever its rating. Spec D6 (spec.md:138) passes a card only with no critical model error. The judge gave this card 8.0, pass true, critical empty (judge-r1.json, card wash-basin-a).
+  Rationale: the judge could not measure, because the cards show no sizes. mech-check.mjs:53 holds the only size test, the bottom y, so no gate compares size to the brief. The plan lists the height overrun (17 percent) and the rack width overrun (11 percent) as known misses (plan.md:103), but not this depth.
+  Effect: if wrong scale is a critical error, wash-basin-a fails, the current arm wins wash-basin, Hy4 wins 1 of 3, and the route result at plan.md:169 changes. If only the 7.0 cap applies, the new rating is 7.0 or less: a tie at 7.0, and a fail below 7.0. A tie changes plan.md:163 and plan.md:169, keeps the route rule, and keeps the promotion (arm a wins the D9 tie-break).
+  Owner of the fix: the user decides the ruling (ESCALATE). The Measure orchestrator (build session) records the ruling in plan.md and reruns the judge with measured sizes. measure-jr-green (Green) re-promotes assets/wash-basin.ts from wash-basin-b (commit 6a03ea7e) only if wash-basin-a fails. Rerun this acceptance at the new HEAD.
+
+NONBLOCKING FINDINGS
+F2 [Nit] phase-acceptance: judge-r1.json does not follow the Output example of judge-brief.md (array of cards with a name field; no asset field, label field, order key, or scores array). FR-7 holds in substance. Card towel-stack-a lists critical as empty, but its first finding says the middle slab hovers, and a floating part is critical error 1 (judge-brief.md:78). The card fails on rating 6.0, so no outcome changes. Owner: the Measure orchestrator (build session).
+F3 [Nit] phase-acceptance: plan.md:106 and plan.md:167 say arm 1 continued once after a service outage. maker-r1-1.log holds no record of it, while maker-r1-2.log records its step limit. Owner: the Measure orchestrator (build session) adds the record or removes the claim at closeout.
+F4 [Nit] phase-acceptance: Task 2 and Task 3 carry [x] with 'not run' (plan.md:110, plan.md:119), although Task 2 runs when a card fails and towel-stack-a failed. The orchestrator decision of 2026-11-18 skips them, and no try 2 result changes a D8 outcome. Both name 'the plan-evidence commit' without a SHA, and Task 4 (plan.md:125) names only dcb269f3, while the results table, the lesson, and maker-t4.log sit in 7d2c530a. Owner: the Measure orchestrator (build session) adds 7d2c530a at closeout.
+F5 [Nit] phase-acceptance: metadata.json is stale (deviation_notes names the kimi judge; actual_tasks 1; updated_at 2026-11-16), and plan.md:3 still reads 'Status: new'. Owner: the Measure orchestrator (build session) updates them at closeout.
+F6 [Nit] phase-acceptance: The type check of mech-check.mjs can pass with no check when tsc cannot start (TD-32, measure/tech-debt.md:42; scripts/typecheck-asset.mjs:41 prints 'typecheck ok: 0 errors', and mech-check.mjs:63 accepts it). Here the check was real: wash-basin-b failed 4 real type errors in the same session (maker-r1-2.log:49), node_modules/.bin/tsc exists, and my rerun passes. Owner: the light-lane track named in TD-32 (Green).
+F7 [Nit] phase-acceptance: spec.md:100 says the quota is recorded before and after each mmx call. mockups.md records one pair for the 3 calls (39 percent before, 36 percent after). The spend rule holds. Owner: the Measure orchestrator (build session).
+
+NOT VERIFIED BY ME
+- AC 10: measure/doctor.sh is not on my command list. Closeout must run it.
+- The seed draw of arm-key.json: python3 -c is not on my command list.
+- Mechanical-check reruns of towel-stack and towel-rack: the brief allows one asset. Their stats.json files match the plan numbers.
+- The plan tasks 'Phase 1 gate' and 'Closeout' stay [ ] as the brief says. They are not a phase failure.
+
+VALIDATORS (python3 -I measure_interphase_checks.py)
+- audit-result on the JSON file: PASS. The JSON is valid.
+- role-gate: FAIL for two reasons. The audit status is fail because of F1. The phase has 2 open tasks, the Phase 1 gate and the Closeout, which the brief names as expected. The log block raised no gate error.
+
+MEASURE_AGENT_RESULT
+role: measure-phase-acceptance
+status: blocked
+track: asset_hy4_maker_trial_20261116
+phase: Phase 1: The trial
+commits: none
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs wash-basin' -> exit 0, pass ({"ok":true,"triangles":3854,"bottomY":-0.001,"forgeAll":{"exitCode":0,"warnings":[]},"typecheckExit":0}); all other commands were read-only git, grep, sha256sum, ls, and cat
+files_changed: measure/runs/asset_hy4_maker_trial_20261116/phase-acceptance-f0a6fda.json, measure/runs/asset_hy4_maker_trial_20261116/phase-acceptance-f0a6fda.log (out/wash-basin was rebuilt by the permitted mechanical check; git ignores it)
+plan_updates: none
+known_failures: F1 (blocker): the promoted wash-basin (wash-basin-a, Hy4) is 0.494 m deep against the 0.40 m brief, which is 23.5 percent over the 20 percent wrong-scale line (judge-brief.md:66 and judge-brief.md:81; cause at assets/wash-basin.ts:229); the judge passed it at 8.0 with no size data. Nits F2 to F7 are in the JSON file.
+handoff: QUESTION for the user (Daniel), through the orchestrator: Does the dipper handle of wash-basin-a, which makes the model 0.494 m deep against a 0.40 m brief (23.5 percent over), count as the critical error 'wrong scale' of judge-brief.md:66 and judge-brief.md:81? OPTION A: Yes. Then wash-basin-a fails, the current arm wins wash-basin, Hy4 wins 1 of 3, and the current route keeps first place; measure-jr-green re-promotes assets/wash-basin.ts from wash-basin-b (commit 6a03ea7e), and the orchestrator fixes plan.md:152-169. OPTION B: No, the rule covers the bowl only. The user records that ruling in spec.md and plan.md, and the route result stays. OPTION C: Only the 7.0 cap applies. The new rating is 7.0 or less: a tie at 7.0 (arm a wins the D9 tie-break, the promotion stays, plan.md:163 and plan.md:169 change, the route rule holds), or a fail below 7.0 (as option A). OPTION D: Rerate. The orchestrator gives the same blind judge the measured sizes of all 6 sources, with no route names, and applies the new ratings under D8. DEFAULT: option D, then ask the user only if the result still turns on how a wrong scale counts an appendage. After the fix, rerun phase acceptance at the new HEAD. Closeout must also run measure/doctor.sh (AC 10) and add the SHA 7d2c530a to plan.md lines 110, 119, and 125.
+retry_recommendation: escalate_human
+END_MEASURE_AGENT_RESULT

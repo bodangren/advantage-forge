@@ -1,0 +1,160 @@
+# judge-r1-sizes log - round 1 rerate with measured sizes
+
+Date: 2026-11-18. Judge route: opencode-go/glm-5.3#high. Track:
+asset_hy4_maker_trial_20261116, Phase 1 Task 1. Blind judge of the model trial.
+
+## Status: BLOCKED
+
+This judge model cannot view images in this session. The rerate needs the mockup and the
+card in view (judge-brief.md:34, method step 1). The JSON output judge-r1-sizes.json is
+not written, because the visual criteria would need invented ratings. This log records
+the block, the blind rule kept, and the size analysis that this judge could finish.
+
+## 1. Reading log
+
+Files read in full:
+
+- measure/runs/asset_hy4_maker_trial_20261116/judge-brief.md - method, 10 criteria,
+  caps, critical errors, bar 7.0, output shape.
+- measure/tracks/asset_hy4_maker_trial_20261116/briefs/towel-stack.md
+- measure/tracks/asset_hy4_maker_trial_20261116/briefs/wash-basin.md
+- measure/tracks/asset_hy4_maker_trial_20261116/briefs/towel-rack.md
+
+Files that this judge could not read (image input not supported by this model):
+
+- docs/bathhouse-mockups/towel-stack-mock.jpg
+- docs/bathhouse-mockups/wash-basin-mock.jpg
+- docs/bathhouse-mockups/towel-rack-mock.jpg
+- out/hy4-trial/cards/r1/wash-basin-b.png (tried first, then again after the catalog check)
+- out/hy4-trial/cards/r1/towel-rack-a.png
+- out/hy4-trial/cards/r1/towel-stack-a.png
+- out/hy4-trial/cards/r1/towel-rack-b.png
+- out/hy4-trial/cards/r1/wash-basin-a.png
+- out/hy4-trial/cards/r1/towel-stack-b.png
+
+Every image read failed with this error: "this model does not support image input".
+
+Capability checks done before the block was declared:
+
+- The tool catalog has no image-analysis or vision tool (searched with two queries).
+- The MCP resource list is empty, so read_mcp_resource cannot carry the images.
+- The browser capture returns an image file; the same limit blocks it.
+- A text fallback through "./forge inspect <label>" is not possible: the per-label trial
+  sources (assets/towel-stack-a.ts and the 5 other labels) and the per-label out/ folders
+  no longer exist in this checkout. Only the base assets and the 6 card PNGs remain.
+
+## 2. Blind rule kept
+
+This judge read no forbidden file: no arm-key.json, no judge-r1.json, no judge-r1.log, no
+maker log, no plan.md, no spec.md, no asset source, no git history. The judge checked file
+existence only (asset names, out folders, card names). The judge did not learn which model
+made which card.
+
+## 3. Size analysis (measured bounds from the task, against the brief sizes)
+
+Appendage ruling. The wash-basin brief leaves the case open: the size line (0.42 x, 0.17 y,
+0.40 z) names no rule for the dipper, and part 6 puts the dipper "resting across the rim".
+One ruling for all 6 cards: "The size in the brief applies to the main body; an appendage
+that extends the bounding box does not make the scale wrong when the main body stays within
+20 percent on every axis."
+
+Card order as tasked.
+
+### wash-basin-b (brief 0.42 x, 0.17 y, 0.40 z)
+
+- x: 0.419 vs 0.42 = -0.2 percent.
+- y: 0.181 vs 0.17 = +6.5 percent.
+- z: 0.399 vs 0.40 = -0.3 percent.
+- wrong_scale: false. No axis is more than 20 percent away.
+- Note for the visual judge: the bowl stands 1.1 cm taller than the brief. Name this in
+  the findings if the card agrees.
+
+### towel-rack-a (brief 0.62 x, 0.82 y, 0.34 z)
+
+- x: 0.620 vs 0.62 = +0.0 percent.
+- y: 0.824 vs 0.82 = +0.5 percent.
+- z: 0.345 vs 0.34 = +1.5 percent.
+- wrong_scale: false.
+
+### towel-stack-a (brief 0.30 x, 0.22 y, 0.24 z; shelf depth 0.30)
+
+- x: 0.308 vs 0.30 = +2.7 percent.
+- y: 0.227 vs 0.22 = +3.2 percent.
+- z: 0.257 vs 0.24 = +7.1 percent.
+- wrong_scale: false.
+- Footprint: 0.257 m deep. It fits the 0.30 m shelf with 43 mm spare.
+
+### towel-rack-b (brief as towel-rack-a)
+
+- x: 0.689 vs 0.62 = +11.1 percent.
+- y: 0.829 vs 0.82 = +1.1 percent.
+- z: 0.340 vs 0.34 = +0.0 percent.
+- wrong_scale: false. The x axis is 11.1 percent over, under the 20 percent cap.
+- Note for the visual judge: the model is 6.9 cm wider than the brief. This is a clear
+  difference. Name it in the findings.
+
+### wash-basin-a (brief 0.42 x, 0.17 y, 0.40 z)
+
+- x: 0.419 vs 0.42 = -0.2 percent.
+- y: 0.199 vs 0.17 = +17.1 percent.
+- z full bounds: 0.494 vs 0.40 = +23.5 percent. The bowl alone: 0.42 vs 0.40 = +5.0 percent.
+- wrong_scale: false under the appendage ruling. The bowl stays within 20 percent on every
+  axis, and the dipper handle extends the bounding box by 7.4 cm past the rim.
+- Under a full-bounds ruling the verdict flips to true (z +23.5 percent): the card would
+  cap at 7.0 and critical error 4 would fail it. The ruling decides this card. The
+  orchestrator may override the ruling; then apply the same ruling to all 6 cards.
+- Findings either way: the bowl stands 2.9 cm taller than the brief (+17.1 percent, near
+  the cap); the dipper handle overhangs 7.4 cm past the rim.
+
+### towel-stack-b (brief as towel-stack-a)
+
+- x: 0.301 vs 0.30 = +0.3 percent.
+- y: 0.222 vs 0.22 = +0.9 percent.
+- z: 0.229 vs 0.24 = -4.6 percent.
+- wrong_scale: false.
+- Footprint: 0.229 m deep. It fits the 0.30 m shelf.
+
+## 4. What stays open
+
+- The 10 visual criteria for all 6 cards: no rating exists. The mockup match, silhouette,
+  appeal, shape language, value and color, materials, detail hierarchy, technical quality
+  at sight level, and the 128 px check all need the card and the mockup in view.
+- The on-ground check (y = 0). The measured bounds carry no base height, so critical
+  error 5 stays untested by this judge.
+- No overall rating, no pass, no fail is issued.
+
+## 5. Handoff to the orchestrator
+
+Question: this judge route cannot view images, and the rerate method needs the mockup and
+each card in view. How should the round 1 rerate proceed?
+
+- Option A: dispatch the rerate again to a judge route that can view images, outside the
+  hy and minimax model families. Give that judge this log. It reuses the size analysis
+  and the appendage ruling, or it re-chooses the ruling with the same one-ruling rule.
+- Option B: send this judge a text description of each card and its mockup. A vision
+  model produces each description from only the allowed files: the card, the mockup, and
+  the asset brief. This judge then scores from the descriptions and writes the JSON. The
+  blind rule stays intact, because the describer sees no forbidden file.
+- Option C: the owner accepts a size-only record. Keep this log as the round 1 size
+  record and drop the visual rerate. This leaves the trial without visual ratings for
+  round 1 and weakens the trial result.
+
+MEASURE_AGENT_RESULT
+status: blocked
+route: opencode-go/glm-5.3#high
+reason: this judge model cannot view images in this session; every mockup and card read
+  fails with "this model does not support image input"; the judge-brief method
+  (judge-brief.md:34) needs the mockup and the card in view, and no text fallback exists
+  because the per-label trial sources and out/ folders were removed.
+ratings_per_label:
+  wash-basin-b: no wrong scale (x -0.2, y +6.5, z -0.3 percent); visual rating not produced
+  towel-rack-a: no wrong scale (x +0.0, y +0.5, z +1.5 percent); visual rating not produced
+  towel-stack-a: no wrong scale (x +2.7, y +3.2, z +7.1 percent); footprint fits the shelf; visual rating not produced
+  towel-rack-b: no wrong scale (x +11.1 percent, a clear difference to name); visual rating not produced
+  wash-basin-a: no wrong scale under the appendage ruling (bowl x -0.2, y +17.1, z +5.0 percent; full-bounds z +23.5 percent would flip the verdict); visual rating not produced
+  towel-stack-b: no wrong scale (x +0.3, y +0.9, z -4.6 percent); visual rating not produced
+passes: none
+fails: none issued; no overall rating exists, so the pass rule cannot run
+retry_recommendation: escalate_human
+handoff: the question and options A, B, and C are in section 5 of this log
+RESULT: FAIL

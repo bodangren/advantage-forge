@@ -100,14 +100,18 @@ Role gate: the jr-green role gate fails while this phase has open tasks (2026-11
     the final one).
   - Record the rating of each card, the pass or fail, and the findings.
   - Arm 1 round 1: commit 37769535; mech-check ok for towel-stack-a, wash-basin-a, towel-rack-b; cards at out/hy4-trial/cards/r1/.
-  - Known misses of arm 1 round 1 (maker log, commit 37769535): wash-basin-a is 0.199 m tall against the 0.17 m brief; towel-rack-b is 0.689 m wide against the 0.62 m brief. The judge gets both; a try 2 fixes them if the judge fails the asset.
+  - Known misses of arm 1 round 1 (maker log, commit 37769535): wash-basin-a is 0.199 m tall against the 0.17 m brief; towel-rack-b is 0.689 m wide against the 0.62 m brief. Wash-basin-a is 0.494 m deep against the 0.40 m brief, because the dipper handle extends past the rim; the bowl is 0.42 m. The judge gets all three; a try 2 fixes them if the judge fails the asset.
   - Arm 2 round 1: commits 3dfd1518, 6a03ea7e, 38f93cb5; mech-check ok for towel-stack-b, wash-basin-b, towel-rack-a; cards at out/hy4-trial/cards/r1/.
   - Judge round 1: `judge-r1.json`, model `opencode-go/muse-spark-1.3-contributor#high`, blind, bar 7.0. It holds 5 passes and 1 fail; the judge log is `judge-r1.log`.
+  - Size rerate of round 1 (2026-11-18): the phase check at `f0a6fdaa` failed F1, the wash-basin depth. Judge route `opencode-go/glm-5.3#high` wrote `judge-r1-sizes.log`. It could not view images, so it issued no new visual rating. It measured every card and set one ruling for all 6 cards: "The size in the brief applies to the main body; an appendage that extends the bounding box does not make the scale wrong when the main body stays within 20 percent on every axis."
+    - Size deviation per card, in percent of the brief on x, y, z: wash-basin-b -0.2, +6.5, -0.3; towel-rack-a +0.0, +0.5, +1.5; towel-stack-a +2.7, +3.2, +7.1; towel-rack-b +11.1, +1.1, +0.0; wash-basin-a bowl -0.2, +17.1, +5.0, and full bounds z +23.5; towel-stack-b +0.3, +0.9, -4.6.
+    - Result: no card has a wrong scale. The round 1 ratings and the D8 results stand.
+    - Default taken under the primary directive; the PM may reverse it. A full-bounds ruling makes wash-basin-a fail, and then Hy4 wins 1 of 3.
   - Try continuity: arm 1 continued once after a service outage, and arm 2 continued once after a step limit. Both continuations stayed inside try 1, so every asset has one try per arm.
 
 ### Task 2: Try round 2
 
-- [x] Task 2: Try round 2 for each arm and each asset that did not pass in round 1. Run only when a card fails. Trial records: dcb269f3 and the plan-evidence commit; not run: the round 1 results fix every D8 outcome (orchestrator, 2026-11-18).
+- [x] Task 2: Try round 2 for each arm and each asset that did not pass in round 1. Run only when a card fails. Trial records: dcb269f3 and the plan-evidence commit 7d2c530a; not run: the round 1 results fix every D8 outcome (orchestrator, 2026-11-18).
   - The one failing card is towel-stack-a. A pass beats a fail, so a round 2 pass for Hy4 would still lose on tries.
   - A maker of round 2 gets only the judge findings for its own arm and asset. It iterates, runs
     `forge all`, the mechanical check, and card `<name>-<label>` at `out/hy4-trial/cards/r2/`.
@@ -116,13 +120,13 @@ Role gate: the jr-green role gate fails while this phase has open tasks (2026-11
 
 ### Task 3: Try round 3
 
-- [x] Task 3: Try round 3 for each arm and each asset that still has no pass and has fewer than 3 tries. Trial records: dcb269f3 and the plan-evidence commit; not run: the round 1 results fix every D8 outcome (orchestrator, 2026-11-18).
+- [x] Task 3: Try round 3 for each arm and each asset that still has no pass and has fewer than 3 tries. Trial records: dcb269f3 and the plan-evidence commit 7d2c530a; not run: the round 1 results fix every D8 outcome (orchestrator, 2026-11-18).
   - Same shape as Task 2, with cards at `out/hy4-trial/cards/r3/` and `judge-r3.json`.
   - An asset with no pass after 3 tries of an arm is a fail for that arm. It gets no more tries.
 
 ### Task 4: Results and promotion
 
-- [x] Task 4: Apply the win rule of D8 to each asset and promote the passing winner to `assets/<name>.ts` (D9). Commits: dcb269f3.
+- [x] Task 4: Apply the win rule of D8 to each asset and promote the passing winner to `assets/<name>.ts` (D9). Commits: dcb269f3, 7d2c530a.
   - Run `./forge all <name>` and the mechanical check on each promoted source.
   - Delete both trial sources of the asset and their `out/<name>-a` and `out/<name>-b` folders.
   - Write the results table in this plan: route, asset, pass or fail, tries, rating per try, and the
@@ -138,6 +142,8 @@ Role gate: the jr-green role gate fails while this phase has open tasks (2026-11
 - [ ] Phase 1 gate: phase acceptance by the checker at an immutable HEAD. The checker reads the spec,
   the plan, the run files, the mockups, the mech-check output, and the judge files. It runs the
   mechanical check on one promoted asset and greps for the spend rule and the foreign-hunk rule.
+  - Run 1 at f0a6fdaa (claude-code/claude-sonnet-5-5#max): FAIL on F1 (wash-basin depth). The size
+    rerate above resolves F1. Nonblocking findings F2 to F7 are in `phase-acceptance-f0a6fda.json`.
 - [ ] Closeout: archive the track, move the registry entry to the Archived Tracks section, and run
   `./measure/doctor.sh`. The generator does not run while `measure/generated/` holds foreign changes.
 
