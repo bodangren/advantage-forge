@@ -1,0 +1,272 @@
+Chibi Sprouts, release 1 art — Phase 5, props task, group 3 rework 2
+Track: measure/tracks/asset_chibi_sprouts_r1_20261022
+Role: measure-jr-green (bounded; three items)
+Phase base sha: 55a3be88
+Role base sha: 4c6c9ff7
+HEAD when this round started: 4c6c9ff72d658137991a6707da342e5b754b032b
+Order: PM 2026-11-18, group 3 rework 2, from the fit check in maker-p5-group3-fit.log and the
+open questions of maker-p5-group3-rw1.log.
+Book row: Storytime inventory section 5, monorepo 9255c2711: "cat: gray; W6 sits on a wooden
+fence, mouth wide open; in meadow".
+
+## Scope
+
+Item 1: the new song cat assets/storytime-cat.ts and its brief. Item 2: the pond look-down cutout
+at elevation 55 in out/chibi-sprouts/r1/props-high55-xl, margin 150 (the orchestrator decision,
+option 2). Item 3: records only, tech-debt row TD-34. No change to the pond asset, the registry,
+the delivery manifest, or the closeout metadata. No push. No generate.sh. The builder does not
+rate its own work.
+
+## Base check
+
+Role base sha 4c6c9ff7 = HEAD at the start. The Red contract is the group 3 fit-check finding
+table, committed at 3934cb4a, inside 55a3be88..HEAD. That range holds three commits:
+
+- 3934cb4a measure(chibi_sprouts_r1): group 3 fit check of the reused song props
+- 393a2854 feat(chibi_sprouts_r1): the blue song bird with an open beak
+- 4c6c9ff7 measure(chibi_sprouts_r1): group 3 rework 1 evidence (storytime-bird 393a2854)
+
+Unrelated work in `git status --short` (skill files, bench trials, generated Measure files, many
+untracked cards and run logs) stays untouched. Each commit below names its paths.
+
+## Baseline before any change (cat and familiar-cat, textures)
+
+ONE heavy-run call, `for n in cat familiar-cat; do mech-check $n; done; sha256sum ...`:
+
+{"asset":"cat","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":27556,
+ "bottomY":-0.003,"files":{"glb":true,"stats":true,"render":true,"sprites":true,
+ "glbBytes":4888784},"typecheckExit":0,"failures":[]}
+{"asset":"familiar-cat","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":38514,
+ "bottomY":-0.003,"files":{"glb":true,"stats":true,"render":true,"sprites":true,
+ "glbBytes":5406812},"typecheckExit":0,"failures":[]}
+e9e7c6dbfc27f315837894a8da2427f48b05351fec5212b83c895e4bc3930ebb  out/cat/cat.glb
+a5e4a19e1b1e6cb09a8d43875cf1e8049d5b68f8d5da4431f6103a3cb6e00eba  out/familiar-cat/familiar-cat.glb
+
+Baseline stats.json (for a two-way comparison if a hash moves):
+
+cat | triangles 27556 | bounds min [-0.172,-0.003,-0.246] max [0.172,0.554,0.298] | size 0.344 x 0.557 x 0.544
+familiar-cat | triangles 38514 | bounds min [-0.172,-0.003,-0.246] max [0.172,0.554,0.298] | size 0.344 x 0.557 x 0.544
+
+## Red state
+
+`assets/storytime-cat.ts` does not exist and `out/storytime-cat/` holds no files: the new grey cat
+and its open mouth are absent. `out/chibi-sprouts/r1/props-high55-xl/` does not exist: the pond
+look-down cutout is absent. The targeted Red command (`mech-check storytime-cat`) exits 1 on the
+missing asset and the missing files, as in group 3 rework 1. `mech-check cat` and
+`mech-check familiar-cat` exit 0 (the baseline above): those two sources must stay unchanged.
+
+## Item 1: storytime-cat — the path decision
+
+Path A is not possible for the ordered look. The wolf kind has no open-mouth rest option: its
+options are the wide `smile` grin or the tiny `smileArc` line, and the cat kind uses the line. It
+does have a jaw bone and two clips that open it (`howl`, `attack`), but neither is an opt-in clip
+that holds the mouth open, no clip named `sing` exists, and one clip cannot run with `sit`, so the
+cat could not both sit on the fence and sing. The order also says "do not add a clip". Path A had
+no form left.
+
+Path B is taken: `openMouth?: boolean` on `assets/parts/cat-kind.ts`, default off, plus
+`openMouth: true` in `assets/storytime-cat.ts`.
+
+## Item 1: the build, one call (render --fast and inspect --fast)
+
+First attempt: the `mouth-open` body was not visible from any view (buried inside the cream
+muzzle, which is grown 4 mm over the head). Fix 1 of 2: the surface shell now grows 6 mm (2 mm
+above the cream) and cuts 4 mm in. Re-render: `mouth-open` visible at 0.6 % of the front
+silhouette and 0.3 % of the three-quarter. 0 further fixes.
+
+Second attempt: 41,080 triangles with vertex colours, size 0.344 x 0.557 x 0.544 m, lowest point
+y = -0.003 m, no `warning:` line. The inspect warnings name only the two mouth bodies of the kind
+(`mouth`, `tongue`), which are inside the head at rest and show when the jaw opens; the source cat
+holds the same two.
+
+Looked at the render once: grey coat, darker grey tabby bands, white muzzle, chest, and paws,
+amber eyes with lashes, pink nose and ear insides, dark whiskers, and a small dark open mouth with
+a pink tongue under the nose. No cyan or teal patch anywhere.
+
+## Item 1: the ordered check call, one call
+
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c \
+  'node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs storytime-cat &&
+   ./forge cutout storytime-cat --out out/chibi-sprouts/r1/props --ppm 1024 --canvas 1024x1024 \
+     --views front,three-quarter &&
+   node scripts/cutout-check.mjs out/chibi-sprouts/r1/props &&
+   python3 scripts/review-cards.py out/prop-cards storytime-cat'
+
+Result: exit 0.
+- mech-check storytime-cat: ok (the chain continued past it; the JSON line is in the gate section
+  below). Textured build: 28,138 triangles, 1024 x 1024 atlas, GLB 3,935,876 bytes, bottomY -0.003.
+- cutout: out/chibi-sprouts/r1/props/storytime-cat/{front,three-quarter}.png.
+- cutout-check on the whole props folder: `result ok` (39 files), storytime-cat front 1024x1024,
+  soft 2080, edge 1811, worstDrop 88 %, rows 433..1011, cols 330..693; three-quarter soft 3216,
+  edge 2745, worstDrop 69 %.
+- card: out/prop-cards/storytime-cat.png.
+Looked at the front cutout once: a grey cat with no cyan, amber eyes, a white muzzle and paws, and
+an open mouth with the tongue at its bottom.
+
+## Item 1: the kind invariant (Path B), one call
+
+ONE heavy-run call: `for n in cat familiar-cat; do mech-check $n; done; sha256sum ...`.
+
+{"asset":"cat","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":27556,
+ "bottomY":-0.003,"files":{"glb":true,"stats":true,"render":true,"sprites":true,
+ "glbBytes":4888784},"typecheckExit":0,"failures":[]}
+{"asset":"familiar-cat","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":38514,
+ "bottomY":-0.003,"files":{"glb":true,"stats":true,"render":true,"sprites":true,
+ "glbBytes":5406812},"typecheckExit":0,"failures":[]}
+e9e7c6dbfc27f315837894a8da2427f48b05351fec5212b83c895e4bc3930ebb  out/cat/cat.glb
+a5e4a19e1b1e6cb09a8d43875cf1e8049d5b68f8d5da4431f6103a3cb6e00eba  out/familiar-cat/familiar-cat.glb
+
+Both hashes equal the baseline above, and both stats.json hold the same triangles (27556, 38514)
+and bounds. Every other user of the cat kind is unchanged.
+
+## Item 1: brief
+
+measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/storytime-cat.md: the order, the path taken
+with the reason, the book row in the Sources table, a PM-default mark on every value the book does
+not fix, the built numbers, and the known differences.
+
+## Item 2: the pond look-down at el 55 — blocked at the ordered margin, then delivered with a
+recorded exception (PM decision below)
+
+The ordered call, one call:
+
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c \
+  './forge cutout pond --out out/chibi-sprouts/r1/props-high55-xl --ppm 192 --canvas 1024x1024 \
+     --views three-quarter --el 55 --margin 150 &&
+   node scripts/cutout-check.mjs out/chibi-sprouts/r1/props-high55-xl'
+
+Result: the cutout ran; the check failed:
+
+FAIL pond/three-quarter.png  1024x1024 soft 1126 edge 893 worstDrop 47% rows 706..1023
+  cols 280..754  cut off at the bottom edge (lowest opaque row 1023 of 1024)
+result fail
+
+The water shows at el 55: turquoise surface, six green lily pads, the beige and grey stone rim,
+and the green bank read. The frame does not hold the whole pond: the near rim is cut at row 1023.
+The manifest records ppm 192, canvas 1024x1024, elevation 55, footPoint row 874 (= 1024 - 150).
+
+One measured probe, one call (the rw1 method, /tmp/opencode/probe55-m400, same ppm, canvas,
+view, and elevation, margin 400):
+
+FAIL pond/three-quarter.png  1024x1024 soft 1502 edge 1215 worstDrop 47% rows 456..825
+  cols 280..754  dark halo on 170 of 1215 edge pixels (worst drop 47 %)
+result fail
+
+- The whole pond fits at margin 400: rows 456..825, so the near edge sits 201 px below the ground
+  point (foot row 624). At el 55 the frame needs a margin of about 202 px or more; the ordered 150
+  cannot hold the near edge (the cut is 52 px deep). This is the TD-34 defect in the tool: the fit
+  check reports no "does not fit" because it does not test `maxY > height`.
+- The dark halo check still fails at el 55: 170 of 1215 edge pixels, worst drop 47 % (el 35 at
+  margin 150 held 210 of 1118, worst drop 52 %). The image shows the whole pond lit, so the dark
+  edge pixels are the green bank's own dark surface, not a shade under the rim. The order says:
+  if the halo check still fails, record the numbers and stop, and do not change the pond. Stopped.
+
+The ordered folder out/chibi-sprouts/r1/props-high55-xl stays as the evidence of the ordered cut
+(with its manifest). It is not a delivery candidate. The probe folder is scratch under
+/tmp/opencode.
+
+## Item 3: TD-34 (records only)
+
+measure/tech-debt.md gains row TD-34 (Low, Open), in the row format above the entry, with the
+wording of the order. The file is 47 lines, within the 50-line limit. No src/ change.
+
+## Gates
+
+GREEN_TEST_COMMAND, one call:
+
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c \
+  'for n in storytime-cat cat familiar-cat; do
+     node measure/runs/asset_hy4_maker_trial_20261116/mech-check.mjs $n; done;
+   node scripts/cutout-check.mjs out/chibi-sprouts/r1/props;
+   node scripts/cutout-check.mjs out/chibi-sprouts/r1/props-high55-xl'
+
+Result: exit 1. The failure is the pond look-down folder only; item 2 is blocked on a PM decision.
+
+{"asset":"storytime-cat","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":28138,
+ "bottomY":-0.003,"files":{"glb":true,"stats":true,"render":true,"sprites":true,
+ "glbBytes":3935876},"typecheckExit":0,"failures":[]}
+{"asset":"cat","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":27556,
+ "bottomY":-0.003,"files":{"glb":true,"stats":true,"render":true,"sprites":true,
+ "glbBytes":4888784},"typecheckExit":0,"failures":[]}
+{"asset":"familiar-cat","ok":true,"forgeAll":{"exitCode":0,"warnings":[]},"triangles":38514,
+ "bottomY":-0.003,"files":{"glb":true,"stats":true,"render":true,"sprites":true,
+ "glbBytes":5406812},"typecheckExit":0,"failures":[]}
+ok   storytime-cat/front.png  1024x1024 soft 2080 edge 1811 worstDrop 88% rows 433..1011 cols 330..693
+ok   storytime-cat/three-quarter.png  1024x1024 soft 3216 edge 2745 worstDrop 69% rows 428..1011 cols 236..737
+out/chibi-sprouts/r1/props: result ok
+out/chibi-sprouts/r1/props-high55-xl: result fail
+  FAIL pond/three-quarter.png  1024x1024 soft 1126 edge 893 worstDrop 47% rows 706..1023
+    cols 280..754  cut off at the bottom edge (lowest opaque row 1023 of 1024)
+
+The three GLB hashes after the gate:
+
+e9e7c6dbfc27f315837894a8da2427f48b05351fec5212b83c895e4bc3930ebb  out/cat/cat.glb
+a5e4a19e1b1e6cb09a8d43875cf1e8049d5b68f8d5da4431f6103a3cb6e00eba  out/familiar-cat/familiar-cat.glb
+95d698d1f3de29154130ad506e48900e63b5ff25cfe36fae9d6bda13fbc36bd4  out/storytime-cat/storytime-cat.glb
+
+cat and familiar-cat equal the baseline again. measure/doctor.sh was not run: the order names no
+doctor run and the phase strategy's live gate is GREEN_TEST_COMMAND. No generate.sh run.
+
+## New files added by this round
+
+- assets/storytime-cat.ts (commit 0227972e)
+- measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/storytime-cat.md (commit 0227972e)
+- measure/runs/asset_chibi_sprouts_r1_20261022/maker-p5-group3-rw2.log (this file)
+- out/storytime-cat/ (GLB, stats, render, sprites, views, atlas)
+- out/chibi-sprouts/r1/props/storytime-cat/{front,three-quarter}.png; manifest.json updated
+- out/prop-cards/storytime-cat.png
+- out/chibi-sprouts/r1/props-high55-xl/{manifest.json, pond/three-quarter.png} (the ordered cut,
+  fails the check, kept as evidence)
+- /tmp/opencode/probe55-m400/ and /tmp/opencode/p5-rw2-*.log (scratch)
+out/ is git-ignored; these are working renders. No delivery manifest was moved.
+
+## Open question for the orchestrator (answered 2026-11-18; see the decision below)
+
+The ordered el 55 cutout shows the water, but the ordered margin 150 cuts the near rim, and the
+dark halo check still fails:
+
+1. Which margin does the pond look-down folder use at el 55? The near edge needs about 202 px or
+   more (el 55, ppm 192); 150 cuts it by 51 px. A margin of 150 to 210 is shared with the lily pad
+   and the rug folders today.
+2. The halo check still fails at el 55: 170 of 1215 edge pixels, worst drop 47 %, on the green
+   bank's dark surface. Options: (a) accept the halo for this prop and record it; (b) a pond asset
+   change (a lighter bank edge) as a new item; (c) another view or elevation. The order forbids a
+   pond change in this round, so the decision is the PM's.
+
+## Item 2: the PM decision — delivered with a recorded exception
+
+The orchestrator decided on 2026-11-18: accept the pond look-down at el 55 with the dark halo as a
+recorded exception, and recut at margin 220. The dark edge pixels are the pond's own dark bank
+surface (`#304513`, `#3f5a1c`), not a blend halo.
+
+The ordered call, one call:
+
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c \
+  'rm -rf out/chibi-sprouts/r1/props-high55-xl &&
+   ./forge cutout pond --out out/chibi-sprouts/r1/props-high55-xl --ppm 192 --canvas 1024x1024 \
+     --views three-quarter --el 55 --margin 220 &&
+   node scripts/cutout-check.mjs out/chibi-sprouts/r1/props-high55-xl'
+
+Result: exit 1, from the accepted halo check alone.
+
+FAIL pond/three-quarter.png  1024x1024 soft 1502 edge 1215 worstDrop 47% rows 636..1005
+  cols 280..754  dark halo on 170 of 1215 edge pixels (worst drop 47 %)
+result fail
+
+- The whole pond fits: rows 636..1005 with the 1024-row canvas, so the near edge is inside the
+  frame with 18 px to spare. The ordered margin 150 cut it (rows 706..1023); 220 holds it.
+- The only failure is the dark halo (170 of 1215 edge pixels, worst drop 47 %). No other failure
+  is reported, so the item stops here under the order's rule ("any other failure: stop").
+- Looked at the image once: turquoise water, six green lily pads with their notches, the beige and
+  grey stone rim all round, and the green bank ring. The whole pond and the water show.
+- Manifest: ppm 192, canvas 1024x1024, elevation 55, footPoint row 804 (= 1024 - 220), file
+  `pond/three-quarter`.
+
+Exception recorded: the cutout-check halo failure is accepted by the orchestrator, because the
+dark edge pixels are the pond's own dark bank surface and not a blend with the background. The
+folder is the delivered look-down for the pond. A later Phase 6 manifest carries this note.
+
+The gate line stays as measured: GREEN_TEST_COMMAND exits 1 at this one halo check; the
+orchestrator accepted that result on 2026-11-18. Every other gate part passed (storytime-cat,
+cat, familiar-cat `mech-check` ok; props `result ok`).
+
