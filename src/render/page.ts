@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { GIFEncoder, applyPalette as gifPalette, quantize } from 'gifenc';
 import { Studio } from './studio.js';
-import { readStrips, resolveStraight } from './cutout.js';
+import { readStrips, resolveStraight, SING_BODY_NAMES } from './cutout.js';
 import {
   applyPalette,
   buildPalette,
@@ -48,6 +48,11 @@ export interface CutoutsRequest {
   readonly at?: number;
   readonly clipInfo?: ClipInfo;
   readonly preset?: string;
+  /**
+   * Hide the singing-face bodies (eyelids, open mouth): the gesture clips never pose their
+   * bones, and the lid discs poke through the hair in back views. The song page keeps them.
+   */
+  readonly hideSing?: boolean;
 }
 
 export interface SpritesRequest {
@@ -803,6 +808,10 @@ async function renderCutouts(req: CutoutsRequest): Promise<{ views: Record<strin
   floorClip(clip ? req.clipInfo : undefined);
   if (clip) poseAt(clip, req.at ?? 0);
   else toRest();
+  if (req.hideSing)
+    current!.scene.traverse((o) => {
+      if ((o as THREE.Mesh).isMesh && SING_BODY_NAMES.includes(o.name)) o.visible = false;
+    });
   const gl = studio.renderer.getContext();
   const maxSize = Math.min(gl.getParameter(gl.MAX_RENDERBUFFER_SIZE) as number, gl.getParameter(gl.MAX_TEXTURE_SIZE) as number);
   let ss = Math.max(1, Math.floor(req.supersample));
@@ -820,7 +829,7 @@ async function renderCutouts(req: CutoutsRequest): Promise<{ views: Record<strin
   const lightCenter = studio.center;
   const meshes: THREE.Mesh[] = [];
   current!.scene.traverse((o) => {
-    if ((o as THREE.Mesh).isMesh) meshes.push(o as THREE.Mesh);
+    if ((o as THREE.Mesh).isMesh && o.visible) meshes.push(o as THREE.Mesh);
   });
   for (const m of meshes) if ((m as THREE.SkinnedMesh).isSkinnedMesh) (m as THREE.SkinnedMesh).skeleton.update();
 

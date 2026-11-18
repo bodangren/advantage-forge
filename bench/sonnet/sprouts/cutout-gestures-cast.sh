@@ -46,7 +46,7 @@ echo "$FRAMES" | while read -r slug clip at stem; do
   [ -z "$slug" ] && continue
   [ -n "$only" ] && [ "$only" != "$slug" ] && continue
   echo "== $CAST $stem ($clip @ $at) $(date +%H:%M)"
-  HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c "./forge cutout $A --out $OUT --clip \"$clip\" --at \"$at\" --stem \"$stem\" --ppm 1080 --canvas 1024x1200" 2>&1 | grep -iE "error|warning|fit|needed|exit 75"
+  HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c "./forge cutout $A --out $OUT --clip \"$clip\" --at \"$at\" --stem \"$stem\" --ppm 1080 --canvas 1024x1200 --hide-sing" 2>&1 | grep -iE "error|warning|fit|needed|exit 75"
 done
 mkdir -p "$OUT/$CAST"; mv "$OUT/$A/"*.png "$OUT/$CAST/" 2>/dev/null; rmdir "$OUT/$A" 2>/dev/null
 # Merge gestures.<cast> into the manifest; keep every existing key (adventurer stays).

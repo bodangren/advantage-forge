@@ -71,3 +71,16 @@ export function resolveStraight(
   }
   return out;
 }
+
+/**
+ * Bodies the song page moves (the singing face: the skin eyelids and the open mouth). A cut-out
+ * hides them when the clip never poses their bones: the eyelid discs sit 3 cm inside the face
+ * but reach past the head sides, so they poke through the hair in back views (turn-back,
+ * turn-side). The song page renders through its own path, so it keeps them.
+ */
+export const SING_BODY_NAMES: readonly string[] = ['eyelid-skin', 'mouth-open'];
+
+/** False when a cut-out with `hideSing` hides this body: it belongs to the singing face. */
+export function singBodyVisible(bodyName: string, hideSing: boolean): boolean {
+  return !hideSing || !SING_BODY_NAMES.includes(bodyName);
+}

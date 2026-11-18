@@ -69,6 +69,9 @@ cutout options
                        elevation in its manifest)
   --margin 16          pixels between the ground origin and the bottom edge (and the top limit)
   --clip walk --at 0.3 pose of a clip at a time in seconds; --stem walk-03 names the file
+  --hide-sing          hide the singing-face bodies (eyelids, open mouth): the gesture
+                       clips never pose their bones, and the lid discs poke through
+                       the hair in back views (the song page keeps them)
   --ss 3               supersample factor (straight alpha, soft edges, no shadow, no background)
 
 animation options
@@ -138,6 +141,7 @@ async function main(): Promise<void> {
       canvas: { type: 'string' },
       stem: { type: 'string' },
       at: { type: 'string' },
+      'hide-sing': { type: 'boolean' },
       cell: { type: 'boolean' },
       into: { type: 'string' },
       wear: { type: 'string' },
@@ -410,6 +414,7 @@ async function main(): Promise<void> {
           supersample: num(values.ss, 3),
           ...(clipName ? { clip: clipName, at, ...(clipInfoOf(clipName) ? { clipInfo: clipInfoOf(clipName)! } : {}) } : {}),
           ...(values.preset && values.preset !== 'all' ? { preset: values.preset } : {}),
+          ...(values['hide-sing'] === true ? { hideSing: true } : {}),
         };
         const res = await page.evaluate((r) => window.forge.renderCutouts(r), req);
         const dir = join(root, outName);

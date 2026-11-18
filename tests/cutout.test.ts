@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { resolveStraight, readStrips } from '../src/render/cutout.js';
+import { resolveStraight, readStrips, singBodyVisible, SING_BODY_NAMES } from '../src/render/cutout.js';
 import { encodePngRgba } from '../src/png.js';
 
 /** A supersampled buffer (premultiplied RGBA, ss x ss samples for each output pixel). */
@@ -78,5 +78,22 @@ describe('cut-out readback', () => {
     expect(big[lost * width * 4 + 3]).toBe(0);
     const out = readStrips(width, height, read, 2);
     for (let y = 0; y < height; y++) expect(out[y * width * 4 + 3]).toBe(255);
+  });
+});
+
+describe('singing-face bodies in cut-outs', () => {
+  it('names the eyelids and the open mouth', () => {
+    expect([...SING_BODY_NAMES].sort()).toEqual(['eyelid-skin', 'mouth-open']);
+  });
+
+  it('hides both bodies only when hideSing is set', () => {
+    for (const name of SING_BODY_NAMES) {
+      expect(singBodyVisible(name, true)).toBe(false);
+      expect(singBodyVisible(name, false)).toBe(true);
+    }
+  });
+
+  it('keeps every other body visible when hideSing is set', () => {
+    for (const name of ['hair', 'skin', 'shirt', 'shoe.L']) expect(singBodyVisible(name, true)).toBe(true);
   });
 });
