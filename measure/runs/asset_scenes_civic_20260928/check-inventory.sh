@@ -8,8 +8,9 @@
 #     docs/map-mockups/<slug>-3q.png | docs/map-mockups/<slug>-top.png |
 #     MAPS rating: <n> | <maps note> | judge: no | maker: <family> |
 #     inventoried|missing |
-# A row whose source is absent in scenes/maps/ must carry `missing`.
-# No row may carry `rated` in Phase 1 (that label belongs to Phase 2).
+# A row whose source is absent in scenes/maps/ must carry `missing` in its state cell.
+# No row may carry `rated` in its state cell in Phase 1 (that label belongs to Phase 2).
+# A MAPS note may quote the word `rated`; only the state cell counts.
 set -uo pipefail
 FAILED=0; PASS_COUNT=0; FAIL_COUNT=0; RESULTS=()
 pass() { RESULTS+=("PASS: $1"); PASS_COUNT=$((PASS_COUNT + 1)); echo "PASS: $1"; }
@@ -123,19 +124,31 @@ if [ "$STATE_MISS" -eq 0 ]; then
   pass "P1-d all 30 rows hold inventoried, or missing for an absent source"
 fi
 
-echo "=== P1-d: no rated label in Phase 1 ==="
-if grep -q -F "rated" "$INV"; then
-  fail "P1-d inventory claims rated in Phase 1; rated belongs to Phase 2"
-else
-  pass "P1-d no rated label in Phase 1"
+echo "=== P1-d: no rated label in the state cell in Phase 1 ==="
+RATED_MISS=0
+for s in $SLUGS; do
+  LINE="$(grep -F "scenes/maps/$s.ts" "$INV" | head -n 1)"
+  if [ -z "$LINE" ]; then
+    fail "P1-d no inventory row holds scenes/maps/$s.ts"
+    RATED_MISS=1
+    continue
+  fi
+  STATE="$(printf '%s' "$LINE" | awk -F'|' '{v=$(NF-1); gsub(/^[ \t]+|[ \t]+$/, "", v); print v}')"
+  case "$STATE" in
+    inventoried|missing) ;;
+    rated) fail "P1-d row for $s carries rated in its state cell; rated belongs to Phase 2"; RATED_MISS=1 ;;
+    *) fail "P1-d row for $s holds unknown state cell: $STATE"; RATED_MISS=1 ;;
+  esac
+done
+if [ "$RATED_MISS" -eq 0 ]; then
+  pass "P1-d no rated label in the state cell in Phase 1"
 fi
 
 echo "=== A9: checker reads the live track path, not an archive ==="
-if grep -q -F "measure/archive/asset_scenes_civic_20260928" "$0"; then
-  fail "A9 checker names the archived track path"
-else
-  pass "A9 checker reads the live track directory"
-fi
+case "$TRACK_DIR:$INV:$TSV" in
+  *measure/archive/*) fail "A9 checker reads an archived track path" ;;
+  *) pass "A9 checker reads the live track directory" ;;
+esac
 
 echo "=== Total: $((PASS_COUNT + FAIL_COUNT)) checks (PASS=$PASS_COUNT, FAIL=$FAIL_COUNT) ==="
 exit "$FAILED"

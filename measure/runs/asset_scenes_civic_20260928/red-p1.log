@@ -36,3 +36,40 @@ plan_updates: Phase 1 task 1 marked [~]; Red evidence line added under the Phase
 known_failures: P1-a inventory file absent (all other P1 checks untested until inventory.md exists)
 handoff: Green writes measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md with 30 single-line rows per the checker contract; judge field must read `judge: no` and no row may carry `rated`; run the checker to verify
 END_MEASURE_AGENT_RESULT
+
+## Mid Red retry: fix A9 self-scan and P1-d state check (option A)
+
+role_base_sha: 8e20f73d. Green log: measure/runs/asset_scenes_civic_20260928/green-p1.log (untracked).
+
+Fix 1 (A9): the checker no longer scans its own source (`grep ... "$0"` removed).
+It tests the values it reads: `case "$TRACK_DIR:$INV:$TSV" in *measure/archive/*)`.
+Fix 2 (P1-d): the file-wide `grep -F "rated"` is replaced by a per-row parse of
+the last table cell (`awk -F'|'`, trimmed `$(NF-1)`). Allowed Phase 1 states:
+`inventoried`, `missing`. `rated` in the state cell fails; any other value fails.
+Quoted MAPS notes containing `rated`/`generated` no longer trip the check.
+
+Proof A (/tmp only, deleted): copy of the untracked inventory with the apothecary
+state cell set to `rated` -> `FAIL: P1-d row for apothecary carries rated in its
+state cell`, exit 1.
+Proof B (/tmp only, deleted): checker copy with
+`TRACK_DIR="measure/archive/asset_scenes_civic_20260928"` and INV on the real
+inventory -> `FAIL: A9 checker reads an archived track path`, exit 1.
+
+Real tree: `bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh`
+exits 0, `=== Total: 9 checks (PASS=9, FAIL=0) ===`. inventory.md untouched
+(still untracked, Green-owned). No push.
+
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: complete
+track: asset_scenes_civic_20260928
+phase: ## Phase 1: Inventory
+baseline_sha: db2053f2
+role_base_sha: 8e20f73d
+commits: fix A9 self-scan and P1-d state check (SHA in chat result block)
+tests_run: proof A (rated state cell -> P1-d FAIL, exit 1); proof B (archive TRACK_DIR -> A9 FAIL, exit 1); real-tree checker -> PASS 9/9, exit 0
+files_changed: measure/runs/asset_scenes_civic_20260928/check-inventory.sh (A9 + P1-d fixes only); measure/runs/asset_scenes_civic_20260928/red-p1.log (this entry)
+plan_updates: none (task 1 stays [~], Green-owned)
+known_failures: none in the checker; Green rerun pending with the orchestrator
+handoff: Green reruns the fixed checker against the untracked scenes/inventory.md; on PASS the orchestrator closes Phase 1 per the strategy closeout gate
+END_MEASURE_AGENT_RESULT
