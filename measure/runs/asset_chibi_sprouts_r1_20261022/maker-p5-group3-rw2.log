@@ -270,3 +270,23 @@ The gate line stays as measured: GREEN_TEST_COMMAND exits 1 at this one halo che
 orchestrator accepted that result on 2026-11-18. Every other gate part passed (storytime-cat,
 cat, familiar-cat `mech-check` ok; props `result ok`).
 
+MEASURE_AGENT_RESULT
+status: pass
+role: measure-jr-green
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check)
+task: group 3 rework 2 (storytime-cat; pond look-down at el 55; TD-34)
+phase_base_sha: 55a3be88
+role_base_sha: 4c6c9ff7
+head: 0227972e
+evidence_commit: 168f618c
+tasks_flipped: none (the props task stays [~]; one plan sub-bullet is added under it)
+deferred: none
+files: assets/storytime-cat.ts, assets/parts/cat-kind.ts, measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/storytime-cat.md, measure/runs/asset_chibi_sprouts_r1_20261022/maker-p5-group3-rw2.log, measure/tech-debt.md, measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md
+new_files: assets/storytime-cat.ts; measure/tracks/asset_chibi_sprouts_r1_20261022/briefs/storytime-cat.md; measure/runs/asset_chibi_sprouts_r1_20261022/maker-p5-group3-rw2.log; out/storytime-cat/ (GLB, stats, render, sprites, views, atlas); out/chibi-sprouts/r1/props/storytime-cat/{front,three-quarter}.png; out/prop-cards/storytime-cat.png; out/chibi-sprouts/r1/props-high55-xl/{manifest.json,pond/three-quarter.png}
+red: before the change, assets/storytime-cat.ts and out/storytime-cat/ did not exist (verified by ls), so mech-check storytime-cat could only exit 1 on the missing asset and files, as in maker-p5-group3-rw1.log. The command now exits 0 because item 1 builds the asset: "ok":true, 28,138 triangles, bottomY -0.003, typecheck 0. out/chibi-sprouts/r1/props-high55-xl/ did not exist before item 2.
+gate: GREEN_TEST_COMMAND exit 1. Pass: storytime-cat, cat, familiar-cat mech-check ok; props cutout-check result ok. Fail: props-high55-xl cutout-check result fail on the dark halo only (170 of 1215 edge pixels, worst drop 47 %; rows 636..1005, whole pond in frame). That halo is the orchestrator-accepted exception of 2026-11-18 (dark bank surface, not a blend). No other failure. doctor.sh not run (the phase live gate is GREEN_TEST_COMMAND). No generate.sh.
+invariant: cat and familiar-cat GLB sha256 equal the round baseline (e9e7c6db...3930ebb, a5e4a19e...b6e00eba) after the cat-kind change.
+result: storytime-cat delivered and committed; pond look-down at el 55, margin 220 delivered with the recorded halo exception; TD-34 added; records committed.
+without: no delivery manifest moved, no closeout metadata changed, no push, no generate.sh, no src/ change, no rate of own work.
+END_MEASURE_AGENT_RESULT
