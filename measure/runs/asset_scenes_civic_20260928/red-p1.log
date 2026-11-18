@@ -73,3 +73,44 @@ plan_updates: none (task 1 stays [~], Green-owned)
 known_failures: none in the checker; Green rerun pending with the orchestrator
 handoff: Green reruns the fixed checker against the untracked scenes/inventory.md; on PASS the orchestrator closes Phase 1 per the strategy closeout gate
 END_MEASURE_AGENT_RESULT
+
+## Mid Red retry round 2: value checks for P1-c, state parse for P1-d (route_red 0355d23c)
+
+role_base_sha: 0355d23c. Adversarial input: adversarial-feeca3f.json, adversarial-p1-feeca3f.log,
+probe script adversarial-p1.sh (read only, not edited).
+
+ADV-1 (Blocker): P1-c now compares values. Each row's MAPS rating (numeric
+equality) and MAPS note (exact string equality) must equal the final row per
+slug in bench/sonnet/log.tsv (empty note renders as "none recorded");
+docs/map-review.html agrees on all 30 rows. The 30 pairs are embedded in
+maps_expected() because fixtures carry the checker but not the log. maker must
+be Anthropic Sonnet; any other value (including the claude family) fails.
+ADV-2: the absent-source branch of P1-d parses the state cell via state_cell(),
+not a substring match. ADV-3: P1-a validates the Slug cell against the TSV
+slug set. ADV-4: P1-b skips disk-existence checks for rows whose state cell is
+missing, so a correctly labeled missing row can pass; naming checks still apply.
+
+Real tree: `bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh`
+exits 0, `=== Total: 9 checks (PASS=9, FAIL=0) ===`.
+Regression gate: `bash measure/runs/asset_scenes_civic_20260928/adversarial-p1.sh`
+exits 0; control OK, all gate probes (01-03) and want-exit-1 probes (04, 05, 07,
+08) CAUGHT, informational probe 06 now also CAUGHT via the Slug cell check.
+No conflict with probe 06 or the ADV-4 expectation: probe 03 (mislabeled
+inventoried row) still fails P1-b on disk existence plus P1-d on the state cell.
+
+inventory.md, plan.md, the TSV, and map-review.html untouched. No push.
+
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: complete
+track: asset_scenes_civic_20260928
+phase: ## Phase 1: Inventory
+baseline_sha: db2053f2
+role_base_sha: 0355d23c
+commits: value checks for P1-c, state parse for P1-d (SHA in chat result block)
+tests_run: real-tree checker -> PASS 9/9, exit 0; adversarial-p1.sh -> gate verdict PASS, exit 0 (control OK; probes 01, 02, 03 CAUGHT; 04, 05, 07, 08 CAUGHT; 06 CAUGHT)
+files_changed: measure/runs/asset_scenes_civic_20260928/check-inventory.sh (ADV-1 value checks + maps_expected, ADV-2 state-cell branch, ADV-3 slug cell check, ADV-4 missing-state P1-b exemption); measure/runs/asset_scenes_civic_20260928/red-p1.log (this entry)
+plan_updates: none
+known_failures: none; Green rerun and phase acceptance pending with the orchestrator
+handoff: Green reruns the fixed checker and adversarial-p1.sh against the untracked scenes/inventory.md; both must exit 0 before the orchestrator closes Phase 1
+END_MEASURE_AGENT_RESULT
