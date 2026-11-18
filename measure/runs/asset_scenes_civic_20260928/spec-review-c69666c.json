@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Round 2 spec review at c69666cf. All seven round 1 findings are resolved or superseded by the amended spec and plan. The paraphrase is clean, the zoom-out and zero-decision checks pass, and the plan facts hold: all 30 civic P2 rows have a source, a design note, a mockup, and two shots. The judge family rule, the batch size, the evidence paths, and the per-map record are defined. One Nit remains: the stop rule counts a third and fourth rating while the plan caps a map at one rework and one rerate.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F8 [Nit] spec.md Rework rule and plan.md Phase 3 stop rule: The stop rule names a third and a fourth rating, but the plan caps a map at one rework and one rerate. Rationale: The recorded MAPS rating and the one-rework cap fix the end state as follow-up, so only the wording can mislead."
+  ],
+  "evidence": [
+    "HEAD equals the audited head c69666cf, confirmed with git rev-parse. The diff of measure/tracks/asset_scenes_civic_20260928, docs/fantasy-world-scene-blueprints.tsv, scenes/maps, and docs/map-mockups from c69666cf to HEAD is empty.",
+    "F1 resolved: plan.md has no scene-selection task. Phase 1 inventories all 30 civic P2 rows, and the 30 map sources already exist in scenes/maps/.",
+    "F2 resolved: spec.md Mockup route states that all 30 rows have docs/map-mockups/<slug>.jpg. The fallback is mmx image generate at 0 USD metered, recorded as 0 USD metered, with PM approval before any metered or paid call.",
+    "F3 resolved: the spec Paths table and plan Phases 1 to 4 name the map source, design note, mockup image, shots, inventory file, judge record files, and the TSV acceptance record.",
+    "F4 resolved: spec.md pins the bar at 7.0 out of 10 for a P2 row, names rubric .claude/skills/forge-assets/references/review.md, names the route ra-quota pick vision-review, states that the judge family differs from the maker family, and bans self-rating. The command ra-quota roles lists vision-review with routes kimi, claude-sonnet-5-5, and claude-opus-5-5.",
+    "F5 resolved: every plan phase has a Gate block, and the spec names the inventory states (rated, reworked, missing) and the final TSV values (accepted, follow-up).",
+    "F6 resolved: spec.md Reuse cites the scenes/maps/*.ts glob, src/scene/main.ts NEW_INTERIOR, and scripts/design-<slug>.mjs. Verified: src/scene/main.ts line 18 globs scenes/maps, line 20 lists bathhouse, and scripts/design-bathhouse.mjs writes both scenes/maps/bathhouse.ts and docs/map-mockups/bathhouse.md.",
+    "F7 resolved: spec.md Fit values for the judge pins a 1.0 m median character, an opening of character plus 0.09 m, 1.2 m walls, a 45 to 50 degree camera, and the 20 percent main-body rule. The values match docs/dungeon-mockups/fit-check.md lines 12, 33, and 49 and review.md lines 38 to 40.",
+    "Spot-check of bathhouse, market-square, library, granary, and watchtower: each has scenes/maps/<slug>.ts, docs/map-mockups/<slug>.md, <slug>.jpg, <slug>-3q.png, and <slug>-top.png. A loop over all 30 civic P2 slugs found no missing file.",
+    "All 30 civic P2 rows have at least one map-p2 row in bench/sonnet/log.tsv, so docs/map-review.html shows a rating and a note for each row.",
+    "No tool reads docs/map-review.html. Only scripts/map-review-page.mjs writes it, from bench/sonnet/log.tsv.",
+    "No validator parses the status column of docs/fantasy-world-scene-blueprints.tsv, so the new value follow-up breaks no tool. The doctor checks scene_id coverage in measure/scope-map.tsv, and the spec keeps IDs unchanged.",
+    "Zoom-out check: the plan delivers the purpose of owning all civic rows with independent evidence. No speculative feature and no premature optimization appear. Reuse claims cite files and symbols. New records stay in measure/tracks and measure/runs, and the TSV stays the acceptance record.",
+    "Zero-decision check: paths, bar, rubric, judge route, family rule, batch size of about 8, rework route, shot command, stop rule, and final TSV values are named. No maker or judge decides a design choice alone.",
+    "The judge family rule is sound: ra-quota pick supports --not-family filters, the default maker family for the 2026-10 batch is Anthropic Sonnet, and vision-review ranks a non-claude route first.",
+    "The plan facts hold: 97 scripts/design-*.mjs exist, hamlet.html and scripts/shoot-map.mjs exist, and the shoot command in Phase 3 matches the usage in shoot-map.mjs.",
+    "No CONTEST item was routed to this round. The amendments of a98b3306 and c69666cf fixed F1 to F7.",
+    "The shell ran read-only commands and wrote only the two run artifacts. No commit was made."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git diff c69666cf HEAD -- measure/tracks/asset_scenes_civic_20260928 docs/fantasy-world-scene-blueprints.tsv scenes/maps docs/map-mockups (read-only, empty)",
+    "cat measure/tracks/asset_scenes_civic_20260928/spec.md and plan.md (read-only)",
+    "awk over docs/fantasy-world-scene-blueprints.tsv for the 32 civic rows and the 30 P2 rows (read-only)",
+    "existence loop over scenes/maps and docs/map-mockups for all 30 civic P2 slugs (read-only)",
+    "grep and sed on scripts/map-review-page.mjs, scripts/shoot-map.mjs, scripts/design-bathhouse.mjs, src/scene/main.ts, measure/tools/doctor.mjs, measure/tools/common.mjs (read-only)",
+    "cat .claude/skills/forge-assets/references/review.md and docs/dungeon-mockups/fit-check.md (read-only)",
+    "ra-quota roles (read-only listing of the vision-review route)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_scenes_civic_20260928/spec-review-c69666c.json",
+    "measure/runs/asset_scenes_civic_20260928/spec-review-c69666c.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "paraphrase": {
+    "proposes": "This track owns the 30 civic P2 rows of the 100-scene blueprint list. The 30 map sources already exist, so the track inventories each map source, design note, shots, and log rating. An independent judge then rates each map against its design note at 7.0 out of 10 or higher. A map below the bar gets one rework and one rerate. The track then writes accepted or follow-up into the blueprint TSV.",
+    "current_system": "The 30 maps live at scenes/maps/<slug>.ts and load through the glob in src/scene/main.ts. Each map has a generated design note and three images in docs/map-mockups/. The blueprint TSV still marks the 30 rows mockup-needed, which is stale. docs/map-review.html shows the earlier orchestrator ratings from bench/sonnet/log.tsv, and no tool reads that page. The rubric review.md sets the bar, the reviewer rule, and the main-body scale rule."
+  },
+  "role": "spec-review",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "track setup",
+  "baseline_sha": "c69666cf31300c65321fd1919d12ae9dddfe82d2",
+  "audited_head_sha": "c69666cf31300c65321fd1919d12ae9dddfe82d2"
+}

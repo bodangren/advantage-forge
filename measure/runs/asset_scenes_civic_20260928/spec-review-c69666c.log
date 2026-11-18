@@ -1,0 +1,30 @@
+Spec review round 2, track asset_scenes_civic_20260928, audited head c69666cf, reviewer measure-spec-review on opencode-go/mimo-v2.6-flash.
+Text below is ready to append to measure/tracks/asset_scenes_civic_20260928/spec-review.md.
+
+### What this track proposes
+
+This track owns the 30 civic P2 rows of the 100-scene blueprint list. The 30 map sources already exist, so the track inventories each map source, design note, shots, and log rating. An independent judge then rates each map against its design note at 7.0 out of 10 or higher. A map below the bar gets one rework and one rerate. The track then writes accepted or follow-up into the blueprint TSV.
+
+### How the current system works, per this spec
+
+The 30 maps live at scenes/maps/<slug>.ts and load through the glob in src/scene/main.ts. Each map has a generated design note and three images in docs/map-mockups/. The blueprint TSV still marks the 30 rows mockup-needed, which is stale. docs/map-review.html shows the earlier orchestrator ratings from bench/sonnet/log.tsv, and no tool reads that page. The rubric review.md sets the bar, the reviewer rule, and the main-body scale rule.
+
+### Findings
+
+- F1 to F7 do not reappear: each round 1 finding is resolved or superseded by the amended spec.md and plan.md. F1 has no scene-selection task left; Phase 1 inventories the 30 existing rows. F2 has the Mockup route section with the 0 USD metered fallback and PM approval. F3 has the Paths table and per-phase paths. F4 pins the 7.0 bar, the rubric, the vision-review route, and the family rule. F5 adds a Gate block to every phase and names the states. F6 cites the scenes/maps glob, src/scene/main.ts, and the design generators. F7 pins the fit values with their sources.
+- F8 [Nit] spec.md Rework rule and plan.md Phase 3 stop rule: The stop rule names a third and a fourth rating, but the plan caps a map at one rework and one rerate. Rationale: The recorded MAPS rating and the one-rework cap fix the end state as follow-up, so only the wording can mislead.
+
+Verdict: pass. One Nit, no Blocker, no Major. Round limit reached; the Nit stays in this round section for the author to fix or decline.
+
+MEASURE_AGENT_RESULT
+role: spec-review
+status: complete
+track: asset_scenes_civic_20260928
+phase: track setup
+commits: none
+tests_run: read-only checks only; git rev-parse HEAD matched c69666cf; the audited-path diff was empty; the five-file existence loop over all 30 civic P2 slugs passed
+files_changed: measure/runs/asset_scenes_civic_20260928/spec-review-c69666c.json, measure/runs/asset_scenes_civic_20260928/spec-review-c69666c.log
+plan_updates: none; report-only role
+known_failures: none
+handoff: Pass with one Nit (F8, stop-rule wording). Round 1 F1 to F7 are all resolved or superseded. No user question is open. Defaults for the orchestrator: docs/map-review.html stays unchanged; pick the judge with ra-quota pick vision-review and exclude the claude family while the maker family is Anthropic Sonnet; label a Phase 1 row inventoried until the judge rates it; after a rerate below 7.0 the row becomes follow-up, because accepted requires a judge rating of 7.0 or higher. The full round 2 report text sits above the result block for the spec-review.md append.
+END_MEASURE_AGENT_RESULT

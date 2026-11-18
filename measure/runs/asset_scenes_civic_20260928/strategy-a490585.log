@@ -1,0 +1,31 @@
+Measure strategy role, track asset_scenes_civic_20260928, route opencode-go/hy4-flash-free#high.
+Baseline and role_base_sha: a4905853. Scope: Phase 1 Inventory to Phase 4 Records.
+
+Read before writing: measure/index.md, measure/tracks.md, spec.md, plan.md, spec-review.md,
+the round 2 JSON and log, measure/anti-patterns.md (absent), measure/workflow.md,
+/home/daniebo/.agents/skills/measure-orchestrator/references/contracts.md, and the canonical
+anti-pattern catalog. graph.db is absent. No product symbol changed, so no build-graph query ran.
+
+Checks verified read-only: the TSV header is scene_id/group/priority/status; 30 civic P2 rows hold
+mockup-needed; scripts/shoot-map.mjs takes FORGE_SHOT_BASE and one <name>=<query> argument per view;
+src/scene/main.ts line 18 globs scenes/maps/*.ts and line 20 lists bathhouse in NEW_INTERIOR.
+
+The strategy records a targeted Red checker for each phase, a Green gate and a closeout gate for
+each phase, fixtures and mocks, live-behavior proof, architecture guardrails, changed-contract
+risks, intentionally-red aggregate-suite handling, the artifact versus live test distinction, a
+risk level per phase, review gate applicability, anti-pattern coverage per phase, the phase base
+capture point, and the F8 handoff item. No SHA is embedded in the strategy. spec.md was not edited.
+
+MEASURE_AGENT_RESULT
+role: measure-strategy
+status: complete
+track: asset_scenes_civic_20260928
+phase: Phase 1 Inventory to Phase 4 Records
+commits: this strategy commit; see git log -1 --format=%h -- measure/tracks/asset_scenes_civic_20260928/test-strategy.md
+tests_run: read-only checks only; no phase gate executed in this role; TSV slug count 30 verified; HEAD a4905853 verified
+files_changed: measure/tracks/asset_scenes_civic_20260928/test-strategy.md, measure/runs/asset_scenes_civic_20260928/spec-review-c69666c.json, measure/runs/asset_scenes_civic_20260928/spec-review-c69666c.log, measure/runs/asset_scenes_civic_20260928/strategy-a490585.log
+plan_updates: none; this role does not mark tasks in plan.md
+known_failures: none
+handoff: Capture phase_base_sha from git rev-parse HEAD immediately after the strategy commit and before Red writes the first checker. Four batches of about 8 maps; judge family must differ from Anthropic Sonnet. F8 is a spec-wording item for the orchestrator; gates read one rework and one rerate. Do not run measure/generate.sh. Stage only the four named paths because foreign dirty work is present.
+dispositions: F8=ESCALATE(spec.md stop-rule wording is a spec-wording item for the orchestrator and this role does not own spec.md)
+END_MEASURE_AGENT_RESULT
