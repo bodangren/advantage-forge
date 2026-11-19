@@ -291,3 +291,46 @@ Gates after `d164f980`: `check-review.sh` exits 0 with
 
 Commit chain: `7dc26d74` (ratings, notes, route, eight evidence files), `d164f980` (critical
 cells), `7a48784d` and `ba13f928` (plan evidence), `84c87f3e` and this note (green log).
+
+---
+
+# Green Phase 2 spot-check dispositions
+
+Role: measure-jr-green. phase_base_sha: 3e8d29e8. role_base_sha: 0aed743a.
+
+The UX browser review found one wrong judge note (bank) and one cause correction (mill). The
+orchestrator kept the judge files and the inventory judge cells unchanged as evidence. Green added
+two evidence lines under Phase 2 in `plan.md`: the bank note correction with the `bank.ts` source
+line, and the mill cause with the `watermill.ts` line and the Phase 3 direction. No task mark
+changed.
+
+Gate: `bash measure/runs/asset_scenes_civic_20260928/check-review.sh` exits 0 with
+`=== Total: 34 checks (PASS=34, FAIL=0) ===`.
+
+```text
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_scenes_civic_20260928
+phase: "## Phase 2: Independent review"
+status: complete
+phase_base_sha: 3e8d29e8
+role_base_sha: 0aed743a
+result_head_sha: 56bdd0cf (plan and UX evidence; this log commit follows it)
+ux_review: measure/runs/asset_scenes_civic_20260928/ux-browser-review-p2-0aed743.json and .log (committed unchanged)
+gate: "check-review.sh exit 0; === Total: 34 checks (PASS=34, FAIL=0) ==="
+tasks_changed: none
+plan_evidence_added:
+  - "Bank: judge note wrong; scenes/maps/bank.ts line 4 places the chandeliers at y=2; floor rings are shadows; 7.5 rating stands; no rework and no rerate"
+  - "Mill: wheel exists in assets/watermill.ts (x=1.15, radius 1.2, line 116 rim); az=35 and el=86 read it edge-on; Phase 3 fixes yaw or shot angle; no new wheel"
+files_changed:
+  - measure/tracks/asset_scenes_civic_20260928/plan.md
+  - measure/runs/asset_scenes_civic_20260928/ux-browser-review-p2-0aed743.json
+  - measure/runs/asset_scenes_civic_20260928/ux-browser-review-p2-0aed743.log
+files_not_changed:
+  - measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md
+  - the four vision-review JSON and log files
+  - measure/runs/asset_scenes_civic_20260928/check-review.sh
+  - docs/fantasy-world-scene-blueprints.tsv and every map source
+notes: "No push. No measure/generate.sh. Foreign dirty work is untouched."
+END_MEASURE_AGENT_RESULT
+```
