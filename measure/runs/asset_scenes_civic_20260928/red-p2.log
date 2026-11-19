@@ -96,3 +96,18 @@ plan_updates: none (Phase 2 tasks stay with Green)
 known_failures: P2-d all 30 inventory rows hold state inventoried, want rated (expected until Green copies the ratings)
 handoff: Green copies the 30 ratings and notes into the inventory with state rated and reruns the checker; P2-c now passes on the committed evidence
 END_MEASURE_AGENT_RESULT
+
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: red-complete
+track: asset_scenes_civic_20260928
+phase: ## Phase 2: Independent review
+baseline_sha: 3e8d29e8
+role_base_sha: 6e9cb9b7
+commits: test(asset_scenes_civic): P2-d critical and route cells, log id, audited head (SHA in reply)
+tests_run: bash measure/runs/asset_scenes_civic_20260928/check-review.sh -> PASS (exit 0; Total 34 checks PASS=34 FAIL=0); bash measure/runs/asset_scenes_civic_20260928/adversarial-p2.sh -> PASS (exit 0; control 34/34; gate probes 01 critical flip, 02 judge cell, 03 route-only log all CAUGHT; regression probes 04, 05, 07, 08 CAUGHT; 06 foreign head informational only); real-tree negative proof: audited_head deadbeef -> FAIL P2-c ancestor check, file restored byte-identical
+files_changed: measure/runs/asset_scenes_civic_20260928/check-review.sh (P2-d compares Judge critical and judge route cells; P2-c requires a labeled model_id:/model_family: line; P2-c verifies audited_head ancestry); measure/runs/asset_scenes_civic_20260928/red-p2.log (this entry)
+plan_updates: none (Phase 2 tasks stay with Green; guard note names the Phase 3 task but no file outside measure/ was changed)
+known_failures: none; ADV-P2-06 foreign head stays informational in fixture trees (no git HEAD there); the real-tree ancestor check runs and passes on 3b35a490
+handoff: Green reruns the checker and adversarial-p2.sh; both must exit 0 before Phase 2 acceptance
+END_MEASURE_AGENT_RESULT

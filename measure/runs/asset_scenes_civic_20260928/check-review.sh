@@ -198,13 +198,32 @@ for n in 1 2 3 4; do
       pass "P2-c batch b$n route [$ROUTE] agrees with a non-maker family"
       ;;
   esac
-  # The log cites the same route string and a model id or model family.
+  # The log cites the same route string and a labeled model id or model family
+  # line (for example `model_id:` or `model_family:`). A route line alone is not
+  # enough: the model id and the family can be substrings of the route string.
   LOG="$RUNS/vision-review-b$n.log"
-  if grep -qF "$ROUTE" "$LOG" && { grep -qF "$MODEL" "$LOG" || grep -qiF "$FAM" "$LOG"; }; then
+  if grep -qF "$ROUTE" "$LOG" && grep -Eq '^[[:space:]]*(model_id|model_family):[[:space:]]*[^[:space:]]' "$LOG"; then
     pass "P2-c batch b$n log cites its route and a model id or family"
   else
-    fail "P2-c batch b$n log does not cite its route and a model id or family"
+    fail "P2-c batch b$n log does not cite its route and a labeled model id or family line"
     FAMILY_MISS=1
+  fi
+  # Each batch audited_head must resolve and be an ancestor of HEAD. In a tree
+  # with no git HEAD (an adversarial fixture copy) only the field presence is
+  # verifiable; the real tree always has a HEAD, so the ancestor check runs.
+  AHEAD="$(jq -r '.audited_head // empty' "$RUNS/vision-review-b$n.json")"
+  if [ -z "$AHEAD" ]; then
+    fail "P2-c batch b$n records no audited_head"
+    FAMILY_MISS=1
+  elif git rev-parse --verify --quiet HEAD >/dev/null 2>&1; then
+    if git rev-parse --verify --quiet "$AHEAD" >/dev/null 2>&1 && git merge-base --is-ancestor "$AHEAD" HEAD 2>/dev/null; then
+      :
+    else
+      fail "P2-c batch b$n audited_head [$AHEAD] is not an ancestor of HEAD"
+      FAMILY_MISS=1
+    fi
+  else
+    :
   fi
 done
 
@@ -257,10 +276,26 @@ else
       fail "P2-d row for $s holds a Judge note that differs from batch b$FOUND"
       ROW_MISS=1
     fi
+    EXP_C="$(jq -r --arg s "$s" '.maps[] | select(.slug==$s) | .critical' "$F")"
+    GOT_C="$(cell_value "$LINE" "Judge critical")"
+    if [ "$GOT_C" = "$EXP_C" ]; then
+      :
+    else
+      fail "P2-d row for $s holds Judge critical [$GOT_C], want [$EXP_C] from batch b$FOUND"
+      ROW_MISS=1
+    fi
+    EXP_RT="$(jq -r '.route' "$F")"
+    GOT_J="$(cell_value "$LINE" "judge")"
+    if [ "$GOT_J" = "$EXP_RT" ]; then
+      :
+    else
+      fail "P2-d row for $s holds judge cell [$GOT_J], want [$EXP_RT] from batch b$FOUND"
+      ROW_MISS=1
+    fi
   done
   echo "Inventory rated rows: $RATED_ROWS"
   if [ "$ROW_MISS" -eq 0 ]; then
-    pass "P2-d all 30 inventory rows hold rated with the batch rating and note"
+    pass "P2-d all 30 inventory rows hold rated with the batch rating, critical flag, route, and note"
   fi
 fi
 
