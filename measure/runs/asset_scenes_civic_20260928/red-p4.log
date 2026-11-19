@@ -1,0 +1,55 @@
+=== Base SHAs resolve ===
+PASS: phase_base_sha [024cfdf9] resolves
+PASS: role_base_sha [024cfdf9] resolves
+Civic P2 TSV slug count: 30
+PASS: P4-a TSV slug set holds 30 civic P2 slugs (Civic P2 TSV slug count: 30)
+=== P4-a: 30 civic P2 TSV rows hold accepted or follow-up ===
+TSV accepted rows: 0
+TSV follow-up rows: 0
+TSV stale mockup-needed rows: 30
+FAIL: P4-a 30 of 30 rows still read mockup-needed (accepted: 0, follow-up: 0)
+=== P4-b: TSV diff changes only the status column; scene_ids unchanged ===
+PASS: P4-b every civic P2 scene_id is unchanged against 024cfdf9
+TSV changed data lines vs 024cfdf9: 0
+PASS: P4-b the TSV is unchanged against 024cfdf9; no non-status edit exists yet
+=== P4-c: accepted rows have inventory support; TSV counts match inventory ===
+Inventory-supported accepted rows: 30
+PASS: P4-c inventory supports 30 accepted rows (29 rated Judge >= 7.0 non-critical plus the mill rerate 7.5)
+FAIL: P4-c TSV accepted count [0] differs from the inventory-supported count [30]
+P4-c no TSV accepted or follow-up row exists yet to cross-check against inventory states
+=== P4-d: each TSV status change cites its commit in plan.md ===
+TSV status changes vs 024cfdf9: 0
+PASS: P4-d no TSV status change exists yet, so no plan citation is missing
+=== P4-e: docs/map-review.html is unchanged ===
+PASS: P4-e docs/map-review.html is unchanged against 024cfdf9 (it stays a view, not a record)
+=== P4-f (scoped): doctor holds no error line for this track ===
+Doctor exit code: 1
+Doctor error count: 51
+PASS: P4-f doctor output holds no error line for this track (total doctor errors: 51, owned elsewhere)
+=== P4-g (carried N3): the mill generator writes the accepted yaw ===
+FAIL: P4-g generator output differs from the committed scenes/maps/mill.ts; the generator still drops the accepted yaw (drift)
+  { asset: 'watermill', at: [2.2, 0, -3.4] },
+  { asset: 'watermill', at: [2.2, 0, -3.4], yaw: -65 },
+FAIL: P4-g scripts/design-mill.mjs holds no yaw -65 for the watermill (it still writes put('watermill', 2.2, -3.4) with no yaw)
+=== A9: checker reads the live track path, not an archive ===
+PASS: A9 checker reads the live track directory
+=== Total: 14 checks (PASS=10, FAIL=4) ===
+exit=1
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+track: asset_scenes_civic_20260928
+phase: ## Phase 4: Records
+baseline_sha: 024cfdf9
+red_run_head_sha: 024cfdf9
+red_run_note: tree at the Red run, before the Red commit; the final message block names the resulting HEAD
+red_command: bash measure/runs/asset_scenes_civic_20260928/check-records.sh
+red_exit_code: 1
+red_summary: === Total: 14 checks (PASS=10, FAIL=4) ===
+remaining_failures:
+  - P4-a: 30 of 30 civic P2 TSV rows still read mockup-needed (accepted: 0, follow-up: 0)
+  - P4-c: TSV accepted count [0] differs from the inventory-supported count [30]
+  - P4-g: generator output differs from the committed scenes/maps/mill.ts (drift, no yaw -65)
+  - P4-g: scripts/design-mill.mjs holds no yaw -65 for the watermill
+generator_method: generator run with cwd in a temp dir so the committed mill.ts was never overwritten; temp output compared byte for byte with cmp
+doctor_note: doctor exits 1 with 51 error lines from other tracks; no error line names asset_scenes_civic_20260928 or its files
+END_MEASURE_AGENT_RESULT

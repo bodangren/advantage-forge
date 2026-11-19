@@ -119,7 +119,7 @@ follow-up list.
 
 ## Phase 4: Records
 
-- [ ] Task: Update the TSV status column for each reviewed map.
+- [~] Task: Update the TSV status column for each reviewed map.
   Use `accepted` or `follow-up`. Do not change any ID. Cite the commit in this plan.
 - [ ] Task: Decide the `docs/map-review.html` note.
   `scripts/map-review-page.mjs` generates that page from `bench/sonnet/log.tsv`. No tool reads the page.
@@ -129,6 +129,12 @@ follow-up list.
 ```bash
 ./measure/doctor.sh
 ```
+
+Red evidence: `bash measure/runs/asset_scenes_civic_20260928/check-records.sh` exits 1 at
+`024cfdf9` with `=== Total: 14 checks (PASS=10, FAIL=4) ===`: the 30 TSV rows still read
+`mockup-needed` (P4-a), the TSV holds 0 accepted rows against 30 inventory-supported (P4-c),
+and the generator output differs from the committed `mill.ts` (P4-g drift, no `yaw: -65`).
+Run log `measure/runs/asset_scenes_civic_20260928/red-p4.log`.
 
 ## Civic review record
 
