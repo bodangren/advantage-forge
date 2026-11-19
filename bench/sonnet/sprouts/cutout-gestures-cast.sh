@@ -2,8 +2,11 @@
 # Gesture key frames of one Sprout cast member for weeks 2 to 7 (set 2 + turn)
 # at the week 1 scale, into out/chibi-sprouts/r1/week2-7/gestures/<cast>/, with
 # gestures.<cast> keys merged into the same manifest.json (adventurer key kept).
+# Adults (Mom first; Dad, Grandma, Grandpa later) render at the same 1080 px/m scale
+# into gestures-adult/<cast>/ with their own manifest: one folder keeps one canvas,
+# and a grown-up does not fit the children's 1024x1200.
 # Usage: ./cutout-gestures-cast.sh <cast> [slug]
-#   <cast>: pat | sam | mia | may (also nan ben adventurer for re-renders)
+#   <cast>: pat | sam | mia | may | mom (also nan ben adventurer for re-renders)
 #   [slug]: optional, one gesture slug to (re)render (point-up, reach, ...)
 # The FRAMES list is a copy of cutout-gestures-w2-7.sh; the last frame of a
 # gesture is the beat frame. The *-picture slugs are held poses for the 64 px
@@ -13,6 +16,9 @@
 cd "$(dirname "$0")/../../.."
 OUT=out/chibi-sprouts/r1/week2-7/gestures
 CAST="${1:?usage: cutout-gestures-cast.sh <cast> [slug]}"
+# Mom is the first adult (1.55 m): same 1080 px/m scale, taller canvas, own folder.
+[ "$CAST" = "mom" ] && OUT=out/chibi-sprouts/r1/week2-7/gestures-adult
+REL="$(basename "$OUT")"
 A="sprout-$CAST"
 FRAMES="
 point-up gesture-point-up 1.0 point-up
@@ -42,18 +48,23 @@ stamp-picture picture-stamp 1.0 stamp-picture
 sway-picture picture-sway 1.0 sway-picture
 "
 only="${2:-}"   # optional: one slug to (re)render
+# Canvas at the week 1 scale (1080 px/m for every cast). Mom is the first adult (1.55 m):
+# she needs a taller canvas than the children at the same scale.
+CANVAS="1024x1200"
+[ "$CAST" = "mom" ] && CANVAS="1664x1856"
 echo "$FRAMES" | while read -r slug clip at stem; do
   [ -z "$slug" ] && continue
   [ -n "$only" ] && [ "$only" != "$slug" ] && continue
   echo "== $CAST $stem ($clip @ $at) $(date +%H:%M)"
-  HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c "./forge cutout $A --out $OUT --clip \"$clip\" --at \"$at\" --stem \"$stem\" --ppm 1080 --canvas 1024x1200 --hide-sing" 2>&1 | grep -iE "error|warning|fit|needed|exit 75"
+  HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c "./forge cutout $A --out $OUT --clip \"$clip\" --at \"$at\" --stem \"$stem\" --ppm 1080 --canvas $CANVAS --hide-sing" 2>&1 | grep -iE "error|warning|fail|needed|exit 75"
 done
 mkdir -p "$OUT/$CAST"; mv "$OUT/$A/"*.png "$OUT/$CAST/" 2>/dev/null; rmdir "$OUT/$A" 2>/dev/null
 # Merge gestures.<cast> into the manifest; keep every existing key (adventurer stays).
-export CAST
+export CAST REL
 echo "$FRAMES" | python3 -c '
 import json, sys, os
 cast = os.environ["CAST"]
+rel = os.environ["REL"]
 out = sys.argv[1]
 g = {}
 files = {}
@@ -61,7 +72,7 @@ for line in sys.stdin:
     p = line.split()
     if not p: continue
     slug, clip, at, stem = p
-    g.setdefault(slug, []).append(f"gestures/{cast}/{stem}.png")
+    g.setdefault(slug, []).append(f"{rel}/{cast}/{stem}.png")
     files[f"sprout-{cast}/{stem}"] = True
 mp = os.path.join(out, "manifest.json")
 m = json.load(open(mp))
