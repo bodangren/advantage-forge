@@ -165,6 +165,11 @@ adds one check for each of the 30 changed TSV rows. Run log
   `scenes/maps/mill.ts` was never overwritten.
 - P4-f (scoped): `./measure/doctor.sh` exits 1 with 51 error lines, all from other tracks. No error
   line names `asset_scenes_civic_20260928` or its files.
+- Review C F1 (`measure/runs/asset_scenes_civic_20260928/review-c-p4-be89dc9.json`): the committed
+  `measure/generated/asset-inventory.json` is stale after the TSV change. It holds 6 `accepted`
+  rows while the TSV holds 36, and `node measure/tools/generate.mjs --check` exits 1 with three
+  stale-fact lines. The standing rule forbids `./measure/generate.sh` while `measure/generated/`
+  and `measure/tracks.md` hold foreign uncommitted edits, so the closeout role regenerates them.
 
 Carried phase-acceptance items N1 to N5 (`phase-acceptance-p3-024cfdf.json`):
 
@@ -184,6 +189,7 @@ Carried phase-acceptance items N1 to N5 (`phase-acceptance-p3-024cfdf.json`):
 - [ ] Task: Close the track (deferred to the closeout role): archive the folder and set the metadata status to completed.
   Owner is the closeout steward. This role records the Phase 4 evidence and writes no closeout
   metadata.
+- [ ] Task: Regenerate measure/generated/ with ./measure/generate.sh and commit it (deferred to the closeout role; blocked while measure/generated/ and measure/tracks.md hold foreign uncommitted edits; Review C F1 at be89dc91).
 
 ## Civic review record
 
