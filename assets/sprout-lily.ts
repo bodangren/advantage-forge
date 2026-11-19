@@ -1,4 +1,5 @@
 import { mixRgb, profile, rgb, sdf } from '../src/index.js';
+import type { Rgb } from '../src/index.js';
 import { AGE5, humanoidAsset } from './parts/humanoid-kind.js';
 import { sproutGestures } from './parts/sprout-gestures.js';
 
@@ -51,32 +52,54 @@ export default humanoidAsset({
       a[2]! + (b[2]! - a[2]!) * t,
     ];
 
-    // ---------------------------------------------------------------- hair: a chin-length bob with a straight fringe
-    // The fringe ends 1.7 cm above the eye tops; the sides fall to the chin; the back is cut
-    // at the jaw so the neck shows. Local frame: y 0 is the head center (eyes at -0.047).
-    const faceMask = sdf.ellipsoid([0.185, 0.12, 0.21]).at(0, -0.11, 0.12);
+    // ---------------------------------------------------------------- hair: a chin-length straight bob with a strand-cut fringe
+    // Local frame: y 0 is the head center (eyes at -0.047, brows at +0.047, chin at -0.145).
+    const faceMask = sdf.ellipsoid([0.19, 0.13, 0.21]).at(0, -0.08, 0.13);
     const cap = sdf
       .ellipsoid([H[0] + 0.008, H[1] + 0.015, H[2] + 0.013])
       .at(0, 0.008, -0.01)
       .smoothSubtract(0.02, faceMask);
-    // Straight blunt fringe across the forehead, hugging the skull, cut flat above the brows.
+    // Straight fringe with a crisp cut line above the brows and slight strand grooves.
     const fringe = sdf
-      .ellipsoid([0.165, 0.055, 0.075])
-      .at(0, 0.09, 0.105)
+      .ellipsoid([0.165, 0.06, 0.08])
+      .at(0, 0.095, 0.1)
       .smoothIntersect(0.02, sdf.ellipsoid([H[0] + 0.03, H[1] + 0.03, H[2] + 0.03]).at(0, 0.008, -0.01))
-      .intersect(sdf.halfSpace([0, -1, 0], -0.06));
-    // Chin side locks framing the cheeks.
-    const lock = sdf.chain(
+      .intersect(sdf.halfSpace([0, -1, 0], -0.062));
+    // Side locks hang straight past the cheeks to the jaw and cover the ears; the ends flick
+    // out a touch for the bob flare.
+    const lock = (s: number) =>
+      sdf.chain(
+        [
+          [0.168 * s, 0.05, 0.085, 0.044],
+          [0.178 * s, -0.045, 0.06, 0.041],
+          [0.168 * s, -0.12, 0.045, 0.036],
+          [0.178 * s, -0.148, 0.032, 0.031],
+        ],
+        0.03,
+      );
+    // Back mass hangs to the nape over the neck top, flaring with the sides.
+    const backLock = sdf.chain(
       [
-        [0.14, 0.06, 0.1, 0.035],
-        [0.155, -0.04, 0.075, 0.03],
-        [0.15, -0.12, 0.05, 0.026],
+        [0, 0.1, -0.14, 0.055],
+        [0, -0.03, -0.155, 0.05],
+        [0, -0.12, -0.13, 0.042],
+        [0, -0.148, -0.11, 0.036],
       ],
-      0.03,
+      0.04,
     );
+    // A darker cut line at the fringe edge and subtle strand grooves across it.
+    const hairPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
+      let c = base;
+      if (y > 0.055 && y < 0.15 && z > 0.02) {
+        const edge = y < 0.072 ? 0.22 : 0;
+        c = mixRgb(c, rgb('#3a1e10'), edge + 0.1 + 0.08 * Math.sin(x * 420));
+      }
+      return c;
+    };
     const hairLocal = sdf
-      .smoothUnion(0.02, cap, fringe, pair(lock))
-      .intersect(sdf.halfSpace([0, -1, 0], 0.13))
+      .smoothUnion(0.025, cap, fringe, lock(1), lock(-1), backLock)
+      .intersect(sdf.halfSpace([0, -1, 0], 0.14))
+      .paintFn(hairPaint)
       .bone('head');
     k.body('hair', hairLocal.at(0, HEAD_Y, 0), { color: k.tint('hair'), roughness: 0.6, detail: 0.004 });
 
@@ -90,11 +113,11 @@ export default humanoidAsset({
       .paintWhere(collarBand, C.collar, 0.003);
     k.body('shirt', shirt, { color: h.tint.shirt!, roughness: 0.85 });
 
-    // ---------------------------------------------------------------- red pleated skirt to the knee
+    // ---------------------------------------------------------------- red A-line pleated skirt to just above the knees
     // The waistband stays inside the shirt and the pleats start below the shirt hem. The folds
-    // are straight triangle-wave ridges from there to the hem.
+    // are deep triangle-wave ridges from there to the flared hem.
     const PLEAT_TOP = HEM_SHIRT - 0.015;
-    const SKIRT_HEM = 0.13;
+    const SKIRT_HEM = 0.11;
     const tri = (x: number, z: number) => {
       const t = ((((PLEATS * Math.atan2(x, z)) / (2 * Math.PI)) % 1) + 1) % 1;
       return 1 - 4 * Math.abs(t - 0.5);
@@ -107,15 +130,15 @@ export default humanoidAsset({
           [0.104, 0.235],
           [0.108, HEM_SHIRT],
           [0.117, PLEAT_TOP],
-          [0.146, SKIRT_HEM],
+          [0.16, SKIRT_HEM],
           [0, SKIRT_HEM],
         ]),
       )
       .scale([1, 1, 0.84]);
     const skirt = skirtBase
       .displace(0.01, (x, y, z) => ramp(y) * tri(x, z))
-      .intersect(sdf.box([0.6, 0.2, 0.6]).at(0, SKIRT_HEM + 0.12, 0))
-      .paintFn((x, y, z, base) => mixRgb(base, rgb(C.fold), 0.7 * ramp(y) * (0.5 - 0.5 * tri(x, z))))
+      .intersect(sdf.box([0.6, 0.24, 0.6]).at(0, SKIRT_HEM + 0.11, 0))
+      .paintFn((x, y, z, base) => mixRgb(base, rgb(C.fold), 0.8 * ramp(y) * (0.5 - 0.5 * tri(x, z))))
       .bone('hips');
     k.body('skirt', skirt, { color: C.skirt, roughness: 0.85, detail: 0.004, textureDensity: 2, maxError: 0.004 });
 
