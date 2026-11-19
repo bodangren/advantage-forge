@@ -76,7 +76,7 @@ wheel.
 
 ## Phase 3: Rework
 
-- [ ] Task: Rework each map below 7.0 or with a critical error, once.
+- [~] Task: Rework each map below 7.0 or with a critical error, once.
   Give the job to a maker on "ra-quota pick coder".
   Regenerate the map with `scripts/design-<slug>.mjs` or edit `scenes/maps/<slug>.ts`.
   Then shoot the two views into `docs/map-mockups/`:
@@ -101,6 +101,11 @@ ls -l docs/map-mockups/bathhouse-3q.png docs/map-mockups/bathhouse-top.png
 ```
 
 Each reworked map has a fresh pair of shots and a newer rating.
+
+Red evidence: `bash measure/runs/asset_scenes_civic_20260928/check-rework.sh` exits 1 on
+`b78fdde1`: Below-bar map count 1 (mill, 5.5 and critical true), Rework record count 0
+(P3-a FAIL), no rerate exists (P3-c FAIL). Run log
+`measure/runs/asset_scenes_civic_20260928/red-p3.log`.
 
 ## Phase 4: Records
 

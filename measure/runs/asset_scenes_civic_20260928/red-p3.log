@@ -1,0 +1,50 @@
+Phase 3 Red run, track asset_scenes_civic_20260928. Targeted Red command:
+
+  bash measure/runs/asset_scenes_civic_20260928/check-rework.sh
+
+Exit code: 1 (expected Red state: no rework record exists yet).
+
+Output:
+
+Civic P2 TSV slug count: 30
+=== P3-a: rework set equals the below-bar set ===
+Below-bar map count: 1
+Below-bar maps: mill
+Rework record count: 0
+FAIL: P3-a 1 map(s) below the bar but Rework record count is 0
+FAIL: P3-a below-bar map mill holds 0 rework records, want exactly 1
+=== P3-a: rework record schema and maker agreement ===
+=== P3-b: fresh shots match recorded SHA-256 and git recency; 3q el in [45, 50] ===
+FAIL: P3-b no rework record names shots to verify
+=== P3-c: exactly one rerate with an independent family ===
+Rerate record count: 0
+FAIL: P3-c no rework record exists, so rerates cannot be checked
+=== P3-d: stop rule, at most three ratings per slug ===
+FAIL: P3-d no rerate exists, so the stop rule cannot be verified
+=== P3-e: accepted only with a rerate at or above 7.0; untouched rows stay rated ===
+FAIL: P3-e no reworked row carries a Rerate cell and an accepted or follow-up state
+PASS: P3-e every row that needs no rework keeps rated in Phase 3
+=== A9: checker reads the live track path, not an archive ===
+PASS: A9 checker reads the live track directory
+=== Total: 8 checks (PASS=2, FAIL=6) ===
+
+The new test fails for the expected reason: the below-bar set is {mill}
+(Judge rating 5.5, Judge critical true) and no rework-mill.json record exists.
+
+MEASURE_AGENT_RESULT
+status: red
+track: asset_scenes_civic_20260928
+phase: Phase 3: Rework
+role: red
+phase_base_sha: b78fdde1
+role_base_sha: b78fdde1
+resulting_head: SHA in reply
+commits: test(asset_scenes_civic): Phase 3 rework checker (red)
+tests: measure/runs/asset_scenes_civic_20260928/check-rework.sh
+files: measure/runs/asset_scenes_civic_20260928/check-rework.sh, measure/runs/asset_scenes_civic_20260928/red-p3.log, measure/tracks/asset_scenes_civic_20260928/plan.md
+red_command: bash measure/runs/asset_scenes_civic_20260928/check-rework.sh
+red_exit: 1
+red_summary: Total: 8 checks (PASS=2, FAIL=6); Below-bar map count: 1 (mill); Rework record count: 0
+remaining_failures: P3-a mill has no rework record; P3-b no shots to verify; P3-c no rerate; P3-d stop rule unverifiable; P3-e no Rerate cell
+handoff: none (red work complete; green owns rework-mill.json, rerate-mill.json/.log, mill shots, inventory Rework/Rerate cells)
+END_MEASURE_AGENT_RESULT
