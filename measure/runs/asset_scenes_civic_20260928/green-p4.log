@@ -116,4 +116,5 @@ Pushes: none. measure/generate.sh: not run. Track archive and metadata: untouche
 
 head_at_log_write: 0c700b8a
 closeout_task_deferral: commit 98499a7e marks the unchecked closeout task "deferred to the closeout role", so the phase gate holds no incomplete Phase 4 task; doctor still exits 1 with 51 errors and none for this track, and check-records.sh exits 0 with 44/44.
+generated_facts_deferral: commit 43c44210 adds an unchecked closeout task for ./measure/generate.sh and one Phase 4 evidence line for Review C F1 at be89dc91; the committed measure/generated/asset-inventory.json holds 6 accepted rows against 36 in the TSV, node measure/tools/generate.mjs --check exits 1 with three stale-fact lines, and the standing rule forbids generate.sh while measure/generated/ and measure/tracks.md hold foreign edits.
 END_MEASURE_AGENT_RESULT
