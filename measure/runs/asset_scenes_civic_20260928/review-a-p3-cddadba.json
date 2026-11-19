@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Phase 3 Rework audit at cddadba3. HEAD equals the audited SHA. The diff b78fdde1..cddadba3 touches 11 files, all phase-owned: the mill fix, both mill shots, check-rework.sh, red-p3.log, green-p3.log, rework-mill.json, rerate-mill.json, rerate-mill.log, the plan.md Phase 3 lines, and the mill inventory row. The mill fix is the smallest change: scenes/maps/mill.ts:125 adds yaw: -65 to the watermill place and nothing else. git diff --exit-code over assets/watermill.ts, scripts/design-mill.mjs, docs/fantasy-world-scene-blueprints.tsv, and docs/map-review.html is empty. No source is duplicated. The inventory mill row appends Rework: 7619c491, Rerate: 7.5, and state accepted as the last cell; the MAPS, Judge, and maker cells stay byte-identical; the other 29 rows change nothing. The gate rerun passes: check-rework.sh exits 0 with 39 checks (PASS=39, FAIL=0), matching plan.md:110-118 word for word. check-review.sh exits 1 with 34 checks (PASS=33, FAIL=1): P2-d rejects the mill accepted state by design, exactly as plan.md:114-118 records. A git fixture under /tmp/opencode/p3fix-a (deleted after the run) proves the checker rejects every wrong record named in the brief: a reused shot (recency FAIL on both shots), a shot whose sha256 differs, a 3q elevation of 60, an Anthropic Sonnet judge, a hy judge, a second rerate file (P3-d counts five ratings), a 6.9 rerate marked accepted, and an inventory Rerate cell that disagrees with the record. Removing the mill Judge rating cell keeps mill in the below-bar set (conservative parse), so no vacuous pass exists. The rerate is independent: route kimi-code-plan-cn/kimi-for-coding differs from the original maker Anthropic Sonnet and the rework maker hy; rating 7.5, critical false; audited head 304a75d6 is an ancestor of HEAD; rerate-mill.log cites the route, the model id, and the rating. The stop rule holds: mill carries three labeled ratings (MAPS 7.0, Judge 5.5, Rerate 7.5), no fourth rating, no follow-up. Four nonblocking Nits remain: the plan evidence calls the mill ls command 'The plan gate' while the Gate block still names bathhouse paths; scripts/design-mill.mjs:25 would drop the yaw on a future generator run and no disposition records it; test-strategy.md:154 says mtime while the checker uses git recency; and Phase 4 should add one line so a closeout rerun of check-review.sh does not read the permanent red as a regression.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] review-a-p3 plan gate wording (measure/tracks/asset_scenes_civic_20260928/plan.md:112-113 versus plan.md:99-101): the Green evidence says 'The plan gate ls -l docs/map-mockups/mill-3q.png docs/map-mockups/mill-top.png lists both fresh shots', but the plan Gate block literally names bathhouse-3q.png and bathhouse-top.png, and bathhouse was never reworked (it rated 8.0 in Phase 2). The substance is true and verified live: both mill shots exist (1185352 and 1288124 bytes) and their last commit is 7619c491. The Gate block is strategy template residue; Phase 4 or the closeout should point the gate at the reworked slug.",
+    "F2 [Nit] review-a-p3 generator drift (scripts/design-mill.mjs:25): the generator still writes put('watermill', 2.2, -3.4) with no yaw, so a future generator run silently drops the rework and regenerates the edge-on wheel. green-p3.log:73-74 flags this handoff item, but plan.md carries no disposition. This was a manual mill.ts edit, which the plan allows, so no rule broke. Phase 4, the closeout, or measure/tech-debt.md should record it, or the generator should gain the yaw.",
+    "F3 [Nit] review-a-p3 freshness wording drift (measure/tracks/asset_scenes_civic_20260928/test-strategy.md:154 versus measure/runs/asset_scenes_civic_20260928/check-rework.sh:19-21): the strategy says each shot has 'an mtime newer than the rework', while the checker proves recency with git log because a checkout resets mtime. The checker documents the reason and the falsifier still holds (fixture M1: a shot committed before the rework commit fails 'predates the rework commit'). A strategy wording fix would remove the drift; same class as the open F8 spec item.",
+    "F4 [Nit] review-a-p3 Phase 4 note for the by-design check-review.sh failure (measure/runs/asset_scenes_civic_20260928/check-review.sh, plan.md:114-118): check-review.sh now exits 1 permanently (PASS=33, FAIL=1; P2-d wants the Phase 2 rated state, mill holds accepted). Plan.md:114-118 records this by design, so Phase 3 itself needs no fix. Phase 4 does need one line: when records close, a rerun of every phase checker will show check-review.sh red forever; without a Phase 4 note, a reviewer can misread it as a regression."
+  ],
+  "evidence": [
+    "Provenance: git rev-parse HEAD gives cddadba3b306ee914af8a0a5fcac327de0d544d6, equal to the audited head. phase_base_sha b78fdde1 resolves and the audit range is exactly b78fdde1..cddadba3; the Green logs record their own role bases (da4a9c78 stage 1, 8241491c stage 2) inside the same range.",
+    "Diff scope: git diff --stat b78fdde1..cddadba3 lists 11 files, all phase-owned (scenes/maps/mill.ts, docs/map-mockups/mill-3q.png, docs/map-mockups/mill-top.png, check-rework.sh, red-p3.log, green-p3.log, rework-mill.json, rerate-mill.json, rerate-mill.log, plan.md, scenes/inventory.md). git diff --exit-code b78fdde1..cddadba3 -- assets/watermill.ts scripts/design-mill.mjs docs/fantasy-world-scene-blueprints.tsv docs/map-review.html is empty: no asset change, no generator change, no TSV change, no record-page change. measure/generated/* is untouched in the range.",
+    "Smallest fix: git diff b78fdde1..cddadba3 -- scenes/maps/mill.ts shows exactly one changed line; scenes/maps/mill.ts:125 reads { asset: 'watermill', at: [2.2, 0, -3.4], yaw: -65 }. The river, bridge, field, yard, and tree placements change nothing. No second source module exists for slug mill (the TSV slug set maps one-to-one to scenes/maps/<slug>.ts).",
+    "Gate rerun: bash measure/runs/asset_scenes_civic_20260928/check-rework.sh exits 0 with === Total: 39 checks (PASS=39, FAIL=0) ===, matching plan.md:110-118 and green-p3.log:117-118 word for word. The run prints both shot sha256 values equal to the record (32a41dc0... and 0543e6a6...), both shots committed with 7619c491, and 3q elevation 47 in [45, 50].",
+    "Plan gate files: ls -l docs/map-mockups/mill-3q.png docs/map-mockups/mill-top.png shows 1185352 and 1288124 bytes, matching green-p3.log:119-120; git log -1 on each shot path gives 7619c491 (fresh, not reused).",
+    "By-design failure verified: bash measure/runs/asset_scenes_civic_20260928/check-review.sh exits 1 with === Total: 34 checks (PASS=33, FAIL=1) === and the single FAIL reads 'P2-d row for mill holds state cell [accepted], want [rated]', exactly as plan.md:114-118 records. No other row fails.",
+    "Inventory integrity: git diff b78fdde1..cddadba3 -- measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md changes only the mill row (scenes/inventory.md:39). The row prefix through 'maker: Anthropic Sonnet' is byte-identical; the appended cells are 'Rework: 7619c491 | Rerate: 7.5 | accepted' with accepted last; the other 29 rows are unchanged (1 insertion, 1 deletion in the diff stat).",
+    "Rerate independence: rerate-mill.json holds route kimi-code-plan-cn/kimi-for-coding, model_family kimi, rating 7.5 (a labeled JSON number), critical false, audited_head 304a75d6. Kimi differs from the original maker family Anthropic Sonnet and the rework maker family hy (rework-mill.json maker_route opencode-go/hy4-flash-free#high). rerate-mill.log cites the route, model_id kimi-for-coding, and Rating: 7.5 / 10. The checker verifies audited_head is an ancestor of HEAD (PASS).",
+    "Stop rule: ls measure/runs/asset_scenes_civic_20260928/rework-*.json rerate*.json shows exactly rework-mill.json and rerate-mill.json; no rerate-mill-* extra exists; mill holds three labeled ratings (MAPS rating 7.0, Judge rating 5.5, Rerate 7.5) and no fourth rating; no map enters follow-up.",
+    "Adversarial fixture (git repo under /tmp/opencode/p3fix-a, checker copy unmodified, deleted after the run; the permission layer denies shell cp and recursive rm, so a Node script built and removed it): CONTROL with faithful copies passes 39/39 exit 0. M1 record citing a commit newer than the shot commits: FAIL 'P3-b mill 3q shot commit ... predates the rework commit' and the same for top (a reused old shot cannot pass). M1b recorded sha with one hex digit changed: FAIL 'shot sha256 ... differs from the recorded'. M2 3q elevation 60: FAIL 'lies outside [45, 50]'. M3a judge model_family Anthropic Sonnet on route anthropic/claude-sonnet-4-5: 4 FAILs including 'is in the original-maker/claude family' and 'equals the original maker family'. M3b judge model_family hy: FAIL 'equals the rework maker family [hy]'. M4 a second file rerate-mill-2.json: 5 FAILs including 'P3-d mill holds 5 ratings ... at most three' and 'holds 2 rerate files; the plan allows one rerate'. M5 rerate 6.9 with inventory Rerate 6.9 and state accepted: FAIL 'wants state [follow-up], found [accepted]' and FAIL 'holds accepted with a rating below 7.0'. M5b inventory Rerate 7.5 against record 6.9: FAIL 'inventory Rerate [7.5] differs from the rerate record [6.9]'. M6 mill Judge rating cell removed: 'Below-bar maps: mill' still holds (the empty parse fails toward more rework), so the A4 vacuous-pass falsifier holds.",
+    "Red evidence verified: red-p3.log records exit 1 with === Total: 8 checks (PASS=2, FAIL=6) === at the base state, matching plan.md:105-108, and a second Red entry at 8241491c for the maker-rule fix with its own /tmp fixture proof (rerate family hy fails against rework maker hy). The Red state failed for the expected reason: below-bar set {mill}, no rework record.",
+    "Green evidence verified: green-p3.log stage 1 records the Red re-run (PASS=21, FAIL=5), the shot commands (3q el=47 dist=34, top el=86 dist=34, agreeing with rework-mill.json cameras), both shot sha256 values, and the stage-1 handoff items; stage 2 records the same gate outputs the live rerun reproduces (39/39, 33/1, both shot sizes).",
+    "A3 and A5 defenses hold: every rating the checker reads comes from a labeled cell ('Judge rating', 'Rerate') or a typed jq number, never a bare digit scan; the plan quotes (39 checks PASS=39 FAIL=0, 33/1, shot sizes) all match live command output.",
+    "Cleanup: the fixture directory /tmp/opencode/p3fix-a and the transient probe script measure/runs/asset_scenes_civic_20260928/review-a-p3-probe.mjs were deleted after the run; only the two result artifacts remain new."
+  ],
+  "commands": [
+    "git rev-parse HEAD (cddadba3b306ee914af8a0a5fcac327de0d544d6, equals the audited head)",
+    "git diff --stat b78fdde1..cddadba3 (11 files, all phase-owned)",
+    "git diff --exit-code b78fdde1..cddadba3 -- assets/watermill.ts scripts/design-mill.mjs docs/fantasy-world-scene-blueprints.tsv docs/map-review.html (exit 0, empty)",
+    "git diff b78fdde1..cddadba3 -- scenes/maps/mill.ts measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md (one mill.ts line, one inventory row)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-rework.sh (exit 0, PASS=39 FAIL=0)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-review.sh (exit 1, PASS=33 FAIL=1, P2-d by design)",
+    "ls -l docs/map-mockups/mill-3q.png docs/map-mockups/mill-top.png (1185352 and 1288124 bytes)",
+    "git log -1 -- docs/map-mockups/mill-3q.png and -- mill-top.png (both 7619c491)",
+    "grep -n watermill scenes/maps/mill.ts (line 125, yaw: -65); grep -n \"put('watermill'\" scripts/design-mill.mjs (line 25, no yaw)",
+    "node fixture probe (transient, deleted): control 39/39; M1 reused shot FAIL; M1b sha mismatch FAIL; M2 el 60 FAIL; M3a Anthropic judge FAIL; M3b hy judge FAIL; M4 second rerate FAIL (five ratings); M5 6.9 accepted FAIL; M5b cell-record mismatch FAIL; M6 removed rating cell stays below bar"
+  ],
+  "changed_files": [
+    "measure/runs/asset_scenes_civic_20260928/review-a-p3-cddadba.json",
+    "measure/runs/asset_scenes_civic_20260928/review-a-p3-cddadba.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "opencode-go/glm-5.3#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The one-line yaw fix at scenes/maps/mill.ts:125 does exactly what the plan claims; the gate rerun passes 39/39; both shot sha256 values match rework-mill.json and their last commit is 7619c491; the rerate (kimi, 7.5, critical false) differs from both maker families and applies the stop rule with three ratings and no fourth."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "Fixture control 39/39, then every wrong record from the brief fails: reused shot ('predates the rework commit'), sha mismatch, el 60 outside [45,50], Anthropic judge (4 FAILs), hy judge, second rerate (P3-d five ratings), and 6.9 marked accepted (2 FAILs)."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff --stat b78fdde1..cddadba3 lists only the 11 phase-owned files; git diff --exit-code over assets/watermill.ts, scripts/design-mill.mjs, the TSV, and docs/map-review.html is empty; the inventory diff changes only the mill row."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "Every plan Phase 3 claim re-verified by live rerun (39/39 gate, 33/1 by-design failure, shot sizes and shas, commit 7619c491 on both shots); one wording Nit remains: plan.md:112-113 calls the mill ls command 'The plan gate' while the Gate block at plan.md:99-101 still names bathhouse paths."
+    }
+  ],
+  "role": "review-a",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "## Phase 3: Rework",
+  "phase_base_sha": "b78fdde1",
+  "role_base_sha": "b78fdde1",
+  "audited_head_sha": "cddadba3b306ee914af8a0a5fcac327de0d544d6"
+}

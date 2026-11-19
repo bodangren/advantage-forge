@@ -1,0 +1,225 @@
+# Phase 2 acceptance run log (track asset_scenes_civic_20260928, phase "## Phase 2: Independent review")
+
+Audit role: measure-phase-acceptance, immutable HEAD b78fdde1, audit only, no commit.
+Route: opencode-go/glm-5.3#high.
+A provisional PASS was written to this file pair first, then refined to this final entry.
+
+## Provenance
+
+- git rev-parse HEAD -> b78fdde17ab72cb16f250b15915dbf75da4fb803. HEAD is current and equals the audited SHA.
+- phase_base_sha 3e8d29e8 resolves to 3e8d29e890aebd564ef3d01cb31b13f776d8d814 (the Phase 1 acceptance HEAD).
+- Review A and Review C target c095ba1f; the adversarial re-audit targets 36dec52e; the UX spot check targets 0aed743a.
+
+## Gates rerun live
+
+1. bash measure/runs/asset_scenes_civic_20260928/check-review.sh
+   -> exit 0, === Total: 34 checks (PASS=34, FAIL=0) ===
+   30 labeled ratings, four batches 8/8/7/7, 30 unique slugs, kimi route and family on every
+   batch, labeled model id in every log, 30 rated inventory rows with the copied rating,
+   critical flag, route, and note. Matches plan.md:57-58 word for word.
+2. bash measure/runs/asset_scenes_civic_20260928/adversarial-p2.sh
+   -> exit 0. ADV-P2-00 control OK (34/34). Probes 01 critical flip, 02 judge cell, 03
+   route-only log, 04 rating drift, 05 duplicate slug, 07 string rating, 08 double rating:
+   all CAUGHT. Probe 06 foreign head: informational, defense proven on the real tree.
+   Gate verdict: PASS.
+3. ls measure/runs/asset_scenes_civic_20260928/vision-review-*.json
+   -> four files: vision-review-b1.json to b4.json.
+4. git diff --exit-code 3e8d29e8..HEAD -- docs/fantasy-world-scene-blueprints.tsv docs/map-review.html scenes/maps
+   -> exit 0, empty. The TSV, the page, and every map source are unchanged in the phase.
+
+## Scope
+
+git diff --stat 3e8d29e8..b78fdde1 lists 30 files, all phase-owned: run artifacts under
+measure/runs/asset_scenes_civic_20260928/, plan.md, and scenes/inventory.md.
+git diff --exit-code 3e8d29e8..b78fdde1 -- docs/ scenes/ bench/ src/ assets/ is empty.
+No map, TSV row, mockup, or app code changed. Phase 2 is a records phase by design.
+
+## Disposition sufficiency (the UX bank point)
+
+The UX spot check (ux-browser-review-p2-0aed743.json) failed on one point only: the bank
+judge note misreads the chandelier shadows as floor wheels. The spot check itself records
+zero impact: its own bank rating is 7.5 (the judge's is 7.5), all 8 sampled ratings stay
+within 1.0, no bar outcome flips, and no critical is missed.
+
+The orchestrator disposition (plan.md:66-75, commit 56bdd0cf) is sufficient for acceptance:
+
+- The factual core is source-verified by this audit: scenes/maps/bank.ts line 4 places the
+  three chandeliers at [-2,2,2.2], [3.5,2,0.5], [-3.5,2,-2], all at y=2. The judge note's
+  "sit at floor level" is contradicted by the source alone.
+- The judge files stay unchanged as true records of what the judge wrote. Rewriting them
+  would falsify evidence. The correction lives in plan.md, the execution source of truth.
+- The escalation path stays open: the plan header records that the PM may reverse each
+  decision taken 2026-11-19.
+- No phase outcome changes: bank stays above 7.0 either way and stays out of the Phase 3
+  rework set; mill stays in the rework set either way (5.5, critical true).
+- The mill disposition is verified too: assets/watermill.ts line 20 sets WCX = 1.15 and
+  line 116 builds the radius-1.2 rim, so the wheel exists and Phase 3 fixes only the yaw or
+  the shot angle. Phase 3 builds no new wheel.
+
+## Review currency (Reviews A and C at c095ba1f)
+
+Reviews A and C at c095ba1f still cover the phase and must not run again.
+
+- git diff --stat c095ba1f..b78fdde1 lists only measure/runs/ artifacts, the adversarial
+  script, the checker fix, the UX artifacts, and plan.md. scenes/inventory.md and the
+  eight vision-review files are byte-identical at HEAD.
+- The checker change at 36dec52e is the remediation of review-a F1 and F2, and the
+  adversarial re-audit PASS at 36dec52e re-probed every mutation plus four new probes
+  (R1 to R4). This audit reran both gates live at HEAD: both exit 0.
+- The plan.md change after c095ba1f is the disposition block plus a reword that preserved
+  every quoted claim (the 34-check string is intact word for word).
+- The acceptance records the exact HEAD b78fdde1 and the allowed test-and-evidence-only
+  commits 6e9cb9b7, 36dec52e, 0aed743a, 56bdd0cf, b78fdde1.
+
+## Route substitution
+
+No vision route exists outside the claude and kimi families, so the four judge batches and
+the spot check ran on kimi-code-plan-cn/kimi-for-coding. The kimi family differs from the
+maker family Anthropic Sonnet, which is the requirement the spec and the checker enforce.
+The substitution is recorded in ux-browser-review-p2-0aed743.json route_note.
+
+## A-gate checks
+
+- A3: the checker parses labeled cells and typed JSON numbers; no bare digit match decides
+  a count.
+- A4: the phase holds 2 completed [x] tasks, so the marker check is not vacuous.
+- A5: every plan claim at plan.md:37, 42, and 52 to 75 matches live output: the Red exit 1
+  with 8 FAILs in red-p2.log, the Green 34 of 34, the four JSON files, the 30 rated rows,
+  the mill row (inventory.md line 39: 5.5, critical true, rated), and the disposition facts.
+- A6: measure/tracks.md holds the track as [~] with no resolution claim.
+- A7: the claude, anthropic, and sonnet bans apply only to the judge context; review-a's
+  live fixture proved a claude-family batch fails (correct rejection) and the adversarial
+  R3 probe proved the route compare is exact, so no filter drops a real hit.
+
+## Findings
+
+Blocking: none.
+
+Nonblocking:
+- F1 [Nit] ADV-4 carried: the P2-c log check never compares the cited model value with the
+  batch route or family (R4 fixture passes 34/34). The committed logs are true (grep finds
+  model_id: kimi-for-coding once in each of the four logs). Future drift only. Route to Red
+  as a follow-up.
+- F2 [Nit] ADV-P2-06 carried, informational: the ancestor check is skipped in fixture trees
+  with no git HEAD. Verified live: git merge-base --is-ancestor 3b35a490 b78fdde1 holds,
+  and all four batches record audited_head 3b35a490.
+- F3 [Nit] review-a F3 carried: check-review.sh P2-d will fail by design in Phase 3 when
+  state cells change from rated. The plan should add the by-design note when Phase 3 runs.
+- F4 [Nit] the UX JSON keeps status fail with escalate_human; the plan disposition
+  supersedes it and no gate reads the UX status. A later reader should read both together.
+
+## Rating rubric v1
+
+- correctness: 5. All 30 rows faithful (review-a node cross-check, 0 mismatches; my checker
+  rerun), and both disposition claims source-verified (bank.ts line 4; watermill.ts lines
+  20 and 116).
+- test_meaning: 4. Red-first checker with every adversarial probe caught, but the cited
+  log model value stays untested (ADV-4) and the ancestor check sleeps in fixture trees.
+- scope_discipline: 5. Only the 30 phase-owned files; docs/, scenes/, bench/, src/, and
+  assets/ empty over the whole range.
+- evidence_quality: 5. Every claim in this audit has a live command result behind it.
+
+## Reviewer ratings
+
+- review-a (opencode-go/glm-5.3#high): agreed, 5. PASS correct; its nits were real and the
+  fix at 36dec52e catches the F1 and F2 mutations (adversarial probes 01 to 03, rerun live).
+- review-c (opencode-go/glm-5.3#high): agreed, 5. Record-contract PASS correct; schema and
+  row format re-verified through the checker's union checks and the empty docs diff.
+- adversarial (opencode-go/glm-5.3#high): agreed, 5. FAIL at c095ba1f and PASS at 36dec52e
+  both correct; adversarial-p2.sh rerun live at HEAD with every gate probe CAUGHT.
+
+## Result block
+
+MEASURE_AGENT_RESULT
+role: measure-phase-acceptance
+track: asset_scenes_civic_20260928
+phase: ## Phase 2: Independent review
+phase_base_sha: 3e8d29e890aebd564ef3d01cb31b13f776d8d814
+role_base_sha: c095ba1fd9cd5a2e6900ef06e5958bff385d5d3b
+audited_head_sha: b78fdde17ab72cb16f250b15915dbf75da4fb803
+route: opencode-go/glm-5.3#high
+verdict: PASS
+confidence: high
+
+blocking_findings: none
+
+nonblocking_findings:
+- F1 [Nit] ADV-4 carried from adversarial-p2-36dec52.json: the P2-c log citation check in
+  check-review.sh requires a labeled model_id or model_family line but never compares the
+  cited value with the batch route or family, so a log citing model_id: claude-sonnet-5-5
+  passes the gate (R4 fixture). The committed logs are true records (model_id:
+  kimi-for-coding in all four logs, grep-verified). Future drift only; route to Red as a
+  follow-up when Phase 3 work next touches the checker, without reintroducing the substring
+  vacuity that ADV-P2-03 exposed.
+- F2 [Nit] ADV-P2-06 carried, informational: the audited_head ancestor check is skipped by
+  design in fixture trees with no git HEAD, so adversarial-p2.sh keeps printing DEFECT
+  CONFIRMED (informational) for probe 06. The defense works on real trees (adversarial R1:
+  the mutated batch head fails with an exact P2-c FAIL, then restores byte-identical), and
+  this audit re-ran git merge-base --is-ancestor 3b35a490 b78fdde1: all four batches record
+  an ancestor head.
+- F3 [Nit] review-a F3 carried: check-review.sh P2-d asserts the Phase 2 state cell rated,
+  so it will fail by design in Phase 3 when reworked rows change state, in the same way
+  check-inventory.sh now fails by design (plan.md:63-65 records that failure correctly).
+  The plan should add the analogous by-design note for check-review.sh when Phase 3 runs.
+- F4 [Nit] ux-browser-review-p2-0aed743.json keeps status fail with retry_recommendation
+  escalate_human, and the orchestrator disposition supersedes it in plan.md:66-75 (commit
+  56bdd0cf) without editing the UX artifact. No gate reads the UX status; a later reader
+  aggregating UX statuses should read the plan disposition alongside the JSON.
+
+disposition_decision: sufficient. The UX spot-check FAIL names one judge-note inaccuracy
+(bank) with zero rating and zero bar impact (judge 7.5, spot check 7.5, all 8 samples
+within 1.0, no critical missed). Keeping the judge files unchanged preserves them as true
+records of what the judge wrote; the correction lives in plan.md:66-75 under commit
+56bdd0cf; the escalation path stays open (the plan header says the PM may reverse each
+decision). The disposition facts are source-verified by this audit: scenes/maps/bank.ts
+line 4 places the chandeliers at y=2, and assets/watermill.ts lines 20 and 116 put the
+wheel at WCX=1.15 with a radius-1.2 rim, so the mill rework is a yaw or camera fix and no
+wheel is rebuilt. No phase outcome changes: bank stays above the bar either way, mill stays
+in the Phase 3 rework set either way.
+
+review_currency_decision: Reviews A and C at c095ba1f still cover the phase and must not
+run again. Every commit after c095ba1f (6e9cb9b7, 36dec52e, 0aed743a, 56bdd0cf,
+b78fdde1) touches only measure/runs/ and the plan evidence text; the implementation content
+(inventory.md, the eight vision-review files, the TSV, the map sources) is byte-identical at
+HEAD; the one reviewed test file that changed (check-review.sh at 36dec52e) is the
+remediation of review-a F1 and F2, covered by the adversarial re-audit PASS at 36dec52e
+and by this acceptance's live gate reruns. The acceptance records the exact HEAD b78fdde1
+and the allowed test-and-evidence-only commits 6e9cb9b7, 36dec52e, 0aed743a, 56bdd0cf,
+b78fdde1.
+
+route_substitution_note: no vision route exists outside the claude and kimi families, so
+the four judge batches and the UX spot check ran on kimi-code-plan-cn/kimi-for-coding. The
+kimi family differs from the maker family Anthropic Sonnet, which is the requirement the
+spec and the checker enforce, and the substitution is recorded in
+ux-browser-review-p2-0aed743.json route_note.
+
+evidence:
+- git rev-parse HEAD -> b78fdde17ab72cb16f250b15915dbf75da4fb803, equals the audited HEAD.
+- bash measure/runs/asset_scenes_civic_20260928/check-review.sh -> exit 0, 34 checks,
+  PASS=34 FAIL=0, matching plan.md:57-58 word for word.
+- bash measure/runs/asset_scenes_civic_20260928/adversarial-p2.sh -> exit 0, control 34/34,
+  probes 01-05 and 07-08 CAUGHT, 06 informational, gate verdict PASS.
+- ls measure/runs/asset_scenes_civic_20260928/vision-review-*.json -> four files.
+- git diff --exit-code 3e8d29e8..HEAD -- docs/fantasy-world-scene-blueprints.tsv
+  docs/map-review.html scenes/maps -> exit 0, empty.
+- git diff --stat 3e8d29e8..b78fdde1 -> 30 files, all phase-owned;
+  git diff --exit-code 3e8d29e8..b78fdde1 -- docs/ scenes/ bench/ src/ assets/ -> empty.
+- red-p2.log -> exit 1 with 8 FAILs on the missing batches, matching plan.md:52-53.
+- grep -c 'model_id: kimi-for-coding' over the four batch logs -> 1 each.
+- git merge-base --is-ancestor 3b35a490 b78fdde1 -> true; all four batches record
+  audited_head 3b35a490.
+- scenes/maps/bank.ts line 4 -> chandeliers at [-2,2,2.2], [3.5,2,0.5], [-3.5,2,-2] (y=2).
+- assets/watermill.ts line 20 -> WCX = 1.15; line 116 -> rim sdf.torus(1.2, 0.1).
+- scenes/inventory.md line 39 -> mill: Judge rating 5.5, Judge critical true, state rated.
+- git diff c095ba1f..HEAD -- plan.md -> disposition block and reword only; the quoted
+  34-check claim is intact.
+- grep asset_scenes_civic over measure/tracks.md -> entry [~], no resolution claim.
+
+changed_files:
+- measure/runs/asset_scenes_civic_20260928/phase-acceptance-p2-b78fdde.json
+- measure/runs/asset_scenes_civic_20260928/phase-acceptance-p2-b78fdde.log
+No implementation, test, plan, or registry file was changed; no commit was made. A
+provisional verdict was written first, then refined to this final result.
+
+retry_recommendation: none
+END_MEASURE_AGENT_RESULT

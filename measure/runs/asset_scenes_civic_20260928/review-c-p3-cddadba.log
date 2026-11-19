@@ -1,0 +1,123 @@
+# Review C (UX and API; record contract only) Phase 3 log: asset_scenes_civic_20260928
+
+Role: measure-review-c-ux-api, audit only. Phase: "## Phase 3: Rework".
+phase_base_sha: b78fdde1. role_base_sha: a4905853 (test-strategy.md line 5).
+audited_head_sha: cddadba3. HEAD equals the audited head (git rev-parse).
+
+Contract applicability: applicable, record contract only. test-strategy.md section 10
+line 257 routes this role to the record schemas, the TSV status vocabulary, the
+inventory state vocabulary, and the run artifact names. The phase diff touches one
+product line (scenes/maps/mill.ts line 125) and no app, page, route, or product API
+path. Visual quality belongs to the judge and the ux-browser-review role (line 259),
+so no browser inspection ran (ux_applicability: not_applicable, webbridge: not_run).
+
+Provisional verdict (written before the detailed pass, refined after): pass. The
+detailed pass below confirms it.
+
+## What was checked
+
+1. Provenance. git rev-parse resolves b78fdde17ab72cb16f250b15915dbf75da4fb803,
+   a49058531ed2224c55210c90aca45b81d823d44e, and
+   cddadba3b306ee914af8a0a5fcac327de0d544d6. HEAD equals cddadba3, so the audited
+   HEAD is current. git merge-base --is-ancestor confirms the phase base and the
+   role base are ancestors of HEAD.
+
+2. Phase diff scope. git diff b78fdde1..cddadba3 --stat lists exactly the owned
+   paths: the two mill shots, check-rework.sh, green-p3.log, red-p3.log,
+   rerate-mill.json, rerate-mill.log, rework-mill.json, plan.md, the mill
+   inventory row, and scenes/maps/mill.ts (the planned one-line rework). No path
+   outside the phase plan changed.
+
+3. Record format against the checker header. jq keys_unsorted on rework-mill.json
+   prints slug,maker_route,maker_family,change,source_paths,commit,shots,cameras,
+   the exact key list and order of the format at check-rework.sh line 9. Each
+   shots entry holds path and sha256. rerate-mill.json prints
+   slug,route,model_family,model_id,audited_head,rating,critical,note; the header
+   format at line 12 names slug, route, model_family, audited_head, rating,
+   critical, note, so model_id is one additive key (F1). Its value kimi-for-coding
+   agrees with the route model and with the model_id line in rerate-mill.log
+   line 2.
+
+4. Record agreement. sha256sum prints 32a41dc0... for mill-3q.png and 0543e6a6...
+   for mill-top.png, equal to the recorded shot digests (rework-mill.json lines 13
+   and 17) and to green-p3.log lines 91-92. git log -1 names commit 7619c491 for
+   both shots, equal to the rework record commit (line 9) and to the Rework cell
+   in the inventory. The rerate audited_head 304a75d6 is a descendant of 7619c491
+   and an ancestor of HEAD, and rerate-mill.log lines 5-6 cite both. The rework
+   cameras (3q az 35, el 47, dist 34; top az 0, el 86, dist 34) match the shoot
+   commands in green-p3.log lines 30-31, and el 47 lies in the [45, 50] band.
+
+5. Routes and families. The rework record holds maker_route
+   opencode-go/hy4-flash-free#high with maker_family hy. The rerate holds route
+   kimi-code-plan-cn/kimi-for-coding with model_family kimi. The inventory maker
+   cell keeps Anthropic Sonnet, so the rerate family differs from both the
+   original maker family and the rework maker family, as check-rework.sh header
+   lines 15-17 require.
+
+6. Inventory mill row format. inventory.md line 39 holds `Rework: 7619c491`,
+   `Rerate: 7.5`, and the state cell last as `accepted`. The maker cell still
+   reads Anthropic Sonnet. The row is the only NF=18 line (awk scan: 31 pipe
+   lines hold NF=16, one holds NF=18), which is the cell growth the checker header
+   line 13 prescribes: add cells Rework, Rerate, and keep the state cell last.
+
+7. Phase 4 mapping capacity. awk finds 30 data rows: 1 accepted, 29 rated; only
+   mill is below the bar (Judge rating 5.5, Judge critical true); the other 29
+   judge ratings span at least 7.0 to 8.5. So Phase 4 maps the 29 rows to accepted
+   on their judge rating, and mill to accepted on the Rerate cell (7.5, critical
+   false). No row needs follow-up. state_cell parses $(NF-1) and cell_value finds
+   labeled cells on both NF values, so no schema break occurs. test-strategy.md
+   section 2 lines 41-43 define accepted and follow-up for Phase 3 or 4.
+
+8. TSV status column. git diff b78fdde1..cddadba3 --
+   docs/fantasy-world-scene-blueprints.tsv is empty. The docs diff holds only the
+   two mill shots. All 30 civic P2 rows still read `mockup-needed`, so the TSV
+   update stays a Phase 4 task as the plan records.
+
+9. Scene id and path stability. The scenes/maps/mill.ts diff changes one line:
+   the watermill place gains `yaw: -65` (line 125). The file still exports
+   places() (line 3). src/scene/main.ts line 16 documents that the scene name is
+   the slug, line 18 globs scenes/maps/*.ts, and line 215 loads
+   ../../scenes/maps/${sceneName}.ts by name. No second source for mill exists.
+   The TSV scene_id column is unchanged. Callers that read scenes/maps/mill.ts
+   by name are unaffected.
+
+10. Checker. bash measure/runs/asset_scenes_civic_20260928/check-rework.sh exits 0
+    with `=== Total: 39 checks (PASS=39, FAIL=0) ===`. green-p3.log line 140
+    records the same result. red-p3.log records the Red state: exit 1 at
+    b78fdde1 (PASS=2, FAIL=6), and a fixture proof that a rerate family equal to
+    the rework maker family fails P3-c. ls shows exactly one rework record
+    (rework-mill.json) and one rerate pair (rerate-mill.json, rerate-mill.log).
+
+## Findings
+
+F1 [Nit] review-c: rerate-mill.json holds one key, model_id (line 5), beyond the
+rerate format that check-rework.sh line 12 documents. The key is additive, agrees
+with the route model and with the model_id line the checker requires in the log
+(lines 305-315, rerate-mill.log line 2), and every reader addresses keys by name.
+No parser or gate breaks. Nonblocking.
+
+F2 [Nit] review-c: the accepted mill state rests on a hand edit to a generated
+file. scenes/maps/mill.ts line 1 says "GENERATED by scripts/design-mill.mjs -
+edit the generator, not this file", but the rework changed the watermill line in
+mill.ts and left scripts/design-mill.mjs unchanged, so a future generator run
+silently drops the fix. plan.md line 81 allows the direct edit, rework-mill.json
+line 5 records the change text, and green-p3.log lines 73-74 disclose the
+divergence. The risk is durability, not a contract break. Nonblocking.
+
+No blocking findings. Both Nits route to the plan or record owner at Phase 4
+convenience; neither blocks Phase 4.
+
+Verdict: pass. retry_recommendation: none.
+
+MEASURE_AGENT_RESULT
+role: review-c
+status: complete
+track: asset_scenes_civic_20260928
+phase: ## Phase 3: Rework
+commits: 313399a7, 7619c491, 304a75d6, 8241491c, 8e6d2a84, cddadba3 (audited; none written by this role)
+tests_run: bash measure/runs/asset_scenes_civic_20260928/check-rework.sh (exit 0; 39 checks, PASS=39, FAIL=0); sha256sum docs/map-mockups/mill-3q.png mill-top.png (equal to rework-mill.json lines 13 and 17); git diff b78fdde1..cddadba3 -- docs/fantasy-world-scene-blueprints.tsv (empty); git diff --quiet b78fdde1..cddadba3 -- scripts/design-mill.mjs assets/watermill.ts (empty); jq keys_unsorted on rework-mill.json and rerate-mill.json (format keys verified; one additive model_id); awk NF and below-bar scans over scenes/inventory.md (states 1 accepted, 29 rated; below-bar mill only)
+files_changed: measure/runs/asset_scenes_civic_20260928/review-c-p3-cddadba.json, measure/runs/asset_scenes_civic_20260928/review-c-p3-cddadba.log
+plan_updates: none (audit only; no commit)
+known_failures: none for this scope. check-review.sh exits 1 with PASS=33, FAIL=1 because P2-d wants the Phase 2 rated state and the mill row now reads accepted; the plan records this as by design (plan.md lines 115-117).
+handoff: The Phase 3 record contract passes. rework-mill.json follows the check-rework.sh header format exactly; rerate-mill.json follows it plus one additive model_id key (F1); the records agree on shots, commits, cameras, routes, and families; the checker passes 39 of 39. The mill inventory row holds Rework, Rerate, and accepted with the state cell last, and Phase 4 can map all 30 rows to accepted without a schema break (29 rated rows at or above 7.0, mill accepted on the 7.5 rerate). The TSV status column is unchanged and the scene id mill and the path scenes/maps/mill.ts did not change, so callers are unaffected. Two Nits: the additive model_id key, and the durability risk that the yaw fix lives in the generated file while the generator stays unchanged (F2, disclosed in green-p3.log lines 73-74); route both to the plan or record owner at Phase 4 convenience, not as a stop. Phase 4 input: all 30 rows map to accepted; no row needs follow-up; the TSV update remains the Phase 4 record.
+END_MEASURE_AGENT_RESULT

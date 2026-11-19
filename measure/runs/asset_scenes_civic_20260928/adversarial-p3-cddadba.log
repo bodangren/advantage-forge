@@ -1,0 +1,106 @@
+MEASURE_AGENT_RESULT
+status: pass
+role: measure-adversarial-testing
+route: opencode-go/glm-5.3#high
+track: asset_scenes_civic_20260928
+phase: Phase 3: Rework
+phase_base_sha: b78fdde1
+role_base_sha: cddadba3
+audited_head_sha: cddadba3b306ee914af8a0a5fcac327de0d544d6 (equals git rev-parse HEAD; pre-adversarial HEAD)
+commits: pending this commit (test(asset_scenes_civic): Phase 3 adversarial tests; no push)
+tests_run: bash measure/runs/asset_scenes_civic_20260928/adversarial-p3.sh exit 0; check-rework.sh on the committed tree exit 0 PASS=39 FAIL=0; control git fixture 39 of 39; git show --name-only 7619c491; git merge-base --is-ancestor 7619c491 304a75d6
+files_changed: measure/runs/asset_scenes_civic_20260928/adversarial-p3.sh, adversarial-p3-cddadba.json (provisional first, final replaces it), adversarial-p3-cddadba.log; plus the pre-existing untracked review-a-p3-cddadba.*, review-c-p3-cddadba.*, phase-acceptance-p2-b78fdde.* added unchanged
+plan_updates: none (all changes under measure/runs; the active plan task stays with Phase 4)
+
+Method. New probes only; the Review A falsifications (reused shot, sha mismatch, el 60,
+anthropic judge, hy judge, second rerate, 6.9 accepted, cell-record mismatch) are not
+repeated as gate probes. A real git fixture under /tmp/opencode/adv-p3-civic reproduces
+the committed Phase 3 records with a faithful history: c0 phase base (inventory, TSV,
+shots, source stand-in), c1 rework commit (fresh shots plus a scenes/maps/mill.ts edit),
+c2 records (rework-mill.json with the c1 sha and the fixture shot sha256 values,
+rerate-mill.json with audited_head = c1, the rerate log), c3 the unmodified checker copy.
+The control passes 39 of 39, so every probe below counts. Each probe changes one fact,
+usually by cp -a of the control fixture, and runs the unmodified checker from the
+fixture root so its relative paths and git commands resolve inside the fixture.
+
+Probes and outcomes.
+- ADV-P3-00 control: exit 0, 39 of 39. Faithful history reproduces Green.
+- ADV-P3-01 rework commit touches no map source (c1 touches the shots and
+  docs/stray.txt only; git show --name-only minus the source path is empty):
+  exit 0, 39 of 39. DEFECT CONFIRMED, checker gap ADV-5. P3-a verifies the commit
+  resolves and is an ancestor of HEAD but never that it touches its source_paths.
+- ADV-P3-02 rework record commit = 1d258c43, a commit on an unmerged side branch
+  (resolves: yes; ancestor of HEAD: no): exit 1, 3 FAILs. CAUGHT. FAIL P3-a "mill
+  rework commit [...] is not an ancestor of HEAD" plus both P3-b recency FAILs.
+- ADV-P3-03 rerate audited_head = c0, the phase base, which predates the rework
+  commit (ancestor of HEAD: yes; rework commit is an ancestor of the audited_head:
+  no): exit 0, 39 of 39. DEFECT CONFIRMED, checker gap ADV-6. P3-c verifies the
+  audited_head is an ancestor of HEAD but never that it postdates the rework
+  commit, so a rerate that judged the pre-rework shots passes.
+- ADV-P3-04 rerate log model_id: glm-5.3 while the route model is kimi-for-coding:
+  exit 1. CAUGHT. FAIL "P3-c mill rerate log model id [glm-5.3] differs from the
+  route model [kimi-for-coding]". The Phase 2 ADV-4 class is closed in this checker
+  by the exact compare at check-rework.sh:305-315.
+- ADV-P3-05 bank (Judge rating 7.5, critical false, state rated) gets a valid
+  rework record with fresh committed shots and correct sha256 values: exit 1,
+  4 FAILs. CAUGHT. FAIL "P3-a reworked map bank is not below the bar", plus the
+  P3-c count and rerate-absent FAILs and the P3-e missing Rerate cell.
+- ADV-P3-06 mill inventory Rerate cell 5.0 while the record keeps 7.5: exit 1.
+  CAUGHT. FAIL "P3-e mill inventory Rerate [5.0] differs from the rerate record
+  [7.5]". Re-verifies the Review A M5b defense in the flip direction.
+- ADV-P3-07 state accepted with Rerate 7.5 while the rerate record holds critical
+  true: exit 1. CAUGHT. FAIL "P3-e mill rerate [7.5] critical [true] wants state
+  [follow-up], found [accepted]".
+- ADV-P3-08 3q elevation boundary: el 45.0 exit 0 (39 of 39); el 50.0 exit 0
+  (39 of 39); el 44.9 exit 1 with FAIL "P3-b mill 3q elevation [44.9] lies outside
+  [45, 50]". Both edges inclusive, as test-strategy.md:155 requires.
+
+No live instance for either gap (why they are Nits, not blockers).
+- git show --name-only --format= 7619c491 lists docs/map-mockups/mill-3q.png,
+  docs/map-mockups/mill-top.png, and scenes/maps/mill.ts: the committed rework
+  commit does touch its claimed source.
+- git merge-base --is-ancestor 7619c491 304a75d6 exits 0 and rerate-mill.json
+  holds audited_head 304a75d6: the committed rerate judged the reworked tree.
+- Review A (its own fixture, M1 to M6) and Review C verified the same two facts,
+  so the mill acceptance rests on records faithful in the committed tree. Both
+  gaps expose future drift only.
+
+blocking_findings: none.
+
+nonblocking_findings:
+- ADV-5 [Nit] routed to Red: check-rework.sh:170-179 never verifies the rework
+  commit touches its source_paths. Fixture t01 passes 39 of 39 with a commit that
+  changed no map source. Fix: require a non-empty diff from the commit for each
+  source_paths entry.
+- ADV-6 [Nit] routed to Red: check-rework.sh:331-338 never verifies the rerate
+  audited_head postdates the rework commit. Fixture t03 passes 39 of 39 with an
+  audited_head that predates the rework. Fix: one added ancestry check (rework
+  commit is an ancestor of the audited_head) inside the P3-c loop, where both
+  SHAs are already in hand.
+
+Anti-pattern coverage. A4: every fixture holds one below-bar map (mill), so no
+vacuous pass exists; the control requires 39 of 39. A3: every mutated rating is a
+labeled cell or a typed jq number. A5: each verdict above quotes the exact FAIL
+line from the checker output. A7: the slug set comes from the full TSV copy in
+every fixture. A9: all paths name the live track directory. The brief's probes are
+the falsifiers; the two DEFECT CONFIRMED lines are the honest result, not a
+filtered pass.
+
+Scope. This role changed no checker, no record, no inventory row, and no map.
+The only new files are the three adversarial artifacts. The five pre-existing
+untracked files (review-a-p3-cddadba.*, review-c-p3-cddadba.*,
+phase-acceptance-p2-b78fdde.*) are added unchanged. No tracked file changed.
+
+verdict: PASS. The Phase 3 gate holds: six of eight probe classes are caught with
+exact FAIL lines, the elevation band is exact at both edges, and the two confirmed
+checker gaps (ADV-5, ADV-6) have no live instance in the committed records.
+
+retry_recommendation: none
+confidence: high
+known_failures: none blocking; ADV-5 and ADV-6 are hardening Nits for Red, same
+  class as the Phase 2 ADV-3 and ADV-4 items that Red closed inside check-rework.sh
+handoff: route ADV-5 and ADV-6 to Red as checker hardening before Phase 4 records
+  (both fixes are one to three lines inside existing loops); the /tmp/opencode/
+  adv-p3-civic fixture trees remain for inspection; any subsequent implementation
+  commit invalidates this result and requires this adversarial gate to rerun
+END_MEASURE_AGENT_RESULT
