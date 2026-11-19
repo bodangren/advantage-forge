@@ -159,3 +159,118 @@ handoff:
 status: blocked
 END_MEASURE_AGENT_RESULT
 ```
+
+---
+
+# Green Phase 2 rerun: unblocked by option A
+
+Role: measure-jr-green. Phase: "## Phase 2: Independent review".
+phase_base_sha: 3e8d29e8. role_base_sha: e62c02d2 (was 3b35a490 on the blocked run).
+
+The orchestrator chose option A. Mid Red fixed P2-c in `e62c02d2`. P2-c now treats the JSON
+`.route` as the provider/model route that `ra-quota pick vision-review` printed. It checks the
+route, the family, and one log line. Green did not edit the checker or the eight evidence files.
+
+## Target Red command on entry
+
+`bash measure/runs/asset_scenes_civic_20260928/check-review.sh` exited 1 at `e62c02d2` with
+`=== Total: 63 checks (PASS=33, FAIL=30) ===`. All 30 FAILs were P2-d state cells: every row read
+`inventoried`, and P2-d wants `rated`.
+
+## What Green changed
+
+`scenes/inventory.md` now holds two extra cells per row: `Judge rating: <n>` and `Judge note: <text>`.
+The `Judge` cell holds `judge: kimi-code-plan-cn/kimi-for-coding`. The state cell reads `rated` and
+sits last. The MAPS rating cell and the MAPS note cell did not change. The TSV and every map source
+did not change. The header prose now names the four judge batches, the route, the family, and the
+state `rated`.
+
+Mill is 5.5 with `critical: true` (no waterwheel). It stays `rated` in this phase. Phase 3 reworks it.
+No other row is below 7.0 or critical.
+
+## Gates
+
+Targeted Red command, `check-review.sh`: exit 0, `=== Total: 34 checks (PASS=34, FAIL=0) ===`.
+
+Plan gate, `ls measure/runs/asset_scenes_civic_20260928/vision-review-*.json`: four files, b1 to b4.
+
+Phase 1 checker, `check-inventory.sh`: exit 1, `=== Total: 96 checks (PASS=6, FAIL=90) ===`.
+The FAILs are P1-c `judge: no` (30) and P1-d `inventoried` (30 plus 30 state cells). That failure
+is by design for a Phase 2 row. Green did not change the checker.
+
+## MEASURE_AGENT_RESULT
+
+```text
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_scenes_civic_20260928
+phase: "## Phase 2: Independent review"
+status: complete
+phase_base_sha: 3e8d29e8
+role_base_sha: e62c02d2
+final_green_head: 7a48784d (code and plan head; this log commit follows it)
+implementation_sha: 7dc26d74
+plan_evidence_sha: 7a48784d
+red_model: opencode-go/muse-spark-1.3-contributor#high
+green_model: opencode-go/deepseek-v4.1-flash
+coder: none (orchestrator handoff said no coder needed)
+
+red_command: bash measure/runs/asset_scenes_civic_20260928/check-review.sh
+red_exit_on_entry: 1
+red_summary_on_entry: "=== Total: 63 checks (PASS=33, FAIL=30) === (P2-d only)"
+green_exit: 0
+green_summary: "=== Total: 34 checks (PASS=34, FAIL=0) ==="
+plan_gate: "ls measure/runs/asset_scenes_civic_20260928/vision-review-*.json lists 4 files (b1..b4)"
+inventory_checker: "exit 1; === Total: 96 checks (PASS=6, FAIL=90) ===; by design, unchanged"
+
+tasks_flipped_to_x:
+  - task: "Send the shots of each existing civic map to an independent judge."
+    sha: 7dc26d74
+    evidence: "four Kimi batches hold 30 ratings on route kimi-code-plan-cn/kimi-for-coding; each log cites the route and model id"
+  - task: "Copy each rating and note into the inventory row, and mark the row rated."
+    sha: 7dc26d74
+    evidence: "30 rows hold rated, the judge route, and the copied rating, critical flag and note"
+
+tasks_flipped_to_b: none
+
+judge_rows:
+  route: kimi-code-plan-cn/kimi-for-coding
+  family: kimi
+  batches: "b1=8, b2=8, b3=7, b4=7 maps; 30 unique slugs"
+  below_bar_or_critical:
+    - slug: mill
+      rating: 5.5
+      critical: true
+      note: "waterwheel not visible; support frame only. Stays rated in Phase 2; Phase 3 reworks it."
+
+new_files_committed:
+  - measure/runs/asset_scenes_civic_20260928/vision-review-b1.json
+  - measure/runs/asset_scenes_civic_20260928/vision-review-b1.log
+  - measure/runs/asset_scenes_civic_20260928/vision-review-b2.json
+  - measure/runs/asset_scenes_civic_20260928/vision-review-b2.log
+  - measure/runs/asset_scenes_civic_20260928/vision-review-b3.json
+  - measure/runs/asset_scenes_civic_20260928/vision-review-b3.log
+  - measure/runs/asset_scenes_civic_20260928/vision-review-b4.json
+  - measure/runs/asset_scenes_civic_20260928/vision-review-b4.log
+
+files_changed:
+  - measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md
+  - measure/tracks/asset_scenes_civic_20260928/plan.md
+  - measure/runs/asset_scenes_civic_20260928/green-p2.log
+
+files_not_changed:
+  - docs/fantasy-world-scene-blueprints.tsv
+  - docs/map-review.html
+  - measure/runs/asset_scenes_civic_20260928/check-review.sh
+  - measure/runs/asset_scenes_civic_20260928/check-inventory.sh
+  - every scenes/maps/*.ts source
+  - measure/generated/ (no generate.sh run)
+
+open_items_for_reviewers:
+  - "P2-c now reads .route as a provider/model string. Review A should confirm the reading agrees with test-strategy Section 5."
+  - "Mill 5.5 critical is the only Phase 3 rework target."
+  - "No push was run. No measure/generate.sh was run."
+
+status: complete
+END_MEASURE_AGENT_RESULT
+```
