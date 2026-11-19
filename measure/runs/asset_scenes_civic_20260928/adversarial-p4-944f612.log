@@ -1,0 +1,102 @@
+MEASURE_AGENT_RESULT
+status: pass
+role: measure-adversarial-testing
+route: opencode-go/glm-5.3#high
+track: asset_scenes_civic_20260928
+phase: Phase 4: Records
+phase_base_sha: 024cfdf9
+role_base_sha: b8022222 (this role's prior adversarial commit; its findings ADV-7 to ADV-9 are the subject)
+audited_head_sha: 944f6128a288ae619140303f84879ecd17bfabc7 (equals git rev-parse HEAD; Red's fix commit)
+commits: pending this commit (test(asset_scenes_civic): Phase 4 adversarial re-audit; no push)
+tests_run: adversarial-p4.sh exit 0 (control 46 of 46 against the live total); check-records.sh exit 0 PASS=46 FAIL=0; all twelve probes CAUGHT, including the four former gaps 03b, 04a, 07a, 07b
+files_changed: adversarial-p4.sh (run-time HEAD, clone reuse or recreate, live total), adversarial-p4-944f612.json (provisional first, final replaces it), adversarial-p4-944f612.log
+plan_updates: none (all changes under measure/runs)
+
+Method. Re-audit at 944f6128 after Red closed ADV-7, ADV-8, and ADV-9. The diff
+b8022222..944f6128 over check-records.sh was read first: it adds the ADV-7
+column-count guard, the ADV-8 masked in-order compare, and the ADV-9 P4-f civic
+grep set; the checker grew from 44 to 46 checks. The harness defects the
+orchestrator named were fixed: the audited head is captured with git rev-parse
+HEAD at run time, the shared clone is reused when it sits at the audited head and
+recreated when it sits at another head (this run pair exercised both paths), and
+the control compares against the live checker total parsed from the
+committed-tree run, never a fixed number. Every probe mutation lives in the
+/tmp/opencode/adv-p4-civic clone and is reset after each probe.
+
+Probes and outcomes (all CAUGHT; a pass on any of them is a regression).
+- ADV-P4-00 control: pristine clone at 944f6128, 46 of 46, exit 0. Live-instance
+  scan: the clone doctor holds 51 foreign error lines and none names
+  scenes/maps/* or locations/civic/*; no TSV data row holds a column count other
+  than 4; base and head cut -f1-3 sha256 are both f608396a. CONTROL OK.
+- ADV-P4-01 bathhouse TSV follow-up while the inventory state stays accepted:
+  exit 1. FAIL "P4-c TSV accepted count [29] differs from the inventory-supported
+  count [30]" and FAIL "P4-c TSV follows up bathhouse but the inventory state
+  cell reads [accepted], want [follow-up]". CAUGHT.
+- ADV-P4-02 the non-civic P0 row locations/adventure/dungeon changes status:
+  exit 1. Two P4-b FAIL lines naming the dungeon row. CAUGHT.
+- ADV-P4-03a a trailing space in the apothecary status cell: exit 1. FAIL
+  "P4-a row apothecary holds unknown TSV status [accepted ]". CAUGHT.
+- ADV-P4-03b a trailing tab adds a fifth column (NF=5): exit 1. FAIL "P4-a TSV
+  data rows hold a column count other than 4 at lines: [36 ]" plus a bonus FAIL
+  "P4-f doctor output names this track or its civic files" quoting the doctor's
+  own "Error: docs/fantasy-world-scene-blueprints.tsv:36: invalid table row".
+  CAUGHT (ADV-7 closed).
+- ADV-P4-04a the adjacent civic rows apothecary and archive swap (masked sha
+  0b771e39): exit 1 with exactly one FAIL "P4-b columns 1-3 of the TSV differ
+  from 024cfdf9 in order or value (reorder or non-status edit)" while the sorted
+  ID check still passes, so Red's new guard alone carries the defense. CAUGHT
+  (ADV-8 closed).
+- ADV-P4-04b the adjacent non-civic rows abandoned-fort and alchemy-lab swap:
+  exit 1. The ADV-8 masked-compare FAIL plus two P4-b line-prefix FAILs. CAUGHT.
+- ADV-P4-05 design-mill.mjs writes watermill x=2.3, so the generated mill.ts
+  differs by one character while the yaw line still reads -65: exit 1. FAIL
+  "P4-g generator output differs from the committed scenes/maps/mill.ts" while
+  the yaw grep check still prints PASS. CAUGHT.
+- ADV-P4-06 one byte appended to docs/map-review.html and committed: exit 1.
+  FAIL "P4-e docs/map-review.html differs against 024cfdf9 with no PM decision
+  naming it as the record". CAUGHT.
+- ADV-P4-07a the doctor prints "error: measure/tech-debt.md: broken local link
+  scenes/maps/mill.ts" with no track id: exit 1. FAIL "P4-f doctor output names
+  this track or its civic files" quoting the injected path. CAUGHT (ADV-9
+  closed).
+- ADV-P4-07b the doctor prints "error: measure/scope-map.tsv: missing scene row
+  for locations/civic/mill" with no track id: exit 1. The same P4-f FAIL
+  quoting the row. CAUGHT (ADV-9 closed).
+- ADV-P4-08 plan.md cites e2c7, a 4-character sha that does not resolve
+  uniquely; e2c7bb9c is the only plan citation that touches the TSV: exit 1 with
+  30 FAIL lines, one per changed slug. CAUGHT.
+
+Honesty note. The first re-audit run reported ADV-P4-04a as PROBE VOID because a
+printf trailing space broke the script's own order-string compare; the swap had
+taken and the checker had already failed correctly (the same masked-compare
+FAIL). The compare now strips the space and the final run reports CAUGHT with
+identical checker behavior. The intermediate VOID run is recorded here rather
+than hidden; its probe outcomes otherwise matched the final run line for line.
+
+Anti-pattern coverage. A4: the control must pass 46 of 46 before any probe
+counts. A3: every status and citation value is a labeled cell or a fixed-string
+grep. A5: each verdict quotes the exact FAIL line; the plan claim "no error line
+names asset_scenes_civic_20260928 or its files" (plan.md line 166) is now
+enforced in both halves by the ADV-9 grep set. A7: the slug set comes from the
+full TSV copy in the clone. A9: all paths name the live track directory. A10:
+this run never touched measure/generated and never ran generate.sh.
+
+Scope. This role changed no checker, no record, no inventory, no plan, and no
+map. The commit holds the fixed script and the two new run artifacts. Red's
+audited commit touched only check-records.sh and red-p4.log.
+
+verdict: PASS. The three routed findings are closed with failing-first evidence,
+the eight standing defenses hold under re-probe, and the harness now survives
+later commits by construction.
+
+retry_recommendation: none
+confidence: high
+known_failures: none; ADV-7, ADV-8, and ADV-9 are closed at 944f6128 and the
+  closeout regeneration deferral (Review C F1/F2) remains the open item for the
+  closeout role
+handoff: the Phase 4 adversarial gate is green at 944f6128; the remaining open
+  items are the closeout role's (archive, regenerate measure/generated, doctor
+  on the committed tree); the /tmp/opencode/adv-p4-civic clone remains for
+  inspection; any subsequent implementation commit invalidates this result and
+  requires this adversarial gate to rerun
+END_MEASURE_AGENT_RESULT
