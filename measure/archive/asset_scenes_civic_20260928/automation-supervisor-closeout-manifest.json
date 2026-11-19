@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "track": "asset_scenes_civic_20260928",
+  "archived_at": "2026-11-19T00:00:00Z",
+  "lane": "standard",
+  "archive_path": "measure/archive/asset_scenes_civic_20260928/",
+  "manifest_path": "measure/archive/asset_scenes_civic_20260928/automation-supervisor-closeout-manifest.json",
+  "track_base_sha": "db2053f2190ef0af3c24d6a149e70ee4bcb8f493",
+  "pre_closeout_head_sha": "3e90457f907ca3c07d280465392f02959c3fa6c9",
+  "archive_commit_sha": "069788d7f40409c4467c9f8f1f524053e519c44e",
+  "plan_sha_commit_sha": "fd6e01703c886325cef59004e3d5beee6700d3a7",
+  "generated_commit_sha": "df462b410d998b1a2e176bacb076b87b124ae91c",
+  "commits": [
+    {
+      "sha": "069788d7f40409c4467c9f8f1f524053e519c44e",
+      "subject": "measure(asset_scenes_civic_20260928): close out and archive",
+      "scope": "git mv of the track folder, metadata status done, registry move, crosswalk repoint, final acceptance evidence"
+    },
+    {
+      "sha": "fd6e01703c886325cef59004e3d5beee6700d3a7",
+      "subject": "measure(asset_scenes_civic_20260928): record archive SHA in closeout plan",
+      "scope": "archived plan.md closeout task marked [x] with the archive commit SHA"
+    },
+    {
+      "sha": "df462b410d998b1a2e176bacb076b87b124ae91c",
+      "subject": "measure(asset_scenes_civic_20260928): regenerate generated facts after archive",
+      "scope": "measure/generated/status.md refreshed after the archive move"
+    }
+  ],
+  "final_acceptance": {
+    "file": "measure/runs/asset_scenes_civic_20260928/final-acceptance-3e90457.json",
+    "status": "pass",
+    "audited_head_sha": "3e90457f907ca3c07d280465392f02959c3fa6c9",
+    "provenance": "git rev-parse HEAD at closeout start printed 3e90457f907ca3c07d280465392f02959c3fa6c9, equal to audited_head_sha. git diff --name-only 3e90457f HEAD printed no path.",
+    "audit_result_check": "python3 measure_interphase_checks.py audit-result --role final-acceptance --file measure/runs/asset_scenes_civic_20260928/final-acceptance-3e90457.json printed PASS: audit result is valid (exit 0)."
+  },
+  "phase_acceptance_results": [
+    {
+      "phase": "Phase 1: Inventory",
+      "file": "measure/runs/asset_scenes_civic_20260928/phase-acceptance-p1-3e8d29e.json",
+      "status": "pass"
+    },
+    {
+      "phase": "Phase 2: Independent review",
+      "file": "measure/runs/asset_scenes_civic_20260928/phase-acceptance-p2-b78fdde.json",
+      "status": "pass"
+    },
+    {
+      "phase": "Phase 3: Rework",
+      "file": "measure/runs/asset_scenes_civic_20260928/phase-acceptance-p3-024cfdf.json",
+      "status": "pass"
+    },
+    {
+      "phase": "Phase 4: Records",
+      "file": "measure/runs/asset_scenes_civic_20260928/phase-acceptance-p4-86966cc.json",
+      "status": "pass"
+    }
+  ],
+  "audits_retained": [
+    "measure/runs/asset_scenes_civic_20260928/spec-review-64f8153.json",
+    "measure/runs/asset_scenes_civic_20260928/spec-review-c69666c.json",
+    "measure/runs/asset_scenes_civic_20260928/review-a-feeca3f.json",
+    "measure/runs/asset_scenes_civic_20260928/review-a-p2-c095ba1.json",
+    "measure/runs/asset_scenes_civic_20260928/review-a-p3-cddadba.json",
+    "measure/runs/asset_scenes_civic_20260928/review-a-p4-be89dc9.json",
+    "measure/runs/asset_scenes_civic_20260928/review-c-feeca3f.json",
+    "measure/runs/asset_scenes_civic_20260928/review-c-p2-c095ba1.json",
+    "measure/runs/asset_scenes_civic_20260928/review-c-p3-cddadba.json",
+    "measure/runs/asset_scenes_civic_20260928/review-c-p4-be89dc9.json",
+    "measure/runs/asset_scenes_civic_20260928/review-c-p4-c1e84b1.json",
+    "measure/runs/asset_scenes_civic_20260928/adversarial-feeca3f.json",
+    "measure/runs/asset_scenes_civic_20260928/adversarial-54213a0.json",
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p2-c095ba1.json",
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p2-36dec52.json",
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p3-cddadba.json",
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p3-fa85bb2.json",
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p4-c1e84b1.json",
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p4-944f612.json",
+    "measure/runs/asset_scenes_civic_20260928/ux-browser-review-p2-0aed743.json",
+    "measure/runs/asset_scenes_civic_20260928/final-acceptance-3e90457.json"
+  ],
+  "gates": {
+    "TASK_MARKERS": "pass: the archived plan holds no [~] and no [ ] line. All 12 tasks are [x]. The two deferred closeout tasks carry their done SHAs 6a094aeb, 80d55840, 9f2e571f and 069788d7.",
+    "DEFERRED_OWNERS": "pass: no [b] task exists. Both closeout tasks name the closeout steward and cite their done SHA on the line.",
+    "PHASE_ACCEPTANCE": "pass: four phase acceptance results, one for each phase, each pass and each bound to an ancestor of the pre-closeout HEAD.",
+    "FINAL_ACCEPTANCE": "pass: final-acceptance-3e90457.json has status pass and audited_head_sha 3e90457f. The provenance matches the current pre-closeout HEAD.",
+    "GENERATED_FACTS": "pass: git status --short measure/generated printed no path before regeneration. ./measure/generate.sh wrote 4 facts and changed only status.md. Commit df462b41 holds the change.",
+    "GENERATED_CHECK_COMMAND": "pass: node measure/tools/generate.mjs --check exits 0 and prints 'Measure facts are current (4 files).' after the archive and the regeneration.",
+    "DOCTOR": "pass: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh' exits 0. Four boundary tests pass and the doctor reports no structural errors.",
+    "A5_PLAN_TRUTH": "pass: the archived plan holds no false PASS= claim. The 46-check quote at plan.md:149 cites green-p4.log, and the final acceptance rerun reproduces the record checks.",
+    "A6_REGISTRY": "pass: the archived registry entry states the completion date, the metadata description, and the recorded final acceptance PASS. It claims no adversarial state that a test did not show."
+  },
+  "commands": [
+    "git rev-parse HEAD (3e90457f907ca3c07d280465392f02959c3fa6c9, equal to audited_head_sha)",
+    "git status --short measure/generated (no path)",
+    "node measure/tools/generate.mjs --check (exit 0)",
+    "python3 measure_interphase_checks.py audit-result --role final-acceptance --file measure/runs/asset_scenes_civic_20260928/final-acceptance-3e90457.json (PASS, exit 0)",
+    "python3 measure_interphase_checks.py status --repo . --track asset_scenes_civic_20260928 (incomplete_phases 0)",
+    "rg -nE 'measure/tracks/([a-z_0-9-]+)/plan\\.md' tests/*.sh (no hit)",
+    "git mv measure/tracks/asset_scenes_civic_20260928 measure/archive/asset_scenes_civic_20260928",
+    "git add and git commit for commits 069788d7, fd6e0170, and df462b41 (explicit paths only)",
+    "./measure/generate.sh (exit 0, generated 4 Measure facts)",
+    "node measure/tools/generate.mjs --check (exit 0 after regeneration)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh' (exit 0)",
+    "GENERATED_CHECK_COMMAND='node measure/tools/generate.mjs --check' python3 measure_interphase_checks.py closeout --repo . --track asset_scenes_civic_20260928 (PASS, exit 0)"
+  ],
+  "antipatterns_clean": [
+    "A5 false claim: every PASS count in the archived plan cites its log file. No test that the plan cites exits 1 at the recorded tree.",
+    "A6 registry overstatement: the archived entry names the completion date and the metadata description. The final acceptance PASS is recorded in final-acceptance-3e90457.json.",
+    "A9 archived track paths: no test under tests/*.sh names measure/tracks/asset_scenes_civic_20260928/plan.md. The move broke no test, so no test edit was needed.",
+    "A10 generated-facts drift: the generator ran after the archive move, and the fresh facts are committed at df462b41. The --check command exits 0."
+  ],
+  "lessons_learned": "No new lesson is warranted. measure/lessons-learned.md holds no civic-scene entry, and the durable evidence is the run folder and the archived plan.",
+  "tech_debt": "No new debt is warranted. measure/tech-debt.md holds no civic-scene row. The mill rerate closed the only below-bar map.",
+  "deferred": "none: both deferred closeout tasks are [x] with done SHAs, and no [b] task or open owner remains.",
+  "artifact_cleanup": "No bulky run artifact was deleted. The orchestrator identified none. Every file under measure/runs/asset_scenes_civic_20260928/ is retained, including the final acceptance pairs, the four phase pairs, the judge batches, the adversarial probes, the red and green logs, and the four checker scripts.",
+  "retained_evidence": [
+    "measure/runs/asset_scenes_civic_20260928/final-acceptance-3e90457.json",
+    "measure/runs/asset_scenes_civic_20260928/final-acceptance-3e90457.log",
+    "measure/runs/asset_scenes_civic_20260928/green-p4.log",
+    "measure/runs/asset_scenes_civic_20260928/check-records.sh",
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p4-944f612.json",
+    "measure/runs/asset_scenes_civic_20260928/vision-review-b1.json",
+    "measure/runs/asset_scenes_civic_20260928/vision-review-b2.json",
+    "measure/runs/asset_scenes_civic_20260928/vision-review-b3.json",
+    "measure/runs/asset_scenes_civic_20260928/vision-review-b4.json",
+    "measure/runs/asset_scenes_civic_20260928/rerate-mill.json",
+    "measure/archive/asset_scenes_civic_20260928/scenes/inventory.md",
+    "docs/fantasy-world-scene-blueprints.tsv"
+  ],
+  "evidence_classes": {
+    "person_reviewed": "Daniel's primary directive of 2026-11-18 and the PM decision of 2026-11-19 own the bar and the rework rule. No judge rating is owner acceptance.",
+    "model_evidence_not_acceptance": "the four Kimi vision batches, the mill rerate, and the phase and final acceptance roles are model evidence recorded in measure/runs/asset_scenes_civic_20260928/.",
+    "workbooks_acceptance": "none recorded"
+  }
+}

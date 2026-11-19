@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "role": "measure-closeout",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "closeout",
+  "status": "pass",
+  "summary": "Closeout passes at the post-regeneration tree df462b41. The track is archived, metadata is done with a completion date, the registry entry moved to Archived Tracks, both deferred closeout tasks carry done SHAs, generated facts are fresh, and the doctor exits 0. Final acceptance passed at 3e90457f, which equals the pre-closeout HEAD.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Pre-closeout HEAD: git rev-parse HEAD printed 3e90457f907ca3c07d280465392f02959c3fa6c9, equal to the final acceptance audited_head_sha.",
+    "Final acceptance: final-acceptance-3e90457.json has status pass. audit-result --role final-acceptance printed PASS: audit result is valid (exit 0).",
+    "Four phase acceptance results pass, one for each plan phase.",
+    "Archive: git mv moved measure/tracks/asset_scenes_civic_20260928 to measure/archive/asset_scenes_civic_20260928 in commit 069788d7.",
+    "Metadata: status done, completed 2026-11-19, completed_at 2026-11-19.",
+    "Registry: the active entry was removed and a description-bearing entry was added under Archived Tracks.",
+    "Plan: all 12 tasks are [x]. The regenerate task cites 6a094aeb, 80d55840, and 9f2e571f. The closeout task cites archive commit 069788d7.",
+    "Generated facts: measure/generated was clean before ./measure/generate.sh. The generator wrote 4 facts and changed only status.md. Commit df462b41 holds the change.",
+    "GENERATED_CHECK_COMMAND: node measure/tools/generate.mjs --check exits 0 and prints 'Measure facts are current (4 files).'",
+    "DOCTOR: the required heavy-run wrapper command exits 0. Four boundary tests pass and the doctor reports no structural errors.",
+    "A9: no test under tests/*.sh references measure/tracks/asset_scenes_civic_20260928/plan.md, so the archive move broke no test.",
+    "No bulky run artifact was deleted. The orchestrator identified none."
+  ],
+  "commands": [
+    "git rev-parse HEAD (3e90457f907ca3c07d280465392f02959c3fa6c9)",
+    "node measure/tools/generate.mjs --check (exit 0)",
+    "python3 measure_interphase_checks.py audit-result --role final-acceptance --file measure/runs/asset_scenes_civic_20260928/final-acceptance-3e90457.json (PASS, exit 0)",
+    "python3 measure_interphase_checks.py status --repo . --track asset_scenes_civic_20260928 (incomplete_phases 0)",
+    "rg -nE 'measure/tracks/([a-z_0-9-]+)/plan\\.md' tests/*.sh (no hit)",
+    "git commit for 069788d7, fd6e0170, and df462b41 (explicit paths only)",
+    "./measure/generate.sh (exit 0)",
+    "node measure/tools/generate.mjs --check (exit 0 after regeneration)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh' (exit 0)",
+    "GENERATED_CHECK_COMMAND='node measure/tools/generate.mjs --check' python3 measure_interphase_checks.py closeout --repo . --track asset_scenes_civic_20260928 (PASS, exit 0)"
+  ],
+  "changed_files": [
+    "measure/archive/asset_scenes_civic_20260928/",
+    "measure/tracks.md",
+    "measure/plan-crosswalk.md",
+    "measure/generated/status.md",
+    "measure/runs/asset_scenes_civic_20260928/"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "baseline_sha": "3e90457f907ca3c07d280465392f02959c3fa6c9",
+  "audited_head_sha": "df462b410d998b1a2e176bacb076b87b124ae91c"
+}

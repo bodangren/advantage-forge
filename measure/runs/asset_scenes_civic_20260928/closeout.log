@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: measure-closeout
+status: complete
+track: asset_scenes_civic_20260928
+phase: closeout
+commits: 069788d7 archive, fd6e0170 plan SHA, df462b41 generated facts; result artifacts follow in the next commit
+tests_run: node measure/tools/generate.mjs --check exit 0; HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh' exit 0; GENERATED_CHECK_COMMAND closeout checker PASS exit 0; final-acceptance audit-result PASS; interphase status incomplete_phases 0
+files_changed: measure/archive/asset_scenes_civic_20260928/, measure/tracks.md, measure/plan-crosswalk.md, measure/generated/status.md, measure/runs/asset_scenes_civic_20260928/
+plan_updates: status line done; both deferred closeout tasks [x] with done SHAs; metadata status done with completed date 2026-11-19; registry entry moved to Archived Tracks
+known_failures: none
+handoff: Track archived at measure/archive/asset_scenes_civic_20260928. Manifest at measure/archive/asset_scenes_civic_20260928/automation-supervisor-closeout-manifest.json. Final acceptance PASS at 3e90457f equals the pre-closeout HEAD. --check exit 0 and doctor exit 0. A9 check found no test reference to the old track path, so no test fix was needed. No bulky artifact was deleted.
+END_MEASURE_AGENT_RESULT
