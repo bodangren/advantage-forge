@@ -30688,6 +30688,53 @@
         }
       }
     },
+    "sprout-lily": {
+      "file": "sprout-lily.ts",
+      "presets": {
+        "lily": {
+          "skin": {
+            "option": "fair",
+            "ratio": [
+              1,
+              1,
+              1
+            ],
+            "default": "#f2c7a4",
+            "shade": "#d5af90"
+          },
+          "hair": {
+            "option": "brown",
+            "ratio": [
+              1,
+              1,
+              1
+            ],
+            "default": "#5a301d",
+            "shade": "#4e2918"
+          },
+          "eyes": {
+            "option": "brown",
+            "ratio": [
+              1,
+              1,
+              1
+            ],
+            "default": "#6e4020",
+            "shade": "#60371b"
+          },
+          "cloth": {
+            "option": "blue",
+            "ratio": [
+              1,
+              1,
+              1
+            ],
+            "default": "#3f8fd0",
+            "shade": "#367db7"
+          }
+        }
+      }
+    },
     "sprout-may": {
       "file": "sprout-may.ts",
       "presets": {
