@@ -54,51 +54,55 @@ export default humanoidAsset({
 
     // ---------------------------------------------------------------- hair: a chin-length straight bob with a strand-cut fringe
     // Local frame: y 0 is the head center (eyes at -0.047, brows at +0.047, chin at -0.145).
-    const faceMask = sdf.ellipsoid([0.19, 0.13, 0.21]).at(0, -0.08, 0.13);
+    // The side panels hang straight past the cheeks to the jaw outside the skull silhouette;
+    // the back mass hangs to the nape over the neck top. Bottom edges are blunt cuts.
+    const faceMask = sdf.ellipsoid([0.188, 0.15, 0.21]).at(0, -0.06, 0.13);
     const cap = sdf
       .ellipsoid([H[0] + 0.008, H[1] + 0.015, H[2] + 0.013])
       .at(0, 0.008, -0.01)
       .smoothSubtract(0.02, faceMask);
-    // Straight fringe with a crisp cut line above the brows and slight strand grooves.
-    const fringe = sdf
-      .ellipsoid([0.165, 0.06, 0.08])
-      .at(0, 0.095, 0.1)
-      .smoothIntersect(0.02, sdf.ellipsoid([H[0] + 0.03, H[1] + 0.03, H[2] + 0.03]).at(0, 0.008, -0.01))
-      .intersect(sdf.halfSpace([0, -1, 0], -0.062));
-    // Side locks hang straight past the cheeks to the jaw and cover the ears; the ends flick
-    // out a touch for the bob flare.
+    // Straight fringe with a crisp cut line just above the brows: a shell layer over the cap,
+    // ending in a geometric step (not a paint edge).
+    const fringeShell = sdf.ellipsoid([H[0] + 0.02, H[1] + 0.025, H[2] + 0.02]).at(0, 0.008, -0.01);
+    const fringeZone = sdf
+      .box([0.34, 0.11, 0.6])
+      .at(0, 0.11, 0.2)
+      .intersect(sdf.halfSpace([0, 0, 1], 0.0));
+    const fringe = fringeShell
+      .smoothIntersect(0.008, fringeZone)
+      .smoothSubtract(0.008, sdf.ellipsoid([H[0] + 0.008, H[1] + 0.015, H[2] + 0.013]).at(0, 0.008, -0.01));
+    // Straight side panels past the cheeks to the jaw, covering the ears.
     const lock = (s: number) =>
       sdf.chain(
         [
-          [0.168 * s, 0.05, 0.085, 0.044],
-          [0.178 * s, -0.045, 0.06, 0.041],
-          [0.168 * s, -0.12, 0.045, 0.036],
-          [0.178 * s, -0.148, 0.032, 0.031],
+          [0.185 * s, 0.06, 0.07, 0.045],
+          [0.19 * s, -0.045, 0.05, 0.043],
+          [0.185 * s, -0.12, 0.03, 0.04],
+          [0.19 * s, -0.148, 0.015, 0.038],
         ],
         0.03,
       );
-    // Back mass hangs to the nape over the neck top, flaring with the sides.
-    const backLock = sdf.chain(
-      [
-        [0, 0.1, -0.14, 0.055],
-        [0, -0.03, -0.155, 0.05],
-        [0, -0.12, -0.13, 0.042],
-        [0, -0.148, -0.11, 0.036],
-      ],
-      0.04,
-    );
-    // A darker cut line at the fringe edge and subtle strand grooves across it.
+    // Back mass to the nape over the neck top: a full-width rounded curtain, not a tail.
+    const backMass = sdf
+      .ellipsoid([H[0] + 0.018, 0.17, H[2] + 0.018])
+      .at(0, -0.03, -0.055)
+      .smoothIntersect(0.02, sdf.halfSpace([0, 0, 1], 0.02))
+      .intersect(sdf.halfSpace([0, -1, 0], 0.205));
+    // A darker cut line at the fringe edge and slight strand grooves across it.
     const hairPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
       let c = base;
-      if (y > 0.055 && y < 0.15 && z > 0.02) {
-        const edge = y < 0.072 ? 0.22 : 0;
+      if (y > 0.05 && y < 0.16 && z > 0.02) {
+        const edge = y < 0.068 ? 0.22 : 0;
         c = mixRgb(c, rgb('#3a1e10'), edge + 0.1 + 0.08 * Math.sin(x * 420));
       }
       return c;
     };
+    const frontHair = sdf
+      .smoothUnion(0.02, cap, lock(1), lock(-1))
+      .intersect(sdf.halfSpace([0, -1, 0], 0.14));
     const hairLocal = sdf
-      .smoothUnion(0.025, cap, fringe, lock(1), lock(-1), backLock)
-      .intersect(sdf.halfSpace([0, -1, 0], 0.14))
+      .smoothUnion(0.02, frontHair, backMass)
+      .union(fringe)
       .paintFn(hairPaint)
       .bone('head');
     k.body('hair', hairLocal.at(0, HEAD_Y, 0), { color: k.tint('hair'), roughness: 0.6, detail: 0.004 });
@@ -113,32 +117,33 @@ export default humanoidAsset({
       .paintWhere(collarBand, C.collar, 0.003);
     k.body('shirt', shirt, { color: h.tint.shirt!, roughness: 0.85 });
 
-    // ---------------------------------------------------------------- red A-line pleated skirt to just above the knees
-    // The waistband stays inside the shirt and the pleats start below the shirt hem. The folds
-    // are deep triangle-wave ridges from there to the flared hem.
+    // ---------------------------------------------------------------- red A-line pleated skirt, hem level just above the knees
+    // The waistband stays inside the shirt. The pleats are shallow vertical grooves on the
+    // surface that fade out above the hem, so the hem stays a straight level edge.
     const PLEAT_TOP = HEM_SHIRT - 0.015;
-    const SKIRT_HEM = 0.11;
+    const SKIRT_HEM = 0.16;
     const tri = (x: number, z: number) => {
       const t = ((((PLEATS * Math.atan2(x, z)) / (2 * Math.PI)) % 1) + 1) % 1;
       return 1 - 4 * Math.abs(t - 0.5);
     };
     const ramp = (y: number) => Math.min(1, Math.max(0, (PLEAT_TOP - y) / 0.008));
+    const hemFade = (y: number) => Math.min(1, Math.max(0, (y - SKIRT_HEM - 0.002) / 0.025));
     const skirtBase = sdf
       .revolve(
         profile.polygon([
           [0, 0.235],
           [0.104, 0.235],
           [0.108, HEM_SHIRT],
-          [0.117, PLEAT_TOP],
-          [0.16, SKIRT_HEM],
+          [0.114, PLEAT_TOP],
+          [0.13, SKIRT_HEM],
           [0, SKIRT_HEM],
         ]),
       )
       .scale([1, 1, 0.84]);
     const skirt = skirtBase
-      .displace(0.01, (x, y, z) => ramp(y) * tri(x, z))
+      .displace(0.008, (x, y, z) => ramp(y) * hemFade(y) * tri(x, z))
       .intersect(sdf.box([0.6, 0.24, 0.6]).at(0, SKIRT_HEM + 0.11, 0))
-      .paintFn((x, y, z, base) => mixRgb(base, rgb(C.fold), 0.8 * ramp(y) * (0.5 - 0.5 * tri(x, z))))
+      .paintFn((x, y, z, base) => mixRgb(base, rgb(C.fold), 0.6 * ramp(y) * (0.5 - 0.5 * tri(x, z))))
       .bone('hips');
     k.body('skirt', skirt, { color: C.skirt, roughness: 0.85, detail: 0.004, textureDensity: 2, maxError: 0.004 });
 
