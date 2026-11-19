@@ -66,3 +66,18 @@ Red evidence under the Phase 2 gate).
   "status": "red-complete"
 }
 ```
+
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: red-complete
+track: asset_scenes_civic_20260928
+phase: ## Phase 2: Independent review
+baseline_sha: 3e8d29e8
+role_base_sha: 3e8d29e8
+commits: test(asset_scenes_civic): Phase 2 review checker (red) 19decdb9; record Phase 2 red HEAD in red-p2.log 4cebc88b
+tests_run: bash measure/runs/asset_scenes_civic_20260928/check-review.sh -> FAIL (exit 1, no vision-review-bN.json files, expected Red; Total 8 checks PASS=0 FAIL=8); smoke fixtures (removed): well-formed batches -> P2-a to P2-c pass, P2-d fails on inventoried rows (59 checks, 29 pass); Anthropic Sonnet judge -> P2-c rejects; date-string rating -> P2-b rejects
+files_changed: measure/runs/asset_scenes_civic_20260928/check-review.sh (new); measure/tracks/asset_scenes_civic_20260928/plan.md ([~] + Red evidence); measure/runs/asset_scenes_civic_20260928/red-p2.log (new)
+plan_updates: first Phase 2 task marked [~]; Red evidence line added under the Phase 2 gate
+known_failures: P2-a no vision-review-b1..b4.json files exist (8 missing-file FAILs); P2-b no ratings to parse; P2-c no judge families to verify; P2-d all 30 inventory rows hold state inventoried, want rated
+handoff: Green dispatches the four independent judge batches (vision-review-b1..b4, about 8 maps each, judge family differs from the maker family) and copies each rating and note into the inventory row with state rated; then reruns the checker
+END_MEASURE_AGENT_RESULT
