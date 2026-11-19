@@ -115,4 +115,5 @@ Anti-patterns checked before the commits:
 Pushes: none. measure/generate.sh: not run. Track archive and metadata: untouched.
 
 head_at_log_write: 0c700b8a
+closeout_task_deferral: commit 98499a7e marks the unchecked closeout task "deferred to the closeout role", so the phase gate holds no incomplete Phase 4 task; doctor still exits 1 with 51 errors and none for this track, and check-records.sh exits 0 with 44/44.
 END_MEASURE_AGENT_RESULT
