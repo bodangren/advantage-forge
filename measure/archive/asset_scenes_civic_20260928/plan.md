@@ -190,7 +190,7 @@ Carried phase-acceptance items N1 to N5 (`phase-acceptance-p3-024cfdf.json`):
 
 ## Closeout
 
-- [ ] Task: Close the track (deferred to the closeout role): archive the folder and set the metadata status to completed.
+- [x] Task: Close the track (deferred to the closeout role): archive the folder and set the metadata status to completed. (`069788d7`: git mv to measure/archive/asset_scenes_civic_20260928, metadata status done with completed date 2026-11-19, registry entry moved to Archived Tracks, crosswalk links repointed, and the final acceptance evidence committed.)
   Owner is the closeout steward. This role records the Phase 4 evidence and writes no closeout
   metadata.
 - [x] Task: Regenerate measure/generated/ with ./measure/generate.sh and commit it (deferred to the closeout role; Review C F1 at be89dc91). Done under the PM decision of 2026-11-19 in Build commits `6a094aeb`, `80d55840`, and `9f2e571f`; the closeout role reran the generator and committed the fresh facts. `node measure/tools/generate.mjs --check` prints `Measure facts are current (4 files).` with exit 0 at closeout.
