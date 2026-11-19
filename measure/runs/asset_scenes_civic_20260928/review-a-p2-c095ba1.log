@@ -1,0 +1,115 @@
+# Review A, Phase 2 audit (track asset_scenes_civic_20260928)
+
+Role: measure-review-a-correctness. Audit only. No production, test, plan, or registry edits.
+No commit. Route opencode-go/glm-5.3#high.
+
+Provenance: phase_base_sha 3e8d29e8, role_base_sha 3e8d29e8, audited_head_sha c095ba1f.
+git rev-parse HEAD gives c095ba1fd9cd5a2e6900ef06e5958bff385d5d3b, equal to the audited HEAD.
+
+## What was audited
+
+The exact diff 3e8d29e8..c095ba1f: check-review.sh, red-p2.log, green-p2.log, the four
+vision-review batch JSONs and logs, plan.md Phase 2 lines, and scenes/inventory.md.
+git diff --stat lists 13 files, all phase-owned. git diff --exit-code over
+docs/fantasy-world-scene-blueprints.tsv, docs/map-review.html, scenes/maps/,
+docs/map-mockups/, and bench/ is empty. No TSV change, no map source change, no shot change.
+
+## Gate rerun (light)
+
+bash measure/runs/asset_scenes_civic_20260928/check-review.sh
+-> exit 0, === Total: 34 checks (PASS=34, FAIL=0) ===
+Matches plan.md:57-58 word for word. The plan gate lists four JSON files:
+vision-review-b1.json to vision-review-b4.json.
+
+## Checker semantics
+
+The checker tests what test-strategy.md section 5 names:
+
+- P2-a: four batch JSONs plus four logs exist, batches hold 6 to 9 maps, the union holds
+  30 unique slugs, and every TSV slug appears in exactly one batch.
+- P2-b: each rating is a labeled JSON number in [0, 10] (jq type check, not digit matching),
+  with a boolean critical field and a note string.
+- P2-c: each batch records a route of provider/model shape, a model_family outside the
+  claude/anthropic/sonnet family, a route string with no claude/anthropic name, and a log
+  citing the route. This reading agrees with the strategy: the judge family must differ from
+  the maker family (Anthropic Sonnet) and the claude family is excluded.
+- P2-d: every inventory row holds state cell rated (last cell, awk-parsed) with the copied
+  rating and note equal to the batch JSON values (numeric compare).
+- A9: the checker reads the live track path, not an archive.
+
+## Live fixture probes (fixture at measure/runs/asset_scenes_civic_20260928/review-a-p2-fixture)
+
+Control run with faithful copies: passes 34/34. Then one mutation per probe:
+
+1. mill Judge critical cell flipped to false -> PASSES 34/34. The gate never reads the cell.
+2. mill judge route cell set to anthropic/claude-sonnet-5-5 -> PASSES 34/34. The gate never
+   reads the inventory route cell.
+3. batch b1 model_family Anthropic Sonnet, route anthropic/claude-sonnet-5-5 -> FAILS
+   P2-c with 3 FAILs (family, route, log citation). A claude-family judge cannot pass.
+4. apothecary rating set to the string 2026-11-19 -> FAILS P2-b (labeled number parse) and
+   P2-d (copy mismatch). A date cannot pass as a rating.
+5. bathhouse dropped from batch b1 -> FAILS with 5 FAILs (rating count 29, unique slug
+   count 29, slug in 0 batches, no entry, nothing to copy). A missing deliverable cannot pass.
+
+Probes 3, 4, and 5 re-verify the smoke claims recorded in red-p2.log (fixtures removed there).
+
+## Record verification (beyond the gate)
+
+An independent node cross-check compared all 30 inventory rows with the four batch JSONs on
+rating (numeric compare), critical flag, judge note, judge route cell, and state cell rated in
+last position: 30 rows, 0 mismatches. The inventory slug set versus the 30 civic P2 TSV slugs
+has an empty symmetric difference. All 30 MAPS rating and MAPS note cells are byte-identical to
+the Phase 1 inventory at 3e8d29e8: 0 differences. The four batch logs each cite the route and
+an explicit model id (kimi-for-coding).
+
+## By-design check-inventory.sh failure
+
+bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh
+-> exit 1, === Total: 96 checks (PASS=6, FAIL=90) ===
+This matches plan.md:63-64 exactly. The failure is by design: the Phase 1 checker asserts
+judge: no and state inventoried, which a rated row no longer holds. Gap for later gates: the
+Phase 1 closeout rerun stays red forever (its acceptance is pinned at 3e8d29e8, so the record
+is intact), and check-review.sh P2-d will fail by design the same way once Phase 3 changes
+row states. Each phase checker is phase-bound; the final validation rests on the Phase 3 and
+Phase 4 checkers plus the doctor. The plan should add the analogous by-design note for
+check-review.sh when Phase 3 runs. One of the 90 FAILs (inn says missing but its source exists)
+is the Phase 1 F2 substring defect surfacing on the inn MAPS note, not state drift; harmless
+inside a by-design failure.
+
+## Findings
+
+No blocking findings. Three nits:
+
+- F1 [Nit] check-review.sh:211-265: P2-d never verifies the Judge critical cell or the judge
+  route cell, while plan.md:59 claims the rows hold the judge route and the copied rating,
+  critical flag and note. Fixture proof: both mutations pass 34/34. The committed inventory is
+  faithful (30 rows, 0 mismatches), so the exposure is future drift. The critical flag feeds
+  the Phase 3 rework set (below 7.0 or critical); mill is double-covered (5.5 and true).
+- F2 [Nit] check-review.sh:202-208: the model-id grep in the log-citation check is always true
+  once the route grep passes, because the route string contains the model id. The test reduces
+  to the log contains the route. The committed logs carry explicit model_id lines, so only the
+  test label overstates coverage.
+- F3 [Nit] The by-design check-inventory.sh failure and its later-gate consequences, described
+  above.
+
+## Cleanup
+
+rm on the fixture directory was denied by the permission layer (same as the Phase 1 review-a).
+The orchestrator should run:
+rm -r measure/runs/asset_scenes_civic_20260928/review-a-p2-fixture
+
+MEASURE_AGENT_RESULT
+role: measure-review-a-correctness
+status: pass
+track: asset_scenes_civic_20260928
+phase: ## Phase 2: Independent review
+phase_base_sha: 3e8d29e8
+role_base_sha: 3e8d29e8
+audited_head_sha: c095ba1fd9cd5a2e6900ef06e5958bff385d5d3b
+gate: bash measure/runs/asset_scenes_civic_20260928/check-review.sh -> exit 0, PASS=34 FAIL=0
+blocking_findings: 0
+nonblocking_findings: 3 (F1 P2-d skips the critical and route cells, fixture proof; F2 vacuous model-id grep in the P2-c log check; F3 by-design check-inventory.sh failure, later-gate note)
+retry_recommendation: none
+confidence: high
+changed_files: measure/runs/asset_scenes_civic_20260928/review-a-p2-c095ba1.json, review-a-p2-c095ba1.log, review-a-p2-fixture/ (rm denied, safe to delete)
+END_MEASURE_AGENT_RESULT

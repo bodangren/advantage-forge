@@ -1,0 +1,106 @@
+# Review C (UX and API; record contract only) Phase 2 log: asset_scenes_civic_20260928
+
+Role: measure-review-c-ux-api, audit only. Phase: "## Phase 2: Independent review".
+phase_base_sha: 3e8d29e8. role_base_sha: a4905853 (test-strategy.md line 5).
+audited_head_sha: c095ba1f. HEAD equals the audited head (git rev-parse).
+
+Contract applicability: applicable, record contract only. test-strategy.md section 10
+line 257 routes this role to the TSV status vocabulary, the inventory state vocabulary,
+the batch JSON schema, and the run artifact names. The phase diff touches no app, page,
+route, or product API path. Visual quality belongs to the judge and the ux-browser-review
+role (line 259), so no browser inspection ran (ux_applicability: not_applicable,
+webbridge: not_run).
+
+Provisional verdict (written before the detailed pass, refined after): pass. The
+detailed pass below confirms it.
+
+## What was checked
+
+1. Provenance. git rev-parse resolves 3e8d29e890aebd564ef3d01cb31b13f776d8d814,
+   a49058531ed2224c55210c90aca45b81d823d44e, and
+   c095ba1fd9cd5a2e6900ef06e5958bff385d5d3b. HEAD equals c095ba1f. The batch files
+   record audited_head 3b35a490; git merge-base --is-ancestor confirms it is an
+   ancestor of HEAD, so the field names the tree the judge audited.
+
+2. Phase diff scope. git diff 3e8d29e8..c095ba1f --stat lists exactly the owned paths:
+   check-review.sh, green-p2.log, red-p2.log, the eight vision-review-b1..b4 files,
+   plan.md (task marks and evidence), and scenes/inventory.md (judge cells).
+   git diff 3e8d29e8..c095ba1f -- docs/ is empty, so the TSV status column and
+   docs/map-review.html are unchanged. All 30 civic P2 rows still read `mockup-needed`
+   (awk scan).
+
+3. Batch JSON schema consistency. jq keys_unsorted prints the same top-level key list
+   in the same order (batch, route, model_family, audited_head, maps, verdict,
+   retry_recommendation) and the same per-map key list (slug, rating, critical, note)
+   in all four files. Map counts: 8, 8, 7, 7 (30 total). The checker union check
+   reports 30 unique slugs, no duplicate, and every TSV slug in exactly one batch.
+   b4 writes whole ratings as JSON integers (8) and b1-b3 as one-decimal numbers
+   (8.0); both are the same JSON number, jq -r prints 8 for both, and the checker
+   compares numerically, so the mixed form breaks no parser.
+
+4. Batch logs. Each of the four logs cites the route kimi-code-plan-cn/kimi-for-coding
+   and the model id kimi-for-coding: b1.log lines 2-3, b2.log line 3 and lines 14-15,
+   b3.log lines 2-3, b4.log lines 3-4. The b2 and b4 logs also confirm the head at
+   judging time. No log records a date (see F2).
+
+5. Checker. bash measure/runs/asset_scenes_civic_20260928/check-review.sh exits 0 with
+   === Total: 34 checks (PASS=34, FAIL=0) ===: P2-a batches and coverage, P2-b labeled
+   numbers with boolean critical and note strings, P2-c route and non-maker family
+   with log citations, P2-d 30 rated rows with copied rating and note, A9 live path.
+
+6. Inventory row format and Phase 3 carry capacity. All 32 pipe lines of
+   scenes/inventory.md hold NF=16 under awk -F'|', so no cell text contains a stray
+   pipe. The judge cells sit before the Maker cell, the State cell is last, and the
+   checker parses the state as $(NF-1) (check-review.sh line 23) and finds labeled
+   cells by label (lines 24-29). Phase 3 rework, rerate, and critical cells inserted
+   before State parse without a column-position change, and test-strategy.md section 2
+   lines 40-43 reserve reworked, accepted, and follow-up. The mill row
+   (inventory.md line 39) holds Judge rating: 5.5 and Judge critical: true with state
+   rated, so the Phase 3 rework set (one map) is derivable from the records and no
+   fourth rating is needed.
+
+7. Phase 4 TSV values. accepted already exists in the TSV (2 civic P0 rows);
+   follow-up is new. measure/tools/doctor.mjs runs exactCoverage on scene_id, and
+   measure/tools/common.mjs tableRows (lines 87-97) checks only the header column
+   count, which stays 4 because Phase 4 changes only the status cell value. The docs
+   diff is empty, so the change lands in Phase 4 as planned.
+
+8. Run artifact names. vision-review-<batch>.json and .log match plan.md line 41 and
+   the strategy gate (test-strategy.md lines 142-145); the plan gate
+   `ls measure/runs/asset_scenes_civic_20260928/vision-review-*.json` lists the four
+   JSON files. The checker name check-review.sh matches test-strategy.md line 129.
+   red-p2.log and green-p2.log hold the evidence plan.md lines 52-61 cite. No run
+   artifact names an archive path.
+
+## Findings
+
+F1 [Nit] review-c: test-strategy.md section 4 (lines 78-80) describes the batch JSON
+fixture as holding per-map judge family, maker family, and shot paths, but the
+implemented schema holds slug, rating, critical, note per map and route plus
+model_family at batch level; maker family and shot paths live in the inventory rows.
+No record is missing; plan.md line 41 and check-review.sh lines 6-9 define the
+operative contract. Doc drift (A11), nonblocking.
+
+F2 [Nit] review-c: test-strategy.md section 4 (line 80) says a batch log holds the
+route, the model id, and the date, but none of the four logs records a date; the
+judging date 2026-11-19 lives in scenes/inventory.md line 14 and plan.md line 37.
+The plan task requires only route and model id, and check-review.sh P2-c (lines
+201-208) checks those. Nonblocking.
+
+No blocking findings. Both findings route to the owner of test-strategy.md wording
+(the user or a build session); neither blocks Phase 3.
+
+Verdict: pass. retry_recommendation: none.
+
+MEASURE_AGENT_RESULT
+role: review-c
+status: complete
+track: asset_scenes_civic_20260928
+phase: ## Phase 2: Independent review
+commits: 7dc26d74, 00611a9f, e62c02d2, 84c87f3e, 7a48784d, d164f980, ba13f928, c095ba1f (audited; none written by this role)
+tests_run: bash measure/runs/asset_scenes_civic_20260928/check-review.sh (exit 0; 34 checks, PASS=34, FAIL=0); jq schema scan of vision-review-b1..b4.json (identical key lists; counts 8, 8, 7, 7); grep route and model id citations in the four logs (all present); git diff --quiet 3e8d29e8..c095ba1f -- docs/ (empty)
+files_changed: measure/runs/asset_scenes_civic_20260928/review-c-p2-c095ba1.json, measure/runs/asset_scenes_civic_20260928/review-c-p2-c095ba1.log
+plan_updates: none (audit only; no commit)
+known_failures: none for this scope. The Phase 1 checker check-inventory.sh exits 1 on a rated row by design (plan.md lines 63-64); that is not a Phase 2 failure.
+handoff: The Phase 2 record contract passes. The batch JSON schema is one schema across four files, each log cites route and model id, the inventory row format carries Phase 3 rework and rerate cells and Phase 4 TSV values without a break, the TSV status column is unchanged in the phase diff, and the run artifact names match the strategy. Two Nits (F1, F2) name test-strategy.md section 4 fixture wording that drifts from the implemented batch schema and logs; route them to the plan owner at Phase 3 convenience, not as a stop. Phase 3 input: only mill (5.5, critical: true, inventory.md line 39) is below the 7.0 bar or critical, so the rework set is one map.
+END_MEASURE_AGENT_RESULT

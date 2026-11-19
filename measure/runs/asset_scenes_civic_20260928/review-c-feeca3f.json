@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Phase 1 record contract passes at feeca3f3. The inventory state vocabulary is exactly {inventoried, missing}: all 30 civic P2 rows hold inventoried, no row holds missing (all 30 sources exist), and no state cell holds rated. The single-line row format parses by labeled fields with the state cell last, so the Phase 2 judge rating and note fit into the Judge cell or into new columns inserted before State without a schema break, and test-strategy.md section 2 already reserves rated, reworked, accepted, and follow-up for later phases. The Phase 4 TSV values break no validator: accepted already exists in the TSV (2 civic P0 rows), follow-up is new but no tool parses the status column (doctor.mjs:236 keys on scene_id; common.mjs tableRows checks only column count). The phase diff db2053f2..feeca3f3 leaves docs/ empty, so the TSV status column and docs/map-review.html are unchanged. Run artifact names match the strategy: check-inventory.sh is the named Phase 1 checker, the Phase 2 vision-review files are correctly absent, and red-p1.log and green-p1.log hold the evidence that plan.md cites. One Nit: the checker verifies the labeled presence of the MAPS rating and note but not their value agreement with bench/sonnet/log.tsv; a manual comparison of all 30 rows found no drift.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] review-c: check-inventory.sh P1-c (lines 80-99) verifies that each row holds the labels MAPS rating:, judge: no, and maker:, but it does not compare the rating value or the note text with the final bench/sonnet/log.tsv row per map, so a wrongly copied value would pass. Rationale: the record is correct today (a 30-of-30 comparison found no drift), and the strategy names only the judge-claim falsifier for P1-c (test-strategy.md line 116), so the gap is checker strength, not a strategy violation."
+  ],
+  "evidence": [
+    "SHA resolution and currency: git rev-parse gives phase_base_sha db2053f2190ef0af3c24d6a149e70ee4bcb8f493, audited_head_sha feeca3f30ea3027f87648c83c92ffcca06d0a9b1, and HEAD equals the audited head. role_base_sha a4905853 (test-strategy.md line 5) resolves to a49058531ed2224c55210c90aca45b81d823d44e and matches the run artifact strategy-a490585.log.",
+    "Phase diff scope: git diff db2053f2..feeca3f3 --stat lists exactly five owned paths: measure/runs/asset_scenes_civic_20260928/check-inventory.sh (added), green-p1.log (added), red-p1.log (added), measure/tracks/asset_scenes_civic_20260928/plan.md (8 lines of task marks and evidence), and scenes/inventory.md (added). git diff db2053f2..feeca3f3 -- docs/ is empty, so the TSV status column and docs/map-review.html are unchanged in this phase.",
+    "Checker run on the audited tree: bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh exits 0 with === Total: 9 checks (PASS=9, FAIL=0) ===, including P1-d no rated label in the state cell and the A9 live-track-path check.",
+    "Plan gate: grep -c 'scenes/maps/' measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md prints 30, and ls scenes/maps/bathhouse.ts docs/map-mockups/bathhouse.md docs/map-mockups/bathhouse-3q.png docs/map-mockups/bathhouse-top.png lists all four files.",
+    "State vocabulary: all 30 rows of measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md end with the state cell inventoried (lines 19-48), the header note states no row holds missing because every source exists (line 15), and check-inventory.sh parses the state cell only (line 136) so the eight MAPS notes that quote the word rated in note cells do not trip the Phase 1 no-rated rule (checker contract comment line 13).",
+    "Row format carry capacity: the checker contract (check-inventory.sh lines 6-13) defines one single-line row per slug parsed by labeled fields, with the state cell last ($(NF-1), line 136). A Phase 2 judge rating and note fit into the existing Judge cell (judge: no becomes the judge record) or into new columns inserted before State; either way the labeled parse keeps working. test-strategy.md section 2 (lines 38-43) reserves rated, reworked, accepted, and follow-up as row states set in later phases, so the vocabulary extends without a break, and the P1 checker rejects rated in Phase 1 only (line 139), which is phase-correct.",
+    "TSV Phase 4 values: all 30 civic P2 rows of docs/fantasy-world-scene-blueprints.tsv read mockup-needed today (awk scan found no other status), accepted already exists in the file (2 civic P0 rows, blacksmith-shop and tavern), and no validator parses the status column: measure/tools/doctor.mjs line 236 runs exactCoverage on scene_id, and measure/tools/common.mjs tableRows (lines 86-98) checks only that each row has the header column count, which stays 4 because only the status cell value changes. The spec-review round 2 result (spec-review-c69666c.json evidence line 21) records the same fact.",
+    "MAPS copy fidelity: an awk comparison of the final bench/sonnet/log.tsv row per map (score field 11, note field 13 for map-p2 rows) against all 30 inventory cells agrees 30 of 30, with the four empty log notes (guild-hall, shrine, temple, warehouse) reading none recorded exactly as inventory.md line 8 documents. The inventory uses the final row, not the first pass, so the below-bar first passes (arena 6.5, bathhouse 6.5, cathedral 6.5, and others) correctly do not appear as the MAPS rating.",
+    "Run artifact names: check-inventory.sh is the checker named in test-strategy.md lines 108 and 129; the Phase 2 artifacts vision-review-<batch>.json and .log (plan.md line 41) are correctly absent because Phase 2 has not started; red-p1.log and green-p1.log hold the Red exit-1 evidence (commit 8e20f73d) and the Green PASS evidence that plan.md lines 31-33 cite, and green-p1.log records the two checker fixes of commit e964238a. No run artifact names an archive path (A9).",
+    "UX applicability: the phase diff touches no app, page, route, or API path; it adds records only. test-strategy.md section 10 (line 257) routes this role to record contract only and routes the visual look to the judge and the ux-browser-review role (line 259), so no browser inspection was needed for this contract.",
+    "F1 basis: check-inventory.sh lines 84-95 test only the labeled presence of MAPS rating:, judge: no, and maker: per row; no automated check compares the copied values with bench/sonnet/log.tsv. The manual 30-of-30 comparison above is the current correctness proof."
+  ],
+  "commands": [
+    "git rev-parse db2053f2 feeca3f3 a4905853 (pass: all resolve; HEAD equals feeca3f3)",
+    "git diff db2053f2..feeca3f3 --stat (five owned paths: checker, two phase logs, plan.md, inventory.md)",
+    "git diff db2053f2..feeca3f3 -- docs/ (empty; exit 0)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh (exit 0; 9 checks, PASS=9, FAIL=0)",
+    "grep -c 'scenes/maps/' measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md (30)",
+    "ls scenes/maps/bathhouse.ts docs/map-mockups/bathhouse.md docs/map-mockups/bathhouse-3q.png docs/map-mockups/bathhouse-top.png (all four exist)",
+    "awk -F'\\t' over bench/sonnet/log.tsv final row per civic slug ($11 score, $13 note) compared with all 30 inventory cells (30 of 30 agree)",
+    "awk -F'\\t' '$2==\"civic\" && $3==\"P2\"' status scan over docs/fantasy-world-scene-blueprints.tsv (all 30 rows read mockup-needed)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_scenes_civic_20260928/review-c-feeca3f.json",
+    "measure/runs/asset_scenes_civic_20260928/review-c-feeca3f.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ux_applicability": "not_applicable",
+  "webbridge_status": "not_run",
+  "webbridge_evidence": {
+    "screenshots": [],
+    "accessibility_snapshots": [],
+    "interactions": []
+  },
+  "route": "opencode-go/glm-5.3#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "All 30 rows hold state inventoried with judge: no, the awk comparison against bench/sonnet/log.tsv agrees 30 of 30, and check-inventory.sh reports PASS=9 FAIL=0."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The checker is red-first (red-p1.log records exit 1 before the file existed) and covers rows, paths, fields, and state, but P1-c (check-inventory.sh:80-99) tests labeled presence only, not value agreement with log.tsv."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff db2053f2..feeca3f3 --stat lists exactly the five owned paths: the checker, the two phase logs, plan.md evidence lines, and scenes/inventory.md; docs/ and product source are untouched."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim in this audit has a command result: checker output 9 of 9, grep -c 30, the empty docs diff, the bathhouse ls, and the 30-of-30 awk comparison."
+    }
+  ],
+  "role": "review-c",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "## Phase 1: Inventory",
+  "baseline_sha": "db2053f2190ef0af3c24d6a149e70ee4bcb8f493",
+  "audited_head_sha": "feeca3f30ea3027f87648c83c92ffcca06d0a9b1"
+}

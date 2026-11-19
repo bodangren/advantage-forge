@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "role": "measure-adversarial-testing",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "## Phase 2: Independent review",
+  "status": "fail",
+  "summary": "Phase 2 adversarial probes confirm review-a F1 and F2 as live checker defects, and the gate must be fixed before Phase 2 acceptance. The harness (measure/runs/asset_scenes_civic_20260928/adversarial-p2.sh) copies the committed inventory, TSV, four batch JSON and log files, and the unmodified checker into fixture trees under /tmp/opencode/adv-p2-civic, and proves fidelity first: the unmutated control passes 34 of 34. ADV-P2-01 flips the mill inventory Judge critical cell to false while batch b3 keeps critical true, and the gate passes 34 of 34. ADV-P2-02 sets the mill judge route cell to anthropic/claude-sonnet-5-5, the maker family, and the gate passes 34 of 34. Both confirm F1: P2-d (check-review.sh:211-265) never compares the Judge critical cell or the judge route cell with the batch JSON, while plan.md:59 claims the rows hold the judge route and the copied rating, critical flag and note. ADV-P2-03 reduces the b1 log to its route line only, and the checker prints PASS: P2-c batch b1 log cites its route and a model id or family, confirming F2: the model id and the family are substrings of the route string, so the log check is vacuous (check-review.sh:202-208). The strength probes hold: an inventory rating changed by 0.5 fails P2-d, a duplicate slug across batches fails P2-a with 3 FAILs, a rating stored as the string 7.5 fails P2-b, and one map rated by two batches with different ratings fails P2-a with 3 FAILs (P2-d alone would take the first batch and pass, so the P2-a count is the only defense). One informational gap: no check reads the batch audited_head, so a batch claiming a tree it never judged passes 34 of 34; review-c's manual ancestor check is the sole provenance defense. The committed records themselves are faithful: the control passes 34 of 34 on byte copies, the live checker on HEAD exits 0 with 34 of 34, and reviews A and C cross-checked all 30 rows. The defects are in the Red checker, not in the records: route the fix to Red before Phase 3 derives its rework set from the critical cells. This role fixed nothing and deleted the untracked review-a-p2-fixture scratch directory that review-a-p2-c095ba1.json asked the orchestrator to remove.",
+  "blocking_findings": [
+    "ADV-1 [Blocker] adversarial-testing: check-review.sh P2-d (measure/runs/asset_scenes_civic_20260928/check-review.sh:211-265) verifies the state cell, the Judge rating, and the Judge note, but never compares the Judge critical cell or the judge route cell with the batch JSON, while plan.md:59 claims the 30 rows hold the judge route and the copied rating, critical flag and note, and cites this gate as the proof. Fixture proof: ADV-P2-01 (mill Judge critical true to false while batch b3 keeps critical true) passes 34 of 34 with exit 0, and ADV-P2-02 (mill judge cell set to anthropic/claude-sonnet-5-5, the maker family) passes 34 of 34 with exit 0. Rationale: the critical cell exists only to drive the Phase 3 rework set (plan.md:60 and the next plan task name maps below 7.0 or with a critical error), so a critical flag that silently contradicts its batch drops a map from rework with no gate failure, and the judge route cell is the per-row record of judge independence, so a maker-family judge claim in the row passes unnoticed; the fix routes to Red, the checker owner, before Phase 2 acceptance and before Phase 3 runs, and this role fixed nothing itself."
+  ],
+  "nonblocking_findings": [
+    "ADV-2 [Nit] adversarial-testing: check-review.sh P2-c log check (measure/runs/asset_scenes_civic_20260928/check-review.sh:202-208) is vacuous: the branch { grep -qF \"$MODEL\" \"$LOG\" || grep -qiF \"$FAM\" \"$LOG\" } is always true once grep -qF \"$ROUTE\" passes, because the model id kimi-for-coding and the family kimi are substrings of the route kimi-code-plan-cn/kimi-for-coding. Fixture proof: ADV-P2-03 rewrites the b1 log to the single line route: kimi-code-plan-cn/kimi-for-coding, and the checker prints PASS: P2-c batch b1 log cites its route and a model id or family and exits 0. Rationale: the pass line overstates coverage; the committed logs are true records that carry explicit model_id lines, so Red should fix the grep alongside ADV-1, for example by requiring a labeled model id or family line distinct from the route line.",
+    "ADV-3 [Nit] adversarial-testing: no check in check-review.sh reads the batch audited_head field. Fixture proof: ADV-P2-06 sets the b1 audited_head to 1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b, which git merge-base --is-ancestor confirms is not an ancestor of HEAD, and the gate passes 34 of 34 with exit 0. Rationale: the batch JSONs record audited_head 3b35a490 and review-c verified manually that it is an ancestor of the audited HEAD, so the committed provenance is sound; the gap is automation only, and Red may add a cheap ancestor check while fixing ADV-1, but no strategy clause names the field as a gate requirement."
+  ],
+  "evidence": [
+    "Provenance: HEAD equals role_base_sha and the audited head c095ba1fd9cd5a2e6900ef06e5958bff385d5d3b (git rev-parse HEAD), and phase_base_sha 3e8d29e8 resolves to 3e8d29e890aebd564ef3d01cb31b13f776d8d814. This role changed only measure/runs/asset_scenes_civic_20260928 files and removed the untracked review-a-p2-fixture scratch directory.",
+    "Harness fidelity: ADV-P2-00 control fixture (byte copies of the committed inventory, TSV, four batch JSON and log files, unmodified checker copy) passes with exit 0 and === Total: 34 checks (PASS=34, FAIL=0) ===, so every probe below measures the checker, not the harness. The live checker on the committed tree also exits 0 with 34 of 34.",
+    "ADV-P2-01 (confirms review-a F1, critical cell): fixture with the mill row changed to Judge critical: false while batch b3 keeps {\"rating\":5.5,\"critical\":true} passes exit 0, PASS=34 FAIL=0. The gate cannot catch a critical flag that contradicts its batch JSON.",
+    "ADV-P2-02 (confirms review-a F1, judge route cell): fixture with the mill judge cell changed to judge: anthropic/claude-sonnet-5-5 passes exit 0, PASS=34 FAIL=0. The per-row record of judge independence is never validated against the batch route.",
+    "ADV-P2-03 (confirms review-a F2): fixture where the b1 log holds only the line route: kimi-code-plan-cn/kimi-for-coding passes exit 0 and prints PASS: P2-c batch b1 log cites its route and a model id or family. The model id and the family are substrings of the route, so the second grep adds no coverage.",
+    "ADV-P2-04 (rating drift): fixture with the mill Judge rating changed 5.5 to 6.0 while batch b3 keeps 5.5 fails exit 1 with FAIL: P2-d row for mill holds Judge rating [6.0], want [5.5] from batch b3. Caught: the copied rating is compared with the batch value.",
+    "ADV-P2-05 (duplicate slug across batches): fixture with the apothecary b1 entry appended to b2 fails exit 1 with 3 FAILs (labeled rating count 31, unique slug count 30 with duplicates [apothecary], slug appears in 2 batch entries). Caught.",
+    "ADV-P2-06 (foreign audited_head, informational): fixture with the b1 audited_head set to 1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b, which git merge-base --is-ancestor rejects as an ancestor of HEAD, passes exit 0, PASS=34 FAIL=0. No check reads the field; see ADV-3.",
+    "ADV-P2-07 (string rating): fixture with the b1 apothecary rating changed from the number 8.0 to the JSON string \"7.5\" (jq type: string) fails exit 1 with 2 FAILs (P2-b wants a labeled JSON number; P2-d wants the copied 8.0). Caught: the A3 labeled-number defense is real.",
+    "ADV-P2-08 (one map, two ratings): fixture where mill stays in b3 at 5.5 critical true and gains a b4 entry at 9.0 fails exit 1 with 3 FAILs on P2-a. The output also shows P2-d passed mill silently (no P2-d row for mill FAIL), because the P2-d loop takes the first batch with a match, b3; the P2-a duplicate count is the only defense against a double rating, and it holds.",
+    "Probe script exit: bash measure/runs/asset_scenes_civic_20260928/adversarial-p2.sh exits 1 with gate verdict FAIL because the three gate probes (01 critical flip, 02 judge cell, 03 log without model id) each pass a bad record; the script exits 0 once Red fixes the checker so every gate probe is caught, and it exits 2 on a harness failure, so it works as the regression gate for the fix.",
+    "Cleanup done: rm -rf measure/runs/asset_scenes_civic_20260928/review-a-p2-fixture removed the untracked audit scratch directory that review-a-p2-c095ba1.json listed as safe to delete; it was untracked, so no git change records it. A provisional inconclusive verdict was written first per the brief and replaced by this final verdict."
+  ],
+  "commands": [
+    "bash measure/runs/asset_scenes_civic_20260928/adversarial-p2.sh | tee measure/runs/asset_scenes_civic_20260928/adversarial-p2-c095ba1.log (exit 1; control OK; 3 gate probes DEFECT, 4 probes CAUGHT, 1 informational DEFECT)",
+    "git rev-parse HEAD 3e8d29e8 c095ba1f (HEAD equals c095ba1fd9cd5a2e6900ef06e5958bff385d5d3b; phase base resolves)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-review.sh (exit 0, PASS=34 FAIL=0, committed tree unchanged and green)",
+    "git merge-base --is-ancestor 1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b HEAD (false; the ADV-P2-06 head is not an ancestor)",
+    "rm -rf measure/runs/asset_scenes_civic_20260928/review-a-p2-fixture (untracked scratch removed)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p2.sh (added, the probe harness)",
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p2-c095ba1.log (added, the probe run log with the result block)",
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p2-c095ba1.json (added, this result; a provisional inconclusive verdict was written first per the brief and replaced by this final verdict)",
+    "measure/runs/asset_scenes_civic_20260928/review-a-p2-fixture/ (untracked audit scratch deleted; no git path)",
+    "committed unchanged as evidence in the same commit: review-a-p2-c095ba1.json/.log, review-c-p2-c095ba1.json/.log, review-a-feeca3f.json/.log, review-c-feeca3f.json/.log, phase-acceptance-p1-3e8d29e.json/.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "phase_base_sha": "3e8d29e8",
+  "role_base_sha": "c095ba1f",
+  "audited_head_sha": "c095ba1fd9cd5a2e6900ef06e5958bff385d5d3b",
+  "route": "opencode-go/glm-5.3#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The committed records are faithful (control fixture passes 34 of 34 on byte copies; the live checker exits 0 on HEAD), but the gate leaves the plan.md:59 claims for the critical flag and the judge route cell unverified at the edges (ADV-P2-01 and ADV-P2-02 both pass)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "Real falsifiers exist and hold (rating drift 1 FAIL, duplicate slug 3 FAILs, string rating 2 FAILs, double rating 3 FAILs), but two claimed cells pass untested and the log-citation check is vacuous (adversarial-p2-c095ba1.log, probes 01 to 03)."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "This role touched only measure/runs/asset_scenes_civic_20260928 paths, committed the named review evidence files unchanged, and deleted the untracked review-a-p2-fixture scratch; no checker, inventory, TSV, or product file was edited."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every probe verdict in adversarial-p2-c095ba1.log carries the mutated cell or JSON, the checker exit code, the Total line, and the exact FAIL or PASS line that proves the outcome, preceded by a control fixture that passes 34 of 34."
+    }
+  ]
+}

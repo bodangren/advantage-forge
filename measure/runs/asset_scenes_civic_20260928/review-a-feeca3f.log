@@ -1,0 +1,86 @@
+# Review A log: Phase 1 Inventory, asset_scenes_civic_20260928
+
+Role: measure-review-a-correctness. Route: opencode-go/glm-5.3#high.
+phase_base_sha: db2053f2. role_base_sha: db2053f2. audited_head_sha: feeca3f3.
+HEAD equals the audited SHA (git rev-parse: feeca3f30ea3027f87648c83c92ffcca06d0a9b1).
+
+## Scope audited
+
+The exact diff db2053f2..feeca3f3 (5 files: check-inventory.sh, red-p1.log,
+green-p1.log, plan.md evidence lines, scenes/inventory.md), the track spec and plan,
+test-strategy.md sections 1 to 13, the 30 civic P2 rows of the scene TSV, and
+docs/map-review.html.
+
+## Verdict: PASS
+
+Two nonblocking findings, no blocker.
+
+## What was verified
+
+- Gate rerun: `bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh`
+  exits 0 with `=== Total: 9 checks (PASS=9, FAIL=0) ===`. Matches plan.md:33.
+- Plan gate rerun: `grep -c 'scenes/maps/'` on the inventory prints 30; the four
+  bathhouse paths exist. Matches plan.md:24-29.
+- All 30 inventory rows verified word for word against the MAPS array in
+  docs/map-review.html (node script, checked=30, mismatches=0): rating, note, and
+  all five path cells. This exceeds the required 8-row spot check. The four empty
+  page notes (guild-hall, shrine, temple, warehouse) read `none recorded`, as the
+  inventory header states.
+- bench/sonnet/log.tsv agrees on spot rows: apothecary line 634, guild-hall line
+  632, stable line 660.
+- TSV and docs/map-review.html unchanged in the range:
+  `git diff --exit-code db2053f2 feeca3f3 -- docs/fantasy-world-scene-blueprints.tsv docs/map-review.html`.
+- All 30 briefs at bench/sonnet/briefs/map-p2-<slug>.md exist.
+- Stop-rule reading (strategy section 2) and F8 (sections 2 and 13) are consistent:
+  one independent rating, one rework, one rerate, three ratings maximum; F8 stays a
+  spec-wording item for the orchestrator.
+- Red defect fixes verified in the committed checker: A9 tests the TRACK_DIR
+  value; P1-d parses the state cell with awk (check-inventory.sh:127-151).
+
+## A4 vacuous-pass probe (fixtures under review-a-fixture)
+
+- Fixture F1 (wrong content): apothecary row changed to `MAPS rating: 9.9` and
+  `MAPS note: totally fabricated`. The checker PASSES 9/9, exit 0. The P1-c check
+  tests field presence only, never value fidelity to the source record.
+- Fixture F2 (wrong structure): watchtower row replaced by a warehouse duplicate,
+  still 30 rows. The checker FAILS with 11 failures, exit 1. Slug coverage is real.
+- Fixture F3 (wrong state): apothecary state cell `rated`. The checker FAILS with
+  2 failures, exit 1. The state-cell parse is real.
+- Empty or absent inventory: FAIL (red-p1.log, exit 1). Row count 0 fails `-eq 30`.
+
+Conclusion: the checker cannot pass a missing or structurally wrong inventory, but
+it can pass a wrong-content inventory (fabricated MAPS rating or note). The
+committed inventory is faithful, so this is a checker-depth gap, not a defect in
+the work.
+
+## Findings
+
+- F1 [Nit] review-a: check-inventory.sh:80-99 P1-c is presence-only. A fabricated
+  MAPS rating or note passes (fixture F1, 9/9, exit 0). The strategy P1-c claims
+  the rating and note come from bench/sonnet/log.tsv; no check compares values, and
+  the maker family value is unchecked. The committed rows are faithful (verified),
+  so no current impact; a later checker or the closeout should cross-check values.
+- F2 [Nit] review-a: check-inventory.sh:110-114 P1-d absent-source branch tests the
+  substring `missing` anywhere in the row. A note containing the word `missing`
+  (the committed inn row: `missing hanging lantern`) would satisfy the branch with
+  state `inventoried`. Latent only: all 30 sources exist. The branch should parse
+  the state cell exactly, as the second P1-d loop already does.
+
+## Housekeeping
+
+This role could not delete the fixture directory (`rm` is denied by the permission
+layer). The orchestrator should run:
+`rm -r measure/runs/asset_scenes_civic_20260928/review-a-fixture`
+
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: asset_scenes_civic_20260928
+phase: ## Phase 1: Inventory
+commits: none (audit only; wrote result artifacts at measure/runs/asset_scenes_civic_20260928/review-a-feeca3f.json and .log)
+tests_run: bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh -> PASS exit 0 (9/9); plan gate -> 30 rows, four bathhouse paths exist; git diff --exit-code on TSV and docs/map-review.html in db2053f2..feeca3f3 -> empty; node word-for-word comparison of all 30 rows against docs/map-review.html -> 30 checked, 0 mismatches; fixture F1 wrong MAPS content -> PASS 9/9 exit 0 (gap); fixture F2 missing slug -> FAIL exit 1; fixture F3 rated state cell -> FAIL exit 1
+files_changed: measure/runs/asset_scenes_civic_20260928/review-a-feeca3f.json (new); measure/runs/asset_scenes_civic_20260928/review-a-feeca3f.log (new); review-a-fixture audit files (delete: rm -r measure/runs/asset_scenes_civic_20260928/review-a-fixture)
+plan_updates: none (audit only; Phase 1 tasks stay [x] with db233e01)
+known_failures: none in the phase gate; two nonblocking checker-depth gaps (F1 presence-only P1-c, F2 substring-based absent-source branch)
+handoff: Phase 1 passes review A. The inventory is faithful to docs/map-review.html on all 30 rows. Recommend: a later phase checker or the closeout cross-checks MAPS rating and note values against bench/sonnet/log.tsv, and the P1-d absent-source branch parses the state cell exactly. Delete the review-a-fixture directory. Phase 2 may proceed with the independent judge batches.
+END_MEASURE_AGENT_RESULT

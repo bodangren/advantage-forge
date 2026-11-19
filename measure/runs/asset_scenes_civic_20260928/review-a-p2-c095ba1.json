@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Phase 2 Independent review audit at c095ba1f. HEAD equals the audited SHA. The phase diff 3e8d29e8..c095ba1f touches only the 13 phase-owned paths: check-review.sh, red-p2.log, green-p2.log, four vision-review batch JSONs and four batch logs, plan.md Phase 2 lines, and scenes/inventory.md. The TSV, docs/map-review.html, scenes/maps/, docs/map-mockups/, and bench/ are unchanged in the range (git diff --exit-code empty). The gate rerun passes: check-review.sh exits 0 with 34 checks (PASS=34, FAIL=0), matching plan.md:57-58 word for word, and the plan gate lists four JSON files. An independent node cross-check of all 30 inventory rows against the four batch JSONs found 0 mismatches on rating (numeric compare), critical flag, judge note, judge route cell, and state cell rated in last position; the slug set equals the 30 civic P2 TSV slugs with an empty symmetric difference. All 30 MAPS rating and note cells are byte-identical to the Phase 1 version at 3e8d29e8 (0 differences). The P2-c route reading agrees with test-strategy.md section 5: the checker rejects claude/anthropic/sonnet in both model_family and the route string, and my live fixture probe confirmed a claude-family judge fails P2-c. A3 and A4 defenses hold by live probes: a date-string rating fails P2-b, a dropped map fails P2-a with 5 FAILs. The by-design check-inventory.sh failure was rerun: exit 1 with 96 checks (PASS=6, FAIL=90), exactly as plan.md:63-64 records. Every plan evidence claim at plan.md:37, 42, and 52 to 64 was re-verified against live command output. Three nonblocking findings remain: P2-d never verifies the Judge critical cell or the judge route cell (fixture proof: both mutations pass 34/34), the P2-c log-citation model-id grep is vacuous because the route string contains the model id, and the by-design check-inventory.sh failure has consequences for later gates that the plan should carry forward.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] review-a-p2 check-review.sh P2-d (measure/runs/asset_scenes_civic_20260928/check-review.sh:211-265): the P2-d loop verifies the state cell, the Judge rating, and the Judge note, but never reads the Judge critical cell or the judge route cell, while plan.md:59 claims the rows hold the judge route and the copied rating, critical flag and note. Fixture proof: an inventory copy with mill's Judge critical cell flipped to false passes 34/34 exit 0, and a copy with mill's judge cell set to anthropic/claude-sonnet-5-5 also passes 34/34 exit 0. The committed inventory is faithful (independent node check: 30 rows, 0 mismatches on all five cells), so the exposure is future drift only. The critical flag matters downstream: the Phase 3 rework set is maps below 7.0 or critical, so a false critical cell on a 7.0-or-above map with a true batch critical would drop it from Phase 3. Mill itself is double-covered (5.5 and critical true).",
+    "F2 [Nit] review-a-p2 check-review.sh P2-c log check (measure/runs/asset_scenes_civic_20260928/check-review.sh:202-208): the branch { grep -qF \"$MODEL\" \"$LOG\" || grep -qiF \"$FAM\" \"$LOG\" } is always true once grep -qF \"$ROUTE\" passes, because the route string contains the model id as a substring. The pass line claims the log cites its route and a model id or family, but the test reduces to the log contains the route. The committed logs are true records: all four carry explicit route and model_id lines (vision-review-b1.log lines 2-3, b2.log line 3, b3.log lines 2-3, b4.log lines 3-4), so only the test label overstates coverage.",
+    "F3 [Nit] review-a-p2 by-design check-inventory.sh failure and later gates (measure/runs/asset_scenes_civic_20260928/check-inventory.sh, plan.md:63-64): check-inventory.sh now exits 1 with 96 checks (PASS=6, FAIL=90) because it asserts Phase 1 semantics (judge: no, state inventoried) against rated rows. That failure is correct by design and the plan records it exactly. Consequence for later gates: the Phase 1 closeout rerun is permanently red after Phase 2 (its acceptance is pinned at 3e8d29e8, so the historical record stays intact); each phase checker is phase-bound, so Phase 3's state changes will make check-review.sh P2-d fail by design in the same way, and the final inventory validation rests on the Phase 3 and Phase 4 checkers plus the doctor (P4-f). The plan should add the analogous by-design note for check-review.sh when Phase 3 runs. One of the 90 FAILs (inn says missing but its source exists) is not state drift but the Phase 1 F2 latent substring defect surfacing on the inn MAPS note missing hanging lantern; harmless inside a by-design failure."
+  ],
+  "evidence": [
+    "HEAD equals audited_head_sha: git rev-parse HEAD gives c095ba1fd9cd5a2e6900ef06e5958bff385d5d3b.",
+    "Gate rerun: bash measure/runs/asset_scenes_civic_20260928/check-review.sh exits 0 with === Total: 34 checks (PASS=34, FAIL=0) ===, matching plan.md:57-58 word for word. The plan gate ls measure/runs/asset_scenes_civic_20260928/vision-review-*.json lists exactly four files.",
+    "Independent 30-row cross-check (node, beyond the gate's coverage): every inventory row agrees with its batch JSON on rating (numeric compare, 8.0 and 8 both accepted as equal), critical flag, judge note, judge route cell, and state cell rated in last position: rows checked 30, mismatches 0. The inventory slug set versus the 30 civic P2 TSV slugs has an empty symmetric difference.",
+    "MAPS cells unchanged: node comparison of the inventory at 3e8d29e8 (git show) versus HEAD over all 30 rows on the MAPS rating and MAPS note cells: old rows 30, new rows 30, MAPS cell differences 0. The git diff of the inventory shows only the header widening, the judge cell change from judge: no to the route, three new Judge cells, the state change inventoried to rated, and the intro text.",
+    "Diff scope: git diff --stat 3e8d29e8..c095ba1f lists 13 files, all phase-owned (check-review.sh, red-p2.log, green-p2.log, vision-review-b1..b4.json and .log, plan.md, scenes/inventory.md). git diff --exit-code 3e8d29e8..c095ba1f -- docs/fantasy-world-scene-blueprints.tsv docs/map-review.html scenes/maps/ docs/map-mockups/ bench/ is empty: no TSV, page, map source, mockup, or log change.",
+    "Red evidence verified: red-p2.log records exit 1 with === Total: 8 checks (PASS=0, FAIL=8) === on the missing batch files at the Red state (matches plan.md:52-53), and a second Red entry at 00611a9f with Total 63 checks (PASS=33, FAIL=30) where P2-d failed on all 30 inventoried rows before Green copied the ratings, plus a /tmp route-agreement probe (claude-code/claude-sonnet-5-5#max with model_family kimi rejected).",
+    "A4 and A3 fixture probes (fixture under measure/runs/asset_scenes_civic_20260928/review-a-p2-fixture, control run first): control with faithful copies passes 34/34; probe 1 mill Judge critical false passes 34/34 (gap F1); probe 2 mill judge cell anthropic/claude-sonnet-5-5 passes 34/34 (gap F1); probe 3 batch b1 model_family Anthropic Sonnet route anthropic/claude-sonnet-5-5 fails P2-c with 3 FAILs (claude judge rejected, matching the strategy falsifier); probe 4 apothecary rating string 2026-11-19 fails P2-b (labeled JSON number parse holds) and P2-d; probe 5 bathhouse dropped from batch b1 fails with 5 FAILs (labeled rating count 29, unique slug count 29, slug in 0 batches, no batch entry, nothing to copy).",
+    "P2-c route reading agrees with the strategy: test-strategy.md section 5 P2-c requires a judge family outside the claude family and no maker family; check-review.sh:177-200 rejects claude, anthropic, and sonnet in model_family, cross-checks the route string for claude/anthropic, requires a provider/model route shape, and cites the log. The committed batches record route kimi-code-plan-cn/kimi-for-coding, model_family kimi, and all four logs cite the route and an explicit model_id.",
+    "By-design failure verified: bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh exits 1 with === Total: 96 checks (PASS=6, FAIL=90) === (P1-c judge: no 30 FAILs, P1-d inventoried 30 FAILs, P1-d rated-in-state 30 FAILs), exactly matching plan.md:63-64.",
+    "Plan evidence claims verified: plan.md:37 (four Kimi batches, 30 ratings, route on each log), plan.md:42 (d164f980 adds the Judge critical cell, true for mill only, MAPS cells unchanged), and plan.md:52-64 (Red exit 1 with 8 FAILs, smoke semantics re-verified live, Green 34/34, four JSON files, 30 rated rows, mill 5.5 critical true stays rated for Phase 3, check-inventory by-design 6/90) all match live command output.",
+    "Stop-rule reading unchanged: Phase 2 adds exactly one independent rating per map (30 ratings total), no rework and no rerate, so the three-ratings maximum still holds; the mill row stays rated and no TSV status changed, so no acceptance claim precedes Phase 3.",
+    "Cleanup blocked: this role could not delete the fixture directory (rm denied by the permission layer, same as the Phase 1 review-a). The orchestrator should run: rm -r measure/runs/asset_scenes_civic_20260928/review-a-p2-fixture"
+  ],
+  "commands": [
+    "git rev-parse HEAD (c095ba1fd9cd5a2e6900ef06e5958bff385d5d3b, equals audited HEAD)",
+    "git diff --stat 3e8d29e8..c095ba1f (13 files, all phase-owned)",
+    "git diff --exit-code 3e8d29e8..c095ba1f -- docs/fantasy-world-scene-blueprints.tsv docs/map-review.html scenes/maps/ docs/map-mockups/ bench/ (exit 0, empty)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-review.sh (exit 0, PASS=34 FAIL=0)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh (exit 1, PASS=6 FAIL=90, by design)",
+    "node cross-check script: all 30 inventory rows versus the four batch JSONs on rating, critical, note, route, state (30 checked, 0 mismatches)",
+    "node comparison: MAPS cells at 3e8d29e8 versus HEAD (30 rows, 0 differences)",
+    "ls measure/runs/asset_scenes_civic_20260928/vision-review-*.json (four files)",
+    "fixture probes under measure/runs/asset_scenes_civic_20260928/review-a-p2-fixture: control pass 34/34; critical-cell mutation pass 34/34; judge-cell claude mutation pass 34/34; claude-family batch 3 FAILs; date-string rating 2 FAILs; dropped map 5 FAILs"
+  ],
+  "changed_files": [
+    "measure/runs/asset_scenes_civic_20260928/review-a-p2-c095ba1.json",
+    "measure/runs/asset_scenes_civic_20260928/review-a-p2-c095ba1.log",
+    "measure/runs/asset_scenes_civic_20260928/review-a-p2-fixture/ (audit fixture, rm denied; safe to delete)"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "opencode-go/glm-5.3#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "Independent node cross-check: 30 inventory rows, 0 mismatches on rating, critical, note, route, and state rated last; MAPS cells byte-identical to Phase 1 (0 differences); TSV and map sources unchanged in the range."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "Live probes prove the real falsifiers (claude judge 3 FAILs, date rating 2 FAILs, dropped map 5 FAILs, red-p2.log 8 FAILs), but two plan.md:59 claims (critical flag and route cells) pass untested: fixture mutations both pass 34/34."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff --stat 3e8d29e8..c095ba1f lists only the 13 phase-owned paths; git diff --exit-code over TSV, map-review.html, scenes/maps, docs/map-mockups, and bench is empty."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every plan claim at plan.md:37, 42, 52-64 was re-verified by a rerun: gate 34/34, plan gate four files, check-inventory 6/90 by design, and the 30-row batch comparison with 0 mismatches."
+    }
+  ],
+  "role": "review-a",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "## Phase 2: Independent review",
+  "phase_base_sha": "3e8d29e8",
+  "role_base_sha": "3e8d29e8",
+  "audited_head_sha": "c095ba1fd9cd5a2e6900ef06e5958bff385d5d3b"
+}

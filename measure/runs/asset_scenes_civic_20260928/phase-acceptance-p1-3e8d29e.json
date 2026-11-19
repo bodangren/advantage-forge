@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "role": "measure-phase-acceptance",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "## Phase 1: Inventory",
+  "status": "pass",
+  "summary": "Phase 1 Inventory accepted at HEAD 3e8d29e890aebd564ef3d01cb31b13f776d8d814. HEAD equals the audited SHA. The phase diff db2053f2..3e8d29e8 touches only phase-owned paths: the checker, the red and green logs, the adversarial artifacts, the Phase 1 lines of plan.md, and scenes/inventory.md. The TSV and docs/map-review.html are unchanged in the range. Both gates were rerun live and pass: check-inventory.sh exits 0 with 9 checks (PASS=9, FAIL=0), and adversarial-p1.sh exits 0 with the control OK and all eight probes CAUGHT. Every plan claim was re-verified against command output, including the Red exit 1 in red-p1.log. An independent awk comparison of all 30 inventory rows against the final bench/sonnet/log.tsv rows agrees 30 of 30. Reviews A and C at feeca3f3 still cover Phase 1: the only commits after feeca3f3 (0355d23c, 54213a00, 3e8d29e8) touch only measure/runs/ test artifacts, the inventory and plan are byte-identical at HEAD, and the one changed test file (check-inventory.sh, 54213a00) is the remediation of the review nits, verified by the adversarial PASS at 54213a00 and by this acceptance's own live gate reruns. The UX browser review does not apply to Phase 1: the phase diff touches no shot, scene source, mockup, page, or app path, and the strategy assigns the visual look of the 30 shots to the Phase 2 judge. One Nit carries forward from the adversarial record: the checker pins the expected MAPS values instead of parsing the live log, so a later log edit would drift unnoticed.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] phase-acceptance (carried from adversarial ADV-5, no action for Phase 1): check-inventory.sh pins the expected MAPS ratings, notes, and maker family inside maps_expected (measure/runs/asset_scenes_civic_20260928/check-inventory.sh:37-71) instead of parsing bench/sonnet/log.tsv live. The pinned table equals the live log today (this audit compared all 30 rows: 30 of 30 agree). The exposure is a later edit of the log or of docs/map-review.html that the gate would not notice. A later phase that regenerates the log or the page must re-diff the pinned table against the live file."
+  ],
+  "evidence": [
+    "Provenance: git rev-parse HEAD gives 3e8d29e890aebd564ef3d01cb31b13f776d8d814, the audited HEAD. phase_base_sha db2053f2 resolves to db2053f2190ef0af3c24d6a149e70ee4bcb8f493. git status over the track directory, the runs directory, the TSV, map-review.html, scenes/maps, docs/map-mockups, and bench/sonnet/log.tsv shows a clean tree; only the untracked review-a and review-c result artifacts remain, which are expected evidence.",
+    "Phase diff scope: git diff --stat db2053f2..3e8d29e8 lists only measure/runs/asset_scenes_civic_20260928 artifacts (check-inventory.sh, red-p1.log, green-p1.log, adversarial-p1.sh, two adversarial JSONs and logs), plan.md (8 lines, all Phase 1), and scenes/inventory.md. git diff --exit-code db2053f2..HEAD -- docs/fantasy-world-scene-blueprints.tsv docs/map-review.html exits 0. No product source, no scene source, no mockup changed.",
+    "Gate 1 rerun: bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh exits 0 with === Total: 9 checks (PASS=9, FAIL=0) ===, matching the plan Green evidence claim word for word (plan.md:33).",
+    "Gate 2 rerun: bash measure/runs/asset_scenes_civic_20260928/adversarial-p1.sh exits 0: ADV-P1-00 control OK, probes 01 to 08 all CAUGHT, gate verdict PASS. The same gate exited 1 at feeca3f3 with probes 01, 02, 03 DEFECT CONFIRMED (adversarial-p1-feeca3f.log), so the fix is failing-first verified.",
+    "Plan gate block: grep -c 'scenes/maps/' measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md prints 30, and ls lists all four bathhouse paths (scenes/maps/bathhouse.ts, docs/map-mockups/bathhouse.md, bathhouse-3q.png, bathhouse-top.png).",
+    "A5 plan-claim verification: every claim in plan.md lines 14, 19, and 31 to 33 was re-verified. Red exited 1 before the inventory existed (red-p1.log lines 6 to 10, commit 8e20f73d). 30 rows exist; the checker's P1-b proves all 150 named paths exist (30 x 5); every row holds MAPS rating 7.0, a source note, judge: no, maker: Anthropic Sonnet, and state inventoried; no row is missing. The e964238a fixes named in the plan are present in the committed checker (A9 case test at lines 226 to 230, state-cell awk parse).",
+    "Independent MAPS fidelity check: an awk loop took the final bench/sonnet/log.tsv row per civic slug (score field 11, note field 13, empty note recorded as none recorded) and compared all 30 rows with the inventory cells. Output: no mismatch line; 30 of 30 agree. This confirms the record independently of the checker's pinned table.",
+    "Review currency decision: Reviews A and C at feeca3f3 still cover Phase 1 and must not run again. Reason: the implementation content of the phase (scenes/inventory.md at db233e01, plan.md evidence lines at f0224d36 and 2e8e4f01) is byte-identical at HEAD; every commit after feeca3f3 (0355d23c, 54213a00, 3e8d29e8) touches only test files under measure/runs/; and the one reviewed test file that changed (check-inventory.sh at 54213a00) is the remediation of the review nits, covered by the adversarial re-audit PASS at 54213a00 (adversarial-54213a0.json) and by this acceptance's live reruns of both gates. The acceptance records the exact HEAD 3e8d29e8 and the allowed test-only commits 0355d23c, 54213a00, 3e8d29e8.",
+    "UX browser review decision: not applicable to Phase 1. The phase diff adds records only and touches no shot, scene source, mockup JPG, page, route, or app path; the 30 shots are inputs that Phase 1 does not modify, so a browser look can falsify no Phase 1 claim. test-strategy.md section 9 ties the judge rating and the human look at the images to Phase 2 and Phase 3 closing, and section 10 routes the visual look of the 30 shots to the Phase 2 judge. Review C recorded the same decision (ux_applicability: not_applicable). The browser review becomes due when Phase 2 rates the shots or Phase 3 produces fresh rework shots.",
+    "A3 and A4: the checker counts rows with a labeled line count (grep -c 'scenes/maps/') compared by integer arithmetic (-eq 30 and -ge 1), not a bare digit match; a date or stray digit cannot satisfy it. An absent or empty inventory fails P1-a (red-p1.log exit 1), so the pass is not vacuous. The phase has 2 completed [x] tasks, so the markers are real.",
+    "A6 and A7: the registry entry in measure/tracks.md at 3e8d29e8 reads [~] Track: Plan and accept civic scenes, and plan.md status reads in_progress; no completion claim exists for a phase that is only now accepted. The slug set comes from all 30 civic P2 rows of the TSV via awk ($2==civic && $3==P2); no filter drops a slug and no banned-term filter masks a hit.",
+    "Adversarial chain: adversarial-feeca3f.json records status fail with one Blocker (ADV-1) and three Nits; the fix 54213a00 changed only check-inventory.sh and red-p1.log; adversarial-54213a0.json records status pass at 54213a00 with every routed finding verified fixed and five new probes pinning the value-check semantics.",
+    "Aggregate suites: test-strategy.md section 8 keeps vitest and tsc out of the phase gates for this records-only track; no stale intentional-red aggregate test masks the phase result."
+  ],
+  "commands": [
+    "git rev-parse HEAD (3e8d29e890aebd564ef3d01cb31b13f776d8d814, equals audited HEAD)",
+    "git diff --stat db2053f2..3e8d29e8 (10 files, all phase-owned)",
+    "git diff --exit-code db2053f2..HEAD -- docs/fantasy-world-scene-blueprints.tsv docs/map-review.html (exit 0, empty)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh (exit 0, PASS=9 FAIL=0)",
+    "bash measure/runs/asset_scenes_civic_20260928/adversarial-p1.sh (exit 0, control OK, probes 01-08 CAUGHT, gate verdict PASS)",
+    "grep -c 'scenes/maps/' measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md (30)",
+    "ls scenes/maps/bathhouse.ts docs/map-mockups/bathhouse.md docs/map-mockups/bathhouse-3q.png docs/map-mockups/bathhouse-top.png (all four exist)",
+    "awk over docs/fantasy-world-scene-blueprints.tsv (30 civic P2 slugs) and the final bench/sonnet/log.tsv row per slug vs all 30 inventory cells (30 of 30 agree, no mismatch line)",
+    "git show 3e8d29e8:measure/tracks.md | grep civic (registry entry [~], no overstatement)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_scenes_civic_20260928/phase-acceptance-p1-3e8d29e.json",
+    "measure/runs/asset_scenes_civic_20260928/phase-acceptance-p1-3e8d29e.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "phase_base_sha": "db2053f2190ef0af3c24d6a149e70ee4bcb8f493",
+  "role_base_sha": "db2053f2190ef0af3c24d6a149e70ee4bcb8f493",
+  "baseline_sha": "db2053f2190ef0af3c24d6a149e70ee4bcb8f493",
+  "audited_head_sha": "3e8d29e890aebd564ef3d01cb31b13f776d8d814",
+  "route": "opencode-go/glm-5.3#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "All 30 inventory rows agree with the final bench/sonnet/log.tsv rows (independent awk comparison, 30 of 30, no mismatch line) and every plan claim at plan.md:14,19,31-33 matches live command output."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The checker is red-first (red-p1.log exit 1 before the inventory existed) and every value claim now has a failing-first probe: adversarial-p1.sh exited 1 at feeca3f3 and exits 0 at HEAD with probes 01-08 all CAUGHT."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff --stat db2053f2..3e8d29e8 lists only phase-owned paths and git diff --exit-code db2053f2..HEAD -- docs/fantasy-world-scene-blueprints.tsv docs/map-review.html exits 0."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim in this audit has a rerun behind it: both gate scripts, the plan gate, the TSV diff, the registry grep, and the 30-of-30 log.tsv comparison."
+    }
+  ],
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "The PASS verdict is correct and both nits (F1 presence-only P1-c, F2 substring P1-d) were real: the adversarial probes 01, 02, 03 confirmed them at feeca3f3 and the fix at 54213a00 closes them; I re-ran both gates live at HEAD."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "The record-contract PASS is correct: the state vocabulary is exactly {inventoried, missing}, the phase diff leaves docs/ empty, and the review's ux_applicability not_applicable decision matches my Phase 1 reasoning."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "The FAIL at feeca3f3 (ADV-1 blocker confirmed by fixture probes) and the PASS at 54213a00 (all probes CAUGHT, pinned table verified 30 of 30) are both correct; I reran adversarial-p1.sh at HEAD and it exits 0 with every probe CAUGHT."
+    }
+  ]
+}
