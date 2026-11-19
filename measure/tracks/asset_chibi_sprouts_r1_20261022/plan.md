@@ -190,6 +190,10 @@ Contract and commands: `docs/storytime-song.md`.
   time 4.5 to 5 min per song minute).
 - [ ] Task: Week 4 (Lily, Tom, Mom, Dad, Grandma, Grandpa) waits for S26: six characters beyond
   the eight. Do not build before the owner's answer; do not ask him.
+  - PM decision 2026-11-19 (S26 interim): build the six week-4 characters now (Lily, Tom, Mom,
+    Dad, Grandma, Grandpa) with a new adult base, in the normal Forge flow and look rules;
+    Daniel's S26 answer has no date and must not be asked; if he later answers 8, the six stay
+    as assets for later weeks. Due 11-24.
 - [ ] Task: After the owner's C1 to C5 answers: a side sun if he wants longer shadows, a quieter
   Pip if he wants it, the portrait cut (F9).
 
@@ -205,7 +209,20 @@ Workbooks does not wait for it.
 
 - [ ] Task: The owner confirms the cast beyond 8 (Lily, Mom, Dad, Grandma, Grandpa, Tom) and the
   cost.
-- [ ] Task: The remaining cast (an adult base for Mom, Dad, Grandma, Grandpa; Tom at about eight).
+  - PM decision 2026-11-19 (S26 interim): build the six week-4 characters now with a new adult
+    base; Daniel's S26 answer has no date and must not be asked. Due 11-24.
+- [~] Task: The remaining cast (an adult base for Mom, Dad, Grandma, Grandpa; Tom at about eight).
+  - PM decision 2026-11-19 (S26 interim): build the six week-4 characters now (Lily, Tom, Mom,
+    Dad, Grandma, Grandpa) with a new adult base, in the normal Forge flow and look rules. Due 11-24.
+  - adult base (this run): `ADULT` proportion set in `assets/parts/humanoid-kind.ts` plus
+    `assets/sprout-adult-base.ts` (neutral clothes), same skeleton bone names, `sproutFace`,
+    `sproutHands`, `sing`, and `sproutGestures` support; AGE5 and HERO output unchanged.
+  - Lily (Tom's seven-year-old sister)
+  - Mom (young mother, medium height)
+  - Dad (young father, tallest of the family)
+  - Grandma (older woman, a little shorter than Mom)
+  - Grandpa (older man, as tall as Mom)
+  - Tom (nine-year-old boy, one of the tallest children)
 - [x] Task: The remaining gesture key frames (20 gestures in use, inventory section 3): the (0bb18f6e, 697ae4a9)
   week 2 to 7 set above covers set 2 and `turn`; only the week 4 family cast gestures wait for S26.
   Commits: 0bb18f6e (set 2), 697ae4a9 (`turn`).
