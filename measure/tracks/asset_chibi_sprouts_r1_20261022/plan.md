@@ -223,7 +223,9 @@ Workbooks does not wait for it.
   - Lily: `assets/sprout-lily.ts` 0e6fe74b (chin bob, straight bangs, blue shirt white collar,
     red pleated skirt, mid-calf socks, red sneakers); look-check fix ef28cfc9 (side/back bob to
     the jaw/nape covering the ears with flared ends, strand-cut fringe with cut line, longer
-    flared 10-pleat A-line skirt); 25 key frames in
+    flared 10-pleat A-line skirt); look-check fix r3 697cdab6 (proud side panels to the jaw,
+    shell fringe with geometric cut line and strand grooves, longer A-line skirt with level hem
+    at 0.16 and shallow groove pleats); preset pin gains Lily 86e44114 (388 assets); 25 key frames in
     out/chibi-sprouts/r1/week2-7/gestures/lily/ with gestures.lily manifest key (script generic,
     no change); cutout-check flags only the known reach tiptoe.
   - Mom (young mother, medium height)

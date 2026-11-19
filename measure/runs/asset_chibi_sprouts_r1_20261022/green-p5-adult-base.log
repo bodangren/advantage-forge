@@ -34,20 +34,24 @@ handoff:
   Render re-read vs mom.jpg/dad.jpg: slim adult, clean waist belt, no back discs, arms near
   the body, neat shoes. Check now fails only touch-nose (intentional); all kind clips
   head-clean; ground ok. Walk strip clean; eat lands at the chin. Vitest 10/10; no warnings.
-- Lily 0e6fe74b + look-check fix ef28cfc9: assets/sprout-lily.ts in the style of sprout-may.ts
-  (AGE5; blue shirt, white collar band, red A-line pleated skirt with 10 deep pleats flaring
-  to just above the knees, white mid-calf socks, red sneakers with white laces/soles/toe caps,
-  chin-length bob with strand-cut fringe + cut line + grooves, lily preset). Three render
-  passes (bangs above the brows; bob to jaw/nape covering ears with flared ends; skirt
-  lengthened + flared). forge all textured, 0 warnings. Check: the same 6 touch clips as
-  shipped nan (wave brushes hair 0.8-2.7 cm; rest intentional face touch with identical depths;
-  waived); no other clip fails; ground ok. Walk, hop, and turn strips read clean (no leg
-  clipping, hair stable, feet plant); sprites preview.png reads at 128 px in all directions.
-  25 key frames in out/chibi-sprouts/r1/week2-7/gestures/lily/ via cutout-gestures-cast.sh
-  (generic, no script change) with gestures.lily manifest key; cutout-check flags only the
-  known reach tiptoe (lowest opaque 1176, foot row 1184; adventurer/reach pre-existing).
-  turn-back (clean bob, no discs, ears peek), bow (fringe clear of eyes, no clipping), and
-  hop-up (airborne, arms out) read clean.
+- Lily 0e6fe74b + look-check fixes ef28cfc9 and 697cdab6 (r3): assets/sprout-lily.ts in the
+  style of sprout-may.ts (AGE5; blue shirt, white collar band, A-line pleated skirt with 10
+  shallow groove pleats and a level hem at 0.16 just above the knees, white mid-calf socks,
+  red sneakers with white laces/soles/toe caps, chin-length bob: proud side panels to the jaw
+  covering the ears, shell fringe with a geometric cut line and strand grooves, full back
+  curtain to the nape; lily preset). Render loop vs the reference until each defect visibly
+  cleared (bangs above the brows; bob out of the cap silhouette; skirt levelled). forge all
+  textured, 0 warnings. Check: the 6 waived touch clips (wave hair-brush 0.8-2.7 cm; rest
+  intentional face touch with identical depths as shipped nan) plus point-up hair graze
+  2.1 cm (visually verified clean pass-by on the strip, no burial); no other clip fails;
+  ground ok. Walk, hop, and turn strips read clean (no leg clipping, hair stable, feet plant);
+  sprites preview.png reads at 128 px in all directions. Hair lowest y 0.4318 m (GLB measured)
+  vs mouth y 0.4867 m: hair hangs 5.5 cm below the mouth. 25 key frames in
+  out/chibi-sprouts/r1/week2-7/gestures/lily/ via cutout-gestures-cast.sh (generic, no script
+  change) with gestures.lily manifest key; cutout-check flags only the known reach tiptoe
+  (lowest opaque 1176, foot row 1184; adventurer/reach pre-existing). turn-back (full bob,
+  no discs, ears peek), bow (fringe cut line, eyes clear, no clipping), and hop-up (airborne,
+  arms out) read clean. Preset pin gains Lily 86e44114 (388 assets, pure addition).
 - New files: assets/sprout-lily.ts (0e6fe74b); base, test, and reference JPGs in 776fc435.
 - No Red tests edited. tests/sprout-gestures.test.ts extended (headF pin 1 / 0.8, chin/ear
   anchors, halfScale 1.5).
