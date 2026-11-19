@@ -41,11 +41,14 @@ export default humanoidAsset({
     const P = ADULT;
 
     // Full-length plain trousers to the shoe tops (the kind cuff ends mid-shin on long legs).
-    // The hips run a touch slim so the shirt always covers them.
+    // The hips run a touch slim so the shirt always covers them. The leg tapers through a
+    // slight knee into a slim calf (like jeans), ending above the shoe.
+    const kneeR = 0.048;
     const trouserLeg = sdf.smoothUnion(
       0.012,
-      sdf.capsule(HIP, KNEE, P.pants.thighR).bone('leg.L'),
-      sdf.cone(KNEE, [P.ankle[0], 0.17, P.ankle[2]], P.pants.shinR[0], 0.05).round(0.002).bone('shin.L'),
+      sdf.cone(HIP, KNEE, 0.06, kneeR).bone('leg.L'),
+      sdf.sphere(kneeR).at(...KNEE).bone('leg.L'),
+      sdf.cone(KNEE, [P.ankle[0], 0.17, P.ankle[2]], kneeR, 0.039).round(0.002).bone('shin.L'),
     );
     const trousers = sdf.smoothUnion(
       0.03,

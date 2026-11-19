@@ -330,7 +330,7 @@ export const AGE5: HumanoidProportions = scaled(HERO, FIVE);
  * thigh reads (the hero pelvis is tall). Mom is about 1.5 m: 4.7 heads. Dad, the tallest of the
  * family, gets his own slightly larger set later.
  */
-const ADULT_F = { leg: 4.74, torso: 1.46, arm: 2.2, thick: 1.1, shoe: 0.9375, turn: [-4, -6], lift: 2, foreSwing: 0, wide: 0.924, head: 0.8, armOut: 12, hand: 1.2, armR: 1.25, legKnee: 3.25, legAnkle: 1.6 } as const;
+const ADULT_F = { leg: 4.74, torso: 1.46, arm: 2.2, thick: 1.1, shoe: 0.53, turn: [-4, -6], lift: 2, foreSwing: 0, wide: 0.924, head: 0.8, armOut: -12, hand: 1.2, armR: 1.25, legKnee: 3.25, legAnkle: 1.6 } as const;
 
 /** The Chibi Sprouts adult body: the same head and face on a longer torso, longer arms, and longer legs. */
 export const ADULT: HumanoidProportions = scaled(HERO, ADULT_F);
