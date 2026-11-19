@@ -1,0 +1,169 @@
+ADV-P2 re-audit at 36dec52e (fix commit for ADV-1 to ADV-3, diff base 6e9cb9b7)
+date: 2026-11-19T00:42:18Z; HEAD: 36dec52ecd0b675a29b062f6e40c073565ab1b1b
+
+ADV-P2 adversarial probes for check-review.sh (asset_scenes_civic_20260928, Phase 2)
+repo: /home/daniebo/Desktop/advantage-forge
+work: /tmp/opencode/adv-p2-civic
+
+=== ADV-P2-00 control: unmutated fixture must pass ===
+checker exit: 0; === Total: 34 checks (PASS=34, FAIL=0) ===
+verdict: CONTROL OK (copied records reproduce Green; probes below count)
+
+=== ADV-P2-01: mill inventory Judge critical true -> false (review-a F1) ===
+mutated cell: Judge critical: false
+batch b3 keeps: {"rating":5.5,"critical":true}
+checker exit: 1; === Total: 34 checks (PASS=33, FAIL=1) ===
+verdict: CAUGHT -- the checker now compares the Judge critical cell with the batch
+FAIL: P2-d row for mill holds Judge critical [false], want [true] from batch b3
+
+=== ADV-P2-02: mill inventory judge route cell -> anthropic/claude-sonnet-5-5 (review-a F1) ===
+mutated cell: judge: anthropic/claude-sonnet-5-5 
+checker exit: 1; === Total: 34 checks (PASS=33, FAIL=1) ===
+verdict: CAUGHT -- the checker now rejects a maker-family judge cell in the row
+FAIL: P2-d row for mill holds judge cell [anthropic/claude-sonnet-5-5], want [kimi-code-plan-cn/kimi-for-coding] from batch b3
+
+=== ADV-P2-03: b1 log reduced to its route line only, no model id (review-a F2) ===
+log content: route: kimi-code-plan-cn/kimi-for-coding
+checker exit: 1; === Total: 34 checks (PASS=33, FAIL=1) ===
+verdict: CAUGHT -- the log check now requires a model id or family beyond the route
+FAIL: P2-c batch b1 log does not cite its route and a labeled model id or family line
+
+=== ADV-P2-04: mill inventory Judge rating 5.5 -> 6.0, batch b3 keeps 5.5 ===
+mutated cell: Judge rating: 6.0
+checker exit: 1; === Total: 34 checks (PASS=33, FAIL=1) ===
+verdict: CAUGHT -- P2-d compares the copied rating with the batch value
+FAIL: P2-d row for mill holds Judge rating [6.0], want [5.5] from batch b3
+
+=== ADV-P2-05: apothecary b1 entry copied into b2 (duplicate slug across batches) ===
+appended entry: {"slug":"apothecary","rating":8.0,"critical":false,"note":"All named zones are present: loaded shelves, counter with healer behind it, drying racks, tasting table on a rug, and a glowing cauldron in the brewing corner. The open floor between zones is sparser than the packed mockup, but nothing floats or clips."}
+checker exit: 1; === Total: 34 checks (PASS=31, FAIL=3) ===
+verdict: CAUGHT -- P2-a rejects the duplicate slug across batches
+FAIL: P2-a labeled rating count is 31, want exactly 30
+FAIL: P2-a unique slug count is 30 with duplicates [apothecary ], want 30 unique and none repeated
+FAIL: P2-a slug apothecary appears in 2 batch entries, want exactly 1
+
+=== ADV-P2-06: b1 audited_head -> 1a2b3c4d (not an ancestor of HEAD) (informational) ===
+mutated audited_head: 1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b
+ancestor check: 1a2b3c4d is not an ancestor of HEAD (expected)
+checker exit: 0; === Total: 34 checks (PASS=34, FAIL=0) ===
+verdict: DEFECT CONFIRMED (informational) -- no check reads the batch audited_head;
+  a batch that claims to judge a tree it never saw passes the phase gate
+
+=== ADV-P2-07: b1 apothecary rating 8.0 -> JSON string "7.5" ===
+mutated rating: "7.5" (jq type: string)
+checker exit: 1; === Total: 34 checks (PASS=32, FAIL=2) ===
+verdict: CAUGHT -- P2-b requires a labeled JSON number, so a string rating fails
+FAIL: P2-b rating for apothecary is [7.5], want a labeled JSON number in [0, 10]
+FAIL: P2-d row for apothecary holds Judge rating [8.0], want [7.5] from batch b1
+
+=== ADV-P2-08: mill rated by b3 (5.5) and by an appended b4 entry (9.0) ===
+b4 mill entry: {"slug":"mill","rating":9.0,"critical":false,"note":"duplicate contradictory rating appended by the adversarial fixture"}
+b3 mill entry: {"slug":"mill","rating":5.5,"critical":true,"note":"The waterwheel, the map's namesake feature, is not visible: only the wooden support frame and axle posts stand by the river channel, with a small half-sunk yellow arc where the wheel should be. Layout, field, bridge, and yard props otherwise match the brief."}
+checker exit: 1; === Total: 34 checks (PASS=31, FAIL=3) ===
+P2-d mill line (first-match batch is b3): none: P2-d passed mill silently
+verdict: CAUGHT -- P2-a rejects the double rating; note that P2-d alone would take
+  the first batch (b3) and pass, so only the P2-a count defends the stop rule here
+FAIL: P2-a labeled rating count is 31, want exactly 30
+FAIL: P2-a unique slug count is 30 with duplicates [mill ], want 30 unique and none repeated
+FAIL: P2-a slug mill appears in 2 batch entries, want exactly 1
+
+=== ADV-P2 summary ===
+ADV-P2-00 control:            CONTROL OK
+ADV-P2-01 critical flip (F1): CAUGHT
+ADV-P2-02 judge cell (F1):    CAUGHT
+ADV-P2-03 log no model id:    CAUGHT
+ADV-P2-04 rating drift:       CAUGHT
+ADV-P2-05 duplicate slug:     CAUGHT
+ADV-P2-06 foreign head:       DEFECT CONFIRMED (informational)
+ADV-P2-07 string rating:      CAUGHT
+ADV-P2-08 double rating:      CAUGHT
+gate verdict: PASS -- every gate probe is caught; the informational probes are listed above
+ADVERSARIAL-P2 SCRIPT EXIT: 0
+
+=== committed-tree gate: check-review.sh at 36dec52e ===
+PASS: A9 checker reads the live track directory
+=== Total: 34 checks (PASS=34, FAIL=0) ===
+checker exit: 0
+
+=== R1: real-tree foreign audited_head (probe 06 catch proof, file restored after) ===
+mutated b1 audited_head: deadbeef00000000000000000000000000000001
+ancestor: no (expected)
+checker exit: 1; === Total: 35 checks (PASS=34, FAIL=1) ===
+FAIL: P2-c batch b1 audited_head [deadbeef00000000000000000000000000000001] is not an ancestor of HEAD
+restore: byte-identical (git diff --quiet exit 0)
+post-restore gate: exit 0; === Total: 34 checks (PASS=34, FAIL=0) ===
+
+=== R2: batch critical stored as the string "true" (new P2-b/P2-d defense) ===
+mutated critical: "true" (jq type: string)
+checker exit: 1; === Total: 34 checks (PASS=32, FAIL=2) ===
+FAIL: P2-b entry for apothecary lacks a boolean critical field
+verdict: CAUGHT -- P2-b rejects a string critical; the boolean type check holds
+
+=== R3: judge cell with a different route of the same family (new P2-d route compare) ===
+mutated cell: judge: kimi-code-plan-cn/kimi-for-coding-v2 
+checker exit: 1; === Total: 34 checks (PASS=33, FAIL=1) ===
+FAIL: P2-d row for mill holds judge cell [kimi-code-plan-cn/kimi-for-coding-v2], want [kimi-code-plan-cn/kimi-for-coding] from batch b3
+verdict: CAUGHT -- P2-d compares the judge cell with the batch route string exactly
+
+=== R4: log whose model_id line names another model (new labeled-line requirement) ===
+b1 log content:
+  route: kimi-code-plan-cn/kimi-for-coding
+  model_id: claude-sonnet-5-5
+checker exit: 0; === Total: 34 checks (PASS=34, FAIL=0) ===
+verdict: DEFECT CONFIRMED (residual, informational) -- the labeled-line grep is presence-only;
+  it never compares the model_id value with the batch route or family, so a log that names
+  claude-sonnet-5-5 as the judging model passes P2-c
+
+=== R2 addendum: both FAIL lines for the string critical ===
+checker exit: 1; === Total: 34 checks (PASS=32, FAIL=2) ===
+FAIL: P2-b entry for apothecary lacks a boolean critical field
+FAIL: P2-d row for apothecary holds Judge critical [false], want [true] from batch b1
+note: the first FAIL is the P2-b boolean type check; the second FAIL is the new P2-d
+Judge critical compare (inventory false versus batch string true), so both new
+defenses fire on one mutation
+
+=== ADV-P2 re-audit summary (36dec52e) ===
+
+ADV-P2-00 control:              CONTROL OK (34/34)
+ADV-P2-01 critical flip (F1):  CAUGHT   (was DEFECT at c095ba1f)
+ADV-P2-02 judge cell (F1):     CAUGHT   (was DEFECT at c095ba1f)
+ADV-P2-03 log no model id:     CAUGHT   (was DEFECT at c095ba1f)
+ADV-P2-04 rating drift:        CAUGHT
+ADV-P2-05 duplicate slug:      CAUGHT
+ADV-P2-06 foreign head:         DEFECT CONFIRMED (informational, HEAD-less fixture only;
+                                caught on a real tree by R1 below)
+ADV-P2-07 string rating:       CAUGHT
+ADV-P2-08 double rating:       CAUGHT
+R1 real-tree foreign head:     CAUGHT (FAIL P2-c audited_head not an ancestor; file
+                                restored byte-identical; gate back to 34 of 34)
+R2 string critical "true":     CAUGHT (P2-b boolean type FAIL plus the new P2-d
+                                Judge critical compare FAIL)
+R3 same-family route drift:    CAUGHT (P2-d judge cell compare, exact string)
+R4 wrong model_id in log:      DEFECT CONFIRMED (residual Nit ADV-4: labeled-line grep
+                                is presence-only; model_id: claude-sonnet-5-5 passes)
+
+- ADV-1 [Blocker] CLOSED: P2-d now compares the Judge critical cell and the judge route
+  cell with the batch JSON (probes 01, 02, R2, R3 all caught).
+- ADV-2 [Nit] CLOSED: P2-c requires a labeled model_id/model_family line (probe 03 caught).
+- ADV-3 [Nit] CLOSED on real trees: P2-c verifies audited_head ancestry when a git HEAD
+  resolves (R1 caught; probe 06 stays informational only inside the HEAD-less /tmp fixture,
+  which is the script's marking, not a checker gap).
+- ADV-4 [Nit] NEW, routed to Red: the labeled-line grep never compares the cited model
+  value with the batch route or family, so a log naming claude-sonnet-5-5 passes (R4).
+  All four committed logs cite model_id: kimi-for-coding, so no live instance exists.
+
+MEASURE_AGENT_RESULT
+role: measure-adversarial-testing
+status: complete
+track: asset_scenes_civic_20260928
+phase: ## Phase 2: Independent review
+phase_base_sha: 3e8d29e8
+role_base_sha: c095ba1f
+audited_head_sha: 36dec52ecd0b675a29b062f6e40c073565ab1b1b
+commits: pending this commit (test(asset_scenes_civic): Phase 2 adversarial re-audit; no push)
+tests_run: git diff 6e9cb9b7..36dec52e (check-review.sh, red-p2.log only; records unchanged); adversarial-p2.sh exit 0 (control 34/34; 01, 02, 03 now CAUGHT; 04, 05, 07, 08 CAUGHT; 06 informational); check-review.sh on committed tree exit 0 PASS=34 FAIL=0; R1 real-tree foreign audited_head caught (FAIL P2-c not an ancestor; restore byte-identical; gate back to 34/34); R2 string critical caught (2 FAILs); R3 same-family route drift caught; R4 wrong model_id log passes (residual Nit ADV-4)
+files_changed: measure/runs/asset_scenes_civic_20260928/adversarial-p2-36dec52.json (provisional replaced by final), adversarial-p2-36dec52.log; no checker, record, or probe-script change
+plan_updates: none (all changes under measure/runs)
+known_failures: none blocking; ADV-4 [Nit] residual: the P2-c log check is presence-only on the labeled line and passes a log citing model_id: claude-sonnet-5-5 (R4); committed logs are faithful
+handoff: verdict PASS; ADV-1 to ADV-3 are closed by 36dec52e and the Phase 2 gate holds; route ADV-4 to Red as a follow-up (compare the cited model_id/model_family value with the batch route or family without reintroducing substring vacuity); note for Phase 3: adversarial-p2.sh probe 06 prints DEFECT CONFIRMED (informational) inside its HEAD-less fixture by design, so re-probe audited_head regressions on a real tree as in R1; any later implementation commit invalidates this result and reruns this gate
+END_MEASURE_AGENT_RESULT

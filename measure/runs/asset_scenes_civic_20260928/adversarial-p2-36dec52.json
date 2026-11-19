@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "role": "measure-adversarial-testing",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "## Phase 2: Independent review",
+  "status": "pass",
+  "summary": "Phase 2 adversarial re-audit at 36dec52e: Red's fix closes ADV-1 to ADV-3, and the Phase 2 gate holds against every probe. The fix diff 6e9cb9b7..36dec52e touches only check-review.sh and red-p2.log (git diff --exit-code over docs/, scenes/, bench/, and measure/tracks/ is empty). The fix adds a P2-d compare of the Judge critical cell and the judge route cell, a P2-c requirement for a labeled model_id or model_family line in each log, and a P2-c audited_head ancestor check that runs whenever a git HEAD resolves. Rerun results: adversarial-p2.sh exits 0 with the control at 34 of 34 and probes 01 critical flip, 02 judge cell, and 03 route-only log all CAUGHT, probes 04, 05, 07, 08 still CAUGHT, and probe 06 informational only because the /tmp fixture has no git HEAD. Probe 06's exposure is now caught on any real tree: R1 mutates the live vision-review-b1.json audited_head to deadbeef00000000000000000000000000000001 and check-review.sh fails with FAIL: P2-c batch b1 audited_head [...] is not an ancestor of HEAD (35 checks, PASS=34 FAIL=1), then the file is restored byte-identical (git diff --quiet exit 0) and the gate returns to 34 of 34. Three new probes against the new checks: R2 stores the batch critical as the string \"true\" and fails with 2 FAILs (the P2-b boolean type check plus the new P2-d Judge critical compare, both defenses firing on one mutation); R3 sets the mill judge cell to a different same-family route kimi-code-plan-cn/kimi-for-coding-v2 and fails on the exact P2-d route compare; R4 rewrites the b1 log to cite model_id: claude-sonnet-5-5 and PASSES, exposing one residual Nit: the labeled-line grep is presence-only and never compares the cited model with the batch route or family. The committed logs are true records (all four carry model_id: kimi-for-coding), so the residual gap is future drift only; route it to Red as a follow-up. One caveat recorded for Phase 3: adversarial-p2.sh probe 06 will keep printing DEFECT CONFIRMED (informational) inside its HEAD-less fixture by design; the real-tree ancestor defense is proven by R1, and any future checker regression on that branch must be re-probed on a tree with a git HEAD. This role fixed nothing and changed only its two run artifacts.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "ADV-4 [Nit] adversarial-testing: the new P2-c log check (measure/runs/asset_scenes_civic_20260928/check-review.sh:201-210 after commit 36dec52e) requires a labeled model_id or model_family line but never compares the cited value with the batch route or model family. Fixture proof: R4 rewrites the b1 log to the two lines route: kimi-code-plan-cn/kimi-for-coding and model_id: claude-sonnet-5-5, and the checker prints PASS: P2-c batch b1 log cites its route and a model id or family with exit 0 and 34 of 34. Rationale: a log that names a maker-family model as the judge passes the gate; the committed logs are true records (all four cite model_id: kimi-for-coding, verified by review-a and re-verified here with grep), so the exposure is future drift only, and the batch JSON route and model_family remain the primary checked records; Red can close it by requiring the model_id or model_family value to match the batch route or family, taking care not to reintroduce the substring vacuity that ADV-P2-03 exposed."
+  ],
+  "evidence": [
+    "Provenance: HEAD equals the audited head 36dec52ecd0b675a29b062f6e40c073565ab1b1b (git rev-parse HEAD); the fix commit 36dec52e sits on 6e9cb9b7 and phase_base_sha 3e8d29e8 still resolves.",
+    "Fix diff scope: git diff 6e9cb9b7..36dec52e --stat lists only measure/runs/asset_scenes_civic_20260928/check-review.sh (+43 lines: P2-d Judge critical and judge route compares, labeled log line requirement, audited_head ancestor check) and red-p2.log (+15 lines, the Red result entry); git diff --exit-code 6e9cb9b7..36dec52e -- docs/ scenes/ bench/ measure/tracks/ is empty, so no record, TSV, map source, mockup, or track file changed.",
+    "Gate rerun on the committed tree: bash measure/runs/asset_scenes_civic_20260928/check-review.sh exits 0 with === Total: 34 checks (PASS=34, FAIL=0) ===, so the fix adds defenses without breaking Green.",
+    "Probe rerun: bash measure/runs/asset_scenes_civic_20260928/adversarial-p2.sh exits 0 with the control at 34 of 34; ADV-P2-01 critical flip CAUGHT (P2-d Judge critical compare), ADV-P2-02 judge cell CAUGHT (P2-d route compare), ADV-P2-03 route-only log CAUGHT (labeled-line requirement), and ADV-P2-04, 05, 07, 08 still CAUGHT. ADV-1 and ADV-2 are closed.",
+    "ADV-3 closure (probe 06): ADV-P2-06 inside the /tmp fixture still passes and stays informational because the fixture tree has no git HEAD, so the checker's ancestor branch is skipped by design (red-p2.log records the same reading). On a real tree the defense works: R1 mutates the live vision-review-b1.json audited_head to deadbeef00000000000000000000000000000001, git merge-base --is-ancestor rejects it, check-review.sh exits 1 with FAIL: P2-c batch b1 audited_head [deadbeef...] is not an ancestor of HEAD, the backup is restored byte-identical (git diff --quiet exit 0), and the gate returns to 34 of 34. The committed batches record audited_head 3b35a490, an ancestor of HEAD.",
+    "R2 (new probe, string critical): fixture with the b1 apothecary critical changed to the JSON string \"true\" (jq type: string) fails exit 1 with 2 FAILs: FAIL: P2-b entry for apothecary lacks a boolean critical field and FAIL: P2-d row for apothecary holds Judge critical [false], want [true] from batch b1. Both the type check and the new value compare fire on one mutation.",
+    "R3 (new probe, same-family route drift): fixture with the mill judge cell changed to judge: kimi-code-plan-cn/kimi-for-coding-v2 while batch b3 keeps kimi-code-plan-cn/kimi-for-coding fails exit 1 with FAIL: P2-d row for mill holds judge cell [kimi-code-plan-cn/kimi-for-coding-v2], want [kimi-code-plan-cn/kimi-for-coding] from batch b3. The new route compare is exact, so family-consistent drift cannot pass.",
+    "R4 (new probe, wrong model id in the log): fixture with the b1 log rewritten to route: kimi-code-plan-cn/kimi-for-coding plus model_id: claude-sonnet-5-5 passes exit 0 with 34 of 34 and prints PASS: P2-c batch b1 log cites its route and a model id or family. See ADV-4.",
+    "Committed log fidelity: grep finds model_id: kimi-for-coding once in each of vision-review-b1.log to b4.log, so the residual R4 gap has no live instance in the committed tree.",
+    "This role changed no checker, no record, and no probe script: adversarial-p2.sh runs unmodified; the R1 mutation of vision-review-b1.json was restored byte-identical and git status shows only the two new audit artifacts. A provisional inconclusive verdict was written first per the brief and replaced by this final verdict."
+  ],
+  "commands": [
+    "git diff 6e9cb9b7..36dec52e (check-review.sh and red-p2.log only; P2-d critical and route compares, labeled log line, audited_head ancestor check)",
+    "git diff --exit-code 6e9cb9b7..36dec52e -- docs/ scenes/ bench/ measure/tracks/ (exit 0, empty)",
+    "bash measure/runs/asset_scenes_civic_20260928/adversarial-p2.sh (exit 0; control 34/34; 01, 02, 03 now CAUGHT; 04, 05, 07, 08 CAUGHT; 06 informational)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-review.sh (exit 0, PASS=34 FAIL=0 on the committed tree)",
+    "R1 real-tree probe: jq audited_head deadbeef... on vision-review-b1.json, check-review.sh -> exit 1 FAIL P2-c audited_head not an ancestor, restore, git diff --quiet exit 0, gate back to 34 of 34",
+    "R2/R3/R4 fixture probes under /tmp/opencode/adv-p2-civic (t09 string critical -> 2 FAILs; t10 same-family route drift -> 1 FAIL; t11 wrong model_id log -> passes 34 of 34)",
+    "grep -c 'model_id: kimi-for-coding' vision-review-b1..4.log (1 in each log)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p2-36dec52.json (added, this result; a provisional inconclusive verdict was written first per the brief and replaced by this final verdict)",
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p2-36dec52.log (added, the re-audit run log with the result block)"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "phase_base_sha": "3e8d29e8",
+  "role_base_sha": "c095ba1f",
+  "audited_head_sha": "36dec52ecd0b675a29b062f6e40c073565ab1b1b",
+  "route": "opencode-go/glm-5.3#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The fix implements exactly the three routed findings: probes 01, 02, 03 are caught (adversarial-p2-36dec52.log), the real-tree foreign head fails with an exact P2-c FAIL line (R1), and the committed tree still passes 34 of 34."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "Every routed finding now has a failing-first probe (01 to 03 caught, R1 to R3 confirm the new compares), but the log's cited model value remains untested: R4's claude-sonnet model_id passes 34 of 34."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff 6e9cb9b7..36dec52e touches only check-review.sh and red-p2.log with docs/, scenes/, bench/, and measure/tracks/ empty; this role added only the two audit artifacts and restored its one real-tree mutation byte-identical."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim carries a command result: the diff hunks, the probe exits, the exact FAIL lines for R1 to R3, the byte-identical restore (git diff --quiet exit 0), and the grep hit for model_id in all four logs."
+    }
+  ]
+}
