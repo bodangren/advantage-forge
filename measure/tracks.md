@@ -28,7 +28,10 @@ This registry gives each historical, current, and planned work item one Measure 
 - [ ] **Track: Plan deferred Forge capabilities**
   *Link: [./tracks/asset_engine_backlog_20260928/](./tracks/asset_engine_backlog_20260928/)*
 
-- [ ] **Track: Produce P2 npcs**
+- [x] **Track: Fill every empty shelf in the games and scene maps**
+  *Link: [./tracks/asset_filled_shelves_20261028/](./tracks/asset_filled_shelves_20261028/)*
+
+- [~] **Track: Produce P2 npcs**
   *Link: [./tracks/asset_p2_npcs_20260928/](./tracks/asset_p2_npcs_20260928/)*
 
 - [~] **Track: Produce P2 wildlife**
@@ -93,11 +96,17 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Rewrite Archers Revenge as a dual renderer game**
   *Link: [./tracks/game_archers_revenge_20260928/](./tracks/game_archers_revenge_20260928/)*
 
+- [~] **Track: Rebuild Archer's Revenge as an aim and shoot game**
+  *Link: [./tracks/game_archers_revenge_rebuild_20261029/](./tracks/game_archers_revenge_rebuild_20261029/)*
+
 - [~] **Track: Rewrite Astral Mage as a dual renderer game**
   *Link: [./tracks/game_astral_mage_20260928/](./tracks/game_astral_mage_20260928/)*
 
 - [~] **Track: Rewrite Castle Defense as a dual renderer game**
   *Link: [./tracks/game_castle_defense_20260928/](./tracks/game_castle_defense_20260928/)*
+
+- [~] **Track: Rebuild Castle Defense as a tower defense game**
+  *Link: [./tracks/game_castle_defense_rebuild_20261029/](./tracks/game_castle_defense_rebuild_20261029/)*
 
 - [~] **Track: Port Devourer Slime to the monorepo**
   *Link: [./tracks/game_devourer_slime_port_20260928/](./tracks/game_devourer_slime_port_20260928/)*
@@ -135,11 +144,17 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Rewrite Magic Defense as a dual renderer game**
   *Link: [./tracks/game_magic_defense_20260928/](./tracks/game_magic_defense_20260928/)*
 
+- [~] **Track: Rebuild Magic Defense as a missile defense game**
+  *Link: [./tracks/game_magic_defense_rebuild_20261029/](./tracks/game_magic_defense_rebuild_20261029/)*
+
 - [~] **Track: Port Monster Encounters to the monorepo**
   *Link: [./tracks/game_monster_encounters_port_20260928/](./tracks/game_monster_encounters_port_20260928/)*
 
 - [~] **Track: Rewrite Paladins Twin Soul as a dual renderer game**
   *Link: [./tracks/game_paladins_twin_soul_20260928/](./tracks/game_paladins_twin_soul_20260928/)*
+
+- [~] **Track: Rebuild Paladin's Twin Soul as a chapel shooter**
+  *Link: [./tracks/game_paladins_twin_soul_rebuild_20261029/](./tracks/game_paladins_twin_soul_rebuild_20261029/)*
 
 - [ ] **Track: Map variants and randomized maps**
   *Link: [./tracks/map_variants_randomized_20261003/](./tracks/map_variants_randomized_20261003/)*
