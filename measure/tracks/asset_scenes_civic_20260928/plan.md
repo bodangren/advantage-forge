@@ -181,7 +181,7 @@ Carried phase-acceptance items N1 to N5 (`phase-acceptance-p3-024cfdf.json`):
 
 ## Closeout
 
-- [ ] Task: Close the track: archive the folder and set the metadata status to completed.
+- [ ] Task: Close the track (deferred to the closeout role): archive the folder and set the metadata status to completed.
   Owner is the closeout steward. This role records the Phase 4 evidence and writes no closeout
   metadata.
 
