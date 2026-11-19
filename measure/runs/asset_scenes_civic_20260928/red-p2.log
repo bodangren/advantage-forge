@@ -81,3 +81,18 @@ plan_updates: first Phase 2 task marked [~]; Red evidence line added under the P
 known_failures: P2-a no vision-review-b1..b4.json files exist (8 missing-file FAILs); P2-b no ratings to parse; P2-c no judge families to verify; P2-d all 30 inventory rows hold state inventoried, want rated
 handoff: Green dispatches the four independent judge batches (vision-review-b1..b4, about 8 maps each, judge family differs from the maker family) and copies each rating and note into the inventory row with state rated; then reruns the checker
 END_MEASURE_AGENT_RESULT
+
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+status: red-complete
+track: asset_scenes_civic_20260928
+phase: ## Phase 2: Independent review
+baseline_sha: 3e8d29e8
+role_base_sha: 00611a9f
+commits: test(asset_scenes_civic): P2-c checks the picked route and family (SHA in reply)
+tests_run: bash measure/runs/asset_scenes_civic_20260928/check-review.sh -> FAIL (exit 1; Total 63 checks PASS=33 FAIL=30); P2-a PASS; P2-b PASS (30 labeled numbers in [0,10]); P2-c 16/16 PASS on the real batches; P2-d 30 FAILs (rows still inventoried, Green copy pending); A9 PASS; /tmp fixture (deleted): route claude-code/claude-sonnet-5-5#max with model_family kimi -> P2-c route-agreement FAIL as required
+files_changed: measure/runs/asset_scenes_civic_20260928/check-review.sh (P2-c rewritten); measure/runs/asset_scenes_civic_20260928/red-p2.log (this entry)
+plan_updates: none (Phase 2 tasks stay with Green)
+known_failures: P2-d all 30 inventory rows hold state inventoried, want rated (expected until Green copies the ratings)
+handoff: Green copies the 30 ratings and notes into the inventory with state rated and reruns the checker; P2-c now passes on the committed evidence
+END_MEASURE_AGENT_RESULT

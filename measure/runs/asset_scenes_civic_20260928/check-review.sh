@@ -145,11 +145,30 @@ if [ "$RATING_MISS" -eq 0 ]; then
   pass "P2-b all 30 ratings are labeled JSON numbers in [0, 10] with a critical flag and a note"
 fi
 
-echo "=== P2-c: judge family differs from the maker family ==="
+echo "=== P2-c: judge route and family differ from the maker family ==="
 FAMILY_MISS=0
 for n in 1 2 3 4; do
   FAM="$(jq -r '.model_family' "$RUNS/vision-review-b$n.json")"
+  ROUTE="$(jq -r '.route' "$RUNS/vision-review-b$n.json")"
+  echo "Batch b$n judge route: $ROUTE"
   echo "Batch b$n judge family: $FAM"
+  # .route is the provider/model route printed by `ra-quota pick vision-review`
+  # (for example kimi-code-plan-cn/kimi-for-coding). It never names the role.
+  if [ -z "$ROUTE" ] || [ "$ROUTE" = "null" ]; then
+    fail "P2-c batch b$n records no route"
+    FAMILY_MISS=1
+    continue
+  fi
+  case "$ROUTE" in
+    */?*)
+      pass "P2-c batch b$n route [$ROUTE] is a provider/model string"
+      ;;
+    *)
+      fail "P2-c batch b$n route [$ROUTE] is not a provider/model string"
+      FAMILY_MISS=1
+      continue
+      ;;
+  esac
   if [ -z "$FAM" ] || [ "$FAM" = "null" ]; then
     fail "P2-c batch b$n records no model_family"
     FAMILY_MISS=1
@@ -158,23 +177,33 @@ for n in 1 2 3 4; do
   LFAM="$(printf '%s' "$FAM" | tr '[:upper:]' '[:lower:]')"
   case "$LFAM" in
     *claude*|*anthropic*|*sonnet*)
-      fail "P2-c batch b$n judge family [$FAM] is in the maker/claude family; the judge must differ from the maker"
+      fail "P2-c batch b$n judge family [$FAM] is in the maker/claude family; the judge must differ from the maker (Anthropic Sonnet)"
       FAMILY_MISS=1
       ;;
     *)
       pass "P2-c batch b$n judge family [$FAM] differs from the maker family"
       ;;
   esac
-  ROUTE="$(jq -r '.route' "$RUNS/vision-review-b$n.json")"
-  case "$ROUTE" in
-    *vision-review*) pass "P2-c batch b$n cites the vision-review route" ;;
-    *) fail "P2-c batch b$n route [$ROUTE] is not the vision-review route"; FAMILY_MISS=1 ;;
+  # The route must agree with the family: a claude-code/* route or a
+  # */claude-* model fails even when model_family claims otherwise.
+  PROVIDER="$(printf '%s' "$ROUTE" | cut -d/ -f1)"
+  MODEL="$(printf '%s' "$ROUTE" | cut -d/ -f2-)"
+  LROUTE="$(printf '%s' "$PROVIDER/$MODEL" | tr '[:upper:]' '[:lower:]')"
+  case "$LROUTE" in
+    *claude*|*anthropic*)
+      fail "P2-c batch b$n route [$ROUTE] names the claude/anthropic family; the judge must differ from the maker"
+      FAMILY_MISS=1
+      ;;
+    *)
+      pass "P2-c batch b$n route [$ROUTE] agrees with a non-maker family"
+      ;;
   esac
+  # The log cites the same route string and a model id or model family.
   LOG="$RUNS/vision-review-b$n.log"
-  if grep -q "vision-review" "$LOG" && grep -qiF "$FAM" "$LOG"; then
-    pass "P2-c batch b$n log cites its route and model family"
+  if grep -qF "$ROUTE" "$LOG" && { grep -qF "$MODEL" "$LOG" || grep -qiF "$FAM" "$LOG"; }; then
+    pass "P2-c batch b$n log cites its route and a model id or family"
   else
-    fail "P2-c batch b$n log does not cite its route and model family"
+    fail "P2-c batch b$n log does not cite its route and a model id or family"
     FAMILY_MISS=1
   fi
 done
