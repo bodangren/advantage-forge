@@ -1,8 +1,8 @@
 # Measure status
 
-Tracks: 78.
-Tracks by status: new: 28; in_progress: 49; completed: 1.
-Tracks by workstream: assets: 34; games: 41; foundation: 3.
+Tracks: 77.
+Tracks by status: new: 28; in_progress: 48; completed: 1.
+Tracks by workstream: assets: 33; games: 41; foundation: 3.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
@@ -18,7 +18,6 @@ Tracks by workstream: assets: 34; games: 41; foundation: 3.
 | [asset_quality_20260928](../tracks/asset_quality_20260928/) | in_progress | assets | 4/10 | 10 | — |
 | [asset_review_audit_20261005](../tracks/asset_review_audit_20261005/) | in_progress | assets | 4/15 | 10 | — |
 | [asset_scenes_adventure_20260928](../tracks/asset_scenes_adventure_20260928/) | new | assets | 0/9 | 9 | — |
-| [asset_scenes_civic_20260928](../tracks/asset_scenes_civic_20260928/) | in_progress | assets | 10/12 | 9 | — |
 | [asset_scenes_settlements_20260928](../tracks/asset_scenes_settlements_20260928/) | in_progress | assets | 0/9 | 9 | — |
 | [asset_scenes_wilderness_20260928](../tracks/asset_scenes_wilderness_20260928/) | in_progress | assets | 0/9 | 9 | — |
 | [audio_game_integration_20261014](../tracks/audio_game_integration_20261014/) | new | games | 0/5 | 5 | — |
