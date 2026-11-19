@@ -6,8 +6,12 @@
 # the generator still writes the mill without the accepted yaw, and the TSV cites no record.
 #
 # P4-a: the 30 civic P2 TSV rows hold `accepted` or `follow-up`; none reads `mockup-needed`.
+#   ADV-7: every TSV data row holds exactly 4 tab-separated columns (a trailing tab that
+#   adds a 5th column is schema drift and fails).
 # P4-b: the TSV diff against the phase base changes only the status column; every scene_id
 #   is unchanged (values compared, not labels).
+#   ADV-8: columns 1-3 of the whole TSV match the phase base in order (masked sha256);
+#   a pure row reorder fails even though the sorted ID set is unchanged.
 # P4-c: each TSV `accepted` row has inventory support: Judge rating >= 7.0 with critical
 #   false, or (mill) Rerate >= 7.0 with a non-critical rerate record. Each `follow-up` row
 #   has a rating below 7.0, a critical error, or a missing source. The TSV accepted count
@@ -17,6 +21,13 @@
 # P4-e: docs/map-review.html is unchanged against the phase base (a view, not a record).
 # P4-f (scoped): the doctor output holds no error line that names asset_scenes_civic_20260928
 #   or its files; the total doctor error count is recorded as information only.
+#   ADV-9: the civic grep set holds the track id plus every civic file path
+#   (scenes/maps/<slug>.ts, docs/map-mockups/<slug>*, scripts/design-<slug>.mjs, the TSV,
+#   and locations/civic/*), so a doctor line that names a civic file without the track id
+#   still fails. NOTE: the doctor today reports
+#   `measure/generated/asset-inventory.json: stale generated fact`; that line names a shared
+#   generated file, not a civic file, so it is not counted as a civic line (the regenerate
+#   is deferred to closeout).
 #   NOTE: ./measure/doctor.sh reports errors from other tracks today (moved-track links in
 #   measure/generated/status.md and asset_p1_* plans, owned elsewhere), so this check does
 #   NOT require a green doctor. It requires only that no error line names this track.
@@ -115,6 +126,18 @@ else
   fail "P4-a $STALE_COUNT of 30 rows still read mockup-needed (accepted: $ACCEPTED_COUNT, follow-up: $FOLLOW_COUNT)"
 fi
 
+echo "=== P4-a: every TSV data row holds exactly 4 tab-separated columns (ADV-7) ==="
+# A3: labeled column counts, never a bare digit scan. A trailing tab adds a fifth column
+# while $4 still reads accepted, so the field count itself is the guard.
+BAD_COL_LINES="$(awk -F'\t' 'NR>1 && NF!=4 {print NR}' "$TSV")"
+if [ -z "$BAD_COL_LINES" ]; then
+  FOUR_COL_ROWS="$(awk -F'\t' 'NR>1 && NF==4 {c++} END{print c+0}' "$TSV")"
+  echo "TSV data rows with 4 columns: $FOUR_COL_ROWS"
+  pass "P4-a every TSV data row holds exactly 4 tab-separated columns (TSV data rows with 4 columns: $FOUR_COL_ROWS)"
+else
+  fail "P4-a TSV data rows hold a column count other than 4 at lines: [$(echo "$BAD_COL_LINES" | tr '\n' ' ')]"
+fi
+
 echo "=== P4-b: TSV diff changes only the status column; scene_ids unchanged ==="
 BASE_IDS="$(git show "$PHASE_BASE:$TSV" | awk -F'\t' '$2=="civic" && $3=="P2" {print $1}' | sort)"
 HEAD_IDS="$(awk -F'\t' '$2=="civic" && $3=="P2" {print $1}' "$TSV" | sort)"
@@ -124,6 +147,18 @@ else
   fail "P4-b civic P2 scene_id set differs against $PHASE_BASE"
   echo "--- base ids ---"; echo "$BASE_IDS"
   echo "--- head ids ---"; echo "$HEAD_IDS"
+fi
+# ADV-8: the masked in-order compare. Columns 1-3 of the whole TSV must match the phase
+# base byte for byte in order; a pure row reorder changes this sha while the sorted ID
+# set above stays unchanged. The status column is masked out, so record updates pass.
+BASE_MASKED_SHA="$(git show "$PHASE_BASE:$TSV" | cut -f1-3 | sha256sum | awk '{print $1}')"
+HEAD_MASKED_SHA="$(cut -f1-3 "$TSV" | sha256sum | awk '{print $1}')"
+echo "TSV columns 1-3 sha256 base: $BASE_MASKED_SHA"
+echo "TSV columns 1-3 sha256 head: $HEAD_MASKED_SHA"
+if [ "$BASE_MASKED_SHA" = "$HEAD_MASKED_SHA" ]; then
+  pass "P4-b columns 1-3 of the whole TSV match $PHASE_BASE in order (no reorder, no ID or group edit)"
+else
+  fail "P4-b columns 1-3 of the TSV differ from $PHASE_BASE in order or value (reorder or non-status edit)"
 fi
 DIFF_ROWS="$(git diff "$PHASE_BASE"..HEAD -- "$TSV" | grep -E '^[+-][^+-]' | grep -c . || true)"
 echo "TSV changed data lines vs $PHASE_BASE: $DIFF_ROWS"
@@ -262,11 +297,25 @@ fi
 DOCTOR_ERRORS="$(grep -c '^error' "$DOCTOR_OUT" || true)"
 echo "Doctor exit code: $DOCTOR_EXIT"
 echo "Doctor error count: $DOCTOR_ERRORS"
-CIVIC_ERRORS="$(grep -F 'asset_scenes_civic_20260928' "$DOCTOR_OUT" || true)"
+# ADV-9: the civic grep set names the track id and every civic file path, so a doctor
+# line that names a civic file without the track id still fails the scoped gate.
+CIVIC_PATTERNS="$(mktemp)"
+{
+  printf '%s\n' "asset_scenes_civic_20260928"
+  printf '%s\n' "docs/fantasy-world-scene-blueprints.tsv"
+  printf '%s\n' "locations/civic/"
+  for s in $SLUGS; do
+    printf '%s\n' "scenes/maps/$s.ts"
+    printf '%s\n' "docs/map-mockups/$s"
+    printf '%s\n' "scripts/design-$s.mjs"
+  done
+} > "$CIVIC_PATTERNS"
+CIVIC_ERRORS="$(grep -F -f "$CIVIC_PATTERNS" "$DOCTOR_OUT" || true)"
+rm -f "$CIVIC_PATTERNS"
 if [ -z "$CIVIC_ERRORS" ]; then
   pass "P4-f doctor output holds no error line for this track (total doctor errors: $DOCTOR_ERRORS, owned elsewhere)"
 else
-  fail "P4-f doctor output names this track: [$CIVIC_ERRORS]"
+  fail "P4-f doctor output names this track or its civic files: [$CIVIC_ERRORS]"
 fi
 rm -f "$DOCTOR_OUT"
 

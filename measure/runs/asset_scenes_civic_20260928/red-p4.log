@@ -53,3 +53,20 @@ remaining_failures:
 generator_method: generator run with cwd in a temp dir so the committed mill.ts was never overwritten; temp output compared byte for byte with cmp
 doctor_note: doctor exits 1 with 51 error lines from other tracks; no error line names asset_scenes_civic_20260928 or its files
 END_MEASURE_AGENT_RESULT
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+track: asset_scenes_civic_20260928
+phase: ## Phase 4: Records
+baseline_sha: 024cfdf9
+role_base_sha: b8022222
+red_run_head_sha: b8022222
+result: checker closes ADV-7, ADV-8, ADV-9; real tree stays green
+real_tree_run: exit 0 with === Total: 46 checks (PASS=46, FAIL=0) ===
+probe_adv7: trailing tab on the apothecary TSV row (fixture NF=5, $4=accepted) -> exit 1 with FAIL: P4-a TSV data rows hold a column count other than 4 at lines: [36] (plus a bonus P4-f FAIL because the doctor itself flags the row as an invalid table row naming the TSV)
+probe_adv8: adjacent apothecary/archive rows swapped (masked cut -f1-3 sha256 0b771e39, matching the adversarial fixture hash) -> exit 1 with one FAIL: P4-b columns 1-3 of the TSV differ from 024cfdf9 in order or value; the old sorted-ID check still passes, so the new guard alone carries the defense
+probe_adv9: tech-debt.md link line forces doctor error naming ../scenes/maps/mill.ts.missing -> exit 1 with one FAIL: P4-f doctor output names this track or its civic files; the shared-file line measure/generated/asset-inventory.json: stale generated fact is not in the civic grep set and stays information only
+fixtures: /tmp fixtures created per probe, applied to a pristine checkout, reverted with git checkout after each run, deleted after; real tree files verified clean
+changed_files:
+  - measure/runs/asset_scenes_civic_20260928/check-records.sh
+  - measure/runs/asset_scenes_civic_20260928/red-p4.log
+END_MEASURE_AGENT_RESULT
