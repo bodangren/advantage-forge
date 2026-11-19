@@ -2,6 +2,22 @@
 
 Status: in progress (started 2026-10-05). This plan owns execution status. Source documents retain design details.
 
+## Contents
+
+- [Phase 1: Contract and scope](#phase-1-contract-and-scope)
+- [Phase 2: Acceptance checks](#phase-2-acceptance-checks)
+- [Phase 3: Production](#phase-3-production)
+- [Phase 4: Documentation and verification](#phase-4-documentation-and-verification)
+- [Acceptance checks (all batches)](#acceptance-checks-all-batches)
+- [Batches (by kind factory)](#batches-by-kind-factory)
+- [Batch 1 (2026-10-05): mounts on the horse kind](#batch-1-2026-10-05-mounts-on-the-horse-kind)
+- [Batch 2 (2026-10-05): deer kind factory](#batch-2-2026-10-05-deer-kind-factory)
+- [Batch 3 (2026-10-05): large farm and desert animals](#batch-3-2026-10-05-large-farm-and-desert-animals)
+- [Batch 4 (2026-10-05): wolf kind and a cat helper](#batch-4-2026-10-05-wolf-kind-and-a-cat-helper)
+- [Batch 5 (2026-10-05): boar kind with friendly faces](#batch-5-2026-10-05-boar-kind-with-friendly-faces)
+- [Batches 6 to 9 (2026-10-05): birds, small animals, insects, and water animals](#batches-6-to-9-2026-10-05-birds-small-animals-insects-and-water-animals)
+- [Independent review (owner decision 2026-10-05)](#independent-review-owner-decision-2026-10-05)
+
 ## Phase 1: Contract and scope
 
 - [x] Task: Select a bounded batch from the scope map (ten batches by kind, below).

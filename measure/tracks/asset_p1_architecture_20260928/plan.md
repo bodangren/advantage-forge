@@ -2,6 +2,23 @@
 
 Status: completed. This plan owns execution status. Source documents retain design details.
 
+## Contents
+
+- [Phase 1: Contract and scope](#phase-1-contract-and-scope)
+- [Phase 2: Acceptance checks](#phase-2-acceptance-checks)
+- [Phase 3: Production](#phase-3-production)
+- [Phase 4: Documentation and verification](#phase-4-documentation-and-verification)
+- [Batch 1 (Sonnet 5.5 probe, 2026-09-29): farmhouse](#batch-1-sonnet-55-probe-2026-09-29-farmhouse)
+- [Batch 1 round 1 (Sonnet 5.5, 2026-09-29): greenhouse, yurt](#batch-1-round-1-sonnet-55-2026-09-29-greenhouse-yurt)
+- [Batch 1 round 2 (Sonnet 5.5, 2026-09-29): pier](#batch-1-round-2-sonnet-55-2026-09-29-pier)
+- [Batch 1 rounds 2 and 3 (Sonnet 5.5, 2026-09-29): city-wall, rampart, greenhouse-dome](#batch-1-rounds-2-and-3-sonnet-55-2026-09-29-city-wall-rampart-greenhouse-dome)
+- [Batch 1 round 4 (Sonnet 5.5, 2026-09-29): watermill](#batch-1-round-4-sonnet-55-2026-09-29-watermill)
+- [Batch 1 round 4 (Sonnet 5.5, 2026-09-29): townhouse, crypt-chapel](#batch-1-round-4-sonnet-55-2026-09-29-townhouse-crypt-chapel)
+- [Batch 2 (Sonnet 5.5 run 4, 2026-09-30): silo, wall-gate](#batch-2-sonnet-55-run-4-2026-09-30-silo-wall-gate)
+- [Rework note (Sonnet 5.5 run 4, 2026-09-30)](#rework-note-sonnet-55-run-4-2026-09-30)
+- [World catch-up (2026-10-01, track `asset_world_catchup_20261001`)](#world-catch-up-2026-10-01-track-assetworldcatchup20261001)
+- [Completion (2026-10-02, track `asset_p0p1_completion_20261002`)](#completion-2026-10-02-track-assetp0p1completion20261002)
+
 ## Phase 1: Contract and scope
 
 - [x] Task: Select a bounded batch from the scope map.

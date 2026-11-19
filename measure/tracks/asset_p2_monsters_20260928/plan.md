@@ -2,6 +2,27 @@
 
 Status: in progress (batch 1 done 2026-10-04). This plan owns execution status. Source documents retain design details.
 
+## Contents
+
+- [Phase 1: Contract and scope](#phase-1-contract-and-scope)
+- [Phase 2: Acceptance checks](#phase-2-acceptance-checks)
+- [Phase 3: Production](#phase-3-production)
+- [Phase 4: Documentation and verification](#phase-4-documentation-and-verification)
+- [Acceptance checks (all batches)](#acceptance-checks-all-batches)
+- [Batch 1 (2026-10-04): game demand, built by the orchestrator](#batch-1-2026-10-04-game-demand-built-by-the-orchestrator)
+- [Batch 2 (2026-10-04): element dragons on a dragon kind factory](#batch-2-2026-10-04-element-dragons-on-a-dragon-kind-factory)
+- [Batch 3 (2026-10-04): ten elementals on a spirit kind factory](#batch-3-2026-10-04-ten-elementals-on-a-spirit-kind-factory)
+- [Batch 4 (2026-10-04): monsters on existing bases](#batch-4-2026-10-04-monsters-on-existing-bases)
+- [Batch 5 (2026-10-04): twelve monsters on six kind factories](#batch-5-2026-10-04-twelve-monsters-on-six-kind-factories)
+- [Batch 6 (2026-10-04): five monsters on dragon, wolf, and spider kinds](#batch-6-2026-10-04-five-monsters-on-dragon-wolf-and-spider-kinds)
+- [Batch 7 (2026-10-04): eight monsters on wolf, boar, goblin, imp, spirit, and slime kinds](#batch-7-2026-10-04-eight-monsters-on-wolf-boar-goblin-imp-spirit-and-slime-kinds)
+- [Batch 8 (2026-10-04): three birds on a new bird kind](#batch-8-2026-10-04-three-birds-on-a-new-bird-kind)
+- [Batch 9 (2026-10-04): four serpents on a new serpent kind, and a hydra on the dragon kind](#batch-9-2026-10-04-four-serpents-on-a-new-serpent-kind-and-a-hydra-on-the-dragon-kind)
+- [Batch 10 (2026-10-04): nine monsters on two new kinds (toad, octopus) and four existing kinds](#batch-10-2026-10-04-nine-monsters-on-two-new-kinds-toad-octopus-and-four-existing-kinds)
+- [Batch 11 (2026-10-04 to 10-05): the last five monsters](#batch-11-2026-10-04-to-10-05-the-last-five-monsters)
+- [Close (2026-10-05)](#close-2026-10-05)
+- [Next](#next)
+
 ## Phase 1: Contract and scope
 
 - [x] Task: Select a bounded batch from the scope map (batch 1 by game demand, below).

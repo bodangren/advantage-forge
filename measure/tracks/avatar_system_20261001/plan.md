@@ -2,6 +2,21 @@
 
 Status: completed (2026-10-04: Phases 4 and 5 done: the avatar pack, the portraits, the composer, and the review). The monorepo tables, API, and pages are a monorepo track. The plan records execution state. The specification retains design detail.
 
+## Contents
+
+- [Phase 1: Documents](#phase-1-documents)
+- [Phase 2: The avatar base](#phase-2-the-avatar-base)
+- [Phase 3: Equipment declaration and fit](#phase-3-equipment-declaration-and-fit)
+- [Phase 4: Pack and portraits](#phase-4-pack-and-portraits)
+- [Phase 5: Composer and review](#phase-5-composer-and-review)
+- [Monorepo notes](#monorepo-notes)
+- [Pack, composer, and portrait record (2026-10-04)](#pack-composer-and-portrait-record-2026-10-04)
+- [Capped hair record (2026-10-04)](#capped-hair-record-2026-10-04)
+- [Part fix record (2026-10-01)](#part-fix-record-2026-10-01)
+- [Avatar base record (2026-10-01)](#avatar-base-record-2026-10-01)
+- [Equip rollout record (2026-10-01)](#equip-rollout-record-2026-10-01)
+- [Equip record (2026-10-01)](#equip-record-2026-10-01)
+
 ## Phase 1: Documents
 
 - [x] Task: Write the program plan (`docs/chibi-quest-progression.md`) and the specification

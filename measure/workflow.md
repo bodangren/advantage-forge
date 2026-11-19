@@ -3,6 +3,17 @@
 The track plan owns execution status. The Measure index resolves project context.
 This workflow adapts Measure to an existing asset and game repository.
 
+## Contents
+
+- [Start work](#start-work)
+- [Define new work](#define-new-work)
+- [Code changes](#code-changes)
+- [Asset changes](#asset-changes)
+- [Game changes and ports](#game-changes-and-ports)
+- [Concurrent work and commits](#concurrent-work-and-commits)
+- [Completion](#completion)
+- [Commands](#commands)
+
 ## Start work
 
 1. Read the Measure index and project status.

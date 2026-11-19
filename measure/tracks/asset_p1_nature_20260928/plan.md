@@ -2,6 +2,22 @@
 
 Status: completed. This plan owns execution status. Source documents retain design details.
 
+## Contents
+
+- [Phase 1: Contract and scope](#phase-1-contract-and-scope)
+- [Phase 2: Acceptance checks](#phase-2-acceptance-checks)
+- [Phase 3: Production](#phase-3-production)
+- [Phase 4: Documentation and verification](#phase-4-documentation-and-verification)
+- [Batch 1 (Sonnet 5.5 probe, 2026-09-29): ivy](#batch-1-sonnet-55-probe-2026-09-29-ivy)
+- [Batch 1 round 2 (Sonnet 5.5, 2026-09-29): cave-mouth](#batch-1-round-2-sonnet-55-2026-09-29-cave-mouth)
+- [Batch 1 round 3 (Sonnet 5.5, 2026-09-29): ancient-tree](#batch-1-round-3-sonnet-55-2026-09-29-ancient-tree)
+- [Batch 1 round 3 (Sonnet 5.5, 2026-09-29): cliff-face SKIPPED](#batch-1-round-3-sonnet-55-2026-09-29-cliff-face-skipped)
+- [Batch 2 (Sonnet 5.5 run 4, 2026-09-30): palm-tree, giant-crystal](#batch-2-sonnet-55-run-4-2026-09-30-palm-tree-giant-crystal)
+- [Rework note (Sonnet 5.5 run 4, 2026-09-30)](#rework-note-sonnet-55-run-4-2026-09-30)
+- [World catch-up (2026-10-01, track `asset_world_catchup_20261001`)](#world-catch-up-2026-10-01-track-assetworldcatchup20261001)
+- [Closeout (2026-10-02, track `asset_p0p1_closeout_20261002`)](#closeout-2026-10-02-track-assetp0p1closeout20261002)
+- [Completion (2026-10-02, track `asset_p0p1_completion_20261002`)](#completion-2026-10-02-track-assetp0p1completion20261002)
+
 ## Phase 1: Contract and scope
 
 - [x] Task: Select a bounded batch from the scope map.

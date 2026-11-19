@@ -2,6 +2,17 @@
 
 Status: in_progress. This plan owns execution status. Source documents retain design details.
 
+## Contents
+
+- [Phase 1: Contract and scope](#phase-1-contract-and-scope)
+- [Phase 2: Acceptance checks](#phase-2-acceptance-checks)
+- [Phase 3: Production](#phase-3-production)
+- [Phase 4: Documentation and verification](#phase-4-documentation-and-verification)
+- [Batch 1 (Sonnet 5.5 probe, 2026-09-29): samurai](#batch-1-sonnet-55-probe-2026-09-29-samurai)
+- [Batch 2 (Sonnet 5.5 run 4, 2026-09-30): the 32 open P1 heroes](#batch-2-sonnet-55-run-4-2026-09-30-the-32-open-p1-heroes)
+- [Heroes resume (2026-10-01 00:10 onward)](#heroes-resume-2026-10-01-0010-onward)
+- [Close (2026-10-01 05:15)](#close-2026-10-01-0515)
+
 ## Phase 1: Contract and scope
 
 - [x] Task: Select a bounded batch from the scope map.

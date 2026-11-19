@@ -2,6 +2,22 @@
 
 Status: completed (2026-10-01). This plan owns execution status. Source documents retain design details.
 
+## Contents
+
+- [Phase 1: Part-module contract](#phase-1-part-module-contract)
+- [Phase 2: Pilot on three parts](#phase-2-pilot-on-three-parts)
+- [Phase 3: Runtime extraction helper](#phase-3-runtime-extraction-helper)
+- [Phase 4: Avatar attachment convention](#phase-4-avatar-attachment-convention)
+- [Phase 5: Acceptance and documentation](#phase-5-acceptance-and-documentation)
+- [Pilot record (2026-10-01, orchestrator)](#pilot-record-2026-10-01-orchestrator)
+- [Rollout batch 1 (2026-10-01, commit 8cf507e)](#rollout-batch-1-2026-10-01-commit-8cf507e)
+- [Priority list (owner decision 2026-10-01)](#priority-list-owner-decision-2026-10-01)
+- [Rollout batches 2 to 4 (2026-10-01, Sonnet low)](#rollout-batches-2-to-4-2026-10-01-sonnet-low)
+- [Rollout batch 5 (2026-10-01, rows 11 to 25, Sonnet low, commit 0ba1537)](#rollout-batch-5-2026-10-01-rows-11-to-25-sonnet-low-commit-0ba1537)
+- [Catalog decision (owner, 2026-10-01): keep every variant](#catalog-decision-owner-2026-10-01-keep-every-variant)
+- [Open questions: answers](#open-questions-answers)
+- [Closing record (2026-10-01)](#closing-record-2026-10-01)
+
 ## Phase 1: Part-module contract
 
 - [x] Task: Read AGENTS.md, docs/equipment-fit.md, torso-contract.md, docs/color-variants.md, src/gltf.ts, and src/pipeline.ts.

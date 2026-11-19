@@ -2,6 +2,17 @@
 
 Status: completed. This plan owns execution status. Source documents retain design details.
 
+## Contents
+
+- [Phase 1: Contract and scope](#phase-1-contract-and-scope)
+- [Phase 2: Acceptance checks](#phase-2-acceptance-checks)
+- [Phase 3: Production](#phase-3-production)
+- [Phase 4: Documentation and verification](#phase-4-documentation-and-verification)
+- [Batch 1: wood-golem](#batch-1-wood-golem)
+- [Batch 1 enemy phase (Sonnet 5.5 high tier, 2026-09-29): orc-archer](#batch-1-enemy-phase-sonnet-55-high-tier-2026-09-29-orc-archer)
+- [Closeout (2026-10-02, track `asset_p0p1_closeout_20261002`)](#closeout-2026-10-02-track-assetp0p1closeout20261002)
+- [Completion (2026-10-02, track `asset_p0p1_completion_20261002`)](#completion-2026-10-02-track-assetp0p1completion20261002)
+
 ## Phase 1: Contract and scope
 
 - [x] Task: Select a bounded batch from the scope map.

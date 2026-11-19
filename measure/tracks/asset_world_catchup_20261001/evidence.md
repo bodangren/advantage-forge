@@ -3,6 +3,12 @@
 Each row is the last pass in `bench/sonnet/log.tsv` (batches `catchup1`, `catchup2`, `slab`).
 Scores are out of 10 from the review rubric. Bars: P0 7.5, P1 7.0.
 
+## Contents
+
+- [Batch 1 (P0 and game-used P1)](#batch-1-p0-and-game-used-p1)
+- [Batch 2 (other P1)](#batch-2-other-p1)
+- [Ground tiles (0.3 m slab)](#ground-tiles-03-m-slab)
+
 ## Batch 1 (P0 and game-used P1)
 
 | Priority | Group | Asset | Score | Bar | Result |
