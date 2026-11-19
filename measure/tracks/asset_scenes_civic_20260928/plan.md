@@ -76,7 +76,7 @@ wheel.
 
 ## Phase 3: Rework
 
-- [x] Task: Rework each map below 7.0 or with a critical error, once. (7619c491: mill only, the one below-bar and critical map; yaw -65 on the watermill makes the wheel face the three-quarter camera; fresh mill-3q.png and mill-top.png committed in 7619c491)
+- [x] Task: Rework each map below 7.0 or with a critical error, once. (`7619c491`: mill only, the one below-bar and critical map; yaw -65 on the watermill makes the wheel face the three-quarter camera; fresh mill-3q.png and mill-top.png committed in 7619c491)
   Give the job to a maker on "ra-quota pick coder".
   Regenerate the map with `scripts/design-<slug>.mjs` or edit `scenes/maps/<slug>.ts`.
   Then shoot the two views into `docs/map-mockups/`:
@@ -89,8 +89,8 @@ FORGE_SHOT_BASE=http://127.0.0.1:5199/hamlet.html node scripts/shoot-map.mjs doc
 ```
 
   Set `dist` from the room size of each map. Keep the three-quarter camera at 45 to 50 degrees.
-- [x] Task: Rerate each reworked map once with an independent judge. (7619c491: the rework audited at 304a75d6; one Kimi rerate of 7.5, critical false, in rerate-mill.json and rerate-mill.log committed with this evidence)
-- [x] Task: Apply the stop rule. (7619c491: mill holds three ratings, MAPS 7.0, Judge 5.5, Rerate 7.5; no fourth rating; state accepted, no follow-up)
+- [x] Task: Rerate each reworked map once with an independent judge. (`7619c491`: the rework audited at 304a75d6; one Kimi rerate of 7.5, critical false, in rerate-mill.json and rerate-mill.log committed with this evidence)
+- [x] Task: Apply the stop rule. (`7619c491`: mill holds three ratings, MAPS 7.0, Judge 5.5, Rerate 7.5; no fourth rating; state accepted, no follow-up)
   After the third rating below the bar, put the map on the follow-up list.
   Do not start a fourth rating.
 
@@ -128,12 +128,12 @@ follow-up list.
 
 ## Phase 4: Records
 
-- [x] Task: Update the TSV status column for each reviewed map. (e2c7bb9c: all 30 civic P2 rows read `accepted`; the diff changes only the status column and no ID moves. 2881a7a3: the 29 inventory state cells that read `rated` now read `accepted`; the mill row already did)
+- [x] Task: Update the TSV status column for each reviewed map. (`e2c7bb9c`: all 30 civic P2 rows read `accepted`; the diff changes only the status column and no ID moves. `2881a7a3`: the 29 inventory state cells that read `rated` now read `accepted`; the mill row already did)
   Use `accepted` or `follow-up`. Do not change any ID. Cite the commit in this plan.
 - [x] Task: Decide the `docs/map-review.html` note. (no commit: the page is unchanged against `024cfdf9`, so P4-e passes. No tool reads the page, and the PM did not name it as the record, so it stays a view)
   `scripts/map-review-page.mjs` generates that page from `bench/sonnet/log.tsv`. No tool reads the page.
   Leave the page alone unless the PM names it as the record.
-- [x] Task: Run the doctor. (2026-11-19: the scoped P4-f check found no civic error line in `./measure/doctor.sh`; the doctor still exits 1 on errors from other tracks, owned elsewhere)
+- [x] Task: Run the doctor. (`9f2e571f`: ./measure/doctor.sh exits 0 through heavy-run.sh, no structural errors; Build commits c3488207, 7619051a, 6bce6ef6; the 2026-11-19 scoped P4-f check found no civic error line)
 
 ```bash
 ./measure/doctor.sh
@@ -165,8 +165,9 @@ grew from 14 at Red because P4-d adds one check for each of the 30 changed TSV r
   `0d2873d1a0f1c8f26095a01bab32d7ebb336be900cee1d6e437ca809fff5a8c1`, and the committed
   `scenes/maps/mill.ts` was never overwritten.
 - P4-f (scoped): on 2026-11-19 the scoped check found no error line for `asset_scenes_civic_20260928`
-  or its files in `./measure/doctor.sh`. The doctor still exits 1 on error lines from other tracks,
-  owned elsewhere; this plan quotes no doctor error count because that count moves with other work.
+  or its files in `./measure/doctor.sh`. The doctor also exits 0 on that date through `heavy-run.sh`,
+  so the tree holds no structural error. This plan quotes no doctor error count because that count
+  moves with other work.
 - Review C F1 (`measure/runs/asset_scenes_civic_20260928/review-c-p4-be89dc9.json`): the committed
   `measure/generated/asset-inventory.json` was stale after the TSV change; it held 6 `accepted` rows
   while the TSV holds 36, and `node measure/tools/generate.mjs --check` exited 1 with three
