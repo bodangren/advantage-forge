@@ -1,0 +1,28 @@
+MEASURE_AGENT_RESULT
+route: kimi-code-plan-cn/kimi-for-coding
+model_id: kimi-for-coding
+model_family: kimi
+role: independent map judge, batch 1 of 4
+track: asset_scenes_civic_20260928
+phase: Phase 2: Independent review
+audited_head: 3b35a490
+batch: 1
+maps_judged: 8
+method: Read each design brief (docs/map-mockups/<slug>.md), the target mockup (<slug>.jpg), and the built map shots (<slug>-3q.png and <slug>-top.png). Rated layout match, named key pieces, game-camera readability, palette, and floating, clipping, or broken geometry. Bar 7.0 for P2. No earlier ratings were consulted.
+
+Ratings (slug: rating, critical):
+apothecary: 8.0, false
+archive: 8.0, false
+arena: 7.5, false
+armory: 8.0, false
+bakery: 8.0, false
+bank: 7.5, false
+barracks: 8.0, false
+bathhouse: 8.0, false
+
+All 8 maps meet the 7.0 bar. No critical model errors found: no floating or buried pieces, no walls through buildings, no missing main features. Lowest gaps: arena corner towers are not distinct and its stand rings read as separated slabs; bank chandeliers sit at floor level and read as stray wagon wheels.
+
+verdict: PASS
+retry_recommendation: none
+status: complete
+END_MEASURE_AGENT_RESULT

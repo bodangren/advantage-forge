@@ -1,0 +1,34 @@
+MEASURE_AGENT_RESULT
+role: independent map judge, batch 4 of 4
+route: kimi-code-plan-cn/kimi-for-coding
+model_id: kimi-for-coding (model family: kimi)
+track: asset_scenes_civic_20260928, phase "Phase 2: Independent review"
+audited_head: 3b35a490 (confirmed current)
+scope: shrine, stable, temple, theater, town-hall, warehouse, watchtower
+
+Method: for each slug, read docs/map-mockups/<slug>.md (design brief),
+docs/map-mockups/<slug>.jpg (target mockup), and the built map shots
+<slug>-3q.png and <slug>-top.png. Rated against layout match, key brief
+pieces, readability at game camera, palette, and defects (floating,
+clipping, broken geometry). Bar 7.0 for P2. No critical model errors
+found: no floating or buried pieces, no wall through a building, no
+missing main feature on any of the seven maps.
+
+Ratings:
+- shrine: 8
+- stable: 8
+- temple: 7.5
+- theater: 8
+- town-hall: 8.5
+- warehouse: 8.5
+- watchtower: 8
+
+All seven maps meet the 7.0 bar. Largest gaps: temple aisle rug is red
+instead of gold; watchtower pad is a raised walled platform instead of a
+flat 7x7 pad; shrine arch is a full stone ring instead of the timber-style
+mockup arch. These are brief deviations, not breakages.
+
+blocking_findings: []
+nonblocking_findings: []
+retry_recommendation: none
+END_MEASURE_AGENT_RESULT

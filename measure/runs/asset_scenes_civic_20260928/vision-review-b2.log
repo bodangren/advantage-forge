@@ -1,0 +1,30 @@
+# Vision review batch 2 - civic scenes, independent judge
+
+Route: kimi-code-plan-cn/kimi-for-coding (model family: kimi, model id: kimi-for-coding)
+Track: asset_scenes_civic_20260928, phase "Phase 2: Independent review"
+Audited HEAD: 3b35a490 (confirmed current)
+
+Method: for each slug, read docs/map-mockups/<slug>.md (brief), <slug>.jpg (target mockup),
+<slug>-3q.png and <slug>-top.png (built map). Rated against layout match, named key pieces,
+readability at game camera, palette, and floating/clipping/broken checks. Bar 7.0 (P2).
+No earlier ratings were consulted; each map was rated from what is visible in the shots.
+
+MEASURE_AGENT_RESULT
+role: independent map judge, batch 2 of 4
+route: kimi-code-plan-cn/kimi-for-coding
+model_id: kimi-for-coding
+audited_head: 3b35a490
+status: complete
+findings:
+  castle: 8.0
+  cathedral: 8.0
+  cemetery: 8.0
+  courthouse: 8.5
+  general-store: 8.5
+  granary: 8.0
+  guild-hall: 8.0
+  inn: 8.5
+critical: none
+verdict: PASS
+retry_recommendation: none
+END_MEASURE_AGENT_RESULT

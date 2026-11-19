@@ -1,0 +1,52 @@
+{
+  "batch": 4,
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "model_family": "kimi",
+  "audited_head": "3b35a490",
+  "maps": [
+    {
+      "slug": "shrine",
+      "rating": 8,
+      "critical": false,
+      "note": "Platform, altar with crystal, braziers, statues, arch, cherry ring and south footpath all match the brief. Largest gap: the arch is a full stone ring, not the timber-style mockup arch."
+    },
+    {
+      "slug": "stable",
+      "rating": 8,
+      "critical": false,
+      "note": "Barn and shed row on the north edge, fenced paddock with horses, west tack yard with carts, central well and troughs all read clearly. Largest gap: stall horses under the thatch roof are hard to count, so the 7-horse tally is not visually verifiable."
+    },
+    {
+      "slug": "temple",
+      "rating": 7.5,
+      "critical": false,
+      "note": "Apse dais with altar, priest, pews in two blocks, columns, side-shrine statues and cutaway edges all present and readable. Largest gap: the aisle rug is red, not the gold the brief names."
+    },
+    {
+      "slug": "theater",
+      "rating": 8,
+      "critical": false,
+      "note": "Curtained stage with statues and props, two bench blocks, red rug aisle, south balcony with lobby strip, and north and west walls all match. Largest gap: none significant; the balcony entry gap is small in the top view."
+    },
+    {
+      "slug": "town-hall",
+      "rating": 8.5,
+      "critical": false,
+      "note": "Hall and bell tower on the north edge, banner steps, fountain square with benches and lanterns, west notice boards and speaker platform, east market stalls and well, and south gate guards all present. No floating or clipping seen."
+    },
+    {
+      "slug": "warehouse",
+      "rating": 8.5,
+      "critical": false,
+      "note": "Crate rows north, barrel columns east, double door with cart and sacks west, clerk desk south, loft ladder and a clear aisle all match the brief. Cutaway walls on north and west only, as specified."
+    },
+    {
+      "slug": "watchtower",
+      "rating": 8,
+      "critical": false,
+      "note": "Tower on a stone pad with braziers and ladder, cobble path to a gated signpost, south-east camp with fire, tents, horse and figures, and a west zone with deer, log and stumps all present. Largest gap: the pad is a raised walled platform, not the flat 7x7 pad the brief describes."
+    }
+  ],
+  "verdict": "PASS",
+  "retry_recommendation": "none"
+}

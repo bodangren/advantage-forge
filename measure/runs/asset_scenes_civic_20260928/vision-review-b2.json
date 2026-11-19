@@ -1,0 +1,58 @@
+{
+  "batch": 2,
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "model_family": "kimi",
+  "audited_head": "3b35a490",
+  "maps": [
+    {
+      "slug": "castle",
+      "rating": 8.0,
+      "critical": false,
+      "note": "All brief zones are present: walled square with four corner ramparts, keep forecourt with tower, rug, braziers, banners and guards, NW well, east longhouse barracks, SE stable pen with horses, and SW training yard with spears and hay bales. The built yard is larger and more divided than the compact mockup courtyard, and the well reads small, but nothing floats or clips."
+    },
+    {
+      "slug": "cathedral",
+      "rating": 8.0,
+      "critical": false,
+      "note": "Raised choir with altar, large stained-glass windows, two pew blocks flanking a red rug aisle between double column rows, hanging chandeliers, statues in side chapels, banners, and an open south edge all match the brief. The apse is a flat gabled wall rather than the mockup's rounded apse, and the columns read darker and squatter."
+    },
+    {
+      "slug": "cemetery",
+      "rating": 8.0,
+      "critical": false,
+      "note": "Fenced stone yard with a winding dirt path from the south gate, gravestone rows west and east, two crypt chapels at the north, a gravedigger shed with tools in the east, and dead trees plus willows around the rim all match the brief. The fence reads as wooden posts rather than the mockup's iron fence."
+    },
+    {
+      "slug": "courthouse",
+      "rating": 8.5,
+      "critical": false,
+      "note": "Judge dais with red throne and the scales of justice at the north, railed jury box west, witness stand east, public gallery bench rows south, red rugs down the aisle, banners, statues, and torch sconces all match the brief. No floating or buried pieces."
+    },
+    {
+      "slug": "general-store",
+      "rating": 8.5,
+      "critical": false,
+      "note": "Shelf walls with a ladder, L counter under a striped awning with the shopkeeper on a stone patch with a red rug, produce barrels and baskets in the SW, tool workbench with buckets in the SE, and a central display table on a rug all match the brief precisely. Nothing floats or clips."
+    },
+    {
+      "slug": "granary",
+      "rating": 8.0,
+      "critical": false,
+      "note": "Red barn on a two-layer stone plinth NW of centre with wooden steps, hay-bale pyramid west, crates and barrels east, threshing floor with sheaves SE, and a stepping-stone path with the farmer all match the brief. The rim trees are green rather than the mockup's golden ones, though the brief tally names apple and oak trees."
+    },
+    {
+      "slug": "guild-hall",
+      "rating": 8.0,
+      "critical": false,
+      "note": "Notice boards on the north wall as the focal point, clerk counter with shelves west, four round map tables on rugs centre-south, fireplace lounge NE, and the east stair landing all match the brief. The notice boards' small shingled roofs read like market kiosks at game camera."
+    },
+    {
+      "slug": "inn",
+      "rating": 8.5,
+      "critical": false,
+      "note": "Stone fireplace as the clear focal point on the north wall, long table with mugs and plates, east counter with barrels, innkeeper and stairs, curtained bunk-bed sleeping alcove in the SW, and travelers' tables in the south all match the brief. No floating or clipping found."
+    }
+  ],
+  "verdict": "PASS",
+  "retry_recommendation": "none"
+}

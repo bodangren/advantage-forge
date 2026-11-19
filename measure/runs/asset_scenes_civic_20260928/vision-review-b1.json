@@ -1,0 +1,58 @@
+{
+  "batch": 1,
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "model_family": "kimi",
+  "audited_head": "3b35a490",
+  "maps": [
+    {
+      "slug": "apothecary",
+      "rating": 8.0,
+      "critical": false,
+      "note": "All named zones are present: loaded shelves, counter with healer behind it, drying racks, tasting table on a rug, and a glowing cauldron in the brewing corner. The open floor between zones is sparser than the packed mockup, but nothing floats or clips."
+    },
+    {
+      "slug": "archive",
+      "rating": 8.0,
+      "critical": false,
+      "note": "West stacks with ladder, clerk desk, central map table on a rug, SE cabinets and chests, and the NE gallery stair all match the brief. Scrolls and candelabra read at game camera; no floating or buried pieces."
+    },
+    {
+      "slug": "arena",
+      "rating": 7.5,
+      "critical": false,
+      "note": "Pit, podium with statue, gladiator duel, stepped stands with crowds, wall ring, gates, flags, and weapon racks all read well. The stand rings look like separated flat slabs, and the four corner towers are not distinct from the wall."
+    },
+    {
+      "slug": "armory",
+      "rating": 8.0,
+      "critical": false,
+      "note": "Merlon-capped walls, spear barrels and sword benches in the NW, guard door with banners in the NE, armor tables along the west, grinding corner in the SW, and stairs with a rug path in the south all match the brief. No clipping found."
+    },
+    {
+      "slug": "bakery",
+      "rating": 8.0,
+      "critical": false,
+      "note": "Kiln sunk in the north brick wall with a lit fireplace, striped awning over the west counter, red rug at the south-west door, focal kneading table with stools, and loaded shelf plus sacks and barrels in storage all match the brief."
+    },
+    {
+      "slug": "bank",
+      "rating": 7.5,
+      "critical": false,
+      "note": "Vault with iron door, strongboxes, coin piles and guard in the NE, long teller counter with clerk desks behind, and a rug-and-bench customer floor all match the brief. The three chandeliers sit at floor level and read as stray wagon wheels."
+    },
+    {
+      "slug": "barracks",
+      "rating": 8.0,
+      "critical": false,
+      "note": "Two bunk houses across the north, drill yard with hay bales and soldiers in the west, mess tent and campfire in the east, central cobble path with flagpole, and a fenced south gate area all match the brief. No floating pieces."
+    },
+    {
+      "slug": "bathhouse",
+      "rating": 8.0,
+      "critical": false,
+      "note": "The 6x4 m pool is the clear focal point in a tiled rim, with the NW massage bed corner, bench rows with buckets along both sides, statues, fountain, and the south entrance rug all matching the brief. Nothing floats or clips."
+    }
+  ],
+  "verdict": "PASS",
+  "retry_recommendation": "none"
+}

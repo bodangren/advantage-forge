@@ -1,0 +1,52 @@
+{
+  "batch": 3,
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "model_family": "kimi",
+  "audited_head": "3b35a490",
+  "maps": [
+    {
+      "slug": "library",
+      "rating": 7.5,
+      "critical": false,
+      "note": "Shelf walls, ladder bay, SW fireplace, rug with chandelier, three reading desks, and the east-side orb all match the brief. Palette is darker than the mockup but readable; purple tomes on shelf tops read as intentional dressing."
+    },
+    {
+      "slug": "market-square",
+      "rating": 7.0,
+      "critical": false,
+      "note": "Fountain, benches, lanterns, four north houses, side cottages, four striped stalls, carts, and south gate all present. The large dark soil areas around the houses and the greyer cobbles depart from the mockup's light palette, and the white gate reads garish."
+    },
+    {
+      "slug": "mill",
+      "rating": 5.5,
+      "critical": true,
+      "note": "The waterwheel, the map's namesake feature, is not visible: only the wooden support frame and axle posts stand by the river channel, with a small half-sunk yellow arc where the wheel should be. Layout, field, bridge, and yard props otherwise match the brief."
+    },
+    {
+      "slug": "monastery",
+      "rating": 7.5,
+      "critical": false,
+      "note": "Cloister arcade around the garden, central well at the path crossing, north chapel, NE bell tower, NW herb plots, and south gate all match the inferred layout. Heavy shadows on the east walk hurt readability slightly."
+    },
+    {
+      "slug": "palace",
+      "rating": 8.0,
+      "critical": false,
+      "note": "Domed central block, two walled wings with domes, lantern-lined fountain court, side hedge gardens, and the south gate with twin towers and guards all match the brief. Statues, banners, and the cobble road read cleanly at game camera."
+    },
+    {
+      "slug": "prison",
+      "rating": 7.5,
+      "critical": false,
+      "note": "Three barred cells with straw beds along the west, guard room with desk and stairs in the NE, interrogation corner in the SE, and the east gate all match. The torch-lit mood is strong; the central floor is very empty but the brief's tally is edge-focused."
+    },
+    {
+      "slug": "school",
+      "rating": 8.0,
+      "critical": false,
+      "note": "Fifteen desks in four rows facing north, teacher desk on rug with lectern and notice-board, red tapestries, west bookshelf wall with the orb on a cabinet, reading corner, and SW entrance props all match the brief and mockup."
+    }
+  ],
+  "verdict": "PASS",
+  "retry_recommendation": "none"
+}

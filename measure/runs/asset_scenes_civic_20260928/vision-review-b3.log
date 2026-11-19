@@ -1,0 +1,19 @@
+MEASURE_AGENT_RESULT
+route: kimi-code-plan-cn/kimi-for-coding
+model_id: kimi-for-coding
+batch: 3
+track: asset_scenes_civic_20260928
+audited_head: 3b35a490
+scope: independent vision judge for 7 civic maps (library, market-square, mill, monastery, palace, prison, school). Read each design brief (docs/map-mockups/<slug>.md), target mockup (<slug>.jpg), and built map shots (<slug>-3q.png, <slug>-top.png). Bar 7.0 for P2. No maps, shots, inventory, or plan files were edited. No commit.
+
+Ratings:
+- library: 7.5
+- market-square: 7.0
+- mill: 5.5 (critical: waterwheel not visible; only the support frame stands by the river)
+- monastery: 7.5
+- palace: 8.0
+- prison: 7.5
+- school: 8.0
+
+Notes per map are in vision-review-b3.json. Judging completed for all 7 maps; verdict PASS (ratings below 7.0 are data, not a role failure). retry_recommendation: none.
+END_MEASURE_AGENT_RESULT
