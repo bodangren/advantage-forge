@@ -1,0 +1,121 @@
+# Review C (UX and API; record contract only) Phase 4 re-audit log: asset_scenes_civic_20260928
+
+MEASURE_AGENT_RESULT
+role: measure-review-c-ux-api, audit only, no commit, no implementation edit
+track: asset_scenes_civic_20260928
+phase: ## Phase 4: Records (re-audit of the F1 disposition)
+phase_base_sha: 024cfdf9250384667142481856d17eebca91cb15
+role_base_sha: a49058531ed2224c55210c90aca45b81d823d44e (test-strategy.md line 5)
+audited_head_sha: c1e84b19dd1b6a73b9b5ac3c1f5dbe394f88c9be (git rev-parse HEAD equals it, so the audited HEAD is current)
+contract_applicability: applicable, record contract only; ux_applicability: not_applicable (no app, page, route, or product API path in the re-audit diff), webbridge: not_run
+verdict: PASS (the F1 disposition is acceptable; no blocking finding remains)
+
+## Facts confirmed
+
+1. Provenance. HEAD is c1e84b19, equal to the audited head. The two commits since
+   be89dc91 are 43c44210 (plan.md only, 6 insertions) and c1e84b19 (green-p4.log
+   only, 1 insertion). No product, TSV, or generated file changed between the two
+   audited heads.
+
+2. Foreign uncommitted edits. git status prints M for measure/generated/
+   architecture.json, measure/generated/asset-inventory.json, measure/generated/
+   status.md, and measure/tracks.md. git diff --stat counts 12, 1114, 13, and 7
+   changed lines. A write-mode regenerate would rewrite files that hold other
+   sessions' uncommitted work, and any commit of them would carry foreign edits.
+   The standing rule that forbids generate.sh holds. This role ran only
+   `node measure/tools/generate.mjs --check` (read-only), which still exits 1
+   with three stale-fact lines.
+
+3. The deferral record. plan.md "## Closeout" now holds two unchecked tasks, each
+   with the word "deferred" in its text; the new one reads "Regenerate
+   measure/generated/ with ./measure/generate.sh and commit it (deferred to the
+   closeout role; blocked while measure/generated/ and measure/tracks.md hold
+   foreign uncommitted edits; Review C F1 at be89dc91)". green-p4.log ends with
+   the generated_facts_deferral line naming the 6-versus-36 counts, the --check
+   exit 1, and the standing rule.
+
+4. The stale fact itself is unchanged: the committed asset-inventory.json holds
+   6 accepted blueprint statuses against 36 in the committed TSV, and
+   generate.mjs --check names all three stale files.
+
+5. The phase gate is unchanged: check-records.sh exits 0 with 44 PASS at
+   c1e84b19.
+
+## Judgment on the disposition
+
+Acceptable. A write-mode regenerate now would break the stronger standing rule
+("Commit only assigned paths during concurrent work"), because the working-tree
+measure/generated/ files carry 1,114 foreign changed lines. Green could not fix
+F1 without committing other sessions' work, so deferral is the only correct
+disposition at this point in the sequence. The deferral is honest and recorded in
+both places the framework reads (the plan closeout task and the green log), and it
+names the exact command and the blocking condition. The stale file is a derived
+artifact; the source record (the TSV) is correct and complete at HEAD. F1 at
+be89dc91 is resolved by this disposition, not withdrawn: the defect is real, its
+fix is owned, and its blocker is verified.
+
+## Judgment on the closeout gate
+
+Partial, and human rather than mechanical. plan_closeout_feedback in
+scripts/measure_interphase_checks.py (lines 966-970) gives no feedback for any
+task line containing "deferred" and counts it covered, and closeout_feedback
+(lines 1029-1051) checks the archive move, the registry, metadata "done", the
+final-acceptance json, and the closeout manifest, but runs neither
+./measure/doctor.sh nor generate.mjs --check. So the mechanical closeout gate
+passes even if the regenerate is skipped. The only lines that name the stale fact
+are the doctor freshness error (common.mjs line 531, names
+measure/generated/asset-inventory.json, not the track) and generate.mjs --check.
+The stale line can never clear without the regenerate, so a closeout steward who
+requires the doctor green, or every error line owned, will catch it; nothing
+mechanical fails on it. This is F2 from the be89dc91 audit, sharpened with the
+closeout specifics, and it stays nonblocking because the disposition text names
+the exact command and AGENTS.md still requires the doctor before closing a
+track.
+
+## Findings
+
+- F1 (Blocker at be89dc91): resolved by the orchestrator disposition; the
+  regenerate is deferred to the closeout role with the blocking condition
+  verified. No blocking finding remains.
+- F2 [Nit, carried] No mechanical gate enforces the deferred regenerate: the
+  interphase closeout check exempts "deferred" lines and runs no freshness check.
+  Suggestion: the closeout steward records the regenerate commit SHA in the
+  deferred task line, or the closeout or final-acceptance gate adds
+  `node measure/tools/generate.mjs --check`.
+- F3 [Nit, carried] bench/sonnet/map-batch1-plan.md line 4 still counts 94
+  mockup-needed rows; the count now reads 64. Historical doc, no tool parses it.
+
+## Ratings
+
+correctness 4 (disposition recorded where the framework reads it, every cited
+fact verified, phase gate 44/44), test_meaning 4 (phase gate red-first and green;
+the deferral itself has no mechanical check), scope_discipline 5 (only plan.md
+and green-p4.log moved), evidence_quality 5 (every claim has a command result).
+
+retry_recommendation: none
+
+files_changed: measure/runs/asset_scenes_civic_20260928/review-c-p4-c1e84b1.json,
+measure/runs/asset_scenes_civic_20260928/review-c-p4-c1e84b1.log (this role writes
+only these two files; no commit)
+
+commands_run: git rev-parse HEAD 024cfdf9; git log --oneline be89dc91..c1e84b19;
+git show --stat 43c44210 c1e84b19; git status --short over the four generated
+paths; git diff --stat over the same paths (12, 1114, 13, 7 changed lines);
+node measure/tools/generate.mjs --check (exit 1, three stale-fact lines,
+read-only); sed over plan.md "## Closeout"; bash
+measure/runs/asset_scenes_civic_20260928/check-records.sh (exit 0, 44/44);
+sed -n over scripts/measure_interphase_checks.py lines 953-975 and 1029-1051
+
+handoff: The F1 disposition is acceptable and the Phase 4 re-audit passes at
+c1e84b19. The standing rule genuinely blocks a regenerate now (1,114 foreign
+changed lines sit in the working-tree asset-inventory.json), the deferral is
+recorded in the plan closeout task and the green log with the exact command and
+blocking condition, and the phase gate stays 44/44. One caution for the closeout
+steward: the mechanical closeout gate will NOT catch a skipped regenerate,
+because it exempts "deferred" lines and runs no freshness check; the stale-fact
+doctor line names measure/generated/asset-inventory.json, not the track. Ask the
+closeout steward to record the regenerate commit SHA in the deferred task line,
+or add `node measure/tools/generate.mjs --check` to the closeout or
+final-acceptance gate. F3 (the 94-row count in the historical batch plan) stays
+open as a nit.
+END_MEASURE_AGENT_RESULT

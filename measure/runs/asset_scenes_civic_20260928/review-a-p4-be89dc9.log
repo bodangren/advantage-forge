@@ -1,0 +1,24 @@
+MEASURE_AGENT_RESULT
+role: measure-review-a-correctness
+status: complete
+track: asset_scenes_civic_20260928
+phase: ## Phase 4: Records
+commits: audited 024cfdf9..be89dc91 (93c536c8, 2881a7a3, e2c7bb9c, 0c700b8a, 4511acdc, 98499a7e, be89dc91); no commit by this role
+tests_run:
+  - bash measure/runs/asset_scenes_civic_20260928/check-records.sh -> exit 0, 44 checks (PASS=44, FAIL=0)
+  - bash ./measure/doctor.sh -> exit 1, 51 error lines, all from other tracks; none names this track
+  - node scripts/design-mill.mjs with cwd in a /tmp temp dir -> cmp BYTE-EQUAL against the committed scenes/maps/mill.ts (sha256 0d2873d1 on both); the committed file was never overwritten
+  - bash check-inventory.sh / check-review.sh / check-rework.sh -> 96 checks (6/90), 63 checks (33/30), 69 checks (40/29), matching the by-design plan quotes
+  - Adversarial reruns of check-records.sh on six mutated fixtures in a /tmp shared clone: ID edit -> P4-b FAIL; extra 31st row -> P4-a and P4-b FAIL; Judge rating 6.5 with TSV accepted -> P4-c FAIL; rerate 6.5 -> P4-c FAIL; citation 93c536c8 (ancestor, no TSV touch) -> P4-d FAIL for all 30 slugs; citation 623e7b5d (non-ancestor) -> P4-d FAIL for all 30 slugs; every fixture exited nonzero; the clone and all fixtures were deleted
+files_changed: measure/runs/asset_scenes_civic_20260928/review-a-p4-be89dc9.json and .log (this result) only; no production, test, plan, or registry file was edited and nothing was committed
+plan_updates: none by this role; plan claims verified (TSV 30 accepted rows, 60 changed data lines, 30 status changes, mill sha256, 44/44 gate, 51 doctor errors, by-design checker counts)
+known_failures:
+  - Foreign baseline only: ./measure/doctor.sh exits 1 with 51 error lines from other tracks and from stale measure/generated facts; the scoped P4-f check passes and the strategy wording item is Nit F2
+  - Earlier-phase checkers fail by design after the Phase 4 record moves (96/6/90, 63/33/30, 69/40/29); check-records.sh is the final gate, as the plan records
+handoff:
+  - Verdict: PASS. The audited diff is correct and the gate holds. No blocking finding.
+  - Nonblocking findings F1 to F3 are in review-a-p4-be89dc9.json: P4-d cites commits globally rather than per slug; the test-strategy P4-f wording ('doctor exits 0') drifted from the honest scoped check; the map-review decision line mixes two tasks' evidence in one parenthetical.
+  - Provenance: HEAD equaled the briefed audited_head_sha be89dc91 at audit start. Concurrent commits 43c44210 and c1e84b19 landed after it during the audit and defer the measure/generated regeneration to the closeout role; they are outside the audited range, agree with the strategy rule that another session owns measure/generated/*, and do not change the gate result. Bind this result to 024cfdf9..be89dc91.
+  - The two declared Green deviations are consistent: the state model in test-strategy.md line 41 allows accepted to be set in Phase 3 or 4, and the deferred closeout task matches the closeout gate that the closeout role owns; the green log also records the doctor structural reason for keeping one unchecked task.
+  - Untracked files review-c-p4-be89dc9.json/.log in measure/runs/ belong to the concurrent Review C role; this role did not write them.
+END_MEASURE_AGENT_RESULT

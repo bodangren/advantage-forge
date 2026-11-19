@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "summary": "Phase 4 record contract fails on one blocking item at be89dc91. Provenance: git rev-parse resolves phase_base_sha 024cfdf9250384667142481856d17eebca91cb15, role_base_sha a49058531ed2224c55210c90aca45b81d823d44e (test-strategy.md line 5), and audited_head_sha be89dc916e7e10bacb56e58f1cc844dde2c6f5ab, and HEAD equals be89dc91, so the audited HEAD is current. The TSV record itself is sound: the new status value `accepted` breaks no reader. The readers are measure/tools/common.mjs line 107 (blueprintEntries via tableRows, which enforces only the column count against the 4-column header and the scene_id column), measure/tools/doctor.mjs line 236 (exactCoverage uses scene_id and source_path, never status), measure/tools/generate.mjs (copies entry.status verbatim into measure/generated/asset-inventory.json), and the fixture test measure/tests/measure-tools.node.mjs (8 pass, 0 fail, node --test). No tool holds a status vocabulary list or validator for the blueprint TSV, and `accepted` was already in use at the phase base by 6 rows (blacksmith-shop, tavern, dungeon, hamlet, village, forest), so the 30 civic P2 rows add no new value. All 100 rows keep exactly 4 tab fields (awk NF scan), and the phase diff changes only column 4 on the 30 civic P2 rows (check-records.sh P4-b and my own git diff read). The plan citations for P4-d name real commits: e2c7bb9c touches only the TSV, 2881a7a3 only scenes/inventory.md, 93c536c8 only scripts/design-mill.mjs (git show --stat), and all are ancestors of HEAD (git merge-base --is-ancestor). scripts/design-mill.mjs keeps its CLI and output paths (line 64 writes scenes/maps/mill.ts, line 67 writes docs/map-mockups/mill.md; only line 25 gained yaw: -65), the brief bench/sonnet/briefs/map-p2-mill.md line 6 still names both outputs, and the checker reruns the generator into a temp dir and compares byte for byte (PASS). docs/map-review.html and scripts/map-review-page.mjs are unchanged against 024cfdf9 (empty git diff, no commit in the range touches them). check-records.sh exits 0 with 44 PASS at the audited HEAD. The blocking item: the phase changed the TSV record but did not run ./measure/generate.sh, so the committed managed fact measure/generated/asset-inventory.json is stale at HEAD. git show be89dc91:measure/generated/asset-inventory.json prints 6 accepted and 94 mockup-needed blueprint statuses while git show be89dc91:docs/fantasy-world-scene-blueprints.tsv prints 36 accepted and 64 mockup-needed, and node measure/tools/generate.mjs --check exits 1 with 'measure/generated/asset-inventory.json: stale generated fact'. green-p4.log itself discloses 'measure/generate.sh: not run'. AGENTS.md requires 'Run ./measure/generate.sh after changing managed facts', and the doctor freshness step (measure/tools/common.mjs line 531) prints this stale-fact line, so the next clean doctor run fails on a file whose staleness this phase caused; the plan P4-f evidence ('no error line names asset_scenes_civic_20260928 or its files') is scoped to the track name and does not record it.",
+  "blocking_findings": [
+    "F1 [Blocker] review-c: the phase record leaves the committed managed facts stale. At HEAD be89dc91, measure/generated/asset-inventory.json holds 6 'accepted' and 94 'mockup-needed' blueprint statuses (git show be89dc91:measure/generated/asset-inventory.json | grep '\"status\"' | sort | uniq -c) while the committed TSV docs/fantasy-world-scene-blueprints.tsv holds 36 'accepted' and 64 'mockup-needed' (git show be89dc91:docs/fantasy-world-scene-blueprints.tsv | awk -F'\\t' '{print $4}' | sort | uniq -c), so 30 status values that this phase wrote into the record are missing from the derived managed fact. node measure/tools/generate.mjs --check exits 1 with 'measure/generated/asset-inventory.json: stale generated fact' (and architecture.json and status.md stale lines from the wider tree). AGENTS.md (Repository rules) says 'Run ./measure/generate.sh after changing managed facts', and green-p4.log discloses 'measure/generate.sh: not run'. The doctor runs freshnessErrors (measure/tools/common.mjs line 531) and prints this stale-fact line, so the phase's own P4-f doctor evidence passes only because check-records.sh line 265 greps for the track name and counts every other error line as owned elsewhere. Rationale for blocking: the phase deliverable is the record, and the derived record disagrees with the source record at the audited HEAD; the next clean doctor run fails on a file this phase made stale. Fix: run ./measure/generate.sh and commit the regenerated measure/generated/ paths. Caution: the working tree holds other tracks' uncommitted edits, so the orchestrator must sequence the regeneration commit so it carries only what the committed sources produce."
+  ],
+  "nonblocking_findings": [
+    "F2 [Nit] review-c: the P4-f gate is blind to errors this phase causes. check-records.sh lines 255-270 count every doctor error line that does not contain the string 'asset_scenes_civic_20260928' as owned elsewhere, so 'measure/generated/asset-inventory.json: stale generated fact' — caused by the phase's own TSV change — passes the gate as information only. Rationale: the plan P4-f evidence is technically true and the checker comment (lines 18-22) declares the scope, so no record lies; but the gate cannot see a defect that the phase itself introduced. A follow-up checker line that fails on a stale-fact error naming a file the phase diff feeds would close the gap.",
+    "F3 [Nit] review-c: bench/sonnet/map-batch1-plan.md line 4 states 'Source: docs/fantasy-world-scene-blueprints.tsv (94 rows at mockup-needed)'; 30 of those rows now read accepted, so the count reads 64. Rationale: the file is a historical batch plan, no tool parses it, and the statement was true when written, so nothing breaks; a date stamp or a refreshed count would stop a reader from quoting it as current."
+  ],
+  "evidence": [
+    "SHA resolution and currency: git rev-parse 024cfdf9 gives 024cfdf9250384667142481856d17eebca91cb15, git rev-parse HEAD gives be89dc916e7e10bacb56e58f1cc844dde2c6f5ab (equal to the audited head), and role_base_sha a4905853 is recorded at test-strategy.md line 5, so the audited HEAD is current.",
+    "Contract applicability: applicable, record contract only, no product UX. The phase diff (git diff 024cfdf9..be89dc91 --stat) touches the TSV, the phase checker, the run logs, plan.md, scenes/inventory.md, and one line of scripts/design-mill.mjs; no app, page, route, or product API path changed, so no browser inspection ran (ux_applicability: not_applicable, webbridge: not_run).",
+    "TSV readers: grep over the repo finds the readers measure/tools/common.mjs line 107 (blueprintEntries), measure/tools/doctor.mjs line 236 (exactCoverage for scenes), measure/tools/generate.mjs (facts), and measure/tests/measure-tools.node.mjs lines 20 and 143 (fixtures); the remaining hits are prose docs. tableRows (common.mjs lines 84-99) enforces the column count against the header and the id column only; exactCoverage (doctor.mjs lines 220-241) compares scene_id and source_path against measure/scope-map.tsv; no reader holds a status vocabulary list or validator for the blueprint status column.",
+    "Column count and vocabulary: awk -F'\\t' 'NF!=4' over the TSV prints nothing, so all 101 lines hold 4 fields; the status histogram prints 36 accepted, 64 mockup-needed, and the header; at the phase base the histogram prints 6 accepted (blacksmith-shop, tavern, dungeon, hamlet, village, forest), so `accepted` is a value the record already used and the 30 civic P2 rows introduce no new value.",
+    "Diff shape: git diff 024cfdf9..be89dc91 -- docs/fantasy-world-scene-blueprints.tsv changes 60 data lines, every one a civic P2 row, and each line changes only the fourth field (mockup-needed to accepted); scene_id, group, and priority are identical on both sides, which check-records.sh P4-b also proves by value comparison.",
+    "P4-d commit citations: git show --stat prints e2c7bb9c (docs/fantasy-world-scene-blueprints.tsv only, 30 insertions 30 deletions), 2881a7a3 (scenes/inventory.md only, 29/29), and 93c536c8 (scripts/design-mill.mjs only, 1/1); git merge-base --is-ancestor confirms each is an ancestor of HEAD; plan.md lines 131 and 161-165 cite them, so every one of the 30 status changes cites a real commit that touches the TSV.",
+    "design-mill CLI and output path: git diff 024cfdf9..be89dc91 -- scripts/design-mill.mjs changes one line (line 25 gains yaw: -65); line 64 still writes scenes/maps/mill.ts and line 67 still writes docs/map-mockups/mill.md; the script takes no arguments; bench/sonnet/briefs/map-p2-mill.md line 6 still names the generator and both outputs. check-records.sh P4-g reran the generator with its cwd in a temp dir and cmp found the output byte for byte equal to the committed scenes/maps/mill.ts (PASS), so the committed generated file was never overwritten and the generator now reproduces it.",
+    "Unchanged view page: git diff --stat 024cfdf9..be89dc91 -- docs/map-review.html scripts/map-review-page.mjs is empty and git log 024cfdf9..be89dc91 on those paths prints no commit, so both are unchanged against the phase base, matching P4-e and the plan note that no tool reads the page.",
+    "Checker green on the audited tree: bash measure/runs/asset_scenes_civic_20260928/check-records.sh ends with '=== Total: 44 checks (PASS=44, FAIL=0) ===' and exits 0, covering the base SHAs, P4-a vocabulary per row, P4-b diff shape, P4-c inventory support and state-cell agreement, P4-d commit citations per changed slug, P4-e, the scoped P4-f doctor line, P4-g byte equality, and A9.",
+    "Reader tests: node --test measure/tests/measure-tools.node.mjs prints pass 8, fail 0, so the TSV and scope-map readers in measure/tools still pass their own tests at this tree.",
+    "F1 basis: git show be89dc91:measure/generated/asset-inventory.json | grep '\"status\"' | sort | uniq -c prints 6 accepted and 94 mockup-needed; git show be89dc91:docs/fantasy-world-scene-blueprints.tsv | awk -F'\\t' '{print $4}' | sort | uniq -c prints 36 accepted and 64 mockup-needed; node measure/tools/generate.mjs --check exits 1 with stale-fact lines for measure/generated/architecture.json, status.md, and asset-inventory.json; measure/tools/common.mjs line 434 copies entry.status into the blueprint inventory and lines 522-533 (freshnessErrors) flag any committed generated file that differs from what the sources produce; green-p4.log discloses 'measure/generate.sh: not run'.",
+    "F2 basis: check-records.sh lines 255-270; the checker comment lines 18-22 declare the scoped intent.",
+    "F3 basis: bench/sonnet/map-batch1-plan.md line 4; awk status histogram at HEAD shows 64 mockup-needed."
+  ],
+  "commands": [
+    "git rev-parse 024cfdf9 HEAD (024cfdf9250384667142481856d17eebca91cb15; be89dc916e7e10bacb56e58f1cc844dde2c6f5ab, equal to the audited head)",
+    "git diff --stat 024cfdf9..be89dc91 (7 owned paths: TSV, check-records.sh, green-p4.log, red-p4.log, plan.md, scenes/inventory.md, scripts/design-mill.mjs)",
+    "grep -rln fantasy-world-scene-blueprints over measure/tools, scripts, src, docs, bench (readers: common.mjs, doctor.mjs, measure-tools.node.mjs; rest are prose)",
+    "awk -F'\\t' 'NF!=4 {print NR\": \"NF}' docs/fantasy-world-scene-blueprints.tsv (no output; all rows 4 fields); awk -F'\\t' '{print $4}' | sort | uniq -c (36 accepted, 64 mockup-needed)",
+    "git show 024cfdf9:docs/fantasy-world-scene-blueprints.tsv | awk -F'\\t' '$4==\"accepted\"{print $1}' (blacksmith-shop, tavern, dungeon, hamlet, village, forest)",
+    "git show --stat e2c7bb9c 2881a7a3 93c536c8; git merge-base --is-ancestor for each against be89dc91 (all true)",
+    "git diff 024cfdf9..be89dc91 -- scripts/design-mill.mjs (one line); git diff --stat 024cfdf9..be89dc91 -- docs/map-review.html scripts/map-review-page.mjs (empty)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-records.sh (exit 0; 44 checks, PASS=44, FAIL=0, including the byte-for-byte P4-g generator rerun)",
+    "node --test measure/tests/measure-tools.node.mjs (pass 8, fail 0)",
+    "node measure/tools/generate.mjs --check (exit 1; three stale generated fact lines, including asset-inventory.json)",
+    "git show be89dc91:measure/generated/asset-inventory.json | grep '\"status\"' | sort | uniq -c (6 accepted, 94 mockup-needed) against the HEAD TSV histogram (36 accepted)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_scenes_civic_20260928/review-c-p4-be89dc9.json",
+    "measure/runs/asset_scenes_civic_20260928/review-c-p4-be89dc9.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [
+    "AGENTS.md repository rule 'Run ./measure/generate.sh after changing managed facts' is violated at the audited HEAD: the phase changed 30 TSV status values (a managed fact that measure/tools/generate.mjs copies into measure/generated/asset-inventory.json) and committed no regenerated file; see blocking finding F1."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_green",
+  "confidence": "high",
+  "ux_applicability": "not_applicable",
+  "webbridge_status": "not_run",
+  "webbridge_evidence": {
+    "screenshots": [],
+    "accessibility_snapshots": [],
+    "interactions": []
+  },
+  "route": "opencode-go/glm-5.3#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "The TSV record itself is right (30 civic P2 rows flip to the already-in-use value accepted, only column 4 changes, IDs stable, real commits cited), but the derived managed fact stays wrong at HEAD: git show be89dc91:measure/generated/asset-inventory.json prints 6 accepted against 36 in the TSV."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "check-records.sh is red-first (red-p4.log records exit 1 at 024cfdf9) and passes 44/44 with per-row vocabulary, value-based diff shape, per-slug commit ancestry, and a byte-for-byte generator rerun; the one untested clause is P4-f, whose track-name grep cannot see the stale-fact error this phase causes (F2)."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff --stat 024cfdf9..be89dc91 lists exactly the owned paths: the TSV, check-records.sh, the two phase logs, plan.md, scenes/inventory.md, and the one-line scripts/design-mill.mjs yaw fix; docs/map-review.html and scripts/map-review-page.mjs are untouched."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim has a command result: the awk NF and status histograms, the git show --stat commit shapes, the empty diff for the two view files, the 44/44 checker run, the 8/8 node --test run, and the generate.mjs --check stale-fact output."
+    }
+  ],
+  "role": "review-c",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "## Phase 4: Records",
+  "baseline_sha": "024cfdf9250384667142481856d17eebca91cb15",
+  "audited_head_sha": "be89dc916e7e10bacb56e58f1cc844dde2c6f5ab"
+}

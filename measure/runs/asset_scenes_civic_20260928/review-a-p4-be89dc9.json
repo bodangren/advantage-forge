@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-a-correctness",
+  "route": "opencode-go/glm-5.3#high",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "## Phase 4: Records",
+  "baseline_sha": "024cfdf9",
+  "audited_head_sha": "be89dc91",
+  "status": "pass",
+  "summary": "The Phase 4 diff 024cfdf9..be89dc91 is correct and fully evidenced. The TSV changes only the status column of exactly the 30 civic P2 rows; the ID, group, and priority columns are byte-identical to the base (cut -f1-3 sha256 f608396a on both sides) and numstat shows 30/30 lines. Twenty-nine accepted rows hold a Judge rating of at least 7.0 with critical false; the mill row holds Judge 5.5 critical true and is supported by the Rerate 7.5 with critical false in rerate-mill.json. scripts/design-mill.mjs writes yaw -65 (commit 93c536c8) and its temp-dir output equals the committed scenes/maps/mill.ts byte for byte (sha256 0d2873d1 on both; the committed file was never overwritten and is unchanged since the Phase 3 rework commit 7619c491). docs/map-review.html is unchanged against the base. The gate check-records.sh passes live with 44/44 and exit 0. Adversarial fixtures in a /tmp shared clone show the checker rejects an ID edit (P4-b), an extra 31st row (P4-a, P4-b), an accepted row whose support drops below the bar (P4-c, both the Judge path and the mill Rerate path), a citation that does not touch the TSV (P4-d), and a citation that is not an ancestor of HEAD (P4-d). The Red checker is byte-identical between the Red commit 07c04b62 and HEAD, so Green did not weaken it. The scoped P4-f doctor check is honest: it prints exit code 1 and the count of 51 foreign error lines, and I verified the doctor output myself; no error line names this track. The two declared deviations agree with the records: the state model in test-strategy.md line 41 allows accepted to be set in Phase 3 or 4, and the deferred closeout task matches the closeout gate that the closeout role owns. Each Green commit touches only its declared file.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] review-a: check-records.sh P4-d validates citations globally, not per slug. The script greps every commit id in plan.md and passes a slug when any cited commit is an ancestor of HEAD and touches the TSV. Rationale: today all 30 status changes came from one cited commit (e2c7bb9c), so the plan citation holds in substance; the check would not catch a later phase that cites each row's own commit incorrectly. A per-slug citation tie would be stronger. File: measure/runs/asset_scenes_civic_20260928/check-records.sh lines 231-245.",
+    "F2 [Nit] review-a: test-strategy.md line 185 reads 'P4-f: ./measure/doctor.sh exits 0' but the implemented gate is the scoped check (no error line names this track). Rationale: the deviation is honest and declared in the checker NOTE (check-records.sh lines 18-22), in plan.md line 136, and in green-p4.log; the doctor's 51 errors are foreign baseline debt that this phase may not fix, because another session owns measure/generated/*. The wording drift is an orchestrator item in the F8 and N5 class; the strategy file was left unchanged as the plan records.",
+    "F3 [Nit] review-a: plan.md line 133 cites the map-review decision as a Phase 4 task with the commit id of a different task in the same sentence. Rationale: the decision task names no commit of its own ('no commit: the page is unchanged'), which is correct, but the parenthetical also carries the e2c7bb9c evidence of the TSV task; a reader can bind the wrong commit to the page decision. The page is verified unchanged, so the substance holds."
+  ],
+  "evidence": [
+    "TSV scope: git show 024cfdf9:docs/fantasy-world-scene-blueprints.tsv | cut -f1-3 and the HEAD file give the same sha256 f608396a26fe4f37c9b3c4fc4603bd438a35d1eaddad6c7f785cd6039a65ebb4; numstat shows 30/30 changed lines; the base status column holds 94 mockup-needed and 6 accepted, HEAD holds 64 mockup-needed and 36 accepted, so exactly 30 rows moved to accepted.",
+    "Inventory support: awk over measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md gives rows=30 judge-supported=29 other=1; the one other row is the mill row (Judge 5.5, critical true, Rerate 7.5, state accepted). rerate-mill.json holds rating 7.5, critical false, judge family kimi, which differs from the maker family Anthropic Sonnet.",
+    "Inventory diff: masking the trailing state cell gives the same sha256 a0131dca for the base and HEAD inventory; the state column moved from 29 rated plus 1 accepted to 30 accepted, which matches the green log claim for commit 2881a7a3.",
+    "P4-g proof rerun: node scripts/design-mill.mjs with cwd in /tmp produced mill.ts; cmp reported BYTE-EQUAL against the committed file; both hold sha256 0d2873d1a0f1c8f26095a01bab32d7ebb336be900cee1d6e437ca809fff5a8c1; git status on scenes/maps/mill.ts is clean; git show 7619c491:scenes/maps/mill.ts gives the same sha256 as HEAD, so the committed file never changed after the Phase 3 rework.",
+    "Gate rerun: bash measure/runs/asset_scenes_civic_20260928/check-records.sh exited 0 with '=== Total: 44 checks (PASS=44, FAIL=0) ===' at HEAD be89dc91; the count and every plan quote (60 changed data lines, 30 status changes, 51 doctor errors) match green-p4.log.",
+    "Doctor honesty: bash ./measure/doctor.sh exited 1 with 51 error lines; I read the full output and no line names asset_scenes_civic_20260928 or its files; the lines name other tracks and foreign generated facts.",
+    "Red checker integrity: git diff 07c04b62..be89dc91 -- measure/runs/asset_scenes_civic_20260928/check-records.sh is empty, so the Red script is unchanged through Green; the Red state is reproduced logically: the base TSV read mockup-needed on all 30 rows, the base design-mill.mjs held no yaw, and 44 minus the 30 per-slug P4-d checks gives the recorded Red total of 14.",
+    "Adversarial fixtures (shared clone under /tmp, deleted after): an ID edit arena to arena2 failed P4-b; a 31st row locations/civic/plaza failed P4-a and P4-b; an inventory Judge rating of 6.5 with TSV accepted failed P4-c; a rerate-mill.json rating of 6.5 with an inventory Rerate of 6.5 failed P4-c; plan citations replaced with 93c536c8 (ancestor, does not touch the TSV) failed P4-d for all 30 slugs; citations replaced with the non-ancestor 623e7b5d failed P4-d for all 30 slugs.",
+    "Commit hygiene: git show --name-only for 93c536c8, 2881a7a3, e2c7bb9c, 0c700b8a, 4511acdc, 98499a7e, and be89dc91 lists exactly the one declared file per commit.",
+    "By-design counts verified live: check-inventory.sh 96 checks (PASS=6, FAIL=90), check-review.sh 63 checks (PASS=33, FAIL=30), check-rework.sh 69 checks (PASS=40, FAIL=29), all matching the plan quotes at plan.md lines 121-127.",
+    "Provenance: HEAD equaled be89dc91 at audit start. During the audit, concurrent commits 43c44210 and c1e84b19 landed after be89dc91; they only defer the measure/generated/* regeneration to the closeout role in plan.md and green-p4.log, which agrees with the strategy rule that another session owns measure/generated/*. The audited range and the gate result are unaffected."
+  ],
+  "commands": [
+    "git rev-parse HEAD (start: be89dc91; at result write: c1e84b19 after concurrent commits)",
+    "git diff 024cfdf9..be89dc91 --stat",
+    "git show 024cfdf9:docs/fantasy-world-scene-blueprints.tsv | cut -f1-3 | sha256sum vs cut -f1-3 docs/fantasy-world-scene-blueprints.tsv | sha256sum",
+    "git diff 024cfdf9..be89dc91 --numstat -- docs/fantasy-world-scene-blueprints.tsv (30 30)",
+    "git diff --exit-code 024cfdf9..be89dc91 -- docs/map-review.html (unchanged)",
+    "awk over measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md (rows=30 judge-supported=29 other=1)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-records.sh (exit 0, 44/44)",
+    "node scripts/design-mill.mjs in a /tmp cwd; cmp against scenes/maps/mill.ts (BYTE-EQUAL)",
+    "bash ./measure/doctor.sh (exit 1, 51 foreign error lines)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh | tail -1 (96 checks 6/90)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-review.sh | tail -1 (63 checks 33/30)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-rework.sh | tail -1 (69 checks 40/29)",
+    "Adversarial reruns of check-records.sh on six mutated fixtures in a /tmp shared clone (all exited nonzero with the expected FAIL lines)"
+  ],
+  "changed_files": [
+    "docs/fantasy-world-scene-blueprints.tsv (status column only, 30 civic P2 rows)",
+    "measure/runs/asset_scenes_civic_20260928/check-records.sh (new Phase 4 checker, unchanged since Red)",
+    "measure/runs/asset_scenes_civic_20260928/green-p4.log",
+    "measure/runs/asset_scenes_civic_20260928/red-p4.log",
+    "measure/tracks/asset_scenes_civic_20260928/plan.md",
+    "measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md (state cells only)",
+    "scripts/design-mill.mjs (one line: yaw -65)"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "cut -f1-3 sha256 f608396a matches on base and HEAD, numstat 30/30, and the generator temp output cmp-equals the committed mill.ts (sha256 0d2873d1)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "All four wrong-TSV falsifier classes (ID edit, extra row, below-bar accepted, bad citation) produced FAIL lines when I reran check-records.sh on mutated fixtures, and the checker is byte-identical since the Red commit 07c04b62."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git show --name-only lists exactly one declared file per commit for all seven range commits; no unrelated path moved."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every plan quote I tested reproduced live: gate 44/44, doctor 51 foreign errors, by-design counts 96/63/69, sha256 0d2873d1, and 60 changed TSV lines."
+    }
+  ]
+}

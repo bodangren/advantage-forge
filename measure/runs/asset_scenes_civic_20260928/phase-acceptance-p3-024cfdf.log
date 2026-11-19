@@ -1,0 +1,58 @@
+MEASURE_AGENT_RESULT
+status: pass
+verdict: Phase 3 "Rework" accepted at 024cfdf9
+role: measure-phase-acceptance
+track: asset_scenes_civic_20260928
+phase: Phase 3: Rework
+route: opencode-go/glm-5.3#high
+retry_recommendation: none
+confidence: high
+phase_base_sha: b78fdde17ab72cb16f250b15915dbf75da4fb803
+audited_head: 024cfdf9250384667142481856d17eebca91cb15 (verified current: git rev-parse HEAD)
+accepted_head_note: allowed test-only commits after the Review A/C head cddadba3: 6cc6f91f, fa85bb2a, 024cfdf9 (all touch only measure/runs/ test and evidence files; no implementation path changed after cddadba3)
+
+gates_run_live:
+  - bash measure/runs/asset_scenes_civic_20260928/check-rework.sh -> exit 0, === Total: 41 checks (PASS=41, FAIL=0) ===
+  - bash measure/runs/asset_scenes_civic_20260928/adversarial-p3.sh -> exit 0, committed tree 41/41, control 41/41, probes 01-08 all caught or passing as designed
+  - bash measure/runs/asset_scenes_civic_20260928/check-review.sh -> exit 1, PASS=33, FAIL=1 (single FAIL: P2-d mill accepted, by design, as plan.md records)
+  - ls -l docs/map-mockups/mill-3q.png docs/map-mockups/mill-top.png -> 1185352 and 1288124 bytes
+  - sha256sum both shots -> 32a41dc0... and 0543e6a6..., equal to rework-mill.json
+  - git diff --exit-code b78fdde1..HEAD -- docs/fantasy-world-scene-blueprints.tsv assets/watermill.ts -> exit 0, empty
+
+task_verification:
+  - Rework each below-bar or critical map once: PASS. Below-bar set is mill only (Judge 5.5, critical true). One rework record; scenes/maps/mill.ts:125 adds yaw: -65 and nothing else; commit 7619c491 touches the source (ADV-5 check passes); both fresh shots committed with 7619c491, digests match the record; 3q elevation 47 in [45, 50].
+  - Rerate each reworked map once: PASS. One rerate (rerate-mill.json/.log): kimi 7.5, critical false, audited head 304a75d6 descends from the rework commit (ADV-6 check passes); kimi differs from both maker families (Anthropic Sonnet original, hy rework); the log cites the route and model id.
+  - Apply the stop rule: PASS. Three labeled ratings (MAPS 7.0, Judge 5.5, Rerate 7.5); no fourth rating file exists; no follow-up row in the inventory; mill state accepted; the other 29 rows stay rated.
+
+prerequisite_coverage:
+  - Review A PASS and Review C PASS at cddadba3; both still cover the phase because every later commit (6cc6f91f, fa85bb2a, 024cfdf9) touches only measure/runs/ test and evidence files. fa85bb2a grew the checker from 39 to 41 checks; the adversarial re-audit at fa85bb2a (committed 024cfdf9) and this audit's rerun prove the two new checks fire and the tree passes 41/41.
+  - Review B: not applicable (test-strategy section 10: no secret, no network call, no write outside owned paths; the phase diff adds no such script).
+  - Adversarial: PASS at cddadba3 (6cc6f91f) with two routed gaps (ADV-5, ADV-6, no live instance), closed by fa85bb2a, re-audit PASS (024cfdf9), and this audit's own rerun exits 0.
+
+ux_browser_decision: not_required_separately. The strategy's Phase 3 UX scope is visual only, over every fresh rework shot. The only fresh shots are the two mill PNGs, and the independent kimi vision judge read exactly those files (with the brief and the mockup) for the rerate; rerate-mill.log names role "ux-browser-review (independent map judge, rerate)" with the four image paths as evidence. Kimi differs from both maker families. No other vision route exists: the claude family is excluded as the original maker family, and the acceptance route cannot read images (verified live: the read of mill-3q.png returned "this model does not support image input"). A separate UX review would reuse the same kimi route and add no independence. Phase 2 holds its own separate UX spot check over the 30-map sample.
+
+carried_item_decisions (brief items):
+  - scripts/design-mill.mjs:25 un-yawed placement: NOT a Phase 3 blocker. plan.md line 81 allows editing scenes/maps/<slug>.ts directly; the checker proves the committed source carries the rework; the drift is disclosed in green-p3.log:73-74, review-a F2, and review-c F2. Carried as N3, a required Phase 4 item: fix the generator and prove mill.ts byte-identical, so the accepted state stays durable.
+  - plan gate block naming bathhouse paths: NOT a Phase 3 blocker. Template residue; the plan's own Green evidence names the mill gate, and both mill shots verify live. Carried as N2 for the Phase 4 plan cleanup.
+  - check-review.sh failing on mill accepted: NOT a Phase 3 blocker. Re-run live: exit 1 with the single P2-d FAIL, exactly as plan.md records. Carried as N4: Phase 4 closeout must note the permanent red so a full checker sweep is not misread as a regression.
+
+anti_pattern_check:
+  - A3 PASS: labeled cell and typed jq number parses only (checker lines 36-41, 63-65, 332-340).
+  - A4 PASS: red-p3.log proves the checker fails with a below-bar map and no rework; the adversarial control passes the empty case only when no map is below the bar.
+  - A5 PASS with one stale quote (N1): the plan's operative claim (checker exits 0) matches live reality, but the quoted total 39 is stale after the fa85bb2a growth to 41; every other Phase 3 claim (shot paths, digests, rerate counts, by-design check-review failure, no fourth rating, no follow-up) matches live output.
+  - A6 PASS: each [x] task citation is backed by the rerate, checker, and adversarial results; no registry completion claim sits in the phase diff.
+  - A7 PASS: the slug set comes from all 30 civic P2 TSV rows; the below-bar scan loops over every slug.
+  - No fake-gate masking; the rerate judged the actual PNGs, not artifacts about them; no stale intentional-red aggregate test (the only red is the documented by-design P2-d item).
+
+blocking_findings: none
+
+nonblocking_findings:
+  - N1 plan.md:110-113 quotes 39 checks; the checker at the accepted HEAD prints 41 after fa85bb2a closed ADV-5/ADV-6. Refresh the quote and cite fa85bb2a when Phase 4 edits plan.md.
+  - N2 plan.md:99-101 gate block names bathhouse shots; the reworked slug is mill. Point the gate at the reworked slug in Phase 4.
+  - N3 scripts/design-mill.mjs:25 still writes the un-yawed watermill placement while mill.ts:125 carries yaw: -65. Required Phase 4 item: fix the generator and prove mill.ts byte-identical.
+  - N4 check-review.sh stays permanently red on the mill accepted state (verified live, PASS=33, FAIL=1). Phase 4 closeout must carry the one-line note.
+  - N5 test-strategy.md:154 says mtime while the checker proves recency with git log. Wording fix, same class as the open F8 item.
+
+evidence_files: measure/runs/asset_scenes_civic_20260928/phase-acceptance-p3-024cfdf.json and phase-acceptance-p3-024cfdf.log (this file). No commit made; no file outside measure/runs/ touched.
+handoff: Phase 4 (Records) may proceed on base 024cfdf9. Phase 4 must resolve N3 (generator yaw with a byte-identical mill.ts proof) and should fold N1, N2, N4, and N5 into its plan and closeout notes.
+END_MEASURE_AGENT_RESULT

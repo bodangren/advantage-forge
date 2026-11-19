@@ -1,0 +1,99 @@
+MEASURE_AGENT_RESULT
+status: pass
+role: measure-adversarial-testing
+route: opencode-go/glm-5.3#high
+track: asset_scenes_civic_20260928
+phase: Phase 4: Records
+phase_base_sha: 024cfdf9
+role_base_sha: c1e84b19
+audited_head_sha: c1e84b19dd1b6a73b9b5ac3c1f5dbe394f88c9be (equals git rev-parse HEAD; pre-adversarial HEAD)
+commits: pending this commit (test(asset_scenes_civic): Phase 4 adversarial tests; no push)
+tests_run: bash measure/runs/asset_scenes_civic_20260928/adversarial-p4.sh exit 0; check-records.sh on the committed tree exit 0 PASS=44 FAIL=0; control shared clone 44 of 44; eight probe classes caught with exact FAIL lines; four checker gaps confirmed with no live instance
+files_changed: measure/runs/asset_scenes_civic_20260928/adversarial-p4.sh, adversarial-p4-c1e84b1.json (provisional first, final replaces it), adversarial-p4-c1e84b1.log; plus the pre-existing untracked review-a-p4-be89dc9.*, review-c-p4-be89dc9.*, review-c-p4-c1e84b1.*, phase-acceptance-p3-024cfdf.* added unchanged
+plan_updates: none (all changes under measure/runs; the plan holds no open task)
+
+Method. New probes only. Review A at be89dc91 already falsified an ID edit, an
+extra 31st row, a below-bar accepted row on both support paths, a citation that
+does not touch the TSV, and a citation that is not an ancestor of HEAD. This run
+does not repeat those. A shared clone under /tmp/opencode/adv-p4-civic holds the
+committed tree at the audited head. The control passes 44 of 44, so every probe
+counts. Each probe mutates one fact, commits it when the checker reads it through
+git diff against the phase base, runs the unmodified committed checker inside the
+clone, and resets the clone. No product file, record, or checker was touched.
+
+Probes and outcomes.
+- ADV-P4-00 control: pristine clone, 44 of 44, exit 0. Live-instance scan: the
+  clone doctor holds 51 foreign error lines and none names scenes/maps/* or
+  locations/civic/*; the clone TSV holds no data row with a column count other
+  than 4; base and head cut -f1-3 sha256 are both f608396a. CONTROL OK.
+- ADV-P4-01 bathhouse TSV follow-up while the inventory state stays accepted:
+  exit 1. FAIL "P4-c TSV accepted count [29] differs from the inventory-supported
+  count [30]" and FAIL "P4-c TSV follows up bathhouse but the inventory state
+  cell reads [accepted], want [follow-up]". CAUGHT.
+- ADV-P4-02 the non-civic P0 row locations/adventure/dungeon changes status:
+  exit 1. Two FAIL lines, each "P4-b diff touches a non-status field or a
+  non-civic-P2 row" naming the dungeon row. CAUGHT.
+- ADV-P4-03a a trailing space in the apothecary status cell: exit 1. FAIL
+  "P4-a row apothecary holds unknown TSV status [accepted ]". CAUGHT.
+- ADV-P4-03b a trailing tab in the same cell adds a fifth column (NF=5): exit 0
+  with 44 of 44. DEFECT CONFIRMED (gap ADV-7). P4-a reads only the 4th field.
+- ADV-P4-04a the adjacent civic rows apothecary and archive swap; the masked
+  cut -f1-3 sha256 changes to 0b771e39: exit 0 with 44 of 44. DEFECT CONFIRMED
+  (gap ADV-8). P4-b compares sorted ID sets and per-line prefixes.
+- ADV-P4-04b the adjacent non-civic rows abandoned-fort and alchemy-lab swap:
+  exit 1. Two P4-b FAIL lines. CAUGHT.
+- ADV-P4-05 design-mill.mjs writes watermill x=2.3, so the generated mill.ts
+  differs by one character while the yaw line still reads -65: exit 1. FAIL
+  "P4-g generator output differs from the committed scenes/maps/mill.ts", while
+  the yaw grep check still prints PASS. The byte compare carries the defense.
+  CAUGHT.
+- ADV-P4-06 one byte appended to docs/map-review.html and committed: exit 1.
+  FAIL "P4-e docs/map-review.html differs against 024cfdf9 with no PM decision
+  naming it as the record". CAUGHT.
+- ADV-P4-07a the doctor prints "error: measure/tech-debt.md: broken local link
+  scenes/maps/mill.ts" and no track id: exit 0 with 44 of 44 and PASS on P4-f.
+  DEFECT CONFIRMED (gap ADV-9).
+- ADV-P4-07b the doctor prints "error: measure/scope-map.tsv: missing scene row
+  for locations/civic/mill" and no track id: exit 0 with 44 of 44 and PASS on
+  P4-f. DEFECT CONFIRMED (gap ADV-9, row-shaped).
+- ADV-P4-08 plan.md cites e2c7, a 4-character sha that does not resolve
+  uniquely; e2c7bb9c is the only plan citation that touches the TSV (verified on
+  the live tree): exit 1 with 30 FAIL lines, one per changed slug, "P4-d status
+  change for <slug> cites no plan commit that is an ancestor of HEAD and touches
+  the TSV". CAUGHT.
+
+Anti-pattern coverage. A4: the control must pass 44 of 44 before any probe
+counts, so no vacuous pass exists. A3: every status and citation value is a
+labeled cell or a fixed-string grep, never a bare digit scan. A5: each caught
+probe quotes the exact FAIL line, and the plan claim "no error line names
+asset_scenes_civic_20260928 or its files" (plan.md line 166) was tested: the
+first half is enforced, the second half is not (ADV-9), and the claim is true
+today on the committed tree. A7: the slug set comes from the full TSV copy in
+the clone. A9: all paths name the live track directory. A10: this run never
+touched measure/generated and never ran generate.sh.
+
+Scope. This role changed no checker, no record, no inventory row, no plan, and
+no map. The three new files are the script, the JSON (provisional first, final
+replaces it), and this log. The eight pre-existing untracked files
+(review-a-p4-be89dc9.*, review-c-p4-be89dc9.*, review-c-p4-c1e84b1.*,
+phase-acceptance-p3-024cfdf.*) are added unchanged. No tracked file changed.
+
+verdict: PASS. The Phase 4 gate holds against eight new probe classes with
+exact FAIL lines, and the four confirmed checker gaps (ADV-7 column count,
+ADV-8 civic row reorder, ADV-9 file-level doctor blindness in two shapes) hold
+no live instance in the committed records. Each gap is a one-to-few-line
+hardening item inside existing checker loops.
+
+retry_recommendation: none
+confidence: high
+known_failures: none blocking; ADV-7, ADV-8, and ADV-9 are hardening Nits for
+  Red, same class as the Phase 2 and Phase 3 ADV items that Red closed inside
+  the earlier checkers
+handoff: route ADV-7, ADV-8, and ADV-9 to Red as checker hardening before the
+  closeout (each fix is small: one awk column-count guard, one in-order masked
+  sha256 compare in P4-b, and a wider P4-f grep set that includes the track's
+  file paths and scene ids); ADV-9 extends the review-c F2 file-not-track
+  blindness into the Phase 4 gate itself; the /tmp/opencode/adv-p4-civic clone
+  remains for inspection; any subsequent implementation commit invalidates
+  this result and requires this adversarial gate to rerun
+END_MEASURE_AGENT_RESULT

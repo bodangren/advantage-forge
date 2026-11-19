@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Phase 4 re-audit passes at c1e84b19: the orchestrator disposition resolves blocking finding F1. Provenance: git rev-parse HEAD gives c1e84b19dd1b6a73b9b5ac3c1f5dbe394f88c9be, equal to the audited head, with phase_base_sha 024cfdf9250384667142481856d17eebca91cb15 and role_base_sha a49058531ed2224c55210c90aca45b81d823d44e (test-strategy.md line 5), so the audited HEAD is current. The two commits since be89dc91 touch only plan.md (6 insertions) and green-p4.log (1 line): 43c44210 adds a Phase 4 evidence paragraph and a second unchecked closeout task 'Regenerate measure/generated/ with ./measure/generate.sh and commit it (deferred to the closeout role; blocked while measure/generated/ and measure/tracks.md hold foreign uncommitted edits; Review C F1 at be89dc91)', and c1e84b19 adds the generated_facts_deferral line to green-p4.log. The disposition facts hold: git status shows measure/generated/architecture.json, measure/generated/asset-inventory.json, measure/generated/status.md, and measure/tracks.md modified with foreign uncommitted edits, and git diff --stat counts 1,114 changed lines in the working-tree asset-inventory.json from other sessions; node measure/tools/generate.mjs --check (read-only) still exits 1 with the three stale-fact lines; the committed asset-inventory.json still holds 6 accepted against 36 in the TSV. Judgment on the disposition: acceptable. A write-mode regenerate now would rewrite measure/generated/ files that hold other sessions' uncommitted work, and any commit of them would carry foreign edits, which breaks the standing rule 'Commit only assigned paths during concurrent work' (AGENTS.md). Green could not fix F1 without breaking a stronger rule, so deferral is the correct disposition, and it is recorded in both places the framework reads: the plan closeout task citing Review C F1, and the green log. The stale file is a derived artifact; the source record (the TSV) is correct and complete at HEAD. check-records.sh still exits 0 with 44 PASS at c1e84b19. Judgment on the gate: the catch is partial and human, not mechanical. plan_closeout_feedback in the orchestrator interphase checker exempts any task line whose text contains 'deferred' (it gives no feedback and counts as covered), and closeout_feedback runs neither ./measure/doctor.sh nor generate.mjs --check, so the mechanical closeout gate passes even if the regenerate is skipped. The only lines that name the stale fact are the doctor freshness error and generate.mjs --check, and the doctor line names measure/generated/asset-inventory.json, not the track — the same scoped-grep blind spot as the earlier F2. The stale line can never clear without the regenerate, so a closeout steward who requires the doctor green, or every error line owned, will catch it; nothing mechanical fails on it. Verdict: pass, with the gate blindness carried as a nonblocking item for the orchestrator and closeout steward.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F2 [Nit, carried and sharpened] review-c: no mechanical gate enforces the deferred regenerate. plan_closeout_feedback in scripts/measure_interphase_checks.py (lines 966-970) exempts any task line containing 'deferred', and closeout_feedback (lines 1029-1051) runs neither ./measure/doctor.sh nor node measure/tools/generate.mjs --check, so a closeout that archives the track without regenerating still prints PASS. The doctor freshness error that would name the stale file (common.mjs line 531) does not name the track, so a scoped grep in the style of check-records.sh P4-f also misses it. Rationale: AGENTS.md still requires './measure/doctor.sh before closing a track', the stale line can never clear without the regenerate, and the deferral text names the exact command, so a careful steward catches it; the gap is enforcement, not visibility. Suggestion: have the closeout steward record the regenerate commit SHA in the deferred task line, or add 'node measure/tools/generate.mjs --check' to the closeout or final-acceptance gate commands.",
+    "F3 [Nit, carried, unchanged] review-c: bench/sonnet/map-batch1-plan.md line 4 states '94 rows at mockup-needed'; 30 of those rows now read accepted, so the count reads 64. Historical batch plan, no tool parses it."
+  ],
+  "evidence": [
+    "SHA resolution and currency: git rev-parse HEAD gives c1e84b19dd1b6a73b9b5ac3c1f5dbe394f88c9be, equal to the audited head; git rev-parse 024cfdf9 gives 024cfdf9250384667142481856d17eebca91cb15; test-strategy.md line 5 records the role base a4905853.",
+    "F1 disposition review (earlier blocking finding at be89dc91): the finding is resolved by the orchestrator disposition, not withdrawn. The disposition commits exist and say what the orchestrator claimed: git show --stat prints 43c44210 (plan.md only, 6 insertions) and c1e84b19 (green-p4.log only, 1 insertion); both are ancestors of HEAD; the plan closeout task text cites 'Review C F1 at be89dc91' verbatim.",
+    "Foreign-edit facts: git status --short over the four paths prints M for measure/generated/architecture.json, measure/generated/asset-inventory.json, measure/generated/status.md, and measure/tracks.md; git diff --stat counts 12, 1114, 13, and 7 changed lines respectively, so a write-mode regenerate would rewrite files that hold other sessions' uncommitted work and any commit would carry it — the standing rule that blocks generate.sh holds.",
+    "Stale-fact facts (read-only check, no write-mode generate): node measure/tools/generate.mjs --check exits 1 with stale-fact lines for measure/generated/architecture.json, measure/generated/status.md, and measure/generated/asset-inventory.json; the committed asset-inventory.json at HEAD still holds 6 accepted and 94 mockup-needed blueprint statuses against 36 accepted and 64 mockup-needed in the committed TSV (the numbers from the be89dc91 audit are unchanged).",
+    "Deferral record shape: plan.md '## Closeout' holds two unchecked tasks, each with the word 'deferred' in its text ('Close the track (deferred to the closeout role)' and 'Regenerate measure/generated/ with ./measure/generate.sh and commit it (deferred to the closeout role; blocked while measure/generated/ and measure/tracks.md hold foreign uncommitted edits; Review C F1 at be89dc91)'); green-p4.log ends with the generated_facts_deferral line naming the 6-versus-36 counts, the --check exit 1, and the standing rule.",
+    "Closeout gate analysis: plan_closeout_feedback (scripts/measure_interphase_checks.py lines 966-970) gives no feedback for any task line containing 'deferred' (case-insensitive) and counts it covered; closeout_feedback (lines 1029-1051) checks the archive move, the registry, metadata 'done', the final-acceptance json, and the closeout manifest, but runs neither ./measure/doctor.sh nor generate.mjs --check, so a skipped regenerate passes the mechanical gate; the doctor freshness step (measure/tools/common.mjs line 531) prints 'measure/generated/asset-inventory.json: stale generated fact', which names the file, not the track.",
+    "Phase gate still green: bash measure/runs/asset_scenes_civic_20260928/check-records.sh ends with '=== Total: 44 checks (PASS=44, FAIL=0) ===' and exits 0 at c1e84b19; the plan.md edit adds evidence text and a closeout task, so no P4 check regresses.",
+    "Scope of the re-audit commits: git diff be89dc91..c1e84b19 --stat lists only green-p4.log (1 insertion) and plan.md (6 insertions); no product, record TSV, or generated file changed between the two audited heads, so every Phase 4 contract finding from the be89dc91 audit that did not depend on the stale generated fact stands unchanged.",
+    "F3 basis: bench/sonnet/map-batch1-plan.md line 4; the HEAD TSV histogram still prints 64 mockup-needed."
+  ],
+  "commands": [
+    "git rev-parse HEAD 024cfdf9 (c1e84b19dd1b6a73b9b5ac3c1f5dbe394f88c9be; 024cfdf9250384667142481856d17eebca91cb15)",
+    "git log --oneline be89dc91..c1e84b19 (43c44210, c1e84b19); git show --stat for both (plan.md only; green-p4.log only)",
+    "git status --short measure/generated/ measure/tracks.md (all four paths M)",
+    "git diff --stat -- measure/generated/architecture.json measure/generated/asset-inventory.json measure/generated/status.md measure/tracks.md (12, 1114, 13, 7 changed lines)",
+    "node measure/tools/generate.mjs --check (exit 1; three stale-fact lines; read-only mode only)",
+    "sed over plan.md '## Closeout' (two deferred unchecked tasks)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-records.sh (exit 0; 44 checks, PASS=44, FAIL=0)",
+    "sed -n 953-975 and 1029-1051 over scripts/measure_interphase_checks.py (deferred lines exempt; closeout_feedback runs no doctor and no freshness check)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_scenes_civic_20260928/review-c-p4-c1e84b1.json",
+    "measure/runs/asset_scenes_civic_20260928/review-c-p4-c1e84b1.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ux_applicability": "not_applicable",
+  "webbridge_status": "not_run",
+  "webbridge_evidence": {
+    "screenshots": [],
+    "accessibility_snapshots": [],
+    "interactions": []
+  },
+  "route": "opencode-go/glm-5.3#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The disposition is recorded exactly where the framework reads it (plan.md '## Closeout' second task citing Review C F1 at be89dc91; green-p4.log generated_facts_deferral line), every fact it cites is true (git status shows the four foreign-edited paths with 1,114 changed lines in asset-inventory.json; generate.mjs --check exits 1), and check-records.sh still passes 44/44 at c1e84b19; the residual gap is that the closeout gate does not enforce the deferred task."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "check-records.sh stays red-first and green at the re-audited head (44/44, exit 0), but the deferral adds no mechanical check: plan_closeout_feedback exempts the word 'deferred' and closeout_feedback runs neither the doctor nor generate.mjs --check."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff be89dc91..c1e84b19 --stat lists only green-p4.log (1 insertion) and plan.md (6 insertions); no product, TSV, or generated file changed between the two audited heads."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every judgment rests on a command result: the git status and diff --stat counts of the foreign edits, the read-only generate.mjs --check exit 1, the sed reads of the deferral text, the interphase checker source lines 966-970 and 1029-1051, and the 44/44 checker run."
+    }
+  ],
+  "role": "review-c",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "## Phase 4: Records",
+  "baseline_sha": "024cfdf9250384667142481856d17eebca91cb15",
+  "audited_head_sha": "c1e84b19dd1b6a73b9b5ac3c1f5dbe394f88c9be"
+}

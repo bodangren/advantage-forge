@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "role": "measure-adversarial-testing",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "## Phase 4: Records",
+  "status": "pass",
+  "summary": "Phase 4 adversarial probes of check-records.sh at c1e84b19, all new beyond the Review A falsification set (ID edit, extra 31st row, below-bar accepted on the Judge and mill Rerate paths, citation not touching the TSV, non-ancestor citation; none repeated). A shared clone under /tmp/opencode/adv-p4-civic holds the committed tree at the audited head c1e84b19dd1b6a73b9b5ac3c1f5dbe394f88c9be; the control passes 44 of 44, so every probe counts. Eight probe classes are caught with exact FAIL lines: a civic row set to follow-up while the inventory state stays accepted fails two P4-c checks (state-cell mismatch and accepted count 29 against supported 30); a status edit on the non-civic P0 row locations/adventure/dungeon fails P4-b on both diff lines; a trailing space in a status cell fails P4-a as an unknown status; a non-civic row reorder fails P4-b; a one-character generator drift (watermill x 2.2 to 2.3, the yaw line still -65) is caught by the P4-g byte compare alone while the yaw grep still passes; a one-byte append to docs/map-review.html fails P4-e; and a plan citation abbreviated to the 4-character sha e2c7, which does not resolve uniquely, makes all 30 changed slugs fail P4-d (the citation regex needs 7 to 40 characters, and e2c7bb9c is the only plan citation that touches the TSV, verified on the live tree). Four probes confirm checker gaps with no live instance, routed to Red as hardening Nits ADV-7 to ADV-9: a trailing tab in a status cell adds a fifth column and the checker still passes 44 of 44 (P4-a reads only the 4th field; the committed TSV holds no row with a column count other than 4); a pure reorder of two adjacent civic P2 rows passes 44 of 44 (P4-b compares sorted ID sets and per-line prefixes; base and head cut -f1-3 sha256 are both f608396a, so the committed diff holds no reorder); and the scoped P4-f check passes 44 of 44 while the doctor output holds an error naming scenes/maps/mill.ts (a broken local link in measure/tech-debt.md) and an error naming the scope-map row locations/civic/mill, neither naming the track id (the control clone doctor output holds 51 foreign errors and no line naming scenes/maps/* or locations/civic/*, so no live instance exists; plan.md line 166 claims no error line names the track 'or its files', and the 'or its files' half is unenforced). No probe regressed an existing defense: the control and every expected catch reproduce their exact FAIL lines. The mill rerate record, the TSV, the inventory, and every other committed record were left untouched; every mutation lived in the /tmp clone and was reset after each probe.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "ADV-7 [Nit] adversarial-testing: check-records.sh P4-a (measure/runs/asset_scenes_civic_20260928/check-records.sh:94-116) validates the 4th TSV field but never the column count, so a status cell that ends with a tab adds a fifth column and the gate still passes 44 of 44. Fixture proof: ADV-P4-03b appends one tab to the apothecary row, the row parses as NF=5 with $4=accepted, the diff commits cleanly, and the unmodified checker exits 0 with PASS=44 FAIL=0. No live instance: awk over the committed TSV reports no data row with a column count other than 4. Rationale: the TSV is the acceptance record and its schema is four columns; a stray fifth column is silent schema drift that downstream strict parsers can reject. Red can close it with one awk guard: every data row must hold exactly 4 tab-separated fields.",
+    "ADV-8 [Nit] adversarial-testing: check-records.sh P4-b (measure/runs/asset_scenes_civic_20260928/check-records.sh:118-149) compares the base and head civic P2 scene_id sets as sorted lists and each diff line only by its id, group, and priority prefix, so a pure row reorder inside the civic P2 block passes 44 of 44 while the TSV diff holds structural changes, which the plan claims cannot exist ('the diff changes only the status column', plan.md line 131). Fixture proof: ADV-P4-04a swaps the adjacent apothecary and archive rows, the masked cut -f1-3 sha256 changes from f608396a to 0b771e39, and the unmodified checker exits 0 with PASS=44 FAIL=0. No live instance: the base and head cut -f1-3 sha256 are both f608396a26fe4f37c9b3c4fc4603bd438a35d1eaddad6c7f785cd6039a65ebb4 on the committed tree, so no line moved. Red can close it by comparing the in-order masked sequence (cut -f1-3 sha256 of base against head, as review-a already ran by hand); that one compare also subsumes the non-civic edit case the current per-line check catches.",
+    "ADV-9 [Nit] adversarial-testing: check-records.sh P4-f (measure/runs/asset_scenes_civic_20260928/check-records.sh:255-271) greps the doctor output only for the track id asset_scenes_civic_20260928, so a doctor error that names this track's file or row without the track id passes the scoped gate, and the plan claim 'no error line names asset_scenes_civic_20260928 or its files' (plan.md line 166) is enforced only in its first half. Fixture proof: ADV-P4-07a makes the doctor print 'error: measure/tech-debt.md: broken local link scenes/maps/mill.ts' and ADV-P4-07b makes it print 'error: measure/scope-map.tsv: missing scene row for locations/civic/mill' (a real scope-map row this track owns, dropped); in both runs the doctor error line exists in the output, yet P4-f prints PASS and the checker exits 0 with PASS=44 FAIL=0. No live instance: the control clone doctor output holds 51 foreign error lines and none names scenes/maps/* or locations/civic/*. This extends the file-not-track blindness that review-c F2 noted for the closeout freshness error down into the Phase 4 gate itself. Red can close it by adding the track's civic file paths and scene ids (scenes/maps/<slug>.ts for the 30 slugs, docs/fantasy-world-scene-blueprints.tsv, and locations/civic/*) to the P4-f grep set."
+  ],
+  "evidence": [
+    "Provenance: git rev-parse HEAD gives c1e84b19dd1b6a73b9b5ac3c1f5dbe394f88c9be, equal to role_base_sha and the pre-adversarial HEAD; phase_base_sha 024cfdf9 resolves and is an ancestor. This role changed no checker, no record, no inventory, no plan, and no map: every mutation lived in the shared clone under /tmp/opencode/adv-p4-civic and was reset after each probe.",
+    "Harness fidelity: bash measure/runs/asset_scenes_civic_20260928/adversarial-p4.sh exits 0; the committed tree gate prints '=== Total: 44 checks (PASS=44, FAIL=0) ===' with exit 0, and the pristine shared clone at the audited head also passes 44 of 44, so probe results are not vacuous (A4 defense held by construction: every probe changes exactly one fact in a tree whose gate passes).",
+    "ADV-P4-01 (follow-up against an accepted inventory, caught): the bathhouse TSV row reads follow-up while the inventory state cell stays accepted; checker exit 1 with 'FAIL: P4-c TSV accepted count [29] differs from the inventory-supported count [30]' and 'FAIL: P4-c TSV follows up bathhouse but the inventory state cell reads [accepted], want [follow-up]'.",
+    "ADV-P4-02 (non-civic P0 row, caught): the locations/adventure/dungeon row changes accepted to follow-up; checker exit 1 with two 'P4-b diff touches a non-status field or a non-civic-P2 row' FAILs, each naming the dungeon row. The civic-only P4-a count stays blind to it, and the diff-scope check catches it.",
+    "ADV-P4-03a (trailing space, caught): the apothecary status cell reads 'accepted ' (trailing space); checker exit 1 with 'FAIL: P4-a row apothecary holds unknown TSV status [accepted ]' plus the P4-a count FAIL and the P4-c accepted-count FAIL.",
+    "ADV-P4-03b (trailing tab, gap ADV-7): the apothecary row ends with a tab, parses as NF=5 with $4=accepted; checker exit 0 with 44 of 44. No live instance: awk over the committed TSV reports no data row with a column count other than 4.",
+    "ADV-P4-04a (civic row reorder, gap ADV-8): the adjacent apothecary and archive rows swap (clone line order 36:archive 37:apothecary); the masked cut -f1-3 sha256 changes to 0b771e3907bf8b174085fd320dae45c6e224a080182cfd7c7241d65477455a27; checker exit 0 with 44 of 44. No live instance: base and head cut -f1-3 sha256 are both f608396a26fe4f37c9b3c4fc4603bd438a35d1eaddad6c7f785cd6039a65ebb4 on the committed tree.",
+    "ADV-P4-04b (non-civic row reorder, caught): the adjacent abandoned-fort and alchemy-lab rows swap; checker exit 1 with two P4-b FAILs, so the line-prefix check rejects a reorder the moment the moved line is outside the civic P2 block.",
+    "ADV-P4-05 (one-character generator drift, caught): sed changes scripts/design-mill.mjs line 25 to put('watermill', 2.3, -3.4, { yaw: -65 }), so the generated mill.ts differs from the committed file by one character while the yaw grep target stays intact; checker exit 1 with 'FAIL: P4-g generator output differs from the committed scenes/maps/mill.ts' and the output still holds 'PASS: P4-g scripts/design-mill.mjs holds the accepted yaw -65 for the watermill'. The byte compare, not the text grep, carries the defense.",
+    "ADV-P4-06 (review page one byte, caught): one byte appended to docs/map-review.html (18733 to 18734) and committed; checker exit 1 with 'FAIL: P4-e docs/map-review.html differs against 024cfdf9 with no PM decision naming it as the record'.",
+    "ADV-P4-07a (doctor names a civic file, gap ADV-9): a link line appended to measure/tech-debt.md (49 lines, within the 50-line bound) makes the doctor print 'error: measure/tech-debt.md: broken local link scenes/maps/mill.ts'; the checker output holds 'PASS: P4-f doctor output holds no error line for this track' and exits 0 with 44 of 44.",
+    "ADV-P4-07b (doctor names a civic row, gap ADV-9): dropping the scope-map scene row for locations/civic/mill makes the doctor print 'error: measure/scope-map.tsv: missing scene row for locations/civic/mill'; P4-f still prints PASS and the checker exits 0 with 44 of 44.",
+    "ADV-P4-08 (4-character citation, caught): plan.md replaces every e2c7bb9c with e2c7; git rev-parse --verify e2c7 fails (does not resolve uniquely in the clone); the 33 remaining plan citations of 7 to 40 characters were pre-verified on the live tree to include no commit that touches the TSV; checker exit 1 with 30 'P4-d status change for <slug> cites no plan commit that is an ancestor of HEAD and touches the TSV' FAILs, one per changed slug.",
+    "Live-instance scan for the P4-f gap: the control clone doctor run exits 1 with 51 error lines, all foreign; no line names scenes/maps/ or locations/civic/, which proves the probe gaps are future drift, not present defects.",
+    "Scope of this role's own change: git status before the commit shows only the three new adversarial artifacts plus the pre-existing untracked review-a-p4-be89dc9.*, review-c-p4-be89dc9.*, review-c-p4-c1e84b1.*, and phase-acceptance-p3-024cfdf.* files, which this commit adds unchanged; no tracked file was modified (git diff --quiet on tracked paths)."
+  ],
+  "commands": [
+    "bash measure/runs/asset_scenes_civic_20260928/adversarial-p4.sh (exit 0; committed tree 44/44; control clone 44/44; probes 01, 02, 03a, 04b, 05, 06, 08 caught with exact FAIL lines; gaps confirmed at 03b, 04a, 07a, 07b)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-records.sh (exit 0; Total: 44 checks, PASS=44, FAIL=0)",
+    "git rev-parse HEAD (c1e84b19dd1b6a73b9b5ac3c1f5dbe394f88c9be, equal to the audited head)",
+    "for c in $(grep -oE '\\b[0-9a-f]{7,40}\\b' measure/tracks/asset_scenes_civic_20260928/plan.md | sort -u); do git show --name-only --format= $c -- docs/fantasy-world-scene-blueprints.tsv; done (only e2c7bb9c touches the TSV)",
+    "git rev-parse --verify --quiet e2c7 (fails: does not resolve uniquely)",
+    "awk -F'\\t' 'NR>1 && NF!=4' docs/fantasy-world-scene-blueprints.tsv (empty: no live 5-column row)",
+    "git show 024cfdf9:docs/fantasy-world-scene-blueprints.tsv | cut -f1-3 | sha256sum and cut -f1-3 docs/fantasy-world-scene-blueprints.tsv | sha256sum (both f608396a26fe4f37c9b3c4fc4603bd438a35d1eaddad6c7f785cd6039a65ebb4: no live reorder)",
+    "grep -E 'scenes/maps/|locations/civic/' over the control clone doctor output (empty: no live civic doctor line)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p4.sh",
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p4-c1e84b1.json (provisional inconclusive verdict written first, replaced by this final pass verdict)",
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p4-c1e84b1.log",
+    "measure/runs/asset_scenes_civic_20260928/review-a-p4-be89dc9.json (pre-existing untracked, added unchanged)",
+    "measure/runs/asset_scenes_civic_20260928/review-a-p4-be89dc9.log (pre-existing untracked, added unchanged)",
+    "measure/runs/asset_scenes_civic_20260928/review-c-p4-be89dc9.json (pre-existing untracked, added unchanged)",
+    "measure/runs/asset_scenes_civic_20260928/review-c-p4-be89dc9.log (pre-existing untracked, added unchanged)",
+    "measure/runs/asset_scenes_civic_20260928/review-c-p4-c1e84b1.json (pre-existing untracked, added unchanged)",
+    "measure/runs/asset_scenes_civic_20260928/review-c-p4-c1e84b1.log (pre-existing untracked, added unchanged)",
+    "measure/runs/asset_scenes_civic_20260928/phase-acceptance-p3-024cfdf.json (pre-existing untracked, added unchanged)",
+    "measure/runs/asset_scenes_civic_20260928/phase-acceptance-p3-024cfdf.log (pre-existing untracked, added unchanged)"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "phase_base_sha": "024cfdf9",
+  "role_base_sha": "c1e84b19",
+  "audited_head_sha": "c1e84b19dd1b6a73b9b5ac3c1f5dbe394f88c9be",
+  "route": "opencode-go/glm-5.3#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The committed Phase 4 records hold every claim the probes could attack: the control clone passes 44 of 44, the base and head masked TSV sha256 are both f608396a (no reorder, no ID move), and the control doctor output holds no line naming scenes/maps/* or locations/civic/* (the plan's 'or its files' claim is true today)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "Eight probe classes fail the gate with exact expected FAIL lines (follow-up mismatch, non-civic P0 edit, trailing space, non-civic reorder, one-character generator drift caught by the byte compare alone, one-byte page edit, 4-character citation with 30 FAILs), but four checker gaps (5-column row, civic reorder, two file-level doctor errors) pass 44 of 44 on their fixtures, so those defenses have no failing-first test until Red closes ADV-7 to ADV-9."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "This role changed only the three new run artifacts and added the eight pre-existing untracked review and acceptance files unchanged; no checker, record, inventory, plan, or map was modified, and every probe mutation lived in the /tmp shared clone (git diff --quiet on tracked paths)."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every verdict carries the checker exit code, the Total line, and the exact FAIL or PASS text; each confirmed gap carries a no-live-instance proof (NF scan empty, masked sha256 equal on base and head, control doctor output free of civic lines)."
+    }
+  ]
+}
