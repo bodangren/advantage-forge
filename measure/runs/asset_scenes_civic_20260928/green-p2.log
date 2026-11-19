@@ -274,3 +274,20 @@ open_items_for_reviewers:
 status: complete
 END_MEASURE_AGENT_RESULT
 ```
+
+## Follow-up commits
+
+`d164f980` adds a `Judge critical` cell to all 30 inventory rows: `true` for mill, `false` for the
+other 29. The rerun block above copied the rating and the note but not this flag, so this later
+commit holds it. `ba13f928` cites `d164f980` in the Phase 2 task 2 line and in the Green evidence
+line.
+
+The code and plan head is now `ba13f928`. The block field `final_green_head: 7a48784d` names the
+head before this follow-up.
+
+Gates after `d164f980`: `check-review.sh` exits 0 with
+`=== Total: 34 checks (PASS=34, FAIL=0) ===`. The plan gate lists four JSON files.
+`check-inventory.sh` exits 1 with `=== Total: 96 checks (PASS=6, FAIL=90) ===` by design.
+
+Commit chain: `7dc26d74` (ratings, notes, route, eight evidence files), `d164f980` (critical
+cells), `7a48784d` and `ba13f928` (plan evidence), `84c87f3e` and this note (green log).
