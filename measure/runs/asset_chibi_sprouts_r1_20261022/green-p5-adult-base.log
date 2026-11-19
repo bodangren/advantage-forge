@@ -1,73 +1,59 @@
 MEASURE_AGENT_RESULT
 track: asset_chibi_sprouts_r1_20261022
-phase: Phase 5 - the rest of the inventory (adult base only, PM S26 interim 2026-11-19)
+phase: Phase 5 - the rest of the inventory (adult base fix round, orchestrator look check 2026-11-19)
 status: partial
-implementation_commit: 776fc435
-plan_commit: 97bf7b2b
-phase_base_sha: not routed in this brief (session start HEAD 16dd2b99; plan commit 97bfb2b; implementation 776fc435)
-result: base done; six characters (Lily, Tom, Mom, Dad, Grandma, Grandpa) next; no tasks flipped
+implementation_commit: ca186c82
+plan_commit: 97bfb2b
+phase_base_sha: not routed in this brief (session start 16dd2b99; plan 97bfb2b; v1 base 776fc435;
+  v1 log 64e8f0b1; fix ca186c82)
+result: base fixed per the three look-check defects; six characters (Lily, Tom, Mom, Dad, Grandma,
+  Grandpa) next; no tasks flipped
+waived: intentional face touch, orchestrator 2026-11-19 (touch-gesture HEAD contacts are
+  contact-as-content, same class as the shipped children; nan fails 6 clips, the adult 3)
 
 handoff:
-- Tasks flipped to [x]: none (brief: do not mark tasks [x]).
-- Tasks flipped to [b] with (deferred:owner): none. No human-gated work was encountered.
-- Step 0 done in 97bfb2b: PM S26 interim decision recorded under the S26 tasks (lines ~191, 206, 208);
-  the remaining-cast task is now [~] with sub-bullets: adult base (this run), Lily, Mom, Dad,
-  Grandma, Grandpa, Tom.
-- References copied read-only from Workbooks to docs/sprout-mockups/: mom, dad, grandma, grandpa,
-  lily, tom.jpg. cast-lineup.jpg is byte-identical (md5 match), so no cast-lineup-workbooks.jpg
-  was needed.
-- New files: assets/sprout-adult-base.ts, tests/sprout-gestures.test.ts, the six reference JPGs.
-  Edited: assets/parts/humanoid-kind.ts (ADULT set, `wide` factor), assets/parts/sprout-gestures.ts
-  (P-parameterized targets).
-- No Red test commit exists for this run (PM-ordered normal Forge build; the track has no
-  test-strategy.md). No Red tests were edited. The new test file is implementation-owned.
-- Green gates (all run, outputs below):
-  - typecheck-asset sprout-adult-base: ok, 0 errors.
-  - mesh-same proof (existing cast unchanged): SAME sprout-pat (30784 tris, 11 bodies, identical
-    GLB), SAME sprout-nan (29653 tris, 9 bodies), SAME avatar-base (26863 tris, 5 bodies).
-  - vitest: tests/sprout-base.test.ts, tests/sprout-gestures.test.ts,
-    tests/preset-colour.test.ts --maxWorkers=1: 3 files, 10 tests, all pass. The preset pin is
-    unchanged (sprout-adult-base declares variants but no presets, so the pin skips it).
-  - forge animate walk strip: read, no clipping, feet plant, arms swing (mild upper-body
-    stiffness is the known kind follow-up, not introduced here).
-  - No `warning:` lines in the render, animate, or check outputs.
-- Heights (no line-up tool exists in scripts/ or bench/sonnet/sprouts, so stating measured
-  heights): sprout-adult-base bounds max y 1.311 m vs sprout-pat 0.858 m = 1.53x (spec: Mom about
-  1.5x the children; Dad tallest comes from his own asset later). Bounds: adult
-  [-0.386, 0, -0.217] to [0.386, 1.311, 0.218], 39766 tris.
-- Artifact paths: out/sprout-adult-base/render.png (4 views),
-  out/sprout-adult-base/anim/walk.png (+ .gif), anim/gesture-clap.png, anim/gesture-touch-neck.png,
-  anim/gesture-touch-nose.png, anim/gesture-hug-self.png (+ .gifs).
-- GATE EXCEPTION (no fake pass): `./forge check sprout-adult-base` ends
-  `result FAIL: a held item passes through the head in 5 clip(s)` (touch-nose, touch-neck,
-  count-fingers, eat, listen: genuine fingertip/fist-on-face touches) with ground ok and all kind
-  clips head-clean. This gate as literally stated is unachievable for ANY touch-gesture Sprout:
-  the shipped, accepted sprout-nan fails the same check with 6 clips (verified this run:
-  wave, touch-nose, touch-neck, count-fingers, eat, listen). Before this run the adult failed
-  worse (hands buried 6-7 cm in the belly on 10 clips because every goal was child-absolute);
-  the P-parameterized targets fixed that (holds verified on strips: clap meets at the chest,
-  touch-neck fists at the throat, touch-nose fingertip on the nose, hug arms crossed). Remaining
-  HEAD lines are the intentional touch contacts, same class as the shipped children; remaining
-  body lines are transit/squeeze presses, also same class as nan (nan clap 4.4 cm, attack
-  3.9 cm). Recommendation to review roles: scope the check gate to kind clips for
-  gesture-carrying Sprouts, or waive touch-gesture HEAD lines track-wide (nan needs the same
-  waiver).
-- Suggested next: Mom (long wavy hair, cream sweater, jeans) on ADULT; Dad tallest via a
-  slightly larger adult proportion set or per-asset scale; then Lily, Tom, Grandma, Grandpa.
+- Defect 1 (proportions): ADULT is now a slim 4.7-head adult. Head 0.8 of the child (same Sprouts
+  face and eye style, eyes absolute size), torso width 1.1 of the child (wide 0.924), clear waist
+  (slim torso + crisp geometry belt + shirt/trouser break), legs about half the height (crotch
+  0.72 of 1.52 m; knee low at 0.43 via legKnee/legAnkle factors), arms 2.2x turned 12 deg out at
+  rest, hands scaled to the head (hand 1.2) reaching mid-thigh, full-length custom trousers to
+  the shoe tops, kind shoes at 1.5x. Shared scaled() grew opt-in factors (head, armOut, hand,
+  armR, legKnee, legAnkle) with same-operand defaults, so HERO/AGE5 output is bit-identical
+  (mesh-same SAME on every body except the intentionally fixed eyelid-skin; pin test green).
+- Defect 2 (back discs): fixed at the source. The sing lids are now a 2 cm thin disc behind the
+  lid front instead of a full-depth slab (thin-disc clip in humanoid-kind.ts, works at every
+  size). Proof: pat-back/nan-back before/after renders: discs gone (pat-back crop verified by
+  eye); fronts byte-identical within renderer noise (pat-front 113 px <=10/255, nan-front
+  ~3k px small + 106 mid + 8 big of 262k; subject bboxes identical); mesh-same pat reports ONLY
+  body eyelid-skin changed (raw 32732 -> 6248, 726 -> 724 tris) with bounds.min[2] -0.209 ->
+  -0.204 (hair is now the back-most surface). If a source fix had changed the children's front
+  view it would have been stopped and reported; it did not.
+- Defect 3 (arms): rest pose 12 deg out via armOut (sleeves, reach mapping, and fist grips follow
+  the same rotation; heroes/children unchanged at 0 deg).
+- Touch-gesture check FAIL: accepted as an orchestrator waiver for intentional face-touch clips.
+  The adult now fails 3 clips (touch-nose fingertip-on-nose, touch-neck 0.3 cm graze, listen
+  1.0 cm into hair); count-fingers and eat no longer flag. No other clip fails on the head;
+  attack/cast are head-clean; ground ok. Body contacts are reported-only transit/squeeze
+  presses (same class as nan: clap 4.4 cm, attack 3.9 cm).
+- New files: none this round (base, test, and reference JPGs landed in 776fc435).
+- No Red tests edited. tests/sprout-gestures.test.ts extended (headF pin 1 / 0.8, adult chin/ear
+  anchors, halfScale 1.5).
+- Suggested next: Mom on ADULT (long wavy hair, cream sweater, jeans); Dad tallest via a
+  slightly larger adult set; then Lily, Tom, Grandma, Grandpa.
 END_MEASURE_AGENT_RESULT
 
 gate outputs:
 - typecheck: "typecheck ok: 0 errors in assets/sprout-adult-base.ts"
-- mesh-same: "SAME sprout-pat: 30784 triangles, 11 bodies, identical GLB data",
-  "SAME sprout-nan: 29653 triangles, 9 bodies, identical GLB data",
-  "SAME avatar-base: 26863 tris, 5 bodies, identical GLB data" (avatar-base run before the
-  gesture-target refactor; sprout-pat/nan re-run after it; gestures do not affect meshes)
-- vitest: "Test Files 3 passed (3); Tests 10 passed (10)"
-- check: "result FAIL: a held item passes through the head in 5 clip(s)" (see exception above);
-  "ground ok: no clip sinks more than 1.5 cm below the rest pose (rest lowest 0.0 cm)";
-  kind clips: idle/walk/run/hit/rest/cheer "ok, nothing within 5.0 cm of the head";
-  attack/cast head-clean with reported-only body grazes (attack 6.2 cm, cast 1.3 cm; nan shows
-  the same class: attack 3.9 cm, cast 1.5 cm)
-- adult gesture targets (P=ADULT): clap y 0.5912 z 0.2015; neck 0.9031; self 0.6251; count 0.8811;
-  hip 0.3876; eat 0.9011; listen 0.8511; hugR 0.6590; hugL 0.5912 (AGE5 reproduces every authored
-  literal; pinned by tests/sprout-gestures.test.ts)
+- render: out/sprout-adult-base/render.png (4 views, read vs docs/sprout-mockups/mom.jpg);
+  stats 36670 tris, bounds y max 1.587 m with hair (body top 1.519 m), head 0.32 m ->
+  head-to-height 4.75; sprout-pat 0.858 m.
+- check: "result FAIL: a held item passes through the head in 3 clip(s)"
+  (touch-nose 3.6-5.7 cm intentional touch; touch-neck 0.3 cm graze; listen 1.0 cm hair);
+  kind clips idle/walk/run/hit/rest/cheer/cast/attack all head-clean;
+  "ground ok: no clip sinks more than 1.5 cm below the rest pose (rest lowest 0.0 cm)".
+- animate: out/sprout-adult-base/anim/walk.png (read: long strides, arm swing, no clipping,
+  feet plant) and anim/gesture-eat.png (read: fist meets the chin at the holds) + .gifs.
+- vitest: "Test Files 3 passed (3); Tests 10 passed (10)" (sprout-base, sprout-gestures,
+  preset-colour; pin unchanged, 387 assets).
+- warnings: none in typecheck, render, animate, or check outputs (inspect notes
+  mouth-open hidden by design, as on every sing asset).
