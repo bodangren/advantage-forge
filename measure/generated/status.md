@@ -1,8 +1,8 @@
 # Measure status
 
-Tracks: 86.
-Tracks by status: new: 34; in_progress: 44; completed: 8.
-Tracks by workstream: assets: 41; games: 42; foundation: 3.
+Tracks: 78.
+Tracks by status: new: 34; in_progress: 44; completed: 0.
+Tracks by workstream: assets: 34; games: 41; foundation: 3.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
@@ -10,13 +10,7 @@ Tracks by workstream: assets: 41; games: 42; foundation: 3.
 | [asset_companion_backlog_20260928](../tracks/asset_companion_backlog_20260928/) | new | assets | 0/5 | 5 | — |
 | [asset_delivery_20260928](../tracks/asset_delivery_20260928/) | new | assets | 0/7 | 7 | — |
 | [asset_engine_backlog_20260928](../tracks/asset_engine_backlog_20260928/) | new | assets | 0/5 | 5 | — |
-| [asset_equipment_parts_20260930](../tracks/asset_equipment_parts_20260930/) | completed | assets | 31/31 | 24 | 31 |
 | [asset_filled_shelves_20261028](../tracks/asset_filled_shelves_20261028/) | new | assets | 19/19 | 12 | — |
-| [asset_p1_architecture_20260928](../tracks/asset_p1_architecture_20260928/) | completed | assets | 9/9 | 9 | 9 |
-| [asset_p1_enemies_20260928](../tracks/asset_p1_enemies_20260928/) | completed | assets | 9/9 | 9 | 9 |
-| [asset_p1_heroes_20260928](../tracks/asset_p1_heroes_20260928/) | completed | assets | 9/9 | 9 | 9 |
-| [asset_p1_nature_20260928](../tracks/asset_p1_nature_20260928/) | completed | assets | 9/9 | 9 | 9 |
-| [asset_p2_monsters_20260928](../tracks/asset_p2_monsters_20260928/) | completed | assets | 19/19 | 9 | 9 |
 | [asset_p2_npcs_20260928](../tracks/asset_p2_npcs_20260928/) | new | assets | 3/9 | 9 | — |
 | [asset_p2_wildlife_20260928](../tracks/asset_p2_wildlife_20260928/) | in_progress | assets | 4/9 | 9 | — |
 | [asset_p3_fx_geometry_20260928](../tracks/asset_p3_fx_geometry_20260928/) | in_progress | assets | 5/9 | 9 | — |
@@ -27,11 +21,9 @@ Tracks by workstream: assets: 41; games: 42; foundation: 3.
 | [asset_scenes_civic_20260928](../tracks/asset_scenes_civic_20260928/) | in_progress | assets | 10/12 | 9 | — |
 | [asset_scenes_settlements_20260928](../tracks/asset_scenes_settlements_20260928/) | in_progress | assets | 0/9 | 9 | — |
 | [asset_scenes_wilderness_20260928](../tracks/asset_scenes_wilderness_20260928/) | in_progress | assets | 0/9 | 9 | — |
-| [asset_world_catchup_20261001](../tracks/asset_world_catchup_20261001/) | completed | assets | 16/16 | 16 | 16 |
 | [audio_game_integration_20261014](../tracks/audio_game_integration_20261014/) | new | games | 0/5 | 5 | — |
 | [audio_sfx_library_20261013](../tracks/audio_sfx_library_20261013/) | in_progress | assets | 18/19 | 12 | — |
 | [audio_sources_expand_20261014](../tracks/audio_sources_expand_20261014/) | in_progress | assets | 7/11 | 10 | — |
-| [avatar_system_20261001](../tracks/avatar_system_20261001/) | completed | games | 20/20 | 12 | 20 |
 | [game_2d_parity_20260928](../tracks/game_2d_parity_20260928/) | new | games | 0/5 | 5 | — |
 | [game_abyssal_well_20260928](../tracks/game_abyssal_well_20260928/) | in_progress | games | 6/8 | 8 | — |
 | [game_alchemists_synthesis_20260928](../tracks/game_alchemists_synthesis_20260928/) | in_progress | games | 6/8 | 8 | — |
@@ -95,6 +87,6 @@ Tracks by workstream: assets: 41; games: 42; foundation: 3.
 
 ## Project health
 
-Completed feature tracks with comparable estimates and actuals: 3.
-Recent feature velocity: 12.67 tasks per track.
-Estimate accuracy ratio: 1.22.
+Completed feature tracks with comparable estimates and actuals: 0.
+Recent feature velocity: unavailable.
+Estimate accuracy ratio: unavailable.
