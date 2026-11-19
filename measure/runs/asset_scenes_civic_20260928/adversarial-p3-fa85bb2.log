@@ -1,0 +1,91 @@
+MEASURE_AGENT_RESULT
+status: pass
+role: measure-adversarial-testing
+route: opencode-go/glm-5.3#high
+track: asset_scenes_civic_20260928
+phase: Phase 3: Rework
+phase_base_sha: b78fdde1
+role_base_sha: cddadba3 (first run at 6cc6f91f; this re-audit at HEAD fa85bb2a)
+audited_head_sha: fa85bb2a (Red's ADV-5 and ADV-6 fix)
+commits: pending this commit (test(asset_scenes_civic): Phase 3 adversarial re-audit; no push)
+tests_run: git diff 6cc6f91f..fa85bb2a (check-rework.sh +24, red-p3.log +21 only);
+  adversarial-p3.sh exit 0 (committed tree 41/41; control 41/41 at the live total;
+  all eight probes caught or passing as designed); check-rework.sh exit 0 PASS=41 FAIL=0
+files_changed: measure/runs/asset_scenes_civic_20260928/adversarial-p3.sh (control compares
+  against the live checker total; probes 01 and 03 expect CAUGHT), adversarial-p3-fa85bb2.json
+  (provisional first, final replaces it), adversarial-p3-fa85bb2.log
+plan_updates: none (all changes under measure/runs)
+
+Fix under audit. Red's fa85bb2a adds exactly the two routed checks:
+- ADV-5: P3-a now fails "rework commit [...] touches none of its source_paths; the
+  claimed source change is not in git" when git show --name-only on the commit is
+  empty for every source_paths entry.
+- ADV-6: P3-c now fails "rerate audited_head [...] predates the rework commit [...];
+  the judge saw the old shots" unless the rework commit is an ancestor of the
+  audited_head.
+The diff touches only check-rework.sh (+24) and red-p3.log (+21). The checker
+grew from 39 to 41 checks.
+
+Harness update, as briefed. adversarial-p3.sh no longer hardcodes 39: it runs the
+committed-tree gate first, parses the live total from the Total line (41), requires
+that run to exit 0, and requires the faithful git fixture control to pass 41 of 41.
+Probes 01 and 03 now expect CAUGHT; a pass there is a regression and sets exit 1.
+
+Probes and outcomes at fa85bb2a.
+- ADV-P3-00 control: exit 0, 41 of 41 at the live total.
+- ADV-P3-01 rework commit touches no map source (shots + docs/stray.txt only;
+  git show on c1 minus the source path is empty): exit 1, PASS=40 FAIL=1.
+  CAUGHT (ADV-5 closed). FAIL "P3-a mill rework commit [c08e107...] touches none
+  of its source_paths; the claimed source change is not in git".
+- ADV-P3-02 rework record commit = f77abb38, an unmerged side-branch commit
+  (resolves: yes; ancestor of HEAD: no): exit 1, 5 FAILs. CAUGHT. The two new
+  checks compose with the earlier defenses: the ancestry FAIL, the new
+  source-touch FAIL, both P3-b recency FAILs, and the new P3-c ordering FAIL.
+- ADV-P3-03 rerate audited_head = the phase-base commit, which predates the
+  rework commit (ancestor of HEAD: yes; rework commit is an ancestor of it: no):
+  exit 1, PASS=40 FAIL=1. CAUGHT (ADV-6 closed). FAIL "P3-c mill rerate
+  audited_head [db34d48...] predates the rework commit [480776...]; the judge
+  saw the old shots".
+- ADV-P3-04 rerate log model_id: glm-5.3 against route model kimi-for-coding:
+  exit 1. CAUGHT. FAIL "model id [glm-5.3] differs from the route model
+  [kimi-for-coding]".
+- ADV-P3-05 bank (judge 7.5, critical false, rated) gets a valid rework record
+  with fresh committed shots: exit 1, 4 FAILs (63 checks). CAUGHT. FAIL
+  "reworked map bank is not below the bar" plus the count, rerate-absent, and
+  missing-Rerate-cell FAILs.
+- ADV-P3-06 mill inventory Rerate cell 5.0 against the record 7.5: exit 1
+  (40 checks, PASS=39). CAUGHT. FAIL "inventory Rerate [5.0] differs from the
+  rerate record [7.5]".
+- ADV-P3-07 state accepted with Rerate 7.5 while the record holds critical true:
+  exit 1. CAUGHT. FAIL "mill rerate [7.5] critical [true] wants state
+  [follow-up], found [accepted]".
+- ADV-P3-08 3q elevation boundary: el 45.0 exit 0 (41 of 41); el 50.0 exit 0
+  (41 of 41); el 44.9 exit 1 with FAIL "3q elevation [44.9] lies outside
+  [45, 50]". Both edges inclusive, as test-strategy.md:155 requires.
+
+Committed tree at the audited head: check-rework.sh prints
+=== Total: 41 checks (PASS=41, FAIL=0) === and exits 0. The two new checks pass
+on the live mill record, matching the no-live-instance proof of the first run:
+7619c491 touches scenes/maps/mill.ts and the audited_head 304a75d6 descends
+from it.
+
+blocking_findings: none.
+nonblocking_findings: none. ADV-5 and ADV-6 are closed; no new gap surfaced.
+The regression sweep (probes 02, 04, 05, 06, 07, 08) shows the fix changed no
+earlier behavior.
+
+Scope. The fix diff touches only check-rework.sh and red-p3.log. This re-audit
+changed only the probe script and its two artifacts. No record, inventory, map,
+or tracked tool changed.
+
+verdict: PASS. ADV-5 and ADV-6 are closed by fa85bb2a, the control gate tracks
+the live checker total, all eight probes are caught or pass as designed, and the
+committed tree passes 41 of 41.
+
+retry_recommendation: none
+confidence: high
+known_failures: none
+handoff: Phase 3 adversarial gate is green at fa85bb2a; the track may proceed to
+  Phase 4 (TSV records) with check-rework.sh at 41 checks; any subsequent
+  implementation commit invalidates this result and requires this gate to rerun
+END_MEASURE_AGENT_RESULT

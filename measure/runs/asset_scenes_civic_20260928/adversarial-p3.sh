@@ -18,14 +18,20 @@
 # fixture (cp -a keeps the git history), and runs the unmodified checker copy from the
 # fixture root, so its relative paths and git commands resolve inside the fixture.
 #
-# Probes (brief of 2026-11-19):
-#   ADV-P3-00 control       faithful fixture.                    want exit 0 (39 of 39)
+# Re-audit at fa85bb2a: Red closed ADV-5 (P3-a now verifies the rework commit touches
+# its source_paths) and ADV-6 (P3-c now verifies the rerate audited_head descends from
+# the rework commit), so the checker grew from 39 to 41 checks. The control no longer
+# hardcodes a check count: it compares the faithful fixture against the live checker
+# total parsed from the committed-tree run. Probes 01 and 03 now expect CAUGHT.
+#
+# Probes (brief of 2026-11-19; re-audit expectations at fa85bb2a):
+#   ADV-P3-00 control       faithful fixture.        want exit 0, PASS = live total
 #   ADV-P3-01 source        rework commit c1 touches only the shots and a stray file,
-#                          not scenes/maps/mill.ts.            expected: checker gap
+#                          not scenes/maps/mill.ts.  want exit 1 (ADV-5 fix)
 #   ADV-P3-02 side branch   rework record commit = a commit on an unmerged side branch
 #                          (resolves, but is not an ancestor of HEAD).  want exit 1
 #   ADV-P3-03 stale head    rerate audited_head = c0, which predates the rework commit
-#                          (the judge saw the old shots).      expected: checker gap
+#                          (the judge saw the old shots). want exit 1 (ADV-6 fix)
 #   ADV-P3-04 model id      rerate log model_id: glm-5.3 while the route model is
 #                          kimi-for-coding.                    want exit 1
 #   ADV-P3-05 above bar     a second map (bank, judge 7.5, critical false, state rated)
@@ -37,12 +43,12 @@
 #   ADV-P3-08 el boundary   3q elevation 45.0 and 50.0 (want exit 0 each) and 44.9
 #                          (want exit 1).
 #
-# Exit codes: 0 every want-exit-1 and boundary probe behaves; the expected checker gaps
-#               (01, 03) are printed and routed to Red, and they do not set the exit code
-#               because the committed records are faithful (no live instance);
-#             1 a probe the existing defenses should catch passes instead (regression),
-#               or a boundary case behaves backwards;
-#             2 harness failure (the control fixture does not pass 39 of 39).
+# Exit codes: 0 every probe is caught or passes as designed;
+#             1 any probe the checker should catch passes instead (regression of the
+#               fa85bb2a fix or of an earlier defense), or a boundary case behaves
+#               backwards;
+#             2 harness failure (the committed-tree gate fails, or the control fixture
+#               does not pass with the live checker total).
 set -uo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -151,18 +157,25 @@ echo "repo: $REPO"
 echo "work: $WORK"
 echo "committed tree gate first:"
 bash "$REPO/$RUNS_REL/check-rework.sh" > "$WORK/committed.out" 2>&1
-echo "  check-rework.sh on the committed tree: exit $?; $(total_line "$WORK/committed.out")"
+COMMITTED_EXIT=$?
+LIVE_TOTAL="$(total_line "$WORK/committed.out" | grep -oE 'Total: [0-9]+' | grep -oE '[0-9]+')"
+echo "  check-rework.sh on the committed tree: exit $COMMITTED_EXIT; $(total_line "$WORK/committed.out")"
+echo "  live checker total on the committed tree: $LIVE_TOTAL"
+if [ "$COMMITTED_EXIT" -ne 0 ]; then
+  echo "HARNESS FAIL: the committed tree gate does not pass; probe results would be void"
+  exit 2
+fi
 echo ""
 
 # ---------------------------------------------------------------- ADV-P3-00 control
-echo "=== ADV-P3-00 control: faithful git fixture must pass 39 of 39 ==="
+echo "=== ADV-P3-00 control: faithful git fixture must pass with the live total ($LIVE_TOTAL of $LIVE_TOTAL) ==="
 build_fixture "$WORK/t00" faithful || { echo "HARNESS FAIL: could not build the control fixture"; exit 2; }
 run_checker "$WORK/t00" "$WORK/t00.out"
 echo "checker exit: $RUN_EXIT; $(total_line "$WORK/t00.out")"
-if [ "$RUN_EXIT" -eq 0 ] && total_line "$WORK/t00.out" | grep -q "PASS=39, FAIL=0"; then
-  echo "verdict: CONTROL OK (faithful history reproduces Green; probes below count)"
+if [ "$RUN_EXIT" -eq 0 ] && total_line "$WORK/t00.out" | grep -q "PASS=$LIVE_TOTAL, FAIL=0"; then
+  echo "verdict: CONTROL OK (faithful history reproduces Green at the live total; probes below count)"
 else
-  echo "verdict: HARNESS FAIL (control did not pass 39 of 39; probe results would be void)"
+  echo "verdict: HARNESS FAIL (control did not pass with PASS=$LIVE_TOTAL, FAIL=0; probe results would be void)"
   cat "$WORK/t00.out"
   exit 2
 fi
@@ -180,15 +193,16 @@ git -C "$WORK/t01" show --name-only --oneline "$P01_C1" | sed 's/^/  /'
 echo "c1 touches scenes/maps/mill.ts: $(git -C "$WORK/t01" show --name-only --format= "$P01_C1" -- scenes/maps/mill.ts | grep -c .) (0 = never touched)"
 run_checker "$WORK/t01" "$WORK/t01.out"
 echo "checker exit: $RUN_EXIT; $(total_line "$WORK/t01.out")"
-if [ "$RUN_EXIT" -eq 0 ]; then
-  echo "verdict: DEFECT CONFIRMED (checker gap ADV-5) -- P3-a verifies the commit resolves"
-  echo "  and is an ancestor of HEAD but never verifies the commit touches its source_paths,"
-  echo "  so a rework record can cite a commit that changed no map source"
-  V01="DEFECT CONFIRMED (gap ADV-5, routed to Red)"
-else
-  echo "verdict: CAUGHT -- the checker verifies the commit touches the map source"
-  V01="CAUGHT"
+if [ "$RUN_EXIT" -ne 0 ] && grep -q "touches none of its source_paths" "$WORK/t01.out"; then
+  echo "verdict: CAUGHT -- the ADV-5 fix (fa85bb2a) verifies the rework commit touches"
+  echo "  its source_paths, so a commit that changed no map source fails the phase gate"
+  V01="CAUGHT (ADV-5 closed)"
   fail_lines "$WORK/t01.out"
+else
+  echo "verdict: DEFECT (regression) -- the checker passed a rework commit that touches"
+  echo "  no map source"
+  REGRESSION=1
+  V01="DEFECT (regression)"
 fi
 echo ""
 
@@ -227,15 +241,16 @@ sed -i "s/$CTRL_C1/$CTRL_C0/" "$WORK/t03/$RUNS_REL/rerate-mill.log"
 echo "audited_head: $CTRL_C0; ancestor of HEAD: $(git -C "$WORK/t03" merge-base --is-ancestor "$CTRL_C0" HEAD && echo yes || echo no); rework commit $CTRL_C1 is an ancestor of the audited_head: $(git -C "$WORK/t03" merge-base --is-ancestor "$CTRL_C1" "$CTRL_C0" && echo yes || echo no) (no = the judge saw the old shots)"
 run_checker "$WORK/t03" "$WORK/t03.out"
 echo "checker exit: $RUN_EXIT; $(total_line "$WORK/t03.out")"
-if [ "$RUN_EXIT" -eq 0 ]; then
-  echo "verdict: DEFECT CONFIRMED (checker gap ADV-6) -- P3-c verifies the audited_head is"
-  echo "  an ancestor of HEAD but never that it is a descendant of the rework commit, so a"
-  echo "  rerate that judged the pre-rework tree passes the phase gate"
-  V03="DEFECT CONFIRMED (gap ADV-6, routed to Red)"
-else
-  echo "verdict: CAUGHT -- the checker verifies the rerate postdates the rework commit"
-  V03="CAUGHT"
+if [ "$RUN_EXIT" -ne 0 ] && grep -q "predates the rework commit" "$WORK/t03.out"; then
+  echo "verdict: CAUGHT -- the ADV-6 fix (fa85bb2a) verifies the rerate audited_head"
+  echo "  descends from the rework commit, so a judge who saw the old shots fails the gate"
+  V03="CAUGHT (ADV-6 closed)"
   fail_lines "$WORK/t03.out"
+else
+  echo "verdict: DEFECT (regression) -- the checker passed a rerate that judged the"
+  echo "  pre-rework tree"
+  REGRESSION=1
+  V03="DEFECT (regression)"
 fi
 echo ""
 
@@ -375,10 +390,9 @@ echo "ADV-P3-06 Rerate cell drift:    $V06"
 echo "ADV-P3-07 accepted + critical:   $V07"
 echo "ADV-P3-08 el boundary 45/50/44.9: $V08"
 if [ "$REGRESSION" -eq 1 ]; then
-  echo "gate verdict: FAIL -- at least one existing defense failed to catch its probe"
+  echo "gate verdict: FAIL -- at least one probe the checker should catch passed instead"
   exit 1
 fi
-echo "gate verdict: PASS with 2 checker gaps routed to Red (ADV-P3-01, ADV-P3-03): the"
-echo "  committed records are faithful (7619c491 touches scenes/maps/mill.ts; 304a75d6"
-echo "  descends from 7619c491), so the gaps expose future drift, not a live defect"
+echo "gate verdict: PASS -- every probe is caught or passes as designed; ADV-5 and ADV-6"
+echo "  are closed by fa85bb2a (probes 01 and 03 now fail the gate on their fixtures)"
 exit 0

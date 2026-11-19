@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "role": "measure-adversarial-testing",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "## Phase 3: Rework",
+  "status": "pass",
+  "summary": "Phase 3 adversarial re-audit at fa85bb2a: Red closed ADV-5 and ADV-6 exactly as routed, and every probe is now caught or passes as designed. The fix diff 6cc6f91f..fa85bb2a touches only measure/runs/asset_scenes_civic_20260928/check-rework.sh (+24 lines) and red-p3.log (+21 lines, the Red result entry). The ADV-5 fix adds a P3-a check that fails 'rework commit [...] touches none of its source_paths; the claimed source change is not in git' whenever git show --name-only on the commit is empty for every source_paths entry. The ADV-6 fix adds a P3-c check that fails 'rerate audited_head [...] predates the rework commit [...]; the judge saw the old shots' unless the rework commit is an ancestor of the audited_head. Re-audit run: adversarial-p3.sh exits 0. The control gate no longer hardcodes a total: it parses the live checker total from the committed-tree run (41) and requires the faithful git fixture to pass 41 of 41, which it does. Probe results: ADV-P3-01 (rework commit that touches only the shots and a stray file) now FAILs exit 1 with the exact ADV-5 line, so ADV-5 is closed; ADV-P3-03 (rerate audited_head set to the phase-base commit that predates the rework) now FAILs exit 1 with the exact ADV-6 line, so ADV-6 is closed; ADV-P3-02 (side-branch commit) fails with 5 FAILs, now also triggering both new checks (the side commit touches no source and the audited_head no longer descends from it); ADV-P3-04 (log model_id glm-5.3 against the route kimi-for-coding) still fails the exact compare; ADV-P3-05 (a rework record for bank, judge 7.5, critical false, rated) still fails with 4 FAILs led by 'reworked map bank is not below the bar'; ADV-P3-06 (inventory Rerate 5.0 against the record 7.5) still fails the P3-e compare; ADV-P3-07 (accepted with critical true) still fails 'wants state [follow-up]'; ADV-P3-08 boundary stays exact with el 45.0 and 50.0 passing 41 of 41 and 44.9 failing 'lies outside [45, 50]'. The committed tree gate passes === Total: 41 checks (PASS=41, FAIL=0) ===. No blocking finding, no violation, and no residual gap remains from the first adversarial run.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Provenance: git rev-parse HEAD gives fa85bb2a (the audited head), the commit that closes ADV-5 and ADV-6; the first adversarial run sits at 6cc6f91f and remains a valid ancestor. This re-audit changed only the probe script and its two artifacts.",
+    "Fix diff scope: git diff 6cc6f91f..fa85bb2a --stat lists exactly measure/runs/asset_scenes_civic_20260928/check-rework.sh (+24) and red-p3.log (+21); no record, inventory, map, TSV, or tool changed. The two hunks implement the routed fixes: the P3-a source_paths touch check and the P3-c audited_head-descends-from-rework check, plus the header comment lines naming ADV-5 and ADV-6.",
+    "Harness update as briefed: adversarial-p3.sh runs the committed-tree gate first, parses the live total (grep on the Total line, no fixed number), and requires the control fixture to print PASS=41, FAIL=0 with exit 0; it also requires the committed-tree run to exit 0 (exit 2 harness failure otherwise). The control passed 41 of 41 before any probe counted.",
+    "ADV-5 closure (probe 01): fixture t01 rework commit touches docs/map-mockups/mill-3q.png, docs/map-mockups/mill-top.png, and docs/stray.txt only; git show --name-only --format= <c1> -- scenes/maps/mill.ts is empty; the unmodified checker now exits 1 with 41 checks (PASS=40, FAIL=1) and the exact line 'FAIL: P3-a mill rework commit [c08e107...] touches none of its source_paths; the claimed source change is not in git'. The gate no longer passes a rework whose claimed source change is absent from git.",
+    "ADV-6 closure (probe 03): fixture t03 sets the rerate audited_head to the fixture phase-base commit (ancestor of HEAD, but the rework commit is not its ancestor, so the judge saw the pre-rework tree); the unmodified checker now exits 1 with 41 checks (PASS=40, FAIL=1) and the exact line 'FAIL: P3-c mill rerate audited_head [db34d48...] predates the rework commit [480776...]; the judge saw the old shots'. The gate no longer passes a rerate that judged the old shots.",
+    "ADV-P3-02 (side-branch commit, still caught, now five FAILs): the checker fails P3-a ancestry, the new P3-a source touch (the side commit touches no source), both P3-b recency checks, and the new P3-c ordering check; the two fixes fire on this record as well, which confirms they compose with the earlier defenses.",
+    "Regression sweep (probes 04 to 08 unchanged in behavior): probe 04 log model_id glm-5.3 fails 'model id [glm-5.3] differs from the route model [kimi-for-coding]' (PASS=40, FAIL=1); probe 05 above-bar bank rework fails 4 FAILs led by 'reworked map bank is not below the bar' (63 checks); probe 06 inventory Rerate 5.0 against the record 7.5 fails the P3-e compare (40 checks, PASS=39); probe 07 accepted with critical true fails 'critical [true] wants state [follow-up], found [accepted]'; probe 08 boundary holds with el 45.0 exit 0 (41 of 41), el 50.0 exit 0 (41 of 41), and el 44.9 exit 1 with '3q elevation [44.9] lies outside [45, 50]'.",
+    "Committed-tree gate at the audited head: bash measure/runs/asset_scenes_civic_20260928/check-rework.sh prints === Total: 41 checks (PASS=41, FAIL=0) === and exits 0; the two new checks pass on the live records (7619c491 touches scenes/maps/mill.ts; the audited_head 304a75d6 descends from 7619c491), which matches the no-live-instance proof from the first run.",
+    "Script run: bash measure/runs/asset_scenes_civic_20260928/adversarial-p3.sh exits 0 with every probe caught or passing as designed and the summary 'gate verdict: PASS -- every probe is caught or passes as designed; ADV-5 and ADV-6 are closed by fa85bb2a'."
+  ],
+  "commands": [
+    "git rev-parse HEAD (fa85bb2a); git diff 6cc6f91f..fa85bb2a --stat (check-rework.sh +24, red-p3.log +21 only)",
+    "git diff 6cc6f91f..fa85bb2a -- measure/runs/asset_scenes_civic_20260928/check-rework.sh (the P3-a source touch check and the P3-c audited_head ordering check)",
+    "bash measure/runs/asset_scenes_civic_20260928/adversarial-p3.sh (exit 0; committed tree 41/41; control 41/41 at the live total; probes 01 and 03 caught; 02, 04, 05, 06, 07 caught; el 45.0/50.0 pass, 44.9 fails)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-rework.sh (exit 0, PASS=41 FAIL=0 at fa85bb2a)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p3.sh (control gate compares against the live checker total; probes 01 and 03 expect CAUGHT)",
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p3-fa85bb2.json (provisional inconclusive verdict written first, replaced by this final pass verdict)",
+    "measure/runs/asset_scenes_civic_20260928/adversarial-p3-fa85bb2.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "phase_base_sha": "b78fdde1",
+  "role_base_sha": "cddadba3",
+  "audited_head_sha": "fa85bb2a",
+  "route": "opencode-go/glm-5.3#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The two new checks implement exactly the routed fixes (git show --name-only on source_paths; merge-base ordering of rework commit before audited_head), and the committed tree passes 41 of 41 with both checks green on the live mill record."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "Both gaps now have failing-first probes: fixture t01 fails 'touches none of its source_paths' and fixture t03 fails 'predates the rework commit; the judge saw the old shots', and all six other probe classes stay caught with the boundary exact at both edges."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff 6cc6f91f..fa85bb2a --stat lists only check-rework.sh (+24) and red-p3.log (+21); this re-audit changed only the probe script and its two artifacts."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim carries the exact FAIL line and checker exit: the 41/41 committed and control totals, the five-FAIL side-branch probe showing the new checks compose, and the unchanged behavior of probes 04 to 08."
+    }
+  ]
+}
