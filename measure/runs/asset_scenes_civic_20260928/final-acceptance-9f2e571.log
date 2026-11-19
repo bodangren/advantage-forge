@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: measure-final-acceptance
+status: complete
+track: asset_scenes_civic_20260928
+phase: track review
+commits: none
+tests_run: PROJECT_LINT exit 0; PROJECT_CHECKS exit 0 through heavy-run; PROJECT_TESTS exit 0 with 46/46 and every adversarial probe CAUGHT
+files_changed: measure/runs/asset_scenes_civic_20260928/final-acceptance-9f2e571.json; measure/runs/asset_scenes_civic_20260928/final-acceptance-9f2e571.log
+plan_updates: none
+known_failures: FA-4 plan.md:136 marks the doctor task complete without SHA evidence; plan_closeout_feedback rejects it
+handoff: All configured gates pass. Add a valid tree SHA to the doctor task and rerun final acceptance. Then archive the track, complete metadata and registry transitions, check the deferred regenerate task, and write the closeout manifest. F8 and N5 remain wording items.
+END_MEASURE_AGENT_RESULT

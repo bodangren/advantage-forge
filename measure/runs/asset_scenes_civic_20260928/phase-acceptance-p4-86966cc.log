@@ -1,0 +1,127 @@
+MEASURE_AGENT_RESULT
+status: pass
+refinement: written first with a provisional verdict, then refined: fixed the 6a094aeb
+  SHA typo in the json, re-verified the generated-fact counts with one consistent
+  pattern (grep -c '"status": "accepted"': 6 at the audited head, 36 at HEAD), and
+  validated the json parses (node JSON.parse ok). The verdict is unchanged.
+verdict: Phase 4 "Records" accepted at 86966cc7
+role: measure-phase-acceptance
+track: asset_scenes_civic_20260928
+phase: Phase 4: Records
+route: opencode-go/glm-5.3#high
+retry_recommendation: none
+confidence: high
+phase_base_sha: 024cfdf9250384667142481856d17eebca91cb15
+role_base_sha: 944f6128a288ae619140303f84879ecd17bfabc7 (last test-only hardening commit before the audited head; this audit reruns every gate itself)
+audited_head: 86966cc777dca6517f366cac5b59802474b9467e
+head_currency: HEAD moved past the audited head during this audit. Foreign Build-session
+  commits outside the audited range, named as such:
+  - 02234745 chore(measure): commit doctor Contents lists (measure/tracks.md, 8 other
+    tracks' plan.md, measure/workflow.md)
+  - 6a094aeb chore(measure): regenerate generated facts (measure/generated/ 3 files)
+  git diff --stat 86966cc7..HEAD over every civic path (the TSV, docs/map-review.html,
+  scenes/maps, scripts/design-mill.mjs, the track folder, this run folder) is empty, so
+  the audited civic content equals HEAD's and this acceptance records 86966cc7.
+
+gates_run_live:
+  - bash measure/runs/asset_scenes_civic_20260928/check-records.sh -> exit 0,
+    === Total: 46 checks (PASS=46, FAIL=0) === (hardened from 44 by 944f6128:
+    ADV-7 column count, ADV-8 in-order masked compare, ADV-9 civic doctor grep set)
+  - bash measure/runs/asset_scenes_civic_20260928/adversarial-p4.sh -> exit 0; control
+    clone 46/46 against the live total; ADV-P4-01..08 all CAUGHT with exact expected
+    FAIL lines; no-live-instance scans clean (no civic doctor line, no 5-column row,
+    base and head masked sha256 both f608396a)
+  - git diff --exit-code 024cfdf9..86966cc7 -- docs/map-review.html scenes/maps ->
+    exit 0, empty (P4-e and the no-map-change claim hold)
+  - by-design re-runs, each matching the plan quote at plan.md:121-127:
+    check-inventory.sh exit 1, 96 checks (6/90); check-review.sh exit 1, 63 (33/30);
+    check-rework.sh exit 1, 69 (40/29)
+
+task_verification:
+  - TSV status column: PASS. 30 civic P2 rows read accepted; columns 1-3 sha256
+    f608396a identical on base and head, in order (ADV-8); 60 changed data lines, all
+    civic P2; no ID moved; all 30 changes cite e2c7bb9c (P4-d live).
+  - docs/map-review.html decision: PASS. Unchanged against the base (live diff exit 0);
+    the plan records the no-commit decision and no PM named the page as the record.
+  - Doctor (scoped): PASS. Doctor exits 1 with foreign errors only; the live count is
+    18 (foreign-state drift; the 51 quote was true at green time); no line names this
+    track or its civic files (live checker PASS and the adversarial clone scan clean).
+
+prerequisite_coverage (the two brief questions):
+  - Review A (PASS at be89dc91) is still current: no implementation path changed after
+    be89dc91. The record-text commits that followed (43c44210 plan.md, c1e84b19
+    green-p4.log) were re-audited by Review C PASS at c1e84b19; the commits after
+    c1e84b19 (b8022222, 944f6128, 86966cc7) touch only measure/runs/ test and evidence
+    files, the allowed test-only class. The checker growth 44 -> 46 is test-only and was
+    adversarially re-audited at 944f6128 (PASS) plus this audit's own rerun.
+  - Review C (FAIL at be89dc91, PASS at c1e84b19) is current: the PASS at c1e84b19 is
+    the operative verdict, and every commit after c1e84b19 touches only measure/runs/
+    test files. Its F1 facts were re-verified: at the audited head the committed
+    measure/generated/asset-inventory.json holds 6 accepted against 36 in the TSV.
+  - Review B: not applicable (record-only phase; no product code, no secret, no
+    network call; review-c recorded ux_applicability not_applicable).
+  - Adversarial: PASS at c1e84b19 (b8022222) and at 944f6128 (86966cc7); this audit
+    re-ran adversarial-p4.sh live: exit 0, all twelve probes CAUGHT.
+  - UX browser: no visual change in Phase 4, confirmed by the phase diff (no shot, map,
+    page, or asset path changed; docs/map-review.html and scenes/maps byte-identical to
+    the base). No browser review required.
+
+closeout_deferral_decision: ACCEPTABLE, and still necessary.
+  - Honest: at the audited head the committed asset-inventory.json holds 6 accepted
+    against 36 in the TSV (re-verified); plan.md:168-172 and the green log
+    generated_facts_deferral line disclose it.
+  - Rule-bound: measure/generated/ and measure/tracks.md held foreign uncommitted edits
+    (1,114 changed lines in asset-inventory.json at the Review C re-audit), so Green
+    could not regenerate without committing foreign work (AGENTS.md standing rule).
+  - PM decision 2026-11-19: a Build session unblocks it; that has partly landed as the
+    foreign commit 6a094aeb, whose regenerated asset-inventory.json holds 36 accepted,
+    equal to the TSV.
+  - Conditions not yet met: node measure/tools/generate.mjs --check still exits 1
+    (measure/generated/status.md stale against the still-uncommitted foreign
+    measure/tracks.md edits), and no civic closeout has recorded a regenerate SHA. The
+    deferral must stand until the closeout steward records the regenerate SHA and shows
+    the --check exit 0, exactly as the PM decision requires.
+
+anti_pattern_check:
+  - A3 PASS: the checker parses labeled cells and labeled counts; no bare digit-scan
+    pattern exists in check-records.sh.
+  - A4 PASS: red-p4.log records exit 1 at the base with === Total: 14 checks (PASS=10,
+    FAIL=4) ===, including 'TSV accepted count [0] differs from the inventory-supported
+    count [30]'; the empty case fails.
+  - A5 PASS with one stale quote carried (P4-N1): every operative exits-0 claim is true
+    live (46/46; TSV counts, digests, and by-design counts all reproduced). The plan
+    quotes 44 checks while the hardened checker prints 46 (944f6128 added ADV-7/8/9
+    after the plan text; the same class as Phase 3 N1, which a plan edit closed). The
+    doctor count quote (51) drifted with foreign state (P4-N4). Neither masks a failure.
+  - A6 PASS: measure/tracks.md is untouched in 024cfdf9..86966cc7 (empty diff); the
+    phase makes no registry completion claim.
+  - A7 PASS: the slug set comes from all 30 civic P2 TSV rows; ADV-9 widened the P4-f
+    grep set to the TSV path, locations/civic/, and per-slug map, mockup, and generator
+    paths, and the probes prove the filters catch real hits while the live tree is clean.
+  - No fake-gate masking, no artifact-only test claiming live proof (the checker reruns
+    the generator into a temp dir and byte-compares), and the only intentional-red
+    checkers are the documented by-design items.
+
+commit_hygiene: git show --name-only over all thirteen commits 07c04b62..86966cc7 lists
+  exactly the declared file(s) per commit. The range 024cfdf9..86966cc7 holds 20 files,
+  all phase-owned. No unrelated path moved.
+
+carried_items (nonblocking, routed):
+  - P4-N1 [plan owner] plan.md:148-151 quotes 44 checks; the live hardened gate prints
+    46. Refresh the quote to 46 and cite 944f6128 (mirror the Phase 3 N1 fix).
+  - P4-N2 [closeout steward] the deferred regenerate task (plan.md:192) does not yet
+    name the PM decision conditions: record the regenerate SHA and show
+    node measure/tools/generate.mjs --check exit 0. The Build session's 6a094aeb
+    regenerated the inventory fact; status.md is still stale on foreign edits, so the
+    closeout must re-run the check after the foreign state settles.
+  - P4-N3 [closeout steward] the 'Civic review record' table (plan.md:194-199) is an
+    empty template while all 30 final ratings are known and sit in the TSV, the declared
+    acceptance record. Fill the 30 rows or delete the section at closeout so the plan
+    does not contradict its own instruction.
+  - P4-N4 [measure-orchestrator-audit] the doctor error count is foreign-state drift
+    (51 at green, 18 live, 19 in the adversarial clone); the scoped claim holds live.
+    Framework-wide freshness state is the scheduled audit's domain, not this phase's.
+
+changed_files (this role): the two acceptance artifacts only; no commit, no edit
+  outside measure/runs/.
+END_MEASURE_AGENT_RESULT

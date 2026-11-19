@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "role": "measure-final-acceptance",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "track review",
+  "status": "fail",
+  "summary": "The configured gates pass at 9f2e571f12160314970146939bd190f3471aa895. Final acceptance fails because the completed doctor task cites no SHA. The mechanical closeout scan rejects plan.md:136.",
+  "blocking_findings": [
+    "FA-4 [Blocker] final-acceptance: `plan.md:136` marks the doctor task complete without commit SHA evidence. `plan_closeout_feedback` rejects that line. Add a valid tree SHA and rerun final acceptance."
+  ],
+  "nonblocking_findings": [
+    "FA-C1 [Nit] final-acceptance: `plan.md:192-195` assigns archive and closeout bookkeeping to the closeout role. Final acceptance performs none of those writes."
+  ],
+  "evidence": [
+    "Provisional artifacts were written before gate execution. This final verdict replaces them at the same paths.",
+    "HEAD provenance: `git rev-parse HEAD` prints `9f2e571f12160314970146939bd190f3471aa895`. This equals the expected audited HEAD. `git diff --name-only 9f2e571f HEAD` prints no path.",
+    "Track ancestry: `git merge-base --is-ancestor db2053f2 9f2e571f` exits 0. `git merge-base --is-ancestor 9f2e571f HEAD` exits 0.",
+    "Phase coverage: exactly one passing result exists for each plan phase. The results are phase-acceptance-p1-3e8d29e.json, -p2-b78fdde.json, -p3-024cfdf.json, and -p4-86966cc.json.",
+    "Phase ancestry: every phase base is an ancestor of its audited HEAD. Every audited HEAD is an ancestor of current HEAD. All ten ancestry checks exit 0.",
+    "Post-remediation civic diff: `git diff --name-only 80d55840 HEAD -- docs/fantasy-world-scene-blueprints.tsv docs/map-review.html docs/map-mockups scenes/maps scripts/design-mill.mjs measure/tracks/asset_scenes_civic_20260928 measure/runs/asset_scenes_civic_20260928` prints only green-p4.log, plan.md, and scenes/inventory.md.",
+    "Post-remediation full diff: `git diff --name-only 80d55840 HEAD` prints measure/generated/status.md; measure/lessons-learned.md; measure/runs/asset_scenes_civic_20260928/green-p4.log; measure/tracks.md; five foreign metadata.json files; civic plan.md; and civic scenes/inventory.md.",
+    "Text-only proof: `ceb58fbb` changes only plan.md and scenes/inventory.md. `56c11a2f` changes only green-p4.log. Numstat is 52/15, 2/1, and 1/0 respectively. No binary path changed.",
+    "FA-1 remediation: c3488207 updates six foreign metadata statuses. 7619051a adds five registry links. 6bce6ef6 reduces lessons memory. 9f2e571f regenerates status.md.",
+    "PROJECT_LINT: `node measure/tools/generate.mjs --check` exits 0. It prints `Measure facts are current (4 files).`",
+    "PROJECT_CHECKS: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh'` exits 0. It reports four boundary tests passed and no structural errors.",
+    "PROJECT_TESTS: `bash measure/runs/asset_scenes_civic_20260928/check-records.sh && bash measure/runs/asset_scenes_civic_20260928/adversarial-p4.sh` exits 0. The record checker passes 46 of 46. Every adversarial probe is CAUGHT.",
+    "Doctor inside the final record checker also exits 0 with zero error lines. The adversarial control passes 46 of 46 at the audited HEAD.",
+    "FA-2 remediation: plan.md:149 now quotes `PASS=46, FAIL=0` and cites `944f6128`. No 51-error quote remains. The 30-row Civic review record table is present.",
+    "Review-table verification: an independent Node comparison reads 30 review rows and 30 inventory rows. It finds no rating, rerate, status, or slug mismatch.",
+    "Regenerate evidence: plan.md:173-175 and plan.md:195 name `6a094aeb` and `80d55840`. They record the successful `generate.mjs --check` result.",
+    "Status wording: plan.md:247 says the civic P2 rows are accepted. inventory.md:16-17 says every row is accepted after `2881a7a3`.",
+    "Specification state: the final checker proves 30 civic P2 accepted rows, independent judge support, stable IDs, the mill rerate, the unchanged review page, and generator byte equality.",
+    "A5 audit: the operative final quote matches the live 46-check result. Historical phase quotes retain their accepted-SHA evidence. No false current-state claim blocks closeout.",
+    "A6 audit: `measure/tracks.md` keeps this track active without a completion claim. Closeout owns the registry transition.",
+    "A9 audit: a search of `tests/*.sh` finds no live-track or archived-track path reference. The final checker uses the live track path.",
+    "Task state: nine completed phase tasks name a SHA. The doctor task at plan.md:136 names none. `measure_interphase_checks.py status` reports `incomplete_phases: 0` and `closeout_candidates: 0`.",
+    "Mechanical closeout proof: `plan_closeout_feedback` returns `completed plan task lacks commit SHA` for the doctor task. This is the only reported plan-task defect.",
+    "Wording items: F8 and N5 do not change the operative cap of one rework and one rerate. They remain wording items, not product defects.",
+    "Closeout remainder: add a valid SHA to the doctor task and rerun final acceptance. Then archive the track, complete metadata and registry transitions, check the deferred regenerate task, and write the manifest.",
+    "Write scope: only final-acceptance-9f2e571.json and final-acceptance-9f2e571.log were written in this rerun. No commit, archive move, metadata edit, or generate write occurred."
+  ],
+  "commands": [
+    "git rev-parse HEAD (9f2e571f12160314970146939bd190f3471aa895; expected HEAD)",
+    "git merge-base --is-ancestor for the track base, phase bases, and audited HEADs (all exit 0)",
+    "git diff --name-only 9f2e571f HEAD (empty)",
+    "git diff --name-only 80d55840 HEAD -- <civic paths> (only plan.md, scenes/inventory.md, and green-p4.log)",
+    "git diff --name-only 80d55840 HEAD (full output recorded in evidence)",
+    "git show --name-status ceb58fbb 56c11a2f (only the three permitted text files)",
+    "git diff --numstat 80d55840..HEAD -- plan.md scenes/inventory.md green-p4.log (text-only insertions and deletions)",
+    "PROJECT_LINT: node measure/tools/generate.mjs --check (exit 0)",
+    "PROJECT_CHECKS: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh' (exit 0)",
+    "PROJECT_TESTS: bash measure/runs/asset_scenes_civic_20260928/check-records.sh && bash measure/runs/asset_scenes_civic_20260928/adversarial-p4.sh (exit 0)",
+    "Independent Node comparison of the Civic review record, inventory, four judge batches, and mill rerate (30 rows; zero mismatches)",
+    "python3 measure_interphase_checks.py status --repo . --track asset_scenes_civic_20260928 (incomplete_phases 0; closeout_candidates 0)",
+    "plan_closeout_feedback on the active plan (one defect: completed doctor task lacks commit SHA at plan.md:136)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_scenes_civic_20260928/final-acceptance-9f2e571.json",
+    "measure/runs/asset_scenes_civic_20260928/final-acceptance-9f2e571.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "track_base_sha": "db2053f2190ef0af3c24d6a149e70ee4bcb8f493",
+  "role_base_sha": "9f2e571f12160314970146939bd190f3471aa895",
+  "baseline_sha": "db2053f2190ef0af3c24d6a149e70ee4bcb8f493",
+  "audited_head_sha": "9f2e571f12160314970146939bd190f3471aa895",
+  "route": "kimi-code-plan-cn/k3.1-pro#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The final checker proves all 30 accepted records, and the independent table comparison finds zero mismatches."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "PROJECT_TESTS passes 46 record checks and catches every adversarial mutation with exact expected failures."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The post-80d55840 civic commits change only the three permitted text files; no product or binary path changes."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "The former findings have commits and live proof, but the completed doctor task at plan.md:136 lacks required SHA evidence."
+    }
+  ],
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-a-feeca3f.json found two real checker gaps; the passing phase result and adversarial closure verify its verdict."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-c-feeca3f.json correctly verified the Phase 1 record contract and the MAPS fidelity gap."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-feeca3f.json proved real checker defects with fixtures; its failure verdict was correct."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-54213a0.json correctly passed the repaired Phase 1 checker with failing-first probes."
+    },
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-a-p2-c095ba1.json found the unchecked critical and route cells; later probes closed those gaps."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-c-p2-c095ba1.json correctly verified all four batch schemas and 30 unique ratings."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-p2-c095ba1.json correctly failed the original Phase 2 checker on three live defects."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-p2-36dec52.json correctly passed the closures and retained the evidenced ADV-4 limitation."
+    },
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-a-p3-cddadba.json correctly proved the one-line yaw rework, fresh shots, and independent rerate."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-c-p3-cddadba.json correctly checked the record schemas and identified the generator drift later fixed."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-p3-cddadba.json found two real provenance gaps without claiming a live record defect."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-p3-fa85bb2.json correctly passed both provenance closures with exact failing-first output."
+    },
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-a-p4-be89dc9.json correctly passed the record implementation and disclosed the scoped doctor deviation."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-c-p4-be89dc9.json correctly blocked the stale generated fact; later commits resolve that fact."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-c-p4-c1e84b1.json correctly accepted the temporary deferral and required regenerate evidence."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-p4-c1e84b1.json found three real checker gaps with no false live-defect claim."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-p4-944f612.json correctly passed all closures; my rerun reproduces every probe."
+    }
+  ]
+}

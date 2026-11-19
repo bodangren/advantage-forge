@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "role": "measure-final-acceptance",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "track review",
+  "status": "fail",
+  "summary": "The 30 civic P2 records meet the specification. Final acceptance fails the doctor, A5, and configured-gate requirements. Closeout must not archive this HEAD.",
+  "blocking_findings": [
+    "FA-1 [Blocker] final-acceptance: `bash measure/doctor.sh` exits 1 with 12 errors. The closeout standard requires exit 0. No error names this track.",
+    "FA-2 [Blocker] final-acceptance: `plan.md:149` quotes `PASS=44, FAIL=0`. The live final checker prints `PASS=46, FAIL=0`. A5 forbids this stale claim.",
+    "FA-3 [Blocker] final-acceptance: `PROJECT_LINT`, `PROJECT_CHECKS`, and `PROJECT_TESTS` are unset. The role contract fails final acceptance on unset gates."
+  ],
+  "nonblocking_findings": [
+    "P4-N2 [Nit] final-acceptance: `plan.md:192` names no regenerate SHA. Commits `6a094aeb` and `80d55840` now regenerate the facts. `node measure/tools/generate.mjs --check` exits 0.",
+    "P4-N3 [Nit] final-acceptance: `plan.md:194-199` keeps an empty Civic review record table. Closeout must add 30 rows or remove the section.",
+    "FA-N3 [Nit] final-acceptance: `plan.md:210` still says the P2 rows remain `mockup-needed`. `inventory.md:16` still says every row is `rated`. Both statements need current-state wording.",
+    "FA-N4 [Nit] final-acceptance: `plan.md:136` and `plan.md:166` pin 51 doctor errors. The live count is 12. Remove the volatile count during closeout."
+  ],
+  "evidence": [
+    "HEAD provenance: `git rev-parse HEAD` prints `80d558401f1df8bc59246e5d626df9e717406826`. This equals the audited HEAD. `git diff --name-only 80d55840 HEAD` prints no path.",
+    "Track ancestry: `git merge-base --is-ancestor db2053f2 80d55840` exits 0. `git merge-base --is-ancestor 80d55840 HEAD` exits 0. The track base is `db2053f2190ef0af3c24d6a149e70ee4bcb8f493`.",
+    "Phase coverage: exactly one passing result exists for each plan phase. The results are phase-acceptance-p1-3e8d29e.json, -p2-b78fdde.json, -p3-024cfdf.json, and -p4-86966cc.json.",
+    "Phase ancestry: every phase base is an ancestor of its audited HEAD. Every audited HEAD is an ancestor of current HEAD. All eight `git merge-base --is-ancestor` checks exit 0.",
+    "Latest-phase coverage command: `git diff --name-only 86966cc7 HEAD -- docs/fantasy-world-scene-blueprints.tsv docs/map-review.html docs/map-mockups scenes/maps scripts/design-mill.mjs measure/tracks/asset_scenes_civic_20260928 measure/runs/asset_scenes_civic_20260928` prints no path.",
+    "Later full-diff command: `git diff --name-only 86966cc7 HEAD` prints only foreign paths. Output: docs/avatar-system.md; docs/chibi-quest-progression.md; measure/archive/asset_equipment_parts_20260930/{index.md,metadata.json,plan.md,spec.md}; measure/archive/asset_p0_acceptance_20260928/plan.md; measure/archive/asset_p1_architecture_20260928/{index.md,metadata.json,plan.md,spec.md}; measure/archive/asset_p1_enemies_20260928/{index.md,metadata.json,plan.md,spec.md}; measure/archive/asset_p1_equipment_20260928/plan.md; measure/archive/asset_p1_heroes_20260928/{index.md,metadata.json,plan.md,spec.md}; measure/archive/asset_p1_nature_20260928/{index.md,metadata.json,plan.md,spec.md}; measure/archive/asset_p1_props_20260928/plan.md; measure/archive/asset_p2_monsters_20260928/{index.md,metadata.json,plan.md,spec.md}; measure/archive/asset_world_catchup_20261001/{batch1.tsv,batch2.tsv,evidence.md,index.md,metadata.json,plan.md,spec.md,tiles.txt}; measure/archive/avatar_system_20261001/{index.md,metadata.json,plan.md,spec.md}; measure/asset-roadmap.md; measure/generated/{architecture.json,asset-inventory.json,status.md}; measure/plan-crosswalk.md; measure/tech-debt.md; measure/tracks.md; measure/tracks/asset_p2_wildlife_20260928/plan.md; measure/tracks/asset_review_audit_20261005/spec.md; measure/workflow.md.",
+    "Later commits: `02234745` changes foreign plans and workflow records. `6a094aeb` regenerates three fact files. `5b351779` archives eight other tracks. `80d55840` regenerates status.md. None changes a civic path.",
+    "Specification check: an independent Node read counts 30 civic P2 rows, 30 accepted rows, zero follow-up rows, and 30 unique judged slugs. Every ID keeps the `locations/civic/` prefix.",
+    "Judge independence: all four batches use `kimi-code-plan-cn/kimi-for-coding` with family `kimi`. The inventory records maker `Anthropic Sonnet` for every map.",
+    "Rework check: mill is the only below-bar or critical map. Its independent rerate is 7.5 with critical false. `rework-mill.json` records one rework and one rerate.",
+    "Generator and view: `check-records.sh` proves the generator reproduces mill.ts byte for byte. `git diff --exit-code 024cfdf9 HEAD -- docs/map-review.html` exits 0 with no output.",
+    "Final record gate: `bash measure/runs/asset_scenes_civic_20260928/check-records.sh` exits 0. It prints `=== Total: 46 checks (PASS=46, FAIL=0) ===`.",
+    "Final adversarial gate: `bash measure/runs/asset_scenes_civic_20260928/adversarial-p4.sh` exits 0. The control passes 46 of 46. Every probe is CAUGHT. The verdict is PASS.",
+    "Earlier-phase checkers: check-inventory.sh exits 1 at 96/6/90. check-review.sh exits 1 at 63/33/30. check-rework.sh exits 1 at 69/40/29. These counts match the documented by-design state changes.",
+    "Generated facts: `node measure/tools/generate.mjs --check` exits 0 and prints `Measure facts are current (4 files).` Both regenerate commits contain 36 accepted blueprint rows.",
+    "Reader checks: `node --test measure/tests/measure-tools.node.mjs` exits 0. It reports 8 tests, 8 passes, and 0 failures. Existing TSV readers keep their contracts.",
+    "Doctor: `bash measure/doctor.sh` exits 1. It prints 12 errors covering other tracks, missing registry links, and the lessons memory budget. No printed error names this track.",
+    "A5 audit: the 44-versus-46 quote fails. The 51-versus-12 doctor counts also drift. The other live by-design counts match the plan. Historical phase claims retain their accepted-SHA evidence.",
+    "A6 audit: `measure/tracks.md:52-53` keeps this track at `[~]`. The registry makes no completion or adversarial-pass claim.",
+    "A9 audit: a search of `tests/*.sh` finds no `measure/tracks/<id>` or `measure/archive/<id>` reference. The final checker uses the live track path.",
+    "Task evidence: every completed phase task names a SHA. The no-change map-review task names base `024cfdf9`. The two unchecked tasks belong to closeout.",
+    "Closeout status: `measure_interphase_checks.py status --repo . --track asset_scenes_civic_20260928` reports `incomplete_phases: 0` and one closeout candidate.",
+    "Scope: the owned product diff changes 30 TSV status cells, one mill source line, one generator line, and two mill shots. Run artifacts and track records complete the planned scope.",
+    "Wording items: F8 and N5 do not change the operative cap of one rework and one rerate. They are wording items, not product defects.",
+    "Configured gates: the environment prints `PROJECT_LINT=<unset>`, `PROJECT_CHECKS=<unset>`, and `PROJECT_TESTS=<unset>`. No project-gate success is claimed.",
+    "Write scope: only final-acceptance-80d5584.json and final-acceptance-80d5584.log were written. No commit, archive move, metadata edit, or generate write occurred."
+  ],
+  "commands": [
+    "git rev-parse db2053f2 80d55840 HEAD (track base and audited HEAD resolve; HEAD equals audited HEAD)",
+    "git merge-base --is-ancestor for every phase base and audited HEAD (all exit 0)",
+    "git diff --name-only 80d55840 HEAD (empty)",
+    "git diff --name-only 86966cc7 HEAD (foreign paths only; full output recorded in evidence)",
+    "git diff --name-only 86966cc7 HEAD -- <all civic paths> (empty)",
+    "git diff --exit-code 024cfdf9 HEAD -- docs/map-review.html (exit 0; empty)",
+    "git diff db2053f2..80d55840 -- scenes/maps/mill.ts scripts/design-mill.mjs docs/fantasy-world-scene-blueprints.tsv measure/tracks/asset_scenes_civic_20260928/plan.md measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md (read in full)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-records.sh (exit 0; PASS=46, FAIL=0)",
+    "bash measure/runs/asset_scenes_civic_20260928/adversarial-p4.sh (exit 0; control 46/46; every probe CAUGHT)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh (exit 1; 96 checks, PASS=6, FAIL=90; by design)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-review.sh (exit 1; 63 checks, PASS=33, FAIL=30; by design)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-rework.sh (exit 1; 69 checks, PASS=40, FAIL=29; by design)",
+    "node measure/tools/generate.mjs --check (exit 0; four files current)",
+    "node --test measure/tests/measure-tools.node.mjs (exit 0; 8 pass, 0 fail)",
+    "bash measure/doctor.sh (exit 1; 12 foreign errors)",
+    "PROJECT_LINT, PROJECT_CHECKS, PROJECT_TESTS environment read (all unset)",
+    "python3 measure_interphase_checks.py status --repo . --track asset_scenes_civic_20260928 (incomplete_phases 0; one closeout candidate)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_scenes_civic_20260928/final-acceptance-80d5584.json",
+    "measure/runs/asset_scenes_civic_20260928/final-acceptance-80d5584.log"
+  ],
+  "test_strategy_violations": [
+    "`test-strategy.md:185-188` requires `./measure/doctor.sh` to exit 0. The live command exits 1."
+  ],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "track_base_sha": "db2053f2190ef0af3c24d6a149e70ee4bcb8f493",
+  "role_base_sha": "80d558401f1df8bc59246e5d626df9e717406826",
+  "baseline_sha": "db2053f2190ef0af3c24d6a149e70ee4bcb8f493",
+  "audited_head_sha": "80d558401f1df8bc59246e5d626df9e717406826",
+  "route": "kimi-code-plan-cn/k3.1-pro#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The independent Node read proves 30 accepted rows and 30 judged slugs; check-records.sh proves the mill generator and record contracts."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "adversarial-p4.sh passes 46 of 46 and catches every mutation with an exact expected failure."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The exact owned diff contains only the planned TSV, mill, generator, shots, inventory, plan, and run records."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 3,
+      "evidence": "Most claims have command proof, but plan.md:149 is stale at 44 checks and plan.md:210 contradicts the accepted TSV."
+    }
+  ],
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-a-feeca3f.json found two real checker gaps; the passing phase result and adversarial closure verify its verdict."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-c-feeca3f.json correctly verified the Phase 1 record contract and the MAPS fidelity gap."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-feeca3f.json proved real checker defects with fixtures; its failure verdict was correct."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-54213a0.json correctly passed the repaired Phase 1 checker with failing-first probes."
+    },
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-a-p2-c095ba1.json found the unchecked critical and route cells; later probes closed those gaps."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-c-p2-c095ba1.json correctly verified all four batch schemas and 30 unique ratings."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-p2-c095ba1.json correctly failed the original Phase 2 checker on three live defects."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-p2-36dec52.json correctly passed the closures and retained the evidenced ADV-4 limitation."
+    },
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-a-p3-cddadba.json correctly proved the one-line yaw rework, fresh shots, and independent rerate."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-c-p3-cddadba.json correctly checked the record schemas and identified the generator drift later fixed."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-p3-cddadba.json found two real provenance gaps without claiming a live record defect."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-p3-fa85bb2.json correctly passed both provenance closures with exact failing-first output."
+    },
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-a-p4-be89dc9.json correctly passed the record implementation and disclosed the scoped doctor deviation."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-c-p4-be89dc9.json correctly blocked the stale generated fact; later commits resolve that fact."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-c-p4-c1e84b1.json correctly accepted the temporary deferral and required regenerate evidence."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-p4-c1e84b1.json found three real checker gaps with no false live-defect claim."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-p4-944f612.json correctly passed all closures; my rerun reproduces every probe."
+    }
+  ]
+}

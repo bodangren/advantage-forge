@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: measure-final-acceptance
+status: complete
+track: asset_scenes_civic_20260928
+phase: track review
+commits: none
+tests_run: PASS check-records.sh 46/46; PASS adversarial-p4.sh all probes; PASS generate.mjs --check; PASS measure-tools 8/8; EXPECTED RED three earlier-phase checkers; FAIL doctor.sh 12 foreign errors; UNSET PROJECT_LINT PROJECT_CHECKS PROJECT_TESTS
+files_changed: measure/runs/asset_scenes_civic_20260928/final-acceptance-80d5584.json; measure/runs/asset_scenes_civic_20260928/final-acceptance-80d5584.log
+plan_updates: none
+known_failures: FA-1 doctor exits 1; FA-2 plan quotes 44 instead of 46; FA-3 PROJECT gates are unset
+handoff: Do not archive this HEAD. Closeout must update the 44-check quote and cite 944f6128. Record regenerate SHAs 6a094aeb and 80d55840 with generate.mjs --check exit 0. Fill or remove the empty Civic review record table. Correct plan.md:210 and inventory.md:16. Remove the volatile doctor count. Obtain doctor exit 0 and configured PROJECT gate passes, then rerun final acceptance. F8 and N5 remain wording items.
+END_MEASURE_AGENT_RESULT

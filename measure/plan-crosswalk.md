@@ -17,8 +17,8 @@ The scope map assigns every asset target and scene blueprint to one current trac
 | [Hamlet mockups](../docs/hamlet-mockups/README.md) and [assembly notes](../docs/hamlet-assembly-notes.md) | [Settlement scenes](./tracks/asset_scenes_settlements_20260928/) | Reconcile source, assembly, and acceptance. |
 | [Village construction](../docs/village-mockups/construction.md) | [Settlement scenes](./tracks/asset_scenes_settlements_20260928/) | Preserve reusable hamlet components. |
 | [Forest mockups](../docs/forest-mockups/README.md) | [Wilderness scenes](./tracks/asset_scenes_wilderness_20260928/) | Reconcile reference and assembled scene. |
-| [Tavern construction](../docs/tavern-mockups/construction.md) | [Civic scenes](./tracks/asset_scenes_civic_20260928/) | Preserve kit dimensions and review criteria. |
-| [Blacksmith construction](../docs/blacksmith-mockups/construction.md) | [Civic scenes](./tracks/asset_scenes_civic_20260928/) | Review the final assembly and components. |
+| [Tavern construction](../docs/tavern-mockups/construction.md) | [Civic scenes](./archive/asset_scenes_civic_20260928/) | Preserve kit dimensions and review criteria. |
+| [Blacksmith construction](../docs/blacksmith-mockups/construction.md) | [Civic scenes](./archive/asset_scenes_civic_20260928/) | Review the final assembly and components. |
 | [Color variants](../docs/color-variants.md) | [Asset delivery](./tracks/asset_delivery_20260928/) | Preserve the source and consumer contracts. |
 | [Forge Bench](../bench/README.md) | [Production controls](./tracks/asset_production_controls_20260928/) and rework history | Preserve trial provenance and comparisons. |
 | [README scope](../README.md) | [Engine backlog](./tracks/asset_engine_backlog_20260928/) | Reconcile deferred capability claims before implementation. |

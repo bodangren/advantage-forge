@@ -1,6 +1,6 @@
 # Plan and accept civic scenes
 
-Status: in_progress. This plan owns execution status. Source documents retain design details.
+Status: done (2026-11-19). This plan owns execution status. Source documents retain design details.
 
 Decisions taken 2026-11-19 under Daniel's primary directive of 2026-11-18. The PM may reverse each one.
 
@@ -193,7 +193,7 @@ Carried phase-acceptance items N1 to N5 (`phase-acceptance-p3-024cfdf.json`):
 - [ ] Task: Close the track (deferred to the closeout role): archive the folder and set the metadata status to completed.
   Owner is the closeout steward. This role records the Phase 4 evidence and writes no closeout
   metadata.
-- [ ] Task: Regenerate measure/generated/ with ./measure/generate.sh and commit it (deferred to the closeout role; blocked while measure/generated/ and measure/tracks.md hold foreign uncommitted edits; Review C F1 at be89dc91). The Build session already regenerated the facts in `6a094aeb` and `80d55840` under the PM decision of 2026-11-19, and `node measure/tools/generate.mjs --check` prints `Measure facts are current (4 files).` with exit 0. The closeout role checks this task when it archives the track.
+- [x] Task: Regenerate measure/generated/ with ./measure/generate.sh and commit it (deferred to the closeout role; Review C F1 at be89dc91). Done under the PM decision of 2026-11-19 in Build commits `6a094aeb`, `80d55840`, and `9f2e571f`; the closeout role reran the generator and committed the fresh facts. `node measure/tools/generate.mjs --check` prints `Measure facts are current (4 files).` with exit 0 at closeout.
 
 ## Civic review record
 

@@ -52,9 +52,6 @@ This registry gives each historical, current, and planned work item one Measure 
 - [ ] **Track: Plan and accept adventure scenes**
   *Link: [./tracks/asset_scenes_adventure_20260928/](./tracks/asset_scenes_adventure_20260928/)*
 
-- [~] **Track: Plan and accept civic scenes**
-  *Link: [./tracks/asset_scenes_civic_20260928/](./tracks/asset_scenes_civic_20260928/)*
-
 - [~] **Track: Plan and accept settlements scenes**
   *Link: [./tracks/asset_scenes_settlements_20260928/](./tracks/asset_scenes_settlements_20260928/)*
 
@@ -254,6 +251,10 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
   *Link: [./tracks/riven_fx_geometry_20261009/](./tracks/riven_fx_geometry_20261009/)*
 
 ## Archived Tracks
+
+- [x] Plan and accept civic scenes, completed 2026-11-19; 30 civic P2 maps inventoried, independently judged at the 7.0 bar, the mill reworked and rerated, and all 30 TSV rows accepted; final acceptance PASS at 3e90457f
+  *Link: [./archive/asset_scenes_civic_20260928/](./archive/asset_scenes_civic_20260928/)*
+  *Plan and accept civic scenes*
 
 - [x] Trial Hy4 Flash as the maker of simple 3D assets, completed 2026-11-18; 3 bathhouse props, each made twice from one brief, blind judge with vision, and a promotion of the winning arm; Hy4 won 2 of 3 assets under the default size ruling; spend 0 USD
   *Link: [./archive/asset_hy4_maker_trial_20261116/](./archive/asset_hy4_maker_trial_20261116/)*

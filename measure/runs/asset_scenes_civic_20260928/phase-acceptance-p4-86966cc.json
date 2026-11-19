@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "role": "measure-phase-acceptance",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "## Phase 4: Records",
+  "status": "pass",
+  "summary": "Phase 4 Records acceptance passes at the audited HEAD 86966cc777dca6517f366cac5b59802474b9467e, with the head no longer current because two Build-session measure chore commits landed during the audit (02234745 'commit doctor Contents lists', 6a094aeb 'regenerate generated facts'); both are named as outside the audited range 024cfdf9..86966cc7 and git diff --stat 86966cc7..HEAD over every civic path (the TSV, docs/map-review.html, scenes/maps, scripts/design-mill.mjs, the track folder, and this run folder) is empty, so the acceptance records 86966cc7. All gates re-run live: check-records.sh exits 0 with === Total: 46 checks (PASS=46, FAIL=0) === (hardened from 44 by 944f6128: ADV-7 column count, ADV-8 in-order masked compare, ADV-9 civic doctor grep set); adversarial-p4.sh exits 0 with the control at 46/46 and all twelve probes CAUGHT with exact expected FAIL lines; git diff --exit-code 024cfdf9..86966cc7 -- docs/map-review.html scenes/maps is empty. The three earlier-phase checkers re-run at their by-design red counts, matching the plan quotes (96/6/90, 63/33/30, 69/40/29). Prerequisite currency: Review A (PASS at be89dc91) still covers the implementation because no implementation path changed after be89dc91; the two record-text commits after it (43c44210 plan.md, c1e84b19 green-p4.log) were re-audited by Review C PASS at c1e84b19, and every commit after c1e84b19 (b8022222, 944f6128, 86966cc7) touches only measure/runs/ test and evidence files, the allowed test-only class; the checker growth 44 to 46 was itself adversarially re-audited at 944f6128 (PASS) and re-proven by this audit's rerun. Review B is not applicable (record-only phase, no product code, no secret, no network call). UX browser review is not required: the phase diff touches no visual file and docs/map-review.html and scenes/maps are byte-identical to the base. Closeout deferral decision: acceptable and still necessary. At the audited head the committed measure/generated/asset-inventory.json holds 6 accepted against 36 in the TSV (re-verified), so the staleness Review C F1 found is real and disclosed in plan.md lines 168-172 and the green log generated_facts_deferral line; the standing rule (commit only assigned paths) held because measure/generated/ and measure/tracks.md carried foreign uncommitted edits. The PM decision of 2026-11-19 assigned the unblock to a Build session, and that has partly landed as the foreign commit 6a094aeb, whose regenerated asset-inventory.json holds 36 accepted, equal to the TSV; but node measure/tools/generate.mjs --check still exits 1 (measure/generated/status.md stale against the still-uncommitted foreign measure/tracks.md edits) and no civic closeout has recorded a regenerate SHA, so the deferral must stand until the closeout steward records the regenerate SHA and shows the --check exit 0, exactly as the PM decision requires. A5 re-verified: every operative exits-0 claim holds live, with one stale count quote carried (the plan says 44 checks while the hardened gate prints 46, the same class as Phase 3 N1) and the doctor count quote drifted with foreign state; neither masks a failure. Four nonblocking items carry to the plan owner and the closeout steward; none blocks Phase 4.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "P4-N1 [Nit] plan Green quote is stale after the adversarial hardening (measure/tracks/asset_scenes_civic_20260928/plan.md:148-151): the plan quotes '=== Total: 44 checks (PASS=44, FAIL=0) ===' while the checker at the accepted HEAD prints 46 (PASS=46, FAIL=0), because 944f6128 added the ADV-7, ADV-8, and ADV-9 checks after the plan text was written; the plan also cites no commit for that closure. The operative claim (the checker exits 0, all checks pass) matches reality and the gate is strictly stronger, re-proven live at 46/46 and by the adversarial re-audit. Same class as Phase 3 N1, which a plan edit closed. Route: when the plan owner next edits plan.md (or at closeout), refresh the quote to 46 and add one line citing 944f6128.",
+    "P4-N2 [Nit] the deferred closeout regenerate task (measure/tracks/asset_scenes_civic_20260928/plan.md:192) does not yet name the PM decision conditions of 2026-11-19: the civic closeout must record the regenerate SHA and show node measure/tools/generate.mjs --check exit 0. Facts now: the Build session's foreign commit 6a094aeb regenerated measure/generated/asset-inventory.json to 36 accepted, equal to the TSV, but generate.mjs --check still exits 1 on measure/generated/status.md because measure/tracks.md holds uncommitted foreign edits, and no regenerate SHA is recorded in the plan. Route: the closeout steward (or the plan owner) updates the deferred task line with the PM decision and its two conditions, then satisfies them before archiving. The deferral itself stays valid until then; this acceptance records the conditions as closeout requirements.",
+    "P4-N3 [Nit] the 'Civic review record' table (measure/tracks/asset_scenes_civic_20260928/plan.md:194-199) is an empty template while its own instruction ('Add one row per map when its final rating is known') is now satisfied in the TSV for all 30 maps. The TSV is the declared acceptance record and holds all 30 final statuses, so no record is missing and no phase task referenced the table; the template simply contradicts its own instruction. Route: at closeout, fill the 30 rows from the TSV and rerate files, or delete the section.",
+    "P4-N4 [Nit, observation] the doctor error count quoted in the plan (51 at green, plan.md:136 and :166) drifted with foreign framework state: the live scoped check prints 18 foreign errors and the adversarial clone at 6a094aeb prints 19, after the Build session's commits changed other tracks' plans and the generated facts. The scoped claim (no error line names this track or its civic files) holds live and under re-probe. Framework-wide freshness and count drift is the measure-orchestrator-audit's domain, not a civic phase defect. Route: scheduled framework audit; no civic action."
+  ],
+  "evidence": [
+    "Provenance: git rev-parse 86966cc7 gives 86966cc777dca6517f366cac5b59802474b9467e and phase_base_sha 024cfdf9 resolves and is an ancestor. HEAD moved during the audit to 6a094aeb; both later commits are named as outside the range: 02234745 touches measure/tracks.md, eight other tracks' plan.md files, and measure/workflow.md; 6a094aeb touches measure/generated/ (architecture.json, asset-inventory.json, status.md). git diff --stat 86966cc7..HEAD over docs/fantasy-world-scene-blueprints.tsv, docs/map-review.html, scenes/maps, scripts/design-mill.mjs, measure/tracks/asset_scenes_civic_20260928/, and measure/runs/asset_scenes_civic_20260928/ is empty, so the audited civic content equals HEAD's and the acceptance records 86966cc7.",
+    "Gate 1 live: bash measure/runs/asset_scenes_civic_20260928/check-records.sh exits 0 with === Total: 46 checks (PASS=46, FAIL=0) ===. The output verifies live: 30 civic P2 slugs, 30 accepted, 0 follow-up, 100 data rows each with exactly 4 columns, base and head columns-1-3 sha256 both f608396a26fe4f37c9b3c4fc4603bd438a35d1eaddad6c7f785cd6039a65ebb4 (in order, no reorder, ADV-8), 60 changed data lines all civic P2, inventory supports 30 accepted (29 Judge >= 7.0 non-critical plus the mill rerate 7.5), all 30 status changes cite e2c7bb9c (ancestor that touches the TSV, P4-d), the map-review page unchanged (P4-e), the scoped doctor clean for this track (P4-f), and the generator byte-equal to the committed mill.ts (P4-g).",
+    "Gate 2 live: bash measure/runs/asset_scenes_civic_20260928/adversarial-p4.sh exits 0. The control clone passes 46 of 46 against the live total parsed at run time; every probe is CAUGHT with its exact expected line: follow-up vs accepted state (2 FAILs), non-civic P0 status edit (2 FAILs), trailing space (3 FAILs), trailing tab 5th column (ADV-7, 2 FAILs including the doctor naming the malformed TSV row), adjacent civic row reorder (ADV-8 alone, 1 FAIL), non-civic reorder (3 FAILs), one-character generator drift (P4-g byte compare alone), one byte on the review page (P4-e), doctor naming scenes/maps/mill.ts (ADV-9), doctor naming locations/civic/mill (ADV-9), and the 4-character citation e2c7 (30 P4-d FAILs). No-live-instance scans clean: no civic doctor line, no 5-column row, equal masked sha256 on base and head.",
+    "Gate 3 live: git diff --exit-code 024cfdf9..86966cc7 -- docs/map-review.html scenes/maps exits 0 (empty), so the record page and every map source are unchanged against the phase base, as the plan claims.",
+    "By-design re-runs live: check-inventory.sh exit 1 with === Total: 96 checks (PASS=6, FAIL=90) ===, check-review.sh exit 1 with === Total: 63 checks (PASS=33, FAIL=30) ===, check-rework.sh exit 1 with === Total: 69 checks (PASS=40, FAIL=29) ===, each matching the plan quote at plan.md lines 121-127; check-records.sh is the final gate and passes.",
+    "Prerequisite currency (Review A): Review A passed at be89dc91 with re-checked commands. Commits be89dc91..86966cc7 are 43c44210 (plan.md only), c1e84b19 (green-p4.log only), b8022222 (measure/runs/ adversarial artifacts only), 944f6128 (check-records.sh + red-p4.log, test-only), and 86966cc7 (measure/runs/ adversarial artifacts only). No implementation path (the TSV, the inventory, scenes/maps, scripts/design-mill.mjs, docs/map-review.html) changed after be89dc91. The two record-text commits 43c44210 and c1e84b19 were audited by Review C's re-audit PASS at c1e84b19 (its evidence lines verify the deferral text and the foreign-edit facts), so Review A's implementation findings stand; the test-only commits after c1e84b19 are the allowed class.",
+    "Prerequisite currency (Review C and adversarial): Review C failed at be89dc91 on the stale committed generated fact (F1), the deferral commits 43c44210 and c1e84b19 dispositioned it, and Review C re-audited PASS at c1e84b19 judging the deferral acceptable. Every commit after c1e84b19 (b8022222, 944f6128, 86966cc7) touches only measure/runs/ test and evidence files, so both PASS results remain current. The adversarial chain: PASS at c1e84b19 (commit b8022222) found the ADV-7/8/9 gaps with no live instance; Red closed them in 944f6128 (test-only); the re-audit PASS at 944f6128 (commit 86966cc7) proves the closures; this audit's own adversarial rerun reproduces every verdict.",
+    "Deferral decision facts: at the audited head, git show 86966cc7:measure/generated/asset-inventory.json counts 6 accepted while the committed TSV holds 36 accepted and 64 mockup-needed (cut -f4 histogram), so the plan's deferral disclosure is true. The PM decision of 2026-11-19 assigns the unblock to a Build session: 02234745 committed the Contents lists and 6a094aeb committed the regenerate (asset-inventory.json at HEAD holds 36 accepted, equal to the TSV). But node measure/tools/generate.mjs --check still exits 1 with 'measure/generated/status.md: stale generated fact', and git status shows measure/tracks.md still modified with foreign uncommitted edits, so the PM closeout conditions (record the regenerate SHA, show --check exit 0) are not yet met and the deferral remains necessary and correctly routed to the closeout role.",
+    "A5 plan-claim check: every operative claim re-verified live. Green quote: the plan says the checker exits 0 (true, 46/46) but quotes 44 checks (stale, carried as P4-N1). Doctor quote: the plan says exits 1 with 51 foreign errors and none for this track (the none-for-this-track part holds live at 18 foreign errors; the count drifted with foreign state, P4-N4). TSV counts (30 slugs, 30 accepted, 60 changed lines, columns 1-3 identical), the P4-g sha256 0d2873d1a0f1c8f26095a01bab32d7ebb336be900cee1d6e437ca809fff5a8c1 byte equality, and the by-design 96/63/69 counts all reproduce live. No plan claim in Phase 4 is false in substance.",
+    "Anti-pattern checks: A3 holds (check-records.sh parses labeled cells and labeled counts; no bare digit-scan pattern exists in it). A4 holds (red-p4.log records exit 1 at the base with Total: 14 (PASS=10, FAIL=4), including 'TSV accepted count [0] differs from the inventory-supported count [30]', so the empty case fails). A6 holds (git diff 024cfdf9..86966cc7 -- measure/tracks.md is empty; the phase makes no registry completion claim). A7 holds (the slug set comes from all 30 civic P2 TSV rows and the ADV-9 grep set covers the TSV path, locations/civic/, and per-slug map, mockup, and generator paths; the probes prove the filters catch real hits). No fake-gate masking, no artifact-only test claiming live proof (the checker reruns the generator into a temp dir and byte-compares), and the only intentional-red checkers are the documented by-design items.",
+    "Commit hygiene in the range: git show --name-only over all thirteen commits 07c04b62..86966cc7 lists exactly the declared file(s) per commit: the Red checker, the one-line generator fix 93c536c8, the inventory cells 2881a7a3, the TSV statuses e2c7bb9c, the plan evidence 0c700b8a, the green log 4511acdc, the deferral edits 98499a7e / be89dc91 / 43c44210 / c1e84b19, and the test-only adversarial commits b8022222 / 944f6128 / 86966cc7. No unrelated path moved in 024cfdf9..86966cc7 (20 files, all phase-owned)."
+  ],
+  "commands": [
+    "git rev-parse 86966cc7 024cfdf9 (86966cc777dca6517f366cac5b59802474b9467e; 024cfdf9250384667142481856d17eebca91cb15)",
+    "git log --oneline 86966cc7..HEAD (02234745, 6a094aeb; both Build-session chore commits, both outside the audited range)",
+    "git diff --stat 86966cc7..HEAD over the civic paths plus git diff --stat 86966cc7..HEAD -- measure/tracks/asset_scenes_civic_20260928 docs/fantasy-world-scene-blueprints.tsv scenes/maps docs/map-review.html scripts/design-mill.mjs measure/runs/asset_scenes_civic_20260928 (empty)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-records.sh (exit 0; Total: 46 checks, PASS=46, FAIL=0)",
+    "bash measure/runs/asset_scenes_civic_20260928/adversarial-p4.sh (exit 0; control 46/46; twelve probes all CAUGHT; no-live-instance scans clean)",
+    "git diff --exit-code 024cfdf9..86966cc7 -- docs/map-review.html scenes/maps (exit 0, empty)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh | tail -1 (96 checks, PASS=6, FAIL=90, by design)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-review.sh | tail -1 (63 checks, PASS=33, FAIL=30, by design)",
+    "bash measure/runs/asset_scenes_civic_20260928/check-rework.sh | tail -1 (69 checks, PASS=40, FAIL=29, by design)",
+    "git show 86966cc7:measure/generated/asset-inventory.json | grep -o '\"accepted\"' | wc -l (6) versus git show HEAD:measure/generated/asset-inventory.json | grep -c '\"status\": \"accepted\"' (36) and cut -f4 docs/fantasy-world-scene-blueprints.tsv | sort | uniq -c (36 accepted, 64 mockup-needed)",
+    "node measure/tools/generate.mjs --check (exit 1; measure/generated/status.md stale generated fact; read-only)",
+    "git status --short measure/generated/ measure/tracks.md (only measure/tracks.md still modified, foreign)",
+    "git diff --stat 024cfdf9..86966cc7 -- measure/tracks.md (empty: no registry claim in the phase diff)",
+    "git show --name-only --format='%h %s' over 07c04b62 93c536c8 2881a7a3 e2c7bb9c 0c700b8a 4511acdc 98499a7e be89dc91 43c44210 c1e84b19 b8022222 944f6128 86966cc7 (each commit its declared file(s) only)"
+  ],
+  "changed_files": [
+    "measure/runs/asset_scenes_civic_20260928/phase-acceptance-p4-86966cc.json",
+    "measure/runs/asset_scenes_civic_20260928/phase-acceptance-p4-86966cc.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "phase_base_sha": "024cfdf9250384667142481856d17eebca91cb15",
+  "role_base_sha": "944f6128a288ae619140303f84879ecd17bfabc7",
+  "audited_head_sha": "86966cc777dca6517f366cac5b59802474b9467e",
+  "accepted_head_note": "Accepted at 86966cc777dca6517f366cac5b59802474b9467e. Allowed test-only commits after the Review A head be89dc91: b8022222 and 944f6128 (both touch only measure/runs/ test files) plus the re-audit artifacts 86966cc7 itself; the record-text commits between be89dc91 and c1e84b19 (43c44210 plan.md, c1e84b19 green-p4.log) were re-audited by Review C PASS at c1e84b19. No implementation path changed after be89dc91. Later foreign commits outside the audited range: 02234745 (Contents lists: measure/tracks.md, eight other tracks' plan.md, one other track's evidence.md, measure/workflow.md) and 6a094aeb (regenerate: measure/generated/ three files); neither touches a civic path.",
+  "ux_browser_decision": "not_required: Phase 4 changes no visual file. The phase diff touches only the TSV status column, the inventory state cells, plan.md, the run logs, and one generator line whose output is byte-identical to the committed map; git diff --exit-code 024cfdf9..86966cc7 -- docs/map-review.html scenes/maps is empty. Review C recorded ux_applicability not_applicable for the same diff.",
+  "route": "opencode-go/glm-5.3#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The record change is exactly what the plan says: 30 civic P2 status cells moved to accepted with columns 1-3 byte-identical in order (sha256 f608396a on base and head, live checker), the inventory supports all 30 (29 Judge >= 7.0 plus the mill rerate 7.5), the generator reproduces mill.ts byte for byte, and the page and every map source are unchanged (git diff --exit-code empty)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "Failing-first chain proven: red-p4.log records exit 1 at the base (14 checks, PASS=10, FAIL=4), and this audit's adversarial rerun catches all twelve probes with exact FAIL lines, including the three ADV-7/8/9 closures of 944f6128 (5th-column row, civic reorder, doctor naming a civic file or row)."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git show --name-only over all thirteen range commits lists exactly the declared file(s) per commit; the phase diff holds 20 files, all phase-owned, and the TSV, page, and map sources outside the status column are untouched."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every acceptance claim carries a live command result from this run: the 46/46 gate output, the adversarial exit 0 with per-probe FAIL lines, the empty immutable diffs, the 6-versus-36 generated-fact counts, the generate.mjs --check exit 1, and the by-design 96/63/69 re-runs matching the plan quotes."
+    }
+  ],
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-a-p4-be89dc9.json passes and its key proofs reproduce at the accepted head: the TSV digest and 30/30 numstat scope, the inventory support counts, the generator byte-equality (0d2873d1), the unchanged page, and the honest scoped doctor check; its 44-check gate quote predates the 944f6128 hardening and was accurate at its own head; its three Nits are real and minor (P4-d is global not per-slug, the strategy wording drift, the task-line commit binding)."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-c-p4-be89dc9.json fails on a real blocker I re-verified: at be89dc91 the committed asset-inventory.json held 6 accepted against 36 in the TSV, so the derived record disagreed with the source record; the finding was fully evidenced with reader analysis and the deferral disposition it forced is the correct one under the standing rule."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-c-p4-c1e84b1.json passes on the deferral disposition with facts I re-verified: the two disposition commits touch only plan.md and green-p4.log, the foreign-edit counts held (measure/generated/ and measure/tracks.md modified), generate.mjs --check exited 1, and the deferral is recorded in both places the framework reads; its sharpened F2 (no mechanical gate enforces the deferred regenerate) becomes my P4-N2 PM-decision conditions for the closeout steward."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "opencode-go/glm-5.3#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-p4-c1e84b1.json passes and found the three real checker gaps (ADV-7, ADV-8, ADV-9) with fixture proofs and no-live-instance scans; adversarial-p4-944f612.json passes and proves all three closures with exact FAIL lines; my own rerun of adversarial-p4.sh reproduces every verdict at 46/46 with all twelve probes CAUGHT."
+    }
+  ]
+}
