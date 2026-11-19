@@ -22,7 +22,7 @@ for (let c = 0; c <= 11; c++)
     put('grass-ground', x, z);
   }
 // focal: watermill, wheel on +X toward the river
-put('watermill', 2.2, -3.4);
+put('watermill', 2.2, -3.4, { yaw: -65 });
 // bridge over the river, south of the mill
 put('bridge', 5, 3);
 // mill yard: sacks, barrels, hay, crates
