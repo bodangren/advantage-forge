@@ -1,0 +1,24 @@
+{
+  "slug": "mill",
+  "maker_route": "opencode-go/hy4-flash-free#high",
+  "maker_family": "hy",
+  "change": "Yaw the watermill -65 degrees in scenes/maps/mill.ts so the wheel disc faces the three-quarter camera; the wheel reads as a circular spoked wheel over the water in mill-3q.png. No asset change, no duplicate source, and no change to the river, bridge, field, yard, or road layout.",
+  "source_paths": [
+    "scenes/maps/mill.ts"
+  ],
+  "commit": "7619c491ffc74398ec8a8c8b5a900fbda870300a",
+  "shots": [
+    {
+      "path": "docs/map-mockups/mill-3q.png",
+      "sha256": "32a41dc054134552276cb0d7931c94c15a0f35face1eb47401c3e3bd05a18b4e"
+    },
+    {
+      "path": "docs/map-mockups/mill-top.png",
+      "sha256": "0543e6a65a51137b021d7912509a4adfd1828647f355a35dd4fdcf80dc268845"
+    }
+  ],
+  "cameras": {
+    "3q": { "az": 35, "el": 47, "dist": 34 },
+    "top": { "az": 0, "el": 86, "dist": 34 }
+  }
+}
