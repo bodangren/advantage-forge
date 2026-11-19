@@ -97,10 +97,12 @@ FORGE_SHOT_BASE=http://127.0.0.1:5199/hamlet.html node scripts/shoot-map.mjs doc
 Gate:
 
 ```bash
+ls -l docs/map-mockups/mill-3q.png docs/map-mockups/mill-top.png
 ls -l docs/map-mockups/bathhouse-3q.png docs/map-mockups/bathhouse-top.png
 ```
 
-Each reworked map has a fresh pair of shots and a newer rating.
+Each reworked map has a fresh pair of shots and a newer rating. The reworked slug is `mill`; the
+`bathhouse` line stays as the shot-command example.
 
 Red evidence: `bash measure/runs/asset_scenes_civic_20260928/check-rework.sh` exits 1 on
 `b78fdde1`: Below-bar map count 1 (mill, 5.5 and critical true), Rework record count 0
@@ -109,22 +111,29 @@ Red evidence: `bash measure/runs/asset_scenes_civic_20260928/check-rework.sh` ex
 
 Green evidence: with the mill cells and the two rerate files in place,
 `bash measure/runs/asset_scenes_civic_20260928/check-rework.sh` exits 0 with
-`=== Total: 39 checks (PASS=39, FAIL=0) ===`. The plan gate
+`=== Total: 41 checks (PASS=41, FAIL=0) ===` at the accepted HEAD `024cfdf9`. Commit
+`fa85bb2a` added the ADV-5 and ADV-6 checks after the first Green log, so the log quote of 39 was
+stale, and the quote above is the live count. The plan gate
 `ls -l docs/map-mockups/mill-3q.png docs/map-mockups/mill-top.png` lists both fresh shots.
-The mill row holds `Rework: 7619c491`, `Rerate: 7.5`, and state `accepted`; the other 29 rows
-stay `rated`. `check-review.sh` exits 1 with
-`=== Total: 34 checks (PASS=33, FAIL=1) ===`: P2-d wants the Phase 2 `rated` state, so the
-mill `accepted` state fails there by design. No fourth rating exists and no map goes on the
+The mill row held `Rework: 7619c491`, `Rerate: 7.5`, and state `accepted` at this gate; the other
+29 rows read `rated` then, and Phase 4 commit `2881a7a3` moves them to `accepted`.
+
+Phase checkers after the Phase 4 record moves (live at this tree): `check-inventory.sh` exits 1
+with `=== Total: 96 checks (PASS=6, FAIL=90) ===`, `check-review.sh` exits 1 with
+`=== Total: 63 checks (PASS=33, FAIL=30) ===`, and `check-rework.sh` exits 1 with
+`=== Total: 69 checks (PASS=40, FAIL=29) ===` (P3-e wants `rated` on rows that needed no
+rework). Each earlier-phase checker fails by design once a later phase moves the state.
+`check-records.sh` is the final gate. No fourth rating exists and no map goes on the
 follow-up list.
 
 ## Phase 4: Records
 
-- [~] Task: Update the TSV status column for each reviewed map.
+- [x] Task: Update the TSV status column for each reviewed map. (e2c7bb9c: all 30 civic P2 rows read `accepted`; the diff changes only the status column and no ID moves. 2881a7a3: the 29 inventory state cells that read `rated` now read `accepted`; the mill row already did)
   Use `accepted` or `follow-up`. Do not change any ID. Cite the commit in this plan.
-- [ ] Task: Decide the `docs/map-review.html` note.
+- [x] Task: Decide the `docs/map-review.html` note. (no commit: the page is unchanged against `024cfdf9`, so P4-e passes. No tool reads the page, and the PM did not name it as the record, so it stays a view)
   `scripts/map-review-page.mjs` generates that page from `bench/sonnet/log.tsv`. No tool reads the page.
   Leave the page alone unless the PM names it as the record.
-- [ ] Task: Run the doctor.
+- [x] Task: Run the doctor. (e2c7bb9c tree: `./measure/doctor.sh` exits 1 with 51 error lines from other tracks; no error line names `asset_scenes_civic_20260928`, so the scoped P4-f check passes)
 
 ```bash
 ./measure/doctor.sh
@@ -135,6 +144,46 @@ Red evidence: `bash measure/runs/asset_scenes_civic_20260928/check-records.sh` e
 `mockup-needed` (P4-a), the TSV holds 0 accepted rows against 30 inventory-supported (P4-c),
 and the generator output differs from the committed `mill.ts` (P4-g drift, no `yaw: -65`).
 Run log `measure/runs/asset_scenes_civic_20260928/red-p4.log`.
+
+Green evidence: `bash measure/runs/asset_scenes_civic_20260928/check-records.sh` exits 0 at this
+tree with `=== Total: 44 checks (PASS=44, FAIL=0) ===`. The total grew from 14 at Red because P4-d
+adds one check for each of the 30 changed TSV rows. Run log
+`measure/runs/asset_scenes_civic_20260928/green-p4.log`.
+
+- P4-a and P4-c: the TSV holds 30 `accepted` rows and the inventory supports 30. Twenty-nine rows
+  hold a Judge rating of 7.0 or higher with critical false, and the mill row holds the rerate 7.5
+  in `rerate-mill.json`.
+- P4-b: the TSV diff against `024cfdf9` changes 60 data lines, all of them civic P2 rows, and the
+  `scene_id`, `group`, and `priority` columns are identical.
+- P4-d: this plan cites `e2c7bb9c`, which is an ancestor of HEAD and touches the TSV, so every
+  one of the 30 status changes cites its commit.
+- P4-e: `docs/map-review.html` is unchanged against `024cfdf9`.
+- P4-g (N3): `scripts/design-mill.mjs` now writes `put('watermill', 2.2, -3.4, { yaw: -65 })` in
+  commit `93c536c8`. A generator run with its cwd in a temp dir writes `scenes/maps/mill.ts` byte
+  for byte equal to the committed file; both hold sha256
+  `0d2873d1a0f1c8f26095a01bab32d7ebb336be900cee1d6e437ca809fff5a8c1`, and the committed
+  `scenes/maps/mill.ts` was never overwritten.
+- P4-f (scoped): `./measure/doctor.sh` exits 1 with 51 error lines, all from other tracks. No error
+  line names `asset_scenes_civic_20260928` or its files.
+
+Carried phase-acceptance items N1 to N5 (`phase-acceptance-p3-024cfdf.json`):
+
+- N1 is closed above: the Phase 3 Green quote now reads 41 checks, and it cites `fa85bb2a` for the
+  ADV-5 and ADV-6 growth.
+- N2 is closed above: the Phase 3 Gate block lists `docs/map-mockups/mill-3q.png` and
+  `docs/map-mockups/mill-top.png` next to the bathhouse example.
+- N3 is closed by commit `93c536c8` and check P4-g.
+- N4 is closed by the by-design note above: `check-inventory.sh`, `check-review.sh`, and
+  `check-rework.sh` fail after the Phases 2, 3, and 4 record moves, and `check-records.sh` is the
+  final gate.
+- N5 is a `test-strategy.md` wording item for the orchestrator. This role leaves that file
+  unchanged.
+
+## Closeout
+
+- [ ] Task: Close the track: archive the folder and set the metadata status to completed.
+  Owner is the closeout steward. This role records the Phase 4 evidence and writes no closeout
+  metadata.
 
 ## Civic review record
 
