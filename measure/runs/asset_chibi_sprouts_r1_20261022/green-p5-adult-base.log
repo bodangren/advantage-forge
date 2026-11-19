@@ -115,3 +115,46 @@ gate outputs:
   tests/storytime-book-pictures.test.ts (Workbooks picture list; unrelated, pre-existing).
 - no Red test edited. src/clip-check.ts carried a temporary debug print for the hand
   positions and was reverted before the commits (clean in git status for that path).
+
+## Mom (2026-11-20, due 11-21; PM order 2026-11-20)
+- Look: docs/sprout-mockups/mom.jpg and the cast.json "mom" entry (read only). Young mother,
+  medium height, slim; large dark-brown eyes, long wavy medium-brown hair past the shoulders,
+  cream cable-knit sweater, blue jeans, brown flats, pearl studs, kind smile. Rated G.
+- Build: assets/sprout-mom.ts on the ADULT proportions (sprout-adult-base, humanoid-kind),
+  normal Forge flow. Face, eyes, brows, and paint come from the kind's sproutFace, the way
+  May and Nan do. Six render loops.
+- Lessons from Lily applied: hair is one smooth union (cap 0.015 off the skull, side part
+  groove high on the crown, swept fringe, jaw-length inner locks, thin outer curtains
+  behind the shoulders, flattened back panel), so no stepped bands; the face opening hugs
+  the face with no bare-skin gaps; the fringe lies nearly flush (no mushroom ledge).
+- Two findings from the check loop, both structural to long hair on the adult:
+  (1) the clap transit and hold sit where a front-chest drape hangs, so the front hair
+  ends at the jaw and the length runs behind the shoulders (curtains + back panel);
+  (2) the clap bounce (hips -24 mm, chest -8 deg, head +4 deg) carries the long hair ends
+  forward into the meeting hands, so Mom's clap keeps the exact shared hand goals but
+  softens the bounce (hips x0.4, chest/head x0.25), the May walk/run wrap pattern.
+- check: "result FAIL: a held item passes through the head in 2 clip(s)" = the waived
+  touch-nose (index/fingers into the nose skin, intentional face touch) and listen only.
+  wave ok, nothing within 5 cm; touch-neck closest 0.0 cm; count-fingers closest 3.5 cm;
+  eat closest 1.7 cm; point-up, stretch-up, cheer, picture-sway, attack all ok;
+  clap closest 0.8 cm. The clap body line (5.6 cm into the sweater) matches the
+  pre-existing adult-base line (5.0 cm into the undershirt): the shared clap target sits
+  inside the deeper adult chest, not a Mom defect. Ground ok, rest lowest 0.0 cm.
+- forge all: exit 0, no warning lines; textured 36,084 tris (adult base 34,995; children
+  are near 25k). Cables, rib hem/collar/cuffs, and pearl studs read in the textured views.
+- cutouts: bench/sonnet/sprouts/cutout-gestures-cast.sh mom rendered 25 frames into
+  out/chibi-sprouts/r1/week2-7/gestures-adult/mom/ with gestures.mom in the new folder's
+  own manifest (25 files). Same 1080 px/m week-1 scale; the adult canvas is 1664x1856
+  because one folder keeps one canvas and a grown-up does not fit the children's
+  1024x1200 (point-up needs 1663 tall; sway-picture needs 1620 wide). Script change only;
+  no frame changes for pat/sam/mia/may/lily/adventurer, whose folder keeps its manifest.
+  scripts/cutout-check.mjs on gestures-adult flags only mom/reach.png (lowest opaque row
+  1833, foot row 1840) = the accepted reach-tiptoe flag; every other mom frame ok.
+  The script's per-frame grep now also matches "fail" (the canvas refusal was silent).
+- typecheck: exit 0, 0 errors in assets/sprout-mom.ts. Preset pin regenerated
+  (389 assets; +47-line sprout-mom block). Sprout vitest: 3 files, 10 tests pass
+  (sprout-base, sprout-gestures, preset-colour) under heavy-run.sh with --maxWorkers=1.
+- Pre-existing, not Mom defects: the red tongue dot under the chin shows on
+  sprout-adult-base too (kind sing mouth on the smaller adult head); the adult-base
+  clap-body line above.
+- No Red test edited. No out/ committed.

@@ -248,7 +248,21 @@ Workbooks does not wait for it.
   - Lily r7 (gpt-6-luna) and r8 (claude-haiku-5-5) FAILED: a bob wide enough to cover the
     jaw (about 0.22 m) collides with the hands in point-up, cheer, picture-sway. No waiver
     for these three clips (a hand through hair is a visible fault).
-  - [~] Mom (young mother, medium height, due 11-21)
+  - [x] Mom (young mother, medium height, due 11-21). `assets/sprout-mom.ts` ac97d422
+    (ADULT proportions; long wavy medium-brown hair past the shoulders, cream cable-knit
+    sweater with collar/cuffs/ribbed hem, blue jeans, brown flats, pearl studs; look target
+    docs/sprout-mockups/mom.jpg). Hair is one smooth union (cap, side part + swept fringe,
+    jaw-length inner locks, thin outer curtains behind the shoulders, flattened back panel);
+    the clap bounce is softened for Mom only (same hand goals; the full dip carries the long
+    hair ends into the meeting hands). `./forge check sprout-mom` fails only the waived
+    touch-nose and listen (wave ok; touch-neck closest 0.0 cm; count-fingers 3.5 cm; eat
+    1.7 cm; clap closest 0.8 cm; ground ok). `./forge all sprout-mom` exits 0, no warnings
+    (36,084 tris textured; adult base is 34,995). 25 gesture frames in
+    out/chibi-sprouts/r1/week2-7/gestures-adult/mom/ (same 1080 px/m week-1 scale, own
+    manifest; a grown-up needs a taller canvas than the children's 1024x1200: 1664x1856;
+    script change, no frame changes for the other cast). cutout-check flags only the known
+    reach tiptoe (lowest opaque row 1833, foot row 1840). typecheck 0 errors in sprout-mom;
+    the 3 sprout vitest files pass 10/10. Log green-p5-adult-base.log.
   - Dad (young father, tallest of the family, due 11-22)
   - Grandma (older woman, a little shorter than Mom, due 11-23)
   - Grandpa (older man, as tall as Mom, due 11-24)
