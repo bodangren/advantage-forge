@@ -69,7 +69,7 @@ and make every part chibi-thick (pole r 0.03 or more, blades 0.03 to 0.05 m thic
 
 ## World catch-up (2026-10-01, track `asset_world_catchup_20261001`)
 
-The world catch-up reviewed or reworked 6 assets of this family. 3 are accepted at their bar (P0 7.5, P1 7.0). Scores and notes are in [the catch-up evidence](../../tracks/asset_world_catchup_20261001/evidence.md) and in `bench/sonnet/log.tsv`.
+The world catch-up reviewed or reworked 6 assets of this family. 3 are accepted at their bar (P0 7.5, P1 7.0). Scores and notes are in [the catch-up evidence](../asset_world_catchup_20261001/evidence.md) and in `bench/sonnet/log.tsv`.
 
 belt-pouch 6.3 (to the equipment-parts track), gauntlets 6.3 (to the equipment-parts track), halberd 6.5 (to the equipment-parts track), lantern 7.5, pike 7.0, scythe 7.0.
 

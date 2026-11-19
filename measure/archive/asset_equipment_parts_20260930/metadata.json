@@ -1,13 +1,13 @@
 {
   "track_id": "asset_equipment_parts_20260930",
   "type": "feature",
-  "status": "completed",
+  "status": "done",
   "created_at": "2026-09-30T00:00:00Z",
-  "updated_at": "2026-10-01T17:00:00Z",
+  "updated_at": "2026-11-19T00:00:00Z",
   "description": "Reusable equipment parts for catalog assets and avatar swaps",
   "estimated_tasks": 24,
   "actual_tasks": 31,
-  "deviation_notes": "Pilot started 2026-10-01 by the orchestrator: contract docs/equipment-parts.md, helper src/part.ts, part modules in assets/parts/, check scripts/part-check.mjs. Closed 2026-10-01: the rollout covered 25 priority characters (owner list). Phase 3 (GLB extraction) was dropped and Phase 4 (sockets) moved to avatar_system_20261001, as the owner approved. The dependency on asset_p1_equipment_20260928 is removed because a completed track must not depend on an unfinished one; this track used only its finished equipment sources.",
+  "deviation_notes": "Pilot started 2026-10-01 by the orchestrator: contract docs/equipment-parts.md, helper src/part.ts, part modules in assets/parts/, check scripts/part-check.mjs. Closed 2026-10-01: the rollout covered 25 priority characters (owner list). Phase 3 (GLB extraction) was dropped and Phase 4 (sockets) moved to avatar_system_20261001, as the owner approved. The dependency on asset_p1_equipment_20260928 is removed because a completed track must not depend on an unfinished one; this track used only its finished equipment sources. Closed and archived 2026-11-19 in the PM-ordered Contents and archive pass.",
   "workstream": "assets",
   "retrospective": false,
   "evidence": [

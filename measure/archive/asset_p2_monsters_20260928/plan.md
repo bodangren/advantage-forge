@@ -1,6 +1,6 @@
 # Produce P2 monsters
 
-Status: in progress (batch 1 done 2026-10-04). This plan owns execution status. Source documents retain design details.
+Status: completed (2026-10-05). Batch 1 started 2026-10-04. This plan owns execution status. Source documents retain design details.
 
 ## Contents
 

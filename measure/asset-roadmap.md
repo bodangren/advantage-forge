@@ -20,7 +20,7 @@ P0 and P1 are complete (track [asset_p0p1_completion_20261002](./archive/asset_p
 | Family | Rows | With a source | At the bar | Open | Track |
 | --- | ---: | ---: | ---: | ---: | --- |
 | Items | 56 | 56 | 55 (iron-ore 6.0) | 0 | [items](./archive/asset_p2_items_20260928/), completed |
-| Monsters | 80 | 80 | 80 (giant-bat 8.1, giant-rat 8.1, imp 8.2, mimic 8.7; batch 1: griffin 7.7, four element slimes 7.6 to 7.8, dragon-wyrmling 7.6; batch 2: four element dragons 7.7 to 8.0; batch 3: ten elementals 7.5 to 7.9; batch 4: nine on existing bases 7.5 to 8.0; batch 5: twelve on six kinds 7.6 to 8.0; batch 6: five on dragon, wolf, and spider kinds 7.6 to 7.8; batch 7: eight on six kinds 7.5 to 7.7; batch 8: three on a bird kind 7.6 to 7.7; batch 9: four on a serpent kind and a hydra 7.5 to 7.7; batch 10: nine on toad, octopus, and four existing kinds 7.5 to 7.7; batch 11: five fey and small monsters 7.6) | 0 | [monsters](./tracks/asset_p2_monsters_20260928/), completed |
+| Monsters | 80 | 80 | 80 (giant-bat 8.1, giant-rat 8.1, imp 8.2, mimic 8.7; batch 1: griffin 7.7, four element slimes 7.6 to 7.8, dragon-wyrmling 7.6; batch 2: four element dragons 7.7 to 8.0; batch 3: ten elementals 7.5 to 7.9; batch 4: nine on existing bases 7.5 to 8.0; batch 5: twelve on six kinds 7.6 to 8.0; batch 6: five on dragon, wolf, and spider kinds 7.6 to 7.8; batch 7: eight on six kinds 7.5 to 7.7; batch 8: three on a bird kind 7.6 to 7.7; batch 9: four on a serpent kind and a hydra 7.5 to 7.7; batch 10: nine on toad, octopus, and four existing kinds 7.5 to 7.7; batch 11: five fey and small monsters 7.6) | 0 | [monsters](./archive/asset_p2_monsters_20260928/), completed |
 | NPCs | 107 | 7 | 7 (cultist, healer, hunter, priest, pilgrim, sailor, scout, all 8.0) | 100 | [NPCs](./tracks/asset_p2_npcs_20260928/), new |
 | Wildlife | 61 | 61 | 50 (independent review, bar 7.0, 2026-10-08: 13 at 7.5 or higher; 8 below the bar on the follow-up list; 3 mounts in rework) | 0 | [wildlife](./tracks/asset_p2_wildlife_20260928/), in progress |
 | **Total** | **304** | **204** | **192** | **100** | |
@@ -52,8 +52,8 @@ Scores and notes are in `bench/sonnet/log.tsv` (batch `closeout`) and in `docs/c
 
 ## World catch-up (2026-10-01)
 
-The [world catch-up](./tracks/asset_world_catchup_20261001/) brought every P0 and P1 world asset in scope to its bar (P0 7.5, P1 7.0): 117 accepted, including 33 ground tiles rebuilt as 0.3 m slabs with the top at y = 0.
-Six equipment items (long-sword, shortbow, staff, belt-pouch, gauntlets, halberd) moved to the [equipment parts](./tracks/asset_equipment_parts_20260930/) track.
+The [world catch-up](./archive/asset_world_catchup_20261001/) brought every P0 and P1 world asset in scope to its bar (P0 7.5, P1 7.0): 117 accepted, including 33 ground tiles rebuilt as 0.3 m slabs with the top at y = 0.
+Six equipment items (long-sword, shortbow, staff, belt-pouch, gauntlets, halberd) moved to the [equipment parts](./archive/asset_equipment_parts_20260930/) track.
 Three assets stayed deferred: wood-golem, cliff-face, and key-skeleton (closed on 2026-10-02, see above).
 The owner decision of 2026-10-01: finish all P0 and P1 assets, including the equipment parts, before P2, because the platform starts with mini-games.
 

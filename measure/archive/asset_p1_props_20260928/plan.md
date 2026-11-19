@@ -44,7 +44,7 @@ two props per agent. Bar 7. Log `bench/sonnet/log.tsv` (batch `run4`), state `be
 
 ## World catch-up (2026-10-01, track `asset_world_catchup_20261001`)
 
-The world catch-up reviewed or reworked 36 assets of this family. 36 are accepted at their bar (P0 7.5, P1 7.0). Scores and notes are in [the catch-up evidence](../../tracks/asset_world_catchup_20261001/evidence.md) and in `bench/sonnet/log.tsv`.
+The world catch-up reviewed or reworked 36 assets of this family. 36 are accepted at their bar (P0 7.5, P1 7.0). Scores and notes are in [the catch-up evidence](../asset_world_catchup_20261001/evidence.md) and in `bench/sonnet/log.tsv`.
 
 apple 7.5, bench 7.2, bottle 7.0, bowl 7.0, brazier 7.6, bread 7.5, cabbage 7.0, candelabra 7.4, candle 7.1, cauldron 7.2, chains 7.0, chandelier 7.2, cheese 7.2, counter 7.0, distillation-flask 7.1, fireplace 7.0, haunch 7.2, hay-bale 7.0, kiln 7.0, mortar-pestle 7.0, mug 7.2, pickaxe 7.0, plate 7.0, pumpkin 7.5, ritual-circle 7.0, round-table 7.0, rug 7.1, sack 7.1, sarcophagus 7.2, shelf 7.0, stool 7.2, switch 7.0, tankard 7.1, treasure-chest 7.5, vial 7.2, workbench 7.1.
 

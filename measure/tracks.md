@@ -28,27 +28,6 @@ This registry gives each historical, current, and planned work item one Measure 
 - [ ] **Track: Plan deferred Forge capabilities**
   *Link: [./tracks/asset_engine_backlog_20260928/](./tracks/asset_engine_backlog_20260928/)*
 
-- [x] **Track: Complete P1 structures**
-  *Link: [./tracks/asset_p1_architecture_20260928/](./tracks/asset_p1_architecture_20260928/)*
-
-- [x] **Track: Complete P1 enemies**
-  *Link: [./tracks/asset_p1_enemies_20260928/](./tracks/asset_p1_enemies_20260928/)*
-
-- [x] **Track: Reusable equipment parts**
-  *Link: [./tracks/asset_equipment_parts_20260930/](./tracks/asset_equipment_parts_20260930/)*
-
-- [x] **Track: Bring P0 and P1 world assets to their bars**
-  *Link: [./tracks/asset_world_catchup_20261001/](./tracks/asset_world_catchup_20261001/)*
-
-- [x] **Track: Complete P1 heroes**
-  *Link: [./tracks/asset_p1_heroes_20260928/](./tracks/asset_p1_heroes_20260928/)*
-
-- [x] **Track: Complete P1 nature**
-  *Link: [./tracks/asset_p1_nature_20260928/](./tracks/asset_p1_nature_20260928/)*
-
-- [x] **Track: Produce P2 monsters**
-  *Link: [./tracks/asset_p2_monsters_20260928/](./tracks/asset_p2_monsters_20260928/)*
-
 - [ ] **Track: Produce P2 npcs**
   *Link: [./tracks/asset_p2_npcs_20260928/](./tracks/asset_p2_npcs_20260928/)*
 
@@ -95,9 +74,6 @@ This registry gives each historical, current, and planned work item one Measure 
   *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
 
 ## Games
-
-- [x] **Track: Player avatar system: base, equipment fit, pack, composer**
-  *Link: [./tracks/avatar_system_20261001/](./tracks/avatar_system_20261001/)*
 
 - [~] **Track: Remove the legacy games from the monorepo**
   *Link: [./tracks/legacy_games_removal_20261006/](./tracks/legacy_games_removal_20261006/)*
@@ -419,3 +395,34 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
 - [x] Accept the P0 asset set, completed 2026-10-02
   *Link: [./archive/asset_p0_acceptance_20260928/](./archive/asset_p0_acceptance_20260928/)*
   *Accept the P0 asset set*
+- [x] Produce P2 monsters, completed 2026-10-05
+  *Link: [./archive/asset_p2_monsters_20260928/](./archive/asset_p2_monsters_20260928/)*
+  *Produce P2 monsters*
+
+- [x] Player avatar system: base, equipment fit, pack, composer, completed 2026-10-04
+  *Link: [./archive/avatar_system_20261001/](./archive/avatar_system_20261001/)*
+  *Player avatar system: avatar base, equipment fit and declaration, avatar pack, portraits, composer*
+
+- [x] Complete P1 structures, completed 2026-10-02
+  *Link: [./archive/asset_p1_architecture_20260928/](./archive/asset_p1_architecture_20260928/)*
+  *Complete P1 structures*
+
+- [x] Complete P1 enemies, completed 2026-10-02
+  *Link: [./archive/asset_p1_enemies_20260928/](./archive/asset_p1_enemies_20260928/)*
+  *Complete P1 enemies*
+
+- [x] Complete P1 nature, completed 2026-10-02
+  *Link: [./archive/asset_p1_nature_20260928/](./archive/asset_p1_nature_20260928/)*
+  *Complete P1 nature*
+
+- [x] Complete P1 heroes, completed 2026-10-01
+  *Link: [./archive/asset_p1_heroes_20260928/](./archive/asset_p1_heroes_20260928/)*
+  *Complete P1 heroes*
+
+- [x] Reusable equipment parts, completed 2026-10-01
+  *Link: [./archive/asset_equipment_parts_20260930/](./archive/asset_equipment_parts_20260930/)*
+  *Reusable equipment parts for catalog assets and avatar swaps*
+
+- [x] Bring P0 and P1 world assets to their bars, completed 2026-10-01
+  *Link: [./archive/asset_world_catchup_20261001/](./archive/asset_world_catchup_20261001/)*
+  *Bring P0 and P1 world assets to their bars, game-used first*

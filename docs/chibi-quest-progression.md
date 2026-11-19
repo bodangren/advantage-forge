@@ -1,6 +1,6 @@
 # Chibi Quest progression: XP, GP, avatars, and Guild Mode
 
-> Measure owns execution status. Track: [avatar_system_20261001](../measure/tracks/avatar_system_20261001/).
+> Measure owns execution status. Track: [avatar_system_20261001](../measure/archive/avatar_system_20261001/).
 > This document is the program plan. The avatar system spec is [avatar-system.md](avatar-system.md).
 
 Status: plan, 2026-10-01. Owner goal (paraphrased): students in the education apps earn XP for

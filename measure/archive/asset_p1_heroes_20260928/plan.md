@@ -1,6 +1,6 @@
 # Complete P1 heroes
 
-Status: in_progress. This plan owns execution status. Source documents retain design details.
+Status: completed (2026-10-01). This plan owns execution status. Source documents retain design details.
 
 ## Contents
 

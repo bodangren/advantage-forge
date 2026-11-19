@@ -30,7 +30,7 @@ stricter rule, records the true ratings, and reworks each asset that falls below
 ## Sources
 
 - [docs/character-reviews.json](../../../docs/character-reviews.json)
-- [asset_p2_monsters_20260928](../asset_p2_monsters_20260928/plan.md)
+- [asset_p2_monsters_20260928](../../archive/asset_p2_monsters_20260928/plan.md)
 - [asset_p2_wildlife_20260928](../asset_p2_wildlife_20260928/plan.md)
 
 ## Open decisions (2026-10-05)

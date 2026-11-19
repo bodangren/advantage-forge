@@ -1,6 +1,6 @@
 # Avatar system specification
 
-> Measure owns execution status. Track: [avatar_system_20261001](../measure/tracks/avatar_system_20261001/).
+> Measure owns execution status. Track: [avatar_system_20261001](../measure/archive/avatar_system_20261001/).
 > Program plan: [chibi-quest-progression.md](chibi-quest-progression.md). Fit contract:
 > [equipment-fit.md](equipment-fit.md). Color slots: [color-variants.md](color-variants.md).
 
