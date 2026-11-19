@@ -1,0 +1,67 @@
+MEASURE_AGENT_RESULT
+role: measure-ux-browser-review (visual only, audit only)
+track: asset_scenes_civic_20260928
+phase: "## Phase 2: Independent review"
+phase_base_sha: 3e8d29e8
+role_base_sha: 3e8d29e8
+audited_head_sha: 0aed743a3a9e8fbd6b1b7bdb93508b087ca19422 (confirmed current: git rev-parse HEAD)
+route: kimi-code-plan-cn/kimi-for-coding
+route_note: substitution per task brief — `ra-quota pick vision-review` exits 3 outside the claude maker
+family and the kimi judge family; this session is separate from the four judge sessions.
+ux_applicability: applicable_visual_only (test-strategy.md section 10: look at the shots; no input or flow change)
+webbridge_status: not_run (task brief: no browser or server; shots read as images with zoomed PIL crops)
+
+Spot check of 8 judge ratings against docs/map-mockups/<slug>.md, <slug>.jpg, <slug>-3q.png, <slug>-top.png.
+
+FINDINGS
+
+blocking_findings:
+1. bank (vision-review-b1, judge 7.5): the judge note does not match the shots. The note says
+   "The three chandeliers sit at floor level and read as stray wagon wheels." scenes/maps/bank.ts
+   places the three chandeliers at y=2 ([-2,2,2.2], [3.5,2,0.5], [-3.5,2,-2]); bank-3q.png shows them
+   floating with white candles and clear air beneath, and bank-top.png shows three dark rings at height
+   plus a fourth grey wheel-shaped SHADOW on the marble floor. The floor-level wheels the judge saw are
+   shadows. Rating impact: none — my rating is also 7.5, the 7.0 bar outcome is unchanged, and no map
+   rework or re-rate is needed; this is a judge-note inaccuracy to record against vision-review-b1.
+   Maps named: bank.
+
+nonblocking_findings:
+2. mill (vision-review-b3, judge 5.5, critical): note matches the shots as description — the wheel does
+   not read. Source + asset geometry add the key nuance: the wheel is NOT absent. assets/watermill.ts
+   builds a radius-1.2 wheel at local x=1.15 (shown plainly in out/watermill/views/side.png and
+   three-quarter.png), and scenes/maps/mill.ts places the mill at [2.2,0,-3.4] facing the river. From
+   az=35 (camera south-east) the wheel hides behind the asset's straw arch — the "small half-sunk yellow
+   arc" the judge spotted — and the dark east-face timber at a grazing angle; from el=86 it is an
+   edge-on sliver under the roof line. My rating 6.0: present but unreadable at the shipped angles.
+   Within 1.0 of 5.5; below-7.0 outcome unchanged. Phase 3 can fix readability by yawing the mill or
+   choosing a shot angle that shows the wheel; no wheel rebuild needed.
+3. courthouse (vision-review-b2, judge 8.5): note matches; trivial detail — the scales of justice stand
+   east by the witness stand, not at the north dais as the note's word order implies. My rating 8.0.
+
+PER-MAP TABLE (slug | judge | yours | notes match | critical missed)
+
+mill           | 5.5 | 6.0 | yes | no
+market-square  | 7.0 | 7.0 | yes | no
+arena          | 7.5 | 7.5 | yes | no
+bank           | 7.5 | 7.5 | no  | no
+library        | 7.5 | 7.5 | yes | no
+temple         | 7.5 | 7.5 | yes | no
+courthouse     | 8.5 | 8.0 | yes | no
+warehouse      | 8.5 | 8.5 | yes | no
+
+EVIDENCE (summary; full list in the JSON result)
+- All 8 judge ratings are within 1.0 of my own; none crosses the 7.0 bar differently.
+- No critical error (floating, clipping, missing main feature) is missed on any sampled map. The only
+  floating objects are the deliberately hanging chandeliers in bank and library, both with candles.
+- market-square: dark soil around houses, grey cobbles, garish white gate — all as judged.
+- arena: stands read as separated flat slabs; corner towers not distinct — as judged.
+- library: darker palette, purple tomes on shelf tops, orb and fireplace present — as judged.
+- temple: aisle rug is red, not the gold the brief names — as judged.
+- warehouse: crate rows, barrel columns, door/cart/sacks, clerk desk, loft ladder, cutaway N/W — as judged.
+
+retry_recommendation: escalate_human (bank judge-note inaccuracy; rating stands; no rework, no re-rate)
+status: fail (bank note does not match the shots; verdict rule: FAIL, naming the maps)
+confidence: high
+END_MEASURE_AGENT_RESULT
+
+RESULT: FAIL

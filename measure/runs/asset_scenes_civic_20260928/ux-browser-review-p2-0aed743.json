@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "role": "measure-ux-browser-review",
+  "track": "asset_scenes_civic_20260928",
+  "phase": "## Phase 2: Independent review",
+  "status": "fail",
+  "ux_applicability": "applicable_visual_only",
+  "webbridge_status": "not_run",
+  "audited_head_sha": "0aed743a3a9e8fbd6b1b7bdb93508b087ca19422",
+  "role_base_sha": "3e8d29e8",
+  "phase_base_sha": "3e8d29e8",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "route_note": "Substitution per the task brief: `ra-quota pick vision-review` exits 3 outside the claude maker family and the kimi judge family, so this spot check runs on kimi-code-plan-cn/kimi-for-coding. This session is separate from the four judge sessions (vision-review-b1..b4) and is not one of the judge sessions.",
+  "summary": "Spot check of 8 judge ratings (mill, market-square, arena, bank, library, temple, courthouse, warehouse) against docs/map-mockups/<slug>.md, <slug>.jpg, <slug>-3q.png and <slug>-top.png at HEAD 0aed743a. All 8 judge ratings are within 1.0 of my own and none crosses the 7.0 bar differently. No critical error (floating, clipping, missing main feature) is missed on any sampled map. Seven of eight judge notes match the shots. One note does not: bank. The bank judge writes that the three chandeliers 'sit at floor level and read as stray wagon wheels'; the scene source and both shots show the chandeliers placed at y=2, floating with visible candles, and the wheel shapes on the floor are their cast shadows. Per the verdict rule (FAIL when a judge note does not match the shots), the audit fails on bank only. The bank rating itself (7.5) stands: my own rating is 7.5 and no bar outcome changes. No rework of the bank map and no re-rate is implied; the failure is a judge-note inaccuracy to record against vision-review-b1.",
+  "blocking_findings": [
+    "bank (vision-review-b1, rating 7.5): the judge note does not match the shots. The note says 'The three chandeliers sit at floor level and read as stray wagon wheels.' scenes/maps/bank.ts places the three chandeliers at y=2 ([-2,2,2.2], [3.5,2,0.5], [-3.5,2,-2]); bank-3q.png shows them floating with white candles and clear air beneath (see the NW chandelier beside the clerk desks), and bank-top.png shows three dark rings at height plus a fourth grey wheel-shaped SHADOW on the marble floor. The floor-level wheels the judge saw are shadows, not the chandeliers. Rating impact: none — the map is slightly better than described; my rating is also 7.5 and the 7.0 bar outcome is unchanged. Action: annotate the judge record; no map rework and no re-rate needed. | maps named: bank"
+  ],
+  "nonblocking_findings": [
+    "mill (vision-review-b3, rating 5.5, critical): the judge note matches the shots as a description — the waterwheel does not read in either delivered shot. Nuance the shots plus source establish: the wheel is NOT absent. assets/watermill.ts builds a large wheel (torus radius 1.2 at local x=1.15) and out/watermill/views/side.png and three-quarter.png show it plainly; scenes/maps/mill.ts places the mill at [2.2,0,-3.4] with no yaw, wheel facing the river as the design note requires. From the az=35 camera the wheel hides behind the asset's straw arch (the 'small half-sunk yellow arc' the judge correctly spotted) and the dark east-face timber at a grazing angle, and from el=86 it is an edge-on sliver under the roof line. My rating: 6.0 (present but unreadable at the shipped angles); within 1.0 of 5.5 and the below-7.0 outcome is unchanged. Phase 3 can fix readability by yawing the mill so the wheel faces south or by accepting a shot angle that shows it; no wheel rebuild is needed.",
+    "courthouse (vision-review-b2, rating 8.5): note matches the shots. Trivial detail: the scales of justice stand on the east side by the witness stand (image x~1180 in courthouse-3q.png), not at the north dais as the note's word order implies. My rating 8.0, within 1.0; no bar impact."
+  ],
+  "ratings": [
+    {"slug": "mill", "judge": 5.5, "mine": 6.0, "notes_match": "yes", "critical_missed": "no"},
+    {"slug": "market-square", "judge": 7.0, "mine": 7.0, "notes_match": "yes", "critical_missed": "no"},
+    {"slug": "arena", "judge": 7.5, "mine": 7.5, "notes_match": "yes", "critical_missed": "no"},
+    {"slug": "bank", "judge": 7.5, "mine": 7.5, "notes_match": "no", "critical_missed": "no"},
+    {"slug": "library", "judge": 7.5, "mine": 7.5, "notes_match": "yes", "critical_missed": "no"},
+    {"slug": "temple", "judge": 7.5, "mine": 7.5, "notes_match": "yes", "critical_missed": "no"},
+    {"slug": "courthouse", "judge": 8.5, "mine": 8.0, "notes_match": "yes", "critical_missed": "no"},
+    {"slug": "warehouse", "judge": 8.5, "mine": 8.5, "notes_match": "yes", "critical_missed": "no"}
+  ],
+  "evidence": [
+    "HEAD = 0aed743a3a9e8fbd6b1b7bdb93508b087ca19422, confirmed current with git rev-parse HEAD; phase_base_sha 3e8d29e8 per the task brief.",
+    "Method: read docs/map-mockups/<slug>.md, <slug>.jpg, <slug>-3q.png, <slug>-top.png for each sampled map; read the judge entry in measure/runs/asset_scenes_civic_20260928/vision-review-b1.json (arena, bank), -b2.json (courthouse), -b3.json (library, market-square, mill), -b4.json (temple, warehouse). No browser or server ran, per the task brief; shots were read as images and zoomed with PIL crops.",
+    "mill: mill-3q.png and mill-top.png show the mill, river channel, bridge, fenced wheat field, yard props all present and grounded. Zoomed crop of the mill east face: dark timber frame, vertical post, and the tan half-arc (the asset's straw arch) where the wheel should read; the wheel itself is not discernible from az=35 or el=86. assets/watermill.ts lines 20-21 and 112-118: wheel torus radius 1.2 at WCX=1.15, WCY=1.38; arch extrude at x=1.75 colored straw. out/watermill/views/side.png and three-quarter.png show the wheel plainly in the built GLB. scenes/maps/mill.ts line 125 places the watermill at [2.2,0,-3.4] with no yaw. Camera math from src/scene/main.ts frame(): az=35 puts the camera south-east, so the wheel face (normal +/-X) is seen at a grazing angle behind the arch. Conclusion: wheel present, unreadable at the shipped angles; judge description of the shots accurate; judge rating within tolerance.",
+    "bank: bank-3q.png and bank-top.png show vault with iron door, strongboxes, coin piles and guard in the NE, teller counter with cash boxes, rugs and benches as judged. scenes/maps/bank.ts places chandeliers at [-2,2,2.2], [3.5,2,0.5], [-3.5,2,-2] (y=2). Zoomed NW chandelier in bank-3q.png: black ring with white candles floating above the stone floor, wheel-shaped shadow directly below. bank-top.png: three dark rings at height plus one grey spoked shadow on the marble floor (world x~2.1, z~-0.7). The judge's 'sit at floor level' clause is contradicted by the shots; 'read as stray wagon wheels' is a fair first impression from the shadow+ring combination.",
+    "market-square: market-square-3q.png and -top.png show the focal fountain with blue basin, two benches, lantern posts, four north houses (two townhouses and two mustard cottages), two side cottages per edge, four red-white striped stalls, two goods carts, and the white crenellated south gate. Large dark soil areas surround the house bases and the cobbles read grey, departing from the light palette of market-square.jpg. Matches the judge note; my rating 7.0.",
+    "arena: arena-3q.png and -top.png show the elliptical dirt pit, central stone podium with statue, two gladiators, three rings of stepped stands carrying crowds, the elliptical wall ring, east and west gates with columns, corner flags, and four weapon racks. The stand segments read as separated flat slabs with gaps between them, and the wall is a smooth ellipse with no distinct corner towers. Matches the judge note; my rating 7.5.",
+    "library: library-3q.png and -top.png show nine north bookcases, six west bookcases with a leaning ladder, the lit SW fireplace, the centre rug with a candle chandelier floating above it (shadow on the rug in the top view), three reading desks with purple books, the lectern, and the east-side glowing blue orb with a purple magic crystal behind it. Purple tomes line the shelf tops. Palette is dark against the light library mockup. Matches the judge note; my rating 7.5.",
+    "temple: temple-3q.png shows the raised apse dais with altar and candles under the stained-glass windows, the priest and a second cleric, two blocks of pews with candle clusters, side columns, two side-shrine statues, burning braziers, and a clearly RED central aisle rug (the brief names gold). East and south edges are open cutaways. Matches the judge note; my rating 7.5.",
+    "courthouse: courthouse-3q.png shows the raised north dais with the red throne under a canopy, the railed jury box west, the witness stand and the scales of justice east, railed public gallery bench rows south, three red aisle rugs, banners, a statue, lit torch sconces, and guards. Nothing floats or is buried. Matches the judge note apart from the scales' position (east, not north); my rating 8.0.",
+    "warehouse: warehouse-3q.png and -top.png show stacked crate rows north, tall barrel columns east, the arched double door with a handcart and sacks west, the clerk desk with ledgers south, the loft ladder against the north wall, rope coils, hay bales, lanterns, and a clear central aisle. Cutaway walls stand on north and west only. Matches the judge note; my rating 8.5.",
+    "No missed criticals on any sampled map: no floating pieces (the only floating objects are the deliberately hanging chandeliers in bank and library, both with candles and floor shadows), no clipping found at shot resolution, and no missing main feature beyond the mill wheel readability issue the judge already flagged."
+  ],
+  "commands": [
+    "git rev-parse HEAD (confirmed 0aed743a3a9e8fbd6b1b7bdb93508b087ca19422)",
+    "read docs/map-mockups/{mill,market-square,arena,bank,library,temple,courthouse,warehouse}{.md,.jpg,-3q.png,-top.png}",
+    "read measure/runs/asset_scenes_civic_20260928/vision-review-b1.json .. -b4.json judge entries for the 8 sampled maps",
+    "grep assets/watermill.ts (wheel WCX=1.15 WCY=1.38, straw arch at x=1.75); read out/watermill/views/side.png and three-quarter.png",
+    "grep scenes/maps/mill.ts (watermill at [2.2,0,-3.4]); grep scenes/maps/bank.ts (chandeliers at y=2)",
+    "PIL crops and 2x-4x zooms of mill east face, bank chandeliers, and bank top-view shadow, saved under /tmp/opencode/"
+  ],
+  "changed_files": [
+    "measure/runs/asset_scenes_civic_20260928/ux-browser-review-p2-0aed743.json",
+    "measure/runs/asset_scenes_civic_20260928/ux-browser-review-p2-0aed743.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high"
+}

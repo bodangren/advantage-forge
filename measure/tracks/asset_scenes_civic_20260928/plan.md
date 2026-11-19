@@ -57,11 +57,22 @@ an Anthropic Sonnet judge, and P2-b reject a date string as a rating.
 Green evidence: `bash measure/runs/asset_scenes_civic_20260928/check-review.sh` exits 0 with
 `=== Total: 34 checks (PASS=34, FAIL=0) ===`, and the plan gate lists four JSON files. Thirty
 inventory rows hold `rated`, the judge route, and the copied rating, critical flag and note. Rows
-below 7.0 or critical: mill, 5.5, `critical: true` (no waterwheel). Mill stays `rated` in Phase 2,
-and Phase 3 reworks it. Commit `7dc26d74` holds the inventory and the eight vision-review files.
-Commit `d164f980` adds the `Judge critical` cell.
-The Phase 1 checker `check-inventory.sh` now exits 1 with `=== Total: 96 checks (PASS=6, FAIL=90) ===`
-(P1-c `judge: no` and P1-d `inventoried`). That failure is by design for a `rated` row.
+below 7.0 or critical: mill, 5.5, `critical: true` (the judge saw no waterwheel). Mill stays
+`rated` in Phase 2, and Phase 3 reworks it. Commit `7dc26d74` holds the inventory and the eight
+vision-review files. Commit `d164f980` adds the `Judge critical` cell.
+The Phase 1 checker `check-inventory.sh` now exits 1 with
+`=== Total: 96 checks (PASS=6, FAIL=90) ===` (P1-c `judge: no` and P1-d `inventoried`). That
+failure is by design for a `rated` row.
+Spot-check dispositions (2026-11-19, `ux-browser-review-p2-0aed743.json`): the judge files and the
+inventory judge cells stay unchanged as evidence. The spot check sampled 8 ratings, and all 8 stay
+within 1.0 of the judge.
+Bank: the judge note is wrong. `scenes/maps/bank.ts` line 4 places the three chandeliers at y=2
+(`[-2,2,2.2]`, `[3.5,2,0.5]`, `[-3.5,2,-2]`). The floor rings in the shots are their shadows. The
+7.5 rating stands, so no rework and no rerate follow.
+Mill: the waterwheel exists. `assets/watermill.ts` line 20 puts the wheel at x=1.15, and line 116
+builds a radius-1.2 rim. The az=35 and el=86 cameras read it edge-on, so the 5.5 note names
+readability, not a missing part. Phase 3 fixes the mill yaw or the shot angle. Phase 3 builds no new
+wheel.
 
 ## Phase 3: Rework
 
