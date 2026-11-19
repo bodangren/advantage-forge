@@ -1,0 +1,161 @@
+# Green Phase 2 log: asset_scenes_civic_20260928
+
+Role: measure-jr-green. Phase: "## Phase 2: Independent review".
+phase_base_sha: 3e8d29e8. role_base_sha: 3b35a490.
+
+Status: blocked. The committed Red checker requires a literal `vision-review` string in the batch
+`route` field and in three batch logs. The immutable judge evidence records the picked model route.
+Green cannot edit that evidence, so the targeted gate cannot exit 0.
+
+## Red change in range
+
+`git diff --name-status 3e8d29e8..HEAD` lists three paths:
+
+- `A measure/runs/asset_scenes_civic_20260928/check-review.sh`
+- `A measure/runs/asset_scenes_civic_20260928/red-p2.log`
+- `M measure/tracks/asset_scenes_civic_20260928/plan.md`
+
+The Red change sits inside `phase_base_sha..HEAD`. HEAD is `3b35a490`.
+
+## Target Red command on entry
+
+`bash measure/runs/asset_scenes_civic_20260928/check-review.sh` exits 1.
+
+`=== Total: 59 checks (PASS=22, FAIL=37) ===`
+
+The 37 FAILs come from two groups.
+
+- P2-d: 30 FAILs. Every inventory row holds state `inventoried`, and P2-d wants `rated`. Green
+  would copy the 30 ratings and notes to fix this group.
+- P2-c: 7 FAILs. Four batches fail the route assertion. Three logs fail the log assertion. This
+  group cannot pass with the immutable evidence (see below).
+
+## Why P2-c cannot pass
+
+The checker asserts two things. First, `.route` must match `*vision-review*`. Second, each log
+must hold the string `vision-review` and the model family.
+
+The four batch files record route `kimi-code-plan-cn/kimi-for-coding`. `ra-quota pick vision-review`
+prints only the selected model route on stdout (`ra-quota.md` lines 16 to 18). `ra-quota roles`
+lists this route first for role `vision-review`. So the recorded route is the correct answer of the
+route picker. It is not the role name.
+
+Measured facts, one line per batch:
+
+- b1: route holds no `vision-review`; log holds no `vision-review`; log holds the route and a `model_id`.
+- b2: route holds no `vision-review`; log holds no `vision-review`; log holds the route and a `model_id`.
+- b3: route holds no `vision-review`; log holds `vision-review-b3.json`; log holds the route and a `model_id`.
+- b4: route holds no `vision-review`; log holds no `vision-review`; log holds the route and a `model_id`.
+
+The strategy Section 5 closeout gate says: "Each batch log cites its route and model id." All four
+logs satisfy that sentence. The strategy says nothing about a `vision-review` string in the route
+or the log. The checker is stricter than the strategy and stricter than the plan wording "Use the
+route from 'ra-quota pick vision-review'".
+
+Green cannot edit the eight evidence files. The orchestrator named them as evidence to commit.
+
+## Work Green did not do
+
+Green did not edit `scenes/inventory.md`, `plan.md`, the TSV, or any map source. Marking a task
+`[x]` needs a passing targeted gate. The gate cannot pass on this Red checker.
+
+## Phase 1 checker report
+
+`bash measure/runs/asset_scenes_civic_20260928/check-inventory.sh` exits 0 now:
+`=== Total: 9 checks (PASS=9, FAIL=0) ===`. It will fail on `rated` states and `judge:` cells
+after the Phase 2 inventory copy. That failure is by design, and Green leaves the checker unchanged.
+
+## Planned Green work after the Red fix
+
+1. Copy each judge rating, critical flag, and note into the matching inventory row.
+2. Keep the MAPS rating and MAPS note cells unchanged.
+3. Set `judge: kimi-code-plan-cn/kimi-for-coding` and set the state cell to `rated` (last cell).
+4. Mark both Phase 2 tasks `[x]` with the commit SHA on each task line.
+5. Add the evidence line with the gate output and the rows below 7.0 or critical: mill 5.5,
+   `critical: true` (no waterwheel). Mill stays `rated` in this phase. Phase 3 reworks it.
+6. Commit `scenes/inventory.md`, `plan.md`, and the eight vision-review files. Commit this log.
+
+## MEASURE_AGENT_RESULT
+
+```text
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_scenes_civic_20260928
+phase: "## Phase 2: Independent review"
+status: blocked
+phase_base_sha: 3e8d29e8
+role_base_sha: 3b35a490
+result_head_sha: 3b35a490
+red_model: opencode-go/muse-spark-1.3-contributor#high
+green_model: opencode-go/deepseek-v4.1-flash
+coder: none (orchestrator handoff said no coder needed)
+
+red_command: bash measure/runs/asset_scenes_civic_20260928/check-review.sh
+red_exit_code: 1
+red_summary: "=== Total: 59 checks (PASS=22, FAIL=37) ==="
+
+gate_output: |
+  Civic P2 TSV slug count: 30
+  P2-a: all four batch JSON and four batch logs exist; map counts 8, 8, 7, 7; 30 unique slugs; PASS
+  P2-b: 30 labeled JSON numbers in [0, 10] with a critical flag and a note; PASS
+  P2-c: 4 route FAILs and 3 log FAILs (see below)
+  P2-d: 30 state-cell FAILs, every row reads inventoried, want rated
+  A9: PASS (live track directory)
+  === Total: 59 checks (PASS=22, FAIL=37) ===
+
+litmus_gate: ls measure/runs/asset_scenes_civic_20260928/vision-review-*.json prints 4 files
+inventory_checker_on_entry: "=== Total: 9 checks (PASS=9, FAIL=0) ===" (exit 0; expected to fail after Phase 2)
+
+blocker:
+  id: P2-c-route-literal
+  summary: >-
+    The committed checker requires the literal string "vision-review" in each batch .route field
+    and in each batch log. The immutable judge evidence records the model route that
+    `ra-quota pick vision-review` printed, and three logs do not repeat the role name.
+  evidence:
+    - "measure/runs/asset_scenes_civic_20260928/check-review.sh lines 168-179: case \"$ROUTE\" in *vision-review*) ... ; grep -q \"vision-review\" \"$LOG\""
+    - "vision-review-b1..b4.json .route = kimi-code-plan-cn/kimi-for-coding; no file holds the substring vision-review in .route"
+    - "vision-review-b1.log, b2.log, b4.log hold no vision-review substring; all four logs cite the route and a model_id"
+    - "advantage-pr/scripts/jobs/ra-quota.md lines 16-18: pick prints only the selected route on stdout"
+    - "ra-quota roles: vision-review: kimi-code-plan-cn/kimi-for-coding, claude-code/claude-sonnet-5-5#max, ..."
+    - "test-strategy.md Section 5 Phase 2 closeout gate: each batch log cites its route and model id (no role-string rule)"
+  constraint: Green may not edit the eight vision-review files and may not edit the committed checker.
+  blocked_work: 30-row rating copy, judge cell, rated state, plan [x] marks, evidence line, commits.
+
+rated_rows_below_bar_or_critical:
+  - slug: mill
+    rating: 5.5
+    critical: true
+    note: "waterwheel not visible; support frame only. Stays rated in Phase 2; Phase 3 reworks it."
+
+planned_inventory_values_after_fix:
+  judge_cell: "judge: kimi-code-plan-cn/kimi-for-coding"
+  state_cell: rated
+  maps_rating_and_note: unchanged
+  tsv_and_map_sources: unchanged
+
+files_changed:
+  - measure/runs/asset_scenes_civic_20260928/green-p2.log
+
+files_not_changed:
+  - measure/tracks/asset_scenes_civic_20260928/scenes/inventory.md
+  - measure/tracks/asset_scenes_civic_20260928/plan.md
+  - docs/fantasy-world-scene-blueprints.tsv
+  - the eight vision-review evidence files
+
+handoff:
+  next_role: measure-mid-red (Phase 2 retry)
+  request: >-
+    Fix P2-c so it matches the strategy and the real evidence. Treat the JSON .route as the picked
+    model route. Verify the log cites that route and a model_id (strategy Section 5 closeout gate).
+    Drop the "vision-review" substring assertion on .route and on the logs, or accept a role field.
+    Keep P2-a, P2-b, P2-d, and A9 as they are. Do not edit the eight vision-review files.
+  options:
+    A: "Mid Red retries P2-c, then Green copies the ratings. Recommended. No evidence file changes."
+    B: "Orchestrator authorizes rewriting the route fields in the eight evidence files to name the role. This contradicts the immutable-evidence instruction and weakens the judge record. Not recommended."
+    C: "Orchestrator re-runs the four batches so the judge agents write a route that names the role. This makes four new paid judge calls."
+  question: "Which option does the orchestrator take for P2-c: A (Mid Red retry), B (authorize evidence edit), or C (re-run the judges)?"
+
+status: blocked
+END_MEASURE_AGENT_RESULT
+```
