@@ -39,7 +39,7 @@ Green evidence: the checker exits 0 with `=== Total: 9 checks (PASS=9, FAIL=0) =
   The judge rates each map out of 10 against its design note. The bar is 7.0.
   Use a judge family that differs from the maker family. The default maker for this batch is Anthropic Sonnet.
   Write one JSON and one log per batch in `measure/runs/asset_scenes_civic_20260928/` as `vision-review-<batch>.json` and `.log`.
-- [x] Task: Copy each rating and note into the inventory row, and mark the row `rated`. (`7dc26d74`: 30 rows hold `rated`, the judge route, and the copied rating, critical flag and note; the MAPS cells did not change)
+- [x] Task: Copy each rating and note into the inventory row, and mark the row `rated`. (`7dc26d74`: 30 rows hold `rated`, the judge route, and the copied rating and note; `d164f980`: adds the `Judge critical` cell, true for mill only; the MAPS cells did not change)
 
 Gate:
 
@@ -59,6 +59,7 @@ Green evidence: `bash measure/runs/asset_scenes_civic_20260928/check-review.sh` 
 inventory rows hold `rated`, the judge route, and the copied rating, critical flag and note. Rows
 below 7.0 or critical: mill, 5.5, `critical: true` (no waterwheel). Mill stays `rated` in Phase 2,
 and Phase 3 reworks it. Commit `7dc26d74` holds the inventory and the eight vision-review files.
+Commit `d164f980` adds the `Judge critical` cell.
 The Phase 1 checker `check-inventory.sh` now exits 1 with `=== Total: 96 checks (PASS=6, FAIL=90) ===`
 (P1-c `judge: no` and P1-d `inventoried`). That failure is by design for a `rated` row.
 
