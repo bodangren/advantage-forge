@@ -1,7 +1,7 @@
 # Measure status
 
 Tracks: 78.
-Tracks by status: new: 34; in_progress: 44; completed: 0.
+Tracks by status: new: 28; in_progress: 49; completed: 1.
 Tracks by workstream: assets: 34; games: 41; foundation: 3.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
@@ -10,8 +10,8 @@ Tracks by workstream: assets: 34; games: 41; foundation: 3.
 | [asset_companion_backlog_20260928](../tracks/asset_companion_backlog_20260928/) | new | assets | 0/5 | 5 | — |
 | [asset_delivery_20260928](../tracks/asset_delivery_20260928/) | new | assets | 0/7 | 7 | — |
 | [asset_engine_backlog_20260928](../tracks/asset_engine_backlog_20260928/) | new | assets | 0/5 | 5 | — |
-| [asset_filled_shelves_20261028](../tracks/asset_filled_shelves_20261028/) | new | assets | 19/19 | 12 | — |
-| [asset_p2_npcs_20260928](../tracks/asset_p2_npcs_20260928/) | new | assets | 3/9 | 9 | — |
+| [asset_filled_shelves_20261028](../tracks/asset_filled_shelves_20261028/) | completed | assets | 19/19 | 12 | — |
+| [asset_p2_npcs_20260928](../tracks/asset_p2_npcs_20260928/) | in_progress | assets | 3/9 | 9 | — |
 | [asset_p2_wildlife_20260928](../tracks/asset_p2_wildlife_20260928/) | in_progress | assets | 4/9 | 9 | — |
 | [asset_p3_fx_geometry_20260928](../tracks/asset_p3_fx_geometry_20260928/) | in_progress | assets | 5/9 | 9 | — |
 | [asset_production_controls_20260928](../tracks/asset_production_controls_20260928/) | new | assets | 0/5 | 5 | — |
@@ -28,10 +28,10 @@ Tracks by workstream: assets: 34; games: 41; foundation: 3.
 | [game_abyssal_well_20260928](../tracks/game_abyssal_well_20260928/) | in_progress | games | 6/8 | 8 | — |
 | [game_alchemists_synthesis_20260928](../tracks/game_alchemists_synthesis_20260928/) | in_progress | games | 6/8 | 8 | — |
 | [game_archers_revenge_20260928](../tracks/game_archers_revenge_20260928/) | in_progress | games | 6/8 | 8 | — |
-| [game_archers_revenge_rebuild_20261029](../tracks/game_archers_revenge_rebuild_20261029/) | new | games | 4/11 | 11 | — |
+| [game_archers_revenge_rebuild_20261029](../tracks/game_archers_revenge_rebuild_20261029/) | in_progress | games | 4/11 | 11 | — |
 | [game_astral_mage_20260928](../tracks/game_astral_mage_20260928/) | in_progress | games | 6/8 | 8 | — |
 | [game_castle_defense_20260928](../tracks/game_castle_defense_20260928/) | in_progress | games | 6/8 | 8 | — |
-| [game_castle_defense_rebuild_20261029](../tracks/game_castle_defense_rebuild_20261029/) | new | games | 4/11 | 11 | — |
+| [game_castle_defense_rebuild_20261029](../tracks/game_castle_defense_rebuild_20261029/) | in_progress | games | 4/11 | 11 | — |
 | [game_devourer_slime_port_20260928](../tracks/game_devourer_slime_port_20260928/) | in_progress | games | 4/6 | 6 | — |
 | [game_dragon_flight_port_20260928](../tracks/game_dragon_flight_port_20260928/) | in_progress | games | 4/6 | 6 | — |
 | [game_dragon_rider_20260928](../tracks/game_dragon_rider_20260928/) | in_progress | games | 6/8 | 8 | — |
@@ -44,10 +44,10 @@ Tracks by workstream: assets: 34; games: 41; foundation: 3.
 | [game_hero_vs_zombie_port_20260928](../tracks/game_hero_vs_zombie_port_20260928/) | in_progress | games | 4/6 | 6 | — |
 | [game_labyrinth_goblin_king_20260928](../tracks/game_labyrinth_goblin_king_20260928/) | in_progress | games | 6/7 | 7 | — |
 | [game_magic_defense_20260928](../tracks/game_magic_defense_20260928/) | in_progress | games | 6/8 | 8 | — |
-| [game_magic_defense_rebuild_20261029](../tracks/game_magic_defense_rebuild_20261029/) | new | games | 7/14 | 11 | — |
+| [game_magic_defense_rebuild_20261029](../tracks/game_magic_defense_rebuild_20261029/) | in_progress | games | 7/14 | 11 | — |
 | [game_monster_encounters_port_20260928](../tracks/game_monster_encounters_port_20260928/) | in_progress | games | 1/6 | 6 | — |
 | [game_paladins_twin_soul_20260928](../tracks/game_paladins_twin_soul_20260928/) | in_progress | games | 6/8 | 8 | — |
-| [game_paladins_twin_soul_rebuild_20261029](../tracks/game_paladins_twin_soul_rebuild_20261029/) | new | games | 6/13 | 11 | — |
+| [game_paladins_twin_soul_rebuild_20261029](../tracks/game_paladins_twin_soul_rebuild_20261029/) | in_progress | games | 6/13 | 11 | — |
 | [game_platform_port_20260928](../tracks/game_platform_port_20260928/) | in_progress | games | 11/13 | 10 | — |
 | [game_potion_rush_port_20260928](../tracks/game_potion_rush_port_20260928/) | in_progress | games | 4/6 | 6 | — |
 | [game_realm_carver_20260928](../tracks/game_realm_carver_20260928/) | in_progress | games | 6/8 | 8 | — |
