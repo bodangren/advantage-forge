@@ -214,10 +214,16 @@ Workbooks does not wait for it.
 - [~] Task: The remaining cast (an adult base for Mom, Dad, Grandma, Grandpa; Tom at about eight).
   - PM decision 2026-11-19 (S26 interim): build the six week-4 characters now (Lily, Tom, Mom,
     Dad, Grandma, Grandpa) with a new adult base, in the normal Forge flow and look rules. Due 11-24.
-  - adult base (this run): `ADULT` proportion set in `assets/parts/humanoid-kind.ts` plus
+  - adult base: `ADULT` proportion set in `assets/parts/humanoid-kind.ts` plus
     `assets/sprout-adult-base.ts` (neutral clothes), same skeleton bone names, `sproutFace`,
     `sproutHands`, `sing`, and `sproutGestures` support; AGE5 and HERO output unchanged.
-  - Lily (Tom's seven-year-old sister)
+    Base 776fc435; look-check fix round ca186c82 (slim 4.7-head adult, thin-disc sing lids);
+    review round 50795b06 (smaller flatter shoes, tapered legs, arms in). Check waived for
+    intentional face touch (orchestrator 2026-11-19).
+  - Lily: `assets/sprout-lily.ts` 0e6fe74b (chin bob, straight bangs, blue shirt white collar,
+    red pleated skirt, mid-calf socks, red sneakers); 25 key frames in
+    out/chibi-sprouts/r1/week2-7/gestures/lily/ with gestures.lily manifest key (script generic,
+    no change); cutout-check flags only the known reach tiptoe.
   - Mom (young mother, medium height)
   - Dad (young father, tallest of the family)
   - Grandma (older woman, a little shorter than Mom)

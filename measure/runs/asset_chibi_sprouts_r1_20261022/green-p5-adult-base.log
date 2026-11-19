@@ -1,59 +1,76 @@
 MEASURE_AGENT_RESULT
 track: asset_chibi_sprouts_r1_20261022
-phase: Phase 5 - the rest of the inventory (adult base fix round, orchestrator look check 2026-11-19)
+phase: Phase 5 - the rest of the inventory (adult base review + Lily, PM S26 interim 2026-11-19)
 status: partial
-implementation_commit: ca186c82
+implementation_commits: 776fc435 (base), ca186c82 (proportions + sing plates), 50795b06 (shoes/legs/arms), 0e6fe74b (Lily)
 plan_commit: 97bfb2b
-phase_base_sha: not routed in this brief (session start 16dd2b99; plan 97bfb2b; v1 base 776fc435;
-  v1 log 64e8f0b1; fix ca186c82)
-result: base fixed per the three look-check defects; six characters (Lily, Tom, Mom, Dad, Grandma,
-  Grandpa) next; no tasks flipped
+phase_base_sha: not routed in this brief (session start 16dd2b99)
+result: adult base fixed per three look defects; Lily built, reviewed, and cut out; Mom, Dad,
+  Grandma, Grandpa, Tom next; parent task stays [~]
 waived: intentional face touch, orchestrator 2026-11-19 (touch-gesture HEAD contacts are
-  contact-as-content, same class as the shipped children; nan fails 6 clips, the adult 3)
-
+  contact-as-content, same class as the shipped children; nan fails 6 clips, adult 3 then 1,
+  Lily the same 6 as nan with identical depths)
 handoff:
-- Defect 1 (proportions): ADULT is now a slim 4.7-head adult. Head 0.8 of the child (same Sprouts
-  face and eye style, eyes absolute size), torso width 1.1 of the child (wide 0.924), clear waist
-  (slim torso + crisp geometry belt + shirt/trouser break), legs about half the height (crotch
-  0.72 of 1.52 m; knee low at 0.43 via legKnee/legAnkle factors), arms 2.2x turned 12 deg out at
-  rest, hands scaled to the head (hand 1.2) reaching mid-thigh, full-length custom trousers to
-  the shoe tops, kind shoes at 1.5x. Shared scaled() grew opt-in factors (head, armOut, hand,
-  armR, legKnee, legAnkle) with same-operand defaults, so HERO/AGE5 output is bit-identical
-  (mesh-same SAME on every body except the intentionally fixed eyelid-skin; pin test green).
-- Defect 2 (back discs): fixed at the source. The sing lids are now a 2 cm thin disc behind the
-  lid front instead of a full-depth slab (thin-disc clip in humanoid-kind.ts, works at every
-  size). Proof: pat-back/nan-back before/after renders: discs gone (pat-back crop verified by
-  eye); fronts byte-identical within renderer noise (pat-front 113 px <=10/255, nan-front
-  ~3k px small + 106 mid + 8 big of 262k; subject bboxes identical); mesh-same pat reports ONLY
+- Defect 1 (proportions, fixed ca186c82): ADULT is a slim 4.7-head adult (body top 1.519 m,
+  1.587 m with hair; head 0.32 m; ratio 4.75). Head 0.8 of the child, same Sprouts face and eye
+  style; torso width 1.1 of the child (wide 0.924); clear waist (slim torso, crisp geometry belt,
+  shirt/trouser break); legs about half the height (crotch 0.72, low knee 0.43 via legKnee/
+  legAnkle); arms 2.2x at 12 deg out at rest, hands scaled to the head (hand 1.2) reaching
+  mid-thigh; full-length custom trousers; kind shoes. Shared scaled() grew opt-in factors
+  (head, armOut, hand, armR, legKnee, legAnkle) with same-operand defaults: HERO/AGE5 unchanged
+  (child pin test green; mesh-same SAME except the intentional lid change).
+- Defect 2 (back discs, fixed ca186c82): lids are now a 2 cm thin disc behind the lid front
+  (thin-disc clip, works at every size). Proof: pat-back/nan-back before/after renders: discs
+  gone (pat-back crop verified by eye); fronts byte-identical within renderer noise
+  (pat-front 113 px <=10/255 of 262k; subject bboxes identical); mesh-same pat reports ONLY
   body eyelid-skin changed (raw 32732 -> 6248, 726 -> 724 tris) with bounds.min[2] -0.209 ->
-  -0.204 (hair is now the back-most surface). If a source fix had changed the children's front
-  view it would have been stopped and reported; it did not.
-- Defect 3 (arms): rest pose 12 deg out via armOut (sleeves, reach mapping, and fist grips follow
-  the same rotation; heroes/children unchanged at 0 deg).
-- Touch-gesture check FAIL: accepted as an orchestrator waiver for intentional face-touch clips.
-  The adult now fails 3 clips (touch-nose fingertip-on-nose, touch-neck 0.3 cm graze, listen
-  1.0 cm into hair); count-fingers and eat no longer flag. No other clip fails on the head;
-  attack/cast are head-clean; ground ok. Body contacts are reported-only transit/squeeze
-  presses (same class as nan: clap 4.4 cm, attack 3.9 cm).
-- New files: none this round (base, test, and reference JPGs landed in 776fc435).
-- No Red tests edited. tests/sprout-gestures.test.ts extended (headF pin 1 / 0.8, adult chin/ear
+  -0.204 (hair now back-most). If the fix had changed a child front view it would have been
+  stopped and reported; it did not.
+- Defect 3 (arms, fixed ca186c82 + 50795b06): armOut -12 (hands one hand-width from the thigh
+  at mid-thigh height); sleeves, reach mapping, and fist grips follow the same rotation;
+  heroes/children unchanged at 0.
+- Review round 50795b06: shoes 1.5x -> 0.85x hero (1.12x the child shoe; shoe factor 0.53),
+  tapered trouser legs (thigh cone, knee sphere, slim calf cone to the shoe tops), arms in.
+  Render re-read vs mom.jpg/dad.jpg: slim adult, clean waist belt, no back discs, arms near
+  the body, neat shoes. Check now fails only touch-nose (intentional); all kind clips
+  head-clean; ground ok. Walk strip clean; eat lands at the chin. Vitest 10/10; no warnings.
+- Lily 0e6fe74b: assets/sprout-lily.ts in the style of sprout-may.ts (AGE5; blue shirt, white
+  collar band, red pleated skirt with 10 pleats, white mid-calf socks, red sneakers with white
+  laces/soles/toe caps, chin bob with straight bangs cut above the eyes, lily preset). Two
+  render passes (bangs raised above the brows). forge all textured, 0 warnings. Check: the same
+  6 touch clips as shipped nan with identical depths (waived); no other clip fails; ground ok.
+  Walk, hop, and turn strips read clean (no skirt leg clipping, hair stays on); sprites
+  preview.png reads at 128 px in all directions. 25 key frames in
+  out/chibi-sprouts/r1/week2-7/gestures/lily/ via cutout-gestures-cast.sh (generic, no script
+  change) with gestures.lily manifest key; cutout-check flags only the known reach tiptoe
+  (lowest opaque 1176, foot row 1184; adventurer/reach pre-existing). turn-back (clean hair,
+  no discs), bow (fringe clear, no clipping), and listen (fist at cheek) read clean.
+- New files: assets/sprout-lily.ts (0e6fe74b); base, test, and reference JPGs in 776fc435.
+- No Red tests edited. tests/sprout-gestures.test.ts extended (headF pin 1 / 0.8, chin/ear
   anchors, halfScale 1.5).
 - Suggested next: Mom on ADULT (long wavy hair, cream sweater, jeans); Dad tallest via a
-  slightly larger adult set; then Lily, Tom, Grandma, Grandpa.
+  slightly larger adult set; then Tom, Grandma, Grandpa.
 END_MEASURE_AGENT_RESULT
 
 gate outputs:
-- typecheck: "typecheck ok: 0 errors in assets/sprout-adult-base.ts"
-- render: out/sprout-adult-base/render.png (4 views, read vs docs/sprout-mockups/mom.jpg);
-  stats 36670 tris, bounds y max 1.587 m with hair (body top 1.519 m), head 0.32 m ->
-  head-to-height 4.75; sprout-pat 0.858 m.
-- check: "result FAIL: a held item passes through the head in 3 clip(s)"
-  (touch-nose 3.6-5.7 cm intentional touch; touch-neck 0.3 cm graze; listen 1.0 cm hair);
-  kind clips idle/walk/run/hit/rest/cheer/cast/attack all head-clean;
-  "ground ok: no clip sinks more than 1.5 cm below the rest pose (rest lowest 0.0 cm)".
-- animate: out/sprout-adult-base/anim/walk.png (read: long strides, arm swing, no clipping,
-  feet plant) and anim/gesture-eat.png (read: fist meets the chin at the holds) + .gifs.
+- typecheck: "typecheck ok: 0 errors" for sprout-adult-base and sprout-lily.
+- adult render: out/sprout-adult-base/render.png (4 views, read vs mom.jpg/dad.jpg);
+  stats 34995 tris, bounds y max 1.587 m (body 1.519 m), head 0.32 m -> head-to-height 4.75;
+  bounds x +-0.27, z -0.18/0.22; child sprout-pat 0.858 m.
+- adult check: "result FAIL: a held item passes through the head in 1 clip(s)"
+  (gesture-touch-nose only: index 3.2, fingers 3.1, hand 5.6 cm into skin - fingertip on nose);
+  all kind clips head-clean; "ground ok (rest lowest 0.0 cm)".
+- adult walk: out/sprout-adult-base/anim/walk.png (read: long strides, arm swing, no
+  clipping, feet plant).
+- Lily render: out/sprout-lily/render.png (textured via forge all; 27333 tris fast build);
+  sprites: out/sprout-lily/sprites/preview.png (read: face reads at 128 px all directions).
+- Lily check: FAIL 6 touch clips (wave 1.4; touch-nose 1.8-4.1; touch-neck 1.6-3.4;
+  count-fingers 3.5-4.7; eat 2.7-5.9; listen 1.7-3.9 - identical to shipped nan); kind clips
+  head-clean; ground ok.
+- Lily strips: anim/walk.png, anim/gesture-hop.png, anim/gesture-turn.png (all read clean).
+- Lily cutouts: 25 frames out/chibi-sprouts/r1/week2-7/gestures/lily/ + manifest gestures.lily;
+  cutout-check: only reach tiptoe FAILs (known exception, same as pat/sam/mia/may/adventurer).
 - vitest: "Test Files 3 passed (3); Tests 10 passed (10)" (sprout-base, sprout-gestures,
   preset-colour; pin unchanged, 387 assets).
-- warnings: none in typecheck, render, animate, or check outputs (inspect notes
-  mouth-open hidden by design, as on every sing asset).
+- warnings: none in typecheck, render, animate, check, all, sprites, or cutout outputs
+  (inspect notes mouth-open hidden by design, as on every sing asset).
