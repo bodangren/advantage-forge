@@ -242,11 +242,21 @@ Workbooks does not wait for it.
     fast). cutout-check fails only the known reach tiptoe flag (adventurer, lily, may, mia,
     sam). typecheck shows the 38 pre-existing errors and none in sprout-lily; the 3 sprout
     test files pass 10/10. Log green-p5-adult-base.log.
-  - Mom (young mother, medium height)
-  - Dad (young father, tallest of the family)
-  - Grandma (older woman, a little shorter than Mom)
-  - Grandpa (older man, as tall as Mom)
-  - Tom (nine-year-old boy, one of the tallest children)
+  - Lily r6 OPEN hair defects (PM decision 2026-11-20, look check): (1) horizontal stepped
+    bands on the sides and back; (2) a mushroom/helmet ledge instead of a straight bob;
+    (3) bare skin between the hair and the face below the ear in the side view.
+  - Lily r7 (gpt-6-luna) and r8 (claude-haiku-5-5) FAILED: a bob wide enough to cover the
+    jaw (about 0.22 m) collides with the hands in point-up, cheer, picture-sway. No waiver
+    for these three clips (a hand through hair is a visible fault).
+  - [~] Mom (young mother, medium height, due 11-21)
+  - Dad (young father, tallest of the family, due 11-22)
+  - Grandma (older woman, a little shorter than Mom, due 11-23)
+  - Grandpa (older man, as tall as Mom, due 11-24)
+  - Tom (nine-year-old boy, one of the tallest children, due 11-25)
+- [ ] Task: Per-character hand offset in assets/parts/sprout-gestures.ts for bob hair (moves
+  the hands of point-up, cheer, picture-sway out for a character that opts in). Red tests
+  first: the gesture poses of every other character (Pat, Sam, Mia, May, Nan, adult base)
+  stay unchanged. Then one Lily hair round.
 - [x] Task: The remaining gesture key frames (20 gestures in use, inventory section 3): the (0bb18f6e, 697ae4a9)
   week 2 to 7 set above covers set 2 and `turn`; only the week 4 family cast gestures wait for S26.
   Commits: 0bb18f6e (set 2), 697ae4a9 (`turn`).
