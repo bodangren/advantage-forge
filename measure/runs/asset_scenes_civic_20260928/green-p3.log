@@ -1,0 +1,97 @@
+Green Phase 3 (rework), stage 1 of 2.
+Track: asset_scenes_civic_20260928. Task: Rework each map below 7.0 or critical, once.
+Role: measure-jr-green. Route: opencode-go/hy4-flash-free#high. Maker family: hy.
+Date: 2026-11-19.
+
+Scope: mill only. The Phase 2 judge rated mill 5.5 with critical true. The judge saw no
+waterwheel in either shot. The wheel exists in assets/watermill.ts; the mill.ts placement
+showed it edge-on. Phase 3 builds no new wheel and duplicates no source.
+
+Immutable bases:
+phase_base_sha = b78fdde17ab72cb16f250b15915dbf75da4fb803
+role_base_sha  = da4a9c78c6fb78148158fe32ea1bd52f3910e80d
+The Red commit da4a9c78 ("test(asset_scenes_civic): Phase 3 rework checker (red)") was HEAD
+at entry, one commit after the phase base, and lies inside phase_base_sha..HEAD.
+The Red checker was not edited.
+
+Targeted Red command before the change:
+  bash measure/runs/asset_scenes_civic_20260928/check-rework.sh
+Exit 1. Output: Below-bar map count 1 (mill), Rework record count 0,
+"FAIL: P3-a 1 map(s) below the bar but Rework record count is 0", total 8 checks
+(PASS=2, FAIL=6). This is the expected Red state.
+
+Change made:
+scenes/maps/mill.ts line 125: the watermill place gains yaw: -65. The wheel disc is a
+vertical plane whose normal is the asset local +X. A -65 degree yaw turns that normal toward
+the three-quarter camera. The river, bridge, road, field, yard props, and tree layout are
+unchanged. assets/watermill.ts and scripts/design-mill.mjs are unchanged.
+
+Shots: rendered with scripts/shoot-map.mjs against vite on port 5199.
+  3q:  scene=mill&clean&az=35&el=47&dist=34&tx=0&tz=0
+  top: scene=mill&clean&az=0&el=86&dist=34&tx=0&tz=0
+The wrapper was used for the server and for the shot command. The shared heavy lock was held
+by an unrelated Workbooks vitest job, so both wrapper calls used a dedicated lock file.
+Both calls exited 0 with "shot mill-3q 225 pieces." and "shot mill-top 225 pieces."
+The vite server was stopped by PID after the shots.
+
+Visual check: a crop of mill-3q.png shows a circular wooden wheel with a rim and radial
+spokes, framed by the straw arch, standing over the blue water patch. The wheel reads as a
+wheel. The top shot shows the rotated mill in place with the wheel and water beside the river.
+The map layout of the brief is intact.
+
+Targeted Red command after the stage-1 commits:
+  bash measure/runs/asset_scenes_civic_20260928/check-rework.sh
+Exit 1. Total 26 checks (PASS=21, FAIL=5). All P3-b shot checks pass: both SHAs match the
+record, both shots carry the rework commit, and the 3q elevation is 47. The five failures are
+the pending rerate (P3-c, P3-d, P3-e) and one P3-a record mismatch described below.
+
+Stage-1 commits:
+  7619c491ffc74398ec8a8c8b5a900fbda870300a  fix(asset_scenes_civic): mill wheel faces the camera
+  313399a708171b0f5a5fe6d9d911766480c64116  measure(asset_scenes_civic): mill rework record
+Stage-1 Green HEAD: the green-p3.log commit on top of 313399a7.
+
+New files added by stage 1:
+  measure/runs/asset_scenes_civic_20260928/rework-mill.json
+  measure/runs/asset_scenes_civic_20260928/green-p3.log
+Modified paths committed by stage 1:
+  scenes/maps/mill.ts
+  docs/map-mockups/mill-3q.png
+  docs/map-mockups/mill-top.png
+
+Tasks flipped to [x]: none. The plan task stays [~] until the rerate and stop rule pass.
+Tasks flipped to [b] with (deferred:<owner>): none.
+
+Handoff to stage 2 and review roles:
+1. Run one independent rerate with a judge family outside hy. Write rerate-mill.json and
+   rerate-mill.json.log in the checker format. Do not write a second rerate.
+2. Add Rework, Rerate, and state cells to the mill inventory row. Use accepted when the rerate
+   is at least 7.0 and not critical; otherwise use follow-up.
+3. Checker anomaly: P3-a compares the inventory maker cell [Anthropic Sonnet] with the rework
+   maker_family [hy] and fails. The inventory cell records the original 2026-10 batch maker.
+   The task set the rework maker family to hy. The orchestrator must decide whether to change
+   that inventory cell to hy or contest the check. This role did not edit the inventory.
+4. scripts/design-mill.mjs and docs/map-mockups/mill.md still describe the old placement.
+   A future generator run would drop the yaw. The task scoped the change to mill.ts.
+
+MEASURE_AGENT_RESULT
+status: partial
+stage: 1 of 2
+role: measure-jr-green
+track: asset_scenes_civic_20260928
+phase: Phase 3 Rework
+phase_base_sha: b78fdde17ab72cb16f250b15915dbf75da4fb803
+role_base_sha: da4a9c78c6fb78148158fe32ea1bd52f3910e80d
+rework_commit: 7619c491ffc74398ec8a8c8b5a900fbda870300a
+record_commit: 313399a708171b0f5a5fe6d9d911766480c64116
+red_before: bash measure/runs/asset_scenes_civic_20260928/check-rework.sh exit 1 (PASS=2, FAIL=6)
+red_after_stage1: bash measure/runs/asset_scenes_civic_20260928/check-rework.sh exit 1 (PASS=21, FAIL=5)
+tasks_marked_x: none
+tasks_marked_b: none
+cameras: 3q az=35 el=47 dist=34; top az=0 el=86 dist=34
+shot_sha256: mill-3q.png=32a41dc054134552276cb0d7931c94c15a0f35face1eb47401c3e3bd05a18b4e
+shot_sha256: mill-top.png=0543e6a65a51137b021d7912509a4adfd1828647f355a35dd4fdcf80dc268845
+new_files: measure/runs/asset_scenes_civic_20260928/rework-mill.json, measure/runs/asset_scenes_civic_20260928/green-p3.log
+note: The 3q shot shows a circular spoked waterwheel framed by the straw arch over water.
+note: P3-c, P3-d, and P3-e stay red until stage 2 adds the rerate and inventory cells.
+note: P3-a inventory maker mismatch needs an orchestrator decision (Anthropic Sonnet vs hy).
+END_MEASURE_AGENT_RESULT
