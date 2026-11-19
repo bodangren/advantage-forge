@@ -68,3 +68,24 @@ fixture_proof: /tmp/p3fix (deleted) rerate model_family hy with rework maker hy 
 maker_rule: inventory maker cell keeps Phase 1 value Anthropic Sonnet; rerate family must differ from both Anthropic Sonnet and rework maker hy; Green's pending rerate (kimi, 7.5) satisfies both
 handoff: Green adds rerate-mill.log (route kimi-code-plan-cn/kimi-for-coding, model_id equal to route model) and the inventory Rework/Rerate cells, then reruns the checker
 END_MEASURE_AGENT_RESULT
+
+MEASURE_AGENT_RESULT
+status: red
+track: asset_scenes_civic_20260928
+phase: Phase 3: Rework
+role: red
+phase_base_sha: b78fdde1
+role_base_sha: 6cc6f91f
+resulting_head: SHA in reply
+commits: test(asset_scenes_civic): P3 rework commit touches source, rerate follows rework
+tests: measure/runs/asset_scenes_civic_20260928/check-rework.sh
+files: measure/runs/asset_scenes_civic_20260928/check-rework.sh, measure/runs/asset_scenes_civic_20260928/red-p3.log
+red_command: bash measure/runs/asset_scenes_civic_20260928/check-rework.sh
+red_exit: 0
+red_summary: Total: 41 checks (PASS=41, FAIL=0); Below-bar map count: 1 (mill); Rework record count: 1; Rerate record count: 1
+adv5_proof: fixture commit touching only shots plus a stray file -> FAIL "P3-a mill rework commit touches none of its source_paths" (40/41, exit 1); fixtures deleted
+adv6_proof: fixture audited_head predating the rework commit -> FAIL "P3-c mill rerate audited_head predates the rework commit" (40/41, exit 1); fixtures deleted
+adversarial_note: adversarial-p3.sh exits 2 at its control gate because it hardcodes PASS=39 (the faithful control now passes 41/41 with the two added checks); probes 01/03 proven CAUGHT by the direct fixture runs above. Script not edited.
+remaining_failures: none; live records faithful (7619c491 touches scenes/maps/mill.ts; 304a75d6 descends from 7619c491)
+handoff: Green reruns the checker; acceptance may proceed on 41/41
+END_MEASURE_AGENT_RESULT

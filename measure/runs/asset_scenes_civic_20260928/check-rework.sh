@@ -15,6 +15,8 @@
 #   The `maker:` cell keeps the Phase 1 original-maker value (Anthropic Sonnet)
 #   and is never rewritten; the rerate family must differ from BOTH the original
 #   maker family and the rework maker family in rework-<slug>.json.
+#   The rework commit must touch its source_paths (ADV-5); the rerate
+#   audited_head must descend from the rework commit (ADV-6).
 #
 # Recency note: shot freshness is proven with `git log` on the shot path, not with
 # file mtime, since a checkout resets mtime. A shot counts as fresh only when its
@@ -177,6 +179,20 @@ for f in ${REWORK_FILES[@]+"${REWORK_FILES[@]}"}; do
   else
     fail "P3-a $slug rework commit [$COMMIT] does not resolve"
   fi
+  # ADV-5: the rework commit must touch at least one of the record's source_paths,
+  # so a record cannot cite a commit that changed no map source.
+  TOUCHED=""
+  while IFS= read -r p; do
+    [ -n "$p" ] || continue
+    if git show --name-only --format= "$COMMIT" -- "$p" 2>/dev/null | grep -q .; then
+      TOUCHED="$TOUCHED $p"
+    fi
+  done < <(jq -r '.source_paths[]? // empty' "$f")
+  if [ -n "$TOUCHED" ]; then
+    pass "P3-a $slug rework commit touches source_paths:$TOUCHED"
+  else
+    fail "P3-a $slug rework commit [$COMMIT] touches none of its source_paths; the claimed source change is not in git"
+  fi
   if jq -e '.shots | type == "array" and length == 2' "$f" >/dev/null 2>&1; then
     pass "P3-a $slug rework record lists exactly two shots"
   else
@@ -335,6 +351,14 @@ for f in ${REWORK_FILES[@]+"${REWORK_FILES[@]}"}; do
     pass "P3-c $slug rerate audited_head is an ancestor of HEAD"
   else
     fail "P3-c $slug rerate audited_head [$AHEAD] is not an ancestor of HEAD"
+  fi
+  # ADV-6: the rerate audited_head must descend from the rework commit, so the
+  # judge rated the reworked shots and not the pre-rework tree.
+  RCOMMIT="$(jq -r '.commit // empty' "$f")"
+  if git merge-base --is-ancestor "$RCOMMIT" "$AHEAD" 2>/dev/null; then
+    pass "P3-c $slug rerate audited_head postdates the rework commit (the judge saw the new shots)"
+  else
+    fail "P3-c $slug rerate audited_head [$AHEAD] predates the rework commit [$RCOMMIT]; the judge saw the old shots"
   fi
 done
 # No rerate may exist for a map that needed no rework.
