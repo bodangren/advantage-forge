@@ -34,12 +34,12 @@ Green evidence: the checker exits 0 with `=== Total: 9 checks (PASS=9, FAIL=0) =
 
 ## Phase 2: Independent review
 
-- [~] Task: Send the shots of each existing civic map to an independent judge.
+- [x] Task: Send the shots of each existing civic map to an independent judge. (`7dc26d74`: four Kimi batches `vision-review-b1..b4` hold 30 ratings on route `kimi-code-plan-cn/kimi-for-coding`; each log cites the route and the model id)
   Use the route from "ra-quota pick vision-review". Work in batches of about 8 maps.
   The judge rates each map out of 10 against its design note. The bar is 7.0.
   Use a judge family that differs from the maker family. The default maker for this batch is Anthropic Sonnet.
   Write one JSON and one log per batch in `measure/runs/asset_scenes_civic_20260928/` as `vision-review-<batch>.json` and `.log`.
-- [ ] Task: Copy each rating and note into the inventory row, and mark the row `rated`.
+- [x] Task: Copy each rating and note into the inventory row, and mark the row `rated`. (`7dc26d74`: 30 rows hold `rated`, the judge route, and the copied rating, critical flag and note; the MAPS cells did not change)
 
 Gate:
 
@@ -54,6 +54,13 @@ Red evidence: `bash measure/runs/asset_scenes_civic_20260928/check-review.sh` ex
 `measure/runs/asset_scenes_civic_20260928/red-p2.log`. Smoke fixtures (since removed) showed
 P2-a to P2-c pass on well-formed batches, P2-d fail while rows read `inventoried`, P2-c reject
 an Anthropic Sonnet judge, and P2-b reject a date string as a rating.
+Green evidence: `bash measure/runs/asset_scenes_civic_20260928/check-review.sh` exits 0 with
+`=== Total: 34 checks (PASS=34, FAIL=0) ===`, and the plan gate lists four JSON files. Thirty
+inventory rows hold `rated`, the judge route, and the copied rating, critical flag and note. Rows
+below 7.0 or critical: mill, 5.5, `critical: true` (no waterwheel). Mill stays `rated` in Phase 2,
+and Phase 3 reworks it. Commit `7dc26d74` holds the inventory and the eight vision-review files.
+The Phase 1 checker `check-inventory.sh` now exits 1 with `=== Total: 96 checks (PASS=6, FAIL=90) ===`
+(P1-c `judge: no` and P1-d `inventoried`). That failure is by design for a `rated` row.
 
 ## Phase 3: Rework
 
