@@ -133,7 +133,7 @@ follow-up list.
 - [x] Task: Decide the `docs/map-review.html` note. (no commit: the page is unchanged against `024cfdf9`, so P4-e passes. No tool reads the page, and the PM did not name it as the record, so it stays a view)
   `scripts/map-review-page.mjs` generates that page from `bench/sonnet/log.tsv`. No tool reads the page.
   Leave the page alone unless the PM names it as the record.
-- [x] Task: Run the doctor. (e2c7bb9c tree: `./measure/doctor.sh` exits 1 with 51 error lines from other tracks; no error line names `asset_scenes_civic_20260928`, so the scoped P4-f check passes)
+- [x] Task: Run the doctor. (2026-11-19: the scoped P4-f check found no civic error line in `./measure/doctor.sh`; the doctor still exits 1 on errors from other tracks, owned elsewhere)
 
 ```bash
 ./measure/doctor.sh
@@ -146,8 +146,9 @@ and the generator output differs from the committed `mill.ts` (P4-g drift, no `y
 Run log `measure/runs/asset_scenes_civic_20260928/red-p4.log`.
 
 Green evidence: `bash measure/runs/asset_scenes_civic_20260928/check-records.sh` exits 0 at this
-tree with `=== Total: 44 checks (PASS=44, FAIL=0) ===`. The total grew from 14 at Red because P4-d
-adds one check for each of the 30 changed TSV rows. Run log
+tree with `=== Total: 46 checks (PASS=46, FAIL=0) ===`. Commit `944f6128` added the TSV
+column-count check and the row-order check, so the earlier Green total of 44 grew to 46. The total
+grew from 14 at Red because P4-d adds one check for each of the 30 changed TSV rows. Run log
 `measure/runs/asset_scenes_civic_20260928/green-p4.log`.
 
 - P4-a and P4-c: the TSV holds 30 `accepted` rows and the inventory supports 30. Twenty-nine rows
@@ -163,13 +164,15 @@ adds one check for each of the 30 changed TSV rows. Run log
   for byte equal to the committed file; both hold sha256
   `0d2873d1a0f1c8f26095a01bab32d7ebb336be900cee1d6e437ca809fff5a8c1`, and the committed
   `scenes/maps/mill.ts` was never overwritten.
-- P4-f (scoped): `./measure/doctor.sh` exits 1 with 51 error lines, all from other tracks. No error
-  line names `asset_scenes_civic_20260928` or its files.
+- P4-f (scoped): on 2026-11-19 the scoped check found no error line for `asset_scenes_civic_20260928`
+  or its files in `./measure/doctor.sh`. The doctor still exits 1 on error lines from other tracks,
+  owned elsewhere; this plan quotes no doctor error count because that count moves with other work.
 - Review C F1 (`measure/runs/asset_scenes_civic_20260928/review-c-p4-be89dc9.json`): the committed
-  `measure/generated/asset-inventory.json` is stale after the TSV change. It holds 6 `accepted`
-  rows while the TSV holds 36, and `node measure/tools/generate.mjs --check` exits 1 with three
-  stale-fact lines. The standing rule forbids `./measure/generate.sh` while `measure/generated/`
-  and `measure/tracks.md` hold foreign uncommitted edits, so the closeout role regenerates them.
+  `measure/generated/asset-inventory.json` was stale after the TSV change; it held 6 `accepted` rows
+  while the TSV holds 36, and `node measure/tools/generate.mjs --check` exited 1 with three
+  stale-fact lines. The Build session regenerated the facts in `6a094aeb` and `80d55840` under the
+  PM decision of 2026-11-19, and `node measure/tools/generate.mjs --check` now prints
+  `Measure facts are current (4 files).` with exit 0.
 
 Carried phase-acceptance items N1 to N5 (`phase-acceptance-p3-024cfdf.json`):
 
@@ -189,14 +192,48 @@ Carried phase-acceptance items N1 to N5 (`phase-acceptance-p3-024cfdf.json`):
 - [ ] Task: Close the track (deferred to the closeout role): archive the folder and set the metadata status to completed.
   Owner is the closeout steward. This role records the Phase 4 evidence and writes no closeout
   metadata.
-- [ ] Task: Regenerate measure/generated/ with ./measure/generate.sh and commit it (deferred to the closeout role; blocked while measure/generated/ and measure/tracks.md hold foreign uncommitted edits; Review C F1 at be89dc91).
+- [ ] Task: Regenerate measure/generated/ with ./measure/generate.sh and commit it (deferred to the closeout role; blocked while measure/generated/ and measure/tracks.md hold foreign uncommitted edits; Review C F1 at be89dc91). The Build session already regenerated the facts in `6a094aeb` and `80d55840` under the PM decision of 2026-11-19, and `node measure/tools/generate.mjs --check` prints `Measure facts are current (4 files).` with exit 0. The closeout role checks this task when it archives the track.
 
 ## Civic review record
 
-Add one row per map when its final rating is known. The TSV is the acceptance record.
+Add one row per map. The inventory holds the notes, the shot paths, and the maker family.
 
-| Map | Source | Final rating | Judge family | Result |
-| --- | --- | ---: | --- | --- |
+| Map | MAPS rating | Judge rating | Rerate | Final status |
+| --- | ---: | ---: | ---: | --- |
+| apothecary | 7.0 | 8.0 | — | accepted |
+| archive | 7.0 | 8.0 | — | accepted |
+| arena | 7.0 | 7.5 | — | accepted |
+| armory | 7.0 | 8.0 | — | accepted |
+| bakery | 7.0 | 8.0 | — | accepted |
+| bank | 7.0 | 7.5 | — | accepted |
+| barracks | 7.0 | 8.0 | — | accepted |
+| bathhouse | 7.0 | 8.0 | — | accepted |
+| castle | 7.0 | 8.0 | — | accepted |
+| cathedral | 7.0 | 8.0 | — | accepted |
+| cemetery | 7.0 | 8.0 | — | accepted |
+| courthouse | 7.0 | 8.5 | — | accepted |
+| general-store | 7.0 | 8.5 | — | accepted |
+| granary | 7.0 | 8.0 | — | accepted |
+| guild-hall | 7.0 | 8.0 | — | accepted |
+| inn | 7.0 | 8.5 | — | accepted |
+| library | 7.0 | 7.5 | — | accepted |
+| market-square | 7.0 | 7.0 | — | accepted |
+| mill | 7.0 | 5.5 | 7.5 | accepted |
+| monastery | 7.0 | 7.5 | — | accepted |
+| palace | 7.0 | 8.0 | — | accepted |
+| prison | 7.0 | 7.5 | — | accepted |
+| school | 7.0 | 8.0 | — | accepted |
+| shrine | 7.0 | 8.0 | — | accepted |
+| stable | 7.0 | 8.0 | — | accepted |
+| temple | 7.0 | 7.5 | — | accepted |
+| theater | 7.0 | 8.0 | — | accepted |
+| town-hall | 7.0 | 8.5 | — | accepted |
+| warehouse | 7.0 | 8.5 | — | accepted |
+| watchtower | 7.0 | 8.0 | — | accepted |
+
+Every row matches `scenes/inventory.md`, which holds the notes, the shot paths, and the maker
+family. The mill is the only rerated map: its Judge rating of 5.5 blocks acceptance, so it took
+one rework and one rerate of 7.5.
 
 ## P0 map acceptance (2026-10-02, track `asset_p0p1_completion_20261002`)
 
@@ -207,4 +244,4 @@ One `forge-sonnet-medium` agent per map worked from a brief (`bench/sonnet/brief
 | blacksmith-shop | blacksmith shop | `scenes/blacksmith-shop.ts` | `docs/blacksmith-mockups/render-3q.png`, `render-top.png` | 7.5 | A 6 x 6 m shop; the forge (scale 1.35) is the focal mass; work triangle with anvil, quench tub, coal, and bellows; stock and tools on both walls. 64 pieces. |
 | tavern | tavern | `scenes/tavern-interior.ts` | `docs/tavern-mockups/render-3q.png`, `render-top.png` | 7.5 | The common room is full: patrons and food in every quarter, a hearth group with the bard, a dressed bar. 148 pieces. Interiors take a warm key light from the camera side. |
 
-The P2 rows of this group remain `mockup-needed`.
+The P2 rows of this group now read `accepted` in the TSV (Phase 4 commit `e2c7bb9c`).

@@ -13,7 +13,8 @@ The maker family is Anthropic Sonnet for all 30 rows. Each map has a brief at
 
 Four independent judge batches scored these maps on 2026-11-19. The judge route is
 `kimi-code-plan-cn/kimi-for-coding`, model family Kimi. The judge family differs from the maker
-family. Every row records its judge rating and its judge note. Every row holds the state `rated`.
+family. Every row records its judge rating and its judge note. Every row holds the state `accepted`
+after the Phase 4 record update (commit `2881a7a3`). The mill row reached `accepted` on its rerate.
 Every source exists in the map folder, so no row holds `missing`.
 
 | Slug | Source | Design note | Mockup | 3q shot | Top shot | MAPS rating | MAPS note | Judge | Judge rating | Judge critical | Judge note | Maker | State |
