@@ -1,9 +1,9 @@
 {
   "track_id": "game_paladins_twin_soul_rebuild_20261029",
   "type": "bug",
-  "status": "new",
+  "status": "in_progress",
   "created_at": "2026-10-29T02:35:00Z",
-  "updated_at": "2026-10-29T02:35:00Z",
+  "updated_at": "2026-11-19T00:00:00Z",
   "description": "Rebuild Paladin's Twin Soul as a shooter in a haunted chapel with its own scene, off the Monster Encounters battle stage and without the battle monsters, with one rules core and a 3D and a 2D view",
   "estimated_tasks": 11,
   "actual_tasks": null,
