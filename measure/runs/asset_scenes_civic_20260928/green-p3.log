@@ -95,3 +95,56 @@ note: The 3q shot shows a circular spoked waterwheel framed by the straw arch ov
 note: P3-c, P3-d, and P3-e stay red until stage 2 adds the rerate and inventory cells.
 note: P3-a inventory maker mismatch needs an orchestrator decision (Anthropic Sonnet vs hy).
 END_MEASURE_AGENT_RESULT
+
+Green Phase 3 (rework), stage 2 of 2.
+Date: 2026-11-19. Role: measure-jr-green. Route: opencode-go/hy4-flash-free#high.
+role_base_sha: 8241491c15d2fa7f64ad9c5e2e23de814b637c6f (Red changed the P3-a maker rule).
+
+Red now keeps the inventory `maker:` cell at the Phase 1 value, Anthropic Sonnet. The rework
+maker lives only in rework-mill.json. The judge family must differ from both makers. The
+checker was not edited.
+
+The independent Kimi judge wrote rerate-mill.json and rerate-mill.log. Route
+kimi-code-plan-cn/kimi-for-coding; model id kimi-for-coding; model family kimi. Rating 7.5,
+critical false, audited head 304a75d6c9a97064e84f4ea5eec54b67ca5daa86. Both files were
+committed as evidence without edits.
+
+The mill inventory row now holds `Rework: 7619c491`, `Rerate: 7.5`, and state `accepted`.
+The `maker: Anthropic Sonnet` cell is unchanged. The other 29 rows stay `rated`, and no other
+cell changed.
+
+Gate outputs:
+- `bash measure/runs/asset_scenes_civic_20260928/check-rework.sh` exit 0.
+  `=== Total: 39 checks (PASS=39, FAIL=0) ===`
+- `ls -l docs/map-mockups/mill-3q.png docs/map-mockups/mill-top.png` lists both shots:
+  1185352 bytes and 1288124 bytes.
+- `bash measure/runs/asset_scenes_civic_20260928/check-review.sh` exit 1.
+  `=== Total: 34 checks (PASS=33, FAIL=1) ===`. P2-d wants the Phase 2 `rated` state;
+  the mill `accepted` state fails there by design. This checker was not changed.
+
+Plan: all three Phase 3 tasks are `[x]` with commit 7619c491 on each task line. The stop rule
+holds: mill has three ratings, MAPS 7.0, Judge 5.5, and Rerate 7.5. There is no fourth rating
+and no follow-up map.
+
+Phase 3 records commit: 8e6d2a84c87fa4847819df546a8c9b2e911557a8.
+
+MEASURE_AGENT_RESULT
+status: complete
+stage: 2 of 2
+role: measure-jr-green
+track: asset_scenes_civic_20260928
+phase: Phase 3 Rework
+role_base_sha: 8241491c15d2fa7f64ad9c5e2e23de814b637c6f
+rework_commit: 7619c491ffc74398ec8a8c8b5a900fbda870300a
+records_commit: 8e6d2a84c87fa4847819df546a8c9b2e911557a8
+check_rework: exit 0; Total: 39 checks (PASS=39, FAIL=0)
+plan_gate: both mill shots listed (1185352 and 1288124 bytes)
+check_review: exit 1; Total: 34 checks (PASS=33, FAIL=1); P2-d by design
+tasks_marked_x: Rework each below-bar map once; Rerate each reworked map once; Apply the stop rule
+tasks_marked_b: none
+ratings: MAPS 7.0; Judge 5.5; Rerate 7.5 (kimi, critical false); no fourth rating
+state: mill accepted; 29 other rows rated; no follow-up map
+shot_sha256: mill-3q.png=32a41dc054134552276cb0d7931c94c15a0f35face1eb47401c3e3bd05a18b4e
+shot_sha256: mill-top.png=0543e6a65a51137b021d7912509a4adfd1828647f355a35dd4fdcf80dc268845
+new_files_committed: rerate-mill.json, rerate-mill.log
+END_MEASURE_AGENT_RESULT
