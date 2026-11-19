@@ -12,6 +12,9 @@
 #   {slug, route, model_family, audited_head, rating, critical, note}.
 # - inventory row: add cells `Rework: <commit>`, `Rerate: <rating>`, and the state
 #   cell last as `accepted` (rerate >= 7.0 and not critical) or `follow-up`.
+#   The `maker:` cell keeps the Phase 1 original-maker value (Anthropic Sonnet)
+#   and is never rewritten; the rerate family must differ from BOTH the original
+#   maker family and the rework maker family in rework-<slug>.json.
 #
 # Recency note: shot freshness is proven with `git log` on the shot path, not with
 # file mtime, since a checkout resets mtime. A shot counts as fresh only when its
@@ -130,12 +133,18 @@ for f in ${REWORK_FILES[@]+"${REWORK_FILES[@]}"}; do
     *"$FIRST"*) pass "P3-a $slug maker_route [$MR] agrees with maker family [$MF]" ;;
     *) fail "P3-a $slug maker_route [$MR] does not agree with maker family [$MF]" ;;
   esac
+  # The inventory maker cell names the original map maker (the Phase 1 value,
+  # Anthropic Sonnet for the 2026-10 batch) and stays unchanged by the rework.
+  # The rework maker lives only in the rework record (maker_route/maker_family).
   LINE="$(grep -F "scenes/maps/$slug.ts" "$INV" | head -n 1)"
   INVMK="$(cell_value "$LINE" "maker")"
-  if [ "$INVMK" = "$MF" ]; then
-    pass "P3-a $slug inventory maker [$INVMK] agrees with the rework record"
+  if [ "$INVMK" = "Anthropic Sonnet" ]; then
+    pass "P3-a $slug inventory maker [$INVMK] keeps the Phase 1 original-maker value"
   else
-    fail "P3-a $slug inventory maker [$INVMK] differs from the rework record [$MF]"
+    fail "P3-a $slug inventory maker [$INVMK] was rewritten; it must stay Anthropic Sonnet (the rework maker lives in the rework record)"
+  fi
+  if [ "$INVMK" = "$MF" ] && [ "$MF" != "Anthropic Sonnet" ]; then
+    fail "P3-a $slug inventory maker was overwritten with the rework maker family [$MF]"
   fi
   CHG="$(jq -r '.change // empty' "$f")"
   if [ -n "$CHG" ] && [ "$CHG" != "null" ]; then
@@ -268,13 +277,19 @@ for f in ${REWORK_FILES[@]+"${REWORK_FILES[@]}"}; do
   LRFAM="$(printf '%s' "$RFAM" | tr '[:upper:]' '[:lower:]')"
   case "$LRFAM" in
     *claude*|*anthropic*|*sonnet*)
-      fail "P3-c $slug rerate family [$RFAM] is in the maker/claude family; the judge must differ from the maker" ;;
-    *) pass "P3-c $slug rerate family [$RFAM] lies outside the maker/claude family" ;;
+      fail "P3-c $slug rerate family [$RFAM] is in the original-maker/claude family; the judge must differ from the original maker" ;;
+    *) pass "P3-c $slug rerate family [$RFAM] lies outside the original-maker/claude family" ;;
   esac
-  if [ "$RFAM" = "$MF" ]; then
-    fail "P3-c $slug rerate family [$RFAM] equals the maker family [$MF]"
+  ORIG="$(cell_value "$(grep -F "scenes/maps/$slug.ts" "$INV" | head -n 1)" "maker")"
+  if [ -n "$ORIG" ] && [ "$RFAM" = "$ORIG" ]; then
+    fail "P3-c $slug rerate family [$RFAM] equals the original maker family [$ORIG]"
   else
-    pass "P3-c $slug rerate family [$RFAM] differs from the maker family [$MF]"
+    pass "P3-c $slug rerate family [$RFAM] differs from the original maker family [$ORIG]"
+  fi
+  if [ "$RFAM" = "$MF" ]; then
+    fail "P3-c $slug rerate family [$RFAM] equals the rework maker family [$MF]"
+  else
+    pass "P3-c $slug rerate family [$RFAM] differs from the rework maker family [$MF]"
   fi
   LROUTE="$(printf '%s' "$ROUTE" | tr '[:upper:]' '[:lower:]')"
   case "$LROUTE" in
