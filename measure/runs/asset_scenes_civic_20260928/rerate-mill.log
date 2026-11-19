@@ -1,0 +1,48 @@
+route: kimi-code-plan-cn/kimi-for-coding
+model_id: kimi-for-coding
+model_family: kimi
+
+Rerate of map "mill" (track asset_scenes_civic_20260928, Phase 3 rework, commit 7619c491).
+Audited HEAD: 304a75d6c9a97064e84f4ea5eec54b67ca5daa86
+
+Inputs read: docs/map-mockups/mill.md (brief), mill.jpg (mockup),
+mill-3q.png and mill-top.png (built shots after the rework).
+
+Findings:
+- The rework turned the watermill so the wheel faces the river and the
+  three-quarter camera. The wheel dips into the pool at the mill base.
+  The pool connects to the river in both shots. The earlier orientation
+  defect (rated 5.5) is fixed.
+- Layout matches the brief: river runs north-south at x=5 and ends in a
+  pool at the north; the mill stands west of the river; the road runs
+  from the south to the mill door and on to the bridge; a fenced wheat
+  field sits in the south-west; willows line the east bank.
+- The turn broke nothing. The river, the road, and the bridge are
+  intact. No piece floats, clips, or reads broken in either shot.
+- Named yard pieces are present: barrels at the bank, crates at the
+  mill, hay bales, a cart at the field, a second cart near the bridge,
+  the farmer stand-in on the road, a lantern, a signpost, and the well.
+- Palette matches the map set: bright green grass, blue water, warm
+  timber browns. The map reads clearly at game camera distance.
+- Minor deductions: the bridge is wooden where the brief text says
+  stone bridge (the mockup shows stone), and a few corner trees
+  overhang the tile edge.
+
+Rating: 7.5 / 10. Bar 7.0. Pass. critical: false.
+
+MEASURE_AGENT_RESULT
+status: complete
+role: ux-browser-review (independent map judge, rerate)
+slug: mill
+rating: 7.5
+critical: false
+bar: 7.0
+verdict: pass
+retry_recommendation: none
+evidence:
+  - docs/map-mockups/mill.md (brief)
+  - docs/map-mockups/mill.jpg (target mockup)
+  - docs/map-mockups/mill-3q.png (built, three-quarter view)
+  - docs/map-mockups/mill-top.png (built, top view)
+findings: none blocking; wheel now meets water; river, road, bridge intact
+END_MEASURE_AGENT_RESULT

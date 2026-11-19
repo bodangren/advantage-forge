@@ -1,0 +1,10 @@
+{
+  "slug": "mill",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "model_family": "kimi",
+  "model_id": "kimi-for-coding",
+  "audited_head": "304a75d6c9a97064e84f4ea5eec54b67ca5daa86",
+  "rating": 7.5,
+  "critical": false,
+  "note": "Rework fixed the main defect. The watermill now faces the river and the three-quarter camera; the wheel dips into the pool at the mill base, and the pool connects to the river in both shots. Layout matches the brief: river north-south at x=5 ending in a north pool, road from south to the mill door and on to the bridge, fenced wheat field in the south-west, willows along the east bank. All named yard pieces present (barrels, crates, hay, two carts, farmer stand-in, lantern, signpost, well). The turn broke nothing: river, road, and bridge are intact, and nothing floats or clips. Minor deductions: the bridge is wooden where the brief text says stone, and a few corner trees overhang the tile edge. Above the 7.0 bar."
+}

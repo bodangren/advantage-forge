@@ -76,7 +76,7 @@ wheel.
 
 ## Phase 3: Rework
 
-- [~] Task: Rework each map below 7.0 or with a critical error, once.
+- [x] Task: Rework each map below 7.0 or with a critical error, once. (7619c491: mill only, the one below-bar and critical map; yaw -65 on the watermill makes the wheel face the three-quarter camera; fresh mill-3q.png and mill-top.png committed in 7619c491)
   Give the job to a maker on "ra-quota pick coder".
   Regenerate the map with `scripts/design-<slug>.mjs` or edit `scenes/maps/<slug>.ts`.
   Then shoot the two views into `docs/map-mockups/`:
@@ -89,8 +89,8 @@ FORGE_SHOT_BASE=http://127.0.0.1:5199/hamlet.html node scripts/shoot-map.mjs doc
 ```
 
   Set `dist` from the room size of each map. Keep the three-quarter camera at 45 to 50 degrees.
-- [ ] Task: Rerate each reworked map once with an independent judge.
-- [ ] Task: Apply the stop rule.
+- [x] Task: Rerate each reworked map once with an independent judge. (7619c491: the rework audited at 304a75d6; one Kimi rerate of 7.5, critical false, in rerate-mill.json and rerate-mill.log committed with this evidence)
+- [x] Task: Apply the stop rule. (7619c491: mill holds three ratings, MAPS 7.0, Judge 5.5, Rerate 7.5; no fourth rating; state accepted, no follow-up)
   After the third rating below the bar, put the map on the follow-up list.
   Do not start a fourth rating.
 
@@ -106,6 +106,16 @@ Red evidence: `bash measure/runs/asset_scenes_civic_20260928/check-rework.sh` ex
 `b78fdde1`: Below-bar map count 1 (mill, 5.5 and critical true), Rework record count 0
 (P3-a FAIL), no rerate exists (P3-c FAIL). Run log
 `measure/runs/asset_scenes_civic_20260928/red-p3.log`.
+
+Green evidence: with the mill cells and the two rerate files in place,
+`bash measure/runs/asset_scenes_civic_20260928/check-rework.sh` exits 0 with
+`=== Total: 39 checks (PASS=39, FAIL=0) ===`. The plan gate
+`ls -l docs/map-mockups/mill-3q.png docs/map-mockups/mill-top.png` lists both fresh shots.
+The mill row holds `Rework: 7619c491`, `Rerate: 7.5`, and state `accepted`; the other 29 rows
+stay `rated`. `check-review.sh` exits 1 with
+`=== Total: 34 checks (PASS=33, FAIL=1) ===`: P2-d wants the Phase 2 `rated` state, so the
+mill `accepted` state fails there by design. No fourth rating exists and no map goes on the
+follow-up list.
 
 ## Phase 4: Records
 
