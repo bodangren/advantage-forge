@@ -3,8 +3,8 @@
   "catalog_note": "Catalog source presence does not show render, review, or acceptance status.",
   "catalog_coverage": {
     "listed": 856,
-    "source_present": 725,
-    "source_missing": 131,
+    "source_present": 825,
+    "source_missing": 31,
     "by_priority": {
       "P0": {
         "listed": 54,
@@ -18,13 +18,13 @@
       },
       "P2": {
         "listed": 304,
-        "source_present": 205,
-        "source_missing": 99
+        "source_present": 304,
+        "source_missing": 0
       },
       "P3": {
         "listed": 48,
-        "source_present": 16,
-        "source_missing": 32
+        "source_present": 17,
+        "source_missing": 31
       }
     },
     "source_filename_collisions": [
@@ -2900,7 +2900,7 @@
       "priority": "P3",
       "kind": "effect",
       "source_path": "assets/cloud.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p3_fx_geometry_20260928"
     },
     {
@@ -5580,7 +5580,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/ambassador.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5590,7 +5590,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/commander.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5600,7 +5600,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/court-wizard.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5620,7 +5620,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/diplomat.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5630,7 +5630,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/general.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5640,7 +5640,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/guild-master.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5650,7 +5650,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/guild-member.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5660,7 +5660,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/inquisitor.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5670,7 +5670,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/king.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5680,7 +5680,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/lady.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5690,7 +5690,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/leader.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5700,7 +5700,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/lord.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5710,7 +5710,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/masked-agent.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5720,7 +5720,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/noble.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5730,7 +5730,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/prince.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5740,7 +5740,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/princess.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5750,7 +5750,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/queen.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5760,7 +5760,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/rebel.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5770,7 +5770,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/regent.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5780,7 +5780,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/royal-guard.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5790,7 +5790,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/soldier.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5800,7 +5800,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/spy.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5810,7 +5810,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/veteran.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5820,7 +5820,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/dwarf-citizen.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5830,7 +5830,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/elf-citizen.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5840,7 +5840,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/fae-citizen.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5850,7 +5850,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/gnome-citizen.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5860,7 +5860,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/goblin-citizen.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5870,7 +5870,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/halfling-citizen.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5880,7 +5880,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/lizardfolk-citizen.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5890,7 +5890,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/merfolk-citizen.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5900,7 +5900,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/orc-citizen.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5910,7 +5910,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/acolyte.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5920,7 +5920,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/apothecary.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5930,7 +5930,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/armorer.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5950,7 +5950,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/banker.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5960,7 +5960,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/bartender.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5970,7 +5970,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/beekeeper.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -5980,7 +5980,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/beggar.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6000,7 +6000,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/brewer.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6010,7 +6010,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/butcher.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6020,7 +6020,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/candle-maker.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6030,7 +6030,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/carpenter.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6040,7 +6040,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/cobbler.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6050,7 +6050,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/cook.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6060,7 +6060,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/courier.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6070,7 +6070,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/elder.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6090,7 +6090,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/fisher.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6100,7 +6100,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/forager.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6110,7 +6110,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/gardener.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6120,7 +6120,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/glassblower.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6130,7 +6130,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/gravedigger.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6160,7 +6160,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/herbalist.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6190,7 +6190,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/jeweler.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6200,7 +6200,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/librarian.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6210,7 +6210,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/lumberjack.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6220,7 +6220,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/magistrate.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6230,7 +6230,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/mason.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6240,7 +6240,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/mayor.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6250,7 +6250,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/merchant.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6260,7 +6260,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/midwife.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6270,7 +6270,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/miller.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6280,7 +6280,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/miner.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6290,7 +6290,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/musician.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6300,7 +6300,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/orphan.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6310,7 +6310,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/peddler.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6320,7 +6320,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/performer.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6330,7 +6330,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/potter.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6360,7 +6360,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/refugee.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6370,7 +6370,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/scholar.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6380,7 +6380,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/scribe.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6390,7 +6390,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/shepherd.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6410,7 +6410,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/stablekeeper.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6420,7 +6420,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/storyteller.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6430,7 +6430,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/student.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6440,7 +6440,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/tailor.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6450,7 +6450,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/tanner.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6460,7 +6460,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/tax-collector.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6470,7 +6470,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/teacher.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6480,7 +6480,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/town-crier.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6490,7 +6490,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/traveler.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6500,7 +6500,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/undertaker.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6520,7 +6520,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/watch-captain.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6530,7 +6530,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/weaponsmith.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6540,7 +6540,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/weaver.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6550,7 +6550,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/archaeologist.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6560,7 +6560,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/caravan-driver.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6570,7 +6570,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/cartographer.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6580,7 +6580,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/chieftain.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6590,7 +6590,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/dockworker.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6600,7 +6600,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/ferryman.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6610,7 +6610,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/hermit.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6620,7 +6620,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/nomad.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6640,7 +6640,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/prospector.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6650,7 +6650,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/ranger-guide.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6660,7 +6660,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/riverboat-captain.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6670,7 +6670,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/ruin-keeper.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6700,7 +6700,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/shrine-keeper.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -6710,7 +6710,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/trapper.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -9033,7 +9033,7 @@
       "source_id": "locations/civic/apothecary",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/apothecary.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9042,7 +9042,7 @@
       "source_id": "locations/civic/archive",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/archive.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9051,7 +9051,7 @@
       "source_id": "locations/civic/arena",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/arena.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9060,7 +9060,7 @@
       "source_id": "locations/civic/armory",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/armory.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9069,7 +9069,7 @@
       "source_id": "locations/civic/bakery",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/bakery.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9078,7 +9078,7 @@
       "source_id": "locations/civic/bank",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/bank.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9087,7 +9087,7 @@
       "source_id": "locations/civic/barracks",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/barracks.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9096,7 +9096,7 @@
       "source_id": "locations/civic/bathhouse",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/bathhouse.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9114,7 +9114,7 @@
       "source_id": "locations/civic/castle",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/castle.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9123,7 +9123,7 @@
       "source_id": "locations/civic/cathedral",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/cathedral.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9132,7 +9132,7 @@
       "source_id": "locations/civic/cemetery",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/cemetery.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9141,7 +9141,7 @@
       "source_id": "locations/civic/courthouse",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/courthouse.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9150,7 +9150,7 @@
       "source_id": "locations/civic/general-store",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/general-store.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9159,7 +9159,7 @@
       "source_id": "locations/civic/granary",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/granary.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9168,7 +9168,7 @@
       "source_id": "locations/civic/guild-hall",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/guild-hall.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9177,7 +9177,7 @@
       "source_id": "locations/civic/inn",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/inn.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9186,7 +9186,7 @@
       "source_id": "locations/civic/library",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/library.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9195,7 +9195,7 @@
       "source_id": "locations/civic/market-square",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/market-square.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9204,7 +9204,7 @@
       "source_id": "locations/civic/mill",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/mill.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9213,7 +9213,7 @@
       "source_id": "locations/civic/monastery",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/monastery.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9222,7 +9222,7 @@
       "source_id": "locations/civic/palace",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/palace.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9231,7 +9231,7 @@
       "source_id": "locations/civic/prison",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/prison.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9240,7 +9240,7 @@
       "source_id": "locations/civic/school",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/school.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9249,7 +9249,7 @@
       "source_id": "locations/civic/shrine",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/shrine.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9258,7 +9258,7 @@
       "source_id": "locations/civic/stable",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/stable.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9276,7 +9276,7 @@
       "source_id": "locations/civic/temple",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/temple.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9285,7 +9285,7 @@
       "source_id": "locations/civic/theater",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/theater.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9294,7 +9294,7 @@
       "source_id": "locations/civic/town-hall",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/town-hall.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9303,7 +9303,7 @@
       "source_id": "locations/civic/warehouse",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/warehouse.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9312,7 +9312,7 @@
       "source_id": "locations/civic/watchtower",
       "group": "civic",
       "priority": "P2",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/watchtower.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9625,9 +9625,9 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 927,
-    "catalog_matched": 709,
-    "off_catalog": 218
+    "listed": 1072,
+    "catalog_matched": 809,
+    "off_catalog": 263
   },
   "asset_sources": [
     {
@@ -9635,6 +9635,13 @@
       "source_path": "assets/abyssal-beast.ts",
       "catalog_source_ids": [
         "monsters/abyssal-and-cosmic/abyssal-beast"
+      ]
+    },
+    {
+      "id": "acolyte",
+      "source_path": "assets/acolyte.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/acolyte"
       ]
     },
     {
@@ -9693,6 +9700,13 @@
       "catalog_source_ids": [
         "architecture/structure/altar",
         "props/world/altar"
+      ]
+    },
+    {
+      "id": "ambassador",
+      "source_path": "assets/ambassador.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/ambassador"
       ]
     },
     {
@@ -9764,6 +9778,13 @@
       ]
     },
     {
+      "id": "apothecary",
+      "source_path": "assets/apothecary.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/apothecary"
+      ]
+    },
+    {
       "id": "apple-tree",
       "source_path": "assets/apple-tree.ts",
       "catalog_source_ids": [
@@ -9802,6 +9823,13 @@
       ]
     },
     {
+      "id": "archaeologist",
+      "source_path": "assets/archaeologist.ts",
+      "catalog_source_ids": [
+        "npcs/wilderness/archaeologist"
+      ]
+    },
+    {
       "id": "archer-bow",
       "source_path": "assets/archer-bow.ts",
       "catalog_source_ids": []
@@ -9818,6 +9846,13 @@
       "source_path": "assets/archway.ts",
       "catalog_source_ids": [
         "architecture/building-parts/archway"
+      ]
+    },
+    {
+      "id": "armorer",
+      "source_path": "assets/armorer.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/armorer"
       ]
     },
     {
@@ -9923,6 +9958,11 @@
       ]
     },
     {
+      "id": "ball",
+      "source_path": "assets/ball.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "balloon-basket",
       "source_path": "assets/balloon-basket.ts",
       "catalog_source_ids": [
@@ -9955,6 +9995,13 @@
       "source_path": "assets/bandit.ts",
       "catalog_source_ids": [
         "enemies/humanoid/bandit"
+      ]
+    },
+    {
+      "id": "banker",
+      "source_path": "assets/banker.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/banker"
       ]
     },
     {
@@ -10012,6 +10059,13 @@
       "source_path": "assets/barrel.ts",
       "catalog_source_ids": [
         "props/containers/barrel"
+      ]
+    },
+    {
+      "id": "bartender",
+      "source_path": "assets/bartender.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/bartender"
       ]
     },
     {
@@ -10089,6 +10143,20 @@
       "source_path": "assets/bee.ts",
       "catalog_source_ids": [
         "wildlife/air/bee"
+      ]
+    },
+    {
+      "id": "beekeeper",
+      "source_path": "assets/beekeeper.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/beekeeper"
+      ]
+    },
+    {
+      "id": "beggar",
+      "source_path": "assets/beggar.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/beggar"
       ]
     },
     {
@@ -10258,6 +10326,13 @@
       ]
     },
     {
+      "id": "brewer",
+      "source_path": "assets/brewer.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/brewer"
+      ]
+    },
+    {
       "id": "brick-wall",
       "source_path": "assets/brick-wall.ts",
       "catalog_source_ids": [
@@ -10293,6 +10368,11 @@
       ]
     },
     {
+      "id": "brush",
+      "source_path": "assets/brush.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "bucket",
       "source_path": "assets/bucket.ts",
       "catalog_source_ids": [
@@ -10318,6 +10398,13 @@
       "source_path": "assets/bush.ts",
       "catalog_source_ids": [
         "nature/plants/bush"
+      ]
+    },
+    {
+      "id": "butcher",
+      "source_path": "assets/butcher.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/butcher"
       ]
     },
     {
@@ -10394,6 +10481,13 @@
       "catalog_source_ids": []
     },
     {
+      "id": "candle-maker",
+      "source_path": "assets/candle-maker.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/candle-maker"
+      ]
+    },
+    {
       "id": "candle",
       "source_path": "assets/candle.ts",
       "catalog_source_ids": [
@@ -10432,6 +10526,13 @@
       ]
     },
     {
+      "id": "caravan-driver",
+      "source_path": "assets/caravan-driver.ts",
+      "catalog_source_ids": [
+        "npcs/wilderness/caravan-driver"
+      ]
+    },
+    {
       "id": "caravan-guard",
       "source_path": "assets/caravan-guard.ts",
       "catalog_source_ids": [
@@ -10446,10 +10547,24 @@
       ]
     },
     {
+      "id": "carpenter",
+      "source_path": "assets/carpenter.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/carpenter"
+      ]
+    },
+    {
       "id": "carrot",
       "source_path": "assets/carrot.ts",
       "catalog_source_ids": [
         "props/food/carrot"
+      ]
+    },
+    {
+      "id": "cartographer",
+      "source_path": "assets/cartographer.ts",
+      "catalog_source_ids": [
+        "npcs/wilderness/cartographer"
       ]
     },
     {
@@ -10567,6 +10682,13 @@
       "source_path": "assets/chicken.ts",
       "catalog_source_ids": [
         "wildlife/land/chicken"
+      ]
+    },
+    {
+      "id": "chieftain",
+      "source_path": "assets/chieftain.ts",
+      "catalog_source_ids": [
+        "npcs/wilderness/chieftain"
       ]
     },
     {
@@ -10688,6 +10810,13 @@
       "catalog_source_ids": []
     },
     {
+      "id": "cloud",
+      "source_path": "assets/cloud.ts",
+      "catalog_source_ids": [
+        "fx-geometry/environment/cloud"
+      ]
+    },
+    {
       "id": "club",
       "source_path": "assets/club.ts",
       "catalog_source_ids": [
@@ -10737,6 +10866,13 @@
       ]
     },
     {
+      "id": "cobbler",
+      "source_path": "assets/cobbler.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/cobbler"
+      ]
+    },
+    {
       "id": "cockatrice",
       "source_path": "assets/cockatrice.ts",
       "catalog_source_ids": [
@@ -10772,10 +10908,24 @@
       ]
     },
     {
+      "id": "commander",
+      "source_path": "assets/commander.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/commander"
+      ]
+    },
+    {
       "id": "compass",
       "source_path": "assets/compass.ts",
       "catalog_source_ids": [
         "equipment/tools/compass"
+      ]
+    },
+    {
+      "id": "cook",
+      "source_path": "assets/cook.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/cook"
       ]
     },
     {
@@ -10823,6 +10973,20 @@
       "source_path": "assets/counter.ts",
       "catalog_source_ids": [
         "props/furniture/counter"
+      ]
+    },
+    {
+      "id": "courier",
+      "source_path": "assets/courier.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/courier"
+      ]
+    },
+    {
+      "id": "court-wizard",
+      "source_path": "assets/court-wizard.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/court-wizard"
       ]
     },
     {
@@ -11030,6 +11194,13 @@
       ]
     },
     {
+      "id": "diplomat",
+      "source_path": "assets/diplomat.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/diplomat"
+      ]
+    },
+    {
       "id": "dire-bear",
       "source_path": "assets/dire-bear.ts",
       "catalog_source_ids": [
@@ -11104,6 +11275,13 @@
       "source_path": "assets/dock.ts",
       "catalog_source_ids": [
         "architecture/structure/dock"
+      ]
+    },
+    {
+      "id": "dockworker",
+      "source_path": "assets/dockworker.ts",
+      "catalog_source_ids": [
+        "npcs/wilderness/dockworker"
       ]
     },
     {
@@ -11270,6 +11448,11 @@
       ]
     },
     {
+      "id": "duck",
+      "source_path": "assets/duck.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "duelist-hat",
       "source_path": "assets/duelist-hat.ts",
       "catalog_source_ids": []
@@ -11284,6 +11467,13 @@
       "source_path": "assets/duelist.ts",
       "catalog_source_ids": [
         "heroes/martial/duelist"
+      ]
+    },
+    {
+      "id": "dwarf-citizen",
+      "source_path": "assets/dwarf-citizen.ts",
+      "catalog_source_ids": [
+        "npcs/fantasy-peoples/dwarf-citizen"
       ]
     },
     {
@@ -11308,6 +11498,11 @@
       ]
     },
     {
+      "id": "easel",
+      "source_path": "assets/easel.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "echo-staff",
       "source_path": "assets/echo-staff.ts",
       "catalog_source_ids": []
@@ -11317,6 +11512,13 @@
       "source_path": "assets/eel.ts",
       "catalog_source_ids": [
         "wildlife/water/eel"
+      ]
+    },
+    {
+      "id": "elder",
+      "source_path": "assets/elder.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/elder"
       ]
     },
     {
@@ -11345,6 +11547,13 @@
       "source_path": "assets/elevator-platform.ts",
       "catalog_source_ids": [
         "architecture/structure/elevator-platform"
+      ]
+    },
+    {
+      "id": "elf-citizen",
+      "source_path": "assets/elf-citizen.ts",
+      "catalog_source_ids": [
+        "npcs/fantasy-peoples/elf-citizen"
       ]
     },
     {
@@ -11400,6 +11609,13 @@
       "source_path": "assets/explorer.ts",
       "catalog_source_ids": [
         "heroes/support/explorer"
+      ]
+    },
+    {
+      "id": "fae-citizen",
+      "source_path": "assets/fae-citizen.ts",
+      "catalog_source_ids": [
+        "npcs/fantasy-peoples/fae-citizen"
       ]
     },
     {
@@ -11499,6 +11715,13 @@
       ]
     },
     {
+      "id": "ferryman",
+      "source_path": "assets/ferryman.ts",
+      "catalog_source_ids": [
+        "npcs/wilderness/ferryman"
+      ]
+    },
+    {
       "id": "fighter-buckler",
       "source_path": "assets/fighter-buckler.ts",
       "catalog_source_ids": []
@@ -11570,6 +11793,13 @@
       ]
     },
     {
+      "id": "fisher",
+      "source_path": "assets/fisher.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/fisher"
+      ]
+    },
+    {
       "id": "fishing-boat",
       "source_path": "assets/fishing-boat.ts",
       "catalog_source_ids": [
@@ -11629,6 +11859,11 @@
       ]
     },
     {
+      "id": "flower",
+      "source_path": "assets/flower.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "flute",
       "source_path": "assets/flute.ts",
       "catalog_source_ids": [
@@ -11654,6 +11889,13 @@
       "source_path": "assets/footpath-straight.ts",
       "catalog_source_ids": [
         "architecture/landscape-parts/footpath-straight"
+      ]
+    },
+    {
+      "id": "forager",
+      "source_path": "assets/forager.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/forager"
       ]
     },
     {
@@ -11720,6 +11962,13 @@
       ]
     },
     {
+      "id": "gardener",
+      "source_path": "assets/gardener.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/gardener"
+      ]
+    },
+    {
       "id": "gargoyle",
       "source_path": "assets/gargoyle.ts",
       "catalog_source_ids": [
@@ -11766,6 +12015,13 @@
       "source_path": "assets/gem-sapphire.ts",
       "catalog_source_ids": [
         "items/crafting/gem-sapphire"
+      ]
+    },
+    {
+      "id": "general",
+      "source_path": "assets/general.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/general"
       ]
     },
     {
@@ -11903,6 +12159,13 @@
       ]
     },
     {
+      "id": "glassblower",
+      "source_path": "assets/glassblower.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/glassblower"
+      ]
+    },
+    {
       "id": "gloves",
       "source_path": "assets/gloves.ts",
       "catalog_source_ids": [
@@ -11931,6 +12194,13 @@
       ]
     },
     {
+      "id": "gnome-citizen",
+      "source_path": "assets/gnome-citizen.ts",
+      "catalog_source_ids": [
+        "npcs/fantasy-peoples/gnome-citizen"
+      ]
+    },
+    {
       "id": "goat",
       "source_path": "assets/goat.ts",
       "catalog_source_ids": [
@@ -11949,6 +12219,13 @@
       "source_path": "assets/goblin-archer.ts",
       "catalog_source_ids": [
         "enemies/humanoid/goblin-archer"
+      ]
+    },
+    {
+      "id": "goblin-citizen",
+      "source_path": "assets/goblin-citizen.ts",
+      "catalog_source_ids": [
+        "npcs/fantasy-peoples/goblin-citizen"
       ]
     },
     {
@@ -11992,6 +12269,11 @@
       "catalog_source_ids": []
     },
     {
+      "id": "grape-bunch",
+      "source_path": "assets/grape-bunch.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "grass-floor",
       "source_path": "assets/grass-floor.ts",
       "catalog_source_ids": [
@@ -12003,6 +12285,13 @@
       "source_path": "assets/grass-ground.ts",
       "catalog_source_ids": [
         "architecture/landscape-parts/grass-ground"
+      ]
+    },
+    {
+      "id": "gravedigger",
+      "source_path": "assets/gravedigger.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/gravedigger"
       ]
     },
     {
@@ -12131,10 +12420,31 @@
       ]
     },
     {
+      "id": "guild-master",
+      "source_path": "assets/guild-master.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/guild-master"
+      ]
+    },
+    {
+      "id": "guild-member",
+      "source_path": "assets/guild-member.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/guild-member"
+      ]
+    },
+    {
       "id": "halberd",
       "source_path": "assets/halberd.ts",
       "catalog_source_ids": [
         "equipment/melee-weapons/halberd"
+      ]
+    },
+    {
+      "id": "halfling-citizen",
+      "source_path": "assets/halfling-citizen.ts",
+      "catalog_source_ids": [
+        "npcs/fantasy-peoples/halfling-citizen"
       ]
     },
     {
@@ -12247,6 +12557,20 @@
       "source_path": "assets/herb-root.ts",
       "catalog_source_ids": [
         "items/crafting/herb-root"
+      ]
+    },
+    {
+      "id": "herbalist",
+      "source_path": "assets/herbalist.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/herbalist"
+      ]
+    },
+    {
+      "id": "hermit",
+      "source_path": "assets/hermit.ts",
+      "catalog_source_ids": [
+        "npcs/wilderness/hermit"
       ]
     },
     {
@@ -12394,6 +12718,13 @@
       ]
     },
     {
+      "id": "inquisitor",
+      "source_path": "assets/inquisitor.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/inquisitor"
+      ]
+    },
+    {
       "id": "invisibility-potion",
       "source_path": "assets/invisibility-potion.ts",
       "catalog_source_ids": [
@@ -12450,6 +12781,13 @@
       ]
     },
     {
+      "id": "jeweler",
+      "source_path": "assets/jeweler.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/jeweler"
+      ]
+    },
+    {
       "id": "katana",
       "source_path": "assets/katana.ts",
       "catalog_source_ids": [
@@ -12499,11 +12837,23 @@
       ]
     },
     {
+      "id": "king",
+      "source_path": "assets/king.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/king"
+      ]
+    },
+    {
       "id": "kite-shield",
       "source_path": "assets/kite-shield.ts",
       "catalog_source_ids": [
         "equipment/armor/kite-shield"
       ]
+    },
+    {
+      "id": "kite",
+      "source_path": "assets/kite.ts",
+      "catalog_source_ids": []
     },
     {
       "id": "kitsune",
@@ -12565,6 +12915,13 @@
       ]
     },
     {
+      "id": "lady",
+      "source_path": "assets/lady.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/lady"
+      ]
+    },
+    {
       "id": "lake-shore",
       "source_path": "assets/lake-shore.ts",
       "catalog_source_ids": [
@@ -12596,6 +12953,13 @@
       "source_path": "assets/lava-rock.ts",
       "catalog_source_ids": [
         "nature/terrain/lava-rock"
+      ]
+    },
+    {
+      "id": "leader",
+      "source_path": "assets/leader.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/leader"
       ]
     },
     {
@@ -12641,6 +13005,13 @@
       ]
     },
     {
+      "id": "librarian",
+      "source_path": "assets/librarian.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/librarian"
+      ]
+    },
+    {
       "id": "lich",
       "source_path": "assets/lich.ts",
       "catalog_source_ids": [
@@ -12667,6 +13038,11 @@
       "catalog_source_ids": []
     },
     {
+      "id": "lily-pad",
+      "source_path": "assets/lily-pad.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "lindworm",
       "source_path": "assets/lindworm.ts",
       "catalog_source_ids": [
@@ -12678,6 +13054,13 @@
       "source_path": "assets/living-statue.ts",
       "catalog_source_ids": [
         "enemies/construct/living-statue"
+      ]
+    },
+    {
+      "id": "lizardfolk-citizen",
+      "source_path": "assets/lizardfolk-citizen.ts",
+      "catalog_source_ids": [
+        "npcs/fantasy-peoples/lizardfolk-citizen"
       ]
     },
     {
@@ -12744,6 +13127,20 @@
       ]
     },
     {
+      "id": "lord",
+      "source_path": "assets/lord.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/lord"
+      ]
+    },
+    {
+      "id": "lumberjack",
+      "source_path": "assets/lumberjack.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/lumberjack"
+      ]
+    },
+    {
       "id": "lute",
       "source_path": "assets/lute.ts",
       "catalog_source_ids": [
@@ -12807,6 +13204,13 @@
       "source_path": "assets/magic-scroll.ts",
       "catalog_source_ids": [
         "items/quest-and-treasure/magic-scroll"
+      ]
+    },
+    {
+      "id": "magistrate",
+      "source_path": "assets/magistrate.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/magistrate"
       ]
     },
     {
@@ -12878,10 +13282,31 @@
       ]
     },
     {
+      "id": "masked-agent",
+      "source_path": "assets/masked-agent.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/masked-agent"
+      ]
+    },
+    {
+      "id": "mason",
+      "source_path": "assets/mason.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/mason"
+      ]
+    },
+    {
       "id": "maul",
       "source_path": "assets/maul.ts",
       "catalog_source_ids": [
         "equipment/melee-weapons/maul"
+      ]
+    },
+    {
+      "id": "mayor",
+      "source_path": "assets/mayor.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/mayor"
       ]
     },
     {
@@ -12920,10 +13345,31 @@
       ]
     },
     {
+      "id": "merchant",
+      "source_path": "assets/merchant.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/merchant"
+      ]
+    },
+    {
+      "id": "merfolk-citizen",
+      "source_path": "assets/merfolk-citizen.ts",
+      "catalog_source_ids": [
+        "npcs/fantasy-peoples/merfolk-citizen"
+      ]
+    },
+    {
       "id": "messenger-bird",
       "source_path": "assets/messenger-bird.ts",
       "catalog_source_ids": [
         "wildlife/mounts-and-pets/messenger-bird"
+      ]
+    },
+    {
+      "id": "midwife",
+      "source_path": "assets/midwife.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/midwife"
       ]
     },
     {
@@ -12934,10 +13380,24 @@
       ]
     },
     {
+      "id": "miller",
+      "source_path": "assets/miller.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/miller"
+      ]
+    },
+    {
       "id": "mimic",
       "source_path": "assets/mimic.ts",
       "catalog_source_ids": [
         "monsters/small/mimic"
+      ]
+    },
+    {
+      "id": "miner",
+      "source_path": "assets/miner.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/miner"
       ]
     },
     {
@@ -13089,6 +13549,13 @@
       ]
     },
     {
+      "id": "musician",
+      "source_path": "assets/musician.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/musician"
+      ]
+    },
+    {
       "id": "necklace",
       "source_path": "assets/necklace.ts",
       "catalog_source_ids": [
@@ -13115,6 +13582,20 @@
       "source_path": "assets/noble-champion.ts",
       "catalog_source_ids": [
         "heroes/support/noble-champion"
+      ]
+    },
+    {
+      "id": "noble",
+      "source_path": "assets/noble.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/noble"
+      ]
+    },
+    {
+      "id": "nomad",
+      "source_path": "assets/nomad.ts",
+      "catalog_source_ids": [
+        "npcs/wilderness/nomad"
       ]
     },
     {
@@ -13174,6 +13655,13 @@
       ]
     },
     {
+      "id": "orc-citizen",
+      "source_path": "assets/orc-citizen.ts",
+      "catalog_source_ids": [
+        "npcs/fantasy-peoples/orc-citizen"
+      ]
+    },
+    {
       "id": "orc-shaman",
       "source_path": "assets/orc-shaman.ts",
       "catalog_source_ids": [
@@ -13192,6 +13680,13 @@
       "source_path": "assets/orc-warrior.ts",
       "catalog_source_ids": [
         "enemies/humanoid/orc-warrior"
+      ]
+    },
+    {
+      "id": "orphan",
+      "source_path": "assets/orphan.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/orphan"
       ]
     },
     {
@@ -13221,6 +13716,16 @@
       "catalog_source_ids": [
         "wildlife/mounts-and-pets/pack-goat"
       ]
+    },
+    {
+      "id": "paint-pot",
+      "source_path": "assets/paint-pot.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "paint-splash",
+      "source_path": "assets/paint-splash.ts",
+      "catalog_source_ids": []
     },
     {
       "id": "paladin-hammer",
@@ -13662,6 +14167,11 @@
       "catalog_source_ids": []
     },
     {
+      "id": "sprout-gestures",
+      "source_path": "assets/parts/sprout-gestures.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "swashbuckler-bandana",
       "source_path": "assets/parts/swashbuckler-bandana.ts",
       "catalog_source_ids": []
@@ -13737,10 +14247,24 @@
       "catalog_source_ids": []
     },
     {
+      "id": "peddler",
+      "source_path": "assets/peddler.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/peddler"
+      ]
+    },
+    {
       "id": "pendant",
       "source_path": "assets/pendant.ts",
       "catalog_source_ids": [
         "equipment/accessories/pendant"
+      ]
+    },
+    {
+      "id": "performer",
+      "source_path": "assets/performer.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/performer"
       ]
     },
     {
@@ -13937,6 +14461,13 @@
       ]
     },
     {
+      "id": "potter",
+      "source_path": "assets/potter.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/potter"
+      ]
+    },
+    {
       "id": "pressure-plate",
       "source_path": "assets/pressure-plate.ts",
       "catalog_source_ids": [
@@ -13949,6 +14480,27 @@
       "catalog_source_ids": [
         "heroes/magic/priest",
         "npcs/settlement/priest"
+      ]
+    },
+    {
+      "id": "prince",
+      "source_path": "assets/prince.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/prince"
+      ]
+    },
+    {
+      "id": "princess",
+      "source_path": "assets/princess.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/princess"
+      ]
+    },
+    {
+      "id": "prospector",
+      "source_path": "assets/prospector.ts",
+      "catalog_source_ids": [
+        "npcs/wilderness/prospector"
       ]
     },
     {
@@ -13970,6 +14522,13 @@
       "source_path": "assets/quarterstaff.ts",
       "catalog_source_ids": [
         "equipment/melee-weapons/quarterstaff"
+      ]
+    },
+    {
+      "id": "queen",
+      "source_path": "assets/queen.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/queen"
       ]
     },
     {
@@ -14032,6 +14591,13 @@
       "catalog_source_ids": []
     },
     {
+      "id": "ranger-guide",
+      "source_path": "assets/ranger-guide.ts",
+      "catalog_source_ids": [
+        "npcs/wilderness/ranger-guide"
+      ]
+    },
+    {
       "id": "ranger",
       "source_path": "assets/ranger.ts",
       "catalog_source_ids": [
@@ -14060,6 +14626,13 @@
       ]
     },
     {
+      "id": "rebel",
+      "source_path": "assets/rebel.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/rebel"
+      ]
+    },
+    {
       "id": "red-mushroom",
       "source_path": "assets/red-mushroom.ts",
       "catalog_source_ids": [
@@ -14071,6 +14644,20 @@
       "source_path": "assets/reeds.ts",
       "catalog_source_ids": [
         "nature/plants/reeds"
+      ]
+    },
+    {
+      "id": "refugee",
+      "source_path": "assets/refugee.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/refugee"
+      ]
+    },
+    {
+      "id": "regent",
+      "source_path": "assets/regent.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/regent"
       ]
     },
     {
@@ -14169,6 +14756,13 @@
       "source_path": "assets/river-straight.ts",
       "catalog_source_ids": [
         "architecture/landscape-parts/river-straight"
+      ]
+    },
+    {
+      "id": "riverboat-captain",
+      "source_path": "assets/riverboat-captain.ts",
+      "catalog_source_ids": [
+        "npcs/wilderness/riverboat-captain"
       ]
     },
     {
@@ -14283,6 +14877,13 @@
       ]
     },
     {
+      "id": "royal-guard",
+      "source_path": "assets/royal-guard.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/royal-guard"
+      ]
+    },
+    {
       "id": "royal-seal",
       "source_path": "assets/royal-seal.ts",
       "catalog_source_ids": [
@@ -14306,6 +14907,13 @@
       "source_path": "assets/ruin-column.ts",
       "catalog_source_ids": [
         "architecture/structure/ruin-column"
+      ]
+    },
+    {
+      "id": "ruin-keeper",
+      "source_path": "assets/ruin-keeper.ts",
+      "catalog_source_ids": [
+        "npcs/wilderness/ruin-keeper"
       ]
     },
     {
@@ -14435,6 +15043,13 @@
       ]
     },
     {
+      "id": "scholar",
+      "source_path": "assets/scholar.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/scholar"
+      ]
+    },
+    {
       "id": "scimitar",
       "source_path": "assets/scimitar.ts",
       "catalog_source_ids": [
@@ -14454,6 +15069,13 @@
       "catalog_source_ids": [
         "heroes/martial/scout",
         "npcs/wilderness/scout"
+      ]
+    },
+    {
+      "id": "scribe",
+      "source_path": "assets/scribe.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/scribe"
       ]
     },
     {
@@ -14566,6 +15188,13 @@
       ]
     },
     {
+      "id": "shepherd",
+      "source_path": "assets/shepherd.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/shepherd"
+      ]
+    },
+    {
       "id": "shield-maiden-axe",
       "source_path": "assets/shield-maiden-axe.ts",
       "catalog_source_ids": []
@@ -14632,6 +15261,13 @@
       "source_path": "assets/shovel.ts",
       "catalog_source_ids": [
         "props/craft-and-trade/shovel"
+      ]
+    },
+    {
+      "id": "shrine-keeper",
+      "source_path": "assets/shrine-keeper.ts",
+      "catalog_source_ids": [
+        "npcs/wilderness/shrine-keeper"
       ]
     },
     {
@@ -14745,6 +15381,13 @@
       ]
     },
     {
+      "id": "soldier",
+      "source_path": "assets/soldier.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/soldier"
+      ]
+    },
+    {
       "id": "sorcerer",
       "source_path": "assets/sorcerer.ts",
       "catalog_source_ids": [
@@ -14828,6 +15471,58 @@
       ]
     },
     {
+      "id": "sprout-adventurer",
+      "source_path": "assets/sprout-adventurer.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "sprout-base",
+      "source_path": "assets/sprout-base.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "sprout-ben",
+      "source_path": "assets/sprout-ben.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "sprout-may",
+      "source_path": "assets/sprout-may.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "sprout-mia",
+      "source_path": "assets/sprout-mia.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "sprout-nan",
+      "source_path": "assets/sprout-nan.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "sprout-pat",
+      "source_path": "assets/sprout-pat.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "sprout-pip",
+      "source_path": "assets/sprout-pip.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "sprout-sam",
+      "source_path": "assets/sprout-sam.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "spy",
+      "source_path": "assets/spy.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/spy"
+      ]
+    },
+    {
       "id": "spyglass",
       "source_path": "assets/spyglass.ts",
       "catalog_source_ids": [
@@ -14839,6 +15534,13 @@
       "source_path": "assets/squirrel.ts",
       "catalog_source_ids": [
         "wildlife/land/squirrel"
+      ]
+    },
+    {
+      "id": "stablekeeper",
+      "source_path": "assets/stablekeeper.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/stablekeeper"
       ]
     },
     {
@@ -14966,6 +15668,113 @@
       ]
     },
     {
+      "id": "storyteller",
+      "source_path": "assets/storyteller.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/storyteller"
+      ]
+    },
+    {
+      "id": "storytime-animal-pictures",
+      "source_path": "assets/storytime-animal-pictures.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "storytime-bird",
+      "source_path": "assets/storytime-bird.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "storytime-block-box",
+      "source_path": "assets/storytime-block-box.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "storytime-butterfly-net",
+      "source_path": "assets/storytime-butterfly-net.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "storytime-cat",
+      "source_path": "assets/storytime-cat.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "storytime-child-cup",
+      "source_path": "assets/storytime-child-cup.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "storytime-crayon-box",
+      "source_path": "assets/storytime-crayon-box.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "storytime-first-aid-box",
+      "source_path": "assets/storytime-first-aid-box.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "storytime-green-door",
+      "source_path": "assets/storytime-green-door.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "storytime-low-branch",
+      "source_path": "assets/storytime-low-branch.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "storytime-low-table",
+      "source_path": "assets/storytime-low-table.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "storytime-nest",
+      "source_path": "assets/storytime-nest.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "storytime-nurse-cap",
+      "source_path": "assets/storytime-nurse-cap.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "storytime-nut",
+      "source_path": "assets/storytime-nut.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "storytime-picture-book",
+      "source_path": "assets/storytime-picture-book.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "storytime-school-bag-ben",
+      "source_path": "assets/storytime-school-bag-ben.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "storytime-school-bag",
+      "source_path": "assets/storytime-school-bag.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "storytime-school-bus",
+      "source_path": "assets/storytime-school-bus.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "storytime-sun-hat",
+      "source_path": "assets/storytime-sun-hat.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "storytime-wall-hook",
+      "source_path": "assets/storytime-wall-hook.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "strength-potion",
       "source_path": "assets/strength-potion.ts",
       "catalog_source_ids": [
@@ -14977,6 +15786,13 @@
       "source_path": "assets/studded-leather.ts",
       "catalog_source_ids": [
         "equipment/armor/studded-leather"
+      ]
+    },
+    {
+      "id": "student",
+      "source_path": "assets/student.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/student"
       ]
     },
     {
@@ -14999,6 +15815,11 @@
       "catalog_source_ids": [
         "heroes/magic/summoner"
       ]
+    },
+    {
+      "id": "sun",
+      "source_path": "assets/sun.ts",
+      "catalog_source_ids": []
     },
     {
       "id": "swashbuckler-bandana",
@@ -15037,6 +15858,13 @@
       ]
     },
     {
+      "id": "tailor",
+      "source_path": "assets/tailor.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/tailor"
+      ]
+    },
+    {
       "id": "tall-grass",
       "source_path": "assets/tall-grass.ts",
       "catalog_source_ids": [
@@ -15051,10 +15879,31 @@
       ]
     },
     {
+      "id": "tanner",
+      "source_path": "assets/tanner.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/tanner"
+      ]
+    },
+    {
       "id": "tapestry",
       "source_path": "assets/tapestry.ts",
       "catalog_source_ids": [
         "props/furniture/tapestry"
+      ]
+    },
+    {
+      "id": "tax-collector",
+      "source_path": "assets/tax-collector.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/tax-collector"
+      ]
+    },
+    {
+      "id": "teacher",
+      "source_path": "assets/teacher.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/teacher"
       ]
     },
     {
@@ -15137,6 +15986,16 @@
       ]
     },
     {
+      "id": "towel-rack",
+      "source_path": "assets/towel-rack.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "towel-stack",
+      "source_path": "assets/towel-stack.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "tower-shield",
       "source_path": "assets/tower-shield.ts",
       "catalog_source_ids": [
@@ -15151,6 +16010,13 @@
       ]
     },
     {
+      "id": "town-crier",
+      "source_path": "assets/town-crier.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/town-crier"
+      ]
+    },
+    {
       "id": "townhouse",
       "source_path": "assets/townhouse.ts",
       "catalog_source_ids": [
@@ -15162,6 +16028,20 @@
       "source_path": "assets/trapdoor.ts",
       "catalog_source_ids": [
         "architecture/building-parts/trapdoor"
+      ]
+    },
+    {
+      "id": "trapper",
+      "source_path": "assets/trapper.ts",
+      "catalog_source_ids": [
+        "npcs/wilderness/trapper"
+      ]
+    },
+    {
+      "id": "traveler",
+      "source_path": "assets/traveler.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/traveler"
       ]
     },
     {
@@ -15255,6 +16135,13 @@
       ]
     },
     {
+      "id": "undertaker",
+      "source_path": "assets/undertaker.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/undertaker"
+      ]
+    },
+    {
       "id": "unicorn",
       "source_path": "assets/unicorn.ts",
       "catalog_source_ids": [
@@ -15287,6 +16174,13 @@
       "source_path": "assets/vampire.ts",
       "catalog_source_ids": [
         "enemies/undead/vampire"
+      ]
+    },
+    {
+      "id": "veteran",
+      "source_path": "assets/veteran.ts",
+      "catalog_source_ids": [
+        "npcs/court-and-faction/veteran"
       ]
     },
     {
@@ -15421,10 +16315,22 @@
       ]
     },
     {
+      "id": "wash-basin",
+      "source_path": "assets/wash-basin.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "wasp",
       "source_path": "assets/wasp.ts",
       "catalog_source_ids": [
         "wildlife/air/wasp"
+      ]
+    },
+    {
+      "id": "watch-captain",
+      "source_path": "assets/watch-captain.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/watch-captain"
       ]
     },
     {
@@ -15471,6 +16377,20 @@
       "id": "weapon-rack",
       "source_path": "assets/weapon-rack.ts",
       "catalog_source_ids": []
+    },
+    {
+      "id": "weaponsmith",
+      "source_path": "assets/weaponsmith.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/weaponsmith"
+      ]
+    },
+    {
+      "id": "weaver",
+      "source_path": "assets/weaver.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/weaver"
+      ]
     },
     {
       "id": "well-apron",
@@ -15583,6 +16503,11 @@
         "enemies/humanoid/witch",
         "heroes/magic/witch"
       ]
+    },
+    {
+      "id": "wizard-argon-trial",
+      "source_path": "assets/wizard-argon-trial.ts",
+      "catalog_source_ids": []
     },
     {
       "id": "wizard-hat",
@@ -15829,6 +16754,11 @@
     {
       "id": "city",
       "source_path": "scenes/maps/city.ts",
+      "source_present": true
+    },
+    {
+      "id": "classroom",
+      "source_path": "scenes/maps/classroom.ts",
       "source_present": true
     },
     {
@@ -16665,6 +17595,10 @@
       "source_present": true
     },
     {
+      "source_path": "src/games/archers-revenge/core/aim.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/games/archers-revenge/core/content.ts",
       "source_present": true
     },
@@ -16678,6 +17612,10 @@
     },
     {
       "source_path": "src/games/archers-revenge/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/archers-revenge/core/tuning.ts",
       "source_present": true
     },
     {
@@ -18341,6 +19279,14 @@
       "source_present": true
     },
     {
+      "source_path": "src/png.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/render/cutout.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/render/page.ts",
       "source_present": true
     },
@@ -18425,6 +19371,34 @@
       "source_present": true
     },
     {
+      "source_path": "src/song/main.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/song/still-hook.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/song/timeline.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/storytime/book-pictures.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/storytime/line-art-pass.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/storytime/muse-delivery-u2.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/storytime/muse-delivery.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/tasks.ts",
       "source_present": true
     },
@@ -18477,8 +19451,8 @@
       "source_present": true
     },
     {
-      "id": "1.0",
-      "source_path": "demo/public/packs/dungeon-monsters/1.0.1/pack.json",
+      "id": "1.1",
+      "source_path": "demo/public/packs/dungeon-monsters/1.1.0/pack.json",
       "source_present": true
     },
     {
@@ -18498,7 +19472,12 @@
     },
     {
       "id": "1.0",
-      "source_path": "demo/public/packs/mounts/1.0.1/pack.json",
+      "source_path": "demo/public/packs/library-furniture/1.0.1/pack.json",
+      "source_present": true
+    },
+    {
+      "id": "1.0",
+      "source_path": "demo/public/packs/mounts/1.0.2/pack.json",
       "source_present": true
     },
     {
@@ -18507,8 +19486,8 @@
       "source_present": true
     },
     {
-      "id": "1.0",
-      "source_path": "demo/public/packs/potion-shop/1.0.0/pack.json",
+      "id": "1.1",
+      "source_path": "demo/public/packs/potion-shop/1.1.0/pack.json",
       "source_present": true
     },
     {
