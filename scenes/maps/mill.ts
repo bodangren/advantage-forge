@@ -122,7 +122,7 @@ export function places(): Place[] {
   { asset: 'grass-ground', at: [11, 0, 5] },
   { asset: 'grass-ground', at: [11, 0, 7] },
   { asset: 'grass-ground', at: [11, 0, 9] },
-  { asset: 'watermill', at: [2.2, 0, -3.4] },
+  { asset: 'watermill', at: [2.2, 0, -3.4], yaw: -65 },
   { asset: 'bridge', at: [5, 0, 3] },
   { asset: 'sack', at: [-0.6, 0, -0.9], yaw: 20 },
   { asset: 'sack', at: [-0.1, 0, -0.7], yaw: 80 },
