@@ -9625,9 +9625,9 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 1072,
+    "listed": 1074,
     "catalog_matched": 809,
-    "off_catalog": 263
+    "off_catalog": 265
   },
   "asset_sources": [
     {
@@ -15471,6 +15471,11 @@
       ]
     },
     {
+      "id": "sprout-adult-base",
+      "source_path": "assets/sprout-adult-base.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "sprout-adventurer",
       "source_path": "assets/sprout-adventurer.ts",
       "catalog_source_ids": []
@@ -15483,6 +15488,11 @@
     {
       "id": "sprout-ben",
       "source_path": "assets/sprout-ben.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "sprout-lily",
+      "source_path": "assets/sprout-lily.ts",
       "catalog_source_ids": []
     },
     {

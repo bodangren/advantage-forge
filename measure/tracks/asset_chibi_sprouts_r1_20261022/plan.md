@@ -227,7 +227,21 @@ Workbooks does not wait for it.
     shell fringe with geometric cut line and strand grooves, longer A-line skirt with level hem
     at 0.16 and shallow groove pleats); preset pin gains Lily 86e44114 (388 assets); 25 key frames in
     out/chibi-sprouts/r1/week2-7/gestures/lily/ with gestures.lily manifest key (script generic,
-    no change); cutout-check flags only the known reach tiptoe.
+    no change); cutout-check flags only the known reach tiptoe; look-check fix r6 e05285e6:
+    the cap margins are now +0.015/+0.015/+0.010 at (0, 0, -0.005), so the top and the upper
+    sides sit 0.015 m from the skull and the back gap drops from 0.030 to 0.015 m, and the top
+    corners read round; the sides reach r 0.231 in the ear band (ear outer x 0.2264), so the
+    ear is hidden in the side and three-quarter views; the sides then tuck to a straight
+    0.177 m panel that runs to the chin-length cut, which clears the raised-hand clips; the
+    fringe lip (ellipsoid band y 0.057 to 0.092) stands 0.014 m proud of the forehead just
+    above the brows as one geometric step; the skirt half-space sign cut nothing, so the hem
+    is now a level cut at 0.161 m = two thirds from hip 0.205 to knee 0.139, with 0.004 m
+    pleat grooves at paint 0.45. `./forge check sprout-lily` fails only the 6 waived clips
+    (point-up closest 0.0 cm, stretch-up 1.3 cm, picture-sway 1.3 cm, cheer 1.9 cm; ground
+    ok). `./forge all sprout-lily` exits 0 with 0 warnings (24,978 tris textured, 28,045
+    fast). cutout-check fails only the known reach tiptoe flag (adventurer, lily, may, mia,
+    sam). typecheck shows the 38 pre-existing errors and none in sprout-lily; the 3 sprout
+    test files pass 10/10. Log green-p5-adult-base.log.
   - Mom (young mother, medium height)
   - Dad (young father, tallest of the family)
   - Grandma (older woman, a little shorter than Mom)

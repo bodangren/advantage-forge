@@ -81,3 +81,37 @@ gate outputs:
   preset-colour; pin unchanged, 387 assets).
 - warnings: none in typecheck, render, animate, check, all, sprites, or cutout outputs
   (inspect notes mouth-open hidden by design, as on every sing asset).
+
+## Lily r6 (jr-green, 2026-11-19) - implementation e05285e6
+
+source constants: hair cut plane y = 0.065 z - 0.1846 in the head local frame (front
+  z 0.195 -> -0.172, side z 0 -> -0.1846, back z -0.205 -> -0.198; world front 0.4597 m,
+  side 0.4471 m); mouth y = face.smileY 0.53 (hero) -> 0.48672 m world at AGE5; skirt hem
+  y 0.161 m world; knee y 0.139125 m world (0.1325 x 1.05), hip y 0.20475 m (0.195 x 1.05),
+  0.20475 - 2/3 * (0.20475 - 0.139125) = 0.161.
+
+gate outputs:
+- render (fast): out/sprout-lily/render.png, 28,045 tris, bounds 0.463 x 0.847 x 0.409 m,
+  no warning lines. Four views read against docs/sprout-mockups/lily.jpg: the dome sits close
+  to the skull on top and at the back, the top corners read round, the ear is hidden in the
+  side and three-quarter views, the fringe step stands proud above the brows, and the skirt
+  hem is level with a bare knee and shallow vertical pleat grooves.
+- check: "result FAIL: a held item passes through the head in 6 clip(s)" = the six waived
+  clips only (wave, touch-nose, touch-neck, count-fingers, eat, listen). point-up ok closest
+  0.0 cm, stretch-up 1.3 cm, picture-sway 1.3 cm, cheer 1.9 cm; ground ok, rest lowest 0.0 cm.
+- forge all: exit 0, no warning lines; textured 24,978 tris (fast build 28,045). Walk strip
+  out/sprout-lily/anim/walk.png: 8 frames, each about 8.0k content pixels, frame-to-frame
+  difference 52k to 63k pixels (no blank frame). Sprites preview
+  out/sprout-lily/sprites/preview.png: 8 directions, 3,455 sampled colours, face reads at
+  128 px in S, SW, and SE.
+- cutouts: bench/sonnet/sprouts/cutout-gestures-cast.sh lily rendered 25 frames into
+  out/chibi-sprouts/r1/week2-7/gestures/lily/ (manifest gestures.lily kept; no script
+  change). scripts/cutout-check.mjs fails only reach.png for adventurer, lily, may, mia, sam
+  (lowest opaque rows 1174-1176, foot row 1184) = the accepted reach-tiptoe flag; every
+  other lily frame reports ok.
+- typecheck: exit 2 with the 38 pre-existing errors (airship, longship, storytime-*, tests);
+  none in assets/sprout-lily.ts. sprout vitest: 3 files, 10 tests pass (sprout-base,
+  sprout-gestures chin/ear anchors, preset-colour). Full pnpm test: 8 failures, all in
+  tests/storytime-book-pictures.test.ts (Workbooks picture list; unrelated, pre-existing).
+- no Red test edited. src/clip-check.ts carried a temporary debug print for the hand
+  positions and was reverted before the commits (clean in git status for that path).
