@@ -54,7 +54,9 @@ describe('sprout gestures (adult-aware targets)', () => {
     // Hands meet in front of the adult chest, above the child plane.
     expect(adult.clap.y).toBeGreaterThan(0.55);
     expect(adult.clap.z).toBeGreaterThan(0.12);
-    expect(adult.clap.halfScale).toBeGreaterThan(1.5);
+    expect(adult.clap.halfScale).toBeCloseTo(1.5, 9);
+    expect(adult.headF).toBeCloseTo(0.8, 9);
+    expect(child.headF).toBe(1);
     // Touch points ride up with the head: the throat, the jaw, the chin, the cheek.
     expect(adult.neck[1]).toBeGreaterThan(0.85);
     expect(adult.count[1]).toBeGreaterThan(0.83);

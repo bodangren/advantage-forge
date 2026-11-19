@@ -180,7 +180,7 @@ const FIVE = { leg: 1.05, torso: 0.84, arm: 0.8, thick: 0.92, shoe: 0.72, turn: 
 
 function scaled(
   h: HumanoidProportions,
-  f: { leg: number; torso: number; arm: number; thick: number; shoe: number; turn: readonly [number, number]; lift: number; foreSwing: number; wide?: number },
+  f: { leg: number; torso: number; arm: number; thick: number; shoe: number; turn: readonly [number, number]; lift: number; foreSwing: number; wide?: number; head?: number; armOut?: number; hand?: number; armR?: number; legKnee?: number; legAnkle?: number },
 ): HumanoidProportions {
   const [bottom, top] = [h.torso.profile.at(-1)![1], h.torso.profile[0]![1]];
   /** Leg-zone height, and torso-zone height (continuous at the torso bottom). */
@@ -190,10 +190,28 @@ function scaled(
   const D = (y: number) => y + dy;
   /** The torso width factor (across X and Z); the height factor stays `torso`. Defaults to `torso` (an upright copy). */
   const W = f.wide ?? f.torso;
+  /** Head scale (1 = the hero head). Only the adult body uses a smaller head. */
+  const HF = f.head ?? 1;
+  /** Rest outward angle of the arms in degrees (0 = the hero hang). Only the adult uses it. */
+  const OA = ((f.armOut ?? 0) * Math.PI) / 180;
+  /** Fist and hand size factor (default: the arm factor, as before). */
+  const handF = f.hand ?? f.arm;
+  /** Arm cross-section factor (default: arm * thick, as before). */
+  const armR = f.armR ?? f.arm * f.thick;
+  /** Knee and ankle height factors (default: the leg factor, as before). */
+  const legK = f.legKnee ?? f.leg;
+  const legA = f.legAnkle ?? f.leg;
   const t3 = (p: V3): V3 => [p[0] * W, Tt(p[1]), p[2] * W];
   const S: V3 = [h.shoulder[0] * W, Tt(h.shoulder[1]), h.shoulder[2]];
-  /** An arm point: scaled about the shoulder. */
-  const A = (p: V3): V3 => [S[0] + (p[0] - h.shoulder[0]) * f.arm, S[1] + (p[1] - h.shoulder[1]) * f.arm, S[2] + (p[2] - h.shoulder[2]) * f.arm];
+  /** An arm point: scaled about the shoulder, then turned out from the body by `armOut`. */
+  const Araw = (p: V3): V3 => [S[0] + (p[0] - h.shoulder[0]) * f.arm, S[1] + (p[1] - h.shoulder[1]) * f.arm, S[2] + (p[2] - h.shoulder[2]) * f.arm];
+  const A = (p: V3): V3 => {
+    const q = Araw(p);
+    if (OA === 0) return q;
+    const dx = q[0] - S[0];
+    const dy = q[1] - S[1];
+    return [S[0] + dx * Math.cos(OA) - dy * Math.sin(OA), S[1] + dx * Math.sin(OA) + dy * Math.cos(OA), q[2]];
+  };
   /** The forearm turn: the hand-side points rotate about the scaled elbow (a deeper rest bend). */
   const E = A(h.elbow);
   const [tz, tx] = [f.turn[0] * (Math.PI / 180), f.turn[1] * (Math.PI / 180)];
@@ -204,42 +222,46 @@ function scaled(
     return [E[0] + x1, E[1] + y1 * Math.cos(tx) - z * Math.sin(tx), E[2] + y1 * Math.sin(tx) + z * Math.cos(tx)];
   };
   const a3 = (v: V3, k: number): V3 => [v[0] * k, v[1] * k, v[2] * k];
-  const lg3 = (p: V3): V3 => [p[0] * W, L(p[1]), p[2] * f.leg];
+  /** Head center height: the D-shifted hero center, or dropped to the neck top when the head shrinks. */
+  const HC = HF === 1 ? D(h.headY) : D(h.neck.y1) + (h.headY - h.neck.y1) * HF;
+  const lgH = (p: V3): V3 => [p[0] * W, p[1] * f.leg, p[2] * f.leg];
+  const lgK = (p: V3): V3 => [p[0] * W, p[1] * legK, p[2] * legK];
+  const lgA = (p: V3): V3 => [p[0] * W, p[1] * legA, p[2] * legA];
   const r = f.thick;
-  const ar = f.arm * f.thick;
+  const ar = armR;
   const fi = h.fist;
   return {
-    headY: D(h.headY),
-    head: h.head,
-    eye: [h.eye[0], D(h.eye[1])],
+    headY: HC,
+    head: HF === 1 ? h.head : [h.head[0] * HF, h.head[1] * HF, h.head[2] * HF],
+    eye: HF === 1 ? [h.eye[0], D(h.eye[1])] : [h.eye[0] * HF, HC + (h.eye[1] - h.headY) * HF],
     face: {
-      cheekAt: [h.face.cheekAt[0], D(h.face.cheekAt[1]), h.face.cheekAt[2]],
-      cheekR: h.face.cheekR,
-      chinSize: h.face.chinSize,
-      chinAt: [h.face.chinAt[0], D(h.face.chinAt[1]), h.face.chinAt[2]],
-      noseY: D(h.face.noseY),
-      earAt: [h.face.earAt[0], D(h.face.earAt[1]), h.face.earAt[2]],
-      browY: D(h.face.browY),
-      smileY: D(h.face.smileY),
-      blushY: D(h.face.blushY),
+      cheekAt: HF === 1 ? [h.face.cheekAt[0], D(h.face.cheekAt[1]), h.face.cheekAt[2]] : [h.face.cheekAt[0] * HF, HC + (h.face.cheekAt[1] - h.headY) * HF, h.face.cheekAt[2] * HF],
+      cheekR: HF === 1 ? h.face.cheekR : h.face.cheekR * HF,
+      chinSize: HF === 1 ? h.face.chinSize : [h.face.chinSize[0] * HF, h.face.chinSize[1] * HF, h.face.chinSize[2] * HF],
+      chinAt: HF === 1 ? [h.face.chinAt[0], D(h.face.chinAt[1]), h.face.chinAt[2]] : [h.face.chinAt[0] * HF, HC + (h.face.chinAt[1] - h.headY) * HF, h.face.chinAt[2] * HF],
+      noseY: HF === 1 ? D(h.face.noseY) : HC + (h.face.noseY - h.headY) * HF,
+      earAt: HF === 1 ? [h.face.earAt[0], D(h.face.earAt[1]), h.face.earAt[2]] : [h.face.earAt[0] * HF, HC + (h.face.earAt[1] - h.headY) * HF, h.face.earAt[2] * HF],
+      browY: HF === 1 ? D(h.face.browY) : HC + (h.face.browY - h.headY) * HF,
+      smileY: HF === 1 ? D(h.face.smileY) : HC + (h.face.smileY - h.headY) * HF,
+      blushY: HF === 1 ? D(h.face.blushY) : HC + (h.face.blushY - h.headY) * HF,
     },
-    neck: { y0: Tt(h.neck.y0), y1: D(h.neck.y1), r: h.neck.r },
+    neck: { y0: Tt(h.neck.y0), y1: D(h.neck.y1), r: HF === 1 ? h.neck.r : h.neck.r * HF },
     bones: {
       hips: t3(h.bones.hips),
       spine: t3(h.bones.spine),
       chest: t3(h.bones.chest),
       neck: t3(h.bones.neck),
-      head: [h.bones.head[0], D(h.bones.head[1]), h.bones.head[2]],
+      head: HF === 1 ? [h.bones.head[0], D(h.bones.head[1]), h.bones.head[2]] : [h.bones.head[0], HC - (h.headY - h.bones.head[1]) * HF, h.bones.head[2]],
       cloak: t3(h.bones.cloak),
     },
     shoulder: S,
     elbow: E,
     wrist: F(h.wrist),
     grip: F(h.grip),
-    hip: lg3(h.hip),
-    knee: lg3(h.knee),
-    ankle: lg3(h.ankle),
-    split: h.split * f.leg,
+    hip: lgH(h.hip),
+    knee: lgK(h.knee),
+    ankle: lgA(h.ankle),
+    split: h.split * legK,
     limb: {
       upper: [h.limb.upper[0] * ar, h.limb.upper[1] * ar],
       fore: [h.limb.fore[0] * ar, h.limb.fore[1] * ar],
@@ -247,14 +269,14 @@ function scaled(
       shin: h.limb.shin * r,
     },
     fist: {
-      palmSize: a3(fi.palmSize, f.arm),
+      palmSize: a3(fi.palmSize, handF),
       palmAt: F(fi.palmAt),
       rollA: F(fi.rollA),
       rollB: F(fi.rollB),
-      rollR: fi.rollR * f.arm,
+      rollR: fi.rollR * handF,
       thumbA: F(fi.thumbA),
       thumbB: F(fi.thumbB),
-      thumbR: [fi.thumbR[0] * f.arm, fi.thumbR[1] * f.arm],
+      thumbR: [fi.thumbR[0] * handF, fi.thumbR[1] * handF],
     },
     torso: {
       profile: h.torso.profile.map(([x, y]): V2 => [x * W, Tt(y)]),
@@ -262,7 +284,7 @@ function scaled(
       spine: [Tt(h.torso.spine[0]), Tt(h.torso.spine[1])],
       chest: [Tt(h.torso.chest[0]), Tt(h.torso.chest[1])],
     },
-    foot: { size: a3(h.foot.size, f.leg * f.shoe * 1.15), y: L(h.foot.y), z: h.foot.z * f.leg * f.shoe * 1.15 },
+    foot: { size: a3(h.foot.size, legA * f.shoe * 1.15), y: h.foot.y * legA, z: h.foot.z * legA * f.shoe * 1.15 },
     shirt: {
       sleeveStart: t3(h.shirt.sleeveStart),
       sleeveEnd: A(h.shirt.sleeveEnd),
@@ -274,11 +296,11 @@ function scaled(
     pants: {
       thighR: h.pants.thighR * r,
       shinR: [h.pants.shinR[0] * r, h.pants.shinR[1] * r],
-      cuff: lg3(h.pants.cuff),
-      hipsSize: [h.pants.hipsSize[0] * W, h.pants.hipsSize[1] * W, h.pants.hipsSize[2] * W],
+      cuff: lgA(h.pants.cuff),
+      hipsSize: [h.pants.hipsSize[0] * W, h.pants.hipsSize[1] * f.torso, h.pants.hipsSize[2] * W],
       hipsY: Tt(h.pants.hipsY),
     },
-    shoe: { ...h.shoe, scale: f.leg * f.shoe },
+    shoe: { ...h.shoe, scale: legA * f.shoe },
     clips: {
       leg: h.clips.leg * f.leg,
       stride: f.leg,
@@ -301,14 +323,14 @@ export const SING_DEPTH = 0.03;
 export const AGE5: HumanoidProportions = scaled(HERO, FIVE);
 
 /**
- * The adult factors: leg length, torso height (an upright copy of the hero torso, taller than it
- * grows wide), arm length, limb thickness, the shoe size (a share of the leg factor), the forearm
- * turn in degrees (inward about Z, forward about X), the lift and bob factor of the clips, and the
- * extra forearm swing in degrees. `wide` grows the torso across X and Z less than `torso` grows it
- * up, so the adult stays slim: Mom reads about 1.5x the age-5 children, Dad the tallest. The head
- * and the face stay the hero's (the Sprouts family face).
+ * The adult factors: leg zone (the crotch) at about half the height, a slimmer torso (width
+ * about 1.1 of the child's, not 1.35), longer thinner arms turned slightly out at rest, hands
+ * scaled to the head, and a 0.8 head on the same Sprouts face. The head and the face sit lower
+ * on the neck; the knee and the ankle follow the leg segments, not the whole leg zone, so the
+ * thigh reads (the hero pelvis is tall). Mom is about 1.5 m: 4.7 heads. Dad, the tallest of the
+ * family, gets his own slightly larger set later.
  */
-const ADULT_F = { leg: 1.8, torso: 1.9, arm: 1.5, thick: 1.0, shoe: 0.51, turn: [-4, -6], lift: 1.5, foreSwing: 0, wide: 1.35 } as const;
+const ADULT_F = { leg: 4.74, torso: 1.46, arm: 2.2, thick: 1.1, shoe: 0.9375, turn: [-4, -6], lift: 2, foreSwing: 0, wide: 0.924, head: 0.8, armOut: 12, hand: 1.2, armR: 1.25, legKnee: 3.25, legAnkle: 1.6 } as const;
 
 /** The Chibi Sprouts adult body: the same head and face on a longer torso, longer arms, and longer legs. */
 export const ADULT: HumanoidProportions = scaled(HERO, ADULT_F);
@@ -748,11 +770,17 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
         // eye corner, so the disc came through the skin there (a skin flap under the lash). `sproutFace`
         // cuts the lid from the head surface itself, moved back by `SING_DEPTH` and grown 4 mm: it stays
         // inside the head at rest and meets the face when the song page moves the bone forward.
+        // The lid back must stay inside the skull (defect D1: the full-depth lids cleared the
+        // skull at the back-side corners and read as skin discs from the back). Keep only a thin
+        // disc behind the lid front: the front (and every front view) is unchanged, and nothing
+        // reaches the back of the skull at any size.
+        const lidFrontZ = faceZ(EYE[0], EYE[1]) - SING_DEPTH;
         const eyelids = pair(
           kind.sproutFace
             ? head
                 .at(0, 0, -SING_DEPTH)
                 .intersect(sdf.extrude(profile.circle(1), 0.6).scale([0.058, 0.06, 1]).at(EYE[0], EYE[1], 0))
+                .intersect(sdf.halfSpace([0, 0, -1], 0.02 - lidFrontZ))
                 .round(0.004)
             : sdf.ellipsoid([0.058, 0.06, 0.012]).at(EYE[0], EYE[1], faceZ(EYE[0], EYE[1]) - SING_DEPTH),
         );

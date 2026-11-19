@@ -26,6 +26,8 @@ export interface GestureTargets {
   readonly hugR: V3;
   readonly hugL: V3;
   readonly listen: V3;
+  /** Head scale of this body (the adult head over the child head); touch offsets scale with it. */
+  readonly headF: number;
 }
 
 /** The revolve radius of the torso profile of `P` at absolute height `y` (clamped to the span). */
@@ -68,19 +70,22 @@ export function gestureTargets(P: HumanoidProportions): GestureTargets {
     const surfA = Math.sqrt(Math.max(0, profX(P, yA) ** 2 - xA ** 2)) * 0.78;
     return surfA + P.fist.palmSize[2] + (litZ - surf5 - palmZ5);
   };
-  /** A child height above the torso top in this body's frame (the head only moves up or down). */
-  const headShift = (y5: number): number => y5 + (P.headY - AGE5.headY);
+  /** Touch points on the smaller adult head keep their place against the chin and the ear. */
+  const headF = P.head[0] / AGE5.head[0];
+  const chinY = P.face.chinAt[1];
+  const earY = P.face.earAt[1];
   const hipGap = 0.14 - (AGE5.hip[0] + AGE5.limb.thigh + palmX5);
   return {
     clap: { y: torsoY(0.3), z: torsoZ(0.3, 0, 0.12), halfScale: P.fist.palmSize[0] / palmX5 },
-    neck: [-0.058, headShift(0.452), 0.063],
+    neck: [-0.058, chinY - (AGE5.face.chinAt[1] - 0.452) * headF, 0.063],
     self: [torsoX(-0.055, 0.315), torsoY(0.315), torsoZ(0.315, -0.055, 0.15)],
-    count: [-0.16, headShift(0.43), 0.13],
-    hip: [-(P.hip[0] + P.limb.thigh + P.fist.palmSize[0] + hipGap), torsoY(0.21), 0.03],
-    eat: [-0.06, headShift(0.45), 0.16],
+    count: [-0.16, chinY - (AGE5.face.chinAt[1] - 0.43) * headF, 0.13],
+    hip: [-(P.hip[0] + P.limb.thigh + P.fist.palmSize[0] + hipGap), P.hip[1] + (0.21 - AGE5.hip[1]), 0.03],
+    eat: [-0.06, chinY - (AGE5.face.chinAt[1] - 0.45) * headF, 0.16],
     hugR: [torsoX(0.035, 0.33), torsoY(0.33), torsoZ(0.33, 0.035, 0.165)],
     hugL: [torsoX(0.035, 0.3), torsoY(0.3), torsoZ(0.3, 0.035, 0.14)],
-    listen: [-0.2, headShift(0.4), 0.05],
+    listen: [-0.2, earY - (AGE5.face.earAt[1] - 0.4) * headF, 0.05],
+    headF,
   };
 }
 
@@ -163,8 +168,10 @@ interface Goal {
 export function sproutGestures(k: AssetContext, h: HumanoidShape, P: HumanoidProportions = AGE5): void {
   const { SHOULDER, ELBOW, WRIST, GRIP, HIP, KNEE, ANKLE } = h.joints;
   const { keys, bump, reach, orient, wave } = motion;
-  /** Every body-anchored goal in this body's frame (the child keeps its authored numbers). */
+  /** The target spots in this body's frame (the child keeps its authored numbers). */
   const T = gestureTargets(P);
+  /** Touch offsets scale with the head (1 for every shipped body). */
+  const HP = T.headF;
 
   const arm = (side: 1 | -1) => {
     const m = (v: V3): V3 => (side === 1 ? [-v[0], v[1], v[2]] : v);
@@ -279,7 +286,7 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape, P: HumanoidPro
   // The head stays turned to the camera and tips down toward the hand (the arm is short). The head position at the key
   // gives the nose tip; the index finger of the right fist is aimed at that point, so the fingertip lands on the nose.
   const NOSE_HEAD_TURN: V3 = [14, -14, 0]; // degrees at the key: tips down and turns a little toward the hand
-  const NOSE_HEAD_MOVE: V3 = [-0.004, -0.05, 0]; // meters
+  const NOSE_HEAD_MOVE: V3 = [-0.004 * HP, -0.05 * HP, 0]; // meters
   const noseRest: V3 = [0, P.face.noseY, h.faceZ(0, P.face.noseY) + 0.011];
   const noseTip = ((): V3 => {
     const pivot = vec(P.bones.head);
@@ -293,14 +300,14 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape, P: HumanoidPro
     const a = vec(fr.a);
     return arr(a.multiplyScalar(Math.cos(FINGER_TURN * RAD)).addScaledVector(vec(noseD), Math.sin(FINGER_TURN * RAD)).normalize());
   })();
-  const NOSE_PRESS: V3 = [-0.024, -0.003, 0.002]; // the fingertip rests on the right side of the nose tip
+  const NOSE_PRESS: V3 = [-0.024 * HP, -0.003 * HP, 0.002 * HP]; // the fingertip rests on the right side of the nose tip
   const noseGrip: V3 = [
-    noseTip[0] + NOSE_PRESS[0] - noseFinger[0] * FINGER_LENGTH,
-    noseTip[1] + NOSE_PRESS[1] - noseFinger[1] * FINGER_LENGTH,
-    noseTip[2] + NOSE_PRESS[2] - noseFinger[2] * FINGER_LENGTH,
+    noseTip[0] + NOSE_PRESS[0] - noseFinger[0] * FINGER_LENGTH * HP,
+    noseTip[1] + NOSE_PRESS[1] - noseFinger[1] * FINGER_LENGTH * HP,
+    noseTip[2] + NOSE_PRESS[2] - noseFinger[2] * FINGER_LENGTH * HP,
   ];
   // With `sproutHands` the index finger is the open hand's own finger: its tip, not a grip offset, rests on the nose.
-  const NOSE_TOUCH: V3 = [-0.012, -0.004, 0.002];
+  const NOSE_TOUCH: V3 = [-0.012 * HP, -0.004 * HP, 0.002 * HP];
   const noseTarget: V3 = [noseTip[0] + NOSE_TOUCH[0], noseTip[1] + NOSE_TOUCH[1], noseTip[2] + NOSE_TOUCH[2]];
   const noseGoal: Goal = {
     wrist: openHands ? R.wristForReach(noseTarget, noseD, noseHint, h.indexReach!) : R.wristFor(noseGrip, noseD, noseHint),
