@@ -180,7 +180,7 @@ const FIVE = { leg: 1.05, torso: 0.84, arm: 0.8, thick: 0.92, shoe: 0.72, turn: 
 
 function scaled(
   h: HumanoidProportions,
-  f: { leg: number; torso: number; arm: number; thick: number; shoe: number; turn: readonly [number, number]; lift: number; foreSwing: number },
+  f: { leg: number; torso: number; arm: number; thick: number; shoe: number; turn: readonly [number, number]; lift: number; foreSwing: number; wide?: number },
 ): HumanoidProportions {
   const [bottom, top] = [h.torso.profile.at(-1)![1], h.torso.profile[0]![1]];
   /** Leg-zone height, and torso-zone height (continuous at the torso bottom). */
@@ -188,8 +188,10 @@ function scaled(
   const Tt = (y: number) => L(bottom) + (y - bottom) * f.torso;
   const dy = Tt(top) - top; // the head moves down with the neck
   const D = (y: number) => y + dy;
-  const t3 = (p: V3): V3 => [p[0] * f.torso, Tt(p[1]), p[2] * f.torso];
-  const S: V3 = [h.shoulder[0] * f.torso, Tt(h.shoulder[1]), h.shoulder[2]];
+  /** The torso width factor (across X and Z); the height factor stays `torso`. Defaults to `torso` (an upright copy). */
+  const W = f.wide ?? f.torso;
+  const t3 = (p: V3): V3 => [p[0] * W, Tt(p[1]), p[2] * W];
+  const S: V3 = [h.shoulder[0] * W, Tt(h.shoulder[1]), h.shoulder[2]];
   /** An arm point: scaled about the shoulder. */
   const A = (p: V3): V3 => [S[0] + (p[0] - h.shoulder[0]) * f.arm, S[1] + (p[1] - h.shoulder[1]) * f.arm, S[2] + (p[2] - h.shoulder[2]) * f.arm];
   /** The forearm turn: the hand-side points rotate about the scaled elbow (a deeper rest bend). */
@@ -202,7 +204,7 @@ function scaled(
     return [E[0] + x1, E[1] + y1 * Math.cos(tx) - z * Math.sin(tx), E[2] + y1 * Math.sin(tx) + z * Math.cos(tx)];
   };
   const a3 = (v: V3, k: number): V3 => [v[0] * k, v[1] * k, v[2] * k];
-  const lg3 = (p: V3): V3 => [p[0] * f.torso, L(p[1]), p[2] * f.leg];
+  const lg3 = (p: V3): V3 => [p[0] * W, L(p[1]), p[2] * f.leg];
   const r = f.thick;
   const ar = f.arm * f.thick;
   const fi = h.fist;
@@ -255,7 +257,7 @@ function scaled(
       thumbR: [fi.thumbR[0] * f.arm, fi.thumbR[1] * f.arm],
     },
     torso: {
-      profile: h.torso.profile.map(([x, y]): V2 => [x * f.torso, Tt(y)]),
+      profile: h.torso.profile.map(([x, y]): V2 => [x * W, Tt(y)]),
       hips: [Tt(h.torso.hips[0]), Tt(h.torso.hips[1])],
       spine: [Tt(h.torso.spine[0]), Tt(h.torso.spine[1])],
       chest: [Tt(h.torso.chest[0]), Tt(h.torso.chest[1])],
@@ -273,7 +275,7 @@ function scaled(
       thighR: h.pants.thighR * r,
       shinR: [h.pants.shinR[0] * r, h.pants.shinR[1] * r],
       cuff: lg3(h.pants.cuff),
-      hipsSize: [h.pants.hipsSize[0] * f.torso, h.pants.hipsSize[1] * f.torso, h.pants.hipsSize[2] * f.torso],
+      hipsSize: [h.pants.hipsSize[0] * W, h.pants.hipsSize[1] * W, h.pants.hipsSize[2] * W],
       hipsY: Tt(h.pants.hipsY),
     },
     shoe: { ...h.shoe, scale: f.leg * f.shoe },
@@ -297,6 +299,19 @@ export const SING_DEPTH = 0.03;
 
 /** The Chibi Sprouts age-5 body: the same head and face on a shorter torso, shorter arms, and shorter legs. */
 export const AGE5: HumanoidProportions = scaled(HERO, FIVE);
+
+/**
+ * The adult factors: leg length, torso height (an upright copy of the hero torso, taller than it
+ * grows wide), arm length, limb thickness, the shoe size (a share of the leg factor), the forearm
+ * turn in degrees (inward about Z, forward about X), the lift and bob factor of the clips, and the
+ * extra forearm swing in degrees. `wide` grows the torso across X and Z less than `torso` grows it
+ * up, so the adult stays slim: Mom reads about 1.5x the age-5 children, Dad the tallest. The head
+ * and the face stay the hero's (the Sprouts family face).
+ */
+const ADULT_F = { leg: 1.8, torso: 1.9, arm: 1.5, thick: 1.0, shoe: 0.51, turn: [-4, -6], lift: 1.5, foreSwing: 0, wide: 1.35 } as const;
+
+/** The Chibi Sprouts adult body: the same head and face on a longer torso, longer arms, and longer legs. */
+export const ADULT: HumanoidProportions = scaled(HERO, ADULT_F);
 
 /** A humanoid kind: the slots and the looks. */
 export interface HumanoidKind {

@@ -2,13 +2,94 @@ import * as THREE from 'three';
 import { motion, sdf } from '../../src/index.js';
 import type { AssetContext, Pose } from '../../src/index.js';
 import { AGE5, HAND_FOLD, HAND_OPEN } from './humanoid-kind.js';
-import type { HumanoidShape } from './humanoid-kind.js';
+import type { HumanoidProportions, HumanoidShape } from './humanoid-kind.js';
+
+/**
+ * Adult-aware gesture targets: every goal that names a point of the body derives it from the
+ * proportions `P`, so the adult base reaches the same places the child does. `P = AGE5`
+ * reproduces every authored number (the child keeps its exact poses; the test pins them).
+ *
+ * - A height above the torso top follows the head (`headShift`): the head only moves up or down.
+ * - A height in the torso zone follows the torso (`torsoY`): the affine map of the profile span.
+ * - A lateral offset on the torso scales with the profile width at that height (`torsoX`).
+ * - A depth in front of the torso seats the fist surface on the clothes (`torsoZ`): the profile
+ *   surface at that height and lateral offset, plus the fist half-depth, plus the authored gap
+ *   (the gap is calibrated from AGE5, so the child keeps its exact numbers).
+ */
+export interface GestureTargets {
+  readonly clap: { readonly y: number; readonly z: number; readonly halfScale: number };
+  readonly neck: V3;
+  readonly self: V3;
+  readonly count: V3;
+  readonly hip: V3;
+  readonly eat: V3;
+  readonly hugR: V3;
+  readonly hugL: V3;
+  readonly listen: V3;
+}
+
+/** The revolve radius of the torso profile of `P` at absolute height `y` (clamped to the span). */
+function profX(P: HumanoidProportions, y: number): number {
+  const pr = P.torso.profile;
+  const top = pr[0]![1];
+  const bottom = pr[pr.length - 1]![1];
+  const c = Math.min(top, Math.max(bottom, y));
+  for (let i = 0; i < pr.length - 1; i++) {
+    const [x0, y0] = pr[i]!;
+    const [x1, y1] = pr[i + 1]!;
+    if (c <= y0 && c >= y1) {
+      const t = y0 === y1 ? 0 : (y0 - c) / (y0 - y1);
+      return x0 + (x1 - x0) * t;
+    }
+  }
+  return pr[pr.length - 1]![0];
+}
+
+export function gestureTargets(P: HumanoidProportions): GestureTargets {
+  const b5 = AGE5.torso.profile[AGE5.torso.profile.length - 1]![1];
+  const t5 = AGE5.torso.profile[0]![1];
+  const bP = P.torso.profile[P.torso.profile.length - 1]![1];
+  const tP = P.torso.profile[0]![1];
+  const span5 = t5 - b5;
+  /** A child torso-zone height in this body's frame. */
+  const torsoY = (y5: number): number => {
+    const c = Math.min(t5, Math.max(b5, y5));
+    return bP + ((c - b5) / span5) * (tP - bP);
+  };
+  /** A child lateral offset on the torso in this body's frame (same share of the local width). */
+  const torsoX = (x5: number, y5: number): number => (x5 * profX(P, torsoY(y5))) / profX(AGE5, y5);
+  const palmX5 = AGE5.fist.palmSize[0];
+  const palmZ5 = AGE5.fist.palmSize[2];
+  /** A child depth in front of the torso in this body's frame (the fist seats the same way). */
+  const torsoZ = (y5: number, x5: number, litZ: number): number => {
+    const surf5 = Math.sqrt(Math.max(0, profX(AGE5, y5) ** 2 - x5 ** 2)) * 0.78;
+    const yA = torsoY(y5);
+    const xA = torsoX(x5, y5);
+    const surfA = Math.sqrt(Math.max(0, profX(P, yA) ** 2 - xA ** 2)) * 0.78;
+    return surfA + P.fist.palmSize[2] + (litZ - surf5 - palmZ5);
+  };
+  /** A child height above the torso top in this body's frame (the head only moves up or down). */
+  const headShift = (y5: number): number => y5 + (P.headY - AGE5.headY);
+  const hipGap = 0.14 - (AGE5.hip[0] + AGE5.limb.thigh + palmX5);
+  return {
+    clap: { y: torsoY(0.3), z: torsoZ(0.3, 0, 0.12), halfScale: P.fist.palmSize[0] / palmX5 },
+    neck: [-0.058, headShift(0.452), 0.063],
+    self: [torsoX(-0.055, 0.315), torsoY(0.315), torsoZ(0.315, -0.055, 0.15)],
+    count: [-0.16, headShift(0.43), 0.13],
+    hip: [-(P.hip[0] + P.limb.thigh + P.fist.palmSize[0] + hipGap), torsoY(0.21), 0.03],
+    eat: [-0.06, headShift(0.45), 0.16],
+    hugR: [torsoX(0.035, 0.33), torsoY(0.33), torsoZ(0.33, 0.035, 0.165)],
+    hugL: [torsoX(0.035, 0.3), torsoY(0.3), torsoZ(0.3, 0.035, 0.14)],
+    listen: [-0.2, headShift(0.4), 0.05],
+  };
+}
 
 /**
  * Sprout gestures: the nine week 1 gesture clips of Chibi Sprouts on the humanoid kind's skeleton
  * (`gesture-idle`, `-clap`, `-wave`, `-nod`, `-touch-nose`, `-touch-neck`, `-point-to-self`,
  * `-point-forward`, `-hands-out`).
- * A Sprout adds them in `extra` with `sproutGestures(k, h)`. Every clip is 2 s, loops, and starts
+ * A Sprout adds them in `extra` with `sproutGestures(k, h)`. The adult base passes its own
+ * proportions as `P` (default `AGE5`); every other caller keeps the age-5 numbers exactly. Every clip is 2 s, loops, and starts
  * and ends in the idle stance. The Workbooks compositor reads key frames at fixed times, so each
  * clip holds its named pose exactly at these times (it eases into and out of the key):
  *
@@ -79,9 +160,11 @@ interface Goal {
   readonly pole: V3;
 }
 
-export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
+export function sproutGestures(k: AssetContext, h: HumanoidShape, P: HumanoidProportions = AGE5): void {
   const { SHOULDER, ELBOW, WRIST, GRIP, HIP, KNEE, ANKLE } = h.joints;
   const { keys, bump, reach, orient, wave } = motion;
+  /** Every body-anchored goal in this body's frame (the child keeps its authored numbers). */
+  const T = gestureTargets(P);
 
   const arm = (side: 1 | -1) => {
     const m = (v: V3): V3 => (side === 1 ? [-v[0], v[1], v[2]] : v);
@@ -153,11 +236,10 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
   }));
 
   // ------------------------------------------------------------------ clap: apart at 0.5 s, together at 1.0 s
-  const CLAP_Y = 0.3;
   const clapGoal = (half: number): Goal => {
     const d: V3 = [0, -0.1, 1];
     const hint: V3 = [0, 1, 0];
-    return { wrist: R.wristFor([-half, CLAP_Y, 0.12], d, hint), d, hint, pole: [-0.2, 0.2, 0.0] };
+    return { wrist: R.wristFor([-half * T.clap.halfScale, T.clap.y, T.clap.z], d, hint), d, hint, pole: [-0.2, 0.2, 0.0] };
   };
   clip('gesture-clap', (p) => {
     const f = keys(p, [[0, 0], [0.25, 1], [0.75, 1], [1, 0]] as const);
@@ -198,9 +280,9 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
   // gives the nose tip; the index finger of the right fist is aimed at that point, so the fingertip lands on the nose.
   const NOSE_HEAD_TURN: V3 = [14, -14, 0]; // degrees at the key: tips down and turns a little toward the hand
   const NOSE_HEAD_MOVE: V3 = [-0.004, -0.05, 0]; // meters
-  const noseRest: V3 = [0, AGE5.face.noseY, h.faceZ(0, AGE5.face.noseY) + 0.011];
+  const noseRest: V3 = [0, P.face.noseY, h.faceZ(0, P.face.noseY) + 0.011];
   const noseTip = ((): V3 => {
-    const pivot = vec(AGE5.bones.head);
+    const pivot = vec(P.bones.head);
     const q = vec(noseRest).sub(pivot).applyQuaternion(motion.quat(NOSE_HEAD_TURN));
     return arr(q.add(pivot).add(vec(NOSE_HEAD_MOVE)));
   })();
@@ -238,10 +320,9 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
   });
 
   // ------------------------------------------------------------------ touch neck: chin lifted, both fists at the front of the neck
-  const NECK_AT: V3 = [-0.058, 0.452, 0.063];
   const neckD: V3 = [0.5, 0.75, 0.25];
   const neckHint: V3 = [0, 0, 1];
-  const neckGoal: Goal = { wrist: R.wristFor(NECK_AT, neckD, neckHint), d: neckD, hint: neckHint, pole: [-0.4, 0.25, -0.1] };
+  const neckGoal: Goal = { wrist: R.wristFor(T.neck, neckD, neckHint), d: neckD, hint: neckHint, pole: [-0.4, 0.25, -0.1] };
   clip('gesture-touch-neck', (p) => {
     const f = ks(p, [[0, 0], [0.65, 1], [1.35, 1], [2, 0]]);
     return {
@@ -254,7 +335,7 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
   // ------------------------------------------------------------------ point to self: the right hand on the chest, the elbow out
   const selfD: V3 = [0.95, -0.1, 0.3];
   const selfHint: V3 = [0, 0, -1];
-  const selfGoal: Goal = { wrist: R.wristFor([-0.055, 0.315, 0.15], selfD, selfHint), d: selfD, hint: selfHint, pole: [-0.5, 0.35, -0.2] };
+  const selfGoal: Goal = { wrist: R.wristFor(T.self, selfD, selfHint), d: selfD, hint: selfHint, pole: [-0.5, 0.35, -0.2] };
   clip('gesture-point-to-self', (p) => {
     const f = keys(p, [[0, 0], [0.4, 1], [0.6, 1], [1, 0]] as const);
     return { ...R.pose(selfGoal, f), head: { rotate: [2 * f, 0, 0] } };
@@ -310,7 +391,7 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
   // ================================================================== week 2 to 6 gestures (13 clips)
   // Times below are seconds (the clip is 2 s); `ks` turns the phase into seconds and eases through the keys.
   const ks = (p: number, list: readonly (readonly [number, number])[], mode: 'smooth' | 'linear' = 'smooth') => keys(p * DEFAULT_DURATION, list, mode);
-  const HIPS_AT = AGE5.bones.hips;
+  const HIPS_AT = P.bones.hips;
 
   // Arms from a fist-center point: `fist` (right-arm coordinates) is where the fist center should be.
   const fistGoal = (point: V3, d: V3, hint: V3, pole: V3): Goal => ({ wrist: R.wristFor(point, d, hint), d, hint, pole });
@@ -405,14 +486,12 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
   });
 
   // ------------------------------------------------------------------ count-fingers: the right fist at the jaw, the left fist on the hip, the whole body bobs with each count
-  const COUNT_AT: V3 = [-0.16, 0.43, 0.13];
-  const HIP_FIST: V3 = [-0.14, 0.21, 0.03];
-  const hipGoal = fistGoal(HIP_FIST, [0.5, -1, 0.2], [0, 0, 1], [-0.55, 0.28, -0.12]);
+  const hipGoal = fistGoal(T.hip, [0.5, -1, 0.2], [0, 0, 1], [-0.55, 0.28, -0.12]);
   clip('gesture-count-fingers', (p) => {
     const f = ks(p, [[0, 0], [0.3, 1], [1.45, 1], [1.9, 0], [2, 0]]);
     const pump = ks(p, [[0, 0], [0.35, 0], [0.5, 0.04], [0.68, 0], [0.85, 0.04], [1.02, 0], [1.2, 0.04], [1.38, 0], [2, 0]]);
     const b = pump / 0.04;
-    const goal = fistGoal([COUNT_AT[0], COUNT_AT[1] + pump, COUNT_AT[2]], [0.2, 1, 0], [0, 0, 1], [-0.45, 0.3, -0.05]);
+    const goal = fistGoal([T.count[0], T.count[1] + pump, T.count[2]], [0.2, 1, 0], [0, 0, 1], [-0.45, 0.3, -0.05]);
     return {
       ...R.pose(goal, f),
       ...L.pose(hipGoal, f),
@@ -476,8 +555,7 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
   });
 
   // ------------------------------------------------------------------ eat: the head lowers to meet the fist at the chin, twice, a chew nod after each
-  const EAT_AT: V3 = [-0.06, 0.45, 0.16];
-  const eatGoal = fistGoal(EAT_AT, [0.5, 0.8, 0.2], [0, 0.3, 1], [-0.5, 0.3, -0.1]);
+  const eatGoal = fistGoal(T.eat, [0.5, 0.8, 0.2], [0, 0.3, 1], [-0.5, 0.3, -0.1]);
   clip('gesture-eat', (p) => {
     const f = ks(p, [[0, 0], [0.5, 1], [0.85, 0.3], [1.2, 1], [1.45, 1], [2, 0]]);
     const down = ks(p, [[0, 0], [0.5, 15], [0.85, 4], [1.2, 15], [1.45, 15], [2, 0]]);
@@ -486,8 +564,8 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
   });
 
   // ------------------------------------------------------------------ hug-self: the arms cross the chest, a small squeeze rock
-  const hugR = fistGoal([0.035, 0.33, 0.165], [0.9, 0.3, 0.2], [0, 1, 0.4], [-0.3, 0.0, 0.1]);
-  const hugL = fistGoalL([0.035, 0.3, 0.14], [0.9, 0.3, 0.2], [0, 1, 0.4], [-0.3, 0.0, 0.1]);
+  const hugR = fistGoal(T.hugR, [0.9, 0.3, 0.2], [0, 1, 0.4], [-0.3, 0.0, 0.1]);
+  const hugL = fistGoalL(T.hugL, [0.9, 0.3, 0.2], [0, 1, 0.4], [-0.3, 0.0, 0.1]);
   clip('gesture-hug-self', (p) => {
     const f = ks(p, [[0, 0], [0.8, 1], [1.3, 1], [1.9, 0], [2, 0]]);
     const rock = ks(p, [[0, 0], [1.0, 0], [1.1, -3], [1.2, 3], [1.3, 0], [2, 0]]);
@@ -506,7 +584,7 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
   });
 
   // ------------------------------------------------------------------ listen: the head tilts 25 degrees into the fist at the cheek, the spine rolls, the left arm out
-  const listenGoal = fistGoal([-0.2, 0.4, 0.05], [0.3, 1, 0], [0, 0, 1], [-0.45, 0.2, -0.1]);
+  const listenGoal = fistGoal(T.listen, [0.3, 1, 0], [0, 0, 1], [-0.45, 0.2, -0.1]);
   clip('gesture-listen', (p) => {
     const f = ks(p, [[0, 0], [0.8, 1], [1.4, 1], [2, 0]]);
     const tilt = ks(p, [[0, 0], [0.4, 0], [0.8, 1], [1.4, 1], [2, 0]]);
