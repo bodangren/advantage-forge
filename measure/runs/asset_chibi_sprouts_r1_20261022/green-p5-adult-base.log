@@ -248,3 +248,57 @@ gate outputs:
 - No Red test edited (no Red test exists for Grandma; the gate set is the six
   waived clips). No out/ committed. Parent plan task stays [~]; Grandpa and Tom
   remain.
+
+## Grandpa green (2026-11-20, feat 95931d6b, role_base 90055b55)
+- Source: assets/sprout-grandpa.ts (new) on the ADULT kind (sprout-adult-base,
+  humanoid-kind), the Dad/Mom template. GRANDPA proportions live in this file
+  only: ADULT with a local 2.2 % height stretch (TALL 1.022, the Dad pattern),
+  because the bald crown builds 1.519 m on ADULT and Mom stands 1.552 m.
+  ADULT is unchanged. Bald crown (no cap), white side puffs at the temples with
+  a slim nape band, round brown glasses (rims, bridge, temples) rigid on the
+  head bone, bushy white mustache, white brow tufts, dark-green V-neck sweater
+  (shirt showing in the V, rib trim, long sleeves, ribbed cuffs and hem),
+  light-green collared shirt (front panel, collar, 2 buttons), brown trousers,
+  brown lace-up shoes. lashes false. Presets: grandpa (fair skin, white hair,
+  brown eyes, green cloth).
+- Height: 1.548 m total, 4 mm under Mom (1.552); widths 0.544 m, depth 0.355 m.
+  Textured 40,798 tris (Mom 36,084; Dad 37,892; Grandma 36,312): the extra
+  3k is the glasses rims, the mustache, and the brow tufts, which are real
+  extra parts no sibling has (rims coarsened to detail 0.003 after a 43,150
+  first textured build).
+- Build loop (2 fast renders + 2 textured): (1) bald crown on ADULT gave 1.519 m,
+  33 mm under Mom: added the local TALL 1.022 stretch. (2) the nape band read
+  as a headband across the back of the head: moved it down to the nape
+  (y -0.10/-0.115) and slimmed it (r 0.024).
+- forge all: exit 0, zero warning: lines, FORGE_GL=software. forge check: result
+  FAIL in 3 clips only, all inside the six waived ones: gesture-touch-nose
+  (fingers/index into the nose skin, intentional face touch), gesture-count-fingers
+  (index 0.7 cm into the glasses), gesture-eat (fingers/hand 0.6-0.7 cm into the
+  glasses). The other three waived clips pass: wave ok; touch-neck closest 0.0 cm;
+  listen closest 0.5 cm. point-up, stretch-up, sway, look, bow, turn, cheer,
+  picture poses ok. No hand through side hair, back band, or mustache in any
+  frame. No hand through glasses outside count-fingers and eat. clap body
+  6.1 cm into the sweater is the shared adult-chest structure (Mom 5.6,
+  Dad 6.1, Grandma 6.4). Ground ok, rest lowest 0.0 cm.
+- Render vs grandpa.jpg (textured 4 views): bald older man, white side tufts,
+  brown round glasses, bushy white mustache, white brows, dark-green V-neck
+  with light-green collar and buttons, brown trousers, brown lace shoes, kind
+  smile. Open defects, all minor: the kind's brown brow paint shows at the
+  temples beside the white tufts; the rims stand visibly proud of the face in
+  the side view; the shirt collar flaps read as tabs from the front (the Dad
+  pattern); the nape band reads as a stripe in the back view.
+- Cut-outs: bench/sonnet/sprouts/cutout-gestures-cast.sh grandpa rendered 25
+  frames into out/chibi-sprouts/r1/week2-7/gestures-adult/grandpa/ with
+  gestures.grandpa in the adult manifest (mom, dad, grandma keys untouched).
+  Script change is comment-only (usage line, adult canvas note); the adult canvas
+  stays 1760x1856 and Grandpa fits it (rows 128..1834, cols 545..1214).
+  cutout-check on gestures-adult flags only the known reach tiptoe in all four
+  adults: grandpa/reach lowest opaque row 1834, foot row 1840 (same as
+  mom/grandma 1833 and dad 1834).
+- typecheck: exit 0, 0 errors in assets/sprout-grandpa.ts. Preset pin gains
+  only the sprout-grandpa block (392 assets, 907 presets, 3186 slots; pure
+  addition, 0 deletions). Sprout vitest: 3 files, 10 tests pass with
+  --maxWorkers=1.
+- No Red test edited (no Red test exists for Grandpa; the gate set is the six
+  waived clips, unchanged from the Mom/Dad/Grandma rounds). No out/ committed.
+  Parent plan task stays [~]; Tom remains.
