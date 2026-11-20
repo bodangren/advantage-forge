@@ -286,10 +286,16 @@ Workbooks does not wait for it.
     stretch-up); now rigid on the hips bone like the skirt. Log green-p5-adult-base.log.
   - [x] Grandpa (older man, as tall as Mom, due 11-24; feat 95931d6b)
   - [x] Tom (nine-year-old boy, one of the tallest children, due 11-25; feat c402738f, fix 71c48a26)
-- [ ] Task: Per-character hand offset in assets/parts/sprout-gestures.ts for bob hair (moves
+- [~] Task: Per-character hand offset in assets/parts/sprout-gestures.ts for bob hair (moves
   the hands of point-up, cheer, picture-sway out for a character that opts in). Red tests
   first: the gesture poses of every other character (Pat, Sam, Mia, May, Nan, adult base)
   stay unchanged. Then one Lily hair round.
+  - Red (2026-11-20): `tests/sprout-gesture-offset.test.ts` (8 tests). Default guards pass:
+    26+8 clip inventory, per-character pose digests (pat c16572dc, sam/mia/nan/lily 22563e18,
+    may 5e70ec98, adult-base 753da272, hero 68442177), key wrist |x| pins, and other-clips-identical
+    with the option. The 3 opt-in movement tests fail for the right reason (option ignored,
+    0.0 m move vs 0.035 m floor). Red command fails as required: 9 pass, 3 fail.
+    Log: measure/runs/asset_chibi_sprouts_r1_20261022/red-p5-hand-offset.log.
 - [x] Task: The remaining gesture key frames (20 gestures in use, inventory section 3): the (0bb18f6e, 697ae4a9)
   week 2 to 7 set above covers set 2 and `turn`; only the week 4 family cast gestures wait for S26.
   Commits: 0bb18f6e (set 2), 697ae4a9 (`turn`).

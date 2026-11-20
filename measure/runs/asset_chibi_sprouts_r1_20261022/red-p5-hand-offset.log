@@ -1,0 +1,33 @@
+MEASURE_AGENT_RESULT
+status: red
+role: measure-mid-red
+role_base_sha: 98f31f3d
+baseline_sha: 98f31f3d
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check)
+task: Per-character hand offset for bob hair (plan.md line 289, marked [~])
+HEAD: 98f31f3d (work committed on top; see commits)
+commits: test(chibi_sprouts_r1): Red for per-character hand offset
+production_change: none (tests and plan only)
+files_touched:
+  tests/sprout-gesture-offset.test.ts (new, 8 tests)
+  measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md ([~] mark plus Red evidence)
+  measure/runs/asset_chibi_sprouts_r1_20261022/red-p5-hand-offset.log (this log)
+red_test_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sprout-gestures.test.ts tests/sprout-gesture-offset.test.ts'
+red_result: FAIL as required (9 pass, 3 fail)
+chosen_api: sproutGestures(k, h, P, opts) with opts = { handClearance?: number }; handClearance is meters, default 0 (absent). It moves the wrist goals of gesture-point-up and picture-sway outward from the head axis by the given clearance. Same option name on the kind object passed to humanoidAsset (read in assets/parts/humanoid-kind.ts at the animation('cheer', ...) wrist goal near line 1100) for cheer. Default 0 keeps every pose identical for every character and every clip, including cheer for HERO, AGE5, and ADULT users.
+scope_note: the module holds 26 sprout clips today (brief said 25); the guard pins all 26 plus the 8 base clips. Pat holds a teddy bear (kind hold), so his cheer arms stay at the rest wrists (|x| 0.0672 m); the other children match Sam exactly.
+tests_pass (5 new + 4 existing):
+  - clip inventory: 26 sprout plus 8 base clips per cast asset, 8 for the hero
+  - full default pose digests: pat c16572dc, sam/mia/nan/lily 22563e18, may 5e70ec98, adult-base 753da272, hero 68442177
+  - key wrist pins: point-up R 0.21596 (child) / 0.41081 (adult); picture-sway 0.22290 / 0.43013; cheer 0.22270 / 0.46213 / 0.27051 (hero)
+  - other 24 sprout clips identical with the option; other 7 base clips identical with the kind option
+  - existing tests/sprout-gestures.test.ts: 4 pass
+tests_fail (3, right reason: option ignored, movement 0.0 m vs floor 0.035 m):
+  - moves the point-up hand outward by the requested clearance: expected 0 to be >= 0.035
+  - moves the picture-sway hands outward by the requested clearance: expected 0 to be >= 0.035
+  - moves the cheer fists outward by the requested clearance on the kind path: expected 0 to be >= 0.035
+typecheck: tsc --noEmit shows no error in tests/sprout-gesture-offset.test.ts (only pre-existing errors elsewhere)
+questions_with_defaults: none (orchestrator supplied phase_base_sha, clip names, and API in the route)
+handoff: Green implements { handClearance } in sproutGestures (point-up, picture-sway) and kind.handClearance in humanoidAsset cheer; then one Lily hair round per the plan task.
+END_MEASURE_AGENT_RESULT
