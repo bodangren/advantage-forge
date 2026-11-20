@@ -81,31 +81,34 @@ export default humanoidAsset({
         ),
       )
       .scale([1, 1, 0.9]);
-    // The face opening removes every hair point in front of the ear plane (z -0.01) below the
-    // fringe line. The bob then falls straight down beside and behind the cheeks. No hair sits in
-    // front of the chin, so the jaw reads clean in the front and three-quarter views. The flat top
-    // at +0.058 sits 1.1 cm above the brows and gives one straight fringe edge. One half-space cut
-    // keeps that edge clean; an extruded polygon left stair steps along the face border.
+    // A large ellipsoid cuts the face opening. Its back surface is a gentle curve, not a flat
+    // wall: z -0.01 at the jaw and ear band, and at most +0.016 at the fringe. The curve stays far
+    // behind the chin front (z +0.14), so the jaw reads clean. The flat top at +0.058 sits 1.1 cm
+    // above the brows and gives one straight fringe edge. The curved cut also rounds the side
+    // hair, so the front edge no longer reads as a slab.
     const faceWindow = sdf
-      .halfSpace([0, 0, -1], 0.01)
-      .intersect(sdf.halfSpace([0, 1, 0], 0.058));
+      .ellipsoid([0.8, 0.5, 0.51])
+      .at(0, -0.1, 0.5)
+      .intersect(
+        // A shallow wave gives the bangs a few soft lock tips instead of one smooth visor line.
+        sdf.halfSpace([0, 1, 0], 0.06).displace(0.0035, (x) => Math.sin(x * 62)),
+      );
     // The blunt cut: level at the chin in front and a little longer at the nape behind.
     const hem = sdf.halfSpace([0, -1, 0.065], 0.1846);
     const hairPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
       const low = Math.max(0, (-0.14 - y) * 6) * 0.12; // a soft darkening at the hem
       return mixRgb(base, rgb('#3a1e10'), low);
     };
-    // The fringe step: a rounded lip stands proud of the forehead. Its sharp lower edge sits at
-    // the forehead cut (y 0.057), 1 cm above the brows (brows at 0.047), so the step is geometry.
-    const fringeLip = sdf
-      .ellipsoid([0.2, 0.16, 0.2203])
-      .at(0, 0, -0.005)
-      .intersect(sdf.halfSpace([0, -1, 0], -0.057))
-      .intersect(sdf.halfSpace([0, 0, -1], -0.02));
-    const hairLocal = bob
-      .smoothSubtract(0.004, faceWindow)
+    // No separate fringe lip. Hollow the bob into a thin shell, so the cut edge is thin too. The
+    // outer surface stays unchanged, so the bob still reads as one smooth mass. A 0.006 m fillet
+    // rounds the bangs into soft locks that lie on the forehead and blend into the cheek hair.
+    const inner = bob
+      .scale([0.93, 1, 0.93])
+      .intersect(sdf.halfSpace([0, 1, 0], 0.12));
+    const hairShell = bob.subtract(inner);
+    const hairLocal = hairShell
+      .smoothSubtract(0.006, faceWindow)
       .intersect(hem)
-      .smoothUnion(0.005, fringeLip)
       .paintFn(hairPaint)
       .bone('head');
     k.body('hair', hairLocal.at(0, HEAD_Y, 0), { color: k.tint('hair'), roughness: 0.6, detail: 0.004 });
