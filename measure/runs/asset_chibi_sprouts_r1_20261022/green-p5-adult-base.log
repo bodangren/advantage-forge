@@ -440,3 +440,56 @@ No Red test edited. Parent P5 cast task stays [~].
 handoff: Phase acceptance should audit assets/sprout-lily.ts at bd5ecf87, the three defect
 claims against out/sprout-lily/render.png, the forge check distances, and the Lily cut-outs.
 END_MEASURE_AGENT_RESULT
+
+MEASURE_AGENT_RESULT
+status: green
+role: measure-jr-green
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check)
+phase_base_sha: 98f31f3d6fe67421bec48e51f93865fde7e4902b
+role_base_sha: af4a733e45a9bddcf4f9a618d17390903fcd30d0
+implementation_sha: 5a1ab2571e969f52d909646dcca5e18126dbab5d
+commits:
+  - 5a1ab257 fix(chibi_sprouts_r1): Lily bob behind the jaw
+  - plan and log evidence committed separately. A commit cannot carry its own SHA.
+
+look_check_response:
+  - A, critical: fixed. The tapered extruded face window left hair in front of the chin. It read
+    as a chin strap and left dark wedges at both jaw corners. One half-space cut now removes hair
+    in front of the ear plane (z -0.01) below the fringe line. The jaw reads clean in the front,
+    three-quarter, and point-up views. The lower edge of the bob is a straight horizontal line.
+    Nothing curls under the chin.
+  - B: fixed. The extruded polygon left stair steps along the fringe and cheek border. One
+    half-space cut and a 0.004 m fillet give one clean straight fringe edge above the brows.
+  - Kept: the smooth one-piece bob, no ledge, no bands, jaw-side coverage in the side view, thick
+    brows, small mouth, short frill skirt, ears visible, and handClearance 0.04.
+
+shape_loops: four fast renders. I read out/sprout-lily/render.png and a fresh point-up cut-out
+  after each loop. Loop 1 used the ear-front cut. Loop 2 was a focused head check. Loop 3 tried
+  z +0.03, which hid the ears, so I reverted. Loop 4 confirmed the ear-front cut again.
+
+gates, all through heavy-run.sh in the foreground:
+  1. node scripts/typecheck-asset.mjs assets/sprout-lily.ts: exit 0, 0 errors.
+  2. FORGE_GL=software ./forge all sprout-lily: exit 0, no warning lines. 22,596 textured
+     triangles. Size 0.457 x 0.844 x 0.405 m.
+  3. ./forge check sprout-lily: exit 1 on the six waived clips only: gesture-wave,
+     gesture-touch-nose, gesture-touch-neck, gesture-count-fingers, gesture-eat, gesture-listen.
+     gesture-point-up ok, closest 3.5 cm (hand.R to hair at phase 0.40).
+     picture-sway ok, nothing within 5.0 cm. cheer ok, nothing within 5.0 cm.
+     gesture-stretch-up ok, closest 0.3 cm. Ground ok.
+  4. tests/fixtures/preset-pin.json unchanged. git status and git diff show no change.
+  5. Lily cut-outs: 25 frames at 1024x1200. The gestures.lily key and every other manifest key
+     stay. cutout-check exits 1 on the known reach tiptoe only: adventurer/reach row 1174,
+     lily/reach row 1176, may/reach row 1176, mia/reach row 1175, sam/reach row 1175,
+     tom/reach row 1175. Foot row 1184. I read the fresh delivery point-up cut-out. Jaw clean.
+  6. Red command after implementation: exit 0, 13 pass and 13 total. Three sprout test files
+     with --maxWorkers=1: exit 0, 15 pass and 15 total.
+
+handClearance_value: 0.04. I did not raise it. No priority clip collides.
+
+new_files_added_for_reviewer_scope: none. The cut-out PNGs replace existing Lily frames.
+No Red test edited. Parent P5 cast task stays [~].
+handoff: Phase acceptance should audit assets/sprout-lily.ts at 5a1ab257. Check the clean jaw in
+  out/sprout-lily/render.png and the fresh Lily point-up cut-out. Check the fringe edge and the
+  forge check distances.
+END_MEASURE_AGENT_RESULT

@@ -263,6 +263,19 @@ Workbooks does not wait for it.
     re-rendered at 1024x1200. The gestures.lily key and every other manifest key stay. cutout-check
     flags only the known reach tiptoe (adventurer, lily, may, mia, sam, tom). Log
     green-p5-adult-base.log.
+  - Lily hair r3 5a1ab257 (2026-11-20, orchestrator look check). The tapered extruded face window
+    at bd5ecf87 left dark hair under the chin in point-up and in the front view. That read as a
+    chin strap. The face border was jagged. The window is now one half-space cut. It removes hair
+    in front of the ear plane (z -0.01) below the fringe line. No hair sits in front of the chin.
+    The fringe is one clean straight edge above the brows. Ears stay visible. The smooth one-piece
+    bob, the straight chin-length hem, the jaw-side coverage, and handClearance 0.04 stay unchanged.
+    `./forge all sprout-lily` exits 0 with no warning lines (22,596 tris textured,
+    0.457 x 0.844 x 0.405 m). `./forge check sprout-lily` fails only the six waived clips.
+    Point-up closest 3.5 cm. Picture-sway and cheer report nothing within 5.0 cm. Stretch-up
+    closest 0.3 cm. Ground ok. The Red command exits 0 with 13/13 tests. The three sprout test
+    files pass 15/15. typecheck-asset reports 0 errors. The preset pin is unchanged. Lily's 25
+    cut-out frames were re-rendered at 1024x1200. cutout-check flags only the known reach tiptoe
+    (adventurer, lily, may, mia, sam, tom). Log green-p5-adult-base.log.
   - [x] Mom (young mother, medium height, due 11-21). `assets/sprout-mom.ts` ac97d422
     (ADULT proportions; long wavy medium-brown hair past the shoulders, cream cable-knit
     sweater with collar/cuffs/ribbed hem, blue jeans, brown flats, pearl studs; look target
