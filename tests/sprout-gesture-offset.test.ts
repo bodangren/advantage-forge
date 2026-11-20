@@ -38,7 +38,8 @@ import adultBase from '../assets/sprout-adult-base.js';
  * needs a lowered floor.
  *
  * Part A pins today's poses (passes now): the full gesture pose data of Pat, Sam, Mia, May,
- * Nan, Lily, and the adult base, plus the base-kind clips of the hero. Part B pins the
+ * Nan, and the adult base, plus the base-kind clips of the hero. Lily is not pinned: she
+ * opts in to `handClearance` (Red r3), so her point-up, picture-sway, and cheer move. Part B pins the
  * contract of the option (fails now for the right reason: the option is ignored, so the
  * hands do not move). Only `gesture-point-up`, `picture-sway`, and `cheer` may change.
  *
@@ -197,7 +198,7 @@ const MOVED_BASE = new Set(['cheer']);
 
 describe('per-character hand offset (default poses stay identical)', () => {
   it('keeps the full clip inventory: 26 sprout clips plus 8 base clips', () => {
-    for (const def of [pat, sam, mia, may, nan, lily, adultBase]) {
+    for (const def of [pat, sam, mia, may, nan, adultBase]) {
       const { anims } = capture(def);
       expect([...anims.keys()].sort()).toEqual([...SPROUT_CLIPS, ...BASE_CLIPS].sort());
       for (const name of SPROUT_CLIPS) {
@@ -215,7 +216,6 @@ describe('per-character hand offset (default poses stay identical)', () => {
     expect(digestAll(mia)).toEqual({ size: 34, digest: '22563e18' });
     expect(digestAll(may)).toEqual({ size: 34, digest: '5e70ec98' });
     expect(digestAll(nan)).toEqual({ size: 34, digest: '22563e18' });
-    expect(digestAll(lily)).toEqual({ size: 34, digest: '22563e18' });
     expect(digestAll(adultBase)).toEqual({ size: 34, digest: '753da272' });
     expect(digestAll(hero)).toEqual({ size: 8, digest: '68442177' });
   });
@@ -227,7 +227,6 @@ describe('per-character hand offset (default poses stay identical)', () => {
     };
     // Raised right wrist of point-up at its hold (t = 1.0 s of 2 s).
     expect(wristHeadDistance(at(sam, 'gesture-point-up', 1.0, 0.5).skel, at(sam, 'gesture-point-up', 1.0, 0.5).pose, 'R')).toBeCloseTo(0.21599, 4);
-    expect(wristHeadDistance(at(lily, 'gesture-point-up', 1.0, 0.5).skel, at(lily, 'gesture-point-up', 1.0, 0.5).pose, 'R')).toBeCloseTo(0.21599, 4);
     expect(wristHeadDistance(at(adultBase, 'gesture-point-up', 1.0, 0.5).skel, at(adultBase, 'gesture-point-up', 1.0, 0.5).pose, 'R')).toBeCloseTo(0.4216, 4);
     // Both raised wrists of picture-sway (constant held pose).
     const sway = at(sam, 'picture-sway', 1.0, 0.5);
@@ -344,5 +343,20 @@ describe('per-character hand offset (the opt-in moves the hands out)', () => {
       return out;
     };
     expect(snap(moved)).toEqual(snap(base));
+  });
+
+  it('Lily opts in: her point-up, picture-sway, and cheer clear the bob hair', () => {
+    // Lily is the character that opts in (plan task). No exact digest or value is pinned:
+    // her clearance may go above 0.04 m. Each clip must beat the AGE5 default by 0.035 m.
+    const c = capture(lily);
+    const at = (clip: string, t: number, p: number) =>
+      c.anims.get(clip)!.pose(t, p) as Record<string, { rotate?: readonly [number, number, number] }>;
+    expect(wristHeadDistance(c.skel, at('gesture-point-up', 1.0, 0.5), 'R')).toBeGreaterThanOrEqual(0.21599 + 0.035);
+    const sway = at('picture-sway', 1.0, 0.5);
+    expect(wristHeadDistance(c.skel, sway, 'R')).toBeGreaterThanOrEqual(0.223 + 0.035);
+    expect(wristHeadDistance(c.skel, sway, 'L')).toBeGreaterThanOrEqual(0.223 + 0.035);
+    const cheer = at('cheer', 0.4, 0.5);
+    expect(wristHeadDistance(c.skel, cheer, 'R')).toBeGreaterThanOrEqual(0.22934 + 0.035);
+    expect(wristHeadDistance(c.skel, cheer, 'L')).toBeGreaterThanOrEqual(0.22934 + 0.035);
   });
 });

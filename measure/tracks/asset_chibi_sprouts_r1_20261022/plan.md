@@ -290,11 +290,11 @@ Workbooks does not wait for it.
   the hands of point-up, cheer, picture-sway out for a character that opts in). Red tests
   first: the gesture poses of every other character (Pat, Sam, Mia, May, Nan, adult base)
   stay unchanged. Then one Lily hair round.
-  - Red r2 (2026-11-20, head-distance metric): metric is the 3D wrist distance from the
-    head bone joint. Feasibility with this file's FK model (400k rotation-only samples, AGE5):
-    point-up max gain 0.058661 m, picture-sway about 0.0517 m, cheer about 0.0453 m; floor
-    stays 0.035 m for all three clips. Red command fails as required: 9 pass, 3 fail
-    (option ignored, 0.0 m gain). tsc clean for the test file (via heavy-run).
+  - Red r3 (2026-11-20, Lily opts in): Lily leaves the default pins (digests and key
+    pins now cover Pat, Sam, Mia, May, Nan, adult base, hero only). New test loads the real
+    sprout-lily and requires point-up, picture-sway, cheer head distances at least AGE5
+    default + 0.035 m (no exact pin). Red command: 12 pass, 1 fail (Lily at default
+    0.21599 m vs 0.25099 m floor, no opt-in yet). tsc clean for the test file (via heavy-run).
   - Green (2026-11-20): `handClearance` (meters, default 0) threads from the fourth argument
     of `sproutGestures(k, h, P, opts)` into the point-up and picture-sway arm goals, and from
     `kind.handClearance` into the cheer fist goal. The arm swings out along the reach circle;

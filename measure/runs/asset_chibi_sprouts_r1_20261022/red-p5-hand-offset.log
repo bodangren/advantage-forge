@@ -48,3 +48,14 @@ guards_kept: default digests unchanged (pat c16572dc, sam/mia/nan/lily 22563e18,
 typecheck_r2: tsc --noEmit via heavy-run.sh shows no error in tests/sprout-gesture-offset.test.ts
 load_rule: all vitest and tsc runs in r2 went through heavy-run.sh (no bare runs)
 END_MEASURE_AGENT_RESULT_R2
+
+MEASURE_AGENT_RESULT_R3
+status: red
+role_base_sha: ebc4e228
+baseline_sha: 98f31f3d
+change: Lily leaves the unchanged-default pins (digest list and key-distance pins now cover Pat, Sam, Mia, May, Nan, adult base, and hero only; Sam, Mia, Nan still pin AGE5 default 22563e18). New test loads the real assets/sprout-lily.ts and requires point-up, picture-sway, and cheer head-center distances at least AGE5 default + 0.035 m (0.25099 / 0.258 / 0.26434 m); no exact digest or value pinned, clearance may exceed 0.04 m.
+red_result_r3: FAIL as required (12 pass, 1 fail; Lily at default 0.21599 m vs 0.25099 m floor, no opt-in at ebc4e228)
+typecheck_r3: tsc --noEmit via heavy-run.sh clean for tests/sprout-gesture-offset.test.ts
+load_rule: all r3 vitest and tsc runs went through heavy-run.sh (no bare runs)
+handoff: Lily hair round adds handClearance to Lily's kind and sproutGestures call; other characters stay pinned.
+END_MEASURE_AGENT_RESULT_R3
