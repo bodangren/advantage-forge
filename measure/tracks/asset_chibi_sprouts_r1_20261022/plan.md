@@ -290,6 +290,17 @@ Workbooks does not wait for it.
     typecheck-asset reports 0 errors. The preset pin is unchanged. Lily's 25 cut-out frames were
     re-rendered at 1024x1200. cutout-check flags only the known reach tiptoe (adventurer, lily,
     may, mia, sam, tom). Log green-p5-adult-base.log.
+  - Adult sleeve skin breakthrough fix ef5be6c4 (2026-11-21, orchestrator look check F1). The
+    cuff carried a hand bone tag. In point-up the cuff followed the wrist while the skin forearm
+    stayed on the forearm bone, so jagged skin patches showed through the raised sleeve. Each
+    adult now cuts the covered arm skin with `paintSkin` and keeps a 4 mm wrist stub inside the
+    cuff. The cuffs take forearm tags, and the sleeve cones use the skin arm's 0.02 m elbow
+    fillet. Mom's sleeves are a separate body, so the hem keeps hips and spine weights only and
+    no longer points. `./forge all` exits 0 for all four with no warning lines. `./forge check`
+    fails only the six waived clips; point-up reports no head contact. All 100 adult cut-out
+    frames were re-rendered. cutout-check flags only the four known reach tiptoe frames. Three
+    sprout vitest files pass 15/15. typecheck-asset reports 0 errors. The preset pin is unchanged.
+    Log green-p5-adult-base.log.
   - [x] Mom (young mother, medium height, due 11-21). `assets/sprout-mom.ts` ac97d422
     (ADULT proportions; long wavy medium-brown hair past the shoulders, cream cable-knit
     sweater with collar/cuffs/ribbed hem, blue jeans, brown flats, pearl studs; look target

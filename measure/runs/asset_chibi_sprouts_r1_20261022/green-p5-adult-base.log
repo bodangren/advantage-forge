@@ -545,3 +545,59 @@ handoff: Phase acceptance should audit assets/sprout-lily.ts at 53f33ae4. Check 
   rounded side edge in out/sprout-lily/render.png and the fresh Lily point-up cut-out. Check the
   forge check distances and the clean crown.
 END_MEASURE_AGENT_RESULT
+
+## Adult sleeve skin breakthrough (orchestrator look check F1, 2026-11-21)
+
+Scope: routed finding F1 from measure/runs/asset_chibi_sprouts_r1_20261022/
+ux-browser-review-6860686.json. Only assets/sprout-{mom,dad,grandma,grandpa}.ts
+changed. No Red test, sprout-gestures.ts, or humanoid-kind.ts edit. No preset pin
+change. No push. No generate.sh.
+
+Cause: the sleeve cuff was tagged `hand.L`. In point-up the cuff followed the wrist
+while the skin forearm stayed on `forearm.L`. The two surfaces diverged and jagged
+skin patches showed through the raised sleeve near the cuff and the elbow. Mom also
+unioned her sleeves with the sweater torso. The cuff sat near the hem height, so the
+arm weight dragged the hem into a sharp point.
+
+Fix ef5be6c4:
+1. Each adult cuts the covered arm skin with `paintSkin`. The cutter spans shoulder
+   to 4 mm above the wrist. It uses the limb radii plus a 22 mm pad, so it clears the
+   skin arm's 20 mm elbow fillet. The hand stays its own body below the stub.
+2. Each cuff is tagged `forearm.L` instead of `hand.L`. The sleeve cone elbow fillet
+   is 0.02 m, the same as the skin arm.
+3. Mom's sweater torso and sleeves are separate bodies. The torso keeps only hips,
+   spine and chest tags, so the hem keeps those weights in every clip.
+
+Fix loops tried:
+- Loop 1: cuff tag and fillet change, plus Mom's sleeve split. The jagged cuff patch
+  left, but a smooth skin strip stayed under the raised sleeve. A pre-change frame
+  (dad stretch-up, rendered before this work) showed the same strip.
+- Loop 2: add `paintSkin` with an 18 mm wrist stub. The strip left. Grandma kept a
+  smooth skin oval inside the cuff ring.
+- Loop 3: shorten the stub to 4 mm. The four raised-arm frames stayed clean apart
+  from that Grandma oval. The oval is the wrist seen through the cuff opening. It
+  was present in loops 1 and 2 at the same size, so no new fault came from loop 3.
+
+Gates (all through heavy-run.sh, FORGE_GL=software, HEAVY_MIN_AVAIL_MB=1500):
+1. typecheck-asset on the four sources: exit 0, 0 errors.
+2. ./forge all sprout-<name> for all four: exit 0, 0 warning lines each.
+   Triangles: mom 35,132; dad 36,218; grandma 34,774; grandpa 39,156.
+3. ./forge check sprout-<name>: exit 1 only for waived clips. HEAD clips are mom
+   listen/touch-nose; dad listen/touch-neck/touch-nose; grandma touch-nose;
+   grandpa count-fingers/eat/touch-nose. gesture-point-up reports no contact for
+   all four. Ground ok for all four.
+4. cutout-gestures-cast.sh rebuilt 25 frames for each adult: 100 frames, 0 errors,
+   0 warnings, 0 exit 75. cutout-check flags only the four known reach tiptoe
+   frames (lowest opaque row 1833 or 1834, foot row 1840). The manifest keeps
+   gestures.dad, .grandma, .grandpa and .mom.
+5. Three sprout vitest files with --maxWorkers=1: exit 0, 15 pass, 15 total.
+6. Read point-up.png, stretch-up.png (no cheer.png exists in the adult frames)
+   and sway-picture.png for all four adults. No jagged skin patch, no skin strip
+   under a raised sleeve, and no pointed hem. Grandma's cuff ring shows a small
+   wrist oval in raised-arm poses; it predates this fix.
+
+measure/doctor.sh reports two pre-existing stale generated facts:
+measure/generated/status.md and measure/generated/asset-inventory.json. This role
+did not run generate.sh, per the brief. No file outside the four assets was built
+or committed for this fix.
+END_MEASURE_AGENT_RESULT
