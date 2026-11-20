@@ -302,3 +302,42 @@ gate outputs:
 - No Red test edited (no Red test exists for Grandpa; the gate set is the six
   waived clips, unchanged from the Mom/Dad/Grandma rounds). No out/ committed.
   Parent plan task stays [~]; Tom remains.
+
+## Tom green (2026-11-20, feat c402738f, role_base 8a932832)
+- Source: assets/sprout-tom.ts (new) on AGE5 (sprout-sam/sprout-may pattern),
+  wrapped in scaleAsset 1.07 local to Tom only: textured height 0.916 m, above
+  Ben 0.908 and the other children (pat 0.858, sam 0.855, mia 0.854, may 0.872,
+  lily 0.846, all from out/*/stats.json bounds max y). AGE5, HERO, ADULT, the
+  sprout base, sprout-gestures, and all other characters unchanged. Slim build
+  from slimmer shorts legs, not from the shared kind.
+- Look: brown cap with fringe swept to his left, three-spike crown tuft lying
+  almost flat (two render loops: first spikes stood 0.235 high and read as
+  horns; now ends at 0.195, small nubs at the crown), blue T-shirt with six
+  wide orange/dark-blue bands, dark-blue collar, green shorts with dark hem,
+  white ankle socks, gray sneakers with white soles and laces, open smile.
+  Every body carries an explicit bone tag (hair/fringe/tuft head; waistband via
+  h.weighted like Sam; hips ellipsoid hips; legs, socks, shoes tagged).
+- forge all: exit 0, zero warning lines, FORGE_GL=software. Textured 25,984
+  tris (children are near 25k), 0.483 x 0.916 x 0.444 m. forge check: result
+  FAIL in 6 clips = the six waived ones only: wave (hand into skin 1.5 cm),
+  touch-nose, touch-neck, count-fingers, eat, listen. point-up closest 0.4 cm,
+  stretch-up 4.6 cm, cheer 3.9 cm, picture-sway 4.4 cm; no hand through hair
+  outside the waived six. Ground ok, rest lowest 0.0 cm.
+- Render vs tom.jpg (textured 4 views): tall slim boy, swept fringe, crown
+  tuft, wide stripe bands in both colors, green shorts, white socks, gray
+  sneakers, open smile. Open defects, both minor: a small step where the
+  fringe meets the cap at the right temple in three-quarter view; the tuft
+  nubs show slightly at the crown in the front view (they read as the tuft).
+- Cut-outs: bench/sonnet/sprouts/cutout-gestures-cast.sh tom rendered 25
+  frames into out/chibi-sprouts/r1/week2-7/gestures/tom/ with gestures.tom in
+  the children's manifest (pat, sam, mia, may, lily, adventurer keys kept).
+  Script change is comment-only (usage line gains lily | tom); children's
+  canvas stays 1024x1200 and Tom fits it (rows 170..1175). cutout-check flags
+  only the known reach tiptoe: tom/reach lowest opaque row 1175, foot row
+  1184 (same as the other cast).
+- typecheck: exit 0, 0 errors in assets/sprout-tom.ts. Preset pin gains only
+  the sprout-tom block (393 assets, 908 presets, 3190 slots; pure addition, 47
+  insertions, 1 deletion of the closing brace line). Sprout vitest: 3 files,
+  10 tests pass with --maxWorkers=1.
+- No Red test edited. No out/ committed. Parent plan task stays [~] (Lily
+  hair defects still open); Tom line is [x] with feat c402738f.

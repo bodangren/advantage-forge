@@ -285,7 +285,7 @@ Workbooks does not wait for it.
     weights and its verts followed the arms and legs (long blades in point-up, sway, and
     stretch-up); now rigid on the hips bone like the skirt. Log green-p5-adult-base.log.
   - [x] Grandpa (older man, as tall as Mom, due 11-24; feat 95931d6b)
-  - Tom (nine-year-old boy, one of the tallest children, due 11-25)
+  - [x] Tom (nine-year-old boy, one of the tallest children, due 11-25; feat c402738f)
 - [ ] Task: Per-character hand offset in assets/parts/sprout-gestures.ts for bob hair (moves
   the hands of point-up, cheer, picture-sway out for a character that opts in). Red tests
   first: the gesture poses of every other character (Pat, Sam, Mia, May, Nan, adult base)
