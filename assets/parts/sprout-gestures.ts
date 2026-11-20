@@ -165,8 +165,17 @@ interface Goal {
   readonly pole: V3;
 }
 
-export function sproutGestures(k: AssetContext, h: HumanoidShape, P: HumanoidProportions = AGE5): void {
+/** Optional per-character gesture tuning: the clearance of the raised hands from the head, in meters. */
+export interface GestureOptions {
+  readonly handClearance?: number;
+}
+
+export function sproutGestures(k: AssetContext, h: HumanoidShape, P: HumanoidProportions = AGE5, opts: GestureOptions = {}): void {
   const { SHOULDER, ELBOW, WRIST, GRIP, HIP, KNEE, ANKLE } = h.joints;
+  /** The raised arms swing out along the reach circle. Zero keeps every authored pose byte-identical. */
+  const clearance = Math.max(0, opts.handClearance ?? 0);
+  /** Degrees of abduction per meter of clearance (45 degrees at 0.04 m; keeps the hand frame up). */
+  const swing = clearance * 1125;
   const { keys, bump, reach, orient, wave } = motion;
   /** The target spots in this body's frame (the child keeps its authored numbers). */
   const T = gestureTargets(P);
@@ -463,7 +472,8 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape, P: HumanoidPro
   // ------------------------------------------------------------------ point-up: one straight arm up and out, the finger up
   // The fist cannot go above the head (the reach is 0.138 m), so the arm is a straight line 50 degrees out from vertical, clear of the head outline.
   const UP_DEG = 50;
-  const upGoal = armUpGoal(UP_DEG, [0, 1, 0], [-0.4, 0.2, -0.1]);
+  // The opted-in arm swings out from the head; the hand axis stays up, so the pose still points up.
+  const upGoal = armUpGoal(UP_DEG + swing, [0, 1, 0], [-0.4, 0.2, -0.1]);
   clip('gesture-point-up', (p) => {
     const f = ks(p, [[0, 0], [0.3, 0], [0.8, 1], [1.3, 1], [2, 0]]);
     return { ...R.pose({ ...upGoal, d: dFor(UP_DEG), hint: [0, 1, 0] }, f), head: { rotate: [-12 * f, 0, 12 * f] } };
@@ -553,6 +563,8 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape, P: HumanoidPro
   // ------------------------------------------------------------------ stretch-up: both straight arms in a wide V, a tiptoe, the head back
   const VEE_DEG = 55;
   const veeGoal = armUpGoal(VEE_DEG, [0, 1, 0], [-0.4, 0.2, -0.1]);
+  // `picture-sway` opts in; `gesture-stretch-up` keeps the authored V. The hands still frame a V.
+  const swayGoal = armUpGoal(VEE_DEG + swing, [0, 1, 0], [-0.4, 0.2, -0.1]);
   const TOE_PITCH = 7; // degrees toe down: the heel rises 0.015 m over the 0.12 m foot
   clip('gesture-stretch-up', (p) => {
     const f = ks(p, [[0, 0], [0.8, 1], [1.3, 1], [1.9, 0], [2, 0]]);
@@ -664,7 +676,7 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape, P: HumanoidPro
   }));
   // picture-sway: the body leans about 15 degrees to +X with both arms up in a V.
   clip('picture-sway', () => ({
-    ...both({ ...veeGoal, d: dFor(VEE_DEG), hint: [0, 1, 0] }, 1),
+    ...both({ ...swayGoal, d: dFor(VEE_DEG), hint: [0, 1, 0] }, 1),
     ...legsPose({ rotate: [0, 0, -12] }),
     spine: { rotate: [0, 0, -12] },
     head: { rotate: [0, 0, 0] },

@@ -389,6 +389,11 @@ export interface HumanoidKind {
    * the relaxed rest curl. The grip anchors `knife.L` and `knife.R` stay where they were.
    */
   readonly sproutHands?: boolean;
+  /**
+   * Clearance of the cheer fists from the head (meters). Default 0 keeps the authored cheer pose
+   * for the hero and every other kind. A wider bob opts in with a positive value.
+   */
+  readonly handClearance?: number;
   /** Paint on the skin body after the face paint (a beard shadow, freckles, age lines). */
   paintSkin?(skin: sdf.Shape, h: HumanoidShape): sdf.Shape;
   /** Extra bodies: clothes, hats, tools. */
@@ -1098,6 +1103,19 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       // A dip, a hop with both fists pumped up beside the cheeks, a landing that gives in the knees.
       // Loops. The wrists stay well outside the cheeks (x 0.31), so held items stay clear of the head.
       const UP: V3 = tg([-0.31, 0.5, 0.05]);
+      /** Swing the fist goal out along the arm's reach circle, about the right shoulder. */
+      const fistClearance = (up: V3, deg: number): V3 => {
+        if (deg === 0) return up;
+        const c = Math.cos(deg * rad);
+        const s = Math.sin(deg * rad);
+        const r = armR.chain.root;
+        const dx = up[0] - r[0];
+        const dy = up[1] - r[1];
+        return [r[0] + dx * c - dy * s, r[1] + dx * s + dy * c, up[2]];
+      };
+      // 50 degrees per meter of clearance (50 degrees at 0.04 m); the item aim is unchanged.
+      const cheerSwing = Math.max(0, kind.handClearance ?? 0) * 1250;
+      const UPC = fistClearance(UP, cheerSwing);
       animation('cheer', {
         duration: 0.8,
         pose: (_t, p) => {
@@ -1108,8 +1126,8 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
           // A held item rises with the fist: up and a little out, the flat outward, so a crossguard
           // or a shield rim spans front to back beside the head and never toward the cheek.
           const aim = { dir: norm(keys(up, [[0, AIM_REST.dir], [1, [-0.45, 0.88, 0.12]]] as [number, V3][])), up: AIM_REST.up };
-          const pumpR = armR.pose(keys(up, [[0, armR.chain.end], [1, UP]] as [number, V3][]), keys(up, [[0, armR.rest], [1, tg([-0.7, 0.1, 0.2])]] as [number, V3][]), aim);
-          const pumpL = armL.pose(keys(up, [[0, armL.chain.end], [1, armL.m(UP)]] as [number, V3][]), keys(up, [[0, armL.rest], [1, armL.m(tg([-0.7, 0.1, 0.2]))]] as [number, V3][]), aim);
+          const pumpR = armR.pose(keys(up, [[0, armR.chain.end], [1, UPC]] as [number, V3][]), keys(up, [[0, armR.rest], [1, tg([-0.7, 0.1, 0.2])]] as [number, V3][]), aim);
+          const pumpL = armL.pose(keys(up, [[0, armL.chain.end], [1, armL.m(UPC)]] as [number, V3][]), keys(up, [[0, armL.rest], [1, armL.m(tg([-0.7, 0.1, 0.2]))]] as [number, V3][]), aim);
           return {
             ...legs.bones,
             hips: { move: [0, 0.05 * K * air - legs.drop, 0] },
