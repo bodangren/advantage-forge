@@ -30782,6 +30782,53 @@
         }
       }
     },
+    "sprout-grandpa": {
+      "file": "sprout-grandpa.ts",
+      "presets": {
+        "grandpa": {
+          "skin": {
+            "option": "fair",
+            "ratio": [
+              1,
+              1,
+              1
+            ],
+            "default": "#f2c7a4",
+            "shade": "#d5af90"
+          },
+          "hair": {
+            "option": "white",
+            "ratio": [
+              1,
+              1,
+              1
+            ],
+            "default": "#ece9e4",
+            "shade": "#d0cdc9"
+          },
+          "eyes": {
+            "option": "brown",
+            "ratio": [
+              1,
+              1,
+              1
+            ],
+            "default": "#4a2c14",
+            "shade": "#402510"
+          },
+          "cloth": {
+            "option": "green",
+            "ratio": [
+              1,
+              1,
+              1
+            ],
+            "default": "#4a7a52",
+            "shade": "#406b47"
+          }
+        }
+      }
+    },
     "sprout-lily": {
       "file": "sprout-lily.ts",
       "presets": {
