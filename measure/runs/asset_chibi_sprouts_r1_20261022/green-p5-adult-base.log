@@ -341,3 +341,28 @@ gate outputs:
   10 tests pass with --maxWorkers=1.
 - No Red test edited. No out/ committed. Parent plan task stays [~] (Lily
   hair defects still open); Tom line is [x] with feat c402738f.
+
+## Tom r2 (2026-11-20, fix 71c48a26, role_base 8a932832; look-check FAIL on r1 c3879ab7)
+- Defect 1 (white blob between the legs, fixed): the sock shape was built at
+  x = 0, so pair() mirrored two overlapping socks at the center. The cone and
+  cuff now sit at ANKLE[0], one white ankle sock per leg above its sneaker.
+  Read the fast render with my own eyes: the blob is gone in front,
+  three-quarter, and back views; each leg shows a white sock. forge inspect
+  --fast reports no floating part (mouth-open and eyelid-skin hidden by
+  design, as on every sing asset; pockets hidden from these views like Sam).
+- Defect 2 (tuft, improved cheaply): four thinner spikes (r 0.015/0.013/
+  0.013/0.012) ending at head-local y 0.21, varied leans; the crown reads as a
+  few spiky locks. Hand clearance held at r1 numbers: point-up closest
+  0.4 cm, cheer 3.9 cm, picture-sway 4.4 cm, stretch-up 4.6 cm.
+- forge all: exit 0, zero warning lines, FORGE_GL=software. Textured 27,232
+  tris, 0.483 x 0.921 x 0.444 m; still the tallest child, above Ben 0.908). forge check: result FAIL in the same six waived
+  clips only (wave hand 1.5 cm; touch-nose, touch-neck, count-fingers, eat,
+  listen). Ground ok, rest lowest 0.0 cm. Every body keeps its explicit bone
+  tag (sock shin.L at the ankle x).
+- Preset pin: unchanged (no variant or preset change; git shows no diff), and
+  the pin test passes. Cut-outs: cutout-gestures-cast.sh tom re-rendered 25
+  frames (script unchanged); cutout-check flags only the known reach tiptoe
+  (tom/reach lowest opaque row 1175, foot row 1184; other cast unchanged).
+  Sprout vitest: 3 files, 10 tests pass with --maxWorkers=1.
+- No Red test edited. No out/ committed. Parent plan task stays [~]; Tom line
+  is [x] with feat c402738f and fix 71c48a26.
