@@ -6,7 +6,7 @@
 # into gestures-adult/<cast>/ with their own manifest: one folder keeps one canvas,
 # and a grown-up does not fit the children's 1024x1200.
 # Usage: ./cutout-gestures-cast.sh <cast> [slug]
-#   <cast>: pat | sam | mia | may | mom | dad (also nan ben adventurer for re-renders)
+#   <cast>: pat | sam | mia | may | mom | dad | grandma (also nan ben adventurer for re-renders)
 #   [slug]: optional, one gesture slug to (re)render (point-up, reach, ...)
 # The FRAMES list is a copy of cutout-gestures-w2-7.sh; the last frame of a
 # gesture is the beat frame. The *-picture slugs are held poses for the 64 px
@@ -16,7 +16,8 @@
 cd "$(dirname "$0")/../../.."
 OUT=out/chibi-sprouts/r1/week2-7/gestures
 CAST="${1:?usage: cutout-gestures-cast.sh <cast> [slug]}"
-# Adults share one folder (one canvas): Mom first, Dad second (1.61 m). Dad's
+# Adults share one folder (one canvas): Mom first, Dad second (1.61 m), Grandma third.
+# Grandma (1.53 m with her bun) fits the same canvas. Dad's
 # widest pose (sway-picture, arms fully out) needs 1738 px wide, so the adult
 # canvas is 1760x1856 for every adult. Same 1080 px/m scale, own manifest.
 case "$CAST" in mom|dad|grandma|grandpa) OUT=out/chibi-sprouts/r1/week2-7/gestures-adult;; esac
