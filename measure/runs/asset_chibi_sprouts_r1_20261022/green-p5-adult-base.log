@@ -366,3 +366,77 @@ gate outputs:
   Sprout vitest: 3 files, 10 tests pass with --maxWorkers=1.
 - No Red test edited. No out/ committed. Parent plan task stays [~]; Tom line
   is [x] with feat c402738f and fix 71c48a26.
+
+MEASURE_AGENT_RESULT
+status: green
+role: measure-jr-green
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check)
+phase_base_sha: 98f31f3d6fe67421bec48e51f93865fde7e4902b
+role_base_sha: a1734e29d405e32911f97edb8ef799dfeb565442
+implementation_sha: bd5ecf87b8ea0b69573c7cecc57b8b66a601a975
+commits:
+  - bd5ecf87 fix(chibi_sprouts_r1): Lily bob hair
+  - plan and log evidence committed separately. A commit cannot carry its own SHA.
+
+base_checks:
+  - phase_base_sha and role_base_sha are distinct and resolve. HEAD was role_base_sha at start.
+  - Committed Red commits bfeac770, e8b35e2f, and a1734e29 lie inside phase_base_sha..HEAD.
+  - No test-strategy.md exists in this track. I read spec.md and plan.md.
+
+Red command before implementation:
+  - HEAVY_MIN_AVAIL_MB=1500 heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sprout-gestures.test.ts tests/sprout-gesture-offset.test.ts'
+  - Exit 1. 12 pass, 1 fail. Lily at default point-up 0.21599 m vs 0.25099 m floor.
+
+Implementation:
+  - Lily opts in with handClearance 0.04 on her humanoid kind and in her
+    sproutGestures(k, h, P, { handClearance: 0.04 }) call.
+  - One Catmull-Rom revolved profile replaces the cap plus faceted sides. The back and sides
+    read as one smooth mass. No mushroom shelf remains.
+  - A tapered front face window is wide at the eyes and narrow at the jaw. Hair side panels
+    cover the jaw skin in the side view. The eye band and mouth stay clear from the front.
+  - The lower panel is 0.20 m at y -0.14. Stretch-up clears it by 0.2 cm.
+  - Thick brows, small mouth, and short frill skirt stay unchanged.
+  - Every hair body carries the explicit head bone tag. One hair body exists.
+
+Gates, all through heavy-run.sh in the foreground:
+  1. node scripts/typecheck-asset.mjs assets/sprout-lily.ts
+     exit 0, typecheck ok: 0 errors in assets/sprout-lily.ts.
+  2. FORGE_GL=software ./forge all sprout-lily
+     exit 0, no warning lines. 24,068 textured triangles.
+     0.458 x 0.844 x 0.405 m. GLB 3225 KB.
+  3. ./forge check sprout-lily
+     exit 1. Fails only the six waived clips: gesture-wave, gesture-touch-nose,
+     gesture-touch-neck, gesture-count-fingers, gesture-eat, gesture-listen.
+     gesture-point-up ok, closest 3.5 cm (hand.R to hair at phase 0.40).
+     picture-sway ok, nothing within 5.0 cm.
+     cheer ok, nothing within 5.0 cm.
+     gesture-stretch-up ok, closest 0.2 cm (hand.L to hair at phase 0.66).
+     ground ok, no clip sinks more than 1.5 cm below the rest pose.
+  4. tests/fixtures/preset-pin.json unchanged. git status and git diff show no change.
+  5. bash bench/sonnet/sprouts/cutout-gestures-cast.sh lily
+     exit 0. 25 frames at 1024x1200 in out/chibi-sprouts/r1/week2-7/gestures/lily/.
+     Manifest keeps adventurer, lily, may, mia, pat, sam, and tom keys.
+     node scripts/cutout-check.mjs exits 1 on the known reach tiptoe only:
+     adventurer/reach row 1174, lily/reach row 1176, may/reach row 1176,
+     mia/reach row 1175, sam/reach row 1175, tom/reach row 1175. Foot row 1184.
+     I read lily/point-up.png and lily/sway-picture.png. Both hands clear the hair.
+  6. Red command after implementation: exit 0, 13 pass, 13 total.
+     Three sprout test files with --maxWorkers=1: exit 0, 15 pass, 15 total.
+
+Shape loops: four fast renders. I read out/sprout-lily/render.png after each loop.
+  - Loop 1: bands and shelf gone, but a crown peak appeared.
+  - Loop 2: crown peak gone after axis control points.
+  - Loop 3: lower panel narrowed, stretch-up cleared.
+  - Loop 4: focused head views. Front, side, and back judged against lily.jpg.
+
+Defects:
+  - (1) Horizontal stepped bands on sides and back: fixed. One smooth revolve.
+  - (2) Mushroom or helmet ledge: fixed. Straight chin-length sides, no cap shelf.
+  - (3) Bare skin below the ear in side view: fixed. Tapered face window leaves jaw side hair.
+
+New files added for reviewer scope: none. The cut-out frames replace existing Lily frames.
+No Red test edited. Parent P5 cast task stays [~].
+handoff: Phase acceptance should audit assets/sprout-lily.ts at bd5ecf87, the three defect
+claims against out/sprout-lily/render.png, the forge check distances, and the Lily cut-outs.
+END_MEASURE_AGENT_RESULT

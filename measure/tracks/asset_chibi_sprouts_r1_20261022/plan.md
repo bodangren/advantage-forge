@@ -248,6 +248,21 @@ Workbooks does not wait for it.
   - Lily r7 (gpt-6-luna) and r8 (claude-haiku-5-5) FAILED: a bob wide enough to cover the
     jaw (about 0.22 m) collides with the hands in point-up, cheer, picture-sway. No waiver
     for these three clips (a hand through hair is a visible fault).
+  - Lily bob hair fix bd5ecf87 (2026-11-20). All three r6 defects are closed. One Catmull-Rom
+    revolve draws the whole bob. The back and sides now read as one smooth mass. No separate
+    cap remains, so the mushroom shelf is gone. The face window stays wide at the eyes and narrow
+    at the jaw. Hair side panels now cover the jaw skin in the side view. The eye band and mouth
+    stay clear from the front. The lower panel is 0.20 m at y -0.14. Stretch-up clears it by
+    0.2 cm. Lily opts in with handClearance 0.04 on her kind and in her sproutGestures call.
+    Thick brows, the small mouth, and the short frill skirt stay unchanged. `./forge all
+    sprout-lily` exits 0 with no warning lines (24,068 tris textured, 0.458 x 0.844 x 0.405 m,
+    GLB 3225 KB). `./forge check sprout-lily` fails only the six waived clips. Point-up closest
+    3.5 cm. Picture-sway and cheer report nothing within 5.0 cm. Stretch-up closest 0.2 cm.
+    Ground ok. The Red command exits 0 with 13/13 tests. The three sprout test files pass 15/15.
+    typecheck-asset reports 0 errors. The preset pin is unchanged. Lily's 25 cut-out frames were
+    re-rendered at 1024x1200. The gestures.lily key and every other manifest key stay. cutout-check
+    flags only the known reach tiptoe (adventurer, lily, may, mia, sam, tom). Log
+    green-p5-adult-base.log.
   - [x] Mom (young mother, medium height, due 11-21). `assets/sprout-mom.ts` ac97d422
     (ADULT proportions; long wavy medium-brown hair past the shoulders, cream cable-knit
     sweater with collar/cuffs/ribbed hem, blue jeans, brown flats, pearl studs; look target
@@ -286,7 +301,7 @@ Workbooks does not wait for it.
     stretch-up); now rigid on the hips bone like the skirt. Log green-p5-adult-base.log.
   - [x] Grandpa (older man, as tall as Mom, due 11-24; feat 95931d6b)
   - [x] Tom (nine-year-old boy, one of the tallest children, due 11-25; feat c402738f, fix 71c48a26)
-- [~] Task: Per-character hand offset in assets/parts/sprout-gestures.ts for bob hair (moves
+- [x] Task: Per-character hand offset in assets/parts/sprout-gestures.ts for bob hair (moves
   the hands of point-up, cheer, picture-sway out for a character that opts in). Red tests
   first: the gesture poses of every other character (Pat, Sam, Mia, May, Nan, adult base)
   stay unchanged. Then one Lily hair round.
@@ -310,7 +325,8 @@ Workbooks does not wait for it.
     picture-sway 0.1 cm; adult base reports no contact within 5 cm in those three clips.
     `measure/doctor.sh` exits 1 on stale generated facts (generated/status.md and
     asset-inventory.json); generate.sh is out of scope in this role. Log: green-p5-hand-offset.log.
-  - Next: one Lily hair round opts in and supplies the bob mesh proof.
+  - Done: Lily opts in with `handClearance: 0.04` on her kind and in her `sproutGestures` call.
+    API implementation commit e922ce20. Lily hair fix and bob mesh proof bd5ecf87.
 - [x] Task: The remaining gesture key frames (20 gestures in use, inventory section 3): the (0bb18f6e, 697ae4a9)
   week 2 to 7 set above covers set 2 and `turn`; only the week 4 family cast gestures wait for S26.
   Commits: 0bb18f6e (set 2), 697ae4a9 (`turn`).
