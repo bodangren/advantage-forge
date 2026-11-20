@@ -81,34 +81,13 @@ export default humanoidAsset({
         ),
       )
       .scale([1, 1, 0.9]);
-    // The face window is wide at the eyes and narrows toward the jaw (x 0.1 at y -0.15). The side
-    // panels then stay in front of the cheek and jaw skin, so no bare skin shows in the side view.
-    // The window cuts only the front (z >= -0.04) and ends above the nape. Its flat top at +0.058
-    // sits 1.1 cm above the brows and gives one straight fringe line.
+    // The face opening removes every hair point in front of the ear plane (z -0.01) below the
+    // fringe line. The bob then falls straight down beside and behind the cheeks. No hair sits in
+    // front of the chin, so the jaw reads clean in the front and three-quarter views. The flat top
+    // at +0.058 sits 1.1 cm above the brows and gives one straight fringe edge. One half-space cut
+    // keeps that edge clean; an extruded polygon left stair steps along the face border.
     const faceWindow = sdf
-      .extrude(
-        profile.polygon(
-          [
-            [0, 0.1],
-            [0.2, 0.1],
-            [0.19, 0.02],
-            [0.165, -0.05],
-            [0.13, -0.1],
-            [0.1, -0.15],
-            [0.07, -0.19],
-            [0, -0.19],
-            [-0.07, -0.19],
-            [-0.1, -0.15],
-            [-0.13, -0.1],
-            [-0.165, -0.05],
-            [-0.19, 0.02],
-            [-0.2, 0.1],
-          ],
-          { smooth: true, samples: 8 },
-        ),
-        0.36,
-      )
-      .at(0, 0, 0.14)
+      .halfSpace([0, 0, -1], 0.01)
       .intersect(sdf.halfSpace([0, 1, 0], 0.058));
     // The blunt cut: level at the chin in front and a little longer at the nape behind.
     const hem = sdf.halfSpace([0, -1, 0.065], 0.1846);
@@ -124,7 +103,7 @@ export default humanoidAsset({
       .intersect(sdf.halfSpace([0, -1, 0], -0.057))
       .intersect(sdf.halfSpace([0, 0, -1], -0.02));
     const hairLocal = bob
-      .smoothSubtract(0.008, faceWindow)
+      .smoothSubtract(0.004, faceWindow)
       .intersect(hem)
       .smoothUnion(0.005, fringeLip)
       .paintFn(hairPaint)
