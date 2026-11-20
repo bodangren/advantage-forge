@@ -295,6 +295,22 @@ Workbooks does not wait for it.
     point-up max gain 0.058661 m, picture-sway about 0.0517 m, cheer about 0.0453 m; floor
     stays 0.035 m for all three clips. Red command fails as required: 9 pass, 3 fail
     (option ignored, 0.0 m gain). tsc clean for the test file (via heavy-run).
+  - Green (2026-11-20): `handClearance` (meters, default 0) threads from the fourth argument
+    of `sproutGestures(k, h, P, opts)` into the point-up and picture-sway arm goals, and from
+    `kind.handClearance` into the cheer fist goal. The arm swings out along the reach circle;
+    the hand axis stays up. Zero leaves every pose byte-identical for every character.
+    Implementation commit: e922ce20.
+  - Gates (all through heavy-run): the Red command exits 0 with 12/12 tests. The 3 sprout
+    vitest files exit 0 with 14/14 tests. `scripts/typecheck-asset.mjs` reports 0 errors in
+    both changed source files. `./forge check sprout-pat` and `./forge check sprout-adult-base`
+    print output byte-identical to the baseline at the same SHA; both exit 1 on the known
+    head-contact clips (Pat's teddy and the six waived clips). Gain at 0.04 m on the
+    head-distance metric: point-up 0.04777 m, picture-sway 0.04372 m, cheer 0.04116 m.
+    Closest distances in `forge check` are unchanged: Pat point-up 0.3 cm, cheer 4.4 cm,
+    picture-sway 0.1 cm; adult base reports no contact within 5 cm in those three clips.
+    `measure/doctor.sh` exits 1 on stale generated facts (generated/status.md and
+    asset-inventory.json); generate.sh is out of scope in this role. Log: green-p5-hand-offset.log.
+  - Next: one Lily hair round opts in and supplies the bob mesh proof.
 - [x] Task: The remaining gesture key frames (20 gestures in use, inventory section 3): the (0bb18f6e, 697ae4a9)
   week 2 to 7 set above covers set 2 and `turn`; only the week 4 family cast gestures wait for S26.
   Commits: 0bb18f6e (set 2), 697ae4a9 (`turn`).

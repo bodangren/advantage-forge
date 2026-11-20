@@ -1,0 +1,71 @@
+MEASURE_AGENT_RESULT
+status: green
+role: measure-jr-green
+role_model: opencode-go/hy4-flash-free#high
+red_model: opencode-go/muse-spark-1.3-contributor#high
+phase_base_sha: 98f31f3d6fe67421bec48e51f93865fde7e4902b
+role_base_sha: e8b35e2f7e0155ee17dea157a2b2445db469ed62
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check)
+task: Per-character hand offset for bob hair (plan.md line 289, kept [~] for the Lily hair round)
+HEAD: e922ce20bc9336fea2a5dbf77d8b18174c3f32c5 (implementation commit; plan evidence follows)
+commits:
+  - feat(chibi_sprouts_r1): per-character hand clearance for gestures (e922ce20)
+  - measure(chibi_sprouts_r1): plan and log for hand clearance (this commit)
+files_touched:
+  - assets/parts/sprout-gestures.ts (fourth argument `opts: GestureOptions`, point-up and picture-sway goals)
+  - assets/parts/humanoid-kind.ts (`HumanoidKind.handClearance`, cheer fist goal)
+  - measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md (Green evidence; task stays [~])
+  - measure/runs/asset_chibi_sprouts_r1_20261022/green-p5-hand-offset.log (this log)
+
+implementation:
+  - `sproutGestures(k, h, P = AGE5, opts: GestureOptions = {})` reads `opts.handClearance` in meters.
+    Zero is the default. A positive value swings the point-up arm and the two picture-sway arms
+    out along the reach circle. The hand axis stays at its authored angle, so point-up still
+    points up and picture-sway still frames a V. `gesture-stretch-up` keeps the shared V goal.
+  - `HumanoidKind.handClearance` (meters, default 0) swings the cheer fist goal out about the
+    right shoulder. The item aim is unchanged, so the fists stay raised in the held frame.
+  - The change is a no-op at zero. No character asset file changed. The Red tests are untouched.
+
+gates (all through heavy-run.sh):
+  - command: HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sprout-gestures.test.ts tests/sprout-gesture-offset.test.ts'
+    exit: 0; 2 files, 12 tests, 12 passed, 0 failed.
+  - command: HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sprout-base.test.ts tests/sprout-gestures.test.ts tests/sprout-gesture-offset.test.ts'
+    exit: 0; 3 files, 14 tests, 14 passed, 0 failed.
+  - command: HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'node scripts/typecheck-asset.mjs assets/parts/sprout-gestures.ts'
+    exit: 0; typecheck ok: 0 errors.
+  - command: HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'node scripts/typecheck-asset.mjs assets/parts/humanoid-kind.ts'
+    exit: 0; typecheck ok: 0 errors.
+  - command: HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c './forge check sprout-pat'
+    exit: 1; 10 clips fail on held-item contact with the head, all pre-existing with Pat's teddy.
+    Point-up closest 0.3 cm (teddy to skin at phase 0.26); cheer closest 4.4 cm (teddy to mouth-open
+    at phase 0.75); picture-sway closest 0.1 cm (teddy to skin at phase 0.00). Ground ok.
+    The output is byte-identical to the baseline run at role_base_sha with my two source files
+    reverted. No change from this role.
+  - command: HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c './forge check sprout-adult-base'
+    exit: 1; 1 clip fails (gesture-touch-nose, a waived face touch). Point-up, cheer, and
+    picture-sway each report nothing within 5.0 cm of the head. Ground ok. The output is
+    byte-identical to the baseline run at role_base_sha with my two source files reverted.
+  - command: HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'bash measure/doctor.sh'
+    exit: 1; stale generated facts in measure/generated/status.md and
+    measure/generated/asset-inventory.json. Both facts predate this role. generate.sh is out of
+    scope in this role, so I did not run it.
+
+opt-in gains at 0.04 m (head-joint metric, measured on the implemented code):
+  - gesture-point-up R: 0.21599 m to 0.26377 m, gain 0.04777 m.
+  - picture-sway R and L: 0.22300 m to 0.26672 m, gain 0.04372 m each.
+  - cheer R and L: 0.22934 m to 0.27049 m, gain 0.04116 m each.
+  Every gain clears the 0.035 m floor. With the option absent every pose is byte-identical, as
+  the pinned per-character digests in the Red tests show.
+
+new_files_added_for_reviewer_scope:
+  - measure/runs/asset_chibi_sprouts_r1_20261022/green-p5-hand-offset.log (this log only).
+  No production file was added. Temporary probe scripts lived in /tmp/opencode and were removed.
+
+questions_with_defaults: none (Red r2 resolved Q1; Q2 answer was to keep the tree clean, done).
+
+handoff: Phase acceptance should audit the two source files and the two forge-check proofs. The task
+stays [~] because the Lily hair round still follows. Lily must opt in with `handClearance` on her
+kind and in her `extra` call to `sproutGestures`, then supply the bob mesh proof. The doctor failure
+needs a generated-fact refresh by a role that owns generate.sh or the closeout steward.
+END_MEASURE_AGENT_RESULT
