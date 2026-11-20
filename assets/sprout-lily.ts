@@ -27,6 +27,7 @@ export default humanoidAsset({
   sing: true,
   sproutFace: true,
   sproutHands: true,
+  handClearance: 0.04,
   hair: false,
   undershirt: false,
   pants: false,
@@ -45,7 +46,6 @@ export default humanoidAsset({
     const { KNEE, ANKLE, HEAD_Y } = h.joints;
     const pair = (s: sdf.Shape) => s.mirror('x', 0);
     const P = AGE5;
-    const H = P.head;
     const lerp = (a: readonly number[], b: readonly number[], t: number): [number, number, number] => [
       a[0]! + (b[0]! - a[0]!) * t,
       a[1]! + (b[1]! - a[1]!) * t,
@@ -53,54 +53,64 @@ export default humanoidAsset({
     ];
 
     // ---------------------------------------------------------------- hair: one smooth chin-length bob
-    // Local frame: y 0 is the head center (eyes at -0.047, brows at +0.047, chin at -0.145).
-    // One volume: a cap that sits 0.015 m from the skull on top, at the sides, and at the back.
-    // Its front stays close to the forehead, so the fringe covers the skin. The sides hug the ear
-    // band (the ear reaches x 0.226 at y -0.065) and then tuck in to a straight panel of 0.177
-    // down to the blunt cut at the chin, which keeps the raised-hand clips clear of the hair.
-    // A shallow-sloped hem takes the back down to the nape (no skin between the hair and the
-    // collar), and one flat-top face opening leaves a straight fringe line above the brows.
-    const cap = sdf.ellipsoid([H[0] + 0.015, H[1] + 0.015, H[2] + 0.01]).at(0, 0, -0.005);
-    const sides = sdf
+    // Local frame: y 0 is the head center (eyes at -0.047, brows at +0.047, mouth at -0.145).
+    // One smooth revolve draws the whole bob: a close dome, straight sides over the ears (the ear
+    // reaches x 0.2264), and a blunt chin-length hem. There is no separate cap, so no mushroom
+    // shelf, and the Catmull-Rom profile removes the stepped bands of the old faceted polygon.
+    const bob = sdf
       .revolve(
-        profile.polygon([
-          [0, 0.145],
-          [0.1, 0.135],
-          [0.16, 0.105],
-          [0.19, 0.05],
-          [0.214, -0.01],
-          [0.22, -0.03],
-          [0.226, -0.042],
-          [0.231, -0.065],
-          [0.23, -0.082],
-          [0.224, -0.093],
-          [0.2175, -0.101],
-          [0.214, -0.105],
-          [0.211, -0.108],
-          [0.208, -0.111],
-          [0.204, -0.114],
-          [0.2, -0.117],
-          [0.197, -0.121],
-          [0.193, -0.126],
-          [0.19, -0.13],
-          [0.185, -0.134],
-          [0.181, -0.137],
-          [0.178, -0.14],
-          [0.177, -0.15],
-          [0.177, -0.24],
-          [0, -0.24],
-        ]),
+        profile.polygon(
+          [
+            [0, 0.212],
+            [0.075, 0.206],
+            [0.145, 0.182],
+            [0.192, 0.135],
+            [0.216, 0.07],
+            [0.227, 0.01],
+            [0.229, -0.045],
+            [0.225, -0.095],
+            [0.202, -0.14],
+            [0.196, -0.19],
+            [0.19, -0.24],
+            [0, -0.24],
+            [0, -0.1],
+            [0, 0.1],
+            [0, 0.205],
+          ],
+          { smooth: true, samples: 10 },
+        ),
       )
       .scale([1, 1, 0.9]);
-    const mass = sdf.smoothUnion(0.025, cap, sides);
-    // The face opening is wide at the eyes and narrows to the chin; its flat top at +0.058 sits
-    // 1.1 cm above the brows, so the fringe edge is one straight horizontal line. The 0.012 fillet
-    // rounds the corners where that line meets the side panels.
-    const faceOpen = sdf
-      .ellipsoid([0.185, 0.17, 0.26])
-      .at(0, -0.06, 0.1)
+    // The face window is wide at the eyes and narrows toward the jaw (x 0.1 at y -0.15). The side
+    // panels then stay in front of the cheek and jaw skin, so no bare skin shows in the side view.
+    // The window cuts only the front (z >= -0.04) and ends above the nape. Its flat top at +0.058
+    // sits 1.1 cm above the brows and gives one straight fringe line.
+    const faceWindow = sdf
+      .extrude(
+        profile.polygon(
+          [
+            [0, 0.1],
+            [0.2, 0.1],
+            [0.19, 0.02],
+            [0.165, -0.05],
+            [0.13, -0.1],
+            [0.1, -0.15],
+            [0.07, -0.19],
+            [0, -0.19],
+            [-0.07, -0.19],
+            [-0.1, -0.15],
+            [-0.13, -0.1],
+            [-0.165, -0.05],
+            [-0.19, 0.02],
+            [-0.2, 0.1],
+          ],
+          { smooth: true, samples: 8 },
+        ),
+        0.36,
+      )
+      .at(0, 0, 0.14)
       .intersect(sdf.halfSpace([0, 1, 0], 0.058));
-    // The blunt cut: level at the chin in front (y -0.172) and at the nape behind (y -0.199).
+    // The blunt cut: level at the chin in front and a little longer at the nape behind.
     const hem = sdf.halfSpace([0, -1, 0.065], 0.1846);
     const hairPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
       const low = Math.max(0, (-0.14 - y) * 6) * 0.12; // a soft darkening at the hem
@@ -108,15 +118,13 @@ export default humanoidAsset({
     };
     // The fringe step: a rounded lip stands proud of the forehead. Its sharp lower edge sits at
     // the forehead cut (y 0.057), 1 cm above the brows (brows at 0.047), so the step is geometry.
-    // The lip thins with height and meets the cap at y 0.092, so it leaves no second line, and it
-    // fades before the temples, where the face opening has already cut the hair away.
     const fringeLip = sdf
       .ellipsoid([0.2, 0.16, 0.2203])
       .at(0, 0, -0.005)
       .intersect(sdf.halfSpace([0, -1, 0], -0.057))
       .intersect(sdf.halfSpace([0, 0, -1], -0.02));
-    const hairLocal = mass
-      .smoothSubtract(0.012, faceOpen)
+    const hairLocal = bob
+      .smoothSubtract(0.008, faceWindow)
       .intersect(hem)
       .smoothUnion(0.005, fringeLip)
       .paintFn(hairPaint)
@@ -190,6 +198,6 @@ export default humanoidAsset({
     k.body('shoes', pair(sneaker), { color: C.shoe, roughness: 0.6 });
 
     // ---------------------------------------------------------------- the week 1 gestures (option C: every singer plays them)
-    sproutGestures(k, h);
+    sproutGestures(k, h, P, { handClearance: 0.04 });
   },
 });
