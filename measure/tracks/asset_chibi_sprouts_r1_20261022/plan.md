@@ -276,6 +276,20 @@ Workbooks does not wait for it.
     files pass 15/15. typecheck-asset reports 0 errors. The preset pin is unchanged. Lily's 25
     cut-out frames were re-rendered at 1024x1200. cutout-check flags only the known reach tiptoe
     (adventurer, lily, may, mia, sam, tom). Log green-p5-adult-base.log.
+  - Lily soft fringe 53f33ae4 (2026-11-20, orchestrator look check). The chin wrap and the jaw
+    wedges stay fixed. The old fringe lip read as a helmet visor. The face cut was a flat vertical
+    wall. The fringe lip is gone. A large ellipsoid now cuts the face with a gentle curve, so the
+    side hair has a rounded front edge. A shallow wave on the cut gives soft bang tips above the
+    brows. The bob is hollowed into a thin shell, capped below y 0.12, so the cut edge is thin and
+    the crown stays clean. The outer surface is unchanged. Ears, thick brows, small mouth, short
+    frill skirt, the straight chin-length hem, and handClearance 0.04 stay. `./forge all
+    sprout-lily` exits 0 with no warning lines (24,830 tris textured, 0.458 x 0.844 x 0.402 m).
+    `./forge check sprout-lily` fails only the six waived clips. Point-up closest 3.5 cm.
+    Picture-sway and cheer report nothing within 5.0 cm. Stretch-up closest 0.2 cm. Ground ok.
+    The Red command exits 0 with 13/13 tests. The three sprout test files pass 15/15.
+    typecheck-asset reports 0 errors. The preset pin is unchanged. Lily's 25 cut-out frames were
+    re-rendered at 1024x1200. cutout-check flags only the known reach tiptoe (adventurer, lily,
+    may, mia, sam, tom). Log green-p5-adult-base.log.
   - [x] Mom (young mother, medium height, due 11-21). `assets/sprout-mom.ts` ac97d422
     (ADULT proportions; long wavy medium-brown hair past the shoulders, cream cable-knit
     sweater with collar/cuffs/ribbed hem, blue jeans, brown flats, pearl studs; look target
