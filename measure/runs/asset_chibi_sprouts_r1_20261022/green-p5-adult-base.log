@@ -158,3 +158,41 @@ gate outputs:
   sprout-adult-base too (kind sing mouth on the smaller adult head); the adult-base
   clap-body line above.
 - No Red test edited. No out/ committed.
+
+## Dad green (2026-11-20, feat 633a40c5, role_base f581bff7)
+- Source: assets/sprout-dad.ts (new, 321 lines) on the ADULT kind (sprout-adult-base,
+  humanoid-kind), the Mom template. Dad stretches ADULT 5 % in height only, in this
+  file only: every Y grows, widths and depths stay the adult's. ADULT is unchanged.
+  Short black side-part hair (cap, part groove high on the crown, swept top, short
+  sides and back), open red-and-black buffalo-check plaid shirt over a white tee,
+  chest pockets with buttons, long sleeves with cuffs, dark-blue jeans, brown lace-up
+  shoes. Presets: dad (fair skin, black hair, brown eyes, red cloth).
+- Build: 37,892 textured triangles (Mom 36,084; ratio 1.050, the 5 % stretch),
+  0.544 x 1.61 x 0.357 m. Six waived clips only fail the
+  check, and only the waived face touches fail at the head: touch-nose (HEAD, the
+  intentional nose touch), touch-neck (HEAD 0.8 cm, the neck hold), listen (HEAD
+  0.7 cm). Wave passes clean. Count-fingers closest 2.5 cm, eat closest 0.0 cm, no
+  penetration. No hand-through-hair line anywhere. Clap body 6.1 cm into the shirt
+  is the shared adult-chest structure (Mom 5.6 cm), not a Dad defect. Ground ok.
+- forge all: exit 0, zero warning: lines, with FORGE_GL=software. Four default-GPU
+  runs died at random browser steps (page.evaluate: Target page closed; once all 8
+  sprite views rendered EMPTY). The desktop GPU is shared with other sessions, so
+  the headless browser loses its GL context. Software GL is slow but stable. Next
+  adult cast: run every browser step with FORGE_GL=software from the start.
+- Cut-outs: full rerun (the killed first run's 24 frames were discarded).
+  gestures-adult canvas grew 1664x1856 to 1760x1856: Dad's sway-picture needs 1738
+  px wide and the folder keeps one scale (forge cutout enforces it). Mom's 25 frames
+  were re-rendered at the same scale and poses on the new canvas; content is
+  unchanged, only the transparent margin grew. Manifest canvas is now [1760,1856]
+  with gestures.dad and gestures.mom (25 files each). cutout-check flags only the
+  known reach tiptoe: dad/reach (lowest opaque row 1834, foot row 1840) and
+  mom/reach (1833 vs 1840, accepted at Mom green).
+- typecheck: exit 0, 0 errors in assets/sprout-dad.ts. Preset pin adds only the
+  sprout-dad block. Sprout vitest: 3 files, 10 tests pass with --maxWorkers=1
+  (one earlier 3-file invocation flaked with a transient EDQUOT write; the rerun
+  is clean, and preset-colour alone also passes 4/4).
+- Render vs dad.jpg: tall chibi father, black swept hair, red-and-black checks,
+  white tee panel, blue jeans, brown shoes, smile. Open defects, all minor: the
+  shoes read flat in the front view (side and back show the shoe volume and laces);
+  the side part is subtle from the front; the checks are coarser than the mockup.
+  No Red test edited. No out/ committed.

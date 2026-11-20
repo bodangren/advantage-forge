@@ -263,7 +263,7 @@ Workbooks does not wait for it.
     script change, no frame changes for the other cast). cutout-check flags only the known
     reach tiptoe (lowest opaque row 1833, foot row 1840). typecheck 0 errors in sprout-mom;
     the 3 sprout vitest files pass 10/10. Log green-p5-adult-base.log.
-  - Dad (young father, tallest of the family, due 11-22)
+  - [x] Dad (young father, tallest of the family, due 11-22; feat 633a40c5)
   - Grandma (older woman, a little shorter than Mom, due 11-23)
   - Grandpa (older man, as tall as Mom, due 11-24)
   - Tom (nine-year-old boy, one of the tallest children, due 11-25)
