@@ -116,15 +116,16 @@ export default scaleAsset(
         0.02,
       );
       const fringeAll = sdf.smoothUnion(0.02, fringe, lock2).smoothIntersect(0.02, outer);
-      // The crown tuft: three short spikes that lie almost flat on the crown
+      // The crown tuft: short spiky locks that lie almost flat on the crown
       // toward his left, standing only just proud of the cap surface.
       const spike = (dx: number, dz: number, lean: number, r: number) =>
-        sdf.capsule([0.05 + dx, 0.15, -0.03 + dz], [0.05 + dx + lean, 0.195, -0.03 + dz], r);
+        sdf.capsule([0.05 + dx, 0.15, -0.03 + dz], [0.05 + dx + lean, 0.21, -0.03 + dz], r);
       const tuft = sdf.smoothUnion(
-        0.012,
-        spike(0, 0, 0.035, 0.02),
-        spike(-0.045, 0.01, 0.01, 0.017),
-        spike(0.03, -0.04, 0.045, 0.017),
+        0.01,
+        spike(0, 0, 0.035, 0.015),
+        spike(-0.045, 0.01, 0.01, 0.013),
+        spike(0.03, -0.04, 0.05, 0.013),
+        spike(-0.01, 0.045, 0.02, 0.012),
       );
       const hair = sdf.smoothUnion(0.025, cap, fringeAll, tuft).bone('head');
       k.body('hair', hair.at(0, HEAD_Y, 0), { color: k.tint('hair'), roughness: 0.6, detail: 0.004 });
@@ -155,10 +156,9 @@ export default scaleAsset(
       k.body('shorts', shorts, { color: C.shorts, roughness: 0.9 });
       k.body('pockets', pair(pocket), { color: C.shortsDark, roughness: 0.9, detail: 0.003 });
 
-      // ---------------------------------------------------------------- white ankle socks
-      const sockTop: [number, number, number] = [0, 0.1, 0];
+      // ---------------------------------------------------------------- white ankle socks, one per leg
       const sock = sdf
-        .smoothUnion(0.004, sdf.cone([0, 0.055, 0.01], sockTop, 0.034, 0.0355), sdf.torus(0.0355, 0.005).at(0, 0.1, 0))
+        .smoothUnion(0.004, sdf.cone([ANKLE[0], 0.055, 0.01], [ANKLE[0], 0.1, 0], 0.034, 0.0355), sdf.torus(0.0355, 0.005).at(ANKLE[0], 0.1, 0))
         .bone('shin.L');
       k.body('socks', pair(sock), { color: C.sock, roughness: 0.9, detail: 0.003 });
 
