@@ -1,5 +1,5 @@
 import { mixRgb, profile, rgb, sdf } from '../src/index.js';
-import type { AnimationDef, Pose } from '../src/index.js';
+import type { AnimationDef, Pose, Rgb } from '../src/index.js';
 import { ADULT, humanoidAsset } from './parts/humanoid-kind.js';
 import { sproutGestures } from './parts/sprout-gestures.js';
 
@@ -48,6 +48,27 @@ export default humanoidAsset({
   },
   presets: {
     mom: { skin: 'fair', hair: 'brown', eyes: 'brown', cloth: 'cream' },
+  },
+
+  // Cut the arm skin inside the long sleeves. The skin upper arm blends into the chest
+  // band near the shoulder while the sleeve takes only arm weights, so a raised arm left
+  // a skin strip under the sleeve. Keep a short wrist stub inside the cuff; the hand is
+  // its own body below it.
+  paintSkin(skin, h) {
+    const { SHOULDER, ELBOW, WRIST } = h.joints;
+    const d: readonly [number, number, number] = [WRIST[0] - ELBOW[0], WRIST[1] - ELBOW[1], WRIST[2] - ELBOW[2]];
+    const len = Math.hypot(...d);
+    const cutEnd: readonly [number, number, number] = [
+      WRIST[0] - (0.004 * d[0]) / len,
+      WRIST[1] - (0.004 * d[1]) / len,
+      WRIST[2] - (0.004 * d[2]) / len,
+    ];
+    const armCut = sdf.smoothUnion(
+      0.02,
+      sdf.cone(SHOULDER, ELBOW, ADULT.limb.upper[0] + 0.022, ADULT.limb.upper[1] + 0.022),
+      sdf.cone(ELBOW, cutEnd, ADULT.limb.fore[0] + 0.022, ADULT.limb.fore[1] + 0.022),
+    );
+    return skin.subtract(sdf.union(armCut, armCut.mirror('x', 0)));
   },
 
   extra(k, h) {
@@ -154,25 +175,40 @@ export default humanoidAsset({
 
     // ---------------------------------------------------------------- cream cable-knit sweater, long sleeves
     // The body runs to a ribbed hem below the belt; the cables are vertical ribs in paint and
-    // bump. Sleeves run shoulder to wrist in two weighted cones with ribbed cuffs.
+    // bump. Sleeves run shoulder to wrist in two weighted cones with ribbed cuffs. The sleeves
+    // are a separate body over the arm skin: a raised arm would otherwise drag the torso union
+    // into a point at the hem (the Dad lesson). The torso keeps hips/spine/chest tags only, so
+    // the hem never takes an arm weight.
     const HEM = 0.7;
     const cableTri = (x: number, z: number) => {
       const t = ((((CABLES * Math.atan2(x, z)) / (2 * Math.PI)) % 1) + 1) % 1;
       return 1 - 4 * Math.abs(t - 0.5);
     };
+    const cablePaint = (x: number, _y: number, z: number, base: Rgb) =>
+      mixRgb(base, rgb(C.cable), 0.45 * (0.5 - 0.5 * cableTri(x, z)));
     const sweaterBase = h.torso.round(0.006).smoothIntersect(0.01, sdf.halfSpace([0, -1, 0], -HEM));
-    const upper = sdf.cone(P.shirt.sleeveStart, ELBOW, P.shirt.sleeveR[0], 0.052).bone('upperarm.L');
-    const fore = sdf.cone(ELBOW, WRIST, 0.052, 0.042).bone('forearm.L');
-    const cuff = sdf.torus(0.044, 0.012).at(WRIST[0], WRIST[1], WRIST[2]).bone('hand.L');
-    const sweater = sdf
-      .smoothUnion(0.012, h.weighted(sweaterBase), pair(sdf.smoothUnion(0.01, upper, fore)), pair(cuff))
-      .paintFn((x, y, z, base) => mixRgb(base, rgb(C.cable), 0.45 * (0.5 - 0.5 * cableTri(x, z))))
+    const sweaterTorso = h
+      .weighted(sweaterBase)
+      .paintFn(cablePaint)
       .paintWhere(
         sdf.halfSpace([0, -1, 0], -HEM).intersect(sdf.halfSpace([0, 1, 0], HEM + 0.06)),
         C.rib,
         0.004,
       );
-    k.body('sweater', sweater, {
+    k.body('sweater', sweaterTorso, {
+      color: h.tint.shirt!,
+      roughness: 0.9,
+      textureDensity: 2,
+      bump: (x, _y, z) => 0.002 * cableTri(x, z),
+    });
+    // The sleeve cones match the skin arm's weight layout: upperarm and forearm tags with the
+    // same 0.02 m elbow fillet, and a forearm-tagged cuff. A hand-tagged cuff follows the wrist
+    // in point-up while the skin forearm stays on the forearm bone, so the skin cuts through.
+    const upper = sdf.cone(P.shirt.sleeveStart, ELBOW, P.shirt.sleeveR[0], 0.052).bone('upperarm.L');
+    const fore = sdf.cone(ELBOW, WRIST, 0.052, 0.042).bone('forearm.L');
+    const cuff = sdf.torus(0.044, 0.012).at(WRIST[0], WRIST[1], WRIST[2]).bone('forearm.L');
+    const sleeves = sdf.smoothUnion(0.02, upper, fore, pair(cuff)).paintFn(cablePaint);
+    k.body('sleeves', pair(sleeves), {
       color: h.tint.shirt!,
       roughness: 0.9,
       textureDensity: 2,

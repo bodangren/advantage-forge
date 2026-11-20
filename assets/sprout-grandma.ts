@@ -131,6 +131,23 @@ export default humanoidAsset({
     grandma: { skin: 'fair', hair: 'white', eyes: 'brown', cloth: 'green' },
   },
 
+  // Cut the arm skin inside the long sleeves. The skin upper arm blends into the chest
+  // band near the shoulder while the sleeve takes only arm weights, so a raised arm left
+  // a skin strip under the sleeve. Keep a short wrist stub inside the cuff; the hand is
+  // its own body below it.
+  paintSkin(skin, h) {
+    const { SHOULDER, ELBOW, WRIST } = h.joints;
+    const d: V3 = [WRIST[0] - ELBOW[0], WRIST[1] - ELBOW[1], WRIST[2] - ELBOW[2]];
+    const len = Math.hypot(...d);
+    const cutEnd: V3 = [WRIST[0] - (0.004 * d[0]) / len, WRIST[1] - (0.004 * d[1]) / len, WRIST[2] - (0.004 * d[2]) / len];
+    const armCut = sdf.smoothUnion(
+      0.02,
+      sdf.cone(SHOULDER, ELBOW, GRANNY.limb.upper[0] + 0.022, GRANNY.limb.upper[1] + 0.022),
+      sdf.cone(ELBOW, cutEnd, GRANNY.limb.fore[0] + 0.022, GRANNY.limb.fore[1] + 0.022),
+    );
+    return skin.subtract(sdf.union(armCut, armCut.mirror('x', 0)));
+  },
+
   extra(k, h) {
     const { ELBOW, WRIST, HIP, KNEE, HEAD_Y } = h.joints;
     const pair = (s: sdf.Shape) => s.mirror('x', 0);
@@ -237,12 +254,15 @@ export default humanoidAsset({
     });
     // Long sleeves with ribbed cuffs. The rib paint stencil is a fresh untagged torus:
     // a stencil that carries a bone tag must never touch a tagged body.
+    // The sleeve cones match the skin arm's weight layout: upperarm and forearm tags with the
+    // same 0.02 m elbow fillet. A hand-tagged cuff follows the wrist in point-up while the skin
+    // forearm stays on the forearm bone, so the skin cuts through. Tag the cuff forearm.L.
     const upper = sdf.cone(P.shirt.sleeveStart, ELBOW, P.shirt.sleeveR[0], 0.052).bone('upperarm.L');
     const fore = sdf.cone(ELBOW, WRIST, 0.052, 0.042).bone('forearm.L');
-    const cuff = sdf.torus(0.044, 0.012).at(WRIST[0], WRIST[1], WRIST[2]).bone('hand.L');
+    const cuff = sdf.torus(0.044, 0.012).at(WRIST[0], WRIST[1], WRIST[2]).bone('forearm.L');
     const cuffPaint = sdf.torus(0.044, 0.014).at(WRIST[0], WRIST[1], WRIST[2]);
     const sleeves = sdf
-      .smoothUnion(0.01, upper, fore, pair(cuff))
+      .smoothUnion(0.02, upper, fore, pair(cuff))
       .paintFn((x, y, _z, base) => mixRgb(base, rgb(C.knit), 0.4 * (0.5 - 0.5 * cableTri(x, y))))
       .paintWhere(pair(cuffPaint), C.rib, 0.004);
     k.body('sleeves', pair(sleeves), { color: k.tint('cloth'), roughness: 0.9, textureDensity: 2 });
