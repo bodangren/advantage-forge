@@ -290,12 +290,11 @@ Workbooks does not wait for it.
   the hands of point-up, cheer, picture-sway out for a character that opts in). Red tests
   first: the gesture poses of every other character (Pat, Sam, Mia, May, Nan, adult base)
   stay unchanged. Then one Lily hair round.
-  - Red (2026-11-20): `tests/sprout-gesture-offset.test.ts` (8 tests). Default guards pass:
-    26+8 clip inventory, per-character pose digests (pat c16572dc, sam/mia/nan/lily 22563e18,
-    may 5e70ec98, adult-base 753da272, hero 68442177), key wrist |x| pins, and other-clips-identical
-    with the option. The 3 opt-in movement tests fail for the right reason (option ignored,
-    0.0 m move vs 0.035 m floor). Red command fails as required: 9 pass, 3 fail.
-    Log: measure/runs/asset_chibi_sprouts_r1_20261022/red-p5-hand-offset.log.
+  - Red r2 (2026-11-20, head-distance metric): metric is the 3D wrist distance from the
+    head bone joint. Feasibility with this file's FK model (400k rotation-only samples, AGE5):
+    point-up max gain 0.058661 m, picture-sway about 0.0517 m, cheer about 0.0453 m; floor
+    stays 0.035 m for all three clips. Red command fails as required: 9 pass, 3 fail
+    (option ignored, 0.0 m gain). tsc clean for the test file (via heavy-run).
 - [x] Task: The remaining gesture key frames (20 gestures in use, inventory section 3): the (0bb18f6e, 697ae4a9)
   week 2 to 7 set above covers set 2 and `turn`; only the week 4 family cast gestures wait for S26.
   Commits: 0bb18f6e (set 2), 697ae4a9 (`turn`).

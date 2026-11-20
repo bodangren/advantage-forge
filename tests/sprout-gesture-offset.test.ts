@@ -17,12 +17,25 @@ import adultBase from '../assets/sprout-adult-base.js';
  * Red: per-character hand offset (`handClearance`, meters) for bob hair.
  *
  * Lily needs a wider bob (side panels near |x| 0.22 m head-local). The hands of
- * `gesture-point-up`, `cheer`, and `picture-sway` pass near the head axis today, so a wider
- * bob collides. The fix is an opt-in per-character option:
+ * `gesture-point-up`, `cheer`, and `picture-sway` pass near the head today, so a wider
+ * bob collides (worst: 3.7 cm in point-up). The fix is an opt-in per-character option:
  * `sproutGestures(k, h, P, { handClearance })` for the two gesture clips, and the same
  * option name `handClearance` on the kind object passed to `humanoidAsset` (read in
  * `assets/parts/humanoid-kind.ts`, in the `animation('cheer', ...)` wrist goal) for `cheer`.
  * Default 0 (absent) keeps every pose identical for every character.
+ *
+ * Metric: the 3D distance from the HEAD CENTER to the wrist. The head center is the head
+ * bone joint position (`skel.head.at`: [0, 0.43672, -0.01] at AGE5). The hand may clear
+ * the hair outward, forward (+Z), or up. The metric is exact under these clips' poses:
+ * both the wrist and the head joint sit in the chest frame (no bone between them carries
+ * a pose `move`), so the rest-frame FK distance equals the world distance. Rotation-only
+ * implementations can pass; the test never requires a bone `move`.
+ *
+ * Feasibility (Red r2, sampled 400,000 rotation-only arm poses with this file's FK
+ * model, AGE5): point-up base 0.215993 m, max 0.274654 m (gain 0.058661 m); picture-sway
+ * base 0.222998 m, max about 0.2747 m (gain about 0.0517 m); cheer base 0.229336 m, max
+ * about 0.2747 m (gain about 0.0453 m). Every clip clears the 0.035 m floor, so no clip
+ * needs a lowered floor.
  *
  * Part A pins today's poses (passes now): the full gesture pose data of Pat, Sam, Mia, May,
  * Nan, Lily, and the adult base, plus the base-kind clips of the hero. Part B pins the
@@ -125,8 +138,8 @@ function lilyLikeKind(gestureOpts: { handClearance?: number } | undefined): Huma
   };
 }
 
-/** The |x| distance of each wrist from the head axis (x = 0) under a pose. */
-function wristAbsX(
+/** The 3D distance from the head center (head bone joint) to each wrist under a pose. */
+function wristHeadDistance(
   skel: Captured['skel'],
   pose: Record<string, { rotate?: readonly [number, number, number] }>,
   side: 'L' | 'R',
@@ -142,7 +155,7 @@ function wristAbsX(
   const Rf = quat(pose[`forearm.${side}`]?.rotate ?? [0, 0, 0]);
   const elbow = S.clone().add(E.clone().sub(S).applyQuaternion(Ru));
   const wrist = elbow.clone().add(W.clone().sub(E).applyQuaternion(Ru).applyQuaternion(Rf));
-  return Math.abs(wrist.x);
+  return wrist.distanceTo(vec(skel['head']!.at));
 }
 
 const roundJson = (v: unknown): unknown =>
@@ -207,32 +220,32 @@ describe('per-character hand offset (default poses stay identical)', () => {
     expect(digestAll(hero)).toEqual({ size: 8, digest: '68442177' });
   });
 
-  it('keeps the key hand heights of point-up, picture-sway, and cheer', () => {
+  it('keeps the key hand distances of point-up, picture-sway, and cheer', () => {
     const at = (def: AssetDefinition, clip: string, t: number, p: number) => {
       const c = capture(def);
       return { skel: c.skel, pose: c.anims.get(clip)!.pose(t, p) as Record<string, { rotate?: readonly [number, number, number] }> };
     };
     // Raised right wrist of point-up at its hold (t = 1.0 s of 2 s).
-    expect(wristAbsX(at(sam, 'gesture-point-up', 1.0, 0.5).skel, at(sam, 'gesture-point-up', 1.0, 0.5).pose, 'R')).toBeCloseTo(0.21596, 4);
-    expect(wristAbsX(at(lily, 'gesture-point-up', 1.0, 0.5).skel, at(lily, 'gesture-point-up', 1.0, 0.5).pose, 'R')).toBeCloseTo(0.21596, 4);
-    expect(wristAbsX(at(adultBase, 'gesture-point-up', 1.0, 0.5).skel, at(adultBase, 'gesture-point-up', 1.0, 0.5).pose, 'R')).toBeCloseTo(0.41081, 4);
+    expect(wristHeadDistance(at(sam, 'gesture-point-up', 1.0, 0.5).skel, at(sam, 'gesture-point-up', 1.0, 0.5).pose, 'R')).toBeCloseTo(0.21599, 4);
+    expect(wristHeadDistance(at(lily, 'gesture-point-up', 1.0, 0.5).skel, at(lily, 'gesture-point-up', 1.0, 0.5).pose, 'R')).toBeCloseTo(0.21599, 4);
+    expect(wristHeadDistance(at(adultBase, 'gesture-point-up', 1.0, 0.5).skel, at(adultBase, 'gesture-point-up', 1.0, 0.5).pose, 'R')).toBeCloseTo(0.4216, 4);
     // Both raised wrists of picture-sway (constant held pose).
     const sway = at(sam, 'picture-sway', 1.0, 0.5);
-    expect(wristAbsX(sway.skel, sway.pose, 'R')).toBeCloseTo(0.2229, 4);
-    expect(wristAbsX(sway.skel, sway.pose, 'L')).toBeCloseTo(0.2229, 4);
+    expect(wristHeadDistance(sway.skel, sway.pose, 'R')).toBeCloseTo(0.223, 4);
+    expect(wristHeadDistance(sway.skel, sway.pose, 'L')).toBeCloseTo(0.223, 4);
     const adultSway = at(adultBase, 'picture-sway', 1.0, 0.5);
-    expect(wristAbsX(adultSway.skel, adultSway.pose, 'R')).toBeCloseTo(0.43013, 4);
+    expect(wristHeadDistance(adultSway.skel, adultSway.pose, 'R')).toBeCloseTo(0.4356, 4);
     // Both pumped fists of cheer at its peak (p = 0.5 of 0.8 s).
     const cheer = at(sam, 'cheer', 0.4, 0.5);
-    expect(wristAbsX(cheer.skel, cheer.pose, 'R')).toBeCloseTo(0.2227, 4);
-    expect(wristAbsX(cheer.skel, cheer.pose, 'L')).toBeCloseTo(0.2227, 4);
+    expect(wristHeadDistance(cheer.skel, cheer.pose, 'R')).toBeCloseTo(0.22934, 4);
+    expect(wristHeadDistance(cheer.skel, cheer.pose, 'L')).toBeCloseTo(0.22934, 4);
     const adultCheer = at(adultBase, 'cheer', 0.4, 0.5);
-    expect(wristAbsX(adultCheer.skel, adultCheer.pose, 'R')).toBeCloseTo(0.46213, 4);
+    expect(wristHeadDistance(adultCheer.skel, adultCheer.pose, 'R')).toBeCloseTo(0.47863, 4);
     const heroCheer = at(hero, 'cheer', 0.4, 0.5);
-    expect(wristAbsX(heroCheer.skel, heroCheer.pose, 'R')).toBeCloseTo(0.27051, 4);
+    expect(wristHeadDistance(heroCheer.skel, heroCheer.pose, 'R')).toBeCloseTo(0.27635, 4);
     // Pat holds a teddy bear, so his cheer arms stay down at the rest wrists.
     const patCheer = at(pat, 'cheer', 0.4, 0.5);
-    expect(wristAbsX(patCheer.skel, patCheer.pose, 'R')).toBeCloseTo(0.0672, 4);
+    expect(wristHeadDistance(patCheer.skel, patCheer.pose, 'R')).toBeCloseTo(0.18631, 4);
   });
 });
 
@@ -245,10 +258,10 @@ describe('per-character hand offset (the opt-in moves the hands out)', () => {
       (sproutGestures as (k: never, h: never, p: never, o?: unknown) => void)(
         k as never, shape as never, AGE5 as never, opts,
       );
-      return wristAbsX(skel, anims.get('gesture-point-up')!.pose(1.0, 0.5), 'R');
+      return wristHeadDistance(skel, anims.get('gesture-point-up')!.pose(1.0, 0.5), 'R');
     };
     const base = run(undefined);
-    expect(base).toBeCloseTo(0.21596, 4);
+    expect(base).toBeCloseTo(0.21599, 4);
     const moved = run({ handClearance: CLEARANCE });
     expect(moved - base).toBeGreaterThanOrEqual(CLEARANCE - TOL);
   });
@@ -262,10 +275,10 @@ describe('per-character hand offset (the opt-in moves the hands out)', () => {
         k as never, shape as never, AGE5 as never, opts,
       );
       const pose = anims.get('picture-sway')!.pose(1.0, 0.5);
-      return { R: wristAbsX(skel, pose, 'R'), L: wristAbsX(skel, pose, 'L') };
+      return { R: wristHeadDistance(skel, pose, 'R'), L: wristHeadDistance(skel, pose, 'L') };
     };
     const base = run(undefined);
-    expect(base.R).toBeCloseTo(0.2229, 4);
+    expect(base.R).toBeCloseTo(0.223, 4);
     const moved = run({ handClearance: CLEARANCE });
     expect(moved.R - base.R).toBeGreaterThanOrEqual(CLEARANCE - TOL);
     expect(moved.L - base.L).toBeGreaterThanOrEqual(CLEARANCE - TOL);
@@ -309,9 +322,9 @@ describe('per-character hand offset (the opt-in moves the hands out)', () => {
     const moved = run(true);
     const basePose = base.anims.get('cheer')!.pose(0.4, 0.5) as Record<string, { rotate?: readonly [number, number, number] }>;
     const movedPose = moved.anims.get('cheer')!.pose(0.4, 0.5) as Record<string, { rotate?: readonly [number, number, number] }>;
-    expect(wristAbsX(base.skel, basePose, 'R')).toBeCloseTo(0.2227, 4);
-    expect(wristAbsX(moved.skel, movedPose, 'R') - wristAbsX(base.skel, basePose, 'R')).toBeGreaterThanOrEqual(CLEARANCE - TOL);
-    expect(wristAbsX(moved.skel, movedPose, 'L') - wristAbsX(base.skel, basePose, 'L')).toBeGreaterThanOrEqual(CLEARANCE - TOL);
+    expect(wristHeadDistance(base.skel, basePose, 'R')).toBeCloseTo(0.22934, 4);
+    expect(wristHeadDistance(moved.skel, movedPose, 'R') - wristHeadDistance(base.skel, basePose, 'R')).toBeGreaterThanOrEqual(CLEARANCE - TOL);
+    expect(wristHeadDistance(moved.skel, movedPose, 'L') - wristHeadDistance(base.skel, basePose, 'L')).toBeGreaterThanOrEqual(CLEARANCE - TOL);
   });
 
   it('leaves the other 7 base clips identical with the kind option', () => {

@@ -31,3 +31,20 @@ typecheck: tsc --noEmit shows no error in tests/sprout-gesture-offset.test.ts (o
 questions_with_defaults: none (orchestrator supplied phase_base_sha, clip names, and API in the route)
 handoff: Green implements { handClearance } in sproutGestures (point-up, picture-sway) and kind.handClearance in humanoidAsset cheer; then one Lily hair round per the plan task.
 END_MEASURE_AGENT_RESULT
+
+MEASURE_AGENT_RESULT_R2
+status: red
+role_base_sha: bfeac770
+baseline_sha: 98f31f3d
+metric: 3D distance from the head center to the wrist. Head center is the head bone joint position (skel.head.at; AGE5 Lily [0, 0.43672, -0.01]). Exact under these clips' poses: wrist and head joint both sit in the chest frame (no posed move between them), so rest-frame FK distance equals world distance. Rotation-only implementations can pass; no bone move required.
+feasibility (this file's FK model, 400,000 rotation-only arm samples, AGE5, scratch script run via heavy-run and deleted before commit):
+  - gesture-point-up R: base 0.215993 m, sampled max 0.274654 m (analytic bound 0.274778 m), max gain 0.058661 m, floor 0.035 m
+  - picture-sway R/L: base 0.222998 m, sampled max about 0.2747 m, max gain about 0.0517 m, floor 0.035 m
+  - cheer R/L (kind path, AGE5): base 0.229336 m, sampled max about 0.2747 m, max gain about 0.0453 m, floor 0.035 m
+floors_lowered: none (no clip below 0.035 m floor; nothing near the 0.03 m tell line)
+key_pins_r2 (head-center distances): point-up R 0.21599 child / 0.42160 adult; picture-sway 0.22300 / 0.43560 adult; cheer 0.22934 / 0.47863 adult / 0.27635 hero; pat cheer 0.18631 (teddy-bear hold keeps arms down)
+red_result_r2: FAIL as required (9 pass, 3 fail; option ignored, 0.0 m gain vs 0.035 m floor)
+guards_kept: default digests unchanged (pat c16572dc, sam/mia/nan/lily 22563e18, may 5e70ec98, adult-base 753da272, hero 68442177); other 24 sprout clips and other 7 base clips identical with the option
+typecheck_r2: tsc --noEmit via heavy-run.sh shows no error in tests/sprout-gesture-offset.test.ts
+load_rule: all vitest and tsc runs in r2 went through heavy-run.sh (no bare runs)
+END_MEASURE_AGENT_RESULT_R2
