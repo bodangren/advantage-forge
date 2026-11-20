@@ -6,7 +6,7 @@
 # into gestures-adult/<cast>/ with their own manifest: one folder keeps one canvas,
 # and a grown-up does not fit the children's 1024x1200.
 # Usage: ./cutout-gestures-cast.sh <cast> [slug]
-#   <cast>: pat | sam | mia | may | mom (also nan ben adventurer for re-renders)
+#   <cast>: pat | sam | mia | may | mom | dad (also nan ben adventurer for re-renders)
 #   [slug]: optional, one gesture slug to (re)render (point-up, reach, ...)
 # The FRAMES list is a copy of cutout-gestures-w2-7.sh; the last frame of a
 # gesture is the beat frame. The *-picture slugs are held poses for the 64 px
@@ -16,8 +16,10 @@
 cd "$(dirname "$0")/../../.."
 OUT=out/chibi-sprouts/r1/week2-7/gestures
 CAST="${1:?usage: cutout-gestures-cast.sh <cast> [slug]}"
-# Mom is the first adult (1.55 m): same 1080 px/m scale, taller canvas, own folder.
-[ "$CAST" = "mom" ] && OUT=out/chibi-sprouts/r1/week2-7/gestures-adult
+# Adults share one folder (one canvas): Mom first, Dad second (1.61 m). Dad's
+# widest pose (sway-picture, arms fully out) needs 1738 px wide, so the adult
+# canvas is 1760x1856 for every adult. Same 1080 px/m scale, own manifest.
+case "$CAST" in mom|dad|grandma|grandpa) OUT=out/chibi-sprouts/r1/week2-7/gestures-adult;; esac
 REL="$(basename "$OUT")"
 A="sprout-$CAST"
 FRAMES="
@@ -48,10 +50,11 @@ stamp-picture picture-stamp 1.0 stamp-picture
 sway-picture picture-sway 1.0 sway-picture
 "
 only="${2:-}"   # optional: one slug to (re)render
-# Canvas at the week 1 scale (1080 px/m for every cast). Mom is the first adult (1.55 m):
-# she needs a taller canvas than the children at the same scale.
+# Canvas at the week 1 scale (1080 px/m for every cast). Adults share the taller
+# and wider canvas: a grown-up does not fit the children's 1024x1200, and the
+# tallest adult (Dad) sets the adult width.
 CANVAS="1024x1200"
-[ "$CAST" = "mom" ] && CANVAS="1664x1856"
+case "$CAST" in mom|dad|grandma|grandpa) CANVAS="1760x1856";; esac
 echo "$FRAMES" | while read -r slug clip at stem; do
   [ -z "$slug" ] && continue
   [ -n "$only" ] && [ "$only" != "$slug" ] && continue
