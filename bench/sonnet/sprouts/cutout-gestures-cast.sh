@@ -6,7 +6,7 @@
 # into gestures-adult/<cast>/ with their own manifest: one folder keeps one canvas,
 # and a grown-up does not fit the children's 1024x1200.
 # Usage: ./cutout-gestures-cast.sh <cast> [slug]
-#   <cast>: pat | sam | mia | may | mom | dad | grandma | grandpa (also nan ben adventurer for re-renders)
+#   <cast>: pat | sam | mia | may | lily | tom | mom | dad | grandma | grandpa (also nan ben adventurer for re-renders)
 #   [slug]: optional, one gesture slug to (re)render (point-up, reach, ...)
 # The FRAMES list is a copy of cutout-gestures-w2-7.sh; the last frame of a
 # gesture is the beat frame. The *-picture slugs are held poses for the 64 px

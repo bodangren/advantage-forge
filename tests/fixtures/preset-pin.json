@@ -31331,6 +31331,53 @@
         }
       }
     },
+    "sprout-tom": {
+      "file": "sprout-tom.ts",
+      "presets": {
+        "tom": {
+          "skin": {
+            "option": "fair",
+            "ratio": [
+              1,
+              1,
+              1
+            ],
+            "default": "#f2c7a4",
+            "shade": "#d5af90"
+          },
+          "hair": {
+            "option": "brown",
+            "ratio": [
+              1,
+              1,
+              1
+            ],
+            "default": "#6e4423",
+            "shade": "#603b1d"
+          },
+          "eyes": {
+            "option": "brown",
+            "ratio": [
+              1,
+              1,
+              1
+            ],
+            "default": "#6e4020",
+            "shade": "#60371b"
+          },
+          "cloth": {
+            "option": "blue",
+            "ratio": [
+              1,
+              1,
+              1
+            ],
+            "default": "#3fa3d8",
+            "shade": "#368fbe"
+          }
+        }
+      }
+    },
     "spy": {
       "file": "spy.ts",
       "presets": {
