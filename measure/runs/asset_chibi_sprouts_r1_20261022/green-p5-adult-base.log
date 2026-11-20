@@ -196,3 +196,55 @@ gate outputs:
   shoes read flat in the front view (side and back show the shoe volume and laces);
   the side part is subtle from the front; the checks are coarser than the mockup.
   No Red test edited. No out/ committed.
+
+## Grandma green (2026-11-20, feat 588f82c4, role_base a6c78f02)
+- Source: assets/sprout-grandma.ts (new) on the ADULT kind (sprout-adult-base,
+  humanoid-kind), the Mom template. GRANNY proportions live in this file only:
+  ADULT shrunk 6 % in height only (every Y x 0.94); widths, depths, and radii
+  stay the adult's, and the soft round build comes from the cardigan and skirt
+  bodies. ADULT is unchanged. White neat hair (cap 0.013 off the skull, shallow
+  center part on the crown, compact sides to the nape, round bun low on the crown
+  center), light-green cable-knit cardigan (V neck with the lighter top showing,
+  4-button column, long sleeves, ribbed cuffs and hem), light-green top, long
+  A-line skirt with waistband to 0.18 m, brown flats, pearl studs. lashes false.
+  Presets: grandma (fair skin, white hair, brown eyes, green cloth).
+- Height: 1.53 m total with bun, below Mom (1.552) and above the children.
+  Textured 36,312 tris (Mom 36,084; Dad 37,892), 0.544 x 1.53 x 0.394 m.
+- Build loop (3 fast renders): (1) part groove end poked through the cap front
+  (dark dot on the bun); moved the part onto the crown where the cap is thick.
+  (2) total height 1.561 above Mom: SHORT 0.96 to 0.94 and the bun set lower.
+  (3) waistband blades (below): all raised-arm frames grew long dark-green blades
+  at the sides. Cause: the waistband was the only untagged body, so it fell back
+  to distance-from-segments weights and its verts followed the arm and leg bones
+  (GLB check: waistband verts weighted to leg.L/R, forearm.L/R, hand.L). Fix:
+  the waistband is now rigid on the hips bone like the skirt. Lesson for the
+  Grandpa and Tom builders: every new body gets an explicit bone tag or a
+  weighted band; never leave a body untagged near the limbs.
+- forge all: exit 0, zero warning: lines, FORGE_GL=software. forge check: result
+  FAIL in 1 clip = gesture-touch-nose only (HEAD: index 3.2, fingers 3.1,
+  hand 5.6 cm into the nose skin, the intentional nose touch). The other five
+  waived clips pass: wave ok; touch-neck closest 3.0 cm; count-fingers ok; eat
+  closest 4.2 cm; listen closest 4.3 cm. point-up, stretch-up, cheer,
+  picture-sway ok. No hand-through-hair or through-bun line anywhere. clap body
+  6.4 cm into the cardigan is the shared adult-chest structure (Mom 5.6,
+  Dad 6.1). Ground ok, rest lowest 0.0 cm.
+- Render vs grandma.jpg (textured 4 views): short round older woman, white bun,
+  center-parted white hair, brown brows, pearl studs, light-green knit V cardigan
+  with buttons, long skirt, flats, kind smile. Open defects, all minor: fingers
+  graze the skirt 1.2 cm in march arm swings (check body lines only); the skirt
+  hem lifts on the weight side in sway-picture (rigid skirt on tilting hips);
+  the inner elbow shows a small skin patch in point-up (sleeve cone narrower
+  than the bent limb).
+- Cut-outs: bench/sonnet/sprouts/cutout-gestures-cast.sh grandma rendered 25
+  frames into out/chibi-sprouts/r1/week2-7/gestures-adult/grandma/ with
+  gestures.grandma in the adult manifest (mom and dad keys untouched). Script
+  change is comment-only (usage line, adult canvas note); the adult canvas stays
+  1760x1856 and Grandma fits it. cutout-check on gestures-adult flags only the
+  known reach tiptoe: grandma/reach (lowest opaque row 1833, foot row 1840),
+  same as mom/reach and dad/reach.
+- typecheck: exit 0, 0 errors in assets/sprout-grandma.ts. Preset pin gains only
+  the sprout-grandma block (391 assets, 906 presets, 3182 slots; pure addition,
+  0 deletions). Sprout vitest: 3 files, 10 tests pass with --maxWorkers=1.
+- No Red test edited (no Red test exists for Grandma; the gate set is the six
+  waived clips). No out/ committed. Parent plan task stays [~]; Grandpa and Tom
+  remain.

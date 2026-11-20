@@ -264,7 +264,26 @@ Workbooks does not wait for it.
     reach tiptoe (lowest opaque row 1833, foot row 1840). typecheck 0 errors in sprout-mom;
     the 3 sprout vitest files pass 10/10. Log green-p5-adult-base.log.
   - [x] Dad (young father, tallest of the family, due 11-22; feat 633a40c5)
-  - Grandma (older woman, a little shorter than Mom, due 11-23)
+  - [x] Grandma (older woman, a little shorter than Mom, due 11-23; feat 588f82c4)
+    `assets/sprout-grandma.ts` on a GRANNY set (ADULT shrunk 6 % in height only, in this
+    file only; widths stay the adult's, roundness from the cardigan and skirt bodies;
+    ADULT unchanged): white neat hair (cap, center part, compact sides to the nape, round
+    top bun), light-green cable-knit cardigan (V neck with top showing, button column,
+    long sleeves, ribbed cuffs and hem), light-green top, long light-green skirt with
+    waistband, brown flats, pearl studs; lashes off. `./forge check sprout-grandma` fails
+    only the waived touch-nose (index/fingers into the nose skin, intentional face touch;
+    wave ok; touch-neck closest 3.0 cm; count-fingers, point-up, stretch-up ok; eat 4.2 cm;
+    listen 4.3 cm; clap closest 0.8 cm into the cardigan body line; ground ok). No hand
+    through hair or bun in any frame. `./forge all sprout-grandma` exits 0, no warning
+    lines (36,312 tris textured; Mom 36,084, Dad 37,892; 0.544 x 1.53 x 0.394 m, below
+    Mom's 1.552). 25 gesture frames in out/chibi-sprouts/r1/week2-7/gestures-adult/grandma/
+    (same 1080 px/m scale, adult canvas unchanged 1760x1856; manifest gains gestures.grandma,
+    mom and dad keys untouched); cutout-check flags only the known reach tiptoe (lowest
+    opaque row 1833, foot row 1840). typecheck 0 errors in sprout-grandma; preset pin gains
+    only the sprout-grandma block (391 assets, pure addition); the 3 sprout vitest files
+    pass 10/10. Fixed in the round: the untagged waistband fell back to segment-distance
+    weights and its verts followed the arms and legs (long blades in point-up, sway, and
+    stretch-up); now rigid on the hips bone like the skirt. Log green-p5-adult-base.log.
   - Grandpa (older man, as tall as Mom, due 11-24)
   - Tom (nine-year-old boy, one of the tallest children, due 11-25)
 - [ ] Task: Per-character hand offset in assets/parts/sprout-gestures.ts for bob hair (moves
