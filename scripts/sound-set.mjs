@@ -71,7 +71,14 @@ try {
 }
 
 const outDir = resolve(ROOT, 'sounds', set);
-mkdirSync(outDir, { recursive: true });
+try {
+  mkdirSync(outDir, { recursive: true });
+} catch {
+  // Share the prepare-output contract. Name the first entry so the line and exit stay exact.
+  const first = sounds[0];
+  const firstOut = join(outDir, `${first.name}.ogg`);
+  fail(`sound-set: cannot prepare output for ${first.name} (${first.design}): ${firstOut}`, 1);
+}
 
 for (const { name, design } of sounds) {
   const out = join(outDir, `${name}.ogg`);

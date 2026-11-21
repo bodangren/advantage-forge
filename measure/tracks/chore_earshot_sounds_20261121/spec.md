@@ -72,7 +72,9 @@ full line for each class. A prefix match is not accepted.
 `<index>` is the zero-based position in the `sounds` array. `<path>` is the absolute path that
 the wrapper resolved. `<code>` is the child exit code. The output path cannot be prepared when it is a directory, when
 its name is too long, or when filesystem I/O fails. This check runs before the child call for that
-entry. The wrapper never deletes a directory recursively and preserves its contents.
+entry. The wrapper never deletes a directory recursively and preserves its contents. The same line
+and exit apply when the output folder cannot be created. In that case the line names the first set
+entry and its target path, and no earshot call starts.
 
 The check order is: set name, set file existence, JSON parse, set content, binary, then each
 render in array order. A failure stops the run, and no later render starts. The wrapper captures
