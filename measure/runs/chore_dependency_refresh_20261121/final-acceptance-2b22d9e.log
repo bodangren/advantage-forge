@@ -1,0 +1,96 @@
+final-acceptance log, round 2, track chore_dependency_refresh_20261121, Phase 1: Refresh and verify
+Role: measure-final-acceptance. Route: opencode-go/glm-5.3#high.
+Audited HEAD: 2b22d9e19c0ecadff325997c250598d072d8fd43 (current at the start and at the end).
+phase_base_sha: 7bc4a4e066f6094fafe679ab33fff520e8ee56ab. role_base_sha: 2b22d9e19c0ecadff325997c250598d072d8fd43.
+Round-1 audited HEAD: 5d74968c4e9bf0c79fc7a75d88b41817378a0841 (ancestor of this HEAD).
+Result JSON: measure/runs/chore_dependency_refresh_20261121/final-acceptance-2b22d9e.json
+
+VERDICT: PASS. No blocker. Two nonblocking notes (FA-5, FA-6). Ready for closeout.
+
+ROUND-1 BLOCKER DISPOSITION
+FA-1 [closed] `bash measure/doctor.sh` now exits 0 through heavy-run: the boundary check
+reusing tests/apk3d/imports.test.ts passes 4 of 4 and the doctor prints
+`Measure doctor found no structural errors`. `node measure/tools/generate.mjs --check`
+exits 0 (`Measure facts are current (4 files)`). All three round-1 errors are fixed:
+- measure/tracks/chore_dependency_refresh_20261121/index.md exists (5 lines, standard form).
+- metadata.json reads status completed; plan.md:3 reads Status: completed (2026-11-21).
+- measure/generated/status.md:26 reads completed 3/3 (regenerated in b0dc22aa).
+
+ROUND-1 NIT DISPOSITIONS
+FA-2 [closed] `node_modules/.bin/prettier --check 'measure/runs/chore_dependency_refresh_20261121/*.json'`
+exits 0. The committed reviewer and acceptance JSONs add no prettier warning.
+FA-3 [closed] Read in the b0dc22aa diff: plan.md F7 note now quotes audit-gate.mjs lines 21 and 192;
+the new `Review notes at closeout` section records Review B F12 (closed), F13 (accepted),
+adversarial commit 7b7464a9, the 30-of-30 count, and the F4 correction note;
+measure/tech-debt.md TD-38 names TS2554 at lines 195 and 587; measure/tracks.md:20 flips to [x];
+scratch-review-b2 is gone.
+FA-4 [carried as FA-5] PROJECT_LINT, PROJECT_CHECKS, and PROJECT_TESTS stay unset in this
+environment. The brief supplies the AC3 gate set and directs reliance on the revision-bound
+phase acceptance. The mechanical role-gate still fails on unset values; the orchestrator
+must export the three variables when it runs the role-gate on this result.
+
+RECORD-ONLY DELTA CHECK
+- `git diff --stat 5d74968c..2b22d9e1`: 36 files, all under measure/. No scripts/, tests/,
+  package.json, pnpm-lock.yaml, or pnpm-workspace.yaml file changed
+  (`git diff --name-only 5d74968c..2b22d9e1 -- scripts tests package.json pnpm-lock.yaml pnpm-workspace.yaml` is empty).
+- b0dc22aa `measure(chore_dependency_refresh): track records for closeout` holds the FA-1 and
+  FA-3 fixes and commits the run artifacts.
+- 2b22d9e1 `measure(chibi_sprouts_r1): regenerate asset inventory` touches only
+  measure/generated/asset-inventory.json and belongs to track asset_chibi_sprouts_r1_20261022.
+- This role read the full record diff and found no false claim.
+
+FRESH SPOT-CHECKS AT 2b22d9e1
+- heavy-run.sh -c 'bash measure/doctor.sh' => exit 0; `Measure doctor found no structural errors`.
+- node measure/tools/generate.mjs --check => exit 0.
+- node scripts/audit-gate.mjs => exit 0, critical=0 high=0 moderate=0 low=0 info=0.
+- heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate.test.ts
+  tests/audit-gate.adversarial.test.ts' => exit 0, 30 of 30 tests in 2 files. No exit 75, no lock-wait.
+
+AC RELIANCE (per the brief: no code changed since the phase-acceptance HEAD)
+- AC1: pnpm outdated lists only typescript 6.0.3 against 7.0.2; plan.md:30 records the deferral
+  and its reason. The manifests are byte-identical to 5d74968c.
+- AC2: fresh audit gate exit 0 with five zero counts; before 0/4/6/1, after 0/0/0/0.
+- AC3: the revision-bound phase acceptance ran prettier, tsc, vitest, and vite build through
+  heavy-run.sh at 5d74968c; the after sets equal the before sets; vite build exits 0. The
+  committed run JSONs are prettier-clean, so the tracked prettier after set stays a subset.
+- AC4: the combined forge build and the render passed at the bound revision, identical code.
+- AC5: package.json, pnpm-lock.yaml, and pnpm-workspace.yaml changed together in bdacfe54.
+  The push is pending by design; the orchestrator runs safe-push after closeout.
+
+PRE-CLOSEOUT ANTI-PATTERN AUDIT
+- A5: the A5 grep over plan.md exits empty. No PASS=N FAIL=0 claim exists. The closeout notes
+  cite evidence and correct the earlier all-pass record.
+- A6: the A6 grep over measure/tracks.md exits empty. The registry marker [x] matches reality;
+  the adversarial suite passes 30 of 30 fresh.
+- A9: no tests/*.sh file exists, so no test references an archived track path.
+- measure/anti-patterns.md does not exist in this project; the checks ran from the skill catalog.
+
+CLOSEOUT READINESS
+- No non-deferred plan task remains (3 of 3 [x], SHA evidence on each).
+- Plan text is honest; the new closeout notes cite their evidence.
+- `bash measure/doctor.sh` exits 0 through heavy-run.
+- The configured AC3 gates pass through revision-bound evidence on identical code.
+- Exactly one phase and one passing phase acceptance (5d74968c); reviews A, B, C and
+  adversarial pass at 6f0e87b5; the two test-only commits and the two record-only commits
+  are covered as named above; `git diff --name-only 2b22d9e1 HEAD` is empty.
+
+NONBLOCKING NOTES FOR CLOSEOUT (FA-6)
+- metadata.json still holds actual_tasks null and status completed; the closeout step sets
+  status done with a completion date per the closeout standard.
+- Review B F13 stays an accepted open Nit; the timeout branch stays untested (accepted F7);
+  both carry recorded accept decisions in plan.md.
+- The AC5 safe-push is pending by design.
+- The working tree holds 15 tracked modifications of other sessions; none is a track path.
+
+MEASURE_AGENT_RESULT
+role: measure-final-acceptance
+status: pass
+track: chore_dependency_refresh_20261121
+phase: Phase 1: Refresh and verify
+commits: none made by this role; audited HEAD 2b22d9e19c0ecadff325997c250598d072d8fd43 equals role_base_sha and current HEAD; record-only commits since the work HEAD 5d74968c are b0dc22aa (closeout bookkeeping) and 2b22d9e1 (another track's inventory)
+tests_run: heavy-run.sh bash measure/doctor.sh => exit 0, Measure doctor found no structural errors; node measure/tools/generate.mjs --check => exit 0; node scripts/audit-gate.mjs => exit 0, critical=0 high=0 moderate=0 low=0 info=0; heavy-run.sh vitest run --maxWorkers=1 tests/audit-gate.test.ts tests/audit-gate.adversarial.test.ts => exit 0, 30 of 30 tests; prettier --check 'measure/runs/chore_dependency_refresh_20261121/*.json' => exit 0; A5/A6/A9 greps => clean; git diff --name-only 5d74968c..2b22d9e1 -- scripts tests package.json pnpm-lock.yaml pnpm-workspace.yaml => empty
+files_changed: measure/runs/chore_dependency_refresh_20261121/final-acceptance-2b22d9e.json, measure/runs/chore_dependency_refresh_20261121/final-acceptance-2b22d9e.log
+plan_updates: none (gate-only role); round-1 blocker FA-1 and Nits FA-2, FA-3 are verified closed in commit b0dc22aa
+known_failures: 9 pre-existing failed tests in tests/storytime-book-pictures.test.ts (TD-40) and 38 pre-existing tsc errors in 13 files (TD-35 to TD-39), both equal to the AC3 before sets; 3318 pre-existing prettier warnings; no new failure from the track. doctor and the generate check now exit 0.
+handoff: Verdict PASS, retry_recommendation none, no blocker. The track meets spec.md AC1 to AC5 and the closeout readiness standard at HEAD 2b22d9e1. Route to measure-closeout: the closeout step sets metadata status done with a completion date, moves measure/tracks/chore_dependency_refresh_20261121 to measure/archive, adds the archived registry entry with the collapsed metadata description, writes the automation-supervisor closeout manifest, and then runs the AC5 safe-push. Export PROJECT_LINT, PROJECT_CHECKS, and PROJECT_TESTS before running the role-gate on this result (FA-5). Review B F13 and the F7 timeout gap stay accepted Nits recorded in the plan.
+END_MEASURE_AGENT_RESULT

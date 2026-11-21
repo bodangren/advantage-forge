@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: closeout
+status: complete
+track: chore_dependency_refresh_20261121
+phase: track closeout
+commits: 2b22d9e (audited pre-closeout head; the closeout commit SHA is reported in the reply)
+tests_run: node measure/tools/generate.mjs --check exit 0 with Measure facts are current (4 files); bash measure/doctor.sh exit 0 with Measure doctor found no structural errors and boundary check 4 of 4; post-move vitest audit-gate suites 2 files and 30 of 30 tests passed with exit 0; all three through heavy-run.sh; ./measure/generate.sh exit 0 after git status --short measure/generated was clean
+files_changed: archive move of measure/tracks/chore_dependency_refresh_20261121 to measure/archive/chore_dependency_refresh_20261121 (index.md, metadata.json, plan.md, spec.md, spec-review.md, automation-supervisor-closeout-manifest.json); measure/tracks.md registry entry moved to Archived Tracks; measure/generated/status.md regenerated; measure/runs/chore_dependency_refresh_20261121/ (final-acceptance-2b22d9e.json/.log and closeout-2b22d9e.json/.log)
+plan_updates: metadata status done with completed and completed_at 2026-11-21 and actual_tasks 3; the archived plan status line and its Closeout record section state the audit counts before 0/4/6/1 and after 0/0/0/0, the TypeScript 7 deferral, TD-35 through TD-40, and the PROJECT_* gate route-around; the registry archived entry reports the 30-of-30 adversarial suite result
+known_failures: none in this track; 9 pre-existing failed tests in tests/storytime-book-pictures.test.ts (TD-40), 38 pre-existing tsc errors in 13 files (TD-35 to TD-39), and 3318 pre-existing prettier warnings stay open at other tracks; TypeScript 7.0.2 stays deferred
+handoff: the track is archived under measure/archive/chore_dependency_refresh_20261121 and all final acceptance and closeout evidence stays under measure/runs/chore_dependency_refresh_20261121; A5, A6, and A9 are clean and no test needed a path fix; the AC5 safe-push stays pending by design for the orchestrator; the gate route-around (PROJECT_* exported as track-scoped audit-gate commands) is recorded in the plan, metadata, and manifest
+END_MEASURE_AGENT_RESULT

@@ -17,9 +17,6 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Resolve dependency launcher reconciliation**
   *Link: [./tracks/measure_dependency_launcher_20260928/](./tracks/measure_dependency_launcher_20260928/)*
 
-- [x] **Track: Refresh dependencies after the vulnerability audit**
-  *Link: [./tracks/chore_dependency_refresh_20261121/](./tracks/chore_dependency_refresh_20261121/)*
-
 ## Asset production
 
 - [ ] **Track: Define companion media production**
@@ -254,6 +251,10 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
   *Link: [./tracks/riven_fx_geometry_20261009/](./tracks/riven_fx_geometry_20261009/)*
 
 ## Archived Tracks
+
+- [x] Refresh dependencies after the vulnerability audit, completed 2026-11-21; direct packages and the lockfile refreshed, a fail-closed audit gate added, and the two audit-gate suites pass 30 of 30 at final acceptance 2b22d9e1; audit findings fell from 0 critical / 4 high / 6 moderate / 1 low to 0/0/0/0; TypeScript 7.0.2 deferred; 38 tsc errors and 9 failed tests stay as pre-existing debt TD-35..TD-40.
+  *Link: [./archive/chore_dependency_refresh_20261121/](./archive/chore_dependency_refresh_20261121/)*
+  *Refresh dependencies after the vulnerability audit*
 
 - [x] Plan and accept civic scenes, completed 2026-11-19; 30 civic P2 maps inventoried, independently judged at the 7.0 bar, the mill reworked and rerated, and all 30 TSV rows accepted; final acceptance PASS at 3e90457f
   *Link: [./archive/asset_scenes_civic_20260928/](./archive/asset_scenes_civic_20260928/)*

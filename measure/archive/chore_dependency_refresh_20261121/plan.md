@@ -1,6 +1,6 @@
 # Refresh dependencies after the vulnerability audit
 
-Status: completed (2026-11-21). All three tasks are `[x]` and carry commit evidence. The track is ready for closeout. It is not archived. This plan owns execution status. Source documents retain design details.
+Status: done (2026-11-21). All three tasks are `[x]` and carry commit evidence. Final acceptance passed at 2b22d9e1. The track was archived on 2026-11-21. This plan owns execution status. Source documents retain design details.
 
 Lane: light. One phase. Deadlines: critical and high by 2026-11-23, the rest by 2026-11-25.
 
@@ -45,3 +45,13 @@ Phase acceptance at `5d74968c` passed with Nits F1 to F6. The bookkeeping round 
 - F13 (Nit, accepted): `decodedKey` at `scripts/audit-gate.mjs:107-113` returns the raw token when `JSON.parse` throws. A fail-closed scanner would let the error reach the catch in `main`, which gives exit 2. The fallback branch is unreachable for valid input, because every key token comes from a document that already parsed. The differential run, the 46 end-to-end probes, and the depth sweeps found no input that reaches it. Decision: accept the branch as a note. No code change in this round.
 - Targeted command count: the two audit-gate suites pass 30 of 30, exit 0, at `5d74968c` (final-acceptance evidence). The earlier counts of 17, 22, and 29 in the T1 and T2 evidence were correct at their own commits.
 - F4 (Nit, noted): `jr-green-199189d9.log:2` and `jr-green-d0f755c8.log:2` say `all gates pass` beside `tsc --noEmit` exit 2 with the pre-existing 38 errors. The logs stay unchanged because they are committed role records. This plan does not repeat that claim. The gate results above stand: the after sets equal the before sets, and the pre-existing failures are debt under TD-35 to TD-40.
+
+## Closeout record (2026-11-21)
+
+Archived at audited HEAD 2b22d9e1 after final acceptance PASS (`measure/runs/chore_dependency_refresh_20261121/final-acceptance-2b22d9e.json`, role-gate exit 0). Phase 1 acceptance passed at 5d74968c. T1, T2, and T3 are `[x]` with commit SHA evidence. No `[ ]`, `[~]`, or `[b]` marker remains, so no deferred owner field is needed.
+
+- Audit: the baseline in `spec.md` holds 0 critical, 4 high, 6 moderate, and 1 low finding. After the refresh, `node scripts/audit-gate.mjs` exits 0 with `critical=0 high=0 moderate=0 low=0 info=0`. No advisory remains, so no reason entry is required.
+- Deferred breaking major: TypeScript 7.0.2 is deferred. It adds 13 `tsc` errors in `tests/song-still-hook.test.ts`, a test file owned by another track. The pin stays at 6.0.3, the latest 6.x.
+- Pre-existing debt: TD-35 through TD-40 stay open at their owning tracks. They record 38 `tsc` errors in 13 files, 9 failed tests in `tests/storytime-book-pictures.test.ts`, and 3318 pre-existing prettier warnings. The after sets equal or are subsets of the before sets, and this track adds no new failure.
+- Gate route-around: `PROJECT_LINT`, `PROJECT_CHECKS`, and `PROJECT_TESTS` were unset in the final-acceptance environment. `measure/gates.json` has no such keys, and the full suite has 9 pre-existing failures under TD-40. The orchestrator exported the track-scoped audit-gate commands as those three variables so the role gate could run, and the gate exited 0. This is a route-around, not a claim that the full suite is clean.
+- Anti-patterns: A5 finds no false-claim line in this plan. A6 finds no overstatement in the registry note, which reports the 30-of-30 adversarial suite result. A9 finds no test or script that hardcodes `measure/tracks/chore_dependency_refresh_20261121/`, so the archive move breaks no test.

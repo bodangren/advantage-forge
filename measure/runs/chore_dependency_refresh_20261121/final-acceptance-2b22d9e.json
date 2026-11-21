@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "role": "measure-final-acceptance",
+  "track": "chore_dependency_refresh_20261121",
+  "phase": "Phase 1: Refresh and verify",
+  "phase_base_sha": "7bc4a4e066f6094fafe679ab33fff520e8ee56ab",
+  "role_base_sha": "2b22d9e19c0ecadff325997c250598d072d8fd43",
+  "audited_head_sha": "2b22d9e19c0ecadff325997c250598d072d8fd43",
+  "current_head_sha": "2b22d9e19c0ecadff325997c250598d072d8fd43",
+  "audited_head_is_current": true,
+  "allowed_test_only_commits": [
+    "7b7464a920209e22d6ee22e75464e0382efbd18d",
+    "5d74968c4e9bf0c79fc7a75d88b41817378a0841",
+    "b0dc22aa (record-only closeout bookkeeping)",
+    "2b22d9e1 (record-only, another track)"
+  ],
+  "status": "pass",
+  "summary": "Final acceptance passes at HEAD 2b22d9e1. The round-1 blocker FA-1 is closed: the track folder holds index.md, metadata.json and the plan read status completed with three [x] tasks, the generated facts are regenerated (3/3), and `bash measure/doctor.sh` exits 0 with `Measure doctor found no structural errors`. `node measure/tools/generate.mjs --check` exits 0. The carried Nits FA-2 and FA-3 are closed: the committed reviewer JSONs are prettier-clean, the plan carries the corrected audit-gate line numbers, the Review B F12 and F13 dispositions, the adversarial commit record, the 30-of-30 count, and the TD-38 line fix. Only record commits landed since the audited work at 5d74968c: scripts/, tests/, package.json, and the lockfile are byte-identical, so the revision-bound phase-acceptance evidence covers AC1 to AC4, and my fresh spot-checks confirm the state: the audit gate exits 0 with five zero counts, the two audit-gate suites pass 30 of 30 through heavy-run, and doctor exits 0 through heavy-run. AC5 holds with the push pending by design. The track is ready for closeout.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "FA-5 [Nit] final-acceptance (carried from round-1 FA-4): PROJECT_LINT, PROJECT_CHECKS, and PROJECT_TESTS were unset in this role's environment again. The brief supplied the configured gates (the AC3 subset rule) and directed reliance on the revision-bound phase acceptance, which is valid because no code changed. The mechanical role-gate still fails on unset values, so the orchestrator must export the three variables when it runs the role-gate on this result.",
+    "FA-6 [Nit] final-acceptance (closeout handoff items, no action for acceptance): (a) metadata.json still holds `actual_tasks: null` and status completed; the closeout step sets status done with a completion date per the closeout standard. (b) Review B F13 stays an accepted open Nit and F7 records the untested timeout branch; both carry recorded accept decisions in plan.md. (c) The AC5 safe-push is pending by design; the orchestrator runs it after closeout. (d) The working tree holds 15 tracked modifications of other sessions (.claude skills, AGENTS.md, bench trials); none is a track path and this role did not touch them."
+  ],
+  "evidence": [
+    "HEAD provenance: `git rev-parse HEAD` printed 2b22d9e19c0ecadff325997c250598d072d8fd43 at the start and at the end of this audit. It equals audited_head_sha and role_base_sha. Track base 113b6c28 and phase base 7bc4a4e0 are ancestors (`git merge-base --is-ancestor`), and 5d74968c, the round-1 audited HEAD, is an ancestor of 2b22d9e1.",
+    "Path-diff command and output: `git diff --name-only 2b22d9e1 HEAD` printed nothing (exit 0). HEAD equals the audited HEAD, so no later commit needs coverage.",
+    "Record-only delta: `git diff --stat 5d74968c..2b22d9e1` lists 36 files, all under measure/: the regenerated status facts, the committed run artifacts (reviewer results, phase acceptance, the round-1 final acceptance, jr-green-a6d3151b.log), measure/tech-debt.md (2 lines), measure/tracks.md (2 lines), and the track index.md (new, 5 lines), metadata.json (status new to completed), and plan.md (13 lines). `git diff --name-only 5d74968c..2b22d9e1 -- scripts tests package.json pnpm-lock.yaml pnpm-workspace.yaml` is empty: the code, the tests, and the manifests are unchanged, so the revision-bound phase-acceptance gate evidence applies.",
+    "The two commits: b0dc22aa `measure(chore_dependency_refresh): track records for closeout` holds the FA-1 and FA-3 fixes plus the evidence commits; 2b22d9e1 `measure(chibi_sprouts_r1): regenerate asset inventory` touches only measure/generated/asset-inventory.json and belongs to track asset_chibi_sprouts_r1_20261022, an active track folder, so it is outside this track's scope. This role read the full diff of both and found no false claim.",
+    "FA-1 closed: `HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'bash measure/doctor.sh'` exited 0: the boundary check reusing tests/apk3d/imports.test.ts passed 4 of 4, and the doctor printed `Measure doctor found no structural errors`. `node measure/tools/generate.mjs --check` exited 0 with `Measure facts are current (4 files)`. The three round-1 doctor errors are gone: measure/tracks/chore_dependency_refresh_20261121/index.md exists (5 lines, the standard form of the other active tracks), metadata.json reads status completed, and measure/generated/status.md:26 reads completed 3/3.",
+    "FA-2 closed: `node_modules/.bin/prettier --check 'measure/runs/chore_dependency_refresh_20261121/*.json'` exited 0 with `All matched files use Prettier code style!`. The committed reviewer and acceptance JSONs add no prettier warning, so the AC3 tracked prettier after set stays a subset of the before set.",
+    "FA-3 closed (record diff read directly): plan.md:3 reads `Status: completed (2026-11-21)`; the F7 note now quotes scripts/audit-gate.mjs lines 21 and 192; the new `Review notes at closeout` section records Review B F12 (closed by the 4 MiB test at tests/audit-gate.adversarial.test.ts:128-148, failing first with exit 134 on the 0019518e scanner), F13 (accepted, scripts/audit-gate.mjs:107-113), adversarial commit 7b7464a9, the 30-of-30 targeted count, and the F4 note that the two committed jr-green logs keep their `all gates pass` status lines with a recorded correction; measure/tech-debt.md TD-38 now names TS2554 at lines 195 and 587; measure/tracks.md:20 flips the track marker to [x]. The scratch-review-b2 directory is gone from the runs folder.",
+    "AC2 fresh: `node scripts/audit-gate.mjs` printed `critical=0 high=0 moderate=0 low=0 info=0` and exited 0 at HEAD 2b22d9e1. The before state was 0 critical, 4 high, 6 moderate, 1 low (spec.md:17); no advisory remains, so none needs a reason (AC2).",
+    "Audit-gate suites fresh: `HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate.test.ts tests/audit-gate.adversarial.test.ts'` exited 0 with 2 test files passed and 30 of 30 tests passed. No exit 75 and no lock-wait line; one heavy job at a time.",
+    "AC1, AC3, AC4 (revision-bound phase acceptance at 5d74968c, valid because scripts/, tests/, and the manifests are unchanged): `pnpm outdated` listed only typescript 6.0.3 against 7.0.2 with the deferral and its reason at plan.md:30; the prettier, tsc, and vitest after sets equaled the before sets with vite build exit 0, the 38 tsc errors and 9 failed tests being pre-existing debt under TD-35 to TD-40; the combined forge build exited 0 with no `warning:` line and the render exited 0 rewriting out/rogue/render.png. The orchestrator brief directs this reliance for the heavy full-suite runs.",
+    "AC5: `git show --stat bdacfe5415b6eb702e0f93e31ea5a067aa642f25` changes package.json, pnpm-lock.yaml, and pnpm-workspace.yaml together, inside phase_base_sha..HEAD. The push is pending by design; the orchestrator runs safe-push after closeout, so this role does not fail on it.",
+    "Prerequisites: review-a, review-b, review-c, and adversarial-testing report pass at 6f0e87b5; commits 7b7464a9 and 5d74968c after it are the allowed test-only commits; the fresh 30-of-30 suite run covers the cases 7b7464a9 added; scripts/audit-gate.mjs last changed in d0f755c8, before 6f0e87b5, and is unchanged since 5d74968c. Exactly one phase exists and exactly one passing phase-acceptance result exists, bound to 5d74968c with code identical to HEAD.",
+    "Plan and SHA checks: T1, T2, and T3 are [x] (plan.md:9, :15, :26) with SHA evidence on their bullets; all 12 plan SHAs resolved inside phase_base_sha..5d74968c in round 1 and the record commits changed no SHA claim.",
+    "Pre-closeout anti-pattern audit: A5 `grep -nE 'PASS=[0-9]+.*FAIL=0|all checks pass' measure/tracks/chore_dependency_refresh_20261121/plan.md` exits 1 empty. A6 `grep -nE 'API-key encryption (was )?resolved|encryption.*resolved|completely fixed|fully solved|all (checks |tests )?pass' measure/tracks.md` exits 1 empty; the registry marker [x] matches reality because the adversarial suite passes 30 of 30 fresh. A9: no tests/*.sh file exists, so no test references an archived track path. `measure/anti-patterns.md` does not exist in this project; the checks ran from the skill catalog definitions.",
+    "Closeout readiness: no non-deferred plan task remains (3 of 3 [x]); completed tasks carry commit SHA evidence; plan text is honest (A5 clean, and the new closeout notes cite their evidence); `bash measure/doctor.sh` exits 0 through heavy-run; the configured AC3 gates pass through the revision-bound phase acceptance on identical code plus the fresh spot-checks.",
+    "Working tree: the 15 tracked modifications of other sessions (.claude skills, AGENTS.md, bench trials) are unchanged by this role and none is a track path. This role added only its two result artifacts under measure/runs/chore_dependency_refresh_20261121/."
+  ],
+  "commands": [
+    "git rev-parse HEAD => 2b22d9e19c0ecadff325997c250598d072d8fd43 (start and end)",
+    "git merge-base --is-ancestor 113b6c28 2b22d9e1; git merge-base --is-ancestor 7bc4a4e0 2b22d9e1; git merge-base --is-ancestor 5d74968c 2b22d9e1 => all true",
+    "git diff --name-only 2b22d9e1 HEAD => empty output, exit 0",
+    "git diff --stat 5d74968c..2b22d9e1 => 36 files, all under measure/",
+    "git diff --name-only 5d74968c..2b22d9e1 -- scripts tests package.json pnpm-lock.yaml pnpm-workspace.yaml => empty output (code, tests, manifests unchanged)",
+    "git log --format='%h %s' 5d74968c..2b22d9e1 => b0dc22aa track records for closeout; 2b22d9e1 regenerate asset inventory (chibi_sprouts_r1)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'bash measure/doctor.sh' => exit 0; boundary 4 of 4; Measure doctor found no structural errors",
+    "node measure/tools/generate.mjs --check => exit 0; Measure facts are current (4 files)",
+    "node scripts/audit-gate.mjs => critical=0 high=0 moderate=0 low=0 info=0, exit 0",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate.test.ts tests/audit-gate.adversarial.test.ts' => exit 0; 2 files, 30 of 30 tests passed",
+    "node_modules/.bin/prettier --check 'measure/runs/chore_dependency_refresh_20261121/*.json' => exit 0; All matched files use Prettier code style!",
+    "grep -nE 'PASS=[0-9]+.*FAIL=0|all checks pass' measure/tracks/chore_dependency_refresh_20261121/plan.md => exit 1 (A5 clean); same-class grep on measure/tracks.md => exit 1 (A6 clean); ls tests/*.sh => none (A9 clean)",
+    "grep -n chore_dependency_refresh measure/generated/status.md => completed, 3/3",
+    "git show --stat b0dc22aa; git show --stat 2b22d9e1; git diff 5d74968c..2b22d9e1 -- measure/tracks/chore_dependency_refresh_20261121/plan.md measure/tech-debt.md measure/tracks.md (full record diff read)"
+  ],
+  "changed_files": [
+    "measure/runs/chore_dependency_refresh_20261121/final-acceptance-2b22d9e.json",
+    "measure/runs/chore_dependency_refresh_20261121/final-acceptance-2b22d9e.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "opencode-go/glm-5.3#high",
+  "ac_results": [
+    {
+      "ac": "AC1",
+      "result": "pass",
+      "basis": "Revision-bound phase acceptance: pnpm outdated lists only typescript 6.0.3 against 7.0.2; the plan names the deferral and its reason (plan.md:30). Manifests unchanged since 5d74968c."
+    },
+    {
+      "ac": "AC2",
+      "result": "pass",
+      "basis": "Fresh at 2b22d9e1: audit gate exit 0 with five zero counts. Before 0/4/6/1, after 0/0/0/0; no advisory remains."
+    },
+    {
+      "ac": "AC3",
+      "result": "pass",
+      "basis": "Revision-bound phase acceptance on identical code: tsc and vitest after sets equal the before sets, the tracked prettier after set is a subset (the committed run JSONs are prettier-clean), vite build exits 0. Doctor and generate checks exit 0 fresh."
+    },
+    {
+      "ac": "AC4",
+      "result": "pass",
+      "basis": "Revision-bound phase acceptance on identical code: combined forge build exit 0 with no warning line; render exit 0 with out/rogue/render.png rewritten."
+    },
+    {
+      "ac": "AC5",
+      "result": "pass_with_pending_push",
+      "basis": "Manifest, lockfile, and workspace yaml changed together in bdacfe54; the safe-push step is pending by design (orchestrator runs it after closeout)."
+    }
+  ],
+  "prerequisite_results": [
+    {
+      "role": "review-a",
+      "file": "measure/runs/chore_dependency_refresh_20261121/review-a-6f0e87b.json",
+      "status": "pass",
+      "audited_head_sha": "6f0e87b520f3188dd170caf7efd0b8d72c112993",
+      "targets_audited_head": false,
+      "covered_by": "allowed test-only commits (7b7464a9, 5d74968c) plus record-only commits (b0dc22aa, 2b22d9e1); code unchanged since 5d74968c"
+    },
+    {
+      "role": "review-b",
+      "file": "measure/runs/chore_dependency_refresh_20261121/review-b-6f0e87b.json",
+      "status": "pass",
+      "audited_head_sha": "6f0e87b520f3188dd170caf7efd0b8d72c112993",
+      "targets_audited_head": false,
+      "covered_by": "allowed test-only commits (7b7464a9, 5d74968c) plus record-only commits (b0dc22aa, 2b22d9e1); code unchanged since 5d74968c"
+    },
+    {
+      "role": "review-c",
+      "file": "measure/runs/chore_dependency_refresh_20261121/review-c-6f0e87b.json",
+      "status": "pass",
+      "audited_head_sha": "6f0e87b520f3188dd170caf7efd0b8d72c112993",
+      "targets_audited_head": false,
+      "covered_by": "allowed test-only commits (7b7464a9, 5d74968c) plus record-only commits (b0dc22aa, 2b22d9e1); code unchanged since 5d74968c"
+    },
+    {
+      "role": "adversarial-testing",
+      "file": "measure/runs/chore_dependency_refresh_20261121/adversarial-testing-6f0e87b.json",
+      "status": "pass",
+      "audited_head_sha": "6f0e87b520f3188dd170caf7efd0b8d72c112993",
+      "targets_audited_head": false,
+      "covered_by": "allowed test-only commits (7b7464a9, 5d74968c) plus record-only commits (b0dc22aa, 2b22d9e1); the fresh 30-of-30 run covers the added cases"
+    },
+    {
+      "role": "phase-acceptance",
+      "file": "measure/runs/chore_dependency_refresh_20261121/phase-acceptance-5d74968.json",
+      "status": "pass",
+      "audited_head_sha": "5d74968c4e9bf0c79fc7a75d88b41817378a0841",
+      "targets_audited_head": false,
+      "covered_by": "record-only commits b0dc22aa and 2b22d9e1, each read in full by this role; scripts/, tests/, and the manifests are byte-identical, so its gate evidence applies; the record-dependent checks (doctor, generate, prettier, registry) were re-run fresh and pass"
+    }
+  ],
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "`node scripts/audit-gate.mjs` exits 0 with five zero counts and doctor exits 0 through heavy-run at HEAD 2b22d9e1, with scripts/, tests/, and the manifests byte-identical to the revision-bound acceptance HEAD 5d74968c."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The fresh heavy-run of the two audit-gate suites passes 30 of 30, and phase acceptance proved the 4 MiB test fails first on the old scanner (exit 134), but the timeout branch stays untested (accepted F7 in plan.md)."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "`git diff --stat 5d74968c..2b22d9e1` lists only measure/ record files; `git diff --name-only 5d74968c..2b22d9e1 -- scripts tests package.json pnpm-lock.yaml pnpm-workspace.yaml` is empty."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim of this round has a fresh command result (doctor exit 0, generate exit 0, audit gate exit 0, suite 30 of 30, prettier exit 0) or a read diff, and the round-1 record drift (plan line numbers, TD-38 lines) is corrected in b0dc22aa."
+    }
+  ],
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "openai/gpt-6-luna#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "Its pass still matches the state: the targeted suite passes 30 of 30 fresh and the live audit gate exits 0 with five zero counts on identical code."
+    },
+    {
+      "reviewer_role": "review-b",
+      "reviewer_route": "claude-code/claude-sonnet-5-5#max",
+      "agreed": true,
+      "score": 5,
+      "evidence": "Its carried F7 line numbers (scripts/audit-gate.mjs:21 and :192) are now the numbers the plan quotes, and its F12 closure and F13 acceptance are both recorded in the plan's closeout notes."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "openai/gpt-6-luna#high",
+      "agreed": true,
+      "score": 4,
+      "evidence": "Its fixture and override probes match the phase-acceptance reruns, but it ran vitest outside heavy-run.sh (recorded in the phase-acceptance reviewer ratings)."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "openai/gpt-6-luna#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "Its added cases pass in this role's fresh heavy-run (30 of 30, exit 0), and phase acceptance reproduced its failing-first proof (old scanner exit 134)."
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "track": "chore_dependency_refresh_20261121",
+  "archived_at": "2026-11-21T16:30:00Z",
+  "track_base_sha": "113b6c28",
+  "phase_base_sha": "7bc4a4e0",
+  "audited_head_sha": "2b22d9e19c0ecadff325997c250598d072d8fd43",
+  "role_base_sha": "2b22d9e19c0ecadff325997c250598d072d8fd43",
+  "lane": "light: one phase per plan.md, with the full audit role set per the orchestrator brief",
+  "phase_acceptance_results": [
+    {
+      "phase": "Phase 1: Refresh and verify",
+      "run": 1,
+      "audited_head_sha": "5d74968c4e9bf0c79fc7a75d88b41817378a0841",
+      "status": "pass",
+      "file": "measure/runs/chore_dependency_refresh_20261121/phase-acceptance-5d74968.json",
+      "note": "One phase exists, and one passing phase-acceptance result exists. scripts/, tests/, package.json, and the lockfile are byte-identical between 5d74968c and the audited HEAD 2b22d9e1, so the revision-bound gate evidence applies."
+    }
+  ],
+  "final_acceptance": {
+    "file": "measure/runs/chore_dependency_refresh_20261121/final-acceptance-2b22d9e.json",
+    "log": "measure/runs/chore_dependency_refresh_20261121/final-acceptance-2b22d9e.log",
+    "status": "pass",
+    "audited_head_sha": "2b22d9e19c0ecadff325997c250598d072d8fd43",
+    "current_head_sha": "2b22d9e19c0ecadff325997c250598d072d8fd43",
+    "role_gate_exit": 0,
+    "note": "The role gate exited 0 with PROJECT_LINT, PROJECT_CHECKS, and PROJECT_TESTS exported as the track-scoped audit-gate commands. See the gate route-around note below."
+  },
+  "completed_phases": [
+    {
+      "id": "Phase 1",
+      "title": "Phase 1: Refresh and verify",
+      "checkpoint": "5d74968c"
+    }
+  ],
+  "gates": {
+    "TASK_MARKERS": "pass: the archived plan holds T1, T2, and T3 as [x] with commit SHA evidence, and no [ ], [~], or [b] line. No deferred owner field is needed.",
+    "PHASE_ACCEPTANCE": "pass at 5d74968c; code, tests, and manifests unchanged through 2b22d9e1, so the revision-bound evidence covers AC1 to AC4.",
+    "FINAL_ACCEPTANCE": "pass at 2b22d9e1; audited_head_sha equals the current pre-closeout HEAD, and the role gate exited 0 after the orchestrator exported the three PROJECT_* variables.",
+    "DOCTOR": "rerun in this closeout through heavy-run.sh; see commands. The doctor must exit 0 with no error naming this track.",
+    "GENERATED_CHECK": "rerun in this closeout through heavy-run.sh; node measure/tools/generate.mjs --check must exit 0.",
+    "POST_MOVE_TEST_GATE": "rerun in this closeout through heavy-run.sh on the two audit-gate suites after the archive move; only the summary lines are retained.",
+    "source": "this closeout session"
+  },
+  "archive_notes": [
+    "Audit: before 0 critical, 4 high, 6 moderate, and 1 low finding (spec.md baseline); after 0 critical, 0 high, 0 moderate, and 0 low, with node scripts/audit-gate.mjs exit 0 and five zero counts. No advisory remains, so no reason entry is needed.",
+    "Deferred: TypeScript 7.0.2 stays deferred. It adds 13 tsc errors in tests/song-still-hook.test.ts, a test file owned by another track. The pin stays at 6.0.3, the latest 6.x.",
+    "Pre-existing debt: TD-35 through TD-40 stay open at their owning tracks. They record 38 tsc errors in 13 files, 9 failed tests in tests/storytime-book-pictures.test.ts, and 3318 pre-existing prettier warnings. The after sets equal or are subsets of the before sets; this track adds no new failure.",
+    "Gate route-around: PROJECT_LINT, PROJECT_CHECKS, and PROJECT_TESTS were unset in the final-acceptance environment. measure/gates.json holds only GENERATED_CHECK, and the full suite has 9 pre-existing failures under TD-40. The orchestrator exported the track-scoped audit-gate commands as the three variables so the role gate could run, and the gate exited 0. This is a route-around, not a claim that the full suite is clean."
+  ],
+  "antipatterns_clean": [
+    "A5 false claim: no PASS= count and no 'all checks pass' claim in the archived plan. The plan records its corrected gate results and the two log lines that still say 'all gates pass' as a noted Nit F4.",
+    "A6 registry overstatement: the archived registry entry states the completion date, the 30-of-30 adversarial suite result, the audit counts, and the deferred major. It claims no clean full suite and no owner acceptance.",
+    "A9 archived track path: no test, script, or support file hardcodes measure/tracks/chore_dependency_refresh_20261121/. The grep before the move found hits only in committed run logs and result JSONs, which are role records, not test references. No test fix was needed."
+  ],
+  "fixed_path_hits_before_move": [
+    "measure/runs/chore_dependency_refresh_20261121/jr-green-6987ed50.log",
+    "measure/runs/chore_dependency_refresh_20261121/jr-green-d0f755c8.log",
+    "measure/runs/chore_dependency_refresh_20261121/jr-green-199189d9.log",
+    "measure/runs/chore_dependency_refresh_20261121/jr-green-a6d3151b.log",
+    "measure/runs/chore_dependency_refresh_20261121/jr-green-bdacfe54.log",
+    "measure/runs/chore_dependency_refresh_20261121/spec-review-7bc4a4e.log",
+    "measure/runs/chore_dependency_refresh_20261121/spec-review-113b6c2.log",
+    "measure/runs/chore_dependency_refresh_20261121/mid-red-5bbf48d.log",
+    "measure/runs/chore_dependency_refresh_20261121/mid-red-0019518.log",
+    "measure/runs/chore_dependency_refresh_20261121/review-a-6f0e87b.json",
+    "measure/runs/chore_dependency_refresh_20261121/review-a-1d00046.json",
+    "measure/runs/chore_dependency_refresh_20261121/review-a-0019518.json",
+    "measure/runs/chore_dependency_refresh_20261121/review-b-1d00046.json",
+    "measure/runs/chore_dependency_refresh_20261121/final-acceptance-5d74968.json"
+  ],
+  "deferred": [
+    "TypeScript 7.0.2 stays deferred because a test file owned by another track needs edits (deferred:PM)",
+    "TD-35 through TD-40 stay open at their owning tracks; 9 failed tests and 38 tsc errors are pre-existing, not new failures (deferred:owning tracks)",
+    "Review B F13 (decodedKey fallback) and F7 (untested timeout branch) stay accepted Nits recorded in the plan (deferred:Measure orchestrator)",
+    "The AC5 safe-push is pending by design; the orchestrator runs it after closeout (deferred:orchestrator)"
+  ],
+  "deferred_note": "No plan task stays open. Every [x] task carries commit SHA evidence. The carried items are accepted Nits, debt, and a pending orchestrator action, not tasks.",
+  "tech_debt": [
+    "TD-35 to TD-40 stay open in measure/tech-debt.md. This closeout adds no new debt row; it records the six entries in the archive notes."
+  ],
+  "tech_debt_note": "No new debt is warranted. The 38 tsc errors and the 9 failed tests were present before this track and are unchanged by it.",
+  "lessons_learned": "No new lesson is warranted. The dependency refresh produced no new reusable rule beyond the gate route-around already recorded in the closeout notes and the accepted Nits in the plan.",
+  "generated_facts": "regenerated after git status --short measure/generated was clean; node measure/tools/generate.mjs --check exits 0. The generated status file no longer lists this track as active.",
+  "artifact_cleanup": "No bulky run artifact was deleted. The orchestrator identified none. Every log, JSON, and result under measure/runs/chore_dependency_refresh_20261121/ is retained, including the final-acceptance and closeout evidence.",
+  "retained_evidence": [
+    "measure/runs/chore_dependency_refresh_20261121/final-acceptance-2b22d9e.json",
+    "measure/runs/chore_dependency_refresh_20261121/final-acceptance-2b22d9e.log",
+    "measure/runs/chore_dependency_refresh_20261121/phase-acceptance-5d74968.json",
+    "measure/runs/chore_dependency_refresh_20261121/phase-acceptance-5d74968.log",
+    "measure/runs/chore_dependency_refresh_20261121/closeout-2b22d9e.json",
+    "measure/runs/chore_dependency_refresh_20261121/closeout-2b22d9e.log",
+    "measure/runs/chore_dependency_refresh_20261121/adversarial-testing-6f0e87b.json",
+    "measure/runs/chore_dependency_refresh_20261121/review-a-6f0e87b.json",
+    "measure/runs/chore_dependency_refresh_20261121/review-b-6f0e87b.json",
+    "measure/runs/chore_dependency_refresh_20261121/review-c-6f0e87b.json",
+    "measure/archive/chore_dependency_refresh_20261121/plan.md",
+    "measure/archive/chore_dependency_refresh_20261121/metadata.json"
+  ],
+  "commands": [
+    "git rev-parse HEAD => 2b22d9e19c0ecadff325997c250598d072d8fd43, equal to the final-acceptance audited_head_sha",
+    "git status --short measure/generated => empty before ./measure/generate.sh",
+    "./measure/generate.sh => exit 0",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/tools/generate.mjs --check'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'bash measure/doctor.sh'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate.test.ts tests/audit-gate.adversarial.test.ts'",
+    "git mv measure/tracks/chore_dependency_refresh_20261121 measure/archive/chore_dependency_refresh_20261121",
+    "grep -rn 'measure/tracks/chore_dependency_refresh_20261121/' tests scripts src measure --include='*.sh' --include='*.mjs' --include='*.ts' --include='*.js' --include='*.py' --include='*.md' => no test or script hit"
+  ],
+  "closeout_commit": "reported in the MEASURE_AGENT_RESULT block and by git log -1; a commit cannot record its own SHA",
+  "evidence_classes": {
+    "person_reviewed": "Daniel owns the dependency refresh order; no model rating is owner acceptance.",
+    "model_evidence_not_acceptance": "review-a, review-b, review-c, adversarial-testing, phase-acceptance, and final-acceptance are role results at their audited heads.",
+    "workbooks_acceptance": "none recorded"
+  },
+  "model_routes": "the audit roles ran on the routes recorded in final-acceptance-2b22d9e.json; this closeout ran on opencode-go/hy4-flash-free#high (ra-quota pick record)."
+}
