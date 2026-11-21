@@ -4,6 +4,14 @@ Worked example: `assets/rogue.ts` (face, hair inside a hood, tunic, belt, cape, 
 idle/walk/run). Read it before building a humanoid. `assets/archer.ts` and `assets/knight.ts`
 use the same head and skeleton: start new heroes from it, so the set stays consistent.
 
+## Contents
+
+- [Proportions](#proportions)
+- [Construction](#construction)
+- [Faces](#faces)
+- [Skeleton template (1 m chibi; scale positions by height)](#skeleton-template-1-m-chibi-scale-positions-by-height)
+- [Failure modes seen in practice](#failure-modes-seen-in-practice)
+
 ## Proportions
 
 Pick a style and measure everything in heads (H = head height).

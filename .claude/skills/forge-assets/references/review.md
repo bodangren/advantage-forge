@@ -13,9 +13,13 @@ Useful views:
 - `./forge sprites <name> --fast`: readability at game size. Look at `sprites/preview.png`.
 - `./forge animate <name> --fast`: motion strips in `anim/<clip>.png`.
 
-## Rubric (score each 1 to 5)
+## Rubric (score each 1 to 10)
 
-| Criterion                 | 1                                              | 3                                              | 5                                                                  |
+Each criterion scores out of 10. The bar depends on the priority of the asset:
+P0 heroes and maps 7.5, characters 7.5, P1 and P2 assets 7.0 to 8.0 by track, and the lowest
+priority, NPCs and similar, 7.0. Read the bar in the track plan. A reviewer scores, not the builder.
+
+| Criterion                 | 1                                              | 5                                              | 10                                                                 |
 | ------------------------- | ---------------------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------ |
 | Silhouette                | unreadable blob or box from some views         | readable from the front, weak from the side    | identifiable as a black cutout from every view; has a signature break |
 | Proportion and appeal     | realistic or accidental proportions            | correct but timid                              | the defining trait is exaggerated; clear big/medium/small rhythm   |
@@ -28,8 +32,8 @@ Useful views:
 | Readability at 128 px     | the key features vanish in sprites             | recognizable but the face or focal point is lost | the focal point and identity read in every direction             |
 | Motion (if animated)      | feet slide or sink, parts detach, loops pop    | readable but stiff or too subtle               | weight, overlap, planted contacts, seamless loops, reads in sprites |
 
-An asset is done when every criterion is 4 or more. If one is below 3, fix it before adding
-anything new.
+An asset passes when its score meets the bar for its priority. A criterion below 5 needs a fix
+before the asset gets new detail.
 
 Scale rule (PM, 2026-11-18): the size in the brief applies to the main body. An appendage, such
 as a handle, a dipper, or a hanging strap, can extend the bounding box. It does not make the

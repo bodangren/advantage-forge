@@ -45,15 +45,12 @@ known failure mode: the mockup omits catalog assets and the kit ships incomplete
 1. Scaffold `bench/trials/<env>-env/`: `queue.tsv` (asset, model, prompt path), one
    `prompts/<asset>.prompt.md` per asset, `mockups/` (the evaluated anchor plus
    `docs/hamlet-mockups/chibi-quest.png` for cross-environment consistency).
-2. Assign models from `bench/trials/chibi-env/ranking.json`: deepseek-flash for hero and
-   emissive-focal assets, glm-5.3-flash for grounded props, mimo-v2.6-flash and
-   muse-spark-1.3-contributor for dressing. MiniMax-M3 refuses to serve; never assign it.
+2. Assign builders from the current ranking in `bench/trials/chibi-env/ranking.json`. Match each
+   builder to the asset role the ranking names. Never assign a model that refuses to serve.
 3. Run `bench/trials/<env>-env/scheduler.sh bench/runs/<env>-env-r1 6` detached.
-4. When the queue drains, review every render yourself. Then run the kimi dual review:
-   two subagents, `volcengine-agent-plan/kimi-k2.8-preview` and
-   `coding-plan/kimi-k2.8-preview`, split by asset count, verdicts to
-   `reviews-kimi-a.json` / `reviews-kimi-b.json`.
-5. Fold verdicts into `bench/trials/<env>-env/reviews.json` (primary + kimi + agreement).
+4. When the queue drains, review every render yourself. Then run an independent review with a
+   second reviewer, split by asset count, verdicts to `reviews-<reviewer>-<part>.json`.
+5. Fold verdicts into `bench/trials/<env>-env/reviews.json` (primary + second reviewer + agreement).
    A 2-point-or-larger disagreement is a flag: re-examine, fix, or re-roll before grafting.
 6. Fix flagged assets yourself when the fix is bounded (palette, density, one body).
 7. Graft: copy each `assets/<name>.ts` into the repo and run `./forge all <name>`.
@@ -70,7 +67,7 @@ known failure mode: the mockup omits catalog assets and the kit ships incomplete
 2. Wire `?scene=<name>` in `src/scene/main.ts`.
 3. Shoot review renders with a playwright script (GPU flags:
    `--use-angle=gl --enable-gpu --ignore-gpu-blocklist --enable-unsafe-swiftshader`,
-   screenshots to `/tmp/opencode`).
+   screenshots to the session scratchpad directory).
 4. Review the renders against the mockup: silhouette zones first, then portals and paths,
    then prop dressing. Fix the largest difference first and re-shoot.
 5. Update `docs/<env>-mockups/components.tsv` counts to the exact map allocation.

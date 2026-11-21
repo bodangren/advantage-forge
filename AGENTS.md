@@ -12,6 +12,19 @@ The owning track plan records execution status. Existing design documents retain
 - Obtain owner approval before changing paths that callers, tools, or users depend on.
 - Commit only assigned paths during concurrent work. Other agents share the git index.
 
+## Contents
+
+- [What this repository is now](#what-this-repository-is-now)
+- [Connected repositories](#connected-repositories)
+- [Measure tracks since 24 September](#measure-tracks-since-24-september)
+- [Working rules learned in this period](#working-rules-learned-in-this-period)
+- [The loop](#the-loop)
+- [Conventions](#conventions)
+- [API](#api)
+- [Recipes that work](#recipes-that-work)
+- [Performance](#performance)
+- [Checks before you call an asset done](#checks-before-you-call-an-asset-done)
+
 ## What this repository is now
 
 Forge began as a code-first asset tool (see the history in [README.md](README.md)). The rebuild
@@ -79,8 +92,8 @@ track.
 
 ## Measure tracks since 24 September
 
-Status counts are in [measure/generated/status.md](measure/generated/status.md) (72 tracks at the
-last generation). The [rework history](measure/history.md) maps 615 commits to 11 history tracks.
+Status counts are in [measure/generated/status.md](measure/generated/status.md), which
+`./measure/generate.sh` rebuilds. The [rework history](measure/history.md) maps 615 commits to 11 history tracks.
 Active track families:
 
 | Family | Tracks | Scope |
@@ -94,7 +107,8 @@ Active track families:
 | Riven Lands pack | `riven_*` | The second pack for Reading Advantage: pack layout, base, one track per family, scenes, game skin ([roadmap](measure/riven-lands-roadmap.md)) |
 
 Assets have priorities: P0 is the first production set and P1 is the next. Priority records build
-order, not quality. Reviews use a rating out of 10 with a bar of 7.
+order, not quality. Reviews use a rating out of 10. The bar depends on the priority: 7.5 for
+P0 and characters, 7.0 for the lowest priority such as NPCs.
 
 ## Working rules learned in this period
 

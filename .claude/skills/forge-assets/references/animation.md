@@ -5,6 +5,15 @@ Worked examples: `assets/rogue.ts` (humanoid idle, walk, run, a trailing cape),
 (quadruped trot, charge, idle), `assets/treasure-chest.ts` (one-shot open, looping rattle),
 `assets/oak-tree.ts` (wind sway).
 
+## Contents
+
+- [Rigging](#rigging)
+- [Pose conventions](#pose-conventions)
+- [Cycles](#cycles)
+- [Weapon attacks that read](#weapon-attacks-that-read)
+- [The clip set](#the-clip-set)
+- [Review](#review)
+
 ## Rigging
 
 1. **Skeleton**: `k.skeleton({ name: { parent?, at: [x, y, z] } })`, where `at` is the joint in

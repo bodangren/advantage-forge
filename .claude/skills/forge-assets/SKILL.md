@@ -16,6 +16,14 @@ would be happy to ship: it reads instantly as a silhouette, it has appealing pro
 clear focal point, its materials are distinct, its colors are harmonious, and it holds up at the
 size the player will see it (often a 128 px sprite).
 
+## Contents
+
+- [Before you start](#before-you-start)
+- [The process](#the-process)
+- [Art direction principles](#art-direction-principles)
+- [Technical rules that save the most time](#technical-rules-that-save-the-most-time)
+- [When you are stuck](#when-you-are-stuck)
+
 ## Before you start
 
 1. Read the brief and decide the category. Open the matching playbook — it has proportions,
