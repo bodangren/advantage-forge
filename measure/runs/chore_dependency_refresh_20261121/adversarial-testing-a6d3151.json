@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "role": "measure-adversarial-testing",
+  "track": "chore_dependency_refresh_20261121",
+  "phase": "Phase 1: Refresh and verify",
+  "phase_base_sha": "7bc4a4e066f6094fafe679ab33fff520e8ee56ab",
+  "baseline_sha": "7bc4a4e066f6094fafe679ab33fff520e8ee56ab",
+  "role_base_sha": "a6d3151b34b5d157d1771c51f7aa292bf465cd42",
+  "audited_head_sha": "a6d3151b34b5d157d1771c51f7aa292bf465cd42",
+  "status": "fail",
+  "summary": "Adversarial regression tests found two false-pass risks in scripts/audit-gate.mjs. Running the gate outside the repository can audit a different lockfile. JSON.parse also accepts duplicate severity keys and can discard a nonzero high count. Twenty of twenty-two targeted tests passed; both failures reproduce the risks. The valid nonzero pnpm exit, stdout warning, and 12,000-advisory cases behaved fail-closed or matched counts.",
+  "blocking_findings": [
+    "F1 [Major]: scripts/audit-gate.mjs:88 calls execFileSync without a repository-root cwd. tests/audit-gate.adversarial.test.ts:67-79 invokes the gate from another directory with a cwd-sensitive pnpm fixture. The fixture returns a clean report only at the repository root and high findings elsewhere; the gate exits 1 instead of the expected 0. A caller can therefore get an audit result for a different lockfile, including a false clean result. Pin cwd to the repository root derived from import.meta.url.",
+    "F2 [Major]: scripts/audit-gate.mjs:100-104 passes duplicate object keys through JSON.parse. tests/fixtures/audit-duplicate-count-keys.json contains high=3 followed by high=0 with no advisories; the gate exits 0 instead of exit 2 for ambiguous input. Reject duplicate keys before accepting vulnerability counts."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Pre-adversarial provenance: git rev-parse 7bc4a4e0 a6d3151b printed phase_base_sha 7bc4a4e066f6094fafe679ab33fff520e8ee56ab and current pre-adversarial HEAD a6d3151b34b5d157d1771c51f7aa292bf465cd42; role_base_sha equals that HEAD.",
+    "Exact phase diff: git diff --name-status 7bc4a4e0..a6d3151b -- scripts/audit-gate.mjs tests/audit-gate.test.ts tests/fixtures package.json pnpm-lock.yaml pnpm-workspace.yaml shows the audit gate, its 17-case test set and fixtures, and refreshed package manifests/lockfile. The implementation introduced in the phase is scripts/audit-gate.mjs.",
+    "Routing and strategy artifacts: the track plan records accepted Review B notes F6 and F7. Review B report review-b-cb16739.json records the live-cwd finding and timeout probes. No track-specific test-strategy.md or anti-pattern artifact exists. build-graph is installed, but graph.db is absent, so graph inspection was skipped.",
+    "Targeted command node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate*.test.ts: 2 test files, 22 tests; 20 passed and 2 failed. The failing cases are audits the repository lockfile when invoked from another working directory and rejects duplicate severity keys instead of accepting the last value.",
+    "Nonzero child case: valid high-severity JSON from a fixture pnpm that exits 1 gives gate exit 1 with critical=0 high=1.",
+    "Stdout warning case: a warning prefix before valid JSON gives exit 2 and audit unavailable; no vulnerability counts print.",
+    "Large count case: a valid document with 12,000 moderate advisories exits 0 and prints moderate=12000.",
+    "Formatting: node_modules/.bin/prettier --check tests/audit-gate.adversarial.test.ts tests/fixtures/audit-duplicate-count-keys.json passes.",
+    "Timeout branch was not added to the suite because the production timeout is fixed at 120000 ms. Review B separately probed an 800 ms copy and confirmed exit 2 on timeout."
+  ],
+  "commands": [
+    "node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate*.test.ts -> 20 passed, 2 failed, exit 1",
+    "node_modules/.bin/prettier --check tests/audit-gate.adversarial.test.ts tests/fixtures/audit-duplicate-count-keys.json -> pass",
+    "command -v build-graph; test -f graph.db -> build-graph available; graph.db absent"
+  ],
+  "changed_files": [
+    "tests/audit-gate.adversarial.test.ts",
+    "tests/fixtures/audit-duplicate-count-keys.json",
+    "measure/runs/chore_dependency_refresh_20261121/adversarial-testing-a6d3151.json",
+    "measure/runs/chore_dependency_refresh_20261121/adversarial-testing-a6d3151.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "green",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 2,
+      "evidence": "The cwd-sensitive test fails at tests/audit-gate.adversarial.test.ts:75 because scripts/audit-gate.mjs does not pin the repository cwd."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The targeted suite fails first on both cwd and duplicate-key probes, while the nonzero exit and 12,000-advisory cases pass."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The added code is confined to tests/audit-gate.adversarial.test.ts and one adversarial fixture; production code remains unchanged."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The exact targeted Vitest command reproduces both false-pass cases and the Prettier command passes on the new test files."
+    }
+  ]
+}

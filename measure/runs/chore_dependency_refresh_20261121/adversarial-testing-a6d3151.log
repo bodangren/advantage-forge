@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: measure-adversarial-testing
+status: fail
+track: chore_dependency_refresh_20261121
+phase: Phase 1: Refresh and verify
+commits: pending
+tests_run: node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate*.test.ts -> 20 passed, 2 failed (cwd audit and duplicate severity keys); node_modules/.bin/prettier --check tests/audit-gate.adversarial.test.ts tests/fixtures/audit-duplicate-count-keys.json -> pass
+files_changed: tests/audit-gate.adversarial.test.ts; tests/fixtures/audit-duplicate-count-keys.json
+plan_updates: none
+known_failures: F1 scripts/audit-gate.mjs:88 inherits the caller cwd and audits the wrong lockfile; F2 scripts/audit-gate.mjs:100-104 accepts duplicate JSON keys and discards the earlier high count
+handoff: Route F1 and F2 to Green. The warning-prefix input fails closed, the pnpm nonzero-with-valid-JSON case correctly reports high findings, and 12,000 moderate advisories count correctly. The fixed 120000 ms timeout was not added as a durable test; Review B's 800 ms probe confirmed the branch. Current pre-adversarial HEAD a6d3151b34b5d157d1771c51f7aa292bf465cd42; phase_base_sha 7bc4a4e066f6094fafe679ab33fff520e8ee56ab.
+END_MEASURE_AGENT_RESULT
