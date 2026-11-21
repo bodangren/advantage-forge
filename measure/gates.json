@@ -1,3 +1,6 @@
 {
-  "GENERATED_CHECK_COMMAND": "node measure/tools/generate.mjs --check"
+  "GENERATED_CHECK_COMMAND": "node measure/tools/generate.mjs --check",
+  "PROJECT_LINT": "./measure/doctor.sh --structural-only",
+  "PROJECT_CHECKS": "node measure/tools/generate.mjs --check",
+  "PROJECT_TESTS": "node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts"
 }

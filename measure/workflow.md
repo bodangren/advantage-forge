@@ -127,3 +127,26 @@ The local doctor also runs the existing architecture boundary tests.
 The direct compiler and test commands use the installed dependencies.
 They avoid the pnpm launcher issue recorded in the debt registry.
 Do not reinstall dependencies during concurrent work without coordination.
+
+### Project gate commands
+
+`measure/gates.json` holds the project gate commands. An environment variable of the same name wins over the file. The role gate finds the heavy runner in this order: `--runner`, `MEASURE_HEAVY_RUN`, then `heavy-run.sh` on `PATH`. Without a runner it runs the command directly.
+
+| Gate | Command | Reason |
+| --- | --- | --- |
+| `PROJECT_LINT` | `./measure/doctor.sh --structural-only` | It is the read-only structural check of the project records, and the Measure CI workflow runs it. |
+| `PROJECT_CHECKS` | `node measure/tools/generate.mjs --check` | It checks that the generated facts match their sources. |
+| `PROJECT_TESTS` | `node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts` | It runs the full application suite. |
+
+Run a long gate through the heavy runner:
+
+```bash
+HEAVY_MIN_AVAIL_MB=1500 bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<command>'
+```
+
+- `PROJECT_TESTS` gave 211 files and 3,233 tests with exit 0 on 2026-11-21. The command excludes `tests/storytime-book-pictures.test.ts` while TD-40 is open.
+- `PROJECT_LINT` gave exit 0, and `PROJECT_CHECKS` printed `Measure facts are current (4 files)` with exit 0, on 2026-11-21.
+- `prettier --check .` is not the lint. It reports 3,317 files on 2026-11-21, including 441 in `src/` and 464 in `measure/`. No formatting track owns that work.
+- `tsc --noEmit` is not a gate while TD-35 to TD-39 are open. It reports 38 errors in 13 files.
+- `RED_TEST_COMMAND` and `GREEN_TEST_COMMAND` stay per track. Each test strategy names the files of its own track, and the Red gate expects the new tests to fail. The orchestrator supplies both values for a run.
+- The role gate fails a command that does not name a file given to `--exclude`. TD-40 is inside `PROJECT_TESTS`, so a run needs no `--exclude` today.
