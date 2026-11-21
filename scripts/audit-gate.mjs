@@ -2,60 +2,72 @@
 // Audit gate for track chore_dependency_refresh_20261121 (T1 Red).
 //
 // Runs `pnpm audit --json` and exits 0 when critical=0 and high=0, 1 otherwise.
-// Exits 2 with `audit unavailable` when the audit cannot run or its JSON cannot
-// parse. Exit 2 is inconclusive and never satisfies AC2.
+// Exit 2 with `audit unavailable` means the audit is inconclusive. Exit 2 never
+// satisfies AC2. Exit 2 also covers a missing or inconsistent audit document.
 //
 //   node scripts/audit-gate.mjs                 live check (needs the network)
 //   node scripts/audit-gate.mjs --input <file>  check a saved audit JSON file
 //
-// Note: `pnpm audit` exits non-zero when it finds advisories, so the live path
-// reads stdout JSON regardless of the child exit code.
+// AUDIT_GATE_PNPM names the pnpm binary for the live path. Tests use it to
+// simulate a binary that cannot run. `pnpm audit` exits non-zero when advisories
+// exist; the live path reads stdout JSON regardless of the child exit code.
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 
-function countFromMetadata(vulnerabilities) {
-  if (!vulnerabilities || typeof vulnerabilities !== 'object') return null;
-  const pick = (key) =>
-    Number.isInteger(vulnerabilities[key]) && vulnerabilities[key] >= 0
-      ? vulnerabilities[key]
-      : 0;
-  return {
-    critical: pick('critical'),
-    high: pick('high'),
-    moderate: pick('moderate'),
-    low: pick('low'),
-    info: pick('info'),
-  };
-}
-
-function countFromAdvisories(advisories) {
-  const list = Array.isArray(advisories)
-    ? advisories
-    : advisories && typeof advisories === 'object'
-      ? Object.values(advisories)
-      : null;
-  if (!list) return null;
-  const counts = { critical: 0, high: 0, moderate: 0, low: 0, info: 0 };
-  for (const advisory of list) {
-    const severity = String((advisory && advisory.severity) || '').toLowerCase();
-    if (severity in counts) counts[severity] += 1;
-  }
-  return counts;
-}
-
-// Prefer metadata.vulnerabilities (the shape `pnpm audit --json` emits); fall
-// back to counting advisory severities for audit documents without metadata.
-function countVulnerabilities(doc) {
-  if (!doc || typeof doc !== 'object') return null;
-  return (
-    countFromMetadata(doc.metadata && doc.metadata.vulnerabilities) ||
-    countFromAdvisories(doc.advisories)
-  );
-}
+const SEVERITIES = ['info', 'low', 'moderate', 'high', 'critical'];
+const TIMEOUT_MS = 120000;
 
 function unavailable() {
   console.error('audit unavailable');
   process.exit(2);
+}
+
+function zeroCounts() {
+  return { info: 0, low: 0, moderate: 0, high: 0, critical: 0 };
+}
+
+// metadata.vulnerabilities must hold all five counts as non-negative integers.
+function countFromMetadata(vulnerabilities) {
+  if (!vulnerabilities || typeof vulnerabilities !== 'object' || Array.isArray(vulnerabilities)) {
+    return null;
+  }
+  const counts = zeroCounts();
+  for (const key of SEVERITIES) {
+    const value = vulnerabilities[key];
+    if (!Number.isInteger(value) || value < 0) return null;
+    counts[key] = value;
+  }
+  return counts;
+}
+
+// Every advisory must be an object with a severity in the five known values.
+function countFromAdvisories(advisories) {
+  if (advisories === undefined) return zeroCounts();
+  if (!advisories || typeof advisories !== 'object' || Array.isArray(advisories)) {
+    return null;
+  }
+  const counts = zeroCounts();
+  for (const advisory of Object.values(advisories)) {
+    if (!advisory || typeof advisory !== 'object' || Array.isArray(advisory)) return null;
+    if (typeof advisory.severity !== 'string' || !SEVERITIES.includes(advisory.severity)) {
+      return null;
+    }
+    counts[advisory.severity] += 1;
+  }
+  return counts;
+}
+
+// Require both sources and require them to agree. A disagreement is inconclusive.
+function countVulnerabilities(doc) {
+  if (!doc || typeof doc !== 'object' || Array.isArray(doc)) return null;
+  const meta = countFromMetadata(doc.metadata && doc.metadata.vulnerabilities);
+  if (!meta) return null;
+  const adv = countFromAdvisories(doc.advisories);
+  if (!adv) return null;
+  for (const key of SEVERITIES) {
+    if (meta[key] !== adv[key]) return null;
+  }
+  return meta;
 }
 
 function main() {
@@ -71,14 +83,17 @@ function main() {
       unavailable();
     }
   } else {
+    const pnpm = process.env.AUDIT_GATE_PNPM || 'pnpm';
     try {
-      raw = execFileSync('pnpm', ['audit', '--json'], {
+      raw = execFileSync(pnpm, ['audit', '--json'], {
         encoding: 'utf8',
         stdio: ['ignore', 'pipe', 'pipe'],
+        timeout: TIMEOUT_MS,
       });
     } catch (err) {
-      // pnpm audit exits non-zero when advisories exist; the JSON still lands
-      // on stdout. Only a missing/empty stdout means the audit never ran.
+      // A timeout, a signal, or a binary that cannot start is inconclusive.
+      if (err && (err.timedOut || err.killed || err.signal)) unavailable();
+      // pnpm audit exits non-zero when advisories exist; stdout still holds JSON.
       raw = err && typeof err.stdout === 'string' ? err.stdout : '';
       if (!raw) unavailable();
     }
