@@ -1,0 +1,40 @@
+MEASURE_AGENT_RESULT
+status: PASS (r4 remediation; both adversarial findings fixed; all gates pass)
+role: Green (Measure Jr)
+track: chore_dependency_refresh_20261121
+phase: Phase 1: Refresh and verify (P1), task T2, remediation round 4
+phase_base_sha: 7bc4a4e066f6094fafe679ab33fff520e8ee56ab
+role_base_sha: 6a45a21f6d1e39b6fac6fcb9de25f64de35f22ac
+implementation_commit: 199189d9ff2a52d0f1b46d41600753d894f37506
+final_green_head: 199189d9ff2a52d0f1b46d41600753d894f37506
+committed_paths_impl: scripts/audit-gate.mjs
+committed_paths_evidence: measure/tracks/chore_dependency_refresh_20261121/plan.md measure/runs/chore_dependency_refresh_20261121/jr-green-199189d9.log
+dispositions: F1=FIX; F2=FIX
+
+Adversarial source: measure/runs/chore_dependency_refresh_20261121/adversarial-testing-a6d3151.json. Red commit a5545102 added the two failing cases and is inside phase_base_sha..HEAD. No committed test or fixture was edited.
+
+Work performed:
+1. F1: scripts/audit-gate.mjs derives REPO_ROOT from import.meta.url with resolve(dirname(fileURLToPath(import.meta.url)), '..') and passes cwd: REPO_ROOT to execFileSync for the live pnpm audit. The gate now audits this repository's lockfile regardless of the caller's working directory.
+2. F2: added hasDuplicateKeys(raw), an escape-aware raw-JSON scanner. After JSON.parse succeeds, any duplicate object key exits 2 with 'audit unavailable'. The previous last-value-wins behavior could discard a nonzero high count.
+3. plan.md T2: kept the [x] marker and added r4 evidence with implementation commit 199189d9.
+
+Targeted Red command output:
+- Before (role base 6a45a21f): HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate.test.ts tests/audit-gate.adversarial.test.ts' -> 2 failed, 20 passed of 22, exit 1. Failures: 'audits the repository lockfile when invoked from another working directory' (status 1, expected 0) and 'rejects duplicate severity keys instead of accepting the last value' (status 0, expected 2).
+- After (implementation commit 199189d9): same command -> 2 passed files, 22 passed tests, exit 0.
+
+Gates (all after the change):
+- targeted vitest (heavy runner): 22 passed, exit 0.
+- node scripts/audit-gate.mjs (repo root): critical=0 high=0 moderate=0 low=0 info=0, exit 0.
+- node /home/daniebo/Desktop/advantage-forge/scripts/audit-gate.mjs (cwd /tmp): critical=0 high=0 moderate=0 low=0 info=0, exit 0.
+- node_modules/.bin/prettier --check scripts/audit-gate.mjs: pass, exit 0.
+- node_modules/.bin/tsc --noEmit (heavy runner): exit 2, 38 errors in 13 files, identical to the recorded before set; comm -13 is empty, so the after set is a subset of the before set.
+- bash measure/doctor.sh (informational): exit 1 on three pre-existing out-of-scope issues (missing track index.md, metadata status new with started tasks, stale generated/status.md). No issue introduced by this round.
+
+Handoff to review roles:
+- Tasks flipped to [x] with SHA evidence: none this round. T2 was already [x] with prior SHA evidence (6987ed50) and stays [x] with r4 evidence added at implementation commit 199189d9. T1 and T3 remain [x].
+- Tasks flipped to [b] with (deferred:<owner>): none. No human-gated or un-implementable contract in this round.
+- New files added: measure/runs/chore_dependency_refresh_20261121/jr-green-199189d9.log (this untracked run record). No new source, test, or fixture file.
+- Immutable phase_base_sha: 7bc4a4e066f6094fafe679ab33fff520e8ee56ab. Final Green HEAD: 199189d9ff2a52d0f1b46d41600753d894f37506.
+
+Scope notes: no push. measure/generate.sh was not run. metadata.json, tracks.md, generated/status.md, and the track index.md were not changed. Unrelated modified and untracked files were left untouched; only the listed paths were staged with explicit git add.
+END_MEASURE_AGENT_RESULT
