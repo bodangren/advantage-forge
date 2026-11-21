@@ -227,16 +227,16 @@ tests/sound-set.test.ts` passes.
     earshot call. The combined targeted command exits 0 with 74 of 74 tests passing. No Ogg file
     was re-rendered. Log: `measure/runs/chore_earshot_sounds_20261121/green-r5.log`.
 
-- [~] T8 Phase acceptance nits (F1/F2/F3 test and text side): fix the two tsc errors the phase
-  added in `tests/sound-set.test.ts` with `(bytes[5] ?? 0) & 0x02` and `bytes[26] ?? 0` (no
-  `!`, because the adversarial test runs this function body through `new Function`). Fix the
-  text drift: stale "Case 9" references for the committed-files case in `plan.md` and
-  `test-strategy.md` (it is case 10), the plan's touched-files list (add
-  `tests/sound-set.adversarial.test.ts`), and the spec D5 forwarding rule (a successful
-  child's stdout and stderr both go to the wrapper stdout; a failed call prints none of its
-  output). F2 note: the closeout wrapper gate renders into a scratch `SOUNDS_ROOT`, never the
-  real root, because fresh renders are audio-identical but not byte-identical. Change no
-  production source.
+- [x] T8 Phase acceptance nits (F1/F2/F3 test and text side): fix the two tsc errors the phase [commit `2cbe1d0d`]
+      added in `tests/sound-set.test.ts` with `(bytes[5] ?? 0) & 0x02` and `bytes[26] ?? 0` (no
+      `!`, because the adversarial test runs this function body through `new Function`). Fix the
+      text drift: stale "Case 9" references for the committed-files case in `plan.md` and
+      `test-strategy.md` (it is case 10), the plan's touched-files list (add
+      `tests/sound-set.adversarial.test.ts`), and the spec D5 forwarding rule (a successful
+      child's stdout and stderr both go to the wrapper stdout; a failed call prints none of its
+      output). F2 note: the closeout wrapper gate renders into a scratch `SOUNDS_ROOT`, never the
+      real root, because fresh renders are audio-identical but not byte-identical. Change no
+      production source.
   - Red evidence: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set.adversarial.test.ts'` plus `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/tsc --noEmit'`.
     Log: `measure/runs/chore_earshot_sounds_20261121/red-r5.log`
   - Red result (2026-11-21): the combined suite exits 0 with 86 of 86 tests passing (the
